@@ -7,7 +7,7 @@ module Spree
 
       context '#duplicate' do
         before do
-          product.stub :taxons => [create(:taxon)]
+          product.stub taxons: [create(:taxon)]
         end
 
         it 'duplicates product' do
@@ -42,7 +42,7 @@ module Spree
 
       context "product has variants" do
         before do
-          create(:variant, :product => product)
+          create(:variant, product: product)
         end
 
         context "#destroy" do
@@ -148,8 +148,8 @@ module Spree
 
     context "permalink" do
       context "build product with similar name" do
-        let!(:other) { create(:product, :name => 'foo bar') }
-        let(:product) { build(:product, :name => 'foo') }
+        let!(:other) { create(:product, name: 'foo bar') }
+        let(:product) { build(:product, name: 'foo') }
 
         before { product.valid? }
 
@@ -160,31 +160,31 @@ module Spree
 
       context "build permalink with quotes" do
         it "saves quotes" do
-          product = create(:product, :name => "Joe's", :permalink => "joe's")
+          product = create(:product, name: "Joe's", permalink: "joe's")
           product.permalink.should == "joe's"
         end
       end
 
       context "permalinks must be unique" do
         before do
-          @product1 = create(:product, :name => 'foo')
+          @product1 = create(:product, name: 'foo')
         end
 
         it "cannot create another product with the same permalink" do
-          pending '[Spree build] Failing spec'        
-          @product2 = create(:product, :name => 'foo')
+          pending '[Spree build] Failing spec'
+          @product2 = create(:product, name: 'foo')
           lambda do
-            @product2.update_attributes(:permalink => @product1.permalink)
+            @product2.update(permalink: @product1.permalink)
           end.should raise_error(ActiveRecord::RecordNotUnique)
         end
       end
 
       it "supports Chinese" do
-        create(:product, :name => "你好").permalink.should == "ni-hao"
+        create(:product, name: "你好").permalink.should == "ni-hao"
       end
 
       context "manual permalink override" do
-        let(:product) { create(:product, :name => "foo") }
+        let(:product) { create(:product, name: "foo") }
 
         it "calling save_permalink with a parameter" do
           product.name = "foobar"
@@ -196,17 +196,17 @@ module Spree
         end
       end
 
-      context "override permalink of deleted product" do 
-        let(:product) { create(:product, :name => "foo") } 
+      context "override permalink of deleted product" do
+        let(:product) { create(:product, name: "foo") }
 
-        it "should create product with same permalink from name like deleted product" do 
-          product.permalink.should == "foo" 
-          product.destroy 
-          
-          new_product = create(:product, :name => "foo") 
-          new_product.permalink.should == "foo" 
-        end 
-      end 
+        it "should create product with same permalink from name like deleted product" do
+          product.permalink.should == "foo"
+          product.destroy
+
+          new_product = create(:product, name: "foo")
+          new_product.permalink.should == "foo"
+        end
+      end
     end
 
     context "properties" do
@@ -237,11 +237,11 @@ module Spree
 
       # Regression test for #2455
       it "should not overwrite properties' presentation names" do
-        Spree::Property.where(:name => 'foo').first_or_create!(:presentation => "Foo's Presentation Name")
+        Spree::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
         product.set_property('foo', 'value1')
         product.set_property('bar', 'value2')
-        Spree::Property.where(:name => 'foo').first.presentation.should == "Foo's Presentation Name"
-        Spree::Property.where(:name => 'bar').first.presentation.should == "bar"
+        Spree::Property.where(name: 'foo').first.presentation.should == "Foo's Presentation Name"
+        Spree::Property.where(name: 'bar').first.presentation.should == "bar"
       end
     end
 
@@ -260,16 +260,16 @@ module Spree
 
       context "when prototype with option types is supplied" do
         def build_option_type_with_values(name, values)
-          ot = create(:option_type, :name => name)
+          ot = create(:option_type, name: name)
           values.each do |val|
-            ot.option_values.create(:name => val.downcase, :presentation => val)
+            ot.option_values.create(name: val.downcase, presentation: val)
           end
           ot
         end
 
         let(:prototype) do
           size = build_option_type_with_values("size", %w(Small Medium Large))
-          create(:prototype, :name => "Size", :option_types => [ size ])
+          create(:prototype, name: "Size", option_types: [size])
         end
 
         let(:option_values_hash) do
