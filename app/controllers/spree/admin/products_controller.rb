@@ -100,6 +100,14 @@ module Spree
         redirect_to edit_admin_product_url(@new)
       end
 
+      def group_buy_options
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+      end
+
+      def seo
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+      end
+
       protected
 
       def find_resource

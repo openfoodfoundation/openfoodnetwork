@@ -204,8 +204,30 @@ feature '
       expect(product.group_buy_unit_size).to eq(10.0)
     end
 
-    scenario "editing product Search" do
+    scenario "loading editing product group buy options with url filters" do
       product = product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.group_buy_options_admin_product_path(product, filter)
+
+      expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product, filter)))
+      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+    end
+
+    scenario "editing product group buy options with url filter" do
+      product = product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.group_buy_options_admin_product_path(product, filter)
+      choose('product_group_buy_1')
+      fill_in 'Bulk unit size', with: '10'
+
+      click_button 'Update'
+
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+    end
+
+    scenario "editing product Search" do
+      product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
       fill_in 'Product Search Keywords', with: 'Product Search Keywords'
@@ -215,6 +237,29 @@ feature '
       product.reload
       expect(product.notes).to eq('Just testing Notes')
       expect(product.meta_keywords).to eq('Product Search Keywords')
+    end
+
+    scenario "loading editing product Search with url filters" do
+      product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.seo_admin_product_path(product, filter)
+
+      expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product, filter)))
+      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+    end
+
+    scenario "editing product Search with url filter" do
+      product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.seo_admin_product_path(product, filter)
+
+      fill_in 'Product Search Keywords', with: 'Product Search Keywords'
+      fill_in 'Notes', with: 'Just testing Notes'
+
+      click_button 'Update'
+
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
     end
 
     scenario "loading product properties page including url filters", js: true do
