@@ -144,7 +144,7 @@ module Spree
       let(:shipping_method){ create :shipping_method }
 
       it "should set calculable correctly" do
-        shipping_method.calculator.calculable.should == shipping_method
+        expect(shipping_method.calculator.calculable).to eq(shipping_method)
       end
     end
   end

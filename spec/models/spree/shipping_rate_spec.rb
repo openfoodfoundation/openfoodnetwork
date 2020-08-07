@@ -10,7 +10,7 @@ describe Spree::ShippingRate do
                             shipping_method: shipping_method,
                             cost: 10.55)
   }
-  before { Spree::TaxRate.stub(default: 0.05) }
+  before { allow(Spree::TaxRate).to receive_messages(default: 0.05) }
 
   context "#display_price" do
     context "when shipment includes VAT" do
@@ -30,7 +30,7 @@ describe Spree::ShippingRate do
     context "when the currency is JPY" do
       let(:shipping_rate) {
         shipping_rate = Spree::ShippingRate.new(cost: 205)
-        shipping_rate.stub(currency: "JPY")
+        allow(shipping_rate).to receive_messages(currency: "JPY")
         shipping_rate
       }
 

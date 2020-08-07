@@ -77,7 +77,7 @@ describe Spree::Address do
     end
 
     it "full state name is in state_name and country does contain that state" do
-      country.states.stub find_all_by_name_or_abbr: [create(:state, name: 'alabama', abbr: 'al')]
+      allow(country.states).to receive_messages find_all_by_name_or_abbr: [create(:state, name: 'alabama', abbr: 'al')]
       address.update state_name: 'alabama'
       expect(address).to be_valid
       expect(address.state.name).to eq 'alabama'
@@ -85,7 +85,7 @@ describe Spree::Address do
     end
 
     it "state abbr is in state_name and country does contain that state" do
-      country.states.stub find_all_by_name_or_abbr: [state]
+      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
       address.state_name = state.abbr
       expect(address).to be_valid
       expect(address.state.abbr).to eq state.abbr
@@ -93,7 +93,7 @@ describe Spree::Address do
     end
 
     it "both state and state_name are entered and country does contain the state" do
-      country.states.stub find_all_by_name_or_abbr: [state]
+      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
       address.state = state
       address.state_name = 'maryland'
       expect(address).to be_valid
@@ -120,7 +120,7 @@ describe Spree::Address do
     end
 
     context "phone not required" do
-      before { address.instance_eval{ stub require_phone?: false } }
+      before { address.instance_eval{ double require_phone?: false } }
 
       it "shows no errors when phone is blank" do
         address.phone = ""
@@ -130,7 +130,7 @@ describe Spree::Address do
     end
 
     context "zipcode not required" do
-      before { address.instance_eval{ stub require_zipcode?: false } }
+      before { address.instance_eval{ double require_zipcode?: false } }
 
       it "shows no errors when phone is blank" do
         address.zipcode = ""
