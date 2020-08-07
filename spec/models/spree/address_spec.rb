@@ -120,7 +120,7 @@ describe Spree::Address do
     end
 
     context "phone not required" do
-      before { address.instance_eval{ double require_phone?: false } }
+      before { allow(address).to receive(:require_phone?) { false } }
 
       it "shows no errors when phone is blank" do
         address.phone = ""
@@ -130,7 +130,7 @@ describe Spree::Address do
     end
 
     context "zipcode not required" do
-      before { address.instance_eval{ double require_zipcode?: false } }
+      before { allow(address).to receive(:require_zipcode?) { false } }
 
       it "shows no errors when phone is blank" do
         address.zipcode = ""
