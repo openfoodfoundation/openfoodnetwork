@@ -121,20 +121,21 @@ module Spree
     end
 
     context "validations" do
-      before { subject.valid? }
+      let!(:shipping_method) { create(:shipping_method, distributors: [create(:distributor_enterprise)]) }
 
       it "validates presence of name" do
-        subject.should have(1).error_on(:name)
+        shipping_method.update name: ''
+        expect(shipping_method.errors[:name].first).to eq "can't be blank"
       end
 
       context "shipping category" do
         it "validates presence of at least one" do
-          subject.should have(1).error_on(:base)
+          shipping_method.update shipping_categories: []
+          expect(shipping_method.reload.errors[:base].first).to eq "You need to select at least one shipping category"
         end
 
         context "one associated" do
-          before { subject.shipping_categories.push create(:shipping_category) }
-          it { subject.should have(0).error_on(:base) }
+          it { expect(shipping_method.reload.errors[:base]).to be_empty }
         end
       end
     end

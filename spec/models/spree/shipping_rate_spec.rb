@@ -16,14 +16,14 @@ describe Spree::ShippingRate do
     context "when shipment includes VAT" do
       before { Spree::Config[:shipment_inc_vat] = true }
       it "displays the correct price" do
-        shipping_rate.display_price.to_s.should == "$11.08" # $10.55 * 1.05 == $11.08
+        expect(shipping_rate.display_price.to_s).to eq "$11.08" # $10.55 * 1.05 == $11.08
       end
     end
 
     context "when shipment does not include VAT" do
       before { Spree::Config[:shipment_inc_vat] = false }
       it "displays the correct price" do
-        shipping_rate.display_price.to_s.should == "$10.55"
+        expect(shipping_rate.display_price.to_s).to eq "$10.55"
       end
     end
 
@@ -35,7 +35,7 @@ describe Spree::ShippingRate do
       }
 
       it "displays the price in yen" do
-        shipping_rate.display_price.to_s.should == "¥205"
+        expect(shipping_rate.display_price.to_s).to eq "¥205"
       end
     end
   end
