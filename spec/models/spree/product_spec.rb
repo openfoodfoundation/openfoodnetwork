@@ -236,12 +236,7 @@ module Spree
     end
 
     describe '#total_on_hand' do
-      it 'should be infinite if track_inventory_levels is false' do
-        Spree::Config[:track_inventory_levels] = false
-        expect(build(:product).total_on_hand).to eql(Float::INFINITY)
-      end
-
-      it 'should return sum of stock items count_on_hand' do
+      it 'returns sum of stock items count_on_hand' do
         product = build(:product)
         product.stub stock_items: [double(Spree::StockItem, count_on_hand: 5)]
         expect(product.total_on_hand).to eql(5)
