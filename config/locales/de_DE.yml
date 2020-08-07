@@ -1029,10 +1029,13 @@ de_DE:
         name: "Unternehmensgebühr Zusammenfassung"
         description: "Zusammenfassung der erhobenen Zuschläge"
     subscriptions:
-      subscriptions: Abonnements
-      new: Neues Abonnement
-      create: Abonnement erstellen
-      edit: Abonnement bearbeiten
+      index:
+        title: "Abonnements"
+        new: "Neues Abonnement"
+      new:
+        title: "Neues Abonnement"
+      edit:
+        title: "Abonnement bearbeiten"
       table:
         edit_subscription: Abonnement bearbeiten
         pause_subscription: Abonement pausieren
@@ -1041,6 +1044,7 @@ de_DE:
       filters:
         query_placeholder: "Suche per E-Mail ..."
       setup_explanation:
+        title: "Abonnements"
         just_a_few_more_steps: 'Nur noch ein paar Schritte bevor Sie beginnen können:'
         enable_subscriptions: "Aktivieren Sie Abonnements für mindestens einen Ihrer Läden"
         enable_subscriptions_step_1_html: 1. Gehen Sie zur Seite %{enterprises_link}, suchen Sie Ihren Laden und klicken Sie auf "Verwalten"
@@ -1054,6 +1058,8 @@ de_DE:
         create_at_least_one_schedule_step_3: 3. Klicken Sie auf "+ Neuer Zeitplan" und füllen Sie das Formular aus
         once_you_are_done_you_can_html: Sobald Sie fertig sind, können Sie %{reload_this_page_link}
         reload_this_page: diese Seite neu laden
+      form:
+        create: "Abonnement erstellen"
       steps:
         details: 1. Grundlegendes
         address: 2. Adresse
@@ -3259,6 +3265,27 @@ de_DE:
       invoice_email:
         hi: "Hallo %{name}"
         invoice_attached_text: Im Anhang findest Du eine Rechnung für die letzte Bestellung vom
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Es wurde angefragt, das Passwort zurückzusetzen.
+            Sollte kein neues Passwort angefordert werden, bitte dieses E-Mail ignorieren.
+        link_text: >
+            Sollte ein neues Passwort angefordert werden, bitte den folgenden Aktivierungslink
+            bestätigen.
+        issue_text: |
+            Falls die URL nicht funktioniert, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen
+      confirmation_instructions:
+        subject: "Bitte OFN-Konto bestätigen"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Sehr geehrter Kunde,"
+        instructions: "Ihre Bestellung wurde versandt"
+        shipment_summary: "Übersicht"
+        subject: "Versandbenachrichtigung"
+        thanks: "Danke für Ihren Einkauf."
+        track_information: "Tracking-Informationen: %{tracking}"
+        track_link: "Tracking-Link: %{url}"
     order_state:
       address: Adresse
       adjustments: Verbesserungen
@@ -3280,18 +3307,6 @@ de_DE:
       ended: beendet
       paused: pausiert
       canceled: storniert
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Es wurde angefragt, das Passwort zurückzusetzen.
-            Sollte kein neues Passwort angefordert werden, bitte dieses E-Mail ignorieren.
-        link_text: >
-            Sollte ein neues Passwort angefordert werden, bitte den folgenden Aktivierungslink
-            bestätigen.
-        issue_text: |
-            Falls die URL nicht funktioniert, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen
-      confirmation_instructions:
-        subject: Bitte OFN-Konto bestätigen
     users:
       form:
         account_settings: Konto Einstellungen
