@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  module PaymentMethod
+  class PaymentMethod
     class Check < Spree::PaymentMethod
       def actions
         %w{capture void}

@@ -17,9 +17,6 @@ Spree::Gateway.class_eval do
   acts_as_taggable
 end
 
-require "#{Rails.root}/app/models/spree/payment_method_decorator"
-require "#{Rails.root}/app/models/spree/gateway_decorator"
-
 Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true

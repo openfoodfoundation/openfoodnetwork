@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  module Gateway
+  class Gateway
     class Bogus < Spree::Gateway
       TEST_VISA = ['4111111111111111', '4012888888881881', '4222222222222'].freeze
       TEST_MC   = ['5500000000000004', '5555555555554444', '5105105105105100'].freeze

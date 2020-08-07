@@ -24,112 +24,116 @@ module Spree
 
       before(:each) do
         @order = create(:order)
-        @payment = Spree::Payment.create(amount: 100, order: @order)
+        @payment = create(:payment, amount: 100, order: @order)
 
         @success_response = double('gateway_response', success?: true,
                                                        authorization: '123',
                                                        avs_result: { 'code' => 'avs-code' })
         @fail_response = double('gateway_response', success?: false)
 
-        @payment_gateway = mock_model(Spree::PaymentMethod,
-                                      payment_profiles_supported?: true,
-                                      authorize: @success_response,
-                                      purchase: @success_response,
-                                      capture: @success_response,
-                                      void: @success_response,
-                                      credit: @success_response,
-                                      environment: 'test')
-
+        @payment_gateway = create(:payment_method,
+                                  environment: 'test')
+        allow(@payment_gateway).to receive_messages :payment_profiles_supported? => true,
+                                                    :authorize => @success_response,
+                                                    :purchase => @success_response,
+                                                    :capture => @success_response,
+                                                    :void => @success_response,
+                                                    :credit => @success_response
         @payment.stub payment_method: @payment_gateway
       end
 
       context "#can_capture?" do
         it "should be true if payment is pending" do
-          payment = mock_model(Spree::Payment, pending?: true, created_at: Time.zone.now)
-          credit_card.can_capture?(payment).should be_true
+          payment = create(:payment, created_at: Time.zone.now)
+          allow(payment).to receive(:pending?) { true }
+          expect(credit_card.can_capture?(payment)).to be_truthy
         end
 
         it "should be true if payment is checkout" do
-          payment = mock_model(Spree::Payment, pending?: false,
-                                               checkout?: true,
-                                               created_at: Time.zone.now)
-          credit_card.can_capture?(payment).should be_true
+          payment = create(:payment, created_at: Time.zone.now)
+          allow(payment).to receive_messages :pending? => false,
+                                             :checkout? => true
+          expect(credit_card.can_capture?(payment)).to be_truthy
         end
       end
 
       context "#can_void?" do
         it "should be true if payment is not void" do
-          payment = mock_model(Spree::Payment, void?: false)
-          credit_card.can_void?(payment).should be_true
+          payment = create(:payment)
+          allow(payment).to receive(:void?) { false }
+          expect(credit_card.can_void?(payment)).to be_truthy
         end
       end
 
       context "#can_credit?" do
         it "should be false if payment is not completed" do
-          payment = mock_model(Spree::Payment, completed?: false)
-          credit_card.can_credit?(payment).should be_false
+          payment = create(:payment)
+          allow(payment).to receive(:completed?) { false }
+          expect(credit_card.can_credit?(payment)).to be_falsy
         end
 
         it "should be false when order payment_state is not 'credit_owed'" do
-          payment = mock_model(Spree::Payment,
-                               completed?: true,
-                               order: mock_model(Spree::Order, payment_state: 'paid'))
-          credit_card.can_credit?(payment).should be_false
+          payment = create(:payment,
+                           order: create(:order, payment_state: 'paid'))
+          allow(payment).to receive(:completed?) { true }
+          expect(credit_card.can_credit?(payment)).to be_falsy
         end
 
         it "should be false when credit_allowed is zero" do
-          payment = mock_model(Spree::Payment,
-                               completed?: true, credit_allowed: 0,
-                               order: mock_model(Spree::Order, payment_state: 'credit_owed'))
-          credit_card.can_credit?(payment).should be_false
+          payment = create(:payment,
+                           order: create(:order, payment_state: 'credit_owed'))
+          allow(payment).to receive_messages :completed? => true,
+                                             :credit_allowed => 0
+
+          expect(credit_card.can_credit?(payment)).to be_falsy
         end
       end
 
       context "#valid?" do
         it "should validate presence of number" do
           credit_card.attributes = valid_credit_card_attributes.except(:number)
-          credit_card.should_not be_valid
+          expect(credit_card).to_not be_valid
           expect(credit_card.errors[:number]).to eq ["can't be blank"]
         end
 
         it "should validate presence of security code" do
           credit_card.attributes = valid_credit_card_attributes.except(:verification_value)
-          credit_card.should_not be_valid
+          expect(credit_card).to_not be_valid
           expect(credit_card.errors[:verification_value]).to eq ["can't be blank"]
         end
 
         it "should validate expiration is not in the past" do
           credit_card.month = 1.month.ago.month
           credit_card.year = 1.month.ago.year
-          credit_card.should_not be_valid
-          expect(credit_card.errors[:base]).to eq ["Card has expired"]
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to eq ["has expired"]
         end
 
         it "does not run expiration in the past validation if month is not set" do
           credit_card.month = nil
           credit_card.year = Time.zone.now.year
-          credit_card.should_not be_valid
-          credit_card.errors[:base].should be_blank
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to be_blank
         end
 
         it "does not run expiration in the past validation if year is not set" do
           credit_card.month = Time.zone.now.month
           credit_card.year = nil
-          credit_card.should_not be_valid
-          credit_card.errors[:base].should be_blank
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to be_blank
         end
 
         it "does not run expiration in the past validation if year and month are empty" do
           credit_card.year = ""
           credit_card.month = ""
-          credit_card.should_not be_valid
-          credit_card.errors[:card].should be_blank
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:card]).to be_blank
         end
 
         it "should only validate on create" do
           credit_card.attributes = valid_credit_card_attributes
           credit_card.save
-          credit_card.should be_valid
+          expect(credit_card).to be_valid
         end
       end
 
@@ -142,11 +146,11 @@ module Spree
         let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
 
         it "should not actually store the number" do
-          persisted_card.number.should be_blank
+          expect(persisted_card.number).to be_blank
         end
 
         it "should not actually store the security code" do
-          persisted_card.verification_value.should be_blank
+          expect(persisted_card.verification_value).to be_blank
         end
       end
 
@@ -161,7 +165,7 @@ module Spree
 
         it "should not raise an exception on non-string input" do
           credit_card.number = ({})
-          credit_card.number.should be_nil
+          expect(credit_card.number).to be_nil
         end
       end
 
