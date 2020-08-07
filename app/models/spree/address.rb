@@ -1,8 +1,11 @@
 module Spree
   class Address < ActiveRecord::Base
+    include AddressDisplay
+
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
 
+    has_one :enterprise, dependent: :restrict_with_exception
     has_many :shipments
 
     validates :firstname, :lastname, :address1, :city, :country, presence: true
@@ -11,8 +14,13 @@ module Spree
 
     validate :state_validate
 
+    after_save :touch_enterprise
+
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
+    delegate :name, to: :state, prefix: true, allow_nil: true
+
+    geocoded_by :geocode_address
 
     def self.default
       country = Spree::Country.find(Spree::Config[:default_country_id]) rescue Spree::Country.first
@@ -74,6 +82,22 @@ module Spree
       }
     end
 
+    def geocode_address
+      render_address([address1, address2, zipcode, city, country.andand.name, state.andand.name])
+    end
+
+    def full_address
+      render_address([address1, address2, city, zipcode, state.andand.name])
+    end
+
+    def address_part1
+      render_address([address1, address2])
+    end
+
+    def address_part2
+      render_address([city, zipcode, state.andand.name])
+    end
+
     private
       def require_phone?
         true
@@ -119,5 +143,13 @@ module Spree
         # ensure at least one state field is populated
         errors.add :state, :blank if state.blank? && state_name.blank?
       end
+
+    def touch_enterprise
+      enterprise.andand.touch
+    end
+
+    def render_address(parts)
+      parts.select(&:present?).join(', ')
+    end
   end
 end
