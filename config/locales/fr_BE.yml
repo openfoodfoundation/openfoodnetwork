@@ -1029,10 +1029,13 @@ fr_BE:
         name: "Récapitulatif de la commission d'entreprise "
         description: "Récapitulatif des commissions d'entreprise perçues"
     subscriptions:
-      subscriptions: Abonnements
-      new: Nouvel abonnement
-      create: Créer abonnement
-      edit: Mettre à jour Abonnement
+      index:
+        title: "commandes récurrantes"
+        new: "Nouvel abonnement"
+      new:
+        title: "Nouvel abonnement"
+      edit:
+        title: "Mettre à jour Abonnement"
       table:
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
@@ -1041,6 +1044,7 @@ fr_BE:
       filters:
         query_placeholder: "Recherche par email ..."
       setup_explanation:
+        title: "commandes récurrantes"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos comptoirs"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre comptoir, et cliquez sur "Gérer"
@@ -1054,6 +1058,8 @@ fr_BE:
         create_at_least_one_schedule_step_3: 3. Cliquez sur "+ Nouveau Rythme d'abonnement", et remplissez le formulaire
         once_you_are_done_you_can_html: Une fois que c'est fait, vous pouvez %{reload_this_page_link}
         reload_this_page: recharger cette page
+      form:
+        create: "Créer abonnement"
       steps:
         details: 1. Informations de base
         address: 2. Adresse
@@ -3230,6 +3236,28 @@ fr_BE:
       invoice_email:
         hi: "Bonjour %{name}"
         invoice_attached_text: 'Veuillez trouver ci-joint la facture pour votre récente commande auprès de '
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Votre demande de nouveau mot de passe a bien été prise en compte.
+            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
+        link_text: >
+            Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
+            lien ci-dessous :
+        issue_text: |
+            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
+            Si le problème persiste, n'hésitez pas à nous contacter.
+      confirmation_instructions:
+        subject: "Veuillez confirmer votre compte"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Cher Client,"
+        instructions: "Votre commande a été expédiée"
+        shipment_summary: "Résumé de l'envoi"
+        subject: "Notification d'expédition"
+        thanks: "Merci pour votre commande."
+        track_information: "Informations de suivi : %{tracking}"
+        track_link: "Lien de suivi : %{url}"
     order_state:
       address: adresse
       adjustments: ajustements
@@ -3251,19 +3279,6 @@ fr_BE:
       ended: terminé
       paused: mis en pause
       canceled: annulé
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Votre demande de nouveau mot de passe a bien été prise en compte.
-            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
-        link_text: >
-            Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
-            lien ci-dessous :
-        issue_text: |
-            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
-            Si le problème persiste, n'hésitez pas à nous contacter.
-      confirmation_instructions:
-        subject: Veuillez confirmer votre compte
     users:
       form:
         account_settings: Paramètres du Compte

@@ -1036,10 +1036,13 @@ tr:
         name: "İşletme Ücreti Özeti"
         description: "Toplanan İşletme Ücretlerinin Özeti"
     subscriptions:
-      subscriptions: Üyelikler
-      new: Yeni Üyelik
-      create: Üyelik Oluştur
-      edit: Üyeliği düzenle
+      index:
+        title: "Üyelikler"
+        new: "Yeni Üyelik"
+      new:
+        title: "Yeni Üyelik"
+      edit:
+        title: "Üyeliği Düzenle"
       table:
         edit_subscription: Üyeliği Düzenle
         pause_subscription: Üyeliği Duraklat
@@ -1048,6 +1051,7 @@ tr:
       filters:
         query_placeholder: "E-posta ile ara ..."
       setup_explanation:
+        title: "Üyelikler"
         just_a_few_more_steps: 'Başlamadan önce birkaç adım kaldı:'
         enable_subscriptions: "Dükkanınızdan en az biri için üyelikleri etkinleştirin"
         enable_subscriptions_step_1_html: 1. %{enterprises_link} sayfasına gidin, dükkanınızı bulun ve ‘Yönet’i tıklayın
@@ -1061,6 +1065,8 @@ tr:
         create_at_least_one_schedule_step_3: 3. 'Yeni Takvim' butonuna tıklayın ve formu doldurun
         once_you_are_done_you_can_html: 'İşiniz bittiğinde, %{reload_this_page_link} '
         reload_this_page: Sayfayı yeniden yükle
+      form:
+        create: "Üyelik Oluştur"
       steps:
         details: 1. Temel Bilgiler
         address: 2. Adres
@@ -3349,6 +3355,27 @@ tr:
       invoice_email:
         hi: "Merhaba %{name}"
         invoice_attached_text: 'Son siparişiniz için gelen fatura ektedir:'
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Şifrenizin değiştirilmesi için bir talepte bulunuldu.
+            Eğer talepte bulunan siz değilseniz lütfen bu mesajı gözardı edin.
+        link_text: >
+            Bu talepte bulunduysanız lütfen aşağıdaki bağlantıya tıklayın:
+        issue_text: |
+            Üstteki URL çalışmıyor ise tarayıcınızın adres çubuğuna kopyalayıp yapıştırmayı deneyebilirsiniz.
+            Sorun yaşamaya devam ederseniz bizimle iletişime geçmekten çekinmeyin.
+      confirmation_instructions:
+        subject: "Lütfen AGA hesabınızı onaylayın"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Değerli müşterimiz,"
+        instructions: "Siparişiniz gönderildi"
+        shipment_summary: "Teslimat Özeti"
+        subject: "TESLİMAT BİLDİRİMİ"
+        thanks: "İş birliğiniz için teşekkür ederim."
+        track_information: "Takip Bilgileri: %{tracking}"
+        track_link: "Takip Bağlantısı: %{url}"
     order_state:
       address: adres
       adjustments: düzenlemeler
@@ -3370,18 +3397,6 @@ tr:
       ended: bitti
       paused: durduruldu
       canceled: iptal edildi
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Şifrenizin değiştirilmesi için bir talepte bulunuldu.
-            Eğer talepte bulunan siz değilseniz lütfen bu mesajı gözardı edin.
-        link_text: >
-            Bu talepte bulunduysanız lütfen aşağıdaki bağlantıya tıklayın:
-        issue_text: |
-            Üstteki URL çalışmıyor ise tarayıcınızın adres çubuğuna kopyalayıp yapıştırmayı deneyebilirsiniz.
-            Sorun yaşamaya devam ederseniz bizimle iletişime geçmekten çekinmeyin.
-      confirmation_instructions:
-        subject: Lütfen AGA hesabınızı onaylayın
     users:
       form:
         account_settings: Hesap Ayarları

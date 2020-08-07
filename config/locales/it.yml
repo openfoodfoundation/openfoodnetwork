@@ -1037,10 +1037,13 @@ it:
         name: "Riepilogo commissioni dell'azienda"
         description: "Riepilogo delle commissioni dell'azienda"
     subscriptions:
-      subscriptions: Abbonamenti
-      new: Nuovo Abbonamento
-      create: Crea Abbonamento
-      edit: Modifica Abbonamento
+      index:
+        title: "Abbonamenti"
+        new: "Nuovo Abbonamento"
+      new:
+        title: "Nuovo Abbonamento"
+      edit:
+        title: "Modifica Abbonamento"
       table:
         edit_subscription: Modifica Abbonamento
         pause_subscription: Metti in pausa l'abbonamento
@@ -1049,6 +1052,7 @@ it:
       filters:
         query_placeholder: "Cerca per email..."
       setup_explanation:
+        title: "Abbonamenti"
         just_a_few_more_steps: 'Ancora pochi passi prima di cominciare:'
         enable_subscriptions: "Ativa abbonamento ad almeno uno dei tuoi negozi"
         enable_subscriptions_step_1_html: 1. Vai alla pagina %{enterprises_link}, trova il tuo negozio e clicca "Gestisci"
@@ -1062,6 +1066,8 @@ it:
         create_at_least_one_schedule_step_3: '3. Clicca su"+ Nuovo programma" e compila il modulo '
         once_you_are_done_you_can_html: Quando hai fatto, puoi %{reload_this_page_link}
         reload_this_page: Ricarica questa pagina
+      form:
+        create: "Crea Abbonamento"
       steps:
         details: 1. Dettagli base
         address: 2. Indirizzo
@@ -3350,6 +3356,27 @@ it:
       invoice_email:
         hi: "Ciao %{name}"
         invoice_attached_text: 'Aggiunge una fattura per il tuo recente ordine di '
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            E' stata fatta una richiesta per resettare la tua password
+            Se non hai fatto questa richiesta, ignora semplicemente questa email.
+        link_text: >
+            Se hai fatto questa richiesta, clicca il link seguente:
+        issue_text: |
+            Se l'URL qui sopra non funziona, prova a copiarlo e incollarlo nel tuo browser.
+            Se continui ad avere problemi, contattaci.
+      confirmation_instructions:
+        subject: "Per favore conferma il tuo account OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Caro Cliente,"
+        instructions: "Il tuo ordine è stato spedito"
+        shipment_summary: "Riepilogo della Spedizione"
+        subject: "Notifica di Spedizione"
+        thanks: "Grazie per il tuo lavoro."
+        track_information: "Informazioni Tracking: %{tracking}"
+        track_link: "Tracking Link: %{url}"
     order_state:
       address: indirizzo
       adjustments: aggiustamenti
@@ -3371,18 +3398,6 @@ it:
       ended: finito
       paused: in pausa
       canceled: annullato
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            E' stata fatta una richiesta per resettare la tua password
-            Se non hai fatto questa richiesta, ignora semplicemente questa email.
-        link_text: >
-            Se hai fatto questa richiesta, clicca il link seguente:
-        issue_text: |
-            Se l'URL qui sopra non funziona, prova a copiarlo e incollarlo nel tuo browser.
-            Se continui ad avere problemi, contattaci.
-      confirmation_instructions:
-        subject: Per favore conferma il tuo account OFN
     users:
       form:
         account_settings: Impostazioni account

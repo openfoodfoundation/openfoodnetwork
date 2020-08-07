@@ -994,10 +994,13 @@ nl_BE:
         name: "Samenvatting van de honoraria voor ondernemingen"
         description: "Overzicht van de geïnde ondernemingsvergoedingen"
     subscriptions:
-      subscriptions: Abonnementen
-      new: Nieuw abonnement
-      create: Abonnement aanmaken
-      edit: Abonnement bewerken
+      index:
+        title: "Abonnementen"
+        new: "Nieuw abonnement"
+      new:
+        title: "Nieuw abonnement"
+      edit:
+        title: "Abonnement bewerken"
       table:
         edit_subscription: Abonnement bewerken
         pause_subscription: Pauze Abonnement
@@ -1006,6 +1009,7 @@ nl_BE:
       filters:
         query_placeholder: "Zoeken per e-mail ..."
       setup_explanation:
+        title: "Abonnementen"
         just_a_few_more_steps: 'Nog een paar stappen voordat u kunt beginnen:'
         enable_subscriptions: "Inschrijven voor minstens één van uw winkels mogelijk maken"
         enable_subscriptions_step_1_html: 1. Ga naar de %{enterprises_link}pagina, vind uw winkel en klik op "Beheren".
@@ -1019,6 +1023,8 @@ nl_BE:
         create_at_least_one_schedule_step_3: 3. Klik '+ Nieuwe Planning', en vul een formulier in
         once_you_are_done_you_can_html: Eens je klaar bent, kan je %{reload_this_page_link}
         reload_this_page: herlaad deze pagina
+      form:
+        create: "Abonnement aanmaken"
       steps:
         details: 1. Basis Specificaties
         address: 2. Adres
@@ -3105,6 +3111,28 @@ nl_BE:
       invoice_email:
         hi: "Hallo %{name}"
         invoice_attached_text: 'Gelieve hier de factuur te vinden in veband met de laatste bestelling geplaatst bij '
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Uw aanvraag voor een nieuww paswoord is in acht genomen
+            Indien je geen nieuw paswoord aangevraagd heeft, gelieve hiermee geen rekening te houden.
+        link_text: >
+            Indien U wel de aanvraag gedaan hebt, gelieve op de link hieronder te
+            klikken :
+        issue_text: |
+            Indien de link niet functioneert, gelieve die te copiëren-plakken in het adresstrook van uw navigator.
+            Moest het probleem blijven duren, aarzel niet ons te contacteren
+      confirmation_instructions:
+        subject: "Gelieve uw OFN rekening te bevestigen"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Geachte klant,"
+        instructions: "Uw bestelling is verzonden"
+        shipment_summary: "Samenvatting van de zending"
+        subject: "Kennisgeving van verzending"
+        thanks: "Bedankt voor uw bedrijf."
+        track_information: "Tracking informatie: %{tracking}"
+        track_link: "Tracking Link:%{url} "
     order_state:
       address: adres
       adjustments: aanpassingen
@@ -3126,19 +3154,6 @@ nl_BE:
       ended: ten einde gebracht
       paused: 'in pause '
       canceled: geschrapt
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Uw aanvraag voor een nieuww paswoord is in acht genomen
-            Indien je geen nieuw paswoord aangevraagd heeft, gelieve hiermee geen rekening te houden.
-        link_text: >
-            Indien U wel de aanvraag gedaan hebt, gelieve op de link hieronder te
-            klikken :
-        issue_text: |
-            Indien de link niet functioneert, gelieve die te copiëren-plakken in het adresstrook van uw navigator.
-            Moest het probleem blijven duren, aarzel niet ons te contacteren
-      confirmation_instructions:
-        subject: Gelieve uw OFN rekening te bevestigen
     users:
       form:
         account_settings: Rekeningsinstellingen

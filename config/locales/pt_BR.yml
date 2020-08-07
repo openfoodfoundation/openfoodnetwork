@@ -1034,10 +1034,10 @@ pt_BR:
         name: "Resumo das taxas da empresa"
         description: "Resumo das taxas corporativas coletadas"
     subscriptions:
-      subscriptions: Assinaturas
-      new: Nova assinatura
-      create: Criar assinatura
-      edit: Editar assinatura
+      index:
+        title: "Assinaturas"
+      edit:
+        title: "Editar assinatura"
       table:
         edit_subscription: Editar assinatura
         pause_subscription: Pausar assinatura
@@ -1046,6 +1046,7 @@ pt_BR:
       filters:
         query_placeholder: "Pesquisar por email ..."
       setup_explanation:
+        title: "Assinaturas"
         just_a_few_more_steps: 'Apenas mais algumas etapas antes de começar:'
         enable_subscriptions: "Ative assinaturas para pelo menos uma de suas lojas"
         enable_subscriptions_step_1_html: '1. Vá para a página %{enterprises_link}, encontre sua loja e clique em "Gerenciar" '
@@ -3349,6 +3350,27 @@ pt_BR:
       invoice_email:
         hi: "Oi %{name}"
         invoice_attached_text: Encontre anexa uma fatura para sua recente ordem de
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Foi feito um pedido para redefinir sua senha.
+            Se você não fez essa solicitação, simplesmente ignore este e-mail.
+        link_text: >
+            Se você fez esse pedido, basta clicar no link abaixo:
+        issue_text: |
+            Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
+            Se continuar a ter problemas, por favor não hesite em contactar-nos.
+      confirmation_instructions:
+        subject: "Confirme sua conta na OFB"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Estimado cliente,"
+        instructions: "Seu pedido foi enviado"
+        shipment_summary: "Resumo de Envio"
+        subject: "Notificação de envio"
+        thanks: "Agradeço pelos seus serviços."
+        track_information: "Informações de rastreamento: %{tracking}"
+        track_link: "Link de rastreamento: %{url}"
     order_state:
       address: endereço
       adjustments: ajustes
@@ -3370,18 +3392,6 @@ pt_BR:
       ended: finalizado
       paused: pausado
       canceled: cancelado
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Foi feito um pedido para redefinir sua senha.
-            Se você não fez essa solicitação, simplesmente ignore este e-mail.
-        link_text: >
-            Se você fez esse pedido, basta clicar no link abaixo:
-        issue_text: |
-            Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
-            Se continuar a ter problemas, por favor não hesite em contactar-nos.
-      confirmation_instructions:
-        subject: Confirme sua conta na OFB
     users:
       form:
         account_settings: Configurações da conta

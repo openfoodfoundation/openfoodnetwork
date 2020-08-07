@@ -1021,10 +1021,13 @@ ar:
         name: "ملخص رسوم الشركات"
         description: "ملخص رسوم الشركات التي تم جمعها"
     subscriptions:
-      subscriptions: الاشتراكات
-      new: اشتراك جديد
-      create: إنشاء اشتراك
-      edit: تحرير الاشتراك
+      index:
+        title: "الاشتراكات"
+        new: "اشتراك جديد"
+      new:
+        title: "اشتراك جديد"
+      edit:
+        title: "تحرير الاشتراك"
       table:
         edit_subscription: تحرير الاشتراك
         pause_subscription: وقف مؤقت الاشتراك
@@ -1033,6 +1036,7 @@ ar:
       filters:
         query_placeholder: "البحث عن طريق البريد الإلكتروني ..."
       setup_explanation:
+        title: "الاشتراكات"
         just_a_few_more_steps: 'فقط بضع خطوات أخرى قبل أن تبدأ:'
         enable_subscriptions: "تمكين الاشتراكات في واحد على الأقل من المتاجر الخاصة بك"
         enable_subscriptions_step_1_html: 1. انتقل إلى صفحة %{enterprises_link} ، وابحث عن متجرك ، وانقر على &quot;إدارة&quot;
@@ -1046,6 +1050,8 @@ ar:
         create_at_least_one_schedule_step_3: 3. انقر فوق &quot;+ جدول جديد&quot; ، واملأ النموذج
         once_you_are_done_you_can_html: بمجرد الانتهاء من ذلك ، يمكنك %{reload_this_page_link}
         reload_this_page: اعد تحميل هذه الصفحة
+      form:
+        create: "إنشاء اشتراك"
       steps:
         details: 1. التفاصيل الأساسية
         address: 2. العنوان
@@ -3244,6 +3250,27 @@ ar:
       invoice_email:
         hi: "مرحبًا %{name}"
         invoice_attached_text: يرجى الاطلاع على فاتورة مرفقة لطلبك الأخير من
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            تم تقديم طلب لإعادة تعيين كلمة المرور الخاصة بك.
+            إذا لم تقدم هذا الطلب ، ببساطة تجاهل هذا البريد الإلكتروني.
+        link_text: >
+            إذا قمت بهذا الطلب ، فما عليك سوى النقر فوق الرابط أدناه:
+        issue_text: |
+            إذا لم يعمل عنوان URL أعلاه ، فحاول نسخه ولصقه في متصفحك.
+            إذا كنت لا تزال تواجه مشاكل ، فلا تتردد في الاتصال بنا.
+      confirmation_instructions:
+        subject: "يرجى تأكيد حسابك OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "عزيزي العميل،"
+        instructions: "تم شحن طلبك"
+        shipment_summary: "ملخص الشحن"
+        subject: "إشعار الشحن"
+        thanks: "شكرا لك على اعمالك."
+        track_information: "معلومات التتبع : %{tracking}"
+        track_link: "رابط التتبع: %{url}"
     order_state:
       address: العنوان
       adjustments: التعديلات
@@ -3265,18 +3292,6 @@ ar:
       ended: انتهى
       paused: التعليق
       canceled: الالغاء
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            تم تقديم طلب لإعادة تعيين كلمة المرور الخاصة بك.
-            إذا لم تقدم هذا الطلب ، ببساطة تجاهل هذا البريد الإلكتروني.
-        link_text: >
-            إذا قمت بهذا الطلب ، فما عليك سوى النقر فوق الرابط أدناه:
-        issue_text: |
-            إذا لم يعمل عنوان URL أعلاه ، فحاول نسخه ولصقه في متصفحك.
-            إذا كنت لا تزال تواجه مشاكل ، فلا تتردد في الاتصال بنا.
-      confirmation_instructions:
-        subject: يرجى تأكيد حسابك OFN
     users:
       form:
         account_settings: إعدادت الحساب

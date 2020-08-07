@@ -979,16 +979,20 @@ pt:
         name: "Sumário das Taxas de Organização"
         description: "Sumário das Taxas de Organização cobradas"
     subscriptions:
-      subscriptions: Subscrições
-      new: Nova Subscrição
-      create: Criar Subscrição
-      edit: Editar Subscrição
+      index:
+        title: "Subscrições"
+        new: "Nova Subscrição"
+      new:
+        title: "Nova Subscrição"
+      edit:
+        title: "Editar Subscrição"
       table:
         edit_subscription: Editar Subscrição
         pause_subscription: Pausar Subscrição
         unpause_subscription: Parar pausa da Subscrição
         cancel_subscription: Cancelar Subscrição
       setup_explanation:
+        title: "Subscrições"
         just_a_few_more_steps: 'Só mais uns passos antes de poder começar:'
         enable_subscriptions: "Activar subscrições para pelo menos uma das suas lojas"
         enable_subscriptions_step_1_html: 1. Vá à página %{enterprises_link}, encontre a sua loja, e clique em "Gerir"
@@ -1002,6 +1006,8 @@ pt:
         create_at_least_one_schedule_step_3: 3. Clique em '+ Novo Horário', e preencha o formulário
         once_you_are_done_you_can_html: Assim que estiver feito, pode %{reload_this_page_link}
         reload_this_page: carregar de novo esta página
+      form:
+        create: "Criar Subscrição"
       steps:
         details: 1. Detalhes Básicos
         address: 2. Morada
@@ -3041,6 +3047,26 @@ pt:
       invoice_email:
         hi: "Olá %{name}"
         invoice_attached_text: Pode encontrar em anexo um recibo da encomenda que fez recentemente a
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Recebemos um pedido para redefinir a sua palavra-passe.
+            Se não fez este pedido, simplesmente ignore esta mensagem.
+        link_text: >
+            Se fez este pedido, clique no link abaixo:
+        issue_text: |
+            Se o endereço URL acima não funcionar, tente copiá-lo e colá-lo directamente no browser. Se continuar a ter problemas por favor entre em contacto connosco.
+      confirmation_instructions:
+        subject: "Por favor confirme a sua conta OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Caro Consumidor,"
+        instructions: "A sua encomenda foi enviada"
+        shipment_summary: "Sumário de Envio"
+        subject: "Notificação de Envio"
+        thanks: "Obrigado."
+        track_information: "Informação de envio: %{tracking}"
+        track_link: "Link de envio: %{url}"
     order_state:
       address: morada
       adjustments: ajustes
@@ -3062,17 +3088,6 @@ pt:
       ended: terminou
       paused: em pausa
       canceled: cancelado
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Recebemos um pedido para redefinir a sua palavra-passe.
-            Se não fez este pedido, simplesmente ignore esta mensagem.
-        link_text: >
-            Se fez este pedido, clique no link abaixo:
-        issue_text: |
-            Se o endereço URL acima não funcionar, tente copiá-lo e colá-lo directamente no browser. Se continuar a ter problemas por favor entre em contacto connosco.
-      confirmation_instructions:
-        subject: Por favor confirme a sua conta OFN
     users:
       form:
         account_settings: Definições de Conta

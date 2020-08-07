@@ -1039,10 +1039,13 @@ ca:
         name: "Resum de les comissions de l'organització"
         description: "Resum de les comissions de l'organització recollides"
     subscriptions:
-      subscriptions: Subscripcions
-      new: Nova subscripció
-      create: Crea una subscripció
-      edit: Edita la subscripció
+      index:
+        title: "Subscripcions"
+        new: "Nova subscripció"
+      new:
+        title: "Nova subscripció"
+      edit:
+        title: "Edita la subscripció"
       table:
         edit_subscription: Edita la subscripció
         pause_subscription: Pausa la subscripció
@@ -1051,6 +1054,7 @@ ca:
       filters:
         query_placeholder: "Cerca per correu electrònic ..."
       setup_explanation:
+        title: "Subscripcions"
         just_a_few_more_steps: 'Només uns quants passos més abans de començar:'
         enable_subscriptions: "Activa les subscripcions d'almenys una de les teves botigues"
         enable_subscriptions_step_1_html: 1. Aneu a la pàgina %{enterprises_link}, cerqueu la vostra botiga i feu clic a "Gestionar"
@@ -1064,6 +1068,8 @@ ca:
         create_at_least_one_schedule_step_3: 3. Fes clic a '+ Nova programació' i omple el formulari
         once_you_are_done_you_can_html: Un cop hagueu acabat, podeu %{reload_this_page_link}
         reload_this_page: tornar a carregar aquesta pàgina
+      form:
+        create: "Crea una subscripció"
       steps:
         details: 1. Detalls bàsics
         address: 2. Adreça
@@ -1938,7 +1944,7 @@ ca:
   admin_enterprise_groups: "Grups d'organització"
   admin_enterprise_groups_name: "Nom"
   admin_enterprise_groups_owner: "Propietària"
-  admin_enterprise_groups_on_front_page: "A la primera pàgina?"
+  admin_enterprise_groups_on_front_page: "Visible a la web"
   admin_enterprise_groups_enterprise: "Organitzacions"
   admin_enterprise_groups_data_powertip: "La usuària principal responsable d'aquest grup."
   admin_enterprise_groups_data_powertip_logo: "Això és el logotip del grup"
@@ -3353,6 +3359,27 @@ ca:
       invoice_email:
         hi: "Hola %{name}"
         invoice_attached_text: Trobareu adjunta un comprovant de la compra per a la vostra comanda recent
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            S'ha fet una sol·licitud per restablir la teva contrasenya.
+            Si no has fet aquesta sol·licitud, simplement ignora aquest correu electrònic.
+        link_text: >
+            Si has fet aquesta sol·licitud, fes clic a l'enllaç següent:
+        issue_text: |
+            Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
+            Si continues tenint problemes, no dubtis en contactar-nos.
+      confirmation_instructions:
+        subject: "Si us plau confirma el teu compte d'OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Benvolguda consumidora:"
+        instructions: "La vostra comanda s'ha enviat"
+        shipment_summary: "Resum de l'enviament"
+        subject: "Notificació d'enviament"
+        thanks: "Gràcies per la teva compra."
+        track_information: "Informació del seguiment: %{tracking}"
+        track_link: "Enllaç del seguiment: %{url}"
     order_state:
       address: adreça
       adjustments: ajustaments
@@ -3374,18 +3401,6 @@ ca:
       ended: acabat
       paused: en pausa
       canceled: cancel·lat
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            S'ha fet una sol·licitud per restablir la teva contrasenya.
-            Si no has fet aquesta sol·licitud, simplement ignora aquest correu electrònic.
-        link_text: >
-            Si has fet aquesta sol·licitud, fes clic a l'enllaç següent:
-        issue_text: |
-            Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
-            Si continues tenint problemes, no dubtis en contactar-nos.
-      confirmation_instructions:
-        subject: Si us plau confirma el teu compte d'OFN
     users:
       form:
         account_settings: Configuració del compte

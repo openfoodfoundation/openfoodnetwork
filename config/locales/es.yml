@@ -1038,10 +1038,13 @@ es:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
     subscriptions:
-      subscriptions: Suscripciones
-      new: Nueva suscripción
-      create: Crear suscripción
-      edit: Editar suscripción
+      index:
+        title: "Suscripciones"
+        new: "Nueva suscripción"
+      new:
+        title: "Nueva suscripción"
+      edit:
+        title: "Editar suscripción"
       table:
         edit_subscription: Editar suscripción
         pause_subscription: Pausa Suscripción
@@ -1050,6 +1053,7 @@ es:
       filters:
         query_placeholder: "Buscar por correo electrónico ..."
       setup_explanation:
+        title: "Suscripciones"
         just_a_few_more_steps: 'Solo unos pocos pasos más antes de que pueda comenzar:'
         enable_subscriptions: "Habilita suscripciones para al menos una de tus tiendas"
         enable_subscriptions_step_1_html: 1. Vaya a la página %{enterprises_link}, encuentre su tienda y haga clic en "Administrar"
@@ -1063,6 +1067,8 @@ es:
         create_at_least_one_schedule_step_3: 3. Haga clic en '+ Nueva programación' y complete el formulario
         once_you_are_done_you_can_html: Una vez que haya terminado, puede %{reload_this_page_link}
         reload_this_page: recarga esta página
+      form:
+        create: "Crear suscripción"
       steps:
         details: 1. Detalles básicos
         address: 2. Dirección
@@ -3353,6 +3359,27 @@ es:
       invoice_email:
         hi: "Hola %{name}"
         invoice_attached_text: Adjunta una factura para su pedido reciente de
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Se ha solicitado el cambio de tu contraseña.
+            Si tu no lo has solicitado simplemente ignora este email.
+        link_text: >
+            Si has solicitado esta acción haz click en el siguiente enlace:
+        issue_text: |
+            Si el enlace no funciona prueba a copiarlo y pegarlo en tu navegador.
+            Si los problemas continúan no dudes en contactarnos.
+      confirmation_instructions:
+        subject: "Por favor, confirma tu cuenta de OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Estimada consumidora,"
+        instructions: "Tu pedido ha sido enviado"
+        shipment_summary: "Resumen de envío"
+        subject: "Notificación de envío"
+        thanks: "Gracias por hacer negocios."
+        track_information: "Información de seguimiento: %{tracking}"
+        track_link: "Enlace de seguimiento: %{url}"
     order_state:
       address: dirección
       adjustments: ajustes
@@ -3374,18 +3401,6 @@ es:
       ended: terminado
       paused: pausado
       canceled: cancelado
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Se ha solicitado el cambio de tu contraseña.
-            Si tu no lo has solicitado simplemente ignora este email.
-        link_text: >
-            Si has solicitado esta acción haz click en el siguiente enlace:
-        issue_text: |
-            Si el enlace no funciona prueba a copiarlo y pegarlo en tu navegador.
-            Si los problemas continúan no dudes en contactarnos.
-      confirmation_instructions:
-        subject: Por favor, confirma tu cuenta de OFN
     users:
       form:
         account_settings: Configuración de la cuenta

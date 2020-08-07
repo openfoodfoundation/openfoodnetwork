@@ -1030,10 +1030,13 @@ fil_PH:
         name: "buod ng bayad sa enterprise"
         description: "buod ng mga nakolektang fees para sa enterprise"
     subscriptions:
-      subscriptions: mga subscription
-      new: bagong subscription
-      create: gumawa ng subscription
-      edit: i-edit ang subscription
+      index:
+        title: "mga nauulit na order"
+        new: "bagong subscription"
+      new:
+        title: "bagong subscription"
+      edit:
+        title: "i-edit ang subscription"
       table:
         edit_subscription: i-edit ang subscription
         pause_subscription: panandaliang ihinto ang subscription
@@ -1042,6 +1045,7 @@ fil_PH:
       filters:
         query_placeholder: "hanapin gamit ang email..."
       setup_explanation:
+        title: "mga nauulit na order"
         just_a_few_more_steps: 'ilang hakbang na lamang bago ka makapagsimula:'
         enable_subscriptions: "paganahin ang subscription sa kahit isa sa iyong mga shop"
         enable_subscriptions_step_1_html: 1. pumunta sa%{enterprises_link}pahina, hanapin ang iyong shop at pindutin ang "pamahalaan"
@@ -1055,6 +1059,8 @@ fil_PH:
         create_at_least_one_schedule_step_3: 3. pindutin ang '+ bagong iskedyul' at sagutan ang form
         once_you_are_done_you_can_html: kapag natapos na ito, maaari mong%{reload_this_page_link}
         reload_this_page: i-reload ang pahina na ito
+      form:
+        create: "gumawa ng subscription"
       steps:
         details: 1. pangunahing detalye
         address: 2. address
@@ -3292,6 +3298,27 @@ fil_PH:
       invoice_email:
         hi: "Hi %{name}"
         invoice_attached_text: 'tignan ang nakalakip na invoice para sa pinakabagong order mula sa  '
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            may ginawang request para i-reset ang inyong password.
+            kung hindi ikaw ang gumawa nito, huwag pansinin ang email na ito.
+        link_text: >
+            kung ikaw ang gumawa ng request na ito, pindutin ang link sa ilalim:
+        issue_text: |
+            kung ang URL sa itaas ay hindi gumagana, subukang kopyahin at i-paste ito sa inyong browser.
+            kung patuloy na magkakaroon ng mga problema, huwag mag-atubiling makipag-ugnayan sa amin.
+      confirmation_instructions:
+        subject: "kumpirmahin ang inyong OFN account"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Dear Customer,"
+        instructions: "ang iyong order ay na-ship na "
+        shipment_summary: "buod ng kargamento"
+        subject: "notification ukol sa kargamento"
+        thanks: "Salamat sa inyong pagtangkilik"
+        track_information: "Impormasyon ukol sa pag-track: %{tracking}"
+        track_link: "Link ng pag-track:%{url}"
     order_state:
       address: tirahan
       adjustments: mga pagsasaayos
@@ -3313,18 +3340,6 @@ fil_PH:
       ended: natapos na
       paused: nakahinto
       canceled: kanselado
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            may ginawang request para i-reset ang inyong password.
-            kung hindi ikaw ang gumawa nito, huwag pansinin ang email na ito.
-        link_text: >
-            kung ikaw ang gumawa ng request na ito, pindutin ang link sa ilalim:
-        issue_text: |
-            kung ang URL sa itaas ay hindi gumagana, subukang kopyahin at i-paste ito sa inyong browser.
-            kung patuloy na magkakaroon ng mga problema, huwag mag-atubiling makipag-ugnayan sa amin.
-      confirmation_instructions:
-        subject: kumpirmahin ang inyong OFN account
     users:
       form:
         account_settings: Setting ng Account
