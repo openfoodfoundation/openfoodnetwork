@@ -21,40 +21,34 @@ module Spree
           allow(originator).to receive_messages update_amount: true
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
+
         it "should do nothing when closed" do
           adjustment.close
           expect(originator).not_to receive(:update_adjustment)
           adjustment.update!
         end
+
         it "should do nothing when finalized" do
           adjustment.finalize
           expect(originator).not_to receive(:update_adjustment)
           adjustment.update!
         end
+
         it "should set the eligibility" do
           expect(adjustment).to receive(:set_eligibility)
           adjustment.update!
         end
+
         it "should ask the originator to update_adjustment" do
           expect(originator).to receive(:update_adjustment)
           adjustment.update!
         end
       end
+
       it "should do nothing when originator is nil" do
         allow(adjustment).to receive_messages originator: nil
         expect(adjustment).not_to receive(:amount=)
         adjustment.update!
-      end
-    end
-
-    context "#promotion?" do
-      it "returns false if not promotion adjustment" do
-        expect(adjustment.promotion?).to eq false
-      end
-
-      it "returns true if promotion adjustment" do
-        adjustment.originator_type = "Spree::PromotionAction"
-        expect(adjustment.promotion?).to eq true
       end
     end
 
@@ -66,12 +60,7 @@ module Spree
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
         end
-        it "should be eligible if `promotion?` even if not `mandatory?`" do
-          expect(adjustment).to receive(:promotion?).and_return(true)
-          adjustment.mandatory = false
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
-        end
+
         it "should not be eligible unless mandatory?" do
           adjustment.mandatory = false
           adjustment.set_eligibility
@@ -81,17 +70,20 @@ module Spree
 
       context "when amount is greater than 0" do
         before { adjustment.amount = 25.00 }
+
         it "should be eligible if mandatory?" do
           adjustment.mandatory = true
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
         end
+
         it "should be eligible if not mandatory and eligible for the originator" do
           adjustment.mandatory = false
           allow(adjustment).to receive_messages(eligible_for_originator?: true)
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
         end
+
         it "should not be eligible if not mandatory not eligible for the originator" do
           adjustment.mandatory = false
           allow(adjustment).to receive_messages(eligible_for_originator?: false)
@@ -149,17 +141,21 @@ module Spree
       context "with no originator" do
         specify { expect(adjustment).to be_eligible_for_originator }
       end
+
       context "with originator that doesn't have 'eligible?'" do
         before { adjustment.originator = build(:tax_rate) }
         specify { expect(adjustment).to be_eligible_for_originator }
       end
+
       context "with originator that has 'eligible?'" do
         let(:originator) { Spree::TaxRate.new }
         before { adjustment.originator = originator }
+
         context "and originator is eligible for order" do
           before { allow(originator).to receive_messages(eligible?: true) }
           specify { expect(adjustment).to be_eligible_for_originator }
         end
+
         context "and originator is not eligible for order" do
           before { allow(originator).to receive_messages(eligible?: false) }
           specify { expect(adjustment).to_not be_eligible_for_originator }

@@ -67,7 +67,6 @@ module Spree
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
-    scope :promotion, -> { where(originator_type: 'Spree::PromotionAction') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
@@ -84,14 +83,10 @@ module Spree
 
     localize_number :amount
 
-    def promotion?
-      originator_type == 'Spree::PromotionAction'
-    end
-
     # Update the boolean _eligible_ attribute which determines which adjustments
     # count towards the order's adjustment_total.
     def set_eligibility
-      result = mandatory || ((amount != 0 || promotion?) && eligible_for_originator?)
+      result = mandatory || (amount != 0 && eligible_for_originator?)
       update_column(:eligible, result)
     end
 
