@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OptionValue < ActiveRecord::Base
     belongs_to :option_type

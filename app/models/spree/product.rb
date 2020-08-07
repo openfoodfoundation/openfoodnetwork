@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
 require 'concerns/product_stock'
@@ -46,18 +48,18 @@ module Spree
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
 
     has_one :master,
-      -> { where is_master: true },
-      class_name: 'Spree::Variant',
-      dependent: :destroy
+            -> { where is_master: true },
+            class_name: 'Spree::Variant',
+            dependent: :destroy
 
     has_many :variants,
-      -> { where(is_master: false).order("#{::Spree::Variant.quoted_table_name}.position ASC") },
-      class_name: 'Spree::Variant'
+             -> { where(is_master: false).order("#{::Spree::Variant.quoted_table_name}.position ASC") },
+             class_name: 'Spree::Variant'
 
     has_many :variants_including_master,
-      -> { order("#{::Spree::Variant.quoted_table_name}.position ASC") },
-      class_name: 'Spree::Variant',
-      dependent: :destroy
+             -> { order("#{::Spree::Variant.quoted_table_name}.position ASC") },
+             class_name: 'Spree::Variant',
+             dependent: :destroy
 
     has_many :prices, -> { order('spree_variants.position, spree_variants.id, currency') }, through: :variants
 
@@ -234,8 +236,9 @@ module Spree
     # Ensures option_types and product_option_types exist for keys in option_values_hash
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
+
       option_values_hash.keys.map(&:to_i).each do |id|
-        self.option_type_ids << id unless option_type_ids.include?(id)
+        option_type_ids << id unless option_type_ids.include?(id)
         product_option_types.create(option_type_id: id) unless product_option_types.pluck(:option_type_id).include?(id)
       end
     end
@@ -268,7 +271,8 @@ module Spree
     # eg categorise_variants_from_option(color) => {"red" -> [...], "blue" -> [...]}
     def categorise_variants_from_option(opt_type)
       return {} unless option_types.include?(opt_type)
-      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type} }
+
+      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
 
     def self.like_any(fields, values)
@@ -298,6 +302,7 @@ module Spree
 
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
+
       product_properties.find_by(property: prop).try(:value)
     end
 
@@ -317,7 +322,7 @@ module Spree
 
     def total_on_hand
       if Spree::Config.track_inventory_levels
-        self.stock_items.sum(&:count_on_hand)
+        stock_items.sum(&:count_on_hand)
       else
         Float::INFINITY
       end
@@ -386,65 +391,66 @@ module Spree
 
     private
 
-      # Builds variants from a hash of option types & values
-      def build_variants_from_option_values_hash
-        ensure_option_types_exist_for_values_hash
-        values = option_values_hash.values
-        values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
+    # Builds variants from a hash of option types & values
+    def build_variants_from_option_values_hash
+      ensure_option_types_exist_for_values_hash
+      values = option_values_hash.values
+      values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
 
-        values.each do |ids|
-          variant = variants.create(
-            option_value_ids: ids,
-            price: master.price
-          )
+      values.each do |ids|
+        variant = variants.create(
+          option_value_ids: ids,
+          price: master.price
+        )
+      end
+      save
+    end
+
+    def add_properties_and_option_types_from_prototype
+      if prototype_id && prototype = Spree::Prototype.find_by(id: prototype_id)
+        prototype.properties.each do |property|
+          product_properties.create(property: property)
         end
-        save
+        self.option_types = prototype.option_types
       end
+    end
 
-      def add_properties_and_option_types_from_prototype
-        if prototype_id && prototype = Spree::Prototype.find_by(id: prototype_id)
-          prototype.properties.each do |property|
-            product_properties.create(property: property)
-          end
-          self.option_types = prototype.option_types
-        end
-      end
+    # ensures the master variant is flagged as such
+    def set_master_variant_defaults
+      master.is_master = true
+    end
 
-      # ensures the master variant is flagged as such
-      def set_master_variant_defaults
-        master.is_master = true
-      end
-
-      # This fixes any problems arising from failing master saves, without the need for a validates_associated on
-      # master, while giving us more specific errors as to why saving failed
-      def save_master
-        if master && (
-            master.changed? || master.new_record? || (
-              master.default_price && (
-                master.default_price.changed? || master.default_price.new_record?
-              )
+    # This fixes any problems arising from failing master saves, without the need for a validates_associated on
+    # master, while giving us more specific errors as to why saving failed
+    def save_master
+      if master && (
+          master.changed? || master.new_record? || (
+            master.default_price && (
+              master.default_price.changed? || master.default_price.new_record?
             )
           )
-          master.save!
-        end
-
-        # If the master cannot be saved, the Product object will get its errors
-        # and will be destroyed
-      rescue ActiveRecord::RecordInvalid
-        master.errors.each do |att, error|
-          errors.add(att, error)
-        end
-        raise
+        )
+        master.save!
       end
 
-      def ensure_master
-        return unless new_record?
-        self.master ||= Variant.new
+      # If the master cannot be saved, the Product object will get its errors
+      # and will be destroyed
+    rescue ActiveRecord::RecordInvalid
+      master.errors.each do |att, error|
+        errors.add(att, error)
       end
+      raise
+    end
 
-      def punch_permalink
-        update_attribute :permalink, "#{Time.now.to_i}_#{permalink}" # punch permalink with date prefix
-      end
+    def ensure_master
+      return unless new_record?
+
+      self.master ||= Variant.new
+    end
+
+    def punch_permalink
+      update_attribute :permalink, "#{Time.now.to_i}_#{permalink}" # punch permalink with date prefix
+    end
 
     def set_available_on_to_now
       self.available_on ||= Time.zone.now

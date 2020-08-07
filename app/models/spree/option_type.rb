@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OptionType < ActiveRecord::Base
     has_many :products, through: :product_option_types
@@ -6,7 +8,7 @@ module Spree
     has_and_belongs_to_many :prototypes, join_table: 'spree_option_types_prototypes'
 
     validates :name, :presentation, presence: true
-    default_scope -> { order("#{self.table_name}.position") }
+    default_scope -> { order("#{table_name}.position") }
 
     accepts_nested_attributes_for :option_values, reject_if: lambda { |ov| ov[:name].blank? || ov[:presentation].blank? }, allow_destroy: true
   end
