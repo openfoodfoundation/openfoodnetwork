@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Calculator < ActiveRecord::Base
     belongs_to :calculable, polymorphic: true
@@ -5,7 +7,7 @@ module Spree
     # This method must be overriden in concrete calculator.
     #
     # It should return amount computed based on #calculable and/or optional parameter
-    def compute(something = nil)
+    def compute(_something = nil)
       raise NotImplementedError, 'please use concrete calculator'
     end
 
@@ -16,8 +18,7 @@ module Spree
 
     ###################################################################
 
-    def self.register(*klasses)
-    end
+    def self.register(*klasses); end
 
     # Returns all calculators applicable for kind of work
     def self.calculators
@@ -32,7 +33,7 @@ module Spree
       self.class.description
     end
 
-    def available?(object)
+    def available?(_object)
       true
     end
 

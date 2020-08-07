@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::TaxCategory do
@@ -10,7 +12,7 @@ describe Spree::TaxCategory do
     end
 
     it "should undefault the previous default tax category" do
-      new_tax_category.update_attributes({:is_default => true})
+      new_tax_category.update({ is_default: true })
       new_tax_category.is_default.should be_true
 
       tax_category.reload

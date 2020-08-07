@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class DefaultTaxZoneValidator < ActiveModel::Validator
     def validate(record)
@@ -35,7 +37,7 @@ module Spree
       order.adjustments.tax.destroy_all
       order.line_item_adjustments.where(originator_type: 'Spree::TaxRate').destroy_all
 
-      self.match(order).each do |rate|
+      match(order).each do |rate|
         rate.adjust(order)
       end
     end
@@ -104,11 +106,11 @@ module Spree
 
     private
 
-      def create_label
-        label = ""
-        label << (name.present? ? name : tax_category.name) + " "
-        label << (show_rate_in_label? ? "#{amount * 100}%" : "")
-      end
+    def create_label
+      label = ""
+      label << (name.presence || tax_category.name) + " "
+      label << (show_rate_in_label? ? "#{amount * 100}%" : "")
+    end
 
     def with_tax_included_in_price
       old_included_in_price = included_in_price

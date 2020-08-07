@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   describe Adjustment do
     let(:order) { mock_model(Spree::Order, update!: nil) }
-    let(:adjustment) { Spree::Adjustment.create(:label => "Adjustment", :amount => 5) }
+    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
     describe "scopes" do
       let!(:arbitrary_adjustment) { create(:adjustment, source: nil, label: "Arbitrary") }
@@ -104,9 +104,9 @@ module Spree
     context "#save" do
       it "should call order#update!" do
         adjustment = Spree::Adjustment.new(
-          :adjustable => order,
-          :amount => 10,
-          :label => "Foo"
+          adjustable: order,
+          amount: 10,
+          label: "Foo"
         )
         order.should_receive(:update!)
         adjustment.save

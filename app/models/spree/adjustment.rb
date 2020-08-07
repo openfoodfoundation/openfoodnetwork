@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/localized_number'
 require 'concerns/adjustment_scopes'
 
@@ -97,6 +99,7 @@ module Spree
     # Should return _true_ if originator is absent or doesn't implement _eligible?_
     def eligible_for_originator?
       return true if originator.nil?
+
       !originator.respond_to?(:eligible?) || originator.eligible?(source)
     end
 
@@ -109,13 +112,14 @@ module Spree
     # are not recalculated.
     #
     # It receives +calculable+ as the updated source here so calculations can be
-    # performed on the current values of that source. If we used +source+ it 
+    # performed on the current values of that source. If we used +source+ it
     # could load the old record from db for the association. e.g. when updating
     # more than on line items at once via accepted_nested_attributes the order
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil)
       return if immutable?
+
       # Fix for #3381
       # If we attempt to call 'source' before the reload, then source is currently
       # the order object. After calling a reload, the source is the Shipment.
@@ -171,8 +175,8 @@ module Spree
 
     private
 
-      def update_adjustable
-        adjustable.update! if adjustable.is_a? Order
-      end
+    def update_adjustable
+      adjustable.update! if adjustable.is_a? Order
+    end
   end
 end
