@@ -19,8 +19,6 @@ module Spree
         context "propagate all variants" do
           subject { StockLocation.new(name: "testing") }
 
-          before { subject.propagate_all_variants = true }
-
           specify do
             expect(subject).to receive(:propagate_variant).at_least(:once)
             subject.save!
