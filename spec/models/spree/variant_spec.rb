@@ -22,7 +22,7 @@ module Spree
 
       it "propagate to stock items" do
         Spree::StockLocation.any_instance.should_receive(:propagate_variant)
-        product.variants.create(:name => "Foobar")
+        product.variants.create(name: "Foobar")
       end
 
       context "stock location has disable propagate all variants" do
@@ -30,7 +30,7 @@ module Spree
 
         it "propagate to stock items" do
           Spree::StockLocation.any_instance.should_not_receive(:propagate_variant)
-          product.variants.create(:name => "Foobar")
+          product.variants.create(name: "Foobar")
         end
       end
     end
@@ -38,7 +38,7 @@ module Spree
     context "product has other variants" do
       describe "option value accessors" do
         before {
-          @multi_variant = FactoryGirl.create :variant, :product => variant.product
+          @multi_variant = FactoryGirl.create :variant, product: variant.product
           variant.product.reload
         }
 
@@ -58,7 +58,7 @@ module Spree
           multi_variant.set_option_value('media_type', 'CD')
 
           expect {
-           multi_variant.set_option_value('media_type', 'DVD')
+            multi_variant.set_option_value('media_type', 'DVD')
           }.to_not change(multi_variant.option_values, :count)
 
           expect {
@@ -70,7 +70,7 @@ module Spree
       context "product has other variants" do
         describe "option value accessors" do
           before {
-            @multi_variant = create(:variant, :product => variant.product)
+            @multi_variant = create(:variant, product: variant.product)
             variant.product.reload
           }
 
@@ -90,7 +90,7 @@ module Spree
             multi_variant.set_option_value('media_type', 'CD')
 
             expect {
-             multi_variant.set_option_value('media_type', 'DVD')
+              multi_variant.set_option_value('media_type', 'DVD')
             }.to_not change(multi_variant.option_values, :count)
 
             expect {
@@ -104,7 +104,7 @@ module Spree
     context "price parsing" do
       before(:each) do
         I18n.locale = I18n.default_locale
-        I18n.backend.store_translations(:de, { :number => { :currency => { :format => { :delimiter => '.', :separator => ',' } } } })
+        I18n.backend.store_translations(:de, { number: { currency: { format: { delimiter: '.', separator: ',' } } } })
       end
 
       after do
@@ -187,7 +187,7 @@ module Spree
 
     describe '.price_in' do
       before do
-        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 33.33)
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
       end
       subject { variant.price_in(currency).display_amount }
 
@@ -218,7 +218,7 @@ module Spree
 
     describe '.amount_in' do
       before do
-        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 33.33)
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
       end
 
       subject { variant.amount_in(currency) }
@@ -251,8 +251,8 @@ module Spree
     # Regression test for #2432
     describe 'options_text' do
       before do
-        option_type = double("OptionType", :presentation => "Foo")
-        option_values = [double("OptionValue", :option_type => option_type, :presentation => "bar")]
+        option_type = double("OptionType", presentation: "Foo")
+        option_values = [double("OptionValue", option_type: option_type, presentation: "bar")]
         variant.stub(:option_values).and_return(option_values)
       end
 
@@ -344,7 +344,7 @@ module Spree
         expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
       end
     end
-    
+
     describe "double loading" do
       # app/models/spree/variant_decorator.rb  may be double-loaded in delayed job environment,
       # so we need to be able to do so without error.
