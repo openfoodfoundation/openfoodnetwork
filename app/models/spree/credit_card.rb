@@ -2,8 +2,6 @@
 
 module Spree
   class CreditCard < ActiveRecord::Base
-    # Should be able to remove once we reach Spree v2.2.0
-    # https://github.com/spree/spree/commit/411010f3975c919ab298cb63962ee492455b415c
     belongs_to :payment_method
     belongs_to :user
 

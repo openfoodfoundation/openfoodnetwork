@@ -13,7 +13,7 @@ module Spree
     DISPLAY = [:both, :front_end, :back_end].freeze
     default_scope -> { where(deleted_at: nil) }
 
-    has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
+    has_many :credit_cards, class_name: "Spree::CreditCard"
 
     validates :name, presence: true
     validate :distributor_validation
@@ -22,7 +22,6 @@ module Spree
 
     scope :production, -> { where(environment: 'production') }
 
-    # -- Scopes
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
         where(nil)
@@ -48,7 +47,6 @@ module Spree
 
     scope :by_name, -> { order('spree_payment_methods.name ASC') }
 
-    # Rewrite Spree's ruby-land class method as a scope
     scope :available, lambda { |display_on = 'both'|
       where(active: true).
         where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
@@ -68,14 +66,6 @@ module Spree
     # nil means the payment method doesn't require a source e.g. check
     def payment_source_class
       raise 'You must implement payment_source_class method for this gateway.'
-    end
-
-    def self.available(display_on = 'both')
-      all.select do |p|
-        p.active &&
-          (p.display_on == display_on.to_s || p.display_on.blank?) &&
-          (p.environment == Rails.env || p.environment.blank?)
-      end
     end
 
     def self.active?
