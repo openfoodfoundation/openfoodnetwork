@@ -1,3 +1,6 @@
+require 'spree/localized_number'
+require 'concerns/adjustment_scopes'
+
 # Adjustments represent a change to the +item_total+ of an Order. Each adjustment
 # has an +amount+ that can be either positive or negative.
 #
@@ -24,9 +27,18 @@
 # it might be reinstated.
 module Spree
   class Adjustment < ActiveRecord::Base
+    extend Spree::LocalizedNumber
+
+    # Deletion of metadata is handled in the database.
+    # So we don't need the option `dependent: :destroy` as long as
+    # AdjustmentMetadata has no destroy logic itself.
+    has_one :metadata, class_name: 'AdjustmentMetadata'
+
     belongs_to :adjustable, polymorphic: true
     belongs_to :source, polymorphic: true
     belongs_to :originator, polymorphic: true
+    belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
+               foreign_key: 'originator_id'
 
     validates :label, presence: true
     validates :amount, numericality: true
@@ -50,13 +62,25 @@ module Spree
 
     scope :tax, -> { where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::Order') }
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
-    scope :shipping, -> { where(originator_type: 'Spree::ShippingMethod') }
     scope :optional, -> { where(mandatory: false) }
-    scope :eligible, -> { where(eligible: true) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
     scope :promotion, -> { where(originator_type: 'Spree::PromotionAction') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+
+    scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
+    scope :admin,          -> { where(source_type: nil, originator_type: nil) }
+    scope :included_tax,   -> {
+      where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
+    }
+
+    scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
+    scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
+    scope :payment_fee,    -> { where(AdjustmentScopes::PAYMENT_FEE_SCOPE) }
+    scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
+    scope :eligible,       -> { where(AdjustmentScopes::ELIGIBLE_SCOPE) }
+
+    localize_number :amount
 
     def promotion?
       originator_type == 'Spree::PromotionAction'
@@ -110,6 +134,39 @@ module Spree
 
     def immutable?
       state != "open"
+    end
+
+    def set_included_tax!(rate)
+      tax = amount - (amount / (1 + rate))
+      set_absolute_included_tax! tax
+    end
+
+    def set_absolute_included_tax!(tax)
+      # This rubocop issue can now fixed by renaming Adjustment#update! to something else,
+      #   then AR's update! can be used instead of update_attributes!
+      # rubocop:disable Rails/ActiveRecordAliases
+      update_attributes! included_tax: tax.round(2)
+      # rubocop:enable Rails/ActiveRecordAliases
+    end
+
+    def display_included_tax
+      Spree::Money.new(included_tax, currency: currency)
+    end
+
+    def has_tax?
+      included_tax > 0
+    end
+
+    def self.without_callbacks
+      skip_callback :save, :after, :update_adjustable
+      skip_callback :destroy, :after, :update_adjustable
+
+      result = yield
+    ensure
+      set_callback :save, :after, :update_adjustable
+      set_callback :destroy, :after, :update_adjustable
+
+      result
     end
 
     private

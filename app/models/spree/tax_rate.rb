@@ -22,11 +22,12 @@ module Spree
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
     # Gets the array of TaxRates appropriate for the specified order
-    def self.match(order)
+    def match(order)
+      return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
+
       all.select do |rate|
-        (!rate.included_in_price && (rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || (order.tax_address.nil? && rate.zone.default_tax))) ||
-        (rate.included_in_price && !order.tax_address.nil? && !rate.zone.contains?(order.tax_zone) && rate.zone.default_tax)
+        rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || rate.zone.default_tax
       end
     end
 
@@ -73,6 +74,32 @@ module Spree
       else
         create_adjustment(label, order, order)
       end
+
+      order.adjustments(:reload)
+      order.line_items(:reload)
+      # TaxRate adjustments (order.adjustments.tax) and price adjustments (tax included on line items) consist of 100% tax
+      (order.adjustments.tax + order.price_adjustments).each do |adjustment|
+        adjustment.set_absolute_included_tax! adjustment.amount
+      end
+    end
+
+    # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
+    # LineItems or Orders, so we mock out a line item here to fit the interface
+    # that our calculator (usually DefaultTax) expects.
+    def compute_tax(amount)
+      line_item = LineItem.new quantity: 1
+      line_item.tax_category = tax_category
+      line_item.define_singleton_method(:price) { amount }
+
+      # Tax on adjustments (represented by the included_tax field) is always inclusive of
+      # tax. However, there's nothing to stop an admin from setting one up with a tax rate
+      # that's marked as not inclusive of tax, and that would result in the DefaultTax
+      # calculator generating a slightly incorrect value. Therefore, we treat the tax
+      # rate as inclusive of tax for the calculations below, regardless of its original
+      # setting.
+      with_tax_included_in_price do
+        calculator.compute line_item
+      end
     end
 
     private
@@ -82,5 +109,19 @@ module Spree
         label << (name.present? ? name : tax_category.name) + " "
         label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       end
+
+    def with_tax_included_in_price
+      old_included_in_price = included_in_price
+
+      self.included_in_price = true
+      calculator.calculable.included_in_price = true
+
+      result = yield
+    ensure
+      self.included_in_price = old_included_in_price
+      calculator.calculable.included_in_price = old_included_in_price
+
+      result
+    end
   end
 end
