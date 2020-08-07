@@ -158,7 +158,7 @@ module Spree
     end
 
     def has_tax?
-      included_tax > 0
+      included_tax.positive?
     end
 
     def self.without_callbacks

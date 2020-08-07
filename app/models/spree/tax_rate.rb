@@ -3,9 +3,11 @@
 module Spree
   class DefaultTaxZoneValidator < ActiveModel::Validator
     def validate(record)
-      if record.included_in_price
-        record.errors.add(:included_in_price, Spree.t(:included_price_validation)) unless Zone.default_tax
-      end
+      return unless record.included_in_price
+
+      return if Zone.default_tax
+
+      record.errors.add(:included_in_price, Spree.t(:included_price_validation))
     end
   end
 end
@@ -42,15 +44,15 @@ module Spree
       end
     end
 
-    # For Vat the default rate is the rate that is configured for the default category
-    # It is needed for every price calculation (as all customer facing prices include vat )
-    # The function returns the actual amount, which may be 0 in case of wrong setup, but is never nil
+    # For VAT, the default rate is the rate that is configured for the default category
+    # It is needed for every price calculation (as all customer facing prices include VAT)
+    # Here we return the actual amount, which may be 0 in case of wrong setup, but is never nil
     def self.default
-      category = TaxCategory.includes(:tax_rates).where(is_default: true).first
+      category = TaxCategory.includes(:tax_rates).find_by(is_default: true)
       return 0 unless category
 
       address ||= Address.new(country_id: Spree::Config[:default_country_id])
-      rate = category.tax_rates.detect { |rate| rate.zone.include? address }.try(:amount)
+      rate = category.tax_rates.detect { |tax_rate| tax_rate.zone.include? address }.try(:amount)
 
       rate || 0
     end
@@ -79,7 +81,8 @@ module Spree
 
       order.adjustments(:reload)
       order.line_items(:reload)
-      # TaxRate adjustments (order.adjustments.tax) and price adjustments (tax included on line items) consist of 100% tax
+      # TaxRate adjustments (order.adjustments.tax)
+      #   and price adjustments (tax included on line items) consist of 100% tax
       (order.adjustments.tax + order.price_adjustments).each do |adjustment|
         adjustment.set_absolute_included_tax! adjustment.amount
       end

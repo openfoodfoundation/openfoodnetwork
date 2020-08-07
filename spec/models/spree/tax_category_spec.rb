@@ -19,7 +19,8 @@ describe Spree::TaxCategory do
       tax_category.is_default.should be_false
     end
 
-    it "should undefault the previous default tax category except when updating the existing default tax category" do
+    it "undefaults the previous default tax category
+      except when updating the existing default tax category" do
       tax_category.update_column(:description, "Updated description")
 
       tax_category.reload
