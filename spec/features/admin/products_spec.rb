@@ -162,7 +162,7 @@ feature '
 
       # Check the url still includes the filters
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, producerFilter: 2)
+      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
 
       # Link back to the bulk product update page should include the filters
       expected_admin_product_url = Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
@@ -217,13 +217,25 @@ feature '
       expect(product.meta_keywords).to eq('Product Search Keywords')
     end
 
+    scenario "loading product properties page including url filters", js: true do
+      product = create(:simple_product, supplier: @supplier2)
+      visit spree.admin_product_product_properties_path(product, filter)
+
+      uri = URI.parse(current_url)
+      # we stay on the same url as the new image content is loaded via an ajax call
+      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_product_properties_path(product, filter)
+
+      expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(product, filter)))
+      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+    end
+
     scenario "deleting product properties", js: true do
       # Given a product with a property
-      p = create(:simple_product, supplier: @supplier2)
-      p.set_property('fooprop', 'fooval')
+      product = create(:simple_product, supplier: @supplier2)
+      product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
-      visit spree.admin_product_product_properties_path(p)
+      visit spree.admin_product_product_properties_path(product)
       expect(page).to have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
       expect(page).to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
@@ -236,7 +248,42 @@ feature '
       # Then the property should have been deleted
       expect(page).not_to have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
       expect(page).not_to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
-      expect(p.reload.property('fooprop')).to be_nil
+      expect(product.reload.property('fooprop')).to be_nil
+    end
+
+    scenario "deleting product properties including url filters", js: true do
+      # Given a product with a property
+      product = create(:simple_product, supplier: @supplier2)
+      product.set_property('fooprop', 'fooval')
+
+      # When I navigate to the product properties page
+      visit spree.admin_product_product_properties_path(product, filter)
+
+      # And I delete the property
+      accept_alert do
+        page.all('a.delete-resource').first.click
+      end
+
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_product_properties_path(product, filter)
+    end
+
+    scenario "adding product properties including url filters", js: true do
+      # Given a product
+      product = create(:simple_product, supplier: @supplier2)
+      product.set_property('fooprop', 'fooval')
+
+      # When I navigate to the product properties page
+      visit spree.admin_product_product_properties_path(product, filter)
+
+      # And I add a property
+      select 'fooprop', from: 'product_product_properties_attributes_0_property_name'
+      fill_in 'product_product_properties_attributes_0_value', with: 'fooval2'
+
+      click_button 'Update'
+
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
     end
 
     scenario "loading new product image page", js: true do
@@ -249,7 +296,7 @@ feature '
       expect(page).to have_selector "#image_attachment"
     end
 
-    scenario "loading new procut image page including url filters", js: true do
+    scenario "loading new product image page including url filters", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product, filter)
