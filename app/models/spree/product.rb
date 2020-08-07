@@ -316,11 +316,7 @@ module Spree
     end
 
     def total_on_hand
-      if Spree::Config.track_inventory_levels
-        stock_items.sum(&:count_on_hand)
-      else
-        Float::INFINITY
-      end
+      stock_items.sum(&:count_on_hand)
     end
 
     # Master variant may be deleted (i.e. when the product is deleted)

@@ -3,6 +3,7 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'variant_units/variant_and_line_item_naming'
 require 'concerns/variant_stock'
+require 'spree/localized_number'
 
 module Spree
   class Variant < ActiveRecord::Base
@@ -148,10 +149,6 @@ module Spree
                                           select("spree_variants.id"))
     end
 
-    def cost_price=(price)
-      self[:cost_price] = parse_price(price) if price.present?
-    end
-
     # Allow variant to access associated soft-deleted prices.
     def default_price
       Spree::Price.unscoped { super }
@@ -257,21 +254,6 @@ module Spree
 
     private
 
-    # strips all non-price-like characters from the price, taking into account locale settings
-    def parse_price(price)
-      return price unless price.is_a?(String)
-
-      separator, _delimiter = I18n.t([:'number.currency.format.separator',
-                                      :'number.currency.format.delimiter'])
-      non_price_characters = /[^0-9\-#{separator}]/
-      # Strip everything else first
-      price.gsub!(non_price_characters, '')
-      # Then replace the locale-specific decimal separator with the standard separator if necessary
-      price.gsub!(separator, '.') unless separator == '.'
-
-      price.to_d
-    end
-
     # Ensures a new variant takes the product master price when price is not supplied
     def check_price
       if price.nil? && Spree::Config[:require_master_price]
@@ -296,7 +278,7 @@ module Spree
 
     def create_stock_items
       StockLocation.all.find_each do |stock_location|
-        stock_location.propagate_variant(self) if stock_location.propagate_all_variants?
+        stock_location.propagate_variant(self)
       end
     end
 
