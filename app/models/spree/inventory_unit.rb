@@ -49,8 +49,8 @@ module Spree
     end
 
     def find_stock_item
-      Spree::StockItem.where(stock_location_id: shipment.stock_location_id,
-                             variant_id: variant_id).first
+      Spree::StockItem.find_by(stock_location_id: shipment.stock_location_id,
+                               variant_id: variant_id)
     end
 
     # Remove variant default_scope `deleted_at: nil`

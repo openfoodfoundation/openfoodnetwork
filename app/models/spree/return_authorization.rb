@@ -67,7 +67,9 @@ module Spree
     private
 
     def must_have_shipped_units
-      errors.add(:order, Spree.t(:has_no_shipped_units)) if order.nil? || order.shipped_shipments.none?
+      return unless order.nil? || order.shipped_shipments.none?
+
+      errors.add(:order, Spree.t(:has_no_shipped_units))
     end
 
     def generate_number
@@ -76,7 +78,7 @@ module Spree
       record = true
       while record
         random = "RMA#{Array.new(9){ rand(9) }.join}"
-        record = self.class.where(number: random).first
+        record = self.class.find_by(number: random)
       end
       self.number = random
     end

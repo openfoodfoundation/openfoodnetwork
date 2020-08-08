@@ -7,7 +7,8 @@ require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
-ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |_name, _start, _finish, _id, payload|
+ActiveSupport::Notifications
+  .subscribe('spree.order.contents_changed') do |_name, _start, _finish, _id, payload|
   payload[:order].reload.update_distribution_charge!
 end
 
@@ -82,7 +83,9 @@ module Spree
     before_validation :ensure_customer, unless: :customer_is_valid?
 
     validates :customer, presence: true, if: :require_customer?
-    validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
+    validate :products_available_from_new_distribution, if: lambda {
+      distributor_id_changed? || order_cycle_id_changed?
+    }
     validate :disallow_guest_order
 
     attr_accessor :use_billing
@@ -110,7 +113,8 @@ module Spree
         where(nil)
       else
         # Find orders that are distributed by the user or have products supplied by the user
-        # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
+        # WARNING: This only filters orders,
+        #   you'll need to filter line items separately using LineItem.managed_by
         with_line_items_variants_and_products_outer.
           where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
                 user.enterprises.select(&:id),
@@ -330,11 +334,6 @@ module Spree
         current_item.quantity = quantity
         current_item.max_quantity = max_quantity
 
-        # This is the original behaviour, behaviour above is so that we can resolve the order populator bug
-        # current_item.quantity ||= 0
-        # current_item.max_quantity ||= 0
-        # current_item.quantity += quantity.to_i
-        # current_item.max_quantity += max_quantity.to_i
         current_item.currency = currency unless currency.nil?
         current_item.save
       else
@@ -356,14 +355,14 @@ module Spree
     def set_variant_attributes(variant, attributes)
       line_item = find_line_item_by_variant(variant)
 
-      if line_item
-        if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
-          attributes[:max_quantity] = line_item.quantity
-        end
+      return unless line_item
 
-        line_item.assign_attributes(attributes)
-        line_item.save!
+      if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
+        attributes[:max_quantity] = line_item.quantity
       end
+
+      line_item.assign_attributes(attributes)
+      line_item.save!
     end
 
     # Associates the specified user with the order.
@@ -372,10 +371,13 @@ module Spree
       self.email = user.email
       self.created_by = user if created_by.blank?
 
-      if persisted?
-        # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
-        self.class.unscoped.where(id: id).update_all(email: user.email, user_id: user.id, created_by_id: created_by_id)
-      end
+      return unless persisted?
+
+      # Persist the changes we just made,
+      #   but don't use save since we might have an invalid address associated
+      self.class.unscoped.where(id: id).update_all(email: user.email,
+                                                   user_id: user.id,
+                                                   created_by_id: created_by_id)
     end
 
     # FIXME refactor this method and implement validation using validates_* utilities
@@ -383,7 +385,7 @@ module Spree
       record = true
       while record
         random = "R#{Array.new(9){ rand(9) }.join}"
-        record = self.class.where(number: random).first
+        record = self.class.find_by(number: random)
       end
       self.number = random if number.blank?
       number
@@ -429,9 +431,10 @@ module Spree
     end
 
     def name
-      if (address = bill_address || ship_address)
-        "#{address.firstname} #{address.lastname}"
-      end
+      address = bill_address || ship_address
+      return unless address
+
+      "#{address.firstname} #{address.lastname}"
     end
 
     def can_ship?
@@ -487,10 +490,12 @@ module Spree
       @available_payment_methods ||= PaymentMethod.available(:front_end)
     end
 
-    # "Checkout" is the initial state and, for card payments, "pending" is the state after authorization
+    # "Checkout" is the initial state and, for card payments, "pending" is the state after auth
     # These are both valid states to process the payment
     def pending_payments
-      (payments.select(&:pending?) + payments.select(&:processing?) + payments.select(&:checkout?)).uniq
+      (payments.select(&:pending?) +
+        payments.select(&:processing?) +
+        payments.select(&:checkout?)).uniq
     end
 
     # processes any pending payments and must return a boolean as it's
@@ -507,17 +512,15 @@ module Spree
     #   :allow_checkout_on_gateway_error is set to false
     #
     def process_payments!
-      if pending_payments.empty?
-        raise Core::GatewayError, Spree.t(:no_pending_payments)
-      else
-        pending_payments.each do |payment|
-          break if payment_total >= total
+      raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
 
-          payment.process!
+      pending_payments.each do |payment|
+        break if payment_total >= total
 
-          if payment.completed?
-            self.payment_total += payment.amount
-          end
+        payment.process!
+
+        if payment.completed?
+          self.payment_total += payment.amount
         end
       end
     rescue Core::GatewayError => e
@@ -542,7 +545,7 @@ module Spree
     end
 
     def insufficient_stock_lines
-      line_items.select &:insufficient_stock?
+      line_items.select(&:insufficient_stock?)
     end
 
     def merge!(order)
@@ -581,15 +584,15 @@ module Spree
 
     def state_changed(name)
       state = "#{name}_state"
-      if persisted?
-        old_state = send("#{state}_was")
-        state_changes.create(
-          previous_state: old_state,
-          next_state: send(state),
-          name: name,
-          user_id: user_id
-        )
-      end
+      return unless persisted?
+
+      old_state = __send__("#{state}_was")
+      state_changes.create(
+        previous_state: old_state,
+        next_state: __send__(state),
+        name: name,
+        user_id: user_id
+      )
     end
 
     def shipped?
@@ -641,25 +644,28 @@ module Spree
     # to delivery again so that proper updated shipments are created.
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
-      if shipments.any?
-        shipments.destroy_all
-        update_column(:state, "address")
-      end
+      return unless shipments.any?
+
+      shipments.destroy_all
+      update_column(:state, "address")
     end
 
     def refresh_shipment_rates
-      shipments.map &:refresh_rates
+      shipments.map(&:refresh_rates)
     end
 
+    # Check that line_items in the current order are available from a newly selected distribution
     def products_available_from_new_distribution
-      # Check that the line_items in the current order are available from a newly selected distribution
-      errors.add(:base, I18n.t(:spree_order_availability_error)) unless OrderCycleDistributedVariants.new(order_cycle, distributor).distributes_order_variants?(self)
+      return if OrderCycleDistributedVariants.new(order_cycle, distributor)
+        .distributes_order_variants?(self)
+
+      errors.add(:base, I18n.t(:spree_order_availability_error))
     end
 
     def disallow_guest_order
-      if using_guest_checkout? && registered_email?
-        errors.add(:base, I18n.t('devise.failure.already_registered'))
-      end
+      return unless using_guest_checkout? && registered_email?
+
+      errors.add(:base, I18n.t('devise.failure.already_registered'))
     end
 
     # After changing line items of a completed order
@@ -816,9 +822,9 @@ module Spree
     end
 
     def ensure_line_items_present
-      if line_items.blank?
-        errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) && (return false)
-      end
+      return if line_items.present?
+
+      errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) && (return false)
     end
 
     def has_available_shipment
@@ -829,9 +835,9 @@ module Spree
     end
 
     def ensure_available_shipping_rates
-      if shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
-        errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
-      end
+      return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
+
+      errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
     end
 
     def has_available_payment
@@ -900,10 +906,13 @@ module Spree
     end
 
     def ensure_customer
-      unless associate_customer
-        customer_name = bill_address.andand.full_name
-        self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user, name: customer_name, bill_address: bill_address.andand.clone, ship_address: ship_address.andand.clone)
-      end
+      return if associate_customer
+
+      customer_name = bill_address.andand.full_name
+      self.customer = Customer.create(enterprise: distributor, email: email_for_customer,
+                                      user: user, name: customer_name,
+                                      bill_address: bill_address.andand.clone,
+                                      ship_address: ship_address.andand.clone)
     end
 
     def update_adjustment!(adjustment)
