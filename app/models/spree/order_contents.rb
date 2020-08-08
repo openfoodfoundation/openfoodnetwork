@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderContents
     attr_accessor :order, :currency
@@ -27,7 +29,7 @@ module Spree
 
     private
 
-    def add_to_line_item(line_item, variant, quantity, currency=nil, shipment=nil)
+    def add_to_line_item(line_item, variant, quantity, currency = nil, shipment = nil)
       if line_item
         line_item.target_shipment = shipment
         line_item.quantity += quantity.to_i
@@ -48,9 +50,9 @@ module Spree
       line_item
     end
 
-    def remove_from_line_item(line_item, variant, quantity, shipment=nil)
+    def remove_from_line_item(line_item, _variant, quantity, shipment = nil)
       line_item.quantity += -quantity
-      line_item.target_shipment= shipment
+      line_item.target_shipment = shipment
 
       if line_item.quantity == 0
         Spree::OrderInventory.new(order).verify(line_item, shipment)
@@ -62,6 +64,5 @@ module Spree
       order.reload
       line_item
     end
-
   end
 end

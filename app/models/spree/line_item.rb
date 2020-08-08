@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variant_to_hub'
 require 'variant_units/variant_and_line_item_naming'
 
@@ -219,20 +221,21 @@ module Spree
     end
 
     private
-      def update_inventory
-        if changed?
-          scoper.scope(variant)
-          Spree::OrderInventory.new(self.order).verify(self, target_shipment)
-        end
-      end
 
-      def update_order
-        if changed? || destroyed?
-          # update the order totals, etc.
-          order.create_tax_charge!
-          order.update!
-        end
+    def update_inventory
+      if changed?
+        scoper.scope(variant)
+        Spree::OrderInventory.new(order).verify(self, target_shipment)
       end
+    end
+
+    def update_order
+      if changed? || destroyed?
+        # update the order totals, etc.
+        order.create_tax_charge!
+        order.update!
+      end
+    end
 
     def update_inventory_before_destroy
       # This is necessary before destroying the line item
