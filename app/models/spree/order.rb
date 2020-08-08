@@ -33,8 +33,6 @@ module Spree
 
     token_resource
 
-    attr_reader :coupon_code
-
     if Spree.user_class
       belongs_to :user, class_name: Spree.user_class.to_s
       belongs_to :created_by, class_name: Spree.user_class.to_s
@@ -461,7 +459,6 @@ module Spree
     def finalize!
       touch :completed_at
 
-      # lock all adjustments (coupon promotions, etc.)
       adjustments.update_all state: 'closed'
 
       # update payment and shipment(s) states, and save
@@ -603,24 +600,6 @@ module Spree
           user_id:        self.user_id
         )
       end
-    end
-
-    def coupon_code=(code)
-      @coupon_code = code.strip.downcase rescue nil
-    end
-
-    # Tells us if there if the specified promotion is already associated with the order
-    # regardless of whether or not its currently eligible. Useful because generally
-    # you would only want a promotion action to apply to order no more than once.
-    #
-    # Receives an adjustment +originator+ (here a PromotionAction object) and tells
-    # if the order has adjustments from that already
-    def promotion_credit_exists?(originator)
-      !! adjustments.includes(:originator).promotion.reload.detect { |credit| credit.originator.id == originator.id }
-    end
-
-    def promo_total
-      adjustments.eligible.promotion.map(&:amount).sum
     end
 
     def shipped?
