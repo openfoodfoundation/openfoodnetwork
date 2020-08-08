@@ -3,16 +3,15 @@
 require 'spec_helper'
 
 describe Spree::ReturnAuthorization do
-  let(:stock_location) { Spree::StockLocation.create(name: "test") }
   let(:order) { FactoryGirl.create(:shipped_order) }
   let(:variant) { order.shipments.first.inventory_units.first.variant }
-  let(:return_authorization) { Spree::ReturnAuthorization.new(order: order, stock_location_id: stock_location.id) }
+  let(:return_authorization) { Spree::ReturnAuthorization.new(order: order) }
 
   context "save" do
     it "should be invalid when order has no inventory units" do
       order.shipments.destroy_all
       return_authorization.save
-      return_authorization.errors[:order].should == ["has no shipped units"]
+      expect(return_authorization.errors[:order]).to eq ["has no shipped units"]
     end
 
     it "should generate RMA number" do
@@ -25,7 +24,7 @@ describe Spree::ReturnAuthorization do
     context "on empty rma" do
       it "should associate inventory unit" do
         return_authorization.add_variant(variant.id, 1)
-        return_authorization.inventory_units.size.should == 1
+        expect(return_authorization.inventory_units.size).to eq 1
       end
 
       it "should associate inventory units as shipped" do
@@ -58,12 +57,12 @@ describe Spree::ReturnAuthorization do
   context "can_receive?" do
     it "should allow_receive when inventory units assigned" do
       return_authorization.stub(inventory_units: [1, 2, 3])
-      return_authorization.can_receive?.should be_true
+      expect(return_authorization.can_receive?).to be_truthy
     end
 
     it "should not allow_receive with no inventory units" do
       return_authorization.stub(inventory_units: [])
-      return_authorization.can_receive?.should be_false
+      expect(return_authorization.can_receive?).to be_falsy
     end
   end
 
@@ -101,7 +100,7 @@ describe Spree::ReturnAuthorization do
     it "should ensure the amount is always positive" do
       return_authorization.amount = -10
       return_authorization.send :force_positive_amount
-      return_authorization.amount.should == 10
+      expect(return_authorization.amount).to eq 10
     end
   end
 
@@ -115,24 +114,24 @@ describe Spree::ReturnAuthorization do
   context "currency" do
     before { order.stub(:currency) { "ABC" } }
     it "returns the order currency" do
-      return_authorization.currency.should == "ABC"
+      expect(return_authorization.currency).to eq "ABC"
     end
   end
 
   context "display_amount" do
     it "returns a Spree::Money" do
       return_authorization.amount = 21.22
-      return_authorization.display_amount.should == Spree::Money.new(21.22)
+      expect(return_authorization.display_amount).to eq Spree::Money.new(21.22)
     end
   end
 
   context "returnable_inventory" do
     pending "should return inventory from shipped shipments" do
-      return_authorization.returnable_inventory.should == [inventory_unit]
+      expect(return_authorization.returnable_inventory).to eq [inventory_unit]
     end
 
     pending "should not return inventory from unshipped shipments" do
-      return_authorization.returnable_inventory.should == []
+      expect(return_authorization.returnable_inventory).to eq []
     end
   end
 end

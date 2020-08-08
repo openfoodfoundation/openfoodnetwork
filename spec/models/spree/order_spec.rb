@@ -3,47 +3,34 @@ require 'spec_helper'
 describe Spree::Order do
   include OpenFoodNetwork::EmailHelper
 
-  let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
-  let(:order) { stub_model(Spree::Order, user: user) }
+  let(:user) { build(:user, email: "spree@example.com") }
+  let(:order) { build(:order, user: user) }
 
   before do
-    Spree::LegacyUser.stub(current: mock_model(Spree::LegacyUser, id: 123))
+    Spree::LegacyUser.stub(current: build(:user, id: 123))
   end
 
   context "#products" do
-    before :each do
-      @variant1 = mock_model(Spree::Variant, product: "product1")
-      @variant2 = mock_model(Spree::Variant, product: "product2")
-      @line_items = [mock_model(Spree::LineItem, product: "product1", variant: @variant1, variant_id: @variant1.id, quantity: 1),
-                     mock_model(Spree::LineItem, product: "product2", variant: @variant2, variant_id: @variant2.id, quantity: 2)]
-      order.stub(line_items: @line_items)
-    end
+    let(:order) { create(:order_with_line_items) }
 
     it "should return ordered products" do
-      order.products.should == ['product1', 'product2']
+      expect(order.products.first).to eq order.line_items.first.product
     end
 
     it "contains?" do
-      order.contains?(@variant1).should be_true
-    end
-
-    it "gets the quantity of a given variant" do
-      order.quantity_of(@variant1).should == 1
-
-      @variant3 = mock_model(Spree::Variant, product: "product3")
-      order.quantity_of(@variant3).should == 0
+      expect(order.contains?(order.line_items.first.variant)).to be_truthy
     end
 
     it "can find a line item matching a given variant" do
-      order.find_line_item_by_variant(@variant1).should_not be_nil
-      order.find_line_item_by_variant(mock_model(Spree::Variant)).should be_nil
+      expect(order.find_line_item_by_variant(order.line_items.third.variant)).to_not be_nil
+      expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
 
   context "#generate_order_number" do
     it "should generate a random string" do
-      order.generate_order_number.is_a?(String).should be_true
-      (!order.generate_order_number.to_s.empty?).should be_true
+      expect(order.generate_order_number.is_a?(String)).to be_truthy
+      expect((!order.generate_order_number.to_s.empty?)).to be_truthy
     end
   end
 
@@ -55,15 +42,15 @@ describe Spree::Order do
       order.user = nil
       order.email = nil
       order.associate_user!(user)
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == user
+      expect(order.user).to eq user
+      expect(order.email).to eq user.email
+      expect(order.created_by).to eq user
 
       # verify that the changes we made were persisted
       order.reload
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == user
+      expect(order.user).to eq user
+      expect(order.email).to eq user.email
+      expect(order.created_by).to eq user
     end
 
     it "should not overwrite the created_by if it already is set" do
@@ -74,15 +61,15 @@ describe Spree::Order do
       order.user = nil
       order.email = nil
       order.associate_user!(user)
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == creator
+      expect(order.user).to eq user
+      expect(order.email).to eq user.email
+      expect(order.created_by).to eq creator
 
       # verify that the changes we made were persisted
       order.reload
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == creator
+      expect(order.user).to eq user
+      expect(order.email).to eq user.email
+      expect(order.created_by).to eq creator
     end
 
     it "should associate a user with a non-persisted order" do
@@ -107,7 +94,7 @@ describe Spree::Order do
   context "#create" do
     it "should assign an order number" do
       order = Spree::Order.create
-      order.number.should_not be_nil
+      expect(order.number).to_not be_nil
     end
   end
 
@@ -116,27 +103,27 @@ describe Spree::Order do
 
     it "should be true for order in the 'complete' state" do
       order.stub(complete?: true)
-      order.can_ship?.should be_true
+      expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for order in the 'resumed' state" do
       order.stub(resumed?: true)
-      order.can_ship?.should be_true
+      expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for an order in the 'awaiting return' state" do
       order.stub(awaiting_return?: true)
-      order.can_ship?.should be_true
+      expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for an order in the 'returned' state" do
       order.stub(returned?: true)
-      order.can_ship?.should be_true
+      expect(order.can_ship?).to be_truthy
     end
 
     it "should be false if the order is neither in the 'complete' nor 'resumed' state" do
       order.stub(resumed?: false, complete?: false)
-      order.can_ship?.should be_false
+      expect(order.can_ship?).to be_falsy
     end
   end
 
@@ -181,7 +168,7 @@ describe Spree::Order do
       order.stub(paid?: true, complete?: true)
       order.finalize!
       order.reload # reload so we're sure the changes are persisted
-      order.shipment_state.should == 'ready'
+      expect(order.shipment_state).to eq 'ready'
     end
 
     after { Spree::Config.set track_inventory_levels: true }
@@ -192,15 +179,9 @@ describe Spree::Order do
     end
 
     it "should send an order confirmation email" do
-      mail_message = double "Mail::Message"
-      Spree::OrderMailer.should_receive(:confirm_email).with(order.id).and_return mail_message
-      mail_message.should_receive :deliver
-      order.finalize!
-    end
-
-    it "should continue even if confirmation email delivery fails" do
-      Spree::OrderMailer.should_receive(:confirm_email).with(order.id).and_raise 'send failed!'
-      order.finalize!
+      expect do
+        order.finalize!
+      end.to enqueue_job ConfirmOrderJob
     end
 
     it "should freeze all adjustments" do
@@ -226,17 +207,17 @@ describe Spree::Order do
   end
 
   context "#process_payments!" do
-    let(:payment) { stub_model(Spree::Payment) }
+    let(:payment) { build(:payment) }
     before { order.stub pending_payments: [payment], total: 10 }
 
     it "should process the payments" do
       payment.should_receive(:process!)
-      order.process_payments!.should be_true
+      expect(order.process_payments!).to be_truthy
     end
 
     it "should return false if no pending_payments available" do
       order.stub pending_payments: []
-      order.process_payments!.should be_false
+      expect(order.process_payments!).to be_falsy
     end
 
     context "when a payment raises a GatewayError" do
@@ -244,12 +225,12 @@ describe Spree::Order do
 
       it "should return true when configured to allow checkout on gateway failures" do
         Spree::Config.set allow_checkout_on_gateway_error: true
-        order.process_payments!.should be_true
+        expect(order.process_payments!).to be_truthy
       end
 
       it "should return false when not configured to allow checkout on gateway failures" do
         Spree::Config.set allow_checkout_on_gateway_error: false
-        order.process_payments!.should be_false
+        expect(order.process_payments!).to be_falsy
       end
     end
   end
@@ -258,12 +239,12 @@ describe Spree::Order do
     it "should return positive amount when payment_total is less than total" do
       order.payment_total = 20.20
       order.total = 30.30
-      order.outstanding_balance.should == 10.10
+      expect(order.outstanding_balance).to eq 10.10
     end
     it "should return negative amount when payment_total is greater than total" do
       order.total = 8.20
       order.payment_total = 10.20
-      order.outstanding_balance.should be_within(0.001).of(-2.00)
+      expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
     end
   end
 
@@ -271,44 +252,38 @@ describe Spree::Order do
     it "should be true when total greater than payment_total" do
       order.total = 10.10
       order.payment_total = 9.50
-      order.outstanding_balance?.should be_true
+      expect(order.outstanding_balance?).to be_truthy
     end
     it "should be true when total less than payment_total" do
       order.total = 8.25
       order.payment_total = 10.44
-      order.outstanding_balance?.should be_true
+      expect(order.outstanding_balance?).to be_truthy
     end
     it "should be false when total equals payment_total" do
       order.total = 10.10
       order.payment_total = 10.10
-      order.outstanding_balance?.should be_false
+      expect(order.outstanding_balance?).to be_falsy
     end
   end
 
   context "#completed?" do
     it "should indicate if order is completed" do
       order.completed_at = nil
-      order.completed?.should be_false
+      expect(order.completed?).to be_falsy
 
       order.completed_at = Time.zone.now
-      order.completed?.should be_true
+      expect(order.completed?).to be_truthy
     end
-  end
-
-  it 'is backordered if one of the shipments is backordered' do
-    order.stub(shipments: [mock_model(Spree::Shipment, backordered?: false),
-                           mock_model(Spree::Shipment, backordered?: true)])
-    order.should be_backordered
   end
 
   context "#allow_checkout?" do
     it "should be true if there are line_items in the order" do
       order.stub_chain(:line_items, count: 1)
-      order.checkout_allowed?.should be_true
+      expect(order.checkout_allowed?).to be_truthy
     end
     it "should be false if there are no line_items in the order" do
       order.stub_chain(:line_items, count: 0)
-      order.checkout_allowed?.should be_false
+      expect(order.checkout_allowed?).to be_falsy
     end
   end
 
@@ -318,7 +293,7 @@ describe Spree::Order do
       @order.line_items = [create(:line_item, quantity: 2), create(:line_item, quantity: 1)]
     end
     it "should return the correct number of items" do
-      @order.item_count.should == 3
+      expect(@order.item_count).to eq 3
     end
   end
 
@@ -329,7 +304,7 @@ describe Spree::Order do
                            create(:line_item, price: 1.0, quantity: 1)]
     end
     it "should return the correct lum sum of items" do
-      @order.amount.should == 3.0
+      expect(@order.amount).to eq 3.0
     end
   end
 
@@ -338,31 +313,34 @@ describe Spree::Order do
       order.state = 'canceled'
       order.shipment_state = 'ready'
       order.completed_at = Time.zone.now
-      order.can_cancel?.should be_false
+      expect(order.can_cancel?).to be_falsy
     end
 
     it "should be true for completed order with no shipment" do
       order.state = 'complete'
       order.shipment_state = nil
       order.completed_at = Time.zone.now
-      order.can_cancel?.should be_true
+      expect(order.can_cancel?).to be_truthy
     end
   end
 
   context "insufficient_stock_lines" do
-    let(:line_item) { mock_model Spree::LineItem, insufficient_stock?: true }
+    let(:line_item) { build(:line_item) }
 
-    before { order.stub(line_items: [line_item]) }
+    before do
+      order.stub(line_items: [line_item])
+      allow(line_item).to receive(:insufficient_stock?) { true }
+    end
 
     it "should return line_item that has insufficient stock on hand" do
-      order.insufficient_stock_lines.size.should == 1
-      order.insufficient_stock_lines.include?(line_item).should be_true
+      expect(order.insufficient_stock_lines.size).to eq 1
+      expect(order.insufficient_stock_lines.include?(line_item)).to be_truthy
     end
   end
 
   context "empty!" do
     it "should clear out all line items and adjustments" do
-      order = stub_model(Spree::Order)
+      order = build(:order)
       order.stub(line_items: line_items = [])
       order.stub(adjustments: adjustments = [])
       order.line_items.should_receive(:destroy_all)
@@ -375,28 +353,28 @@ describe Spree::Order do
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
       order.stub(:outstanding_balance) { 10.55 }
-      order.display_outstanding_balance.should == Spree::Money.new(10.55)
+      expect(order.display_outstanding_balance).to eq Spree::Money.new(10.55)
     end
   end
 
   context "#display_item_total" do
     it "returns the value as a spree money" do
       order.stub(:item_total) { 10.55 }
-      order.display_item_total.should == Spree::Money.new(10.55)
+      expect(order.display_item_total).to eq Spree::Money.new(10.55)
     end
   end
 
   context "#display_adjustment_total" do
     it "returns the value as a spree money" do
       order.adjustment_total = 10.55
-      order.display_adjustment_total.should == Spree::Money.new(10.55)
+      expect(order.display_adjustment_total).to eq Spree::Money.new(10.55)
     end
   end
 
   context "#display_total" do
     it "returns the value as a spree money" do
       order.total = 10.55
-      order.display_total.should == Spree::Money.new(10.55)
+      expect(order.display_total).to eq Spree::Money.new(10.55)
     end
   end
 
@@ -405,7 +383,7 @@ describe Spree::Order do
       before { order.currency = "ABC" }
 
       it "returns the currency from the object" do
-        order.currency.should == "ABC"
+        expect(order.currency).to eq "ABC"
       end
     end
 
@@ -413,63 +391,8 @@ describe Spree::Order do
       before { order.currency = nil }
 
       it "returns the globally configured currency" do
-        order.currency.should == "USD"
+        expect(order.currency).to eq Spree::Config[:currency]
       end
-    end
-  end
-
-  # Regression tests for Spree #2179
-  context "#merge!" do
-    let(:variant) { create(:variant) }
-    let(:order_1) { Spree::Order.create }
-    let(:order_2) { Spree::Order.create }
-
-    it "destroys the other order" do
-      order_1.merge!(order_2)
-      lambda { order_2.reload }.should raise_error(ActiveRecord::RecordNotFound)
-    end
-
-    context "merging together two orders with line items for the same variant" do
-      before do
-        order_1.contents.add(variant, 1)
-        order_2.contents.add(variant, 1)
-      end
-
-      specify do
-        order_1.merge!(order_2)
-        order_1.line_items.count.should == 1
-
-        line_item = order_1.line_items.first
-        line_item.quantity.should == 2
-        line_item.variant_id.should == variant.id
-      end
-    end
-
-    context "merging together two orders with different line items" do
-      let(:variant_2) { create(:variant) }
-
-      before do
-        order_1.contents.add(variant, 1)
-        order_2.contents.add(variant_2, 1)
-      end
-
-      specify do
-        order_1.merge!(order_2)
-        line_items = order_1.line_items
-        line_items.count.should == 2
-
-        # No guarantee on ordering of line items, so we do this:
-        line_items.pluck(:quantity).should =~ [1, 1]
-        line_items.pluck(:variant_id).should =~ [variant.id, variant_2.id]
-      end
-    end
-  end
-
-  context "#confirmation_required?" do
-    it "does not bomb out when an order has an unpersisted payment" do
-      order = Spree::Order.new
-      order.payments.build
-      assert !order.confirmation_required?
     end
   end
 
@@ -496,7 +419,7 @@ describe Spree::Order do
     it "transitions from delivery to payment" do
       persisted_order.stub(payment_required?: true)
       persisted_order.next!
-      persisted_order.state.should == "payment"
+      expect(persisted_order.state).to eq "payment"
     end
   end
 
@@ -504,12 +427,12 @@ describe Spree::Order do
     let(:order) { Spree::Order.new }
 
     context "total is zero" do
-      it { order.payment_required?.should be_false }
+      it { expect(order.payment_required?).to be_falsy }
     end
 
     context "total > zero" do
       before { order.stub(total: 1) }
-      it { order.payment_required?.should be_true }
+      it { expect(order.payment_required?).to be_truthy }
     end
   end
 
@@ -559,7 +482,7 @@ describe Spree::Order do
       let(:tax_using_ship_address) { true }
 
       it 'returns ship_address' do
-        subject.should == order.ship_address
+        expect(subject).to eq order.ship_address
       end
     end
 
@@ -567,7 +490,7 @@ describe Spree::Order do
       let(:tax_using_ship_address) { false }
 
       it "returns bill_address" do
-        subject.should == order.bill_address
+        expect(subject).to eq order.bill_address
       end
     end
   end
@@ -586,11 +509,11 @@ describe Spree::Order do
     end
 
     it 'returns an order_updater_decorator class' do
-      order.updater.class.should == FakeOrderUpdaterDecorator
+      expect(order.updater.class).to eq FakeOrderUpdaterDecorator
     end
 
     it 'decorates a Spree::OrderUpdater' do
-      order.updater.decorated_object.class.should == Spree::OrderUpdater
+      expect(order.updater.decorated_object.class).to eq Spree::OrderUpdater
     end
   end
 

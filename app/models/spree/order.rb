@@ -399,11 +399,6 @@ module Spree
       find_line_item_by_variant(variant).present?
     end
 
-    def quantity_of(variant)
-      line_item = find_line_item_by_variant(variant)
-      line_item ? line_item.quantity : 0
-    end
-
     def find_line_item_by_variant(variant)
       line_items.detect { |line_item| line_item.variant_id == variant.id }
     end
@@ -476,9 +471,9 @@ module Spree
     end
 
     def deliver_order_confirmation_email
-      if subscription.blank?
-        Delayed::Job.enqueue ConfirmOrderJob.new(id)
-      end
+      return if subscription.present?
+
+      Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
 
     # Helper methods for checkout steps
@@ -546,24 +541,6 @@ module Spree
 
     def insufficient_stock_lines
       line_items.select(&:insufficient_stock?)
-    end
-
-    def merge!(order)
-      order.line_items.each do |line_item|
-        next unless line_item.currency == currency
-
-        current_line_item = line_items.find_by(variant: line_item.variant)
-        if current_line_item
-          current_line_item.quantity += line_item.quantity
-          current_line_item.save
-        else
-          line_item.order_id = id
-          line_item.save
-        end
-      end
-      # So that the destroy doesn't take out line items which may have been re-assigned
-      order.line_items.reload
-      order.destroy
     end
 
     def empty!
