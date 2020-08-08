@@ -7,7 +7,7 @@ describe Spree::Order do
   let(:order) { build(:order, user: user) }
 
   before do
-    Spree::LegacyUser.stub(current: build(:user, id: 123))
+    allow(Spree::LegacyUser).to receive_messages(current: build(:user, id: 123))
   end
 
   context "#products" do
@@ -102,39 +102,39 @@ describe Spree::Order do
     let(:order) { Spree::Order.create }
 
     it "should be true for order in the 'complete' state" do
-      order.stub(complete?: true)
+      allow(order).to receive_messages(complete?: true)
       expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for order in the 'resumed' state" do
-      order.stub(resumed?: true)
+      allow(order).to receive_messages(resumed?: true)
       expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for an order in the 'awaiting return' state" do
-      order.stub(awaiting_return?: true)
+      allow(order).to receive_messages(awaiting_return?: true)
       expect(order.can_ship?).to be_truthy
     end
 
     it "should be true for an order in the 'returned' state" do
-      order.stub(returned?: true)
+      allow(order).to receive_messages(returned?: true)
       expect(order.can_ship?).to be_truthy
     end
 
     it "should be false if the order is neither in the 'complete' nor 'resumed' state" do
-      order.stub(resumed?: false, complete?: false)
+      allow(order).to receive_messages(resumed?: false, complete?: false)
       expect(order.can_ship?).to be_falsy
     end
   end
 
   context "checking if order is paid" do
     context "payment_state is paid" do
-      before { order.stub payment_state: 'paid' }
+      before { allow(order).to receive_messages payment_state: 'paid' }
       it { expect(order).to be_paid }
     end
 
     context "payment_state is credit_owned" do
-      before { order.stub payment_state: 'credit_owed' }
+      before { allow(order).to receive_messages payment_state: 'credit_owed' }
       it { expect(order).to be_paid }
     end
   end
@@ -142,21 +142,21 @@ describe Spree::Order do
   context "#finalize!" do
     let(:order) { Spree::Order.create }
     it "should set completed_at" do
-      order.should_receive(:touch).with(:completed_at)
+      expect(order).to receive(:touch).with(:completed_at)
       order.finalize!
     end
 
     it "should sell inventory units" do
       order.shipments.each do |shipment|
-        shipment.should_receive(:update!)
-        shipment.should_receive(:finalize!)
+        expect(shipment).to receive(:update!)
+        expect(shipment).to receive(:finalize!)
       end
       order.finalize!
     end
 
     it "should decrease the stock for each variant in the shipment" do
       order.shipments.each do |shipment|
-        shipment.stock_location.should_receive(:decrease_stock_for_variant)
+        expect(shipment.stock_location).to receive(:decrease_stock_for_variant)
       end
       order.finalize!
     end
@@ -165,7 +165,7 @@ describe Spree::Order do
       Spree::Shipment.create(order: order)
       order.shipments.reload
 
-      order.stub(paid?: true, complete?: true)
+      allow(order).to receive_messages(paid?: true, complete?: true)
       order.finalize!
       order.reload # reload so we're sure the changes are persisted
       expect(order.shipment_state).to eq 'ready'
@@ -180,41 +180,41 @@ describe Spree::Order do
     it "should freeze all adjustments" do
       # Stub this method as it's called due to a callback
       # and it's irrelevant to this test
-      order.stub :has_available_shipment
-      Spree::OrderMailer.stub_chain :confirm_email, :deliver
+      allow(order).to receive :has_available_shipment
+      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver
       adjustments = double
-      order.stub adjustments: adjustments
+      allow(order).to receive_messages adjustments: adjustments
       expect(adjustments).to receive(:update_all).with(state: 'closed')
       order.finalize!
     end
 
     it "should log state event" do
-      order.state_changes.should_receive(:create).exactly(3).times # order, shipment & payment state changes
+      expect(order.state_changes).to receive(:create).exactly(3).times # order, shipment & payment state changes
       order.finalize!
     end
 
     it 'calls updater#before_save' do
-      order.updater.should_receive(:before_save_hook)
+      expect(order.updater).to receive(:before_save_hook)
       order.finalize!
     end
   end
 
   context "#process_payments!" do
     let(:payment) { build(:payment) }
-    before { order.stub pending_payments: [payment], total: 10 }
+    before { allow(order).to receive_messages pending_payments: [payment], total: 10 }
 
     it "should process the payments" do
-      payment.should_receive(:process!)
+      expect(payment).to receive(:process!)
       expect(order.process_payments!).to be_truthy
     end
 
     it "should return false if no pending_payments available" do
-      order.stub pending_payments: []
+      allow(order).to receive_messages pending_payments: []
       expect(order.process_payments!).to be_falsy
     end
 
     context "when a payment raises a GatewayError" do
-      before { payment.should_receive(:process!).and_raise(Spree::Core::GatewayError) }
+      before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
 
       it "should return true when configured to allow checkout on gateway failures" do
         Spree::Config.set allow_checkout_on_gateway_error: true
@@ -271,11 +271,11 @@ describe Spree::Order do
 
   context "#allow_checkout?" do
     it "should be true if there are line_items in the order" do
-      order.stub_chain(:line_items, count: 1)
+      allow(order).to receive_message_chain(:line_items, count: 1)
       expect(order.checkout_allowed?).to be_truthy
     end
     it "should be false if there are no line_items in the order" do
-      order.stub_chain(:line_items, count: 0)
+      allow(order).to receive_message_chain(:line_items, count: 0)
       expect(order.checkout_allowed?).to be_falsy
     end
   end
@@ -321,7 +321,7 @@ describe Spree::Order do
     let(:line_item) { build(:line_item) }
 
     before do
-      order.stub(line_items: [line_item])
+      allow(order).to receive_messages(line_items: [line_item])
       allow(line_item).to receive(:insufficient_stock?) { true }
     end
 
@@ -334,10 +334,10 @@ describe Spree::Order do
   context "empty!" do
     it "should clear out all line items and adjustments" do
       order = build(:order)
-      order.stub(line_items: line_items = [])
-      order.stub(adjustments: adjustments = [])
-      order.line_items.should_receive(:destroy_all)
-      order.adjustments.should_receive(:destroy_all)
+      allow(order).to receive_messages(line_items: line_items = [])
+      allow(order).to receive_messages(adjustments: adjustments = [])
+      expect(order.line_items).to receive(:destroy_all)
+      expect(order.adjustments).to receive(:destroy_all)
 
       order.empty!
     end
@@ -345,14 +345,14 @@ describe Spree::Order do
 
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
-      order.stub(:outstanding_balance) { 10.55 }
+      allow(order).to receive(:outstanding_balance) { 10.55 }
       expect(order.display_outstanding_balance).to eq Spree::Money.new(10.55)
     end
   end
 
   context "#display_item_total" do
     it "returns the value as a spree money" do
-      order.stub(:item_total) { 10.55 }
+      allow(order).to receive(:item_total) { 10.55 }
       expect(order.display_item_total).to eq Spree::Money.new(10.55)
     end
   end
@@ -402,7 +402,7 @@ describe Spree::Order do
 
     before do
       # Don't care about available payment methods in this test
-      persisted_order.stub(has_available_payment: false)
+      allow(persisted_order).to receive_messages(has_available_payment: false)
       persisted_order.line_items << line_item
       persisted_order.adjustments.create(amount: -line_item.amount, label: "Promotion")
       persisted_order.state = 'delivery'
@@ -410,7 +410,7 @@ describe Spree::Order do
     end
 
     it "transitions from delivery to payment" do
-      persisted_order.stub(payment_required?: true)
+      allow(persisted_order).to receive_messages(payment_required?: true)
       persisted_order.next!
       expect(persisted_order.state).to eq "payment"
     end
@@ -424,7 +424,7 @@ describe Spree::Order do
     end
 
     context "total > zero" do
-      before { order.stub(total: 1) }
+      before { allow(order).to receive_messages(total: 1) }
       it { expect(order.payment_required?).to be_truthy }
     end
   end
@@ -442,13 +442,13 @@ describe Spree::Order do
 
     it "calls hook during update" do
       order = create(:order)
-      order.should_receive(:add_awesome_sauce)
+      expect(order).to receive(:add_awesome_sauce)
       order.update!
     end
 
     it "calls hook during finalize" do
       order = create(:order)
-      order.should_receive(:add_awesome_sauce)
+      expect(order).to receive(:add_awesome_sauce)
       order.finalize!
     end
   end
@@ -498,7 +498,7 @@ describe Spree::Order do
     end
 
     before do
-      Spree::Config.stub(:order_updater_decorator) { FakeOrderUpdaterDecorator }
+      allow(Spree::Config).to receive(:order_updater_decorator) { FakeOrderUpdaterDecorator }
     end
 
     it 'returns an order_updater_decorator class' do
@@ -514,7 +514,7 @@ describe Spree::Order do
     let(:order) { build(:order) }
 
     it "has errors if email is blank" do
-      order.stub(require_email: true)
+      allow(order).to receive_messages(require_email: true)
       order.email = ""
 
       order.valid?
@@ -522,7 +522,7 @@ describe Spree::Order do
     end
 
     it "has errors if email is invalid" do
-      order.stub(require_email: true)
+      allow(order).to receive_messages(require_email: true)
       order.email = "invalid_email"
 
       order.valid?
@@ -530,7 +530,7 @@ describe Spree::Order do
     end
 
     it "has errors if email has invalid domain" do
-      order.stub(require_email: true)
+      allow(order).to receive_messages(require_email: true)
       order.email = "single_letter_tld@domain.z"
 
       order.valid?
@@ -538,7 +538,7 @@ describe Spree::Order do
     end
 
     it "is valid if email is valid" do
-      order.stub(require_email: true)
+      allow(order).to receive_messages(require_email: true)
       order.email = "a@b.ca"
 
       order.valid?

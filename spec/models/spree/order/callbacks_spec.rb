@@ -24,7 +24,7 @@ describe Spree::Order do
       let(:user) { double(:user, email: "test@example.com") }
 
       before do
-        order.stub user: user
+        allow(order).to receive_messages user: user
       end
 
       it "should assign the email address of the user" do

@@ -15,7 +15,7 @@ describe Spree::ReturnAuthorization do
     end
 
     it "should generate RMA number" do
-      return_authorization.should_receive(:generate_number)
+      expect(return_authorization).to receive(:generate_number)
       return_authorization.save
     end
   end
@@ -33,7 +33,7 @@ describe Spree::ReturnAuthorization do
       end
 
       it "should update order state" do
-        order.should_receive(:authorize_return!)
+        expect(order).to receive(:authorize_return!)
         return_authorization.add_variant(variant.id, 1)
       end
     end
@@ -56,12 +56,12 @@ describe Spree::ReturnAuthorization do
 
   context "can_receive?" do
     it "should allow_receive when inventory units assigned" do
-      return_authorization.stub(inventory_units: [1, 2, 3])
+      allow(return_authorization).to receive_messages(inventory_units: [1, 2, 3])
       expect(return_authorization.can_receive?).to be_truthy
     end
 
     it "should not allow_receive with no inventory units" do
-      return_authorization.stub(inventory_units: [])
+      allow(return_authorization).to receive_messages(inventory_units: [])
       expect(return_authorization.can_receive?).to be_falsy
     end
   end
@@ -70,28 +70,28 @@ describe Spree::ReturnAuthorization do
     let(:inventory_unit) { order.shipments.first.inventory_units.first }
 
     before do
-      return_authorization.stub(inventory_units: [inventory_unit], amount: -20)
-      Spree::Adjustment.stub(:create)
-      order.stub(:update!)
+      allow(return_authorization).to receive_messages(inventory_units: [inventory_unit], amount: -20)
+      allow(Spree::Adjustment).to receive(:create)
+      allow(order).to receive(:update!)
     end
 
     it "should mark all inventory units are returned" do
-      inventory_unit.should_receive(:return!)
+      expect(inventory_unit).to receive(:return!)
       return_authorization.receive!
     end
 
     it "should add credit for specified amount" do
       return_authorization.amount = 20
       mock_adjustment = double
-      mock_adjustment.should_receive(:source=).with(return_authorization)
-      mock_adjustment.should_receive(:adjustable=).with(order)
-      mock_adjustment.should_receive(:save)
-      Spree::Adjustment.should_receive(:new).with(amount: -20, label: Spree.t(:rma_credit)).and_return(mock_adjustment)
+      expect(mock_adjustment).to receive(:source=).with(return_authorization)
+      expect(mock_adjustment).to receive(:adjustable=).with(order)
+      expect(mock_adjustment).to receive(:save)
+      expect(Spree::Adjustment).to receive(:new).with(amount: -20, label: Spree.t(:rma_credit)).and_return(mock_adjustment)
       return_authorization.receive!
     end
 
     it "should update order state" do
-      order.should_receive :update!
+      expect(order).to receive :update!
       return_authorization.receive!
     end
   end
@@ -106,13 +106,13 @@ describe Spree::ReturnAuthorization do
 
   context "after_save" do
     it "should run correct callbacks" do
-      return_authorization.should_receive(:force_positive_amount)
+      expect(return_authorization).to receive(:force_positive_amount)
       return_authorization.run_callbacks(:save)
     end
   end
 
   context "currency" do
-    before { order.stub(:currency) { "ABC" } }
+    before { allow(order).to receive(:currency) { "ABC" } }
     it "returns the order currency" do
       expect(return_authorization.currency).to eq "ABC"
     end

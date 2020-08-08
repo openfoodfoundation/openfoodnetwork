@@ -8,8 +8,8 @@ module Spree
     context '#save' do
       it 'should update inventory, totals, and tax' do
         # Regression check for Spree #1481
-        line_item.order.should_receive(:create_tax_charge!)
-        line_item.order.should_receive(:update!)
+        expect(line_item.order).to receive(:create_tax_charge!)
+        expect(line_item.order).to receive(:update!)
         line_item.quantity = 2
         line_item.save
       end
@@ -18,7 +18,7 @@ module Spree
     context '#destroy' do
       # Regression test for Spree #1481
       it "applies tax adjustments" do
-        line_item.order.should_receive(:create_tax_charge!)
+        expect(line_item.order).to receive(:create_tax_charge!)
         line_item.destroy
       end
 
