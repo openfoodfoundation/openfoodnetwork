@@ -12,14 +12,14 @@ module Spree
       # So that Payment#purchase! is called during processing
       Spree::Config[:auto_capture] = true
 
-      order.stub_chain(:line_items, :empty?).and_return(false)
-      order.stub total: 100
+      allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
+      allow(order).to receive_messages total: 100
     end
 
     it 'processes all payments' do
       payment1 = create(:payment, amount: 50, payment_method: bogus)
       payment2 = create(:payment, amount: 50, payment_method: bogus)
-      order.stub(:pending_payments).and_return([payment1, payment2])
+      allow(order).to receive(:pending_payments).and_return([payment1, payment2])
 
       order.process_payments!
       updater.update_payment_state
@@ -33,7 +33,7 @@ module Spree
       payment1 = create(:payment, amount: 50, payment_method: bogus)
       payment2 = create(:payment, amount: 50, payment_method: bogus)
       payment3 = create(:payment, amount: 50, payment_method: bogus)
-      order.stub(:pending_payments).and_return([payment1, payment2, payment3])
+      allow(order).to receive(:pending_payments).and_return([payment1, payment2, payment3])
 
       order.process_payments!
       updater.update_payment_state
@@ -47,9 +47,9 @@ module Spree
     it "does not use failed payments" do
       payment1 = create(:payment, amount: 50, payment_method: bogus)
       payment2 = create(:payment, amount: 50, state: 'failed', payment_method: bogus)
-      order.stub(:pending_payments).and_return([payment1])
+      allow(order).to receive(:pending_payments).and_return([payment1])
 
-      payment2.should_not_receive(:process!)
+      expect(payment2).not_to receive(:process!)
 
       order.process_payments!
     end

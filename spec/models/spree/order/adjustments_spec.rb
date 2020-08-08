@@ -8,14 +8,14 @@ describe Spree::Order do
     let(:adjustment) { double("Adjustment") }
 
     it "destroys all order adjustments" do
-      order.stub(adjustments: adjustment)
-      adjustment.should_receive(:destroy_all)
+      allow(order).to receive_messages(adjustments: adjustment)
+      expect(adjustment).to receive(:destroy_all)
       order.clear_adjustments!
     end
 
     it "destroy all line item adjustments" do
-      order.stub(line_item_adjustments: adjustment)
-      adjustment.should_receive(:destroy_all)
+      allow(order).to receive_messages(line_item_adjustments: adjustment)
+      expect(adjustment).to receive(:destroy_all)
       order.clear_adjustments!
     end
   end
@@ -26,14 +26,14 @@ describe Spree::Order do
 
     context "#ship_total" do
       it "should return the correct amount" do
-        order.stub_chain :adjustments, shipping: [adjustment1, adjustment2]
+        allow(order).to receive_message_chain :adjustments, shipping: [adjustment1, adjustment2]
         expect(order.ship_total).to eq 15
       end
     end
 
     context "#tax_total" do
       it "should return the correct amount" do
-        order.stub_chain :adjustments, tax: [adjustment1, adjustment2]
+        allow(order).to receive_message_chain :adjustments, tax: [adjustment1, adjustment2]
         expect(order.tax_total).to eq 15
       end
     end
@@ -43,7 +43,7 @@ describe Spree::Order do
     before { @order = Spree::Order.create! }
 
     context "when there are no line item adjustments" do
-      before { @order.stub_chain(:line_item_adjustments, eligible: []) }
+      before { allow(@order).to receive_message_chain(:line_item_adjustments, eligible: []) }
 
       it "should return an empty hash" do
         expect(@order.line_item_adjustment_totals).to eq({})
@@ -55,7 +55,7 @@ describe Spree::Order do
       let(:adj2) { build(:adjustment, amount: 20, label: "Bar") }
 
       before do
-        @order.stub_chain(:line_item_adjustments, eligible: [adj1, adj2])
+        allow(@order).to receive_message_chain(:line_item_adjustments, eligible: [adj1, adj2])
       end
 
       it "should return exactly two totals" do
@@ -74,7 +74,7 @@ describe Spree::Order do
       let(:adj3) { build(:adjustment, amount: 40, label: "Bar") }
 
       before do
-        @order.stub_chain(:line_item_adjustments, eligible: [adj1, adj2, adj3])
+        allow(@order).to receive_message_chain(:line_item_adjustments, eligible: [adj1, adj2, adj3])
       end
 
       it "should return exactly two totals" do
@@ -90,7 +90,7 @@ describe Spree::Order do
   context "line item adjustments" do
     before do
       @order = Spree::Order.create!
-      @order.stub line_items: [line_item1, line_item2]
+      allow(@order).to receive_messages line_items: [line_item1, line_item2]
     end
 
     let(:line_item1) { create(:line_item, order: @order) }

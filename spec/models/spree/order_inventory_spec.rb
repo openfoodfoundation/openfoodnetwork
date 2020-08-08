@@ -33,16 +33,16 @@ describe Spree::OrderInventory do
     let(:variant) { create :variant }
 
     context "order is not completed" do
-      before { order.stub completed?: false }
+      before { allow(order).to receive_messages completed?: false }
 
       it "doesn't unstock items" do
-        shipment.stock_location.should_not_receive(:unstock)
+        expect(shipment.stock_location).not_to receive(:unstock)
         expect(subject.send(:add_to_shipment, shipment, variant, 5)).to eq 5
       end
     end
 
     it 'should create inventory_units in the necessary states' do
-      shipment.stock_location.should_receive(:fill_status).with(variant, 5).and_return([3, 2])
+      expect(shipment.stock_location).to receive(:fill_status).with(variant, 5).and_return([3, 2])
 
       expect(subject.send(:add_to_shipment, shipment, variant, 5)).to eq 5
 
@@ -85,10 +85,10 @@ describe Spree::OrderInventory do
       let(:variant) { order.line_items.first.variant }
 
       context "order is not completed" do
-        before { order.stub completed?: false }
+        before { allow(order).to receive_messages completed?: false }
 
         it "doesn't restock items" do
-          shipment.stock_location.should_not_receive(:restock)
+          expect(shipment.stock_location).not_to receive(:restock)
           expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
         end
       end
@@ -102,40 +102,40 @@ describe Spree::OrderInventory do
       end
 
       it 'should destroy backordered units first' do
-        shipment.stub(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'backordered'),
+        allow(shipment).to receive_messages(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'backordered'),
                                             build(:inventory_unit, variant_id: variant.id, state: 'on_hand'),
                                             build(:inventory_unit, variant_id: variant.id, state: 'backordered')])
 
-        shipment.inventory_units_for[0].should_receive(:destroy)
-        shipment.inventory_units_for[1].should_not_receive(:destroy)
-        shipment.inventory_units_for[2].should_receive(:destroy)
+        expect(shipment.inventory_units_for[0]).to receive(:destroy)
+        expect(shipment.inventory_units_for[1]).not_to receive(:destroy)
+        expect(shipment.inventory_units_for[2]).to receive(:destroy)
 
         expect(subject.send(:remove_from_shipment, shipment, variant, 2)).to eq 2
       end
 
       it 'should destroy unshipped units first' do
-        shipment.stub(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'shipped'),
+        allow(shipment).to receive_messages(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'shipped'),
                                             build(:inventory_unit, variant_id: variant.id, state: 'on_hand')] )
 
-        shipment.inventory_units_for[0].should_not_receive(:destroy)
-        shipment.inventory_units_for[1].should_receive(:destroy)
+        expect(shipment.inventory_units_for[0]).not_to receive(:destroy)
+        expect(shipment.inventory_units_for[1]).to receive(:destroy)
 
         expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
       end
 
       it 'only attempts to destroy as many units as are eligible, and return amount destroyed' do
-        shipment.stub(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'shipped'),
+        allow(shipment).to receive_messages(inventory_units_for: [build(:inventory_unit, variant_id: variant.id, state: 'shipped'),
                                             build(:inventory_unit, variant_id: variant.id, state: 'on_hand')] )
 
-        shipment.inventory_units_for[0].should_not_receive(:destroy)
-        shipment.inventory_units_for[1].should_receive(:destroy)
+        expect(shipment.inventory_units_for[0]).not_to receive(:destroy)
+        expect(shipment.inventory_units_for[1]).to receive(:destroy)
 
         expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
       end
 
       it 'should destroy self if not inventory units remain' do
-        shipment.inventory_units.stub(count: 0)
-        shipment.should_receive(:destroy)
+        allow(shipment.inventory_units).to receive_messages(count: 0)
+        expect(shipment).to receive(:destroy)
 
         expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
       end

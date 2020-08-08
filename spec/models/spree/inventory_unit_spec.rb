@@ -15,7 +15,7 @@ describe Spree::InventoryUnit do
       shipment.shipping_methods << create(:shipping_method)
       shipment.order = order
       # We don't care about this in this test
-      shipment.stub(:ensure_correct_adjustment)
+      allow(shipment).to receive(:ensure_correct_adjustment)
       shipment.tap(&:save!)
     end
 
