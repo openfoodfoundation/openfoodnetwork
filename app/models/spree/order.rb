@@ -33,13 +33,8 @@ module Spree
 
     token_resource
 
-    if Spree.user_class
-      belongs_to :user, class_name: Spree.user_class.to_s
-      belongs_to :created_by, class_name: Spree.user_class.to_s
-    else
-      belongs_to :user
-      belongs_to :created_by
-    end
+    belongs_to :user, class_name: Spree.user_class.to_s
+    belongs_to :created_by, class_name: Spree.user_class.to_s
 
     belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
