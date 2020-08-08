@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ReturnAuthorization < ActiveRecord::Base
     belongs_to :order, class_name: 'Spree::Order'
@@ -55,49 +57,50 @@ module Spree
         end
       end
 
-      order.authorize_return! if inventory_units.reload.size > 0 && !order.awaiting_return?
+      order.authorize_return! if !inventory_units.reload.empty? && !order.awaiting_return?
     end
 
     def returnable_inventory
-      order.shipped_shipments.collect{|s| s.inventory_units.to_a}.flatten
+      order.shipped_shipments.collect{ |s| s.inventory_units.to_a }.flatten
     end
 
     private
-      def must_have_shipped_units
-        errors.add(:order, Spree.t(:has_no_shipped_units)) if order.nil? || !order.shipped_shipments.any?
+
+    def must_have_shipped_units
+      errors.add(:order, Spree.t(:has_no_shipped_units)) if order.nil? || order.shipped_shipments.none?
+    end
+
+    def generate_number
+      return if number
+
+      record = true
+      while record
+        random = "RMA#{Array.new(9){ rand(9) }.join}"
+        record = self.class.where(number: random).first
+      end
+      self.number = random
+    end
+
+    def process_return
+      inventory_units.each do |iu|
+        iu.return!
+        Spree::StockMovement.create!(stock_item_id: iu.find_stock_item.id, quantity: 1)
       end
 
-      def generate_number
-        return if number
+      credit = Adjustment.new(amount: amount.abs * -1, label: Spree.t(:rma_credit))
+      credit.source = self
+      credit.adjustable = order
+      credit.save
 
-        record = true
-        while record
-          random = "RMA#{Array.new(9){rand(9)}.join}"
-          record = self.class.where(number: random).first
-        end
-        self.number = random
-      end
+      order.return if inventory_units.all?(&:returned?)
+    end
 
-      def process_return
-        inventory_units.each do |iu|
-          iu.return!
-          Spree::StockMovement.create!(stock_item_id: iu.find_stock_item.id, quantity: 1)
-        end
+    def allow_receive?
+      !inventory_units.empty?
+    end
 
-        credit = Adjustment.new(amount: amount.abs * -1, label: Spree.t(:rma_credit))
-        credit.source = self
-        credit.adjustable = order
-        credit.save
-
-        order.return if inventory_units.all?(&:returned?)
-      end
-
-      def allow_receive?
-        !inventory_units.empty?
-      end
-
-      def force_positive_amount
-        self.amount = amount.abs
-      end
+    def force_positive_amount
+      self.amount = amount.abs
+    end
   end
 end

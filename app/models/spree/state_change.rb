@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class StateChange < ActiveRecord::Base
     belongs_to :user
@@ -9,7 +11,7 @@ module Spree
     end
 
     def assign_user
-      true   # don't stop the filters
+      true # don't stop the filters
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderInventory
     attr_accessor :order
@@ -21,7 +23,7 @@ module Spree
         if variant_units.size < line_item.quantity
           quantity = line_item.quantity - variant_units.size
 
-          shipment = determine_target_shipment(line_item.variant) unless shipment
+          shipment ||= determine_target_shipment(line_item.variant)
           add_to_shipment(shipment, line_item.variant, quantity)
         elsif variant_units.size > line_item.quantity
           remove(line_item, variant_units, shipment)
@@ -32,11 +34,12 @@ module Spree
     end
 
     def inventory_units_for(variant)
-      units = order.shipments.collect{|s| s.inventory_units.to_a}.flatten
+      units = order.shipments.collect{ |s| s.inventory_units.to_a }.flatten
       units.group_by(&:variant_id)[variant.id] || []
     end
 
     private
+
     def remove(line_item, variant_units, shipment = nil)
       quantity = variant_units.size - line_item.quantity
 
@@ -45,6 +48,7 @@ module Spree
       else
         order.shipments.each do |shipment|
           break if quantity == 0
+
           quantity -= remove_from_shipment(shipment, line_item.variant, quantity)
         end
       end
@@ -89,6 +93,7 @@ module Spree
 
       shipment_units.each do |inventory_unit|
         break if removed_quantity == quantity
+
         inventory_unit.destroy
         removed_quantity += 1
       end
