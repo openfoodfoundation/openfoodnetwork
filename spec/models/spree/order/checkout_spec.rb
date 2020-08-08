@@ -147,7 +147,7 @@ describe Spree::Order do
         end
       end
 
-      # Regression test for #2028
+      # Regression test for Spree #2028
       context "when payment is not required" do
         before do
           allow(order).to receive_messages payment_required?: false
@@ -211,7 +211,7 @@ describe Spree::Order do
     end
   end
 
-  # Regression test for #3665
+  # Regression test for Spree #3665
   context "with only a complete step" do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
