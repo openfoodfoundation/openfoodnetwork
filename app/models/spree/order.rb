@@ -88,19 +88,10 @@ module Spree
     before_create :link_by_email
     after_create :create_tax_charge!
 
-    validates :email, presence: true, if: :require_email
-    validates :email, email: true, if: :require_email, allow_blank: true
     validate :has_available_shipment
     validate :has_available_payment
-
-    # The EmailValidator introduced in Spree 2.1 is not working
-    # So here we remove it and re-introduce the regexp validation rule from Spree 2.0
-    _validate_callbacks.each do |callback|
-      if callback.raw_filter.respond_to? :attributes
-        callback.raw_filter.attributes.delete :email
-      end
-    end
-    validates :email, presence: true, format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
+    validates :email, presence: true,
+                      format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
                       if: :require_email
 
     make_permalink field: :number
