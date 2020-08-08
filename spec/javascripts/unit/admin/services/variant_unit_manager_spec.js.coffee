@@ -28,16 +28,18 @@ describe "VariantUnitManager", ->
       expect(VariantUnitManager.getUnitName(1000, "volume")).toEqual "kL"
 
   describe "unitScales", ->
-    it "returns a set of scales for unit type weight", ->
-      expect(VariantUnitManager.unitScales('weight')).toEqual [1.0, 1000.0, 1000000.0]
+    it "returns a sorted set of scales for unit type weight", ->
+      expect(VariantUnitManager.unitScales('weight')).toEqual [1.0, 28.34952, 453.6, 1000.0, 1000000.0]
 
-    it "returns a set of scales for unit type volume", ->
+    it "returns a sorted set of scales for unit type volume", ->
       expect(VariantUnitManager.unitScales('volume')).toEqual [0.001, 1.0, 1000.0]
 
   describe "variantUnitOptions", ->
     it "returns an array of options", ->
       expect(VariantUnitManager.variantUnitOptions()).toEqual [
         ["Weight (g)", "weight_1"],
+        ["Weight (oz)", "weight_28.34952"],
+        ["Weight (lb)", "weight_453.6"],
         ["Weight (kg)", "weight_1000"],
         ["Weight (T)", "weight_1000000"],
         ["Volume (mL)", "volume_0.001"],
