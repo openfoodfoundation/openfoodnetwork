@@ -171,13 +171,6 @@ describe Spree::Order do
       expect(order.shipment_state).to eq 'ready'
     end
 
-    after { Spree::Config.set track_inventory_levels: true }
-    it "should not sell inventory units if track_inventory_levels is false" do
-      Spree::Config.set track_inventory_levels: false
-      Spree::InventoryUnit.should_not_receive(:sell_units)
-      order.finalize!
-    end
-
     it "should send an order confirmation email" do
       expect do
         order.finalize!

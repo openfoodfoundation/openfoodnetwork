@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   describe Spree::Order do
-    let(:order) { stub_model(Spree::Order) }
+    let(:order) { build(:order) }
 
     context "#tax_zone" do
       let(:bill_address) { create :address }
@@ -16,7 +16,7 @@ module Spree
         before { Spree::Zone.destroy_all }
 
         it "should return nil" do
-          order.tax_zone.should be_nil
+          expect(order.tax_zone).to be_nil
         end
       end
 
@@ -50,7 +50,7 @@ module Spree
           before { Spree::Zone.stub(match: zone) }
 
           it "should return the matching zone" do
-            order.tax_zone.should == zone
+            expect(order.tax_zone).to eq zone
           end
         end
 
@@ -58,7 +58,7 @@ module Spree
           before { Spree::Zone.stub(match: nil) }
 
           it "should return the default tax zone" do
-            order.tax_zone.should == @default_zone
+            expect(order.tax_zone).to eq @default_zone
           end
         end
       end
@@ -70,7 +70,7 @@ module Spree
           before { Spree::Zone.stub(match: zone) }
 
           it "should return the matching zone" do
-            order.tax_zone.should == zone
+            expect(order.tax_zone).to eq zone
           end
         end
 
@@ -78,7 +78,7 @@ module Spree
           before { Spree::Zone.stub(match: nil) }
 
           it "should return nil" do
-            order.tax_zone.should be_nil
+            expect(order.tax_zone).to be_nil
           end
         end
       end
@@ -96,12 +96,12 @@ module Spree
 
         it "should be true when tax_zone is not the same as the default" do
           @order.stub tax_zone: create(:zone, name: "other_zone")
-          @order.exclude_tax?.should be_true
+          expect(@order.exclude_tax?).to be_truthy
         end
 
         it "should be false when tax_zone is the same as the default" do
           @order.stub tax_zone: @default_zone
-          @order.exclude_tax?.should be_false
+          expect(@order.exclude_tax?).to be_falsy
         end
       end
 
@@ -109,7 +109,7 @@ module Spree
         before { Spree::Config.set(prices_inc_tax: false) }
 
         it "should be false" do
-          @order.exclude_tax?.should be_false
+          expect(@order.exclude_tax?).to be_falsy
         end
       end
     end

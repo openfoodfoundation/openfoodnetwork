@@ -12,9 +12,9 @@ describe Spree::Order do
   end
 
   context "#next!" do
-    context "when current state is confirm" do
+    context "when current state is payment" do
       before do
-        order.state = "confirm"
+        order.state = "payment"
         order.run_callbacks(:create)
         order.stub payment_required?: true
         order.stub process_payments!: true
@@ -34,7 +34,7 @@ describe Spree::Order do
 
           it "should not complete the order" do
             order.next
-            order.state.should == "confirm"
+            expect(order.state).to eq "payment"
           end
         end
       end
@@ -44,7 +44,7 @@ describe Spree::Order do
 
         it "cannot transition to complete" do
           order.next
-          order.state.should == "confirm"
+          expect(order.state).to eq "payment"
         end
       end
     end
@@ -77,7 +77,7 @@ describe Spree::Order do
       it "should be true if shipment_state is #{shipment_state}" do
         order.stub completed?: true
         order.shipment_state = shipment_state
-        order.can_cancel?.should be_true
+        expect(order.can_cancel?).to be_truthy
       end
     end
 
@@ -85,26 +85,26 @@ describe Spree::Order do
       it "should be false if shipment_state is #{shipment_state}" do
         order.stub completed?: true
         order.shipment_state = shipment_state
-        order.can_cancel?.should be_false
+        expect(order.can_cancel?).to be_falsy
       end
     end
   end
 
   context "#cancel" do
-    let!(:variant) { stub_model(Spree::Variant) }
+    let!(:variant) { build(:variant) }
     let!(:inventory_units) {
-      [stub_model(Spree::InventoryUnit, variant: variant),
-       stub_model(Spree::InventoryUnit, variant: variant)]
+      [build(:inventory_unit, variant: variant),
+       build(:inventory_unit, variant: variant)]
     }
     let!(:shipment) do
-      shipment = stub_model(Spree::Shipment)
+      shipment = build(:shipment)
       shipment.stub inventory_units: inventory_units
       order.stub shipments: [shipment]
       shipment
     end
 
     before do
-      order.stub line_items: [stub_model(Spree::LineItem, variant: variant, quantity: 2)]
+      order.stub line_items: [build(:line_item, variant: variant, quantity: 2)]
       order.line_items.stub find_by_variant_id: order.line_items.first
 
       order.stub completed?: true
@@ -124,7 +124,7 @@ describe Spree::Order do
       }
       mail_message.should_receive :deliver
       order.cancel!
-      order_id.should == order.id
+      expect(order_id).to eq order.id
     end
 
     context "restocking inventory" do
@@ -151,7 +151,7 @@ describe Spree::Order do
       context "without shipped items" do
         it "should set payment state to 'credit owed'" do
           order.cancel!
-          order.payment_state.should == 'credit_owed'
+          expect(order.payment_state).to eq 'credit_owed'
         end
       end
 
@@ -162,7 +162,7 @@ describe Spree::Order do
 
         it "should not alter the payment state" do
           order.cancel!
-          order.payment_state.should be_nil
+          expect(order.payment_state).to be_nil
         end
       end
     end
