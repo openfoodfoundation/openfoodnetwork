@@ -720,7 +720,7 @@ module Spree
     end
 
     def cap_quantity_at_stock!
-      line_items.includes(variant: :stock_items).all.find_each(&:cap_quantity_at_stock!)
+      line_items.includes(variant: :stock_items).all.each(&:cap_quantity_at_stock!)
     end
 
     def set_distributor!(distributor)
