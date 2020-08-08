@@ -15,7 +15,8 @@ module Spree
     has_one :product, through: :variant
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
-    has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
+    has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items',
+                                            class_name: 'Spree::OptionValue'
 
     before_validation :adjust_quantity
     before_validation :copy_price
@@ -31,7 +32,8 @@ module Spree
     validates_with Stock::AvailabilityValidator
 
     before_save :update_inventory
-    before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
+    before_save :calculate_final_weight_volume, if: :quantity_changed?,
+                                                unless: :final_weight_volume_changed?
     after_save :update_order
     after_save :update_units
     before_destroy :update_inventory_before_destroy
@@ -50,7 +52,8 @@ module Spree
         # Find line items that are from orders distributed by the user or supplied by the user
         joins(variant: :product).
           joins(:order).
-          where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
+          where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
+                user.enterprises, user.enterprises).
           select('spree_line_items.*')
       end
     }
@@ -99,17 +102,17 @@ module Spree
     }
 
     def copy_price
-      if variant
-        self.price = variant.price if price.nil?
-        self.cost_price = variant.cost_price if cost_price.nil?
-        self.currency = variant.currency if currency.nil?
-      end
+      return unless variant
+
+      self.price = variant.price if price.nil?
+      self.cost_price = variant.cost_price if cost_price.nil?
+      self.currency = variant.currency if currency.nil?
     end
 
     def copy_tax_category
-      if variant
-        self.tax_category = variant.product.tax_category
-      end
+      return unless variant
+
+      self.tax_category = variant.product.tax_category
     end
 
     def amount
@@ -223,18 +226,18 @@ module Spree
     private
 
     def update_inventory
-      if changed?
-        scoper.scope(variant)
-        Spree::OrderInventory.new(order).verify(self, target_shipment)
-      end
+      return unless changed?
+
+      scoper.scope(variant)
+      Spree::OrderInventory.new(order).verify(self, target_shipment)
     end
 
     def update_order
-      if changed? || destroyed?
-        # update the order totals, etc.
-        order.create_tax_charge!
-        order.update!
-      end
+      return unless changed? || destroyed?
+
+      # update the order totals, etc.
+      order.create_tax_charge!
+      order.update!
     end
 
     def update_inventory_before_destroy
