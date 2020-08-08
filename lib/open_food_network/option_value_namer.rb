@@ -71,7 +71,7 @@ module OpenFoodNetwork
       # shop or producer basis?
 
       units = { 'weight' => { 1.0 => 'g', 1000.0 => 'kg', 1_000_000.0 => 'T',
-                              28.34952 => 'oz', 453.59237 => 'lb'},
+                              28.34952 => 'oz', 453.6 => 'lb'},
                 'volume' => { 0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL' } }
 
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.

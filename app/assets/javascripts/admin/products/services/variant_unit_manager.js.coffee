@@ -4,15 +4,9 @@ angular.module("admin.products").factory "VariantUnitManager", ->
       'weight':
         1.0: 'g'
         1000.0: 'kg'
-        1000000.0: 'T',
-        # This appears to be what needs to be set in order for
-        # products to have a mass value stored in the database
-        # when they are created. However, it does not appear to
-        # change the existing product(s), so if the scale value
-        # is changed, a data migration may be necessary to make sure
-        # the proper unit X to grams actually works.
-        # TODO: ^^^ Delete this
-        453.592: 'lb'
+        1000000.0: 'T'
+        453.6: 'lb'
+        28.34952: 'oz'
       'volume':
         0.001: 'mL'
         1.0: 'L'
