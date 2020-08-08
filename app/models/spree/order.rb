@@ -21,15 +21,9 @@ module Spree
         order.update_totals
         order.payment_required?
       }
-      go_to_state :confirm, if: ->(order) { order.confirmation_required? }
       go_to_state :complete
       remove_transition from: :delivery, to: :confirm
     end
-
-    # Orders are confirmed with their payment, we don't use the confirm step.
-    # Here we remove that step from Spree's checkout state machine.
-    # See: https://guides.spreecommerce.org/developer/checkout.html#modifying-the-checkout-flow
-    remove_checkout_step :confirm
 
     state_machine.after_transition to: :payment, do: :charge_shipping_and_payment_fees!
 
@@ -246,11 +240,6 @@ module Spree
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
       total.to_f > 0.0 && !skip_payment_for_subscription?
-    end
-
-    # If true, causes the confirmation step to happen during the checkout process
-    def confirmation_required?
-      payments.map(&:payment_method).compact.any?(&:payment_profiles_supported?)
     end
 
     # Indicates the number of items in the order
