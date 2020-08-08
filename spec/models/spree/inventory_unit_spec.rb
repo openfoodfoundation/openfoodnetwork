@@ -33,16 +33,7 @@ describe Spree::InventoryUnit do
     end
 
     it "finds inventory units from its stock location when the unit's variant matches the stock item's variant" do
-      Spree::InventoryUnit.backordered_for_stock_item(stock_item).should =~ [unit]
-    end
-
-    it "does not find inventory units that aren't backordered" do
-      on_hand_unit = shipment.inventory_units.build
-      on_hand_unit.state = 'on_hand'
-      on_hand_unit.variant_id = 1
-      on_hand_unit.save!
-
-      Spree::InventoryUnit.backordered_for_stock_item(stock_item).should_not include(on_hand_unit)
+      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).to eq [unit]
     end
 
     it "does not find inventory units that don't match the stock item's variant" do
@@ -51,7 +42,7 @@ describe Spree::InventoryUnit do
       other_variant_unit.variant = create(:variant)
       other_variant_unit.save!
 
-      Spree::InventoryUnit.backordered_for_stock_item(stock_item).should_not include(other_variant_unit)
+      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).to_not include(other_variant_unit)
     end
   end
 
@@ -63,11 +54,6 @@ describe Spree::InventoryUnit do
     it "can still fetch variant" do
       unit.variant.destroy
       expect(unit.reload.variant).to be_a Spree::Variant
-    end
-
-    it "can still fetch variants by eager loading (remove default_scope)" do
-      unit.variant.destroy
-      expect(Spree::InventoryUnit.joins(:variant).includes(:variant).first.variant).to be_a Spree::Variant
     end
   end
 
@@ -83,7 +69,7 @@ describe Spree::InventoryUnit do
 
     it "should create a stock movement" do
       Spree::InventoryUnit.finalize_units!(inventory_units)
-      inventory_units.any?(&:pending).should be_false
+      expect(inventory_units.any?(&:pending)).to be_falsy
     end
   end
 end

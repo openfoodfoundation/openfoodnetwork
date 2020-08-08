@@ -41,9 +41,9 @@ module Spree
         line_item.currency = nil
         line_item.copy_price
         variant = line_item.variant
-        line_item.price.should == variant.price
-        line_item.cost_price.should == variant.cost_price
-        line_item.currency.should == variant.currency
+        expect(line_item.price).to eq variant.price
+        expect(line_item.cost_price).to eq variant.cost_price
+        expect(line_item.currency).to eq variant.currency
       end
     end
 
@@ -52,7 +52,7 @@ module Spree
       it "copies over a variant's tax category" do
         line_item.tax_category = nil
         line_item.copy_tax_category
-        line_item.tax_category.should == line_item.variant.product.tax_category
+        expect(line_item.tax_category).to eq line_item.variant.product.tax_category
       end
     end
 
@@ -69,14 +69,14 @@ module Spree
       end
 
       it "returns a Spree::Money representing the total for this line item" do
-        line_item.money.to_s.should == "$7.00"
+        expect(line_item.money.to_s).to eq "$7.00"
       end
     end
 
     describe '.single_money' do
       before { line_item.price = 3.50 }
       it "returns a Spree::Money representing the price for one variant" do
-        line_item.single_money.to_s.should == "$3.50"
+        expect(line_item.single_money.to_s).to eq "$3.50"
       end
     end
 
@@ -98,7 +98,7 @@ module Spree
           line_item.target_shipment = order.shipments.first
 
           line_item.save
-          expect(line_item).to have(0).errors_on(:quantity)
+          expect(line_item.errors[:quantity]).to be_empty
         end
 
         it "doesnt allow to increase item quantity" do
@@ -107,7 +107,7 @@ module Spree
           line_item.target_shipment = order.shipments.first
 
           line_item.save
-          expect(line_item).to have(1).errors_on(:quantity)
+          expect(line_item.errors[:quantity].first).to include "is out of stock"
         end
       end
 
@@ -125,7 +125,7 @@ module Spree
           line_item.target_shipment = order.shipments.first
 
           line_item.save
-          expect(line_item).to have(0).errors_on(:quantity)
+          expect(line_item.errors[:quantity]).to be_empty
         end
 
         it "doesnt allow to increase quantity over stock availability" do
@@ -134,7 +134,7 @@ module Spree
           line_item.target_shipment = order.shipments.first
 
           line_item.save
-          expect(line_item).to have(1).errors_on(:quantity)
+          expect(line_item.errors[:quantity].first).to include "is out of stock"
         end
       end
     end

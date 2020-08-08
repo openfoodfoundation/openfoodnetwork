@@ -12,32 +12,32 @@ describe Spree::OrderContents do
     context 'given quantity is not explicitly provided' do
       it 'should add one line item' do
         line_item = subject.add(variant)
-        line_item.quantity.should == 1
-        order.line_items.size.should == 1
+        expect(line_item.quantity).to eq 1
+        expect(order.line_items.size).to eq 1
       end
     end
 
     it 'should add line item if one does not exist' do
       line_item = subject.add(variant, 1)
-      line_item.quantity.should == 1
-      order.line_items.size.should == 1
+      expect(line_item.quantity).to eq 1
+      expect(order.line_items.size).to eq 1
     end
 
     it 'should update line item if one exists' do
       subject.add(variant, 1)
       line_item = subject.add(variant, 1)
-      line_item.quantity.should == 2
-      order.line_items.size.should == 1
+      expect(line_item.quantity).to eq 2
+      expect(order.line_items.size).to eq 1
     end
 
     it "should update order totals" do
-      order.item_total.to_f.should == 0.00
-      order.total.to_f.should == 0.00
+      expect(order.item_total.to_f).to eq 0.00
+      expect(order.total.to_f).to eq 0.00
 
       subject.add(variant, 1)
 
-      order.item_total.to_f.should == 19.99
-      order.total.to_f.should == 19.99
+      expect(order.item_total.to_f).to eq 19.99
+      expect(order.total.to_f).to eq 19.99
     end
   end
 
@@ -57,7 +57,7 @@ describe Spree::OrderContents do
         line_item = subject.add(variant, 3)
         subject.remove(variant)
 
-        line_item.reload.quantity.should == 2
+        expect(line_item.reload.quantity).to eq 2
       end
     end
 
@@ -65,28 +65,28 @@ describe Spree::OrderContents do
       line_item = subject.add(variant, 3)
       subject.remove(variant, 1)
 
-      line_item.reload.quantity.should == 2
+      expect(line_item.reload.quantity).to eq 2
     end
 
     it 'should remove line_item if quantity matches line_item quantity' do
       subject.add(variant, 1)
       subject.remove(variant, 1)
 
-      order.reload.find_line_item_by_variant(variant).should be_nil
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
     end
 
     it "should update order totals" do
-      order.item_total.to_f.should == 0.00
-      order.total.to_f.should == 0.00
+      expect(order.item_total.to_f).to eq 0.00
+      expect(order.total.to_f).to eq 0.00
 
       subject.add(variant, 2)
 
-      order.item_total.to_f.should == 39.98
-      order.total.to_f.should == 39.98
+      expect(order.item_total.to_f).to eq 39.98
+      expect(order.total.to_f).to eq 39.98
 
       subject.remove(variant, 1)
-      order.item_total.to_f.should == 19.99
-      order.total.to_f.should == 19.99
+      expect(order.item_total.to_f).to eq 19.99
+      expect(order.total.to_f).to eq 19.99
     end
   end
 end
