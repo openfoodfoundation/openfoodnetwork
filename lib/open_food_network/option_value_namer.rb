@@ -63,25 +63,34 @@ module OpenFoodNetwork
     end
 
     def scale_for_unit_value
-      # TODO: We _think_ this will cause the following weird results:
-      #   29g of product would use the `oz` measurement
-      #   445g of product would use the `lb` measurement
-      # So we probably want to keep the metric and imperial measures
-      # in their own lanes; perhaps using a configurable value on a per
-      # shop or producer basis?
+      units = {
+        'weight' => {
+          1.0         => { 'name' => 'g',  'system' => 'metric' },
+          28.34952    => { 'name' => 'oz', 'system' => 'imperial' },
+          453.6       => { 'name' => 'lb', 'system' => 'imperial' },
+          1000.0      => { 'name' => 'kg', 'system' => 'metric' },
+          1_000_000.0 => { 'name' => 'T',  'system' => 'metric' }
+        },
+        'volume' => {
+          0.001 => { 'name' => 'mL', 'system' => 'metric' },
+          1.0 => { 'name' => 'L', 'system' => 'metric' },
+          1000.0 => { 'name' => 'kL', 'system' => 'metric' }
+        }
+      }
 
-      units = { 'weight' => { 1.0 => 'g', 1000.0 => 'kg', 1_000_000.0 => 'T',
-                              28.34952 => 'oz', 453.6 => 'lb'},
-                'volume' => { 0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL' } }
-
-      # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
+      # Find the largest available and compatible unit where unit_value comes
+      # to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest available unit.
-      unit = units[@variant.product.variant_unit].select { |scale, _unit_name|
-        @variant.unit_value / scale >= 1
-      }.to_a.last
-      unit = units[@variant.product.variant_unit].first if unit.nil?
+      scales = units[@variant.product.variant_unit]
+      product_scale = @variant.product.variant_unit_scale
+      product_scale_system = scales[product_scale.to_f]['system']
+      largest_unit = scales.select { |scale, unit_info|
+        unit_info['system'] == product_scale_system &&
+        @variant.unit_value/scale >= 1
+      }.sort.last
+      largest_unit = units[@variant.product.variant_unit].first if largest_unit.nil?
 
-      unit
+      [largest_unit[0], largest_unit[1]["name"]]
     end
 
     def pluralize(unit_name, count)
