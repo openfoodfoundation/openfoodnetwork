@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::OrderInventory do
@@ -65,8 +67,8 @@ describe Spree::OrderInventory do
     let(:variant) { line_item.variant }
 
     before do
-      order.shipments.create(:stock_location_id => stock_location.id)
-      shipped = order.shipments.create(:stock_location_id => order.shipments.first.stock_location.id)
+      order.shipments.create(stock_location_id: stock_location.id)
+      shipped = order.shipments.create(stock_location_id: order.shipments.first.stock_location.id)
       shipped.update_column(:state, 'shipped')
     end
 
@@ -132,9 +134,9 @@ describe Spree::OrderInventory do
       end
 
       it 'should destroy backordered units first' do
-        shipment.stub(:inventory_units_for => [ mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'backordered'),
-                                                mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand'),
-                                                mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'backordered') ])
+        shipment.stub(inventory_units_for: [mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'backordered'),
+                                            mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'on_hand'),
+                                            mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'backordered')])
 
         shipment.inventory_units_for[0].should_receive(:destroy)
         shipment.inventory_units_for[1].should_not_receive(:destroy)
@@ -144,8 +146,8 @@ describe Spree::OrderInventory do
       end
 
       it 'should destroy unshipped units first' do
-        shipment.stub(:inventory_units_for => [ mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
-                                                mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand') ] )
+        shipment.stub(inventory_units_for: [mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'shipped'),
+                                            mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'on_hand')] )
 
         shipment.inventory_units_for[0].should_not_receive(:destroy)
         shipment.inventory_units_for[1].should_receive(:destroy)
@@ -154,8 +156,8 @@ describe Spree::OrderInventory do
       end
 
       it 'only attempts to destroy as many units as are eligible, and return amount destroyed' do
-        shipment.stub(:inventory_units_for => [ mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
-                                                mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand') ] )
+        shipment.stub(inventory_units_for: [mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'shipped'),
+                                            mock_model(Spree::InventoryUnit, variant_id: variant.id, state: 'on_hand')] )
 
         shipment.inventory_units_for[0].should_not_receive(:destroy)
         shipment.inventory_units_for[1].should_receive(:destroy)
@@ -164,7 +166,7 @@ describe Spree::OrderInventory do
       end
 
       it 'should destroy self if not inventory units remain' do
-        shipment.inventory_units.stub(:count => 0)
+        shipment.inventory_units.stub(count: 0)
         shipment.should_receive(:destroy)
 
         subject.send(:remove_from_shipment, shipment, variant, 1).should == 1

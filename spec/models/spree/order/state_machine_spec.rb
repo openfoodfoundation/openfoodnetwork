@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Order do
@@ -14,13 +16,13 @@ describe Spree::Order do
       before do
         order.state = "confirm"
         order.run_callbacks(:create)
-        order.stub :payment_required? => true
-        order.stub :process_payments! => true
+        order.stub payment_required?: true
+        order.stub process_payments!: true
         order.stub :has_available_shipment
       end
 
       context "when payment processing succeeds" do
-        before { order.stub :process_payments! => true }
+        before { order.stub process_payments!: true }
 
         it "should finalize order when transitioning to complete state" do
           order.should_receive(:finalize!)
@@ -28,25 +30,23 @@ describe Spree::Order do
         end
 
         context "when credit card processing fails" do
-          before { order.stub :process_payments! => false }
+          before { order.stub process_payments!: false }
 
           it "should not complete the order" do
-             order.next
-             order.state.should == "confirm"
-           end
+            order.next
+            order.state.should == "confirm"
+          end
         end
-
       end
 
       context "when payment processing fails" do
-        before { order.stub :process_payments! => false }
+        before { order.stub process_payments!: false }
 
         it "cannot transition to complete" do
-         order.next
-         order.state.should == "confirm"
+          order.next
+          order.state.should == "confirm"
         end
       end
-
     end
 
     context "when current state is address" do
@@ -67,17 +67,15 @@ describe Spree::Order do
     context "when current state is delivery" do
       before do
         order.state = "delivery"
-        order.stub :total => 10.0
+        order.stub total: 10.0
       end
     end
-
   end
 
   context "#can_cancel?" do
-
     %w(pending backorder ready).each do |shipment_state|
       it "should be true if shipment_state is #{shipment_state}" do
-        order.stub :completed? => true
+        order.stub completed?: true
         order.shipment_state = shipment_state
         order.can_cancel?.should be_true
       end
@@ -85,31 +83,32 @@ describe Spree::Order do
 
     (Spree::Shipment.state_machine.states.keys - %w(pending backorder ready)).each do |shipment_state|
       it "should be false if shipment_state is #{shipment_state}" do
-        order.stub :completed? => true
+        order.stub completed?: true
         order.shipment_state = shipment_state
         order.can_cancel?.should be_false
       end
     end
-
   end
 
   context "#cancel" do
     let!(:variant) { stub_model(Spree::Variant) }
-    let!(:inventory_units) { [stub_model(Spree::InventoryUnit, :variant => variant),
-                              stub_model(Spree::InventoryUnit, :variant => variant) ]}
+    let!(:inventory_units) {
+      [stub_model(Spree::InventoryUnit, variant: variant),
+       stub_model(Spree::InventoryUnit, variant: variant)]
+    }
     let!(:shipment) do
       shipment = stub_model(Spree::Shipment)
-      shipment.stub :inventory_units => inventory_units
-      order.stub :shipments => [shipment]
+      shipment.stub inventory_units: inventory_units
+      order.stub shipments: [shipment]
       shipment
     end
 
     before do
-      order.stub :line_items => [stub_model(Spree::LineItem, :variant => variant, :quantity => 2)]
-      order.line_items.stub :find_by_variant_id => order.line_items.first
+      order.stub line_items: [stub_model(Spree::LineItem, variant: variant, quantity: 2)]
+      order.line_items.stub find_by_variant_id: order.line_items.first
 
-      order.stub :completed? => true
-      order.stub :allow_cancel? => true
+      order.stub completed?: true
+      order.stub allow_cancel?: true
     end
 
     it "should send a cancel email" do
@@ -158,7 +157,7 @@ describe Spree::Order do
 
       context "with shipped items" do
         before do
-          order.stub :shipment_state => 'partial'
+          order.stub shipment_state: 'partial'
         end
 
         it "should not alter the payment state" do
@@ -172,9 +171,9 @@ describe Spree::Order do
   # Another regression test for Spree #729
   context "#resume" do
     before do
-      order.stub :email => "user@spreecommerce.com"
-      order.stub :state => "canceled"
-      order.stub :allow_resume? => true
+      order.stub email: "user@spreecommerce.com"
+      order.stub state: "canceled"
+      order.stub allow_resume?: true
 
       # Stubs method that cause unwanted side effects in this test
       order.stub :has_available_shipment

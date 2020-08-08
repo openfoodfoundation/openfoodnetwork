@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::InventoryUnit do
@@ -24,7 +26,7 @@ describe Spree::InventoryUnit do
       unit.tap(&:save!)
     end
 
-    # Regression for #3066
+    # Regression for Spree #3066
     it "returns modifiable objects" do
       units = Spree::InventoryUnit.backordered_for_stock_item(stock_item)
       expect { units.first.save! }.to_not raise_error
@@ -72,10 +74,12 @@ describe Spree::InventoryUnit do
   context "#finalize_units!" do
     let!(:stock_location) { create(:stock_location) }
     let(:variant) { create(:variant) }
-    let(:inventory_units) { [
-      create(:inventory_unit, variant: variant),
-      create(:inventory_unit, variant: variant)
-    ] }
+    let(:inventory_units) {
+      [
+        create(:inventory_unit, variant: variant),
+        create(:inventory_unit, variant: variant)
+      ]
+    }
 
     it "should create a stock movement" do
       Spree::InventoryUnit.finalize_units!(inventory_units)

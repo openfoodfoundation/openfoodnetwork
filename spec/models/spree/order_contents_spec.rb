@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::OrderContents do
@@ -77,16 +79,14 @@ describe Spree::OrderContents do
       order.item_total.to_f.should == 0.00
       order.total.to_f.should == 0.00
 
-      subject.add(variant,2)
+      subject.add(variant, 2)
 
       order.item_total.to_f.should == 39.98
       order.total.to_f.should == 39.98
 
-      subject.remove(variant,1)
+      subject.remove(variant, 1)
       order.item_total.to_f.should == 19.99
       order.total.to_f.should == 19.99
     end
-
   end
-
 end

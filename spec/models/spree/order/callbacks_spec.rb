@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Order do
@@ -19,10 +21,10 @@ describe Spree::Order do
 
   context "#save" do
     context "when associated with a registered user" do
-      let(:user) { double(:user, :email => "test@example.com") }
+      let(:user) { double(:user, email: "test@example.com") }
 
       before do
-        order.stub :user => user
+        order.stub user: user
       end
 
       it "should assign the email address of the user" do
