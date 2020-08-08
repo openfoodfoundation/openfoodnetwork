@@ -8,7 +8,7 @@ describe Spree::Order do
   context 'validation' do
     context "when @use_billing is populated" do
       before do
-        order.bill_address = stub_model(Spree::Address)
+        order.bill_address = build(:address)
         order.ship_address = nil
       end
 
@@ -17,7 +17,7 @@ describe Spree::Order do
 
         it "clones the bill address to the ship address" do
           order.valid?
-          order.ship_address.should == order.bill_address
+          expect(order.ship_address).to eq order.bill_address
         end
       end
 
@@ -26,7 +26,7 @@ describe Spree::Order do
 
         it "clones the bill address to the shipping" do
           order.valid?
-          order.ship_address.should == order.bill_address
+          expect(order.ship_address).to eq order.bill_address
         end
       end
 
@@ -35,7 +35,7 @@ describe Spree::Order do
 
         it "clones the bill address to the shipping" do
           order.valid?
-          order.ship_address.should == order.bill_address
+          expect(order.ship_address).to eq order.bill_address
         end
       end
 
@@ -44,7 +44,7 @@ describe Spree::Order do
 
         it "does not clone the bill address to the shipping" do
           order.valid?
-          order.ship_address.should be_nil
+          expect(order.ship_address).to be_nil
         end
       end
     end

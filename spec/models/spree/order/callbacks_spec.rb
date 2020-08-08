@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  let(:order) { stub_model(Spree::Order) }
+  let(:order) { build(:order) }
   before do
     Spree::Order.define_state_machine!
   end
@@ -14,7 +14,7 @@ describe Spree::Order do
       it "o'brien@gmail.com is a valid email address" do
         order.state = 'address'
         order.email = "o'brien@gmail.com"
-        order.should have(:no).error_on(:email)
+        expect(order.errors[:email]).to be_empty
       end
     end
   end
@@ -29,7 +29,7 @@ describe Spree::Order do
 
       it "should assign the email address of the user" do
         order.run_callbacks(:create)
-        order.email.should == user.email
+        expect(order.email).to eq user.email
       end
     end
   end
@@ -38,7 +38,7 @@ describe Spree::Order do
     it "should not validate email address" do
       order.state = "cart"
       order.email = nil
-      order.should have(:no).error_on(:email)
+      expect(order.errors[:email]).to be_empty
     end
   end
 end
