@@ -18,14 +18,17 @@ module OpenFoodNetwork
                    order("#{Spree::OptionType.table_name}.position asc")
                end
 
-      values.map { |option_value| presentation(option_value) }.to_sentence(words_connector: ", ", two_words_connector: ", ")
+      values.map { |option_value|
+        presentation(option_value)
+      }.to_sentence(words_connector: ", ", two_words_connector: ", ")
     end
 
     def presentation(option_value)
       if option_value.option_type.name == "unit_weight"
         if has_attribute?(:display_as) && display_as.present?
           return display_as
-        elsif respond_to?(:variant) && variant.present? && variant.respond_to?(:display_as) && variant.display_as.present?
+        elsif respond_to?(:variant) && variant.present? &&
+            variant.respond_to?(:display_as) && variant.display_as.present?
           return variant.display_as
         end
       end
@@ -61,7 +64,8 @@ module OpenFoodNetwork
     def unit_to_display
       if has_attribute?(:display_as) && display_as.present?
         display_as
-      elsif respond_to?(:variant) && variant.present? && variant.respond_to?(:display_as) && variant.display_as.present?
+      elsif respond_to?(:variant) && variant.present? &&
+          variant.respond_to?(:display_as) && variant.display_as.present?
         variant.display_as
       else
         options_text

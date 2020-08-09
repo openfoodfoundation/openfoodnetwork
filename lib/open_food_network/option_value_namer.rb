@@ -65,15 +65,15 @@ module OpenFoodNetwork
     def scale_for_unit_value
       units = {
         'weight' => {
-          1.0         => { 'name' => 'g',  'system' => 'metric' },
-          28.34952    => { 'name' => 'oz', 'system' => 'imperial' },
-          453.6       => { 'name' => 'lb', 'system' => 'imperial' },
-          1000.0      => { 'name' => 'kg', 'system' => 'metric' },
+          1.0 =>         { 'name' => 'g',  'system' => 'metric' },
+          28.34952 =>    { 'name' => 'oz', 'system' => 'imperial' },
+          453.6 =>       { 'name' => 'lb', 'system' => 'imperial' },
+          1000.0 =>      { 'name' => 'kg', 'system' => 'metric' },
           1_000_000.0 => { 'name' => 'T',  'system' => 'metric' }
         },
         'volume' => {
-          0.001 => { 'name' => 'mL', 'system' => 'metric' },
-          1.0 => { 'name' => 'L', 'system' => 'metric' },
+          0.001 =>  { 'name' => 'mL', 'system' => 'metric' },
+          1.0 =>    { 'name' => 'L', 'system' => 'metric' },
           1000.0 => { 'name' => 'kL', 'system' => 'metric' }
         }
       }
@@ -86,8 +86,8 @@ module OpenFoodNetwork
       product_scale_system = scales[product_scale.to_f]['system']
       largest_unit = scales.select { |scale, unit_info|
         unit_info['system'] == product_scale_system &&
-        @variant.unit_value/scale >= 1
-      }.sort.last
+          @variant.unit_value / scale >= 1
+      }.max
       largest_unit = units[@variant.product.variant_unit].first if largest_unit.nil?
 
       [largest_unit[0], largest_unit[1]["name"]]
