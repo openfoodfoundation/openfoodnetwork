@@ -32,13 +32,13 @@ describe "spree/admin/payment_methods/index.html.haml" do
         expect(rendered).to have_content "Cash/EFT/etc. (payments for which automatic validation is not required)", count: 2
       end
 
-      it "does not show Enviroment column when user is not admin" do
+      it "does not show Enviroment column" do
         render
 
         expect(rendered).not_to have_content "Environment"
       end
 
-      it "does not show column content when user is not admin" do
+      it "does not show column content" do
         render
 
         expect(rendered).not_to have_content "Test"
@@ -56,13 +56,13 @@ describe "spree/admin/payment_methods/index.html.haml" do
         expect(rendered).to have_content "Cash/EFT/etc. (payments for which automatic validation is not required)", count: 2
       end
 
-      it "does not show Enviroment column when user is not admin" do
+      it "shows the Enviroment column" do
         render
 
         expect(rendered).to have_content "Environment"
       end
 
-      it "does not show column content when user is not admin" do
+      it "shows the column content" do
         render
 
         expect(rendered).to have_content "Test"
