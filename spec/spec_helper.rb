@@ -181,6 +181,10 @@ RSpec.configure do |config|
 
   config.include JsonSpec::Helpers
 
+  # Suppress Selenium deprecation warnings. Stops a flood of pointless warnings filling the
+  # test output. We can remove this in the future after upgrading Rails, Rack, and Capybara.
+  Selenium::WebDriver.logger.level = :error
+
   # Profiling
   #
   # This code shouldn't be run in normal circumstances. But if you want to know
