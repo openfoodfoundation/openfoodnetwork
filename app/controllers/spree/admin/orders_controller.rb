@@ -80,7 +80,7 @@ module Spree
 
       def resend
         Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
-        flash[:success] = t(:order_email_resent)
+        flash[:success] = t('admin.orders.order_email_resent')
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
