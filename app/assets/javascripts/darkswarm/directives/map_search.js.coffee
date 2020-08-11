@@ -43,7 +43,7 @@ Darkswarm.directive 'mapSearch', ($timeout, Search) ->
     # When the map loads, and we have a search from ?query, perform that search
     scope.performUrlSearch = (map) ->
       google.maps.event.addListenerOnce map, "idle", =>
-        google.maps.event.trigger(scope.input, 'focus');
+        google.maps.event.trigger(scope.input, 'focus',{});
         google.maps.event.trigger(scope.input, 'keydown', {keyCode: 13});
 
     # Bias the SearchBox results towards places that are within the bounds of the
