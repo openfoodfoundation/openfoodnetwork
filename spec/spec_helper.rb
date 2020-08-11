@@ -183,7 +183,13 @@ RSpec.configure do |config|
 
   # Suppress Selenium deprecation warnings. Stops a flood of pointless warnings filling the
   # test output. We can remove this in the future after upgrading Rails, Rack, and Capybara.
-  Selenium::WebDriver.logger.level = :error
+  if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
+    Selenium::WebDriver.logger.level = :error
+  else
+    ActiveSupport::Deprecation.warn(
+      "Suppressing Selenium deprecation warnings is not needed any more."
+    )
+  end
 
   # Profiling
   #
