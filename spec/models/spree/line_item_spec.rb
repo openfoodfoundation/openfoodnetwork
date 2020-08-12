@@ -545,10 +545,23 @@ module Spree
       end
 
       describe "getting unit for display" do
+        let(:o) { create(:order) }
+        let(:p1) { create(:product, name: 'Clear Honey', variant_unit_scale: 1) }
+        let(:v1) { create(:variant, product: p1, unit_value: 500) }
+        let(:li1) { create(:line_item, order: o, product: p1, variant: v1) }
+        let(:p2) { create(:product, name: 'Clear United States Honey', variant_unit_scale: 453.6) }
+        let(:v2) { create(:variant, product: p2, unit_value: 453.6) }
+        let(:li2) { create(:line_item, order: o, product: p2, variant: v2) }
+
         it "returns options_text" do
           li = create(:line_item)
           allow(li).to receive(:options_text).and_return "ponies"
           expect(li.unit_to_display).to eq("ponies")
+        end
+
+        it "returns options_text based on units" do
+          expect(li1.options_text).to eq("500g")
+          expect(li2.options_text).to eq("1lb")
         end
       end
 
