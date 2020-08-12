@@ -42,8 +42,7 @@
       %p
         = t "on_ofn_map"
     .list
-      /-# Can we pass an anchor here to zoom to our enterprise?
-      %a.button.bottom{href: main_app.map_path, target: '_blank'}
+      %a.button.bottom{href: main_app.enterprise_shop_url(@enterprise), target: '_blank'}
         = t "see"
         = @enterprise.name
         = t "live"
