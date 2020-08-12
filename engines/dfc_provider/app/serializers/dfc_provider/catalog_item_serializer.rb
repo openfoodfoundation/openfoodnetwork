@@ -16,7 +16,11 @@ module DfcProvider
     delegate :sku, to: :object
 
     def id
-      "/catalog_items/#{object.id}"
+      dfc_provider_routes.api_dfc_provider_enterprise_product_url(
+        enterprise_id: object.product.supplier_id,
+        id: object.id,
+        host: root_url
+      )
     end
 
     def type
@@ -34,6 +38,12 @@ module DfcProvider
 
     def offered_through
       [object]
+    end
+
+    private
+
+    def dfc_provider_routes
+      DfcProvider::Engine.routes.url_helpers
     end
   end
 end

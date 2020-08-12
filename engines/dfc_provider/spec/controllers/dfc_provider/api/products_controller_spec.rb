@@ -98,4 +98,55 @@ describe DfcProvider::Api::ProductsController, type: :controller do
       end
     end
   end
+
+  describe('.show') do
+    context 'with authorization token' do
+      before do
+        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
+      end
+
+      context 'with an authenticated user' do
+        before do
+          allow_any_instance_of(DfcProvider::AuthorizationControl)
+            .to receive(:process)
+            .and_return(user)
+        end
+
+        context 'with an enterprise' do
+          context 'given with an id' do
+            context 'related to the user' do
+              before do
+                api_get :show,
+                        enterprise_id: enterprise.id,
+                        id: product.variants.first.id
+              end
+
+              it 'is successful' do
+                expect(response.status).to eq 200
+              end
+
+              it 'renders the required content' do
+                expect(response.body)
+                  .to include('dfc:CatalogItem')
+                expect(response.body)
+                  .to include("offers/#{product.variants.first.id}")
+              end
+            end
+
+            context 'with a variant not linked to the enterprise' do
+              before do
+                api_get :show,
+                        enterprise_id: enterprise.id,
+                        id: create(:simple_product).variants.first.id
+              end
+
+              it 'returns a 404 error' do
+                expect(response.status).to eq 404
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end

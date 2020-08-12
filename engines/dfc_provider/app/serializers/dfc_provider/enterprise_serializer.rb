@@ -16,7 +16,10 @@ module DfcProvider
              serializer: DfcProvider::CatalogItemSerializer
 
     def id
-      "/entreprises/#{object.id}"
+      dfc_provider_routes.api_dfc_provider_enterprise_url(
+        id: object.id,
+        host: root_url
+      )
     end
 
     def type
@@ -30,20 +33,21 @@ module DfcProvider
     end
 
     def supplies
-      products
+      object.
+        supplied_products.
+        includes(variants: :product)
     end
 
     def manages
-      products.map(&:variants).flatten
+      Spree::Variant.
+        joins(product: :supplier).
+        where('enterprises.id' => object.id)
     end
 
     private
 
-    def products
-      @products ||=
-        object.
-          supplied_products.
-          includes(variants: :product)
+    def dfc_provider_routes
+      DfcProvider::Engine.routes.url_helpers
     end
   end
 end
