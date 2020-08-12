@@ -14,7 +14,7 @@ angular.module("admin.products").factory "VariantUnitManager", ->
         453.6:
           name: 'lb'
           system: 'imperial'
-        28.34952:
+        28.35:
           name: 'oz'
           system: 'imperial'
       'volume':

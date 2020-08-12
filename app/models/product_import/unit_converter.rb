@@ -32,7 +32,7 @@ module ProductImport
       {
         'g' => { scale: 1, unit: 'weight' },
         'kg' => { scale: 1000, unit: 'weight' },
-        'oz' => { scale: 28.34952, unit: 'weight' },
+        'oz' => { scale: 28.35, unit: 'weight' },
         'lb' => { scale: 453.6, unit: 'weight' },
         't' => { scale: 1_000_000, unit: 'weight' },
         'ml' => { scale: 0.001, unit: 'volume' },

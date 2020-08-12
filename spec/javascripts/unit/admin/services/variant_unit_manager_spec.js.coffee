@@ -29,7 +29,7 @@ describe "VariantUnitManager", ->
 
   describe "unitScales", ->
     it "returns a sorted set of scales for unit type weight", ->
-      expect(VariantUnitManager.unitScales('weight')).toEqual [1.0, 28.34952, 453.6, 1000.0, 1000000.0]
+      expect(VariantUnitManager.unitScales('weight')).toEqual [1.0, 28.35, 453.6, 1000.0, 1000000.0]
 
     it "returns a sorted set of scales for unit type volume", ->
       expect(VariantUnitManager.unitScales('volume')).toEqual [0.001, 1.0, 1000.0]
@@ -37,13 +37,13 @@ describe "VariantUnitManager", ->
   describe "compatibleUnitScales", ->
     it "returns a sorted set of compatible scales based on the scale and unit type provided", ->
       expect(VariantUnitManager.compatibleUnitScales(1, "weight")).toEqual [1.0, 1000.0, 1000000.0]
-      expect(VariantUnitManager.compatibleUnitScales(453.6, "weight")).toEqual [28.34952, 453.6]
+      expect(VariantUnitManager.compatibleUnitScales(453.6, "weight")).toEqual [28.35, 453.6]
 
   describe "variantUnitOptions", ->
     it "returns an array of options", ->
       expect(VariantUnitManager.variantUnitOptions()).toEqual [
         ["Weight (g)", "weight_1"],
-        ["Weight (oz)", "weight_28.34952"],
+        ["Weight (oz)", "weight_28.35"],
         ["Weight (lb)", "weight_453.6"],
         ["Weight (kg)", "weight_1000"],
         ["Weight (T)", "weight_1000000"],

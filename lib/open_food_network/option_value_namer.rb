@@ -39,7 +39,6 @@ module OpenFoodNetwork
       if @variant.unit_value.present?
         if %w(weight volume).include? @variant.product.variant_unit
           value, unit_name = option_value_value_unit_scaled
-
         else
           value = @variant.unit_value
           unit_name = pluralize(@variant.product.variant_unit_name, value)
@@ -66,7 +65,7 @@ module OpenFoodNetwork
       units = {
         'weight' => {
           1.0 =>         { 'name' => 'g',  'system' => 'metric' },
-          28.34952 =>    { 'name' => 'oz', 'system' => 'imperial' },
+          28.35 =>       { 'name' => 'oz', 'system' => 'imperial' },
           453.6 =>       { 'name' => 'lb', 'system' => 'imperial' },
           1000.0 =>      { 'name' => 'kg', 'system' => 'metric' },
           1_000_000.0 => { 'name' => 'T',  'system' => 'metric' }
