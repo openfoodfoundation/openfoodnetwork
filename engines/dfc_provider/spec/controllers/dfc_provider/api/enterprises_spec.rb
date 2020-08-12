@@ -24,21 +24,19 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
 
         context 'with an enterprise' do
           context 'given with an id' do
-            context 'related to the user' do
-              before { api_get :show, id: 'default' }
+            before { api_get :show, id: 'default' }
 
-              it 'is successful' do
-                expect(response.status).to eq 200
-              end
+            it 'is successful' do
+              expect(response.status).to eq 200
+            end
 
-              it 'renders the required content' do
-                expect(response.body)
-                  .to include(product.name)
-                expect(response.body)
-                  .to include(product.sku)
-                expect(response.body)
-                  .to include("offers/#{product.variants.first.id}")
-              end
+            it 'renders the required content' do
+              expect(response.body)
+                .to include(product.name)
+              expect(response.body)
+                .to include(product.sku)
+              expect(response.body)
+                .to include("offers/#{product.variants.first.id}")
             end
           end
 

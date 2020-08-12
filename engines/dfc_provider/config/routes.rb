@@ -4,7 +4,7 @@ DfcProvider::Engine.routes.draw do
   namespace :api do
     scope :dfc_provider, as: :dfc_provider, path: '/dfc_provider' do
       resources :enterprises, only: [:show] do
-        resources :catalog_item, only: [:index, :show]
+        resources :catalog_items, only: [:index, :show]
       end
     end
   end
