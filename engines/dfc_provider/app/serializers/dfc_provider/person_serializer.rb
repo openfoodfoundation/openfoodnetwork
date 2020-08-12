@@ -4,6 +4,7 @@
 # into JSON-LD format based on DFC ontology
 module DfcProvider
   class PersonSerializer < ActiveModel::Serializer
+    attribute :context, key: '@context'
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :family_name, key: 'dfc:familyName'
@@ -14,6 +15,15 @@ module DfcProvider
     has_many :affiliates,
              key: 'dfc:affiliates',
              serializer: DfcProvider::EnterpriseSerializer
+
+    # Context should be provided inside the controller,
+    # but AMS doesn't not supported `meta` and `meta_key` with `root` to nil...
+    def context
+      {
+        'dfc' => 'http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#',
+        '@base' => "#{root_url}api/dfc_provider"
+      }
+    end
 
     def id
       "/personId/#{object.id}"

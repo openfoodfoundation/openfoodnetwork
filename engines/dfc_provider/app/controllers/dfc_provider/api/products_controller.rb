@@ -14,10 +14,7 @@ module DfcProvider
       respond_to :json
 
       def index
-        render json: @user,
-               serializer: DfcProvider::PersonSerializer,
-               meta: meta_data,
-               meta_key: '@context'
+        render json: @user, serializer: DfcProvider::PersonSerializer
       end
 
       private
@@ -55,13 +52,6 @@ module DfcProvider
 
       def authorization_control
         DfcProvider::AuthorizationControl.new(access_token)
-      end
-
-      def meta_data
-        {
-          "dfc" => "http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
-          "@base" => "#{root_url}api/dfc_provider"
-        }
       end
     end
   end
