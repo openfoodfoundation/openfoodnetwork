@@ -3,34 +3,34 @@
 # Serializer used to render the DFC Person from an OFN User
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class PersonSerializer
-    def initialize(user)
-      @user = user
+  class PersonSerializer < ActiveModel::Serializer
+    attribute :id, key: '@id'
+    attribute :type, key: '@type'
+    attribute :family_name, key: 'dfc:familyName'
+    attribute :first_name, key: 'dfc:firstName'
+    has_one :address,
+            key: 'dfc:hasAddress',
+            serializer: DfcProvider::AddressSerializer
+    has_many :affiliates,
+             key: 'dfc:affiliates',
+             serializer: DfcProvider::EnterpriseSerializer
+
+    def id
+      "/personId/#{object.id}"
     end
 
-    def serialized_data
-      {
-        "@id" => "/personId/#{@user.id}",
-        "@type" => "dfc:Person",
-        "dfc:familyName" => @user.login,
-        "dfc:firtsName" => @user.email,
-        "dfc:hasAdress" => {
-          "@type" => "dfc:Address",
-          "dfc:city" => nil,
-          "dfc:country" => nil,
-          "dfc:postcode" => nil,
-          "dfc:street" => nil
-        },
-        "dfc:affiliates" => affiliates_serialized_data
-      }
+    def type
+      'dfc:Person'
     end
 
-    private
+    def family_name; end
 
-    def affiliates_serialized_data
-      @user.enterprises.map do |enterprise|
-        EnterpriseSerializer.new(enterprise).serialized_data
-      end
+    def first_name; end
+
+    def address; end
+
+    def affiliates
+      object.enterprises
     end
   end
 end

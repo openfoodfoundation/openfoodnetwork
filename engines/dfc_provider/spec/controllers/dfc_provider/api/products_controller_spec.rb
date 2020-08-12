@@ -35,7 +35,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
                 expect(response.body)
                   .to include(product.name)
                 expect(response.body)
-                  .to include(user.email)
+                  .to include(product.sku)
                 expect(response.body)
                   .to include("offers/#{product.variants.first.id}")
               end
@@ -62,7 +62,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
               expect(response.body)
                 .to include(product.name)
               expect(response.body)
-                .to include(user.email)
+                .to include(product.sku)
               expect(response.body)
                 .to include("offers/#{product.variants.first.id}")
             end

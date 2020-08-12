@@ -3,31 +3,39 @@
 # Serializer used to render a DFC CatalogItem from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class CatalogItemSerializer
-    def initialize(variant)
-      @variant = variant
+  class CatalogItemSerializer < ActiveModel::Serializer
+    attribute :id, key: '@id'
+    attribute :type, key: '@type'
+    attribute :references, key: 'dfc:references'
+    attribute :sku, key: 'dfc:sku'
+    attribute :stock_limitation, key: 'dfc:stockLimitation'
+    has_many :offered_through,
+             serializer: DfcProvider::OfferSerializer,
+             key: 'dfc:offeredThrough'
+
+    def id
+      "/catalog_items/#{object.id}"
     end
 
-    def serialized_data
+    def type
+      'dfc:CatalogItem'
+    end
+
+    def references
       {
-        "@id" => "/catalog_items/#{@variant.id}",
-        "@type" => "dfc:CatalogItem",
-        "dfc:references" => {
-          "@type" => "@id",
-          "@id" => "/supplied_products/#{@variant.product_id}"
-        },
-        "dfc:sku" => @variant.sku,
-        "dfc:stockLimitation" => nil,
-        "dfc:offeredThrough" => serialized_offers
+        '@type' => '@id',
+        '@id' => "/supplied_products/#{object.product_id}"
       }
     end
 
-    private
+    def sku
+      object.sku
+    end
 
-    def serialized_offers
-      [
-        OfferSerializer.new(@variant).serialized_data
-      ]
+    def stock_limitation; end
+
+    def offered_through
+      [object]
     end
   end
 end

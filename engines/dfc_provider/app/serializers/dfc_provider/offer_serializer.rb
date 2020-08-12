@@ -3,22 +3,34 @@
 # Serializer used to render the DFC Offer from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class OfferSerializer
-    def initialize(variant)
-      @variant = variant
+  class OfferSerializer < ActiveModel::Serializer
+    attribute :id, key: '@id'
+    attribute :type, key: '@type'
+    attribute :offeres_to, key: 'dfc:offeres_to'
+    attribute :price, key: 'dfc:price'
+    attribute :stock_limitation, key: 'dfc:stockLimitation'
+
+    def id
+      "/offers/#{object.id}"
     end
 
-    def serialized_data
+    def type
+      'dfc:Offer'
+    end
+
+    def offeres_to
       {
-        "@id" => "offers/#{@variant.id}",
-        "@type" => "dfc:Offer",
-        "dfc:offeresTo" => {
-          "@type" => "@id",
-          "@id" => "/customerCategoryId1"
-        },
-        "dfc:price" => @variant.price,
-        "dfc:stockLimitation" => @variant.on_hand,
+        '@type' => '@id',
+        '@id' => nil
       }
+    end
+
+    def price
+      object.price
+    end
+
+    def stock_limitation
+      object.on_hand
     end
   end
 end

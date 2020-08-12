@@ -3,33 +3,59 @@
 # Serializer used to render a DFC SuppliedProduct from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class SuppliedProductSerializer
-    def initialize(product)
-      @product = product
+  class SuppliedProductSerializer < ActiveModel::Serializer
+    attribute :id, key: '@id'
+    attribute :type, key: '@type'
+    attribute :unit, key: 'dfc:hasUnit'
+    attribute :quantity, key: 'dfc:quantity'
+    attribute :description, key: 'dfc:description'
+    attribute :total_theoritical_stock, key: 'dfc:totalTheoriticalStock'
+    attribute :brand, key: 'dfc:brand'
+    attribute :claim, key: 'dfc:claim'
+    attribute :image, key: 'dfc:image'
+    attribute :life_time, key: 'lifeTime'
+    has_many :physical_characteristics, key: 'dfc:physicalCharacterisctics'
+
+    def id
+      "/supplied_products/#{object.id}"
     end
 
-    def serialized_data
+    def type
+      'dfc:SuppliedProduct'
+    end
+
+    def unit
       {
-        "@id" => "/products/#{@product.id}",
-        "dfc:hasUnit" => {
-          "@id" => "/unit/#{unit_name}",
-          "rdfs:label" => unit_name
-        },
-        "dfc:quantity" => @product.on_hand,
-        "dfc:description" => @product.name,
-        "dfc:totalTheoriticalStock" => nil,
-        "dfc:brand" => nil,
-        "dfc:claim" => nil,
-        "dfc:image" => @product.images.first.try(:attachment, :url),
-        "lifeTime" => nil,
-        "dfc:physicalCharacterisctics" => nil
+        '@id' => "/unit/#{unit_name}",
+        'rdfs:label' => unit_name
       }
+    end
+
+    def quantity
+      object.on_hand
+    end
+
+    def description
+      object.name
+    end
+
+    def total_theoritical_stock; end
+    def brand; end
+    def claim; end
+
+    def image
+      object.images.first.try(:attachment, :url)
+    end
+
+    def life_time; end
+    def physical_characteristics
+      []
     end
 
     private
 
     def unit_name
-      @product.unit_description.presence || 'piece'
+      object.unit_description.presence || 'piece'
     end
   end
 end
