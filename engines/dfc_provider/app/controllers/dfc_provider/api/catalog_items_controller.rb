@@ -3,18 +3,17 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   module Api
-    class ProductsController < BaseController
-      # To access 'base_url' helper
-      include Rails.application.routes.url_helpers
-
+    class CatalogItemsController < BaseController
       def index
         render json: @user, serializer: DfcProvider::PersonSerializer
       end
 
       def show
-        @variant = Spree::Variant.joins(product: :supplier)
-                                 .where('enterprises.id' => @enterprise.id)
-                                 .find(params[:id])
+        @variant =
+          Spree::Variant.
+            joins(product: :supplier).
+            where('enterprises.id' => @enterprise.id).
+            find(params[:id])
 
         render json: @variant, serializer: DfcProvider::CatalogItemSerializer
       end

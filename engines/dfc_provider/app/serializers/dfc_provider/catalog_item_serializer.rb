@@ -16,7 +16,7 @@ module DfcProvider
     delegate :sku, to: :object
 
     def id
-      dfc_provider_routes.api_dfc_provider_enterprise_product_url(
+      dfc_provider_routes.api_dfc_provider_enterprise_catalog_item_url(
         enterprise_id: object.product.supplier_id,
         id: object.id,
         host: root_url

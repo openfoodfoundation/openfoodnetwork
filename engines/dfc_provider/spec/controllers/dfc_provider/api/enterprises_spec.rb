@@ -41,6 +41,14 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
               end
             end
           end
+
+          context 'given with a wrong id' do
+            before { api_get :show, id: 999 }
+
+            it 'returns 404' do
+              expect(response.status).to eq 404
+            end
+          end
         end
       end
     end
