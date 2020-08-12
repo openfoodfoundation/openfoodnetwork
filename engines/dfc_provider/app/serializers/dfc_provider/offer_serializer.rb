@@ -10,6 +10,8 @@ module DfcProvider
     attribute :price, key: 'dfc:price'
     attribute :stock_limitation, key: 'dfc:stockLimitation'
 
+    delegate :price, to: :object
+
     def id
       "/offers/#{object.id}"
     end
@@ -23,10 +25,6 @@ module DfcProvider
         '@type' => '@id',
         '@id' => nil
       }
-    end
-
-    def price
-      object.price
     end
 
     def stock_limitation

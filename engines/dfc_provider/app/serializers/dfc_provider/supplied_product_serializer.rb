@@ -40,7 +40,9 @@ module DfcProvider
     end
 
     def total_theoritical_stock; end
+
     def brand; end
+
     def claim; end
 
     def image
@@ -48,6 +50,7 @@ module DfcProvider
     end
 
     def life_time; end
+
     def physical_characteristics
       []
     end

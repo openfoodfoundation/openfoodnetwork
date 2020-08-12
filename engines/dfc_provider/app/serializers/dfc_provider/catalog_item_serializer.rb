@@ -13,6 +13,8 @@ module DfcProvider
              serializer: DfcProvider::OfferSerializer,
              key: 'dfc:offeredThrough'
 
+    delegate :sku, to: :object
+
     def id
       "/catalog_items/#{object.id}"
     end
@@ -26,10 +28,6 @@ module DfcProvider
         '@type' => '@id',
         '@id' => "/supplied_products/#{object.product_id}"
       }
-    end
-
-    def sku
-      object.sku
     end
 
     def stock_limitation; end

@@ -15,8 +15,11 @@ module DfcProvider
     end
 
     def city; end
+
     def country; end
+
     def postcode; end
+
     def street; end
   end
 end
