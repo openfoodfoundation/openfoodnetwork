@@ -42,6 +42,14 @@ module DfcProvider
 
     private
 
+    def reference_id
+      dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
+        enterprise_id: object.product.supplier_id,
+        id: object.product_id,
+        host: root_url
+      )
+    end
+
     def dfc_provider_routes
       DfcProvider::Engine.routes.url_helpers
     end

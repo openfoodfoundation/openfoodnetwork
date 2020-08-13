@@ -17,7 +17,11 @@ module DfcProvider
     has_many :physical_characteristics, key: 'dfc:physicalCharacterisctics'
 
     def id
-      "/supplied_products/#{object.id}"
+      dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
+        enterprise_id: object.supplier_id,
+        id: object.id,
+        host: root_url
+      )
     end
 
     def type
@@ -59,6 +63,10 @@ module DfcProvider
 
     def unit_name
       object.unit_description.presence || 'piece'
+    end
+
+    def dfc_provider_routes
+      DfcProvider::Engine.routes.url_helpers
     end
   end
 end
