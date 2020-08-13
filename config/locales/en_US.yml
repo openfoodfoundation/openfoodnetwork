@@ -14,6 +14,7 @@ en_US:
       spree/payment:
         amount: Amount
         state: State
+        source: Source
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -183,6 +184,7 @@ en_US:
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
   search_by_name: Search by name or city...
   producers_join: US producers are now welcome to join the Open Food Network.
@@ -271,6 +273,9 @@ en_US:
   on hand: "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
+  height: "Height"
+  width: "Width"
+  depth: "Depth"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1309,6 +1314,8 @@ en_US:
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
+  item: "Item"
+  qty: "Qty"
   card_number: Card number
   card_securitycode: "Security code"
   card_expiry_date: Expiry date
@@ -1720,6 +1727,7 @@ en_US:
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
   orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1963,6 +1971,7 @@ en_US:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  permalink: "Permalink"
   shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
@@ -2060,6 +2069,7 @@ en_US:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  shipping_method: "Shipping method"
   new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
@@ -3173,6 +3183,8 @@ en_US:
           stripe:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
+          paypal:
+            no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
@@ -3371,6 +3383,11 @@ en_US:
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Congratulations!"
+        message: "If you have received this email, then your email settings are correct."
+        subject: "Test Mail"
     order_state:
       address: address
       adjustments: adjustments

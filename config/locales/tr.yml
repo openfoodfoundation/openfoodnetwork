@@ -273,6 +273,9 @@ tr:
   on hand: "Mevcut"
   ship: "Teslimat"
   shipping_category: "Teslimat KategOrİSİ"
+  height: "Boy"
+  width: "En"
+  depth: "Boy"
   actions:
     create_and_add_another: "Oluştur ve Yeni Ekle"
     create: "Oluştur"
@@ -431,7 +434,7 @@ tr:
       enterprise_role:
         manages: yönetir
     products:
-      unit_name_placeholder: 'örn. demet'
+      unit_name_placeholder: 'Örn. demet'
       index:
         unit: Birim
         display_as: Gösterme Şekli
@@ -634,12 +637,12 @@ tr:
           name: Ad
           name_placeholder: Örn. Toprak Güneş
           email_address: E-posta Adresi
-          email_address_placeholder: Örn. siparis@yesilciftlik.com
+          email_address_placeholder: Örn. siparis@ciftlik.com
           email_address_tip: "Bu e-posta adresi profilinizde görüntülenecek"
           phone: Telefon
           phone_placeholder: Örn. 0532 123 00 01
           website: İnternet sitesi
-          website_placeholder: 'Örn: www.yesilciftlik.com'
+          website_placeholder: Örn. www.ciftlik.com
         enterprise_fees:
           name: Ad
           fee_type: Ücret Türü
@@ -735,8 +738,8 @@ tr:
           open_date: "AÇILIŞ TARİHİ"
           close_date: "KAPANIŞ TARİHİ"
         social:
-          twitter_placeholder: "Örneğin. @the_usta"
-          instagram_placeholder: "Örneğin. the_usta"
+          twitter_placeholder: "Örn.  @the_usta"
+          instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"
           facebook_placeholder: "Örn: www.facebook.com/TurkiyeKoop"
           linkedin_placeholder: "Örn: www.linkedin.com/in/adınızsoyadınız"
         stripe_connect:
@@ -1311,6 +1314,8 @@ tr:
   cart_updating: "Sepet güncelleniyor ..."
   cart_empty: "Sepetiniz boş"
   cart_edit: "Sepetinizi düzenleyin"
+  item: "Ürün"
+  qty: "Miktar"
   card_number: Kart numarası
   card_securitycode: "Güvenlik Kodu"
   card_expiry_date: Son kullanma tarihi
@@ -1370,8 +1375,8 @@ tr:
       cookies_policy_link: "çerezler politikası"
       cookies_accept_button: "Çerezleri kabul et"
   home_shop: 'ALIŞVERİŞE BAŞLAYIN '
-  brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
-  brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
+  brandstory_headline: "Yerel, adil ve temiz gıda."
+  brandstory_intro: "Eğer sistemi düzeltemiyorsak en iyi yol yeni bir sistem yaratmaktır."
   brandstory_part1: "Açık Gıda Ağı, adil, temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
   brandstory_part2: "AGA, üreticilere ve alıcılara aracısız ticaret faydaları sağlar ve toplumsal iletişimi ve güveni cesaretlendirir. Gıda yetiştiriciliği ve satışının kendine özgü ihtiyaçlarını karşılamak için geliştirilmiştir. Temiz gıdaya ulaşım sürecini kolaylaştırır."
   brandstory_part3: "Platform üzerinden yalnızca yerel ve bağımsız gıda üreticileri ve dağıtımcıları satış yapabilir. Siz de ürünlerinizi AGA üzerinden oluşturduğunuz dükan ile doğrudan alıcılara ulaştırabilir, dilerseniz bölgenizdeki diğer üreticiler ile bir araya gelerek kendi ortak 'Üretici Pazarı' veya 'Türetici Pazarı' nızı oluşturabilirsiniz. Bu şekilde çeşitliliği ve bereketi artırır, dayanışmanın getirdiği faydalardan da yararlanabilirsiniz."
@@ -1872,15 +1877,15 @@ tr:
         enterprise_final_step: "Son adım!"
         enterprise_social_text: "Kişiler %{enterprise}' nasıl çevrimiçi bulabilir?"
         website: "İnternet sitesi"
-        website_placeholder: "Örneğin. yesilciftlik.com"
+        website_placeholder: "Örn. ciftlik.com"
         facebook: "Facebook"
-        facebook_placeholder: "Örneğin. www.facebook.com/SayfaAdı"
+        facebook_placeholder: "Örn. www.facebook.com/Ciftlik"
         linkedin: "LinkedIn"
-        linkedin_placeholder: "Örneğin. www.linkedin.com/Adınız"
+        linkedin_placeholder: "Örn. www.linkedin.com/Adınız"
         twitter: "Twitter"
-        twitter_placeholder: "Örneğin. @twitter_ciftlik"
+        twitter_placeholder: "Örn. @twitter_ciftlik"
         instagram: "Instagram"
-        instagram_placeholder: "Örneğin. @instagram_ciftlik"
+        instagram_placeholder: "Örn. @instagram_ciftlik"
       limit_reached:
         headline: "Hayır!"
         message: "Sınıra ulaştınız!"
@@ -1947,17 +1952,17 @@ tr:
   admin_enterprise_groups_data_powertip_logo: "Grubun logosu"
   admin_enterprise_groups_data_powertip_promo_image: "Bu resim grup profilinin üstünde görüntülenir"
   admin_enterprise_groups_contact: "İLETİŞİM"
-  admin_enterprise_groups_contact_phone_placeholder: "Örneğin. 532 100 05 01"
-  admin_enterprise_groups_contact_address1_placeholder: "Örneğin. 123 Cadde"
+  admin_enterprise_groups_contact_phone_placeholder: "Örn. 532 100 05 01"
+  admin_enterprise_groups_contact_address1_placeholder: "Örn. 123 Cadde"
   admin_enterprise_groups_contact_city: "İlçe"
-  admin_enterprise_groups_contact_city_placeholder: "Örneğin. Kadıköy"
+  admin_enterprise_groups_contact_city_placeholder: "Örn. Kadıköy"
   admin_enterprise_groups_contact_zipcode: "Posta kodu"
   admin_enterprise_groups_contact_zipcode_placeholder: "Örn. 34000"
   admin_enterprise_groups_contact_state_id: "Şehir"
   admin_enterprise_groups_contact_country_id: "Ülke"
   admin_enterprise_groups_web: "Web Kaynakları"
-  admin_enterprise_groups_web_twitter: "Örneğin. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "Örneğin. www.ciftlik.com"
+  admin_enterprise_groups_web_twitter: "Örn. @the_ciftlik"
+  admin_enterprise_groups_web_website_placeholder: "Örn. www.ciftlik.com"
   admin_order_cycles: "Yönetici Sipariş Dönemleri"
   open: "AÇILIŞ"
   close: "KAPANIŞ"
@@ -2464,9 +2469,9 @@ tr:
               adına sipariş ve teslimatları yönetebilir, adil ve temiz gıdayı nihai
               tüketiciler ile buluşturmaya yardımcı olabilirler.
           producer_desc: Gıda üreticileri
-          producer_example: 'Örn: ÇİFTÇİLER, FIRINLAR, ÜRETİM KOOPERATİFLERİ vs.'
+          producer_example: Örn. ÇİFTÇİLER, FIRINLAR, ÜRETİM KOOPERATİFLERİ vs.
           non_producer_desc: Diğer tüm gıda işletmeleri
-          non_producer_example: 'Örn: Manavlar, Gıda Kooperatifleri, Gıda Toplulukları vs.'
+          non_producer_example: Örn. Dükkanlar, Gıda Kooperatifleri, Gıda Toplulukları vs.
         enterprise_status:
           status_title: "%{name} kuruldu ve başlamaya hazır!"
           severity: ÖNEM
@@ -3198,7 +3203,7 @@ tr:
           product_description: "Ürün Açıklaması"
           image: "Görsel"
           or: "veya"
-        unit_name_placeholder: 'Örneğin. demet'
+        unit_name_placeholder: 'Örn. Demet'
         index:
           header:
             title: Ürünleri Toplu Düzenleme
@@ -3276,8 +3281,8 @@ tr:
           price: "Fiyat"
           display_as: "Gösterme Şekli"
           display_name: "Ekran adı"
-          display_as_placeholder: 'örn. 2 kg'
-          display_name_placeholder: 'örn. Domates'
+          display_as_placeholder: 'Örn. 2 kg'
+          display_name_placeholder: 'Örn. Domates'
         autocomplete:
           out_of_stock: "Stokta Yok"
           producer_name: "Üretici"
@@ -3380,6 +3385,11 @@ tr:
         thanks: "İş birliğiniz için teşekkür ederim."
         track_information: "Takip Bilgileri: %{tracking}"
         track_link: "Takip Bağlantısı: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Tebrikler!"
+        message: "Bu maili teslim aldıysanız e-posta ayarlarınız doğru yapılmıştır demektir."
+        subject: "Test Maili"
     order_state:
       address: adres
       adjustments: düzenlemeler
