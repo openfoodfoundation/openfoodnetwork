@@ -26,7 +26,10 @@ module DfcProvider
     end
 
     def id
-      "/personId/#{object.id}"
+      dfc_provider_routes.api_dfc_provider_person_url(
+        id: object.id,
+        host: root_url
+      )
     end
 
     def type
@@ -41,6 +44,12 @@ module DfcProvider
 
     def affiliates
       object.enterprises
+    end
+
+    private
+
+    def dfc_provider_routes
+      DfcProvider::Engine.routes.url_helpers
     end
   end
 end
