@@ -31,14 +31,10 @@ module DfcProvider
       def check_enterprise
         @enterprise =
           if params[:enterprise_id] == 'default'
-            @user.enterprises.first
+            @user.enterprises.first!
           else
-            @user.enterprises.where(id: params[:enterprise_id]).first
+            @user.enterprises.find(params[:enterprise_id])
           end
-
-        return if @enterprise.present?
-
-        head :not_found
       end
 
       def access_token
