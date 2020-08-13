@@ -19,7 +19,7 @@ describe BaseController, type: :controller do
     end
 
     it "creates a new order" do
-      allow(controller).to receive(:try_spree_current_user).and_return(user)
+      allow(controller).to receive(:spree_current_user).and_return(user)
 
       expect {
         get :index
@@ -30,7 +30,7 @@ describe BaseController, type: :controller do
 
     it "uses the last incomplete order" do
       last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
-      allow(controller).to receive(:try_spree_current_user).and_return(user)
+      allow(controller).to receive(:spree_current_user).and_return(user)
 
       expect {
         get :index
@@ -39,17 +39,7 @@ describe BaseController, type: :controller do
       expect(session[:order_id]).to eq last_cart.id
     end
 
-    # This behaviour comes from spree_core/lib/spree/core/controller_helpers/order.rb.
-    # It should be overridden by our lib/spree/core/controller_helpers/order.rb.
-    # But this test case proves that the original Spree logic is active.
-    #
-    # We originally overrode the Spree logic because merging orders from different
-    # shops was confusing. Incomplete orders would also re-appear after checkout,
-    # confusing as well.
-    #
-    # When we brought this code from Spree and merged it with our overrides,
-    # we accidentally started using Spree's version again.
-    it "merges the last incomplete order into the current one" do
+    it "deletes the last incomplete order" do
       last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
       last_cart.line_items << create(:line_item)
 
@@ -63,13 +53,13 @@ describe BaseController, type: :controller do
       )
       session[:order_id] = current_cart.id
 
-      allow(controller).to receive(:try_spree_current_user).and_return(user)
+      allow(controller).to receive(:spree_current_user).and_return(user)
 
       expect {
         get :index
-      }.to_not change { session[:order_id] }
+      }.to change { Spree::Order.count }.by(-1)
 
-      expect(current_cart.line_items.pluck(:id)).to match_array last_cart.line_items.map(&:id)
+      expect(current_cart.line_items.count).to eq 0
     end
   end
 

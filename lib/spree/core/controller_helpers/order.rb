@@ -6,10 +6,6 @@ module Spree
   module Core
     module ControllerHelpers
       module Order
-        # WARNING: This code seems to be overridden by Spree's original in:
-        #   spree_core/lib/spree/core/controller_helpers/order.rb
-        #
-        # None of our patches are active.
         def self.included(base)
           base.class_eval do
             helper_method :current_order
