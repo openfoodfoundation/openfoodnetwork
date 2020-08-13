@@ -1296,6 +1296,8 @@ fil_PH:
   cart_updating: "ina-update ang cart"
   cart_empty: "walang laman ang cart"
   cart_edit: "i-edit ang cart"
+  item: "Item"
+  qty: "Dami"
   card_number: numero ng card
   card_securitycode: "Security code"
   card_expiry_date: petsa ng pag-expire

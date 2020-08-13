@@ -1311,6 +1311,8 @@ it:
   cart_updating: "Aggiornamento del carrello..."
   cart_empty: "Carrello vuoto"
   cart_edit: "Modifica il tuo carrello"
+  item: "Articolo"
+  qty: "Qtà"
   card_number: Numero della carta
   card_securitycode: "Codice di sicurezza"
   card_expiry_date: Data di scadenza

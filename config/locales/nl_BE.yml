@@ -1255,6 +1255,8 @@ nl_BE:
   cart_updating: "winkelwagentje wordt geüpdatet..."
   cart_empty: "Winkelwagentje is leeg"
   cart_edit: "Pas je winkelwagentje aan"
+  item: "Artikel"
+  qty: "Aantal"
   card_number: Kaartnummer
   card_securitycode: "Veiligheidscode"
   card_expiry_date: Vervaldatum

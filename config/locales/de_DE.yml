@@ -1292,6 +1292,8 @@ de_DE:
   cart_updating: "Warenkorb aktualisieren..."
   cart_empty: "Warenkorb leer"
   cart_edit: "Warenkorb bearbeiten"
+  item: "Artikel"
+  qty: "Menge"
   card_number: Kartennummer
   card_securitycode: "Sicherheitscode"
   card_expiry_date: Ablaufdatum

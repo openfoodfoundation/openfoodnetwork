@@ -753,6 +753,8 @@ sv:
   cart_updating: "Uppdatera din varukorg"
   cart_empty: "Tom varukorg"
   cart_edit: "Redigera din varukorg "
+  item: "Vara"
+  qty: "Kvantitet"
   card_number: Kortnummer
   card_securitycode: "Säkerhetskod"
   card_expiry_date: Förfallodatum

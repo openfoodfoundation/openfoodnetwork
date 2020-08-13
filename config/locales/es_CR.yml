@@ -1296,6 +1296,8 @@ es_CR:
   cart_updating: "Actualizando el carrito..."
   cart_empty: "Carrito vacío"
   cart_edit: "Editar carrito"
+  item: "Artículo"
+  qty: "Cantidad"
   card_number: Número de tarjeta
   card_securitycode: "Código de seguridad"
   card_expiry_date: Fecha de expiración

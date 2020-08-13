@@ -1909,7 +1909,7 @@ tr:
   follow: "TAKİP ET"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ÜRÜNLERİNİ SATIN ALIN:"
   change_shop: "Dükkanı şuna değiştir:"
-  shop_at: "Şimdi alışveriş yapın:"
+  shop_at: "ŞİMDİ ALIŞVERİŞ YAPIN:"
   price_breakdown: "Fiyat dökümü"
   admin_fee: "Yönetim Ücreti"
   sales_fee: "Satış Ücreti"
@@ -1965,7 +1965,7 @@ tr:
   admin_enterprise_groups_web_website_placeholder: "Örn. www.ciftlik.com"
   admin_order_cycles: "Yönetici Sipariş Dönemleri"
   open: "AÇILIŞ"
-  close: "KAPANIŞ"
+  close: "Kapat"
   create: "Oluştur"
   search: "Ara"
   supplier: "Tedarikçi"
@@ -3378,7 +3378,7 @@ tr:
         subject: "Lütfen AGA hesabınızı onaylayın"
     shipment_mailer:
       shipped_email:
-        dear_customer: "Değerli müşterimiz,"
+        dear_customer: "Değerli Müşterimiz,"
         instructions: "Siparişiniz gönderildi"
         shipment_summary: "Teslimat Özeti"
         subject: "TESLİMAT BİLDİRİMİ"

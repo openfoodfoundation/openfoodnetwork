@@ -1287,6 +1287,8 @@ ar:
   cart_updating: "جارٍ تحديث العربة ..."
   cart_empty: "السلة فارغة"
   cart_edit: "تعديل عربة التسوق"
+  item: "بند"
+  qty: "الكمية"
   card_number: رقم البطاقة
   card_securitycode: "رمز الحماية"
   card_expiry_date: تاريخ الانتهاء

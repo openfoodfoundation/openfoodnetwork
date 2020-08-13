@@ -1311,6 +1311,8 @@ nb:
   cart_updating: "Oppdaterer handlekurv..."
   cart_empty: "Handlekurven er tom"
   cart_edit: "Rediger handlekurv"
+  item: "Vare"
+  qty: "Antall"
   card_number: Kortnummer
   card_securitycode: "Sikkerhetskode"
   card_expiry_date: Utløpsdato

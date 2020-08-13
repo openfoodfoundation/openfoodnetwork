@@ -1317,6 +1317,8 @@ ca:
   cart_updating: "Actualitzant la cistella..."
   cart_empty: "Cistella buida"
   cart_edit: "Edita la teva cistella"
+  item: "Article"
+  qty: "quant."
   card_number: Número de targeta
   card_securitycode: "Codi de seguretat"
   card_expiry_date: Data de caducitat

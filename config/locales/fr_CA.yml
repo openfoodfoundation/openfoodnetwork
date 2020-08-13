@@ -1312,6 +1312,8 @@ fr_CA:
   cart_updating: "Mettre à jour le panier"
   cart_empty: "Panier vide"
   cart_edit: "Modifier votre panier"
+  item: "Produit"
+  qty: "Qté"
   card_number: Numéro de carte
   card_securitycode: "Cryptogramme visuel"
   card_expiry_date: Date d'expiration

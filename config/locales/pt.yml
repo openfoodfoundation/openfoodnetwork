@@ -1229,6 +1229,8 @@ pt:
   cart_updating: "Atualizando carrinho"
   cart_empty: "Carrinho vazio"
   cart_edit: "Edite o seu carrinho"
+  item: "Item"
+  qty: "Qtd"
   card_number: Número do Cartão
   card_securitycode: "Código de Segurança"
   card_expiry_date: Data de Vencimento

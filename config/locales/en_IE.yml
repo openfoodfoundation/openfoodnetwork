@@ -1309,6 +1309,8 @@ en_IE:
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
+  item: "Item"
+  qty: "Qty"
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
