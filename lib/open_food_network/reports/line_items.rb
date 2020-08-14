@@ -27,23 +27,7 @@ module OpenFoodNetwork
         line_items.reject{ |li|
           editable_line_items.include? li
         }.each do |line_item|
-          # TODO We should really be hiding customer code here too, but until we
-          # have an actual association between order and customer, it's a bit tricky
-
-          unless line_item.order.distributor.preferences[:show_customer_names_to_suppliers]
-            line_item.order.bill_address.andand.
-              assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "")
-            line_item.order.ship_address.andand.
-              assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "")
-          end
-
-          line_item.order.bill_address.andand.
-            assign_attributes(phone: "", address1: "", address2: "",
-                              city: "", zipcode: "", state: nil)
-          line_item.order.ship_address.andand.
-            assign_attributes(phone: "", address1: "", address2: "",
-                              city: "", zipcode: "", state: nil)
-          line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
+          OrderDataMasker.new(line_item.order).call
         end
 
         line_items
