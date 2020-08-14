@@ -39,7 +39,11 @@ describe BaseController, type: :controller do
       expect(session[:order_id]).to eq last_cart.id
     end
 
-    it "deletes the last incomplete order" do
+    it "ignores the last incomplete order" do
+      # Spree used to merge the last order with the current one.
+      # And we used to override that logic to delete old incomplete orders.
+      # Now we are checking here that none of that is happening.
+
       last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
       last_cart.line_items << create(:line_item)
 
@@ -57,9 +61,35 @@ describe BaseController, type: :controller do
 
       expect {
         get :index
-      }.to change { Spree::Order.count }.by(-1)
+      }.to_not change { Spree::Order.count }
 
       expect(current_cart.line_items.count).to eq 0
+    end
+
+    it "doesn't recover old orders after checkout, a new empty one is created" do
+      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      last_cart.line_items << create(:line_item)
+
+      just_completed_order = create(
+        :order,
+        user: user,
+        created_by: user,
+        state: "complete",
+        completed_at: Time.zone.now,
+        created_at: 1.week.ago
+      )
+      expect(just_completed_order.completed_at).to be_present
+      session[:order_id] = just_completed_order.id
+
+      allow(controller).to receive(:spree_current_user).and_return(user)
+
+      expect {
+        get :index
+      }.to change { Spree::Order.count }.by(1)
+
+      expect(session[:order_id]).to_not eq just_completed_order.id
+      expect(session[:order_id]).to_not eq last_cart.id
+      expect(controller.current_order.line_items.count).to eq 0
     end
   end
 

@@ -68,8 +68,7 @@ module Spree
           session[:guest_token] = nil
         end
 
-        # Do not attempt to merge incomplete and current orders.
-        #   Instead, destroy the incomplete orders.
+        # Recover incomplete orders from other sessions after logging in.
         def set_current_order
           return unless (user = spree_current_user)
 
@@ -77,11 +76,10 @@ module Spree
 
           if session[:order_id].nil? && last_incomplete_order
             session[:order_id] = last_incomplete_order.id
-          elsif current_order(true) &&
-                last_incomplete_order &&
-                current_order != last_incomplete_order
-            last_incomplete_order.destroy
           end
+
+          # Load current order and create a new one if necessary.
+          current_order(true)
         end
 
         def current_currency
