@@ -10,8 +10,14 @@ class RemoveTransientData
   def call
     Rails.logger.info("RemoveTransientData: processing")
 
-    Spree::StateChange.delete_all("created_at < '#{1.month.ago.to_date}'")
-    Spree::LogEntry.delete_all("created_at < '#{1.month.ago.to_date}'")
-    Session.delete_all("created_at < '#{2.weeks.ago.to_date}'")
+    Spree::StateChange.delete_all("created_at < '#{retention_period}'")
+    Spree::LogEntry.delete_all("created_at < '#{retention_period}'")
+    Session.delete_all("updated_at < '#{retention_period}'")
+  end
+
+  private
+
+  def retention_period
+    2.months.ago.to_date
   end
 end
