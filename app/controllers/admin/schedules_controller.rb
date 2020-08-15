@@ -3,6 +3,8 @@ require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
+    include PaperTrailLogging
+
     before_action :adapt_params, only: [:update]
     before_action :editable_order_cycle_ids_for_create, only: [:create]
     before_action :editable_order_cycle_ids_for_update, only: [:update]
