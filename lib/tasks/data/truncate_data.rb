@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class TruncateData
-  # This model lets us operate on the sessions DB table using ActiveRecord's
-  # methods within the scope of this service. This relies on the AR's
-  # convention where a Session model maps to a sessions table.
-  class Session < ActiveRecord::Base
-  end
-
   def initialize(months_to_keep = nil)
     @date = (months_to_keep || 24).to_i.months.ago
   end
@@ -25,8 +19,6 @@ class TruncateData
       sql_delete_from "order_cycles #{where_ocs_to_delete}"
 
       Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
-
-      remove_transient_data
     end
   end
 
@@ -45,12 +37,6 @@ class TruncateData
     sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
     sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
     sql_delete_from "spree_return_authorizations #{where_order_id_in_orders_to_delete}"
-  end
-
-  def remove_transient_data
-    Spree::StateChange.delete_all("created_at < '#{1.month.ago.to_date}'")
-    Spree::LogEntry.delete_all("created_at < '#{1.month.ago.to_date}'")
-    Session.delete_all("created_at < '#{2.weeks.ago.to_date}'")
   end
 
   def truncate_subscriptions
