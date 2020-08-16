@@ -229,7 +229,6 @@ GEM
     devise-token_authenticatable (0.4.10)
       devise (>= 3.5.2, < 4.0.0)
     diff-lcs (1.3)
-    diffy (3.3.0)
     docile (1.3.2)
     dry-inflector (0.1.2)
     erubis (2.7.0)
@@ -743,7 +742,6 @@ DEPENDENCIES
   devise-encryptable
   devise-token_authenticatable (~> 0.4.10)
   dfc_provider!
-  diffy
   eventmachine (>= 1.2.3)
   factory_bot_rails (= 4.10.0)
   ffaker (~> 1.16)
