@@ -74,9 +74,15 @@ class Enterprise < ActiveRecord::Base
                     },
                     url: '/images/enterprises/promo_images/:id/:style/:basename.:extension',
                     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
-
   validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
   validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
+
+  has_attached_file :terms_and_conditions,
+                    url: '/files/enterprises/terms_and_conditions/:id/:basename.:extension',
+                    path: 'public/files/enterprises/terms_and_conditions/:id/:basename.:extension'
+  validates_attachment_content_type :terms_and_conditions,
+                                    content_type: "application/pdf",
+                                    message: I18n.t(:enterprise_terms_and_conditions_type_error)
 
   include Spree::Core::S3Support
   supports_s3 :logo

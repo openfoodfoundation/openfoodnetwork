@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200721135726) do
+ActiveRecord::Schema.define(version: 20200817150002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,8 +190,8 @@ ActiveRecord::Schema.define(version: 20200721135726) do
     t.integer  "address_id"
     t.text     "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -201,22 +201,26 @@ ActiveRecord::Schema.define(version: 20200721135726) do
     t.string   "promo_image_content_type"
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
-    t.boolean  "visible",                  default: true
+    t.boolean  "visible",                           default: true
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.integer  "owner_id",                                  null: false
-    t.string   "sells",                    default: "none", null: false
-    t.boolean  "producer_profile_only",    default: false
-    t.string   "permalink",                                 null: false
-    t.boolean  "charges_sales_tax",        default: false,  null: false
+    t.integer  "owner_id",                                           null: false
+    t.string   "sells",                             default: "none", null: false
+    t.boolean  "producer_profile_only",             default: false
+    t.string   "permalink",                                          null: false
+    t.boolean  "charges_sales_tax",                 default: false,  null: false
     t.string   "email_address"
-    t.boolean  "require_login",            default: false,  null: false
-    t.boolean  "allow_guest_orders",       default: true,   null: false
+    t.boolean  "require_login",                     default: false,  null: false
+    t.boolean  "allow_guest_orders",                default: true,   null: false
     t.text     "invoice_text"
-    t.boolean  "display_invoice_logo",     default: false
-    t.boolean  "allow_order_changes",      default: false,  null: false
-    t.boolean  "enable_subscriptions",     default: false,  null: false
+    t.boolean  "display_invoice_logo",              default: false
+    t.boolean  "allow_order_changes",               default: false,  null: false
+    t.boolean  "enable_subscriptions",              default: false,  null: false
+    t.string   "terms_and_conditions_file_name"
+    t.string   "terms_and_conditions_content_type"
+    t.integer  "terms_and_conditions_file_size"
+    t.datetime "terms_and_conditions_updated_at"
   end
 
   add_index "enterprises", ["address_id"], name: "index_enterprises_on_address_id", using: :btree
