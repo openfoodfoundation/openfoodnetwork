@@ -14,6 +14,7 @@
   = render "checkout/shipping", f: f
   = render "checkout/payment", f: f
   = render "checkout/already_ordered", f: f if show_bought_items?
+  = render "checkout/terms_and_conditions", f: f
   %p
     %button.button.primary{type: :submit}
       = t :checkout_send
