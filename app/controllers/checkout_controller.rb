@@ -235,7 +235,7 @@ class CheckoutController < Spree::StoreController
         render :edit
       end
       format.json do
-        xhr_flash_errors
+        discard_flash_errors
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
@@ -250,7 +250,7 @@ class CheckoutController < Spree::StoreController
     PermittedAttributes::Checkout.new(params).call
   end
 
-  def xhr_flash_errors
+  def discard_flash_errors
     # Marks flash errors for deletion after the current action has completed.
     # This ensures flash errors generated during XHR requests are not persisted in the
     # session for longer than expected.
