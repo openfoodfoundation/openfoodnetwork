@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 feature "Uploading Terms and Conditions PDF" do
-  include WebHelper
   include AuthenticationHelper
 
   context "as an Enterprise user", js: true do
@@ -22,14 +23,14 @@ feature "Uploading Terms and Conditions PDF" do
         end
       end
 
-      let(:white_pdf_file_name) { Rails.root.join("app", "assets", "images", "logo-white.pdf") }
-      let(:black_pdf_file_name) { Rails.root.join("app", "assets", "images", "logo-black.pdf") }
+      let(:white_pdf_file_name) { Rails.root.join("app/assets/images/logo-white.pdf") }
+      let(:black_pdf_file_name) { Rails.root.join("app/assets/images/logo-black.pdf") }
 
       before do
         # Create fake PDFs from PNG images
-        FileUtils.cp(Rails.root.join("app", "assets", "images", "logo-white.png"), white_pdf_file_name)
-        FileUtils.cp(Rails.root.join("app", "assets", "images", "logo-black.png"), black_pdf_file_name)
-  
+        FileUtils.cp(Rails.root.join("app/assets/images/logo-white.png"), white_pdf_file_name)
+        FileUtils.cp(Rails.root.join("app/assets/images/logo-black.png"), black_pdf_file_name)
+
         go_to_business_details
       end
 
@@ -37,7 +38,8 @@ feature "Uploading Terms and Conditions PDF" do
         # Add PDF
         attach_file "enterprise[terms_and_conditions]", white_pdf_file_name
         click_button "Update"
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).
+          to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
 
         go_to_business_details
         expect(page).to have_selector("a[href*='logo-white.pdf']")
@@ -45,7 +47,8 @@ feature "Uploading Terms and Conditions PDF" do
         # Replace PDF
         attach_file "enterprise[terms_and_conditions]", black_pdf_file_name
         click_button "Update"
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).
+          to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
 
         go_to_business_details
         expect(page).to have_selector("a[href*='logo-black.pdf']")
