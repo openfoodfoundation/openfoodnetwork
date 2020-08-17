@@ -256,6 +256,7 @@ en:
   enterprises: Enterprises
   enterprise_groups: Groups
   reports: Reports
+  listing_reports: Listing Reports
   variant_overrides: Inventory
   import: Import
   spree_products: Spree Products
