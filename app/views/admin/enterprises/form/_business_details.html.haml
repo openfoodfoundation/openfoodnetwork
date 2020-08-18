@@ -41,3 +41,6 @@
       = '{{ Enterprise.terms_and_conditions_file_name }}'
     .pad-top
       = f.file_field :terms_and_conditions
+    .pad-top
+      %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
+        = t('.remove_terms_and_conditions')

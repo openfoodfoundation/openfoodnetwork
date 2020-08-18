@@ -691,6 +691,7 @@ en:
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
+          remove_terms_and_conditions: "Remove File"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
