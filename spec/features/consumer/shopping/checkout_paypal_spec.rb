@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Checking out with Paypal", js: true do
   include ShopWorkflow
-  include CheckoutWorkflow
+  include CheckoutHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
