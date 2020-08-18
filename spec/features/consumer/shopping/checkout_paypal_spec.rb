@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Checking out with Paypal", js: true do
+feature "Check out with Paypal", js: true do
   include ShopWorkflow
   include CheckoutHelper
 

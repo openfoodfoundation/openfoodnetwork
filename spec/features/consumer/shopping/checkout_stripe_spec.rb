@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "As a consumer I want to check out my cart", js: true do
+feature "Check out with Stripe", js: true do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutHelper
