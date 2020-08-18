@@ -51,8 +51,8 @@ module InjectionHelper
       all
 
     inject_json_array "enterprises",
-                     enterprises_and_relatives,
-                     Api::EnterpriseSerializer, enterprise_injection_data
+                      enterprises_and_relatives,
+                      Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_group_enterprises
@@ -65,11 +65,18 @@ module InjectionHelper
   end
 
   def inject_current_hub
-    inject_json "currentHub", current_distributor, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json "currentHub",
+                current_distributor,
+                Api::EnterpriseSerializer,
+                enterprise_injection_data
   end
 
   def inject_current_order
-    inject_json "currentOrder", current_order, Api::CurrentOrderSerializer, current_distributor: current_distributor, current_order_cycle: current_order_cycle
+    inject_json "currentOrder",
+                current_order,
+                Api::CurrentOrderSerializer,
+                current_distributor: current_distributor,
+                current_order_cycle: current_order_cycle
   end
 
   def inject_current_order_cycle
@@ -80,12 +87,12 @@ module InjectionHelper
 
   def inject_available_shipping_methods
     inject_json_array "shippingMethods", available_shipping_methods,
-                     Api::ShippingMethodSerializer, current_order: current_order
+                      Api::ShippingMethodSerializer, current_order: current_order
   end
 
   def inject_available_payment_methods
     inject_json_array "paymentMethods", available_payment_methods,
-                     Api::PaymentMethodSerializer, current_order: current_order
+                      Api::PaymentMethodSerializer, current_order: current_order
   end
 
   def inject_taxons
@@ -105,7 +112,8 @@ module InjectionHelper
   end
 
   def inject_spree_api_key
-    render partial: "json/injection_ams", locals: { name: 'spreeApiKey', json: "'#{@spree_api_key}'" }
+    render partial: "json/injection_ams",
+           locals: { name: 'spreeApiKey', json: "'#{@spree_api_key}'" }
   end
 
   def inject_available_countries
@@ -113,7 +121,8 @@ module InjectionHelper
   end
 
   def inject_enterprise_attributes
-    render partial: "json/injection_ams", locals: { name: 'enterpriseAttributes', json: @enterprise_attributes.to_json.to_s }
+    render partial: "json/injection_ams",
+           locals: { name: 'enterpriseAttributes', json: @enterprise_attributes.to_json.to_s }
   end
 
   def inject_orders
@@ -122,7 +131,8 @@ module InjectionHelper
 
   def inject_shops
     customers = spree_current_user.customers
-    shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
+    shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq |
+                                 customers.pluck(:enterprise_id))
     inject_json_array "shops", shops.all, Api::ShopForOrdersSerializer
   end
 
