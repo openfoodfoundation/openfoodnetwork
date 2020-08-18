@@ -14,4 +14,7 @@ angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
     'removePromoImage':
       url: '/api/enterprises/:id/promo_image.json'
       method: 'DELETE'
+    'removeTermsAndConditions':
+      url: '/api/enterprises/:id/terms_and_conditions.json'
+      method: 'DELETE'
   })

@@ -52,3 +52,4 @@ angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource
 
     removeLogo: performActionOnEnterpriseResource(EnterpriseResource.removeLogo)
     removePromoImage: performActionOnEnterpriseResource(EnterpriseResource.removePromoImage)
+    removeTermsAndConditions: performActionOnEnterpriseResource(EnterpriseResource.removeTermsAndConditions)

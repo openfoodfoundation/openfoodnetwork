@@ -20,6 +20,12 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
     attachment_urls(object.promo_image, [:thumb, :medium, :large])
   end
 
+  def terms_and_conditions
+    return unless @object.terms_and_conditions.file?
+
+    @object.terms_and_conditions.url
+  end
+
   def tag_groups
     object.tag_rules.prioritised.reject(&:is_default).each_with_object([]) do |tag_rule, tag_groups|
       tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.

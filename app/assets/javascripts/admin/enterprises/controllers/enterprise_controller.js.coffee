@@ -82,6 +82,13 @@ angular.module("admin.enterprises")
         .then $scope.removeImageSuccessCallback("removed_promo_image_successfully"),
               $scope.removeImageSuccessCallback()
 
+    $scope.removeTermsAndConditions = ->
+      return unless confirm($scope.translation("immediate_terms_and_conditions_removal_warning"))
+
+      Enterprises.removeTermsAndConditions($scope.Enterprise)
+        .then $scope.removeImageSuccessCallback("removed_terms_and_conditions_successfully"),
+              $scope.removeImageSuccessCallback()
+
     $scope.removeImageSuccessCallback = (success_message_key) ->
       (data) ->
         $scope.Enterprise = angular.copy(data)

@@ -300,11 +300,11 @@ module Spree
           let!(:er_pd) { create(:enterprise_relationship, parent: d_related, child: d1, permissions_list: [:edit_profile]) }
 
           it "should be able to edit enterprises it manages" do
-            is_expected.to have_ability([:read, :edit, :update, :remove_logo, :remove_promo_image, :bulk_update, :resend_confirmation], for: d1)
+            is_expected.to have_ability([:read, :edit, :update, :remove_logo, :remove_promo_image, :remove_terms_and_conditions, :bulk_update, :resend_confirmation], for: d1)
           end
 
           it "should be able to edit enterprises it has permission to" do
-            is_expected.to have_ability([:read, :edit, :update, :remove_logo, :remove_promo_image, :bulk_update, :resend_confirmation], for: d_related)
+            is_expected.to have_ability([:read, :edit, :update, :remove_logo, :remove_promo_image, :remove_terms_and_conditions, :bulk_update, :resend_confirmation], for: d_related)
           end
 
           it "should be able to manage shipping methods, payment methods and enterprise fees for enterprises it manages" do
