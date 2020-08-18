@@ -39,5 +39,5 @@
   .omega.eight.columns
     %a{ href: '{{ Enterprise.terms_and_conditions }}', ng: { if: 'Enterprise.terms_and_conditions' } }
       = '{{ Enterprise.terms_and_conditions_file_name }}'
-    %p
+    .pad-top
       = f.file_field :terms_and_conditions
