@@ -122,6 +122,21 @@ feature "As a consumer I want to check out my cart", js: true do
       end
     end
 
+    context "when distributor has terms and conditions" do
+      let(:fake_terms_and_conditions_path) { Rails.root.join("app/assets/images/logo-white.png") }
+      let(:terms_and_conditions_file) { Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf") }
+
+      before do
+        order.distributor.terms_and_conditions = terms_and_conditions_file
+        order.distributor.save
+      end
+
+      it "shows a link to the terms and conditions" do
+        visit checkout_path
+        expect(page).to have_link('Terms of Service', href: order.distributor.terms_and_conditions.url)
+      end
+    end
+
     context "with previous orders" do
       let!(:prev_order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: order.user) }
 
