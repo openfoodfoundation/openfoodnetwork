@@ -156,7 +156,7 @@ feature "As a consumer I want to check out my cart", js: true do
     end
   end
 
-  context "on the checkout page" do
+  context "guest checkout" do
     before do
       visit checkout_path
       checkout_as_guest
@@ -258,13 +258,6 @@ feature "As a consumer I want to check out my cart", js: true do
         expect(page).to have_content "Donkeys"
         expect(page).to have_content "Local"
       end
-    end
-  end
-
-  context "on the checkout page with payments open" do
-    before do
-      visit checkout_path
-      checkout_as_guest
     end
 
     it "shows all available payment methods" do
