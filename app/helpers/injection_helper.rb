@@ -4,7 +4,7 @@ module InjectionHelper
   include SerializerHelper
 
   def inject_enterprises(enterprises = nil)
-    inject_json_list(
+    inject_json_array(
       "enterprises",
       enterprises || default_enterprise_query,
       Api::EnterpriseSerializer,
@@ -15,7 +15,7 @@ module InjectionHelper
   def inject_groups
     select_only = required_attributes EnterpriseGroup, Api::GroupListSerializer
 
-    inject_json_list(
+    inject_json_array(
       "groups",
       EnterpriseGroup.on_front_page.by_position.select(select_only).
         includes(enterprises: [:shipping_methods, { address: [:state, :country] }],
@@ -36,7 +36,7 @@ module InjectionHelper
   def inject_enterprise_shopfront_list
     select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
 
-    inject_json_list(
+    inject_json_array(
       "enterprises",
       Enterprise.activated.visible.select(select_only).includes(address: [:state, :country]).all,
       Api::EnterpriseShopfrontListSerializer
@@ -50,13 +50,13 @@ module InjectionHelper
       includes(:properties, address: [:state, :country], supplied_products: :properties).
       all
 
-    inject_json_list "enterprises",
+    inject_json_array "enterprises",
                      enterprises_and_relatives,
                      Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_group_enterprises
-    inject_json_list(
+    inject_json_array(
       "enterprises",
       @group.enterprises.activated.all,
       Api::EnterpriseSerializer,
@@ -79,21 +79,21 @@ module InjectionHelper
   end
 
   def inject_available_shipping_methods
-    inject_json_list "shippingMethods", available_shipping_methods,
+    inject_json_array "shippingMethods", available_shipping_methods,
                      Api::ShippingMethodSerializer, current_order: current_order
   end
 
   def inject_available_payment_methods
-    inject_json_list "paymentMethods", available_payment_methods,
+    inject_json_array "paymentMethods", available_payment_methods,
                      Api::PaymentMethodSerializer, current_order: current_order
   end
 
   def inject_taxons
-    inject_json_list "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
+    inject_json_array "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
   end
 
   def inject_properties
-    inject_json_list "properties", Spree::Property.all.to_a, Api::PropertySerializer
+    inject_json_array "properties", Spree::Property.all.to_a, Api::PropertySerializer
   end
 
   def inject_currency_config
@@ -109,7 +109,7 @@ module InjectionHelper
   end
 
   def inject_available_countries
-    inject_json_list "availableCountries", available_countries, Api::CountrySerializer
+    inject_json_array "availableCountries", available_countries, Api::CountrySerializer
   end
 
   def inject_enterprise_attributes
@@ -117,19 +117,19 @@ module InjectionHelper
   end
 
   def inject_orders
-    inject_json_list "orders", @orders.all, Api::OrderSerializer
+    inject_json_array "orders", @orders.all, Api::OrderSerializer
   end
 
   def inject_shops
     customers = spree_current_user.customers
     shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
-    inject_json_list "shops", shops.all, Api::ShopForOrdersSerializer
+    inject_json_array "shops", shops.all, Api::ShopForOrdersSerializer
   end
 
   def inject_saved_credit_cards
     data = spree_current_user ? spree_current_user.credit_cards.with_payment_profile.all : []
 
-    inject_json_list "savedCreditCards", data, Api::CreditCardSerializer
+    inject_json_array "savedCreditCards", data, Api::CreditCardSerializer
   end
 
   def inject_current_user
@@ -140,7 +140,7 @@ module InjectionHelper
     inject_json "railsFlash", OpenStruct.new(flash.to_hash), Api::RailsFlashSerializer
   end
 
-  def inject_json_list(name, data, serializer, opts = {})
+  def inject_json_array(name, data, serializer, opts = {})
     opts = { each_serializer: serializer }.merge(opts)
     serializer = ActiveModel::ArraySerializer
 
