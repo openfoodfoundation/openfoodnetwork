@@ -56,7 +56,7 @@ feature "Check out with Stripe", js: true do
           .to_return(status: 200, body: JSON.generate(response_mock))
 
         visit checkout_path
-        fill_out_form(shipping_with_fee.name, stripe_pm.name)
+        fill_out_form(shipping_with_fee.name, stripe_pm.name, false)
       end
 
       it "allows use of a saved card" do
