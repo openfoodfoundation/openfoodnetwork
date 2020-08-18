@@ -42,7 +42,6 @@ Layout/LineLength:
   - app/helpers/angular_form_helper.rb
   - app/helpers/checkout_helper.rb
   - app/helpers/enterprises_helper.rb
-  - app/helpers/injection_helper.rb
   - app/helpers/markdown_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/orders_helper.rb
