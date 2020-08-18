@@ -38,16 +38,16 @@ module CheckoutHelper
     end
   end
 
-  def fill_out_form
-    choose free_shipping.name
-    choose check_without_fee.name
+  def fill_out_form(shipping_method_name, payment_method_name, save_default_addresses = false)
+    choose shipping_method_name
+    choose payment_method_name
 
     fill_out_details
-    check "Save as default billing address"
+    check "Save as default billing address" if save_default_addresses
 
     fill_out_billing_address
 
     check "Shipping address same as billing address?"
-    check "Save as default shipping address"
+    check "Save as default shipping address" if save_default_addresses
   end
 end

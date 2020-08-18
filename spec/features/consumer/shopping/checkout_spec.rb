@@ -68,7 +68,7 @@ feature "As a consumer I want to check out my cart", js: true do
     context "with details filled out" do
       before do
         visit checkout_path
-        fill_out_form
+        fill_out_form(free_shipping.name, check_without_fee.name)
       end
 
       it "creates a new default billing address and shipping address" do
@@ -184,8 +184,7 @@ feature "As a consumer I want to check out my cart", js: true do
           .to_return(status: 200, body: JSON.generate(response_mock))
 
         visit checkout_path
-        fill_out_form
-        choose stripe_pm.name
+        fill_out_form(free_shipping.name, stripe_pm.name)
       end
 
       it "allows use of a saved card" do
