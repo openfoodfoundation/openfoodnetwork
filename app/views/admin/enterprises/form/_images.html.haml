@@ -7,7 +7,7 @@
     %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.logo.medium }}', if: 'Enterprise.logo' } }
     = f.file_field :logo
     %a.button.red{ href: '', ng: {click: 'removeLogo()', if: 'Enterprise.logo'} }
-      = t('admin.enterprises.remove_logo.remove')
+      = t('.remove_logo')
 
 .row.page-admin-enterprises-form__promo-image-field-group.image-field-group
   .alpha.three.columns
@@ -23,4 +23,4 @@
     %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.promo_image.large }}', if: 'Enterprise.promo_image' } }
     = f.file_field :promo_image
     %a.button.red{ href: '', ng: {click: 'removePromoImage()', if: 'Enterprise.promo_image'} }
-      = t('admin.enterprises.remove_promo_image.remove')
+      = t('.remove_promo_image')
