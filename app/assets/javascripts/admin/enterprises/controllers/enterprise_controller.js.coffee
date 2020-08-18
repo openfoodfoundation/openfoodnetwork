@@ -69,25 +69,29 @@ angular.module("admin.enterprises")
       $scope.newUser = $scope.invite_errors = $scope.invite_success = null
 
     $scope.removeLogo = ->
-      return unless confirm(t("js.admin.enterprises.form.images.immediate_logo_removal_warning"))
+      return unless confirm($scope.translation("immediate_logo_removal_warning"))
 
-      Enterprises.removeLogo($scope.Enterprise).then (data) ->
-        $scope.Enterprise = angular.copy(data)
-        $scope.$emit("enterprise:updated", $scope.Enterprise)
-
-        StatusMessage.display("success", t("js.admin.enterprises.form.images.removed_logo_successfully"))
-      , (response) ->
-        if response.data.error?
-          StatusMessage.display("failure", response.data.error)
+      Enterprises.removeLogo($scope.Enterprise)
+        .then $scope.removeImageSuccessCallback("removed_logo_successfully"),
+              $scope.removeImageSuccessCallback()
 
     $scope.removePromoImage = ->
-      return unless confirm(t("js.admin.enterprises.form.images.immediate_promo_image_removal_warning"))
+      return unless confirm($scope.translation("immediate_promo_image_removal_warning"))
 
-      Enterprises.removePromoImage($scope.Enterprise).then (data) ->
+      Enterprises.removePromoImage($scope.Enterprise)
+        .then $scope.removeImageSuccessCallback("removed_promo_image_successfully"),
+              $scope.removeImageSuccessCallback()
+
+    $scope.removeImageSuccessCallback = (success_message_key) ->
+      (data) ->
         $scope.Enterprise = angular.copy(data)
         $scope.$emit("enterprise:updated", $scope.Enterprise)
+        StatusMessage.display("success", $scope.translation(success_message_key))
 
-        StatusMessage.display("success", t("js.admin.enterprises.form.images.removed_promo_image_successfully"))
-      , (response) ->
+    $scope.removeImageErrorCallback = ->
+      (response) ->
         if response.data.error?
           StatusMessage.display("failure", response.data.error)
+
+    $scope.translation = (key) ->
+      t('js.admin.enterprises.form.images.' + key)
