@@ -117,8 +117,12 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
 
-      it "it doesn't tell about previous orders" do
+      it "doesn't tell about previous orders" do
         expect(page).to have_no_content("You have an order for this order cycle already.")
+      end
+
+      it "doesn't show link to terms and conditions" do
+        expect(page).to have_no_link("Terms of Service")
       end
     end
 
@@ -133,7 +137,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       it "shows a link to the terms and conditions" do
         visit checkout_path
-        expect(page).to have_link('Terms of Service', href: order.distributor.terms_and_conditions.url)
+        expect(page).to have_link("Terms of Service", href: order.distributor.terms_and_conditions.url)
       end
     end
 
