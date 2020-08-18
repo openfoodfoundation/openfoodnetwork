@@ -87,6 +87,7 @@ Layout/LineLength:
   - Gemfile
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/available_payment_method_filter.rb
+  - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/customers_report.rb
   - lib/open_food_network/enterprise_fee_applicator.rb
   - lib/open_food_network/enterprise_fee_calculator.rb
