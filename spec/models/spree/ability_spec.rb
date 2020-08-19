@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'cancan/matchers'
-require 'spree/testing_support/ability_helpers'
+require 'support/ability_helpers'
 require 'spree/testing_support/bar_ability'
 
 # Fake ability for testing registration of additional abilities
@@ -36,12 +36,12 @@ describe Spree::Ability do
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
       Spree::Ability.register_ability(FooAbility)
-      Spree::Ability.new(user).abilities.should_not be_empty
+      expect(Spree::Ability.new(user).abilities).to_not be_empty
     end
 
     it 'should apply the registered abilities permissions' do
       Spree::Ability.register_ability(FooAbility)
-      Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, id: 1)).should be_true
+      expect(Spree::Ability.new(user).can?(:update, build(:order, id: 1))).to be_truthy
     end
   end
 
@@ -72,10 +72,10 @@ describe Spree::Ability do
     context 'with admin user' do
       it 'should be able to admin' do
         user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-        ability.should be_able_to :admin, resource
-        ability.should be_able_to :index, resource_order
-        ability.should be_able_to :show, resource_product
-        ability.should be_able_to :create, resource_user
+        expect(ability).to be_able_to :admin, resource
+        expect(ability).to be_able_to :index, resource_order
+        expect(ability).to be_able_to :show, resource_product
+        expect(ability).to be_able_to :create, resource_user
       end
     end
 
@@ -85,25 +85,23 @@ describe Spree::Ability do
 
         Spree::Ability.register_ability(BarAbility)
 
-        ability.should_not be_able_to :admin, resource
+        expect(ability).to_not be_able_to :admin, resource
 
-        ability.should be_able_to :admin, resource_order
-        ability.should be_able_to :index, resource_order
-        ability.should_not be_able_to :update, resource_order
-        # ability.should_not be_able_to :create, resource_order # Fails
+        expect(ability).to be_able_to :admin, resource_order
+        expect(ability).to be_able_to :index, resource_order
+        expect(ability).to_not be_able_to :update, resource_order
 
-        ability.should be_able_to :admin, resource_shipment
-        ability.should be_able_to :index, resource_shipment
-        ability.should be_able_to :create, resource_shipment
+        expect(ability).to be_able_to :admin, resource_shipment
+        expect(ability).to be_able_to :index, resource_shipment
+        expect(ability).to be_able_to :create, resource_shipment
 
-        ability.should_not be_able_to :admin, resource_product
-        ability.should_not be_able_to :update, resource_product
-        # ability.should_not be_able_to :show, resource_product # Fails
+        expect(ability).to_not be_able_to :admin, resource_product
+        expect(ability).to_not be_able_to :update, resource_product
 
-        ability.should_not be_able_to :admin, resource_user
-        ability.should_not be_able_to :update, resource_user
-        ability.should be_able_to :update, user
-        # ability.should_not be_able_to :create, resource_user # Fails
+        expect(ability).to_not be_able_to :admin, resource_user
+        expect(ability).to_not be_able_to :update, resource_user
+        expect(ability).to be_able_to :update, user
+
         # It can create new users if is has access to the :admin, User!!
 
         # TODO change the Ability class so only users and customers get the extra premissions?
@@ -114,10 +112,10 @@ describe Spree::Ability do
 
     context 'with customer' do
       it 'should not be able to admin' do
-        ability.should_not be_able_to :admin, resource
-        ability.should_not be_able_to :admin, resource_order
-        ability.should_not be_able_to :admin, resource_product
-        ability.should_not be_able_to :admin, resource_user
+        expect(ability).to_not be_able_to :admin, resource
+        expect(ability).to_not be_able_to :admin, resource_order
+        expect(ability).to_not be_able_to :admin, resource_product
+        expect(ability).to_not be_able_to :admin, resource_user
       end
     end
   end
