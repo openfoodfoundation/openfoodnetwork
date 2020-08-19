@@ -4,7 +4,7 @@ module Spree
   class LogEntry < ActiveRecord::Base
     belongs_to :source, polymorphic: true
 
-    # Fix for #1767
+    # Fix for Spree #1767
     # If a payment fails, we want to make sure we keep the record of it failing
     after_rollback :save_anyway
 
