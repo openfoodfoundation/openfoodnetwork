@@ -49,7 +49,7 @@ describe Spree::Ability do
     let(:resource) { Object.new }
 
     context 'with admin user' do
-      before(:each) { user.stub(:has_spree_role?).and_return(true) }
+      before(:each) { allow(user).to receive(:has_spree_role?).and_return(true) }
       it_should_behave_like 'access granted'
       it_should_behave_like 'index allowed'
     end
@@ -158,14 +158,14 @@ describe Spree::Ability do
 
       context 'requested with proper token' do
         let(:token) { 'TOKEN123' }
-        before(:each) { resource.stub token: 'TOKEN123' }
+        before(:each) { allow(resource).to receive_messages token: 'TOKEN123' }
         it_should_behave_like 'access granted'
         it_should_behave_like 'no index allowed'
       end
 
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
-        before(:each) { resource.stub token: 'TOKEN123' }
+        before(:each) { allow(resource).to receive_messages token: 'TOKEN123' }
         it_should_behave_like 'create only'
       end
     end
