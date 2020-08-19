@@ -10,7 +10,6 @@ module Spree
           base.class_eval do
             helper_method :current_order
             helper_method :current_currency
-            before_filter :set_current_order
           end
         end
 
@@ -66,11 +65,6 @@ module Spree
           end
 
           session[:guest_token] = nil
-        end
-
-        # Load current order and create a new one if necessary.
-        def set_current_order
-          current_order(true) if spree_current_user
         end
 
         def current_currency

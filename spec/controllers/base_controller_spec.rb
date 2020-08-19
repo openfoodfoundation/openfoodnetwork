@@ -12,73 +12,41 @@ describe BaseController, type: :controller do
   describe "#current_order" do
     let(:user) { create(:user) }
 
-    it "doesn't change anything without a user" do
-      expect {
-        get :index
-      }.to_not change { Spree::Order.count }
-    end
-
     it "creates a new order" do
-      allow(controller).to receive(:spree_current_user).and_return(user)
-
       expect {
-        get :index
+        controller.current_order(true)
       }.to change { Spree::Order.count }.by(1)
-
-      expect(user.orders.count).to eq 1
     end
 
-    it "ignores the last incomplete order" do
-      # Spree used to merge the last order with the current one.
-      # And we used to override that logic to delete old incomplete orders.
-      # Now we are checking here that none of that is happening.
+    it "associates the current user" do
+      allow(controller).to receive(:spree_current_user).and_return(user)
+      order = controller.current_order(true)
+      expect(user.orders.reload).to eq [order]
+    end
 
-      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
-      last_cart.line_items << create(:line_item)
+    it "loads the order referenced in the session" do
+      cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      session[:order_id] = cart.id
 
-      current_cart = create(
+      expect(controller.current_order).to eq cart
+    end
+
+    it "applies variant overrides" do
+      shop = create(:distributor_enterprise)
+      variant = create(:variant, price: 3)
+      create(:variant_override, variant: variant, hub: shop, price: 5)
+      cart = create(
         :order,
         user: user,
         created_by: user,
+        distributor: shop,
         state: "cart",
-        completed_at: nil,
-        created_at: 1.week.ago
+        completed_at: nil
       )
-      session[:order_id] = current_cart.id
+      cart.line_items << create(:line_item, variant: variant)
+      session[:order_id] = cart.id
 
-      allow(controller).to receive(:spree_current_user).and_return(user)
-
-      expect {
-        get :index
-      }.to_not change { Spree::Order.count }
-
-      expect(current_cart.line_items.count).to eq 0
-    end
-
-    it "doesn't recover old orders after checkout, a new empty one is created" do
-      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
-      last_cart.line_items << create(:line_item)
-
-      just_completed_order = create(
-        :order,
-        user: user,
-        created_by: user,
-        state: "complete",
-        completed_at: Time.zone.now,
-        created_at: 1.week.ago
-      )
-      expect(just_completed_order.completed_at).to be_present
-      session[:order_id] = just_completed_order.id
-
-      allow(controller).to receive(:spree_current_user).and_return(user)
-
-      expect {
-        get :index
-      }.to change { Spree::Order.count }.by(1)
-
-      expect(session[:order_id]).to_not eq just_completed_order.id
-      expect(session[:order_id]).to_not eq last_cart.id
-      expect(controller.current_order.line_items.count).to eq 0
+      expect(controller.current_order.line_items.first.variant.price).to eq 5
     end
   end
 
