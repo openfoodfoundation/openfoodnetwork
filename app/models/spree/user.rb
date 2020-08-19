@@ -7,6 +7,13 @@ module Spree
     belongs_to :ship_address, foreign_key: 'ship_address_id', class_name: 'Spree::Address'
     belongs_to :bill_address, foreign_key: 'bill_address_id', class_name: 'Spree::Address'
 
+    has_and_belongs_to_many :spree_roles,
+                            join_table: 'spree_roles_users',
+                            foreign_key: "user_id",
+                            class_name: "Spree::Role"
+
+    has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
+
     before_validation :set_login
     before_destroy :check_completed_orders
 
@@ -41,9 +48,15 @@ module Spree
       User.admin.count > 0
     end
 
+    # Whether a user has a role or not.
+    def has_spree_role?(role_in_question)
+      spree_roles.where(name: role_in_question.to_s).any?
+    end
+
     def admin?
       has_spree_role?('admin')
     end
+
 
     # handle_asynchronously will define send_reset_password_instructions_with_delay.
     # If handle_asynchronously is called twice, we get an infinite job loop.
@@ -123,6 +136,10 @@ module Spree
     def clear_spree_api_key!
       self.spree_api_key = nil
       save!
+    end
+
+    def last_incomplete_spree_order
+      spree_orders.incomplete.where(created_by_id: id).order('created_at DESC').first
     end
 
     protected
