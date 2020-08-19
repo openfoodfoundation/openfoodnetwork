@@ -30,8 +30,6 @@ Spree.config do |config|
   config.auto_capture = true
   #config.override_actionmailer_config = false
 
-  config.order_updater_decorator = OrderUpdater
-
   # S3 settings
   config.s3_bucket = ENV['S3_BUCKET'] if ENV['S3_BUCKET']
   config.s3_access_key = ENV['S3_ACCESS_KEY'] if ENV['S3_ACCESS_KEY']

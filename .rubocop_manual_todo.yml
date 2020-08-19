@@ -408,6 +408,7 @@ Metrics/AbcSize:
   - app/services/create_order_cycle.rb
   - app/services/order_cycle_form.rb
   - app/services/order_syncer.rb
+  - engines/order_management/app/services/order_management/order/updater.rb
   - engines/order_management/app/services/order_management/stock/estimator.rb
   - engines/order_management/app/services/order_management/stock/package.rb
   - engines/order_management/app/services/order_management/stock/packer.rb
@@ -624,6 +625,7 @@ Metrics/MethodLength:
   - app/serializers/api/cached_enterprise_serializer.rb
   - app/services/order_cycle_form.rb
   - app/services/permitted_attributes/checkout.rb
+  - engines/order_management/app/services/order_management/order/updater.rb
   - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
   - engines/order_management/app/services/order_management/stock/estimator.rb
   - engines/order_management/app/services/order_management/stock/package.rb
@@ -702,6 +704,7 @@ Metrics/ClassLength:
   - app/serializers/api/cached_enterprise_serializer.rb
   - app/serializers/api/enterprise_shopfront_serializer.rb
   - app/services/cart_service.rb
+  - engines/order_management/app/services/order_management/order/updater.rb
   - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/open_food_network/bulk_coop_report.rb
@@ -724,6 +727,7 @@ Metrics/ModuleLength:
   - app/helpers/injection_helper.rb
   - app/helpers/spree/admin/base_helper.rb
   - app/helpers/spree/admin/navigation_helper.rb
+  - engines/order_management/spec/services/order_management/order/updater_spec.rb
   - engines/order_management/spec/services/order_management/stock/package_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/form_spec.rb
