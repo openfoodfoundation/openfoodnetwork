@@ -48,6 +48,11 @@ describe BaseController, type: :controller do
 
       expect(controller.current_order.line_items.first.variant.price).to eq 5
     end
+
+    it "doesn't load variant overrides without line items" do
+      expect(VariantOverride).to_not receive(:indexed)
+      controller.current_order(true)
+    end
   end
 
   it "redirects to home with message if order cycle is expired" do
