@@ -95,8 +95,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
         failed_payment.adjustment.update amount: 456.00, eligible: false, state: "finalized"
       end
 
-      xit "shows the correct payment fee amount for the order" do
-        # Fails; the sum of adjustments for both failed and complete payments is shown
+      it "shows the correct payment fee amount for the order" do
         payment_fee_field = report_table.last[12]
         expect(payment_fee_field).to eq completed_payment.adjustment.amount
       end
