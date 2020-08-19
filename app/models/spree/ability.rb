@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# Implementation class for Cancan gem.  Instead of overriding this class, consider adding new permissions
+# Implementation class for Cancan gem.
+# Instead of overriding this class, consider adding new permissions
 # using the special +register_ability+ method which allows extensions to add their own abilities.
 #
 # See http://github.com/ryanb/cancan for more details on cancan.
@@ -13,10 +14,11 @@ module Spree
     class_attribute :abilities
     self.abilities = Set.new
 
-    # Allows us to go beyond the standard cancan initialize method which makes it difficult for engines to
-    # modify the default +Ability+ of an application.  The +ability+ argument must be a class that includes
-    # the +CanCan::Ability+ module.  The registered ability should behave properly as a stand-alone class
-    # and therefore should be easy to test in isolation.
+    # Allows us to go beyond the standard cancan initialize method
+    #   which makes it difficult for engines to modify the default +Ability+ of an application.
+    # The +ability+ argument must be a class that includes the +CanCan::Ability+ module.
+    # The registered ability should behave properly as a stand-alone class
+    #   and therefore should be easy to test in isolation.
     def self.register_ability(ability)
       abilities.add(ability)
     end
@@ -67,8 +69,8 @@ module Spree
 
       # Include any abilities registered by extensions, etc.
       Ability.abilities.each do |clazz|
-        ability = clazz.send(:new, user)
-        @rules = rules + ability.send(:rules)
+        ability = clazz.__send__(:new, user)
+        @rules = rules + ability.__send__(:rules)
       end
     end
   end
