@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     class Engine < ::Rails::Engine
@@ -26,25 +28,27 @@ module Spree
         Rails.application.routes_reloader.reload!
       end
 
-      initializer "spree.environment", :before => :load_config_initializers do |app|
+      initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Core::Environment.new
-        Spree::Config = app.config.spree.preferences #legacy access
+        Spree::Config = app.config.spree.preferences # legacy access
       end
 
-      initializer "spree.load_preferences", :before => "spree.environment" do
-        ::ActiveRecord::Base.send :include, Spree::Preferences::Preferable
+      initializer "spree.load_preferences", before: "spree.environment" do
+        ::ActiveRecord::Base.include Spree::Preferences::Preferable
       end
 
       initializer "spree.register.calculators" do |app|
         app.config.spree.calculators.shipping_methods = [
-            Spree::Calculator::Shipping::FlatPercentItemTotal,
-            Spree::Calculator::Shipping::FlatRate,
-            Spree::Calculator::Shipping::FlexiRate,
-            Spree::Calculator::Shipping::PerItem,
-            Spree::Calculator::Shipping::PriceSack]
+          Spree::Calculator::Shipping::FlatPercentItemTotal,
+          Spree::Calculator::Shipping::FlatRate,
+          Spree::Calculator::Shipping::FlexiRate,
+          Spree::Calculator::Shipping::PerItem,
+          Spree::Calculator::Shipping::PriceSack
+        ]
 
-         app.config.spree.calculators.tax_rates = [
-            Spree::Calculator::DefaultTax]
+        app.config.spree.calculators.tax_rates = [
+          Spree::Calculator::DefaultTax
+        ]
       end
 
       initializer "spree.register.stock_splitters" do |app|
@@ -56,12 +60,13 @@ module Spree
 
       initializer "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods = [
-            Spree::Gateway::Bogus,
-            Spree::Gateway::BogusSimple,
-            Spree::PaymentMethod::Check ]
+          Spree::Gateway::Bogus,
+          Spree::Gateway::BogusSimple,
+          Spree::PaymentMethod::Check
+        ]
       end
 
-      initializer "spree.mail.settings" do |app|
+      initializer "spree.mail.settings" do |_app|
         Spree::Core::MailSettings.init
         Mail.register_interceptor(Spree::Core::MailInterceptor)
       end
@@ -92,12 +97,13 @@ module Spree
           Spree::Promotion::Rules::Product,
           Spree::Promotion::Rules::User,
           Spree::Promotion::Rules::FirstOrder,
-          Spree::Promotion::Rules::UserLoggedIn]
+          Spree::Promotion::Rules::UserLoggedIn
+        ]
       end
 
       initializer 'spree.promo.register.promotions.actions' do |app|
         app.config.spree.promotions.actions = [Spree::Promotion::Actions::CreateAdjustment,
-          Spree::Promotion::Actions::CreateLineItems]
+                                               Spree::Promotion::Actions::CreateLineItems]
       end
 
       # filter sensitive information during logging
@@ -106,7 +112,8 @@ module Spree
           :password,
           :password_confirmation,
           :number,
-          :verification_value]
+          :verification_value
+        ]
       end
     end
   end
