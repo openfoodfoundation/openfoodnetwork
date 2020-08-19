@@ -18,7 +18,7 @@ describe Spree::BaseHelper do
       end
 
       it "return complete list of countries" do
-        available_countries.count.should == Spree::Country.count
+        expect(available_countries.count).to eq Spree::Country.count
       end
     end
 
@@ -31,7 +31,7 @@ describe Spree::BaseHelper do
         end
 
         it "return only the countries defined by the checkout zone" do
-          available_countries.should == [country]
+          expect(available_countries).to eq [country]
         end
       end
 
@@ -44,7 +44,7 @@ describe Spree::BaseHelper do
         end
 
         it "return complete list of countries" do
-          available_countries.count.should == Spree::Country.count
+          expect(available_countries.count).to eq Spree::Country.count
         end
       end
     end
