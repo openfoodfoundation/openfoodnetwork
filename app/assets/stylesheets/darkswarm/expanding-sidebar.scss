@@ -16,12 +16,14 @@
     width: 100%;
     background-color: $shop-sidebar-overlay;
     opacity: 0;
-    transition: opacity $transition-sidebar;
+    visibility: hidden;
+    transition: all $transition-sidebar;
   }
 
   &.shown {
     .background {
       opacity: 1;
+      visibility: visible;
     }
 
     .sidebar,
