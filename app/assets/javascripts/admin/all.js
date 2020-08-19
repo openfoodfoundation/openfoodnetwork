@@ -34,7 +34,7 @@
 //= require css_browser_selector_dev
 //= require responsive-tables
 //= require admin/spree_paypal_express
-//= require admin/handlebar_extensions
+//= require handlebars
 
 // OFN specific
 //= require_tree ../templates/admin
