@@ -1,4 +1,10 @@
 <script>
+  if (Spree === undefined) {
+    var Spree = {}
+  }
+  if (Spree.routes == undefined) {
+    Spree.routes = {}
+  }
   Spree.routes = <%== {
     :variants_search       => spree.admin_search_variants_path(:format => 'json'),
     :taxons_search         => main_app.api_taxons_path(:format => 'json'),
