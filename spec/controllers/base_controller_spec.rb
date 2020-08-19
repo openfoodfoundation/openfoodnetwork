@@ -28,6 +28,17 @@ describe BaseController, type: :controller do
       expect(user.orders.count).to eq 1
     end
 
+    it "uses the last incomplete order" do
+      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      allow(controller).to receive(:spree_current_user).and_return(user)
+
+      expect {
+        get :index
+      }.to_not change { Spree::Order.count }
+
+      expect(session[:order_id]).to eq last_cart.id
+    end
+
     it "ignores the last incomplete order" do
       # Spree used to merge the last order with the current one.
       # And we used to override that logic to delete old incomplete orders.

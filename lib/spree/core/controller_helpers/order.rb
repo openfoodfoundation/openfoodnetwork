@@ -68,9 +68,18 @@ module Spree
           session[:guest_token] = nil
         end
 
-        # Load current order and create a new one if necessary.
+        # Recover incomplete orders from other sessions after logging in.
         def set_current_order
-          current_order(true) if spree_current_user
+          return unless (user = spree_current_user)
+
+          last_incomplete_order = user.last_incomplete_spree_order
+
+          if session[:order_id].nil? && last_incomplete_order
+            session[:order_id] = last_incomplete_order.id
+          end
+
+          # Load current order and create a new one if necessary.
+          current_order(true)
         end
 
         def current_currency
