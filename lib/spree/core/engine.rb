@@ -10,7 +10,7 @@ module Spree
 
       config.after_initialize do
         ActiveSupport::Notifications.subscribe(/^spree\./) do |*args|
-          event_name, start_time, end_time, id, payload = args
+          event_name, _start_time, _end_time, _id, payload = args
           Activator.active.event_name_starts_with(event_name).each do |activator|
             payload[:event_name] = event_name
             activator.activate(payload)
