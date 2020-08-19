@@ -53,10 +53,10 @@ module Spree
       spree_roles.where(name: role_in_question.to_s).any?
     end
 
+    # Checks whether the specified user is a superadmin, with full control of the instance
     def admin?
       has_spree_role?('admin')
     end
-
 
     # handle_asynchronously will define send_reset_password_instructions_with_delay.
     # If handle_asynchronously is called twice, we get an infinite job loop.
@@ -118,14 +118,6 @@ module Spree
       else
         credit_cards.where(is_default: true).first
       end
-    end
-
-    # Checks whether the specified user is a superadmin, with full control of the
-    # instance
-    #
-    # @return [Boolean]
-    def superadmin?
-      has_spree_role?('admin')
     end
 
     def generate_spree_api_key!
