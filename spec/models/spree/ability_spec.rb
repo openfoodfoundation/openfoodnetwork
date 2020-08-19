@@ -7,7 +7,7 @@ require 'spree/testing_support/bar_ability'
 class FooAbility
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(_user)
     # allow anyone to perform index on Order
     can :index, Spree::Order
     # allow anyone to update an Order with id of 1
@@ -26,7 +26,7 @@ describe Spree::Ability do
     user.spree_roles.clear
   end
 
-  TOKEN = 'token123'
+  TOKEN = 'token123'.freeze
 
   after(:each) {
     Spree::Ability.abilities = Set.new
@@ -41,7 +41,7 @@ describe Spree::Ability do
 
     it 'should apply the registered abilities permissions' do
       Spree::Ability.register_ability(FooAbility)
-      Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, :id => 1)).should be_true
+      Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, id: 1)).should be_true
     end
   end
 
@@ -123,7 +123,6 @@ describe Spree::Ability do
   end
 
   context 'as Guest User' do
-
     context 'for Country' do
       let(:resource) { Spree::Country.new }
       context 'requested by any user' do
@@ -161,14 +160,14 @@ describe Spree::Ability do
 
       context 'requested with proper token' do
         let(:token) { 'TOKEN123' }
-        before(:each) { resource.stub :token => 'TOKEN123' }
+        before(:each) { resource.stub token: 'TOKEN123' }
         it_should_behave_like 'access granted'
         it_should_behave_like 'no index allowed'
       end
 
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
-        before(:each) { resource.stub :token => 'TOKEN123' }
+        before(:each) { resource.stub token: 'TOKEN123' }
         it_should_behave_like 'create only'
       end
     end
