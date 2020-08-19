@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module BaseHelper
     def available_countries
@@ -17,7 +19,7 @@ module Spree
 
     def pretty_time(time)
       [I18n.l(time.to_date, format: :long),
-        time.strftime("%l:%M %p")].join(" ")
+       time.strftime("%l:%M %p")].join(" ")
     end
   end
 end

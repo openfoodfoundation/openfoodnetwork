@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::BaseHelper do
@@ -23,8 +25,8 @@ describe Spree::BaseHelper do
     context "with a checkout zone defined" do
       context "checkout zone is of type country" do
         before do
-          @country_zone = create(:zone, :name => "CountryZone")
-          @country_zone.members.create(:zoneable => country)
+          @country_zone = create(:zone, name: "CountryZone")
+          @country_zone.members.create(zoneable: country)
           Spree::Config[:checkout_zone] = @country_zone.name
         end
 
@@ -35,9 +37,9 @@ describe Spree::BaseHelper do
 
       context "checkout zone is of type state" do
         before do
-          state_zone = create(:zone, :name => "StateZone")
-          state = create(:state, :country => country)
-          state_zone.members.create(:zoneable => state)
+          state_zone = create(:zone, name: "StateZone")
+          state = create(:state, country: country)
+          state_zone.members.create(zoneable: state)
           Spree::Config[:checkout_zone] = state_zone.name
         end
 
