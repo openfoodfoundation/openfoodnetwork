@@ -1,6 +1,6 @@
 %p.callout
   %span{:style => "float:right;"}
-    - if @order.paid?
+    - if @order.paid? && !@order.outstanding_balance?
       = t :email_payment_paid
     - else
       - if @order.outstanding_balance?
