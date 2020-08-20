@@ -2,11 +2,13 @@
 
 require 'spec_helper'
 
-# We'll use the OrderMailer as a quick and easy way to test. IF it works here
-# it works for all email (in theory.)
+# Here we use the OrderMailer as a way to test the mail interceptor.
 describe Spree::OrderMailer do
-  let(:order) { Spree::Order.new(email: "customer@example.com") }
-  let(:message) { Spree::OrderMailer.confirm_email(order) }
+  let(:order) do
+    Spree::Order.new(distributor: create(:enterprise),
+                     bill_address: create(:address))
+  end
+  let(:message) { Spree::OrderMailer.confirm_email_for_shop(order) }
 
   before(:all) do
     ActionMailer::Base.perform_deliveries = true
@@ -64,7 +66,7 @@ describe Spree::OrderMailer do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        expect(@email.subject.match(/customer@example\.com/)).to be_truthy
+        expect(@email.subject).to include order.distributor.contact.email
       end
     end
 
@@ -73,7 +75,7 @@ describe Spree::OrderMailer do
         Spree::Config[:intercept_email] = ""
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        expect(@email.to).to eq ["customer@example.com"]
+        expect(@email.to).to eq [order.distributor.contact.email]
       end
     end
   end
