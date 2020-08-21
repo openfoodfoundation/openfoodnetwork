@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, $location, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser, ProductFiltersService) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, $location, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser, ProductFiltersUrl) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -32,7 +32,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.sortOptions = SortOptions
 
   $scope.initialise = ->
-    $scope.q = ProductFiltersService.loadFromUrl($location.search())
+    $scope.q = ProductFiltersUrl.loadFromUrl($location.search())
     $scope.fetchProducts()
 
   $scope.$watchCollection '[q.query, q.producerFilter, q.categoryFilter, q.importDateFilter, per_page]', ->
@@ -55,7 +55,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     }
     RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
       # update url with the filters used
-      $location.search(ProductFiltersService.generate($scope.q))
+      $location.search(ProductFiltersUrl.generate($scope.q))
       $scope.resetProducts()
 
   removeClearedValues = ->
@@ -116,7 +116,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.editWarn = (product, variant) ->
     if confirm_unsaved_changes()
-      $window.location.href = ProductFiltersService.buildUrl(editProductUrl(product, variant), $scope.q)
+      $window.location.href = ProductFiltersUrl.buildUrl(editProductUrl(product, variant), $scope.q)
 
   $scope.toggleShowAllVariants = ->
     showVariants = !DisplayProperties.showVariants 0

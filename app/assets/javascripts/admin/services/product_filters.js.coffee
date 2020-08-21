@@ -1,5 +1,5 @@
-angular.module("ofn.admin").factory "ProductFiltersService", ($httpParamSerializer) ->
-  new class ProductFiltersService
+angular.module("ofn.admin").factory "ProductFiltersUrl", ($httpParamSerializer) ->
+  new class ProductFiltersUrl
     productFilters: ['producerFilter', 'categoryFilter', 'query', 'sorting', 'importDateFilter']
 
     loadFromUrl: (filters) ->

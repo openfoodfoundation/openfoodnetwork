@@ -246,7 +246,7 @@ describe "filtering products for submission to database", ->
     ]
 
 describe "AdminProductEditCtrl", ->
-  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = ProductFiltersService = windowStub = null
+  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = ProductFiltersUrl = windowStub = null
 
   beforeEach ->
     module "ofn.admin"
@@ -258,7 +258,7 @@ describe "AdminProductEditCtrl", ->
       $provide.value 'columns', []
       null
 
-  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_, _ProductFiltersService_) ->
+  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_, _ProductFiltersUrl_) ->
     $scope = $rootScope.$new()
     $ctrl = _$controller_
     $timeout = _$timeout_
@@ -266,7 +266,7 @@ describe "AdminProductEditCtrl", ->
     BulkProducts = _BulkProducts_
     DirtyProducts = _DirtyProducts_
     DisplayProperties = _DisplayProperties_
-    ProductFiltersService = _ProductFiltersService_
+    ProductFiltersUrl = _ProductFiltersUrl_
 
     # Stub the window object so we don't get redirected when href is updated
     windowStub = {navigator: {userAgent: 'foo'}, location: {href: ''}}

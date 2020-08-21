@@ -1,24 +1,24 @@
-describe "ProductFiltersService service", ->
-  ProductFiltersService = null
+describe "ProductFiltersUrl service", ->
+  ProductFiltersUrl = null
 
   beforeEach ->
     module "ofn.admin"
 
-  beforeEach inject (_ProductFiltersService_) ->
-    ProductFiltersService = _ProductFiltersService_
+  beforeEach inject (_ProductFiltersUrl_) ->
+    ProductFiltersUrl = _ProductFiltersUrl_
 
   describe "loadFromUrl", ->
     it "should return a hash with value populated for filters existing in parameter", ->
       producerFilter = 2
       query = 'fruit'
 
-      filters = ProductFiltersService.loadFromUrl(producerFilter: producerFilter, query: query)
+      filters = ProductFiltersUrl.loadFromUrl(producerFilter: producerFilter, query: query)
 
       expect(filters.producerFilter).toBe producerFilter
       expect(filters.query).toBe query
 
     it "should return a hash with empty value for filters missing from parameter", ->
-      filters = ProductFiltersService.loadFromUrl({})
+      filters = ProductFiltersUrl.loadFromUrl({})
 
       expect(filters.producerFilter).toBe ""
       expect(filters.query).toBe ""
@@ -31,7 +31,7 @@ describe "ProductFiltersService service", ->
       producerFilter = 2
       query = 'fruit'
 
-      filters = ProductFiltersService.generate(
+      filters = ProductFiltersUrl.generate(
         producerFilter: producerFilter, query: query, otherParam: 'otherParam'
       )
 
@@ -55,7 +55,7 @@ describe "ProductFiltersService service", ->
       }
       baseUrl = "openfoodnetwork.org.au"
 
-      url = ProductFiltersService.buildUrl(baseUrl, filters)
+      url = ProductFiltersUrl.buildUrl(baseUrl, filters)
 
       expectedFilters = $httpParamSerializer(filters)
       expect(url).toBe("#{baseUrl}?#{expectedFilters}")
@@ -63,6 +63,6 @@ describe "ProductFiltersService service", ->
     it 'should return baseUrl if filters are empty', ->
       baseUrl = "openfoodnetwork.org.au"
 
-      url = ProductFiltersService.buildUrl(baseUrl, {})
+      url = ProductFiltersUrl.buildUrl(baseUrl, {})
       expect(url).toBe baseUrl
 
