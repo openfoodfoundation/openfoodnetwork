@@ -13,7 +13,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
 
-  productFilters = ['producerFilter', 'categoryFilter', 'query', 'sorting', 'importDateFilter']
   $scope.q = {
     producerFilter: ""
     categoryFilter: ""
@@ -42,13 +41,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.changePage = (newPage) ->
     $scope.page = newPage
     $scope.fetchProducts()
-
-  generateFilter = ->
-    filters = {}
-    for filter in productFilters
-      filters[filter] = $scope[filter] if $scope[filter]
-
-    filters
 
   $scope.fetchProducts = ->
     removeClearedValues()
