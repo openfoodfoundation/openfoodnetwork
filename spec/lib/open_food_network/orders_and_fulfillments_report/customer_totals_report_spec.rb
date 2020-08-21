@@ -1,5 +1,7 @@
 require "spec_helper"
+require 'open_food_network/orders_and_fulfillments_report'
 require 'open_food_network/orders_and_fulfillments_report/customer_totals_report'
+require 'open_food_network/order_grouper'
 
 RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsReport do
   let!(:distributor) { create(:distributor_enterprise) }
@@ -76,6 +78,27 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
     it "displays the correct shipping_method" do
       shipping_method_name_field = report_table.first[15]
       expect(shipping_method_name_field).to eq shipping_method2.name
+    end
+  end
+
+  context "displaying payment fees" do
+    context "with both failed and completed payments present" do
+      let!(:order) { 
+        create(:order_ready_to_ship, user: customer.user,
+                                     customer: customer, distributor: distributor)
+      }
+      let(:completed_payment) { order.payments.completed.first }
+      let!(:failed_payment) { create(:payment, order: order, state: "failed") }
+
+      before do
+        completed_payment.adjustment.update amount: 123.00
+        failed_payment.adjustment.update amount: 456.00, eligible: false, state: "finalized"
+      end
+
+      it "shows the correct payment fee amount for the order" do
+        payment_fee_field = report_table.last[12]
+        expect(payment_fee_field).to eq completed_payment.adjustment.amount
+      end
     end
   end
 

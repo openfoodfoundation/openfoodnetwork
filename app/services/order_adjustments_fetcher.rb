@@ -57,11 +57,12 @@ class OrderAdjustmentsFetcher
     if adjustments_eager_loaded?
       adjustment_scope = public_send("#{scope}_scope")
 
+      # Adjustments are already loaded here, this block is using `Array#select`
       adjustments.select do |adjustment|
-        match_by_scope(adjustment, adjustment_scope)
+        match_by_scope(adjustment, adjustment_scope) && match_by_scope(adjustment, eligible_scope)
       end
     else
-      adjustments.where(nil).public_send scope
+      adjustments.where(nil).eligible.public_send scope
     end
   end
 
