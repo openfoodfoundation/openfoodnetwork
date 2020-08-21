@@ -1885,7 +1885,7 @@ tr:
         twitter: "Twitter"
         twitter_placeholder: "Örn. @twitter_ciftlik"
         instagram: "Instagram"
-        instagram_placeholder: "Örn. @instagram_ciftlik"
+        instagram_placeholder: "Örn. instagram_ciftlik"
       limit_reached:
         headline: "Hayır!"
         message: "Sınıra ulaştınız!"

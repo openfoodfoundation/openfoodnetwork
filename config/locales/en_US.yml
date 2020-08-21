@@ -32,7 +32,7 @@ en_US:
         spree/user:
           attributes:
             email:
-              taken: "There's already an account registered for this email. Please login to reset your password."
+              taken: "There's already an account registered for this email. Please login or reset your password."
         spree/order:
           no_card: There are no authorized credit cards available to charge
         spree/credit_card:
