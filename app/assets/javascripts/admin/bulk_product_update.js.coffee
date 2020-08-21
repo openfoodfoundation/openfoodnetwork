@@ -35,7 +35,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.q = ProductFiltersService.loadFromUrl($location.search())
     $scope.fetchProducts()
 
-  $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter, per_page]', ->
+  $scope.$watchCollection '[q.query, q.producerFilter, q.categoryFilter, q.importDateFilter, per_page]', ->
     $scope.page = 1 # Reset page when changing filters for new search
 
   $scope.changePage = (newPage) ->
