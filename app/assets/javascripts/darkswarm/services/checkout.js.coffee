@@ -24,7 +24,8 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
           try
             @loadFlash(error: t("checkout.failed")) # inform the user about the unexpected error
           finally
-            throw error # generate a BugsnagJS alert
+            Bugsnag.notify(error)
+            throw error
 
     handle_checkout_error_response: (response) =>
       throw response unless response.data?
