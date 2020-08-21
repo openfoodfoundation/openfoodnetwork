@@ -23,10 +23,6 @@ The categories are based on https://keepachangelog.com/en/1.0.0/. -->
 
 Changelog Category: Added | Changed | Deprecated | Removed | Fixed | Security
 
-#### How is this related to the Spree upgrade?
-<!-- Any known conflicts with the Spree Upgrade?
-Explain them or remove this section. -->
-
 
 
 #### Discourse thread
