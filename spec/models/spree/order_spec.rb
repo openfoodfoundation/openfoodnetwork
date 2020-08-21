@@ -489,24 +489,8 @@ describe Spree::Order do
   end
 
   context '#updater' do
-    class FakeOrderUpdaterDecorator
-      attr_reader :decorated_object
-
-      def initialize(decorated_object)
-        @decorated_object = decorated_object
-      end
-    end
-
-    before do
-      allow(Spree::Config).to receive(:order_updater_decorator) { FakeOrderUpdaterDecorator }
-    end
-
-    it 'returns an order_updater_decorator class' do
-      expect(order.updater.class).to eq FakeOrderUpdaterDecorator
-    end
-
-    it 'decorates a Spree::OrderUpdater' do
-      expect(order.updater.decorated_object.class).to eq Spree::OrderUpdater
+    it 'returns an OrderManagement::Order::Updater' do
+      expect(order.updater.class).to eq OrderManagement::Order::Updater
     end
   end
 
