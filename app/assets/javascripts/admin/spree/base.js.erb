@@ -116,7 +116,8 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
 }
 
 $(document).ready(function() {
-  if (typeof Spree !== 'undefined') {
+  if (typeof Spree !== 'undefined' &&
+    typeof Spree.translations !== 'undefined') {
     handle_date_picker_fields = function(){
       $('.datepicker').datepicker({
         dateFormat: Spree.translations.date_picker,
