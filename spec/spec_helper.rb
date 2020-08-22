@@ -44,7 +44,6 @@ WebMock.disable_net_connect!(
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 require 'spree/api/testing_support/setup'
-require 'spree/testing_support/preferences'
 require 'support/api_helper'
 
 # Capybara config
@@ -157,7 +156,7 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
-  config.include Spree::TestingSupport::Preferences
+  config.include PreferencesHelper
   config.include ControllerRequestsHelper, type: :controller
   config.include Devise::TestHelpers, type: :controller
   config.extend  Spree::Api::TestingSupport::Setup, type: :controller
