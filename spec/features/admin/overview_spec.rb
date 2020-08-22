@@ -6,7 +6,6 @@ feature '
 ', js: true do
   include WebHelper
   include AuthenticationHelper
-  include ::Spree::TestingSupport::AuthorizationHelpers
 
   context "as an enterprise user" do
     before do
