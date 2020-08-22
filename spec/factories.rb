@@ -1,20 +1,4 @@
 require 'ffaker'
-require 'spree/testing_support/factories'
-
-# http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
-#
-# The spree_core gem defines factories in several files. For example:
-#
-# - lib/spree/core/testing_support/factories/calculator_factory.rb
-#   * calculator
-#   * no_amount_calculator
-#
-# - lib/spree/core/testing_support/factories/order_factory.rb
-#   * order
-#   * order_with_totals
-#   * order_with_inventory_unit_shipped
-#   * completed_order_with_totals
-#
 
 FactoryBot.define do
   factory :classification, class: Spree::Classification do
