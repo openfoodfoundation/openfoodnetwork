@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file exists solely to test whether or not there are missing translations
 # within the code that Spree's test suite covers.
 #
@@ -49,29 +51,29 @@ module Spree
     self.used_translations ||= []
     self.unused_translation_messages = []
     self.unused_translations = []
-    self.load_translations(translations)
+    load_translations(translations)
     translation_diff = unused_translations - used_translations
     translation_diff.each do |translation|
       Spree.unused_translation_messages << "#{translation} (#{I18n.locale})"
     end
   end
 
-  private
-
-  def self.load_translations(hash, root=[])
-    hash.each do |k,v|
+  def self.load_translations(hash, root = [])
+    hash.each do |k, v|
       if v.is_a?(Hash)
         load_translations(v, root.dup << k)
       else
         key = (root + [k]).join('.')
-        self.unused_translations << key
+        unused_translations << key
       end
     end
   end
+  private_class_method :load_translations
 
   def self.translations
-    @translations ||= I18n.backend.send(:translations)[I18n.locale][:spree]
+    @translations ||= I18n.backend.__send__(:translations)[I18n.locale][:spree]
   end
+  private_class_method :translations
 end
 
 RSpec.configure do |config|
@@ -86,7 +88,7 @@ RSpec.configure do |config|
       end
 
       Spree.check_unused_translations
-      if false && Spree.unused_translation_messages.any?
+      if Spree.unused_translation_messages.any?
         puts "\nThere are unused translations within Spree:"
         puts Spree.unused_translation_messages.sort
         exit(1)
@@ -94,4 +96,3 @@ RSpec.configure do |config|
     end
   end
 end
-
