@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Taxonomies" do
   include AuthenticationHelper
+  include WebHelper
 
   before(:each) do
     login_as_admin_and_visit spree.edit_admin_general_settings_path

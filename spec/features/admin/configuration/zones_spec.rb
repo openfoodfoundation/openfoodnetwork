@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Zones" do
   include AuthenticationHelper
+  include WebHelper
 
   before do
     login_as_admin

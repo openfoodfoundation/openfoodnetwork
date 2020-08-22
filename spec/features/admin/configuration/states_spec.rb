@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "States" do
   include AuthenticationHelper
+  include WebHelper
 
   let!(:country) { create(:country) }
 
