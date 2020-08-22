@@ -44,7 +44,6 @@ WebMock.disable_net_connect!(
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 require 'spree/api/testing_support/setup'
-require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/preferences'
 require 'support/api_helper'
 
