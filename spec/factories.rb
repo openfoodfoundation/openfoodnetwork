@@ -160,10 +160,3 @@ FactoryBot.define do
     stripe_publishable_key "xyz456"
   end
 end
-
-FactoryBot.modify do
-  factory :shipping_category, class: Spree::ShippingCategory do
-    initialize_with { DefaultShippingCategory.find_or_create }
-    transient { name 'Default' }
-  end
-end
