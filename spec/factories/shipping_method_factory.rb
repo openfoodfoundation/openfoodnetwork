@@ -7,7 +7,7 @@ FactoryBot.define do
     display_on ''
 
     before(:create) do |shipping_method, evaluator|
-      shipping_method.shipping_categories << (Spree::ShippingCategory.first || create(:shipping_category))
+      shipping_method.shipping_categories << DefaultShippingCategory.find_or_create
     end
 
     trait :flat_rate do
