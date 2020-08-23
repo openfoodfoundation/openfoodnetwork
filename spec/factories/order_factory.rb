@@ -123,6 +123,7 @@ FactoryBot.define do
       product_price 0
       tax_rate_amount 0
       tax_rate_name ""
+      zone { create(:zone_with_member) }
     end
 
     distributor { create(:distributor_enterprise) }
@@ -130,13 +131,11 @@ FactoryBot.define do
 
     after(:create) do |order, proxy|
       order.distributor.update_attribute(:charges_sales_tax, true)
-      Spree::Zone.global.update_attribute(:default_tax, true)
-
-      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global,
-                                            price: proxy.product_price,
-                                            tax_rate_amount: proxy.tax_rate_amount,
-                                            tax_rate_name: proxy.tax_rate_name)
-      FactoryBot.create(:line_item, order: order, product: p, price: p.price)
+      product = FactoryBot.create(:taxed_product, zone: proxy.zone,
+                                                  price: proxy.product_price,
+                                                  tax_rate_amount: proxy.tax_rate_amount,
+                                                  tax_rate_name: proxy.tax_rate_name)
+      FactoryBot.create(:line_item, order: order, product: product, price: product.price)
       order.reload
     end
   end
