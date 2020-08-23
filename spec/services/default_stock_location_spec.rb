@@ -22,7 +22,7 @@ describe DefaultStockLocation do
 
   describe '.destroy_all' do
     it "removes all stock locations named 'default'" do
-      create(:stock_location, name: 'default')
+      create(:stock_location)
 
       expect { described_class.destroy_all }
         .to change { Spree::StockLocation.count }.to(0)
