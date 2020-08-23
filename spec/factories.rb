@@ -162,17 +162,6 @@ FactoryBot.define do
 end
 
 FactoryBot.modify do
-  factory :payment do
-    transient do
-      distributor {
-        order.distributor ||
-          Enterprise.is_distributor.first ||
-          FactoryBot.create(:distributor_enterprise)
-      }
-    end
-    payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
-  end
-
   factory :payment_method do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
   end
