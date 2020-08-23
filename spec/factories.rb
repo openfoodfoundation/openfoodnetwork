@@ -162,10 +162,6 @@ FactoryBot.define do
 end
 
 FactoryBot.modify do
-  factory :credit_card do
-    cc_type 'visa'
-  end
-
   factory :payment do
     transient do
       distributor {
