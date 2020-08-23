@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :stock_location, class: Spree::StockLocation do
     # Ensures the name attribute is not assigned after instantiating the default location
     transient { name 'default' }

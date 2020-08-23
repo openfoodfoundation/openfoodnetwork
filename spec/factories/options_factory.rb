@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :option_value, class: Spree::OptionValue do
     name 'Size'
     presentation 'S'

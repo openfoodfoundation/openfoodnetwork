@@ -63,7 +63,7 @@ describe Spree::Order do
     end
 
     it "transitions to address" do
-      order.line_items << FactoryGirl.create(:line_item)
+      order.line_items << FactoryBot.create(:line_item)
       order.email = "user@example.com"
       order.next!
       expect(order.state).to eq "address"

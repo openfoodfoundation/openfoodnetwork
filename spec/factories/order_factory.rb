@@ -108,7 +108,7 @@ FactoryBot.modify do
 
     trait :with_line_item do
       transient do
-        variant { FactoryGirl.create(:variant) }
+        variant { FactoryBot.create(:variant) }
       end
 
       after(:create) do |order, evaluator|

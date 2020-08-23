@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :payment, class: Spree::Payment do
     transient do
       distributor {
