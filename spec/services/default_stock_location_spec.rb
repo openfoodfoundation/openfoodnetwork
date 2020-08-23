@@ -33,7 +33,7 @@ describe DefaultStockLocation do
     context 'when a location named default already exists' do
       let!(:location) do
         country = create(:country)
-        state = create(:state, country: country)
+        state = Spree::State.create(name: 'Alabama', country: country)
         Spree::StockLocation.create!(
           name: 'default',
           country_id: country.id,

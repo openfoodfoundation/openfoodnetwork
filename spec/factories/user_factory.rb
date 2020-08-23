@@ -34,7 +34,7 @@ FactoryBot.define do
     end    
 
     factory :admin_user do
-      spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+      spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
 
       after(:create) do |user|
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
