@@ -162,17 +162,6 @@ FactoryBot.define do
 end
 
 FactoryBot.modify do
-  factory :stock_location, class: Spree::StockLocation do
-    # keeps the test stock_location unique
-    initialize_with { DefaultStockLocation.find_or_create }
-
-    # Ensures the name attribute is not assigned after instantiating the default location
-    transient { name 'default' }
-
-    # sets the default value for variant.on_demand
-    backorderable_default false
-  end
-
   factory :shipping_category, class: Spree::ShippingCategory do
     initialize_with { DefaultShippingCategory.find_or_create }
     transient { name 'Default' }
