@@ -20,4 +20,18 @@ FactoryBot.define do
     name 'Credit Card'
     environment 'test'
   end
+
+  factory :stripe_payment_method, class: Spree::Gateway::StripeConnect do
+    name 'Stripe'
+    environment 'test'
+    distributors { [FactoryBot.create(:enterprise)] }
+    preferred_enterprise_id { distributors.first.id }
+  end
+
+  factory :stripe_sca_payment_method, class: Spree::Gateway::StripeSCA do
+    name 'StripeSCA'
+    environment 'test'
+    distributors { [FactoryBot.create(:stripe_account).enterprise] }
+    preferred_enterprise_id { distributors.first.id }
+  end
 end
