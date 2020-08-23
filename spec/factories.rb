@@ -81,6 +81,16 @@ FactoryBot.define do
     calculator { build(:calculator_per_item, preferred_amount: amount) }
 
     after(:create) { |ef| ef.calculator.save! }
+
+    trait :flat_rate do
+      transient { amount 1 }
+      calculator { build(:calculator_flat_rate, preferred_amount: amount) }
+    end
+
+    trait :per_item do
+      transient { amount 1 }
+      calculator { build(:calculator_per_item, preferred_amount: amount) }
+    end
   end
 
   factory :adjustment_metadata, class: AdjustmentMetadata do
