@@ -162,10 +162,6 @@ FactoryBot.define do
 end
 
 FactoryBot.modify do
-  factory :payment_method do
-    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
-  end
-
   factory :option_type do
     # Prevent inconsistent ordering in specs when all option types have the same (0) position
     sequence(:position)
