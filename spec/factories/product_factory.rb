@@ -21,7 +21,7 @@ FactoryBot.define do
     shipping_category { DefaultShippingCategory.find_or_create }
 
     # ensure stock item will be created for this products master
-    before(:create) { DefaultStockLocation.find_or_create }
+    before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
 
     factory :product do
       transient do
