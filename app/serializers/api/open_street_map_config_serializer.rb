@@ -17,7 +17,7 @@ module Api
     end
 
     def open_street_map_provider_options
-      ContentConfig.open_street_map_provider_options.to_json
+      ContentConfig.open_street_map_provider_options
     end
 
     def open_street_map_default_latitude
