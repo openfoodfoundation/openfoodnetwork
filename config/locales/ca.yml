@@ -3389,6 +3389,11 @@ ca:
         thanks: "Gràcies per la teva compra."
         track_information: "Informació del seguiment: %{tracking}"
         track_link: "Enllaç del seguiment: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Enhorabona!"
+        message: "Si heu rebut aquest correu electrònic, la vostra configuració de correu electrònic és correcta."
+        subject: "Correu de prova"
     order_state:
       address: adreça
       adjustments: ajustaments
