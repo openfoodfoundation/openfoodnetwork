@@ -273,6 +273,9 @@ nb:
   on hand: "Tilgjengelig"
   ship: "Levere"
   shipping_category: "Leveringskategori"
+  height: "Høyde"
+  width: "Bredde"
+  depth: "Dybde"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -3379,6 +3382,11 @@ nb:
         thanks: "Takk for handelen."
         track_information: "Sporingsinformasjon: %{tracking}"
         track_link: "Sporingslink: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Gratulerer!"
+        message: "Hvis du har mottatt denne eposten, er epostinnstillingene dine riktige."
+        subject: "Test Epost"
     order_state:
       address: adresse
       adjustments: justeringer

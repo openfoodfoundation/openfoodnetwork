@@ -3389,6 +3389,11 @@ es:
         thanks: "Gracias por hacer negocios."
         track_information: "Información de seguimiento: %{tracking}"
         track_link: "Enlace de seguimiento: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "¡Felicidades!"
+        message: "Si ha recibido este correo electrónico, su configuración de correo electrónico es correcta."
+        subject: "Correo de prueba"
     order_state:
       address: dirección
       adjustments: ajustes

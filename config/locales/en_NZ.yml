@@ -14,6 +14,7 @@ en_NZ:
       spree/payment:
         amount: Amount
         state: State
+        source: Source
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -272,6 +273,9 @@ en_NZ:
   on hand: "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
+  height: "Height"
+  width: "Width"
+  depth: "Depth"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1967,6 +1971,7 @@ en_NZ:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  permalink: "Permalink"
   shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
@@ -2064,6 +2069,7 @@ en_NZ:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  shipping_method: "Shipping method"
   new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
@@ -3177,6 +3183,8 @@ en_NZ:
           stripe:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
+          paypal:
+            no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
@@ -3375,6 +3383,11 @@ en_NZ:
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Congratulations!"
+        message: "If you have received this email, then your email settings are correct."
+        subject: "Test Mail"
     order_state:
       address: address
       adjustments: adjustments
