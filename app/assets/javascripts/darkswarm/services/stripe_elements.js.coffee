@@ -13,9 +13,7 @@ Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          Messages.error(t("error") + ": #{response.error.message}")
-          @triggerAngularDigest()
-          console.error(JSON.stringify(response.error))
+          @reportError(response.error, t("error") + ": #{response.error.message}")
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapTokenApiCardBrand(response.token.card.brand)
@@ -31,14 +29,17 @@ Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
 
       @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
-          Messages.error(t("error") + ": #{response.error.message}")
-          @triggerAngularDigest()
-          console.error(JSON.stringify(response.error))
+          @reportError(response.error, t("error") + ": #{response.error.message}")
         else
           secrets.token = response.paymentMethod.id
           secrets.cc_type = @mapPaymentMethodsApiCardBrand(response.paymentMethod.card.brand)
           secrets.card = response.paymentMethod.card
           submit()
+
+    reportError: (error, messageForUser) ->
+      Messages.error(messageForUser)
+      @triggerAngularDigest()
+      console.error(JSON.stringify(error))
 
     triggerAngularDigest: ->
       # $evalAsync is improved way of triggering a digest without calling $apply
