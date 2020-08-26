@@ -22,7 +22,6 @@ FactoryBot.define do
         on_hand { 5 }
       end
 
-      # on_hand 5
       product { |p| p.association(:product) }
       unit_value 1
       unit_description ''
