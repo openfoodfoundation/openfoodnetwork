@@ -1,4 +1,4 @@
-Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
+Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
   new class StripeElements
     # These are both set from the StripeElements directive
     stripe: null
@@ -8,13 +8,12 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
     requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
       return unless @stripe? && @card?
 
-      Loading.message = loading_message
+      Messages.loading loading_message
       cardData = @makeCardData(secrets)
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          Loading.clear()
-          RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          Messages.error(t("error") + ": #{response.error.message}")
           @triggerAngularDigest()
           console.error(JSON.stringify(response.error))
         else
@@ -27,13 +26,12 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
     createPaymentMethod: (secrets, submit, loading_message = t("processing_payment")) ->
       return unless @stripe? && @card?
 
-      Loading.message = loading_message
+      Messages.loading loading_message
       cardData = @makeCardData(secrets)
 
       @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
-          Loading.clear()
-          RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          Messages.error(t("error") + ": #{response.error.message}")
           @triggerAngularDigest()
           console.error(JSON.stringify(response.error))
         else

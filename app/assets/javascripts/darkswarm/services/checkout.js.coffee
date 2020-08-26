@@ -1,4 +1,4 @@
-Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, Messages)->
   new class Checkout
     errors: {}
     secrets: {}
@@ -13,7 +13,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
         @submit()
 
     submit: =>
-      Loading.message = t 'submitting_order'
+      Messages.loading(t 'submitting_order')
       $http.put('/checkout.json', {order: @preprocess()})
       .then (response) =>
         Navigation.go response.data.path
@@ -39,8 +39,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
         @loadFlash(response.data.flash)
 
     loadFlash: (flash) =>
-      Loading.clear()
-      RailsFlashLoader.loadFlash(flash)
+      Messages.flash(flash)
 
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->

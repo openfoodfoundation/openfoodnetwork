@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService, RailsFlashLoader) ->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService, Messages) ->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -50,7 +50,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
         @popQueue() if @update_enqueued
 
       .error (response, status)=>
-        RailsFlashLoader.loadFlash({error: t('js.cart.add_to_cart_failed')})
+        Messages.flash({error: t('js.cart.add_to_cart_failed')})
         @update_running = false
 
     compareAndNotifyStockLevels: (stockLevels) =>
