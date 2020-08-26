@@ -55,7 +55,7 @@ module Spree
     end
 
     # convenience method for returning the countries contained within a zone
-    def country_list
+    def countries
       @countries ||= case kind
                      when 'country' then zoneables
                      when 'state' then zoneables.collect(&:country)

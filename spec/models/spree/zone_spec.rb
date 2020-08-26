@@ -63,7 +63,7 @@ describe Spree::Zone do
     end
   end
 
-  context "#country_list" do
+  context "#countries" do
     let(:state) { create(:state) }
     let(:country) { state.country }
 
@@ -73,7 +73,7 @@ describe Spree::Zone do
       before { country_zone.members.create(zoneable: country) }
 
       it 'should return a list of countries' do
-        expect(country_zone.country_list).to eq [country]
+        expect(country_zone.countries).to eq [country]
       end
     end
 
@@ -83,7 +83,7 @@ describe Spree::Zone do
       before { state_zone.members.create(zoneable: state) }
 
       it 'should return a list of countries' do
-        expect(state_zone.country_list).to eq [state.country]
+        expect(state_zone.countries).to eq [state.country]
       end
     end
   end
