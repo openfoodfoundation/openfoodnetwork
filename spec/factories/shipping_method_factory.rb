@@ -6,7 +6,7 @@ FactoryBot.define do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
     display_on ''
 
-    before(:create) do |shipping_method, evaluator|
+    before(:create) do |shipping_method, _evaluator|
       shipping_method.shipping_categories << DefaultShippingCategory.find_or_create
     end
 

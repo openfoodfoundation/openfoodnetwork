@@ -35,13 +35,11 @@ FactoryBot.define do
 
       factory :completed_order_with_totals do
         state 'complete'
-        completed_at { Time.now }
+        completed_at { Time.zone.now }
 
         distributor { create(:distributor_enterprise) }
 
-        after(:create) do |order|
-          order.refresh_shipment_rates
-        end
+        after(:create, &:refresh_shipment_rates)
 
         factory :order_ready_to_ship do
           payment_state 'paid'
@@ -95,7 +93,7 @@ FactoryBot.define do
         while !order.completed? do break unless a = order.next! end
         order.select_shipping_method(evaluator.shipping_method.id)
       end
-    end    
+    end
   end
 
   factory :order_with_totals_and_distribution, parent: :order_with_distributor do

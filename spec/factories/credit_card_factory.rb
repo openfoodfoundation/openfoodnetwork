@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # allows credit card info to be saved to the database which is needed for factories to work properly
 class TestCard < Spree::CreditCard
   def remove_readonly_attributes(attributes) attributes; end
@@ -7,7 +9,7 @@ FactoryBot.define do
   factory :credit_card, class: TestCard do
     verification_value 123
     month 12
-    year { Time.now.year + 1 }
+    year { Time.zone.now.year + 1 }
     number '4111111111111111'
 
     cc_type 'visa'

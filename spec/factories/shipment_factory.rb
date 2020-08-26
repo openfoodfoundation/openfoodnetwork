@@ -11,7 +11,7 @@ FactoryBot.define do
     address
     stock_location { Spree::StockLocation.first || create(:stock_location) }
 
-    after(:create) do |shipment, evalulator|
+    after(:create) do |shipment, _evalulator|
       shipment.add_shipping_method(create(:shipping_method), true)
 
       shipment.order.line_items.each do |line_item|

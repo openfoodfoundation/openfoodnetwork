@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :inventory_unit, class: Spree::InventoryUnit do
     variant

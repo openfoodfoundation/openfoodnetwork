@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :zone, class: Spree::Zone do
     name { generate(:random_string) }

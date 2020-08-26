@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :stock_package, class: Spree::Stock::Package do
     ignore do

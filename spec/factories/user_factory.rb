@@ -31,14 +31,14 @@ FactoryBot.define do
       user.spree_roles.clear # Remove admin role
 
       user.enterprises << proxy.enterprises
-    end    
+    end
 
     factory :admin_user do
       spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
 
       after(:create) do |user|
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-      end      
+      end
     end
   end
 end
