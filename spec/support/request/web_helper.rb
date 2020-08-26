@@ -141,36 +141,6 @@ module WebHelper
     page.execute_script %Q{$('#{field}').select2('val', '#{value}')}
   end
 
-  def select2_search(value, options)
-    label = find_label_by_text(options[:from])
-    within label.first(:xpath,".//..") do
-      options[:from] = "##{find(".select2-container")["id"]}"
-      targetted_select2_search(value, options)
-    end
-  end
-
-  def find_label_by_text(text)
-    label = find_label(text)
-    counter = 0
-
-    # Because JavaScript testing is prone to errors...
-    while label.nil? && counter < 10
-      sleep(1)
-      counter += 1
-      label = find_label(text)
-    end
-
-    if label.nil?
-      raise "Could not find label by text #{text}"
-    end
-
-    label
-  end
-
-  def find_label(text)
-    first(:xpath, "//label[text()[contains(.,'#{text}')]]")
-  end
-
   def accept_js_alert
     page.driver.browser.switch_to.alert.accept
   end

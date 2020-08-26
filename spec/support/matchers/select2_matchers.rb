@@ -6,7 +6,6 @@ RSpec::Matchers.define :have_select2 do |id, options = {}|
   match do |node|
     @id, @options, @node = id, options, node
 
-    # id = find_label_by_text(locator)
     from = "#s2id_#{id}"
 
     results = []
@@ -35,7 +34,6 @@ RSpec::Matchers.define :have_select2 do |id, options = {}|
   match_when_negated do |node|
     @id, @options, @node = id, options, node
 
-    # id = find_label_by_text(locator)
     from = "#s2id_#{id}"
 
     results = []
