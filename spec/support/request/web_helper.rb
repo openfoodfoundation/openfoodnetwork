@@ -149,27 +149,6 @@ module WebHelper
     end
   end
 
-  def select2_search_async(value, options)
-    id = find_label_by_text(options[:from])
-    options[:from] = "#s2id_#{id}"
-    targetted_select2_search_async(value, options)
-  end
-
-  def targetted_select2_search_async(value, options)
-    page.execute_script %{$('#{options[:from]}').select2('open')}
-    page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
-    select_select2_result_async(value)
-  end
-
-  def select_select2_result_async(value)
-    while page.has_selector? "div.select2-searching"
-      return if page.has_selector? "div.select2-no-results"
-
-      sleep 0.2
-    end
-    page.execute_script(%{$("div.select2-result-label:contains('#{value}')").mouseup()})
-  end
-
   def find_label_by_text(text)
     label = find_label(text)
     counter = 0
