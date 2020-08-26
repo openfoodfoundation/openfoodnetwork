@@ -81,7 +81,8 @@ feature '
   end
 
   scenario "updating a payment method", js: true do
-    payment_method = create(:payment_method, distributors: [@distributors[0]])
+    payment_method = create(:payment_method, distributors: [@distributors[0]],
+                                             calculator: build(:calculator_flat_rate))
     login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'

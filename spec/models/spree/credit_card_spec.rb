@@ -2,6 +2,220 @@ require 'spec_helper'
 
 module Spree
   describe CreditCard do
+    describe "original specs from Spree" do
+      let(:valid_credit_card_attributes) {
+        {
+          number: '4111111111111111',
+          verification_value: '123',
+          month: 12,
+          year: Time.zone.now.year + 1
+        }
+      }
+
+      def self.payment_states
+        Spree::Payment.state_machine.states.keys
+      end
+
+      def stub_rails_env(environment)
+        allow(Rails).to receive_messages(env: ActiveSupport::StringInquirer.new(environment))
+      end
+
+      let(:credit_card) { Spree::CreditCard.new }
+
+      before(:each) do
+        @order = create(:order)
+        @payment = create(:payment, amount: 100, order: @order)
+
+        @success_response = double('gateway_response', success?: true,
+                                                       authorization: '123',
+                                                       avs_result: { 'code' => 'avs-code' })
+        @fail_response = double('gateway_response', success?: false)
+
+        @payment_gateway = create(:payment_method,
+                                  environment: 'test')
+        allow(@payment_gateway).to receive_messages :payment_profiles_supported? => true,
+                                                    :authorize => @success_response,
+                                                    :purchase => @success_response,
+                                                    :capture => @success_response,
+                                                    :void => @success_response,
+                                                    :credit => @success_response
+        allow(@payment).to receive_messages payment_method: @payment_gateway
+      end
+
+      context "#can_capture?" do
+        it "should be true if payment is pending" do
+          payment = create(:payment, created_at: Time.zone.now)
+          allow(payment).to receive(:pending?) { true }
+          expect(credit_card.can_capture?(payment)).to be_truthy
+        end
+
+        it "should be true if payment is checkout" do
+          payment = create(:payment, created_at: Time.zone.now)
+          allow(payment).to receive_messages :pending? => false,
+                                             :checkout? => true
+          expect(credit_card.can_capture?(payment)).to be_truthy
+        end
+      end
+
+      context "#can_void?" do
+        it "should be true if payment is not void" do
+          payment = create(:payment)
+          allow(payment).to receive(:void?) { false }
+          expect(credit_card.can_void?(payment)).to be_truthy
+        end
+      end
+
+      context "#can_credit?" do
+        it "should be false if payment is not completed" do
+          payment = create(:payment)
+          allow(payment).to receive(:completed?) { false }
+          expect(credit_card.can_credit?(payment)).to be_falsy
+        end
+
+        it "should be false when order payment_state is not 'credit_owed'" do
+          payment = create(:payment,
+                           order: create(:order, payment_state: 'paid'))
+          allow(payment).to receive(:completed?) { true }
+          expect(credit_card.can_credit?(payment)).to be_falsy
+        end
+
+        it "should be false when credit_allowed is zero" do
+          payment = create(:payment,
+                           order: create(:order, payment_state: 'credit_owed'))
+          allow(payment).to receive_messages :completed? => true,
+                                             :credit_allowed => 0
+
+          expect(credit_card.can_credit?(payment)).to be_falsy
+        end
+      end
+
+      context "#valid?" do
+        it "should validate presence of number" do
+          credit_card.attributes = valid_credit_card_attributes.except(:number)
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:number]).to eq ["can't be blank"]
+        end
+
+        it "should validate presence of security code" do
+          credit_card.attributes = valid_credit_card_attributes.except(:verification_value)
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:verification_value]).to eq ["can't be blank"]
+        end
+
+        it "should validate expiration is not in the past" do
+          credit_card.month = 1.month.ago.month
+          credit_card.year = 1.month.ago.year
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to eq ["has expired"]
+        end
+
+        it "does not run expiration in the past validation if month is not set" do
+          credit_card.month = nil
+          credit_card.year = Time.zone.now.year
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to be_blank
+        end
+
+        it "does not run expiration in the past validation if year is not set" do
+          credit_card.month = Time.zone.now.month
+          credit_card.year = nil
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:base]).to be_blank
+        end
+
+        it "does not run expiration in the past validation if year and month are empty" do
+          credit_card.year = ""
+          credit_card.month = ""
+          expect(credit_card).to_not be_valid
+          expect(credit_card.errors[:card]).to be_blank
+        end
+
+        it "should only validate on create" do
+          credit_card.attributes = valid_credit_card_attributes
+          credit_card.save
+          expect(credit_card).to be_valid
+        end
+      end
+
+      context "#save" do
+        before do
+          credit_card.attributes = valid_credit_card_attributes
+          credit_card.save!
+        end
+
+        let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
+
+        it "should not actually store the number" do
+          expect(persisted_card.number).to be_blank
+        end
+
+        it "should not actually store the security code" do
+          expect(persisted_card.verification_value).to be_blank
+        end
+      end
+
+      context "#number=" do
+        it "should strip non-numeric characters from card input" do
+          credit_card.number = "6011000990139424"
+          expect(credit_card.number).to eq "6011000990139424"
+
+          credit_card.number = "  6011-0009-9013-9424  "
+          expect(credit_card.number).to eq "6011000990139424"
+        end
+
+        it "should not raise an exception on non-string input" do
+          credit_card.number = ({})
+          expect(credit_card.number).to be_nil
+        end
+      end
+
+      context "#cc_type=" do
+        it "converts between the different types" do
+          credit_card.cc_type = 'mastercard'
+          expect(credit_card.cc_type).to eq 'master'
+
+          credit_card.cc_type = 'maestro'
+          expect(credit_card.cc_type).to eq 'master'
+
+          credit_card.cc_type = 'amex'
+          expect(credit_card.cc_type).to eq 'american_express'
+
+          credit_card.cc_type = 'dinersclub'
+          expect(credit_card.cc_type).to eq 'diners_club'
+
+          credit_card.cc_type = 'some_outlandish_cc_type'
+          expect(credit_card.cc_type).to eq 'some_outlandish_cc_type'
+        end
+      end
+
+      context "#associations" do
+        it "should be able to access its payments" do
+          expect { credit_card.payments.to_a }.not_to raise_error
+        end
+      end
+
+      context "#to_active_merchant" do
+        before do
+          credit_card.number = "4111111111111111"
+          credit_card.year = Time.zone.now.year
+          credit_card.month = Time.zone.now.month
+          credit_card.first_name = "Bob"
+          credit_card.last_name = "Boblaw"
+          credit_card.verification_value = 123
+        end
+
+        it "converts to an ActiveMerchant::Billing::CreditCard object" do
+          am_card = credit_card.to_active_merchant
+          expect(am_card.number).to eq "4111111111111111"
+          expect(am_card.year).to eq Time.zone.now.year
+          expect(am_card.month).to eq Time.zone.now.month
+          expect(am_card.first_name).to eq "Bob"
+          am_card.last_name = "Boblaw"
+          expect(am_card.verification_value).to eq 123
+        end
+      end
+    end
+
     describe "setting default credit card for a user" do
       let(:user) { create(:user) }
       let(:onetime_card_attrs) do
