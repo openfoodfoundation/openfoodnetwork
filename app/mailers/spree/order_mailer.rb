@@ -5,6 +5,7 @@ module Spree
     helper HtmlHelper
     helper ::CheckoutHelper
     helper SpreeCurrencyHelper
+    helper Spree::Admin::PaymentsHelper
     helper OrderHelper
     include I18nHelper
 

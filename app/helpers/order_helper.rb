@@ -4,4 +4,8 @@ module OrderHelper
   def last_payment_method(order)
     OrderPaymentFinder.new(order).last_payment&.payment_method
   end
+
+  def outstanding_balance_label(order)
+    order.outstanding_balance.negative? ? t(:credit_owed) : t(:balance_due)
+  end
 end
