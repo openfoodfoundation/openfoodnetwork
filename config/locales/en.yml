@@ -3646,3 +3646,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+    activerecord:
+      models:
+        spree/payment:
+          one: One
