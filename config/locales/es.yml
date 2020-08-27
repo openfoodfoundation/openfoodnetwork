@@ -227,6 +227,7 @@ es:
   enterprises: Organizaciones
   enterprise_groups: Redes
   reports: Informes
+  listing_reports: Listado de reportes
   variant_overrides: Inventario
   import: Importar
   spree_products: Productos Spree
@@ -2054,7 +2055,6 @@ es:
   spree_user_enterprise_limit_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   spree_variant_product_error: Debes tener al menos una variante
   your_profil_live: "Tu perfil online"
-  on_ofn_map: "en el mapa Open Food Network"
   see: "Ver"
   live: "En directo"
   manage: "Gestionar"
