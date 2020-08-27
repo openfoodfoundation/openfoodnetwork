@@ -1,6 +1,7 @@
 module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
+    include PaperTrailLogging
 
     prepend_before_action :set_order_cycle_id, only: [:incoming, :outgoing]
     before_action :load_data_for_index, only: :index
