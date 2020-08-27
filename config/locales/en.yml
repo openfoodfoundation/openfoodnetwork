@@ -2767,6 +2767,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    stripe_elements:
+      unknown_error_from_stripe: |
+        Uh oh, the Stripe integration failed. You can try again but there is
+        a very small chance that the payment came through already. It's best to
+        check your bank account first.
 
   # Singular and plural forms of commonly used words.
   # We use these entries to pluralize unit names in every language.

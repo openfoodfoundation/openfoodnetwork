@@ -19,6 +19,11 @@ Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
           secrets.cc_type = @mapTokenApiCardBrand(response.token.card.brand)
           secrets.card = response.token.card
           submit()
+      .catch (response) =>
+        # Stripe handles errors in the response above. This code may never be
+        # reached. But if we get here, we want to know.
+        @reportError(response, t("js.stripe_elements.unknown_error_from_stripe"))
+        throw response
 
     # Create Payment Method to be used with the Stripe Payment Intents API
     createPaymentMethod: (secrets, submit, loading_message = t("processing_payment")) ->
@@ -35,11 +40,17 @@ Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
           secrets.cc_type = @mapPaymentMethodsApiCardBrand(response.paymentMethod.card.brand)
           secrets.card = response.paymentMethod.card
           submit()
+      .catch (response) =>
+        # Stripe handles errors in the response above. This code may never be
+        # reached. But if we get here, we want to know.
+        @reportError(response, t("js.stripe_elements.unknown_error_from_stripe"))
+        throw response
 
     reportError: (error, messageForUser) ->
       Messages.error(messageForUser)
       @triggerAngularDigest()
-      console.error(JSON.stringify(error))
+      console.error(error)
+      Bugsnag.notify(new Error(JSON.stringify(error)))
 
     triggerAngularDigest: ->
       # $evalAsync is improved way of triggering a digest without calling $apply
