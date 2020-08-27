@@ -75,6 +75,18 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
           expect(subject.table_items).to eq([li2])
           expect(subject.table_items.first.order.bill_address.firstname).to eq("HIDDEN")
         end
+
+        context "where the distributor allows suppliers to see customer names" do
+          before do
+            distributor.preferred_show_customer_names_to_suppliers = true
+          end
+
+          it "shows line items supplied by my producers, with names shown" do
+            expect(subject.table_items).to eq([li2])
+            expect(subject.table_items.first.order.bill_address.firstname).
+              to eq(order.bill_address.firstname)
+          end
+        end
       end
 
       context "that has not granted P-OC to the distributor" do
@@ -95,6 +107,16 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
         it "does not show line items supplied by my producers" do
           expect(subject.table_items).to eq([])
+        end
+
+        context "where the distributor allows suppliers to see customer names" do
+          before do
+            distributor.preferred_show_customer_names_to_suppliers = true
+          end
+
+          it "does not show line items supplied by my producers" do
+            expect(subject.table_items).to eq([])
+          end
         end
       end
     end
