@@ -16,6 +16,16 @@
       padding-right: 0;
       padding-left: 0;
     }
+
+    .row.full {
+      width: 100%;
+      margin: 0;
+
+      .columns.full {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
   }
 
   products {
@@ -59,7 +69,6 @@
 
       border-top: 1px solid #e5e5e5;
       padding-bottom: 1px;
-      margin-bottom: 20px !important;
       position: relative;
       display: block;
       color: $med-drk-grey;
@@ -71,21 +80,6 @@
       .spinner {
         width: 100px;
         margin-bottom: 20px;
-      }
-
-      // ICONS
-      i {
-        font-size: 0.75em;
-        padding-right: 0.9375rem;
-
-        @include breakpoint(phablet) {
-          padding-right: 0.25rem;
-        }
-      }
-
-      i.ofn-i_056-bulk {
-        font-size: 1rem;
-        padding-right: 0rem;
       }
     }
   }

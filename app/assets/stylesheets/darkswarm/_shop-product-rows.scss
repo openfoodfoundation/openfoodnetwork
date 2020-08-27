@@ -14,6 +14,15 @@
         }
       }
 
+      .shop-variants {
+        padding-left: 7.9375rem;
+
+        @include breakpoint(phablet) {
+          padding-left: 0;
+          clear: left;
+        }
+      }
+
       // ROW VARIANTS
       .row.variants {
         margin: 0 0 1em 0;
@@ -22,17 +31,25 @@
           opacity: 0.2;
         }
 
+        .variant-name,
+        .variant-price,
+        .total-price {
+          line-height: 2.5em;
+        }
+
         // Variant name
         .variant-name {
-          padding-left: 7.9375rem;
+          padding-left: 0;
 
           @include breakpoint(phablet) {
-            padding-left: 0.9375rem;
+            padding-left: 0.5rem;
           }
 
           & > *:nth-child(n + 2) {
             color: #888;
             font-size: 0.875rem;
+            line-height: normal;
+            margin-top: -0.75em;
           }
         }
 
@@ -62,7 +79,7 @@
       }
 
       // ROW SUMMARY
-      .row.summary {
+      .summary {
         margin-left: 0;
         margin-right: 0;
         margin-bottom: 1.25em;

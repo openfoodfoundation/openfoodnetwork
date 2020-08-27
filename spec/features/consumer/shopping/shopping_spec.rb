@@ -243,20 +243,24 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to the cart and display it on shopfront reload" do
           # -- Quantity
           click_add_bulk_to_cart variant, 6
+          close_modal
           expect(page).to have_in_cart product.name
           toggle_cart
 
           expect(order.reload.line_items.first.quantity).to eq(6)
 
           # -- Max quantity
-          click_add_bulk_max_to_cart variant, 7
+          open_bulk_quantity_modal(variant)
+          click_add_bulk_max_to_cart variant, 1
 
           expect(order.reload.line_items.first.max_quantity).to eq(7)
 
           # -- Reload
           visit shop_path
-          expect(page).to have_field "variants[#{variant.id}]", with: 6
-          expect(page).to have_field "variant_attributes[#{variant.id}][max_quantity]", with: 7
+          within_variant(variant) do
+            expect(page).to have_selector "button.bulk-buy:nth-of-type(1)", text: "6"
+            expect(page).to have_selector "button.bulk-buy:nth-last-of-type(1)", text: "7"
+          end
         end
       end
     end
@@ -294,19 +298,21 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         click_add_to_cart variant, 10
 
-        expect(page).to have_field "variants[#{variant.id}]", with: '10'
+        within_variant(variant) do
+          expect(page).to have_content "10 in cart"
+        end
       end
 
       it "alerts us when we enter a quantity greater than the stock available" do
         variant.update on_hand: 5
         visit shop_path
 
-        
-        accept_alert 'Insufficient stock available, only 5 remaining' do
-          fill_in "variants[#{variant.id}]", with: '10'
-        end
+        click_add_to_cart variant, 5
 
-        expect(page).to have_field "variants[#{variant.id}]", with: '5'
+        within_variant(variant) do
+          expect(page).to have_content "5 in cart"
+          expect(page).to have_button increase_quantity_symbol, disabled: true
+        end
       end
 
       describe "when a product goes out of stock just before it's added to the cart" do
@@ -325,8 +331,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           # -- Page updates
           # Update amount in cart
-          expect(page).to have_field "variants[#{variant.id}]", with: '0', disabled: true
-          expect(page).to have_field "variants[#{variant2.id}]", with: ''
+          within_variant(variant) do
+            expect(page).to have_button "Add", disabled: true
+            expect(page).to have_no_content "in cart"
+          end
+          within_variant(variant2) do
+            expect(page).to have_button "Add", disabled: false
+          end
 
           # Update amount available in product list
           #   If amount falls to zero, variant should be greyed out and input disabled
@@ -352,7 +363,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
             variant.update! on_hand: 0
 
             # -- Messaging
-            click_add_bulk_max_to_cart variant
+            within(".reveal-modal") do
+              page.all("button", text: increase_quantity_symbol).last.click
+            end
+            close_modal
+            wait_for_cart
 
             within(".out-of-stock-modal") do
               expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
@@ -361,12 +376,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             # -- Page updates
             # Update amount in cart
-            expect(page).to have_field "variant_attributes[#{variant.id}][max_quantity]", with: '0', disabled: true
+            within_variant(variant) do
+              expect(page).to have_button "Add", disabled: true
+              expect(page).to have_no_content "in cart"
+            end
 
             # Update amount available in product list
-            #   If amount falls to zero, variant should be greyed out and input disabled
+            #   If amount falls to zero, variant should be greyed out
             expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
-            expect(page).to have_selector "#variants_#{variant.id}_max[disabled='disabled']"
           end
         end
 
@@ -389,7 +406,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             it "does not update max_quantity" do
               click_add_bulk_to_cart variant, 2
-              click_add_bulk_max_to_cart variant, 3
+              click_add_bulk_max_to_cart variant, 1
+              close_modal
 
               variant.update! on_hand: 1
 
@@ -400,8 +418,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
                 expect(page).to have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
               end
 
-              expect(page).to have_field "variants[#{variant.id}]", with: '1'
-              expect(page).to have_field "variant_attributes[#{variant.id}][max_quantity]", with: '3'
+              within_variant(variant) do
+                expect(page).to have_selector "button.bulk-buy:nth-of-type(1)", text: "1"
+                expect(page).to have_selector "button.bulk-buy:nth-last-of-type(1)", text: "3"
+              end
             end
           end
         end
@@ -554,9 +574,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     # Removes the item from the client-side cart and marks the variant as unavailable
-    expect(page).to have_field "variants[#{variant.id}]", with: '0', disabled: true
     expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
-    expect(page).to have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
-    expect(page).to have_selector "#variants_#{variant.id}[disabled='disabled']"
+    within_variant(variant) do
+      expect(page).to have_button "Add", disabled: true
+      expect(page).to have_no_content "in cart"
+    end
   end
 end
