@@ -2911,6 +2911,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   adjustments: "Adjustments"
   payments: "Payments"
   return_authorizations: "Return Authorizations"
+  credit_owed: "Credit Owed"
 
   payment: "Payment"
   payment_method: "Payment Method"
