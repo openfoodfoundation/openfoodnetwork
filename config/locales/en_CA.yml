@@ -227,6 +227,7 @@ en_CA:
   enterprises: Enterprises
   enterprise_groups: Groups
   reports: Reports
+  listing_reports: Listing Reports
   variant_overrides: Inventory
   import: Import
   spree_products: Spree Products
@@ -721,6 +722,10 @@ en_CA:
           enable_subscriptions_tip: "Enable subscriptions functionality?"
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
+          customer_names_in_reports: "Customer Names in Reports"
+          customer_names_tip: "Enable your suppliers/vendors to see your customers' names in reports."
+          customer_names_false: "Disabled"
+          customer_names_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with
@@ -2052,7 +2057,6 @@ en_CA:
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   spree_variant_product_error: must have at least one variant
   your_profil_live: "Your profile live"
-  on_ofn_map: "on the Open Food Network map"
   see: "See"
   live: "live"
   manage: "Manage"
@@ -3237,6 +3241,8 @@ en_CA:
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+        customer_names_message:
+          customer_names_tip: "If customer names are hidden for the items you have supplied, you can contact the seller (hub, market, distributor) and ask if they can update their preferences and allow you to view customer names."
       users:
         index:
           listing_users: "Listing Users"
