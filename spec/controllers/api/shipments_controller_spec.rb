@@ -29,7 +29,7 @@ describe Api::ShipmentsController, type: :controller do
     let(:current_api_user) { build(:admin_user) }
     let!(:order) { shipment.order }
     let(:order_ship_address) { create(:address) }
-    let!(:stock_location) { create(:stock_location_with_items) }
+    let!(:stock_location) { Spree::StockLocation.first || create(:stock_location) }
     let!(:variant) { create(:variant) }
     let(:params) do
       { quantity: 2,

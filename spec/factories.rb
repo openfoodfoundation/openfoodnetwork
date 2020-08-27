@@ -1,22 +1,10 @@
 require 'ffaker'
-require 'spree/testing_support/factories'
-
-# http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
-#
-# The spree_core gem defines factories in several files. For example:
-#
-# - lib/spree/core/testing_support/factories/calculator_factory.rb
-#   * calculator
-#   * no_amount_calculator
-#
-# - lib/spree/core/testing_support/factories/order_factory.rb
-#   * order
-#   * order_with_totals
-#   * order_with_inventory_unit_shipped
-#   * completed_order_with_totals
-#
 
 FactoryBot.define do
+  sequence(:random_string)      { Faker::Lorem.sentence }
+  sequence(:random_description) { Faker::Lorem.paragraphs(1 + Kernel.rand(5)).join("\n") }
+  sequence(:random_email)       { Faker::Internet.email }
+
   factory :classification, class: Spree::Classification do
   end
 
@@ -97,6 +85,16 @@ FactoryBot.define do
     calculator { build(:calculator_per_item, preferred_amount: amount) }
 
     after(:create) { |ef| ef.calculator.save! }
+
+    trait :flat_rate do
+      transient { amount 1 }
+      calculator { build(:calculator_flat_rate, preferred_amount: amount) }
+    end
+
+    trait :per_item do
+      transient { amount 1 }
+      calculator { build(:calculator_per_item, preferred_amount: amount) }
+    end
   end
 
   factory :adjustment_metadata, class: AdjustmentMetadata do
@@ -105,35 +103,6 @@ FactoryBot.define do
     fee_name 'fee'
     fee_type 'packing'
     enterprise_role 'distributor'
-  end
-
-  factory :line_item_with_shipment, parent: :line_item do
-    transient do
-      shipping_fee 3
-      shipping_method nil
-    end
-
-    after(:build) do |line_item, evaluator|
-      shipment = line_item.order.reload.shipments.first
-      if shipment.nil?
-        shipping_method = evaluator.shipping_method
-        unless shipping_method
-          shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
-          shipping_method.distributors << line_item.order.distributor if line_item.order.distributor
-        end
-        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method,
-                                                            order: line_item.order)
-      end
-      line_item.target_shipment = shipment
-    end
-  end
-
-  factory :zone_with_member, parent: :zone do
-    default_tax true
-
-    after(:create) do |zone|
-      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by(name: 'Australia'))
-    end
   end
 
   factory :producer_property, class: ProducerProperty do
@@ -150,76 +119,9 @@ FactoryBot.define do
     bill_address { create(:address) }
   end
 
-  # A card that has been added to the user's profile and can be re-used.
-  factory :stored_credit_card, parent: :credit_card do
-    gateway_customer_profile_id "cus_F2T..."
-    gateway_payment_profile_id "card_1EY..."
-  end
-
-  factory :stripe_payment_method, class: Spree::Gateway::StripeConnect do
-    name 'Stripe'
-    environment 'test'
-    distributors { [FactoryBot.create(:enterprise)] }
-    preferred_enterprise_id { distributors.first.id }
-  end
-
-  factory :stripe_sca_payment_method, class: Spree::Gateway::StripeSCA do
-    name 'StripeSCA'
-    environment 'test'
-    distributors { [FactoryBot.create(:stripe_account).enterprise] }
-    preferred_enterprise_id { distributors.first.id }
-  end
-
   factory :stripe_account do
     enterprise { FactoryBot.create(:distributor_enterprise) }
     stripe_user_id "abc123"
     stripe_publishable_key "xyz456"
-  end
-end
-
-FactoryBot.modify do
-  factory :address do
-    state { Spree::State.find_by name: 'Victoria' }
-    country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
-  end
-
-  factory :credit_card do
-    cc_type 'visa'
-  end
-
-  factory :payment do
-    transient do
-      distributor {
-        order.distributor ||
-          Enterprise.is_distributor.first ||
-          FactoryBot.create(:distributor_enterprise)
-      }
-    end
-    payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
-  end
-
-  factory :payment_method do
-    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
-  end
-
-  factory :option_type do
-    # Prevent inconsistent ordering in specs when all option types have the same (0) position
-    sequence(:position)
-  end
-
-  factory :stock_location, class: Spree::StockLocation do
-    # keeps the test stock_location unique
-    initialize_with { DefaultStockLocation.find_or_create }
-
-    # Ensures the name attribute is not assigned after instantiating the default location
-    transient { name 'default' }
-
-    # sets the default value for variant.on_demand
-    backorderable_default false
-  end
-
-  factory :shipping_category, class: Spree::ShippingCategory do
-    initialize_with { DefaultShippingCategory.find_or_create }
-    transient { name 'Default' }
   end
 end

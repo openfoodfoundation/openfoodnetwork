@@ -1,4 +1,101 @@
 FactoryBot.define do
+  factory :order, class: Spree::Order do
+    transient do
+      shipping_method { create(:shipping_method, distributors: [distributor]) }
+    end
+
+    user
+    bill_address
+    completed_at nil
+    email { user.email }
+
+    factory :order_with_totals do
+      after(:create) do |order|
+        create(:line_item, order: order)
+        order.line_items.reload # to ensure order.line_items is accessible after
+      end
+    end
+
+    factory :order_with_line_items do
+      bill_address
+      ship_address
+
+      ignore do
+        line_items_count 5
+      end
+
+      after(:create) do |order, evaluator|
+        create(:shipment, order: order)
+        order.shipments.reload
+
+        create_list(:line_item, evaluator.line_items_count, order: order)
+        order.line_items.reload
+        order.update!
+      end
+
+      factory :completed_order_with_totals do
+        state 'complete'
+        completed_at { Time.zone.now }
+
+        distributor { create(:distributor_enterprise) }
+
+        after(:create, &:refresh_shipment_rates)
+
+        factory :order_ready_to_ship do
+          payment_state 'paid'
+          shipment_state 'ready'
+          after(:create) do |order|
+            create(:payment, amount: order.total, order: order, state: 'completed')
+            order.shipments.each do |shipment|
+              shipment.inventory_units.each { |u| u.update_column('state', 'on_hand') }
+              shipment.update_column('state', 'ready')
+            end
+            order.reload
+          end
+        end
+
+        factory :shipped_order do
+          after(:create) do |order|
+            order.shipments.each do |shipment|
+              shipment.inventory_units.each { |u| u.update_column('state', 'shipped') }
+              shipment.update_column('state', 'shipped')
+            end
+            order.reload
+          end
+        end
+      end
+    end
+
+    trait :with_line_item do
+      transient do
+        variant { FactoryBot.create(:variant) }
+      end
+
+      after(:create) do |order, evaluator|
+        line_item = create(:line_item_with_shipment, order: order,
+                                                     variant: evaluator.variant,
+                                                     shipping_method: evaluator.shipping_method)
+        order.shipments << line_item.target_shipment
+      end
+    end
+
+    trait :completed do
+      transient do
+        payment_method { create(:payment_method, distributors: [distributor]) }
+        ship_address { create(:address) }
+      end
+
+      after(:create) do |order, evaluator|
+        create(:payment, state: "checkout", order: order, amount: order.total,
+                         payment_method: evaluator.payment_method)
+        order.update_distribution_charge!
+        order.ship_address = evaluator.ship_address
+        while !order.completed? do break unless a = order.next! end
+        order.select_shipping_method(evaluator.shipping_method.id)
+      end
+    end
+  end
+
   factory :order_with_totals_and_distribution, parent: :order_with_distributor do
     transient do
       shipping_fee 3
@@ -24,6 +121,7 @@ FactoryBot.define do
       product_price 0
       tax_rate_amount 0
       tax_rate_name ""
+      zone { create(:zone_with_member) }
     end
 
     distributor { create(:distributor_enterprise) }
@@ -31,13 +129,11 @@ FactoryBot.define do
 
     after(:create) do |order, proxy|
       order.distributor.update_attribute(:charges_sales_tax, true)
-      Spree::Zone.global.update_attribute(:default_tax, true)
-
-      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global,
-                                            price: proxy.product_price,
-                                            tax_rate_amount: proxy.tax_rate_amount,
-                                            tax_rate_name: proxy.tax_rate_name)
-      FactoryBot.create(:line_item, order: order, product: p, price: p.price)
+      product = FactoryBot.create(:taxed_product, zone: proxy.zone,
+                                                  price: proxy.product_price,
+                                                  tax_rate_amount: proxy.tax_rate_amount,
+                                                  tax_rate_name: proxy.tax_rate_name)
+      FactoryBot.create(:line_item, order: order, product: product, price: product.price)
       order.reload
     end
   end
@@ -97,46 +193,5 @@ FactoryBot.define do
       order.reload
       while !order.completed? do break unless order.next! end
     end
-  end
-end
-
-FactoryBot.modify do
-  factory :order do
-    transient do
-      shipping_method { create(:shipping_method, distributors: [distributor]) }
-    end
-
-    trait :with_line_item do
-      transient do
-        variant { FactoryGirl.create(:variant) }
-      end
-
-      after(:create) do |order, evaluator|
-        line_item = create(:line_item_with_shipment, order: order,
-                                                     variant: evaluator.variant,
-                                                     shipping_method: evaluator.shipping_method)
-        order.shipments << line_item.target_shipment
-      end
-    end
-
-    trait :completed do
-      transient do
-        payment_method { create(:payment_method, distributors: [distributor]) }
-        ship_address { create(:address) }
-      end
-
-      after(:create) do |order, evaluator|
-        create(:payment, state: "checkout", order: order, amount: order.total,
-                         payment_method: evaluator.payment_method)
-        order.update_distribution_charge!
-        order.ship_address = evaluator.ship_address
-        while !order.completed? do break unless a = order.next! end
-        order.select_shipping_method(evaluator.shipping_method.id)
-      end
-    end
-  end
-
-  factory :completed_order_with_totals do
-    distributor { create(:distributor_enterprise) }
   end
 end
