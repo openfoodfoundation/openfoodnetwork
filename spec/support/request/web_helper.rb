@@ -95,16 +95,29 @@ module WebHelper
     end
   end
 
+  def within_row(num, &block)
+    within("table.index tbody tr:nth-child(#{num})", &block)
+  end
+
   def select2_select(value, options)
     id = options[:from]
     options[:from] = "#s2id_#{id}"
     targetted_select2(value, options)
   end
 
+  def targetted_select2(value, options)
+    # find select2 element and click it
+    find(options[:from]).find('a').click
+    select_select2_result(value)
+  end
+
+  def select_select2_result(value)
+    sleep(1)
+    page.execute_script(%Q{$("div.select2-result-label:contains('#{value}')").mouseup()})
+  end
+
   # Support having different texts to search for and to click in the select2
   # field.
-  #
-  # This overrides the method in Spree.
   def targetted_select2_search(value, options)
     page.execute_script %{$('#{options[:from]}').select2('open')}
     page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
@@ -124,25 +137,8 @@ module WebHelper
     page.execute_script "jQuery('#{selector}').select2('close');"
   end
 
-  def select2_search_async(value, options)
-    id = find_label_by_text(options[:from])
-    options[:from] = "#s2id_#{id}"
-    targetted_select2_search_async(value, options)
-  end
-
-  def targetted_select2_search_async(value, options)
-    page.execute_script %{$('#{options[:from]}').select2('open')}
-    page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
-    select_select2_result_async(value)
-  end
-
-  def select_select2_result_async(value)
-    while page.has_selector? "div.select2-searching"
-      return if page.has_selector? "div.select2-no-results"
-
-      sleep 0.2
-    end
-    page.execute_script(%{$("div.select2-result-label:contains('#{value}')").mouseup()})
+  def set_select2_field(field, value)
+    page.execute_script %Q{$('#{field}').select2('val', '#{value}')}
   end
 
   def accept_js_alert

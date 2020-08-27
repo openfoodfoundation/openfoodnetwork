@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Taxonomies" do
   include AuthenticationHelper
+  include WebHelper
 
   before(:each) do
     login_as_admin_and_visit spree.edit_admin_general_settings_path
@@ -43,7 +44,7 @@ describe "Taxonomies" do
     it "should allow an admin to update an existing taxonomy" do
       create(:taxonomy)
       click_link "Taxonomies"
-      within_row(1) { click_icon :edit }
+      within_row(1) { find(".icon-edit").click }
       fill_in "taxonomy_name", with: "sports 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
