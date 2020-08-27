@@ -37,7 +37,7 @@ module Spree
 
             redirect_to admin_order_payments_path(@order)
           else
-            AdvanceOrderService.new(@order).call!
+            OrderWorkflow.new(@order).complete!
 
             flash[:success] = Spree.t(:new_order_completed)
             redirect_to edit_admin_order_url(@order)
@@ -61,7 +61,7 @@ module Spree
         else
           flash[:error] = t(:cannot_perform_operation)
         end
-      rescue Spree::Core::GatewayError => e
+      rescue StandardError => e
         flash[:error] = e.message
       ensure
         redirect_to request.referer

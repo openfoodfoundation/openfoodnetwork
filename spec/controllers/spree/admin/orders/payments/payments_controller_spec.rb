@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Admin::PaymentsController, type: :controller do
@@ -10,7 +12,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
     allow(controller).to receive(:spree_current_user) { user }
   end
 
-  context "#create" do
+  describe "#create" do
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let(:params) { { amount: order.total, payment_method_id: payment_method.id } }
 
@@ -135,6 +137,94 @@ describe Spree::Admin::PaymentsController, type: :controller do
       def expect_redirect_to(path)
         expect(response.status).to eq 302
         expect(response.location).to eq path
+      end
+    end
+  end
+
+  describe '#fire' do
+    let(:payment_method) do
+      create(
+        :stripe_sca_payment_method,
+        distributor_ids: [create(:distributor_enterprise).id],
+        preferred_enterprise_id: create(:enterprise).id
+      )
+    end
+    let(:order) { create(:order, state: 'complete') }
+    let(:payment) do
+      create(:payment, order: order, payment_method: payment_method, amount: order.total)
+    end
+
+    let(:successful_response) { ActiveMerchant::Billing::Response.new(true, "Yay!") }
+
+    context 'on credit event' do
+      let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
+
+      before do
+        allow(request).to receive(:referer) { 'http://foo.com' }
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+      end
+
+      it 'handles gateway errors' do
+        allow(payment.payment_method)
+          .to receive(:credit).and_raise(Spree::Core::GatewayError, 'error message')
+
+        spree_put :fire, params
+
+        expect(flash[:error]).to eq('error message')
+        expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'handles validation errors' do
+        allow(payment).to receive(:credit!).and_raise(StandardError, 'validation error')
+
+        spree_put :fire, params
+
+        expect(flash[:error]).to eq('validation error')
+        expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'displays a success message and redirects to the referer' do
+        allow(payment_method).to receive(:credit) { successful_response }
+
+        spree_put :fire, params
+
+        expect(flash[:success]).to eq(I18n.t(:payment_updated))
+      end
+    end
+
+    context 'on refund event' do
+      let(:params) { { e: 'refund', order_id: order.number, id: payment.id } }
+
+      before do
+        allow(request).to receive(:referer) { 'http://foo.com' }
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+      end
+
+      it 'handles gateway errors' do
+        allow(payment.payment_method)
+          .to receive(:refund).and_raise(Spree::Core::GatewayError, 'error message')
+
+        spree_put :fire, params
+
+        expect(flash[:error]).to eq('error message')
+        expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'handles validation errors' do
+        allow(payment).to receive(:refund!).and_raise(StandardError, 'validation error')
+
+        spree_put :fire, params
+
+        expect(flash[:error]).to eq('validation error')
+        expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'displays a success message and redirects to the referer' do
+        allow(payment_method).to receive(:refund) { successful_response }
+
+        spree_put :fire, params
+
+        expect(flash[:success]).to eq(I18n.t(:payment_updated))
       end
     end
   end

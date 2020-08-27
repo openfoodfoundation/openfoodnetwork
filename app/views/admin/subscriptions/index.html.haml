@@ -1,5 +1,5 @@
 - content_for :page_title do
-  = t('admin.subscriptions.subscriptions')
+  = t('.title')
 
 - content_for :main_ng_app_name do
   = "admin.subscriptions"
@@ -7,7 +7,7 @@
 - content_for :page_actions do
   %li
     %a.button.icon-plus#new-subscription{ href: "javascript:void(0)", "new-subscription-dialog" => true }
-      = t('admin.subscriptions.new')
+      = t('.new')
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 

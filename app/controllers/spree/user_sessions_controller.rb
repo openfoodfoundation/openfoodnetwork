@@ -1,3 +1,10 @@
+# frozen_string_literal: true
+
+require "spree/core/controller_helpers/auth"
+require "spree/core/controller_helpers/common"
+require "spree/core/controller_helpers/order"
+require "spree/core/controller_helpers/ssl"
+
 module Spree
   class UserSessionsController < Devise::SessionsController
     helper 'spree/base', 'spree/store'
@@ -39,7 +46,17 @@ module Spree
       end
     end
 
+    def destroy
+      # Logout will clear session data including shopfront_redirect
+      #   Here we store it before actually logging out so that the redirect works correctly
+      @shopfront_redirect = session[:shopfront_redirect]
+
+      super
+    end
+
     private
+
+    attr_reader :shopfront_redirect
 
     def accurate_title
       Spree.t(:login)

@@ -6,7 +6,7 @@ feature '
     and view any outstanding balance.
 ', js: true do
   include UIComponentHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:user) { create(:user) }
   let!(:distributor1) { create(:distributor_enterprise) }

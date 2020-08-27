@@ -32,20 +32,20 @@ class CheckoutController < Spree::StoreController
 
   helper 'spree/orders'
 
-  rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
-
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
 
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
-    # the #update_failed method, then we can remove this call
+    # the #action_failed method, then we can remove this call
     OrderCheckoutRestart.new(@order).call
+  rescue Spree::Core::GatewayError => e
+    rescue_from_spree_gateway_error(e)
   end
 
   def update
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
-    return update_failed unless @order.update(params_adapter.params[:order])
+    return action_failed unless @order.update(params_adapter.params[:order])
 
     fire_event('spree.checkout.update')
 
@@ -54,7 +54,7 @@ class CheckoutController < Spree::StoreController
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
     flash[:error] = I18n.t("checkout.failed")
-    update_failed(e)
+    action_failed(e)
   end
 
   # Clears the cached order. Required for #current_order to return a new order
@@ -138,14 +138,6 @@ class CheckoutController < Spree::StoreController
     current_order.payments.destroy_all if request.put?
   end
 
-  def rescue_from_spree_gateway_error(error)
-    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
-    end
-  end
-
   def valid_payment_intent_provided?
     return false unless params["payment_intent"]&.starts_with?("pi_")
 
@@ -156,11 +148,10 @@ class CheckoutController < Spree::StoreController
   end
 
   def handle_redirect_from_stripe
-    if advance_order_state(@order) && order_complete?
+    if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
       redirect_to(order_path(@order)) && return
     else
-      flash[:error] = order_error
       checkout_failed
     end
   end
@@ -171,11 +162,9 @@ class CheckoutController < Spree::StoreController
         return if redirect_to_payment_gateway
       end
 
-      @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
+      next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })
 
-      next if advance_order_state(@order)
-
-      return update_failed
+      return action_failed
     end
 
     update_response
@@ -188,15 +177,6 @@ class CheckoutController < Spree::StoreController
 
     render json: { path: redirect_path }, status: :ok
     true
-  end
-
-  # Perform order.next, guarding against StaleObjectErrors
-  def advance_order_state(order)
-    tries ||= 3
-    order.next
-  rescue ActiveRecord::StaleObjectError
-    retry unless (tries -= 1).zero?
-    false
   end
 
   def order_error
@@ -212,7 +192,7 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       update_succeeded_response
     else
-      update_failed(RuntimeError.new("Order not complete after the checkout workflow"))
+      action_failed(RuntimeError.new("Order not complete after the checkout workflow"))
     end
   end
 
@@ -238,30 +218,42 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  def update_failed(error = RuntimeError.new(order_error))
-    Bugsnag.notify(error)
-
-    flash[:error] = order_error if flash.blank?
-    checkout_failed
-    update_failed_response
+  def action_failed(error = RuntimeError.new(order_error))
+    checkout_failed(error)
+    action_failed_response
   end
 
-  def checkout_failed
+  def checkout_failed(error = RuntimeError.new(order_error))
+    Bugsnag.notify(error)
+    flash[:error] = order_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end
 
-  def update_failed_response
+  def action_failed_response
     respond_to do |format|
       format.html do
         render :edit
       end
       format.json do
+        discard_flash_errors
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
   end
 
+  def rescue_from_spree_gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+    action_failed(error)
+  end
+
   def permitted_params
     PermittedAttributes::Checkout.new(params).call
+  end
+
+  def discard_flash_errors
+    # Marks flash errors for deletion after the current action has completed.
+    # This ensures flash errors generated during XHR requests are not persisted in the
+    # session for longer than expected.
+    flash.discard(:error)
   end
 end

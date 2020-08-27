@@ -29,8 +29,14 @@ class SubscriptionPlacementJob
 
   def place_order_for(proxy_order)
     JobLogger.logger.info("Placing Order for Proxy Order #{proxy_order.id}")
-    proxy_order.initialise_order!
+    initialise_order(proxy_order)
     place_order(proxy_order.order)
+  end
+
+  def initialise_order(proxy_order)
+    proxy_order.initialise_order!
+  rescue StandardError => e
+    Bugsnag.notify(e, subscription: proxy_order.subscription, proxy_order: proxy_order)
   end
 
   def place_order(order)
@@ -42,8 +48,9 @@ class SubscriptionPlacementJob
 
     move_to_completion(order)
     send_placement_email(order, changes)
-  rescue StateMachine::InvalidTransition
-    record_and_log_error(:processing, order)
+  rescue StandardError => e
+    record_and_log_error(:processing, order, e.message)
+    Bugsnag.notify(e, order: order)
   end
 
   def cap_quantity_and_store_changes(order)
@@ -66,7 +73,7 @@ class SubscriptionPlacementJob
   end
 
   def move_to_completion(order)
-    AdvanceOrderService.new(order).call!
+    OrderWorkflow.new(order).complete!
   end
 
   def unavailable_stock_lines_for(order)

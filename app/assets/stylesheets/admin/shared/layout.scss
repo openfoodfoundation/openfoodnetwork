@@ -20,9 +20,11 @@
 
     &:first-child {
       padding-left: 0;
+      width: 70%;
     }
     &:last-child {
       padding-right: 0;
+      width: 30%;
     }
   }
 }

@@ -1,4 +1,6 @@
 describe 'Checkout service', ->
+  BugsnagMock =
+    notify: (arg) ->
   Checkout = null
   orderData = null
   $httpBackend = null
@@ -47,6 +49,8 @@ describe 'Checkout service', ->
         lastname: "Harrington"
       ship_address: {test: "bar"}
       user_id: 901
+
+    window.Bugsnag = BugsnagMock
 
     module 'Darkswarm'
     module ($provide)->
@@ -128,6 +132,7 @@ describe 'Checkout service', ->
         expect(Checkout.errors).toEqual {error: "frogs"}
 
       it "throws exception and sends generic flash message when there are errors but no flash message", ->
+        spyOn(BugsnagMock, "notify")
         $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "broken response"}}
         try
           Checkout.submit()
@@ -136,9 +141,11 @@ describe 'Checkout service', ->
           expect(error.data.errors.error).toBe("broken response")
 
         expect(Checkout.errors).toEqual {}
+        expect(BugsnagMock.notify).toHaveBeenCalled()
 
       it "throws an exception and sends a flash message to the flash service when reponse doesnt contain errors nor a flash message", ->
         spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+        spyOn(BugsnagMock, "notify")
         $httpBackend.expectPUT("/checkout.json").respond 400, "broken response"
         try
           Checkout.submit()
@@ -147,9 +154,11 @@ describe 'Checkout service', ->
           expect(error.data).toBe("broken response")
 
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
+        expect(BugsnagMock.notify).toHaveBeenCalled()
 
       it "throws an exception and sends a flash message to the flash service when an exception is thrown while handling the error", ->
         spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+        spyOn(BugsnagMock, "notify")
         navigationSpy.and.callFake(-> throw "unexpected error")
         $httpBackend.expectPUT("/checkout.json").respond 400, {path: 'path'}
         try
@@ -159,6 +168,7 @@ describe 'Checkout service', ->
           expect(error).toBe("unexpected error")
 
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
+        expect(BugsnagMock.notify).toHaveBeenCalled()
 
     describe "when using the Stripe Connect gateway", ->
       beforeEach inject ($injector, StripeElements) ->

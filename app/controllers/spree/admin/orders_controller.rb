@@ -27,7 +27,7 @@ module Spree
 
       def new
         @order = Order.create
-        @order.created_by = try_spree_current_user
+        @order.created_by = spree_current_user
         @order.save
         redirect_to edit_admin_order_url(@order)
       end
@@ -35,7 +35,7 @@ module Spree
       def edit
         @order.shipments.map(&:refresh_rates)
 
-        AdvanceOrderService.new(@order).call
+        OrderWorkflow.new(@order).complete
 
         # The payment step shows an error of 'No pending payments'
         # Clearing the errors from the order object will stop this error

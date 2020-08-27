@@ -8,6 +8,8 @@ sv:
         payment_state: Betalningstatus
         shipment_state: Leveransstatus
         state: Region
+      spree/payment:
+        state: Region
       spree/product:
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
@@ -751,6 +753,8 @@ sv:
   cart_updating: "Uppdatera din varukorg"
   cart_empty: "Tom varukorg"
   cart_edit: "Redigera din varukorg "
+  item: "Vara"
+  qty: "Kvantitet"
   card_number: Kortnummer
   card_securitycode: "Säkerhetskod"
   card_expiry_date: Förfallodatum
@@ -2106,6 +2110,16 @@ sv:
       invoice_email:
         hi: "Hi %{name}"
         invoice_attached_text: Här är en faktura för din senaste order från
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            En begäran om att återställa ditt lösenord har gjorts.
+            Om du inte gjorde denna förfrågan ignorerar du bara det här e-postmeddelandet.
+        link_text: >
+            Om du gjorde denna förfrågan klickar du bara på länken nedan:
+        issue_text: |
+            Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
+            Om du får problem, var god kontakta oss.
     order_state:
       address: adress
       adjustments: justeringar
@@ -2118,16 +2132,6 @@ sv:
       resumed: återupptagen
       returned: returnerad
       skrill: skrill
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            En begäran om att återställa ditt lösenord har gjorts.
-            Om du inte gjorde denna förfrågan ignorerar du bara det här e-postmeddelandet.
-        link_text: >
-            Om du gjorde denna förfrågan klickar du bara på länken nedan:
-        issue_text: |
-            Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
-            Om du får problem, var god kontakta oss.
     users:
       open_orders:
         order: Beställningar

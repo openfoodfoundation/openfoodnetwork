@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::CustomersController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "index" do
     let(:enterprise) { create(:distributor_enterprise) }
@@ -90,7 +90,7 @@ describe Admin::CustomersController, type: :controller do
 
         it "prevents me from updating the customer" do
           spree_put :update, format: :json, id: customer.id, customer: { email: 'new.email@gmail.com' }
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
           expect(assigns(:customer)).to eq nil
           expect(customer.email).to_not eq 'new.email@gmail.com'
         end
@@ -166,7 +166,7 @@ describe Admin::CustomersController, type: :controller do
 
         it "prevents me from updating the customer" do
           spree_get :show, format: :json, id: customer.id
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
     end

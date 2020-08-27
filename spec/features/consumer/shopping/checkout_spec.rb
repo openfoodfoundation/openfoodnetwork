@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "As a consumer I want to check out my cart", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include ShopWorkflow
   include CheckoutWorkflow
   include WebHelper
@@ -65,7 +65,7 @@ feature "As a consumer I want to check out my cart", js: true do
       let(:user) { create(:user) }
 
       before do
-        quick_login_as(user)
+        login_as(user)
       end
 
       context "with details filled out" do
@@ -292,7 +292,7 @@ feature "As a consumer I want to check out my cart", js: true do
           expect(page).to have_content "Donkeys"
           expect(page).not_to have_content "Local"
 
-          quick_login_as(user)
+          login_as(user)
           visit checkout_path
 
           # Default rule in still effect, disallows access to 'Local'

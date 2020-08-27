@@ -36,6 +36,26 @@ describe Checkout::FormDataAdapter do
         end
       end
 
+      describe "and a credit card is provided" do
+        before do
+          params[:order][:payments_attributes].first[:source_attributes] = {number: "4444333322221111"}
+        end
+
+        it "fills in missing credit card brand" do
+          expect(adapter.params[:order][:payments_attributes].first[:source_attributes][:cc_type]).to eq "visa"
+        end
+
+        it "leaves an existing credit card brand" do
+          params[:order][:payments_attributes].first[:source_attributes][:cc_type] = "test"
+          expect(adapter.params[:order][:payments_attributes].first[:source_attributes][:cc_type]).to eq "test"
+        end
+
+        it "doesn't touch the credit card brand without a number" do
+          params[:order][:payments_attributes].first[:source_attributes][:number] = ""
+          expect(adapter.params[:order][:payments_attributes].first[:source_attributes].key?(:cc_type)).to eq false
+        end
+      end
+
       describe "and existing credit card is provided" do
         before { params[:order][:existing_card_id] = credit_card.id }
 

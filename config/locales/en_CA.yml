@@ -13,6 +13,8 @@ en_CA:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: State
+        source: Source
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -182,6 +184,7 @@ en_CA:
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or city
   producers_join: Producers are  welcome to join the Open Food Network.
@@ -270,6 +273,9 @@ en_CA:
   on hand: "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
+  height: "Height"
+  width: "Width"
+  depth: "Depth"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1033,10 +1039,13 @@ en_CA:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
     subscriptions:
-      subscriptions: Subscriptions
-      new: New Subscription
-      create: Create Subscription
-      edit: Edit Subscription
+      index:
+        title: "Subscriptions"
+        new: "New Subscription"
+      new:
+        title: "New Subscription"
+      edit:
+        title: "Edit Subscription"
       table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
@@ -1045,6 +1054,7 @@ en_CA:
       filters:
         query_placeholder: "Search by email..."
       setup_explanation:
+        title: "Subscriptions"
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
         enable_subscriptions_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
@@ -1058,6 +1068,8 @@ en_CA:
         create_at_least_one_schedule_step_3: 3. Click '+ New Schedule', and fill out the form
         once_you_are_done_you_can_html: Once you are done, you can %{reload_this_page_link}
         reload_this_page: reload this page
+      form:
+        create: "Create Subscription"
       steps:
         details: 1. Basic Details
         address: 2. Address
@@ -1160,7 +1172,7 @@ en_CA:
       mobile_menu:
         cart: "Cart"
     register_call:
-      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      selling_on_ofn: "Interested in selling on the Open Food Network?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."
@@ -1302,6 +1314,8 @@ en_CA:
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
+  item: "Item"
+  qty: "Qty"
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
@@ -1713,6 +1727,7 @@ en_CA:
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
   orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1956,6 +1971,8 @@ en_CA:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  permalink: "Permalink"
+  shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
@@ -2052,6 +2069,8 @@ en_CA:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  shipping_method: "Shipping method"
+  new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
@@ -2070,6 +2089,7 @@ en_CA:
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
+  order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
@@ -2306,6 +2326,7 @@ en_CA:
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
   back_to_orders_list: "Back to order list"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
@@ -2807,7 +2828,7 @@ en_CA:
     city: "City"
     zip: "Postal Code"
     country: "Country"
-    state: "Province"
+    state: "State"
     phone: "Phone"
     update: "Update"
     use_billing_address: "Use Billing Address"
@@ -3161,6 +3182,8 @@ en_CA:
           stripe:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
+          paypal:
+            no_payment_via_admin_backend: Paypal payments cannot be captured in the backoffice.
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
@@ -3338,6 +3361,32 @@ en_CA:
       invoice_email:
         hi: "Hi %{name}"
         invoice_attached_text: Please find attached an invoice for your recent order from
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            A request to reset your password has been made.
+            If you did not make this request, simply ignore this email.
+        link_text: >
+            If you did make this request just click the link below:
+        issue_text: |
+            If the above URL does not work try copying and pasting it into your browser.
+            If you continue to have problems please feel free to contact us.
+      confirmation_instructions:
+        subject: "Please confirm your OFN account"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Dear Customer, "
+        instructions: "Your order has been shipped or picked up."
+        shipment_summary: "Shipment/Pick Up Summary"
+        subject: "Shipment/Pick Up Notification"
+        thanks: "Thank you for your business."
+        track_information: "Tracking Information: %{tracking}"
+        track_link: "Tracking Link: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Congratulations!"
+        message: "If you have received this email,  then your OFN email settings are correct."
+        subject: "Test Mail"
     order_state:
       address: address
       adjustments: adjustments
@@ -3359,18 +3408,6 @@ en_CA:
       ended: ended
       paused: paused
       canceled: cancelled
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            A request to reset your password has been made.
-            If you did not make this request, simply ignore this email.
-        link_text: >
-            If you did make this request just click the link below:
-        issue_text: |
-            If the above URL does not work try copying and pasting it into your browser.
-            If you continue to have problems please feel free to contact us.
-      confirmation_instructions:
-        subject: Please confirm your OFN account
     users:
       form:
         account_settings: Account Settings

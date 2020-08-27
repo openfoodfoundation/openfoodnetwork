@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 
@@ -28,6 +28,7 @@ feature "Authentication", js: true do
           browse_as_large
           open_login_modal
         end
+
         scenario "showing login" do
           expect(page).to have_login_modal
         end
@@ -106,8 +107,31 @@ feature "Authentication", js: true do
             end.to enqueue_job Delayed::PerformableMethod
             expect(Delayed::Job.last.payload_object.method_name).to eq(:send_reset_password_instructions_without_delay)
           end
+
+          context "user with unconfirmed email" do
+            let(:email) { "test@example.org" }
+            let!(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }
+
+            scenario "cannot reset password before confirming email" do
+              fill_in "Your email", with: email
+              click_reset_password_button
+              expect(page).to have_content I18n.t('email_unconfirmed')
+              page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
+              expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
+
+              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              expect(user.reload.confirmed?).to be true
+              expect(page).to have_text I18n.t('devise.confirmations.confirmed')
+
+              select_login_tab "Forgot Password?"
+              fill_in "Your email", with: email
+              click_reset_password_button
+              expect(page).to have_reset_password
+            end
+          end
         end
       end
+
       describe "as medium" do
         before do
           browse_as_medium

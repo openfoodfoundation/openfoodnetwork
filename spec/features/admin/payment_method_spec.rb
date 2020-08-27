@@ -4,8 +4,8 @@ feature '
     As a Super Admin
     I want to be able to set a distributor on each payment method
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   background do
     @distributors = (1..3).map { create(:distributor_enterprise) }
@@ -13,9 +13,7 @@ feature '
 
   describe "creating a payment method", js: true do
     scenario "assigning a distributor to the payment method" do
-      login_to_admin_section
-
-      click_link 'Configuration'
+      login_as_admin_and_visit spree.edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -47,7 +45,7 @@ feature '
       end
 
       it "communicates the status of the stripe connection to the user" do
-        quick_login_as user
+        login_as user
         visit spree.new_admin_payment_method_path
 
         select2_select "Stripe", from: "payment_method_type"
@@ -70,14 +68,12 @@ feature '
 
     scenario "checking a single distributor is checked by default" do
       2.times.each { Enterprise.last.destroy }
-      quick_login_as_admin
-      visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
-      quick_login_as_admin
-      visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}", checked: false
@@ -85,10 +81,9 @@ feature '
   end
 
   scenario "updating a payment method", js: true do
-    payment_method = create(:payment_method, distributors: [@distributors[0]])
-    quick_login_as_admin
-
-    visit spree.edit_admin_payment_method_path payment_method
+    payment_method = create(:payment_method, distributors: [@distributors[0]],
+                                             calculator: build(:calculator_flat_rate))
+    login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'
     find(:css, "tags-input .tags input").set "member\n"
@@ -131,7 +126,7 @@ feature '
   end
 
   context "as an enterprise user", js: true do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
@@ -142,7 +137,7 @@ feature '
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     it "I can get to the new enterprise page" do

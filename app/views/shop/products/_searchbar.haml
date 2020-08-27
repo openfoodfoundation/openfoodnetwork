@@ -6,7 +6,7 @@
               type: 'search',
               placeholder: t(:products_search),
               "ng-debounce" => "200",
-              "ofn-disable-enter" => true}
+              "disable-enter-with-blur" => true}
         %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
           = image_tag "icn-close.png"
 

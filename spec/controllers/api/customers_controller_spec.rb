@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Api
   describe CustomersController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
     render_views
 
     let(:user) { create(:user) }

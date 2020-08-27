@@ -13,6 +13,8 @@ pt_BR:
         email: Email do cliente
       spree/payment:
         amount: Montante
+        state: Estado
+        source: Origem
       spree/product:
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
@@ -271,6 +273,9 @@ pt_BR:
   on hand: "Disponível"
   ship: "Envio"
   shipping_category: "Tipos de Frete"
+  height: "Altura"
+  width: "Largura"
+  depth: "Profundidade"
   actions:
     create_and_add_another: "Criar e adicionar outro"
     create: "Criar"
@@ -1012,7 +1017,7 @@ pt_BR:
         name: Relatórios de pagamento
         description: Relatórios para pagamentos
       orders_and_fulfillment:
-        name: Relatórios de pedidos e de satisfação
+        name: Relatórios de pedidos e fechamento
       customers:
         name: Clientes
       products_and_inventory:
@@ -1033,10 +1038,13 @@ pt_BR:
         name: "Resumo das taxas da empresa"
         description: "Resumo das taxas corporativas coletadas"
     subscriptions:
-      subscriptions: Assinaturas
-      new: Nova assinatura
-      create: Criar assinatura
-      edit: Editar assinatura
+      index:
+        title: "Assinaturas"
+        new: "Nova Assinatura"
+      new:
+        title: "Nova Assinatura"
+      edit:
+        title: "Editar assinatura"
       table:
         edit_subscription: Editar assinatura
         pause_subscription: Pausar assinatura
@@ -1045,6 +1053,7 @@ pt_BR:
       filters:
         query_placeholder: "Pesquisar por email ..."
       setup_explanation:
+        title: "Assinaturas"
         just_a_few_more_steps: 'Apenas mais algumas etapas antes de começar:'
         enable_subscriptions: "Ative assinaturas para pelo menos uma de suas lojas"
         enable_subscriptions_step_1_html: '1. Vá para a página %{enterprises_link}, encontre sua loja e clique em "Gerenciar" '
@@ -1058,6 +1067,8 @@ pt_BR:
         create_at_least_one_schedule_step_3: 3. Clique em "Novo cronograma" e preencha o formulário
         once_you_are_done_you_can_html: Quando terminar, você pode %{reload_this_page_link}
         reload_this_page: recarregar esta página
+      form:
+        create: "Criar Assinatura"
       steps:
         details: 1. Detalhes Básicos
         address: 2. Endereço
@@ -1204,14 +1215,14 @@ pt_BR:
   invoice_column_price_without_taxes: "Preço total (sem taxas)"
   invoice_column_tax_rate: "Taxa de imposto"
   invoice_tax_total: "Total de Imposto sobre Bens e Serviços"
-  tax_invoice: "NOTA FISCAL"
+  tax_invoice: "FATURA"
   tax_total: "Total de imposto (%{rate}):"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
   abn: "CNPJ"
   acn: "CNPJ:"
-  invoice_issued_on: "Nota fiscal emitida em:"
-  order_number: "Número da nota fiscal:"
+  invoice_issued_on: "Fatura emitida em:"
+  order_number: "Número da fatura:"
   date_of_transaction: "Dia da transação:"
   ticket_column_qty: "Qtd"
   ticket_column_item: "Ítem"
@@ -1301,6 +1312,8 @@ pt_BR:
   cart_updating: "Atualizando carrinho"
   cart_empty: "Carrinho vazio"
   cart_edit: "Edite seu carrinho"
+  item: "Ítem"
+  qty: "Qtd"
   card_number: Número do Cartão
   card_securitycode: "Código de Segurança"
   card_expiry_date: Data de Vencimento
@@ -1522,7 +1535,7 @@ pt_BR:
   shopping_contact_social: "Seguir"
   shopping_groups_part_of: "é parte de:"
   shopping_producers_of_hub: "produtores de %{hub}:"
-  enterprises_next_closing: "Próximo fechamento de pedido"
+  enterprises_next_closing: "Próximo fechamento"
   enterprises_ready_for: "Pronto para"
   enterprises_choose: "Escolha para quando você quer seu pedido:"
   maps_open: "Aberto"
@@ -1956,6 +1969,8 @@ pt_BR:
   supplier: "Fornecedor"
   product_name: "Nome do Produto"
   product_description: "Descrição do Produto"
+  permalink: "Permalink"
+  shipping_categories: "Categorias de Remessa"
   units: "Unidade de medida"
   coordinator: "Coordenador"
   distributor: "Distribuidor"
@@ -2052,6 +2067,8 @@ pt_BR:
   remove_tax: "Remover taxa"
   first_name_begins_with: "O primeiro nome começa com"
   last_name_begins_with: "O sobrenome começa com"
+  shipping_method: "Método de Envio"
+  new_order: "Novo Pedido"
   enterprise_tos_link: "Link de Termos de Serviço da iniciativa"
   enterprise_tos_message: "Queremos trabalhar com pessoas que compartilham nossos objetivos e valores. Como tal, pedimos às novas iniciativas que concordem com nossos"
   enterprise_tos_link_text: "Termos de Serviço."
@@ -3059,7 +3076,7 @@ pt_BR:
           email: "Email do cliente"
         invoice:
           issued_on: "Emitida em"
-          tax_invoice: "NOTA FISCAL"
+          tax_invoice: "FATURA"
           code: "Código"
           from: "De"
           to: "Informações de cobrança"
@@ -3346,6 +3363,32 @@ pt_BR:
       invoice_email:
         hi: "Oi %{name}"
         invoice_attached_text: Encontre anexa uma fatura para sua recente ordem de
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Foi feito um pedido para redefinir sua senha.
+            Se você não fez essa solicitação, simplesmente ignore este e-mail.
+        link_text: >
+            Se você fez esse pedido, basta clicar no link abaixo:
+        issue_text: |
+            Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
+            Se continuar a ter problemas, por favor não hesite em contactar-nos.
+      confirmation_instructions:
+        subject: "Confirme sua conta na OFB"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Estimado cliente,"
+        instructions: "Seu pedido foi enviado"
+        shipment_summary: "Resumo de Envio"
+        subject: "Notificação de envio"
+        thanks: "Agradeço pelos seus serviços."
+        track_information: "Informações de rastreamento: %{tracking}"
+        track_link: "Link de rastreamento: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Parabéns!"
+        message: "Se você recebeu este email, então as suas configurações de email estão corretas."
+        subject: "Email Teste"
     order_state:
       address: endereço
       adjustments: ajustes
@@ -3367,18 +3410,6 @@ pt_BR:
       ended: finalizado
       paused: pausado
       canceled: cancelado
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Foi feito um pedido para redefinir sua senha.
-            Se você não fez essa solicitação, simplesmente ignore este e-mail.
-        link_text: >
-            Se você fez esse pedido, basta clicar no link abaixo:
-        issue_text: |
-            Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
-            Se continuar a ter problemas, por favor não hesite em contactar-nos.
-      confirmation_instructions:
-        subject: Confirme sua conta na OFB
     users:
       form:
         account_settings: Configurações da conta

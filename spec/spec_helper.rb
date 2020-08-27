@@ -181,6 +181,16 @@ RSpec.configure do |config|
 
   config.include JsonSpec::Helpers
 
+  # Suppress Selenium deprecation warnings. Stops a flood of pointless warnings filling the
+  # test output. We can remove this in the future after upgrading Rails, Rack, and Capybara.
+  if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
+    Selenium::WebDriver.logger.level = :error
+  else
+    ActiveSupport::Deprecation.warn(
+      "Suppressing Selenium deprecation warnings is not needed any more."
+    )
+  end
+
   # Profiling
   #
   # This code shouldn't be run in normal circumstances. But if you want to know
@@ -201,4 +211,5 @@ RSpec.configure do |config|
   # config.after :suite do
   # PerfTools::CpuProfiler.stop
   # end
+  config.infer_spec_type_from_file_location!
 end

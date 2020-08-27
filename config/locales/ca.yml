@@ -13,6 +13,8 @@ ca:
         email: Correu electrònic de la consumidora
       spree/payment:
         amount: Import
+        state: Estat
+        source: Source
       spree/product:
         primary_taxon: "Categoria del producte"
         supplier: "Proveïdora"
@@ -43,7 +45,7 @@ ca:
               after_orders_open_at: s'ha de fer amb el termini obert
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració de l'inventari de la productora"
+            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
   activemodel:
@@ -182,6 +184,7 @@ ca:
         explainer: El processament automàtic d'aquestes comandes va fallar per un motiu desconegut. Això no hauria de passar, si us plau, contacteu amb nosaltres si esteu veient això.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Benvingut a "
   site_meta_description: "Comencem des de baix. Amb agricultors i productors disposats a explicar les seves històries amb orgull i sinceritat. Amb distribuïdors connectant persones i productes de manera justa i honesta. Amb compradors que creuen que millors decisions de compra setmanal poden ..."
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
@@ -270,6 +273,9 @@ ca:
   on hand: "Disponibles"
   ship: "Enviament"
   shipping_category: "Categoria d'enviament"
+  height: "Alçada"
+  width: "Amplada"
+  depth: "Profunditat"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -1036,10 +1042,13 @@ ca:
         name: "Resum de les comissions de l'organització"
         description: "Resum de les comissions de l'organització recollides"
     subscriptions:
-      subscriptions: Subscripcions
-      new: Nova subscripció
-      create: Crea una subscripció
-      edit: Edita la subscripció
+      index:
+        title: "Subscripcions"
+        new: "Nova subscripció"
+      new:
+        title: "Nova subscripció"
+      edit:
+        title: "Edita la subscripció"
       table:
         edit_subscription: Edita la subscripció
         pause_subscription: Pausa la subscripció
@@ -1048,6 +1057,7 @@ ca:
       filters:
         query_placeholder: "Cerca per correu electrònic ..."
       setup_explanation:
+        title: "Subscripcions"
         just_a_few_more_steps: 'Només uns quants passos més abans de començar:'
         enable_subscriptions: "Activa les subscripcions d'almenys una de les teves botigues"
         enable_subscriptions_step_1_html: 1. Aneu a la pàgina %{enterprises_link}, cerqueu la vostra botiga i feu clic a "Gestionar"
@@ -1061,6 +1071,8 @@ ca:
         create_at_least_one_schedule_step_3: 3. Fes clic a '+ Nova programació' i omple el formulari
         once_you_are_done_you_can_html: Un cop hagueu acabat, podeu %{reload_this_page_link}
         reload_this_page: tornar a carregar aquesta pàgina
+      form:
+        create: "Crea una subscripció"
       steps:
         details: 1. Detalls bàsics
         address: 2. Adreça
@@ -1305,6 +1317,8 @@ ca:
   cart_updating: "Actualitzant la cistella..."
   cart_empty: "Cistella buida"
   cart_edit: "Edita la teva cistella"
+  item: "Article"
+  qty: "quant."
   card_number: Número de targeta
   card_securitycode: "Codi de seguretat"
   card_expiry_date: Data de caducitat
@@ -1526,7 +1540,7 @@ ca:
   shopping_contact_social: "Segueix"
   shopping_groups_part_of: "forma part de:"
   shopping_producers_of_hub: "Productores de%{hub}:"
-  enterprises_next_closing: "Tancament de la comanda següent"
+  enterprises_next_closing: "La següent comanda tanca"
   enterprises_ready_for: "Llest per"
   enterprises_choose: "Escull quan vols la teva comanda:"
   maps_open: "Obert"
@@ -1716,6 +1730,7 @@ ca:
   remember_me: Recorda'm
   are_you_sure: "Estàs segur?"
   orders_open: "Comandes obertes"
+  closing: "Tancant"
   going_back_to_home_page: "Tornant a la pàgina d'inici"
   creating: Creant
   updating: Actualitzant
@@ -1934,7 +1949,7 @@ ca:
   admin_enterprise_groups: "Grups d'organització"
   admin_enterprise_groups_name: "Nom"
   admin_enterprise_groups_owner: "Propietària"
-  admin_enterprise_groups_on_front_page: "A la primera pàgina?"
+  admin_enterprise_groups_on_front_page: "Visible a la web"
   admin_enterprise_groups_enterprise: "Organitzacions"
   admin_enterprise_groups_data_powertip: "La usuària principal responsable d'aquest grup."
   admin_enterprise_groups_data_powertip_logo: "Això és el logotip del grup"
@@ -1959,6 +1974,8 @@ ca:
   supplier: "Proveïdora"
   product_name: "Nom del producte"
   product_description: "Descripció del producte"
+  permalink: "Enllaç permanent"
+  shipping_categories: "Tipus d'enviament"
   units: "Mida d'unitat"
   coordinator: "Coordinador"
   distributor: "Distribuïdora"
@@ -2055,6 +2072,8 @@ ca:
   remove_tax: "Suprimeix comissions"
   first_name_begins_with: "El nom comença amb"
   last_name_begins_with: "El cognom comença amb"
+  shipping_method: "Mètode d'enviament"
+  new_order: "Nova comanda"
   enterprise_tos_link: "Enllaç a les condicions d'ús de l'organització"
   enterprise_tos_message: "Volem treballar amb persones que comparteixen els nostres objectius i valors. Com a tal, demanem a les noves organitzacions que acceptin la nostra"
   enterprise_tos_link_text: "Termes del servei."
@@ -2073,6 +2092,7 @@ ca:
   hub_sidebar_at_least: "Cal seleccionar almenys un grup "
   hub_sidebar_blue: "blau"
   hub_sidebar_red: "vermell"
+  order_cycles_closed_for_hub: "La botiga que has triat està temporalment tancada per a fer comandes. Sisplau, prova una mica més tard"
   report_customers_distributor: "Distribuïdora"
   report_customers_supplier: "Proveïdora"
   report_customers_cycle: "Cicle de Comanda"
@@ -2309,6 +2329,7 @@ ca:
   order_cycles_email_to_producers_notice: 'Els correus electrònics per enviar a les productores estan en cua.'
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
+  order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
   back_to_orders_list: "Torna a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
@@ -2564,7 +2585,7 @@ ca:
         'yes': "Sota demanda"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Utilitzeu la configuració d'inventari de la productora"
+        use_producer_settings: "Utilitzeu la configuració d'estoc de la productora"
         'yes': "Sí"
         'no': "No"
       inventory_products: "Productes de l'inventari"
@@ -3168,6 +3189,8 @@ ca:
           stripe:
             error_saving_payment: Error en desar el pagament
             submitting_payment: S'està lliurant el pagament...
+          paypal:
+            no_payment_via_admin_backend: Els pagaments amb Paypal no es poden capturar des de l'administració
       products:
         image_upload_error: "No s'ha reconegut la imatge del producte. Carregueu una imatge en format PNG o JPG."
         new:
@@ -3345,6 +3368,32 @@ ca:
       invoice_email:
         hi: "Hola %{name}"
         invoice_attached_text: Trobareu adjunta un comprovant de la compra per a la vostra comanda recent
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            S'ha fet una sol·licitud per restablir la teva contrasenya.
+            Si no has fet aquesta sol·licitud, simplement ignora aquest correu electrònic.
+        link_text: >
+            Si has fet aquesta sol·licitud, fes clic a l'enllaç següent:
+        issue_text: |
+            Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
+            Si continues tenint problemes, no dubtis en contactar-nos.
+      confirmation_instructions:
+        subject: "Si us plau confirma el teu compte d'OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Benvolguda consumidora:"
+        instructions: "La vostra comanda s'ha enviat"
+        shipment_summary: "Resum de l'enviament"
+        subject: "Notificació d'enviament"
+        thanks: "Gràcies per la teva compra."
+        track_information: "Informació del seguiment: %{tracking}"
+        track_link: "Enllaç del seguiment: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Enhorabona!"
+        message: "Si heu rebut aquest correu electrònic, la vostra configuració de correu electrònic és correcta."
+        subject: "Correu de prova"
     order_state:
       address: adreça
       adjustments: ajustaments
@@ -3366,18 +3415,6 @@ ca:
       ended: acabat
       paused: en pausa
       canceled: cancel·lat
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            S'ha fet una sol·licitud per restablir la teva contrasenya.
-            Si no has fet aquesta sol·licitud, simplement ignora aquest correu electrònic.
-        link_text: >
-            Si has fet aquesta sol·licitud, fes clic a l'enllaç següent:
-        issue_text: |
-            Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
-            Si continues tenint problemes, no dubtis en contactar-nos.
-      confirmation_instructions:
-        subject: Si us plau confirma el teu compte d'OFN
     users:
       form:
         account_settings: Configuració del compte

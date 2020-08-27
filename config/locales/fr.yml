@@ -13,6 +13,8 @@ fr:
         email: Email acheteur
       spree/payment:
         amount: Montant
+        state: Statut
+        source: Source
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
@@ -271,6 +273,9 @@ fr:
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Condition de transport"
+  height: "Hauteur"
+  width: "Largeur"
+  depth: "Profondeur"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -1036,10 +1041,13 @@ fr:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
     subscriptions:
-      subscriptions: Abonnements
-      new: Nouvel abonnement
-      create: Créer abonnement
-      edit: Mettre à jour Abonnement
+      index:
+        title: "Abonnements"
+        new: "Nouvel abonnement"
+      new:
+        title: "Nouvel abonnement"
+      edit:
+        title: "Mettre à jour Abonnement"
       table:
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
@@ -1048,6 +1056,7 @@ fr:
       filters:
         query_placeholder: "Recherche par email"
       setup_explanation:
+        title: "Abonnements"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos boutiques"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre boutique, et cliquez sur "Gérer"
@@ -1061,6 +1070,8 @@ fr:
         create_at_least_one_schedule_step_3: 3. Cliquez sur "+ Nouveau Rythme d'abonnement", et remplissez le formulaire
         once_you_are_done_you_can_html: Une fois que c'est fait, vous pouvez %{reload_this_page_link}
         reload_this_page: recharger cette page
+      form:
+        create: "Créer abonnement"
       steps:
         details: 1. Informations de base
         address: 2. Adresse
@@ -1151,7 +1162,7 @@ fr:
       cart:
         cart: "Panier"
       cart_sidebar:
-        checkout: "Etape suivante (coordonnées)"
+        checkout: "Etape suivante"
         edit_cart: "Modifier le panier"
         items_in_cart_singular: "%{num} élément dans le panier"
         items_in_cart_plural: "%{num} éléments dans le panier"
@@ -1305,6 +1316,8 @@ fr:
   cart_updating: "Mettre à jour le panier"
   cart_empty: "Panier vide"
   cart_edit: "Modifier votre panier"
+  item: "Produit"
+  qty: "Qté"
   card_number: Numéro de carte
   card_securitycode: "Cryptogramme visuel"
   card_expiry_date: Date d'expiration
@@ -1400,7 +1413,7 @@ fr:
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
   checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
-  checkout_shipping: Informations de livraison
+  checkout_shipping: Informations de livraison ou de retrait
   checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
   checkout_method_free: Pas de frais supplémentaires
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
@@ -1960,6 +1973,8 @@ fr:
   supplier: "Fournisseur"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
+  permalink: "Permalien"
+  shipping_categories: "Conditions de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
   distributor: "Distributeur"
@@ -2056,6 +2071,8 @@ fr:
   remove_tax: "Retirer TVA"
   first_name_begins_with: "Prénom commence par"
   last_name_begins_with: "Nom de famille commence par"
+  shipping_method: "Méthode de livraison"
+  new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -3139,12 +3156,12 @@ fr:
           zones: "Zones"
           both: "Vu par l'acheteur sur la boutique"
           back_end: "Visible pour l'administration uniquement"
-          deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
+          deactivation_warning: "Désactiver une méthode de livraison peut engendrer sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
         index:
           payment_methods: "Méthodes de paiement"
           new_payment_method: "Nouvelle méthode de paiement"
-          name: "Produit/Variante"
+          name: "Nom"
           products_distributor: "Distributeur"
           provider: "Fournisseur"
           environment: "Environnement"
@@ -3177,7 +3194,7 @@ fr:
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
         form:
-          name: "Produit/Variante"
+          name: "Nom"
           description: "Description"
           environment: "Environnement"
           display: "Afficher"
@@ -3196,6 +3213,8 @@ fr:
           stripe:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
+          paypal:
+            no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
@@ -3373,6 +3392,33 @@ fr:
       invoice_email:
         hi: "Bonjour %{name}"
         invoice_attached_text: 'Veuillez trouver ci-joint la facture pour votre récente commande auprès de '
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            Votre demande de nouveau mot de passe a bien été prise en compte.
+            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
+        link_text: >
+            Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
+            lien ci-dessous :
+        issue_text: |
+            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
+            Si le problème persiste, n'hésitez pas à nous contacter.
+      confirmation_instructions:
+        subject: "Veuillez confirmer votre compte"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Cher Acheteur,"
+        instructions: "Votre commande a été expédiée"
+        shipment_summary: "Résumé de l'envoi"
+        subject: "Notification d'expédition"
+        thanks: "Merci pour votre commande."
+        track_information: "Informations de suivi : %{tracking}"
+        track_link: "Lien de suivi : %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Félicitations !"
+        message: "Si vous avez reçu cet email, cela signifie que vos emails sont bien paramétrés."
+        subject: "Mail de test"
     order_state:
       address: adresse
       adjustments: ajustements
@@ -3394,19 +3440,6 @@ fr:
       ended: terminé
       paused: mis en pause
       canceled: annulé
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            Votre demande de nouveau mot de passe a bien été prise en compte.
-            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
-        link_text: >
-            Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
-            lien ci-dessous :
-        issue_text: |
-            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
-            Si le problème persiste, n'hésitez pas à nous contacter.
-      confirmation_instructions:
-        subject: Veuillez confirmer votre compte
     users:
       form:
         account_settings: Paramètres du Compte

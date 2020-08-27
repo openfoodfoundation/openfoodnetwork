@@ -7,7 +7,7 @@ feature '
     I want to manage complex order cycles
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   describe "editing an order cycle with multiple pages of products", js: true do
@@ -18,8 +18,7 @@ feature '
     before do
       stub_const("#{Api::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
 
-      quick_login_as_admin
-      visit admin_order_cycle_incoming_path(order_cycle)
+      login_as_admin_and_visit admin_order_cycle_incoming_path(order_cycle)
       expect(page).to have_content "1 / 2 selected"
 
       page.find("tr.supplier-#{supplier_enterprise.id} td.products").click

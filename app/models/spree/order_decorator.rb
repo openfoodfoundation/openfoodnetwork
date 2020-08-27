@@ -89,6 +89,10 @@ Spree::Order.class_eval do
     where("state != ?", state)
   }
 
+  def updater
+    @updater ||= OrderManagement::Order::Updater.new(self)
+  end
+
   def create_proposed_shipments
     adjustments.shipping.delete_all
     shipments.destroy_all
@@ -374,6 +378,13 @@ Spree::Order.class_eval do
     address
   end
 
+  # Update attributes of a record in the database without callbacks, validations etc.
+  #   This was originally an extension to ActiveRecord in Spree but only used for Spree::Order
+  def update_attributes_without_callbacks(attributes)
+    assign_attributes(attributes)
+    Spree::Order.where(id: id).update_all(attributes)
+  end
+
   private
 
   def adjustments_fetcher
@@ -432,8 +443,8 @@ Spree::Order.class_eval do
   # amount here.
   def charge_shipping_and_payment_fees!
     update_totals
-    return unless payments.any?
+    return unless pending_payments.any?
 
-    payments.first.update_attribute :amount, total
+    pending_payments.first.update_attribute :amount, total
   end
 end

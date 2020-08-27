@@ -3,7 +3,7 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
-gem 'i18n-js', '~> 3.7.0'
+gem 'i18n-js', '~> 3.7.1'
 gem 'rails', '~> 4.0.13'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
@@ -39,18 +39,21 @@ gem 'stringex', '~> 1.5.1'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 
-# Our branch contains two changes
+# Our branch contains the following changes:
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
+# - Skip CA cert file and use the ones provided by the OS
 gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-1-0-stable'
+
 gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
-gem 'devise', '~> 3.0.1'
+gem 'devise', '~> 3.5.10' # v4.0.0 needs rails 4.1
 gem 'devise-encryptable'
+gem 'devise-token_authenticatable', '~> 0.4.10' # v0.5.0 needs devise v4
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 
@@ -83,12 +86,11 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
-gem 'diffy'
 gem 'figaro'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'oj'
-gem 'paper_trail', '~> 5.2.3'
+gem 'paper_trail', '~> 7.1.3'
 gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'

@@ -44,9 +44,10 @@ class UserConfirmationsController < DeviseController
         'not_confirmed'
       end
 
-    if resource.reset_password_token.present?
+    if result == 'confirmed' && resource.reset_password_token.present?
+      raw_reset_password_token = resource.regenerate_reset_password_token
       return spree.edit_spree_user_password_path(
-        reset_password_token: resource.reset_password_token
+        reset_password_token: raw_reset_password_token
       )
     end
 

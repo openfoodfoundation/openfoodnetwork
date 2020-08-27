@@ -5,12 +5,12 @@ feature '
   I want to be able to manage orders in bulk
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "listing orders" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     it "displays a message when number of line items is zero" do
@@ -121,7 +121,7 @@ feature '
 
   context "altering line item properties" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     context "tracking changes" do
@@ -177,7 +177,7 @@ feature '
 
   context "using page controls" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     let!(:p1) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }
@@ -719,11 +719,11 @@ feature '
     let!(:line_item_not_distributed) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s1) ) }
 
     before(:each) do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      quick_login_as @enterprise_user
+      login_as @enterprise_user
     end
 
     it "displays a Bulk Management Tab under the Orders item" do

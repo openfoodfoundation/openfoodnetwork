@@ -4,12 +4,11 @@ feature '
   As a site administrator
   I want to configure the site content
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   before do
-    login_to_admin_section
-    click_link 'Configuration'
+    login_as_admin_and_visit spree.edit_admin_general_settings_path
     click_link 'Content'
   end
 

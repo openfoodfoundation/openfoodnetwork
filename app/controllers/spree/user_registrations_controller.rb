@@ -1,3 +1,10 @@
+# frozen_string_literal: true
+
+require "spree/core/controller_helpers/auth"
+require "spree/core/controller_helpers/common"
+require "spree/core/controller_helpers/order"
+require "spree/core/controller_helpers/ssl"
+
 module Spree
   class UserRegistrationsController < Devise::RegistrationsController
     helper 'spree/base', 'spree/store'
@@ -23,7 +30,6 @@ module Spree
       if resource.save
         set_flash_message(:notice, :signed_up)
         sign_in(:spree_user, @user)
-        session[:spree_user_signup] = true
         associate_user
         respond_with resource, location: after_sign_up_path_for(resource)
       else

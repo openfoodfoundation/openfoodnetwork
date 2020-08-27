@@ -13,6 +13,8 @@ ar:
         email: الايميل الالكتروني للعميل
       spree/payment:
         amount: القيمة
+        state: ولاية
+        source: المصدر
       spree/product:
         primary_taxon: "نوع المنتج "
         supplier: "المورد"
@@ -33,6 +35,10 @@ ar:
               taken: "يوجد حساب متصل بهذا الايميل.\nالرجاء الدخول او اعادة تعيين كلمة السر."
         spree/order:
           no_card: لا يوجد بطاقة ائتمان معتمدة متاحة لاتمام عملية الدفع
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "انتهت صلاحيته"
         order_cycle:
           attributes:
             orders_close_at:
@@ -178,6 +184,7 @@ ar:
         explainer: فشلت المعالجة التلقائية لهذه الطلبات لسبب غير معروف. لا ينبغي أن يحدث هذا ، يرجى الاتصال بنا إذا كنت ترى هذا.
   home: "OFN"
   title: "شبكة الغذاء المفتوح"
+  welcome_to: "مرحبا بك في"
   site_meta_description: "نبدأ من الألف إلى الياء. مع المزارعين والمزارعين على استعداد لرواية قصصهم بفخر وحق. مع الموزعين على استعداد لتوصيل الأشخاص بالمنتجات بطريقة عادلة وبصدق. مع المشترين الذين يعتقدون أن أفضل قرارات التسوق الأسبوعية يمكن ..."
   search_by_name: البحث بالاسم أو الضاحية ...
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
@@ -266,6 +273,9 @@ ar:
   on hand: "متوفر"
   ship: "الشحن"
   shipping_category: "نوع الشحن"
+  height: "الارتفاع"
+  width: "العرض"
+  depth: "العمق"
   actions:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
@@ -321,6 +331,7 @@ ar:
     show_n_more: عرض %{num} أكثر
     choose: "أختر..."
     please_select: الرجاء اختيار ...
+    column_save_as_default: إحفظ كافتراض اساسي
     columns: أعمدة
     actions: أجراءات
     viewing: "عرض: %{current_view_name}"
@@ -365,7 +376,10 @@ ar:
         title: "إعدادات Matomo"
         matomo_url: "العنوان الالكتروني ل Matomo "
         matomo_site_id: "معرف موقع Matomo"
+        matomo_tag_manager_url: "عنوان URL لبرنامج Matomo "
+        info_html: "ماتومو هو تطبيق تحليلات الويب والجوال. يمكنك اضافة Matomo محليًا أو استخدام خدمة مستضافة على السحابة. انظر <a href='http://matomo.org' target='_blank'>matomo.org</a> لمزيد من المعلومات."
         config_instructions_html: "هنا يمكنك تهيئة تكامل Matomo لشبكة الغذاء المفتوح. يجب أن يشير عنوان الالكتروني URL الخاص بـ Matomo أدناه إلى مثيل Matomo حيث سيتم إرسال معلومات تتبع المستخدم إلى ؛ إذا تم تركه فارغًا ، فسيتم تعطيل تتبع مستخدم Matomo. حقل معرف الموقع ليس إلزاميًا ولكنه مفيد إذا كنت تتعقب أكثر من موقع ويب على مثيل Matomo  ؛ يمكن العثور عليه على وحدة تحكم مثيل Matomo."
+        config_instructions_tag_manager_html: "يؤدي تعيين عنوان URL لبرنامج Matomo إلى تمكين Matomo . تتيح لك هذه الأداة إعداد أحداث التحليلات. يتم نسخ عنوان URL لبرنامج Matomo من قسم كود التثبيت في Manager. تأكد من تحديد الحاوية والبيئة المناسبة لأن هذه الخيارات تغير عنوان URL."
     customers:
       index:
         new_customer: "عميل جديد"
@@ -471,6 +485,7 @@ ar:
         line_number: "السطر %{number}:"
         encoding_error: "يرجى التحقق من إعداد اللغة للملف المصدر والتأكد من حفظه بترميز UTF-8"
         unexpected_error: "واجه استيراد المنتج خطأ غير متوقع أثناء فتح الملف: %{error_message}"
+        malformed_csv: "صادف استيراد المنتج ملف CSV مشوه: %{error_message}"
       index:
         notice: "تنويه"
         beta_notice: "لا تزال هذه الميزة تجريبية: قد تواجه بعض الأخطاء أثناء استخدامها. من فضلك لا تتردد في الاتصال بالدعم."
@@ -683,6 +698,7 @@ ar:
           ofn_uid_tip: المعرف الفريد المستخدم لتحديد الشركة على شبكة الغذاء المفتوح.
         shipping_methods:
           name: "اسم"
+          applies: "نشيط؟"
           manage: "إدارة طرق الشحن"
           create_button: "إنشاء طريقة شحن جديدة"
           create_one_button: "إنشاء واحدة الآن"
@@ -860,6 +876,7 @@ ar:
         incoming: "الوارد"
         supplier: "المورد"
         products: "منتجات"
+        receival_details: "تفاصيل الاستلام"
         fees: "رسوم"
         save: "حفظ"
         save_and_next: "حفظ والتالي"
@@ -871,6 +888,7 @@ ar:
         distributor: "الموزع"
         products: "منتجات"
         tags: "الاوسمة"
+        delivery_details: "تفاصيل التسليم"
         fees: "رسوم"
         previous: "السابق"
         save: "حفظ"
@@ -1020,10 +1038,13 @@ ar:
         name: "ملخص رسوم الشركات"
         description: "ملخص رسوم الشركات التي تم جمعها"
     subscriptions:
-      subscriptions: الاشتراكات
-      new: اشتراك جديد
-      create: إنشاء اشتراك
-      edit: تحرير الاشتراك
+      index:
+        title: "الاشتراكات"
+        new: "اشتراك جديد"
+      new:
+        title: "اشتراك جديد"
+      edit:
+        title: "تحرير الاشتراك"
       table:
         edit_subscription: تحرير الاشتراك
         pause_subscription: وقف مؤقت الاشتراك
@@ -1032,6 +1053,7 @@ ar:
       filters:
         query_placeholder: "البحث عن طريق البريد الإلكتروني ..."
       setup_explanation:
+        title: "الاشتراكات"
         just_a_few_more_steps: 'فقط بضع خطوات أخرى قبل أن تبدأ:'
         enable_subscriptions: "تمكين الاشتراكات في واحد على الأقل من المتاجر الخاصة بك"
         enable_subscriptions_step_1_html: 1. انتقل إلى صفحة %{enterprises_link} ، وابحث عن متجرك ، وانقر على &quot;إدارة&quot;
@@ -1045,6 +1067,8 @@ ar:
         create_at_least_one_schedule_step_3: 3. انقر فوق &quot;+ جدول جديد&quot; ، واملأ النموذج
         once_you_are_done_you_can_html: بمجرد الانتهاء من ذلك ، يمكنك %{reload_this_page_link}
         reload_this_page: اعد تحميل هذه الصفحة
+      form:
+        create: "إنشاء اشتراك"
       steps:
         details: 1. التفاصيل الأساسية
         address: 2. العنوان
@@ -1136,7 +1160,12 @@ ar:
         cart: "سلة"
       cart_sidebar:
         checkout: "تابع للخروج"
+        edit_cart: "تعديل سلة التسوق"
+        items_in_cart_singular: "%{num} عنصر في سلة التسوق الخاصة بك"
+        items_in_cart_plural: "%{num} العناصر في سلة التسوق الخاصة بك"
         close: "إغلاق"
+        cart_empty: "سلة التسوق فارغة"
+        take_me_shopping: "خذني للتسوق!"
       signed_in:
         profile: "الملف الشخصي"
       mobile_menu:
@@ -1168,7 +1197,11 @@ ar:
         signup: "سجل"
         contact: "اتصل"
         require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
+        require_login_html: "إذا كنت عميلاً معتمدًا بالفعل ، %{login} أو %{signup} للمتابعة."
+        require_login_2_html: "تريد أن تبدأ التسوق هنا؟ من فضلك %{contact} %{enterprise} واسأل عن الانضمام."
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
+      select_oc:
+        select_oc_html: "يرجى <span class='highlighted'>اختيار الوقت الذي تريده لطلبك</span> ، لمعرفة المنتجات المتوفرة."
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1280,6 +1313,8 @@ ar:
   cart_updating: "جارٍ تحديث العربة ..."
   cart_empty: "السلة فارغة"
   cart_edit: "تعديل عربة التسوق"
+  item: "بند"
+  qty: "الكمية"
   card_number: رقم البطاقة
   card_securitycode: "رمز الحماية"
   card_expiry_date: تاريخ الانتهاء
@@ -1532,12 +1567,17 @@ ar:
   orders_changeable_orders_alert_html: تم تأكيد هذا الطلب ، ولكن يمكنك إجراء تغييرات حتى <strong>%{oc_close}</strong> .
   products_clear: ازالة
   products_showing: "عرض:"
+  products_results_for: "نتائج"
   products_or: "أو"
   products_and: "و"
+  products_filters_in: "في"
   products_with: مع
+  products_search: "بحث..."
   products_filter_by: "مرشح بواسطة"
   products_filter_selected: "تم الاختيار"
+  products_filter_heading: "المرشحات"
   products_filter_clear: "ازالة"
+  products_filter_done: "تم"
   products_loading: "جارٍ تحميل المنتجات ..."
   products_updating_cart: "جارٍ تحديث سلة المشتريات..."
   products_cart_empty: "السلة فارغة"
@@ -1548,6 +1588,8 @@ ar:
   products_update_error_msg: "فشل الحفظ."
   products_update_error_data: "فشل الحفظ بسبب بيانات غير صالحة:"
   products_changes_saved: "تم حفظ التغييرات."
+  products_no_results_html: "عذرا ، لم يتم العثور على نتائج لـ %{query}"
+  products_clear_search: "مسح البحث"
   search_no_results_html: "عذرًا ، لم يتم العثور على نتائج لـ %{query}. جرب بحث آخر؟"
   components_profiles_popover: "لا تملك ملفات التعريف واجهة متجر على شبكة الغذاء المفتوح ، ولكن قد يكون لها متجر على ارض الواقع أو عبر الإنترنت في أي مكان آخر"
   components_profiles_show: "إظهار الملفات الشخصية"
@@ -1692,6 +1734,7 @@ ar:
   remember_me: تذكرنى
   are_you_sure: "هل أنت واثق؟"
   orders_open: "الطلب مفتوح"
+  closing: "إغلاق"
   going_back_to_home_page: "الرجوع إلى الصفحة الرئيسية"
   creating: انشاء
   updating: تحديث
@@ -1906,6 +1949,7 @@ ar:
   admin_enterprise_relationships_permits: "تسمح"
   admin_enterprise_relationships_seach_placeholder: "بحث"
   admin_enterprise_relationships_button_create: "انشاء"
+  admin_enterprise_relationships_to: "إلى"
   admin_enterprise_groups: "مجموعات المؤسسة"
   admin_enterprise_groups_name: "اسم"
   admin_enterprise_groups_owner: "المالك"
@@ -1934,6 +1978,8 @@ ar:
   supplier: "المورد"
   product_name: "اسم المنتج"
   product_description: "وصف المنتج"
+  permalink: "الرابط الثابت"
+  shipping_categories: "فئات الشحن"
   units: "حجم الوحدة"
   coordinator: "منسق"
   distributor: "الموزع"
@@ -2030,6 +2076,8 @@ ar:
   remove_tax: "إزالة الضريبة"
   first_name_begins_with: "الاسم الأول يبدأ بـ"
   last_name_begins_with: "اسم العائلة يبدأ بـ"
+  shipping_method: "طريقة الشحن"
+  new_order: "طلب جديد"
   enterprise_tos_link: "شروط المؤسسة لخدمة الرابط"
   enterprise_tos_message: "نريد العمل مع أشخاص يشاركوننا أهدافنا وقيمنا. على هذا النحو ، نطلب من المؤسسات الجديدة الموافقة على"
   enterprise_tos_link_text: "شروط الخدمة."
@@ -2048,6 +2096,7 @@ ar:
   hub_sidebar_at_least: "يجب تحديد مركز واحد على الأقل"
   hub_sidebar_blue: "أزرق"
   hub_sidebar_red: "أحمر"
+  order_cycles_closed_for_hub: "المحور الذي حددته مغلق مؤقتًا للطلبات. الرجاء معاودة المحاولة في وقت لاحق."
   report_customers_distributor: "الموزع"
   report_customers_supplier: "المورد"
   report_customers_cycle: "ترتيب الدورة"
@@ -2282,6 +2331,7 @@ ar:
   order_cycles_email_to_producers_notice: 'رسائل البريد الإلكتروني المراد إرسالها إلى المنتجين تم وضعها في قائمة الانتظار للإرسال.'
   order_cycles_no_permission_to_coordinate_error: "لا تملك أي من مؤسساتك إذنًا لتنسيق دورة الطلب"
   order_cycles_no_permission_to_create_error: "ليس لديك إذن لإنشاء دورة طلب تنسقها تلك المؤسسة"
+  order_cycle_closed: "تم إغلاق دورة الطلب التي حددتها للتو. حاول مرة اخرى!"
   back_to_orders_list: "العودة إلى قائمة الطلب"
   no_orders_found: "لم يتم العثور على أية طلبات"
   order_information: "معلومات الطلب"
@@ -2309,6 +2359,10 @@ ar:
     resolve_errors: يرجى حل الأخطاء التالية
     more_items: "+ %{count} ايضا"
     default_card_updated: تم تحديث البطاقة الافتراضية
+    cart:
+      add_to_cart_failed: >
+          حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو
+          أن المحل يغلق.
     admin:
       enterprise_limit_reached: "لقد وصلت إلى الحد القياسي للمؤسسات لكل حساب. اكتب %{contact_email} إذا كنت بحاجة إلى زيادته."
       modals:
@@ -2593,6 +2647,13 @@ ar:
       few: "كل"
       many: "كل"
       other: "كل"
+    bunch:
+      zero: "عناقيد"
+      one: "حفنة"
+      two: "عناقيد"
+      few: "عناقيد"
+      many: "عناقيد"
+      other: "عناقيد"
     pack:
       zero: "حزم"
       one: "رزمة"
@@ -2600,6 +2661,13 @@ ar:
       few: "حزم"
       many: "حزم"
       other: "حزم"
+    box:
+      zero: "مربعات"
+      one: "صندوق"
+      two: "مربعات"
+      few: "مربعات"
+      many: "مربعات"
+      other: "بكسات"
     bottle:
       zero: "زجاجات"
       one: "زجاجة"
@@ -2607,6 +2675,62 @@ ar:
       few: "زجاجات"
       many: "زجاجات"
       other: "زجاجات"
+    jar:
+      zero: "الجرار"
+      one: "إناء"
+      two: "الجرار"
+      few: "الجرار"
+      many: "الجرار"
+      other: "مرتبان"
+    head:
+      zero: "رؤساء"
+      one: "رئيس"
+      two: "رؤساء"
+      few: "رؤساء"
+      many: "رؤساء"
+      other: "رؤوس"
+    bag:
+      zero: "أكياس"
+      one: "كيس"
+      two: "أكياس"
+      few: "أكياس"
+      many: "أكياس"
+      other: "أكياس"
+    loaf:
+      zero: "أرغفة"
+      one: "رغيف"
+      two: "أرغفة"
+      few: "أرغفة"
+      many: "أرغفة"
+      other: "أرغفة"
+    single:
+      zero: "الفردي"
+      one: "غير مرتبطة"
+      two: "الفردي"
+      few: "الفردي"
+      many: "الفردي"
+      other: "الفردي"
+    tub:
+      zero: "أحواض"
+      one: "حوض"
+      two: "أحواض"
+      few: "أحواض"
+      many: "أحواض"
+      other: "أحواض"
+    punnet:
+      zero: "سلات"
+      one: "إناء"
+      two: "سلات"
+      few: "سلات"
+      many: "سلات"
+      other: "سلات"
+    packet:
+      zero: "الحزم"
+      one: "رزمة"
+      two: "الحزم"
+      few: "الحزم"
+      many: "الحزم"
+      other: "الحزم"
     item:
       zero: "العناصر"
       one: "بند"
@@ -2628,6 +2752,62 @@ ar:
       few: "الوحدات"
       many: "الوحدات"
       other: "الوحدات"
+    serve:
+      zero: "يخدم"
+      one: "تخدم"
+      two: "يخدم"
+      few: "يخدم"
+      many: "يخدم"
+      other: "خدمة"
+    tray:
+      zero: "صواني"
+      one: "صينية"
+      two: "صواني"
+      few: "صواني"
+      many: "صواني"
+      other: "صواني"
+    piece:
+      zero: "قطع"
+      one: "قطعة"
+      two: "قطع"
+      few: "قطع"
+      many: "قطع"
+      other: "قطع"
+    pot:
+      zero: "الأواني"
+      one: "وعاء"
+      two: "الأواني"
+      few: "الأواني"
+      many: "الأواني"
+      other: "اصص"
+    bundle:
+      zero: "حزم"
+      one: "حزمة"
+      two: "حزم"
+      few: "حزم"
+      many: "حزم"
+      other: "حزم"
+    flask:
+      zero: "قوارير"
+      one: "قارورة"
+      two: "قوارير"
+      few: "قوارير"
+      many: "قوارير"
+      other: "قوارير"
+    basket:
+      zero: "سلال"
+      one: "سلة"
+      two: "سلال"
+      few: "سلال"
+      many: "سلال"
+      other: "سلال"
+    sack:
+      zero: "أكياس"
+      one: "كيس"
+      two: "أكياس"
+      few: "أكياس"
+      many: "أكياس"
+      other: "أكياس"
   producers:
     signup:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"
@@ -2757,6 +2937,12 @@ ar:
     void: "فارغ"
     login: "تسجيل الدخول"
     password: "كلمه السر"
+    signature: "التوقيع"
+    solution: "المحاليل"
+    landing_page: "الصفحة المقصودة"
+    server: "الخادم"
+    test_mode: "وضع الاختبار"
+    logourl: "وحدة"
     configurations: "تهيئة"
     general_settings: "الاعدادات العامة"
     site_name: "اسم الموقع"
@@ -2873,6 +3059,16 @@ ar:
     options: "خيارات"
     actions:
       update: "تحديث"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          zero: "منعت أخطاء %{count} حفظ هذا السجل:"
+          one: "حظر خطأ واحد حفظ هذا السجل:"
+          two: "منعت أخطاء %{count} حفظ هذا السجل:"
+          few: "منعت أخطاء %{count} حفظ هذا السجل:"
+          many: "منعت أخطاء %{count} حفظ هذا السجل:"
+          other: "منعت أخطاء %{count} حفظ هذا السجل:"
+        there_were_problems_with_the_following_fields: "كانت هناك مشاكل مع الحقول التالية"
     errors:
       messages:
         blank: "لا يمكن أن تكون فارغة"
@@ -3015,6 +3211,8 @@ ar:
           zone: "منطقة"
           calculator: "آلة حاسبة"
           display: "عرض"
+          both: "كل من تسجيل الخروج والمكتب الخلفي"
+          back_end: "المكتب الخلفي فقط"
           no_shipping_methods_found: "لم يتم العثور على طرق الشحن"
         new:
           new_shipping_method: "طريقة الشحن الجديدة"
@@ -3026,6 +3224,9 @@ ar:
         form:
           categories: "التصنيفات"
           zones: "مناطق"
+          both: "كل من تسجيل الخروج والمكتب الخلفي"
+          back_end: "المكتب الخلفي فقط"
+          deactivation_warning: "يمكن أن يؤدي إلغاء تنشيط طريقة الشحن إلى اختفاء طريقة الشحن من قائمتك. بدلاً من ذلك ، يمكنك إخفاء طريقة الشحن من صفحة الخروج عن طريق تعيين الخيار\"عرض\" إلى\"المكتب الخلفي فقط\"."
       payment_methods:
         index:
           payment_methods: "طريقة الدفع"
@@ -3037,8 +3238,11 @@ ar:
           display: "عرض"
           active: "نشط"
           both: "على حد سواء"
+          front_end: "الخروج فقط"
+          back_end: "المكتب الخلفي فقط"
           active_yes: "نعم"
           active_no: "لا"
+          no_payment_methods_found: "لم يتم العثور على طرق دفع"
         new:
           new_payment_method: "طريقة الدفع الجديدة"
           back_to_payment_methods_list: "العودة إلى قائمة طرق الدفع"
@@ -3067,7 +3271,11 @@ ar:
           active: "نشط"
           active_yes: "نعم"
           active_no: "لا"
+          both: "كل من تسجيل الخروج والمكتب الخلفي"
+          front_end: "الخروج فقط"
+          back_end: "المكتب الخلفي فقط"
           tags: "الاوسمة"
+          deactivation_warning: "يمكن أن يؤدي إلغاء تنشيط طريقة الدفع إلى اختفاء طريقة الدفع من قائمتك. بدلاً من ذلك ، يمكنك إخفاء طريقة الدفع من صفحة الخروج عن طريق تعيين الخيار \"عرض\" إلى\"المكتب الخلفي فقط\"."
         providers:
           provider: "مزود"
       payments:
@@ -3075,6 +3283,8 @@ ar:
           stripe:
             error_saving_payment: خطأ في حفظ الدفعة
             submitting_payment: تقديم الدفعة ...
+          paypal:
+            no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
         image_upload_error: "لم يتم التعرف على صورة المنتج. يرجى تحميل صورة بتنسيق PNG أو JPG."
         new:
@@ -3169,6 +3379,8 @@ ar:
           price: "السعر"
           display_as: "عرض ب"
           display_name: "اسم العرض"
+          display_as_placeholder: 'على سبيل المثال 2 كجم'
+          display_name_placeholder: 'على سبيل المثال طماطم'
         autocomplete:
           out_of_stock: "غير متوفر"
           producer_name: "المنتج"
@@ -3208,6 +3420,7 @@ ar:
       format: '٪ س-٪ م-%d'
       js_format: 'يوم-شهر-سنة'
     orders:
+      error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:
         login_to_view_order: "يرجى تسجيل الدخول لعرض طلبك."
       bought:
@@ -3235,12 +3448,46 @@ ar:
       invalid: غير صالحة
     order_mailer:
       cancel_email:
+        customer_greeting: "عزيزي %{name} ،"
+        instructions_html: "تم إلغاء طلبك مع <strong>%{distributor}</strong> . يرجى الاحتفاظ بمعلومات الإلغاء هذه في سجلاتك."
+        dont_cancel: "إذا غيرت رأيك أو لا ترغب في إلغاء هذا الطلب ، فيرجى الاتصال بـ %{email}"
+        order_summary_canceled_html: "<strong>ملخص الطلب # %{number} [ملغي]</strong>"
+        details: "إليك تفاصيل ما طلبته:"
+        unpaid_order: "لم يتم سداد طلبك ، لذا لم يتم رد الأموال"
+        paid_order: "تم دفع طلبك حتى أعاد %{distributor} المبلغ بالكامل"
+        credit_order: "تم دفع طلبك حتى تم إضافة رصيد إلى حسابك"
         subject: "إلغاء الطلب"
       confirm_email:
         subject: "تأكيد الطلب"
       invoice_email:
         hi: "مرحبًا %{name}"
         invoice_attached_text: يرجى الاطلاع على فاتورة مرفقة لطلبك الأخير من
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            تم تقديم طلب لإعادة تعيين كلمة المرور الخاصة بك.
+            إذا لم تقدم هذا الطلب ، ببساطة تجاهل هذا البريد الإلكتروني.
+        link_text: >
+            إذا قمت بهذا الطلب ، فما عليك سوى النقر فوق الرابط أدناه:
+        issue_text: |
+            إذا لم يعمل عنوان URL أعلاه ، فحاول نسخه ولصقه في متصفحك.
+            إذا كنت لا تزال تواجه مشاكل ، فلا تتردد في الاتصال بنا.
+      confirmation_instructions:
+        subject: "يرجى تأكيد حسابك OFN"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "عزيزي العميل،"
+        instructions: "تم شحن طلبك"
+        shipment_summary: "ملخص الشحن"
+        subject: "إشعار الشحن"
+        thanks: "شكرا لك على اعمالك."
+        track_information: "معلومات التتبع : %{tracking}"
+        track_link: "رابط التتبع: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "تهانينا!"
+        message: "إذا كنت قد تلقيت هذا البريد الإلكتروني ، فإن إعدادات بريدك الإلكتروني صحيحة."
+        subject: "اختبار البريد"
     order_state:
       address: العنوان
       adjustments: التعديلات
@@ -3262,18 +3509,6 @@ ar:
       ended: انتهى
       paused: التعليق
       canceled: الالغاء
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            تم تقديم طلب لإعادة تعيين كلمة المرور الخاصة بك.
-            إذا لم تقدم هذا الطلب ، ببساطة تجاهل هذا البريد الإلكتروني.
-        link_text: >
-            إذا قمت بهذا الطلب ، فما عليك سوى النقر فوق الرابط أدناه:
-        issue_text: |
-            إذا لم يعمل عنوان URL أعلاه ، فحاول نسخه ولصقه في متصفحك.
-            إذا كنت لا تزال تواجه مشاكل ، فلا تتردد في الاتصال بنا.
-      confirmation_instructions:
-        subject: يرجى تأكيد حسابك OFN
     users:
       form:
         account_settings: إعدادت الحساب

@@ -1,7 +1,46 @@
 require 'spec_helper'
 
+class Spree::Gateway::Test < Spree::Gateway
+end
+
 module Spree
   describe PaymentMethod do
+    describe "#available" do
+      let(:enterprise) { create(:enterprise) }
+
+      before do
+        Spree::PaymentMethod.delete_all
+
+        [nil, 'both', 'front_end', 'back_end'].each do |display_on|
+          Spree::Gateway::Test.create(
+            name: 'Display Both',
+            display_on: display_on,
+            active: true,
+            environment: 'test',
+            description: 'foofah',
+            distributors: [enterprise]
+          )
+        end
+        expect(Spree::PaymentMethod.all.size).to eq 4
+      end
+
+      it "should return all methods available to front-end/back-end when no parameter is passed" do
+        expect(Spree::PaymentMethod.available.size).to eq 2
+      end
+
+      it "should return all methods available to front-end/back-end when display_on = :both" do
+        expect(Spree::PaymentMethod.available(:both).size).to eq 2
+      end
+
+      it "should return all methods available to front-end when display_on = :front_end" do
+        expect(Spree::PaymentMethod.available(:front_end).size).to eq 2
+      end
+
+      it "should return all methods available to back-end when display_on = :back_end" do
+        expect(Spree::PaymentMethod.available(:back_end).size).to eq 2
+      end
+    end
+
     it "orders payment methods by name" do
       pm1 = create(:payment_method, name: 'ZZ')
       pm2 = create(:payment_method, name: 'AA')

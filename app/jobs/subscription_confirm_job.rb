@@ -45,27 +45,33 @@ class SubscriptionConfirmJob
   def confirm_order!(order)
     record_order(order)
 
-    if process_payment!(order)
-      send_confirmation_email(order)
-    else
+    process_payment!(order)
+    send_confirmation_email(order)
+  rescue StandardError => e
+    if order.errors.any?
       send_failed_payment_email(order)
+    else
+      Bugsnag.notify(e, order: order)
+      send_failed_payment_email(order, e.message)
     end
   end
 
+  # Process the order payment and raise if it's not successful
   def process_payment!(order)
-    return false if order.errors.present?
-    return true unless order.payment_required?
+    raise if order.errors.present?
+    return unless order.payment_required?
 
+    prepare_for_payment!(order)
+    order.process_payments!
+    raise if order.errors.any?
+  end
+
+  def prepare_for_payment!(order)
     setup_payment!(order)
-    return false if order.errors.any?
+    raise if order.errors.any?
 
     authorize_payment!(order)
-    return false if order.errors.any?
-
-    order.process_payments!
-    return false if order.errors.any?
-
-    true
+    raise if order.errors.any?
   end
 
   def setup_payment!(order)
@@ -87,9 +93,11 @@ class SubscriptionConfirmJob
     SubscriptionMailer.confirmation_email(order).deliver
   end
 
-  def send_failed_payment_email(order)
+  def send_failed_payment_email(order, error_message = nil)
     order.update!
-    record_and_log_error(:failed_payment, order)
+    record_and_log_error(:failed_payment, order, error_message)
     SubscriptionMailer.failed_payment_email(order).deliver
+  rescue StandardError => e
+    Bugsnag.notify(e, order: order, error_message: error_message)
   end
 end

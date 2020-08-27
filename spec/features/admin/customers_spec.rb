@@ -2,11 +2,11 @@ require 'spec_helper'
 
 feature 'Customers' do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "as an enterprise user" do
-    let(:user) { create_enterprise_user(enterprise_limit: 10) }
+    let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_distributor1) { create(:distributor_enterprise, owner: user) }
     let(:managed_distributor2) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
@@ -18,7 +18,7 @@ feature 'Customers' do
       let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
 
       before do
-        quick_login_as user
+        login_as user
         visit admin_customers_path
       end
 

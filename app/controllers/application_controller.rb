@@ -62,10 +62,14 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(_resource_or_scope)
-    session[:shopfront_redirect] || main_app.root_path
+    shopfront_redirect || main_app.root_path
   end
 
   private
+
+  def shopfront_redirect
+    session[:shopfront_redirect]
+  end
 
   def restrict_iframes
     response.headers['X-Frame-Options'] = 'DENY'
