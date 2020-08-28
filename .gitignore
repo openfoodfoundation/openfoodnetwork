@@ -1,5 +1,6 @@
 .bundle
 .rbenv-version
+.python-version
 .byebug_history
 .swp
 *.swo
