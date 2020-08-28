@@ -39,10 +39,12 @@ gem 'stringex', '~> 1.5.1'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 
-# Our branch contains two changes
+# Our branch contains the following changes:
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
+# - Skip CA cert file and use the ones provided by the OS
 gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-1-0-stable'
+
 gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
@@ -84,12 +86,11 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
-gem 'diffy'
 gem 'figaro'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'oj'
-gem 'paper_trail', '~> 5.2.3'
+gem 'paper_trail', '~> 7.1.3'
 gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'

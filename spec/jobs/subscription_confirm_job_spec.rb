@@ -216,7 +216,7 @@ describe SubscriptionConfirmJob do
 
     it "records and logs an error and sends the email" do
       expect(order).to receive(:update!)
-      expect(job).to receive(:record_and_log_error).with(:failed_payment, order).once
+      expect(job).to receive(:record_and_log_error).with(:failed_payment, order, nil).once
       job.send(:send_failed_payment_email, order)
       expect(SubscriptionMailer).to have_received(:failed_payment_email).with(order)
       expect(mail_mock).to have_received(:deliver)

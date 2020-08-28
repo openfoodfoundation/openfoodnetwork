@@ -131,6 +131,15 @@ describe Admin::EnterprisesController, type: :controller do
         expect(distributor.users).to_not include user
       end
 
+      it "updates enterprise preferences" do
+        allow(controller).to receive_messages spree_current_user: distributor_manager
+        update_params = { id: distributor, enterprise: { preferred_show_customer_names_to_suppliers: "1" } }
+        spree_post :update, update_params
+
+        distributor.reload
+        expect(distributor.preferences[:show_customer_names_to_suppliers]).to eq true
+      end
+
       describe "enterprise properties" do
         let(:producer) { create(:enterprise) }
         let!(:property) { create(:property, name: "A nice name") }

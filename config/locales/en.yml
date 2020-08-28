@@ -84,7 +84,7 @@ en:
       messages:
         inclusion: "is not included in the list"
       models:
-        order_management/subscriptions/validator:          
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
@@ -256,6 +256,7 @@ en:
   enterprises: Enterprises
   enterprise_groups: Groups
   reports: Reports
+  listing_reports: Listing Reports
   variant_overrides: Inventory
   import: Import
   spree_products: Spree Products
@@ -777,6 +778,10 @@ en:
           enable_subscriptions_tip: "Enable subscriptions functionality?"
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
+          customer_names_in_reports: "Customer Names in Reports"
+          customer_names_tip: "Enable your suppliers to see your customers names in reports"
+          customer_names_false: "Disabled"
+          customer_names_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
             An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront.
@@ -1395,6 +1400,8 @@ en:
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
+  item: "Item"
+  qty: "Qty"
 
   card_number: Card Number
   card_securitycode: "Security Code"
@@ -2180,7 +2187,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   spree_variant_product_error: must have at least one variant
   your_profil_live: "Your profile live"
-  on_ofn_map: "on the Open Food Network map"
   see: "See"
   live: "live"
   manage: "Manage"
@@ -3132,6 +3138,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           one: "1 error prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
+      payments_list:
+        date_time: "Date/time"
+        amount: "Amount"
+        payment_method: "Payment Method"
+        payment_state: "Payment State"
     errors:
       messages:
         blank: "can't be blank"
@@ -3401,6 +3412,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+        customer_names_message:
+          customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
       users:
         index:
           listing_users: "Listing Users"
@@ -3633,3 +3646,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+    activerecord:
+      models:
+        spree/payment:
+          one: One

@@ -25,4 +25,6 @@
   .row
   = button t(:search)
 
+= render partial: "customer_names_message"
+
 = render "table", id: "listing_orders", msg_option: t(:search)

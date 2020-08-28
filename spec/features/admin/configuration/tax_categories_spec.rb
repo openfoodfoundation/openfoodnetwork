@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Tax Categories" do
   include AuthenticationHelper
+  include WebHelper
 
   before(:each) do
     login_as_admin_and_visit spree.edit_admin_general_settings_path
@@ -13,9 +14,9 @@ describe "Tax Categories" do
       click_link "Tax Categories"
       expect(page).to have_content("Listing Tax Categories")
       within_row(1) do
-        expect(column_text(1)).to eq("Clothing")
-        expect(column_text(2)).to eq("For Clothing")
-        expect(column_text(3)).to eq("False")
+        expect(find("td:nth-child(1)").text).to eq("Clothing")
+        expect(find("td:nth-child(2)").text).to eq("For Clothing")
+        expect(find("td:nth-child(3)").text).to eq("False")
       end
     end
   end
@@ -44,7 +45,7 @@ describe "Tax Categories" do
     it "should be able to update an existing tax category" do
       create(:tax_category)
       click_link "Tax Categories"
-      within_row(1) { click_icon :edit }
+      within_row(1) { find(".icon-edit").click }
       fill_in "tax_category_description", with: "desc 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")

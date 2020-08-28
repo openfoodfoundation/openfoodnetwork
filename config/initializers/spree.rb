@@ -6,6 +6,7 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
+require "spree/core/environment"
 require 'spree/product_filters'
 
 # Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
@@ -17,9 +18,6 @@ Spree::Gateway.class_eval do
   acts_as_taggable
 end
 
-require "#{Rails.root}/app/models/spree/payment_method_decorator"
-require "#{Rails.root}/app/models/spree/gateway_decorator"
-
 Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true
@@ -29,8 +27,6 @@ Spree.config do |config|
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
   #config.override_actionmailer_config = false
-
-  config.order_updater_decorator = OrderUpdater
 
   # S3 settings
   config.s3_bucket = ENV['S3_BUCKET'] if ENV['S3_BUCKET']

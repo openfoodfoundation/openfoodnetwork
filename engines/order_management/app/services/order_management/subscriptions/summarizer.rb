@@ -22,12 +22,15 @@ module OrderManagement
         summary_for(order).record_issue(type, order, message)
       end
 
-      def record_and_log_error(type, order)
+      def record_and_log_error(type, order, error_message = nil)
         return record_issue(type, order) unless order.errors.any?
 
         error = "Subscription#{type.to_s.camelize}Error"
         line1 = "#{error}: Cannot process order #{order.number} due to errors"
-        line2 = "Errors: #{order.errors.full_messages.join(', ')}"
+
+        error_message ||= order.errors.full_messages.join(', ')
+        line2 = "Errors: #{error_message}"
+
         JobLogger.logger.info("#{line1}\n#{line2}")
         record_issue(type, order, line2)
       end

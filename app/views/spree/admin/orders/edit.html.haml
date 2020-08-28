@@ -4,7 +4,7 @@
     %li= event_links
   - if can?(:resend, @order)
     %li= button_link_to Spree.t(:resend), resend_admin_order_url(@order), :method => :post, :icon => 'icon-email'
-  %li.links-dropdown#links-dropdown{ links: order_links(@order).to_json }
+  = render partial: 'spree/admin/shared/order_links'
   - if can?(:admin, Spree::Order)
     %li= button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
 
@@ -29,6 +29,3 @@
 
     %div{"data-hook" => "admin_order_edit_form"}
       = render :partial => 'form', :locals => { :order => @order }
-
-:coffee
-  angular.bootstrap(document.getElementById("links-dropdown"),['admin.dropdown'])

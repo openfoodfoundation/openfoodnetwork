@@ -273,6 +273,9 @@ nb:
   on hand: "Tilgjengelig"
   ship: "Levere"
   shipping_category: "Leveringskategori"
+  height: "Høyde"
+  width: "Bredde"
+  depth: "Dybde"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -1036,10 +1039,13 @@ nb:
         name: "Sammendrag Bedriftsavgift"
         description: "Sammendrag av bedriftsavgifter innsamlet"
     subscriptions:
-      subscriptions: Abonnement
-      new: Nytt abonnement
-      create: Opprett abonnement
-      edit: Rediger abonnement
+      index:
+        title: "Abonnement"
+        new: "Nytt abonnement"
+      new:
+        title: "Nytt abonnement"
+      edit:
+        title: "Rediger abonnement"
       table:
         edit_subscription: Rediger abonnement
         pause_subscription: Pause abonnement
@@ -1048,6 +1054,7 @@ nb:
       filters:
         query_placeholder: "Søk på epost..."
       setup_explanation:
+        title: "Abonnement"
         just_a_few_more_steps: 'Bare noen få skritt før du kan begynne:'
         enable_subscriptions: "Aktiver abonnementer for minst en av butikkene dine"
         enable_subscriptions_step_1_html: 1. Gå til siden %{enterprises_link}, finn butikken din, og klikk på "Endre profil"
@@ -1061,6 +1068,8 @@ nb:
         create_at_least_one_schedule_step_3: 3. Klikk på '+ Ny tidsplan', og fyll ut skjemaet
         once_you_are_done_you_can_html: Når du er ferdig, kan du %{reload_this_page_link}
         reload_this_page: oppdater denne siden
+      form:
+        create: "Opprett abonnement"
       steps:
         details: 1. Grunnleggende detaljer
         address: 2. Adresse
@@ -1305,6 +1314,8 @@ nb:
   cart_updating: "Oppdaterer handlekurv..."
   cart_empty: "Handlekurven er tom"
   cart_edit: "Rediger handlekurv"
+  item: "Vare"
+  qty: "Antall"
   card_number: Kortnummer
   card_securitycode: "Sikkerhetskode"
   card_expiry_date: Utløpsdato
@@ -3350,6 +3361,32 @@ nb:
       invoice_email:
         hi: "Hei %{name}"
         invoice_attached_text: Vennligst finn vedlagt en faktura for din nylige bestilling fra
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            En forespørsel om å nullstille ditt passord er utført.
+            Hvis det ikke var du som forespurte dette kan du se bort i fra denne eposten.
+        link_text: >
+            Hvis det var du som forespurte dette kan du klikke nedenfor:
+        issue_text: |
+            Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
+            Hvis du fortsatt har problemer vennligst ta kontakt.
+      confirmation_instructions:
+        subject: "Vennligst bekreft OFN-kontoen din"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Kjære Kunde,"
+        instructions: "Din bestilling har blitt sendt"
+        shipment_summary: "Leveringssammendrag"
+        subject: "Leveringsvarsling"
+        thanks: "Takk for handelen."
+        track_information: "Sporingsinformasjon: %{tracking}"
+        track_link: "Sporingslink: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Gratulerer!"
+        message: "Hvis du har mottatt denne eposten, er epostinnstillingene dine riktige."
+        subject: "Test Epost"
     order_state:
       address: adresse
       adjustments: justeringer
@@ -3371,18 +3408,6 @@ nb:
       ended: avsluttet
       paused: pauset
       canceled: avbrutt
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-            En forespørsel om å nullstille ditt passord er utført.
-            Hvis det ikke var du som forespurte dette kan du se bort i fra denne eposten.
-        link_text: >
-            Hvis det var du som forespurte dette kan du klikke nedenfor:
-        issue_text: |
-            Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
-            Hvis du fortsatt har problemer vennligst ta kontakt.
-      confirmation_instructions:
-        subject: Vennligst bekreft OFN-kontoen din
     users:
       form:
         account_settings: Kontoinnstillinger

@@ -4,8 +4,8 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
              :preferred_shopfront_message, :preferred_shopfront_closed_message,
              :preferred_shopfront_taxon_order, :preferred_shopfront_order_cycle_order,
              :preferred_product_selection_from_inventory_only,
-             :owner, :contact, :users, :tag_groups, :default_tag_group,
-             :require_login, :allow_guest_orders, :allow_order_changes,
+             :preferred_show_customer_names_to_suppliers, :owner, :contact, :users, :tag_groups,
+             :default_tag_group, :require_login, :allow_guest_orders, :allow_order_changes,
              :logo, :promo_image
 
   has_one :owner, serializer: Api::Admin::UserSerializer

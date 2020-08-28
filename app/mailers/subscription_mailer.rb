@@ -2,6 +2,7 @@ class SubscriptionMailer < Spree::BaseMailer
   helper CheckoutHelper
   helper ShopMailHelper
   helper OrderHelper
+  helper Spree::Admin::PaymentsHelper
   include I18nHelper
 
   def confirmation_email(order)

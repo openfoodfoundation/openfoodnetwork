@@ -1,5 +1,15 @@
-FactoryBot.modify do
-  factory :address do
+FactoryBot.define do
+  factory :address, aliases: [:bill_address, :ship_address], class: Spree::Address do
+    firstname 'John'
+    lastname 'Doe'
+    company 'Company'
+    address1 '10 Lovely Street'
+    address2 'Northwest'
+    city 'Herndon'
+    zipcode '20170'
+    phone '123-456-7890'
+    alternative_phone '123-456-7899'
+
     state { Spree::State.find_by(name: 'Victoria') || Spree::State.first || create(:state) }
     country do |address|
       if address.state

@@ -105,7 +105,7 @@ feature '
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 
-      click_icon :edit
+      find(".icon-edit").click
 
       expect(page).to have_current_path spree.edit_admin_order_path(incomplete_order)
     end

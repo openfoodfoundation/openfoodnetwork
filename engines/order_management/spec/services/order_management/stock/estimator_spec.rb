@@ -5,7 +5,7 @@ require 'spec_helper'
 module OrderManagement
   module Stock
     describe Estimator do
-      let!(:shipping_method) { create(:shipping_method, zones: [Spree::Zone.global] ) }
+      let!(:shipping_method) { create(:shipping_method, zones: [create(:zone)] ) }
       let(:package) { build(:stock_package_fulfilled) }
       let(:order) { package.order }
       subject { Estimator.new(order) }
