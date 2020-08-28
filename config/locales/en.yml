@@ -3138,6 +3138,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           one: "1 error prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
+      payments_list:
+        date_time: "Date/time"
+        amount: "Amount"
+        payment_method: "Payment Method"
+        payment_state: "Payment State"
     errors:
       messages:
         blank: "can't be blank"
@@ -3641,3 +3646,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+    activerecord:
+      models:
+        spree/payment:
+          one: Payment

@@ -719,6 +719,8 @@ it:
           enable_subscriptions_tip: "Abilita la funzionalità \"sottoscrizioni\"?"
           enable_subscriptions_false: "Disabilitata"
           enable_subscriptions_true: "Abilitata"
+          customer_names_false: "Disabilitata"
+          customer_names_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
           shopfront_message_placeholder: >
               Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come
@@ -2048,7 +2050,6 @@ it:
   spree_user_enterprise_limit_error: "^%{email}non può gestire altre aziende (il limite è %{enterprise_limit})."
   spree_variant_product_error: deve avere almeno una variante
   your_profil_live: "Il tuo profilo è attivo"
-  on_ofn_map: "sulla mappa di Open Food Network"
   see: "Vedi"
   live: "attivo"
   manage: "Gestisci"

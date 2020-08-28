@@ -51,7 +51,7 @@ module Spree
         end
 
         def load_order
-          @order = Order.find_by_number!(params[:order_id], include: :adjustments)
+          @order = Order.find_by!({ number: params[:order_id] }, include: :adjustments)
         end
 
         def check_authorization

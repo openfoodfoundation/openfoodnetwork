@@ -680,6 +680,8 @@ pt:
           enable_subscriptions_tip: "Activar a funcionalidade das subscrições?"
           enable_subscriptions_false: "Desactivado"
           enable_subscriptions_true: "Activo"
+          customer_names_false: "Desactivado"
+          customer_names_true: "Activo"
           shopfront_message: "Mensagem da Loja"
           shopfront_message_link_tooltip: "Inserir / editar link"
           shopfront_message_link_prompt: "Por favor insira um URL"
@@ -1950,7 +1952,6 @@ pt:
   spree_user_enterprise_limit_error: "^%{email} não tem autorização para ter mais organizações (o limite é %{enterprise_limit})."
   spree_variant_product_error: tem de ter pelo menos uma variante
   your_profil_live: "O seu perfil online"
-  on_ofn_map: "no mapa da Open Food Network"
   see: "Ver"
   live: "online"
   manage: "Gerir"

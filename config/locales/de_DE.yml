@@ -711,6 +711,8 @@ de_DE:
           enable_subscriptions_tip: "Abo-Funktionalität aktivieren?"
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
+          customer_names_false: "deaktiviert"
+          customer_names_true: "aktiviert"
           shopfront_message: "Laden-Nachricht"
           shopfront_message_placeholder: >
               Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
@@ -2019,7 +2021,6 @@ de_DE:
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (Limit ist %{enterprise_limit})."
   spree_variant_product_error: muss mindestens eine Variante haben
   your_profil_live: "Dein Profil live"
-  on_ofn_map: "auf der Open Food Network Karte"
   see: "Sehen"
   live: "Leben"
   manage: "Verwalten"

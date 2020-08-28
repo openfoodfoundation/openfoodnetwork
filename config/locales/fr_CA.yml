@@ -14,6 +14,7 @@ fr_CA:
       spree/payment:
         amount: Montant
         state: Département
+        source: Source
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
@@ -273,6 +274,9 @@ fr_CA:
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Condition de transport"
+  height: "Hauteur"
+  width: "Largeur"
+  depth: "Profondeur"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -719,6 +723,8 @@ fr_CA:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivée"
           enable_subscriptions_true: "Activée"
+          customer_names_false: "Désactivée"
+          customer_names_true: "Activée"
           shopfront_message: "Message d'accueil de la boutique ouverte"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
@@ -1969,6 +1975,7 @@ fr_CA:
   supplier: "Fournisseurs"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
+  permalink: "Nom pour URL (sans espace)"
   shipping_categories: "Condition de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
@@ -2049,7 +2056,6 @@ fr_CA:
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   spree_variant_product_error: doit avoir au moins une variante
   your_profil_live: "Votre profil en ligne"
-  on_ofn_map: "sur la carte Open Food Network"
   see: "Voir"
   live: "en ligne"
   manage: "Gérer"
@@ -2066,6 +2072,7 @@ fr_CA:
   remove_tax: "Retirer taxe"
   first_name_begins_with: "Prénom commence par"
   last_name_begins_with: "Nom de famille commence par"
+  shipping_method: "Méthode de livraison"
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food Network de valider nos "
@@ -3190,6 +3197,8 @@ fr_CA:
           stripe:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
+          paypal:
+            no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
@@ -3389,6 +3398,11 @@ fr_CA:
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi :%{tracking}"
         track_link: "Lien de suivi :%{url}"
+    test_mailer:
+      test_email:
+        greeting: "Félicitations !"
+        message: "Si vous avez reçu cet email, cela signifie que vos emails sont bien paramétrés."
+        subject: "Mail de test"
     order_state:
       address: adresse
       adjustments: ajustements

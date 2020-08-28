@@ -14,7 +14,7 @@
 
 - if @order.outstanding_balance?
   %h5.outstanding-balance
-    = @order.outstanding_balance < 0 ? t(:credit_owed) : t(:balance_due)
+    = outstanding_balance_label(@order)
     \:
     %strong= @order.display_outstanding_balance
 
