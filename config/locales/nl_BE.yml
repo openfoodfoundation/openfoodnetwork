@@ -724,6 +724,8 @@ nl_BE:
           enable_subscriptions_tip: "Activeer Abonneermogelijkheid"
           enable_subscriptions_false: "Deactiveer"
           enable_subscriptions_true: "Activeer"
+          customer_names_in_reports: "Klanten naam in rapporten"
+          customer_names_tip: "Schakel in dat je leveranciers de namen van de klanten kunnen zien in rapporten"
           customer_names_false: "Deactiveer"
           customer_names_true: "Activeer"
           shopfront_message: "Etalage Boodschap"
@@ -1121,6 +1123,7 @@ nl_BE:
       cancel_failure_msg: "Sorry, de annulatie is mislukt!"
       confirm_pause_msg: "Ben je zeker dat je dit abonnement wil pauseren?"
       pause_failure_msg: "Sorry, pauseren mislukt!"
+      confirm_unpause_msg: "Als u een open besteling cyclus heb in deze abonement schema, dat gaat een besteling worden aangemaakt voor deze klant. Bent u zeker dat u deze abonement wilt laten stoppen?"
       unpause_failure_msg: "Sorry, hervatten mislukt!"
       confirm_cancel_open_orders_msg: "Sommige bestellingen voor deze abonnementen zijn nog niet afgerond. De klant werd al op de hoogte gebracht dat deze bestelling geplaatst zullen worden. Wil je graag dat deze bestelling(en) geannuleerd worden of wil je ze behouden?"
       resume_canceled_orders_msg: "Sommige bestellingen voor de abonnementen kunnen nu hervat worden. Je kan verdergaan vanuit het dropdownmenu bij bestellingen."
@@ -1988,6 +1991,7 @@ nl_BE:
   tax_category: "Belastingcategorie"
   calculator: "Rekenmachine"
   calculator_values: "Rekenmachine waarden"
+  calculator_settings_warning: "Als u de rekenmachine type veranderd, moet u dan eerst opslaan vooraleer u de rekenmachine type kunt aanpassen."
   flat_percent_per_item: "Vast bedrag per artikel (uitgeslloten artikelen aan gewicht/volume)"
   flat_rate_per_item: "Vast bedrag per artikel (uitgesloten artikelen aan gewicht/volume)"
   flat_rate_per_order: "Vast bedrag per bestelling (uitgesloten artikelen aan gewicht/volume)"
@@ -2962,10 +2966,22 @@ nl_BE:
           back_to_return_authorizations_list: "Terug naar goedkeuringslijst"
           continue: "Ga verder"
         edit:
+          receive: "Ontvangst"
           are_you_sure: "Ben je zeker?"
+          return_authorization: "Terugkeer autorisatie"
         form:
           product: "Product"
+          quantity_shipped: "Hoeveelheid Verzonden"
+          quantity_returned: "Hoeveelheid Teruggebracht"
+          return_quantity: "Terugkeer hoeveelheid"
           amount: "Bedrag"
+          rma_value: "RMA Waarde"
+          reason: "Reden"
+          stock_location: "Stock locatie"
+        states:
+          authorized: "Toegestaan"
+          received: "Ontvangen"
+          canceled: "Geannuleerd"
       orders:
         index:
           listing_orders: "Lijst van de bestellingen"
@@ -2973,6 +2989,7 @@ nl_BE:
           capture: "Capture"
           ship: "Verzenden"
           edit: "bewerking"
+          order_not_updated: "De besteling kon niet worden bijgewerkt"
           note: "Nota"
           first: "Eerst"
           last: "Laatst"
@@ -2995,6 +3012,8 @@ nl_BE:
           tax_invoice: "FACTUUR"
           code: "Code"
           from: "Van"
+          to: "Factureer naar"
+          shipping: "Verzending"
         form:
           distribution_fields:
             title: "Distributie"
@@ -3028,6 +3047,8 @@ nl_BE:
           zone: "Zone"
           calculator: "Rekenmachine"
           display: "Display"
+          both: "Bijden uitchecken en Back office"
+          back_end: "Aleen Back Office"
           no_shipping_methods_found: "Geen verzendmethoden gevonden"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3039,6 +3060,9 @@ nl_BE:
         form:
           categories: "Categorieën"
           zones: "Zones "
+          both: "Bijden uitchecken en Back office"
+          back_end: "Aleen Back Office"
+          deactivation_warning: "De activatie van de verzending methode kan de verzending methode laten verdwijnen van uw lijst. Alternatief, u kunt de verzending methode van de uitchecken pagina verstoppen door bij de opties \"Display\" naar \"aleen back office\""
       payment_methods:
         index:
           payment_methods: "Betalingsmethode"
@@ -3050,8 +3074,11 @@ nl_BE:
           display: "Display"
           active: "Aktief"
           both: "Beide"
+          front_end: "Uitchecken aleen"
+          back_end: "Aleen Back Office"
           active_yes: "Ya"
           active_no: "Néé"
+          no_payment_methods_found: "Geen betaalmethodes gevonden"
         new:
           new_payment_method: "Nieuwe betalingswijze"
           back_to_payment_methods_list: "Terug naar de lijst van de betalingswijzes"
@@ -3080,7 +3107,11 @@ nl_BE:
           active: "Aktief"
           active_yes: "Ya"
           active_no: "Néé"
+          both: "Bijden uitchecken en Back office"
+          front_end: "Uitchecken aleen"
+          back_end: "Aleen Back Office"
           tags: "Tags"
+          deactivation_warning: "De activatie van de verzending methode kan de verzending methode laten verdwijnen van uw lijst. Alternatief, u kunt de verzending methode van de uitchecken pagina verstoppen door bij de opties \"Display\" naar \"aleen back office\""
         providers:
           provider: "Leverancier"
       payments:
@@ -3088,6 +3119,8 @@ nl_BE:
           stripe:
             error_saving_payment: Fout bij het opladen van de betaling
             submitting_payment: 'Het doorsturen van de betaling '
+          paypal:
+            no_payment_via_admin_backend: Paypal betaling kan niet worden opgepakt in de Backoffice
       products:
         image_upload_error: "Het productbeeld werd niet herkend. Upload een afbeelding in PNG- of JPG-indeling."
         new:
@@ -3141,6 +3174,8 @@ nl_BE:
           bulk_coop_allocation: 'Groepsaankoop-Toelage'
           bulk_coop_packing_sheets: 'Groepsaankoop- voorbereidingsdokumenten voor de manden'
           bulk_coop_customer_payments: 'Groepsaankoop-betalingen van de klanten'
+        customer_names_message:
+          customer_names_tip: "Als klanten namen verstopt zijn voor bestelingen dat u heb geleverd, dan kunt u de distibuteur contacteren en vragen of ze hun shop voorkeur kunnen bijwerken zodat de leveranciers de namen van de klanten kan zien."
       users:
         index:
           listing_users: "Advertentiegebruikers"
@@ -3167,12 +3202,23 @@ nl_BE:
           price: "Prijs"
           options: "Opties"
           no_results: "Geen resultaten "
+          to_add_variants_you_must_first_define: "Om varianten toetevoegen moet u eerst bepalen"
           option_types: "Optietypen"
+          option_values: "Waarden opties"
           and: "En"
+          new_variant: "Nieuw variant"
+          show_active: "Toon actief"
+          show_deleted: "Toon verwijderde"
+        new:
+          new_variant: "Nieuw variant"
         form:
+          cost_price: "Kostprijs"
           sku: "SKU"
           price: "Prijs"
           display_as: "Weergeven als"
+          display_name: "Weergave naam"
+          display_as_placeholder: 'bv. 2.kg'
+          display_name_placeholder: 'bv. Tomaten'
         autocomplete:
           out_of_stock: "Geen voorraad"
           producer_name: "Producent"
@@ -3212,6 +3258,7 @@ nl_BE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Een item in u winkelkar is niet meer beschikbaar. Vernieuwd de geselecteerde hoeveelheid."
       edit:
         login_to_view_order: "Gelieve U te connecteren om uw bestelling te zien."
       bought:
@@ -3239,6 +3286,14 @@ nl_BE:
       invalid: fout
     order_mailer:
       cancel_email:
+        customer_greeting: "Beste %{name}"
+        instructions_html: "Uw order met <strong>%{distributor}</strong> werd geanuleerd. Bewaar deze annuleringsinformatie voor uw archief."
+        dont_cancel: "Als u van gedachten bent veranderd of u wens deze besteling niet annuleren contacteer gerust %{email}"
+        order_summary_canceled_html: "<strong>Overzicht van besteling # %{number} [GEANULEERD]</strong>"
+        details: "Hier zijn de details van wat u hebt besteld:"
+        unpaid_order: "Uw besteling was niet betaald dus geen terugbetaling werd gedaan"
+        paid_order: "Uw besteling was al betaald dus %{distributor}heeft uw de volledige bedrag terugbetaald"
+        credit_order: "Uw besteling was al betaald dus werd uw acount gecrediteerd"
         subject: "Annulering van de bestelling"
       confirm_email:
         subject: "Bestellingsinformatie"
@@ -3267,6 +3322,11 @@ nl_BE:
         thanks: "Bedankt voor uw bedrijf."
         track_information: "Tracking informatie: %{tracking}"
         track_link: "Tracking Link:%{url} "
+    test_mailer:
+      test_email:
+        greeting: "Gefeliciteerd!"
+        message: "Als u deze email hebt ontvangen , dan zijn uw email instellingen correct."
+        subject: "Test E-mail"
     order_state:
       address: adres
       adjustments: aanpassingen
@@ -3333,3 +3393,19 @@ nl_BE:
         allow_charges?: "Een encasso toelaten ?"
     localized_number:
       invalid_format: ' heeft incorrect invoer . Voer alsjeblieft een nummer in.'
+    api:
+      invalid_api_key: "Onjuiste API sleutel (%{key}) gespecificeerd"
+      unauthorized: "U bent niet toegestaan deze actie uittevoeren"
+      invalid_resource: "Ongeldige bron. Stel fout vast en probeer later opnieuw."
+      resource_not_found: "De bron die u zocht kon niet word gevonden."
+      access: "API Toegang"
+      key: "Sleutel"
+      clear_key: "Verwijder sleutel"
+      regenerate_key: "Regenereer Sleutel"
+      no_key: "Geen sleutel"
+      generate_key: "Regenereer API sleutel"
+      key_generated: "Sleutel geregenereerd"
+      key_cleared: "Sleutel gewist"
+      shipment:
+        cannot_ready: "Kan levering niet klaarmaken"
+      invalid_taxonomy_id: "Onjuiste taxonomie id."
