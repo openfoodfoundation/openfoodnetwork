@@ -281,7 +281,7 @@ feature '
     expect(p.variant_unit).to eq "weight"
     expect(p.variant_unit_scale).to eq 1000 # Kg
     expect(p.available_on).to eq 3.days.ago.beginning_of_day
-    expect(p.primary_taxon).to eq t1
+    expect(p.primary_taxon.permalink).to eq t1.permalink
     expect(p.inherits_properties).to be false
     expect(p.sku).to eq "NEW SKU"
   end
