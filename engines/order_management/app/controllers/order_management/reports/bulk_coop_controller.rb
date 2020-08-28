@@ -46,8 +46,8 @@ module OrderManagement
             completed_at_gt: params[:report][:start_at],
             completed_at_lt: params[:report][:end_at],
             distributor_id_in: params[:report][:distributor_ids],
-            report_type: params[:report][:report_type]
-          }
+          },
+          report_type: params[:report][:report_type]
         }
       end
 
