@@ -10,8 +10,14 @@ FactoryBot.define do
     phone '123-456-7890'
     alternative_phone '123-456-7899'
 
-    state { Spree::State.find_by name: 'Victoria' }
-    country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
+    state { Spree::State.find_by(name: 'Victoria') || Spree::State.first || create(:state) }
+    country do |address|
+      if address.state
+        address.state.country
+      else
+        Spree::Country.find_by(name: 'Australia') || Spree::Country.first || create(:country)
+      end
+    end
 
     trait :randomized do
       firstname { Faker::Name.first_name }
