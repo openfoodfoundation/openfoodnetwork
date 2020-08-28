@@ -1364,7 +1364,6 @@ sv:
   spree_user_enterprise_limit_error: "^ %{email} har inte rätt att äga några fler företag (gränsen är %{enterprise_limit})."
   spree_variant_product_error: måste ha minst en variant
   your_profil_live: "Din profil direkt"
-  on_ofn_map: "Öppna kartan över Open Food Network"
   see: "Se"
   live: "direkt"
   manage: "Hantera"

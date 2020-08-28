@@ -712,6 +712,8 @@ fil_PH:
           enable_subscriptions_tip: "paganahina ng paggamit ng mga subscription?"
           enable_subscriptions_false: "huwag paganahin"
           enable_subscriptions_true: "pinagana"
+          customer_names_false: "huwag paganahin"
+          customer_names_true: "pinagana"
           shopfront_message: "mensahe sa Shopfront"
           shopfront_message_placeholder: >
               opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag
@@ -2025,7 +2027,6 @@ fil_PH:
   spree_user_enterprise_limit_error: "^%{email}ay walang permiso na mag-ari ng karagdagang mga enterprise (ang limitasyon ay%{enterprise_limit})."
   spree_variant_product_error: ay dapat mayroong kahit isang uri
   your_profil_live: "ang iyong live na profile"
-  on_ofn_map: "sa Open Food Network map"
   see: "Tignan"
   live: "live"
   manage: "pamahalaan"

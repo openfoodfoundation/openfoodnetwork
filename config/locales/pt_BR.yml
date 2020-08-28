@@ -2050,7 +2050,6 @@ pt_BR:
   spree_user_enterprise_limit_error: "^ %{email} não é permitido possuir mais iniciativas (o limite é %{enterprise_limit})."
   spree_variant_product_error: deve ter pelo menos uma variante
   your_profil_live: "Seu perfil online"
-  on_ofn_map: "O mapa da Open Food Brasil"
   see: "Ver"
   live: "vivo"
   manage: "Gerenciar"

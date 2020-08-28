@@ -721,6 +721,8 @@ nb:
           enable_subscriptions_tip: "Aktiver abonnementsfunksjonalitet?"
           enable_subscriptions_false: "Deaktivert"
           enable_subscriptions_true: "Aktivert"
+          customer_names_false: "Deaktivert"
+          customer_names_true: "Aktivert"
           shopfront_message: "Melding Butikk"
           shopfront_message_placeholder: >
               En valgfri melding for å ønske kunder velkommen og forklare hvordan
@@ -2052,7 +2054,6 @@ nb:
   spree_user_enterprise_limit_error: "^ %{email} kan ikke eie flere bedrifter (grense er %{enterprise_limit})."
   spree_variant_product_error: må ha minst en variant
   your_profil_live: "Din profil live"
-  on_ofn_map: "på Open Food Network kartet"
   see: "Se"
   live: "live"
   manage: "Administrer"

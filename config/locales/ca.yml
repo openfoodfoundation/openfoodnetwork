@@ -723,6 +723,10 @@ ca:
           enable_subscriptions_tip: "Habilitar la funcionalitat de subscripcions?"
           enable_subscriptions_false: "Deshabilitat"
           enable_subscriptions_true: "Habilitat"
+          customer_names_in_reports: "Noms de consumidores als informes"
+          customer_names_tip: "Habiliteu als proveïdors veure els noms dels vostres clients als informes"
+          customer_names_false: "Deshabilitat"
+          customer_names_true: "Habilitat"
           shopfront_message: "Missatge de la botiga"
           shopfront_message_placeholder: >
               Un missatge opcional per donar la benvinguda als clients i explicar
@@ -3244,6 +3248,8 @@ ca:
           bulk_coop_allocation: 'Compra grupal - Assignació'
           bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
           bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
+        customer_names_message:
+          customer_names_tip: "Si els noms de les consumidores per a les comandes que heu subministrat apareixen amagats, podeu contactar amb la distribuïdora i preguntar-los si poden actualitzar les seves preferències de la botiga per permetre als seus proveïdors visualitzar els noms de les consumidores."
       users:
         index:
           listing_users: "Llistat d'usuàries"

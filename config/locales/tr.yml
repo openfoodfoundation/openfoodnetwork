@@ -124,7 +124,7 @@ tr:
     confirmation_instructions:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
     welcome:
-      subject: "%{enterprise} şimdi %{sitename} 'de"
+      subject: "%{enterprise} şimdi %{sitename} 'nda"
       email_welcome: "Aramıza Hoşgeldiniz "
       email_registered: "şimdi bir parçası"
       email_userguide_html: "Dükkan veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
@@ -227,6 +227,7 @@ tr:
   enterprises: İşletmeler
   enterprise_groups: AĞLAR
   reports: Raporlar
+  listing_reports: Listeleme Raporları
   variant_overrides: Stok
   import: Aktar
   spree_products: Spree Ürünleri
@@ -721,6 +722,8 @@ tr:
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
           enable_subscriptions_true: "Etkin"
+          customer_names_false: "Kapalı"
+          customer_names_true: "Etkin"
           shopfront_message: "DÜKKAN MESAJINIZ"
           shopfront_message_placeholder: >
               Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
@@ -1413,7 +1416,6 @@ tr:
   checkout_default_bill_address: "Varsayılan fatura adresi olarak kaydet"
   checkout_shipping: Teslimat bilgileri
   checkout_default_ship_address: "Varsayılan teslimat adresi olarak kaydet"
-  checkout_method_free: Ücretsiz
   checkout_address_same: Teslimat adresi fatura adresiyle aynı mı?
   checkout_ready_for: "Teslimat:"
   checkout_instructions: "Yorumlarınız veya özel talimatlarınız var mı?"
@@ -2052,7 +2054,6 @@ tr:
   spree_user_enterprise_limit_error: "^ %{email}'ın daha fazla işletmeye sahip olmasına izin verilmiyor (limit %{enterprise_limit})."
   spree_variant_product_error: en az bir varyant olmalı
   your_profil_live: "Profiliniz Canlı"
-  on_ofn_map: "Açık Gıda Ağı haritasında görünürsünüz"
   see: "Haritada"
   live: "gör"
   manage: "yönet"
@@ -3118,11 +3119,11 @@ tr:
           no_shipping_methods_found: "Hiçbir teslimat yöntemi bulunamadı"
         new:
           new_shipping_method: "YENİ TESLİMAT YÖNTEMİ"
-          back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
+          back_to_shipping_methods_list: "Teslimat Yöntemlerine Geri Dön"
         edit:
           editing_shipping_method: "Teslimat Yöntemini Düzenle"
           new: "YENİ"
-          back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
+          back_to_shipping_methods_list: "Teslimat Yöntemlerine Gerİ Dön"
         form:
           categories: "Kategoriler"
           zones: "bölgeler"

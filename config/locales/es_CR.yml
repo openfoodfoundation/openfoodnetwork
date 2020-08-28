@@ -712,6 +712,8 @@ es_CR:
           enable_subscriptions_tip: "¿Habilitar la funcionalidad de suscripciones?"
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
+          customer_names_false: "Deshabilitado"
+          customer_names_true: "Habilitado"
           shopfront_message: "Mensaje de la tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
@@ -2025,7 +2027,6 @@ es_CR:
   spree_user_enterprise_limit_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   spree_variant_product_error: Debes tener al menos una variante
   your_profil_live: "Tu perfil online"
-  on_ofn_map: "en el mapa Open Food Network"
   see: "Ver"
   live: "En directo"
   manage: "Gestionar"

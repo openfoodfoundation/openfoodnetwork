@@ -722,6 +722,8 @@ fr:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
+          customer_names_false: "Désactivé"
+          customer_names_true: "Activé"
           shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
@@ -2054,7 +2056,6 @@ fr:
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   spree_variant_product_error: doit avoir au moins une variante
   your_profil_live: "Votre profil en ligne"
-  on_ofn_map: "sur la carte Open Food France"
   see: "Voir"
   live: "en ligne"
   manage: "Gérer"

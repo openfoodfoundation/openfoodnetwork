@@ -699,6 +699,8 @@ en_DE:
           enable_subscriptions_tip: "Enable subscriptions functionality?"
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
+          customer_names_false: "Disabled"
+          customer_names_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
@@ -1985,7 +1987,6 @@ en_DE:
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   spree_variant_product_error: must have at least one variant
   your_profil_live: "Your profile live"
-  on_ofn_map: "on the Open Food Network map"
   see: "See"
   live: "live"
   manage: "Manage"

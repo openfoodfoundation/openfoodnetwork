@@ -1,5 +1,5 @@
 ar:
-  language_name: "الانجيلزي"
+  language_name: "العربي"
   activerecord:
     attributes:
       enterprise_fee:
@@ -227,6 +227,7 @@ ar:
   enterprises: المؤسسات
   enterprise_groups: مجموعات
   reports: التقارير
+  listing_reports: قائمة التقارير
   variant_overrides: المخزون
   import: استيراد
   spree_products: منتجات Spree 
@@ -721,6 +722,10 @@ ar:
           enable_subscriptions_tip: "تمكين الاشتراكات وظيفيا ؟"
           enable_subscriptions_false: "تعليق"
           enable_subscriptions_true: "تمكين"
+          customer_names_in_reports: "أسماء العملاء في التقارير"
+          customer_names_tip: "قم بتمكين مورديك من رؤية أسماء عملائك في التقارير"
+          customer_names_false: "تعليق"
+          customer_names_true: "تمكين"
           shopfront_message: "رسالة واجهة المتجر"
           shopfront_message_placeholder: >
               رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال
@@ -2059,7 +2064,6 @@ ar:
   spree_user_enterprise_limit_error: "^ %{email} غير مسموح به لامتلاك أي مؤسسات أخرى (الحد الأقصى هو %{enterprise_limit})."
   spree_variant_product_error: يجب أن يكون لديك نوع واحد على الأقل
   your_profil_live: "ملفك الشخصي نشط"
-  on_ofn_map: "على خريطة شبكة الغذاء المفتوح"
   see: "نرى"
   live: "نشط"
   manage: "يدير"
@@ -3338,6 +3342,8 @@ ar:
           bulk_coop_allocation: 'معظم التعاونية - تخصيص'
           bulk_coop_packing_sheets: 'معظم التعاونية - صحائف التعبئة'
           bulk_coop_customer_payments: ' الجمعية التعاونية - مدفوعات العملاء بالجملة'
+        customer_names_message:
+          customer_names_tip: "إذا كانت أسماء العملاء مخفية للطلبات التي قدمتها ، فيمكنك الاتصال بالموزع والسؤال عما إذا كان بإمكانهم تحديث تفضيلات متجرهم للسماح لمورديهم بمشاهدة أسماء العملاء."
       users:
         index:
           listing_users: "قائمة المستخدمين"
