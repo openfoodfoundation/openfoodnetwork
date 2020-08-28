@@ -28,6 +28,10 @@
     }
   }
 
+  .filter-header {
+    margin-top: 1.1em;
+  }
+
   products {
     display: block;
 
@@ -67,7 +71,13 @@
     product {
       @include csstrans;
 
-      border-top: 1px solid #e5e5e5;
+      // Avoid margin collapsing which breaks the flush alignment of the first
+      // image. https://stackoverflow.com/a/19719427/3377535
+      overflow: auto;
+
+      &:nth-child(n + 2) {
+        border-top: 1px solid #e5e5e5;
+      }
       padding-bottom: 1px;
       position: relative;
       display: block;

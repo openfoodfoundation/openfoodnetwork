@@ -24,7 +24,7 @@
                     %img.spinner{ src: image_path("spinning-circles.svg") }
 
           .hide-for-medium-down.large-2.columns
-            %h5
+            %h5.filter-header
               = t(:products_filter_by)
               %span{ng: {show: 'filtersCount()' }}
                 = "({{ filtersCount() }} #{t(:products_filter_selected)})"
