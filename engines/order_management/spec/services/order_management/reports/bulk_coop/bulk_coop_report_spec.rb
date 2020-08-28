@@ -36,7 +36,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         o2.line_items << li2
 
         report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
-        expect(report.table_items).to eq([li1, li2])
+        expect(report.table_items).to match_array [li1, li2]
 
         report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
           user, { q: { completed_at_gt: 2.days.ago } }, true
@@ -60,7 +60,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         o2.line_items << li2
 
         report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
-        expect(report.table_items).to eq([li1, li2])
+        expect(report.table_items).to match_array [li1, li2]
 
         report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
           user, { q: { distributor_id_in: [d1.id] } }, true
