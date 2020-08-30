@@ -8,6 +8,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
   let!(:user) { create(:user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
+  let!(:variant) { product.variants.first }
 
   describe('.index') do
     context 'with authorization token' do
@@ -33,11 +34,11 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
               it 'renders the required content' do
                 expect(response.body)
-                  .to include(product.name)
+                  .to include(variant.name)
                 expect(response.body)
-                  .to include(product.sku)
+                  .to include(variant.sku)
                 expect(response.body)
-                  .to include("offers/#{product.variants.first.id}")
+                  .to include("offers/#{variant.id}")
               end
             end
 
@@ -60,11 +61,11 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
             it 'renders the required content' do
               expect(response.body)
-                .to include(product.name)
+                .to include(variant.name)
               expect(response.body)
-                .to include(product.sku)
+                .to include(variant.sku)
               expect(response.body)
-                .to include("offers/#{product.variants.first.id}")
+                .to include("offers/#{variant.id}")
             end
           end
         end
@@ -117,7 +118,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             before do
               api_get :show,
                       enterprise_id: enterprise.id,
-                      id: product.variants.first.id
+                      id: variant.id
             end
 
             it 'is successful' do
@@ -128,7 +129,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
               expect(response.body)
                 .to include('dfc:CatalogItem')
               expect(response.body)
-                .to include("offers/#{product.variants.first.id}")
+                .to include("offers/#{variant.id}")
             end
           end
 

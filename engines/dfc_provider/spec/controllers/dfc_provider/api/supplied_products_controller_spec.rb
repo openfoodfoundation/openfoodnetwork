@@ -8,6 +8,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
   let!(:user) { create(:user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
+  let!(:variant) { product.variants.first }
 
   describe('.show') do
     context 'with authorization token' do
@@ -27,7 +28,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
             before do
               api_get :show,
                       enterprise_id: 'default',
-                      id: product.id
+                      id: variant.id
             end
 
             it 'is successful' do
@@ -36,7 +37,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
 
             it 'renders the required content' do
               expect(response.body)
-                .to include(product.name)
+                .to include(variant.name)
             end
           end
 

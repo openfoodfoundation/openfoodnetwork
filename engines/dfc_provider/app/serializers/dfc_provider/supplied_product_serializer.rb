@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Serializer used to render a DFC SuppliedProduct from an OFN Product
+# Serializer used to render a DFC SuppliedProduct from an OFN Variant
 # into JSON-LD format based on DFC ontology
 module DfcProvider
   class SuppliedProductSerializer < ActiveModel::Serializer
@@ -18,7 +18,7 @@ module DfcProvider
 
     def id
       dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
-        enterprise_id: object.supplier_id,
+        enterprise_id: object.product.supplier_id,
         id: object.id,
         host: root_url
       )

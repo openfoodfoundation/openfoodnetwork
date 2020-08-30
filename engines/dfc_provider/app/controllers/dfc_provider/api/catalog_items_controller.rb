@@ -9,13 +9,17 @@ module DfcProvider
       end
 
       def show
-        @variant =
+        render json: variant, serializer: DfcProvider::CatalogItemSerializer
+      end
+
+      private
+
+      def variant
+        @variant ||=
           Spree::Variant.
             joins(product: :supplier).
             where('enterprises.id' => @enterprise.id).
             find(params[:id])
-
-        render json: @variant, serializer: DfcProvider::CatalogItemSerializer
       end
     end
   end

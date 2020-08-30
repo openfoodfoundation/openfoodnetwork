@@ -5,9 +5,17 @@ module DfcProvider
   module Api
     class SuppliedProductsController < BaseController
       def show
-        @product = @enterprise.supplied_products.find(params[:id])
+        render json: variant, serializer: DfcProvider::SuppliedProductSerializer
+      end
 
-        render json: @product, serializer: DfcProvider::SuppliedProductSerializer
+      private
+
+      def variant
+        @variant ||=
+          Spree::Variant.
+            joins(product: :supplier).
+            where('enterprises.id' => @enterprise.id).
+            find(params[:id])
       end
     end
   end

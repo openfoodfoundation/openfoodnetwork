@@ -33,9 +33,9 @@ module DfcProvider
     end
 
     def supplies
-      object.
-        supplied_products.
-        includes(variants: :product)
+      Spree::Variant.
+        joins(product: :supplier).
+        where('enterprises.id' => object.id)
     end
 
     def manages
