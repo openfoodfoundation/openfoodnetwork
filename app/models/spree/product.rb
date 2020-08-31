@@ -68,7 +68,7 @@ module Spree
     has_many :stock_items, through: :variants
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
-                        :height, :width, :depth, :is_master, :has_default_price?, :cost_currency,
+                        :height, :width, :depth, :is_master, :default_price?, :cost_currency,
                         :price_in, :amount_in, :unit_value, :unit_description
     delegate_belongs_to :master, :cost_price if Variant.table_exists? &&
                                                 Variant.column_names.include?('cost_price')
@@ -150,8 +150,12 @@ module Spree
     }
 
     scope :visible_for, lambda { |enterprise|
-      joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-        joins('LEFT OUTER JOIN inventory_items AS o_inventory_items ON (o_spree_variants.id = o_inventory_items.variant_id)').
+      joins('
+        LEFT OUTER JOIN spree_variants AS o_spree_variants
+          ON (o_spree_variants.product_id = spree_products.id)').
+        joins('
+          LEFT OUTER JOIN inventory_items AS o_inventory_items
+            ON (o_spree_variants.id = o_inventory_items.variant_id)').
         where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true)
     }
 
@@ -225,7 +229,7 @@ module Spree
     end
 
     # the master variant is not a member of the variants array
-    def has_variants?
+    def variants?
       variants.any?
     end
 
