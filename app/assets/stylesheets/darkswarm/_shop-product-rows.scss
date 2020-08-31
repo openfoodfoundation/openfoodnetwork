@@ -57,10 +57,6 @@
         .variant-price {
           padding-left: 0.25rem;
           padding-right: 0.25rem;
-
-          @include breakpoint(phablet) {
-            text-align: right;
-          }
         }
 
         // Total price
