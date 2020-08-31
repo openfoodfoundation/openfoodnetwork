@@ -2,9 +2,16 @@
   products {
     product {
       .product-thumb {
-        width: 7rem;
-        height: 7rem;
+        // Desktop: the product summary is nine columns wide. Use two
+        // for the image. In our design, that's a max of 192px.
+        width: calc(100% / 9 * 2);
         float: left;
+
+        // Mobile: the summary has full twelve columns and the image
+        // should take four of them. Maximum is 227px.
+        @include breakpoint(phablet) {
+          width: calc(100% / 12 * 4);
+        }
       }
     }
   }
