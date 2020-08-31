@@ -45,7 +45,7 @@ feature "Check out with Paypal", js: true do
     it "fails with an error message" do
       visit checkout_path
       checkout_as_guest
-      fill_out_form(free_shipping.name, paypal.name, false)
+      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
 
       paypal_response = double(:response, success?: false, errors: [])
       paypal_provider = double(

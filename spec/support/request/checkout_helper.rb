@@ -38,7 +38,7 @@ module CheckoutHelper
     end
   end
 
-  def fill_out_form(shipping_method_name, payment_method_name, save_default_addresses = true)
+  def fill_out_form(shipping_method_name, payment_method_name, save_default_addresses: true)
     choose shipping_method_name
     choose payment_method_name
 
