@@ -2,17 +2,6 @@ module Spree
   module Api
     module TestingSupport
       module Setup
-        def sign_in_as_user!
-          let!(:current_api_user) do
-            user = Spree::LegacyUser.new(email: "ofn@example.com")
-            user.stub(:has_spree_role?).with("admin").and_return(false)
-            user.stub(:enterprises) { [] }
-            user.stub(:owned_groups) { [] }
-            user.stub(:spree_api_key) { "spree_api_key" }
-            user
-          end
-        end
-
         # enterprises is an array of variable names of let defines
         # eg.
         # let(:enterprise) { ... }

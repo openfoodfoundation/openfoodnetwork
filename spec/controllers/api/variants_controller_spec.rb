@@ -14,7 +14,7 @@ describe Api::VariantsController, type: :controller do
   end
 
   context "as a normal user" do
-    sign_in_as_user!
+    let(:current_api_user) { build(:user) }
 
     let!(:product) { create(:product) }
     let!(:variant) do
