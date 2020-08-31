@@ -26,15 +26,21 @@ feature "Uploading Terms and Conditions PDF" do
       let(:white_pdf_file_name) { Rails.root.join("app/assets/images/logo-white.pdf") }
       let(:black_pdf_file_name) { Rails.root.join("app/assets/images/logo-black.pdf") }
 
-      before do
+      around do |example|
         # Create fake PDFs from PNG images
         FileUtils.cp(Rails.root.join("app/assets/images/logo-white.png"), white_pdf_file_name)
         FileUtils.cp(Rails.root.join("app/assets/images/logo-black.png"), black_pdf_file_name)
 
-        go_to_business_details
+        example.run
+
+        # Delete fake PDFs
+        FileUtils.rm_f(white_pdf_file_name)
+        FileUtils.rm_f(black_pdf_file_name)
       end
 
       scenario "uploading terms and conditions" do
+        go_to_business_details
+
         # Add PDF
         attach_file "enterprise[terms_and_conditions]", white_pdf_file_name
         click_button "Update"
@@ -52,12 +58,6 @@ feature "Uploading Terms and Conditions PDF" do
 
         go_to_business_details
         expect(page).to have_selector("a[href*='logo-black.pdf']")
-      end
-
-      after do
-        # Delete fake PDFs
-        FileUtils.rm_f(white_pdf_file_name)
-        FileUtils.rm_f(black_pdf_file_name)
       end
     end
   end
