@@ -6,7 +6,7 @@
     .row
       .footer-pad.small-12.columns.product-listing
         .row.full
-          .medium-12.large-10.columns.full
+          .medium-12.large-9.columns.full
             = render partial: "shop/products/search_feedback"
 
             %div{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
@@ -23,6 +23,9 @@
                   .small-12.columns.text-center
                     %img.spinner{ src: image_path("spinning-circles.svg") }
 
+          .hide-for-medium-down.large-1.columns
+            -# Space between products and filters
+            &nbsp;
           .hide-for-medium-down.large-2.columns
             %h5.filter-header
               = t(:products_filter_by)
