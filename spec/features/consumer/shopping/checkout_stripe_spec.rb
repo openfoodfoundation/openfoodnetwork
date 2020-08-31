@@ -47,6 +47,12 @@ feature "Check out with Stripe", js: true do
 
       let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000 } }
 
+      around do |example|
+        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
+        example.run
+        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
+      end
+
       before do
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
         allow(Stripe).to receive(:publishable_key) { "some_key" }

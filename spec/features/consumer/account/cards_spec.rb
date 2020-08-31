@@ -8,6 +8,12 @@ feature "Credit Cards", js: true do
     let!(:default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ', is_default: true) }
     let!(:non_default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
 
+    around do |example|
+      original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
+      example.run
+      Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
+    end
+
     before do
       login_as user
 

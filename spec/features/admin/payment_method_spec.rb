@@ -37,6 +37,12 @@ feature '
       let!(:disconnected_stripe_account) { create(:stripe_account, enterprise: revoked_account_enterprise, stripe_user_id: "acc_revoked123") }
       let!(:stripe_account_mock) { { id: "acc_connected123", business_name: "My Org", charges_enabled: true } }
 
+      around do |example|
+        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
+        example.run
+        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
+      end
+
       before do
         Spree::Config.set(stripe_connect_enabled: true)
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
