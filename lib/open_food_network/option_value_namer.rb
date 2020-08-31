@@ -77,19 +77,25 @@ module OpenFoodNetwork
         }
       }
 
-      # Find the largest available and compatible unit where unit_value comes
-      # to >= 1 when expressed in it.
-      # If there is none available where this is true, use the smallest available unit.
       scales = units[@variant.product.variant_unit]
       product_scale = @variant.product.variant_unit_scale
       product_scale_system = scales[product_scale.to_f]['system']
+
+      largest_unit = find_largest_unit(scales, product_scale_system)
+      [largest_unit[0], largest_unit[1]["name"]]
+    end
+
+    # Find the largest available and compatible unit where unit_value comes
+    #   to >= 1 when expressed in it.
+    # If there is none available where this is true, use the smallest available unit.
+    def find_largest_unit(scales, product_scale_system)
       largest_unit = scales.select { |scale, unit_info|
         unit_info['system'] == product_scale_system &&
           @variant.unit_value / scale >= 1
       }.max
-      largest_unit = units[@variant.product.variant_unit].first if largest_unit.nil?
+      return scales.first if largest_unit.nil?
 
-      [largest_unit[0], largest_unit[1]["name"]]
+      largest_unit
     end
 
     def pluralize(unit_name, count)
