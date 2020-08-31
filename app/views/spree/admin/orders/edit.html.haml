@@ -2,8 +2,6 @@
 - content_for :page_actions do
   - if can?(:fire, @order)
     %li= event_links
-  - if can?(:resend, @order)
-    %li= button_link_to Spree.t(:resend), resend_admin_order_url(@order), :method => :post, :icon => 'icon-email'
   = render partial: 'spree/admin/shared/order_links'
   - if can?(:admin, Spree::Order)
     %li= button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
