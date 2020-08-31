@@ -10,7 +10,7 @@ module Spree
              taxons: [],
              product_properties: [property],
              master: variant,
-             has_variants?: false
+             variants?: false
     end
 
     let(:new_product) do

@@ -9,6 +9,10 @@ module Spree
     validates :name, :presentation, presence: true
     default_scope -> { order("#{table_name}.position") }
 
-    accepts_nested_attributes_for :option_values, reject_if: lambda { |ov| ov[:name].blank? || ov[:presentation].blank? }, allow_destroy: true
+    accepts_nested_attributes_for :option_values,
+                                  reject_if: lambda { |ov|
+                                    ov[:name].blank? || ov[:presentation].blank?
+                                  },
+                                  allow_destroy: true
   end
 end

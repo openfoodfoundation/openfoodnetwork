@@ -39,7 +39,8 @@ module Spree
     has_many :prices,
              class_name: 'Spree::Price',
              dependent: :destroy
-    delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency if Spree::Price.table_exists?
+    delegate_belongs_to :default_price, :display_price, :display_amount,
+                        :price, :price=, :currency
 
     has_many :exchange_variants
     has_many :exchanges, through: :exchange_variants
@@ -52,7 +53,7 @@ module Spree
     validates :price, numericality: { greater_than_or_equal_to: 0 },
                       presence: true,
                       if: proc { Spree::Config[:require_master_price] }
-    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true } if table_exists? && column_names.include?('cost_price')
+    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product.andand.variant_unit)
@@ -219,7 +220,7 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
-    def has_default_price?
+    def default_price?
       !default_price.nil?
     end
 
