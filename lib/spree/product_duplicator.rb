@@ -12,7 +12,7 @@ module Spree
       new_product = duplicate_product
 
       # don't dup the actual variants, just the characterising types
-      new_product.option_types = product.option_types if product.has_variants?
+      new_product.option_types = product.option_types if product.variants?
 
       # allow site to do some customization
       new_product.__send__(:duplicate_extra, product) if new_product.respond_to?(:duplicate_extra)
