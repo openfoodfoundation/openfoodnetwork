@@ -15,7 +15,8 @@
       }
 
       .shop-variants {
-        padding-left: 7.9375rem;
+        // product-thumb width + 1rem
+        padding-left: calc(100% / 9 * 2 + 1rem);
 
         @include breakpoint(phablet) {
           padding-left: 0;
@@ -93,8 +94,13 @@
         }
 
         .summary-header {
-          padding-left: 7.9375rem;
+          // product-thumb width + 1rem
+          padding-left: calc(100% / 9 * 2 + 1rem);
           padding-right: 1rem;
+
+          @include breakpoint(phablet) {
+            padding-left: calc(100% / 12 * 4 + 1rem);
+          }
 
           .product-producer {
             white-space: nowrap;
