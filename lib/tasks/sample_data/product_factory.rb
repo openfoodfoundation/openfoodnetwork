@@ -15,7 +15,7 @@ class ProductFactory
   def product_data(enterprises)
     vegetables = Spree::Taxon.find_by(name: 'Vegetables')
     fruit = Spree::Taxon.find_by(name: 'Fruit')
-    meat = Spree::Taxon.find_by(name: 'Meat and Fish')
+    fungi = Spree::Taxon.find_by(name: 'Fungi')
     producers = enterprises.select(&:is_primary_producer)
     distributors = enterprises.select(&:is_distributor)
     [
@@ -34,10 +34,10 @@ class ProductFactory
         distributor: distributors[0]
       },
       {
-        name: 'Beef - 5kg Trays',
+        name: 'Mushrooms',
         price: 50.00,
         supplier: producers[1],
-        taxons: [meat],
+        taxons: [fungi],
         distributor: distributors[0]
       },
       {
