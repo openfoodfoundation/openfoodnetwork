@@ -64,15 +64,15 @@ module OpenFoodNetwork
     def scale_for_unit_value
       units = {
         'weight' => {
-          1.0 =>         { 'name' => 'g',  'system' => 'metric' },
-          28.35 =>       { 'name' => 'oz', 'system' => 'imperial' },
-          453.6 =>       { 'name' => 'lb', 'system' => 'imperial' },
-          1000.0 =>      { 'name' => 'kg', 'system' => 'metric' },
-          1_000_000.0 => { 'name' => 'T',  'system' => 'metric' }
+          1.0 => { 'name' => 'g', 'system' => 'metric' },
+          28.35 => { 'name' => 'oz', 'system' => 'imperial' },
+          453.6 => { 'name' => 'lb', 'system' => 'imperial' },
+          1000.0 => { 'name' => 'kg', 'system' => 'metric' },
+          1_000_000.0 => { 'name' => 'T', 'system' => 'metric' }
         },
         'volume' => {
-          0.001 =>  { 'name' => 'mL', 'system' => 'metric' },
-          1.0 =>    { 'name' => 'L', 'system' => 'metric' },
+          0.001 => { 'name' => 'mL', 'system' => 'metric' },
+          1.0 => { 'name' => 'L', 'system' => 'metric' },
           1000.0 => { 'name' => 'kL', 'system' => 'metric' }
         }
       }
