@@ -2,7 +2,7 @@
 
 require "open_food_network/i18n_inflections"
 
-module OpenFoodNetwork
+module VariantUnits
   class OptionValueNamer
     def initialize(variant = nil)
       @variant = variant
@@ -99,7 +99,7 @@ module OpenFoodNetwork
     end
 
     def pluralize(unit_name, count)
-      I18nInflections.pluralize(unit_name, count)
+      OpenFoodNetwork::I18nInflections.pluralize(unit_name, count)
     end
   end
 end

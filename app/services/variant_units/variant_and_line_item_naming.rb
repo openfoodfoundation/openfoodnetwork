@@ -2,9 +2,9 @@
 # It contains all of our logic for creating and naming option values (which are associated
 # with both models) and methods for printing human readable "names" for instances of these models.
 
-require 'open_food_network/option_value_namer'
+require 'variant_units/option_value_namer'
 
-module OpenFoodNetwork
+module VariantUnits
   module VariantAndLineItemNaming
     # Copied and modified from Spree::Variant
     def options_text
@@ -103,7 +103,7 @@ module OpenFoodNetwork
       if has_attribute?(:display_as) && display_as.present?
         display_as
       else
-        option_value_namer = OpenFoodNetwork::OptionValueNamer.new self
+        option_value_namer = VariantUnits::OptionValueNamer.new self
         option_value_namer.name
       end
     end

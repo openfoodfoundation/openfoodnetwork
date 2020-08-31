@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module OpenFoodNetwork
+module VariantUnits
   describe OptionValueNamer do
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
