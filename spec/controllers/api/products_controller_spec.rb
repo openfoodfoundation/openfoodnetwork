@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'spree/product_duplicator'
 
 describe Api::ProductsController, type: :controller do
   render_views

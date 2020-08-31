@@ -1,4 +1,5 @@
 require 'open_food_network/permissions'
+require 'spree/product_duplicator'
 
 module Api
   class ProductsController < Api::BaseController

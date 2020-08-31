@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'spree/product_duplicator'
 
 module Spree
   describe Product do
