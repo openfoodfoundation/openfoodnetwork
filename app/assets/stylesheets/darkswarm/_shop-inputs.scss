@@ -22,6 +22,9 @@ button.add-variant, button.variant-quantity {
   padding: 0;
   transition: none;
 
+  &:hover {
+    background-color: $orange-600;
+  }
   &[disabled] {
     &:hover, &:focus {
       background-color: $orange-500;
