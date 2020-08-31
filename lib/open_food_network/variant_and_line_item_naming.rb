@@ -24,15 +24,18 @@ module OpenFoodNetwork
     end
 
     def presentation(option_value)
-      if option_value.option_type.name == "unit_weight"
-        if has_attribute?(:display_as) && display_as.present?
-          return display_as
-        elsif respond_to?(:variant) && variant.present? &&
-            variant.respond_to?(:display_as) && variant.display_as.present?
-          return variant.display_as
-        end
-      end
+      return option_value.presentation unless option_value.option_type.name == "unit_weight"
+
+      return display_as if has_attribute?(:display_as) && display_as.present?
+
+      return variant.display_as if variant_display_as?
+
       option_value.presentation
+    end
+
+    def variant_display_as?
+      respond_to?(:variant) && variant.present? &&
+        variant.respond_to?(:display_as) && variant.display_as.present?
     end
 
     def product_and_full_name
@@ -62,14 +65,11 @@ module OpenFoodNetwork
     end
 
     def unit_to_display
-      if has_attribute?(:display_as) && display_as.present?
-        display_as
-      elsif respond_to?(:variant) && variant.present? &&
-          variant.respond_to?(:display_as) && variant.display_as.present?
-        variant.display_as
-      else
-        options_text
-      end
+      return display_as if has_attribute?(:display_as) && display_as.present?
+
+      return variant.display_as if variant_display_as?
+
+      options_text
     end
 
     def update_units
