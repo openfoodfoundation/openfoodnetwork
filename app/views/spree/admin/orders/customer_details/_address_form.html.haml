@@ -39,10 +39,7 @@
   %div{class: "field"}
     = f.label :state_id, Spree.t(:state) + ':'
     %span{id: "#{s_or_b}state"}
-      = f.text_field :state_name,                                                      |
-         style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };",  |
-        disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' |
-      = f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?}
+      = f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', disabled: f.object.country.states.empty?}
   %div{class: "field"}
     = f.label :phone, Spree.t(:phone) + ':'
     = f.phone_field :phone, class: 'fullwidth'
