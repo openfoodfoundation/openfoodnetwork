@@ -483,5 +483,3 @@ module Spree
     end
   end
 end
-
-require_dependency 'spree/product/scopes'
