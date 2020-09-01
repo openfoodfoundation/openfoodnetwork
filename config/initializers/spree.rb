@@ -6,7 +6,7 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-require "spree/core/environment"
+require 'spree/core'
 
 # Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
 # should have inherited it from its parent PaymentMethod.
