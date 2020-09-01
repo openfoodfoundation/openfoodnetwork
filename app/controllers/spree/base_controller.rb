@@ -3,8 +3,8 @@
 require 'cancan'
 require 'spree/core/controller_helpers/auth'
 require 'spree/core/controller_helpers/respond_with'
-require 'spree/core/controller_helpers/common'
 require 'spree/core/controller_helpers/ssl'
+require 'spree/core/controller_helpers/common'
 
 module Spree
   class BaseController < ApplicationController

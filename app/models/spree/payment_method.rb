@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'concerns/payment_method_distributors'
+require 'spree/core/calculated_adjustments'
+
 module Spree
   class PaymentMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
