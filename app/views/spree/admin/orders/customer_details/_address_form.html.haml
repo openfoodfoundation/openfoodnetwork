@@ -7,7 +7,9 @@
 - is_shipping_address = name == Spree.t(:shipping_address)
 - s_or_b = is_shipping_address ? 's' : 'b'
 
-%div{id: "#{is_shipping_address ? 'shipping' : 'billing'}", style: "display: #{(use_billing  (!(@order.bill_address.empty?  @order.ship_address.empty?)  @order.bill_address.eql?(@order.ship_address))) ? 'none' : 'block'}"}
+- display_style = (use_billing && (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.eql?(@order.ship_address))) ? 'none' : 'block'
+
+%div{id: "#{is_shipping_address ? 'shipping' : 'billing'}", style: "display: #{display_style}"}
   %div{class: "field"}
     = f.label :firstname, Spree.t(:first_name) + ':'
     = f.text_field :firstname, class: 'fullwidth'
