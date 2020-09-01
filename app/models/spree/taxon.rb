@@ -92,8 +92,11 @@ module Spree
       ents_and_vars = ents_and_vars.merge(OrderCycle.active) if which_taxons == :current
 
       taxons = Spree::Taxon
-        .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id").joins(products: :variants_including_master)
-        .joins("INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars ON spree_variants.id = ents_and_vars.variant_id")
+        .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id")
+        .joins(products: :variants_including_master)
+        .joins("
+          INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars
+          ON spree_variants.id = ents_and_vars.variant_id")
 
       taxons.each_with_object({}) do |t, ts|
         ts[t.enterprise_id.to_i] ||= Set.new
