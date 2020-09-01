@@ -28,6 +28,52 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
       end
     end
 
+    context "filtering by date" do
+      it do
+        user = create(:admin_user)
+        o2 = create(:order, completed_at: 3.days.ago, order_cycle: oc1, distributor: d1)
+        li2 = build(:line_item_with_shipment)
+        o2.line_items << li2
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        expect(report.table_items).to match_array [li1, li2]
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+          user, { q: { completed_at_gt: 2.days.ago } }, true
+        )
+        expect(report.table_items).to eq([li1])
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+          user, { q: { completed_at_lt: 2.days.ago } }, true
+        )
+        expect(report.table_items).to eq([li2])
+      end
+    end
+
+    context "filtering by distributor" do
+      it do
+        user = create(:admin_user)
+        d2 = create(:distributor_enterprise)
+        o2 = create(:order, distributor: d2, order_cycle: oc1,
+                            completed_at: Time.zone.now)
+        li2 = build(:line_item_with_shipment)
+        o2.line_items << li2
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        expect(report.table_items).to match_array [li1, li2]
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+          user, { q: { distributor_id_in: [d1.id] } }, true
+        )
+        expect(report.table_items).to eq([li1])
+
+        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+          user, { q: { distributor_id_in: [d2.id] } }, true
+        )
+        expect(report.table_items).to eq([li2])
+      end
+    end
+
     context "as a manager of a supplier" do
       let!(:user) { create(:user) }
       subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true }

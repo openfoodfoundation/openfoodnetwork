@@ -13,7 +13,8 @@ module OrderManagement
 
         @report_parameters.authorize!(@permissions)
 
-        @report = report_klass::ReportService.new(@permissions, params[:report], spree_current_user)
+        @report = report_klass::ReportService.new(@permissions, legacy_format_report_params,
+                                                  spree_current_user)
         renderer.render(self)
       rescue ::Reports::Authorizer::ParameterNotAllowedError => e
         flash[:error] = e.message
@@ -37,6 +38,17 @@ module OrderManagement
 
       def report_klass
         OrderManagement::Reports::BulkCoop
+      end
+
+      def legacy_format_report_params
+        {
+          q: {
+            completed_at_gt: params[:report][:start_at],
+            completed_at_lt: params[:report][:end_at],
+            distributor_id_in: params[:report][:distributor_ids],
+          },
+          report_type: params[:report][:report_type]
+        }
       end
 
       def load_report_parameters
