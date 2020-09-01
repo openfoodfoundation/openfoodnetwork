@@ -21,6 +21,8 @@
 # a.get :color
 # a.preferred_color
 #
+require 'spree/core/mail_settings'
+
 module Spree
   class AppConfiguration < Preferences::Configuration
     # Should state/state_name be required
