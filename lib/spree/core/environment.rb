@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'environment_extension'
+require_relative 'environment/calculators'
+
 module Spree
   module Core
     class Environment
