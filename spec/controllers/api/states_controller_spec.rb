@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Api
   describe StatesController do
     render_views
 
-    let!(:state) { create(:state, :name => "Victoria") }
+    let!(:state) { create(:state, name: "Victoria") }
     let(:attributes) { [:id, :name, :abbr, :country_id] }
     let(:current_user) { create(:user) }
 
@@ -33,26 +35,25 @@ module Api
       it "paginates when page parameter is passed through" do
         @scope.should_receive(:page).with(1).and_return(@scope)
         @scope.should_receive(:per).with(nil)
-        api_get :index, :page => 1
+        api_get :index, page: 1
       end
 
       it "paginates when per_page parameter is passed through" do
         @scope.should_receive(:page).with(nil).and_return(@scope)
         @scope.should_receive(:per).with(25)
-        api_get :index, :per_page => 25
+        api_get :index, per_page: 25
       end
     end
 
-
     context "with two states" do
-      before { create(:state, :name => "New South Wales") }
+      before { create(:state, name: "New South Wales") }
 
       it "gets all states for a country" do
-        country = create(:country, :states_required => true)
-        state.country = country 
+        country = create(:country, states_required: true)
+        state.country = country
         state.save
 
-        api_get :index, :country_id => country.id
+        api_get :index, country_id: country.id
         expect(json_response.first.symbolize_keys.keys).to include(*attributes)
         expect(json_response.count).to eq 1
       end
@@ -63,13 +64,13 @@ module Api
       end
 
       it 'can query the results through a paramter' do
-        api_get :index, :q => { :name_cont => 'Vic' }
+        api_get :index, q: { name_cont: 'Vic' }
         expect(json_response.first['name']).to eq("Victoria")
       end
     end
 
     it "can view a state" do
-      api_get :show, :id => state.id
+      api_get :show, id: state.id
       expect(json_response.symbolize_keys.keys).to include(*attributes)
     end
   end

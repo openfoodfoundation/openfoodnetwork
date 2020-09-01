@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class StatesController < Api::BaseController
     respond_to :json
@@ -5,14 +7,7 @@ module Api
     skip_authorization_check
 
     def index
-      @states = scope.ransack(params[:q]).result.
-                  includes(:country).order('name ASC')
-
-      if params[:page] || params[:per_page]
-        @states = @states.page(params[:page]).per(params[:per_page])
-      end
-
-      render json: @states, each_serializer: Api::StateSerializer, status: :ok
+      render json: states, each_serializer: Api::StateSerializer, status: :ok
     end
 
     def show
@@ -29,6 +24,21 @@ module Api
       else
         Spree::State.all
       end
+    end
+
+    def states
+      states = scope.ransack(params[:q]).result.
+        includes(:country).order('name ASC')
+
+      if pagination?
+        states = states.page(params[:page]).per(params[:per_page])
+      end
+
+      states
+    end
+
+    def pagination?
+      params[:page] || params[:per_page]
     end
   end
 end
