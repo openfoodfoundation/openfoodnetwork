@@ -4,8 +4,7 @@ var update_state = function(region) {
   var state_select   = $('span#' + region + 'state select.select2');
   var state_input    = $('span#' + region + 'state input.state_name');
 
-  $.get(Spree.routes.states_search + "?country_id=" + country, function(data) {
-    var states = data["states"]
+  $.get(Spree.routes.states_search + "?country_id=" + country, function(states) {
     if (states.length > 0) {
       state_select.html('');
       var states_with_blank = [{name: '', id: ''}].concat(states);
