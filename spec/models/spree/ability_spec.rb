@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'cancan/matchers'
 require 'support/ability_helpers'
-require 'spree/testing_support/bar_ability'
 
 # Fake ability for testing registration of additional abilities
 class FooAbility
@@ -80,6 +79,17 @@ describe Spree::Ability do
     end
 
     context 'with fakedispatch user' do
+      class BarAbility
+        include CanCan::Ability
+
+        def initialize(user)
+          user ||= Spree::User.new
+          return unless user.has_spree_role?('bar')
+
+          can [:admin, :index, :show], Spree::Order
+        end
+      end
+
       it 'should be able to admin on the order and shipment pages' do
         user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
 
