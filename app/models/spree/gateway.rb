@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'concerns/payment_method_distributors'
+require 'spree/core/delegate_belongs_to'
+
 module Spree
   class Gateway < PaymentMethod
     include PaymentMethodDistributors
