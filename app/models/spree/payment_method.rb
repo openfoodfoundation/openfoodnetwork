@@ -99,7 +99,7 @@ module Spree
         self.class.include Spree::Core::CalculatedAdjustments
       end
 
-      self.calculator ||= Calculator::FlatRate.new(preferred_amount: 0)
+      self.calculator ||= ::Calculator::FlatRate.new(preferred_amount: 0)
     end
 
     def has_distributor?(distributor)
