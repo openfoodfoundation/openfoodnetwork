@@ -27,7 +27,11 @@ module DfcProvider
       end
 
       def check_enterprise
-        @enterprise =
+        current_enterprise
+      end
+
+      def current_enterprise
+        @current_enterprise ||=
           if params[:enterprise_id] == 'default'
             current_user.enterprises.first!
           else

@@ -18,7 +18,7 @@ module DfcProvider
         @variant ||=
           Spree::Variant.
             joins(product: :supplier).
-            where('enterprises.id' => @enterprise.id).
+            where('enterprises.id' => current_enterprise.id).
             find(params[:id])
       end
     end
