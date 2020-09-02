@@ -2803,6 +2803,8 @@ fr:
   adjustments: "Ajustements"
   payments: "Paiements"
   return_authorizations: "Autorisations de retours"
+  credit_owed: "Crédit dû"
+  new_adjustment: "Nouveau ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Livraison"
@@ -3003,6 +3005,11 @@ fr:
           one: "1 erreur n'a pas permis de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
+      payments_list:
+        date_time: "Date/heure"
+        amount: "Montant"
+        payment_method: "Méthode de paiement"
+        payment_state: "Statut du Paiement"
     errors:
       messages:
         blank: "Champ obligatoire"
@@ -3507,3 +3514,8 @@ fr:
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
       invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
+    activerecord:
+      models:
+        spree/payment:
+          one: Paiement
+          other: Paiements
