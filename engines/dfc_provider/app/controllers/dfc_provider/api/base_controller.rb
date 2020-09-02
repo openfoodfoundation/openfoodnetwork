@@ -21,9 +21,7 @@ module DfcProvider
       end
 
       def check_user
-        @user = authorization_control.process
-
-        return if @user.present?
+        return if current_user.present?
 
         head :unauthorized
       end
@@ -31,10 +29,14 @@ module DfcProvider
       def check_enterprise
         @enterprise =
           if params[:enterprise_id] == 'default'
-            @user.enterprises.first!
+            current_user.enterprises.first!
           else
-            @user.enterprises.find(params[:enterprise_id])
+            current_user.enterprises.find(params[:enterprise_id])
           end
+      end
+
+      def current_user
+        @current_user ||= authorization_control.process
       end
 
       def access_token

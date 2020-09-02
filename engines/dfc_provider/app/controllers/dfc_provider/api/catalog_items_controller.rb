@@ -5,7 +5,7 @@ module DfcProvider
   module Api
     class CatalogItemsController < BaseController
       def index
-        render json: @user, serializer: DfcProvider::PersonSerializer
+        render json: current_user, serializer: DfcProvider::PersonSerializer
       end
 
       def show

@@ -6,20 +6,20 @@ module DfcProvider
     class PeopleController < BaseController
       skip_before_action :check_enterprise
 
-      before_action :find_user, :check_user_accessibility
+      before_action :check_user_accessibility
 
       def show
-        render json: @user, serializer: DfcProvider::PersonSerializer
+        render json: user, serializer: DfcProvider::PersonSerializer
       end
 
       private
 
-      def find_user
-        @retrieved_user = Spree::User.find(params[:id])
+      def user
+        @user ||= Spree::User.find(params[:id])
       end
 
       def check_user_accessibility
-        return if @user == @retrieved_user
+        return if current_user == user
 
         not_found
       end

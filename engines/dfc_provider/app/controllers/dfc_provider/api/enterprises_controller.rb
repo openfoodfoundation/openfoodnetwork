@@ -13,9 +13,9 @@ module DfcProvider
       def check_enterprise
         @enterprise =
           if params[:id] == 'default'
-            @user.enterprises.first!
+            current_user.enterprises.first!
           else
-            @user.enterprises.find(params[:id])
+            current_user.enterprises.find(params[:id])
           end
       end
     end
