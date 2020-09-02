@@ -6,10 +6,6 @@ describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user: user) }
 
-  before do
-    allow(Spree::LegacyUser).to receive_messages(current: build(:user, id: 123))
-  end
-
   context "#products" do
     let(:order) { create(:order_with_line_items) }
 
@@ -36,8 +32,8 @@ describe Spree::Order do
 
   context "#associate_user!" do
     it "should associate a user with a persisted order" do
-      order = FactoryGirl.create(:order_with_line_items, created_by: nil)
-      user = FactoryGirl.create(:user)
+      order = create(:order_with_line_items, created_by: nil)
+      user = create(:user)
 
       order.user = nil
       order.email = nil
@@ -55,8 +51,8 @@ describe Spree::Order do
 
     it "should not overwrite the created_by if it already is set" do
       creator = create(:user)
-      order = FactoryGirl.create(:order_with_line_items, created_by: creator)
-      user = FactoryGirl.create(:user)
+      order = create(:order_with_line_items, created_by: creator)
+      user = create(:user)
 
       order.user = nil
       order.email = nil
