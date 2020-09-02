@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::PeopleController, type: :controller do
+describe DfcProvider::Api::PersonsController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }

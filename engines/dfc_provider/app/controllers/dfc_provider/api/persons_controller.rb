@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Controller used to provide the People API for the DFC application
+# Controller used to provide the Persons API for the DFC application
 module DfcProvider
   module Api
-    class PeopleController < DfcProvider::Api::BaseController
+    class PersonsController < DfcProvider::Api::BaseController
       skip_before_action :check_enterprise
 
       before_action :check_user_accessibility
