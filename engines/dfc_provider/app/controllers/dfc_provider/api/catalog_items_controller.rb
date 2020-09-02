@@ -3,7 +3,7 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   module Api
-    class CatalogItemsController < BaseController
+    class CatalogItemsController < DfcProvider::Api::BaseController
       def index
         render json: current_user, serializer: DfcProvider::PersonSerializer
       end

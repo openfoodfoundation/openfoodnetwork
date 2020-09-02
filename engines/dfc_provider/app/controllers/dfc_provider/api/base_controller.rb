@@ -3,7 +3,7 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   module Api
-    class BaseController < ::ActionController::Base
+    class BaseController < ActionController::Base
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       before_action :check_authorization,

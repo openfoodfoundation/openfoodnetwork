@@ -3,7 +3,7 @@
 # Controller used to provide the CatalogItem API for the DFC application
 module DfcProvider
   module Api
-    class EnterprisesController < BaseController
+    class EnterprisesController < DfcProvider::Api::BaseController
       def show
         render json: current_enterprise, serializer: DfcProvider::EnterpriseSerializer
       end

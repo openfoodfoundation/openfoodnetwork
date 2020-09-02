@@ -3,7 +3,7 @@
 # Controller used to provide the People API for the DFC application
 module DfcProvider
   module Api
-    class PeopleController < BaseController
+    class PeopleController < DfcProvider::Api::BaseController
       skip_before_action :check_enterprise
 
       before_action :check_user_accessibility

@@ -3,7 +3,7 @@
 # Controller used to provide the SuppliedProducts API for the DFC application
 module DfcProvider
   module Api
-    class SuppliedProductsController < BaseController
+    class SuppliedProductsController < DfcProvider::Api::BaseController
       def show
         render json: variant, serializer: DfcProvider::SuppliedProductSerializer
       end
