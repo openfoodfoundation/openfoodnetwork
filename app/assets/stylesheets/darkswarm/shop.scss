@@ -72,11 +72,11 @@
       @include csstrans;
 
       // Avoid margin collapsing which breaks the flush alignment of the first
-      // image. https://stackoverflow.com/a/19719427/3377535
+      // image.
       overflow: auto;
 
       &:nth-child(n + 2) {
-        border-top: 1px solid #e5e5e5;
+        border-top: 1px solid $grey-100;
       }
       padding-bottom: 1px;
       position: relative;
