@@ -4,9 +4,9 @@
 module DfcProvider
   module Api
     class PeopleController < BaseController
-      skip_before_filter :check_enterprise
+      skip_before_action :check_enterprise
 
-      before_filter :find_user, :check_user_accessibility
+      before_action :find_user, :check_user_accessibility
 
       def show
         render json: @user, serializer: DfcProvider::PersonSerializer
