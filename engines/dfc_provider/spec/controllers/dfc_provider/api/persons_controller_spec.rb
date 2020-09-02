@@ -38,7 +38,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
         context 'with an other user id' do
           before { api_get :show, id: create(:user).id }
 
-          it 'returns 404' do
+          it 'is not found' do
             expect(response.status).to eq 404
           end
         end

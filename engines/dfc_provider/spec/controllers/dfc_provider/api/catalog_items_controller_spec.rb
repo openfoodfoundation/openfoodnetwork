@@ -73,7 +73,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
         context 'without a recorded enterprise' do
           let(:enterprise) { create(:enterprise) }
 
-          it 'returns not_found head' do
+          it 'is not found' do
             api_get :index, enterprise_id: 'default'
             expect(response.status).to eq 404
           end
@@ -140,7 +140,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
                       id: create(:simple_product).variants.first.id
             end
 
-            it 'returns a 404 error' do
+            it 'is not found' do
               expect(response.status).to eq 404
             end
           end
