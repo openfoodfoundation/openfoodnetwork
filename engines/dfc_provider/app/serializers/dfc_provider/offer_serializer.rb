@@ -10,8 +10,6 @@ module DfcProvider
     attribute :price, key: 'dfc:price'
     attribute :stock_limitation, key: 'dfc:stockLimitation'
 
-    delegate :price, to: :object
-
     def id
       "/offers/#{object.id}"
     end

@@ -13,8 +13,6 @@ module DfcProvider
              serializer: DfcProvider::OfferSerializer,
              key: 'dfc:offeredThrough'
 
-    delegate :sku, to: :object
-
     def id
       dfc_provider_routes.api_dfc_provider_enterprise_catalog_item_url(
         enterprise_id: object.product.supplier_id,
