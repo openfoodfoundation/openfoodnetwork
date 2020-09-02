@@ -16,7 +16,7 @@
 
       .shop-variants {
         // product-thumb width + 1rem
-        padding-left: calc(100% / 9 * 2 + 1rem);
+        padding-left: calc(22.222% + 1rem);
 
         @include breakpoint(phablet) {
           padding-left: 0;
@@ -95,11 +95,11 @@
 
         .summary-header {
           // product-thumb width + 1rem
-          padding-left: calc(100% / 9 * 2 + 1rem);
+          padding-left: calc(22.222% + 1rem);
           padding-right: 1rem;
 
           @include breakpoint(phablet) {
-            padding-left: calc(100% / 12 * 4 + 1rem);
+            padding-left: calc(33.333% + 1rem);
           }
 
           .product-producer {
