@@ -3,14 +3,14 @@
     product {
       .product-thumb {
         // Desktop: the product summary is nine columns wide. Use two
-        // for the image. In our design, that's a max of 192px.
-        width: calc(100% / 9 * 2);
+        // for the image. 100% / 9 * 2 = 22.222% <= 192px
+        width: calc(22.222%);
         float: left;
 
         // Mobile: the summary has full twelve columns and the image
-        // should take four of them. Maximum is 227px.
+        // should take four of them. 100% / 12 * 4 = 33.333% <= 227px
         @include breakpoint(phablet) {
-          width: calc(100% / 12 * 4);
+          width: calc(33.333%);
         }
       }
     }
