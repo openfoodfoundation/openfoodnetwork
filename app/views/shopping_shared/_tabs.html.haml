@@ -9,6 +9,6 @@
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
             .page{ "ng-class" => "{ selected: selectedPage() == '#{tab[:name]}' }" }
-              %a{ href: "##{tab[:name]}" }=tab[:title]
+              %a{ class: "#{shop_tabs.size > 4 ? 'small' : ''}", href: "##{tab[:name]}" }=tab[:title]
 
     .page-view{ ng: {include: "'shop/' + selectedPage() + '.html'" } }

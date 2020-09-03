@@ -56,6 +56,12 @@
         background: none;
       }
 
+      @include breakpoint(mobile) {
+        &.small {
+          font-size: 0.75em;
+        }
+      }
+
       @include breakpoint(phablet) {
         padding: 0.35em 0 0.65em 0;
       }

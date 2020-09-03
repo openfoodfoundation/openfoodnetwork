@@ -25,7 +25,7 @@ module ShopHelper
   end
 
   def shop_tabs
-    [
+    @shop_tabs ||= [
       { name: 'home', title: t(:shopping_tabs_home), show: show_home_tab? },
       { name: 'shop', title: t(:shopping_tabs_shop), show: !require_customer? },
       { name: 'about', title: t(:shopping_tabs_about), show: true },
