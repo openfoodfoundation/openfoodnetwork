@@ -223,6 +223,14 @@ module Spree
       return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
     }
 
+    scope :active, lambda {
+      where("spree_products.deleted_at IS NULL AND spree_products.available_on <= ?", Time.zone.now)
+    }
+
+    def self.group_by_products_id
+      group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
+    end
+
     def to_param
       permalink.present? ? permalink : (permalink_was || name.to_s.to_url)
     end
