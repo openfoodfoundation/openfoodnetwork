@@ -2779,6 +2779,8 @@ ca:
   adjustments: "Ajustaments"
   payments: "Pagaments"
   return_authorizations: "Autoritzacions de devolució"
+  credit_owed: "Crèdit a deure"
+  new_adjustment: "Nou ajustament"
   payment: "Pagament"
   payment_method: "Mètode de pagament"
   shipment: "Enviament"
@@ -2980,6 +2982,7 @@ ca:
           other: "%{count} errors han impedit guardar aquest registre:"
         there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
       payments_list:
+        date_time: "Data i hora"
         amount: "Quantitat"
         payment_method: "Mètode de pagament"
         payment_state: "Estat del pagament"
@@ -3486,3 +3489,8 @@ ca:
       shipment:
         cannot_ready: "No es pot fer l'enviament."
       invalid_taxonomy_id: "Identificador de taxonomia no vàlid."
+    activerecord:
+      models:
+        spree/payment:
+          one: Pagament
+          other: Pagaments
