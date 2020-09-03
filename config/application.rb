@@ -33,12 +33,6 @@ module Openfoodnetwork
       end
     end
 
-    # We reload the routes here
-    #   so that the appended/prepended routes are available to the application.
-    config.after_initialize do
-      Rails.application.routes_reloader.reload!
-    end
-
     initializer "spree.environment", before: :load_config_initializers do |app|
       app.config.spree = Spree::Core::Environment.new
       Spree::Config = app.config.spree.preferences # legacy access
