@@ -95,7 +95,7 @@ module Spree
         end
 
         respond_with(@taxon) do |format|
-          format.html { redirect_to edit_admin_taxonomy_url(@taxonomy) }
+          format.html { redirect_to spree.edit_admin_taxonomy_url(@taxonomy) }
           format.json { render json: @taxon.to_json }
         end
       end
