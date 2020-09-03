@@ -48,7 +48,7 @@ module Spree
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
-          return redirect_to(edit_admin_order_path(@order),
+          return redirect_to(spree.edit_admin_order_path(@order),
                              flash: { error: @order.errors.full_messages.join(', ') })
         end
 
