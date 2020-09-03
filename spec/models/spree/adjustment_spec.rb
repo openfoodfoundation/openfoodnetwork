@@ -245,7 +245,7 @@ module Spree
         let!(:zone)        { create(:zone_with_member) }
         let!(:order)       { create(:order, bill_address: create(:address)) }
         let!(:line_item)   { create(:line_item, order: order) }
-        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::FlatRate.new(preferred_amount: 0.1)) }
+        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1)) }
         let(:adjustment)   { line_item.adjustments(:reload).first }
 
         before do
