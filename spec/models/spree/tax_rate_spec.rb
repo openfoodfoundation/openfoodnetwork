@@ -5,7 +5,7 @@ module Spree
     describe "selecting tax rates to apply to an order" do
       let!(:zone) { create(:zone_with_member) }
       let!(:order) { create(:order, distributor: hub, bill_address: create(:address)) }
-      let!(:tax_rate) { create(:tax_rate, included_in_price: true, calculator: Calculator::FlatRate.new(preferred_amount: 0.1), zone: zone) }
+      let!(:tax_rate) { create(:tax_rate, included_in_price: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1), zone: zone) }
 
       describe "when the order's hub charges sales tax" do
         let(:hub) { create(:distributor_enterprise, charges_sales_tax: true) }
@@ -33,7 +33,7 @@ module Spree
     end
 
     describe "ensuring that tax rate is marked as tax included_in_price" do
-      let(:tax_rate) { create(:tax_rate, included_in_price: false, calculator: Calculator::DefaultTax.new) }
+      let(:tax_rate) { create(:tax_rate, included_in_price: false, calculator: ::Calculator::DefaultTax.new) }
 
       it "sets included_in_price to true" do
         tax_rate.send(:with_tax_included_in_price) do
