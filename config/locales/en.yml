@@ -3152,6 +3152,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     has_no_shipped_units: "has no shipped units"
+    order_populator:
+      out_of_stock: ! '%{item} is out of stock.'
 
     actions:
       update: "Update"
