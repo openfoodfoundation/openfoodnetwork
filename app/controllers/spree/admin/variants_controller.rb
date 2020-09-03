@@ -67,7 +67,7 @@ module Spree
                             Spree.t('notice_messages.variant_not_deleted')
                           end
 
-        redirect_to admin_product_variants_url(params[:product_id], @url_filters)
+        redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
       end
 
       protected

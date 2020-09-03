@@ -35,16 +35,16 @@ module Spree
             @payment.process!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
-            redirect_to admin_order_payments_path(@order)
+            redirect_to spree.admin_order_payments_path(@order)
           else
             OrderWorkflow.new(@order).complete!
 
             flash[:success] = Spree.t(:new_order_completed)
-            redirect_to edit_admin_order_url(@order)
+            redirect_to spree.edit_admin_order_url(@order)
           end
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
-          redirect_to new_admin_order_payment_path(@order)
+          redirect_to spree.new_admin_order_payment_path(@order)
         end
       end
 
