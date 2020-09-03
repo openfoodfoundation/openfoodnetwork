@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/responder'
+
 module ActionController
   class Base
     def respond_with(*resources, &block)
