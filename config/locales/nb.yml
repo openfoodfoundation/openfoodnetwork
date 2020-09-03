@@ -227,6 +227,7 @@ nb:
   enterprises: Bedrifter
   enterprise_groups: Grupper
   reports: Rapporter
+  listing_reports: Lister opp rapporter
   variant_overrides: Varelager
   import: Import
   spree_products: Spree Produkter
@@ -721,6 +722,8 @@ nb:
           enable_subscriptions_tip: "Aktiver abonnementsfunksjonalitet?"
           enable_subscriptions_false: "Deaktivert"
           enable_subscriptions_true: "Aktivert"
+          customer_names_in_reports: "Kundenavn i rapporter"
+          customer_names_tip: "La leverandørene dine se kundenes navn i rapporter"
           customer_names_false: "Deaktivert"
           customer_names_true: "Aktivert"
           shopfront_message: "Melding Butikk"
@@ -2769,6 +2772,8 @@ nb:
   adjustments: "Justeringer"
   payments: "Betalinger"
   return_authorizations: "Returautorisasjoner"
+  credit_owed: "Kreditt skyldig"
+  new_adjustment: "Ny justering"
   payment: "Betaling"
   payment_method: "Betalingsmetode"
   shipment: "Leveranse"
@@ -2969,6 +2974,11 @@ nb:
           one: "1 feil forbød å lagre denne posten:"
           other: "%{count} feil forbød at denne posten ble lagret:"
         there_were_problems_with_the_following_fields: "Det var problemer med følgende felt"
+      payments_list:
+        date_time: "Dato/tid"
+        amount: "Antall"
+        payment_method: "Betalingsmetode"
+        payment_state: "Betalingsstatus"
     errors:
       messages:
         blank: "kan ikke være tomt"
@@ -3238,6 +3248,8 @@ nb:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
+        customer_names_message:
+          customer_names_tip: "Hvis kundenavnene er skjult for bestillinger du har levert, kan du kontakte distributøren og spørre om de kan oppdatere sine butikkinnstillinger slik at leverandørene kan se kundenavn."
       users:
         index:
           listing_users: "Lister opp brukere"
@@ -3470,3 +3482,8 @@ nb:
       shipment:
         cannot_ready: "Kan ikke gjøre klar forsendelse."
       invalid_taxonomy_id: "Ugyldig kategori-id."
+    activerecord:
+      models:
+        spree/payment:
+          one: innbetaling
+          other: Betalinger
