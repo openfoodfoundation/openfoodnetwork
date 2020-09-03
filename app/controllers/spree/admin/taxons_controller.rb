@@ -15,9 +15,9 @@ module Spree
           respond_with(@taxon) do |format|
             format.html do
               if redirect_to @taxonomy
-                edit_admin_taxonomy_url(@taxonomy)
+                spree.edit_admin_taxonomy_url(@taxonomy)
               else
-                admin_taxonomies_url
+                spree.admin_taxonomies_url
               end
             end
           end
