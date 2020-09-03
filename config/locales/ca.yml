@@ -2979,6 +2979,10 @@ ca:
           one: "Un error va prohibir guardar aquest registre:"
           other: "%{count} errors han impedit guardar aquest registre:"
         there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
+      payments_list:
+        amount: "Quantitat"
+        payment_method: "Mètode de pagament"
+        payment_state: "Estat del pagament"
     errors:
       messages:
         blank: "no es pot deixar en blanc"

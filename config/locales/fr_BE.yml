@@ -14,6 +14,7 @@ fr_BE:
       spree/payment:
         amount: Montant
         state: Statut de la commande
+        source: Source
       spree/product:
         primary_taxon: "Catégorie de Produit"
         supplier: "Fournisseur"
@@ -183,6 +184,7 @@ fr_BE:
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Bienvenue sur"
   site_meta_description: "C’est ce que nous faisons en créant une plateforme qui veut mettre en contact :\n● des paysans passionnés, engagés pour une agriculture durable et régénératrice,\n● des distributeurs de produits locaux, adeptes de circuits courts, qui agissent en toute transparence et assurent une juste rémunération des producteurs,\n● des acheteurs qui veulent changer le monde en mangeant mieux,"
   search_by_name: Recherche par nom ou province...
   producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
@@ -225,6 +227,7 @@ fr_BE:
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
+  listing_reports: Report de référencement
   variant_overrides: Catalogue magasin
   import: Importer
   spree_products: Produits
@@ -271,6 +274,9 @@ fr_BE:
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Catégorie de livraison"
+  height: "Taille"
+  width: "largeur"
+  depth: "profondeur"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
@@ -326,6 +332,7 @@ fr_BE:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
+    column_save_as_default: Sauvegarder par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -370,6 +377,8 @@ fr_BE:
         title: "Configuration Matomo"
         matomo_url: "URL de l'instance sur Matomo"
         matomo_site_id: "ID de l'instance sur Matomo"
+        matomo_tag_manager_url: "URL de l'instance sur Matomo"
+        info_html: "Matomo est un site web est une application mobile analytique . Vous pouvez heberger matomo sur place ou heberger dans le cloud. Voyez <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
     customers:
       index:
@@ -476,6 +485,7 @@ fr_BE:
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
         unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
+        malformed_csv: "L'import du produit a rencontré une erreur a l'ouverture du fichier:%{error_message}"
       index:
         notice: "Remarque"
         beta_notice: "Cette fonction est encore en phase Beta: vous pouvez rencontrer quelques erreurs pendant que vous l'utilisez. N'hésitez donc pas à contacter notre support."
@@ -689,6 +699,7 @@ fr_BE:
           ofn_uid_tip: L'identifiant unique utilisé pour identifier l'entreprise sur Open Food Network.
         shipping_methods:
           name: "Nom"
+          applies: "Actif?"
           manage: "Gérer les méthodes de livraison"
           create_button: "Créer nouvelle méthode de livraison"
           create_one_button: "En créer une maintenant"
@@ -711,6 +722,8 @@ fr_BE:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
+          customer_names_in_reports: "Nom de client dans le rapport"
+          customer_names_tip: "Activer vos fourniseur pour voir les noms des client dans le rapport "
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
@@ -870,6 +883,7 @@ fr_BE:
         incoming: "Produits entrants (pouvant être mis en vente par les comptoirs)"
         supplier: "Disitributeur·trice"
         products: "Produits"
+        receival_details: "Detail de la livraison"
         fees: "Commission"
         save: "Sauvergarder"
         save_and_next: "Sauver et suivant"
@@ -1153,7 +1167,12 @@ fr_BE:
         cart: "Panier"
       cart_sidebar:
         checkout: "Etape suivante (coordonnées)"
+        edit_cart: "Modifier le pannier"
+        items_in_cart_singular: "%{num}Article dans le pannier"
+        items_in_cart_plural: "%{num}Articles dans le pannier"
         close: "Ferme"
+        cart_empty: "Votre pannier est vide"
+        take_me_shopping: "Emmenez moi vaire le magazin"
       signed_in:
         profile: "Profil"
       mobile_menu:
@@ -1551,12 +1570,17 @@ fr_BE:
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Annuler
   products_showing: "Afficher:"
+  products_results_for: "Resultat pour"
   products_or: "ou"
   products_and: "et"
+  products_filters_in: "dedans"
   products_with: avec
+  products_search: "Recherche..."
   products_filter_by: "Filtrer par"
   products_filter_selected: "sélectionné"
+  products_filter_heading: "Filtré"
   products_filter_clear: "Annuler"
+  products_filter_done: "Terminé"
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
@@ -1568,6 +1592,7 @@ fr_BE:
   products_update_error_data: "Échec de l'enregistrement dû à des données non valides."
   products_changes_saved: "Modifications enregistrées."
   products_no_results_html: "Désolé, aucun résultat trouvé pour %{query}"
+  products_clear_search: "Effacer recherche"
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
   components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food Network mais ne vendent pas via la plateforme. Elles ont peut-être une comptoir physique, ou une comptoir en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
@@ -1708,6 +1733,7 @@ fr_BE:
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
   orders_open: "Comptoir ouvert"
+  closing: "fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
   updating: Mettre à jour
@@ -1922,6 +1948,7 @@ fr_BE:
   admin_enterprise_relationships_permits: "autorise"
   admin_enterprise_relationships_seach_placeholder: "Rechercher"
   admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_relationships_to: "vers"
   admin_enterprise_groups: "Groupes d'entreprises"
   admin_enterprise_groups_name: "Produit/Variante"
   admin_enterprise_groups_owner: "Manager principal"
@@ -1950,6 +1977,7 @@ fr_BE:
   supplier: "Fournisseurs"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
+  permalink: "permalien"
   shipping_categories: "Condition de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
@@ -2046,6 +2074,7 @@ fr_BE:
   remove_tax: "Retirer TVA"
   first_name_begins_with: "Début du prénom"
   last_name_begins_with: "Début du nom de famille"
+  shipping_method: "Méthode de livraison"
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des acteurs et actrices qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux acteurs s'enregistrant sur Open Food Network de valider nos "
@@ -2065,6 +2094,7 @@ fr_BE:
   hub_sidebar_at_least: "Sélectionnez un/des comptoir/s"
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
+  order_cycles_closed_for_hub: "Le hub que vous avez choisi ets temporairement fermer pour commande. Essayer plus tard."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Fournisseurs"
   report_customers_cycle: "Cycle de vente"
@@ -2303,6 +2333,7 @@ fr_BE:
   order_cycles_email_to_producers_notice: 'Les emails à destination des producteur·trice·s ont été mis en file d''attente.'
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
+  order_cycle_closed: "Le cycle de commande que vous avez sélectionner vient de fermer. Essayer plus tard."
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
@@ -2683,6 +2714,8 @@ fr_BE:
   adjustments: "Corrections"
   payments: "Paiements"
   return_authorizations: "Autorisations de retour"
+  credit_owed: "Crédit redevable"
+  new_adjustment: "Nouvelle ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Envoi"
@@ -2755,6 +2788,12 @@ fr_BE:
     void: "Vide"
     login: "Se connecter"
     password: "Mot de passe"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Page d'accueil"
+    server: "Serveur"
+    test_mode: "Mode test"
+    logourl: "Url logo"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -2871,6 +2910,14 @@ fr_BE:
     options: "Options"
     actions:
       update: "Mettre à jour"
+    shared:
+      error_messages:
+        there_were_problems_with_the_following_fields: "Il y a u des erreur avec les champs suivant"
+      payments_list:
+        date_time: "Date/Temps"
+        amount: "Quantité"
+        payment_method: "Méthode de paiement"
+        payment_state: "Statut du Paiement"
     errors:
       messages:
         blank: "Champ obligatoire"
@@ -3013,6 +3060,8 @@ fr_BE:
           zone: "Zone"
           calculator: "Calculateur"
           display: "Ecran"
+          both: "Aussi bien check-out ets parametre"
+          back_end: "Seulement Back office"
           no_shipping_methods_found: "Aucune méthode de livraison trouvée"
         new:
           new_shipping_method: "Nouvelle méthode de livraison"
@@ -3024,6 +3073,9 @@ fr_BE:
         form:
           categories: "Les catégories"
           zones: "Zones"
+          both: "Aussi bien check-out ets parametre"
+          back_end: "Seulement back office"
+          deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""
       payment_methods:
         index:
           payment_methods: "Méthodes de paiement"
@@ -3035,8 +3087,11 @@ fr_BE:
           display: "Ecran"
           active: "Actif"
           both: "Les deux"
+          front_end: "Seulement Passage a la caisse"
+          back_end: "Seulement Back office"
           active_yes: "Oui"
           active_no: "Non"
+          no_payment_methods_found: "Pas de méthode de payement trouver"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des paiements"
@@ -3065,7 +3120,11 @@ fr_BE:
           active: "Actif"
           active_yes: "Oui"
           active_no: "Non"
+          both: "Aussi bien check-out ets parametre"
+          front_end: "Seulement Passage a la caisse"
+          back_end: "Seulement Back office"
           tags: "Tags"
+          deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""
         providers:
           provider: "Fournisseur"
       payments:
@@ -3073,6 +3132,8 @@ fr_BE:
           stripe:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
+          paypal:
+            no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez télécharger une image au format PNG ou JPG."
         new:
@@ -3126,6 +3187,8 @@ fr_BE:
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteur·euse·s'
+        customer_names_message:
+          customer_names_tip: "Si le nom des client est cacher pour des commande que vous avez faite, vous pouvez contacter le distributeur est leur demander de changer les préférence pour savoir laisser leur fournisseur voire les nom des client. "
       users:
         index:
           listing_users: "Utilisateur·trice d'annonces"
@@ -3167,6 +3230,8 @@ fr_BE:
           price: "Prix"
           display_as: "Unité affichéé"
           display_name: "Nom d'affichage"
+          display_as_placeholder: 'Ex: 2 kilo'
+          display_name_placeholder: 'ex: Tomates'
         autocomplete:
           out_of_stock: "Pas en stock"
           producer_name: "Producteur·trice"
@@ -3206,6 +3271,7 @@ fr_BE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Un produit dans votre panier n'est plus disponible. Veuillez changer le montant des quantité. "
       edit:
         login_to_view_order: "Veuillez vous connecter pour voir votre commande."
       bought:
@@ -3233,6 +3299,14 @@ fr_BE:
       invalid: invalide
     order_mailer:
       cancel_email:
+        customer_greeting: "Chère %{name}"
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong> a eter annulée. Veuillez conserver cette information d'annulation pour votre dossiers."
+        dont_cancel: "Si vous avez changer d'avis ou souhaiter annuler cette commande contacter nous %{email}"
+        order_summary_canceled_html: "<strong>Résumé de la commande #%{number} [ANNULEE]"
+        details: "Voici les détails que vous avez commander:"
+        unpaid_order: "Votre commande n'était pas encore payer donc aucun remboursement na été fait."
+        paid_order: "Votre commande était payer donc %{distributor} vous a rembourser le montant totale. "
+        credit_order: "Votre commande était payer donc vous avez eter crediter."
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"
@@ -3261,6 +3335,11 @@ fr_BE:
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi : %{tracking}"
         track_link: "Lien de suivi : %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Félicitation "
+        message: "Si vous avez recu cette email, allor votre adresse mail est correcte"
+        subject: "Test Mail"
     order_state:
       address: adresse
       adjustments: ajustements

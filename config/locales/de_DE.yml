@@ -2916,6 +2916,11 @@ de_DE:
     options: "Optionen"
     actions:
       update: "Aktualisieren"
+    shared:
+      payments_list:
+        amount: "Betrag"
+        payment_method: "Zahlungsart"
+        payment_state: "Zahlungsstatus"
     errors:
       messages:
         blank: "kann nicht leer sein"

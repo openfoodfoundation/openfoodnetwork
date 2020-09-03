@@ -1235,13 +1235,13 @@ ar:
   ticket_column_unit_price: "سعر الوحدة"
   ticket_column_total_price: "السعر الكلي"
   menu_1_title: "محلات"
-  menu_1_url: "/محلات"
+  menu_1_url: "/shops"
   menu_2_title: "خريطة"
-  menu_2_url: "/خريطة"
+  menu_2_url: "/map"
   menu_3_title: "المنتجين"
-  menu_3_url: "/ المنتجين"
+  menu_3_url: "/producers"
   menu_4_title: "مجموعات"
-  menu_4_url: "/مجموعات"
+  menu_4_url: "/groups"
   menu_5_title: "حول"
   menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "الاتصال"
@@ -3073,6 +3073,10 @@ ar:
           many: "منعت أخطاء %{count} حفظ هذا السجل:"
           other: "منعت أخطاء %{count} حفظ هذا السجل:"
         there_were_problems_with_the_following_fields: "كانت هناك مشاكل مع الحقول التالية"
+      payments_list:
+        amount: "القيمة"
+        payment_method: "طريقة الدفع او السداد"
+        payment_state: "حالة الدفعة"
     errors:
       messages:
         blank: "لا يمكن أن تكون فارغة"

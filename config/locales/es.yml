@@ -2979,6 +2979,10 @@ es:
           one: "1 error prohibió guardar este registro:"
           other: "%{count} errores impidieron que se guardara este registro:"
         there_were_problems_with_the_following_fields: "Hubo problemas con los siguientes campos"
+      payments_list:
+        amount: "Cantidad"
+        payment_method: "Método de pago"
+        payment_state: "Estado del pago"
     errors:
       messages:
         blank: "no puede estar vacío"

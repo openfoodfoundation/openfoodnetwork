@@ -2972,6 +2972,10 @@ tr:
           one: "1 hata kaydedilmesini engelledi:"
           other: "%{count}hata kaydedilmeyi engelledi:"
         there_were_problems_with_the_following_fields: "Belirtilen alanlar ile ilgili sorun oluştu:"
+      payments_list:
+        amount: "Tutar"
+        payment_method: "ÖDEME YÖNTEMİ"
+        payment_state: "Ödeme Durumu"
     errors:
       messages:
         blank: "boş olamaz"

@@ -2983,6 +2983,10 @@ fr_CA:
           one: "1 erreur n'a pas permis de sauvegarder:"
           other: "1 %{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
+      payments_list:
+        amount: "Montant"
+        payment_method: "Méthode de paiement"
+        payment_state: "Statut du Paiement"
     errors:
       messages:
         blank: "Champ obligatoire"

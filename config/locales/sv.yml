@@ -1927,6 +1927,11 @@ sv:
     weight: Vikt (kg)
     actions:
       update: "Uppdatera"
+    shared:
+      payments_list:
+        amount: "Belopp"
+        payment_method: "Betalningsmetod"
+        payment_state: "Betalningsstatus"
     errors:
       messages:
         blank: "kan inte vara blank"

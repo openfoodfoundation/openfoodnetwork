@@ -2794,6 +2794,11 @@ en_DE:
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     actions:
       update: "Update"
+    shared:
+      payments_list:
+        amount: "Amount"
+        payment_method: "Payment Method"
+        payment_state: "Payment State"
     errors:
       messages:
         blank: "can't be blank"

@@ -1207,7 +1207,7 @@ en_CA:
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact}%{enterprise}  to ask about joining."
       select_oc:
-        select_oc_html: "Please 1choose when you want your order1, to see what products are available."
+        select_oc_html: "Please <span class='highlighted'>choose the store you want</span> from the dropdown box above right."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -2972,6 +2972,10 @@ en_CA:
           one: " 1 errors prohibited this record from being saved:"
           other: " %{count}errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
+      payments_list:
+        amount: "Amount"
+        payment_method: "Payment Method"
+        payment_state: "Payment State"
     errors:
       messages:
         blank: "can't be blank"

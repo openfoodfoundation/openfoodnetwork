@@ -380,6 +380,7 @@ nl_BE:
         matomo_tag_manager_url: "Matomo label Manager URL"
         info_html: "Matomo is een Web en Mobile Analytics. U kunt Matomo on-premises hosten of gebruik maken van een cloud-hosted service. Zie <a href='http://matomo.org' target='_blank'>matomo.org</a> voor meer informatie."
         config_instructions_html: "Hier kunt u de OFN Matomo integratie configureren. De Matomo URL hieronder zou moeten verwijzen naar de Matomo instantie waar de gebruiker tracking informatie naartoe wordt gestuurd; als deze leeg wordt gelaten, wordt Matomo gebruiker tracking uitgeschakeld. Het veld Site ID is niet verplicht, maar handig als je meer dan één website volgt op één Matomo instance; het is te vinden op de Matomo instance console. Vertaald met www.DeepL.com/Translator"
+        config_instructions_tag_manager_html: "ALs u de Matomo Tag Manager URL maakt u het mogenlijk matomo tag manager. Deze tool maakt het mogenlijk een analystische evenement te maken. De Matomo Tag Manager url is gekopieerd van de Instalatie code sectie  van Matomo Tag Manager. Wees zeker dat u de exacte container en milieu kiest omdat deze optie de URL veranderen."
     customers:
       index:
         new_customer: "Nieuwe klant"
@@ -2708,6 +2709,8 @@ nl_BE:
   adjustments: "Correcties "
   payments: "Betalingen "
   return_authorizations: "terugkeer autorisatie"
+  credit_owed: "Krediet tegoed"
+  new_adjustment: "nieuwe aanpassingen"
   payment: "Betaling"
   payment_method: "Betaalmethode"
   shipment: "Verzending"
@@ -2905,6 +2908,11 @@ nl_BE:
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Er waren fouten met de volgende velden"
+      payments_list:
+        date_time: "Datum/tijd"
+        amount: "Bedrag"
+        payment_method: "Betaalmethode"
+        payment_state: "Status Betaling"
     errors:
       messages:
         blank: "kan niet leeg zijn"

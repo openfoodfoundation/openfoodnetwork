@@ -2928,6 +2928,11 @@ es_CR:
     options: "Opciones"
     actions:
       update: "Actualizar"
+    shared:
+      payments_list:
+        amount: "Cantidad"
+        payment_method: "Método de pago"
+        payment_state: "Estado del pago"
     errors:
       messages:
         blank: "no puede estar en blanco"

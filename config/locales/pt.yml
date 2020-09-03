@@ -2734,6 +2734,11 @@ pt:
     weight: Peso (por kg)
     actions:
       update: "Atualizar"
+    shared:
+      payments_list:
+        amount: "Quantia"
+        payment_method: "Método de Pagamento"
+        payment_state: "Estado do Pagamento"
     errors:
       messages:
         blank: "não pode ser vazio"

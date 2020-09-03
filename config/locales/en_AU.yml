@@ -2831,6 +2831,11 @@ en_AU:
     options: "Options"
     actions:
       update: "Update"
+    shared:
+      payments_list:
+        amount: "Amount"
+        payment_method: "Payment Method"
+        payment_state: "Payment State"
     errors:
       messages:
         blank: "can't be blank"

@@ -2971,6 +2971,10 @@ pt_BR:
           one: "1 erro não permitiu que este registro fosse salvo:"
           other: "%{count}erros não permitiram que esse registro fosse salvo:"
         there_were_problems_with_the_following_fields: "Houve problemas com os seguintes campos"
+      payments_list:
+        amount: "Montante"
+        payment_method: "Método de Pagamento"
+        payment_state: "Estado de pagamento"
     errors:
       messages:
         blank: "Não pode ser vazio"

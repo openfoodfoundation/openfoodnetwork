@@ -2933,6 +2933,11 @@ fil_PH:
     options: "pagpipilian"
     actions:
       update: "i-update"
+    shared:
+      payments_list:
+        amount: "Halaga"
+        payment_method: "Paraan ng pagbayad"
+        payment_state: "status ng pagbabayad"
     errors:
       messages:
         blank: "hindi maaaring iwanang blanko"
