@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree
   describe Spree::Order do
     let(:order) { build(:order) }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+    let(:updater) { OrderManagement::Order::Updater.new(order) }
     let(:bogus) { create(:bogus_payment_method, distributors: [create(:enterprise)]) }    
 
     before do
