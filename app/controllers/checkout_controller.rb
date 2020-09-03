@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'open_food_network/address_finder'
+require 'spree/core/gateway_error'
 
 class CheckoutController < Spree::StoreController
   layout 'darkswarm'
