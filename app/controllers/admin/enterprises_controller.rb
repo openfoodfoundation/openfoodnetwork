@@ -73,7 +73,7 @@ module Admin
 
       if @enterprise.update(attributes)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
-        redirect_to admin_dashboard_path
+        redirect_to spree.admin_dashboard_path
       else
         flash[:error] = I18n.t(:enterprise_register_error, enterprise: @enterprise.name)
         render :welcome, layout: "spree/layouts/bare_admin"

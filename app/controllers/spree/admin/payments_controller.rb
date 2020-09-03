@@ -25,7 +25,7 @@ module Spree
 
         begin
           unless @payment.save
-            redirect_to admin_order_payments_path(@order)
+            redirect_to spree.admin_order_payments_path(@order)
             return
           end
 
@@ -118,7 +118,7 @@ module Spree
         return if @order.payment? || @order.complete?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
-        redirect_to edit_admin_order_customer_url(@order)
+        redirect_to spree.edit_admin_order_customer_url(@order)
       end
 
       def load_order
