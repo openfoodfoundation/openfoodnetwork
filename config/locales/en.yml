@@ -44,6 +44,10 @@ en:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
+        number: "Number"
+        month: "Month"
+        verification_value: "Verification Value"
+        year: "Year"
       order_cycle:
         orders_close_at: Close date
       variant_override:
@@ -3152,6 +3156,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     has_no_shipped_units: "has no shipped units"
+    successfully_created: ! '%{resource} has been successfully created!'
+    successfully_updated: ! '%{resource} has been successfully updated!'
+    payment_processing_failed: "Payment could not be processed, please check the details you entered"
     order_populator:
       out_of_stock: ! '%{item} is out of stock.'
 

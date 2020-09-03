@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'spree/core/gateway_error'
 
 describe Spree::Payment do
   context 'original specs from Spree' do
