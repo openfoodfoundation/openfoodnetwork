@@ -122,7 +122,7 @@ module Spree
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
-        redirect_to new_admin_payment_method_path
+        redirect_to spree.new_admin_payment_method_path
       end
 
       def load_hubs
