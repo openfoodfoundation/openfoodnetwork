@@ -211,10 +211,10 @@ class CheckoutController < Spree::StoreController
   def update_succeeded_response
     respond_to do |format|
       format.html do
-        respond_with(@order, location: order_path(@order))
+        respond_with(@order, location: spree.order_path(@order))
       end
       format.json do
-        render json: { path: order_path(@order) }, status: :ok
+        render json: { path: spree.order_path(@order) }, status: :ok
       end
     end
   end
