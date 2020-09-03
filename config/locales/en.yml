@@ -3159,6 +3159,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     successfully_created: ! '%{resource} has been successfully created!'
     successfully_updated: ! '%{resource} has been successfully updated!'
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
+    not_available: "N/A"
     order_populator:
       out_of_stock: ! '%{item} is out of stock.'
 
