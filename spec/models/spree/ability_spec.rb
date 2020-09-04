@@ -466,7 +466,6 @@ describe Spree::Ability do
     end
 
     context "when is a distributor enterprise user" do
-      # create distributor_enterprise1 user without full admin access
       let(:user) do
         user = create(:user)
         user.spree_roles = []
@@ -615,7 +614,7 @@ describe Spree::Ability do
       end
 
       context "for a given order_cycle" do
-        let!(:order_cycle) { create(:simple_order_cycle) }
+        let!(:order_cycle) { create(:simple_order_cycle, coordinator: d2) }
         let!(:exchange){ create(:exchange, incoming: false, order_cycle: order_cycle, receiver: d1, sender: order_cycle.coordinator) }
 
         it "should be able to access read and update order cycle actions" do
@@ -645,7 +644,7 @@ describe Spree::Ability do
       end
 
       let(:oc1) { create(:simple_order_cycle, coordinator: d1) }
-      let(:oc2) { create(:simple_order_cycle) }
+      let(:oc2) { create(:simple_order_cycle, coordinator: d2) }
 
       it "should be able to read/write OrderCycles they are the co-ordinator of" do
         is_expected.to have_ability([:admin, :index, :read, :edit, :update, :bulk_update, :clone, :destroy], for: oc1)
