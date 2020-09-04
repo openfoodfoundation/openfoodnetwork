@@ -2772,6 +2772,8 @@ en_CA:
   adjustments: "Adjustments"
   payments: "Payments"
   return_authorizations: "Return Authoriations"
+  credit_owed: "Credit Owed"
+  new_adjustment: "New Adjustment"
   payment: "Payment"
   payment_method: "Payment Method"
   shipment: "Shipment"
@@ -2973,6 +2975,7 @@ en_CA:
           other: " %{count}errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
       payments_list:
+        date_time: "Date/time"
         amount: "Amount"
         payment_method: "Payment Method"
         payment_state: "Payment State"
@@ -3479,3 +3482,8 @@ en_CA:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+    activerecord:
+      models:
+        spree/payment:
+          one: Payment
+          other: Payments

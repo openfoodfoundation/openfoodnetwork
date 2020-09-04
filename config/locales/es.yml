@@ -2779,6 +2779,8 @@ es:
   adjustments: "Ajustes"
   payments: "Pagos"
   return_authorizations: "Autorizaciones de devolución"
+  credit_owed: "Crédito debido"
+  new_adjustment: "Nuevo ajuste"
   payment: "Pago"
   payment_method: "Método de pago"
   shipment: "Envío"
@@ -2980,6 +2982,7 @@ es:
           other: "%{count} errores impidieron que se guardara este registro:"
         there_were_problems_with_the_following_fields: "Hubo problemas con los siguientes campos"
       payments_list:
+        date_time: "Fecha y hora"
         amount: "Cantidad"
         payment_method: "Método de pago"
         payment_state: "Estado del pago"
@@ -3486,3 +3489,8 @@ es:
       shipment:
         cannot_ready: "No se puede completar envío"
       invalid_taxonomy_id: "El identificador de taxonomía es inválido."
+    activerecord:
+      models:
+        spree/payment:
+          one: Pago
+          other: Pagos
