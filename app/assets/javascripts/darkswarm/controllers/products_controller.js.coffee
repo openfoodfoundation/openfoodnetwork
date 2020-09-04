@@ -12,6 +12,11 @@ Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Product
   $scope.supplied_properties = null
   $scope.showFilterSidebar = false
 
+  # Update filters after initial load of shop tab
+  $timeout =>
+    $scope.update_filters()
+
+  # Update filters when order cycle changed
   $rootScope.$on "orderCycleSelected", ->
     $scope.update_filters()
     $scope.clearAll()

@@ -2,15 +2,6 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, $rootScope, $timeout, OrderCycle
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.OrderCycle = OrderCycle
 
-  # Timeout forces this to be evaluated after everything is loaded
-  # This is a hack. We should probably write our own "popover" directive
-  # That takes an expression instead of a trigger, and binds to that
-  $timeout =>
-    $rootScope.$broadcast 'orderCycleSelected'
-    if !$scope.OrderCycle.selected()
-      $("#order_cycle_id").trigger("openTrigger")
-
-
 Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $rootScope, $timeout, OrderCycle, Products, Variants, Cart, ChangeableOrdersAlert) ->
   # Track previous order cycle id for use with revertOrderCycle()
   $scope.previous_order_cycle_id = OrderCycle.order_cycle.order_cycle_id

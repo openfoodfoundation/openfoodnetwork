@@ -16,8 +16,5 @@ window.Darkswarm = angular.module("Darkswarm", [
   $httpProvider.defaults.headers['common']['X-Requested-With'] = 'XMLHttpRequest'
   $httpProvider.defaults.headers.common.Accept = "application/json, text/javascript, */*"
 
-  # This allows us to trigger these two events on tooltips
-  $tooltipProvider.setTriggers( 'openTrigger': 'closeTrigger' )
-
   # We manually handle our scrolling
   $anchorScrollProvider.disableAutoScrolling()
