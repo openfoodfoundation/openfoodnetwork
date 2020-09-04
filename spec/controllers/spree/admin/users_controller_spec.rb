@@ -33,33 +33,6 @@ describe Spree::Admin::UsersController do
       expect(response).to redirect_to(spree.edit_admin_user_path(test_user))
     end
 
-    describe "with BarAbility" do
-      class BarAbility
-        include CanCan::Ability
-
-        def initialize(user)
-          user ||= Spree::User.new
-          return unless user.has_spree_role?('bar')
-
-          can [:admin, :index, :show], Spree::Order
-        end
-      end
-
-      it 'should deny access to users with an bar role' do
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-        Spree::Ability.register_ability(BarAbility)
-        spree_post :index
-        expect(response).to redirect_to('/unauthorized')
-      end
-
-      it 'should deny access to users with an bar role' do
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-        Spree::Ability.register_ability(BarAbility)
-        spree_post :update, id: '9'
-        expect(response).to redirect_to('/unauthorized')
-      end
-    end
-
     it 'should deny access to users without an admin role' do
       allow(user).to receive_messages has_spree_role?: false
       spree_post :index
