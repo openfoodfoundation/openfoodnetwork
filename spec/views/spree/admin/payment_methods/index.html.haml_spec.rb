@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "spree/admin/payment_methods/index.html.haml" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before do
     controller.singleton_class.class_eval do
@@ -23,7 +23,7 @@ describe "spree/admin/payment_methods/index.html.haml" do
   describe "payment methods index page" do
     context "when user is not admin" do
       before do
-        allow(view).to receive_messages spree_current_user: create_enterprise_user
+        allow(view).to receive_messages spree_current_user: create(:user)
       end
 
       it "shows only the providers of the existing payment methods" do
