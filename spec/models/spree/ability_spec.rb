@@ -306,7 +306,7 @@ describe Spree::Ability do
       it { expect(subject.can_manage_order_cycles?(user)).to be false }
 
       it "can create enterprises straight off the bat" do
-        expect(subject.is_new_user?(user)).to be true
+        expect(subject.new_user?(user)).to be true
         expect(user).to have_ability :create, for: Enterprise
       end
     end

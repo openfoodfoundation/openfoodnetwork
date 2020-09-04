@@ -47,7 +47,7 @@ module Spree
       end
 
       add_shopping_abilities user
-      add_base_abilities user if is_new_user? user
+      add_base_abilities user if new_user? user
       add_enterprise_management_abilities user if can_manage_enterprises? user
       add_group_management_abilities user if can_manage_groups? user
       add_product_management_abilities user if can_manage_products? user
@@ -57,7 +57,7 @@ module Spree
     end
 
     # New users have no enterprises.
-    def is_new_user?(user)
+    def new_user?(user)
       user.enterprises.blank?
     end
 
@@ -126,8 +126,8 @@ module Spree
     end
 
     def add_enterprise_management_abilities(user)
-      # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
-      # when searching for variants to add to the order
+      # We perform authorize! on (:create, nil) when creating a new order from admin,
+      #   and also (:search, nil) when searching for variants to add to the order
       can [:create, :search], nil
 
       can [:admin, :index], :overview
@@ -147,7 +147,9 @@ module Spree
       can [:welcome, :register], Enterprise do |enterprise|
         enterprise.owner == user
       end
-      can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
+      can [:manage_payment_methods,
+           :manage_shipping_methods,
+           :manage_enterprise_fees], Enterprise do |enterprise|
         user.enterprises.include? enterprise
       end
 
@@ -188,8 +190,10 @@ module Spree
       end
 
       can [:create], Spree::Variant
-      can [:admin, :index, :read, :edit, :update, :search, :delete, :destroy], Spree::Variant do |variant|
-        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
+      can [:admin, :index, :read, :edit,
+           :update, :search, :delete, :destroy], Spree::Variant do |variant|
+        OpenFoodNetwork::Permissions.new(user).
+          managed_product_enterprises.include? variant.product.supplier
       end
 
       can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
@@ -207,7 +211,8 @@ module Spree
       end
 
       can [:admin, :create, :update], InventoryItem do |ii|
-        next false unless ii.enterprise.present? && ii.variant.andand.product.andand.supplier.present?
+        next false unless ii.enterprise.present? &&
+                          ii.variant.andand.product.andand.supplier.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -220,13 +225,15 @@ module Spree
         hub_auth && producer_auth
       end
 
-      can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
+      can [:admin, :index, :read, :create,
+           :edit, :update_positions, :destroy], Spree::ProductProperty
       can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
 
       can [:admin, :index, :read, :search], Spree::Taxon
       can [:admin, :index, :read, :create, :edit], Spree::Classification
 
-      can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
+      can [:admin, :index, :guide, :import, :save, :save_data,
+           :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
       # Reports page
       can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :payments,
@@ -271,7 +278,9 @@ module Spree
       can [:admin, :index, :create], Spree::LineItem
       can [:destroy, :update], Spree::LineItem do |item|
         order = item.order
-        user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
+        user.admin? ||
+          user.enterprises.include?(order.distributor) ||
+          order.order_cycle.andand.coordinated_by?(user)
       end
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
@@ -279,15 +288,16 @@ module Spree
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
       can [:destroy], Spree::Adjustment do |adjustment|
-        # Sharing code with destroying a line item. This should be unified and probably applied for other actions as well.
         if user.admin?
           true
         elsif adjustment.adjustable.instance_of? Spree::Order
           order = adjustment.adjustable
-          user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
+          user.enterprises.include?(order.distributor) ||
+            order.order_cycle.andand.coordinated_by?(user)
         elsif adjustment.adjustable.instance_of? Spree::LineItem
           order = adjustment.adjustable.order
-          user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
+          user.enterprises.include?(order.distributor) ||
+            order.order_cycle.andand.coordinated_by?(user)
         end
       end
 
@@ -299,7 +309,8 @@ module Spree
 
       # Enterprise user can only access payment and shipping methods for their distributors
       can [:index, :create], Spree::PaymentMethod
-      can [:admin, :read, :update, :fire, :resend, :destroy, :show_provider_preferences], Spree::PaymentMethod do |payment_method|
+      can [:admin, :read, :update, :fire, :resend,
+           :destroy, :show_provider_preferences], Spree::PaymentMethod do |payment_method|
         (user.enterprises & payment_method.distributors).any?
       end
 
@@ -316,7 +327,8 @@ module Spree
       add_enterprise_fee_summary_abilities
 
       can [:create], Customer
-      can [:admin, :index, :update, :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+      can [:admin, :index, :update,
+           :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
       can [:admin, :new, :index], Subscription
       can [:create, :edit, :update, :cancel, :pause, :unpause], Subscription do |subscription|
         user.enterprises.include?(subscription.shop)
@@ -349,6 +361,6 @@ module Spree
       can [:enterprise_fee_summary], Spree::Admin::ReportsController
       # Allow direct access to the report resource
       can [:admin, :new, :create], :enterprise_fee_summary
-    end   
+    end
   end
 end
