@@ -726,7 +726,7 @@ describe Spree::Ability do
     let(:manage_actions) { [:admin, :index, :read, :update, :bulk_update, :bulk_reset] }
 
     describe "when admin" do
-      let(:user) { create(:admin_user) }
+      before { user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin') }
 
       it "should have permission" do
         is_expected.to have_ability(manage_actions, for: variant_override)
