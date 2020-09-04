@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EnterpriseRelationship < ActiveRecord::Base
   belongs_to :parent, class_name: 'Enterprise', touch: true
   belongs_to :child, class_name: 'Enterprise', touch: true

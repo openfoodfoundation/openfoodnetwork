@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require 'cancan'
+require 'spree/core/controller_helpers/auth'
+require 'spree/core/controller_helpers/respond_with'
+require 'spree/core/controller_helpers/common'
+require 'spree/core/controller_helpers/ssl'
 
 module Spree
   class BaseController < ApplicationController

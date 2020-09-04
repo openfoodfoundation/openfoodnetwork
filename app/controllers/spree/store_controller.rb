@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'spree/core/controller_helpers/order'
+
 module Spree
   class StoreController < Spree::BaseController
     layout 'darkswarm'
