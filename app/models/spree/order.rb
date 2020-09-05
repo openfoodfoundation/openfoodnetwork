@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/core/validators/email'
 require 'spree/order/checkout'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/feature_toggle'
