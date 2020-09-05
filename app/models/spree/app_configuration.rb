@@ -21,8 +21,6 @@
 # a.get :color
 # a.preferred_color
 #
-require "spree/core/search/base"
-
 module Spree
   class AppConfiguration < Preferences::Configuration
     # Should state/state_name be required
@@ -156,12 +154,5 @@ module Spree
     # Enable cache
     preference :enable_products_cache?, :boolean,
                default: (Rails.env.production? || Rails.env.staging?)
-
-    # searcher_class allows spree extension writers to provide their own Search class
-    def searcher_class
-      @searcher_class ||= Spree::Core::Search::Base
-    end
-
-    attr_writer :searcher_class
   end
 end
