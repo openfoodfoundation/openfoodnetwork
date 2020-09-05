@@ -22,8 +22,6 @@ module Spree
     include Spree::Core::S3Support
     supports_s3 :icon
 
-    include Spree::Core::ProductFilters # for detailed defs of filters
-
     # Indicate which filters should be used for this taxon
     def applicable_filters
       []
