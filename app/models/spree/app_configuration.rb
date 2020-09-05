@@ -25,7 +25,7 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     # Should state/state_name be required
     preference :address_requires_state, :boolean, default: true
-    preference :admin_interface_logo, :string, default: 'logo/spree_50.png'
+    preference :admin_interface_logo, :string, default: 'ofn-logo.png'
     preference :admin_products_per_page, :integer, default: 10
     # Should only be true if you don't need to track inventory
     preference :allow_backorder_shipping, :boolean, default: false
@@ -52,14 +52,15 @@ module Spree
     preference :currency_thousands_separator, :string, default: ","
     preference :display_currency, :boolean, default: false
     preference :default_country_id, :integer
-    preference :default_meta_description, :string, default: 'Spree demo site'
-    preference :default_meta_keywords, :string, default: 'spree, demo'
+    preference :default_meta_description, :string, default: 'OFN demo site'
+    preference :default_meta_keywords, :string, default: 'ofn, demo'
     preference :default_seo_title, :string, default: ''
     preference :dismissed_spree_alerts, :string, default: ''
     preference :hide_cents, :boolean, default: false
     preference :last_check_for_spree_alerts, :string, default: nil
-    preference :layout, :string, default: 'spree/layouts/spree_application'
-    preference :logo, :string, default: 'logo/spree_50.png'
+    preference :layout, :string, default: 'darkswarm'
+    preference :logo, :string, default: 'ofn-logo.png'
+
     # Maximum nesting level in taxons menu
     preference :max_level_in_taxons_menu, :integer, default: 1
     preference :orders_per_page, :integer, default: 15
@@ -75,8 +76,8 @@ module Spree
     preference :show_variant_full_price, :boolean, default: false
     preference :show_products_without_price, :boolean, default: false
     preference :show_raw_product_description, :boolean, default: false
-    preference :site_name, :string, default: 'Spree Demo Site'
-    preference :site_url, :string, default: 'demo.spreecommerce.com'
+    preference :site_name, :string, default: 'OFN Demo Site'
+    preference :site_url, :string, default: 'demo.openfoodnetwork.org'
     preference :tax_using_ship_address, :boolean, default: true
     # Determines whether to track on_hand values for variants / products.
     preference :track_inventory_levels, :boolean, default: true
@@ -101,8 +102,8 @@ module Spree
 
     # Default mail headers settings
     preference :enable_mail_delivery, :boolean, default: false
-    preference :mails_from, :string, default: 'spree@example.com'
-    preference :mail_bcc, :string, default: 'spree@example.com'
+    preference :mails_from, :string, default: 'ofn@example.com'
+    preference :mail_bcc, :string, default: 'ofn@example.com'
     preference :intercept_email, :string, default: nil
 
     # Default smtp settings
