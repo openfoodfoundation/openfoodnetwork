@@ -34,18 +34,10 @@ module Spree
     preference :allow_ssl_in_development_and_test, :boolean, default: false
     preference :allow_ssl_in_production, :boolean, default: true
     preference :allow_ssl_in_staging, :boolean, default: true
-    # Request extra phone for bill addr
-    preference :alternative_billing_phone, :boolean, default: false
-    # Request extra phone for ship addr
-    preference :alternative_shipping_phone, :boolean, default: false
-    preference :always_put_site_name_in_title, :boolean, default: true
     # Automatically capture the credit card (as opposed to just authorize and capture later)
     preference :auto_capture, :boolean, default: false
-    preference :check_for_spree_alerts, :boolean, default: true
     # Replace with the name of a zone if you would like to limit the countries
     preference :checkout_zone, :string, default: nil
-    # Request company field for billing and shipping addr
-    preference :company, :boolean, default: false
     preference :currency, :string, default: "USD"
     preference :currency_decimal_mark, :string, default: "."
     preference :currency_symbol_position, :string, default: "before"
@@ -55,9 +47,7 @@ module Spree
     preference :default_meta_description, :string, default: 'OFN demo site'
     preference :default_meta_keywords, :string, default: 'ofn, demo'
     preference :default_seo_title, :string, default: ''
-    preference :dismissed_spree_alerts, :string, default: ''
     preference :hide_cents, :boolean, default: false
-    preference :last_check_for_spree_alerts, :string, default: nil
     preference :layout, :string, default: 'darkswarm'
     preference :logo, :string, default: 'ofn-logo.png'
 
@@ -71,7 +61,6 @@ module Spree
     preference :shipment_inc_vat, :boolean, default: false
     # Request instructions/info for shipping
     preference :shipping_instructions, :boolean, default: false
-    preference :show_only_complete_orders_by_default, :boolean, default: true
     # Displays variant full price or difference with product price.
     preference :show_variant_full_price, :boolean, default: false
     preference :show_products_without_price, :boolean, default: false
