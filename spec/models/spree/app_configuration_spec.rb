@@ -14,9 +14,4 @@ describe Spree::AppConfiguration do
     Spree::Config.site_name = "Spree::Config TEST SITE NAME"
     expect(Spree::Config.site_name).to eq "Spree::Config TEST SITE NAME"
   end
-
-  it "uses base searcher class by default" do
-    prefs.searcher_class = nil
-    expect(prefs.searcher_class).to eq Spree::Core::Search::Base
-  end
 end
