@@ -299,5 +299,3 @@ module Spree
     end
   end
 end
-
-require_dependency 'spree/variant/scopes'
