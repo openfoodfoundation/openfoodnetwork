@@ -180,27 +180,27 @@ module Spree
     end
 
     def display_outstanding_balance
-      Spree::Money.new(outstanding_balance, { currency: currency })
+      Spree::Money.new(outstanding_balance, currency: currency)
     end
 
     def display_item_total
-      Spree::Money.new(item_total, { currency: currency })
+      Spree::Money.new(item_total, currency: currency)
     end
 
     def display_adjustment_total
-      Spree::Money.new(adjustment_total, { currency: currency })
+      Spree::Money.new(adjustment_total, currency: currency)
     end
 
     def display_tax_total
-      Spree::Money.new(tax_total, { currency: currency })
+      Spree::Money.new(tax_total, currency: currency)
     end
 
     def display_ship_total
-      Spree::Money.new(ship_total, { currency: currency })
+      Spree::Money.new(ship_total, currency: currency)
     end
 
     def display_total
-      Spree::Money.new(total, { currency: currency })
+      Spree::Money.new(total, currency: currency)
     end
 
     def to_param
@@ -266,7 +266,7 @@ module Spree
     def line_item_adjustment_totals
       Hash[line_item_adjustments.eligible.group_by(&:label).map do |label, adjustments|
         total = adjustments.sum(&:amount)
-        [label, Spree::Money.new(total, { currency: currency })]
+        [label, Spree::Money.new(total, currency: currency)]
       end]
     end
 
