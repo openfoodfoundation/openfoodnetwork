@@ -39,7 +39,7 @@ module Spree
       order.adjustments.tax.destroy_all
       order.line_item_adjustments.where(originator_type: 'Spree::TaxRate').destroy_all
 
-      self.match(order).each do |rate|
+      match(order).each do |rate|
         rate.adjust(order)
       end
     end

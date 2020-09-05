@@ -128,7 +128,7 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new(amount, { currency: currency })
+      Spree::Money.new(amount, currency: currency)
     end
 
     def immutable?
