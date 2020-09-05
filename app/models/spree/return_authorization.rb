@@ -29,7 +29,7 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new(amount, { currency: currency })
+      Spree::Money.new(amount, currency: currency)
     end
 
     def add_variant(variant_id, quantity)
