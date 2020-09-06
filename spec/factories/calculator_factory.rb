@@ -16,4 +16,9 @@ FactoryBot.define do
     after(:build)  { |c| c.set_preference(:per_kg, 0.5) }
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
+
+  factory :weight_lb_calculator, class: Calculator::WeightLb do
+    after(:build)  { |c| c.set_preference(:per_lb, 0.5) }
+    after(:create) { |c| c.set_preference(:per_lb, 0.5); c.save! }
+  end
 end

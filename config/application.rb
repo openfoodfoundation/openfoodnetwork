@@ -54,7 +54,8 @@ module Openfoodnetwork
         Calculator::FlexiRate,
         Calculator::PerItem,
         Calculator::PriceSack,
-        Calculator::Weight
+        Calculator::Weight,
+        Calculator::WeightLb
       ]
 
       app.config.spree.calculators.add_class('enterprise_fees')
@@ -64,7 +65,8 @@ module Openfoodnetwork
         Calculator::FlexiRate,
         Calculator::PerItem,
         Calculator::PriceSack,
-        Calculator::Weight
+        Calculator::Weight,
+        Calculator::WeightLb
       ]
 
       app.config.spree.calculators.add_class('payment_methods')
