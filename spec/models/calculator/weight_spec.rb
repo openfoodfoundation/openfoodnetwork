@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Calculator::Weight do
-  it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_kg]
+  it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_unit]
 
   it "computes shipping cost for an order by total weight" do
     variant1 = build(:variant, unit_value: 10_000)
@@ -14,7 +14,8 @@ describe Calculator::Weight do
 
     order = double(:order, line_items: [line_item1, line_item2, line_item3])
 
-    subject.set_preference(:per_kg, 5)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit, "kg")
     expect(subject.compute(order)).to eq(350) # (10 * 1 + 20 * 3) * 5
   end
 
@@ -22,7 +23,10 @@ describe Calculator::Weight do
     let(:variant) { create(:variant, unit_value: 10_000) }
     let(:line_item) { create(:line_item, variant: variant, quantity: 2) }
 
-    before { subject.set_preference(:per_kg, 5) }
+    before {
+      subject.set_preference(:per_unit, 5)
+      subject.set_preference(:unit, "kg")
+    }
 
     it "computes shipping cost for a line item" do
       expect(subject.compute(line_item)).to eq(100) # 10 * 2 * 5
@@ -55,7 +59,8 @@ describe Calculator::Weight do
     order = double(:order, line_items: [line_item1, line_item2])
     object_with_order = double(:object_with_order, order: order)
 
-    subject.set_preference(:per_kg, 5)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit, "kg")
     expect(subject.compute(object_with_order)).to eq(250) # (10 * 1 + 20 * 2) * 5
   end
 
@@ -63,7 +68,7 @@ describe Calculator::Weight do
     let!(:product) { create(:product, product_attributes) }
     let!(:variant) { create(:variant, variant_attributes.merge(product: product)) }
 
-    let(:calculator) { described_class.new(preferred_per_kg: 6) }
+    let(:calculator) { described_class.new(preferred_per_unit: 6, preferred_unit: "kg") }
     let(:line_item) do
       create(:line_item, variant: variant, quantity: 2).tap do |object|
         object.send(:calculate_final_weight_volume)
@@ -158,7 +163,10 @@ describe Calculator::Weight do
     }
     let(:line_item) { create(:line_item, variant: variant, quantity: 1) }
 
-    before { subject.set_preference(:per_kg, 5) }
+    before {
+      subject.set_preference(:per_unit, 5)
+      subject.set_preference(:unit, "kg")
+    }
 
     context "when unit_value is zero variant.weight is present" do
       let(:variant) { create(:variant, product: product, unit_value: 0, weight: 10.0) }
