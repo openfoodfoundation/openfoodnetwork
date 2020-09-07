@@ -61,16 +61,20 @@ module Spree
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
         @variant = Spree::Variant.find(params[:id])
-        flash[:success] = if VariantDeleter.new.delete(@variant)
-                            Spree.t('notice_messages.variant_deleted')
-                          else
-                            Spree.t('notice_messages.variant_not_deleted')
-                          end
+        flash[:success] = delete_variant
 
         redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
       end
 
       protected
+
+      def delete_variant
+        if VariantDeleter.new.delete(@variant)
+          Spree.t('notice_messages.variant_deleted')
+        else
+          Spree.t('notice_messages.variant_not_deleted')
+        end
+      end
 
       def create_before
         option_values = params[:new_variant]
