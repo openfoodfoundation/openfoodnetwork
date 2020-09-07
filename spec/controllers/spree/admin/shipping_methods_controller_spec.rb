@@ -38,15 +38,6 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       expect(shipping_method.reload.calculator.preferred_per_kg).to eq 10
     end
 
-    it "updates preferred_per_lb of a Weight (Lb) calculator" do
-      shipping_method.calculator = create(:weight_lb_calculator, calculable: shipping_method)
-      params[:shipping_method][:calculator_attributes][:preferred_per_lb] = 10
-
-      spree_post :update, params
-
-      expect(shipping_method.reload.calculator.preferred_per_lb).to eq 10
-    end
-
     it "updates preferred_flat_percent of a FlatPercentPerItem calculator" do
       shipping_method.calculator = Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20,
 
