@@ -1,5 +1,5 @@
 - terms_and_conditions_activated = current_order.distributor.terms_and_conditions.file?
 - if terms_and_conditions_activated
-  %p.small
+  %p
     %input{ type: 'checkbox', id: 'accept_terms', ng: { model: "terms_and_conditions_accepted", init: "terms_and_conditions_activated=#{terms_and_conditions_activated}" } }
-      %label{for: "accept_terms"}= t('.message_html', terms_and_conditions_link: link_to( t( '.link_text' ), current_order.distributor.terms_and_conditions.url, target: '_blank'))
+      %label.small{for: "accept_terms"}= t('.message_html', terms_and_conditions_link: link_to( t( '.link_text' ), current_order.distributor.terms_and_conditions.url, target: '_blank'))
