@@ -27,7 +27,7 @@
 //= require lodash.underscore.js
 
 // spree
-//= require spree
+//= require admin/spree/spree
 //= require admin/spree/spree-select2
 //= require modernizr
 //= require equalize
