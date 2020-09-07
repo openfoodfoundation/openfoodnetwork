@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200817150002) do
+ActiveRecord::Schema.define(version: 20200907140555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,16 +47,17 @@ ActiveRecord::Schema.define(version: 20200817150002) do
   add_index "coordinator_fees", ["order_cycle_id"], name: "index_coordinator_fees_on_order_cycle_id", using: :btree
 
   create_table "customers", force: true do |t|
-    t.string   "email",                           null: false
-    t.integer  "enterprise_id",                   null: false
+    t.string   "email",                                            null: false
+    t.integer  "enterprise_id",                                    null: false
     t.string   "code"
     t.integer  "user_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
     t.string   "name"
-    t.boolean  "allow_charges",   default: false, null: false
+    t.boolean  "allow_charges",                    default: false, null: false
+    t.datetime "terms_and_conditions_accepted_at"
   end
 
   add_index "customers", ["bill_address_id"], name: "index_customers_on_bill_address_id", using: :btree
