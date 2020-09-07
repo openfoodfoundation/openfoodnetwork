@@ -45,18 +45,28 @@ module Spree
         end
       end
 
-      def preference_field_for(form, field, options)
+      def preference_field_for(form, field, options, object)
         case options[:type]
         when :integer
           form.text_field(field, preference_field_options(options))
         when :boolean
           form.check_box(field, preference_field_options(options))
         when :string
-          form.text_field(field, preference_field_options(options))
+          preference_field_for_text_field(form, field, options, object)
         when :password
           form.password_field(field, preference_field_options(options))
         when :text
           form.text_area(field, preference_field_options(options))
+        else
+          form.text_field(field, preference_field_options(options))
+        end
+      end
+
+      def preference_field_for_text_field(form, field, options, object)
+        if field.end_with?('_from_list') && object.respond_to?("#{field}_values")
+          list_values = object.__send__("#{field}_values")
+          selected_value = object.__send__(field)
+          form.select(field, options_for_select(list_values, selected_value), preference_field_options(options))
         else
           form.text_field(field, preference_field_options(options))
         end
@@ -95,8 +105,8 @@ module Spree
         return unless object.respond_to?(:preferences)
 
         object.preferences.keys.map{ |key|
-          form.label("preferred_#{key}", Spree.t(key) + ": ") +
-            preference_field_for(form, "preferred_#{key}", type: object.preference_type(key))
+          form.label("preferred_#{key}", Spree.t(key.to_s.gsub("_from_list", "")) + ": ") +
+            preference_field_for(form, "preferred_#{key}", { type: object.preference_type(key) }, object)
         }.join("<br />").html_safe
       end
 

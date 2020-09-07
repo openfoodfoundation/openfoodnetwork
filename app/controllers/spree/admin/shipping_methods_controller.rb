@@ -88,7 +88,7 @@ module Spree
           :require_ship_address, :tag_list, :calculator_type,
           distributor_ids: [],
           calculator_attributes: [
-            :id, :preferred_currency, :preferred_amount, :preferred_unit, :preferred_per_unit, :preferred_flat_percent,
+            :id, :preferred_currency, :preferred_amount, :preferred_unit_from_list, :preferred_per_unit, :preferred_flat_percent,
             :preferred_first_item, :preferred_additional_item, :preferred_max_items,
             :preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount
           ]

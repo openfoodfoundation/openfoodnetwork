@@ -4,7 +4,7 @@ module Calculator
   class Weight < Spree::Calculator
     extend Spree::LocalizedNumber
     preference :per_unit, :decimal, default: 0.0
-    preference :unit, :string, default: "kg"
+    preference :unit_from_list, :string, default: "kg"
     localize_number :preferred_per_unit
 
     def self.description
@@ -14,6 +14,10 @@ module Calculator
     def compute(object)
       line_items = line_items_for object
       (total_weight(line_items) * preferred_per_unit).round(2)
+    end
+
+    def preferred_unit_from_list_values
+      ["kg", "lb"]
     end
 
     private
