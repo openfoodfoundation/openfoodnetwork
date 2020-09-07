@@ -66,7 +66,8 @@ module Spree
         if field.end_with?('_from_list') && object.respond_to?("#{field}_values")
           list_values = object.__send__("#{field}_values")
           selected_value = object.__send__(field)
-          form.select(field, options_for_select(list_values, selected_value), preference_field_options(options))
+          form.select(field, options_for_select(list_values, selected_value),
+                      preference_field_options(options))
         else
           form.text_field(field, preference_field_options(options))
         end
@@ -106,7 +107,8 @@ module Spree
 
         object.preferences.keys.map{ |key|
           form.label("preferred_#{key}", Spree.t(key.to_s.gsub("_from_list", "")) + ": ") +
-            preference_field_for(form, "preferred_#{key}", { type: object.preference_type(key) }, object)
+            preference_field_for(form, "preferred_#{key}",
+                                 { type: object.preference_type(key) }, object)
         }.join("<br />").html_safe
       end
 

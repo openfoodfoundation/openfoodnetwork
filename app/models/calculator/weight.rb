@@ -73,12 +73,12 @@ module Calculator
 
     def convert_weight(value)
       return 0 unless value
+
       if preferences[:unit] == "kg"
         value / 1000
       elsif preferences[:unit] == "lb"
         value / 453.6
       else
-        #TODO: handle this case without crashing?
         raise "Unknown unit preference"
       end
     end
