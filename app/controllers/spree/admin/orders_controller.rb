@@ -91,7 +91,9 @@ module Spree
         Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
         flash[:success] = t('admin.orders.invoice_email_sent')
 
-        respond_with(@order) { |format| format.html { redirect_to spree.edit_admin_order_path(@order) } }
+        respond_with(@order) { |format|
+          format.html { redirect_to spree.edit_admin_order_path(@order) }
+        }
       end
 
       def print
@@ -131,7 +133,9 @@ module Spree
 
         flash[:error] = t(:must_have_valid_business_number,
                           enterprise_name: @order.distributor.name)
-        respond_with(@order) { |format| format.html { redirect_to spree.edit_admin_order_path(@order) } }
+        respond_with(@order) { |format|
+          format.html { redirect_to spree.edit_admin_order_path(@order) }
+        }
       end
 
       def load_distribution_choices
