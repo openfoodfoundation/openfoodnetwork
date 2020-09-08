@@ -8,7 +8,7 @@ class RemoveTransientData
   end
 
   def call
-    Rails.logger.info("RemoveTransientData: processing")
+    Rails.logger.info("#{self.class.name}: processing")
 
     Spree::StateChange.delete_all("created_at < '#{retention_period}'")
     Spree::LogEntry.delete_all("created_at < '#{retention_period}'")
