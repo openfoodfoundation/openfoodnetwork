@@ -14,28 +14,27 @@ describe RemoveTransientData do
       allow(Rails.logger).to receive(:info)
     end
 
-    it 'deletes state changes older than a month' do
-      RemoveTransientData.new.call
+    it 'deletes state changes older than rentention_period' do
+      Spree::StateChange.create(created_at: retention_period - 1.day)
 
-      expect(Spree::StateChange)
-        .to have_received(:delete_all)
-        .with("created_at < '#{retention_period}'")
+      RemoveTransientData.new.call
+      expect(Spree::StateChange.all).to be_empty
     end
 
     it 'deletes log entries older than a month' do
+      Spree::LogEntry.create(created_at: retention_period - 1.day)
+
       RemoveTransientData.new.call
 
-      expect(Spree::LogEntry)
-        .to have_received(:delete_all)
-        .with("created_at < '#{retention_period}'")
+      expect(Spree::LogEntry.all).to be_empty
     end
 
-    it 'deletes sessions older than two weeks' do
+    it 'deletes sessions older than retention_period' do
+      RemoveTransientData::Session.create(session_id: 1, updated_at: retention_period - 1.day)
+
       RemoveTransientData.new.call
 
-      expect(RemoveTransientData::Session)
-        .to have_received(:delete_all)
-        .with("updated_at < '#{retention_period}'")
+      expect(RemoveTransientData::Session.all).to be_empty
     end
   end
 end

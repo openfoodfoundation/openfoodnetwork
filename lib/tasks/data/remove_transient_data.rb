@@ -11,8 +11,8 @@ class RemoveTransientData
     Rails.logger.info("#{self.class.name}: processing")
 
     Spree::StateChange.where("created_at < ?", retention_period).delete_all
-    Spree::LogEntry.delete_all("created_at < '#{retention_period}'")
-    Session.delete_all("updated_at < '#{retention_period}'")
+    Spree::LogEntry.where("created_at < ?", retention_period).delete_all
+    Session.where("updated_at < ?", retention_period).delete_all
   end
 
   private
