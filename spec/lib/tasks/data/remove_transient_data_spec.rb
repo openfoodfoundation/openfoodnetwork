@@ -5,7 +5,7 @@ require 'tasks/data/remove_transient_data'
 
 describe RemoveTransientData do
   describe '#call' do
-    let(:retention_period) { RemoveTransientData.new.__send__(:retention_period) }
+    let(:retention_period) { RemoveTransientData::RETENTION_PERIOD }
 
     before do
       allow(Spree::StateChange).to receive(:delete_all)
