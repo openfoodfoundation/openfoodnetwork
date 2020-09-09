@@ -2869,6 +2869,8 @@ ar:
   adjustments: "التعديلات"
   payments: "المدفوعات"
   return_authorizations: "عودة التراخيص"
+  credit_owed: "الائتمان مدين"
+  new_adjustment: "تعديل جديد"
   payment: "دفعة"
   payment_method: "طريقة الدفع او السداد"
   shipment: "الشحنة"
@@ -3074,6 +3076,7 @@ ar:
           other: "منعت أخطاء %{count} حفظ هذا السجل:"
         there_were_problems_with_the_following_fields: "كانت هناك مشاكل مع الحقول التالية"
       payments_list:
+        date_time: "التاريخ / الوقت"
         amount: "القيمة"
         payment_method: "طريقة الدفع او السداد"
         payment_state: "حالة الدفعة"
@@ -3580,3 +3583,12 @@ ar:
       shipment:
         cannot_ready: "لا يمكن تجهيز الشحنة"
       invalid_taxonomy_id: "معرف التصنيف غير صالح."
+    activerecord:
+      models:
+        spree/payment:
+          zero: المدفوعات
+          one: دفع
+          two: المدفوعات
+          few: المدفوعات
+          many: المدفوعات
+          other: الدفعات
