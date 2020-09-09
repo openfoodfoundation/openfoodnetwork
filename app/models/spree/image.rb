@@ -34,6 +34,8 @@ module Spree
     end
 
     def find_dimensions
+      return if attachment.errors.present?
+
       temporary = attachment.queued_for_write[:original]
       filename = temporary.path unless temporary.nil?
       filename = attachment.path if filename.blank?
