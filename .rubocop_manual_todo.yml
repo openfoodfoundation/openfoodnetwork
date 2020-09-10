@@ -330,6 +330,13 @@ Layout/LineLength:
   - spec/requests/api/orders_spec.rb
   - spec/swagger_helper.rb
   - spec/views/spree/admin/payment_methods/index.html.haml_spec.rb
+  - app/models/spree/image.rb
+  - app/models/spree/payment_method.rb
+  - spec/factories/line_item_factory.rb
+  - spec/factories/shipment_factory.rb
+  - spec/factories/stock_location_factory.rb
+  - spec/factories/user_factory.rb
+  - spec/lib/spree/core/calculated_adjustments_spec.rb
 
 Metrics/AbcSize:
   Max: 15
@@ -459,6 +466,13 @@ Metrics/AbcSize:
   - app/models/spree/payment/processing.rb
   - app/models/spree/payment.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
+  - app/models/spree/zone.rb
+  - lib/spree/core/calculated_adjustments.rb
+  - lib/spree/core/delegate_belongs_to.rb
+  - lib/spree/core/permalinks.rb
+  - lib/spree/core/s3_support.rb
+  - lib/spree/money.rb
+  - spec/support/i18n_translations_checker.rb
 
 Metrics/BlockLength:
   Max: 25
@@ -501,6 +515,9 @@ Metrics/BlockLength:
   - app/models/spree/payment/processing.rb
   - spec/requests/api/orders_spec.rb
   - spec/swagger_helper.rb
+  - spec/factories/address_factory.rb
+  - spec/factories/payment_method_factory.rb
+  - spec/factories/shipment_factory.rb
 
 Metrics/CyclomaticComplexity:
   Max: 6
@@ -535,6 +552,9 @@ Metrics/CyclomaticComplexity:
   - app/models/spree/order/checkout.rb
   - app/models/spree/payment.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
+  - app/models/spree/payment_method.rb
+  - app/models/spree/zone.rb
+  - lib/spree/core/calculated_adjustments.rb
 
 Metrics/PerceivedComplexity:
   Max: 7
@@ -563,6 +583,8 @@ Metrics/PerceivedComplexity:
   - spec/models/product_importer_spec.rb
   - app/models/spree/order/checkout.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
+  - app/models/spree/zone.rb
+  - lib/spree/core/calculated_adjustments.rb
 
 Metrics/MethodLength:
   Max: 10
@@ -675,6 +697,15 @@ Metrics/MethodLength:
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_allocation_report.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_supplier_report.rb
+  - app/models/spree/credit_card.rb
+  - app/models/spree/payment_method.rb
+  - app/models/spree/zone.rb
+  - lib/spree/core/calculated_adjustments.rb
+  - lib/spree/core/delegate_belongs_to.rb
+  - lib/spree/core/permalinks.rb
+  - lib/spree/core/s3_support.rb
+  - lib/spree/responder.rb
+  - spec/support/i18n_translations_checker.rb
 
 Metrics/ClassLength:
   Max: 100
@@ -719,6 +750,8 @@ Metrics/ClassLength:
   - lib/open_food_network/xero_invoices_report.rb
   - app/models/spree/payment.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
+  - app/models/spree/credit_card.rb
+  - app/models/spree/zone.rb
 
 Metrics/ModuleLength:
   Max: 100
@@ -764,6 +797,8 @@ Metrics/ModuleLength:
   - spec/support/request/web_helper.rb
   - app/models/spree/order/checkout.rb
   - app/models/spree/payment/processing.rb
+  - spec/lib/open_food_network/packing_report_spec.rb
+  - spec/models/spree/credit_card_spec.rb
 
 Metrics/ParameterLists:
   Max: 5
