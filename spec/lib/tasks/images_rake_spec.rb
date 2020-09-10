@@ -10,6 +10,48 @@ describe "images.rake" do
     Rake::Task.define_task(:environment)
   end
 
+  describe ":delete_orphans" do
+    let(:subject) { Rake::Task["images:delete_orphans"] }
+    let(:variant) { create(:variant) }
+    let(:image_file) { File.open(Rails.root.join("app/assets/images/logo-white.png")) }
+
+    it "reports the number of orphaned image entries" do
+      Spree::Image.create!(
+        attachment: image_file,
+        viewable_id: variant.id,
+        viewable_type: variant.class.name,
+      )
+
+      expect {
+        subject.execute
+      }.to output(/Found 0 out of 1 images could be deleted/).to_stdout
+    end
+
+    it "deletes orphaned image entries" do
+      valid_image = Spree::Image.create!(
+        attachment: image_file,
+        viewable_id: variant.id,
+        viewable_type: variant.class.name,
+      )
+      orphan = Spree::Image.create!(
+        attachment: image_file,
+        viewable_id: variant.id,
+        viewable_type: variant.class.name,
+      )
+      orphan.update!(attachment_file_size: 0)
+
+      expect(ENV).to receive(:fetch).with("DELETE_IMAGES", false).and_return("true")
+      allow_any_instance_of(Object).to receive(:sleep)
+      expect {
+        expect {
+          subject.execute
+        }.to change { Spree::Image.count }.by(-1)
+      }.to output(/Done\. 1 image records were deleted/).to_stdout
+      expect(Spree::Image.pluck(:id)).to include valid_image.id
+      expect(Spree::Image.pluck(:id)).to_not include orphan.id
+    end
+  end
+
   describe ":reset_styles" do
     let(:subject) { Rake::Task["images:reset_styles"] }
 

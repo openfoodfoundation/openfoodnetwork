@@ -1,6 +1,41 @@
 # frozen_string_literal: true
 
 namespace :images do
+  # Images can be lost for several reasons, for example:
+  #
+  # - file loss on disk
+  # - failed upload
+  # - file loss on bucket
+  # - file loss when changing storage
+  #
+  # If we can't recover the image, we should delete the record in the database
+  # as well. Otherwise operations like regenerating thumbnails will try to
+  # find those images every time which costs time and bandwidth.
+  task delete_orphans: :environment do
+    puts "To identify orphaned images, update the metadata first:"
+    puts ""
+    puts "  bundle exec rake paperclip:refresh:metadata CLASS=Spree::Image"
+    puts ""
+
+    orphaned_images = Spree::Image.where(attachment_file_size: 0)
+    total = Spree::Image.count
+    really_delete_images = ENV.fetch("DELETE_IMAGES", false)
+
+    if really_delete_images
+      puts "Deleting #{orphaned_images.count} out of #{total} images!"
+      [3, 2, 1].each do |i|
+        print "#{i} "
+        sleep 1
+      end
+      puts ""
+      deleted = orphaned_images.delete_all
+      puts "Done. #{deleted} image records were deleted."
+    else
+      puts "Found #{orphaned_images.count} out of #{total} images could be deleted."
+      puts "Set environment variable DELETE_IMAGES=true to delete them."
+    end
+  end
+
   task reset_styles: :environment do
     klass = Paperclip::Task.obtain_class
     names = Paperclip::Task.obtain_attachments(klass)
