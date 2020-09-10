@@ -13,8 +13,6 @@
       "ng-class" => "{valid: payment.$valid, open: accordion.payment}"}
       = render 'checkout/accordion_heading'
 
-      -# TODO render this in Angular instead of server-side
-      -# The problem being how to render the partials
       .row
         .small-12.medium-12.large-6.columns
           - available_payment_methods.each do |method|

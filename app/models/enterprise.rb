@@ -7,10 +7,7 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_taxon_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
 
-  # This is hopefully a temporary measure, pending the arrival of multiple named inventories
-  # for shops. We need this here to allow hubs to restrict visible variants to only those in
-  # their inventory if they so choose
-  # TODO: delegate this to a separate model instead of abusing Preferences.
+  # Allow hubs to restrict visible variants to only those in their inventory
   preference :product_selection_from_inventory_only, :boolean, default: false
 
   has_paper_trail only: [:owner_id, :sells], on: [:update]

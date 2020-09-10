@@ -30,7 +30,6 @@
           = link_to_with_icon('icon-edit', Spree.t(:edit), edit_object_url(variant, @url_filters), no_text: true) unless variant.deleted?
           = link_to_delete(variant, { url: object_url(variant, @url_filters), no_text: true }) unless variant.deleted?
 
-// TODO this
 - if @product.empty_option_values?
   %p.first_add_option_types.no-objects-found
     = t('.to_add_variants_you_must_first_define')
