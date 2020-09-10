@@ -11,6 +11,9 @@ env "MAILTO", app_config["SCHEDULE_NOTIFICATIONS"] if app_config["SCHEDULE_NOTIF
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"
 job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exec script/enqueue :task :priority :output"
 
+every 1.month do
+  rake 'ofn:data:remove_transient_data'
+end
 
 every 1.day, at: '2:45am' do
   rake 'db2fog:clean' if app_config['S3_BACKUPS_BUCKET']
