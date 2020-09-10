@@ -185,7 +185,7 @@ fr:
   home: "OFF"
   title: "Open Food France"
   welcome_to: "Bienvenue sur"
-  site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
+  site_meta_description: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative CoopCircuits. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
   search_by_name: Recherche par nom ou département...
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
   charges_sales_tax: Soumis à la TVA?
@@ -1179,21 +1179,21 @@ fr:
       mobile_menu:
         cart: "Panier"
     register_call:
-      selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
+      selling_on_ofn: "Vous souhaitez proposer vos produits sur CoopCircuits ?"
       register: "Démarrez ici"
     footer:
       footer_secure: "Fiable et sécurisé."
-      footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
-      footer_contact_headline: "Restez en contact"
+      footer_secure_text: "CoopCircuits utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de vos commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
+      footer_contact_headline: "Général"
       footer_contact_email: "Nous écrire"
-      footer_nav_headline: "Naviguer"
-      footer_join_headline: "Nous rejoindre"
-      footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food France."
+      footer_nav_headline: "Naviguer sur la plateforme"
+      footer_join_headline: "S'inscrire"
+      footer_join_body: "Créer un profil, une boutique ou un groupe sur CoopCircuits."
       footer_join_cta: "Je veux en savoir plus!"
       footer_legal_call: "Lire nos"
-      footer_legal_tos: "Termes et conditions"
+      footer_legal_tos: "conditions générales d'utilisation"
       footer_legal_visit: "Nous trouver sur"
-      footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
+      footer_legal_text_html: "CoopCircuits utilise pour délivrer son service le logiciel libre Open Food Network, dont le code est protégé sous licence %{code_license}. Les autres productions disponibles sur ce site sont protégées sous licence %{content_license}."
       footer_data_text_with_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{privacy_policy} et %{cookies_policy}."
       footer_data_text_without_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{cookies_policy}."
       footer_data_privacy_policy: "politique de confidentialité"
@@ -1246,9 +1246,9 @@ fr:
   menu_4_title: "Groupes"
   menu_4_url: "/groups"
   menu_5_title: "A propos"
-  menu_5_url: "https://apropos.openfoodfrance.org/"
+  menu_5_url: "https://openfoodfrance.org/sell"
   menu_6_title: "Blog"
-  menu_6_url: "https://apropos.openfoodfrance.org/blog/"
+  menu_6_url: "https://apropos.openfoodfrance.org"
   menu_7_title: "Support"
   menu_7_url: "https://apropos.openfoodfrance.org/support/"
   logo: "Logo (640x130)"
@@ -1383,24 +1383,24 @@ fr:
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Des aliments porteurs de sens."
-  brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
-  brandstory_part1: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent véritablement changer le monde."
-  brandstory_part2: "Nous avons besoin d'un outil pour rendre tout ça réel. Un moyen de redonner le pouvoir à ceux qui cultivent, vendent et achètent la nourriture. Un moyen de raconter les histoires, de gérer la logistique. Un moyen de transformer chaque jour les transactions en actions porteuses de changement."
-  brandstory_part3: "C'est pour cela que nous construisons cette plateforme, ce \"marché en ligne\", afin de rééquilibrer les échanges et redistribuer le pouvoir. Elle est transparente, pour assurer des relations équitables et favoriser les prises de conscience. Elle est open source, donc possédée par tout le monde. Elle se déploie aux échelles régionales et nationales, et des gens lancent de multiples versions à travers le monde."
-  brandstory_part4: "Elle fonctionne partout. Elle change tout."
-  brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
-  brandstory_part6: "Nous aimons notre nourriture. Maintenant nous pouvons aussi aimer notre système alimentaire."
+  brandstory_intro: "Votre plateforme Open Food France change de nom et devient CoopCircuits, une plateforme libre, cogérée et accessible à tous."
+  brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative CoopCircuits. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
+  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, CoopCircuits vous accompagne :-)"
+  brandstory_part3: " "
+  brandstory_part4: " "
+  brandstory_part5_strong: " "
+  brandstory_part6: " "
   learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
   learn_cta: "Découvrir "
   connect_body: "Rechercher dans le répertoire des producteurs, hubs et groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur OFFrance pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
   connect_cta: "Explorer"
-  system_headline: "Faire mes courses - comment ça marche?"
+  system_headline: "Commander en ligne - comment ça marche?"
   system_step1: "1. Recherche"
-  system_step1_text: "Recherchez des produits locaux, de saison, parmi nos multiples boutiques indépendantes. Filtrez par localisation ou catégorie de produits, livraison en point retrait ou à domicile."
+  system_step1_text: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
   system_step2: "2. Achat"
-  system_step2_text: "Transformez vos achats en choisissant des produits locaux et abordables, proposés par les divers producteurs et hubs. Découvrez les histoires et les personnes qui se cachent derrière les produits!"
+  system_step2_text: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné, et découvrez les producteurs qui se cachent derrière les produits."
   system_step3: "3. Retrait / Livraison"
-  system_step3_text: "Réceptionnez vos produits à domicile, ou rendez vous chez votre producteur ou hub pour rencontrer les gens qui se cachent derrière les produits. Au delà de la bio-diversité, nous cultivons l'éco-diversité: vivez des expériences d'achat de nourriture uniques et humaines."
+  system_step3_text: "Retirez votre panier au lieu et à l’heure indiqués lors de votre commande, ou à domicile si le circuit sélectionné propose cette option."
   cta_headline: "Des achats qui rendent le monde un peu meilleur."
   cta_label: "Je vote avec mes achats"
   stats_headline: "Nous créons un nouveau système alimentaire."
@@ -1600,8 +1600,8 @@ fr:
   components_filters_nofilters: "Pas de filtre"
   components_filters_clearfilters: "Vider les filtres"
   groups_title: Groupes
-  groups_headline: Groupes  / réseaux territoriaux
-  groups_text: "Chaque producteur est unique. Chaque entreprise peut offrir quelque chose de différent. Nos groupes sont des collectifs de producteurs, des plateformes et des distributeurs qui partagent une proximité géographique, un marché fermier ou des valeurs. C'est ce qui rend votre expérience d'achat plus simple. Explorez donc ces groupes sélectionnés."
+  groups_headline: Groupes
+  groups_text: "Un groupe sur CoopCircuits est une page permettant de communiquer sur un collectif particulier (de producteurs, réseau de distributeurs d’un même projet et producteurs associés, etc.) Il comprend une présentation du groupe, une carte permettant de visualiser géographiquement les membres, ainsi que des onglets pour un accès rapide aux boutiques et producteurs du groupe."
   groups_search: "Recherche par nom ou mot-clé"
   groups_no_groups: "Aucun groupe trouvé"
   groups_about: "A propos"
@@ -1614,23 +1614,23 @@ fr:
   groups_contact_website: Visiter notre site web
   groups_contact_facebook: Nous suivre sur Facebook
   groups_signup_title: S'inscrire en tant que groupe
-  groups_signup_headline: Inscription groupe
-  groups_signup_intro: "Nous sommes une plate-forme très efficace pour le marketing collaboratif, une excellente manière pour vos membres et parties prenantes d'atteindre de nouveaux marchés. Nous sommes à but non lucratif, abordable et simple."
+  groups_signup_headline: 'Groupe : un outil marketing au service de votre réseau'
+  groups_signup_intro: "Rassemblez en un même espace tous les producteurs et boutiques de votre réseau pour renforcer la visibilité de vos membres."
   groups_signup_email: Nous écrire
-  groups_signup_motivation1: Nous transformons les systèmes alimentaires pour remettre de l'équité dans les échanges.
-  groups_signup_motivation2: C'est pourquoi nous sortons du lit chaque matin. Nous sommes une organisation à but non lucratif, basée sur un code source ouvert. Nous opérons en toute transparence.
-  groups_signup_motivation3: Vous avez de belles idées, et nous voulons vous aider. Nous partageons nos connaissances, réseaux et ressources. Nous savons que l'isolement ne crée pas le changement, alors coopérons.
-  groups_signup_motivation4: Nous venons à votre rencontrer.
-  groups_signup_motivation5: Vous êtes un réseau de circuits de distribution alternatifs, de producteurs, de distributeurs, une administration liée à l'industrie alimentaire ou une autorité locale?
-  groups_signup_motivation6: Quel que soit votre rôle dans la relocalisation des systèmes alimentaires, nous sommes prêts à vous soutenir. Si vous vous demandez à quoi Open Food Network ressemble / pourrait ressembler dans votre coin du monde, contactez-nous.
-  groups_signup_motivation7: Nous contribuons à remettre du sens dans les systèmes alimentaires.
-  groups_signup_motivation8: Vous avez besoin de connecter et d'outiller vos réseaux, nous offrons une plate-forme pour la coopération et l'action. Vous souhaitez de l'engagement. Nous vous aidons à atteindre les acteurs, les parties-prenantes, les secteurs.
-  groups_signup_motivation9: Vous avez besoin de ressources. Nous mettons à votre service notre expérience. Vous avez besoin de coopération. Nous vous connectons à un large réseau d'acteurs et d'organisations soeurs partout dans le monde.
-  groups_signup_pricing: Compte groupe
-  groups_signup_studies: Etudes de cas
-  groups_signup_contact: Vous voulez discuter?
-  groups_signup_contact_text: "Prenez contact et découvrez ce qu'Open Food France peut faire pour vous:"
-  groups_signup_detail: "Plus de précisions."
+  groups_signup_motivation1: A quoi ça sert ?
+  groups_signup_motivation2: Le module “groupe” est un espace dédié comprenant une carte des acteurs de votre réseau, une page de présentation, et une liste des producteurs et des boutiques associées. La carte et les listes comprennent une fonction de recherche. Ce module est accessible via un lien internet (URL) unique et peut être intégré sur votre site web.
+  groups_signup_motivation3: ' '
+  groups_signup_motivation4: ' '
+  groups_signup_motivation5: ' '
+  groups_signup_motivation6: ' '
+  groups_signup_motivation7: ' '
+  groups_signup_motivation8: ' '
+  groups_signup_motivation9: ' '
+  groups_signup_pricing: Pour qui ?
+  groups_signup_studies: Histoires de réseaux
+  groups_signup_contact: Vous souhaitez créer votre module groupe ?
+  groups_signup_contact_text: "Cette fonctionnalité n’est pas encore automatisée. Prenez contact avec nous pour créer votre groupe."
+  groups_signup_detail: "Les avantages CoopCircuits"
   login_invalid: "Email ou mot de passe erroné"
   producers_about: A propos
   producers_buy: Acheter
@@ -1644,14 +1644,14 @@ fr:
   producers_title: Producteurs
   producers_headline: Trouvez un producteur local
   producers_signup_title: S'inscrire en tant que producteur
-  producers_signup_headline: Des producteurs, indépendants
-  producers_signup_motivation: Vendez vos produits et racontez vos histoires pour toucher de nouveaux marchés. Gagnez du temps et de l'argent sur la gestion des opérations courantes. Vous pouvez innover sans prendre de risque. Nous nivellons le terrain de jeu pour des échanges plus équitables.
-  producers_signup_send: Rejoindre le réseau
-  producers_signup_enterprise: Comptes entreprises
-  producers_signup_studies: Les histoires de nos producteurs.
-  producers_signup_cta_headline: Rejoindre le réseau!
-  producers_signup_cta_action: Rejoindre le réseau
-  producers_signup_detail: Comment ça marche.
+  producers_signup_headline: 'Producteurs : gérez vos ventes directes'
+  producers_signup_motivation: Vendez vos produits en direct et en ligne via votre boutique producteur. Gagnez du temps sur la gestion de votre commercialisation grâce à CoopCircuits, votre partenaire coopératif et engagé !
+  producers_signup_send: S'inscrire
+  producers_signup_enterprise: CoopCircuits vous simplifie la vie
+  producers_signup_studies: Histoires de producteurs
+  producers_signup_cta_headline: Rejoindre le réseau
+  producers_signup_cta_action: S'inscrire
+  producers_signup_detail: Les avantages CoopCircuits
   products_item: Produit
   products_description: Description
   products_variant: Variante
@@ -1661,31 +1661,31 @@ fr:
   products_price: "Prix"
   name_or_sku: "NOM OU REF PRODUIT"
   register_title: S'inscrire
-  sell_title: "S'inscrire"
-  sell_headline: "Aller sur Open Food France!"
-  sell_motivation: "Mettez en avant vos beaux aliments."
-  sell_producers: "Producteurs"
-  sell_hubs: "Hubs"
+  sell_title: "En savoir plus"
+  sell_headline: "Gérez vos ventes en ligne avec CoopCircuits"
+  sell_motivation: "3 options pour interagir avec vos acheteurs"
+  sell_producers: "Boutique producteur"
+  sell_hubs: "Boutique multi-producteurs"
   sell_groups: "Groupes"
-  sell_producers_detail: "Créer un profil pour votre entreprise sur OFFrance en quelques minutes. A tout moment vous pourrez créer une boutique en ligne pour vendre vos produits en direct aux acheteurs."
-  sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFFrance. A tout moment vous pourrez créer une boutique multi-fournisseurs."
-  sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et hubs de distribution) pour votre région ou votre organisation."
+  sell_producers_detail: "Vous êtes producteur ? Créez votre profil pour rejoindre le réseau, et ouvrez votre boutique pour vendre en ligne vos produits."
+  sell_hubs_detail: "Vous organisez des distributions de produits en provenance de plusieurs producteurs (drive fermier, groupement d’achat…) ? Créez le profil de votre initiative, et ouvrez votre boutique multi-producteurs."
+  sell_groups_detail: "Vous gérez un collectif et souhaitez communiquer sur l’ensemble des membres qui le composent ? Créez une page groupe."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "L'inscription sur OFFrance est gratuite. Ouvrir et gérer une boutique sur OFFrance ou créer un groupe sur OFFrance pour votre organisation ou réseau régional, n'est pas gratuit. Il existe deux formules : soit la formule \"petit débrouillard\"  où vous pouvez opter pour un montant libre à nous reverser (mais vous ne pouvez pas disposer de support personnalisé), soit vous nous reversez 1% du volume de vente réalisé sur la plateforme pour bénéfier de notre accompagnement. Ce pourcentage peut être dégressif à partir d'un certain montant. Veuillez nous contacter pour en savoir plus !"
-  sell_embed: "Nous pouvons aussi intégrer votre boutique OFFrance dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
-  sell_ask_services: "Nous consulter sur les services des partenaires OFFrance."
+  sell_listing_price: "Créez gratuitement votre profil sur CoopCircuits pour être visible auprès des visiteurs et membres du réseau. L’utilisation de CoopCircuits pour vendre en ligne (boutique) est payante après une période d’essai de 3 mois. Voir le lien “nos offres” en bas de page pour en savoir plus."
+  sell_embed: "Nous pouvons aussi intégrer votre boutique CoopCircuits dans votre propre site web ou construire pour vous un site de vente en ligne s’appuyant sur une boutique CoopCircuits."
+  sell_ask_services: "Nous consulter pour en savoir plus."
   shops_title: Boutiques
-  shops_headline: Des achats qui transforment.
-  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
+  shops_headline: Je vote avec mes achats.
+  shops_text: Trouvez des circuits de distribution pour vous approvisionner près de chez vous en bio/local/éthique.
   shops_signup_title: S'inscrire en tant que hub
-  shops_signup_headline: Des hubs divers et variés
-  shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en toute circonstance.
-  shops_signup_action: Rejoindre le réseau
-  shops_signup_pricing: Comptes entreprises
-  shops_signup_stories: Histoires de hubs.
-  shops_signup_help: Nous sommes là pour vous aider.
-  shops_signup_help_text: Vous avez besoin de pouvoir travailler de manière efficace. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit, que l'acheteur final sache qui se trouve derrière les produits.
-  shops_signup_detail: Comment ça marche.
+  shops_signup_headline: Des circuits courts offrant une large gamme de produits
+  shops_signup_motivation: 'Que vous soyez vous-même producteur, ou que vous gériez un groupement d’achat, un drive ou autre circuit court, proposez à la vente des produits venant de différents producteurs via votre boutique multi-producteurs. Gagnez du temps sur la gestion de votre commercialisation grâce à CoopCircuits, votre partenaire coopératif et engagé ! '
+  shops_signup_action: S'inscrire
+  shops_signup_pricing: CoopCircuits vous simplifie la vie
+  shops_signup_stories: Histoires de circuits courts
+  shops_signup_help: Rejoindre le réseau
+  shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
+  shops_signup_detail: Les avantages CoopCircuits
   orders: Commandes
   orders_fees: Frais...
   orders_edit_title: Panier
@@ -2748,7 +2748,7 @@ fr:
       other: "sachets"
   producers:
     signup:
-      start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
+      start_free_profile: "Créez votre profil producteur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne."
   order_management:
     reports:
       enterprise_fee_summaries:
