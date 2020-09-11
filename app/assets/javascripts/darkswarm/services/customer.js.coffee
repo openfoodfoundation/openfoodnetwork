@@ -1,4 +1,4 @@
-angular.module("Darkswarm").factory 'Customer', ($resource, RailsFlashLoader) ->
+angular.module("Darkswarm").factory 'Customer', ($resource, Messages) ->
   Customer = $resource('/api/customers/:id/:action.json', {}, {
     'index':
       method: 'GET'
@@ -13,8 +13,8 @@ angular.module("Darkswarm").factory 'Customer', ($resource, RailsFlashLoader) ->
 
   Customer.prototype.update = ->
     @$update().then (response) =>
-      RailsFlashLoader.loadFlash({success: t('js.changes_saved')})
+      Messages.success(t('js.changes_saved'))
     , (response) =>
-      RailsFlashLoader.loadFlash({error: response.data.error})
+      Messages.error(response.data.error)
 
   Customer
