@@ -990,7 +990,7 @@ ar:
       resend_email: إعادة إرسال البريد الإلكتروني
       has_no_payment_methods: "لا تحتوي %{enterprise} حاليًا على طريقة دفع"
       has_no_shipping_methods: "%{enterprise} لا يوجد لديها حاليا طريقة شحن"
-      email_confirmation: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{email}."
+      email_confirmation: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا لك رسالة تأكيد على البريد الإلكتروني إلى %{email}."
       not_visible: "%{enterprise} غير مرئي وبالتالي لا يمكن العثور عليه على الخريطة أو في عمليات البحث"
     reports:
       hidden: خفية
@@ -1056,7 +1056,7 @@ ar:
         unpause_subscription: إلغاء الاشتراك المؤقت
         cancel_subscription: إلغاء الاشتراك
       filters:
-        query_placeholder: "البحث عن طريق البريد الإلكتروني ..."
+        query_placeholder: "ابحث عن طريق البريد الإلكتروني ..."
       setup_explanation:
         title: "الاشتراكات"
         just_a_few_more_steps: 'فقط بضع خطوات أخرى قبل أن تبدأ:'
@@ -1182,7 +1182,7 @@ ar:
       footer_secure: "آمن وموثوق به."
       footer_secure_text: "تستخدم شبكة الغذاء المفتوح تشفير( SSL 2048 بت RSA) في كل مكان للحفاظ على خصوصية معلومات التسوق والدفع. لا تقوم خوادمنا بتخزين تفاصيل بطاقة الائتمان الخاصة بك ، وتتم معالجة المدفوعات بواسطة خدمات متوافقة مع PCI."
       footer_contact_headline: "أبق على اتصال"
-      footer_contact_email: "ارسل لنا عبر البريد الإلكتروني"
+      footer_contact_email: "راسلنا عبر البريد الإلكتروني"
       footer_nav_headline: "التنقل"
       footer_join_headline: "انضم إلينا"
       footer_join_body: "إنشاء قائمة أو متجر أو دليل المجموعة على شبكة الغذاء المفتوح."

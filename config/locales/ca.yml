@@ -2544,7 +2544,7 @@ ca:
           paid: "pagat"
           pending: "pendents"
           processing: "processant"
-          void: "buit"
+          void: "pendent"
           invalid: "invàlid"
       resend_user_email_confirmation:
         resend: "Reenviar"
@@ -2849,8 +2849,8 @@ ca:
     continue: "Continua"
     fill_in_customer_info: "Ompliu la informació de la consumidora"
     new_payment: "Nou pagament"
-    capture: "Captura"
-    void: "Buit"
+    capture: "Pagat"
+    void: "Pendent"
     login: "Inicia sessió"
     password: "Contrasenya"
     signature: "Signatura"
@@ -3067,7 +3067,7 @@ ca:
         index:
           listing_orders: "Llistat comandes"
           new_order: "Nova comanda"
-          capture: "Captura"
+          capture: "Pagat"
           ship: "Enviament"
           edit: "Editar"
           order_not_updated: "La comanda no s'ha pogut actualitzar"
@@ -3201,7 +3201,7 @@ ca:
             error_saving_payment: Error en desar el pagament
             submitting_payment: S'està lliurant el pagament...
           paypal:
-            no_payment_via_admin_backend: Els pagaments amb Paypal no es poden capturar des de l'administració
+            no_payment_via_admin_backend: Els pagaments amb Paypal no es poden marcar com pagats des de l'administració
       products:
         image_upload_error: "No s'ha reconegut la imatge del producte. Carregueu una imatge en format PNG o JPG."
         new:
@@ -3363,7 +3363,7 @@ ca:
       paid: pagat
       pending: pendents
       processing: processant
-      void: buit
+      void: pendent
       invalid: invàlid
     order_mailer:
       cancel_email:

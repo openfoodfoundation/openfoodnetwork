@@ -2544,7 +2544,7 @@ es:
           paid: "pagado"
           pending: "pendiente"
           processing: "procesando"
-          void: "vacío"
+          void: "pendiente"
           invalid: "inválido"
       resend_user_email_confirmation:
         resend: "Reenviar"
@@ -2849,8 +2849,8 @@ es:
     continue: "Continuar"
     fill_in_customer_info: "Por favor complete la información de la consumidora"
     new_payment: "Nuevo pago"
-    capture: "Captura"
-    void: "Vacío"
+    capture: "Pagado"
+    void: "Pendiente"
     login: "Iniciar sesión"
     password: "Contraseña"
     signature: "Firma"
@@ -3067,7 +3067,7 @@ es:
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
-          capture: "Captura"
+          capture: "Pagado"
           ship: "Envío"
           edit: "Editar"
           order_not_updated: "El pedido no se pudo actualizar"
@@ -3201,7 +3201,7 @@ es:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
           paypal:
-            no_payment_via_admin_backend: Los pagos de PayPal no se pueden capturar desde la administración
+            no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
@@ -3363,7 +3363,7 @@ es:
       paid: pagado
       pending: pendiente
       processing: procesando
-      void: vacío
+      void: pendiente
       invalid: inválido
     order_mailer:
       cancel_email:
