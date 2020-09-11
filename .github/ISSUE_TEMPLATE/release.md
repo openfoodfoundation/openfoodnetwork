@@ -9,10 +9,11 @@ assignees: ''
 
 Steps: 
 
-- [ ] Include translations
+- [ ] Include translations: `tx pull --force`
 - [ ] [Draft new release]
 - [ ] Notify #instance-managers of user-facing changes.
 - [ ] Test: https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2/branches/master <!-- replace the URL -->
+- [ ] Update translations if necessary
 - [ ] Publish and notify #global-community
 - [ ] Deploy and notify #instance-managers
 - [ ] Nudge next release manager
