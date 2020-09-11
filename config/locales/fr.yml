@@ -1248,9 +1248,9 @@ fr:
   menu_5_title: "A propos"
   menu_5_url: "https://openfoodfrance.org/sell"
   menu_6_title: "Blog"
-  menu_6_url: "https://apropos.openfoodfrance.org"
+  menu_6_url: "https://apropos.coopcircuits.fr/"
   menu_7_title: "Support"
-  menu_7_url: "https://apropos.openfoodfrance.org/support/"
+  menu_7_url: "https://apropos.coopcircuits.fr/ressources/"
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -2673,6 +2673,11 @@ fr:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Il a eu un problème lors de la prise en compte de votre carte.
+          Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
+          merci de nous contacter.
   inflections:
     each:
       one: "chacun"
