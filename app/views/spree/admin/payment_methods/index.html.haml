@@ -11,7 +11,8 @@
       %col{style: "width: 13%"}
       %col{style: "width: 14%"}
       %col{style: "width: 32%"}
-      %col{style: "width: 14%"}
+      - if spree_current_user.admin?
+        %col{style: "width: 14%"}
       %col{style: "width:  8%"}
       %col{style: "width:  8%"}
       %col{style: "width: 11%"}
@@ -20,7 +21,8 @@
         %th= t('.name')
         %th= t('.products_distributor')
         %th= t('.provider')
-        %th= t('.environment')
+        - if spree_current_user.admin?
+          %th= t('.environment')
         %th= t('.display')
         %th= t('.active')
         %th.actions
@@ -33,7 +35,8 @@
               = distributor.name
               %br/
           %td= method.class.clean_name
-          %td.align-center= method.environment.to_s.titleize
+          - if spree_current_user.admin?
+            %td.align-center= method.environment.to_s.titleize
           %td.align-center= method.display_on.blank? ? t('.both') : t('.' + method.display_on.to_s)
           %td.align-center= method.active ? t('.active_yes') : t('.active_no')
           %td.actions
