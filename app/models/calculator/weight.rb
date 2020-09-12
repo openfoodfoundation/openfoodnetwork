@@ -3,7 +3,6 @@ require 'spree/localized_number'
 module Calculator
   class Weight < Spree::Calculator
     extend Spree::LocalizedNumber
-    
     preference :unit_from_list, :string, default: "kg"
     preference :per_unit, :decimal, default: 0.0
 
@@ -11,6 +10,14 @@ module Calculator
 
     def self.description
       I18n.t('spree.weight')
+    end
+
+    def set_preference(name, value)
+      if name == :unit_from_list && !["kg", "lb"].include?(value)
+        self.calculable.errors.add(:preferred_unit_from_list, "must be kg or lb")
+      else
+        send self.class.preference_setter_method(name), value
+      end
     end
 
     def compute(object)
@@ -76,9 +83,9 @@ module Calculator
     def convert_weight(value)
       return 0 unless value
 
-      if preferences[:unit] == "kg"
+      if preferences[:unit_from_list] == "kg"
         value / 1000
-      elsif preferences[:unit] == "lb"
+      elsif preferences[:unit_from_list] == "lb"
         value / 453.6
       else
         raise "Unknown unit preference"
