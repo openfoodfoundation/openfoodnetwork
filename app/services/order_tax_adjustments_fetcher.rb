@@ -32,7 +32,7 @@ class OrderTaxAdjustmentsFetcher
   end
 
   def line_item_adjustments
-    table[:adjustable_id].eq(order.line_item_ids.join(','))
+    table[:adjustable_id].eq_any(order.line_item_ids)
       .and(table[:adjustable_type].eq('Spree::LineItem'))
   end
 

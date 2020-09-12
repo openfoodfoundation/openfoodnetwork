@@ -90,8 +90,7 @@ describe OrderTaxAdjustmentsFetcher do
       expect(subject.size).to eq(4)
     end
 
-    xit "contains tax on line_item" do
-      # This should be the sum of tax on all line items, but only returns tax for one.
+    it "contains tax on all line_items" do
       expect(subject[tax_rate10]).to eq(8.0)
     end
 
