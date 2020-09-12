@@ -33,12 +33,6 @@ module Api
     use_renderers :json
     check_authorization
 
-    # Temporary measure to help debugging strong_parameters
-    rescue_from ActiveModel::ForbiddenAttributesError, with: :print_params
-    def print_params
-      raise ActiveModel::ForbiddenAttributesError, params.to_s
-    end
-
     def set_jsonp_format
       return unless params[:callback] && request.get?
 
