@@ -40,11 +40,11 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
 
     it "updates preferred_unit of a Weight calculator" do
       shipping_method.calculator = create(:weight_calculator, calculable: shipping_method)
-      params[:shipping_method][:calculator_attributes][:preferred_unit] = "kg"
+      params[:shipping_method][:calculator_attributes][:preferred_unit_from_list] = "kg"
 
       spree_post :update, params
 
-      expect(shipping_method.reload.calculator.preferred_unit).to eq "kg"
+      expect(shipping_method.reload.calculator.preferred_unit_from_list).to eq "kg"
     end
 
     it "updates preferred_flat_percent of a FlatPercentPerItem calculator" do
