@@ -3301,7 +3301,7 @@ en_CA:
         sortable_header:
           name: "Name"
           number: "Number"
-          state: "Province"
+          state: "State"
           payment_state: "Payment State"
           shipment_state: "Shipment State"
           email: "Email"
