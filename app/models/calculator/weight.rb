@@ -3,8 +3,10 @@ require 'spree/localized_number'
 module Calculator
   class Weight < Spree::Calculator
     extend Spree::LocalizedNumber
-    preference :per_unit, :decimal, default: 0.0
+    
     preference :unit_from_list, :string, default: "kg"
+    preference :per_unit, :decimal, default: 0.0
+
     localize_number :preferred_per_unit
 
     def self.description

@@ -105,11 +105,11 @@ module Spree
       def preference_fields(object, form)
         return unless object.respond_to?(:preferences)
 
-        object.preferences.keys.map{ |key|
-          form.label("preferred_#{key}", Spree.t(key.to_s.gsub("_from_list", "")) + ": ") +
+        object.preferences.keys.map { |key|
+          [form.label("preferred_#{key}", Spree.t(key.to_s.gsub("_from_list", "")) + ": "),
             preference_field_for(form, "preferred_#{key}",
-                                 { type: object.preference_type(key) }, object)
-        }.join("<br />").html_safe
+                                 { type: object.preference_type(key) }, object)]
+        }
       end
 
       def link_to_add_fields(name, target, options = {})
