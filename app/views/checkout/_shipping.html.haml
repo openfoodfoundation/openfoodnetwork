@@ -54,8 +54,3 @@
         .small-12.columns
           %label{ for: 'order_special_instructions'}= t(:checkout_instructions)
           = f.text_area :special_instructions, size: "60x4", "ng-model" => "order.special_instructions"
-
-      .row
-        .small-12.columns.text-right
-          %button.primary{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)"}
-            = t :next
