@@ -6,6 +6,8 @@ class EnterprisesController < BaseController
   include OrderCyclesHelper
   include SerializerHelper
 
+  protect_from_forgery except: :check_permalink
+
   # These prepended filters are in the reverse order of execution
   prepend_before_action :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
 
