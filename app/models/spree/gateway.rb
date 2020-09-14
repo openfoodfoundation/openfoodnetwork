@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'spree/concerns/payment_method_distributors'
-
 module Spree
   class Gateway < PaymentMethod
-    include Spree::PaymentMethodDistributors
+    include PaymentMethodDistributors
 
     delegate_belongs_to :provider, :authorize, :purchase, :capture, :void, :credit
 
