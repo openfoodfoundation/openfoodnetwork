@@ -134,8 +134,11 @@ module Spree
       end
 
       # Show Stripe as an option if enabled, or if the
-      # current payment_method is already a Stripe method
+      # current payment_method is already a Stripe method.
+      # Don't show stripe as an option if Stripe Connect hasn't been set up for any hubs.
       def show_stripe?
+        hubs = Enterprise.managed_by(spree_current_user).is_distributor
+        return false unless hubs.map { |h| h.stripe_account }.compact.count > 0
         Spree::Config.stripe_connect_enabled ||
           stripe_payment_method?
       end
