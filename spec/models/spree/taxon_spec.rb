@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
   describe Taxon do
+    let(:taxon) { Spree::Taxon.new(name: "Ruby on Rails") }
+
     let(:e) { create(:supplier_enterprise) }
     let!(:t1) { create(:taxon) }
     let!(:t2) { create(:taxon) }
@@ -44,6 +48,52 @@ module Spree
           product.primary_taxon = taxon2
           product.save
         end.to change { taxon2.reload.updated_at }
+      end
+    end
+
+    context "set_permalink" do
+      it "should set permalink correctly when no parent present" do
+        taxon.set_permalink
+        expect(taxon.permalink).to eq "ruby-on-rails"
+      end
+
+      it "should support Chinese characters" do
+        taxon.name = "你好"
+        taxon.set_permalink
+        expect(taxon.permalink).to eq 'ni-hao'
+      end
+
+      context "with parent taxon" do
+        before do
+          allow(taxon).to receive_messages parent_id: 123
+          allow(taxon).to receive_messages parent: build(:taxon, permalink: "brands")
+        end
+
+        it "should set permalink correctly when taxon has parent" do
+          taxon.set_permalink
+          expect(taxon.permalink).to eq "brands/ruby-on-rails"
+        end
+
+        it "should set permalink correctly with existing permalink present" do
+          taxon.permalink = "b/rubyonrails"
+          taxon.set_permalink
+          expect(taxon.permalink).to eq "brands/rubyonrails"
+        end
+
+        it "should support Chinese characters" do
+          taxon.name = "我"
+          taxon.set_permalink
+          expect(taxon.permalink).to eq "brands/wo"
+        end
+      end
+    end
+
+    # Regression test for Spree #2620
+    context "creating a child node using first_or_create" do
+      let(:taxonomy) { create(:taxonomy) }
+
+      it "does not error out" do
+        expect { taxonomy.root.children.where(name: "Some name").first_or_create }.not_to raise_error
       end
     end
   end
