@@ -70,9 +70,7 @@ feature "As a consumer I want to check out my cart", js: true do
         fill_in 'Email', with: user.email
         fill_in 'Phone', with: '098712736'
 
-        within '#details' do
-          click_button 'Next'
-        end
+        click_button 'Place order now'
 
         expect(page).to have_selector 'div.login-modal', visible: true
         expect(page).to have_content I18n.t('devise.failure.already_registered')
