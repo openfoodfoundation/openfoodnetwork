@@ -34,7 +34,7 @@ end
 module Spree
   module Core
     module ControllerHelpers
-      module RespondWith
+      module RespondWithRenamed
         extend ActiveSupport::Concern
 
         included do

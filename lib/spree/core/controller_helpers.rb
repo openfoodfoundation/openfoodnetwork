@@ -7,7 +7,7 @@ module Spree
         klass.class_eval do
           include Spree::Core::ControllerHelpers::Common
           include Spree::Core::ControllerHelpers::Auth
-          include Spree::Core::ControllerHelpers::RespondWith
+          include Spree::Core::ControllerHelpers::RespondWithRenamed
           include Spree::Core::ControllerHelpers::Order
         end
       end
