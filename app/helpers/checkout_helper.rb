@@ -16,7 +16,7 @@ module CheckoutHelper
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     unless exclude.include? :admin_and_handling
-      adjustments << Spree::Adjustment.new(label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(&:amount))
+      adjustments << Spree::Adjustment.new(label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(:amount))
     end
 
     adjustments
@@ -24,7 +24,7 @@ module CheckoutHelper
 
   def display_checkout_admin_and_handling_adjustments_total_for(order)
     adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
-    Spree::Money.new adjustments.sum(&:amount), currency: order.currency
+    Spree::Money.new adjustments.sum(:amount), currency: order.currency
   end
 
   def checkout_line_item_adjustments(order)
@@ -32,7 +32,7 @@ module CheckoutHelper
   end
 
   def checkout_subtotal(order)
-    order.item_total + checkout_line_item_adjustments(order).sum(&:amount)
+    order.item_total + checkout_line_item_adjustments(order).sum(:amount)
   end
 
   def display_checkout_subtotal(order)
