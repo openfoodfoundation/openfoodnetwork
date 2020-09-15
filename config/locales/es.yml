@@ -9,11 +9,11 @@ es:
         shipment_state: Estado del envío
         completed_at: Completado en
         number: Número
-        state: Provincia
+        state: Estado
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
-        state: Provincia
+        state: Estado
         source: Source
       spree/product:
         primary_taxon: "categoría del producto"
@@ -2141,7 +2141,7 @@ es:
   report_header_ship_street_2: Calle de envío 2
   report_header_ship_city: Ciudad de envío
   report_header_ship_postcode: Código postal de envío
-  report_header_ship_state: Provincia de envío
+  report_header_ship_state: Estado del envío
   report_header_billing_street: Calle de facturación
   report_header_billing_street_2: Calle de facturación 2
   report_header_billing_street_3: Calle de facturación 3
@@ -2649,6 +2649,9 @@ es:
       signup_or_login: "Empieza registrándose (o iniciando sesión)"
       have_an_account: "¿Ya tiene una cuenta?"
       action_login: "Inicie sesión ahora."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Hubo un problema al configurar su tarjeta en nuestra pasarela de pagos. Actualice la página y vuelva a intentarlo; si falla por segunda vez, comuníquese con nosotros para obtener asistencia.
   inflections:
     each:
       one: "each"
@@ -3086,7 +3089,7 @@ es:
           shipment_state: "Estado del envío"
           completed_at: "Completado en"
           number: "Número"
-          state: "Provincia"
+          state: "Estado"
           email: "E-mail del consumidor"
         invoice:
           issued_on: "Emitido el"
