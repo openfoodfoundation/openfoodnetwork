@@ -138,7 +138,8 @@ module Spree
       # Don't show stripe as an option if Stripe Connect hasn't been set up for any hubs.
       def show_stripe?
         hubs = Enterprise.managed_by(spree_current_user).is_distributor
-        return false unless hubs.map { |h| h.stripe_account }.compact.count > 0
+        return false unless hubs.map(&:stripe_account).compact.count.positive?
+
         Spree::Config.stripe_connect_enabled ||
           stripe_payment_method?
       end
