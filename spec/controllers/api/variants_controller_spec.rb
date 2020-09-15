@@ -14,7 +14,7 @@ describe Api::VariantsController, type: :controller do
   end
 
   context "as a normal user" do
-    sign_in_as_user!
+    let(:current_api_user) { build(:user) }
 
     let!(:product) { create(:product) }
     let!(:variant) do
@@ -84,7 +84,7 @@ describe Api::VariantsController, type: :controller do
   end
 
   context "as an enterprise user" do
-    sign_in_as_enterprise_user! [:supplier]
+    let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
     let(:product) { create(:product, supplier: supplier) }
     let(:variant) { product.master }
@@ -109,7 +109,7 @@ describe Api::VariantsController, type: :controller do
   end
 
   context "as an administrator" do
-    sign_in_as_admin!
+    let(:current_api_user) { create(:admin_user) }
 
     let(:product) { create(:product) }
     let(:variant) { product.master }
