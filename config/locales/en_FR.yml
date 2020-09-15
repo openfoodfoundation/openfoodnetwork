@@ -1244,11 +1244,11 @@ en_FR:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://apropos.openfoodfrance.org/"
+  menu_5_url: "https://apropos.coopcircuits.fr/"
   menu_6_title: "Connect"
-  menu_6_url: "https://apropos.openfoodfrance.org/blog/"
+  menu_6_url: "https://apropos.coopcircuits.fr/blog/"
   menu_7_title: "Learn"
-  menu_7_url: "https://apropos.openfoodfrance.org/support/"
+  menu_7_url: "https://apropos.coopcircuits.fr/ressources/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -2643,6 +2643,11 @@ en_FR:
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          There was a problem setting up your card in our payments gateway.
+          Please refresh the page and try again, if it fails a second time,
+          please contact us for support.
   inflections:
     each:
       one: "each"

@@ -2649,6 +2649,11 @@ en_GB:
       signup_or_login: "Start By signing up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          There was a problem setting up your card in our payments gateway.
+          Please refresh the page and try again, if it fails a second time,
+          please contact us for support.
   inflections:
     each:
       one: "each"
