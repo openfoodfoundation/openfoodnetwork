@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require 'spree/concerns/payment_method_distributors'
-
 module Spree
   class PaymentMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
-    include Spree::PaymentMethodDistributors
+    include PaymentMethodDistributors
 
     acts_as_taggable
     acts_as_paranoid
