@@ -2649,6 +2649,9 @@ ca:
       signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
       have_an_account: "Ja tens un compte?"
       action_login: "Inicia la sessió ara."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Hi ha hagut un problema al configurar la vostra targeta a la nostra passarel·la de pagaments. Actualitzeu la pàgina i torneu-ho a provar; si falla una segona vegada, poseu-vos en contacte amb nosaltres per obtenir assistència.
   inflections:
     each:
       one: "cadascun"
