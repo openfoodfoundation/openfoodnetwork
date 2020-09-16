@@ -38,6 +38,5 @@ Add the link or remove this section. -->
 
 
 #### Documentation updates
-<!-- Are their any wiki pages that need updating after merging this PR?
+<!-- Are there any wiki pages that need updating after merging this PR?
 List them here or remove this section. -->
-
