@@ -41,6 +41,7 @@
         // Variant name
         .variant-name {
           padding-left: 0;
+          padding-right: 0;
 
           @include breakpoint(phablet) {
             padding-left: 0.5rem;
@@ -56,8 +57,9 @@
 
         // Variant price
         .variant-price {
-          padding-left: 0.25rem;
-          padding-right: 0.25rem;
+          @include breakpoint(phablet) {
+            padding-left: 1rem;
+          }
         }
 
         // Total price
