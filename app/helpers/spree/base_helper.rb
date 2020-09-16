@@ -1,12 +1,7 @@
+# frozen_string_literal: true
+
 module Spree
   module BaseHelper
-    # human readable list of variant options
-    # Override: Do not show out of stock text
-    def variant_options(variant, _options = {})
-      variant.options_text
-    end
-
-    # Overriden to eager-load :states
     def available_countries
       checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
 
@@ -20,6 +15,11 @@ module Spree
         country.name = Spree.t(country.iso, scope: 'country_names', default: country.name)
         country
       end.sort { |a, b| a.name <=> b.name }
+    end
+
+    def pretty_time(time)
+      [I18n.l(time.to_date, format: :long),
+       time.strftime("%l:%M %p")].join(" ")
     end
   end
 end
