@@ -119,5 +119,33 @@ module Spree
         expect{ add_distributor }.to change { shipping_method.reload.updated_at }
       end
     end
+
+    context "validations" do
+      let!(:shipping_method) { create(:shipping_method, distributors: [create(:distributor_enterprise)]) }
+
+      it "validates presence of name" do
+        shipping_method.update name: ''
+        expect(shipping_method.errors[:name].first).to eq "can't be blank"
+      end
+
+      context "shipping category" do
+        it "validates presence of at least one" do
+          shipping_method.update shipping_categories: []
+          expect(shipping_method.reload.errors[:base].first).to eq "You need to select at least one shipping category"
+        end
+
+        context "one associated" do
+          it { expect(shipping_method.reload.errors[:base]).to be_empty }
+        end
+      end
+    end
+
+    context 'factory' do
+      let(:shipping_method){ create :shipping_method }
+
+      it "should set calculable correctly" do
+        expect(shipping_method.calculator.calculable).to eq(shipping_method)
+      end
+    end
   end
 end
