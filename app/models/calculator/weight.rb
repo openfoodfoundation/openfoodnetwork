@@ -81,14 +81,12 @@ module Calculator
     end
 
     def convert_weight(value)
-      return 0 unless value
+      return 0 unless value && ["kg", "lb"].include?(preferences[:unit_from_list])
 
       if preferences[:unit_from_list] == "kg"
         value / 1000
       elsif preferences[:unit_from_list] == "lb"
         value / 453.6
-      else
-        raise "Unknown unit preference"
       end
     end
   end
