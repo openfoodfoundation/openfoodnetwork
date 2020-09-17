@@ -145,6 +145,10 @@ en:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
 
+  datetime_picker_ui:
+    current_text: Now
+    close_text: Done
+    time_text: Time
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"

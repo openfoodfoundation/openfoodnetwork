@@ -1,22 +1,30 @@
-$(document).ready(function() {
-  $('.datetimepicker').datetimepicker({
-    dateFormat: 'yy-mm-dd',
-    timeFormat: 'HH:mm',
+$(document).ready(function(){
+  window.JQUERY_UI_DATE_PICKER_DEFAULTS = {
+    dateFormat: Spree.translations.date_picker,
     dayNames: Spree.translations.abbr_day_names,
     dayNamesMin: Spree.translations.abbr_day_names,
     monthNames: Spree.translations.month_names,
     prevText: Spree.translations.previous,
     nextText: Spree.translations.next,
-    showOn: 'button',
-    controlType: 'select',
     oneLine: true,
+    showOn: 'button',
     buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
-    buttonImageOnly: true,
-    stepMinute: 15
-  });
-});
+    buttonImageOnly: true
+  }
 
-$(document).ready(function(){
+  window.JQUERY_UI_DATETIME_PICKER_DEFAULTS = Object.assign(
+    {},
+    window.JQUERY_UI_DATE_PICKER_DEFAULTS,
+    {
+      currentText: Spree.translations.datetime_ui_current_text,
+      closeText: Spree.translations.datetime_ui_close_text,
+      timeText: Spree.translations.datetime_ui_time_text,
+      timeFormat: 'HH:mm',
+      controlType: 'select',
+      stepMinute: 15
+    }
+  );
+  $('.datetimepicker').datetimepicker(window.JQUERY_UI_DATETIME_PICKER_DEFAULTS);
   $('a.close').click(function(event){
     event.preventDefault();
     $(this).parent().slideUp(250);
