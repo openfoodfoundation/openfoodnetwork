@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'open_food_network/option_value_namer'
+require 'variant_units/option_value_namer'
 
 module Spree
   describe Variant do
@@ -436,7 +436,7 @@ module Spree
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '') }
 
         it "requests the name of the new option_value from OptionValueName" do
-          expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
+          expect_any_instance_of(VariantUnits::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
           v.update(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
           expect(ov.name).to eq("10g foo")
@@ -448,7 +448,7 @@ module Spree
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
 
         it "does not request the name of the new option_value from OptionValueName" do
-          expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).not_to receive(:name)
+          expect_any_instance_of(VariantUnits::OptionValueNamer).not_to receive(:name)
           v.update!(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
           expect(ov.name).to eq("FOOS!")

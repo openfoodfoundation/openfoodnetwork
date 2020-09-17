@@ -194,11 +194,11 @@ module OrderManagement
         end
 
         def option_value_value(line_items)
-          OpenFoodNetwork::OptionValueNamer.new(line_items.first).value
+          VariantUnits::OptionValueNamer.new(line_items.first).value
         end
 
         def option_value_unit(line_items)
-          OpenFoodNetwork::OptionValueNamer.new(line_items.first).unit
+          VariantUnits::OptionValueNamer.new(line_items.first).unit
         end
 
         def order_billing_address_name(line_items)

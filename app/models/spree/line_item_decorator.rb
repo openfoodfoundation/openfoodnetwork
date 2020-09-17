@@ -1,8 +1,8 @@
 require 'open_food_network/scope_variant_to_hub'
-require 'open_food_network/variant_and_line_item_naming'
+require 'variant_units/variant_and_line_item_naming'
 
 Spree::LineItem.class_eval do
-  include OpenFoodNetwork::VariantAndLineItemNaming
+  include VariantUnits::VariantAndLineItemNaming
   include LineItemBasedAdjustmentHandling
   has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
 

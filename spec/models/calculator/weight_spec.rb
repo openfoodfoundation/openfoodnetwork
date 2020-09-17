@@ -103,6 +103,28 @@ describe Calculator::Weight do
           expect(calculator.compute(line_item)).to eq(42_000) # 7000 * 6
         end
       end
+
+      context "when the product is in lb (1lb)" do
+        let!(:product_attributes) { { variant_unit: "weight", variant_unit_scale: 453.6 } }
+        let!(:variant_attributes) { { unit_value: 453.6, weight: 453.6 } }
+
+        it "is correct" do
+          expect(line_item.final_weight_volume).to eq(907.2) # 2lb
+          line_item.final_weight_volume = 680.4 # 1.5lb
+          expect(calculator.compute(line_item)).to eq(4.08) # 0.6804 * 6
+        end
+      end
+
+      context "when the product is in oz (8oz)" do
+        let!(:product_attributes) { { variant_unit: "weight", variant_unit_scale: 28.35 } }
+        let!(:variant_attributes) { { unit_value: 226.8, weight: 226.8 } }
+
+        it "is correct" do
+          expect(line_item.final_weight_volume).to eq(453.6) # 2 * 8oz == 1lb
+          line_item.final_weight_volume = 680.4 # 1.5lb
+          expect(calculator.compute(line_item)).to eq(4.08) # 0.6804 * 6
+        end
+      end
     end
 
     context "when the product uses volume unit" do

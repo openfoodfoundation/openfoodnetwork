@@ -2,9 +2,9 @@
 # It contains all of our logic for creating and naming option values (which are associated
 # with both models) and methods for printing human readable "names" for instances of these models.
 
-require 'open_food_network/option_value_namer'
+require 'variant_units/option_value_namer'
 
-module OpenFoodNetwork
+module VariantUnits
   module VariantAndLineItemNaming
     # Copied and modified from Spree::Variant
     def options_text
@@ -18,7 +18,24 @@ module OpenFoodNetwork
                    order("#{Spree::OptionType.table_name}.position asc")
                end
 
-      values.map(&:presentation).to_sentence(words_connector: ", ", two_words_connector: ", ")
+      values.map { |option_value|
+        presentation(option_value)
+      }.to_sentence(words_connector: ", ", two_words_connector: ", ")
+    end
+
+    def presentation(option_value)
+      return option_value.presentation unless option_value.option_type.name == "unit_weight"
+
+      return display_as if has_attribute?(:display_as) && display_as.present?
+
+      return variant.display_as if variant_display_as?
+
+      option_value.presentation
+    end
+
+    def variant_display_as?
+      respond_to?(:variant) && variant.present? &&
+        variant.respond_to?(:display_as) && variant.display_as.present?
     end
 
     def product_and_full_name
@@ -48,9 +65,11 @@ module OpenFoodNetwork
     end
 
     def unit_to_display
-      return options_text if !has_attribute?(:display_as) || display_as.blank?
+      return display_as if has_attribute?(:display_as) && display_as.present?
 
-      display_as
+      return variant.display_as if variant_display_as?
+
+      options_text
     end
 
     def update_units
@@ -84,7 +103,7 @@ module OpenFoodNetwork
       if has_attribute?(:display_as) && display_as.present?
         display_as
       else
-        option_value_namer = OpenFoodNetwork::OptionValueNamer.new self
+        option_value_namer = VariantUnits::OptionValueNamer.new self
         option_value_namer.name
       end
     end

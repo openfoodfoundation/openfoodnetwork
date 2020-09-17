@@ -1,4 +1,5 @@
 require 'open_food_network/products_and_inventory_report_base'
+require 'variant_units/option_value_namer'
 
 module OpenFoodNetwork
   class LettuceShareReport < ProductsAndInventoryReportBase
@@ -27,8 +28,8 @@ module OpenFoodNetwork
           variant.product.name,
           variant.full_name,
           '',
-          OptionValueNamer.new(variant).value,
-          OptionValueNamer.new(variant).unit,
+          VariantUnits::OptionValueNamer.new(variant).value,
+          VariantUnits::OptionValueNamer.new(variant).unit,
           variant.price,
           '',
           gst(variant),

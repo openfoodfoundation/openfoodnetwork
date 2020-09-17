@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module OpenFoodNetwork
+module VariantUnits
   describe OptionValueNamer do
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
@@ -83,12 +83,21 @@ module OpenFoodNetwork
         expect(subject.send(:option_value_value_unit)).to eq [1, 'kg']
       end
 
+      it "returns only values that are in the same measurement systems" do
+        p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
+        allow(v).to receive(:product) { p }
+        allow(v).to receive(:unit_value) { 500 }
+        # 500g would convert to > 1 pound, but we don't want the namer to use
+        # pounds since it's in a different measurement system.
+        expect(subject.send(:option_value_value_unit)).to eq [500, 'g']
+      end
+
       it "generates values for all weight scales" do
-        [[1.0, 'g'], [1000.0, 'kg'], [1_000_000.0, 'T']].each do |scale, unit|
+        [[1.0, 'g'], [28.35, 'oz'], [453.6, 'lb'], [1000.0, 'kg'], [1_000_000.0, 'T']].each do |scale, unit|
           p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
           allow(v).to receive(:product) { p }
-          allow(v).to receive(:unit_value) { 100 * scale }
-          expect(subject.send(:option_value_value_unit)).to eq [100, unit]
+          allow(v).to receive(:unit_value) { 10.0 * scale }
+          expect(subject.send(:option_value_value_unit)).to eq [10, unit]
         end
       end
 

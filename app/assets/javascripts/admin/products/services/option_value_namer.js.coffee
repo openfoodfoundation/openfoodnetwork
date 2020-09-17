@@ -53,17 +53,18 @@ angular.module("admin.products").factory "OptionValueNamer", (VariantUnitManager
       [value, unit_name]
 
     scale_for_unit_value: ->
-      # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
-      # If there is none available where this is true, use the smallest available unit.
-      unit = ([scale, unit_name] for scale, unit_name of VariantUnitManager.unitNames[@variant.product.variant_unit] when @variant.unit_value / scale >= 1).reduce (unit, [scale, unit_name]) ->
-        if (unit && scale > unit[0]) || !unit?
-          [scale, unit_name]
-        else
-          unit
-      , null
-      if !unit?
-        unit = ([scale, unit_name] for scale, unit_name of VariantUnitManager.unitNames[@variant.product.variant_unit]).reduce (unit, [scale, unit_name]) ->
-          if scale < unit[0] then [scale, unit_name] else unit
-        , [Infinity,""]
+      # Find the largest available and compatible unit where unit_value comes
+      # to >= 1 when expressed in it.
+      # If there is none available where this is true, use the smallest
+      # available unit.
+      product = @variant.product
+      scales = VariantUnitManager.compatibleUnitScales(product.variant_unit_scale, product.variant_unit)
+      variantUnitValue = @variant.unit_value
 
-      unit
+      # sets largestScale = last element in filtered scales array
+      [_, ..., largestScale] = (scales.filter (s) -> variantUnitValue / s >= 1)
+
+      if (largestScale)
+        [largestScale, VariantUnitManager.getUnitName(largestScale, product.variant_unit)]
+      else
+        [scales[0], VariantUnitManager.getUnitName(scales[0], product.variant_unit)]

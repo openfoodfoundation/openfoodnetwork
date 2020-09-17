@@ -1,5 +1,5 @@
 require 'open_food_network/enterprise_fee_calculator'
-require 'open_food_network/variant_and_line_item_naming'
+require 'variant_units/variant_and_line_item_naming'
 require 'concerns/variant_stock'
 
 Spree::Variant.class_eval do
@@ -8,7 +8,7 @@ Spree::Variant.class_eval do
   # This file may be double-loaded in delayed job environment, so we check before
   # removing the Spree method to prevent error.
   remove_method :options_text if instance_methods(false).include? :options_text
-  include OpenFoodNetwork::VariantAndLineItemNaming
+  include VariantUnits::VariantAndLineItemNaming
   include VariantStock
 
   has_many :exchange_variants
