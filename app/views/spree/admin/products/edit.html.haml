@@ -1,5 +1,5 @@
 - content_for :page_actions do
-  %li= button_link_to t('admin.products.back_to_products_list'), admin_products_path, :icon => 'icon-arrow-left'
+  %li= button_link_to t('admin.products.back_to_products_list'), "#{admin_products_path}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", :icon => 'icon-arrow-left'
   %li#new_product_link
     = button_link_to t(:new_product), new_object_url, { :icon => 'icon-plus', :id => 'admin_new_product' }
 
@@ -8,7 +8,10 @@
 = render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Product Details' }
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @product }
 
-= form_for [:admin, @product], :method => :put, :html => { :multipart => true } do |f|
+= form_for [:admin, @product], :url => admin_product_path(@product, @url_filters), :method => :put, :html => { :multipart => true } do |f|
   %fieldset.no-border-top{'ng-app' => 'admin.products'}
     = render :partial => 'form', :locals => { :f => f }
-    = render :partial => 'spree/admin/shared/edit_resource_links'
+    .form-buttons.filter-actions.actions
+      = button t(:update), 'icon-refresh'
+      %span.or= t(:or)
+      = button_link_to t(:cancel), "#{collection_url}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", icon: 'icon-remove'

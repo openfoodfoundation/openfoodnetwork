@@ -12,22 +12,22 @@
       - if can?(:admin, Spree::Product)
         - klass = current == 'Product Details' ? 'active' : ''
         %li{:class => klass}
-          = link_to_with_icon 'icon-edit', t('admin.products.tabs.product_details'), edit_admin_product_url(@product)
+          = link_to_with_icon 'icon-edit', t('admin.products.tabs.product_details'), edit_admin_product_url(@product, @url_filters)
       - if can?(:admin, Spree::Image)
         - klass = current == 'Images' ? 'active' : ''
         %li{:class => klass}
-          = link_to_with_icon 'icon-picture', t('admin.products.tabs.images'), admin_product_images_url(@product)
+          = link_to_with_icon 'icon-picture', t('admin.products.tabs.images'), admin_product_images_url(@product, @url_filters)
       - if can?(:admin, Spree::Variant)
         - klass = current == 'Variants' ? 'active' : ''
         %li{:class => klass}
-          = link_to_with_icon 'icon-th-large', t('admin.products.tabs.variants'),  admin_product_variants_url(@product)
+          = link_to_with_icon 'icon-th-large', t('admin.products.tabs.variants'),  admin_product_variants_url(@product, @url_filters)
       - if can?(:admin, Spree::ProductProperty)
         - klass = current == 'Product Properties' ? 'active' : ''
         %li{:class => klass}
-          = link_to_with_icon 'icon-tasks', t('admin.products.tabs.product_properties'), admin_product_product_properties_url(@product)
+          = link_to_with_icon 'icon-tasks', t('admin.products.tabs.product_properties'), admin_product_product_properties_url(@product, @url_filters)
       - klass = current == 'Group Buy Options' ? 'active' : ''
       %li{:class => klass}
-        = link_to_with_icon 'icon-tasks', t('admin.products.tabs.group_buy_options'), group_buy_options_admin_product_url(@product)
+        = link_to_with_icon 'icon-tasks', t('admin.products.tabs.group_buy_options'), group_buy_options_admin_product_url(@product, @url_filters)
       - klass = current == t(:search) ? 'active' : ''
       %li{:class => klass}
-        = link_to_with_icon 'icon-tasks', t(:search), seo_admin_product_url(@product)
+        = link_to_with_icon 'icon-tasks', t(:search), seo_admin_product_url(@product, @url_filters)

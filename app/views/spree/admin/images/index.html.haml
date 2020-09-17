@@ -2,7 +2,7 @@
 = render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Images'}
 
 - content_for :page_actions do
-  %li= link_to_with_icon('icon-plus', t('spree.new_image'), new_admin_product_image_url(@product), id: 'new_image_link', class: 'button')
+  %li= link_to_with_icon('icon-plus', t('spree.new_image'), new_admin_product_image_url(@product, @url_filters), id: 'new_image_link', class: 'button')
 
 #images
 
@@ -11,7 +11,7 @@
     = t('spree.no_images_found')
     \.
 - else
-  %table.index.sortable{ "data-sortable-link" => "#{update_positions_admin_product_images_url(@product)}" }
+  %table.index.sortable{ "data-sortable-link" => "#{update_positions_admin_product_images_url(@product, @url_filters)}" }
     %colgroup
       %col{ style: "width: 5%" }/
       %col{ style: "width: 10%" }/
@@ -36,5 +36,5 @@
           %td= options_text_for(image)
           %td= image.alt
           %td.actions
-            = link_to_with_icon 'icon-edit', t('spree.edit'), edit_admin_product_image_url(@product, image), no_text: true, data: { action: 'edit'}
-            = link_to_delete image, { url: admin_product_image_url(@product, image), no_text: true }
+            = link_to_with_icon 'icon-edit', t('spree.edit'), edit_admin_product_image_url(@product, image, @url_filters), no_text: true, data: { action: 'edit'}
+            = link_to_delete image, { url: admin_product_image_url(@product, image, @url_filters), no_text: true }

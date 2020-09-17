@@ -10,35 +10,32 @@ module Spree
       include OrderCyclesHelper
       include EnterprisesHelper
 
-      create.before :create_before
-      update.before :update_before
-
       before_action :load_data
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
 
-      respond_override create: { html: {
-        success: lambda {
-          if params[:button] == "add_another"
-            redirect_to new_admin_product_path
-          else
-            redirect_to admin_products_path
-          end
-        },
-        failure: lambda {
-          render :new
-        }
-      } }
-
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
-        super
       end
 
       def create
         delete_stock_params_and_set_after do
-          super
+          if params[:product][:prototype_id].present?
+            @prototype = Spree::Prototype.find(params[:product][:prototype_id])
+          end
+
+          @object.attributes = permitted_resource_params
+          if @object.save
+            flash[:success] = flash_message_for(@object, :successfully_created)
+            if params[:button] == "add_another"
+              redirect_to new_admin_product_path
+            else
+              redirect_to admin_products_path
+            end
+          else
+            render :new
+          end
         end
       rescue Paperclip::Errors::NotIdentifiedByImageMagickError
         invoke_callbacks(:create, :fails)
@@ -56,14 +53,24 @@ module Spree
         @show_latest_import = params[:latest_import] || false
       end
 
-      def update
-        original_supplier_id = @product.supplier_id
+      def edit
+        @url_filters = ::ProductFilters.new.extract(params)
+      end
 
+      def update
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+
+        original_supplier_id = @product.supplier_id
         delete_stock_params_and_set_after do
-          super
-          if original_supplier_id != @product.supplier_id
-            ExchangeVariantDeleter.new.delete(@product)
+          params[:product] ||= {} if params[:clear_product_properties]
+          if @object.update(permitted_resource_params)
+            if original_supplier_id != @product.supplier_id
+              ExchangeVariantDeleter.new.delete(@product)
+            end
+
+            flash[:success] = flash_message_for(@object, :successfully_updated)
           end
+          redirect_to edit_admin_product_url(@object, @url_filters)
         end
       end
 
@@ -91,6 +98,14 @@ module Spree
                           end
 
         redirect_to edit_admin_product_url(@new)
+      end
+
+      def group_buy_options
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+      end
+
+      def seo
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
       protected
@@ -133,19 +148,6 @@ module Spree
           @collection = @collection.group("spree_prices.amount")
         end
         @collection
-      end
-
-      def create_before
-        return if params[:product][:prototype_id].blank?
-
-        @prototype = Spree::Prototype.find(params[:product][:prototype_id])
-      end
-
-      def update_before
-        # We only reset the product properties if we're receiving a post from the form on that tab
-        return unless params[:clear_product_properties]
-
-        params[:product] ||= {}
       end
 
       def product_includes

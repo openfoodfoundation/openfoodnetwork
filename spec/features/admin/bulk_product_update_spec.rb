@@ -514,37 +514,61 @@ feature '
         login_as_admin_and_visit spree.admin_products_path
       end
 
-      it "shows an edit button for products, which takes the user to the standard edit page for that product in a new window" do
+      it "shows an edit button for products, which takes the user to the standard edit page for that product" do
         expect(page).to have_selector "a.edit-product", count: 2
 
-        new_window = window_opened_by do
-          within "tr#p_#{p1.id}" do
-            find("a.edit-product").click
-          end
+        within "tr#p_#{p1.id}" do
+          find("a.edit-product").click
         end
 
-        within_window new_window do
-          expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
-          page.execute_script('window.close()')
-        end
+        expect(URI.parse(current_url).path).to eq spree.edit_admin_product_path(v1.product.permalink)
       end
 
-      it "shows an edit button for variants, which takes the user to the standard edit page for that variant in a new window" do
+      it "shows an edit button for products, which takes the user to the standard edit page for that product, url includes selected filter" do
+        expect(page).to have_selector "a.edit-product", count: 2
+
+        # Set a filter
+        select2_select p1.supplier.name, from: "producer_filter"
+        apply_filters
+
+        within "tr#p_#{p1.id}" do
+          find("a.edit-product").click
+        end
+
+        uri = URI.parse(current_url)
+        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(v1.product.permalink, producerFilter: p1.supplier.id)
+      end
+
+      it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each(&:click)
 
         expect(page).to have_selector "a.edit-variant", count: 2
 
-        new_window = window_opened_by do
-          within "tr#v_#{v1.id}" do
-            find("a.edit-variant").click
-          end
+        within "tr#v_#{v1.id}" do
+          find("a.edit-variant").click
         end
 
-        within_window new_window do
-          expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
-          page.execute_script('window.close()')
+        uri = URI.parse(current_url)
+        expect(URI.parse(current_url).path).to eq spree.edit_admin_product_variant_path(v1.product.permalink, v1.id)
+      end
+
+      it "shows an edit button for variants, which takes the user to the standard edit page for that variant, url includes selected filter" do
+        expect(page).to have_selector "a.view-variants"
+        all("a.view-variants").each(&:click)
+
+        expect(page).to have_selector "a.edit-variant", count: 2
+
+        # Set a filter
+        select2_select p1.supplier.name, from: "producer_filter"
+        apply_filters
+
+        within "tr#v_#{v1.id}" do
+          find("a.edit-variant").click
         end
+
+        uri = URI.parse(current_url)
+        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_variant_path(v1.product.permalink, v1.id, producerFilter: p1.supplier.id)
       end
     end
 

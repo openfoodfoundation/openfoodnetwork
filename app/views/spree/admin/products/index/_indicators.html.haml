@@ -3,12 +3,12 @@
   %img.spinner{ src: image_path("spinning-circles.svg") }
   %h1= t('.title')
 
-%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && query.length==0' }
+%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && q.query.length == 0' }
   %h1#no_results= t('.no_products')
 
-%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && query.length!=0' }
+%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && q.query.length != 0' }
   %h1#no_results
     = t('.no_results')
     '
-    {{query}}
+    {{q.query}}
     '
