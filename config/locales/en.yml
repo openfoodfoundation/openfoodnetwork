@@ -1226,8 +1226,8 @@ en:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "By placing this order you agree to the %{terms_and_conditions_link}."
-      link_text: "Terms of Service"
+      message_html: "I agree to the seller's %{terms_and_conditions_link}."
+      link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:

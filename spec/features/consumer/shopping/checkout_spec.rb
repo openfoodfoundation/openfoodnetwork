@@ -122,7 +122,7 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "doesn't show link to terms and conditions" do
-        expect(page).to have_no_link("Terms of Service")
+        expect(page).to have_no_link("Terms and Conditions")
       end
     end
 
@@ -137,7 +137,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       it "shows a link to the terms and conditions" do
         visit checkout_path
-        expect(page).to have_link("Terms of Service", href: order.distributor.terms_and_conditions.url)
+        expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
 
         expect(page).to have_button("Place order now", disabled: true)
 
