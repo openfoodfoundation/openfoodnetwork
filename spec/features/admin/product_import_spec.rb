@@ -339,6 +339,56 @@ feature "Product Import", js: true do
       expect(cabbage_override.count_on_hand).to be_nil
       expect(cabbage_override.on_demand).to be_nil
     end
+
+    it "imports lines with all allowed units" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "1", "lb", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "8", "oz", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "2"
+      expect(page).to have_no_selector '.update-count'
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '2'
+      expect(page).to have_no_selector '.updated-count'
+    end
+
+    it "does not allow import for lines with unknown units" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Heavy Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "1", "stones", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "1"
+      expect(page).to have_selector '.invalid-count', text: "1"
+      expect(page).to have_no_selector ".create-count"
+      expect(page).to have_no_selector '.update-count'
+
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+    end
   end
 
   describe "when dealing with uploaded files" do
