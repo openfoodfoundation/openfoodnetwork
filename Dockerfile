@@ -15,8 +15,8 @@ COPY .ruby-version .
 # Install Rbenv & Ruby
 RUN git clone --depth 1 --branch v1.1.2 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
     git clone --depth 1 --branch v20200520 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
-    ${RBENV_ROOT}/plugins/ruby-build/install.sh && \
-    echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
+	${RBENV_ROOT}/plugins/ruby-build/install.sh && \
+	echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     rbenv install $(cat .ruby-version) && \
     rbenv global $(cat .ruby-version) && \
     gem install bundler --version=1.17.2
