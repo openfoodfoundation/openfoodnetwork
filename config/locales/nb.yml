@@ -2642,6 +2642,9 @@ nb:
       signup_or_login: "Kom i gang ved å registrere deg (eller logge inn)"
       have_an_account: "Har du allerede en konto?"
       action_login: "Logg inn nå."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Det oppsto et problem med å konfigurere kortet ditt i betalingsportalen vår. Oppdater siden og prøv igjen. Hvis den mislykkes en gang til, kan du kontakte oss for support.
   inflections:
     each:
       one: "Hver"
