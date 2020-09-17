@@ -120,6 +120,9 @@ it:
     integer_array_validator:
       not_array_error: "deve essere un array"
       invalid_element_error: "deve contenere solo numeri interi"
+  datetime_picker_ui:
+    close_text: Fatto
+    time_text: Ora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Per favore conferma l'indirizzo email di %{enterprise}"
@@ -652,6 +655,8 @@ it:
           promo_image_note1: 'Per favore nota:'
           promo_image_note2: Ogni immagine caricata sarà ritagliata a 1200 x 260
           promo_image_note3: L'immagine promo sarà visualizzata in cima alla pagina del profilo azienda e nei pop-up.
+          remove_logo: "Rimuovi immagine"
+          remove_promo_image: "Rimuovi immagine"
         inventory_settings:
           text1: Puoi optare per la gestione dei livelli di scorta e dei prezzi attraverso il tuo
           inventory: inventario
@@ -838,14 +843,6 @@ it:
       new:
         title: Nuova Azienda
         back_link: Indietro alla lista delle aziende
-      remove_logo:
-        remove: "Rimuovi immagine"
-        removed_successfully: "Logo rimosso con successo"
-        immediate_removal_warning: "Il logo verrà rimosso immediatamente dopo la conferma."
-      remove_promo_image:
-        remove: "Rimuovi immagine"
-        removed_successfully: "Immagine promozionale rimossa con successo"
-        immediate_removal_warning: "L'immagine promozionale verrà rimossa immediatamente dopo la conferma da parte tua.."
       welcome:
         welcome_title: Benvenuto su Open Food Network!
         welcome_text: Hai creato con successo una
@@ -2565,6 +2562,13 @@ it:
         error_saving: "Errore nel salvataggio dell'abbonamento"
         new:
           please_select_a_shop: "Seleziona un negozio"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo rimosso con successo"
+            immediate_logo_removal_warning: "Il logo verrà rimosso immediatamente dopo la conferma."
+            removed_promo_image_successfully: "Immagine promozionale rimossa con successo"
+            immediate_promo_image_removal_warning: "L'immagine promozionale verrà rimossa immediatamente dopo la conferma da parte tua.."
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
     out_of_stock:
       reduced_stock_available: Quantità disponibile ridotta

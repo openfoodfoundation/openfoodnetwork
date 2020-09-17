@@ -120,6 +120,9 @@ nb:
     integer_array_validator:
       not_array_error: "må være en tabell"
       invalid_element_error: "må kun inneholde gyldige heltall"
+  datetime_picker_ui:
+    close_text: Ferdig
+    time_text: Tid
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -656,6 +659,8 @@ nb:
           promo_image_note1: 'VENNLIGST MERK:'
           promo_image_note2: Ethvert promobilde lastet opp her vil bli kuttet til 1200x260.
           promo_image_note3: Promobildet vises på toppen av en bedrifts profilside og i pop-ups.
+          remove_logo: "Fjern Bilde"
+          remove_promo_image: "Fjern Bilde"
         inventory_settings:
           text1: Du kan velge å administrere lagernivå og priser inn via din
           inventory: varelager
@@ -843,14 +848,6 @@ nb:
       new:
         title: Ny Bedrift
         back_link: Tilbake til bedriftsliste
-      remove_logo:
-        remove: "Fjern Bilde"
-        removed_successfully: "Logo fjernet vellykket"
-        immediate_removal_warning: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
-      remove_promo_image:
-        remove: "Fjern Bilde"
-        removed_successfully: "Promobilde fjernet vellykket"
-        immediate_removal_warning: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
       welcome:
         welcome_title: Velkommen til Open Food Network!
         welcome_text: Du har opprettet en
@@ -2570,6 +2567,13 @@ nb:
         error_saving: "Feil ved lagring av abonnement"
         new:
           please_select_a_shop: "Vennligst velg en butikk"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo fjernet vellykket"
+            immediate_logo_removal_warning: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
+            removed_promo_image_successfully: "Promobilde fjernet vellykket"
+            immediate_promo_image_removal_warning: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
     insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig

@@ -645,6 +645,8 @@ de_DE:
           promo_image_note1: 'BITTE BEACHTEN SIE:'
           promo_image_note2: Jedes hier hochgeladene Werbebild wird auf 1200 x 260 beschnitten.
           promo_image_note3: Das Werbebild wird oben auf der Profilseite eines Unternehmens und in Pop-ups angezeigt.
+          remove_logo: "Bild entfernen"
+          remove_promo_image: "Bild entfernen"
         inventory_settings:
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
           inventory: Katalog
@@ -831,14 +833,6 @@ de_DE:
       new:
         title: Neues Unternehmen
         back_link: Zurück zur Unternehmensliste
-      remove_logo:
-        remove: "Bild entfernen"
-        removed_successfully: "Das Logo wurde erfolgreich entfernt"
-        immediate_removal_warning: "Das Logo wird sofort nach der Bestätigung entfernt."
-      remove_promo_image:
-        remove: "Bild entfernen"
-        removed_successfully: "Werbebild wurde erfolgreich entfernt"
-        immediate_removal_warning: "Das Werbebild wird sofort nach der Bestätigung entfernt."
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -2529,6 +2523,13 @@ de_DE:
         error_saving: "Fehler beim Speichern des Abonnements"
         new:
           please_select_a_shop: "Bitte wählen Sie einen Laden"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Das Logo wurde erfolgreich entfernt"
+            immediate_logo_removal_warning: "Das Logo wird sofort nach der Bestätigung entfernt."
+            removed_promo_image_successfully: "Werbebild wurde erfolgreich entfernt"
+            immediate_promo_image_removal_warning: "Das Werbebild wird sofort nach der Bestätigung entfernt."
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
     out_of_stock:
       reduced_stock_available: Reduzierter Bestand verfügbar

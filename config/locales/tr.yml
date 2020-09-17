@@ -120,6 +120,9 @@ tr:
     integer_array_validator:
       not_array_error: "Sıralı olmalı"
       invalid_element_error: "Yalnızca geçerli tam sayılar içermelidir"
+  datetime_picker_ui:
+    close_text: Tamam
+    time_text: zaman
   enterprise_mailer:
     confirmation_instructions:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
@@ -656,6 +659,8 @@ tr:
           promo_image_note1: 'DİKKAT:'
           promo_image_note2: Kapak resmi 1200 x 260 formatına göre kırpılacaktır.
           promo_image_note3: Kapak resmi, işletmenin profil sayfasının üstünde görüntülenir.
+          remove_logo: "Resmi Kaldır"
+          remove_promo_image: "Resmi Kaldır"
         inventory_settings:
           text1: 'Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz:'
           inventory: Stok
@@ -701,7 +706,7 @@ tr:
           name: "Ad"
           applies: "AKTİF?"
           manage: "Teslimat Yöntemlerini Yönet"
-          create_button: "Yenİ Teslİmat Yöntemİ Oluştur"
+          create_button: "Yeni Teslimat Yöntemi Oluştur"
           create_one_button: "Şimdi Oluştur"
           no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
@@ -841,14 +846,6 @@ tr:
       new:
         title: Yeni İşletme
         back_link: İşletmeler LİSTESİNE gerİ dön
-      remove_logo:
-        remove: "Resmi Kaldır"
-        removed_successfully: "Logo başarıyla kaldırıldı"
-        immediate_removal_warning: "Onayladıktan hemen sonra logo kaldırılacaktır."
-      remove_promo_image:
-        remove: "Resmi Kaldır"
-        removed_successfully: "Kapak resmi başarıyla kaldırıldı"
-        immediate_removal_warning: "Kapak resmi, onayladıktan hemen sonra kaldırılacaktır."
       welcome:
         welcome_title: Açık Gıda Ağı'na Hoşgeldiniz!
         welcome_text: 'BAŞARILI ŞEKİLDE OLUŞTURULDU:'
@@ -1416,6 +1413,7 @@ tr:
   checkout_default_bill_address: "Varsayılan fatura adresi olarak kaydet"
   checkout_shipping: Teslimat bilgileri
   checkout_default_ship_address: "Varsayılan teslimat adresi olarak kaydet"
+  checkout_method_free: Ücretsiz
   checkout_address_same: Teslimat adresi fatura adresiyle aynı mı?
   checkout_ready_for: "Teslimat:"
   checkout_instructions: "Yorumlarınız veya özel talimatlarınız var mı?"
@@ -2569,6 +2567,13 @@ tr:
         error_saving: "Üyelik kaydedilirken hata oluştu"
         new:
           please_select_a_shop: "Lütfen bir dükkan seçin"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo başarıyla kaldırıldı"
+            immediate_logo_removal_warning: "Onayladıktan hemen sonra logo kaldırılacaktır."
+            removed_promo_image_successfully: "Kapak resmi başarıyla kaldırıldı"
+            immediate_promo_image_removal_warning: "Kapak resmi, onayladıktan hemen sonra kaldırılacaktır."
     insufficient_stock: "Yetersiz stok, sadece %{on_hand} kaldı"
     out_of_stock:
       reduced_stock_available: Azaltılmış stok mevcut
@@ -2772,6 +2777,7 @@ tr:
   adjustments: "Düzeltmeler"
   payments: "Ödemeler"
   return_authorizations: "İade Yetkileri"
+  new_adjustment: "Yeni Düzenleme"
   payment: "Ödeme"
   payment_method: "ÖDEME YÖNTEMİ"
   shipment: "Teslimat"
@@ -2973,6 +2979,7 @@ tr:
           other: "%{count}hata kaydedilmeyi engelledi:"
         there_were_problems_with_the_following_fields: "Belirtilen alanlar ile ilgili sorun oluştu:"
       payments_list:
+        date_time: "Gün/Saat"
         amount: "Tutar"
         payment_method: "ÖDEME YÖNTEMİ"
         payment_state: "Ödeme Durumu"

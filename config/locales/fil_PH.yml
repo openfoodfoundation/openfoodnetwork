@@ -119,6 +119,8 @@ fil_PH:
     integer_array_validator:
       not_array_error: "ay dapat na pagpipilian"
       invalid_element_error: "ay dapat naglalaman lamang ng valid na integers"
+  datetime_picker_ui:
+    time_text: oras
   enterprise_mailer:
     confirmation_instructions:
       subject: "Kumpirmahin ang email address para sa %{enterprise}"
@@ -646,6 +648,8 @@ fil_PH:
           promo_image_note1: 'TANDAAN:'
           promo_image_note2: ang kahit anong larawan na ilalagay dito ay maka-crop sa 1200 x 260.
           promo_image_note3: ang promo na larawan ay makikita sa itaas na bahagi sa pahina ng profile ng enterprise at pop-ups.
+          remove_logo: "alisin ang larawan"
+          remove_promo_image: "alisin ang larawan"
         inventory_settings:
           text1: maaari mong piliin na pamahalaan ang lebel ng mga stock at presyo sa iyong
           inventory: imbentaryo
@@ -832,14 +836,6 @@ fil_PH:
       new:
         title: bagong enterprise
         back_link: bumalik sa listahan ng mga enterprise
-      remove_logo:
-        remove: "alisin ang larawan"
-        removed_successfully: "matagumpay na natanggal ang logo"
-        immediate_removal_warning: "ang logo ay tatanggalin agad pagkatapos mong magkumpirma."
-      remove_promo_image:
-        remove: "alisin ang larawan"
-        removed_successfully: "ang promo na larawan ay matagumpay na natanggal"
-        immediate_removal_warning: "ang promo na larawan ay tatanggalin agad pagkatapos mong magkumpirma."
       welcome:
         welcome_title: Welcome sa Open Food Network!
         welcome_text: matagumpay mong nagawa ang
@@ -2542,6 +2538,13 @@ fil_PH:
         error_saving: "error sa pag-save ng subscription"
         new:
           please_select_a_shop: "Pumili ng shop"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "matagumpay na natanggal ang logo"
+            immediate_logo_removal_warning: "ang logo ay tatanggalin agad pagkatapos mong magkumpirma."
+            removed_promo_image_successfully: "ang promo na larawan ay matagumpay na natanggal"
+            immediate_promo_image_removal_warning: "ang promo na larawan ay tatanggalin agad pagkatapos mong magkumpirma."
     insufficient_stock: "Hindi sapat ang stock, mayroon na lamang%{on_hand} na natitira"
     out_of_stock:
       reduced_stock_available: binawasan ang stock na magagamit

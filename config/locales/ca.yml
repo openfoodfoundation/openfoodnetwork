@@ -120,6 +120,9 @@ ca:
     integer_array_validator:
       not_array_error: "ha de ser una matriu"
       invalid_element_error: "ha de contenir només nombres enters vàlids"
+  datetime_picker_ui:
+    close_text: Fet
+    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Sisplau, confirma l'adreça electrònica d'%{enterprise}"
@@ -656,6 +659,8 @@ ca:
           promo_image_note1: 'ATENCIÓ:'
           promo_image_note2: Qualsevol imatge promocional que es carregui aquí es tallarà a 1200 x 260.
           promo_image_note3: 'La imatge promocional es mostra a la part superior de la pàgina de perfil i finestres emergents d''una organització '
+          remove_logo: "Elimina la imatge "
+          remove_promo_image: "Elimina la imatge "
         inventory_settings:
           text1: 'Pots optar per gestionar els nivells d''existències i els preus a través del teu '
           inventory: inventari
@@ -846,14 +851,6 @@ ca:
       new:
         title: Nova organització
         back_link: 'Tornar a la llista d''organitzacions '
-      remove_logo:
-        remove: "Elimina la imatge"
-        removed_successfully: "Logotip eliminat correctament"
-        immediate_removal_warning: "El logotip s'eliminarà immediatament després de confirmar."
-      remove_promo_image:
-        remove: "Elimina la imatge "
-        removed_successfully: "Imatge promocional eliminada correctament"
-        immediate_removal_warning: "La imatge promocional s'eliminarà immediatament després de confirmar."
       welcome:
         welcome_title: Benvingut a Katuma - Open Food Network!
         welcome_text: Heu creat correctament un
@@ -2576,6 +2573,13 @@ ca:
         error_saving: "S'ha produït un error en desar la subscripció"
         new:
           please_select_a_shop: "Si us plau, seleccioneu una botiga"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logotip eliminat correctament"
+            immediate_logo_removal_warning: "El logotip s'eliminarà immediatament després de confirmar."
+            removed_promo_image_successfully: "Imatge promocional eliminada correctament"
+            immediate_promo_image_removal_warning: "La imatge promocional s'eliminarà immediatament després de confirmar."
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
     out_of_stock:
       reduced_stock_available: Estoc reduït disponible

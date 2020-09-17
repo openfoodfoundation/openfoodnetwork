@@ -120,6 +120,9 @@ nl_BE:
     integer_array_validator:
       not_array_error: "moet een array zijn"
       invalid_element_error: "mogen alleen geldige gehele getallen bevatten"
+  datetime_picker_ui:
+    close_text: Afgerond
+    time_text: Uur
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bevestig a.u.b. het e-mailadres voor %{enterprise}"
@@ -656,6 +659,8 @@ nl_BE:
           promo_image_note1: 'Hou er rekening mee dat:'
           promo_image_note2: 'Elke promotie-afbeelding die hier wordt geüpload zal herschaald worden tot 1200 x 260. '
           promo_image_note3: De promotie-afbeelding wordt afgebeeld bovenaan de ondernemingsprofielpagina en op pop-ups.
+          remove_logo: "Afbeelding Verwijderen"
+          remove_promo_image: "Afbeelding Verwijderen"
         inventory_settings:
           text1: U kunt ervoor kiezen om de voorraadniveaus en prijzen te beheren via uw
           inventory: inventaris
@@ -846,14 +851,6 @@ nl_BE:
       new:
         title: Nieuwe onderneming
         back_link: Terug naar bedrijvenlijst
-      remove_logo:
-        remove: "Afbeelding Verwijderen"
-        removed_successfully: "Logo succesvol verwijderd"
-        immediate_removal_warning: "Het logo wordt onmiddellijk na uw bevestiging verwijderd."
-      remove_promo_image:
-        remove: "Afbeelding verwijderen"
-        removed_successfully: "Promo afbeelding succesvol verwijderd"
-        immediate_removal_warning: "De promo afbeelding wordt onmiddellijk na bevestiging verwijderd."
       welcome:
         welcome_title: Welkom bij het Open Food Network!
         welcome_text: U heeft met succes een
@@ -2579,6 +2576,13 @@ nl_BE:
         error_saving: "Fout bij het opslaan van uw abonnement."
         new:
           please_select_a_shop: "Selecteer een winkel"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo succesvol verwijderd"
+            immediate_logo_removal_warning: "Het logo wordt onmiddellijk na uw bevestiging verwijderd."
+            removed_promo_image_successfully: "Promo afbeelding succesvol verwijderd"
+            immediate_promo_image_removal_warning: "De promo afbeelding wordt onmiddellijk na bevestiging verwijderd."
     insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
     out_of_stock:
       reduced_stock_available: Stock beschikbaar

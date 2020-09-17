@@ -34,7 +34,7 @@ ar:
             email:
               taken: "يوجد حساب متصل بهذا الايميل.\nالرجاء الدخول او اعادة تعيين كلمة السر."
         spree/order:
-          no_card: لا يوجد بطاقة ائتمان معتمدة متاحة لاتمام عملية الدفع
+          no_card: لا توجد بطاقات ائتمان معتمدة لشحنها
         spree/credit_card:
           attributes:
             base:
@@ -120,6 +120,9 @@ ar:
     integer_array_validator:
       not_array_error: "يجب أن يكون مصفوفة"
       invalid_element_error: "يجب أن يحتوي فقط على أعداد صحيحة فاعلة"
+  datetime_picker_ui:
+    close_text: تم
+    time_text: الوقت
   enterprise_mailer:
     confirmation_instructions:
       subject: "يرجى تأكيد عنوان البريد الإلكتروني ل %{enterprise}"
@@ -144,7 +147,7 @@ ar:
       instructions: "تم شحن طلبك"
       shipment_summary: "ملخص الشحن"
       subject: "إشعار الشحن"
-      thanks: "شكرا لك على اعمالك."
+      thanks: "شكرا لك على تعاملاتك."
       track_information: "معلومات التتبع : %{tracking}"
       track_link: "رابط التتبع: %{url}"
   subscription_mailer:
@@ -656,6 +659,8 @@ ar:
           promo_image_note1: 'يرجى الملاحظة:'
           promo_image_note2: سيتم اقتصاص أي صورة ترويجية تم تحميلها هنا إلى 1200 × 260.
           promo_image_note3: يتم عرض صورة الترويجي في الجزء العلوي من صفحة الملف الشخصي للشركات والنوافذ المنبثقة.
+          remove_logo: "إزالة الصورة"
+          remove_promo_image: "إزالة الصورة"
         inventory_settings:
           text1: يمكنك اختيار إدارة مستويات المخزون والأسعار عبر
           inventory: المخزون
@@ -842,14 +847,6 @@ ar:
       new:
         title: شركة جديدة
         back_link: العودة إلى قائمة المؤسسات
-      remove_logo:
-        remove: "إزالة الصورة"
-        removed_successfully: "تمت إزالة الشعار بنجاح"
-        immediate_removal_warning: "سيتم إزالة الشعار مباشرة بعد التأكيد."
-      remove_promo_image:
-        remove: "إزالة الصورة"
-        removed_successfully: "تمت إزالة الصورة الترويجية بنجاح"
-        immediate_removal_warning: "ستتم إزالة صورة الترويجي فور التأكيد."
       welcome:
         welcome_title: مرحبا بكم في شبكة الغذاء المفتوح!
         welcome_text: لقد نجحت في إنشاء
@@ -2570,6 +2567,13 @@ ar:
         error_saving: "خطأ في حفظ الاشتراك"
         new:
           please_select_a_shop: "يرجى اختيار متجر"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "تمت إزالة الشعار بنجاح"
+            immediate_logo_removal_warning: "سيتم إزالة الشعار مباشرة بعد التأكيد."
+            removed_promo_image_successfully: "تمت إزالة الصورة الترويجية بنجاح"
+            immediate_promo_image_removal_warning: "ستتم إزالة صورة الترويجي فور التأكيد."
     insufficient_stock: "مخزون غير متوفر ، تبقى %{on_hand}"
     out_of_stock:
       reduced_stock_available: انخفاض المخزون المتاح

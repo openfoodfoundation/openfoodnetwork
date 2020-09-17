@@ -121,6 +121,9 @@ fr_CA:
     integer_array_validator:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  datetime_picker_ui:
+    close_text: Fait
+    time_text: Heure
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -657,6 +660,8 @@ fr_CA:
           promo_image_note1: 'ATTENTION:'
           promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
           promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
+          remove_logo: "Supprimer l'image"
+          remove_promo_image: "Supprimer l'image"
         inventory_settings:
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
           inventory: catalogue boutique
@@ -846,14 +851,6 @@ fr_CA:
       new:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
-      remove_logo:
-        remove: "Supprimer l'image"
-        removed_successfully: "Logo supprimé avec succès"
-        immediate_removal_warning: "Le logo sera supprimé juste après votre confirmation."
-      remove_promo_image:
-        remove: "Supprimer l'image"
-        removed_successfully: "Bannière supprimée avec succès"
-        immediate_removal_warning: "La bannière sera supprimée juste après votre confirmation."
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -2582,6 +2579,13 @@ fr_CA:
         error_saving: "Une erreur est survenue à la sauvegarde"
         new:
           please_select_a_shop: "Veuillez choisir une boutique"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo supprimé avec succès"
+            immediate_logo_removal_warning: "Le logo sera supprimé juste après votre confirmation."
+            removed_promo_image_successfully: "Bannière supprimée avec succès"
+            immediate_promo_image_removal_warning: "La bannière sera supprimée juste après votre confirmation."
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible

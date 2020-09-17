@@ -120,6 +120,8 @@ es_CO:
     integer_array_validator:
       not_array_error: "debe ser una lista"
       invalid_element_error: "debe contener solo enteros válidos"
+  datetime_picker_ui:
+    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor, confirma la dirección de correo electrónico de %{enterprise}"
@@ -656,6 +658,8 @@ es_CO:
           promo_image_note1: 'ATENCIÓN:'
           promo_image_note2: La imagen será recortada a  1200 x 260.
           promo_image_note3: La imagen se mostrará en la parte superior del perfil de la organización y en pop-ups.
+          remove_logo: "Eliminar la imágen"
+          remove_promo_image: "Eliminar la imágen"
         inventory_settings:
           text1: Puedes optar por administrar los niveles de stock y los precios a través de tu
           inventory: inventario
@@ -845,14 +849,6 @@ es_CO:
       new:
         title: Nueva Organización
         back_link: Volver a la lista de organizaciones
-      remove_logo:
-        remove: "Eliminar la imágen"
-        removed_successfully: "Logotipo eliminado con éxito"
-        immediate_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
-      remove_promo_image:
-        remove: "Eliminar la imagen"
-        removed_successfully: "Imágen promocional eliminada con éxito"
-        immediate_removal_warning: "La imágen promocional se eliminará inmediatamente después de confirmar."
       welcome:
         welcome_title: ¡Bienvenido a Open Food Network!
         welcome_text: Ha creado correctamente un
@@ -1019,8 +1015,8 @@ es_CO:
         name: Pedidos y distribuidores
         description: Pedidos con detalles de distribuidor
       bulk_coop:
-        name: Co-Op Mayorista
-        description: Reporte para pedidos de Bulk Co-Op
+        name: Al Por Mayor Co-op
+        description: Reporte para pedidos Al Por Mayor Co-op
       payments:
         name: Reportes de pago
         description: Reportes para pagos
@@ -2576,6 +2572,13 @@ es_CO:
         error_saving: "Error al guardar suscripción "
         new:
           please_select_a_shop: "Por favor seleccione una tienda"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logotipo eliminado con éxito"
+            immediate_logo_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
+            removed_promo_image_successfully: "Imágen promocional eliminada con éxito"
+            immediate_promo_image_removal_warning: "La imágen promocional se eliminará inmediatamente después de confirmar."
     insufficient_stock: "Inventario insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Inventario reducido disponible
@@ -3255,10 +3258,10 @@ es_CO:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
         bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
-          bulk_coop_allocation: 'Bulk Co-op - Asignación'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
-          bulk_coop_customer_payments: 'Bulk Co-op - Pagos de clientes'
+          bulk_coop_supplier_report: 'Al Por Mayor Co-op - Totales por Proveedor'
+          bulk_coop_allocation: 'Al Por Mayor Co-op - Asignación'
+          bulk_coop_packing_sheets: 'Al Por Mayor Co-op - Hojas de Empaquetado'
+          bulk_coop_customer_payments: 'Al Por Mayor  Co-op - Pagos de clientes'
         customer_names_message:
           customer_names_tip: "Si los nombres de los clientes están ocultos para los pedidos que ha suministrado, puede comunicarse con el distribuidor y preguntar si pueden actualizar sus preferencias de tienda para permitir que sus proveedores vean los nombres de los clientes."
       users:

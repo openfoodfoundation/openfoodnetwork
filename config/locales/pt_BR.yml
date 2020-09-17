@@ -120,6 +120,8 @@ pt_BR:
     integer_array_validator:
       not_array_error: "deve ser uma matriz"
       invalid_element_error: "deve conter apenas números inteiros válidos"
+  datetime_picker_ui:
+    close_text: Feito
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de e-mail para %{enterprise}"
@@ -223,7 +225,7 @@ pt_BR:
   edit: Editar
   clone: Cópia
   distributors: Distribuidores
-  bulk_order_management: Gestão de Pedidos  em Atacado
+  bulk_order_management: Gestão de Pedidos em Massa
   enterprises: Iniciativas
   enterprise_groups: Grupos
   reports: Relatórios
@@ -598,7 +600,7 @@ pt_BR:
         product_unit: "Produto: Unidade"
         weight_volume: "Peso/Volume"
         ask: "Perguntar?"
-        page_title: "Gestão de Pedidos  em Atacado"
+        page_title: "Gestão de Pedidos em Massa"
         actions_delete: "Deletar selecionado"
         loading: "Carregando pedidos"
         no_results: "Nenhum pedido encontrado. "
@@ -655,6 +657,8 @@ pt_BR:
           promo_image_note1: 'POR FAVOR OBSERVE:'
           promo_image_note2: Qualquer imagem promocional carregada aqui será cortada para 1200 x 260.
           promo_image_note3: A imagem promocional é exibida no topo da página do perfil dos empreendimento e em pop-ups.
+          remove_logo: "Remover imagem"
+          remove_promo_image: "Remover imagem"
         inventory_settings:
           text1: Você pode optar por modificar preços e nível de estoque através de seu
           inventory: inventário
@@ -841,14 +845,6 @@ pt_BR:
       new:
         title: Nova iniciativa
         back_link: Voltar à lista de iniciativas
-      remove_logo:
-        remove: "Remover imagem"
-        removed_successfully: "Logo removida com sucesso"
-        immediate_removal_warning: "A logo será removida imediatamente após a confirmação."
-      remove_promo_image:
-        remove: "Remover imagem"
-        removed_successfully: "Imagem promocional removida com sucesso"
-        immediate_removal_warning: "A imagem promocional será removida imediatamente após a confirmação."
       welcome:
         welcome_title: Bem-vindo à Open Food Brasil!
         welcome_text: Você criou com sucesso uma
@@ -2572,6 +2568,11 @@ pt_BR:
         error_saving: "Erro ao salvar inscrição"
         new:
           please_select_a_shop: "Por favor selecione uma loja"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "Logo removida com sucesso"
+            immediate_logo_removal_warning: "A logo será removida imediatamente após a confirmação."
     insufficient_stock: "Estoque insuficiente disponível, apenas %{on_hand} restante"
     out_of_stock:
       reduced_stock_available: Estoque reduzido disponível
@@ -2994,7 +2995,7 @@ pt_BR:
       tab:
         dashboard: "Painel"
         orders: "Encomendas"
-        bulk_order_management: "Gestão de Pedidos  em Atacado"
+        bulk_order_management: "Gestão de Pedidos em Massa"
         subscriptions: "Assinaturas"
         products: "Produtos"
         option_types: "Tipos de opção"
