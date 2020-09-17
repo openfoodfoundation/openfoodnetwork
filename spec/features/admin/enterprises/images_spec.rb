@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 feature "Managing enterprise images" do
@@ -15,7 +17,7 @@ feature "Managing enterprise images" do
       visit edit_admin_enterprise_path(distributor)
     end
 
-    describe "images for an enterprise", js: true do
+    describe "images for an enterprise" do
       def go_to_images
         within(".side_menu") do
           click_link "Images"

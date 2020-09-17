@@ -33,6 +33,7 @@ Openfoodnetwork::Application.routes.draw do
 
       resource :logo, only: [:destroy]
       resource :promo_image, only: [:destroy]
+      resource :terms_and_conditions, only: [:destroy]
     end
 
     resources :shops, only: [:show] do

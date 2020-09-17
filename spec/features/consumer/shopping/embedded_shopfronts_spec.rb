@@ -5,7 +5,7 @@ feature "Using embedded shopfront functionality", js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
-  include CheckoutWorkflow
+  include CheckoutHelper
   include UIComponentHelper
 
   describe "using iframes" do

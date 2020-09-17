@@ -1,0 +1,2 @@
+%p.small
+  = t('.message_html', terms_and_conditions_link: link_to( t( '.link_text' ), current_order.distributor.terms_and_conditions.url, target: '_blank')) if current_order.distributor.terms_and_conditions.file?

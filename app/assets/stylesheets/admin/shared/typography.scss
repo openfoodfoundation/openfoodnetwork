@@ -132,3 +132,25 @@ dl {
   padding: 40px 0px;
   color: lighten($color-body-text, 15);
 }
+
+.text-normal {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.text-big {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.text-red {
+  color: $warning-red;
+}
+
+input.text-big {
+  font-size: 1.1rem;
+}
+
+.pad-top {
+  padding-top: 1em;
+}

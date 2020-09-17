@@ -4,7 +4,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
-  include CheckoutWorkflow
+  include CheckoutHelper
   include UIComponentHelper
 
   describe "using the checkout" do

@@ -1,7 +1,9 @@
-@import "variables";
+@import "../variables";
 
-span.unavailable, span.available {
+span.unavailable,
+span.available {
   font-weight: bold;
+
   i {
     font-size: 150%;
   }

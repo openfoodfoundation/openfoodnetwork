@@ -25,7 +25,7 @@ module PermittedAttributes
       [
         :id, :name, :visible, :permalink, :owner_id, :contact_name, :email_address, :phone,
         :is_primary_producer, :sells, :website, :facebook, :instagram, :linkedin, :twitter,
-        :description, :long_description, :logo, :promo_image,
+        :description, :long_description, :logo, :promo_image, :terms_and_conditions,
         :allow_guest_orders, :allow_order_changes, :require_login, :enable_subscriptions,
         :abn, :acn, :charges_sales_tax, :display_invoice_logo, :invoice_text,
         :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,

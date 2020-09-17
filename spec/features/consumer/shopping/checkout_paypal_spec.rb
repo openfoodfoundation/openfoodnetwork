@@ -1,8 +1,8 @@
 require "spec_helper"
 
-feature "Checking out with Paypal", js: true do
+feature "Check out with Paypal", js: true do
   include ShopWorkflow
-  include CheckoutWorkflow
+  include CheckoutHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -44,7 +44,8 @@ feature "Checking out with Paypal", js: true do
   describe "as a guest" do
     it "fails with an error message" do
       visit checkout_path
-      complete_the_form
+      checkout_as_guest
+      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
 
       paypal_response = double(:response, success?: false, errors: [])
       paypal_provider = double(
@@ -57,32 +58,6 @@ feature "Checking out with Paypal", js: true do
 
       place_order
       expect(page).to have_content "PayPal failed."
-    end
-  end
-
-  def complete_the_form
-    checkout_as_guest
-
-    within "#details" do
-      fill_in "First Name", with: "Will"
-      fill_in "Last Name", with: "Marshall"
-      fill_in "Email", with: "test@test.com"
-      fill_in "Phone", with: "0468363090"
-    end
-
-    within "#billing" do
-      fill_in "City", with: "Melbourne"
-      fill_in "Postcode", with: "3066"
-      fill_in "Address", with: "123 Your Head"
-      select "Australia", from: "Country"
-      select "Victoria", from: "State"
-    end
-
-    within "#shipping" do
-      choose free_shipping.name
-    end
-    within "#payment" do
-      choose paypal.name
     end
   end
 end
