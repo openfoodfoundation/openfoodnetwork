@@ -18,7 +18,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   # return an unformatted descripton
   def description
-    strip_tags object.description
+    strip_tags object.description&.strip
   end
 
   # return a sanitized html description
