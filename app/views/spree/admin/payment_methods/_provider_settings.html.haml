@@ -10,9 +10,8 @@
         = t(:provider_settings)
       .preference-settings
         = fields_for :payment_method, @payment_method do |payment_method_form|
-          - fields = preference_fields(@payment_method, payment_method_form)
-          - fields.each do |f|
+          - preference_fields(@payment_method, payment_method_form).each do |field|
             .field.alpha.three.columns
-              = f[:label]
+              = field[:label]
             .field.omega.eight.columns
-              = f[:field]
+              = field[:field]

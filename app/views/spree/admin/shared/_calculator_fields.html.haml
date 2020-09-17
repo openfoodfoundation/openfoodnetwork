@@ -10,11 +10,10 @@
       .field
         .calculator-settings
           = f.fields_for :calculator do |calculator_form|
-            - fields = preference_fields(@object.calculator, calculator_form)
-            - fields.each do |f|
+            - preference_fields(@object.calculator, calculator_form).each do |field|
               .field.alpha.three.columns
-                = f[:label]
+                = field[:label]
               .field.omega.eight.columns
-                = f[:field]
+                = field[:field]
         - if @object.calculator.respond_to?(:preferences)
           %span.calculator-settings-warning.info.warning= t(:calculator_settings_warning)
