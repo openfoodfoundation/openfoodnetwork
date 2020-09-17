@@ -13,8 +13,8 @@
             - fields = preference_fields(@object.calculator, calculator_form)
             - fields.each do |f|
               .field.alpha.three.columns
-                = f[0].html_safe
+                = f[:label]
               .field.omega.eight.columns
-                = f[1].html_safe
+                = f[:field]
         - if @object.calculator.respond_to?(:preferences)
           %span.calculator-settings-warning.info.warning= t(:calculator_settings_warning)

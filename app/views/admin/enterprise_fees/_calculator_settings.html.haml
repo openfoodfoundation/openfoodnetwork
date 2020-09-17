@@ -9,7 +9,7 @@
           = f.fields_for :calculator do |calculator_form|
             - fields = preference_fields(enterprise_fee.calculator, calculator_form)
             - fields.each do |f|
-              = f[0].html_safe
-              = f[1].html_safe
+              = f[:label]
+              = f[:field]
 
 = calculator_form_string

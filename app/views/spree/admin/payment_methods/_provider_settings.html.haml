@@ -13,6 +13,6 @@
           - fields = preference_fields(@payment_method, payment_method_form)
           - fields.each do |f|
             .field.alpha.three.columns
-              = f[0].html_safe
+              = f[:label]
             .field.omega.eight.columns
-              = f[1].html_safe
+              = f[:field]
