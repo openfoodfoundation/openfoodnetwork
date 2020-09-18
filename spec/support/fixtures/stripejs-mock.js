@@ -8,7 +8,6 @@ class Element {
       <input id="stripe-cardnumber" placeholder="cardnumber" size="16" type="text">
       <input placeholder="exp-date" size="6" type="text">
       <input placeholder="cvc" size="3" type="text">
-      <input placeholder="postal" size="6" type="text">
     `;
   }
 }
