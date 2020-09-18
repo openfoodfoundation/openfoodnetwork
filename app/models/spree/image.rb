@@ -20,8 +20,6 @@ module Spree
     include Spree::Core::S3Support
     supports_s3 :attachment
 
-    Spree::Image.set_attachment_definitions
-
     # used by admin products autocomplete
     def mini_url
       attachment.url(:mini, false)
@@ -59,7 +57,7 @@ module Spree
       if Spree::Config[:use_s3]
         s3_creds = { access_key_id: Spree::Config[:s3_access_key],
                      secret_access_key: Spree::Config[:s3_secret],
-                     bucket: Spree::Config[:s3_bucket]}
+                     bucket: Spree::Config[:s3_bucket] }
         Spree::Image.attachment_definitions[:attachment][:storage] = :s3
         Spree::Image.attachment_definitions[:attachment][:s3_credentials] = s3_creds
         Spree::Image.attachment_definitions[:attachment][:s3_headers] =
@@ -90,6 +88,9 @@ module Spree
         format_styles(Spree::Image.attachment_definitions[:attachment][:styles])
     end
 
+    # We need to run this every time Spree::Image is loaded because "has_attached_file :attachment"
+    #   is setting default values that are not the ones coming from Spree::Config
+    set_attachment_definitions
     reformat_styles
   end
 end
