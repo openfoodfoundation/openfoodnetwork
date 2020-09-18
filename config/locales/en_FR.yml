@@ -601,7 +601,7 @@ en_FR:
         order_date: "Completed at"
         max: "Max"
         product_unit: "Product: Unit"
-        weight_volume: "Weight/Volume"
+        weight_volume: "Weight/Volume (g)"
         ask: "Ask?"
         page_title: "Bulk Order Management"
         actions_delete: "Delete Selected"
