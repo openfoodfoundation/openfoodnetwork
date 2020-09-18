@@ -10,6 +10,10 @@ class Element {
       <input name="cvc" placeholder="CVC" size="3" type="text">
     `;
   }
+
+  addEventListener(event) {
+    return true;
+  }
 }
 
 window.Stripe = () => {
