@@ -2,6 +2,8 @@
 
 class DistributorShippingMethods
   def self.shipping_methods(distributor, checkout = false, customer = nil)
+    return [] if distributor.blank?
+
     methods = if checkout
                 distributor.shipping_methods.display_on_checkout.to_a
               else

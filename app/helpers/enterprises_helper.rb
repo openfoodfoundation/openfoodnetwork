@@ -12,8 +12,6 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    return [] if current_distributor.blank?
-
     DistributorShippingMethods.shipping_methods(current_distributor, true, current_customer)
   end
 
