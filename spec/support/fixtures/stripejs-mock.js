@@ -22,6 +22,22 @@ window.Stripe = () => {
   };
 
   return {
+    createPaymentMethod: () => {
+      return new Promise(resolve => {
+        resolve({
+          paymentMethod: {
+            id: "pm_123",
+            card: {
+              brand: 'visa',
+              last4: fetchLastFour(),
+              exp_month: "10",
+              exp_year: "2050"
+            }
+          }
+        });
+      });
+    },
+
     elements: () => {
       return {
         create: (type, options) => new Element()
