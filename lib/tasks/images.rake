@@ -46,6 +46,22 @@ namespace :images do
     end
   end
 
+  desc "Regenerates thumbnails for a given CLASS (and optional ATTACHMENT and STYLES splitted by comma)."
+  task regenerate_thumbnails: :environment do
+    klass = Paperclip::Task.obtain_class
+    names = Paperclip::Task.obtain_attachments(klass)
+    styles = (ENV['STYLES'] || ENV['styles'] || '').split(',').map(&:to_sym)
+    names.each do |name|
+      Paperclip.each_instance_with_attachment(klass, name) do |instance|
+        instance.send(name).reprocess!(*styles)
+        unless instance.errors.blank?
+          puts "errors while processing #{klass} ID #{instance.id}:"
+          puts " " + instance.errors.full_messages.join("\n ") + "\n"
+        end
+      end
+    end
+  end
+
   desc "Restyle thumbnails for a future deployment."
   task restyle: ["images:reset_styles", "paperclip:refresh:thumbnails"]
 

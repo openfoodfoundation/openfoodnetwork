@@ -4,6 +4,9 @@ require 'spec_helper'
 require 'rake'
 
 describe "images.rake" do
+  let(:variant) { create(:variant) }
+  let(:image_file) { File.open(Rails.root.join("app/assets/images/logo-white.png")) }
+
   before(:all) do
     Rake.application.rake_require 'tasks/images'
     Rake.application.rake_require 'tasks/paperclip'
@@ -12,8 +15,6 @@ describe "images.rake" do
 
   describe ":delete_orphans" do
     let(:subject) { Rake::Task["images:delete_orphans"] }
-    let(:variant) { create(:variant) }
-    let(:image_file) { File.open(Rails.root.join("app/assets/images/logo-white.png")) }
 
     it "reports the number of orphaned image entries" do
       Spree::Image.create!(
@@ -67,6 +68,31 @@ describe "images.rake" do
       expect(Spree::Image.attachment_definitions[:attachment][:styles]).to eq(
         small: ["227x227#", :jpg]
       )
+    end
+  end
+
+  describe ":regenerate_thumbnails" do
+    let(:subject) { Rake::Task["images:regenerate_thumbnails"] }
+
+    it "reprocesses all images" do
+      2.times do
+        Spree::Image.create!(
+          attachment: image_file,
+          viewable_id: variant.id,
+          viewable_type: variant.class.name,
+        )
+      end
+
+      attachment = double(Paperclip::Attachment)
+      allow(Paperclip::Attachment).to receive(:new).and_return(attachment)
+      expect(attachment).to receive(:reprocess!).with(:small).twice
+
+      env = {
+        "CLASS" => "Spree::Image",
+        "STYLES" => "small",
+      }
+      stub_const("ENV", ENV.to_hash.merge(env))
+      subject.execute
     end
   end
 end
