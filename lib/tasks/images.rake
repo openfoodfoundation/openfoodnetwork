@@ -66,8 +66,8 @@ namespace :images do
     end
   end
 
-  desc "Restyle thumbnails for a future deployment."
-  task restyle: ["images:reset_styles", "paperclip:refresh:thumbnails"]
+  desc "Restyle thumbnails for a future deployment. Use CLASS, STYLE_DEFS and AFTER_ID."
+  task restyle: ["images:reset_styles", "images:regenerate_thumbnails"]
 
   def obtain_styles
     # Env var STYLES is used by paperclip for a list of styles.
