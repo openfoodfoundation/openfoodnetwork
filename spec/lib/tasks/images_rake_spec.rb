@@ -96,5 +96,29 @@ describe "images.rake" do
         subject.execute
       }.to output(/ done\./).to_stdout
     end
+
+    it "reprocesses some images" do
+      images = [1, 2].map do
+        Spree::Image.create!(
+          attachment: image_file,
+          viewable_id: variant.id,
+          viewable_type: variant.class.name,
+        )
+      end
+
+      attachment = double(Paperclip::Attachment)
+      allow(Paperclip::Attachment).to receive(:new).and_return(attachment)
+      expect(attachment).to receive(:reprocess!).with(:small).once
+
+      env = {
+        "CLASS" => "Spree::Image",
+        "STYLES" => "small",
+        "AFTER_ID" => images.first.id.to_s,
+      }
+      stub_const("ENV", ENV.to_hash.merge(env))
+      expect {
+        subject.execute
+      }.to output(/ done\./).to_stdout
+    end
   end
 end
