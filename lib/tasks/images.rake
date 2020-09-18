@@ -52,7 +52,7 @@ namespace :images do
     names = Paperclip::Task.obtain_attachments(klass)
     styles = (ENV['STYLES'] || ENV['styles'] || '').split(',').map(&:to_sym)
     names.each do |name|
-      Paperclip.each_instance_with_attachment(klass, name) do |instance|
+      instances_with_attachment(klass, name).find_each do |instance|
         print "processing #{klass} ID #{instance.id}:"
         instance.send(name).reprocess!(*styles)
         if instance.errors.blank?
@@ -76,5 +76,9 @@ namespace :images do
     end
 
     Spree::Image.format_styles(JSON.parse(styles))
+  end
+
+  def instances_with_attachment(klass, name)
+    Paperclip.class_for(klass).unscoped.where("#{name}_file_name IS NOT NULL")
   end
 end
