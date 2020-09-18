@@ -601,7 +601,7 @@ fr:
         order_date: "Date"
         max: "Max"
         product_unit: "Produit: Unité"
-        weight_volume: "Poids/Volume"
+        weight_volume: "Poids/Volume (g)"
         ask: "Demander?"
         page_title: "Gestion des commandes"
         actions_delete: "Supprimer la sélection"
