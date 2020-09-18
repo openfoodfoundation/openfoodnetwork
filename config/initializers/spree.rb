@@ -35,18 +35,12 @@ Spree.config do |config|
   config.use_s3 = true if ENV['S3_BUCKET']
   config.s3_headers = ENV['S3_HEADERS'] if ENV['S3_HEADERS']
   config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
-
-  # Attachments settings
-  config.attachment_default_url = ENV['ATTACHMENT_DEFAULT_URL'] if ENV['ATTACHMENT_DEFAULT_URL']
-  config.attachment_path = ENV['ATTACHMENT_PATH'] if ENV['ATTACHMENT_PATH']
-  config.attachment_url = ENV['ATTACHMENT_URL'] if ENV['ATTACHMENT_URL']
-  config.attachment_styles = ENV['ATTACHMENT_STYLES'] if ENV['ATTACHMENT_STYLES']
-  config.attachment_default_style = ENV['ATTACHMENT_DEFAULT_STYLE'] if ENV['ATTACHMENT_DEFAULT_STYLE']
 end
 
+# Attachments settings
+Spree::Image.set_attachment_attributes(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
+Spree::Image.set_attachment_attributes(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
 Spree::Image.set_s3_attachment_definitions
-Spree::Image.set_attachment_definitions
-Spree::Image.reformat_styles
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'

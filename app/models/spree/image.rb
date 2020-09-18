@@ -5,9 +5,14 @@ module Spree
     validates_attachment_presence :attachment
     validate :no_attachment_errors
 
+    # This is where the styles are used in the app:
+    # - mini: used in the BackOffice: Bulk Product edit page and Order Cycle edit page
+    # - small: used in the FrontOffice: product list page
+    # - product: used in the BackOffice: Product Image upload modal in the Bulk Product edit page and Product image edit page
+    # - large: used in the FrontOffice: product modal
     has_attached_file :attachment,
-                      styles: { mini: '48x48>', small: '100x100>',
-                                product: '240x240>', large: '600x600>' },
+                      styles: { mini: ["48x48#", :jpg], small: ["227x227#", :jpg],
+                                product: ["240x240>", :jpg], large: ["600x600>", :jpg] },
                       default_style: :product,
                       url: '/spree/products/:id/:style/:basename.:extension',
                       path: ':rails_root/public/spree/products/:id/:style/:basename.:extension',
@@ -42,15 +47,8 @@ module Spree
       false
     end
 
-    def self.set_attachment_definitions
-      Spree::Image.attachment_definitions[:attachment][:styles] =
-        ActiveSupport::JSON.decode(Spree::Config[:attachment_styles]).symbolize_keys!
-      Spree::Image.attachment_definitions[:attachment][:path] = Spree::Config[:attachment_path]
-      Spree::Image.attachment_definitions[:attachment][:url] = Spree::Config[:attachment_url]
-      Spree::Image.attachment_definitions[:attachment][:default_url] =
-        Spree::Config[:attachment_default_url]
-      Spree::Image.attachment_definitions[:attachment][:default_style] =
-        Spree::Config[:attachment_default_style]
+    def self.set_attachment_attributes(attribute_name, attribute_value)
+      Spree::Image.attachment_definitions[:attachment][attribute_name] = attribute_value
     end
 
     def self.set_s3_attachment_definitions
@@ -67,30 +65,5 @@ module Spree
         Spree::Image.attachment_definitions[:attachment].delete :storage
       end
     end
-
-    # Spree stores attachent definitions in JSON. This converts the style name and format to
-    # strings. However, when paperclip encounters these, it doesn't recognise the format.
-    # Here we solve that problem by converting format and style name to symbols.
-    # See also: ImageSettingsController decorator.
-    #
-    # eg. {'mini' => ['48x48>', 'png']} is converted to {mini: ['48x48>', :png]}
-    def self.format_styles(styles)
-      styles_a = styles.map do |name, style|
-        style[1] = style[1].to_sym if style.is_a? Array
-        [name.to_sym, style]
-      end
-
-      Hash[styles_a]
-    end
-
-    def self.reformat_styles
-      Spree::Image.attachment_definitions[:attachment][:styles] =
-        format_styles(Spree::Image.attachment_definitions[:attachment][:styles])
-    end
-
-    # We need to run this every time Spree::Image is loaded because "has_attached_file :attachment"
-    #   is setting default values that are not the ones coming from Spree::Config
-    set_attachment_definitions
-    reformat_styles
   end
 end
