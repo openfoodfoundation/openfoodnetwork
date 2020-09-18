@@ -1,3 +1,7 @@
+// StripeJS fixture for using Stripe in feature specs. Mimics credit card form and Element objects.
+// Based on: https://github.com/thoughtbot/fake_stripe/blob/v0.3.0/lib/fake_stripe/assets/v3.js
+// The original has been adapted to work with OFN (see commit history for details).
+
 class Element {
   mount(el) {
     if (typeof el === "string") {
