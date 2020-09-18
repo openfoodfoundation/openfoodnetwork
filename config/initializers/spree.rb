@@ -18,25 +18,6 @@ Spree::Gateway.class_eval do
   acts_as_taggable
 end
 
-# Spree stores attachent definitions in JSON. This converts the style name and format to
-# strings. However, when paperclip encounters these, it doesn't recognise the format.
-# Here we solve that problem by converting format and style name to symbols.
-#
-# eg. {'mini' => ['48x48>', 'png']} is converted to {mini: ['48x48>', :png]}
-def format_styles(styles)
-  styles_a = styles.map do |name, style|
-    style[1] = style[1].to_sym if style.is_a? Array
-    [name.to_sym, style]
-  end
-
-  Hash[styles_a]
-end
-
-def reformat_styles
-  Spree::Image.attachment_definitions[:attachment][:styles] =
-    format_styles(Spree::Image.attachment_definitions[:attachment][:styles])
-end
-
 Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true
@@ -84,7 +65,7 @@ Spree.config do |config|
   Spree::Image.attachment_definitions[:attachment][:default_style] =
     config.attachment_default_style
 
-  reformat_styles
+  Spree::Image.reformat_styles
 end
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
