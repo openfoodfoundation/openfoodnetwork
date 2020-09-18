@@ -44,7 +44,7 @@ module Spree
       false
     end
 
-    def self.set_attachment_definitions(config)
+    def self.set_attachment_definitions
       Spree::Image.attachment_definitions[:attachment][:styles] =
         ActiveSupport::JSON.decode(Spree::Config[:attachment_styles]).symbolize_keys!
       Spree::Image.attachment_definitions[:attachment][:path] = Spree::Config[:attachment_path]

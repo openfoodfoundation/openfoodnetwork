@@ -58,14 +58,7 @@ else
   Spree::Image.attachment_definitions[:attachment].delete :storage
 end
 
-Spree::Image.attachment_definitions[:attachment][:styles] =
-  ActiveSupport::JSON.decode(Spree::Config[:attachment_styles]).symbolize_keys!
-Spree::Image.attachment_definitions[:attachment][:path] = Spree::Config[:attachment_path]
-Spree::Image.attachment_definitions[:attachment][:default_url] =
-  Spree::Config[:attachment_default_url]
-Spree::Image.attachment_definitions[:attachment][:default_style] =
-  Spree::Config[:attachment_default_style]
-
+Spree::Image.set_attachment_definitions
 Spree::Image.reformat_styles
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
