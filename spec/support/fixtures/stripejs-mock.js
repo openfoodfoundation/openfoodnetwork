@@ -5,9 +5,9 @@ class Element {
     }
 
     el.innerHTML = `
-      <input id="stripe-cardnumber" placeholder="cardnumber" size="16" type="text">
-      <input placeholder="exp-date" size="6" type="text">
-      <input placeholder="cvc" size="3" type="text">
+      <input id="stripe-cardnumber" name="cardnumber" placeholder="Card number" size="16" type="text">
+      <input name="exp-date" placeholder="MM / YY" size="6" type="text">
+      <input name="cvc" placeholder="CVC" size="3" type="text">
     `;
   }
 }
