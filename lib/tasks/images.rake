@@ -46,7 +46,8 @@ namespace :images do
     end
   end
 
-  desc "Regenerates thumbnails for a given CLASS (and optional ATTACHMENT and STYLES splitted by comma)."
+  desc "Regenerates thumbnails for a given CLASS"\
+       " (and optional ATTACHMENT and STYLES splitted by comma)."
   task regenerate_thumbnails: :environment do
     klass = Paperclip::Task.obtain_class
     names = Paperclip::Task.obtain_attachments(klass)
@@ -55,7 +56,7 @@ namespace :images do
     names.each do |name|
       instances_with_attachment_after_id(klass, name, after_id).find_each do |instance|
         print "processing #{klass} ID #{instance.id}:"
-        instance.send(name).reprocess!(*styles)
+        instance.public_send(name).reprocess!(*styles)
         if instance.errors.blank?
           puts " done."
         else
@@ -66,7 +67,7 @@ namespace :images do
     end
   end
 
-  desc "Restyle thumbnails for a future deployment. Use CLASS, STYLE_DEFS and AFTER_ID."
+  desc "Restyle thumbnails for a future deployment, use CLASS, STYLE_DEFS and AFTER_ID."
   task restyle: ["images:reset_styles", "images:regenerate_thumbnails"]
 
   def obtain_styles
