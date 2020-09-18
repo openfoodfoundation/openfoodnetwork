@@ -28,7 +28,7 @@
 #= require angular-backstretch.js
 #= require angular-flash.min.js
 #
-#= require moment
+#= require moment/min/moment.min.js
 #= require moment/de.js
 #= require moment/en-gb.js
 #= require moment/es.js
