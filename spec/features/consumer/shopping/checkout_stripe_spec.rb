@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "Check out with Stripe", js: true do
@@ -12,12 +14,13 @@ feature "Check out with Stripe", js: true do
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
 
   let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
+  let(:free_shipping) { create(:shipping_method) }
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
 
   before do
     set_order order
     add_product_to_cart order, product
-    distributor.shipping_methods << shipping_with_fee
+    distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
 
   context 'login in as user' do
@@ -76,6 +79,88 @@ feature "Check out with Stripe", js: true do
         # allows checkout
         place_order
         expect(page).to have_content "Your order has been processed successfully"
+      end
+    end
+  end
+
+  describe "using Stripe SCA" do
+    let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
+    let!(:stripe_sca_payment_method) {
+      create(:stripe_sca_payment_method, distributors: [distributor])
+    }
+    let!(:shipping_method) { create(:shipping_method) }
+    let(:payment_intent_id) { "pi_123" }
+    let(:payment_intent_response_mock) do
+      {
+        status: 200, body: JSON.generate(object: "payment_intent",
+                                         amount: 2000,
+                                         charges: { data: [{ id: "ch_1234", amount: 2000 }] })
+      }
+    end
+    let(:payment_intent_authorize_response_mock) do
+      {
+        status: 200, body: JSON.generate(id: payment_intent_id,
+                                         object: "payment_intent",
+                                         amount: 2000,
+                                         status: "requires_capture", last_payment_error: nil,
+                                         charges: { data: [{ id: "ch_1234", amount: 2000 }] })
+      }
+    end
+    let(:hubs_payment_method_response_mock) do
+      {
+        status: 200,
+        body: JSON.generate(id: "pm_456", customer: "cus_A123")
+      }
+    end
+
+    before do
+      allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+      allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }
+      Spree::Config.set(stripe_connect_enabled: true)
+
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+        .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+        .to_return(payment_intent_authorize_response_mock)
+
+      stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
+        .with(headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(payment_intent_authorize_response_mock)
+
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
+        .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(payment_intent_response_mock)
+
+      stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+        .with(body: { payment_method: "pm_123" },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(hubs_payment_method_response_mock)
+    end
+
+    context "with guest checkout" do
+      it "completes checkout successfully" do
+        visit checkout_path
+
+        checkout_as_guest
+
+        fill_out_form(
+          free_shipping.name,
+          stripe_sca_payment_method.name,
+          save_default_addresses: false
+        )
+
+        expect(page).to have_css("input[name='cardnumber']")
+
+        fill_in 'Card number', with: '4242424242424242'
+        fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
+        fill_in 'CVC', with: '123'
+
+        place_order
+
+        expect(page).to have_content "Confirmed"
+
+        expect(order.reload.completed?).to eq true
+        expect(order.payments.first.state).to eq "completed"
       end
     end
   end
