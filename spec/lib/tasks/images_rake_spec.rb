@@ -92,7 +92,9 @@ describe "images.rake" do
         "STYLES" => "small",
       }
       stub_const("ENV", ENV.to_hash.merge(env))
-      subject.execute
+      expect {
+        subject.execute
+      }.to output(/ done\./).to_stdout
     end
   end
 end

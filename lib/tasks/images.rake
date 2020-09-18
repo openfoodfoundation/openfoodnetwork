@@ -53,9 +53,12 @@ namespace :images do
     styles = (ENV['STYLES'] || ENV['styles'] || '').split(',').map(&:to_sym)
     names.each do |name|
       Paperclip.each_instance_with_attachment(klass, name) do |instance|
+        print "processing #{klass} ID #{instance.id}:"
         instance.send(name).reprocess!(*styles)
-        unless instance.errors.blank?
-          puts "errors while processing #{klass} ID #{instance.id}:"
+        if instance.errors.blank?
+          puts " done."
+        else
+          puts " failed."
           puts " " + instance.errors.full_messages.join("\n ") + "\n"
         end
       end
