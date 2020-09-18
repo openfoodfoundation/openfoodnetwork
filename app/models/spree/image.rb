@@ -55,6 +55,21 @@ module Spree
         Spree::Config[:attachment_default_style]
     end
 
+    def self.set_s3_attachment_definitions
+      if Spree::Config[:use_s3]
+        s3_creds = { access_key_id: Spree::Config[:s3_access_key],
+                     secret_access_key: Spree::Config[:s3_secret],
+                     bucket: Spree::Config[:s3_bucket]}
+        Spree::Image.attachment_definitions[:attachment][:storage] = :s3
+        Spree::Image.attachment_definitions[:attachment][:s3_credentials] = s3_creds
+        Spree::Image.attachment_definitions[:attachment][:s3_headers] =
+          ActiveSupport::JSON.decode(Spree::Config[:s3_headers])
+        Spree::Image.attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
+      else
+        Spree::Image.attachment_definitions[:attachment].delete :storage
+      end
+    end
+
     # Spree stores attachent definitions in JSON. This converts the style name and format to
     # strings. However, when paperclip encounters these, it doesn't recognise the format.
     # Here we solve that problem by converting format and style name to symbols.

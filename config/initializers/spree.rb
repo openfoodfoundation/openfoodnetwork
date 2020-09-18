@@ -44,20 +44,7 @@ Spree.config do |config|
   config.attachment_default_style = ENV['ATTACHMENT_DEFAULT_STYLE'] if ENV['ATTACHMENT_DEFAULT_STYLE']
 end
 
-# Update paperclip settings
-if Spree::Config[:use_s3]
-  s3_creds = { access_key_id: Spree::Config[:s3_access_key],
-               secret_access_key: Spree::Config[:s3_secret],
-               bucket: Spree::Config[:s3_bucket]}
-  Spree::Image.attachment_definitions[:attachment][:storage] = :s3
-  Spree::Image.attachment_definitions[:attachment][:s3_credentials] = s3_creds
-  Spree::Image.attachment_definitions[:attachment][:s3_headers] =
-    ActiveSupport::JSON.decode(Spree::Config[:s3_headers])
-  Spree::Image.attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
-else
-  Spree::Image.attachment_definitions[:attachment].delete :storage
-end
-
+Spree::Image.set_s3_attachment_definitions
 Spree::Image.set_attachment_definitions
 Spree::Image.reformat_styles
 
