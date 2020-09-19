@@ -1,6 +1,6 @@
 -# = render "spree/admin/payments/source_forms/gateway", payment_method: payment_method
 .stripe
-  = render "shared/include_stripe_js"
+  = render "shared/stripe_js"
 
   - if Stripe.publishable_key
     :javascript
