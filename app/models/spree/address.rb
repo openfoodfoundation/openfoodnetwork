@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
+  # rubocop:disable Metrics/ClassLength
   class Address < ActiveRecord::Base
     include AddressDisplay
 
@@ -159,4 +160,5 @@ module Spree
       parts.select(&:present?).join(', ')
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
