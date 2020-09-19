@@ -4,6 +4,8 @@ class Element {
       el = document.querySelector(el);
     }
 
+    el.classList.add('StripeElement');
+
     el.innerHTML = `
       <input id="stripe-cardnumber" name="cardnumber" placeholder="Card number" size="16" type="text">
       <input name="exp-date" placeholder="MM / YY" size="6" type="text">
