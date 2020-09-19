@@ -4,16 +4,14 @@ class DistributorShippingMethods
   def self.shipping_methods(distributor, checkout = false, customer = nil)
     return [] if distributor.blank?
 
-    methods = if checkout
-                distributor.shipping_methods.display_on_checkout.to_a
-              else
-                distributor.shipping_methods.to_a
-              end
+    shipping_methods = distributor.shipping_methods
+    shipping_methods = shipping_methods.display_on_checkout if checkout
+    shipping_methods = shipping_methods.to_a
 
     OpenFoodNetwork::TagRuleApplicator.new(
-      distributor, "FilterShippingMethods", customer.andand.tag_list
-    ).filter!(methods)
+      distributor, "FilterShippingMethods", customer&.tag_list
+    ).filter!(shipping_methods)
 
-    methods.uniq
+    shipping_methods.uniq
   end
 end
