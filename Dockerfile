@@ -19,7 +19,7 @@ RUN git clone --depth 1 --branch v1.1.2 https://github.com/rbenv/rbenv.git ${RBE
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     rbenv install $(cat .ruby-version) && \
     rbenv global $(cat .ruby-version) && \
-    gem install bundler --version=1.17.2
+    gem install bundler --version=1.17.3
 
 # Install Postgres
 RUN sh -c "echo 'deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' > /etc/apt/sources.list.d/pgdg.list" && \
