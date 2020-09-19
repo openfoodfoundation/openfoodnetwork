@@ -26,6 +26,7 @@ module Spree
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
     # Gets the array of TaxRates appropriate for the specified order
+    # rubocop:disable Metrics/AbcSize
     def self.match(order)
       return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
@@ -43,6 +44,7 @@ module Spree
         rate.adjust(order)
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     # For VAT, the default rate is the rate that is configured for the default category
     # It is needed for every price calculation (as all customer facing prices include VAT)
@@ -58,6 +60,8 @@ module Spree
     end
 
     # Creates necessary tax adjustments for the order.
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def adjust(order)
       label = create_label
       if included_in_price
@@ -87,6 +91,8 @@ module Spree
         adjustment.set_absolute_included_tax! adjustment.amount
       end
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
     # LineItems or Orders, so we mock out a line item here to fit the interface

@@ -116,6 +116,10 @@ module Spree
       true
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def state_validate
       # Skip state validation without country (also required)
       # or when disabled by preference
@@ -151,6 +155,10 @@ module Spree
       # ensure at least one state field is populated
       errors.add :state, :blank if state.blank? && state_name.blank?
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def touch_enterprise
       enterprise.andand.touch
