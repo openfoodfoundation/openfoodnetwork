@@ -120,17 +120,6 @@ module OrderManagement
 
         shipment
       end
-
-      private
-
-      # Checks whether the given distributor provides the specified shipping method
-      #
-      # @param shipping_methods [Array<Spree::ShippingMethod>]
-      # @param shipping_method [Spree::ShippingMethod]
-      # @return [Boolean]
-      def ships_with?(shipping_methods, shipping_method)
-        shipping_methods.include?(shipping_method)
-      end
     end
   end
 end
