@@ -30,9 +30,9 @@ feature "Check out with Stripe", js: true do
       login_as(user)
     end
 
-    context "with Stripe" do
+    context "with Stripe Connect" do
       let!(:stripe_pm) do
-        create(:stripe_payment_method, distributors: [distributor])
+        create(:stripe_connect_payment_method, distributors: [distributor])
       end
 
       let!(:saved_card) do

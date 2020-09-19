@@ -21,7 +21,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
-        let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
+        let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
           create(:payment, order: order, state: 'completed', payment_method: payment_method,
                            response_code: 'ch_1a2b3c', amount: order.total)
@@ -80,7 +80,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
-        let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
+        let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
           create(:payment, order: order, state: 'completed', payment_method: payment_method,
                            response_code: 'ch_1a2b3c', amount: order.total + 5)
