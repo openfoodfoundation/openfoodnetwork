@@ -13,7 +13,8 @@ module Spree
       ability_hash.each do |action, _true_or_false|
         @ability_result[action] = ability.can?(action, target)
       end
-      ability_hash.diff(@ability_result).none?
+
+      expect(ability_hash).to eq(@ability_result)
     end
 
     failure_message do |user|
@@ -21,7 +22,7 @@ module Spree
       ability_hash = { ability_hash => true } if ability_hash.is_a? Symbol # e.g.: :create
       ability_hash = ability_hash.inject({}){ |member, i| member.merge(i => true) } if ability_hash.is_a? Array # e.g.: [:create, :read] => {:create=>true, :read=>true}
       target = options[:for]
-      message = "expected User:#{user} to have ability:#{ability_hash} for #{target}, but actual result is #{@ability_result}"
+      message = "expected User:#{user} to have ability: #{ability_hash} for #{target}, but actual result is #{@ability_result}"
     end
 
     # to clean up output of RSpec Documentation format
