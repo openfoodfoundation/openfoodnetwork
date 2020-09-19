@@ -16,6 +16,7 @@ module Spree
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
+      # rubocop:disable Metrics/AbcSize
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
@@ -26,11 +27,14 @@ module Spree
           redirect_to edit_admin_product_variant_url(params[:product_id], @object, @url_filters)
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def new
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
       def create
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
@@ -50,6 +54,8 @@ module Spree
         @object.on_demand = on_demand if on_demand.present?
         @object.on_hand = on_hand.to_i if on_hand.present?
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
       def search
         scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
@@ -57,6 +63,7 @@ module Spree
         render json: @variants, each_serializer: ::Api::Admin::VariantSerializer
       end
 
+      # rubocop:disable Metrics/AbcSize
       def destroy
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
@@ -69,6 +76,7 @@ module Spree
 
         redirect_to admin_product_variants_url(params[:product_id], @url_filters)
       end
+      # rubocop:enable Metrics/AbcSize
 
       protected
 
