@@ -79,15 +79,6 @@ module OrderManagement
         # TODO calculate from first variant?
       end
 
-      # Returns all existing shipping categories.
-      #   It disables the matching of product shipping category with shipping method's category
-      #   It allows checkout of products with categories that are not the ship method's categories
-      #
-      # @return [Array<Spree::ShippingCategory>]
-      def shipping_categories
-        Spree::ShippingCategory.all
-      end
-
       # Skips the methods that are not used by the order's distributor
       #
       # @return [Array<Spree::ShippingMethod>]
