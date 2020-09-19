@@ -20,6 +20,9 @@ plugins:
         enabled: false
       DeclarationOrder:
         enabled: false
+      NestingDepth:
+        enabled: false
+
   duplication:
     enabled: true
     exclude_patterns:

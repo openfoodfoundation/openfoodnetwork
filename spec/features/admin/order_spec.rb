@@ -151,7 +151,7 @@ feature '
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     click_button 'Update'
 
-    expect(page).to have_selector 'h1.page-title', text: "Customer Details"
+    expect(page).to have_selector 'h1.js-admin-page-title', text: "Customer Details"
 
     # The customer selection partial should be visible
     expect(page).to have_selector '#select-customer'
@@ -160,7 +160,7 @@ feature '
     targetted_select2_search customer.email, from: '#customer_search_override',
                                              dropdown_css: '.select2-drop'
     click_button 'Update'
-    expect(page).to have_selector "h1.page-title", text: "Customer Details"
+    expect(page).to have_selector "h1.js-admin-page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last

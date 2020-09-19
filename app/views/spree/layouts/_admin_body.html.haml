@@ -1,7 +1,7 @@
 = admin_inject_currency_config
 = render "layouts/i18n_script"
 
-#wrapper{"data-hook" => ""}
+#wrapper{ data: { hook: '' } }
   - if flash[:error]
     .flash.error= flash[:error]
   - if notice
@@ -18,30 +18,30 @@
       %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
         = render :partial => 'spree/layouts/admin/login_nav'
 
-  %nav#admin-menu{"data-hook" => ""}
+  %nav#admin-menu{ data: { hook: '' }}
     .container
       .sixteen.columns.main-menu-wrapper
         %ul.inline-menu.fullwidth-menu{"data-hook" => "admin_tabs"}
           = render :partial => 'spree/admin/shared/tabs'
 
   - if content_for?(:sub_menu)
-    %nav#sub-menu{"data-hook" => ""}
+    %nav#sub-menu{ data: { hook: ''} }
       .container
         .sixteen.columns
           = yield :sub_menu
 
   - if content_for?(:page_title) || content_for?(:page_actions)
-    #content-header{"data-hook" => ""}
+    .js-admin-section-header.admin__section-header{ data: { hook: '' } }
       .container
         .sixteen.columns
-          .block-table
+          .admin__section-header__content
             - if content_for?(:page_title)
-              .table-cell
-                %h1{:class => "page-title"}= yield :page_title
+              .admin__section-header__title
+                %h1.js-admin-page-title= yield :page_title
+
             - if content_for?(:page_actions)
-              .page-actions.table-cell.toolbar{"data-hook" => "toolbar"}
-                %ul.inline-menu
-                  = yield :page_actions
+              %ul.admin__section-header__actions{ data: { hook: 'toolbar' } }
+                = yield :page_actions
 
   .container
     .row
