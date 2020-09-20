@@ -26,11 +26,18 @@ module StripeHelper
       .to_return(hub_payment_method_response_mock(response))
   end
 
-  def stub_payment_intent_capture_request(order:, response: {})
+  def stub_successful_capture_request(order:, response: {})
     stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
       .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
             headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(payment_intent_response_mock(response))
+      .to_return(payment_successful_capture_mock(response))
+  end
+
+  def stub_failed_capture_request(order:, response: {})
+    stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
+      .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(payment_failed_capture_mock(response))
   end
 
   private
@@ -45,11 +52,17 @@ module StripeHelper
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
   end
 
-  def payment_intent_response_mock(options)
+  def payment_successful_capture_mock(options)
     { status: options[:code] || 200,
       body: JSON.generate(object: "payment_intent",
                           amount: 2000,
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+  end
+
+  def payment_failed_capture_mock(options)
+    { status: options[:code] || 402,
+      body: JSON.generate(error: { message:
+                                     options[:message] || "payment-method-failure" }) }
   end
 
   def hub_payment_method_response_mock(options)

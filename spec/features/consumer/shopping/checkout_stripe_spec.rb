@@ -89,37 +89,75 @@ feature "Check out with Stripe", js: true do
     }
     let!(:shipping_method) { create(:shipping_method) }
 
-    before do
-      stub_payment_intents_post_request order: order
-      stub_payment_intent_get_request
-      stub_hub_payment_methods_request
-      stub_payment_intent_capture_request order: order
-    end
-
     context "with guest checkout" do
-      it "completes checkout successfully" do
-        visit checkout_path
+      context "when the card is accepted" do
+        before do
+          stub_payment_intents_post_request order: order
+          stub_payment_intent_get_request
+          stub_hub_payment_methods_request
+          stub_successful_capture_request order: order
+        end
 
-        checkout_as_guest
+        it "completes checkout successfully" do
+          visit checkout_path
 
-        fill_out_form(
-          free_shipping.name,
-          stripe_sca_payment_method.name,
-          save_default_addresses: false
-        )
+          checkout_as_guest
 
-        expect(page).to have_css("input[name='cardnumber']")
+          fill_out_form(
+            free_shipping.name,
+            stripe_sca_payment_method.name,
+            save_default_addresses: false
+          )
 
-        fill_in 'Card number', with: '4242424242424242'
-        fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
-        fill_in 'CVC', with: '123'
+          expect(page).to have_css("input[name='cardnumber']")
 
-        place_order
+          fill_in 'Card number', with: '4242424242424242'
+          fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
+          fill_in 'CVC', with: '123'
 
-        expect(page).to have_content "Confirmed"
+          place_order
 
-        expect(order.reload.completed?).to eq true
-        expect(order.payments.first.state).to eq "completed"
+          expect(page).to have_content "Confirmed"
+
+          expect(order.reload.completed?).to eq true
+          expect(order.payments.first.state).to eq "completed"
+        end
+      end
+
+      context "when the card is rejected" do
+        let(:error_message) { "Card was declined: insufficient funds." }
+
+        before do
+          stub_payment_intents_post_request order: order
+          stub_payment_intent_get_request
+          stub_hub_payment_methods_request
+          stub_failed_capture_request order: order, response: { message: error_message }
+        end
+
+        it "shows an error message from the Stripe response" do
+          visit checkout_path
+
+          checkout_as_guest
+
+          fill_out_form(
+            free_shipping.name,
+            stripe_sca_payment_method.name,
+            save_default_addresses: false
+          )
+
+          expect(page).to have_css("input[name='cardnumber']")
+
+          fill_in 'Card number', with: '4242424242424242'
+          fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
+          fill_in 'CVC', with: '123'
+
+          place_order
+
+          expect(page).to have_content error_message
+
+          expect(order.reload.state).to eq "cart"
+          expect(order.payments.first.state).to eq "failed"
+        end
       end
     end
   end
