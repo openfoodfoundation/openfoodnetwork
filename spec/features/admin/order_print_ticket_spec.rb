@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-
 feature '
     As an administrator
     I want to print a ticket for an order

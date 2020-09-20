@@ -8,7 +8,7 @@ module OrderManagement
       let!(:shipping_method) { create(:shipping_method, zones: [Spree::Zone.global] ) }
       let(:package) { build(:stock_package_fulfilled) }
       let(:order) { package.order }
-      subject { Estimator.new(order) }
+      subject { described_class.new(order) }
 
       context "#shipping rates" do
         before(:each) do
@@ -23,7 +23,8 @@ module OrderManagement
           allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :marked_for_destruction?)
 
-          allow(package).to receive_messages(shipping_methods: [shipping_method])
+          # FIXME: DO NOT mock private methods
+          allow(package).to receive_messages(select_shipping_methods: [shipping_method])
         end
 
         context "the order's ship address is in the same zone" do
@@ -74,7 +75,8 @@ module OrderManagement
           allow(shipping_methods[2]).
             to receive_message_chain(:calculator, :compute).and_return(4.00)
 
-          allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
+          # FIXME: DO NOT mock private methods
+          allow(subject).to receive(:select_shipping_methods).and_return(shipping_methods)
 
           expected_costs = %w[3.00 4.00 5.00].map(&BigDecimal.method(:new))
           expect(subject.shipping_rates(package).map(&:cost)).to eq expected_costs
@@ -89,7 +91,8 @@ module OrderManagement
             allow(shipping_methods[1]).
               to receive_message_chain(:calculator, :compute).and_return(3.00)
 
-            allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
+            # FIXME: DO NOT mock private methods
+            allow(subject).to receive(:select_shipping_methods).and_return(shipping_methods)
 
             shipping_rates = subject.shipping_rates(package)
             expect(shipping_rates.sort_by(&:cost).map(&:selected)).to eq [true, false]
@@ -101,7 +104,8 @@ module OrderManagement
             allow(shipping_methods[1]).
               to receive_message_chain(:calculator, :compute).and_return(nil)
 
-            allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
+            # FIXME: DO NOT mock private methods
+            allow(subject).to receive(:select_shipping_methods).and_return(shipping_methods)
 
             subject.shipping_rates(package)
           end
@@ -116,8 +120,9 @@ module OrderManagement
             allow(backend_method).to receive_message_chain(:calculator, :compute).and_return(0.00)
             allow(generic_method).to receive_message_chain(:calculator, :compute).and_return(5.00)
 
+            # FIXME: DO NOT mock private methods
             allow(subject).
-              to receive(:shipping_methods).and_return([backend_method, generic_method])
+              to receive(:select_shipping_methods).and_return([backend_method, generic_method])
 
             expect(subject.shipping_rates(package).map(&:selected)).to eq [false, true]
           end

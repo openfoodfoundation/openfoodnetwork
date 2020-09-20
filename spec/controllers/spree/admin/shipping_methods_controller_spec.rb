@@ -9,9 +9,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       {
         id: shipping_method.id,
         shipping_method: {
-          calculator_attributes: {
-            id: shipping_method.calculator.id
-          }
+          calculator_attributes: { id: shipping_method.calculator.id }
         }
       }
     }

@@ -4,7 +4,6 @@ module Spree
   class GatewayWithPassword < PaymentMethod
     preference :password, :string, default: "password"
   end
-
   describe Admin::PaymentMethodsController, type: :controller do
     describe "#create and #update" do
       let!(:enterprise) { create(:distributor_enterprise, owner: user) }

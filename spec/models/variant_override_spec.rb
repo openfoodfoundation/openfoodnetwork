@@ -3,7 +3,6 @@ require 'spec_helper'
 describe VariantOverride do
   let(:variant) { create(:variant) }
   let(:hub)     { create(:distributor_enterprise) }
-
   describe "scopes" do
     let(:hub1) { create(:distributor_enterprise) }
     let(:hub2) { create(:distributor_enterprise) }
@@ -92,7 +91,6 @@ describe VariantOverride do
           end
         end
       end
-
       context "when limited stock" do
         let(:on_demand) { false }
 
@@ -147,7 +145,15 @@ describe VariantOverride do
   end
 
   describe "with nil count on hand" do
-    let(:variant_override) { create(:variant_override, variant: variant, hub: hub, count_on_hand: nil, on_demand: true) }
+    let(:variant_override) do
+      create(
+        :variant_override,
+        variant: variant,
+        hub: hub,
+        count_on_hand: nil,
+        on_demand: true
+      )
+    end
 
     describe "stock_overridden?" do
       it "returns false" do

@@ -1,4 +1,4 @@
-require 'open_food_network/tag_rule_applicator'
+require 'spec_helper'
 
 module OpenFoodNetwork
   describe TagRuleApplicator do
@@ -85,7 +85,9 @@ module OpenFoodNetwork
 
     describe "filter!" do
       let(:applicator) { OpenFoodNetwork::TagRuleApplicator.new(enterprise, "FilterProducts", []) }
-
+      # FIXME: Do not check internal implementation of filter!
+      #
+      # Do not check that `reject!` is called but check that subject iis filtered
       context "when the subject is nil" do
         let(:subject) { double(:subject, reject!: false) }
 

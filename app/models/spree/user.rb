@@ -54,14 +54,14 @@ module Spree
     end
 
     def known_users
-      if admin?
-        Spree::User.where(nil)
-      else
-        Spree::User
-          .includes(:enterprises)
-          .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)",
-                 id)
-      end
+      return Spree::User.where(nil) if admin?
+
+      Spree::User
+        .joins(:enterprises)
+        .where(
+          'enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)',
+          id
+        )
     end
 
     def build_enterprise_roles
@@ -150,17 +150,14 @@ module Spree
     def limit_owned_enterprises
       return unless owned_enterprises.size > enterprise_limit
 
-      errors.add(:owned_enterprises, I18n.t(:spree_user_enterprise_limit_error,
-                                            email: email,
-                                            enterprise_limit: enterprise_limit))
-    end
-
-    def remove_payments_in_checkout(enterprises)
-      enterprises.each do |enterprise|
-        enterprise.distributed_orders.each do |order|
-          order.payments.keep_if { |payment| payment.state != "checkout" }
-        end
-      end
+      errors.add(
+        :owned_enterprises,
+        I18n.t(
+          :spree_user_enterprise_limit_error,
+          email: email,
+          enterprise_limit: enterprise_limit
+        )
+      )
     end
   end
 end

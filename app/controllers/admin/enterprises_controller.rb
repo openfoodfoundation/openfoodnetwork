@@ -88,7 +88,7 @@ module Admin
         redirect_to main_app.admin_enterprises_path
       else
         touched_enterprises = @enterprise_set.collection.select(&:changed?)
-        @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
+        @enterprise_set.collection.to_a.select! { |e| touched_enterprises.include? e }
         flash[:error] = I18n.t(:enterprise_bulk_update_error)
         render :index
       end
@@ -181,10 +181,10 @@ module Admin
       enterprise_payment_methods = @enterprise.payment_methods.to_a
       enterprise_shipping_methods = @enterprise.shipping_methods.to_a
       # rubocop:disable Style/TernaryParentheses
-      @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by! do |pm|
+      @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).to_a.sort_by! do |pm|
         [(enterprise_payment_methods.include? pm) ? 0 : 1, pm.name]
       end
-      @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by! do |sm|
+      @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).to_a.sort_by! do |sm|
         [(enterprise_shipping_methods.include? sm) ? 0 : 1, sm.name]
       end
       # rubocop:enable Style/TernaryParentheses

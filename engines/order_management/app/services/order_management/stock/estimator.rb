@@ -12,7 +12,7 @@ module OrderManagement
 
       def shipping_rates(package, frontend_only = true)
         shipping_rates = []
-        shipping_methods = shipping_methods(package)
+        shipping_methods = select_shipping_methods(package)
         return [] unless shipping_methods
 
         shipping_methods.each do |shipping_method|
@@ -40,15 +40,16 @@ module OrderManagement
 
       private
 
-      def shipping_methods(package)
-        shipping_methods = package.shipping_methods
-        shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
-        shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }
-        shipping_methods.delete_if { |ship_method|
-          !(ship_method.calculator.preferences[:currency].nil? ||
-            ship_method.calculator.preferences[:currency] == currency)
-        }
-        shipping_methods
+      def select_shipping_methods(package)
+        package
+          .shipping_methods
+          .reject do |ship_method|
+            method_currency = ship_method.calculator.preferences&.dig(:currency)
+
+            !ship_method.calculator.available?(package) ||
+              !ship_method.include?(order.ship_address) ||
+              !(method_currency.nil? || method_currency == currency)
+          end
       end
 
       def calculate_cost(shipping_method, package)

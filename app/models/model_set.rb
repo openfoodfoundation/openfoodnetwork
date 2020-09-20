@@ -43,22 +43,22 @@ class ModelSet
 
   def save
     collection_to_delete.each(&:destroy)
-    collection_to_keep.all?(&:save)
-  end
-
-  def collection_to_delete
-    # Remove all elements to be deleted from collection and return them
-    # Allows us to render @model_set.collection without deleted elements
-    deleted = []
-    collection.delete_if { |e| deleted << e if @delete_if.andand.call(e.attributes) }
-    deleted
-  end
-
-  def collection_to_keep
-    collection.reject { |e| @delete_if.andand.call(e.attributes) }
+    (collection - collection_to_delete).each(&:save)
   end
 
   def persisted?
     false
+  end
+
+  private
+
+  attr_accessor :delete_if, :reject_if, :klass
+
+  # Remove all elements to be deleted from collection and return them
+  # Allows us to render @model_set.collection without deleted elements
+  def collection_to_delete
+    return [] if delete_if.nil?
+
+    collection.select { |model| delete_if.call(model.attributes) }
   end
 end

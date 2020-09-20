@@ -4,7 +4,6 @@ describe EnterprisesHelper, type: :helper do
   let(:user) { create(:user) }
   let(:distributor) { create(:distributor_enterprise) }
   let(:some_other_distributor) { create(:distributor_enterprise) }
-
   before { allow(helper).to receive(:spree_current_user) { user } }
 
   describe "loading available shipping methods" do

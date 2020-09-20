@@ -1,4 +1,3 @@
-require 'spree/core/controller_helpers/respond_with'
 require 'open_food_network/tag_rule_applicator'
 
 class BaseController < ApplicationController
