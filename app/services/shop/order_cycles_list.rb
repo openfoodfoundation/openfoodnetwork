@@ -20,11 +20,13 @@ module Shop
     # order_cycles is a ActiveRecord::Relation that is modified with reject in the TagRuleApplicator
     # If this relation is reloaded (for example by calling count on it), the modifications are lost
     def apply_tag_rules!(order_cycles)
-      applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
-                                                          "FilterOrderCycles",
-                                                          @customer.andand.tag_list)
-      applicator.filter!(order_cycles)
+      applicator = OpenFoodNetwork::TagRuleApplicator.new(
+        @distributor,
+        "FilterOrderCycles",
+        @customer.andand.tag_list
+      )
 
+      applicator.filter!(order_cycles)
       order_cycles
     end
   end

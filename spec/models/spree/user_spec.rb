@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Spree.user_class do
   include OpenFoodNetwork::EmailHelper
-
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }
 

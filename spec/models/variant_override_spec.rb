@@ -3,7 +3,6 @@ require 'spec_helper'
 describe VariantOverride do
   let(:variant) { create(:variant) }
   let(:hub)     { create(:distributor_enterprise) }
-
   describe "scopes" do
     let(:hub1) { create(:distributor_enterprise) }
     let(:hub2) { create(:distributor_enterprise) }
@@ -97,7 +96,6 @@ describe VariantOverride do
           end
         end
       end
-
       context "when limited stock" do
         let(:on_demand) { false }
 

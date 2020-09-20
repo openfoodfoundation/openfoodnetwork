@@ -13,8 +13,7 @@ module OrderManagement
 
       def prioritized_packages
         adjust_packages
-        prune_packages
-        packages
+        packages.reject(&:empty?)
       end
 
       private
@@ -35,10 +34,6 @@ module OrderManagement
           item = package.find_item adjuster.variant, adjuster.status
           adjuster.adjust(item) if item
         end
-      end
-
-      def prune_packages
-        packages.reject!(&:empty?)
       end
     end
   end
