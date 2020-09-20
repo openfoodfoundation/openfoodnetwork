@@ -1,0 +1,60 @@
+# frozen_string_literal: true
+
+module StripeHelper
+  def setup_stripe
+    allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+    allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }
+    Spree::Config.set(stripe_connect_enabled: true)
+  end
+
+  def stub_payment_intents_post_request(order:, response: {})
+    stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+      .to_return(payment_intent_authorize_response_mock(response))
+  end
+
+  def stub_payment_intent_get_request(response: {})
+    stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
+      .with(headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(payment_intent_authorize_response_mock(response))
+  end
+
+  def stub_hub_payment_methods_request(response: {})
+    stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+      .with(body: { payment_method: "pm_123" },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(hub_payment_method_response_mock(response))
+  end
+
+  def stub_payment_intent_capture_request(order:, response: {})
+    stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
+      .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(payment_intent_response_mock(response))
+  end
+
+  private
+
+  def payment_intent_authorize_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate(id: "pi_123",
+                          object: "payment_intent",
+                          amount: 2000,
+                          status: options[:intent_status] || "requires_capture",
+                          last_payment_error: nil,
+                          charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+  end
+
+  def payment_intent_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate(object: "payment_intent",
+                          amount: 2000,
+                          charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+  end
+
+  def hub_payment_method_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate(id: "pm_456", customer: "cus_A123") }
+  end
+end
+

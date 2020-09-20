@@ -6,6 +6,7 @@ feature "Check out with Stripe", js: true do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutHelper
+  include StripeHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
@@ -18,6 +19,7 @@ feature "Check out with Stripe", js: true do
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
 
   before do
+    setup_stripe
     set_order order
     add_product_to_cart order, product
     distributor.shipping_methods << [shipping_with_fee, free_shipping]
@@ -57,9 +59,6 @@ feature "Check out with Stripe", js: true do
       end
 
       before do
-        allow(Stripe).to receive(:api_key) { "sk_test_12345" }
-        allow(Stripe).to receive(:publishable_key) { "some_key" }
-        Spree::Config.set(stripe_connect_enabled: true)
         stub_request(:post, "https://api.stripe.com/v1/charges")
           .with(basic_auth: ["sk_test_12345", ""])
           .to_return(status: 200, body: JSON.generate(response_mock))
@@ -89,52 +88,12 @@ feature "Check out with Stripe", js: true do
       create(:stripe_sca_payment_method, distributors: [distributor])
     }
     let!(:shipping_method) { create(:shipping_method) }
-    let(:payment_intent_id) { "pi_123" }
-    let(:payment_intent_response_mock) do
-      {
-        status: 200, body: JSON.generate(object: "payment_intent",
-                                         amount: 2000,
-                                         charges: { data: [{ id: "ch_1234", amount: 2000 }] })
-      }
-    end
-    let(:payment_intent_authorize_response_mock) do
-      {
-        status: 200, body: JSON.generate(id: payment_intent_id,
-                                         object: "payment_intent",
-                                         amount: 2000,
-                                         status: "requires_capture", last_payment_error: nil,
-                                         charges: { data: [{ id: "ch_1234", amount: 2000 }] })
-      }
-    end
-    let(:hubs_payment_method_response_mock) do
-      {
-        status: 200,
-        body: JSON.generate(id: "pm_456", customer: "cus_A123")
-      }
-    end
 
     before do
-      allow(Stripe).to receive(:api_key) { "sk_test_12345" }
-      allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }
-      Spree::Config.set(stripe_connect_enabled: true)
-
-      stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-        .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
-        .to_return(payment_intent_authorize_response_mock)
-
-      stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
-        .with(headers: { 'Stripe-Account' => 'abc123' })
-        .to_return(payment_intent_authorize_response_mock)
-
-      stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
-        .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
-              headers: { 'Stripe-Account' => 'abc123' })
-        .to_return(payment_intent_response_mock)
-
-      stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-        .with(body: { payment_method: "pm_123" },
-              headers: { 'Stripe-Account' => 'abc123' })
-        .to_return(hubs_payment_method_response_mock)
+      stub_payment_intents_post_request order: order
+      stub_payment_intent_get_request
+      stub_hub_payment_methods_request
+      stub_payment_intent_capture_request order: order
     end
 
     context "with guest checkout" do
