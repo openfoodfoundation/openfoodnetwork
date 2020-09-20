@@ -112,8 +112,9 @@ module WebHelper
   end
 
   def select_select2_result(value)
-    sleep(1)
-    page.execute_script(%Q{$("div.select2-result-label:contains('#{value}')").mouseup()})
+    page.find(:xpath, '//body')
+      .find(:css, '.select2-drop-active .select2-result-label', text: value)
+      .click
   end
 
   # Support having different texts to search for and to click in the select2
