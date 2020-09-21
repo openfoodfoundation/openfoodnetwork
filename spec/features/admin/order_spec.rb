@@ -50,7 +50,7 @@ feature '
     open_select2('#s2id_order_distributor_id')
     expect(page).to have_selector "ul.select2-results li.select2-result.select2-disabled",
                                   text: distributor_disabled.name
-    close_select2('#s2id_order_distributor_id')
+    close_select2
 
     # Order cycle selector should be disabled
     expect(page).to have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
@@ -64,7 +64,7 @@ feature '
     # it suppresses validation errors when setting distribution
     expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
-    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     expect(page).to have_selector 'td', text: product.name
@@ -80,7 +80,7 @@ feature '
   scenario "can add a product to an existing order" do
     login_as_admin_and_visit spree.edit_admin_order_path(order)
 
-    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    select2_select product.name, from: 'add_variant_id', search: true
 
     find('button.add_variant').click
 
@@ -146,7 +146,7 @@ feature '
     # When I create a new order
     login_as user
     new_order_with_distribution(distributor, order_cycle)
-    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     click_button 'Update'
@@ -157,8 +157,7 @@ feature '
     expect(page).to have_selector '#select-customer'
 
     # And I select that customer's email address and save the order
-    targetted_select2_search customer.email, from: '#customer_search_override',
-                                             dropdown_css: '.select2-drop'
+    select2_select customer.email, from: 'customer_search_override', search: true
     click_button 'Update'
     expect(page).to have_selector "h1.js-admin-page-title", text: "Customer Details"
 
@@ -323,7 +322,7 @@ feature '
       new_order_with_distribution(distributor1, order_cycle1)
 
       expect(page).to have_content 'ADD PRODUCT'
-      targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+      select2_select product.name, from: 'add_variant_id', search: true
 
       find('button.add_variant').click
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"
