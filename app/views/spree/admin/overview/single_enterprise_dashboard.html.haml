@@ -34,7 +34,7 @@
     %a.close{ href: "#" } ×
 
 .row
-  .alpha.seven.columns.dashboard_item.single-ent#map
+  .alpha.eight.columns.dashboard_item.single-ent#map
     .header
       %h3
         %span.icon-user
@@ -45,10 +45,8 @@
         = @enterprise.name
         = t "live"
         %span.icon-arrow-right
-  .two.columns
-    &nbsp;
 
-  .seven.columns.omega.dashboard_item.single-ent#edit
+  .eight.columns.omega.dashboard_item.single-ent#edit
     .header
       %h3
         %span.icon-edit
@@ -63,7 +61,7 @@
 
 .row
   - if can? :admin, Spree::Product
-    .seven.columns.alpha.dashboard_item.single-ent#products
+    .eight.columns.alpha.dashboard_item.single-ent#products
       .header
         %h3
           %span.icon-th-large
@@ -73,11 +71,8 @@
           = t "manage_products"
           %span.icon-arrow-right
 
-  .two.columns
-    &nbsp;
-
   - if can? :admin, OrderCycle
-    .seven.columns.omega.dashboard_item.single-ent#order_cycles
+    .eight.columns.omega.dashboard_item.single-ent#order_cycles
       .header
         %h3
           %span.icon-shopping-cart
