@@ -5,8 +5,8 @@ require 'spec_helper'
 describe Spree::Address do
   describe "clone" do
     it "creates a copy of the address with the exception of the id, updated_at and created_at attributes" do
-      state = create(:state)
-      original = create(:address,
+      state = build_stubbed(:state)
+      original = build_stubbed(:address,
                         address1: 'address1',
                         address2: 'address2',
                         alternative_phone: 'alternative_phone',
@@ -62,9 +62,9 @@ describe Spree::Address do
       end
     end
 
-    let(:state) { create(:state, name: 'maryland', abbr: 'md') }
+    let(:state) { build_stubbed(:state, name: 'maryland', abbr: 'md') }
     let(:country) { state.country }
-    let(:address) { create(:address, country: country, state: state) }
+    let(:address) { build_stubbed(:address, country: country, state: state) }
 
     before do
       country.states_required = true
@@ -77,15 +77,18 @@ describe Spree::Address do
     end
 
     it "full state name is in state_name and country does contain that state" do
-      allow(country.states).to receive_messages find_all_by_name_or_abbr: [create(:state, name: 'alabama', abbr: 'al')]
-      address.update state_name: 'alabama'
+      allow(country).to receive_message_chain(:states, :find_all_by_name_or_abbr) do
+        [build_stubbed(:state, name: 'alabama', abbr: 'al')]
+      end
+
+      address.state_name = 'alabama'
       expect(address).to be_valid
       expect(address.state.name).to eq 'alabama'
       expect(address.state_name).to eq 'alabama'
     end
 
     it "state abbr is in state_name and country does contain that state" do
-      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
+      allow(country).to receive_message_chain(:states, :find_all_by_name_or_abbr) { [state] }
       address.state_name = state.abbr
       expect(address).to be_valid
       expect(address.state.abbr).to eq state.abbr
@@ -93,7 +96,7 @@ describe Spree::Address do
     end
 
     it "both state and state_name are entered and country does contain the state" do
-      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
+      allow(country).to receive_message_chain(:states, :find_all_by_name_or_abbr) { [state] }
       address.state = state
       address.state_name = 'maryland'
       expect(address).to be_valid
