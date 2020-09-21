@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe AdjustmentMetadata do
-  it "is valid when build from factory" do
-    adjustment = create(:adjustment)
+  it "is valid when built from factory" do
+    adjustment = build(:adjustment)
     expect(adjustment).to be_valid
   end
 end
