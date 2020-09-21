@@ -534,7 +534,7 @@ feature 'Subscriptions' do
   def add_variant_to_subscription(variant, quantity)
     row_count = all("#subscription-line-items .item").length
     variant_name = variant.full_name.present? ? "#{variant.name} - #{variant.full_name}" : variant.name
-    targetted_select2_search variant.name, from: "#s2id_add_variant_id", dropdown_css: ".select2-drop", select_text: variant_name
+    select2_select variant.name, from: "add_variant_id", search: true, select_text: variant_name
     fill_in "add_quantity", with: quantity
     click_link "Add"
     expect(page).to have_selector("#subscription-line-items .item", count: row_count + 1)
