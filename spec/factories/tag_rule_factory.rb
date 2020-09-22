@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :filter_products_tag_rule, class: TagRule::FilterProducts do
-    enterprise { FactoryBot.create :distributor_enterprise }
+    enterprise factory: :distributor_enterprise
   end
 
   factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
