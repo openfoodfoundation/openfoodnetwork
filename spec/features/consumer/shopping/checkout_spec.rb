@@ -136,7 +136,7 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       describe "when customer has not accepted T&Cs before" do
-        it "shows a link to the T&Cs and disabled checkout button until terms are accepted" do
+        it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
           visit checkout_path
           expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
 
@@ -153,10 +153,18 @@ feature "As a consumer I want to check out my cart", js: true do
           customer.update terms_and_conditions_accepted_at: Time.zone.now
         end
 
-        it "enables checkout because T&Cs are accepted by default" do
+        it "enables checkout button (because T&Cs are accepted by default)" do
           visit checkout_path
-
           expect(page).to have_button("Place order now", disabled: false)
+        end
+
+        describe "but afterwards the enterprise has uploaded a new T&Cs file" do
+          before { order.distributor.update terms_and_conditions_updated_at: Time.zone.now }
+
+          it "disables checkout button until terms are accepted" do
+            visit checkout_path
+            expect(page).to have_button("Place order now", disabled: true)
+          end
         end
       end
     end
