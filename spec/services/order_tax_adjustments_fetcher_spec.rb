@@ -54,11 +54,12 @@ describe OrderTaxAdjustmentsFetcher do
                                   distributors: [coordinator],
                                   variants: [variant])
     end
-    let(:line_item) { create(:line_item, variant: variant, price: 44.0) }
+    let(:line_item1) { create(:line_item, variant: variant, price: 44.0) }
+    let(:line_item2) { create(:line_item, variant: variant, price: 44.0) }
     let(:order) do
       create(
         :order,
-        line_items: [line_item],
+        line_items: [line_item1, line_item2],
         bill_address: create(:address),
         order_cycle: order_cycle,
         distributor: coordinator,
@@ -89,8 +90,8 @@ describe OrderTaxAdjustmentsFetcher do
       expect(subject.size).to eq(4)
     end
 
-    it "contains tax on line_item" do
-      expect(subject[tax_rate10]).to eq(4.0)
+    it "contains tax on all line_items" do
+      expect(subject[tax_rate10]).to eq(8.0)
     end
 
     it "contains tax on shipping_fee" do
