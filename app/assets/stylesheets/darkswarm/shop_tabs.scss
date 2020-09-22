@@ -34,7 +34,7 @@
     >a {
       outline: none;
       display: block;
-      color: $grey-500;
+      color: $black;
       font-family: "Oswald", sans-serif;
     }
 
@@ -42,7 +42,7 @@
       @include headingFont;
 
       background: transparent;
-      text-transform: uppercase;
+      text-transform: capitalize;
       line-height: 1;
       font-size: 0.875em;
       padding: 1em 2em;
