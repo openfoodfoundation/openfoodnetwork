@@ -46,6 +46,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
       munged_order =
         default_bill_address: !!@default_bill_address
         default_ship_address: !!@default_ship_address
+        terms_and_conditions_accepted: true
 
       for name, value of @order # Clone all data from the order JSON object
         switch name
