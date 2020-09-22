@@ -18,14 +18,14 @@
     = stylesheet_link_tag "darkswarm/all"
     = csrf_meta_tags
 
-  %body{class: body_classes, "body-scroll" => true , ng: {app: "Darkswarm"}}
+  %body{ class: body_classes, "body-scroll" => true , ng: { app: 'Darkswarm' }}
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
 
     = render "layouts/shopfront_script" if @shopfront_layout
 
-    .off-canvas-wrap{offcanvas: true}
+    .off-canvas-wrap{ offcanvas: true }
       .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu
         = yield :page_alert
