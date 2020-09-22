@@ -4,7 +4,7 @@ FactoryBot.define do
   end
 
   factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
-    enterprise { FactoryBot.create :distributor_enterprise }
+    enterprise factory: :distributor_enterprise
   end
 
   factory :filter_products_tag_rule, class: TagRule::FilterProducts do
