@@ -660,6 +660,7 @@ GEM
     stringex (1.5.1)
     stripe (5.25.0)
     temple (0.8.2)
+    test-prof (0.7.5)
     test-unit (3.3.6)
       power_assert
     thor (0.20.3)
@@ -810,6 +811,7 @@ DEPENDENCIES
   state_machine (= 1.2.0)
   stringex (~> 1.5.1)
   stripe
+  test-prof
   test-unit (~> 3.3)
   timecop
   truncate_html (= 0.9.2)
