@@ -8,7 +8,7 @@ describe Calculator::PriceSack do
     calculator.preferred_discount_amount = 1
     calculator
   end
-  let(:line_item) { build(:line_item, price: price, quantity: 2) }
+  let(:line_item) { build_stubbed(:line_item, price: price, quantity: 2) }
 
   context 'when the order amount is below preferred minimal' do
     let(:price) { 2 }
