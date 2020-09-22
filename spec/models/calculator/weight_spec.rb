@@ -4,13 +4,13 @@ describe Calculator::Weight do
   it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_kg]
 
   it "computes shipping cost for an order by total weight" do
-    variant1 = build(:variant, unit_value: 10_000)
-    variant2 = build(:variant, unit_value: 20_000)
-    variant3 = build(:variant, unit_value: nil)
+    variant1 = build_stubbed(:variant, unit_value: 10_000)
+    variant2 = build_stubbed(:variant, unit_value: 20_000)
+    variant3 = build_stubbed(:variant, unit_value: nil)
 
-    line_item1 = build(:line_item, variant: variant1, quantity: 1)
-    line_item2 = build(:line_item, variant: variant2, quantity: 3)
-    line_item3 = build(:line_item, variant: variant3, quantity: 5)
+    line_item1 = build_stubbed(:line_item, variant: variant1, quantity: 1)
+    line_item2 = build_stubbed(:line_item, variant: variant2, quantity: 3)
+    line_item3 = build_stubbed(:line_item, variant: variant3, quantity: 5)
 
     order = double(:order, line_items: [line_item1, line_item2, line_item3])
 
