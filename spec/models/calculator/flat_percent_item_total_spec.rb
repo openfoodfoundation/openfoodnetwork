@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Calculator::FlatPercentItemTotal do
   let(:calculator) { Calculator::FlatPercentItemTotal.new }
-  let(:line_item) { build(:line_item, price: 10, quantity: 1) }
+  let(:line_item) { build_stubbed(:line_item, price: 10, quantity: 1) }
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
