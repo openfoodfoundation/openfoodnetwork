@@ -12,6 +12,18 @@
         @include breakpoint(phablet) {
           width: calc(33.333%);
         }
+
+        // Make this an anchor for the bulk label.
+        position: relative;
+
+        .product-thumb__bulk-label {
+          background-color: $grey-700;
+          color: white;
+          position: absolute;
+          right: 0;
+          top: .8em;
+          padding: .25em .5em;
+        }
       }
     }
   }
