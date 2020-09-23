@@ -4,6 +4,8 @@
 // Pop over
 // Foundation overrides
 .joyride-tip-guide.price_breakdown {
+  width: 16rem;
+  max-width: 65%;
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
   margin-left: -7.4rem;
   margin-top: 0.1rem;
