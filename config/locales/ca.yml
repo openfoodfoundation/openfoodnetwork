@@ -601,7 +601,7 @@ ca:
         order_date: "Completada a"
         max: "Màx"
         product_unit: "Producte: Unitat"
-        weight_volume: "Pes/Volum"
+        weight_volume: "Pes / Volum (g)"
         ask: "Preguntar?"
         page_title: "Gestió de les comandes en bloc"
         actions_delete: "Suprimeix seleccionats"
