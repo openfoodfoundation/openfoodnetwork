@@ -36,4 +36,4 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
 
   $scope.addBulk = (quantity) ->
     $scope.add(quantity)
-    $modal.open(templateUrl: "bulk_buy_modal.html", scope: $scope)
+    $modal.open(templateUrl: "bulk_buy_modal.html", scope: $scope, windowClass: "product-bulk-modal")
