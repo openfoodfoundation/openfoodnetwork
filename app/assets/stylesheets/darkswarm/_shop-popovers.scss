@@ -19,8 +19,11 @@
     color: white;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    color: #1f1f1f;
+  h6 {
+    font-size: 0.937rem;
+    border-bottom: .1em solid $grey-700;
+    padding: .5em 0.25rem;
+    margin-bottom: 2px;
   }
 
   .joyride-nub.top {
