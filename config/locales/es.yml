@@ -601,7 +601,7 @@ es:
         order_date: "Completado en"
         max: "Max"
         product_unit: "Producto: Unidad"
-        weight_volume: "Peso/Volumen"
+        weight_volume: "Peso / Volumen (g)"
         ask: "¿Pregunta?"
         page_title: "Gestor de Multiples Pedidos"
         actions_delete: "Borrar Seleccionados"
