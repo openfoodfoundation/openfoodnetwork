@@ -121,6 +121,7 @@ es:
       not_array_error: "debe ser una matriz"
       invalid_element_error: "debe contener solo enteros válidos"
   datetime_picker_ui:
+    current_text: Ahora
     close_text: Hecho
     time_text: Hora
   enterprise_mailer:
@@ -600,7 +601,7 @@ es:
         order_date: "Completado en"
         max: "Max"
         product_unit: "Producto: Unidad"
-        weight_volume: "Peso/Volumen"
+        weight_volume: "Peso / Volumen (g)"
         ask: "¿Pregunta?"
         page_title: "Gestor de Multiples Pedidos"
         actions_delete: "Borrar Seleccionados"
@@ -637,6 +638,8 @@ es:
           acn_placeholder: ej. 123 456 789
           display_invoice_logo: Mostrar logo en facturas
           invoice_text: Añadir texto personalizado al final de las facturas
+          terms_and_conditions: "Términos y Condiciones"
+          remove_terms_and_conditions: "Eliminar archivo"
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -1147,12 +1150,17 @@ es:
       destroy_attachment_does_not_exist: "El logotipo no existe"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "La imagen promocional no existe"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "El archivo de términos y condiciones no existe"
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
     already_ordered:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
+    terms_and_conditions:
+      message_html: "Al realizar este pedido acepta %{terms_and_conditions_link}."
+      link_text: "Términos de servicio"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:
@@ -2298,6 +2306,7 @@ es:
   enterprise_name_error: "ya está en uso. Si esta es su organización y le gustaría reclamar la propiedad, o si desea negociar con esta organización, comuníquese con el gestor actual de este perfil al %{email}."
   enterprise_owner_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Este rol ya está presente."
+  enterprise_terms_and_conditions_type_error: "Solo se permiten archivos PDF"
   inventory_item_visibility_error: Debe ser verdadero o falso
   product_importer_file_error: "Error: no se ha subido ningún archivo"
   product_importer_spreadsheet_error: "No se pudo procesar el archivo: tipo de archivo inválido"
@@ -2580,6 +2589,8 @@ es:
             immediate_logo_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
             removed_promo_image_successfully: "Imagen promocional eliminada con éxito"
             immediate_promo_image_removal_warning: "La imagen promocional se eliminará inmediatamente después de confirmar."
+            immediate_terms_and_conditions_removal_warning: "El archivo de términos y condiciones se eliminará inmediatamente después de que confirme."
+            removed_terms_and_conditions_successfully: "Archivo de términos y condiciones eliminado correctamente"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock reducido disponible

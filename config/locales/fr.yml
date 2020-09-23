@@ -121,6 +121,7 @@ fr:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
   datetime_picker_ui:
+    current_text: Mtnt
     close_text: Fait
     time_text: Heure
   enterprise_mailer:
@@ -600,7 +601,7 @@ fr:
         order_date: "Date"
         max: "Max"
         product_unit: "Produit: Unité"
-        weight_volume: "Poids/Volume"
+        weight_volume: "Poids/Volume (g)"
         ask: "Demander?"
         page_title: "Gestion des commandes"
         actions_delete: "Supprimer la sélection"
@@ -637,6 +638,8 @@ fr:
           acn_placeholder: 'ex: 404 833 048'
           display_invoice_logo: Afficher le logo sur la facture
           invoice_text: Ajouter une mention spécifique en bas des factures
+          terms_and_conditions: "CGU & CGV"
+          remove_terms_and_conditions: "Supprimer le fichier"
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -1147,12 +1150,17 @@ fr:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Aucune bannière trouvée :-("
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "Aucun fichier"
     orders:
       failed_to_update: "La mise à jour de la commande échoué"
   checkout:
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
+    terms_and_conditions:
+      message_html: "En confirmant votre commande, vous acceptez les %{terms_and_conditions_link}."
+      link_text: "Conditions Générales d'Utilisation"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
   shops:
     hubs:
@@ -2298,6 +2306,7 @@ fr:
   enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le gestionnaire principal du profil à %{email}."
   enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
+  enterprise_terms_and_conditions_type_error: "Seul le format PDF est autorisé"
   inventory_item_visibility_error: doit être vrai ou faux
   product_importer_file_error: "erreur : aucun document importé"
   product_importer_spreadsheet_error: "impossible de traiter le fichier : type de fichier invalide"
@@ -2602,6 +2611,8 @@ fr:
             immediate_logo_removal_warning: "Le logo sera supprimé juste après votre confirmation."
             removed_promo_image_successfully: "Bannière supprimée avec succès"
             immediate_promo_image_removal_warning: "La bannière sera supprimée juste après votre confirmation."
+            immediate_terms_and_conditions_removal_warning: "Le fichier sera supprimé après confirmation."
+            removed_terms_and_conditions_successfully: "Le fichier a été supprimé avec succès"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible

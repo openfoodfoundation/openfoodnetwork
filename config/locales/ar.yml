@@ -121,6 +121,7 @@ ar:
       not_array_error: "يجب أن يكون مصفوفة"
       invalid_element_error: "يجب أن يحتوي فقط على أعداد صحيحة فاعلة"
   datetime_picker_ui:
+    current_text: الآن
     close_text: تم
     time_text: الوقت
   enterprise_mailer:
@@ -600,7 +601,7 @@ ar:
         order_date: "اكتمل في"
         max: "اعلى"
         product_unit: "المنتج: وحدة"
-        weight_volume: "الوزن / الحجم"
+        weight_volume: "الوزن / الحجم (جم)"
         ask: "يطلب؟"
         page_title: "ادارة طلب الجملة "
         actions_delete: "حذف المواد المختارة"
@@ -637,6 +638,8 @@ ar:
           acn_placeholder: على سبيل المثال. 123 456 789
           display_invoice_logo: عرض الشعار في الفواتير
           invoice_text: أضف نصًا مخصصًا في نهاية الفواتير
+          terms_and_conditions: "الأحكام والشروط"
+          remove_terms_and_conditions: "إزالة الملف"
         contact:
           name: اسم
           name_placeholder: على سبيل المثال. برقوق غوستاف
@@ -1144,12 +1147,17 @@ ar:
       destroy_attachment_does_not_exist: "الشعار غير موجود"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "الصورة الترويجية غير موجودة"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "ملف الشروط والأحكام غير موجود"
     orders:
       failed_to_update: "فشل في تحديث الطلب"
   checkout:
     already_ordered:
       cart: "سلة التسوق"
       message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
+    terms_and_conditions:
+      message_html: "من خلال تقديم هذا الطلب ، فإنك توافق على %{terms_and_conditions_link}."
+      link_text: "شروط الخدمة"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
   shops:
     hubs:
@@ -2303,6 +2311,7 @@ ar:
   enterprise_name_error: "لقد اتخذت بالفعل. إذا كانت هذه هي مؤسستك وترغب في المطالبة بالملكية ، أو إذا كنت ترغب في التداول مع هذا المشروع ، فيرجى الاتصال بالمدير الحالي لملف التعريف هذا على %{email}."
   enterprise_owner_error: "^ %{email} غير مسموح به لامتلاك أي مؤسسات أخرى (الحد الأقصى هو %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ هذا الدور موجود بالفعل."
+  enterprise_terms_and_conditions_type_error: "يسمح فقط بملفات PDF"
   inventory_item_visibility_error: يجب أن تكون صحيحة أو خاطئة
   product_importer_file_error: "خطأ: لم يتم تحميل الملف"
   product_importer_spreadsheet_error: "لا يمكن معالجة الملف: ملف غير صالح"
@@ -2574,6 +2583,8 @@ ar:
             immediate_logo_removal_warning: "سيتم إزالة الشعار مباشرة بعد التأكيد."
             removed_promo_image_successfully: "تمت إزالة الصورة الترويجية بنجاح"
             immediate_promo_image_removal_warning: "ستتم إزالة صورة الترويجي فور التأكيد."
+            immediate_terms_and_conditions_removal_warning: "ستتم إزالة ملف الشروط والأحكام فورًا بعد التأكيد."
+            removed_terms_and_conditions_successfully: "تمت إزالة ملف الشروط والأحكام بنجاح"
     insufficient_stock: "مخزون غير متوفر ، تبقى %{on_hand}"
     out_of_stock:
       reduced_stock_available: انخفاض المخزون المتاح
