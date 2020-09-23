@@ -11,9 +11,7 @@
   @include box-shadow(0 2px 8px 0 rgba(0, 0, 0, 0.35));
 
   .joyride-content-wrapper {
-    padding: 1.125rem 1.25rem 1.5rem;
-    padding: 1rem;
-    margin: 1%;
+    padding: .625rem;
     width: 98%;
     background-color: $grey-800;
     color: white;
@@ -21,8 +19,9 @@
 
   h6 {
     font-size: 0.937rem;
+    line-height: 1;
     border-bottom: .1em solid $grey-700;
-    padding: .5em 0.25rem;
+    padding: 0 0 .625em 0;
     margin-bottom: 2px;
   }
 
@@ -48,14 +47,15 @@
   }
 
   li {
+    line-height: 1;
     border-bottom: .1em solid $grey-700;
-    padding: 0 0.25rem;
+    padding: 0.625rem 0;
     margin-bottom: 2px;
   }
 
   li:last-child {
     border-bottom: 0;
-    margin-bottom: 0.75rem;
+    padding-bottom: 0;
   }
 }
 
