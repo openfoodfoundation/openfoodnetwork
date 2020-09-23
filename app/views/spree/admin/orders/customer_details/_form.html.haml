@@ -11,13 +11,13 @@
     %fieldset.no-border-bottom
       %legend{:align => "center"}= Spree.t(:billing_address)
       = f.fields_for :bill_address do |ba_form|
-        = render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :name => Spree.t(:billing_address), :use_billing => false }
+        = render :partial => 'address_form', :locals => { :f => ba_form, :name => Spree.t(:billing_address), :use_billing => false }
 
   .omega.six.columns{"data-hook" => "ship_address_wrapper"}
     %fieldset.no-border-bottom
       %legend{:align => "center"}= Spree.t(:shipping_address)
       = f.fields_for :ship_address do |sa_form|
-        = render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :name => Spree.t(:shipping_address), :use_billing => true }
+        = render :partial => 'address_form', :locals => { :f => sa_form, :name => Spree.t(:shipping_address), :use_billing => true }
 
   .clear
 
@@ -26,3 +26,4 @@
 
   - content_for :head do
     = javascript_include_tag 'admin/spree/orders/address_states.js'
+    = javascript_include_tag 'admin/spree/orders/use_billing.js'

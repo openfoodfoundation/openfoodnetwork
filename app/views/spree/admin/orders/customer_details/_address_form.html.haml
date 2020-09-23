@@ -1,0 +1,45 @@
+- if use_billing
+  .field{style: "position: absolute;margin-top: -15px;right: 0;"}
+    %span
+      = check_box_tag 'order[use_billing]', '1', (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.same_as?(@order.ship_address))
+      = label_tag 'order[use_billing]', Spree.t(:use_billing_address)
+
+- is_shipping_address = name == Spree.t(:shipping_address)
+- s_or_b = is_shipping_address ? 's' : 'b'
+
+- display_style = (use_billing && (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address == @order.ship_address)) ? 'none' : 'block'
+
+%div{id: "#{is_shipping_address ? 'shipping' : 'billing'}", style: "display: #{display_style}"}
+  %div{class: "field"}
+    = f.label :firstname, Spree.t(:first_name) + ':'
+    = f.text_field :firstname, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :lastname, Spree.t(:last_name) + ':'
+    = f.text_field :lastname, class: 'fullwidth'
+  - if Spree::Config[:company]
+    %div{class: "field"}
+      = f.label :company, Spree.t(:company) + ':'
+      = f.text_field :company, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :address1, Spree.t(:street_address) + ':'
+    = f.text_field :address1, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :address2, Spree.t(:street_address_2) + ':'
+    = f.text_field :address2, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :city, Spree.t(:city) + ':'
+    = f.text_field :city, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :zipcode, Spree.t(:zip) + ':'
+    = f.text_field :zipcode, class: 'fullwidth'
+  %div{class: "field"}
+    = f.label :country_id, Spree.t(:country) + ':'
+    %span{id: "#{s_or_b}country"}
+      = f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'select2 fullwidth', onchange: "update_state('#{s_or_b}')"}
+  %div{class: "field"}
+    = f.label :state_id, Spree.t(:state) + ':'
+    %span{id: "#{s_or_b}state"}
+      = f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', disabled: f.object.country.states.empty?}
+  %div{class: "field"}
+    = f.label :phone, Spree.t(:phone) + ':'
+    = f.phone_field :phone, class: 'fullwidth'
