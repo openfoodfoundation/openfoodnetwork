@@ -598,7 +598,6 @@ pt_BR:
         order_date: "Concluído em"
         max: "Máximo"
         product_unit: "Produto: Unidade"
-        weight_volume: "Peso/Volume"
         ask: "Perguntar?"
         page_title: "Gestão de Pedidos em Massa"
         actions_delete: "Deletar selecionado"

@@ -600,7 +600,6 @@ nl_BE:
         order_date: "Vervolledigd op"
         max: "Maximum"
         product_unit: "Product: Eenheid"
-        weight_volume: "Gewicht/Volume"
         ask: "Vraag?"
         page_title: "Beheer van bulkorders"
         actions_delete: "Verwijder geselecteerde"

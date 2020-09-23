@@ -589,7 +589,6 @@ fil_PH:
         order_date: "nakumpleto sa"
         max: "Max"
         product_unit: "Produkto: Yunit"
-        weight_volume: "Timbang/Dami"
         ask: "magtanong?"
         page_title: "Pamamahala sa Bulk order"
         actions_delete: "tanggalin ang napili"

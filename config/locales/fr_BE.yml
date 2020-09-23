@@ -599,7 +599,6 @@ fr_BE:
         order_date: "Complété à "
         max: "Max"
         product_unit: "Produit: Unité"
-        weight_volume: "Poids/Volume"
         ask: "Demander?"
         page_title: "Gestion des commandes"
         actions_delete: "Supprimer la sélection"

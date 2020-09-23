@@ -599,7 +599,6 @@ es_CO:
         order_date: "Completado en"
         max: "Max"
         product_unit: "Producto: Unidad"
-        weight_volume: "Peso/Volumen"
         ask: "¿Pregunta?"
         page_title: "Gestor de Multiples Pedidos"
         actions_delete: "Borrar Seleccionados"
