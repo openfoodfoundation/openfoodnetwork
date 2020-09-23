@@ -1704,6 +1704,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"
   products_edit_cart: "Edit your cart"
+  products_bulk: "Bulk"
   products_from: from
   products_change: "No changes to save."
   products_update_error: "Saving failed with the following error(s):"
