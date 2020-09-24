@@ -19,7 +19,7 @@ describe "Tax Rates" do
     end
   end
 
-  # Regression test for #1422
+  # Regression test for Spree #1422
   it "can create a new tax rate" do
     click_link "Tax Rates"
     click_link "New Tax Rate"
