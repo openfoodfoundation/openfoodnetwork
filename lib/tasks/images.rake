@@ -77,7 +77,7 @@ namespace :images do
       raise 'Must specify styles like STYLE_DEFS=\'{"small":["227x227#","jpg"]}\''
     end
 
-    Spree::Image.format_styles(JSON.parse(styles))
+    format_styles(JSON.parse(styles))
   end
 
   def instances_with_attachment_after_id(klass, name, id)
@@ -91,5 +91,17 @@ namespace :images do
 
   def instances_with_attachment(klass, name)
     Paperclip.class_for(klass).unscoped.where("#{name}_file_name IS NOT NULL")
+  end
+
+  # Convert strings from JSON into symbols understood by Paperclip:
+  #
+  #   {'mini' => ['48x48>', 'png']} is converted to {mini: ['48x48>', :png]}
+  def format_styles(styles)
+    styles_a = styles.map do |name, style|
+      style[1] = style[1].to_sym if style.is_a? Array
+      [name.to_sym, style]
+    end
+
+    Hash[styles_a]
   end
 end
