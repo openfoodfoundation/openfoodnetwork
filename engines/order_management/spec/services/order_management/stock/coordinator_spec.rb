@@ -5,7 +5,12 @@ require 'spec_helper'
 module OrderManagement
   module Stock
     describe Coordinator do
-      let!(:order) { create(:order_with_line_items, distributor: create(:distributor_enterprise)) }
+      let!(:order) do
+        build_stubbed(
+          :order_with_line_items,
+          distributor: build_stubbed(:distributor_enterprise)
+        )
+      end
 
       subject { Coordinator.new(order) }
 
