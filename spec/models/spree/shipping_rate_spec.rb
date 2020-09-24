@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Spree::ShippingRate do
   let(:shipment) { create(:shipment) }
-  let(:shipping_method) { create(:shipping_method) }
+  let(:shipping_method) { build_stubbed(:shipping_method) }
   let(:shipping_rate) {
     Spree::ShippingRate.new(shipment: shipment,
                             shipping_method: shipping_method,
