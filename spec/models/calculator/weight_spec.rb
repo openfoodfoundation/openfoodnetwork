@@ -62,6 +62,8 @@ describe Calculator::Weight do
     subject.set_preference(:per_unit, 5)
     subject.set_preference(:unit_from_list, "kg")
     expect(subject.compute(object_with_order)).to eq(250) # (10 * 1 + 20 * 2) * 5
+    subject.set_preference(:unit_from_list, "lb")
+    expect(subject.compute(object_with_order)).to eq(551.15) # (10 * 1 + 20 * 2) * 5 * 2.2
   end
 
   context "when line item final_weight_volume is set" do
@@ -213,6 +215,8 @@ describe Calculator::Weight do
     subject.calculable = build(:shipping_method)
     subject.set_preference(:per_unit, 5)
     subject.set_preference(:unit_from_list, "kg")
+    expect(subject.calculable.errors.count).to eq(0)
+    subject.set_preference(:unit_from_list, "lb")
     expect(subject.calculable.errors.count).to eq(0)
   end
 
