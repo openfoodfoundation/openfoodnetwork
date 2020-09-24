@@ -3044,6 +3044,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
