@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+DATE=`date +%Y%m%d-%H%M%S-%3N`
+docker/test-log 2>&1 | tee log/test-$DATE.log
