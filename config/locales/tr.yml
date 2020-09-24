@@ -600,7 +600,6 @@ tr:
         order_date: "Tamamlanma Tarihi:"
         max: "En Fazla"
         product_unit: "Ürün: Birim"
-        weight_volume: "Ağırlık / Hacim"
         ask: "Sor?"
         page_title: "TOPLU SİPARİŞ YÖNETİMİ"
         actions_delete: "Seçilenleri Sil"

@@ -600,7 +600,6 @@ nb:
         order_date: "Fullført på"
         max: "Max"
         product_unit: "Produkt: Enhet"
-        weight_volume: "Vekt/Volum"
         ask: "Spør?"
         page_title: "Bulk ordrehåndtering"
         actions_delete: "Slett Valgte"

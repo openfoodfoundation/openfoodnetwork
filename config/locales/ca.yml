@@ -121,6 +121,7 @@ ca:
       not_array_error: "ha de ser una matriu"
       invalid_element_error: "ha de contenir només nombres enters vàlids"
   datetime_picker_ui:
+    current_text: Ara
     close_text: Fet
     time_text: Hora
   enterprise_mailer:
@@ -600,7 +601,7 @@ ca:
         order_date: "Completada a"
         max: "Màx"
         product_unit: "Producte: Unitat"
-        weight_volume: "Pes/Volum"
+        weight_volume: "Pes / Volum (g)"
         ask: "Preguntar?"
         page_title: "Gestió de les comandes en bloc"
         actions_delete: "Suprimeix seleccionats"
@@ -637,6 +638,8 @@ ca:
           acn_placeholder: p. ex. 123 456 789
           display_invoice_logo: Mostreu el logotip a les factures
           invoice_text: Afegeix text personalitzat al final de les factures
+          terms_and_conditions: "Termes i condicions"
+          remove_terms_and_conditions: "Elimina el fitxer"
         contact:
           name: Nom
           name_placeholder: 'p. ex: Josep Ribes'
@@ -1148,12 +1151,17 @@ ca:
       destroy_attachment_does_not_exist: "El logotip no existeix"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "La imatge promocional no existeix"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "El fitxer de termes i condicions no existeix"
     orders:
       failed_to_update: "No s'ha pogut actualitzar la comanda"
   checkout:
     already_ordered:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
+    terms_and_conditions:
+      message_html: "En fer aquesta comanda accepteu %{terms_and_conditions_link}."
+      link_text: "Termes del servei"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:
@@ -2299,6 +2307,7 @@ ca:
   enterprise_name_error: "ja ha estat agafat. Si aquesta és la vostra organització i voleu reclamar-ne la propietat o si voleu comerciar amb aquesta organització, poseu-vos en contacte amb l'administradora actual d'aquest perfil %{email}."
   enterprise_owner_error: "^ %{email} no està autoritzat a tenir més organitzacions (el límit és %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Aquest rol ja està present."
+  enterprise_terms_and_conditions_type_error: "Només s’admeten fitxers PDF"
   inventory_item_visibility_error: ha de ser veritable o falsa
   product_importer_file_error: "error: no s'ha carregat cap fitxer"
   product_importer_spreadsheet_error: "no s'ha pogut processar el fitxer: tipus de fitxer no vàlid"
@@ -2580,6 +2589,8 @@ ca:
             immediate_logo_removal_warning: "El logotip s'eliminarà immediatament després de confirmar."
             removed_promo_image_successfully: "Imatge promocional eliminada correctament"
             immediate_promo_image_removal_warning: "La imatge promocional s'eliminarà immediatament després de confirmar."
+            immediate_terms_and_conditions_removal_warning: "El fitxer de termes i condicions s’eliminarà immediatament després de confirmar-ho."
+            removed_terms_and_conditions_successfully: "El fitxer de termes i condicions s’ha eliminat correctament"
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
     out_of_stock:
       reduced_stock_available: Estoc reduït disponible

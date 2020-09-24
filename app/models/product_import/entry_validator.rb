@@ -159,7 +159,7 @@ module ProductImport
     end
 
     def unit_fields_validation(entry)
-      unit_types = ['g', 'kg', 't', 'ml', 'l', 'kl', '']
+      unit_types = ['g', 'oz', 'lb', 'kg', 't', 'ml', 'l', 'kl', '']
 
       unless entry.units&.present?
         mark_as_invalid(entry, attribute: 'units',

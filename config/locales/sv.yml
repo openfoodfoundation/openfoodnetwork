@@ -274,7 +274,6 @@ sv:
         order_no: "Ordernummer"
         max: "Max"
         product_unit: "Produkt: Enhet"
-        weight_volume: "Vikten/Volymen"
         ask: "Fråga efter?"
         page_title: "Hantering av storköp"
         actions_delete: "Ta bort valda produkten"

@@ -586,7 +586,6 @@ de_DE:
         order_date: "Abgeschlossen am"
         max: "Max"
         product_unit: "Produkt: Einheit"
-        weight_volume: "Gewicht / Volumen"
         ask: "Fragen?"
         page_title: "Massenbearbeitung von Bestellungen"
         actions_delete: "Ausgewählte löschen"

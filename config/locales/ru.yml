@@ -1,0 +1,303 @@
+ru:
+  language_name: "Английский"
+  activerecord:
+    attributes:
+      enterprise_fee:
+        fee_type: Способ Оплаты
+      spree/order:
+        payment_state: Состояние Платежа
+        state: Состояние
+        email: E-mail Покупателя
+      spree/payment:
+        amount: К оплате
+        state: Состояние
+      spree/product:
+        primary_taxon: "Категория Продукта"
+        supplier: "Поставщик"
+        shipping_category_id: "Категория Доставки"
+      spree/credit_card:
+        base: "Кредитная Карта"
+  activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        producer_ids: "Производители"
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Пожалуйста, подтвердите адрес электронной почты для %{enterprise}"
+    welcome:
+      subject: "%{enterprise} теперь размещён на %{sitename}"
+  resend_confirmation: "Отправить Подтверждение Заново"
+  say_no: "Нет"
+  say_yes: "Да"
+  required_fields: Обязательные поля отмечены звёздочкой
+  select_continue: Выбрать и Продолжить
+  remove: Удалить
+  or: или
+  collapse_all: Свернуть все
+  expand_all: Развернуть все
+  loading: Загрузка ...
+  show_more: Показать больше
+  show_all: Показать все
+  cancel: Отмена
+  edit: Изменить
+  clone: Клонировать
+  enterprise_groups: Группы
+  reports: Отчеты
+  quantity: Количество
+  shipping_category: "Категория Доставки"
+  actions:
+    cancel: "Отмена"
+    edit: "Редактировать"
+  admin:
+    date: Дата
+    email: Электронная почта
+    name: Имя
+    phone: Телефон
+    price: Цена
+    product: Продукт
+    quantity: Количество
+    shop: Магазин
+    status_state: Состояние
+    quick_search: Быстрый Поиск
+    clear_all: Очистить Все
+    start_date: "Дата Начала"
+    form_invalid: "Форма содержит пропущенные или неверные поля"
+    cancel: Отмена
+    show_more: Показать больше
+    columns: Колонки
+    description: Описание
+    whats_this: Что это?
+    has_one_rule: "имеет одно правило"
+    unsaved_confirm_leave: "На этой странице есть несохранённые изменения. Продолжить без сохранения?"
+    unsaved_changes: "У вас есть несохранённые изменения"
+    stripe_connect_settings:
+      edit:
+        status: Состояние
+    customers:
+      index:
+        select_country: 'Выберите Страну'
+        select_state: 'Выберите Штат'
+        edit: 'Редактировать'
+    contents:
+      edit:
+        title: Содержание
+    enterprise_fees:
+      index:
+        fee_type: "Способ Оплаты"
+        name: "Имя"
+        tax_category: "Налоговая Категория"
+    products:
+      index:
+        tax_category: Налоговая Категория
+        inherits_properties?: Наследовать Свойства?
+        available_on: Доступен К
+    variant_overrides:
+      index:
+        add: Добавить
+        hide: Спрятать
+    orders:
+      bulk_management:
+        max: "Максимум"
+        product_unit: "Продукт: Единица"
+        actions_delete: "Удалить Выбранное"
+        loading: "Загрузка заказов"
+        no_results: "Заказов не найдено."
+    enterprises:
+      index:
+        status: Состояние
+      form:
+        contact:
+          name: Имя
+          phone: Телефон
+        enterprise_fees:
+          name: Имя
+          fee_type: Способ Оплаты
+        payment_methods:
+          name: Имя
+        primary_details:
+          name: Имя
+          groups: Группы
+        shipping_methods:
+          name: "Имя"
+      actions:
+        edit_profile: Настройки
+      admin_index:
+        name: Имя
+      enterprise_user_index:
+        manage_link: Настройки
+        status: "Состояние"
+    order_cycles:
+      new:
+        cancel: "Отмена"
+      edit:
+        cancel: "Отмена"
+      incoming:
+        supplier: "Поставщик"
+        cancel: "Отмена"
+      outgoing:
+        cancel: "Отмена"
+      exchange_form:
+        remove: 'Удалить'
+      form:
+        supplier: Поставщик
+      name_and_timing_form:
+        name: Имя
+      date_warning:
+        cancel: Отмена
+    subscriptions:
+      autocomplete:
+        quantity: "Количество"
+        add: "Добавить"
+      details:
+        credit_card: Кредитная Карта
+  invoice_column_price: "Цена"
+  menu_3_title: "Производители"
+  menu_4_title: "Группы"
+  footer_email: "Электронная почта"
+  name: Имя
+  email: Электронная почта
+  phone: Телефон
+  state: Состояние
+  label_producers: "Производители"
+  label_groups: "Группы"
+  label_more: "Показать больше"
+  checkout_hide: Спрятать
+  email_order_summary_price: "Цена"
+  shopping_tabs_shop: "Магазин"
+  products_or: "или"
+  groups_title: Группы
+  producers_title: Производители
+  products_description: Описание
+  products_quantity: Количество
+  products_price: "Цена"
+  sell_producers: "Производители"
+  sell_groups: "Группы"
+  transaction_date: "Дата"
+  admin_enterprise_groups_name: "Имя"
+  admin_enterprise_groups_contact_state_id: "Состояние"
+  supplier: "Поставщик"
+  fee_type: "Способ Оплаты"
+  tax_category: "Налоговая Категория"
+  product: "Продукт"
+  price: "Цена"
+  spree_admin_enterprises_hubs_name: "Имя"
+  spree_admin_supplier: Поставщик
+  spree_admin_product_category: Категория Продукта
+  admin_share_state: "Состояние"
+  report_customers_supplier: "Поставщик"
+  report_header_email: Электронная почта
+  report_header_status: Состояние
+  report_header_date: Дата
+  report_header_quantity: Количество
+  report_header_supplier: Поставщик
+  report_header_payment_state: Состояние Платежа
+  report_header_amount: К оплате
+  primary_details: "Основная Информация"
+  amount: "К оплате"
+  js:
+    admin:
+      panels:
+        enterprise_status:
+          description: Описание
+    variant_overrides:
+      on_demand:
+        'yes': "Да"
+        'no': "Нет"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        formats:
+          csv:
+            header:
+              fee_type: "Способ Оплаты"
+              tax_category_name: "Налоговая Категория"
+          html:
+            header:
+              fee_type: "Способ Оплаты"
+              tax_category_name: "Налоговая Категория"
+  spree:
+    quantity: "Количество"
+    price: "Цена"
+    edit: "Редактировать"
+    state: "Состояние"
+    phone: "Телефон"
+    tax_category: "Налоговая Категория"
+    name: "Имя"
+    description: "Описание"
+    amount: "К оплате"
+    email: Электронная почта
+    date: "Дата"
+    shared:
+      payments_list:
+        amount: "К оплате"
+        payment_state: "Состояние Платежа"
+    admin:
+      tab:
+        reports: "Отчеты"
+        groups: "Группы"
+      properties:
+        index:
+          name: "Имя"
+        form:
+          name: "Имя"
+      return_authorizations:
+        index:
+          status: "Состояние"
+          amount: "К оплате"
+        form:
+          product: "Продукт"
+          amount: "К оплате"
+      orders:
+        index:
+          edit: "Редактировать"
+        sortable_header:
+          payment_state: "Состояние Платежа"
+          state: "Состояние"
+          email: "E-mail Покупателя"
+      shipping_methods:
+        index:
+          name: "Имя"
+      payment_methods:
+        index:
+          name: "Имя"
+          active_yes: "Да"
+          active_no: "Нет"
+        stripe_connect:
+          status: Состояние
+        form:
+          name: "Имя"
+          description: "Описание"
+          active_yes: "Да"
+          active_no: "Нет"
+      products:
+        new:
+          supplier: "Поставщик"
+          price: "Цена"
+          or: "или"
+        index:
+          products_head:
+            name: Имя
+            tax_category: Налоговая Категория
+            inherits_properties?: Наследовать Свойства?
+            available_on: Доступен к
+        primary_taxon_form:
+          product_category: Категория Продукта
+      users:
+        index:
+          email: "Электронная почта"
+        form:
+          email: "Электронная почта"
+      variants:
+        index:
+          price: "Цена"
+        form:
+          price: "Цена"
+      shared:
+        sortable_header:
+          name: "Имя"
+          state: "Состояние"
+          payment_state: "Состояние Платежа"
+          email: "Электронная почта"
+    users:
+      open_orders:
+        edit: Изменить

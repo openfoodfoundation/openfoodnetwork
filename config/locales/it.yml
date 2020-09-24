@@ -596,7 +596,6 @@ it:
         order_date: "Completato al"
         max: "Max"
         product_unit: "Prodotto: Unità"
-        weight_volume: "Peso/Volume"
         ask: "Chiedi?"
         page_title: "Gestione di ordine all'ingrosso"
         actions_delete: "Cancella i selezionati"
