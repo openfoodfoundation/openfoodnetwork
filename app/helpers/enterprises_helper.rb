@@ -12,7 +12,12 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    DistributorShippingMethods.shipping_methods(current_distributor, true, current_customer)
+    DistributorShippingMethods.shipping_methods(
+      distributor: current_distributor,
+      checkout: true,
+      customer: current_customer,
+      apply_tags: true
+    )
   end
 
   def available_payment_methods

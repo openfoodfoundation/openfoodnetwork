@@ -79,11 +79,22 @@ module OrderManagement
         # TODO calculate from first variant?
       end
 
-      # Skips the methods that are not used by the order's distributor
-      #
-      # @return [Array<Spree::ShippingMethod>]
       def shipping_methods
-        DistributorShippingMethods.shipping_methods(order.distributor, false, order.customer)
+        DistributorShippingMethods.shipping_methods(
+          distributor: order.distributor,
+          checkout: false,
+          customer: order.customer,
+          apply_tags: false
+        )
+      end
+
+      def filtered_shipping_methods
+        DistributorShippingMethods.shipping_methods(
+          distributor: order.distributor,
+          checkout: false,
+          customer: order.customer,
+          apply_tags: true
+        )
       end
 
       def inspect

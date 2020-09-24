@@ -103,12 +103,13 @@ module Spree
       save!
     end
 
-    def refresh_rates
+    def refresh_rates(apply_tags = true)
       return shipping_rates if shipped?
 
       # The call to Stock::Estimator below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try(:id)
-      self.shipping_rates = OrderManagement::Stock::Estimator.new(order).shipping_rates(to_package)
+      self.shipping_rates =
+        OrderManagement::Stock::Estimator.new(order).shipping_rates(to_package, true, apply_tags)
 
       keep_original_shipping_method_selection(original_shipping_method_id)
 
