@@ -11,7 +11,6 @@ module OpenFoodNetwork
     let!(:product_tag_rule2) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 4, preferred_customer_tags: "tag1", preferred_variant_tags: "tag3", preferred_matched_variants_visibility: "hidden" ) }
     let!(:product_tag_rule3) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 3, preferred_customer_tags: "tag2", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "visible" ) }
     let!(:default_product_tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 2, is_default: true, preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
-    let!(:sm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, priority: 1, preferred_customer_tags: "tag1", preferred_shipping_method_tags: "tag1", preferred_matched_shipping_methods_visibility: "visible" ) }
 
     describe "initialisation" do
       context "when enterprise is nil" do
