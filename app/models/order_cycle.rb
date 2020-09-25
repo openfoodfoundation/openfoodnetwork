@@ -139,6 +139,26 @@ class OrderCycle < ActiveRecord::Base
     ]
   end
 
+  def orders_open_at=(time)
+    if coordinator.timezone == Time.zone.name
+      super(time)
+    else
+      Time.use_zone(coordinator.timezone) do
+        super(Time.zone.parse(time))
+      end
+    end
+  end
+
+  def orders_close_at=(time)
+    if coordinator.timezone == Time.zone.name
+      super(time)
+    else
+      Time.use_zone(coordinator.timezone) do
+        super(Time.zone.parse(time))
+      end
+    end
+  end
+
   def clone!
     oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)

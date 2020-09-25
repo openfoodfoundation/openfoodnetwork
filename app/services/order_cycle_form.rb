@@ -13,6 +13,9 @@ class OrderCycleForm
 
   def save
     schedule_ids = build_schedule_ids
+    # set the coordinator_id here, first, so that we can set the open/close times
+    # in the coordinator's timezone.
+    order_cycle.coordinator_id = order_cycle_params[:coordinator_id]
     order_cycle.assign_attributes(order_cycle_params)
     return false unless order_cycle.valid?
 
