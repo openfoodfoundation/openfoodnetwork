@@ -78,3 +78,9 @@
         %a= t('admin.whats_this')
     .six.columns
       {{Enterprise.id}}
+  .row
+    .alpha.eleven.columns
+      .three.columns.alpha
+        = f.label :timezone, t('.timezone')
+      .eight.columns.omega
+        = f.time_zone_select(:timezone, ActiveSupport::TimeZone.all.sort)

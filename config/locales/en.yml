@@ -761,6 +761,7 @@ en:
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
+          timezone: Time Zone
         shipping_methods:
           name: "Name"
           applies: "Active?"
