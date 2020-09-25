@@ -2,6 +2,9 @@
 
 set -e
 
+# Use this script to execute commaands in the Docker container.
+# Example: To run the "ls -l" command in the Docker container, enter the command "docker/exec ls -l".
+
 function cleanup {
   # capture exit code
   code=$?
