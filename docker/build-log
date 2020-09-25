@@ -6,7 +6,7 @@ wait
 echo '###########################'
 echo 'BEGIN: docker-compose build'
 echo '###########################'
-docker-compose build
+docker-compose build # Set up the Docker containers
 echo '##############################'
 echo 'FINISHED: docker-compose build'
 echo '##############################'

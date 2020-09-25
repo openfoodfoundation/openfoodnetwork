@@ -4,7 +4,7 @@ This is a general guide to setting up an Open Food Network **development environ
 
 ### Requirements
 
-The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](DOCKER.md).
+The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
 Otherwise, for a local setup you will need:
 * Ruby 2.3.7 and bundler
 * PostgreSQL database
