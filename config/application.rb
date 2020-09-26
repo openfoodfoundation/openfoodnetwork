@@ -23,6 +23,11 @@ module Openfoodnetwork
       end
     end
 
+    config.after_initialize do
+      # We need this here because the test env file loads before the Spree engine is loaded
+      Spree::Core::Engine.routes.default_url_options[:host] = 'test.host' if Rails.env = 'test'
+    end
+
     initializer "spree.environment", before: :load_config_initializers do |app|
       app.config.spree = Spree::Core::Environment.new
       Spree::Config = app.config.spree.preferences # legacy access
