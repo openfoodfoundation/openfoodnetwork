@@ -263,7 +263,7 @@ module Spree
     # for adding products which are closely related to existing ones
     # define "duplicate_extra" for site-specific actions, eg for additional fields
     def duplicate
-      duplicator = ProductDuplicator.new(self)
+      duplicator = Spree::Core::ProductDuplicator.new(self)
       duplicator.duplicate
     end
 
