@@ -64,7 +64,7 @@ describe Spree::Core::ProductDuplicator do
     expect(new_product).to receive(:deleted_at=).with(nil)
     expect(new_product).to receive(:master=).with(new_variant)
 
-    expect(new_variant).to receive(:sku=).with("COPY OF 12345")
+    expect(new_variant).to receive(:sku=).with("")
     expect(new_variant).to receive(:deleted_at=).with(nil)
     expect(new_variant).to receive(:images=).with([new_image])
     expect(new_variant).to receive(:price=).with(variant.price)
