@@ -15,8 +15,6 @@ module Spree
         # don't dup the actual variants, just the characterising types
         new_product.option_types = product.option_types if product.variants?
 
-        # allow site to do some customization
-        new_product.__send__(:duplicate_extra, product) if new_product.respond_to?(:duplicate_extra)
         new_product.save!
         new_product
       end
@@ -38,7 +36,7 @@ module Spree
       def duplicate_master
         master = product.master
         master.dup.tap do |new_master|
-          new_master.sku = "COPY OF #{master.sku}"
+          new_master.sku = ""
           new_master.deleted_at = nil
           new_master.images = master.images.map { |image| duplicate_image image }
           new_master.price = master.price
