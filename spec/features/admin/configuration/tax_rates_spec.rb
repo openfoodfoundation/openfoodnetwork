@@ -25,6 +25,6 @@ describe "Tax Rates" do
     click_link "New Tax Rate"
     fill_in "Rate", with: "0.05"
     click_button "Create"
-    expect(page).to have_content("Tax Rate has been successfully created!")
+    expect(page).to have_content("Tax rate has been successfully created!")
   end
 end
