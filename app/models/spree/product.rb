@@ -261,15 +261,9 @@ module Spree
     end
 
     # for adding products which are closely related to existing ones
-    # define "duplicate_extra" for site-specific actions, eg for additional fields
     def duplicate
       duplicator = Spree::Core::ProductDuplicator.new(self)
       duplicator.duplicate
-    end
-
-    # Called by Spree::Product::duplicate before saving.
-    def duplicate_extra(_parent)
-      master.sku = ''
     end
 
     # use deleted? rather than checking the attribute directly. this
