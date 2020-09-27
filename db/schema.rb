@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200817150002) do
+ActiveRecord::Schema.define(version: 20200925184818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 20200817150002) do
     t.string   "terms_and_conditions_content_type"
     t.integer  "terms_and_conditions_file_size"
     t.datetime "terms_and_conditions_updated_at"
+    t.string   "timezone"
   end
 
   add_index "enterprises", ["address_id"], name: "index_enterprises_on_address_id", using: :btree
