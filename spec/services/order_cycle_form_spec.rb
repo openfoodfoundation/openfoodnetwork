@@ -43,9 +43,9 @@ describe OrderCycleForm do
         form = OrderCycleForm.new(order_cycle, params, shop.owner)
         expect(form.save).to be true
         expect(order_cycle.orders_open_at.utc).to eq("2020-12-30 07:00 UTC")
-        expect(order_cycle.orders_open_at).to include("+13")
+        expect(order_cycle.orders_open_at.to_s).to include("+13")
         expect(order_cycle.orders_close_at.utc).to eq("2020-12-30 09:00 UTC")
-        expect(order_cycle.orders_close_at).to include("+13")
+        expect(order_cycle.orders_close_at.to_s).to include("+13")
       end
     end
 
