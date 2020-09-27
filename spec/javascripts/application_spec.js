@@ -14,6 +14,7 @@
 //= require textAngular.min.js
 //= require moment/min/moment.min.js
 //= require i18n
+//= require handlebars
 
 angular.module('templates', [])
 angular.module('uiGmapgoogle-maps', []);
