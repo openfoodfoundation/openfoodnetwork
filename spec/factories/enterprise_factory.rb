@@ -12,6 +12,7 @@ FactoryBot.define do
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     address { FactoryBot.create(:address) }
+    timezone { Time.zone.name }
 
     after(:create) do |enterprise, proxy|
       proxy.users.each do |user|

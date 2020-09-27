@@ -95,10 +95,12 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :owner, presence: true
   validates :permalink, uniqueness: true, presence: true
+  validates :timezone, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
+  before_validation :initialize_timezone, if: lambda { timezone.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
@@ -471,6 +473,10 @@ class Enterprise < ActiveRecord::Base
 
   def initialize_permalink
     self.permalink = Enterprise.find_available_permalink(name)
+  end
+
+  def initialize_timezone
+    self.timezone = Time.zone.name
   end
 
   # Touch distributors without them touching their distributors.
