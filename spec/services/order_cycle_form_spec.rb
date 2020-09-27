@@ -29,6 +29,26 @@ describe OrderCycleForm do
       end
     end
 
+    describe "creating an order cycle in a different time zone" do
+      let(:shop) { create(:enterprise) }
+      it "sets the open and close times based on the shop's time zone" do
+        shop.update_attribute(:timezone, "Auckland") # UTC+13 in December
+        order_cycle = OrderCycle.new
+        params = {
+          name: "Auckland Order Cycle",
+          coordinator_id: shop.id,
+          orders_open_at: "2020-12-30 20:00",
+          orders_close_at: "2020-12-30 22:00"
+        }
+        form = OrderCycleForm.new(order_cycle, params, shop.owner)
+        expect(form.save).to be true
+        expect(order_cycle.orders_open_at.utc).to eq("2020-12-30 07:00 UTC")
+        expect(order_cycle.orders_open_at).to include("+13")
+        expect(order_cycle.orders_close_at.utc).to eq("2020-12-30 09:00 UTC")
+        expect(order_cycle.orders_close_at).to include("+13")
+      end
+    end
+
     describe "updating an existing order cycle from params" do
       let(:shop) { create(:enterprise) }
       let(:order_cycle) { create(:simple_order_cycle, name: "Old Name") }
