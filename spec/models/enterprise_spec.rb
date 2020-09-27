@@ -112,7 +112,6 @@ describe Enterprise do
     subject { FactoryBot.create(:distributor_enterprise) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:permalink) }
-    it { is_expected.to validate_presence_of(:timezone) }
 
     it "requires an owner" do
       expect{
@@ -603,18 +602,20 @@ describe Enterprise do
   end
 
   describe "changing time zone" do
-    let(:enterprise) { build(:enterprise, name: "Auckland Shop") }
+    let(:enterprise) { create(:enterprise, name: "Auckland Shop") }
 
     it "should keep order cycles at the same time after the timezone is changed" do
       expect(enterprise.timezone).to eq(Time.zone.name)
 
       # orders_open_at  { 1.day.ago }; orders_close_at { 1.week.from_now }
-      oc = create(:simple_order_cycle, coordinator: enterprise)
+      oc = create(:simple_order_cycle)
+      oc.coordinator = enterprise
+      oc.save
       enterprise.update_attribute(:timezone, "Auckland") # server timezone is Melbourne
 
       # open and close times should remain unchanged
-      expect(oc.orders_open_at).to eq(1.day.ago)
-      expect(oc.orders_close_at).to eq(1.week.from_now)
+      expect(1.day.ago - oc.orders_open_at).to be < 1
+      expect(1.week.from_now - oc.orders_close_at).to be < 1
     end
   end
 end
