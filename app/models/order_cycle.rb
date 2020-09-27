@@ -140,42 +140,42 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def orders_open_at=(time)
-    if coordinator.timezone == Time.zone.name
-      super(time)
-    else
+    if coordinator && coordinator.timezone != Time.zone.name
       Time.use_zone(coordinator.timezone) do
         super(Time.zone.parse(time))
       end
+    else
+      super(time)
     end
   end
 
   def orders_close_at=(time)
-    if coordinator.timezone == Time.zone.name
-      super(time)
-    else
+    if coordinator && coordinator.timezone != Time.zone.name
       Time.use_zone(coordinator.timezone) do
         super(Time.zone.parse(time))
       end
+    else
+      super(time)
     end
   end
 
   def orders_open_at
-    if coordinator.timezone == Time.zone.name
-      super
-    else
+    if coordinator && coordinator.timezone != Time.zone.name
       Time.use_zone(coordinator.timezone) do
         super
       end
+    else
+      super
     end
   end
 
   def orders_close_at
-    if coordinator.timezone == Time.zone.name
-      super
-    else
+    if coordinator && coordinator.timezone != Time.zone.name
       Time.use_zone(coordinator.timezone) do
         super
       end
+    else
+      super
     end
   end
 
