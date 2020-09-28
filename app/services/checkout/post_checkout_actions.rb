@@ -29,6 +29,8 @@ module Checkout
     end
 
     def set_customer_terms_and_conditions_accepted_at(params)
+      return unless params[:order]
+
       @order.customer.update(terms_and_conditions_accepted_at: Time.zone.now) if params[:order][:terms_and_conditions_accepted]
     end
   end
