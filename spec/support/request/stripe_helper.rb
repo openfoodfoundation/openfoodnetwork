@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module StripeHelper
+  def fill_out_card_details
+    expect(page).to have_css("input[name='cardnumber']")
+    fill_in 'Card number', with: '4242424242424242'
+    fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
+    fill_in 'CVC', with: '123'
+  end
+
   def setup_stripe
     allow(Stripe).to receive(:api_key) { "sk_test_12345" }
     allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }

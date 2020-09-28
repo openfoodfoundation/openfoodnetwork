@@ -109,11 +109,7 @@ feature "Check out with Stripe", js: true do
             save_default_addresses: false
           )
 
-          expect(page).to have_css("input[name='cardnumber']")
-
-          fill_in 'Card number', with: '4242424242424242'
-          fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
-          fill_in 'CVC', with: '123'
+          fill_out_card_details
 
           place_order
 
@@ -145,11 +141,7 @@ feature "Check out with Stripe", js: true do
             save_default_addresses: false
           )
 
-          expect(page).to have_css("input[name='cardnumber']")
-
-          fill_in 'Card number', with: '4242424242424242'
-          fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
-          fill_in 'CVC', with: '123'
+          fill_out_card_details
 
           place_order
 
