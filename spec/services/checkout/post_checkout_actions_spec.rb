@@ -24,7 +24,7 @@ describe Checkout::PostCheckoutActions do
     end
 
     describe "setting customer terms_and_conditions_accepted_at" do
-      before { order.customer = build_stubbed(:customer) }
+      before { order.customer = build(:customer) }
 
       it "does not set customer's terms_and_conditions to the current time if terms have not been accepted" do
         postCheckoutActions.success(controller, params, current_user)
