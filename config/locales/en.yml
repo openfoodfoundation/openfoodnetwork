@@ -696,6 +696,7 @@ en:
           invoice_text: Add customized text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
+          uploaded_on: "uploaded on"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum

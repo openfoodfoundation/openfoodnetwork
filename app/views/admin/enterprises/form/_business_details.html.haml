@@ -38,7 +38,9 @@
 
   .omega.eight.columns
     %a{ href: '{{ Enterprise.terms_and_conditions }}', target: '_blank', ng: { if: 'Enterprise.terms_and_conditions' } }
-      = '{{ Enterprise.terms_and_conditions_file_name }}' " uploaded on " '{{ Enterprise.terms_and_conditions_updated_at }}'
+      = '{{ Enterprise.terms_and_conditions_file_name }}'
+      = t('.uploaded_on')
+      = '{{ Enterprise.terms_and_conditions_updated_at }}'
     .pad-top
       = f.file_field :terms_and_conditions, accept: 'application/pdf'
     .pad-top
