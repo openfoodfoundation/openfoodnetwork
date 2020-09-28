@@ -40,7 +40,7 @@
     %a{ href: '{{ Enterprise.terms_and_conditions }}', target: '_blank', ng: { if: 'Enterprise.terms_and_conditions' } }
       = '{{ Enterprise.terms_and_conditions_file_name }}' " uploaded on " '{{ Enterprise.terms_and_conditions_updated_at }}'
     .pad-top
-      = f.file_field :terms_and_conditions
+      = f.file_field :terms_and_conditions, accept: 'application/pdf'
     .pad-top
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')
