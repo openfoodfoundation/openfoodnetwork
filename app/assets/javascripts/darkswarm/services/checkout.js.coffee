@@ -46,7 +46,6 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
       munged_order =
         default_bill_address: !!@default_bill_address
         default_ship_address: !!@default_ship_address
-        terms_and_conditions_accepted: true
 
       for name, value of @order # Clone all data from the order JSON object
         switch name
@@ -96,6 +95,10 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
               last_name: @order.bill_address.lastname
               save_requested_by_customer: @secrets.save_requested_by_customer
           }
+
+      if @terms_and_conditions_accepted()
+        munged_order["terms_and_conditions_accepted"] = true
+
       munged_order
 
     shippingMethod: ->
@@ -115,3 +118,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
 
     cartTotal: ->
       @order.display_total + @shippingPrice() + @paymentPrice()
+
+    terms_and_conditions_accepted: ->
+      terms_and_conditions_checkbox = angular.element("#accept_terms")[0]
+      terms_and_conditions_checkbox? && terms_and_conditions_checkbox.checked
