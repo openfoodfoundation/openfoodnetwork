@@ -37,7 +37,7 @@
     = f.label :terms_and_conditions, t('.terms_and_conditions')
 
   .omega.eight.columns
-    %a{ href: '{{ Enterprise.terms_and_conditions }}', ng: { if: 'Enterprise.terms_and_conditions' } }
+    %a{ href: '{{ Enterprise.terms_and_conditions }}', target: "_blank", ng: { if: 'Enterprise.terms_and_conditions' } }
       = '{{ Enterprise.terms_and_conditions_file_name }}'
     .pad-top
       = f.file_field :terms_and_conditions
