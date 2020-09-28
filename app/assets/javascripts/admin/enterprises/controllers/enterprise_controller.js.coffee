@@ -90,3 +90,7 @@ angular.module("admin.enterprises")
 
     $scope.translation = (key) ->
       t('js.admin.enterprises.form.images.' + key)
+
+    $scope.show_terms_and_conditions_warning = (event) ->
+      unless confirm("All your buyers will have to agree to the Terms and Conditions again at checkout. Are you sure?")
+        event.preventDefault()
