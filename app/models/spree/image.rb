@@ -6,9 +6,10 @@ module Spree
     validate :no_attachment_errors
 
     # This is where the styles are used in the app:
-    # - mini: used in the BackOffice: Bulk Product edit page and Order Cycle edit page
-    # - small: used in the FrontOffice: product list page
-    # - product: used in the BackOffice: Product Image upload modal in the Bulk Product edit page and Product image edit page
+    # - mini: used in the BackOffice: Bulk Product Edit page and Order Cycle edit page
+    # - small: used in the FrontOffice: Product List page
+    # - product: used in the BackOffice: Product Image upload modal in the Bulk Product Edit page
+    #                                      and Product image edit page
     # - large: used in the FrontOffice: product modal
     has_attached_file :attachment,
                       styles: { mini: ["48x48#", :jpg], small: ["227x227#", :jpg],
@@ -48,7 +49,7 @@ module Spree
     end
 
     def self.set_attachment_attributes(attribute_name, attribute_value)
-      self.attachment_definitions[:attachment][attribute_name] = attribute_value
+      attachment_definitions[:attachment][attribute_name] = attribute_value
     end
 
     def self.set_s3_attachment_definitions
@@ -56,13 +57,13 @@ module Spree
         s3_creds = { access_key_id: Spree::Config[:s3_access_key],
                      secret_access_key: Spree::Config[:s3_secret],
                      bucket: Spree::Config[:s3_bucket] }
-        self.attachment_definitions[:attachment][:storage] = :s3
-        self.attachment_definitions[:attachment][:s3_credentials] = s3_creds
-        self.attachment_definitions[:attachment][:s3_headers] =
+        attachment_definitions[:attachment][:storage] = :s3
+        attachment_definitions[:attachment][:s3_credentials] = s3_creds
+        attachment_definitions[:attachment][:s3_headers] =
           ActiveSupport::JSON.decode(Spree::Config[:s3_headers])
-        self.attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
+        attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
       else
-        self.attachment_definitions[:attachment].delete :storage
+        attachment_definitions[:attachment].delete :storage
       end
     end
   end
