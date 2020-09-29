@@ -121,6 +121,7 @@ nb:
       not_array_error: "må være en tabell"
       invalid_element_error: "må kun inneholde gyldige heltall"
   datetime_picker_ui:
+    current_text: Nå
     close_text: Ferdig
     time_text: Tid
   enterprise_mailer:
@@ -600,6 +601,7 @@ nb:
         order_date: "Fullført på"
         max: "Max"
         product_unit: "Produkt: Enhet"
+        weight_volume: "Vekt/Volum (g)"
         ask: "Spør?"
         page_title: "Bulk ordrehåndtering"
         actions_delete: "Slett Valgte"
@@ -636,6 +638,8 @@ nb:
           acn_placeholder: f.eks. 999 000 123
           display_invoice_logo: Vis logo i fakturaer
           invoice_text: Legg til tilpasset tekst på slutten av fakturaer
+          terms_and_conditions: "Vilkår og Betingelser"
+          remove_terms_and_conditions: "Fjern Fil"
         contact:
           name: Navn
           name_placeholder: f.eks. Gustav Plum
@@ -1144,12 +1148,17 @@ nb:
       destroy_attachment_does_not_exist: "Logo eksisterer ikke"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo-bilde eksisterer ikke"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "Vilkår og Betingelser-filen eksisterer ikke"
     orders:
       failed_to_update: "Kunne ikke oppdatere bestillingen"
   checkout:
     already_ordered:
       cart: "handlekurv"
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
+    terms_and_conditions:
+      message_html: "Ved å gjøre denne bestillingen godtar du %{terms_and_conditions_link}."
+      link_text: "Vilkår for bruk"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
     hubs:
@@ -2295,6 +2304,7 @@ nb:
   enterprise_name_error: "har allerede blitt tatt. Hvis dette er din bedrift og du ønsker å kreve eierskap, eller hvis du ønsker å handle med denne bedriften, vennligst kontakt gjeldende administrator av denne profilen på %{email}."
   enterprise_owner_error: "^ %{email} kan ikke eie flere bedrifter (grense er %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Den rollen finnes allerede."
+  enterprise_terms_and_conditions_type_error: "Kun PDF-filer er tillatt"
   inventory_item_visibility_error: må være true eller false
   product_importer_file_error: "feil: ingen fil lastet opp"
   product_importer_spreadsheet_error: "kunne ikke behandle filen: ugyldig filtype"
@@ -2573,6 +2583,8 @@ nb:
             immediate_logo_removal_warning: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
             removed_promo_image_successfully: "Promobilde fjernet vellykket"
             immediate_promo_image_removal_warning: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
+            immediate_terms_and_conditions_removal_warning: "Vilkår og Betingelser-filen vil bli fjernet umiddelbart etter at du har bekreftet."
+            removed_terms_and_conditions_successfully: "Vilkår og Betingleser-filen ble fjernet"
     insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
