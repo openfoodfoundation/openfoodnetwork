@@ -48,7 +48,7 @@ module Spree
     end
 
     def self.set_attachment_attributes(attribute_name, attribute_value)
-      Spree::Image.attachment_definitions[:attachment][attribute_name] = attribute_value
+      self.attachment_definitions[:attachment][attribute_name] = attribute_value
     end
 
     def self.set_s3_attachment_definitions
@@ -56,13 +56,13 @@ module Spree
         s3_creds = { access_key_id: Spree::Config[:s3_access_key],
                      secret_access_key: Spree::Config[:s3_secret],
                      bucket: Spree::Config[:s3_bucket] }
-        Spree::Image.attachment_definitions[:attachment][:storage] = :s3
-        Spree::Image.attachment_definitions[:attachment][:s3_credentials] = s3_creds
-        Spree::Image.attachment_definitions[:attachment][:s3_headers] =
+        self.attachment_definitions[:attachment][:storage] = :s3
+        self.attachment_definitions[:attachment][:s3_credentials] = s3_creds
+        self.attachment_definitions[:attachment][:s3_headers] =
           ActiveSupport::JSON.decode(Spree::Config[:s3_headers])
-        Spree::Image.attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
+        self.attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
       else
-        Spree::Image.attachment_definitions[:attachment].delete :storage
+        self.attachment_definitions[:attachment].delete :storage
       end
     end
   end
