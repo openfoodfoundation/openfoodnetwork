@@ -1,0 +1,14 @@
+%div
+  .margin-bottom-30.text-center
+    .text-big
+      {{ 'js.admin.modals.terms_and_conditions_warning.title' | t }}
+  .margin-bottom-30
+    %p
+      {{ 'js.admin.modals.terms_and_conditions_warning.message_1' | t }}
+  .margin-bottom-30
+    %p
+      {{ 'js.admin.modals.terms_and_conditions_warning.message_2' | t }}
+
+  .text-center
+    %input.button.red{ type: 'button', value: t('js.admin.modals.close'), ng: { click: 'close()' } }
+    %input.button.red{ type: 'button', value: t('js.admin.modals.continue'), ng: { click: 'continue()' } }

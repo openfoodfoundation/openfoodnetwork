@@ -43,7 +43,7 @@
       = t('.uploaded_on')
       = '{{ Enterprise.terms_and_conditions_updated_at }}'
     .pad-top
-      = f.file_field :terms_and_conditions, accept: 'application/pdf', 'ng-click' => 'show_terms_and_conditions_warning($event)'
+      = f.file_field :terms_and_conditions, accept: 'application/pdf', 'terms-and-conditions-warning' => 'true'
     .pad-top
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')
