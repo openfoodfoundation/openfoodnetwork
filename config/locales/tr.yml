@@ -123,7 +123,7 @@ tr:
   datetime_picker_ui:
     current_text: Şimdi
     close_text: Tamam
-    time_text: zaman
+    time_text: Zaman
   enterprise_mailer:
     confirmation_instructions:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
