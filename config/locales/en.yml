@@ -2520,6 +2520,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       modals:
         got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2542,6 +2543,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           title: "Uploading Terms and Conditions"
           message_1: "Terms and Conditions are the contract between you, the seller, and the shopper. If you upload a file here shoppers must accept your Terms and Conditions in order to complete checkout. For the shopper this will appear as a checkbox at checkout that must be checked in order to proceed with checkout. We highly recommend you upload Terms and Conditions in alignment with national legislation."
           message_2: "Shoppers will only be required to accept Terms and Conditions once. However if you change you Terms and Conditions shoppers will again be required to accept them before they can checkout."
+        terms_and_conditions_warning:
+          title: "Uploading Terms and Conditions"
+          message_1: "All your buyers will have to agree to them again at checkout."
+          message_2: "For buyers with subscriptions, you need to email them the changes for now, nothing will notify them about this change."
       panels:
         save: SAVE
         saved: SAVED
