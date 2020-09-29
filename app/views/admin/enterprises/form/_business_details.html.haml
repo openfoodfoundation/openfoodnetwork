@@ -35,6 +35,7 @@
 .row
   .alpha.three.columns
     = f.label :terms_and_conditions, t('.terms_and_conditions')
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/terms_and_conditions_info.html' }
 
   .omega.eight.columns
     %a{ href: '{{ Enterprise.terms_and_conditions }}', target: '_blank', ng: { if: 'Enterprise.terms_and_conditions' } }
