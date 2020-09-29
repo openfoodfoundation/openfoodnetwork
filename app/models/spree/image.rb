@@ -54,17 +54,20 @@ module Spree
 
     def self.set_s3_attachment_definitions
       if Spree::Config[:use_s3]
-        s3_creds = { access_key_id: Spree::Config[:s3_access_key],
-                     secret_access_key: Spree::Config[:s3_secret],
-                     bucket: Spree::Config[:s3_bucket] }
-        attachment_definitions[:attachment][:storage] = :s3
-        attachment_definitions[:attachment][:s3_credentials] = s3_creds
-        attachment_definitions[:attachment][:s3_headers] =
-          ActiveSupport::JSON.decode(Spree::Config[:s3_headers])
-        attachment_definitions[:attachment][:bucket] = Spree::Config[:s3_bucket]
+        set_attachment_attributes(:storage, :s3)
+        set_attachment_attributes(:s3_credentials, s3_credentials)
+        set_attachment_attributes(:s3_headers,
+                                  ActiveSupport::JSON.decode(Spree::Config[:s3_headers]))
+        set_attachment_attributes(:bucket, Spree::Config[:s3_bucket])
       else
         attachment_definitions[:attachment].delete :storage
       end
+    end
+
+    def s3_credentials
+      { access_key_id: Spree::Config[:s3_access_key],
+        secret_access_key: Spree::Config[:s3_secret],
+        bucket: Spree::Config[:s3_bucket] }
     end
   end
 end
