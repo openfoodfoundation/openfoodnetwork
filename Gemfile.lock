@@ -64,6 +64,7 @@ PATH
   remote: engines/dfc_provider
   specs:
     dfc_provider (0.0.1)
+      active_model_serializers (~> 0.8.4)
       jwt (~> 2.2)
       rspec (~> 3.9)
 
