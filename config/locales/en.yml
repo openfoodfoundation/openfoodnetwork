@@ -2533,8 +2533,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           message_2: "Shoppers will only be required to accept Terms and Conditions once. However if you change you Terms and Conditions shoppers will again be required to accept them before they can checkout."
         terms_and_conditions_warning:
           title: "Uploading Terms and Conditions"
-          message_1: "All your buyers will have to agree to them again at checkout."
-          message_2: "For buyers with subscriptions, you need to email them the changes for now, nothing will notify them about this change."
+          message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
+          message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
       panels:
         save: SAVE
         saved: SAVED
