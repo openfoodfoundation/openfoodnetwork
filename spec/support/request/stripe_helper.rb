@@ -34,17 +34,18 @@ module StripeHelper
   end
 
   def stub_successful_capture_request(order:, response: {})
-    stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
-      .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
-            headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(payment_successful_capture_mock(response))
+    stub_capture_request(order, payment_successful_capture_mock(response))
   end
 
   def stub_failed_capture_request(order:, response: {})
+    stub_capture_request(order, payment_failed_capture_mock(response))
+  end
+
+  def stub_capture_request(order, response_mock)
     stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/capture")
       .with(body: { amount_to_capture: Spree::Money.new(order.total).cents },
             headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(payment_failed_capture_mock(response))
+      .to_return(response_mock)
   end
 
   private
