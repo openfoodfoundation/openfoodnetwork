@@ -7,8 +7,9 @@ angular.module("admin.enterprises").directive 'termsAndConditionsWarning', ($com
     scope.hold_file_input_and_show_warning_modal = (event) ->
       event.preventDefault()
       scope.template = $compile($templateCache.get('admin/modals/terms_and_conditions_warning.html'))(scope)
-      scope.template.dialog(DialogDefaults)
-      scope.template.dialog('open')
+      if scope.template.dialog
+        scope.template.dialog(DialogDefaults)
+        scope.template.dialog('open')
       scope.$apply()
 
     element.bind 'click', scope.hold_file_input_and_show_warning_modal
