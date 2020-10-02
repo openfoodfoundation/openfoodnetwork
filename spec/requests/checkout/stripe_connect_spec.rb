@@ -14,7 +14,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       distributors: [enterprise]
     )
   end
-  let!(:payment_method) { create(:stripe_payment_method, distributors: [enterprise]) }
+  let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [enterprise]) }
   let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
   let!(:line_item) { create(:line_item, price: 12.34) }
   let!(:order) { line_item.order }

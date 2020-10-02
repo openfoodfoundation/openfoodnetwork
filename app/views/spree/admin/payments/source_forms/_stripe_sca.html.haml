@@ -1,5 +1,6 @@
 .stripe
-  %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+  = render "shared/stripe_js"
+
   - if Stripe.publishable_key
     :javascript
       angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}"))

@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "Check out with Stripe", js: true do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutHelper
+  include StripeHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
@@ -12,12 +15,14 @@ feature "Check out with Stripe", js: true do
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
 
   let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
+  let(:free_shipping) { create(:shipping_method) }
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
 
   before do
+    setup_stripe
     set_order order
     add_product_to_cart order, product
-    distributor.shipping_methods << shipping_with_fee
+    distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
 
   context 'login in as user' do
@@ -27,9 +32,9 @@ feature "Check out with Stripe", js: true do
       login_as(user)
     end
 
-    context "with Stripe" do
+    context "with Stripe Connect" do
       let!(:stripe_pm) do
-        create(:stripe_payment_method, distributors: [distributor])
+        create(:stripe_connect_payment_method, distributors: [distributor])
       end
 
       let!(:saved_card) do
@@ -54,9 +59,6 @@ feature "Check out with Stripe", js: true do
       end
 
       before do
-        allow(Stripe).to receive(:api_key) { "sk_test_12345" }
-        allow(Stripe).to receive(:publishable_key) { "some_key" }
-        Spree::Config.set(stripe_connect_enabled: true)
         stub_request(:post, "https://api.stripe.com/v1/charges")
           .with(basic_auth: ["sk_test_12345", ""])
           .to_return(status: 200, body: JSON.generate(response_mock))
@@ -76,6 +78,78 @@ feature "Check out with Stripe", js: true do
         # allows checkout
         place_order
         expect(page).to have_content "Your order has been processed successfully"
+      end
+    end
+  end
+
+  describe "using Stripe SCA" do
+    let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
+    let!(:stripe_sca_payment_method) {
+      create(:stripe_sca_payment_method, distributors: [distributor])
+    }
+    let!(:shipping_method) { create(:shipping_method) }
+
+    context "with guest checkout" do
+      context "when the card is accepted" do
+        before do
+          stub_payment_intents_post_request order: order
+          stub_payment_intent_get_request
+          stub_hub_payment_methods_request
+          stub_successful_capture_request order: order
+        end
+
+        it "completes checkout successfully" do
+          visit checkout_path
+
+          checkout_as_guest
+
+          fill_out_form(
+            free_shipping.name,
+            stripe_sca_payment_method.name,
+            save_default_addresses: false
+          )
+
+          fill_out_card_details
+
+          place_order
+
+          expect(page).to have_content "Confirmed"
+
+          expect(order.reload.completed?).to eq true
+          expect(order.payments.first.state).to eq "completed"
+        end
+      end
+
+      context "when the card is rejected" do
+        let(:error_message) { "Card was declined: insufficient funds." }
+
+        before do
+          stub_payment_intents_post_request order: order
+          stub_payment_intent_get_request
+          stub_hub_payment_methods_request
+          stub_failed_capture_request order: order, response: { message: error_message }
+        end
+
+        it "shows an error message from the Stripe response" do
+          visit checkout_path
+
+          checkout_as_guest
+
+          fill_out_form(
+            free_shipping.name,
+            stripe_sca_payment_method.name,
+            save_default_addresses: false
+          )
+
+          fill_out_card_details
+
+          place_order
+
+          expect(page).to have_content error_message
+
+          expect(order.reload.state).to eq "cart"
+          expect(order.payments.first.state).to eq "failed"
+        end
       end
     end
   end

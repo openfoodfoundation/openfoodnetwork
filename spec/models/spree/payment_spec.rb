@@ -847,7 +847,7 @@ describe Spree::Payment do
 
       context "to Stripe payments" do
         let(:shop) { create(:enterprise) }
-        let(:payment_method) { create(:stripe_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
+        let(:payment_method) { create(:stripe_connect_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
         let(:payment) { create(:payment, order: order, payment_method: payment_method, amount: order.total) }
         let(:calculator) { ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
