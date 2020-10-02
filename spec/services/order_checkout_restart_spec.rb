@@ -23,7 +23,7 @@ describe OrderCheckoutRestart do
         order.update_attribute(:state, "payment")
       end
 
-      context "when order ship address is nil" do
+      xcontext "when order ship address is nil" do
         before { order.ship_address = nil }
 
         it "resets the order state, and clears incomplete shipments and payments" do
@@ -33,7 +33,7 @@ describe OrderCheckoutRestart do
         end
       end
 
-      context "when order ship address is not empty" do
+      xcontext "when order ship address is not empty" do
         before { order.ship_address = order.address_from_distributor }
 
         it "resets the order state, and clears incomplete shipments and payments" do
