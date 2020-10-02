@@ -5,7 +5,7 @@ pl:
       enterprise_fee:
         fee_type: Typ opłaty
       spree/order:
-        payment_state: Stus płatności
+        payment_state: Status płatności
         shipment_state: Status dostawy
         completed_at: Zakończono
         number: Numer zamówienia
@@ -815,18 +815,18 @@ pl:
         producer_profile: Profil producenta
         connect_ofn: Połącz się przez OFN
         always_free: ZAWSZE WOLNY
-        producer_description_text: Dodaj swoje produkty do Open Food Network, umożliwiając centrom przechowywanie Twoich produktów w swoich sklepach.
+        producer_description_text: Dodaj swoje produkty do Open Food Network, umożliwiając kooperatywom przechowywanie Twoich produktów w swoich sklepach.
         producer_shop: Sklep producenta
         sell_your_produce: Sprzedawaj własne produkty
         producer_shop_description_text: Sprzedawaj swoje produkty bezpośrednio klientom za pośrednictwem własnej witryny sklepowej Open Food Network.
-        producer_shop_description_text2: Sklep producenta jest przeznaczony tylko dla twoich produktów, jeśli chcesz sprzedawać produkty wyhodowane / wyprodukowane poza miejscem, wybierz „Centrum producentów”.
-        producer_hub: Centrum producentów
+        producer_shop_description_text2: Sklep producenta jest przeznaczony tylko dla twoich produktów, jeśli chcesz sprzedawać produkty wyhodowane / wyprodukowane poza miejscem, wybierz „Kooperatywę producentów”.
+        producer_hub: Kooperatywa producentów
         producer_hub_text: Sprzedawaj produkty od siebie i innych
         producer_hub_description_text: Twoje przedsiębiorstwo jest podstawą lokalnego systemu żywnościowego. Możesz sprzedawać własne produkty, a także produkty zagregowane z innych przedsiębiorstw za pośrednictwem swojej witryny sklepowej w Open Food Network.
         profile: Tylko profil
         get_listing: Uzyskaj listę
         profile_description_text: Ludzie mogą Cię znaleźć i skontaktować się z Open Food Network. Twoje przedsiębiorstwo będzie widoczne na mapie i będzie można je wyszukiwać na listach.
-        hub_shop: Hub Shop
+        hub_shop: Sklep kooperatywy
         hub_shop_text: Sprzedawaj produkty od innych
         hub_shop_description_text: Twoje przedsiębiorstwo jest podstawą lokalnego systemu żywnościowego. Gromadzisz produkty z innych przedsiębiorstw i możesz je sprzedawać za pośrednictwem swojego sklepu w Open Food Network.
         choose_option: Wybierz jedną z powyższych opcji.
@@ -1394,15 +1394,15 @@ pl:
   brandstory_part6: "Wszyscy kochamy jedzenie. Teraz możemy również pokochać nasz system żywieniowy."
   learn_body: "Przeglądaj modele, historie i zasoby, które pomogą Ci rozwinąć Twój biznes lub organizację fair food. Znajdź szkolenia, wydarzenia i inne możliwości uczenia się od rówieśników."
   learn_cta: "Zainspirować się"
-  connect_body: "Przeszukaj nasze pełne katalogi producentów, centrów i grup, aby znaleźć uczciwych sprzedawców żywności w Twojej okolicy. Umieść swoją firmę lub organizację w OFN, aby kupujący mogli Cię znaleźć. Dołącz do społeczności, aby uzyskać porady i wspólnie rozwiązywać problemy."
+  connect_body: "Przeszukaj nasze pełne katalogi producentów, kooperatyw i grup, aby znaleźć uczciwych sprzedawców żywności w Twojej okolicy. Umieść swoją firmę lub organizację w OFN, aby kupujący mogli Cię znaleźć. Dołącz do społeczności, aby uzyskać porady i wspólnie rozwiązywać problemy."
   connect_cta: "Idź eksplorować"
   system_headline: "Zakupy - tak to działa."
   system_step1: "1. Szukaj"
   system_step1_text: "Przeszukuj nasze różnorodne, niezależne sklepy pod kątem sezonowej lokalnej żywności. Szukaj według okolicy i kategorii żywności lub czy wolisz dostawę czy odbiór."
   system_step2: "2. Sklep"
-  system_step2_text: "Przekształć swoje transakcje dzięki przystępnej cenowo lokalnej żywności od różnych producentów i ośrodków. Poznaj historie związane z jedzeniem i ludźmi, którzy je przyrządzają!"
+  system_step2_text: "Przekształć swoje transakcje dzięki przystępnej cenowo lokalnej żywności od różnych producentów i kooperatyw. Poznaj historie związane z jedzeniem i ludźmi, którzy je przyrządzają!"
   system_step3: "3. Odbiór / Dostawa"
-  system_step3_text: "Poczekaj na dostawę lub odwiedź producenta lub centrum, aby uzyskać bardziej osobisty kontakt z jedzeniem. Zakupy żywności tak różnorodne, jak chciała tego natura."
+  system_step3_text: "Poczekaj na dostawę lub odwiedź producenta lub kooperatywę, aby uzyskać bardziej osobisty kontakt z jedzeniem. Zakupy żywności tak różnorodne, jak chciała tego natura."
   cta_headline: "Zakupy, dzięki którym świat staje się lepszym miejscem."
   cta_label: "Jestem gotowy"
   stats_headline: "Tworzymy nowy system żywieniowy."
@@ -1449,7 +1449,7 @@ pl:
   order_total_price: Całkowity
   order_includes_tax: (zawiera podatek)
   order_payment_paypal_successful: Twoja płatność za pośrednictwem PayPal została pomyślnie przetworzona.
-  order_hub_info: Informacje o centrum
+  order_hub_info: Informacje o kooperatywie
   order_back_to_store: Powrót do sklepu
   order_back_to_cart: Powrót do koszyka
   bom_tip: "Użyj tej strony, aby zmienić ilości produktów w wielu zamówieniach. W razie potrzeby produkty mogą być również całkowicie usunięte z zamówień."
@@ -1519,7 +1519,7 @@ pl:
   email_signup_welcome: "Witamy w %{sitename}!"
   email_signup_confirmed_email: "Dziękuję za potwierdzenie adresu e-mail."
   email_signup_shop_html: "Możesz teraz zalogować się pod adresem %{link}."
-  email_signup_text: "Dzięki za przyłączenie się do sieci. Jeśli jesteś klientem, z niecierpliwością czekamy na wprowadzenie Cię do wielu fantastycznych rolników, wspaniałych centrów gastronomicznych i pysznego jedzenia! Jeśli jesteś producentem lub przedsiębiorstwem spożywczym, cieszymy się, że dołączyłeś do sieci."
+  email_signup_text: "Dzięki za przyłączenie się do sieci. Jeśli jesteś klientem, z niecierpliwością czekamy na wprowadzenie Cię do wielu fantastycznych rolników, wspaniałych kooperatyw spożywczych i pysznego jedzenia! Jeśli jesteś producentem lub przedsiębiorstwem spożywczym, cieszymy się, że dołączyłeś do sieci."
   email_signup_help_html: "Czekamy na wszystkie Twoje pytania i opinie; możesz użyć przycisku <em>Prześlij opinię</em> na stronie lub wysłać do nas e-mail na adres %{email}"
   invite_email:
     greeting: "Dzień dobry!"
@@ -1605,12 +1605,12 @@ pl:
   components_filters_clearfilters: "Wyczyść wszystkie filtry"
   groups_title: Grupy
   groups_headline: Grupy / regiony
-  groups_text: "Każdy producent jest wyjątkowy. Każda firma ma coś innego do zaoferowania. Nasze grupy to kolektywy producentów, ośrodków i dystrybutorów, których łączy coś wspólnego, np. Lokalizacja, rynek rolniczy lub filozofia. Ułatwia to zakupy. Poznaj więc nasze grupy i przygotuj kuratorstwo za Ciebie."
+  groups_text: "Każdy producent jest wyjątkowy. Każda firma ma coś innego do zaoferowania. Nasze grupy to kolektywy producentów, kooperatyw i dystrybutorów, których łączy coś wspólnego, np. Lokalizacja, rynek rolniczy lub filozofia. Ułatwia to zakupy, poznaj więc nasze grupy."
   groups_search: "Wyszukaj nazwę lub słowo kluczowe"
   groups_no_groups: "Nie znaleziono żadnych grup"
   groups_about: "O nas"
   groups_producers: "Nasi producenci"
-  groups_hubs: "Nasze centra"
+  groups_hubs: "Nasze kooperatywy"
   groups_contact_web: Kontakt
   groups_contact_social: Podążać
   groups_contact_address: Adres
@@ -1625,7 +1625,7 @@ pl:
   groups_signup_motivation2: Dlatego każdego dnia wstajemy z łóżka. Jesteśmy globalną organizacją non-profit opartą na kodzie open source. Gramy uczciwie. Zawsze możesz nam zaufać.
   groups_signup_motivation3: Wiemy, że masz wielkie pomysły i chcemy pomóc. Będziemy dzielić się naszą wiedzą, sieciami i zasobami. Wiemy, że izolacja nie powoduje zmiany, więc będziemy z Tobą współpracować.
   groups_signup_motivation4: Spotkamy się tam, gdzie jesteś.
-  groups_signup_motivation5: Możesz być sojuszem centrów spożywczych, producentów lub dystrybutorów oraz organizacji branżowej lub samorządu lokalnego.
+  groups_signup_motivation5: Możesz być związkiem kooperatyw spożywczych, producentów lub dystrybutorów oraz organizacji branżowej lub samorządu lokalnego.
   groups_signup_motivation6: Niezależnie od Twojej roli w lokalnym ruchu żywnościowym, jesteśmy gotowi do pomocy. Jakkolwiek zaczynasz się zastanawiać, jak wyglądałaby lub robi Open Food Network w Twojej części świata, zacznijmy rozmowę.
   groups_signup_motivation7: Sprawiamy, że ruchy żywnościowe mają większy sens.
   groups_signup_motivation8: Musisz aktywować i włączyć swoje sieci, oferujemy platformę do rozmowy i działania. Potrzebujesz prawdziwego zaangażowania. Pomożemy dotrzeć do wszystkich graczy, wszystkich interesariuszy, wszystkich sektorów.
@@ -1681,12 +1681,12 @@ pl:
   shops_title: Sklepy
   shops_headline: Zakupy, przemienione.
   shops_text: Żywność rośnie w cyklach, rolnicy zbierają się w cyklach, a my zamawiamy żywność w cyklach. Jeśli zauważysz, że cykl zamówienia jest zamknięty, sprawdź ponownie wkrótce.
-  shops_signup_title: Zarejestruj się jako centrum
-  shops_signup_headline: Centra gastronomiczne, nieograniczone.
+  shops_signup_title: Zarejestruj się jako kooperatywa
+  shops_signup_headline: Kooperatywy bez granic.
   shops_signup_motivation: Niezależnie od Twojego modelu, wspieramy Cię. Jakkolwiek się zmienisz, jesteśmy z tobą. Jesteśmy organizacją non-profit, niezależną i opartą na otwartym źródle. Jesteśmy partnerami oprogramowania, o których marzyłeś.
   shops_signup_action: Dołącz teraz
   shops_signup_pricing: Konta firmowe
-  shops_signup_stories: Historie z naszych centrów.
+  shops_signup_stories: Historie z naszych kooperatyw.
   shops_signup_help: Jesteśmy gotowi do pomocy.
   shops_signup_help_text: Potrzebujesz lepszego zwrotu. Potrzebujesz nowych kupujących i partnerów logistycznych. Potrzebujesz swojej historii opowiedzianej w sprzedaży hurtowej, detalicznej i na stole kuchennym.
   shops_signup_detail: Oto szczegóły.
@@ -1702,9 +1702,9 @@ pl:
   orders_form_admin: Administracja i obsługa
   orders_form_total: Całkowity
   orders_oc_expired_headline: Zamówienia w tym cyklu zamówień zostały zamknięte
-  orders_oc_expired_text: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z centrum, aby sprawdzić, czy może przyjmować spóźnione zamówienia."
-  orders_oc_expired_text_others_html: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z centrum, aby sprawdzić, czy może przyjąć spóźnione zamówienia <strong>%{link}</strong> ."
-  orders_oc_expired_text_link: "lub zobacz inne cykle zamówień dostępne w tym centrum"
+  orders_oc_expired_text: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z kooperatywą, aby sprawdzić, czy może przyjmować spóźnione zamówienia."
+  orders_oc_expired_text_others_html: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z kooperatywą, aby sprawdzić, czy może przyjąć spóźnione zamówienia <strong>%{link}</strong> ."
+  orders_oc_expired_text_link: "lub zobacz inne cykle zamówień dostępne w tej kooperatywie"
   orders_oc_expired_email: "E-mail:"
   orders_oc_expired_phone: "Telefon:"
   orders_show_title: Potwierdzenie zamówienia
@@ -1754,7 +1754,7 @@ pl:
   one_filter_applied: "Zastosowano 1 filtr"
   x_filters_applied: "zastosowane filtry"
   submitting_order: "Składanie zamówienia: proszę czekać"
-  confirm_hub_change: "Jesteś pewny? Spowoduje to zmianę wybranego centrum i usunięcie wszelkich pozycji z koszyka."
+  confirm_hub_change: "Jesteś pewny? Spowoduje to zmianę wybranej kooperatywy i usunięcie wszelkich pozycji z koszyka."
   confirm_oc_change: "Jesteś pewny? Spowoduje to zmianę wybranego cyklu zamówień i usunięcie wszelkich pozycji z koszyka."
   location_placeholder: "Wpisz lokalizację ..."
   error_required: "nie może być puste"
@@ -1792,7 +1792,7 @@ pl:
     steps:
       introduction:
         registration_greeting: "Cześć!"
-        registration_intro: "Możesz teraz utworzyć profil dla swojego producenta lub centrum"
+        registration_intro: "Możesz teraz utworzyć profil dla swojego producenta lub kooperatywy"
         registration_checklist: "Czego potrzebuję?"
         registration_time: "5-10 minut"
         registration_enterprise_address: "Adres przedsiębiorstwa"
@@ -2017,11 +2017,11 @@ pl:
   queued: "W kolejce"
   scheduled_for: "Zaplanowane na"
   customers: "Klienci"
-  please_select_hub: "Wybierz centrum"
+  please_select_hub: "Wybierz kooperatywę"
   loading_customers: "Ładowanie klientów"
   no_customers_found: "Nie znaleziono klientów"
   go: "Iść"
-  hub: "Centrum"
+  hub: "Kooperatywa"
   producer: "Producent"
   product: "Produkt"
   price: "Cena"
@@ -2038,7 +2038,7 @@ pl:
   spree_admin_enterprises_fees: "Opłaty dla przedsiębiorstw"
   spree_admin_enterprises_none_create_a_new_enterprise: "STWÓRZ NOWE PRZEDSIĘBIORSTWO"
   spree_admin_enterprises_none_text: "Nie masz jeszcze żadnych przedsiębiorstw"
-  spree_admin_enterprises_tabs_hubs: "PIASTY"
+  spree_admin_enterprises_tabs_hubs: "Kooperatywy"
   spree_admin_enterprises_producers_manage_products: "ZARZĄDZAJ PRODUKTAMI"
   spree_admin_enterprises_create_new_product: "STWÓRZ NOWY PRODUKT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Potwierdź adres e-mail dla"
@@ -2061,7 +2061,7 @@ pl:
   spree_order_availability_error: "Dystrybutor lub cykl zamówienia nie mogą dostarczyć produktów w Twoim koszyku"
   spree_order_populator_error: "Ten dystrybutor lub cykl zamówienia nie może dostarczyć wszystkich produktów w Twoim koszyku. Proszę wybierz inny."
   spree_order_populator_availability_error: "Ten produkt nie jest dostępny u wybranego dystrybutora lub cyklu zamówień."
-  spree_distributors_error: "Należy wybrać co najmniej jedno centrum"
+  spree_distributors_error: "Należy wybrać co najmniej jedną kooperatywę"
   spree_user_enterprise_limit_error: "^ %{email} nie może posiadać więcej przedsiębiorstw (limit to %{enterprise_limit})."
   spree_variant_product_error: musi mieć co najmniej jeden wariant
   your_profil_live: "Twój profil na żywo"
@@ -2098,10 +2098,10 @@ pl:
   hub_sidebar_hubs: "Kooperatywy"
   hub_sidebar_none_available: "Niedostępne"
   hub_sidebar_manage: "Zarządzaj"
-  hub_sidebar_at_least: "Należy wybrać co najmniej jedno centrum"
+  hub_sidebar_at_least: "Należy wybrać co najmniej jedną kooperatywę"
   hub_sidebar_blue: "niebieski"
   hub_sidebar_red: "czerwony"
-  order_cycles_closed_for_hub: "Wybrane centrum jest tymczasowo zamknięte dla zamówień. Spróbuj ponownie później."
+  order_cycles_closed_for_hub: "Wybrana kooperatywa jest tymczasowo zamknięta dla zamówień. Spróbuj ponownie później."
   report_customers_distributor: "Dystrybutor"
   report_customers_supplier: "Dostawca"
   report_customers_cycle: "Cykl zamówień"
@@ -2109,7 +2109,7 @@ pl:
   report_customers_csv: "Pobierz jako plik csv"
   report_producers: "Producenci:"
   report_type: "Typ raportu:"
-  report_hubs: "Piasty:"
+  report_hubs: "Kooperatywy:"
   report_payment: "Metody Płatności:"
   report_distributor: "Dystrybutor:"
   report_payment_by: 'Płatności według rodzaju'
@@ -2133,10 +2133,10 @@ pl:
   report_header_address: Adres
   report_header_billing_address: Adres rozliczeniowy
   report_header_relationship: Związek
-  report_header_hub: Centrum
-  report_header_hub_address: Adres koncentratora
-  report_header_to_hub: Do Hub
-  report_header_hub_code: Kod koncentratora
+  report_header_hub: Kooperatywa
+  report_header_hub_address: Adres kooperatywy
+  report_header_to_hub: Do kooperatywy
+  report_header_hub_code: Kod kooperatywy
   report_header_code: Kod
   report_header_paid: Płatny?
   report_header_delivery: Dostawa?
@@ -2298,7 +2298,7 @@ pl:
   enterprise_fee_whole_order: Całe zamówienie
   enterprise_fee_by: "%{type} opłata przez %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Ten związek jest już ustanowiony."
-  validation_msg_at_least_one_hub: "^ Należy wybrać co najmniej jeden koncentrator"
+  validation_msg_at_least_one_hub: "^ Należy wybrać co najmniej jedną kooperatywę"
   validation_msg_tax_category_cant_be_blank: "^ Kategoria podatku nie może być pusta"
   validation_msg_is_associated_with_an_exising_customer: "jest powiązany z istniejącym klientem"
   content_configuration_pricing_table: "(TODO: Tabela cen)"
@@ -2314,16 +2314,16 @@ pl:
   product_importer_products_save_error: nie zapisał pomyślnie żadnych produktów
   product_import_file_not_found_notice: 'Nie znaleziono pliku lub nie można go otworzyć'
   product_import_no_data_in_spreadsheet_notice: 'Brak danych w arkuszu kalkulacyjnym'
-  order_choosing_hub_notice: Twoje centrum zostało wybrane.
+  order_choosing_hub_notice: Twoja kooperatywa została wybrana.
   order_cycle_selecting_notice: Twój cykl zamówienia został wybrany.
   adjustments_tax_rate_error: "^ Sprawdź, czy stawka podatku dla tej korekty jest prawidłowa."
   active_distributors_not_ready_for_checkout_message_singular: >-
-      Centrum %{distributor_names} jest wymienione w aktywnym cyklu zamówień, ale
-      nie ma prawidłowych metod wysyłki i płatności. Dopóki ich nie skonfigurujesz,
-      klienci nie będą mogli robić zakupów w tym centrum.
+      Kooperatywa %{distributor_names} jest wymieniona w aktywnym cyklu zamówień,
+      ale nie ma prawidłowych metod wysyłki i płatności. Dopóki ich nie skonfigurujesz,
+      klienci nie będą mogli robić zakupów w tej kooperatywie.
   active_distributors_not_ready_for_checkout_message_plural: >-
-      Koncentratory %{distributor_names} są wymienione w aktywnym cyklu zamówień,
-      ale nie mają prawidłowych metod wysyłki i płatności. Dopóki ich nie skonfigurujesz,
+      Kooperatywy %{distributor_names} są wymienione w aktywnym cyklu zamówień, ale
+      nie mają prawidłowych metod wysyłki i płatności. Dopóki ich nie skonfigurujesz,
       klienci nie będą mogli robić zakupów w tych centrach.
   enterprise_fees_update_notice: Twoje opłaty dla przedsiębiorstw zostały zaktualizowane.
   enterprise_register_package_error: "Wybierz pakiet"
@@ -2361,7 +2361,7 @@ pl:
     error: Błąd
     unavailable: Niedostępne
     profile: Profil
-    hub: Centrum
+    hub: Kooperatywa
     shop: Sklep
     choose: Wybierać
     resolve_errors: Rozwiąż następujące błędy
@@ -2400,7 +2400,7 @@ pl:
         saved: ZAPISANO
         saving: OSZCZĘDNOŚĆ
         enterprise_package:
-          hub_profile: Profil koncentratora
+          hub_profile: Profil kooperatywy
           hub_profile_cost: "KOSZT: ZAWSZE ZA DARMO"
           hub_profile_text1: >
               Ludzie mogą Cię znaleźć i skontaktować się z Open Food Network. Twoje
@@ -2409,14 +2409,15 @@ pl:
           hub_profile_text2: >
               Posiadanie profilu i nawiązywanie połączeń w lokalnym systemie żywnościowym
               za pośrednictwem Open Food Network zawsze będzie bezpłatne.
-          hub_shop: Hub Shop
+          hub_shop: Sklep kooperatywy
           hub_shop_text1: >
               Twoje przedsiębiorstwo jest podstawą lokalnego systemu żywnościowego.
               Gromadzisz produkty z innych przedsiębiorstw i możesz je sprzedawać
               za pośrednictwem swojego sklepu w Open Food Network.
           hub_shop_text2: >
-              Centra mogą przybierać różne formy, niezależnie od tego, czy są to spółdzielnie
-              spożywcze, grupa zakupowa, program warzywny czy lokalny sklep spożywczy.
+              Kooperatywy mogą przybierać różne formy, niezależnie od tego, czy są
+              to spółdzielnie spożywcze, grupa zakupowa, program dostaw warzyw czy
+              lokalny sklep spożywczy.
           hub_shop_text3: >
               Jeśli chcesz sprzedawać również własne produkty, będziesz musiał zmienić
               to przedsiębiorstwo na producenta.
@@ -2436,8 +2437,8 @@ pl:
               Jeśli wolisz skupić się na produkcji żywności i chcesz zostawić sprzedawanie
               jej komuś innemu, nie potrzebujesz sklepu w Open Food Network.
           profile_only_text3: >
-              Dodaj swoje produkty do Open Food Network, umożliwiając centrom przechowywanie
-              Twoich produktów w swoich sklepach.
+              Dodaj swoje produkty do Open Food Network, umożliwiając kooperatywom
+              przechowywanie Twoich produktów w swoich sklepach.
           producer_shop: Sklep producenta
           producer_shop_text1: >
               Sprzedawaj swoje produkty bezpośrednio klientom za pośrednictwem własnej
@@ -2445,8 +2446,8 @@ pl:
           producer_shop_text2: >
               Sklep producenta jest przeznaczony tylko dla twoich produktów, jeśli
               chcesz sprzedawać produkty wyhodowane / wyprodukowane poza miejscem,
-              wybierz „Centrum producentów”.
-          producer_hub: Centrum producentów
+              wybierz „Kooperatywę producentów”.
+          producer_hub: Kooperatywa producentów
           producer_hub_text1: >
               Twoje przedsiębiorstwo jest podstawą lokalnego systemu żywnościowego.
               Możesz sprzedawać własne produkty, a także produkty zagregowane z innych
@@ -2458,7 +2459,7 @@ pl:
               na dachu.
           producer_hub_text3: >
               Open Food Network ma na celu wspieranie jak największej liczby modeli
-              centrów, więc niezależnie od Twojej sytuacji chcemy zapewnić narzędzia
+              kooperatyw, więc niezależnie od Twojej sytuacji chcemy zapewnić narzędzia
               potrzebne do prowadzenia Twojej organizacji lub lokalnej firmy spożywczej.
           get_listing: Uzyskaj listę
           always_free: ZAWSZE WOLNY
@@ -3173,7 +3174,7 @@ pl:
           order_total: "Suma zamówienia"
       overview:
         enterprises_header:
-          ofn_with_tip: Przedsiębiorstwa są producentami i / lub centrami i są podstawową jednostką organizacyjną w ramach Open Food Network.
+          ofn_with_tip: Podmioty są producentami i / lub kooperatywami i są podstawową jednostką organizacyjną w ramach Open Food Network.
         products:
           active_products:
             zero: "Nie masz żadnych aktywnych produktów."

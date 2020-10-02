@@ -2662,7 +2662,8 @@ tr:
       action_login: "Şimdi giriş yapın."
     stripe_elements:
       unknown_error_from_stripe: |
-          Ödeme sağlayıcımızda kart ayarlarınız ile ilgili bir sorun oluştu. Lütfen sayfayı yenileyip tekrar deneyin, eğer sorun devam ediyorsa lütfen destek için bize ulaşın.
+          Ödeme sağlayıcımızda kart ayarlarınız ile ilgili bir sorun oluştu.
+          Lütfen sayfayı yenileyip tekrar deneyin, eğer sorun devam ediyorsa lütfen destek için bize ulaşın.
   inflections:
     each:
       one: "her biri"
@@ -3270,7 +3271,7 @@ tr:
           bulk_coop_packing_sheets: 'Toplu Alım - Paketleme Sayfaları'
           bulk_coop_customer_payments: 'Toplu Alım - Müşteri Ödemeleri'
         customer_names_message:
-          customer_names_tip: "Tedarik ettiğiniz siparişlerde müşteri isimleri gizli ise dağıtıcıya ulaşıp alışveriş tercihlerini tedarikçilerinin müşteri isimlerini görebilmelerini sağlayacak şekilde güncellemelerini isteyebilirsiniz. "
+          customer_names_tip: "Tedarik ettiğiniz siparişlerde müşteri isimleri gizli ise dağıtımcıya ulaşıp alışveriş tercihlerini tedarikçilerinin müşteri isimlerini görebilmelerini sağlayacak şekilde güncellemelerini isteyebilirsiniz. "
       users:
         index:
           listing_users: "Kullanıcılar Listeleniyor"
