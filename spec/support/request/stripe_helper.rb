@@ -55,6 +55,7 @@ module StripeHelper
       body: JSON.generate(id: "pi_123",
                           object: "payment_intent",
                           amount: 2000,
+                          amount_received: 2000,
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
