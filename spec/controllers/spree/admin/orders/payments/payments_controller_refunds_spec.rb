@@ -216,17 +216,12 @@ describe Spree::Admin::PaymentsController, type: :controller do
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
-          # Retrieves payment intent info
-          stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
-            .to_return({ status: 200, body: JSON.generate(
-              amount_received: 2000,
-              charges: { data: [{ id: "ch_1a2b3c" }] }
-            ) })
+          stub_payment_intent_get_request stripe_account_header: false
         end
 
         context "where the request succeeds" do
           before do
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
@@ -246,7 +241,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end

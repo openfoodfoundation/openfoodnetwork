@@ -20,10 +20,10 @@ module StripeHelper
       .to_return(payment_intent_authorize_response_mock(response))
   end
 
-  def stub_payment_intent_get_request(response: {})
-    stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
-      .with(headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(payment_intent_authorize_response_mock(response))
+  def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
+    stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
+    stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
+    stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
   def stub_hub_payment_methods_request(response: {})
