@@ -14,7 +14,8 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def balance
-    OpenFoodNetwork::UserBalanceCalculator.new(object.email, object.enterprise).balance
+    balance = OpenFoodNetwork::UserBalanceCalculator.new(object.email, object.enterprise).balance
+    Spree::Money.new(balance, { currency: Spree::Config[:currency] }).to_s
   end
 
   def tags
