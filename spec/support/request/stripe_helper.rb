@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 module StripeHelper
+  def checkout_with_stripe
+    visit checkout_path
+    checkout_as_guest
+
+    fill_out_form(
+      free_shipping.name,
+      stripe_sca_payment_method.name,
+      save_default_addresses: false
+    )
+    fill_out_card_details
+    place_order
+  end
+
   def fill_out_card_details
     expect(page).to have_css("input[name='cardnumber']")
     fill_in 'Card number', with: '4242424242424242'

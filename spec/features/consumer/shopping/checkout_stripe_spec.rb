@@ -90,25 +90,19 @@ feature "Check out with Stripe", js: true do
     let!(:shipping_method) { create(:shipping_method) }
 
     context "with guest checkout" do
+      before do
+        stub_payment_intent_get_request
+        stub_hub_payment_methods_request
+      end
+
       context "when the card is accepted" do
         before do
           stub_payment_intents_post_request order: order
-          stub_payment_intent_get_request
-          stub_hub_payment_methods_request
           stub_successful_capture_request order: order
         end
 
         it "completes checkout successfully" do
-          visit checkout_path
-          checkout_as_guest
-
-          fill_out_form(
-            free_shipping.name,
-            stripe_sca_payment_method.name,
-            save_default_addresses: false
-          )
-          fill_out_card_details
-          place_order
+          checkout_with_stripe
 
           expect(page).to have_content "Confirmed"
           expect(order.reload.completed?).to eq true
@@ -121,22 +115,11 @@ feature "Check out with Stripe", js: true do
 
         before do
           stub_payment_intents_post_request order: order
-          stub_payment_intent_get_request
-          stub_hub_payment_methods_request
           stub_failed_capture_request order: order, response: { message: error_message }
         end
 
         it "shows an error message from the Stripe response" do
-          visit checkout_path
-          checkout_as_guest
-
-          fill_out_form(
-            free_shipping.name,
-            stripe_sca_payment_method.name,
-            save_default_addresses: false
-          )
-          fill_out_card_details
-          place_order
+          checkout_with_stripe
 
           expect(page).to have_content error_message
           expect(order.reload.state).to eq "cart"
@@ -157,8 +140,6 @@ feature "Check out with Stripe", js: true do
         end
 
         before do
-          stub_payment_intent_get_request
-          stub_hub_payment_methods_request
           stub_request(:post, "https://api.stripe.com/v1/payment_intents")
             .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
             .to_return(payment_intent_authorize_response)
@@ -170,16 +151,7 @@ feature "Check out with Stripe", js: true do
           end
 
           it "completes checkout successfully" do
-            visit checkout_path
-            checkout_as_guest
-
-            fill_out_form(
-              free_shipping.name,
-              stripe_sca_payment_method.name,
-              save_default_addresses: false
-            )
-            fill_out_card_details
-            place_order
+            checkout_with_stripe
 
             # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
             # We can then control the actual authorization or failure of the payment through the mock stub_successful_capture_request
@@ -198,16 +170,7 @@ feature "Check out with Stripe", js: true do
           end
 
           it "completes checkout successfully" do
-            visit checkout_path
-            checkout_as_guest
-
-            fill_out_form(
-              free_shipping.name,
-              stripe_sca_payment_method.name,
-              save_default_addresses: false
-            )
-            fill_out_card_details
-            place_order
+            checkout_with_stripe
 
             # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
             # We can then control the actual authorization or failure of the payment through the mock stub_failed_capture_request
