@@ -3571,6 +3571,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         issue_text: |
           If the above URL does not work try copying and pasting it into your browser.
           If you continue to have problems please feel free to contact us.
+        subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
     shipment_mailer:
