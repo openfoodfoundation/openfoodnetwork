@@ -27,10 +27,11 @@ module StripeHelper
     Spree::Config.set(stripe_connect_enabled: true)
   end
 
-  def stub_payment_intents_post_request(order:, response: {})
-    stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+  def stub_payment_intents_post_request(order:, response: {}, stripe_account_header: true)
+    stub = stub_request(:post, "https://api.stripe.com/v1/payment_intents")
       .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
-      .to_return(payment_intent_authorize_response_mock(response))
+    stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
+    stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
   def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
