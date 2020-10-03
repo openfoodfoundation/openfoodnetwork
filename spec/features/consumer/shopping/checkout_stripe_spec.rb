@@ -169,7 +169,7 @@ feature "Check out with Stripe", js: true do
             stub_failed_capture_request order: order, response: { message: error_message }
           end
 
-          it "completes checkout successfully" do
+          it "shows an error message from the Stripe response" do
             checkout_with_stripe
 
             # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
