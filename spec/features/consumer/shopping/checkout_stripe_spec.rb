@@ -90,31 +90,21 @@ feature "Check out with Stripe", js: true do
     let!(:shipping_method) { create(:shipping_method) }
 
     context "with guest checkout" do
+      before do
+        stub_payment_intent_get_request
+        stub_hub_payment_methods_request
+      end
+
       context "when the card is accepted" do
         before do
           stub_payment_intents_post_request order: order
-          stub_payment_intent_get_request
-          stub_hub_payment_methods_request
           stub_successful_capture_request order: order
         end
 
         it "completes checkout successfully" do
-          visit checkout_path
-
-          checkout_as_guest
-
-          fill_out_form(
-            free_shipping.name,
-            stripe_sca_payment_method.name,
-            save_default_addresses: false
-          )
-
-          fill_out_card_details
-
-          place_order
+          checkout_with_stripe
 
           expect(page).to have_content "Confirmed"
-
           expect(order.reload.completed?).to eq true
           expect(order.payments.first.state).to eq "completed"
         end
@@ -125,30 +115,70 @@ feature "Check out with Stripe", js: true do
 
         before do
           stub_payment_intents_post_request order: order
-          stub_payment_intent_get_request
-          stub_hub_payment_methods_request
           stub_failed_capture_request order: order, response: { message: error_message }
         end
 
         it "shows an error message from the Stripe response" do
-          visit checkout_path
-
-          checkout_as_guest
-
-          fill_out_form(
-            free_shipping.name,
-            stripe_sca_payment_method.name,
-            save_default_addresses: false
-          )
-
-          fill_out_card_details
-
-          place_order
+          checkout_with_stripe
 
           expect(page).to have_content error_message
-
           expect(order.reload.state).to eq "cart"
           expect(order.payments.first.state).to eq "failed"
+        end
+      end
+
+      context "when the card needs extra SCA authorization", js: true do
+        let(:stripe_redirect_url) { checkout_path(payment_intent: "pi_123") }
+        let(:payment_intent_authorize_response) do
+          { status: 200, body: JSON.generate(id: "pi_123",
+                                             object: "payment_intent",
+                                             next_source_action: {
+                                               type: "authorize_with_url",
+                                               authorize_with_url: { url: stripe_redirect_url }
+                                             },
+                                             status: "requires_source_action") }
+        end
+
+        before do
+          stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+            .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+            .to_return(payment_intent_authorize_response)
+        end
+
+        describe "and the authorization succeeds" do
+          before do
+            stub_successful_capture_request order: order
+          end
+
+          it "completes checkout successfully" do
+            checkout_with_stripe
+
+            # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
+            # We can then control the actual authorization or failure of the payment through the mock stub_successful_capture_request
+
+            expect(page).to have_content "Confirmed"
+            expect(order.reload.completed?).to eq true
+            expect(order.payments.first.state).to eq "completed"
+          end
+        end
+
+        describe "and the authorization fails" do
+          let(:error_message) { "Card was declined: insufficient funds." }
+
+          before do
+            stub_failed_capture_request order: order, response: { message: error_message }
+          end
+
+          it "shows an error message from the Stripe response" do
+            checkout_with_stripe
+
+            # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
+            # We can then control the actual authorization or failure of the payment through the mock stub_failed_capture_request
+
+            expect(page).to have_content error_message
+            expect(order.reload.state).to eq "cart"
+            expect(order.payments.first.state).to eq "failed"
+          end
         end
       end
     end

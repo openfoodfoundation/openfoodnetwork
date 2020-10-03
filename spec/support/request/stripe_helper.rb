@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 module StripeHelper
+  def checkout_with_stripe
+    visit checkout_path
+    checkout_as_guest
+
+    fill_out_form(
+      free_shipping.name,
+      stripe_sca_payment_method.name,
+      save_default_addresses: false
+    )
+    fill_out_card_details
+    place_order
+  end
+
   def fill_out_card_details
     expect(page).to have_css("input[name='cardnumber']")
     fill_in 'Card number', with: '4242424242424242'
@@ -20,10 +33,10 @@ module StripeHelper
       .to_return(payment_intent_authorize_response_mock(response))
   end
 
-  def stub_payment_intent_get_request(response: {})
-    stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
-      .with(headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(payment_intent_authorize_response_mock(response))
+  def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
+    stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
+    stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
+    stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
   def stub_hub_payment_methods_request(response: {})
@@ -55,6 +68,7 @@ module StripeHelper
       body: JSON.generate(id: "pi_123",
                           object: "payment_intent",
                           amount: 2000,
+                          amount_received: 2000,
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
