@@ -88,6 +88,7 @@ feature "Check out with Stripe", js: true do
       create(:stripe_sca_payment_method, distributors: [distributor])
     }
     let!(:shipping_method) { create(:shipping_method) }
+    let(:error_message) { "Card was declined: insufficient funds." }
 
     context "with guest checkout" do
       before do
@@ -111,8 +112,6 @@ feature "Check out with Stripe", js: true do
       end
 
       context "when the card is rejected" do
-        let(:error_message) { "Card was declined: insufficient funds." }
-
         before do
           stub_payment_intents_post_request order: order
           stub_failed_capture_request order: order, response: { message: error_message }
@@ -163,8 +162,6 @@ feature "Check out with Stripe", js: true do
         end
 
         describe "and the authorization fails" do
-          let(:error_message) { "Card was declined: insufficient funds." }
-
           before do
             stub_failed_capture_request order: order, response: { message: error_message }
           end
@@ -183,8 +180,6 @@ feature "Check out with Stripe", js: true do
       end
 
       context "with multiple payment attempts; one failed and one succeeded" do
-        let(:error_message) { "Card was declined: insufficient funds." }
-
         before do
           stub_payment_intents_post_request order: order
         end
