@@ -181,6 +181,34 @@ feature "Check out with Stripe", js: true do
           end
         end
       end
+
+      context "with multiple payment attempts; one failed and one succeeded" do
+        let(:error_message) { "Card was declined: insufficient funds." }
+
+        before do
+          stub_payment_intents_post_request order: order
+        end
+
+        it "records failed payment attempt and allows order completion" do
+          # First payment attempt is rejected
+          stub_failed_capture_request(order: order, response: { message: error_message })
+          checkout_with_stripe
+          expect(page).to have_content error_message
+
+          expect(order.reload.payments.count).to eq 1
+          expect(order.state).to eq "cart"
+          expect(order.payments.first.state).to eq "failed"
+
+          # Second payment attempt is accepted
+          stub_successful_capture_request order: order
+          place_order
+          expect(page).to have_content "Confirmed"
+
+          expect(order.reload.payments.count).to eq 2
+          expect(order.state).to eq "complete"
+          expect(order.payments.last.state).to eq "completed"
+        end
+      end
     end
   end
 end
