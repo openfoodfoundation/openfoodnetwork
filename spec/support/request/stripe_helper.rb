@@ -21,6 +21,14 @@ module StripeHelper
     fill_in 'CVC', with: '123'
   end
 
+  def fill_in_stripe_cards_details_in_backoffice
+    choose "StripeSCA"
+    fill_in "cardholder_name", with: "David Gilmour"
+    fill_in "stripe-cardnumber", with: "4242424242424242"
+    fill_in "exp-date", with: "01-01-2050"
+    fill_in "cvc", with: "678"
+  end
+
   def setup_stripe
     allow(Stripe).to receive(:api_key) { "sk_test_12345" }
     allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }
