@@ -46,19 +46,34 @@ feature '
       stub_successful_capture_request order: order
     end
 
-    it "adds a payment with state complete", js: true do
-      login_as_admin_and_visit spree.new_admin_order_payment_path order
+    context "for a complete order" do
+      it "adds a payment with state complete", js: true do
+        login_as_admin_and_visit spree.new_admin_order_payment_path order
 
-      choose "StripeSCA"
-      fill_in "payment_amount", with: order.total.to_s
-      fill_in "cardholder_name", with: "David Gilmour"
-      fill_in "stripe-cardnumber", with: "4242424242424242"
-      fill_in "exp-date", with: "01-01-2050"
-      fill_in "cvc", with: "678"
-      click_button "Update"
+        fill_in "payment_amount", with: order.total.to_s
+        fill_in_stripe_cards_details_in_backoffice
+        click_button "Update"
 
-      expect(page).to have_link "StripeSCA"
-      expect(order.payments.reload.first.state).to eq "completed"
+        expect(page).to have_link "StripeSCA"
+        expect(order.payments.reload.first.state).to eq "completed"
+      end
+    end
+
+    context "for an order in payment state" do
+      let!(:order) { create(:order_with_line_items, distributor: create(:enterprise)) }
+
+      before { while !order.payment? do break unless order.next! end }
+
+      it "adds a payment with state complete", js: true do
+        login_as_admin_and_visit spree.new_admin_order_payment_path order
+
+        fill_in "payment_amount", with: order.total.to_s
+        fill_in_stripe_cards_details_in_backoffice
+        click_button "Update"
+
+        expect(page).to have_link "StripeSCA"
+        expect(order.payments.reload.first.state).to eq "completed"
+      end
     end
   end
 end
