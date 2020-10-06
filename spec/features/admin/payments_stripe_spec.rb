@@ -13,12 +13,11 @@ feature '
   let!(:stripe_payment_method) do
     create(:stripe_sca_payment_method, distributors: [order.distributor])
   end
+  let!(:stripe_account) do
+    create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
+  end
 
   context "making a new Stripe payment", js: true do
-    let!(:stripe_account) do
-      create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
-    end
-
     before do
       stub_payment_methods_post_request
       stub_payment_intent_get_request
@@ -107,6 +106,7 @@ feature '
 
   context "with a payment using a StripeSCA payment method" do
     before do
+      order.update payments: []
       order.payments << create(:payment, payment_method: stripe_payment_method, order: order)
     end
 
@@ -127,6 +127,32 @@ feature '
 
         page.click_link("StripeSCA")
         expect(page).to have_content order.payments.last.amount
+      end
+    end
+
+    context "that is completed", js: true do
+      let(:payment) { OrderPaymentFinder.new(order.reload).last_payment }
+
+      before do
+        stub_payment_intent_get_request stripe_account_header: false
+        stub_successful_capture_request order: order
+
+        payment.update response_code: "pi_123", amount: order.total
+        payment.purchase!
+
+        stub_refund_request
+      end
+
+      it "allows to refund the payment" do
+        login_as_admin_and_visit spree.admin_order_payments_path order
+
+        expect(page).to have_link "StripeSCA"
+        expect(page).to have_content "COMPLETED"
+
+        page.find('a.icon-void').click
+
+        expect(page).to have_content "VOID"
+        expect(payment.reload.state).to eq "void"
       end
     end
   end
