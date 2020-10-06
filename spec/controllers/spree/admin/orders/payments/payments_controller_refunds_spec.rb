@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe Spree::Admin::PaymentsController, type: :controller do
+  include StripeHelper
+
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
   let!(:order) { create(:order, distributor: shop, state: 'complete') }
@@ -21,7 +23,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
-        let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
+        let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
           create(:payment, order: order, state: 'completed', payment_method: payment_method,
                            response_code: 'ch_1a2b3c', amount: order.total)
@@ -80,7 +82,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
-        let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
+        let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
           create(:payment, order: order, state: 'completed', payment_method: payment_method,
                            response_code: 'ch_1a2b3c', amount: order.total + 5)
@@ -152,19 +154,13 @@ describe Spree::Admin::PaymentsController, type: :controller do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
           allow(StripeAccount).to receive(:find_by) { stripe_account }
 
-          # Retrieves payment intent info
-          stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
-            .with(headers: { 'Stripe-Account' => 'abc123' })
-            .to_return({ status: 200, body: JSON.generate(
-              amount_received: 2000,
-              charges: { data: [{ id: "ch_1a2b3c" }] }
-            ) })
+          stub_payment_intent_get_request
         end
 
         context "where the request succeeds" do
           before do
             # Issues the refund
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
@@ -184,7 +180,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
@@ -220,17 +216,12 @@ describe Spree::Admin::PaymentsController, type: :controller do
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
-          # Retrieves payment intent info
-          stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
-            .to_return({ status: 200, body: JSON.generate(
-              amount_received: 2000,
-              charges: { data: [{ id: "ch_1a2b3c" }] }
-            ) })
+          stub_payment_intent_get_request stripe_account_header: false
         end
 
         context "where the request succeeds" do
           before do
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
@@ -250,7 +241,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end

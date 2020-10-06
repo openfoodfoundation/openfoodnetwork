@@ -130,6 +130,15 @@ RSpec.configure do |config|
     ActionController::Base.perform_caching = caching
   end
 
+  # Show javascript errors in test output with `js_debug: true`
+  config.after(:each, :js_debug) do
+    errors = page.driver.browser.manage.logs.get(:browser)
+    if errors.present?
+      message = errors.map(&:message).join("\n")
+      puts message
+    end
+  end
+
   config.before(:all) { restart_driver }
 
   # Geocoding

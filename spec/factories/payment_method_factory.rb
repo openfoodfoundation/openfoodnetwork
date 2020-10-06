@@ -23,8 +23,8 @@ FactoryBot.define do
     environment 'test'
   end
 
-  factory :stripe_payment_method, class: Spree::Gateway::StripeConnect do
-    name 'Stripe'
+  factory :stripe_connect_payment_method, class: Spree::Gateway::StripeConnect do
+    name 'StripeConnect'
     environment 'test'
     distributors { [FactoryBot.create(:enterprise)] }
     preferred_enterprise_id { distributors.first.id }

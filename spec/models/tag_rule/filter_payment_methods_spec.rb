@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TagRule::FilterPaymentMethods, type: :model do
-  let!(:tag_rule) { create(:filter_payment_methods_tag_rule) }
+  let!(:tag_rule) { build_stubbed(:filter_payment_methods_tag_rule) }
 
   describe "determining whether tags match for a given payment method" do
     context "when the payment method is nil" do

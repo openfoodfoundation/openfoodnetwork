@@ -172,7 +172,7 @@ feature 'Subscriptions' do
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
       let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [test_variant, shop_variant], enterprise_fees: [enterprise_fee]) }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-      let!(:payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop]) }
+      let!(:payment_method) { create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop]) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
       before do
@@ -319,7 +319,7 @@ feature 'Subscriptions' do
       let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
       let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
       let!(:payment_method) { create(:payment_method, distributors: [shop]) }
-      let!(:stripe_payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop]) }
+      let!(:stripe_payment_method) { create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop]) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
       let!(:subscription) {
         create(:subscription,
@@ -457,7 +457,7 @@ feature 'Subscriptions' do
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop) }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-      let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
+      let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
       before do

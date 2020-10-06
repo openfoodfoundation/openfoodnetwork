@@ -121,6 +121,7 @@ en_US:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
   datetime_picker_ui:
+    current_text: Now
     close_text: Done
     time_text: Time
   enterprise_mailer:
@@ -1240,7 +1241,7 @@ en_US:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://www.openfoodnetwork.org/about-us/"
+  menu_5_url: "https://about.openfoodnetwork.net"
   menu_6_title: "Connect"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Learn"

@@ -6,12 +6,12 @@ FactoryBot.define do
       promo_image {}
     end
 
-    owner { FactoryBot.create :user }
+    owner factory: :user
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
-    address { FactoryBot.create(:address) }
+    address
 
     after(:create) do |enterprise, proxy|
       proxy.users.each do |user|
