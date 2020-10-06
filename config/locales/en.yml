@@ -394,6 +394,8 @@ en:
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
 
+    available_units: "Available Units"
+
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"

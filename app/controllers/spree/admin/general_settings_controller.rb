@@ -10,6 +10,13 @@ module Spree
       end
 
       def update
+        available_units = []
+        params.each do |name, value|
+          if value == "1" && unit = name.match(/available_units_(.*)/)&.captures&.first
+            available_units << unit
+          end
+        end
+        Spree::Config[:available_units] = available_units.join(",")
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 
