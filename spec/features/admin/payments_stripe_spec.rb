@@ -89,21 +89,9 @@ feature '
       end
 
       context "with a card that fails on registration because it requires(redirects) extra auth" do
-        let(:stripe_redirect_url) { checkout_path(payment_intent: "pi_123") }
-        let(:payment_intent_authorize_response) do
-          { status: 200, body: JSON.generate(id: "pi_123",
-                                             object: "payment_intent",
-                                             next_source_action: {
-                                               type: "authorize_with_url",
-                                               authorize_with_url: { url: stripe_redirect_url }
-                                             },
-                                             status: "requires_source_action") }
-        end
-
         before do
-          stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-            .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
-            .to_return(payment_intent_authorize_response)
+          stub_payment_intents_post_request_with_redirect order: order,
+                                                          redirect_url: "www.dummy.org"
         end
 
         it "fails to add a payment due to card error" do

@@ -42,6 +42,12 @@ module StripeHelper
     stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
+  def stub_payment_intents_post_request_with_redirect(order:, redirect_url:)
+    stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+      .to_return(payment_intent_redirect_response_mock(redirect_url))
+  end
+
   def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
     stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
@@ -81,6 +87,16 @@ module StripeHelper
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+  end
+
+  def payment_intent_redirect_response_mock(redirect_url)
+    { status: 200, body: JSON.generate(id: "pi_123",
+                                       object: "payment_intent",
+                                       next_source_action: {
+                                         type: "authorize_with_url",
+                                         authorize_with_url: { url: redirect_url }
+                                       },
+                                       status: "requires_source_action") }
   end
 
   def payment_successful_capture_mock(options)
