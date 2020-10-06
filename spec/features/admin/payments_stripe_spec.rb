@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -8,7 +10,9 @@ feature '
   include StripeHelper
 
   let!(:order) { create(:completed_order_with_fees) }
-  let!(:stripe_payment_method) { create(:stripe_sca_payment_method, distributors: [order.distributor]) }
+  let!(:stripe_payment_method) do
+    create(:stripe_sca_payment_method, distributors: [order.distributor])
+  end
 
   context "with a payment using a StripeSCA payment method" do
     before do
@@ -24,7 +28,7 @@ feature '
 
     context "with a deleted credit card" do
       before do
-        order.payments.last.update_attribute(:source, nil)
+        order.payments.last.update source: nil
       end
 
       it "renders the payment details" do
@@ -37,7 +41,9 @@ feature '
   end
 
   context "making a new Stripe payment", js: true do
-    let!(:stripe_account) { create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123") }
+    let!(:stripe_account) do
+      create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
+    end
 
     before do
       stub_hub_payment_methods_request
@@ -82,7 +88,7 @@ feature '
         end
       end
 
-      context "with a card that fails on registration (requires extra SCA auth: redirects to stripe" do
+      context "with a card that fails on registration because it requires(redirects) extra auth" do
         let(:stripe_redirect_url) { checkout_path(payment_intent: "pi_123") }
         let(:payment_intent_authorize_response) do
           { status: 200, body: JSON.generate(id: "pi_123",
