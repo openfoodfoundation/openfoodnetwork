@@ -24,7 +24,7 @@ feature '
     end
 
     context "for a complete order" do
-      context "with a card that succceeds on card registration" do
+      context "with a card that succeeds on card registration" do
         before { stub_payment_intents_post_request order: order, stripe_account_header: true }
 
         context "and succeeds on payment capture" do
