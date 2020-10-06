@@ -36,37 +36,71 @@ feature '
     end
   end
 
-  context "making a new Stripe payment" do
+  context "making a new Stripe payment", js: true do
     let!(:stripe_account) { create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123") }
 
     before do
       stub_hub_payment_methods_request
-      stub_payment_intents_post_request order: order, stripe_account_header: true
       stub_payment_intent_get_request
     end
 
     context "for a complete order" do
-      before {  stub_successful_capture_request order: order }
+      context "with a card that succceeds on card registration" do
+        before { stub_payment_intents_post_request order: order, stripe_account_header: true }
 
-      context "with a valid credit card" do
-        it "adds a payment with state complete", js: true do
-          login_as_admin_and_visit spree.new_admin_order_payment_path order
+        context "and succeeds on payment capture" do
+          before { stub_successful_capture_request order: order }
 
-          fill_in "payment_amount", with: order.total.to_s
-          fill_in_stripe_cards_details_in_backoffice
-          click_button "Update"
+          it "adds a payment with state complete" do
+            login_as_admin_and_visit spree.new_admin_order_payment_path order
 
-          expect(page).to have_link "StripeSCA"
-          expect(order.payments.reload.first.state).to eq "completed"
+            fill_in "payment_amount", with: order.total.to_s
+            fill_in_stripe_cards_details_in_backoffice
+            click_button "Update"
+
+            expect(page).to have_link "StripeSCA"
+            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+          end
+        end
+
+        context "but fails on payment capture" do
+          let(:error_message) { "Card was declined: insufficient funds." }
+
+          before { stub_failed_capture_request order: order, response: { message: error_message } }
+
+          it "fails to add a payment due to card error" do
+            login_as_admin_and_visit spree.new_admin_order_payment_path order
+
+            fill_in "payment_amount", with: order.total.to_s
+            fill_in_stripe_cards_details_in_backoffice
+            click_button "Update"
+
+            expect(page).to have_link "StripeSCA"
+            expect(page).to have_content "FAILED"
+            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "failed"
+          end
         end
       end
 
-      context "with a card that fails the paymet capture step" do
-        let(:error_message) { "Card was declined: insufficient funds." }
+      context "with a card that fails on registration (requires extra SCA auth: redirects to stripe" do
+        let(:stripe_redirect_url) { checkout_path(payment_intent: "pi_123") }
+        let(:payment_intent_authorize_response) do
+          { status: 200, body: JSON.generate(id: "pi_123",
+                                             object: "payment_intent",
+                                             next_source_action: {
+                                               type: "authorize_with_url",
+                                               authorize_with_url: { url: stripe_redirect_url }
+                                             },
+                                             status: "requires_source_action") }
+        end
 
-        before { stub_failed_capture_request order: order, response: { message: error_message } }
+        before do
+          stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+            .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+            .to_return(payment_intent_authorize_response)
+        end
 
-        it "fails to add a payment due to card error", js: true do
+        it "fails to add a payment due to card error" do
           login_as_admin_and_visit spree.new_admin_order_payment_path order
 
           fill_in "payment_amount", with: order.total.to_s
@@ -74,8 +108,8 @@ feature '
           click_button "Update"
 
           expect(page).to have_link "StripeSCA"
-          expect(page).to have_content "FAILED"
-          expect(order.payments.reload.second.state).to eq "failed"
+          expect(page).to have_content "PROCESSING"
+          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "processing"
         end
       end
     end
@@ -84,11 +118,13 @@ feature '
       let!(:order) { create(:order_with_line_items, distributor: create(:enterprise)) }
 
       before do
+        stub_payment_intents_post_request order: order, stripe_account_header: true
         stub_successful_capture_request order: order
+
         while !order.payment? do break unless order.next! end
       end
 
-      it "adds a payment with state complete", js: true do
+      it "adds a payment with state complete" do
         login_as_admin_and_visit spree.new_admin_order_payment_path order
 
         fill_in "payment_amount", with: order.total.to_s
@@ -96,7 +132,7 @@ feature '
         click_button "Update"
 
         expect(page).to have_link "StripeSCA"
-        expect(order.payments.reload.first.state).to eq "completed"
+        expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
       end
     end
   end
