@@ -93,7 +93,7 @@ feature "Check out with Stripe", js: true do
     context "with guest checkout" do
       before do
         stub_payment_intent_get_request
-        stub_hub_payment_methods_request
+        stub_payment_methods_post_request
       end
 
       context "when the card is accepted" do
