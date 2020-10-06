@@ -76,6 +76,13 @@ module StripeHelper
       .to_return(response_mock)
   end
 
+  def stub_refund_request
+    stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds")
+      .with(body: { amount: 2000, expand: ["charge"] },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(payment_successful_refund_mock)
+  end
+
   private
 
   def payment_intent_authorize_response_mock(options)
@@ -115,6 +122,13 @@ module StripeHelper
   def hub_payment_method_response_mock(options)
     { status: options[:code] || 200,
       body: JSON.generate(id: "pm_456", customer: "cus_A123") }
+  end
+
+  def payment_successful_refund_mock
+    { status: 200,
+      body: JSON.generate(object: "refund",
+                          amount: 2000,
+                          charge: "ch_1234") }
   end
 end
 
