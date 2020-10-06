@@ -54,7 +54,7 @@ describe Spree::Order do
     end
 
     it "does nothing when the line item is not found" do
-      p = create(:simple_product)
+      p = build_stubbed(:simple_product)
       subject.set_variant_attributes(p.master, { 'max_quantity' => '3' }.with_indifferent_access)
     end
   end
@@ -823,10 +823,14 @@ describe Spree::Order do
   end
 
   describe '#restart_checkout!' do
-    let(:order) { build(:order, line_items: [build(:line_item)]) }
-
     context 'when the order is complete' do
-      before { order.completed_at = Time.zone.now }
+      let(:order) do
+        build_stubbed(
+          :order,
+          completed_at: Time.zone.now,
+          line_items: [build_stubbed(:line_item)]
+        )
+      end
 
       it 'raises' do
         expect { order.restart_checkout! }
@@ -835,7 +839,13 @@ describe Spree::Order do
     end
 
     context 'when the is not complete' do
-      before { order.completed_at = nil }
+      let(:order) do
+        build(
+          :order,
+          completed_at: nil,
+          line_items: [build(:line_item)]
+        )
+      end
 
       it 'transitions to :cart state' do
         order.restart_checkout!
