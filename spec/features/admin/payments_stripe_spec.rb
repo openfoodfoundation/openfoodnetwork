@@ -14,32 +14,6 @@ feature '
     create(:stripe_sca_payment_method, distributors: [order.distributor])
   end
 
-  context "with a payment using a StripeSCA payment method" do
-    before do
-      order.payments << create(:payment, payment_method: stripe_payment_method, order: order)
-    end
-
-    it "renders the payment details" do
-      login_as_admin_and_visit spree.admin_order_payments_path order
-
-      page.click_link("StripeSCA")
-      expect(page).to have_content order.payments.last.source.last_digits
-    end
-
-    context "with a deleted credit card" do
-      before do
-        order.payments.last.update source: nil
-      end
-
-      it "renders the payment details" do
-        login_as_admin_and_visit spree.admin_order_payments_path order
-
-        page.click_link("StripeSCA")
-        expect(page).to have_content order.payments.last.amount
-      end
-    end
-  end
-
   context "making a new Stripe payment", js: true do
     let!(:stripe_account) do
       create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
@@ -127,6 +101,32 @@ feature '
 
         expect(page).to have_link "StripeSCA"
         expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+      end
+    end
+  end
+
+  context "with a payment using a StripeSCA payment method" do
+    before do
+      order.payments << create(:payment, payment_method: stripe_payment_method, order: order)
+    end
+
+    it "renders the payment details" do
+      login_as_admin_and_visit spree.admin_order_payments_path order
+
+      page.click_link("StripeSCA")
+      expect(page).to have_content order.payments.last.source.last_digits
+    end
+
+    context "with a deleted credit card" do
+      before do
+        order.payments.last.update source: nil
+      end
+
+      it "renders the payment details" do
+        login_as_admin_and_visit spree.admin_order_payments_path order
+
+        page.click_link("StripeSCA")
+        expect(page).to have_content order.payments.last.amount
       end
     end
   end
