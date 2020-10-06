@@ -46,7 +46,7 @@ feature '
     end
 
     before do
-      stub_hub_payment_methods_request
+      stub_payment_methods_post_request
       stub_payment_intent_get_request
     end
 
@@ -61,7 +61,7 @@ feature '
             login_as_admin_and_visit spree.new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
-            fill_in_stripe_cards_details_in_backoffice
+            fill_in_card_details_in_backoffice
             click_button "Update"
 
             expect(page).to have_link "StripeSCA"
@@ -78,7 +78,7 @@ feature '
             login_as_admin_and_visit spree.new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
-            fill_in_stripe_cards_details_in_backoffice
+            fill_in_card_details_in_backoffice
             click_button "Update"
 
             expect(page).to have_link "StripeSCA"
@@ -110,7 +110,7 @@ feature '
           login_as_admin_and_visit spree.new_admin_order_payment_path order
 
           fill_in "payment_amount", with: order.total.to_s
-          fill_in_stripe_cards_details_in_backoffice
+          fill_in_card_details_in_backoffice
           click_button "Update"
 
           expect(page).to have_link "StripeSCA"
@@ -134,7 +134,7 @@ feature '
         login_as_admin_and_visit spree.new_admin_order_payment_path order
 
         fill_in "payment_amount", with: order.total.to_s
-        fill_in_stripe_cards_details_in_backoffice
+        fill_in_card_details_in_backoffice
         click_button "Update"
 
         expect(page).to have_link "StripeSCA"

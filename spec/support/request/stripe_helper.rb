@@ -21,7 +21,7 @@ module StripeHelper
     fill_in 'CVC', with: '123'
   end
 
-  def fill_in_stripe_cards_details_in_backoffice
+  def fill_in_card_details_in_backoffice
     choose "StripeSCA"
     fill_in "cardholder_name", with: "David Gilmour"
     fill_in "stripe-cardnumber", with: "4242424242424242"
@@ -48,7 +48,7 @@ module StripeHelper
     stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
-  def stub_hub_payment_methods_request(response: {})
+  def stub_payment_methods_post_request(response: {})
     stub_request(:post, "https://api.stripe.com/v1/payment_methods")
       .with(body: { payment_method: "pm_123" },
             headers: { 'Stripe-Account' => 'abc123' })
