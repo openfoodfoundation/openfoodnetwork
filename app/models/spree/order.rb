@@ -24,7 +24,6 @@ module Spree
         order.payment_required?
       }
       go_to_state :complete
-      remove_transition from: :delivery, to: :confirm
     end
 
     state_machine.after_transition to: :payment, do: :charge_shipping_and_payment_fees!
