@@ -205,7 +205,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.40.0)
+    ddtrace (0.41.0)
       msgpack
     debugger-linecache (1.2.0)
     delayed_job (4.1.8)
