@@ -10,13 +10,7 @@ module Spree
       end
 
       def update
-        available_units = []
-        params.each do |name, value|
-          if value == "1" && unit = name.match(/available_units_(.*)/)&.captures&.first
-            available_units << unit
-          end
-        end
-        Spree::Config[:available_units] = available_units.join(",")
+        combine_available_units_params
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 
@@ -25,6 +19,18 @@ module Spree
         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
 
         redirect_to spree.edit_admin_general_settings_path
+      end
+
+      private
+
+      def combine_available_units_params
+        available_units = []
+        params.each do |name, value|
+          if value == "1" && unit = name.match(/available_units_(.*)/)&.captures&.first
+            available_units << unit
+          end
+        end
+        params[:available_units] = available_units.join(",")
       end
     end
   end
