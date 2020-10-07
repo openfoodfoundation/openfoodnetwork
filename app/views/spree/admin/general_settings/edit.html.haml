@@ -90,7 +90,6 @@
           %fieldset.available_units.no-border-bottom
             %legend{:align => "center"}= t('admin.available_units')
             .field
-              - all_units = ["g", "oz", "lb", "kg", "T", "mL", "L", "kL"]
               - selected_units = Spree::Config[:available_units].split(",")
               - all_units.each do |unit|
                 - selected = selected_units.include?(unit)
