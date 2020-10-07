@@ -3,6 +3,9 @@ describe "VariantUnitManager", ->
 
   beforeEach ->
     module "admin.products"
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
 
   beforeEach inject (_VariantUnitManager_) ->
     VariantUnitManager = _VariantUnitManager_
