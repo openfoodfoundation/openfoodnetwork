@@ -412,7 +412,7 @@ GEM
     get_process_mem (0.2.5)
       ffi (~> 1.0)
     gmaps4rails (2.1.2)
-    haml (5.1.2)
+    haml (5.2.0)
       temple (>= 0.8.0)
       tilt
     hashdiff (1.0.1)
