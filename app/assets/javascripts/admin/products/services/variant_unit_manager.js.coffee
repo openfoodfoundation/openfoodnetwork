@@ -37,7 +37,6 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
             ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
           else
             null
-      debugger
       options.push [[I18n.t('items'), 'items']]
       options = [].concat options...
       (option for option in options when option != null)
