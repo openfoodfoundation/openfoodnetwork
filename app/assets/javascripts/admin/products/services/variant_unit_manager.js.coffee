@@ -1,4 +1,4 @@
-angular.module("admin.products").factory "VariantUnitManager", ->
+angular.module("admin.products").factory "VariantUnitManager", (availableUnits) ->
   class VariantUnitManager
     @units:
       'weight':
@@ -29,12 +29,18 @@ angular.module("admin.products").factory "VariantUnitManager", ->
           system: 'metric'
 
     @variantUnitOptions: ->
+      availableUnits = availableUnits.split(",")
       options = for unit_type, _ of @units
         for scale in @unitScales(unit_type)
           name = @getUnitName(scale, unit_type)
-          ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
+          if availableUnits.includes(name)
+            ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
+          else
+            null
+      debugger
       options.push [[I18n.t('items'), 'items']]
-      [].concat options...
+      options = [].concat options...
+      (option for option in options when option != null)
 
     @getScale: (value, unitType) ->
       scaledValue = null
