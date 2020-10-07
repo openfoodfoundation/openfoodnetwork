@@ -194,8 +194,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       it "returns search results for products where the search term matches one of the product's variant names" do
-        pending "has been broken for a while"
-
         visit shop_path
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
