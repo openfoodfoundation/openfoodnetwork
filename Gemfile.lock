@@ -445,7 +445,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.11.3)
-    knapsack (1.18.0)
+    knapsack (1.19.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
