@@ -1,9 +1,13 @@
 #!/bin/bash
 
-# This script destroys all Docker containers and images.
+# This script destroys all Docker containers, images, and networks.
 # SOURCE: https://gist.github.com/JeffBelback/5687bb02f3618965ca8f
 
 docker/nukec
+
+echo '-----------------------'
+echo 'docker network prune -f'
+docker network prune -f
 
 echo '--------------------------------------'
 echo 'Killing and removing all Docker images'
