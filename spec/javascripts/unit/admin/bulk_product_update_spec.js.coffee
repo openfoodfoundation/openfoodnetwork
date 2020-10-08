@@ -257,6 +257,10 @@ describe "AdminProductEditCtrl", ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'columns', []
       null
+    module "admin.products"
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
 
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_, _ProductFiltersUrl_) ->
     $scope = $rootScope.$new()

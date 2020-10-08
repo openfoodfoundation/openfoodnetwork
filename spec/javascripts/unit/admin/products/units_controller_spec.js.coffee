@@ -5,9 +5,13 @@ describe "unitsCtrl", ->
 
   beforeEach ->
     module('admin.products')
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
     inject ($rootScope, $controller, VariantUnitManager) ->
       scope = $rootScope
       ctrl = $controller 'unitsCtrl', {$scope: scope, VariantUnitManager: VariantUnitManager}
+
 
   describe "interpretting variant_unit_with_scale", ->
     it "splits string with one underscore and stores the two parts", ->
