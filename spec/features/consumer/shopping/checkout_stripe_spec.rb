@@ -90,12 +90,12 @@ feature "Check out with Stripe", js: true do
     let!(:shipping_method) { create(:shipping_method) }
     let(:error_message) { "Card was declined: insufficient funds." }
 
-    context "with guest checkout" do
-      before do
-        stub_payment_intent_get_request
-        stub_payment_methods_post_request
-      end
+    before do
+      stub_payment_intent_get_request
+      stub_payment_methods_post_request
+    end
 
+    context "with guest checkout" do
       context "when the card is accepted" do
         before do
           stub_payment_intents_post_request order: order
@@ -126,7 +126,7 @@ feature "Check out with Stripe", js: true do
         end
       end
 
-      context "when the card needs extra SCA authorization", js: true do
+      context "when the card needs extra SCA authorization" do
         before do
           stripe_redirect_url = checkout_path(payment_intent: "pi_123")
           stub_payment_intents_post_request_with_redirect order: order,
@@ -191,6 +191,59 @@ feature "Check out with Stripe", js: true do
           expect(order.reload.payments.count).to eq 2
           expect(order.state).to eq "complete"
           expect(order.payments.last.state).to eq "completed"
+        end
+      end
+    end
+
+    context "with a logged in user" do
+      let(:user) { order.user }
+
+      before do
+        login_as user
+      end
+
+      context "saving a card and re-using it" do
+        let(:customers_response_mock) do
+          { status: 200,
+            body: JSON.generate(id: "cus_A123",
+                                sources: { data: [id: "cus_A123"] }) }
+        end
+
+        let(:hubs_payment_method_response_mock) do
+          {
+            status: 200,
+            body: JSON.generate(id: "pm_123", customer: "cus_A123")
+          }
+        end
+
+        before do
+          stub_payment_methods_post_request_with_customer response: { pm_id: "pm_123" }
+          stub_payment_intents_post_request order: order
+          stub_successful_capture_request order: order
+
+          # Creates a customer
+          #   This stubs the customers call to both the main stripe account and the connected account
+          stub_request(:post, "https://api.stripe.com/v1/customers")
+            .with(body: { email: user.email })
+            .to_return(customers_response_mock)
+
+          # Attaches the payment method to the customer in the hub's stripe account
+          stub_request(:post,
+                       "https://api.stripe.com/v1/payment_methods/pm_123/attach")
+            .with(body: { customer: "cus_A123" })
+            .to_return(hubs_payment_method_response_mock)
+        end
+
+        it "allows saving a card and re-using it" do
+          checkout_with_stripe guest_checkout: false, remember_card: true
+
+          expect(page).to have_content "Confirmed"
+          expect(order.reload.completed?).to eq true
+          expect(order.payments.first.state).to eq "completed"
+
+          user_credit_card = order.reload.user.credit_cards.first
+          expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
+          expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
         end
       end
     end

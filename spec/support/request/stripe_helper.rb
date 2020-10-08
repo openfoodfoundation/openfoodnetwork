@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module StripeHelper
-  def checkout_with_stripe
+  def checkout_with_stripe(guest_checkout: true, remember_card: false)
     visit checkout_path
-    checkout_as_guest
-
+    checkout_as_guest if guest_checkout
     fill_out_form(
       free_shipping.name,
       stripe_sca_payment_method.name,
       save_default_addresses: false
     )
     fill_out_card_details
+    check "Remember this card?" if remember_card
     place_order
   end
 
@@ -57,6 +57,13 @@ module StripeHelper
   def stub_payment_methods_post_request(response: {})
     stub_request(:post, "https://api.stripe.com/v1/payment_methods")
       .with(body: { payment_method: "pm_123" },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(hub_payment_method_response_mock(response))
+  end
+
+  def stub_payment_methods_post_request_with_customer(response: {})
+    stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+      .with(body: { payment_method: "pm_123", customer: "cus_A123" },
             headers: { 'Stripe-Account' => 'abc123' })
       .to_return(hub_payment_method_response_mock(response))
   end
@@ -121,7 +128,7 @@ module StripeHelper
 
   def hub_payment_method_response_mock(options)
     { status: options[:code] || 200,
-      body: JSON.generate(id: "pm_456", customer: "cus_A123") }
+      body: JSON.generate(id: options[:pm_id] || "pm_456", customer: "cus_A123") }
   end
 
   def payment_successful_refund_mock
