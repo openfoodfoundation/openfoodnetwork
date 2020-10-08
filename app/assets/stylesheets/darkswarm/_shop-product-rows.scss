@@ -161,6 +161,12 @@
                   border-color: #ccc;
                 }
               }
+
+              // Foundation doesn't show the nub on mobile.
+              // Repeating the style to show it here.
+              .nub {
+                border-color: transparent transparent #333333 transparent;
+              }
             }
           }
         }
