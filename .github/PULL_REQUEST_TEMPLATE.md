@@ -13,8 +13,8 @@ Provide context for others to understand it. -->
 
 
 #### Release notes
-<!-- Write a line or two to be included in the release notes.
-Everything is worth mentioning, because you did it for a reason. -->
+<!-- Write a one liner description of the change to be included in the release notes.
+Every PR is worth mentioning, because you did it for a reason. -->
 
 
 
