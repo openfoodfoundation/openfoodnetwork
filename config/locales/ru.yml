@@ -19,8 +19,8 @@ ru:
         primary_taxon: "Категория Продукта"
         supplier: "Поставщик"
         shipping_category_id: "Категория Доставки"
-        variant_unit: "Variant Unit"
-        variant_unit_name: "Variant Unit Name"
+        variant_unit: "Единица Варианта"
+        variant_unit_name: "Название Единицы Варианта"
       spree/credit_card:
         base: "Кредитная Карта"
       order_cycle:
@@ -205,7 +205,7 @@ ru:
   cancel_order: "Отменить Заказ"
   confirm_send_invoice: "Счет на этот заказ будет отправлен клиенту. Вы уверены что хотите продолжить?"
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
-  must_have_valid_business_number: " %{enterprise_name} должен быть указан Tax ID or W9 перед отправкой счетов."
+  must_have_valid_business_number: " %{enterprise_name} должен быть указан ИНН перед отправкой счетов."
   invoice: "Счёт"
   more: "Ещё"
   say_no: "Нет"
@@ -364,11 +364,11 @@ ru:
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
-        settings: "Settings"
+        settings: "Настройки"
         stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
         no_api_key_msg: No Stripe account exists for this enterprise.
         configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
-        status: Status
+        status: Статус
         ok: Ok
         instance_secret_key: Instance Secret Key
         account_id: Account ID
@@ -383,8 +383,8 @@ ru:
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
         matomo_tag_manager_url: "URL Диспетчера Тегов Matomo"
-        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo locally or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
-        config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user trackingwill be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        info_html: "Matomo - это приложение для Веб и Мобильной аналитики. Вы можете разместить Matomo локально или использовать облачную службу. См. <a href='http://matomo.org' target='_blank'>Matomo.org</a> для получения дополнительной информации."
+        config_instructions_html: "Здесь вы можете настроить интеграцию ОСП Matomo. Приведенный ниже URL-адрес Matomo должен указывать на экземпляр Matomo, на который будет отправляться отслеживающая информация пользователя; если оставить его пустым, отслеживание пользователей Matomo будет отключено. Поле Site ID не является обязательным, но полезно, если вы отслеживаете более одного веб-сайта на одном экземпляре Matomo; его можно найти на консоли экземпляра Matomo."
         config_instructions_tag_manager_html: "Установка URL-адреса Диспетчера Тегов Matomo включает Диспетчер Тегов Matomo. Этот инструмент позволяет настраивать события аналитики. URL-адрес Диспетчера Тегов Matomo скопирован из раздела &quot;Код установки&quot; Диспетчера Тегов Matomo. Убедитесь, что вы выбрали правильный контейнер и среду, поскольку эти параметры изменяют URL-адрес."
     customers:
       index:
@@ -602,7 +602,7 @@ ru:
         order_date: "Завершен в"
         max: "Максимум"
         product_unit: "Товар: Единица измерения"
-        weight_volume: "Вес/Объем"
+        weight_volume: "Вес/Объем (г)"
         ask: "Спросить?"
         page_title: "Пакетное Управление Заказами"
         actions_delete: "Удалить Выбранное"
@@ -815,7 +815,7 @@ ru:
         producer: Производитель
       change_type_form:
         producer_profile: Профиль Производителя
-        connect_ofn: Connect through OFN
+        connect_ofn: Подключиться через ОСП
         always_free: ВСЕГДА БЕСПЛАТНО
         producer_description_text: Добавляйте свои продукты в Открытую Сеть Продуктов, позволяя продуктовым центрам размещать их в своих магазинах.
         producer_shop: Магазин Производителя
@@ -996,17 +996,17 @@ ru:
       email_confirmation: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
       not_visible: "%{enterprise} не виден и поэтому не может быть найден на карте или в поисках"
     reports:
-      hidden: HIDDEN
-      unitsize: UNITSIZE
-      total: TOTAL
-      total_items: TOTAL ITEMS
-      supplier_totals: Order Cycle Supplier Totals
-      supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
-      totals_by_supplier: Order Cycle Distributor Totals by Supplier
+      hidden: СКРЫТО
+      unitsize: РАЗМЕР ЕДИНИЦЫ
+      total: ВСЕГО
+      total_items: ИТОГО
+      supplier_totals: Итоговые данные Поставщика Цикла Заказа
+      supplier_totals_by_distributor: Итоговые данные Поставщика Цикла Заказа по Дистрибьюторам
+      totals_by_supplier: Итоговые данные Дистрибьютора за Цикл Заказов по Поставщикам
       customer_totals: Итоги по Клиентам Цикла Заказа
       all_products: Все товары
       inventory: Товарная Номенклатура (в наличии)
-      lettuce_share: LettuceShare
+      lettuce_share: Доля Салата
       mailing_list: Список Рассылки
       addresses: Адреса
       payment_methods: Отчет О Способах Оплаты
@@ -1019,7 +1019,7 @@ ru:
         name: Заказы и Дистрибьюторы
         description: Заказы с информацией о дистрибьюторе
       bulk_coop:
-        name: Bulk Co-Op
+        name: Массовая Кооперация
         description: Отчеты по оптовым заказам кооперативов
       payments:
         name: Отчеты об Оплате
@@ -1097,11 +1097,11 @@ ru:
         invalid_error: Ой! Пожалуйста, заполните все обязательные поля...
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Кредитная Карта
-        charges_not_allowed: Charges are not allowed by this customer
-        no_default_card: Customer has no cards available to charge
-        card_ok: Customer has a card available to charge
-        begins_at_placeholder: "Select a Date"
-        ends_at_placeholder: "Optional"
+        charges_not_allowed: Этот клиент не разрешает взимать плату
+        no_default_card: У клиента нет доступных карт для оплаты
+        card_ok: У клиента есть карта для оплаты
+        begins_at_placeholder: "Выберите Дату"
+        ends_at_placeholder: "Необязательный"
       loading_flash:
         loading: ЗАГРУЗКА ПОДПИСОК
       review:
@@ -1148,21 +1148,21 @@ ru:
         resource: Stripe Connect configuration
   api:
     enterprise_logo:
-      destroy_attachment_does_not_exist: "Logo does not exist"
+      destroy_attachment_does_not_exist: "Логотип не существует"
     enterprise_promo_image:
-      destroy_attachment_does_not_exist: "Promo image does not exist"
+      destroy_attachment_does_not_exist: "Промо-изображение не существует"
     enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "Файл Условий и Положений не существует"
     orders:
-      failed_to_update: "Failed to update order"
+      failed_to_update: "Не удалось обновить заказ"
   checkout:
     already_ordered:
       cart: "корзина"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     terms_and_conditions:
       message_html: "Размещая этот заказ, вы соглашаетесь с %{terms_and_conditions_link}."
       link_text: "Условия Сервиса"
-    failed: "The checkout failed. Please let us know so that we can process your order."
+    failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
   shops:
     hubs:
       show_closed_shops: "Показать закрытые магазины"
@@ -1253,7 +1253,7 @@ ru:
   menu_4_url: "/groups"
   menu_5_title: "О нас"
   menu_5_url: "https://about.openfoodnetwork.ru/"
-  menu_6_title: "Connect"
+  menu_6_title: "Подключить"
   menu_6_url: "https://about.openfoodnetwork.ru/resources/"
   menu_7_title: "Узнать"
   menu_7_url: "https://about.openfoodnetwork.ru/resources/"
@@ -1307,7 +1307,7 @@ ru:
   label_producers: "Производители"
   label_groups: "Группы"
   label_about: "О нас"
-  label_connect: "Connect"
+  label_connect: "Подключить"
   label_learn: "Узнать"
   label_blog: "Блог"
   label_support: "Поддержка"
@@ -1316,7 +1316,7 @@ ru:
   label_logout: "Выйти"
   label_signup: "Зарегистрироваться"
   label_administration: "Управление"
-  label_admin: "Admin"
+  label_admin: "Админ"
   label_account: "Профиль"
   label_more: "Показать больше"
   label_less: "Показать меньше"
@@ -1398,7 +1398,7 @@ ru:
   brandstory_part6: "Все мы любим еду. Теперь мы можем так же любить нашу продуктовую систему."
   learn_body: "Изучите модели, истории и ресурсы, которые помогут вам развить свой бизнес или организацию по продаже продуктов питания. Найдите обучение, события и другие возможности учиться у соседей."
   learn_cta: "Вдохновитесь"
-  connect_body: "Ищите наши каталоги производителей, центров и групп, чтобы найти честных продавцов продуктами питания рядом с Вами. Зарегистрируйте свой бизнес или организацию в OFN, чтобы покупатели могли найти Вас. Присоединяйтесь к сообществу, чтобы получать советы и решать проблемы вместе."
+  connect_body: "Ищите наши каталоги производителей, центров и групп, чтобы найти честных продавцов продуктами питания рядом с Вами. Зарегистрируйте свой бизнес или организацию в ОСП, чтобы покупатели могли найти Вас. Присоединяйтесь к сообществу, чтобы получать советы и решать проблемы вместе."
   connect_cta: "Исследовать"
   system_headline: "Покупки - как это работает."
   system_step1: "1. Поиск"
@@ -1460,8 +1460,8 @@ ru:
   unsaved_changes_warning: "Есть несохраненные изменения, которые будут потеряны, если вы продолжите."
   unsaved_changes_error: "Поля с красными границами содержат ошибки."
   products: "Товары"
-  products_in: "in %{oc}"
-  products_at: "at %{distributor}"
+  products_in: "в %{oc}"
+  products_at: "у %{distributor}"
   products_elsewhere: "Товары, найденные в других местах"
   email_confirmed: "Спасибо за подтверждение Вашего email адреса."
   email_confirmation_activate_account: "Перед тем как сможем активировать Ваш профиль, мы должны подтвердить Ваш email адрес."
@@ -1596,7 +1596,7 @@ ru:
   products_edit_cart: "Изменить Вашу корзину"
   products_from: от
   products_change: "Нет изменений для сохранения."
-  products_update_error: "Ошибка сохранения со следующей ошибкой:"
+  products_update_error: "Ошибка сохранения со следующей ошибкой(ми):"
   products_update_error_msg: "Сохранение не удалось."
   products_update_error_data: "Ошибка сохранения из-за неверных данных:"
   products_changes_saved: "Изменения сохранены."
@@ -1703,7 +1703,7 @@ ru:
   orders_edit_checkout: Оформить
   orders_form_empty_cart: "Очистить корзину"
   orders_form_subtotal: Итого
-  orders_form_admin: Администрирование & Управление
+  orders_form_admin: Администрирование и Управление
   orders_form_total: Всего
   orders_oc_expired_headline: Оформление Заказов для этого Цикла Заказа закрыто
   orders_oc_expired_text: "Извините, оформление заказов для этого цикла заказов закрыты %{time} назад! Пожалуйста, свяжитесь с вашим центром напрямую, чтобы узнать, могут ли они принимать поздние заказы."
@@ -2139,19 +2139,19 @@ ru:
   report_header_relationship: Relationship
   report_header_hub: Центр
   report_header_hub_address: Адрес Центра
-  report_header_to_hub: To Hub
-  report_header_hub_code: Hub Code
-  report_header_code: Code
-  report_header_paid: Paid?
-  report_header_delivery: Delivery?
+  report_header_to_hub: В Центр
+  report_header_hub_code: Код Центра
+  report_header_code: Код
+  report_header_paid: Оплачен?
+  report_header_delivery: Доставка?
   report_header_shipping: Доставка
   report_header_shipping_method: Способ Доставки
   report_header_shipping_instructions: Инструкции по Доставке
-  report_header_ship_street: Ship Street
-  report_header_ship_street_2: Ship Street 2
-  report_header_ship_city: Ship City
-  report_header_ship_postcode: Ship Zip Code
-  report_header_ship_state: Ship State
+  report_header_ship_street: Улица Доставки
+  report_header_ship_street_2: Улица Доставки 2
+  report_header_ship_city: Город Доставки
+  report_header_ship_postcode: Индекс Доставки
+  report_header_ship_state: Область Доставки
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
@@ -2159,20 +2159,20 @@ ru:
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Zip code
   report_header_billing_state: Billing State
-  report_header_incoming_transport: Incoming Transport
-  report_header_special_instructions: Special Instructions
+  report_header_incoming_transport: Входящий Транспорт
+  report_header_special_instructions: Специальные Инструкции
   report_header_order_number: Номер заказа
   report_header_date: Дата
-  report_header_confirmation_date: Confirmation Date
+  report_header_confirmation_date: Дата Подтверждения
   report_header_tags: Метки
-  report_header_items: Items
-  report_header_items_total: "Items total %{currency_symbol}"
-  report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
-  report_header_sales_tax: "Sales Tax (%{currency_symbol})"
-  report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
-  report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
-  report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
-  report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_items: Товары
+  report_header_items_total: "Всего товаров %{currency_symbol}"
+  report_header_taxable_items_total: "Итого по статьям налогообложения (%{currency_symbol})"
+  report_header_sales_tax: "Налог с продаж (%{currency_symbol})"
+  report_header_delivery_charge: "Стоимость доставки (%{currency_symbol})"
+  report_header_tax_on_delivery: "Налог на доставку (%{currency_symbol})"
+  report_header_tax_on_fees: "Налог на сборы (%{currency_symbol})"
+  report_header_total_tax: "Общий налог (%{currency_symbol})"
   report_header_enterprise: Предприятие
   report_header_customer: Клиент
   report_header_customer_code: Код Клиента
@@ -2181,87 +2181,87 @@ ru:
   report_header_quantity: Количество
   report_header_max_quantity: Max Количество
   report_header_variant: Вариант
-  report_header_variant_value: Variant Value
-  report_header_variant_unit: Variant Unit
+  report_header_variant_value: Значение Варианта
+  report_header_variant_unit: Единица Варианта
   report_header_total_available: Всего доступно
   report_header_unallocated: Нераспределенный
-  report_header_max_quantity_excess: Max Количество Excess
-  report_header_taxons: Taxons
+  report_header_max_quantity_excess: Максимальное превышение количества
+  report_header_taxons: Таксоны
   report_header_supplier: Поставщик
   report_header_producer: Производитель
   report_header_producer_suburb: Город Производителя
-  report_header_unit: Unit
+  report_header_unit: Единица измерения
   report_header_group_buy_unit_quantity: Group Buy Unit Количество
-  report_header_cost: Cost
-  report_header_shipping_cost: Shipping Cost
-  report_header_curr_cost_per_unit: Curr. Cost per Unit
-  report_header_total_shipping_cost: Total Shipping Cost
-  report_header_payment_method: Payment Method
-  report_header_sells: Sells
-  report_header_visible: Visible
+  report_header_cost: Стоимость
+  report_header_shipping_cost: Стоимость доставки
+  report_header_curr_cost_per_unit: Текущ. Стоимость за единицу
+  report_header_total_shipping_cost: Общая стоимость доставки
+  report_header_payment_method: Способ оплаты
+  report_header_sells: Продает
+  report_header_visible: Видимый
   report_header_price: Цена
-  report_header_unit_size: Unit Size
+  report_header_unit_size: Размер единицы
   report_header_distributor: Дистрибьютор
   report_header_distributor_address: Адрес Дистрибьютора
   report_header_distributor_city: Город Дистрибьютора
   report_header_distributor_postcode: Почтовый индекс Дистрибьютора
   report_header_delivery_address: Адрес Доставки
   report_header_delivery_postcode: Почтовый индекс Доставки
-  report_header_bulk_unit_size: Bulk Unit Size
-  report_header_weight: Weight
-  report_header_sum_total: Sum Total
-  report_header_date_of_order: Date of Order
-  report_header_amount_owing: Amount Owing
-  report_header_amount_paid: Amount Paid
-  report_header_units_required: Units Required
-  report_header_remainder: Remainder
-  report_header_order_date: Order date
-  report_header_order_id: Order Id
-  report_header_item_name: Item name
-  report_header_temp_controlled_items: Temp Controlled Items?
-  report_header_customer_name: Customer Name
-  report_header_customer_email: Customer Email
-  report_header_customer_phone: Customer Phone
-  report_header_customer_city: Customer City
+  report_header_bulk_unit_size: Размер оптовой единицы
+  report_header_weight: Вес
+  report_header_sum_total: Итого
+  report_header_date_of_order: Дата Заказа
+  report_header_amount_owing: Сумма Задолженности
+  report_header_amount_paid: Выплаченная Сумма
+  report_header_units_required: Необходимые Единицы
+  report_header_remainder: Остаток
+  report_header_order_date: Дата заказа
+  report_header_order_id: Номер заказа
+  report_header_item_name: Название товара
+  report_header_temp_controlled_items: Товары с контролем температуры?
+  report_header_customer_name: Имя Клиента
+  report_header_customer_email: Email Клиента
+  report_header_customer_phone: Телефон Клиента
+  report_header_customer_city: Город Заказчика
   report_header_payment_state: Статус Платежа
-  report_header_payment_type: Payment Type
-  report_header_item_price: "Item (%{currency})"
-  report_header_item_fees_price: "Item + Fees (%{currency})"
-  report_header_admin_handling_fees: "Admin & Handling (%{currency})"
-  report_header_ship_price: "Ship (%{currency})"
-  report_header_pay_fee_price: "Pay fee (%{currency})"
-  report_header_total_price: "Total (%{currency})"
-  report_header_product_total_price: "Product Total (%{currency})"
-  report_header_shipping_total_price: "Shipping Total (%{currency})"
-  report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
+  report_header_payment_type: Способ Оплаты
+  report_header_item_price: "Товар (%{currency})"
+  report_header_item_fees_price: "Товар + Комиссии (%{currency})"
+  report_header_admin_handling_fees: "Администрирование и Обработка (%{currency})"
+  report_header_ship_price: "Доставка (%{currency})"
+  report_header_pay_fee_price: "Комиссия за оплату (%{currency})"
+  report_header_total_price: "Итого (%{currency})"
+  report_header_product_total_price: "Итого по Продукту (%{currency})"
+  report_header_shipping_total_price: "Итого за Доставку (%{currency})"
+  report_header_outstanding_balance_price: "Непогашенный Остаток (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: SKU
   report_header_amount: К оплате
   report_header_balance: Баланс
-  report_header_total_cost: "Total Cost"
-  report_header_total_ordered: Total Ordered
-  report_header_total_max: Total Max
-  report_header_total_units: Total Units
-  report_header_sum_max_total: "Sum Max Total"
-  report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
-  report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_total_cost: "Общая Стоимость"
+  report_header_total_ordered: Всего Заказано
+  report_header_total_max: Всего Макс
+  report_header_total_units: Всего Единиц
+  report_header_sum_max_total: "Сумма Макс Итого"
+  report_header_total_excl_vat: "Итого искл. налог (%{currency_symbol})"
+  report_header_total_incl_vat: "Итого, вкл. налог (%{currency_symbol})"
   report_header_temp_controlled: Контроль Температуры?
   report_header_is_producer: Производитель?
-  report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: Tax on Income
+  report_header_not_confirmed: Не Подтверждено
+  report_header_gst_on_income: Налог на доход
   report_header_gst_free_income: Tax Free Income
-  report_header_total_untaxable_produce: Total untaxable produce (no tax)
-  report_header_total_taxable_produce: Total taxable produce (tax inclusive)
-  report_header_total_untaxable_fees: Total untaxable fees (no tax)
-  report_header_total_taxable_fees: Total taxable fees (tax inclusive)
-  report_header_delivery_shipping_cost: Delivery Shipping Cost (tax inclusive)
-  report_header_transaction_fee: Transaction Fee (no tax)
-  report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
-  report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_header_total_untaxable_produce: Общая не облагаемая налогом продукция (без налога)
+  report_header_total_taxable_produce: Общая налогооблагаемая продукция (включая налоги)
+  report_header_total_untaxable_fees: Всего необлагаемых налогом сборов (без налогов)
+  report_header_total_taxable_fees: Всего налогооблагаемых сборов (включая налоги)
+  report_header_delivery_shipping_cost: Стоимость Доставки (включая налоги)
+  report_header_transaction_fee: Комиссия за Операцию (без налога)
+  report_header_total_untaxable_admin: Всего необлагаемых налогом административных корректировок (без налогов)
+  report_header_total_taxable_admin: Всего налогооблагаемых административных корректировок (включая налоги)
   initial_invoice_number: "Начальный номер счета:"
-  invoice_date: "Счёт date:"
-  due_date: "Счёт date:"
+  invoice_date: "Дата Счёта:"
+  due_date: "Срок Выполнения:"
   account_code: "Код счета:"
   equals: "Равно"
   contains: "содержит"
@@ -2505,13 +2505,13 @@ ru:
           loading_variants: "Загрузка Вариантов"
       tag_rules:
         shipping_method_tagged_top: "Способы доставки помечены"
-        shipping_method_tagged_bottom: "are:"
+        shipping_method_tagged_bottom: "являются:"
         payment_method_tagged_top: "Способы оплаты помечены"
-        payment_method_tagged_bottom: "are:"
+        payment_method_tagged_bottom: "являются:"
         order_cycle_tagged_top: "Циклы заказа помечены"
-        order_cycle_tagged_bottom: "are:"
+        order_cycle_tagged_bottom: "являются:"
         inventory_tagged_top: "Помечены варианты Товарной Номенклатуры"
-        inventory_tagged_bottom: "are:"
+        inventory_tagged_bottom: "являются:"
       new_tag_rule_dialog:
         select_rule_type: "Выберите тип правила:"
         add_rule: "Добавить Правило"
@@ -3111,9 +3111,9 @@ ru:
       return_authorizations:
         index:
           new_return_authorization: "Новое разрешение на возврат"
-          return_authorizations: "Разрешения на возврат (RMA)"
+          return_authorizations: "Разрешения на возврат"
           back_to_orders_list: "Назад К Списку Заказов"
-          rma_number: "Номер RMA"
+          rma_number: "Номер возврата"
           status: "Статус"
           amount: "Сумма"
           cannot_create_returns: "Невозможно оформить возврат. Заказ ещё не отправлен."
@@ -3132,7 +3132,7 @@ ru:
           quantity_returned: "Количество возврата"
           return_quantity: "возвращенное количество"
           amount: "Количество"
-          rma_value: "Сумма RMA"
+          rma_value: "Сумма возврата"
           reason: "Причина"
           stock_location: "Расположение склада"
         states:
@@ -3143,7 +3143,7 @@ ru:
         index:
           listing_orders: "Список Заказов"
           new_order: "Новый Заказ"
-          capture: "Capture"
+          capture: "Записать"
           ship: "Доставка"
           edit: "Изменить"
           order_not_updated: "Заказ не может быть обновлен"
@@ -3327,10 +3327,10 @@ ru:
         table:
           select_and_search: "Для получения данных, выберите фильры и нажмите на %{option}."
         bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
-          bulk_coop_allocation: 'Bulk Co-op - Allocation'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
-          bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+          bulk_coop_supplier_report: 'Массовая Кооперация - Итоги по Поставщикам'
+          bulk_coop_allocation: 'Массовая Кооперация - Размещение'
+          bulk_coop_packing_sheets: 'Массовая Кооперация - Упаковочные листы'
+          bulk_coop_customer_payments: 'Массовая Кооперация - Клиентские Платежи'
         customer_names_message:
           customer_names_tip: "Если имена клиентов скрыты для заказов, которые вы предоставили, вы можете связаться с дистрибьютором и спросить, могут ли они обновить настройки своего магазина, чтобы их поставщики могли просматривать имена клиентов."
       users:
@@ -3444,7 +3444,7 @@ ru:
     order_mailer:
       cancel_email:
         customer_greeting: "Уважаемый %{name}!"
-        instructions_html: "Ваш заказ был ОТМЕНЕН. Пожалуйста, сохраните эту информацию об отмене для ваших записей."
+        instructions_html: "Ваш заказ на <strong>%{distributor}</strong> был ОТМЕНЕН. Сохраните эту информацию об отмене для своих записей."
         dont_cancel: "Если вы передумали или не хотите отменять этот заказ, свяжитесь с нами. %{email}"
         order_summary_canceled_html: "<strong>Информация по Заказу #%{number} [ОТМЕНЕН]</strong>"
         details: "Подробности того, что вы заказали:"
