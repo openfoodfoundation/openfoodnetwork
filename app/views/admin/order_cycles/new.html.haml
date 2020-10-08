@@ -1,5 +1,5 @@
-%h1
-  =t'new_order_cycle'
+- content_for :page_title do
+  =t('new_order_cycle')
 
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
 = admin_inject_order_cycle_instance

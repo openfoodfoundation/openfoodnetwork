@@ -75,7 +75,7 @@ module Api
     end
 
     def permitted_ransack_params
-      [:name_or_meta_keywords_or_supplier_name_cont,
+      [:name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont,
        :properties_id_or_supplier_properties_id_in_any,
        :primary_taxon_id_in_any]
     end

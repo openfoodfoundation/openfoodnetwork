@@ -42,6 +42,9 @@ $ docker/server
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 * You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
 
+### Troubleshooting
+If you are using Windows and having issues related to the ruby-build not finding a definition for the ruby version, you may need to follow these commands [here](https://stackoverflow.com/questions/2517190/how-do-i-force-git-to-use-lf-instead-of-crlf-under-windows/33424884#33424884) to fix your local git config related to line breaks
+
 ## Script Summary
 * docker/build: This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations.  After you use "git clone" to download this repository, run the docker/build script to start the setup process.
 * docker/server: Use this script to run this app in the Rails server.  This script executes the "docker-compose up" command and logs the results.  If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.

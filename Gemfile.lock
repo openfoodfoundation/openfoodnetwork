@@ -205,7 +205,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.40.0)
+    ddtrace (0.41.0)
       msgpack
     debugger-linecache (1.2.0)
     delayed_job (4.1.8)
@@ -412,7 +412,7 @@ GEM
     get_process_mem (0.2.5)
       ffi (~> 1.0)
     gmaps4rails (2.1.2)
-    haml (5.1.2)
+    haml (5.2.0)
       temple (>= 0.8.0)
       tilt
     hashdiff (1.0.1)
@@ -445,7 +445,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.11.3)
-    knapsack (1.18.0)
+    knapsack (1.19.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
