@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# This script destroys all Docker containers and networks but leaves the Docker images alone.
-
-echo '-----------------------'
-echo 'docker network prune -f'
-docker network prune -f
+# This script destroys all Docker containers but leaves the Docker images alone.
 
 echo '------------------------------------------'
 echo 'Killing and removing all Docker containers'
