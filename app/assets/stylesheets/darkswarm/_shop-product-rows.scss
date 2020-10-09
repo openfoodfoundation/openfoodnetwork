@@ -33,9 +33,11 @@
         }
 
         .variant-name,
-        .variant-price,
         .total-price {
-          line-height: 2.5em;
+          padding-top: .74em;
+        }
+        .variant-price {
+          padding-top: .65em;
         }
 
         // Variant name
@@ -51,7 +53,6 @@
             color: #888;
             font-size: 0.875rem;
             line-height: normal;
-            margin-top: -0.75em;
           }
         }
 
