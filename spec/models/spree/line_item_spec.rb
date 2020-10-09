@@ -242,14 +242,8 @@ module Spree
       let!(:o) { create(:order, distributor: hub) }
       let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
       let!(:v_on_demand) { create(:variant, on_demand: true, on_hand: 1) }
-      let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
-      let!(:li_on_demand) { create(:line_item, variant: v_on_demand, order: o, quantity: 99, max_quantity: 99) }
-
-      before do
-        # li#scoper is memoised, and this makes it difficult to update test conditions
-        # so we reset it after the line_item is created for each spec
-        li.remove_instance_variable(:@scoper)
-      end
+      let(:li) { build_stubbed(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
+      let(:li_on_demand) { build_stubbed(:line_item, variant: v_on_demand, order: o, quantity: 99, max_quantity: 99) }
 
       context "when the variant is on_demand" do
         it { expect(li_on_demand.sufficient_stock?).to be true }
@@ -539,7 +533,7 @@ module Spree
 
       describe "getting name for display" do
         it "returns product name" do
-          li = create(:line_item, product: create(:product))
+          li = build_stubbed(:line_item)
           expect(li.name_to_display).to eq(li.product.name)
         end
       end
@@ -554,7 +548,7 @@ module Spree
         let(:li2) { create(:line_item, order: o, product: p2, variant: v2) }
 
         it "returns options_text" do
-          li = create(:line_item)
+          li = build_stubbed(:line_item)
           allow(li).to receive(:options_text).and_return "ponies"
           expect(li.unit_to_display).to eq("ponies")
         end
@@ -610,8 +604,8 @@ module Spree
       end
 
       describe "calculating unit_value" do
-        let(:v) { create(:variant, unit_value: 10) }
-        let(:li) { create(:line_item, variant: v, quantity: 5) }
+        let(:v) { build_stubbed(:variant, unit_value: 10) }
+        let(:li) { build_stubbed(:line_item, variant: v, quantity: 5) }
 
         context "when the quantity is greater than zero" do
           context "and final_weight_volume has not been changed" do
@@ -623,14 +617,18 @@ module Spree
           end
 
           context "and final_weight_volume has been changed" do
-            before { li.update_attribute(:final_weight_volume, 35) }
+            before do
+              li.final_weight_volume = 35
+            end
             it "returns the unit_value of the variant" do
               expect(li.unit_value).to eq 7
             end
           end
 
           context "and final_weight_volume is nil" do
-            before { li.update_attribute(:final_weight_volume, nil) }
+            before do
+              li.final_weight_volume = nil
+            end
             it "returns the unit_value of the variant" do
               expect(li.unit_value).to eq 10
             end
@@ -638,7 +636,9 @@ module Spree
         end
 
         context "when the quantity is zero" do
-          before { li.update_attribute(:quantity, 0) }
+          before do
+            li.quantity = 0
+          end
           it "returns the unit_value of the variant" do
             expect(li.unit_value).to eq 10
           end
