@@ -28,7 +28,7 @@ module OrderManagement
 
         context "the order's ship address is in the same zone" do
           it "returns shipping rates from a shipping method" do
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates.first.cost).to eq 4.00
           end
         end
@@ -36,7 +36,7 @@ module OrderManagement
         context "the order's ship address is in a different zone" do
           it "still returns shipping rates from a shipping method" do
             shipping_method.zones.each{ |z| z.members.delete_all }
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates.first.cost).to eq 4.00
           end
         end
@@ -45,14 +45,14 @@ module OrderManagement
           it "does not return shipping rates from a shipping method" do
             allow_any_instance_of(Spree::ShippingMethod).
               to receive_message_chain(:calculator, :available?).and_return(false)
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates).to eq []
           end
         end
 
         context "the currency matches the order's currency" do
           it "returns shipping rates from a shipping method" do
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates.first.cost).to eq 4.00
           end
         end
@@ -60,7 +60,7 @@ module OrderManagement
         context "the currency is different than the order's currency" do
           it "does not return shipping rates from a shipping method" do
             order.currency = "USD"
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates).to eq []
           end
         end
@@ -77,7 +77,7 @@ module OrderManagement
           allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
 
           expected_costs = %w[3.00 4.00 5.00].map(&BigDecimal.method(:new))
-          expect(subject.shipping_rates(package).map(&:cost)).to eq expected_costs
+          expect(subject.shipping_rates(package: package).map(&:cost)).to eq expected_costs
         end
 
         context "general shipping methods" do
@@ -91,7 +91,7 @@ module OrderManagement
 
             allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
 
-            shipping_rates = subject.shipping_rates(package)
+            shipping_rates = subject.shipping_rates(package: package)
             expect(shipping_rates.sort_by(&:cost).map(&:selected)).to eq [true, false]
           end
 
@@ -103,7 +103,7 @@ module OrderManagement
 
             allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
 
-            subject.shipping_rates(package)
+            subject.shipping_rates(package: package)
           end
         end
 
@@ -119,7 +119,7 @@ module OrderManagement
             allow(subject).
               to receive(:shipping_methods).and_return([backend_method, generic_method])
 
-            expect(subject.shipping_rates(package).map(&:selected)).to eq [false, true]
+            expect(subject.shipping_rates(package: package).map(&:selected)).to eq [false, true]
           end
         end
       end

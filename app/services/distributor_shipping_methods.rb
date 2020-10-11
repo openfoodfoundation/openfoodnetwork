@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistributorShippingMethods
-  def self.shipping_methods(distributor:, checkout: false, apply_tags: true, customer: nil)
+  def self.shipping_methods(distributor:, customer: nil, checkout: false, apply_tags: true)
     return [] if distributor.blank?
 
     shipping_methods = distributor.shipping_methods

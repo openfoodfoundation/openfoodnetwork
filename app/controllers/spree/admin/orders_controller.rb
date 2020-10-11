@@ -32,7 +32,9 @@ module Spree
       end
 
       def edit
-        @order.shipments.map(&:refresh_rates)
+        @order.shipments.map { |shipment|
+          shipment.refresh_rates(checkout: false, apply_tags: false)
+        }
 
         OrderWorkflow.new(@order).complete
 

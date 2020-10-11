@@ -9,10 +9,10 @@ module OrderManagement
         @order = order
       end
 
-      def packages
+      def packages(checkout: true, apply_tags: true)
         packages = build_packages
         packages = prioritize_packages(packages)
-        estimate_packages(packages)
+        estimate_packages(packages: packages, checkout: checkout, apply_tags: apply_tags)
       end
 
       # Build package with default stock location
@@ -32,10 +32,12 @@ module OrderManagement
         prioritizer.prioritized_packages
       end
 
-      def estimate_packages(packages)
+      def estimate_packages(packages:, checkout: true, apply_tags: true)
         estimator = OrderManagement::Stock::Estimator.new(order)
         packages.each do |package|
-          package.shipping_rates = estimator.shipping_rates(package)
+          package.shipping_rates = estimator.shipping_rates(
+            package: package, checkout: checkout, apply_tags: apply_tags
+          )
         end
         packages
       end

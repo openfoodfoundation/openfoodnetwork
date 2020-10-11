@@ -79,21 +79,12 @@ module OrderManagement
         # TODO calculate from first variant?
       end
 
-      def shipping_methods
+      def shipping_methods(checkout: true, apply_tags: true)
         DistributorShippingMethods.shipping_methods(
           distributor: order.distributor,
-          checkout: false,
+          checkout: checkout,
           customer: order.customer,
-          apply_tags: false
-        )
-      end
-
-      def filtered_shipping_methods
-        DistributorShippingMethods.shipping_methods(
-          distributor: order.distributor,
-          checkout: false,
-          customer: order.customer,
-          apply_tags: true
+          apply_tags: apply_tags
         )
       end
 
