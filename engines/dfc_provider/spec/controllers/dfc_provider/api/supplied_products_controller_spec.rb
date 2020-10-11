@@ -10,7 +10,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'

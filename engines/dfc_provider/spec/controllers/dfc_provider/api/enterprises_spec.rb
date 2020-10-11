@@ -9,7 +9,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'

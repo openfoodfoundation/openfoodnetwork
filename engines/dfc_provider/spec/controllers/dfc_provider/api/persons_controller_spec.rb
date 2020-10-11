@@ -7,7 +7,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
 
   let!(:user) { create(:user) }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
