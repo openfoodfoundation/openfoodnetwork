@@ -6,6 +6,10 @@ module DfcProvider
   module Api
     class CatalogItemsController < DfcProvider::Api::BaseController
       def index
+        # CatalogItem is nested into an entreprise which is also nested into
+        # an user on the DFC specifications, as defined here:
+        # https://datafoodconsortium.gitbook.io/dfc-standard-documentation
+        #  /technical-specification/api-examples
         render json: current_user, serializer: DfcProvider::PersonSerializer
       end
 
