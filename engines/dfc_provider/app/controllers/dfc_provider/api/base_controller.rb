@@ -8,7 +8,7 @@ module DfcProvider
 
       before_action :check_authorization,
                     :check_user,
-                    :check_enterprise
+                    :set_enterprise
 
       respond_to :json
 
@@ -26,7 +26,7 @@ module DfcProvider
         head :unauthorized
       end
 
-      def check_enterprise
+      def set_enterprise
         current_enterprise
       end
 
