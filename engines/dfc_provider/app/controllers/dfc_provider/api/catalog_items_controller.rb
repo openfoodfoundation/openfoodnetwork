@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Controller used to provide the API products for the DFC application
+# CatalogItems are items that are being sold by the entreprise.
 module DfcProvider
   module Api
     class CatalogItemsController < DfcProvider::Api::BaseController

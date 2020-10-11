@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Controller used to provide the SuppliedProducts API for the DFC application
+# SuppliedProducts are products that are managed by an entrerprise.
 module DfcProvider
   module Api
     class SuppliedProductsController < DfcProvider::Api::BaseController
