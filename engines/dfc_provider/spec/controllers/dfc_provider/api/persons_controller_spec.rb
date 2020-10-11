@@ -21,10 +21,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
         end
 
         context 'given with an accessible id' do
-          before do
-            api_get :show,
-                    id: user.id
-          end
+          before { api_get :show, id: user.id }
 
           it 'is successful' do
             expect(response.status).to eq 200

@@ -26,9 +26,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
         context 'with an enterprise' do
           context 'given with an id' do
             before do
-              api_get :show,
-                      enterprise_id: 'default',
-                      id: variant.id
+              api_get :show, enterprise_id: 'default', id: variant.id
             end
 
             it 'is successful' do
@@ -36,8 +34,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
             end
 
             it 'renders the required content' do
-              expect(response.body)
-                .to include(variant.name)
+              expect(response.body).to include(variant.name)
             end
           end
 
