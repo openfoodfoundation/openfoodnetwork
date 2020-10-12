@@ -117,7 +117,6 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'angular-rails-templates', '~> 0.3.0'
 gem 'foundation-icons-sass-rails'
-gem 'momentjs-rails'
 
 gem 'foundation-rails', '= 5.5.2.1'
 

@@ -28,20 +28,22 @@
 #= require angular-backstretch.js
 #= require angular-flash.min.js
 #
-#= require moment
-#= require moment/de.js
-#= require moment/en-gb.js
-#= require moment/es.js
-#= require moment/fr.js
-#= require moment/it.js
-#= require moment/nb.js
-#= require moment/pt-br.js
-#= require moment/pt.js
-#= require moment/ru.js
-#= require moment/sv.js
-#= require moment/ca.js
-#= require moment/ar.js
-#= require moment/tr.js
+#= require moment/min/moment.min.js
+#= require moment/locale/ar.js
+#= require moment/locale/ca.js
+#= require moment/locale/de.js
+#= require moment/locale/en-gb.js
+#= require moment/locale/es.js
+#= require moment/locale/fil.js
+#= require moment/locale/fr.js
+#= require moment/locale/it.js
+#= require moment/locale/nb.js
+#= require moment/locale/nl-be.js
+#= require moment/locale/pt-br.js
+#= require moment/locale/pt.js
+#= require moment/locale/ru.js
+#= require moment/locale/sv.js
+#= require moment/locale/tr.js
 #
 #= require modernizr
 #
