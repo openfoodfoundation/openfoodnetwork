@@ -348,7 +348,9 @@ class Enterprise < ActiveRecord::Base
   end
 
   def ready_for_checkout?
-    shipping_methods.any? && payment_methods.available.any?
+    DistributorShippingMethods.shipping_methods(
+      distributor: self, checkout: true, apply_tags: false
+    ).any? && payment_methods.available.any?
   end
 
   def self.find_available_permalink(test_permalink)
