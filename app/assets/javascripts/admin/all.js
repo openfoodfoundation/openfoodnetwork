@@ -87,6 +87,7 @@
 //= require moment/locale/ru.js
 //= require moment/locale/sv.js
 //= require moment/locale/tr.js
+//= require moment/locale/pl.js
 
 // foundation
 //= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js
