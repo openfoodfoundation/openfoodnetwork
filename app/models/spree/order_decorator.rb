@@ -8,6 +8,8 @@ ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |_name
 end
 
 Spree::Order.class_eval do
+  include TimezoneAttributes
+
   prepend OrderShipment
 
   delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
@@ -55,6 +57,8 @@ Spree::Order.class_eval do
   state_machine.event :restart_checkout do
     transition to: :cart, unless: :completed?
   end
+
+  define_timezone_attribute_methods(:distributor, ["completed_at"])
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -379,26 +383,6 @@ Spree::Order.class_eval do
   def update_attributes_without_callbacks(attributes)
     assign_attributes(attributes)
     Spree::Order.where(id: id).update_all(attributes)
-  end
-
-  def completed_at
-    if distributor && distributor.timezone != Time.zone.name
-      Time.use_zone(distributor.timezone) do
-        super()
-      end
-    else
-      super()
-    end
-  end
-
-  def completed_at=(time)
-    if distributor && distributor.timezone != Time.zone.name
-      Time.use_zone(distributor.timezone) do
-        super(Time.zone.parse(time))
-      end
-    else
-      super(time)
-    end
   end
 
   private

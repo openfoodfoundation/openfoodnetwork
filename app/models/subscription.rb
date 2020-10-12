@@ -1,4 +1,8 @@
+require 'open_food_network/timezone_attributes'
+
 class Subscription < ActiveRecord::Base
+  include TimezoneAttributes
+
   ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check",
                                   "Spree::Gateway::StripeConnect",
                                   "Spree::Gateway::StripeSCA"].freeze
@@ -25,6 +29,8 @@ class Subscription < ActiveRecord::Base
   scope :not_canceled, -> { where('subscriptions.canceled_at IS NULL') }
   scope :not_paused, -> { where('subscriptions.paused_at IS NULL') }
   scope :active, -> { not_canceled.not_ended.not_paused.where('subscriptions.begins_at <= (?)', Time.zone.now) }
+
+  define_timezone_attribute_methods(:shop, ["begins_at", "ends_at", "canceled_at", "paused_at"])
 
   def closed_proxy_orders
     proxy_orders.closed
@@ -61,28 +67,6 @@ class Subscription < ActiveRecord::Base
   # Used to calculators to estimate fees
   def line_items
     subscription_line_items
-  end
-
-  ["begins_at", "ends_at", "canceled_at", "paused_at"].each do |method|
-    define_method(method) do
-      if shop && shop.timezone != Time.zone.name
-        Time.use_zone(shop.timezone) do
-          super()
-        end
-      else
-        super()
-      end
-    end
-
-    define_method("#{method}=") do |time|
-      if shop && shop.timezone != Time.zone.name
-        Time.use_zone(shop.timezone) do
-          super(Time.zone.parse(time))
-        end
-      else
-        super(time)
-      end
-    end
   end
 
   private

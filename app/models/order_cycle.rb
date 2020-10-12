@@ -1,6 +1,9 @@
 require 'open_food_network/scope_variant_to_hub'
+require 'open_food_network/timezone_attributes'
 
 class OrderCycle < ActiveRecord::Base
+  include TimezoneAttributes
+
   belongs_to :coordinator, class_name: 'Enterprise'
 
   has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'
@@ -112,6 +115,8 @@ class OrderCycle < ActiveRecord::Base
       select('DISTINCT order_cycles.*')
   }
 
+  define_timezone_attribute_methods(:coordinator, ["orders_open_at", "orders_close_at"])
+
   def self.first_opening_for(distributor)
     with_distributor(distributor).soonest_opening.first
   end
@@ -137,28 +142,6 @@ class OrderCycle < ActiveRecord::Base
                 MIN(order_cycles.orders_close_at) AS earliest_close_at").
         map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
     ]
-  end
-
-  ["orders_open_at", "orders_close_at"].each do |method|
-    define_method(method) do
-      if coordinator && coordinator.timezone != Time.zone.name
-        Time.use_zone(coordinator.timezone) do
-          super()
-        end
-      else
-        super()
-      end
-    end
-
-    define_method("#{method}=") do |time|
-      if coordinator && coordinator.timezone != Time.zone.name
-        Time.use_zone(coordinator.timezone) do
-          super(Time.zone.parse(time))
-        end
-      else
-        super(time)
-      end
-    end
   end
 
   def clone!

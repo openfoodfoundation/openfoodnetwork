@@ -1,10 +1,12 @@
 require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
 require 'concerns/product_stock'
+require 'open_food_network/timezone_attributes'
 
 Spree::Product.class_eval do
   include PermalinkGenerator
   include ProductStock
+  include TimezoneAttributes
 
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
@@ -128,6 +130,8 @@ Spree::Product.class_eval do
       .with_permission(:add_to_order_cycle).where(enterprises: { is_primary_producer: true }).pluck(:parent_id)
     return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
   }
+
+  define_timezone_attribute_methods(:supplier, ["available_on"])
 
   # -- Methods
 
