@@ -63,6 +63,28 @@ class Subscription < ActiveRecord::Base
     subscription_line_items
   end
 
+  ["begins_at", "ends_at", "canceled_at", "paused_at"].each do |method|
+    define_method(method) do
+      if shop && shop.timezone != Time.zone.name
+        Time.use_zone(shop.timezone) do
+          super()
+        end
+      else
+        super()
+      end
+    end
+
+    define_method("#{method}=") do |time|
+      if shop && shop.timezone != Time.zone.name
+        Time.use_zone(shop.timezone) do
+          super(Time.zone.parse(time))
+        end
+      else
+        super(time)
+      end
+    end
+  end
+
   private
 
   def pending?

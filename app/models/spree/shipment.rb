@@ -81,6 +81,16 @@ module Spree
       self.shipped_at = Time.zone.now
     end
 
+    def shipped_at
+      if order.distributor && order.distributor.timezone != Time.zone.name
+        Time.use_zone(order.distributor.timezone) do
+          super()
+        end
+      else
+        super()
+      end
+    end
+
     def shipping_method
       selected_shipping_rate.try(:shipping_method) || shipping_rates.first.try(:shipping_method)
     end

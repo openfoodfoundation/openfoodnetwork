@@ -381,6 +381,26 @@ Spree::Order.class_eval do
     Spree::Order.where(id: id).update_all(attributes)
   end
 
+  def completed_at
+    if distributor && distributor.timezone != Time.zone.name
+      Time.use_zone(distributor.timezone) do
+        super()
+      end
+    else
+      super()
+    end
+  end
+
+  def completed_at=(time)
+    if distributor && distributor.timezone != Time.zone.name
+      Time.use_zone(distributor.timezone) do
+        super(Time.zone.parse(time))
+      end
+    else
+      super(time)
+    end
+  end
+
   private
 
   def adjustments_fetcher
