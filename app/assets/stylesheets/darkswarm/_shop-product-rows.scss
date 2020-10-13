@@ -50,7 +50,7 @@
           }
 
           & > *:nth-child(n + 2) {
-            color: #888;
+            color: $grey-550;
             font-size: 0.875rem;
             font-style: italic;
             line-height: normal;
@@ -107,7 +107,7 @@
           }
 
           .product-producer {
-            color: #888;
+            color: $grey-550;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
