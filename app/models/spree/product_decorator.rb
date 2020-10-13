@@ -195,26 +195,6 @@ Spree::Product.class_eval do
   end
   alias_method_chain :destroy, :delete_from_order_cycles
 
-  def available_on
-    if supplier && supplier.timezone != Time.zone.name
-      Time.use_zone(supplier.timezone) do
-        super()
-      end
-    else
-      super()
-    end
-  end
-
-  def available_on=(time)
-    if supplier && supplier.timezone != Time.zone.name
-      Time.use_zone(supplier.timezone) do
-        super(Time.zone.parse(time))
-      end
-    else
-      super(time)
-    end
-  end
-
   private
 
   def set_available_on_to_now
