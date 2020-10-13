@@ -117,7 +117,6 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'angular-rails-templates', '~> 0.3.0'
 gem 'foundation-icons-sass-rails'
-gem 'momentjs-rails'
 
 gem 'foundation-rails', '= 5.5.2.1'
 
@@ -156,6 +155,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'test-prof'
   gem 'webmock'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'

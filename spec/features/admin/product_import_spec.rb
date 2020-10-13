@@ -168,7 +168,7 @@ feature "Product Import", js: true do
       end
 
       expect(page).to have_selector 'div#s2id_import_date_filter'
-      import_time = carrots.import_date.to_date.to_formatted_s(:long)
+      import_time = carrots.import_date.to_date.to_formatted_s(:long).gsub('  ', ' ')
       select2_select import_time, from: "import_date_filter"
       page.find('.button.icon-search').click
 
@@ -295,6 +295,31 @@ feature "Product Import", js: true do
         expect(page).to have_content 'Sprouts'
         expect(page).to have_content 'Cabbage'
       end
+    end
+
+    it "handles a unit of kg for inventory import" do
+      product = create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beets', unit_value: '1000', variant_unit_scale: 1000)
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type", "units", "on_demand"]
+        csv << ["Beets", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "kg", "1", "true"]
+      end
+
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "1"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.inv-create-count', text: '1'
+
+      save_data
+
+      expect(page).to have_selector '.inv-created-count', text: '1'
     end
 
     it "handles on_demand and on_hand validations with inventory" do

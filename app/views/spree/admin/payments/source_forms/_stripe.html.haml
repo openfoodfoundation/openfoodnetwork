@@ -1,6 +1,7 @@
 -# = render "spree/admin/payments/source_forms/gateway", payment_method: payment_method
 .stripe
-  %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+  = render "shared/stripe_js"
+
   - if Stripe.publishable_key
     :javascript
       angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}"))

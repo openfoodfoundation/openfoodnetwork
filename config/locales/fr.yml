@@ -1251,7 +1251,7 @@ fr:
   menu_4_title: "Groupes"
   menu_4_url: "/groups"
   menu_5_title: "Créer ma boutique"
-  menu_5_url: "https://openfoodfrance.org/sell"
+  menu_5_url: "/sell"
   menu_6_title: "A propos"
   menu_6_url: "https://apropos.coopcircuits.fr/"
   menu_7_title: "Support"

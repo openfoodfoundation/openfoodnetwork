@@ -34,7 +34,7 @@
     >a {
       outline: none;
       display: block;
-      color: $grey-500;
+      color: $black;
       font-family: "Oswald", sans-serif;
     }
 
@@ -42,9 +42,9 @@
       @include headingFont;
 
       background: transparent;
-      text-transform: uppercase;
+      text-transform: capitalize;
       line-height: 1;
-      font-size: 0.875em;
+      font-size: 1em;
       padding: 1em 2em;
       border: none;
 
@@ -58,6 +58,7 @@
 
       @include breakpoint(phablet) {
         padding: 0.35em 0 0.65em 0;
+        font-size: 0.875em;
       }
     }
 

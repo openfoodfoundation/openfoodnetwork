@@ -60,3 +60,6 @@ Check the app in the browser at `http://localhost:3000`.
 You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 
 You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
+
+### Troubleshooting
+If you are using Windows and having issues related to the ruby-build not finding a definition for the ruby version, you may need to follow these commands [here](https://stackoverflow.com/questions/2517190/how-do-i-force-git-to-use-lf-instead-of-crlf-under-windows/33424884#33424884) to fix your local git config related to line breaks.

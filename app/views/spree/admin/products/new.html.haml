@@ -78,6 +78,7 @@
           = f.label :product_description, t(".product_description")
           %br/
           %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', "textangular-links-target-blank" => true, 'ta-toolbar' => "[['bold','italics','underline','clear'],['insertLink']]"}
+            = sanitize(@product.description)
           = f.error_message_on :description
   .four.columns.omega{ style: "text-align: center" }
     %fieldset.no-border-bottom{ id: "image" }
