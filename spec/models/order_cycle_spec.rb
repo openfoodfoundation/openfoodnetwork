@@ -78,7 +78,7 @@ describe OrderCycle do
   end
 
   it "finds the soonest opening order cycles" do
-    oc1 = create(:simple_order_cycle, orders_open_at: 1.week.from_now)
+    oc1 = create(:simple_order_cycle, orders_open_at: 6.days.from_now)
     oc2 = create(:simple_order_cycle, orders_open_at: 2.hours.from_now)
     oc3 = create(:simple_order_cycle, orders_open_at: 1.hour.ago)
 
@@ -421,11 +421,11 @@ describe OrderCycle do
     let!(:oc3) { create(:simple_order_cycle, orders_close_at: time3, distributors: [e2]) }
 
     it "returns the closing time, indexed by enterprise id" do
-      expect(OrderCycle.earliest_closing_times[e1.id].round).to eq(time1.round)
+      expect((OrderCycle.earliest_closing_times[e1.id].round - time1.round).abs).to be <= 1
     end
 
     it "returns the earliest closing time" do
-      expect(OrderCycle.earliest_closing_times[e2.id].round).to eq(time2.round)
+      expect((OrderCycle.earliest_closing_times[e2.id].round - time2.round).abs).to be <= 1
     end
   end
 
