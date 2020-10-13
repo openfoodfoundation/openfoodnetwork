@@ -191,7 +191,7 @@ feature '
         fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
         fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
         expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
-        multi_select2_select schedule.name, from: 'schedule_ids'
+        select2_select schedule.name, from: 'schedule_ids'
 
         click_button 'Add coordinator fee'
         select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
@@ -246,7 +246,7 @@ feature '
         visit edit_admin_order_cycle_path(oc)
 
         expect(page).to have_field 'order_cycle_name', with: oc.name
-        multi_select2_select schedule.name, from: 'schedule_ids'
+        select2_select schedule.name, from: 'schedule_ids'
         expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
 
         click_button 'Save and Next'

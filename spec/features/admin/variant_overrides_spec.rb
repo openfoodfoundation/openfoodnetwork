@@ -409,7 +409,7 @@ feature "
 
       # Reproducing a bug, issue #1446
       it "shows the overridden price" do
-        targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        select2_select product.name, from: 'add_variant_id', search: true
         find('button.add_variant').click
         expect(page).to have_selector("table.index tbody tr") # Wait for JS
         expect(page).to have_content(product.variants.first.variant_overrides.first.price)

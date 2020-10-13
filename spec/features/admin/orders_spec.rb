@@ -51,8 +51,8 @@ feature '
 
       login_as_admin_and_visit 'admin/orders'
 
-      multi_select2_select 'Two', from: 'q_order_cycle_id_in'
-      multi_select2_select 'Three', from: 'q_order_cycle_id_in'
+      select2_select 'Two', from: 'q_order_cycle_id_in'
+      select2_select 'Three', from: 'q_order_cycle_id_in'
 
       page.find('.filter-actions .button.icon-search').click
 
