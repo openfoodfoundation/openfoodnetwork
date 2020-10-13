@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# This script runs RuboCop.
+
+echo '------------------------------------------------------'
+echo 'BEGIN: docker-compose run --rm web bundle exec rubocop'
+echo '------------------------------------------------------'
+docker-compose run --rm web bundle exec rubocop
+echo '----------------------------------------------------'
+echo 'END: docker-compose run --rm web bundle exec rubocop'
+echo '----------------------------------------------------'
