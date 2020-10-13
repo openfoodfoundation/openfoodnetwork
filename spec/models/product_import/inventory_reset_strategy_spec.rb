@@ -45,7 +45,6 @@ describe ProductImport::InventoryResetStrategy do
       end
 
       context 'and supplier_ids is set' do
-        let(:enterprise) { variant.product.supplier }
         let(:variant) { create(:variant) }
         let!(:variant_override) do
           create(
