@@ -113,7 +113,7 @@ describe Enterprise do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
     it do
-      FactoryBot.create(:distributor_enterprise)
+      create(:distributor_enterprise)
       is_expected.to validate_uniqueness_of(:permalink)
     end
 
