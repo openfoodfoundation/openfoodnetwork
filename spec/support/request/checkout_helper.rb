@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckoutHelper
   def have_checkout_details
     have_content "Your details"
