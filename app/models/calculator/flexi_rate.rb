@@ -25,7 +25,7 @@ module Calculator
 
     def compute(object)
       max = preferred_max_items.to_i
-      items_count = line_items_for(object).map(&:quantity).sum
+      items_count = line_items_for(object).map(&:quantity).to_a.sum
 
       # check max value to avoid divide by 0 errors
       return 0 if max.zero?

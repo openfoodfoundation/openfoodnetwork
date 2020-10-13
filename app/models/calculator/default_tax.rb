@@ -33,7 +33,7 @@ module Calculator
         line_items_total(order),
         per_item_fees_total(order, calculator),
         per_order_fees_total(order, calculator)
-      ].sum do |total|
+      ].to_a.sum do |total|
         round_to_two_places(total * rate.amount)
       end
     end
@@ -43,16 +43,16 @@ module Calculator
         line_item.product.tax_category == rate.tax_category
       end
 
-      matched_line_items.sum(&:total)
+      matched_line_items.to_a.sum(&:total)
     end
 
     # Finds relevant fees for each line_item,
     #   calculates the tax on them, and returns the total tax
     def per_item_fees_total(order, calculator)
-      order.line_items.sum do |line_item|
+      order.line_items.to_a.sum do |line_item|
         calculator.per_item_enterprise_fee_applicators_for(line_item.variant)
           .select { |applicator| applicable_rate?(applicator, line_item) }
-          .sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }
+          .to_a.sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }
       end
     end
 
@@ -67,7 +67,7 @@ module Calculator
     def per_order_fees_total(order, calculator)
       calculator.per_order_enterprise_fee_applicators_for(order)
         .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
-        .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
+        .to_a.sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
     end
 
     def compute_line_item(line_item)
