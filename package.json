@@ -1,16 +1,19 @@
 {
   "name": "openfoodnetwork",
-  "version": "1.7.1",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
   "devDependencies": {
+    "jasmine-core": "~2.4.1",
     "karma": "~0.13.22",
     "karma-chrome-launcher": "~2.2.0",
-    "karma-jasmine": "~0.3.8",
-    "jasmine-core": "~2.4.1",
-    "karma-coffee-preprocessor": "~0.3.0"
+    "karma-coffee-preprocessor": "~0.3.0",
+    "karma-jasmine": "~0.3.8"
   },
-  "license": "AGPL-1.0"
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "moment": "^2.28.0"
+  }
 }

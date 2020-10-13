@@ -2,18 +2,13 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::ProductsController, type: :controller do
+describe DfcProvider::Api::CatalogItemsController, type: :controller do
   render_views
 
-  let(:user) { create(:user) }
-  let(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let(:product) { create(:simple_product, supplier: enterprise ) }
-  let!(:visible_inventory_item) do
-    create(:inventory_item,
-           enterprise: enterprise,
-           variant: product.variants.first,
-           visible: true)
-  end
+  let!(:user) { create(:user) }
+  let!(:enterprise) { create(:distributor_enterprise, owner: user) }
+  let!(:product) { create(:simple_product, supplier: enterprise ) }
+  let!(:variant) { product.variants.first }
 
   describe('.index') do
     context 'with authorization token' do
@@ -37,9 +32,13 @@ describe DfcProvider::Api::ProductsController, type: :controller do
                 expect(response.status).to eq 200
               end
 
-              it 'renders the related product' do
+              it 'renders the required content' do
                 expect(response.body)
-                  .to include(product.variants.first.name)
+                  .to include(variant.name)
+                expect(response.body)
+                  .to include(variant.sku)
+                expect(response.body)
+                  .to include("offers/#{variant.id}")
               end
             end
 
@@ -60,9 +59,13 @@ describe DfcProvider::Api::ProductsController, type: :controller do
               expect(response.status).to eq 200
             end
 
-            it 'renders the related product' do
+            it 'renders the required content' do
               expect(response.body)
-                .to include(product.variants.first.name)
+                .to include(variant.name)
+              expect(response.body)
+                .to include(variant.sku)
+              expect(response.body)
+                .to include("offers/#{variant.id}")
             end
           end
         end
@@ -70,7 +73,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         context 'without a recorded enterprise' do
           let(:enterprise) { create(:enterprise) }
 
-          it 'returns not_found head' do
+          it 'is not found' do
             api_get :index, enterprise_id: 'default'
             expect(response.status).to eq 404
           end
@@ -93,6 +96,55 @@ describe DfcProvider::Api::ProductsController, type: :controller do
       it 'returns unprocessable_entity head' do
         api_get :index, enterprise_id: enterprise.id
         expect(response.status).to eq 422
+      end
+    end
+  end
+
+  describe('.show') do
+    context 'with authorization token' do
+      before do
+        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
+      end
+
+      context 'with an authenticated user' do
+        before do
+          allow_any_instance_of(DfcProvider::AuthorizationControl)
+            .to receive(:process)
+            .and_return(user)
+        end
+
+        context 'with an enterprise' do
+          context 'given with an id' do
+            before do
+              api_get :show,
+                      enterprise_id: enterprise.id,
+                      id: variant.id
+            end
+
+            it 'is successful' do
+              expect(response.status).to eq 200
+            end
+
+            it 'renders the required content' do
+              expect(response.body)
+                .to include('dfc:CatalogItem')
+              expect(response.body)
+                .to include("offers/#{variant.id}")
+            end
+          end
+
+          context 'with a variant not linked to the enterprise' do
+            before do
+              api_get :show,
+                      enterprise_id: enterprise.id,
+                      id: create(:simple_product).variants.first.id
+            end
+
+            it 'is not found' do
+              expect(response.status).to eq 404
+            end
+          end
+        end
       end
     end
   end

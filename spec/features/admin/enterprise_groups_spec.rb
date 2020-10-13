@@ -33,8 +33,8 @@ feature '
     fill_in 'enterprise_group_name', with: 'EGEGEG'
     fill_in 'enterprise_group_description', with: 'This is a description'
     check 'enterprise_group_on_front_page'
-    targetted_select2_search e1.name, from: '#s2id_enterprise_group_enterprise_ids'
-    targetted_select2_search e2.name, from: '#s2id_enterprise_group_enterprise_ids'
+    select2_select e1.name, from: 'enterprise_group_enterprise_ids', search: true
+    select2_select e2.name, from: 'enterprise_group_enterprise_ids', search: true
     click_link 'Contact'
     fill_in 'enterprise_group_address_attributes_phone', with: '000'
     fill_in 'enterprise_group_address_attributes_address1', with: 'My Street'

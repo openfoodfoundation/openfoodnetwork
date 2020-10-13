@@ -139,7 +139,7 @@ feature 'Enterprises Index' do
         expect(page).to have_no_content "supplier2.name"
         expect(page).to have_no_content "distributor2.name"
 
-        expect(find("#content-header")).to have_link "New Enterprise"
+        expect(find('.js-admin-section-header')).to have_link "New Enterprise"
       end
 
       it "does not give me an option to change or update the package and producer properties of enterprises I manage" do

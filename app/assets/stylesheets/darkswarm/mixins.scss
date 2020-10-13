@@ -1,4 +1,5 @@
 // Note this mixin file is used in ADMIN and FRONTEND
+@import 'shared/variables/layout';
 
 @import "branding";
 
@@ -258,15 +259,15 @@
 
 @mixin breakpoint($point) {
   @if $point == desktop {
-    @media all and (max-width: 1024px) { @content; }
+    @media all and (max-width: $desktop_breakpoint) { @content; }
   }
   @else if $point == tablet {
-    @media all and (max-width: 768px) { @content; }
+    @media all and (max-width: $tablet_breakpoint) { @content; }
   }
   @else if $point == phablet {
-    @media all and (max-width: 640px)  { @content; }
+    @media all and (max-width: $phablet_breakpoint)  { @content; }
   }
   @else if $point == mobile {
-    @media all and (max-width: 480px)  { @content; }
+    @media all and (max-width: $mobile_breakpoint)  { @content; }
   }
 }

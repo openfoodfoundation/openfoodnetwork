@@ -121,6 +121,7 @@ en_NZ:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
   datetime_picker_ui:
+    current_text: Now
     close_text: Done
     time_text: Time
   enterprise_mailer:
@@ -600,6 +601,7 @@ en_NZ:
         order_date: "Completed at"
         max: "Max"
         product_unit: "Product: Unit"
+        weight_volume: "Weight/Volume (g)"
         ask: "Ask?"
         page_title: "Bulk Order Management"
         actions_delete: "Delete Selected"
@@ -636,6 +638,8 @@ en_NZ:
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
+          terms_and_conditions: "Terms and Conditions"
+          remove_terms_and_conditions: "Remove File"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -1144,12 +1148,17 @@ en_NZ:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
   checkout:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    terms_and_conditions:
+      message_html: "By placing this order you agree to the %{terms_and_conditions_link}."
+      link_text: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -2295,6 +2304,7 @@ en_NZ:
   enterprise_name_error: "has already been taken. If this is your enterprise and you would like to claim ownership, or if you would like to trade with this enterprise please contact the current manager of this profile at %{email}."
   enterprise_owner_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^That role is already present."
+  enterprise_terms_and_conditions_type_error: "Only PDFs are allowed"
   inventory_item_visibility_error: must be true or false
   product_importer_file_error: "error: no file uploaded"
   product_importer_spreadsheet_error: "could not process file: invalid filetype"
@@ -2573,6 +2583,8 @@ en_NZ:
             immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
             removed_promo_image_successfully: "Promo image removed successfully"
             immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
+            immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
+            removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
@@ -2646,6 +2658,11 @@ en_NZ:
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          There was a problem setting up your card in our payments gateway.
+          Please refresh the page and try again, if it fails a second time,
+          please contact us for support.
   inflections:
     each:
       one: "each"

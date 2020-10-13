@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Calculator::PerItem do
   let(:calculator) { Calculator::PerItem.new(preferred_amount: 10) }
   let(:shipping_calculable) { double(:calculable) }
-  let(:line_item) { build(:line_item, quantity: 5) }
+  let(:line_item) { build_stubbed(:line_item, quantity: 5) }
 
   it "correctly calculates on a single line item object" do
     allow(calculator).to receive_messages(calculable: shipping_calculable)

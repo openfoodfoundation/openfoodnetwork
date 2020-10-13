@@ -253,7 +253,7 @@ module ProductImport
 
       products.flat_map(&:variants).each do |existing_variant|
         unit_scale = existing_variant.product.variant_unit_scale
-        unscaled_units = entry.unscaled_units || 0
+        unscaled_units = entry.unscaled_units.to_f || 0
         entry.unit_value = unscaled_units * unit_scale unless unit_scale.nil?
 
         if entry_matches_existing_variant?(entry, existing_variant)

@@ -117,7 +117,7 @@ feature '
 
       it "allows adding new managers" do
         within 'table.managers' do
-          targetted_select2_search user3.email, from: '#s2id_ignored'
+          select2_select user3.email, from: 'ignored', search: true
 
           # user3 has been added and has an unconfirmed email address
           expect(page).to have_css "tr#manager-#{user3.id}"

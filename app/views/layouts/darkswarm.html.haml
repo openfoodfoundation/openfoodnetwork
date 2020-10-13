@@ -40,7 +40,8 @@
     = render "layouts/bugsnag_js"
 
     - if Spree::Config.stripe_connect_enabled
-      %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+      = render "shared/stripe_js"
+
     - if !ContentConfig.open_street_map_enabled
       %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
 

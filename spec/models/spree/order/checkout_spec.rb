@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Order do
+describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 
   context "with default state machine" do
@@ -15,8 +15,6 @@ describe Spree::Order do
 
     it "has the following transitions" do
       transitions.each do |transition|
-        puts transition.keys.first
-        puts transition.values.first
         transition = Spree::Order.find_transition(from: transition.keys.first,
                                                   to: transition.values.first)
         expect(transition).to_not be_nil
@@ -302,12 +300,12 @@ describe Spree::Order do
   end
 
   describe 'event :restart_checkout' do
-    let(:order) { create(:order) }
+    let(:order) { build_stubbed(:order) }
 
     context 'when the order is not complete' do
       before { allow(order).to receive(:completed?) { false } }
 
-      it 'does transition to cart state' do
+      it 'transitions to cart state' do
         expect(order.state).to eq('cart')
       end
     end

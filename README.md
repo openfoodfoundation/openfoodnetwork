@@ -9,7 +9,7 @@ Supported by the Open Food Foundation and a network of global affiliates, we are
 
 We're part of global movement - get involved!
 
-* Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel.
+* Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel and join #dev for all tech-related topics.
 * Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project.
 * Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials.
 * Join our [discussion forum](https://community.openfoodnetwork.org).
@@ -19,6 +19,11 @@ We're part of global movement - get involved!
 If you are interested in contributing to the OFN in any capacity, please introduce yourself [on Slack][slack-invite], and have a look through our [Contributor Guide][contributor-guide].
 
 Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) guides are the best place to start for developers looking to set up a development environment and make contributions to the codebase.
+
+### Hacktoberfest :tada:
+
+Are you participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/)? Go check out our [Welcome New Developers project board][welcome-dev]! We have curated all issues we consider to be a good starting point for new members of the community and categorized them by skills and level of complexity. 
+Have a look and pick the one you would prefer working on!
 
 ## Provisioning
 
@@ -39,3 +44,4 @@ Copyright (c) 2012 - 2020 Open Food Foundation, released under the AGPL licence.
 [contributor-guide]: https://ofn-user-guide.gitbook.io/ofn-contributor-guide/who-are-we
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
+[welcome-dev]: https://github.com/openfoodfoundation/openfoodnetwork/projects/27
