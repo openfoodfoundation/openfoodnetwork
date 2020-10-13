@@ -2,7 +2,7 @@
   %span.joyride-nub.top
   .background{ng: {click: "tt_isOpen = false"}}
   .joyride-content-wrapper
-    %h6= t("price_breakdown")
+    %h6 {{ "js.shopfront.price_breakdown" | t }}
     %ul
       %li
         .right {{ ::variant.price | localizeCurrency }}
