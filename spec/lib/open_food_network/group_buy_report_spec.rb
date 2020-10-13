@@ -56,8 +56,8 @@ module OpenFoodNetwork
 
       line_items = @orders.map(&:line_items).flatten.select{ |li| li.product.supplier == @supplier1 && li.variant == @variant1 }
 
-      sum_quantities = line_items.map(&:quantity).sum
-      sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.sum
+      sum_quantities = line_items.map(&:quantity).to_a.sum
+      sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.to_a.sum
 
       expect(table[0]).to eq([@variant1.product.supplier.name, @variant1.product.name, "UNITSIZE", @variant1.options_text, @variant1.weight, sum_quantities, sum_max_quantities])
     end

@@ -9,9 +9,9 @@ module OpenFoodNetwork
 
     context "constructing the table" do
       it "should build a tree then build a table" do
-        rules = [{ group_by: proc { |sentence| sentence.paragraph.chapter }, sort_by: proc { |chapter| chapter.name }, summary_columns: [proc { |is| is.first.paragraph.chapter.name }, proc { |_is| "TOTAL" }, proc { |_is| "" }, proc { |is| is.sum(&:property1) }] },
+        rules = [{ group_by: proc { |sentence| sentence.paragraph.chapter }, sort_by: proc { |chapter| chapter.name }, summary_columns: [proc { |is| is.first.paragraph.chapter.name }, proc { |_is| "TOTAL" }, proc { |_is| "" }, proc { |is| is.to_a.sum(&:property1) }] },
                  { group_by: proc { |sentence| sentence.paragraph }, sort_by: proc { |paragraph| paragraph.name } }]
-        columns = [proc { |is| is.first.paragraph.chapter.name }, proc { |is| is.first.paragraph.name }, proc { |is| is.first.name }, proc { |is| is.sum(&:property1) }]
+        columns = [proc { |is| is.first.paragraph.chapter.name }, proc { |is| is.first.paragraph.name }, proc { |is| is.first.name }, proc { |is| is.to_a.sum(&:property1) }]
 
         subject = OrderGrouper.new rules, columns
 
