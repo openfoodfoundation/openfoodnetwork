@@ -44,7 +44,7 @@ module Spree
       end
 
       def update
-        unless @order.update(order_params) && @order.line_items.present?
+        unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
