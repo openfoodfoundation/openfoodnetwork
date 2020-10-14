@@ -224,6 +224,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def checkout_failed(error = RuntimeError.new(order_error))
+    puts error.message
     Bugsnag.notify(error)
     flash[:error] = order_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
