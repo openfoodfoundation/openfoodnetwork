@@ -17,6 +17,8 @@ feature '
     create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
   end
 
+  before { setup_stripe }
+
   context "making a new Stripe payment", js: true do
     before do
       stub_payment_methods_post_request
