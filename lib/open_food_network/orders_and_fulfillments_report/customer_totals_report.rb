@@ -134,7 +134,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.variant.product.name },
           proc { |line_items| line_items.first.variant.full_name },
 
-          proc { |line_items| line_items.sum(:quantity) },
+          proc { |line_items| line_items.to_a.sum(&:quantity) },
           proc { |line_items| line_items.sum(&:amount) },
           proc { |line_items| line_items.sum(&:amount_with_adjustments) },
           proc { |_line_items| "" },
