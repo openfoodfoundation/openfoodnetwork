@@ -44,6 +44,8 @@ class CheckoutController < Spree::StoreController
   end
 
   def update
+    pp "#update: order state: #{@order.state}"
+
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
     return action_failed unless @order.update(params_adapter.params[:order])
 

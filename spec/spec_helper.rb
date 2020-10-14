@@ -159,6 +159,16 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:all) do
+    ApplicationController.class_eval do
+      rescue_from WebMock::NetConnectNotAllowedError, with: :handle_webmock_error
+
+      def handle_webmock_error(exception)
+        raise exception.message
+      end
+    end
+  end
+
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers

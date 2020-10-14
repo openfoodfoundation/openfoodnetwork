@@ -21,6 +21,7 @@ class OrderCheckoutRestart
   attr_reader :order
 
   def reset_state_to_cart
+    pp "#reset_state_to_cart order state: #{order.state}"
     order.restart_checkout!
   end
 
