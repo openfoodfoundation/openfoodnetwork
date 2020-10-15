@@ -44,6 +44,7 @@
 #= require moment/locale/ru.js
 #= require moment/locale/sv.js
 #= require moment/locale/tr.js
+#= require moment/locale/pl.js
 #
 #= require modernizr
 #
