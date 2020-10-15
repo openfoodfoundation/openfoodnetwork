@@ -88,7 +88,7 @@ module Admin
         redirect_to main_app.admin_enterprises_path
       else
         touched_enterprises = @enterprise_set.collection.select(&:changed?)
-        @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
+        @enterprise_set.collection.to_a.select! { |e| touched_enterprises.include? e }
         flash[:error] = I18n.t(:enterprise_bulk_update_error)
         render :index
       end
