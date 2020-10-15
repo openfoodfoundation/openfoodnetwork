@@ -170,58 +170,6 @@ describe Spree::Order::Checkout do
     end
   end
 
-  context "re-define checkout flow" do
-    before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        checkout_flow do
-          go_to_state :payment
-          go_to_state :complete
-        end
-      end
-    end
-
-    after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
-    end
-
-    it "should not keep old event transitions when checkout_flow is redefined" do
-      expect(Spree::Order.next_event_transitions).to eq [{ cart: :payment }, { payment: :complete }]
-    end
-
-    it "should not keep old events when checkout_flow is redefined" do
-      state_machine = Spree::Order.state_machine
-      expect(state_machine.states.any? { |s| s.name == :address }).to be_falsy
-      known_states = state_machine.events[:next].branches.map(&:known_states).flatten
-      expect(known_states).to_not include(:address)
-      expect(known_states).to_not include(:delivery)
-      expect(known_states).to_not include(:confirm)
-    end
-  end
-
-  # Regression test for Spree #3665
-  context "with only a complete step" do
-    before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        checkout_flow do
-          go_to_state :complete
-        end
-      end
-    end
-
-    after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
-    end
-
-    it "does not attempt to process payments" do
-      allow(order).to receive_message_chain(:line_items, :present?).and_return(true)
-      expect(order).to_not receive(:payment_required?)
-      expect(order).to_not receive(:process_payments!)
-      order.next!
-    end
-  end
-
   describe 'event :restart_checkout' do
     let(:order) { build_stubbed(:order) }
 
