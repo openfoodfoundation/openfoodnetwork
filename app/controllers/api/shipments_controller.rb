@@ -88,7 +88,7 @@ module Api
 
     def find_and_update_shipment
       @shipment = @order.shipments.find_by!(number: params[:id])
-      @shipment.update(params[:shipment])
+      @shipment.update(params[:shipment]) if params[:shipment].present?
       @shipment.reload
     end
 
