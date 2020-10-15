@@ -30,16 +30,6 @@ describe Spree::Order::Checkout do
       expect(Spree::Order.find_transition({ foo: :bar, baz: :dog })).to be_falsy
     end
 
-    it '.remove_transition' do
-      options = { from: transitions.first.keys.first, to: transitions.first.values.first }
-      allow(Spree::Order).to receive(:next_event_transition).and_return([options])
-      expect(Spree::Order.remove_transition(options)).to be_truthy
-    end
-
-    it '.remove_transition when contract was broken' do
-      expect(Spree::Order.remove_transition(nil)).to be_falsy
-    end
-
     context "#checkout_steps" do
       context "when payment not required" do
         before { allow(order).to receive_messages payment_required?: false }
@@ -229,73 +219,6 @@ describe Spree::Order::Checkout do
       expect(order).to_not receive(:payment_required?)
       expect(order).to_not receive(:process_payments!)
       order.next!
-    end
-  end
-
-  context "insert checkout step" do
-    before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        insert_checkout_step :new_step, before: :address
-      end
-    end
-
-    after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
-    end
-
-    it "should maintain removed transitions" do
-      transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      expect(transition).to be_nil
-    end
-
-    context "before" do
-      before do
-        Spree::Order.class_eval do
-          insert_checkout_step :before_address, before: :address
-        end
-      end
-
-      specify do
-        order = Spree::Order.new
-        expect(order.checkout_steps).to eq %w(new_step before_address address delivery complete)
-      end
-    end
-
-    context "after" do
-      before do
-        Spree::Order.class_eval do
-          insert_checkout_step :after_address, after: :address
-        end
-      end
-
-      specify do
-        order = Spree::Order.new
-        expect(order.checkout_steps).to eq %w(new_step address after_address delivery complete)
-      end
-    end
-  end
-
-  context "remove checkout step" do
-    before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        remove_checkout_step :address
-      end
-    end
-
-    after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
-    end
-
-    it "should maintain removed transitions" do
-      transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      expect(transition).to be_nil
-    end
-
-    specify do
-      order = Spree::Order.new
-      expect(order.checkout_steps).to eq %w(delivery complete)
     end
   end
 
