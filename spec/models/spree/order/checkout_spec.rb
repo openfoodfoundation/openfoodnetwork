@@ -150,26 +150,6 @@ describe Spree::Order::Checkout do
     end
   end
 
-  context "subclassed order" do
-    # This causes another test above to fail, but fixing this test should make
-    #   the other test pass
-    class SubclassedOrder < Spree::Order
-      checkout_flow do
-        go_to_state :payment
-        go_to_state :complete
-      end
-    end
-
-    it "should only call default transitions once when checkout_flow is redefined" do
-      order = SubclassedOrder.new
-      allow(order).to receive_messages payment_required?: true
-      expect(order).to receive(:process_payments!).once
-      order.state = "payment"
-      order.next!
-      expect(order.state).to eq "complete"
-    end
-  end
-
   describe 'event :restart_checkout' do
     let(:order) { build_stubbed(:order) }
 
