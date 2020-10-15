@@ -655,7 +655,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
     state_machine (1.2.0)
     stringex (1.5.1)
-    stripe (5.25.0)
+    stripe (5.28.0)
     temple (0.8.2)
     test-prof (0.7.5)
     test-unit (3.3.6)
