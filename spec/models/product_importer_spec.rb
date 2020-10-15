@@ -484,7 +484,7 @@ describe ProductImport::ProductImporter do
       expect(importer.inventory_updated_count).to eq 0
       expect(importer.updated_ids.count).to eq 2
 
-      products = Spree::Product.find_all_by_name('Bag of Oats')
+      products = Spree::Product.where(name: 'Bag of Oats')
 
       expect(products.count).to eq 1
       expect(products.first.variants.count).to eq 5
