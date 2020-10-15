@@ -92,4 +92,3 @@ module StripeHelper
       body: JSON.generate(id: "pm_456", customer: "cus_A123") }
   end
 end
-

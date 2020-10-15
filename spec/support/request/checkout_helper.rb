@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckoutHelper
   def have_checkout_details
     have_content "Your details"
@@ -47,9 +49,9 @@ module CheckoutHelper
 
     fill_out_billing_address
 
-    if save_default_addresses
-      check "Shipping address same as billing address?"
-      check "Save as default shipping address"
-    end
+    return unless save_default_addresses
+
+    check "Shipping address same as billing address?"
+    check "Save as default shipping address"
   end
 end
