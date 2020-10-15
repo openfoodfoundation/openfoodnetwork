@@ -8,26 +8,9 @@ Hopefully, this will evolve into a propper class.
 **/
 
 jQuery(function($) {
-  // Make main menu use full width
-  mainMenu = $('.fullwidth-menu')
-  if (typeof mainMenu.horizontalNav === 'function' )
-    mainMenu.horizontalNav({
-      tableDisplay: false,
-      responsiveDelay: 0
-    });
-
   // Vertical align of checkbox fields
   if (typeof $('.field.checkbox label').vAlign === 'function' )
     $('.field.checkbox label').vAlign()
-
-  // We activate AdaptiveMenu only if not on webdriver
-  // Re-adjusting the admin menu during tests causes tests to fail.
-  if (!navigator.webdriver && typeof Spree !== 'undefined') {
-    $('.main-menu-wrapper ul').AdaptiveMenu({
-      text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
-      klass: "dropdown"
-    });
-  }
 
   // Add some tips
   if (typeof $('.with-tip').powerTip === 'function' ) {
