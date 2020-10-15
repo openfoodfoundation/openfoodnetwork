@@ -663,7 +663,7 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (1.4.1)
-    timecop (0.9.1)
+    timecop (0.9.2)
     truncate_html (0.9.2)
     tzinfo (0.3.57)
     uglifier (4.2.0)
