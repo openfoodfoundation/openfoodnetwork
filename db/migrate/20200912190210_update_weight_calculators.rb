@@ -1,7 +1,7 @@
 class UpdateWeightCalculators < ActiveRecord::Migration
   def change
     Spree::Calculator.connection.execute(
-      "UPDATE spree_preferences SET key = replace( key, 'per_kg', 'per_unit') WHERE key like '/calculator/weight/per_kg/%'"
+      "UPDATE spree_preferences SET key = replace( key, 'per_kg', 'per_unit') WHERE key ilike '/calculator/weight/per_kg/%'"
     )
 
     Calculator::Weight.all.each { |calculator|
