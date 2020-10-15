@@ -72,6 +72,7 @@ module Spree
       else
         Spree::User
           .includes(:enterprises)
+          .references(:enterprises)
           .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)",
                  id)
       end
