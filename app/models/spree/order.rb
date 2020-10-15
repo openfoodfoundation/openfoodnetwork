@@ -593,7 +593,9 @@ module Spree
       adjustments.shipping.delete_all
       shipments.destroy_all
 
-      packages = OrderManagement::Stock::Coordinator.new(self).packages
+      packages = OrderManagement::Stock::Coordinator.new(self).packages(
+        checkout: true, apply_tags: true
+      )
       packages.each do |package|
         shipments << package.to_shipment
       end
