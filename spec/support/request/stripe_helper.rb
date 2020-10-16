@@ -21,16 +21,31 @@ module StripeHelper
     fill_in 'CVC', with: '123'
   end
 
+  def fill_in_card_details_in_backoffice
+    choose "StripeSCA"
+    fill_in "cardholder_name", with: "David Gilmour"
+    fill_in "stripe-cardnumber", with: "4242424242424242"
+    fill_in "exp-date", with: "01-01-2050"
+    fill_in "cvc", with: "678"
+  end
+
   def setup_stripe
     allow(Stripe).to receive(:api_key) { "sk_test_12345" }
     allow(Stripe).to receive(:publishable_key) { "pk_test_12345" }
     Spree::Config.set(stripe_connect_enabled: true)
   end
 
-  def stub_payment_intents_post_request(order:, response: {})
+  def stub_payment_intents_post_request(order:, response: {}, stripe_account_header: true)
+    stub = stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+    stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
+    stub.to_return(payment_intent_authorize_response_mock(response))
+  end
+
+  def stub_payment_intents_post_request_with_redirect(order:, redirect_url:)
     stub_request(:post, "https://api.stripe.com/v1/payment_intents")
       .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
-      .to_return(payment_intent_authorize_response_mock(response))
+      .to_return(payment_intent_redirect_response_mock(redirect_url))
   end
 
   def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
@@ -39,7 +54,7 @@ module StripeHelper
     stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
-  def stub_hub_payment_methods_request(response: {})
+  def stub_payment_methods_post_request(response: {})
     stub_request(:post, "https://api.stripe.com/v1/payment_methods")
       .with(body: { payment_method: "pm_123" },
             headers: { 'Stripe-Account' => 'abc123' })
@@ -61,6 +76,13 @@ module StripeHelper
       .to_return(response_mock)
   end
 
+  def stub_refund_request
+    stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds")
+      .with(body: { amount: 2000, expand: ["charge"] },
+            headers: { 'Stripe-Account' => 'abc123' })
+      .to_return(payment_successful_refund_mock)
+  end
+
   private
 
   def payment_intent_authorize_response_mock(options)
@@ -72,6 +94,16 @@ module StripeHelper
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
                           charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+  end
+
+  def payment_intent_redirect_response_mock(redirect_url)
+    { status: 200, body: JSON.generate(id: "pi_123",
+                                       object: "payment_intent",
+                                       next_source_action: {
+                                         type: "authorize_with_url",
+                                         authorize_with_url: { url: redirect_url }
+                                       },
+                                       status: "requires_source_action") }
   end
 
   def payment_successful_capture_mock(options)
@@ -90,5 +122,12 @@ module StripeHelper
   def hub_payment_method_response_mock(options)
     { status: options[:code] || 200,
       body: JSON.generate(id: "pm_456", customer: "cus_A123") }
+  end
+
+  def payment_successful_refund_mock
+    { status: 200,
+      body: JSON.generate(object: "refund",
+                          amount: 2000,
+                          charge: "ch_1234") }
   end
 end

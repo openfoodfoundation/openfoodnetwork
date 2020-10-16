@@ -553,10 +553,6 @@ module Spree
       line_item_adjustments.destroy_all
     end
 
-    def has_step?(step)
-      checkout_steps.include?(step)
-    end
-
     def state_changed(name)
       state = "#{name}_state"
       return unless persisted?
@@ -803,7 +799,6 @@ module Spree
     end
 
     def has_available_shipment
-      return unless has_step?("delivery")
       return unless address?
       return unless ship_address&.valid?
       # errors.add(:base, :no_shipping_methods_available) if available_shipping_methods.empty?

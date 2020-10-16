@@ -10,9 +10,7 @@ module Spree
     let!(:line_item2) { create(:line_item, order: order) }
 
     before do
-      order.line_items << line_item
-      order.line_items << line_item2
-      order.shipments = [shipment]
+      order.reload.shipments = [shipment]
     end
 
     describe "#line_items_for" do
