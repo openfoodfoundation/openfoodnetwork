@@ -61,6 +61,14 @@ module StripeHelper
       .to_return(hub_payment_method_response_mock(response))
   end
 
+  # Attaches the payment method to the customer in the hub's stripe account
+  def stub_payment_method_attach_request
+    stub_request(:post,
+                 "https://api.stripe.com/v1/payment_methods/pm_123/attach")
+      .with(body: { customer: "cus_A123" })
+      .to_return(hub_payment_method_response_mock({ pm_id: "pm_123" }))
+  end
+
   def stub_successful_capture_request(order:, response: {})
     stub_capture_request(order, payment_successful_capture_mock(response))
   end

@@ -209,13 +209,6 @@ feature "Check out with Stripe", js: true do
                                 sources: { data: [id: "cus_A123"] }) }
         end
 
-        let(:hubs_payment_method_response_mock) do
-          {
-            status: 200,
-            body: JSON.generate(id: "pm_123", customer: "cus_A123")
-          }
-        end
-
         before do
           stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
           stub_payment_intents_post_request order: order
@@ -227,11 +220,7 @@ feature "Check out with Stripe", js: true do
             .with(body: { email: user.email })
             .to_return(customers_response_mock)
 
-          # Attaches the payment method to the customer in the hub's stripe account
-          stub_request(:post,
-                       "https://api.stripe.com/v1/payment_methods/pm_123/attach")
-            .with(body: { customer: "cus_A123" })
-            .to_return(hubs_payment_method_response_mock)
+          stub_payment_method_attach_request
         end
 
         it "allows saving a card and re-using it" do
