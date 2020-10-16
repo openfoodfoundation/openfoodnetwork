@@ -241,9 +241,23 @@ feature "Check out with Stripe", js: true do
           expect(order.reload.completed?).to eq true
           expect(order.payments.first.state).to eq "completed"
 
+          # Verify card has been saved with correct stripe IDs
           user_credit_card = order.reload.user.credit_cards.first
           expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
           expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
+
+          # Prepare a second order
+          new_order = create(:order, user: user, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil)
+          set_order(new_order)
+          add_product_to_cart(new_order, product, quantity: 10)
+
+          # Checkout with saved card
+          visit checkout_path
+          choose free_shipping.name
+          choose stripe_sca_payment_method.name
+          expect(page).to have_content "Use a saved card"
+          expect(page).to have_select 'selected_card', selected: "Visa x-4242 Exp:10/2050"
+          place_order
         end
       end
     end
