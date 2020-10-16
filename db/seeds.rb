@@ -20,32 +20,30 @@ end
 # We need mail_configuration to create a user account, because it sends a confirmation email.
 set_mail_configuration
 
-# -- Spree
+puts "[db:seed] Seeding Roles"
+Spree::Role.where(:name => "admin").first_or_create
+Spree::Role.where(:name => "user").first_or_create
+
+puts "[db:seed] Seeding Countries"
 unless Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
-  puts "[db:seed] Seeding Spree"
-  Spree::Core::Engine.load_seed if defined?(Spree::Core)
-  Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+  require File.join(File.dirname(__FILE__), 'default', 'countries')
 end
-
 country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
-puts "Country is #{country.to_s}"
+puts "Default country is #{country.to_s}"
 
-puts "[db:seed] loading states yaml"
-states = YAML::load_file "db/default/spree/states.yml"
-puts "States: #{states.to_s}"
-
-# -- Seeding States
 puts "[db:seed] Seeding states for " + country.name
-
+states = YAML::load_file "db/default/states.yml"
 states.each do |state|
   puts "State: " + state.to_s
-
   unless Spree::State.find_by(name: state['name'])
     Spree::State.create!({ name: state['name'], abbr: state['abbr'], country: country })
   end
 end
 
-# Create users:
+puts "[db:seed] Seeding Zones"
+require File.join(File.dirname(__FILE__), 'default', 'zones')
+
+puts "[db:seed] Seeding Users"
 require File.join(File.dirname(__FILE__), 'default', 'users')
 
 DefaultStockLocation.find_or_create
