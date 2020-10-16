@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Lists all PRs for the next release in a neat list to copy into the release
+# template. It also opens all PRs in Firefox so that you can find the release
+# notes.
+
+git fetch upstream
+latest="$(git tag --sort="-v:refname" | head -1)"
+
+echo "Changes since last release $latest:"
+
+pr_numbers() {
+	git log "$latest.." --merges --oneline |\
+        grep -oP 'Merge pull request #\K[0-9]+(?= from)'
+}
+
+pr_numbers |\
+       while read n; do echo "https://github.com/openfoodfoundation/openfoodnetwork/pull/$n"; done |\
+       xargs firefox
+
+pr_numbers |\
+       while read n; do echo "- #$n "; done
