@@ -46,3 +46,4 @@ coverage
 /reports/
 !/reports/README.md
 bin/
+docker-compose.override.yml
