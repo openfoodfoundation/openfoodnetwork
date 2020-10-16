@@ -1,7 +1,13 @@
-class Api::Admin::CalculatorSerializer < ActiveModel::Serializer
-  attributes :name, :description
+# frozen_string_literal: true
 
-  delegate :name, to: :object
+module Api
+  module Admin
+    class CalculatorSerializer < ActiveModel::Serializer
+      attributes :name, :description
 
-  delegate :description, to: :object
+      delegate :name, to: :object
+
+      delegate :description, to: :object
+    end
+  end
 end
