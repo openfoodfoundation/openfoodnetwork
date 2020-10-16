@@ -1,7 +1,8 @@
 FROM ubuntu:18.04
 
 # Install all the requirements
-RUN apt-get update && apt-get install -y curl git build-essential software-properties-common wget zlib1g-dev libssl1.0-dev libreadline-dev libyaml-dev libffi-dev libxml2-dev libxslt1-dev wait-for-it imagemagick unzip
+RUN apt-get update && apt-get install -y curl git build-essential software-properties-common wget zlib1g-dev libssl1.0-dev libreadline-dev libyaml-dev libffi-dev libxml2-dev libxslt1-dev wait-for-it imagemagick unzip && \
+apt-get install -y links2 elinks links lynx w3m
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
