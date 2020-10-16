@@ -3529,11 +3529,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         out_of_stock: "Out of Stock"
         unavailable_item: "Currently unavailable"
     shipment_states:
-      backorder: backorder
-      partial: partial
-      pending: pending
-      ready: ready
-      shipped: shipped
+      backorder: "backorder"
+      partial: "partial"
+      pending: "pending"
+      ready: "ready"
+      shipped: "shipped"
+      canceled: "cancelled"
     payment_states:
       balance_due: balance due
       completed: completed

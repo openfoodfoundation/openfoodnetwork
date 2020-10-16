@@ -416,7 +416,9 @@ module Spree
     end
 
     def outstanding_balance
-      total - payment_total
+      outstanding_balance = -payment_total
+      outstanding_balance += total unless state == 'canceled'
+      outstanding_balance
     end
 
     def outstanding_balance?

@@ -14,7 +14,7 @@ module Spree
 
     # Ignores invoice orders, only order where state: 'complete'
     def show
-      @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+      @orders = @user.orders.where(state: ['complete', 'canceled']).order('completed_at desc')
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
