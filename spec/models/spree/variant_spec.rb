@@ -234,7 +234,7 @@ module Spree
         context 'when stock_items out of stock' do
           before do
             allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
-            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+            allow_any_instance_of(Spree::Stock::Quantifier).to receive_messages(total_on_hand: 0)
           end
 
           it 'return false if stock_items out of stock' do
