@@ -25,7 +25,8 @@ module Api
       end
 
       def price
-        # Decimals are passed to json as strings, we need to run parseFloat.toFixed(2) on the client.
+        # Decimals are passed to json as strings,
+        #   we need to run parseFloat.toFixed(2) on the client.
         object.price.nil? ? 0.to_f : object.price
       end
 

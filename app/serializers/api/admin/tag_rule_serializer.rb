@@ -50,7 +50,9 @@ module Api
       end
 
       class FilterOrderCyclesSerializer < BaseSerializer
-        attributes :preferred_matched_order_cycles_visibility, :preferred_exchange_tags, :exchange_tags
+        attributes :preferred_matched_order_cycles_visibility,
+                   :preferred_exchange_tags,
+                   :exchange_tags
 
         def exchange_tags
           object.preferred_exchange_tags.split(",")

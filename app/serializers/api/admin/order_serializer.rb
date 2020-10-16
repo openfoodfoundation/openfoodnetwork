@@ -6,8 +6,8 @@ module Api
       attributes :id, :number, :user_id, :full_name, :email, :phone, :completed_at, :display_total,
                  :edit_path, :state, :payment_state, :shipment_state,
                  :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
-                 :distributor_name, :special_instructions,
-                 :item_total, :adjustment_total, :payment_total, :total, :display_outstanding_balance
+                 :distributor_name, :special_instructions, :display_outstanding_balance,
+                 :item_total, :adjustment_total, :payment_total, :total
 
       has_one :distributor, serializer: Api::Admin::IdSerializer
       has_one :order_cycle, serializer: Api::Admin::IdSerializer

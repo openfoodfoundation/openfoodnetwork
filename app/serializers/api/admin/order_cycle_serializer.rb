@@ -6,7 +6,8 @@ module Api
   module Admin
     class OrderCycleSerializer < ActiveModel::Serializer
       attributes :id, :name, :orders_open_at, :orders_close_at, :coordinator_id, :exchanges,
-                 :editable_variants_for_incoming_exchanges, :editable_variants_for_outgoing_exchanges,
+                 :editable_variants_for_incoming_exchanges,
+                 :editable_variants_for_outgoing_exchanges,
                  :visible_variants_for_outgoing_exchanges,
                  :viewing_as_coordinator, :schedule_ids, :subscriptions_count
 

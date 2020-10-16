@@ -4,10 +4,10 @@ module Api
   module Admin
     class EnterpriseSerializer < ActiveModel::Serializer
       attributes :name, :id, :is_primary_producer, :is_distributor, :sells, :category, :permalink,
-                 :payment_method_ids, :shipping_method_ids, :producer_profile_only, :long_description,
+                 :payment_method_ids, :shipping_method_ids, :producer_profile_only,
+                 :long_description, :preferred_product_selection_from_inventory_only,
                  :preferred_shopfront_message, :preferred_shopfront_closed_message,
                  :preferred_shopfront_taxon_order, :preferred_shopfront_order_cycle_order,
-                 :preferred_product_selection_from_inventory_only,
                  :preferred_show_customer_names_to_suppliers, :owner, :contact, :users, :tag_groups,
                  :default_tag_group, :require_login, :allow_guest_orders, :allow_order_changes,
                  :logo, :promo_image, :terms_and_conditions,
@@ -36,7 +36,7 @@ module Api
       end
 
       def tag_groups
-        object.tag_rules.prioritised.reject(&:is_default).each_with_object([]) do |tag_rule, tag_groups|
+        prioritized_tag_rules.each_with_object([]) do |tag_rule, tag_groups|
           tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.
                                                split(",").
                                                map{ |t| { text: t } })
@@ -65,6 +65,10 @@ module Api
       end
 
       private
+
+      def prioritized_tag_rules
+        object.tag_rules.prioritised.reject(&:is_default)
+      end
 
       # Returns a hash of URLs for specified versions of an attachment.
       #
