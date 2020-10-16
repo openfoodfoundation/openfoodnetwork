@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   attributes :id, :email, :enterprise_id, :user_id, :code, :tags, :tag_list, :name,
              :allow_charges, :default_card_present?, :balance, :balance_status
@@ -14,13 +16,13 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def balance
-    Spree::Money.new(balance_value, { currency: Spree::Config[:currency] }).to_s
+    Spree::Money.new(balance_value, currency: Spree::Config[:currency]).to_s
   end
 
   def balance_status
-    if balance_value > 0
+    if balance_value.positive?
       "credit_owed"
-    elsif balance_value < 0
+    elsif balance_value.negative?
       "balance_due"
     else
       ""
@@ -49,6 +51,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def balance_value
-    @balance_value ||= OpenFoodNetwork::UserBalanceCalculator.new(object.email, object.enterprise).balance
+    @balance_value ||=
+      OpenFoodNetwork::UserBalanceCalculator.new(object.email, object.enterprise).balance
   end
 end
