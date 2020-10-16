@@ -1997,6 +1997,7 @@ fr:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
+  calculator_preferred_unit_error: "doit être kg ou lb"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe par article"
   flat_rate_per_order: "Montant fixe par commande"
@@ -3011,7 +3012,7 @@ fr:
     inventory_error_flash_for_insufficient_quantity: "Un produit de votre panier n'est plus disponible."
     inventory: Catalogue boutique
     zipcode: Code postal
-    weight: Poids (au kg)
+    weight: Poids (par kg ou lb)
     error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas ajouter un paiement pour une commande sans avoir défini de méthode de paiement au préalable."
     please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
