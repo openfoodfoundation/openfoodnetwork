@@ -15,7 +15,7 @@ module Api
       @enterprise = Enterprise.new(enterprise_params)
       if @enterprise.save
         @enterprise.user_ids = user_ids
-        render text: @enterprise.id, status: :created
+        render json: @enterprise.id, status: :created
       else
         invalid_resource!(@enterprise)
       end
@@ -26,7 +26,7 @@ module Api
       authorize! :update, @enterprise
 
       if @enterprise.update(enterprise_params)
-        render text: @enterprise.id, status: :ok
+        render json: @enterprise.id, status: :ok
       else
         invalid_resource!(@enterprise)
       end
