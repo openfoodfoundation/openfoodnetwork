@@ -217,7 +217,7 @@ feature "Check out with Stripe", js: true do
         end
 
         before do
-          stub_payment_methods_post_request_with_customer response: { pm_id: "pm_123" }
+          stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
 

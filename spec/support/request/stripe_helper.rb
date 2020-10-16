@@ -54,16 +54,9 @@ module StripeHelper
     stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
-  def stub_payment_methods_post_request(response: {})
+  def stub_payment_methods_post_request(request: { payment_method: "pm_123" }, response: {})
     stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-      .with(body: { payment_method: "pm_123" },
-            headers: { 'Stripe-Account' => 'abc123' })
-      .to_return(hub_payment_method_response_mock(response))
-  end
-
-  def stub_payment_methods_post_request_with_customer(response: {})
-    stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-      .with(body: { payment_method: "pm_123", customer: "cus_A123" },
+      .with(body: request,
             headers: { 'Stripe-Account' => 'abc123' })
       .to_return(hub_payment_method_response_mock(response))
   end
