@@ -35,6 +35,13 @@ module StripeStubs
       .to_return(hub_payment_method_response_mock({ pm_id: "pm_123" }))
   end
 
+  # Stubs the customers call to both the main stripe account and the connected account
+  def stub_customer_post_request(email:)
+    stub_request(:post, "https://api.stripe.com/v1/customers")
+      .with(body: { email: email })
+      .to_return(customers_response_mock)
+  end
+
   def stub_successful_capture_request(order:, response: {})
     stub_capture_request(order, payment_successful_capture_mock(response))
   end
@@ -96,6 +103,12 @@ module StripeStubs
   def hub_payment_method_response_mock(options)
     { status: options[:code] || 200,
       body: JSON.generate(id: options[:pm_id] || "pm_456", customer: "cus_A123") }
+  end
+
+  def customers_response_mock
+    { status: 200,
+      body: JSON.generate(id: "cus_A123",
+                          sources: { data: [id: "cus_A123"] }) }
   end
 
   def payment_successful_refund_mock

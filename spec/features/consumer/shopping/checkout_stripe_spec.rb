@@ -204,23 +204,11 @@ feature "Check out with Stripe", js: true do
       end
 
       context "saving a card and re-using it" do
-        let(:customers_response_mock) do
-          { status: 200,
-            body: JSON.generate(id: "cus_A123",
-                                sources: { data: [id: "cus_A123"] }) }
-        end
-
         before do
           stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
-
-          # Creates a customer
-          #   This stubs the customers call to both the main stripe account and the connected account
-          stub_request(:post, "https://api.stripe.com/v1/customers")
-            .with(body: { email: user.email })
-            .to_return(customers_response_mock)
-
+          stub_customer_post_request email: user.email
           stub_payment_method_attach_request
         end
 
