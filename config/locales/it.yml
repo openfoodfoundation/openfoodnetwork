@@ -1191,11 +1191,11 @@ it:
       customer_required:
         login: "fai il login"
         signup: "Registrati"
-        contact: "contatto"
+        contact: "contatta"
         require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
         require_login_html: "Se sei già un cliente approvato, %{login} o %{signup} per procedere."
-        require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact}%{enterprise}e chiedi di essere aggiunto."
-        require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di raggiungerci."
+        require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
+        require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
         select_oc_html: "Per favore <span class='highlighted'>scegli quando vuoi il tuo ordine </span>, per vedere quali prodotti sono disponibili."
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata

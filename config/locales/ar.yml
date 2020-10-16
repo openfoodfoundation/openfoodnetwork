@@ -3574,7 +3574,7 @@ ar:
         items: المواد
         total: المجموع
         paid?: دفع؟
-        view: العرض
+        view: عرض
       saved_cards:
         default?: الإفتراضي؟
         delete?: حذف؟
