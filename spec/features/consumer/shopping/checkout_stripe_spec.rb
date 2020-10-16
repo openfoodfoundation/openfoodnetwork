@@ -7,6 +7,7 @@ feature "Check out with Stripe", js: true do
   include ShopWorkflow
   include CheckoutHelper
   include StripeHelper
+  include StripeStubs
 
   let(:distributor) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
