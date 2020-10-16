@@ -1995,6 +1995,7 @@ en_FR:
   calculator: "Calculator"
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  calculator_preferred_unit_error: "must be kg or lb"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2982,7 +2983,7 @@ en_FR:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    weight: Weight (per kg)
+    weight: Weight (per kg or lb)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
     please_define_payment_methods: "Please define some payment methods first."
