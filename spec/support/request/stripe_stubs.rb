@@ -36,10 +36,11 @@ module StripeStubs
   end
 
   # Stubs the customers call to both the main stripe account and the connected account
-  def stub_customer_post_request(email:)
-    stub_request(:post, "https://api.stripe.com/v1/customers")
+  def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
+    stub = stub_request(:post, "https://api.stripe.com/v1/customers")
       .with(body: { email: email })
-      .to_return(customers_response_mock)
+    stub = stub.with(headers: { 'Stripe-Account' => 'acct_456' }) if stripe_account_header
+    stub.to_return(customers_response_mock(response))
   end
 
   def stub_successful_capture_request(order:, response: {})
@@ -105,10 +106,11 @@ module StripeStubs
       body: JSON.generate(id: options[:pm_id] || "pm_456", customer: "cus_A123") }
   end
 
-  def customers_response_mock
+  def customers_response_mock(options)
+    customer_id = options[:customer_id] || "cus_A123"
     { status: 200,
-      body: JSON.generate(id: "cus_A123",
-                          sources: { data: [id: "cus_A123"] }) }
+      body: JSON.generate(id: customer_id,
+                          sources: { data: [id: customer_id] }) }
   end
 
   def payment_successful_refund_mock

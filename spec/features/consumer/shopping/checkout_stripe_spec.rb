@@ -208,7 +208,7 @@ feature "Check out with Stripe", js: true do
           stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
-          stub_customer_post_request email: user.email
+          stub_customers_post_request email: user.email
           stub_payment_method_attach_request
         end
 
