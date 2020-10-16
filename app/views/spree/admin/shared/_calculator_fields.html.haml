@@ -2,12 +2,18 @@
   %legend{align: "center"}= t(:calculator)
   #preference-settings
     .field
-      = f.label(:calculator_type, t(:calculator), for: 'calc_type')
-      = f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {id: 'calc_type', class: 'select2 fullwidth'})
+      .alpha.three.columns
+        = f.label(:calculator_type, t(:calculator), for: 'calc_type')
+      .omega.eight.columns
+        = f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {id: 'calc_type', class: 'select2 fullwidth'})
     - if !@object.new_record?
       .field
         .calculator-settings
           = f.fields_for :calculator do |calculator_form|
-            = preference_fields(@object.calculator, calculator_form)
+            - preference_fields(@object.calculator, calculator_form).each do |field|
+              .field.alpha.three.columns
+                = field[:label]
+              .field.omega.eight.columns
+                = field[:field]
         - if @object.calculator.respond_to?(:preferences)
           %span.calculator-settings-warning.info.warning= t(:calculator_settings_warning)

@@ -84,13 +84,13 @@ module Spree
 
       def permitted_resource_params
         params.require(:shipping_method).permit(
-          :name, :description, :display_on,
-          :require_ship_address, :tag_list, :calculator_type,
+          :name, :description, :display_on, :require_ship_address, :tag_list, :calculator_type,
           distributor_ids: [],
           calculator_attributes: [
-            :id, :preferred_currency, :preferred_amount, :preferred_per_kg, :preferred_flat_percent,
-            :preferred_first_item, :preferred_additional_item, :preferred_max_items,
-            :preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount
+            :id, :preferred_currency, :preferred_amount, :preferred_unit_from_list,
+            :preferred_per_unit, :preferred_flat_percent, :preferred_first_item,
+            :preferred_additional_item, :preferred_max_items, :preferred_minimal_amount,
+            :preferred_normal_amount, :preferred_discount_amount
           ]
         )
       end

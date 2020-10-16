@@ -45,18 +45,33 @@ module Spree
         end
       end
 
-      def preference_field_for(form, field, options)
+      def preference_field_for(form, field, options, object)
         case options[:type]
         when :integer
           form.text_field(field, preference_field_options(options))
         when :boolean
           form.check_box(field, preference_field_options(options))
         when :string
-          form.text_field(field, preference_field_options(options))
+          preference_field_for_text_field(form, field, options, object)
         when :password
           form.password_field(field, preference_field_options(options))
         when :text
           form.text_area(field, preference_field_options(options))
+        else
+          form.text_field(field, preference_field_options(options))
+        end
+      end
+
+      # Here we show a text field for all string fields except when the field name ends in
+      # "_from_list", in that case we render a dropdown.
+      # In this specific case, to render the dropdown, the object provided must have a method named
+      # like "#{field}_values" that returns an array with the string options to be listed.
+      def preference_field_for_text_field(form, field, options, object)
+        if field.end_with?('_from_list') && object.respond_to?("#{field}_values")
+          list_values = object.__send__("#{field}_values")
+          selected_value = object.__send__(field)
+          form.select(field, options_for_select(list_values, selected_value),
+                      preference_field_options(options))
         else
           form.text_field(field, preference_field_options(options))
         end
@@ -91,13 +106,21 @@ module Spree
         )
       end
 
+      # maps each preference to a hash containing the label and field html.
+      # E.g. { :label => "<label>...", :field => "<select>..." }
       def preference_fields(object, form)
         return unless object.respond_to?(:preferences)
 
-        object.preferences.keys.map{ |key|
-          form.label("preferred_#{key}", Spree.t(key) + ": ") +
-            preference_field_for(form, "preferred_#{key}", type: object.preference_type(key))
-        }.join("<br />").html_safe
+        object.preferences.keys.map { |key|
+          preference_label = form.label("preferred_#{key}",
+                                        Spree.t(key.to_s.gsub("_from_list", "")) + ": ").html_safe
+          preference_field = preference_field_for(
+            form,
+            "preferred_#{key}",
+            { type: object.preference_type(key) }, object
+          ).html_safe
+          { label: preference_label, field: preference_field }
+        }
       end
 
       def link_to_add_fields(name, target, options = {})
