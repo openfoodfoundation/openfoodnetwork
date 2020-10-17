@@ -10,10 +10,10 @@ module OrderManagement
         @currency = order.currency
       end
 
-      def shipping_rates(package:, checkout: true, apply_tags: true)
+      def shipping_rates(package, checkout: true, apply_tags: true)
         shipping_rates = []
         shipping_methods =
-          shipping_methods(package: package, checkout: checkout, apply_tags: apply_tags)
+          shipping_methods(package, checkout: checkout, apply_tags: apply_tags)
         return [] unless shipping_methods
 
         shipping_methods.each do |shipping_method|
@@ -41,7 +41,7 @@ module OrderManagement
 
       private
 
-      def shipping_methods(package:, checkout: true, apply_tags: true)
+      def shipping_methods(package, checkout: true, apply_tags: true)
         shipping_methods = package.shipping_methods(checkout: checkout, apply_tags: apply_tags)
         shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
         shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }

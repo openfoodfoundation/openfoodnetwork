@@ -36,7 +36,7 @@ module OrderManagement
         estimator = OrderManagement::Stock::Estimator.new(order)
         packages.each do |package|
           package.shipping_rates = estimator.shipping_rates(
-            package: package, checkout: checkout, apply_tags: apply_tags
+            package, checkout: checkout, apply_tags: apply_tags
           )
         end
         packages
