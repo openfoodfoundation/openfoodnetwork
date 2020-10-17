@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 ruby "2.3.7"
-ruby "2.3.8"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
@@ -138,6 +137,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
+  gem 'bundle-audit'
   gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '4.10.0', require: false

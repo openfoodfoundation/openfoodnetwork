@@ -148,10 +148,15 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
-    bcrypt (3.1.13)
+    bcrypt (3.1.16)
     bugsnag (6.17.0)
       concurrent-ruby (~> 1.0)
     builder (3.1.4)
+    bundle-audit (0.1.0)
+      bundler-audit
+    bundler-audit (0.7.0.1)
+      bundler (>= 1.2.0, < 3)
+      thor (>= 0.18, < 2)
     byebug (11.0.1)
     cancan (1.6.10)
     capybara (2.18.0)
@@ -724,6 +729,7 @@ DEPENDENCIES
   awesome_print
   aws-sdk (= 1.11.1)
   bugsnag
+  bundle-audit
   byebug (~> 11.0.0)
   cancan (~> 1.6.10)
   capybara (>= 2.18.0)
@@ -829,7 +835,6 @@ DEPENDENCIES
 
 RUBY VERSION
    ruby 2.3.7p456
-   ruby 2.3.8p459
 
 BUNDLED WITH
    1.17.3
