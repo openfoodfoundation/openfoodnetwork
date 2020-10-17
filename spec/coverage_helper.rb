@@ -11,4 +11,9 @@ SimpleCov.start 'rails' do
   add_filter '/lib/generators'
   add_filter '/spec/'
   add_filter '/vendor/'
+  add_filter '/public'
+  add_filter '/swagger'
+  add_filter '/script'
+  add_filter '/log'
+  add_filter '/db'
 end
