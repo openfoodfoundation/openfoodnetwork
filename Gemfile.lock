@@ -6,12 +6,11 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 1736e3268239a841576d2719a1f276cf9b74c5c5
+  revision: 3ae54d8eaeee6c0a8bc4f0e5ee03b1e48b2450c0
   branch: 2-1-0-stable
   specs:
     spree_paypal_express (2.0.3)
       paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 2.1.0)
 
 GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
@@ -469,7 +468,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     newrelic_rpm (3.18.1.330)
-    nokogiri (1.10.9)
+    nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
@@ -678,7 +677,7 @@ GEM
     unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
-    uuidtools (2.1.5)
+    uuidtools (2.2.0)
     warden (1.2.7)
       rack (>= 1.0)
     webdrivers (4.2.0)
