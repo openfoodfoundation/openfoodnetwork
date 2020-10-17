@@ -12,7 +12,7 @@ describe Spree::Admin::GeneralSettingsController, type: :controller do
 
     it "updates available units" do
       expect(Spree::Config.available_units).to_not include("lb")
-      settings_params = { available_units_lb: "1" }
+      settings_params = { available_units: { lb: "1" } }
       spree_put :update, settings_params
       expect(Spree::Config.available_units).to include("lb")
     end
