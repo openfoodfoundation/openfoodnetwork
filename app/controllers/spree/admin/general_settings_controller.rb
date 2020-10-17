@@ -10,7 +10,7 @@ module Spree
       end
 
       def update
-        combine_available_units_params
+        merge_available_units_params
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 
@@ -23,14 +23,9 @@ module Spree
 
       private
 
-      def combine_available_units_params
-        available_units = []
-        params.each do |name, value|
-          if value == "1" && unit = name.match(/available_units_(.*)/)&.captures&.first
-            available_units << unit
-          end
-        end
-        params[:available_units] = available_units.join(",")
+      def merge_available_units_params
+        params[:available_units] =
+          params[:available_units].select { |unit, checked| checked == "1" }.keys.join(",")
       end
     end
   end

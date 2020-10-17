@@ -90,10 +90,10 @@
           %fieldset.available_units.no-border-bottom
             %legend{:align => "center"}= t('admin.available_units')
             .field
-              - selected_units = Spree::Config[:available_units].split(",")
+              - available_units = Spree::Config[:available_units].split(",")
               - all_units.each do |unit|
-                - selected = selected_units.include?(unit)
-                = preference_field_tag("available_units_#{unit}", selected, { type: :boolean, selected: selected })
+                - selected = available_units.include?(unit)
+                = preference_field_tag("available_units[#{unit}]", selected, { type: :boolean, selected: selected })
                 = label_tag(unit, unit.downcase) + tag(:br)
 
       .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
