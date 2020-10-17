@@ -29,8 +29,9 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
           system: 'metric'
 
     @variantUnitOptions: ->
+      available = availableUnits.split(",")
       options = for unit_type, _ of @units
-        for scale in @availableUnitScales(unit_type)
+        for scale in @unitScales(unit_type, available)
           name = @getUnitName(scale, unit_type)
           ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
       options.push [[I18n.t('items'), 'items']]
@@ -53,15 +54,13 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
       else
         ''
 
-    @unitScales: (unitType) ->
-      (parseFloat(scale) for scale in Object.keys(@units[unitType])).sort (a, b) ->
-         a - b
-
-    @availableUnitScales: (unitType) ->
-      available = availableUnits.split(",")
+    @unitScales: (unitType, availableUnits = null) ->
+      scales = Object.keys(@units[unitType])
       units = @units
-      scales = Object.keys(@units[unitType]).filter (scale) ->
-        available.includes(units[unitType][scale]['name'])
+      if availableUnits
+        scales = scales.filter (scale) ->
+          availableUnits.includes(units[unitType][scale]['name'])
+
       (parseFloat(scale) for scale in scales).sort (a, b) ->
          a - b
 
