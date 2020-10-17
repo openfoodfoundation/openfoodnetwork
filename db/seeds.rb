@@ -32,7 +32,7 @@ country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
 puts "Default country is #{country.to_s}"
 
 puts "[db:seed] Seeding states for " + country.name
-states = YAML::load_file "db/default/states.yml"
+states = YAML::load_file "db/default/spree/states.yml"
 states.each do |state|
   puts "State: " + state.to_s
   unless Spree::State.find_by(name: state['name'])
