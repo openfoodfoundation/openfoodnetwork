@@ -1,0 +1,36 @@
+# This workflow integrates Bundler audit gems that are installed in the project.
+# This checks the vulnerabilities in gems if they are outdated and needs updating.
+
+name: Audit Bundled Gems
+
+# This section configures the trigger for the workflow. Feel free to customize depending on your convention
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  brakeman-scan:
+    name: Bundle Audit
+    runs-on: ubuntu-18.04
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Customize the ruby version depending on your needs
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.4'
+
+    - name: Setup Bundle Audit
+      run: |
+        gem install bundle-audit
+
+    # Execute Auditing the bundled gems
+    - name: Audit
+      continue-on-error: true
+      run: |
+        bundle exec bundle audit check --update --ignore CVE-2016-2098 CVE-2015-7576 CVE-2016-6316 CVE-2016-0752 CVE-2016-0751 CVE-2020-8166 CVE-2020-8164 CVE-2015-7581 CVE-2016-2097 CVE-2015-7577 CVE-2015-3227 CVE-2020-8165 CVE-2019-5421 CVE-2019-16109 CVE-2014-10077 CVE-2019-11358 CVE-2016-7103 CVE-2020-10663 CVE-2020-11082 CVE-2015-2963 CVE-2017-0889 OSVDB-103151 CVE-2018-16471 CVE-2020-8184 CVE-2020-8161 CVE-2019-16782
