@@ -10,7 +10,7 @@ module Spree
       end
 
       def update
-        merge_available_units_params
+        merge_available_units_params unless params[:available_units].nil?
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 
