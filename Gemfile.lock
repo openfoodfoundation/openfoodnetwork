@@ -109,7 +109,7 @@ GEM
       activesupport (= 4.0.13)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.4)
-    activerecord-import (1.0.6)
+    activerecord-import (1.0.7)
       activerecord (>= 3.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
