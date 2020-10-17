@@ -129,6 +129,7 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 group :production, :staging do
   gem 'ddtrace'
+  gem 'elastic-apm'
   gem 'unicorn-worker-killer'
 end
 
