@@ -2,14 +2,14 @@
   .alpha.two.columns
     = f.label :name, t('.name')
     %span.required *
-  .six.columns.omega
+  .six.columns.omega.fullwidth_inputs
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true, 'ng-disabled' => '!loaded()'
     - else
       {{ order_cycle.name }}
   .two.columns
     = f.label :orders_open_at, t('.orders_open')
-  .omega.six.columns
+  .omega.six.columns.fullwidth_inputs
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at', 'ng-disabled' => '!loaded()', 'change-warning' => 'order_cycle'
     - else
@@ -18,11 +18,11 @@
 .row
   .alpha.two.columns
     = f.label :coordinator, t('.coordinator')
-  .six.columns.omega
+  .six.columns.omega.fullwidth_inputs
     = @order_cycle.coordinator.name
   .two.columns
     = f.label :orders_close, t('.orders_close')
-  .six.columns.omega
+  .six.columns.omega.fullwidth_inputs
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at', 'ng-disabled' => '!loaded()', 'change-warning' => 'order_cycle'
     - else
@@ -33,7 +33,7 @@
   .row
     .two.columns.alpha
       = f.label :schedule_ids, t('admin.order_cycles.index.schedules')
-    .twelve.columns
+    .six.columns
       - if viewing_as_coordinator_of?(@order_cycle)
         %input.fullwidth.ofn-select2#schedule_ids{ name: 'order_cycle[schedule_ids]',
           data: 'schedules',
@@ -43,5 +43,3 @@
           ng: { model: 'order_cycle.schedule_ids' } }
       - else
         %schedule-list{ 'order-cycle' => 'order_cycle' }
-    .two.columns.omega
-      &nbsp;
