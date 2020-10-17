@@ -73,7 +73,7 @@ module Api
     end
 
     def error_during_processing(exception)
-      render(text: { exception: exception.message }.to_json,
+      render(json: { exception: exception.message },
              status: :unprocessable_entity) && return
     end
 
