@@ -33,6 +33,7 @@ $col-16: 100;
   padding: 0 1.5%;
   box-sizing: border-box;
   display: flex;
+  max-width: 1400px;
 
   &.no-gutter {
     padding: 0;
