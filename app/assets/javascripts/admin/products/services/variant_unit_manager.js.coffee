@@ -29,17 +29,12 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
           system: 'metric'
 
     @variantUnitOptions: ->
-      availableUnits = availableUnits.split(",")
       options = for unit_type, _ of @units
-        for scale in @unitScales(unit_type)
+        for scale in @availableUnitScales(unit_type)
           name = @getUnitName(scale, unit_type)
-          if availableUnits.includes(name)
-            ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
-          else
-            null
+          ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
       options.push [[I18n.t('items'), 'items']]
       options = [].concat options...
-      (option for option in options when option != null)
 
     @getScale: (value, unitType) ->
       scaledValue = null
@@ -60,6 +55,14 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
 
     @unitScales: (unitType) ->
       (parseFloat(scale) for scale in Object.keys(@units[unitType])).sort (a, b) ->
+         a - b
+
+    @availableUnitScales: (unitType) ->
+      available = availableUnits.split(",")
+      units = @units
+      scales = Object.keys(@units[unitType]).filter (scale) ->
+        available.includes(units[unitType][scale]['name'])
+      (parseFloat(scale) for scale in scales).sort (a, b) ->
          a - b
 
     @compatibleUnitScales: (scale, unitType) ->
