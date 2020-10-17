@@ -25,9 +25,7 @@ module Spree
 
             OrderWorkflow.new(@order).complete
 
-            @order.shipments.map { |shipment|
-              shipment.refresh_rates(checkout: false, apply_tags: false)
-            }
+            @order.shipments.map(&:refresh_rates)
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to spree.admin_order_customer_path(@order)
           else
