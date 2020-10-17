@@ -150,6 +150,7 @@ module Spree
       def ensure_distribution
         unless @order
           @order = Spree::Order.new
+          @order.created_by = spree_current_user
           @order.generate_order_number
           @order.save!
         end

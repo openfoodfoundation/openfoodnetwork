@@ -594,7 +594,7 @@ module Spree
       shipments.destroy_all
 
       packages = OrderManagement::Stock::Coordinator.new(self).packages(
-        checkout: true, apply_tags: true
+        checkout: true, apply_tags: !created_by&.admin?
       )
       packages.each do |package|
         shipments << package.to_shipment
