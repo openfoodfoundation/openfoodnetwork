@@ -617,18 +617,16 @@ module Spree
           end
 
           context "and final_weight_volume has been changed" do
-            before do
-              li.final_weight_volume = 35
-            end
+            before { li.final_weight_volume = 35 }
+
             it "returns the unit_value of the variant" do
               expect(li.unit_value).to eq 7
             end
           end
 
           context "and final_weight_volume is nil" do
-            before do
-              li.final_weight_volume = nil
-            end
+            before { li.final_weight_volume = nil }
+
             it "returns the unit_value of the variant" do
               expect(li.unit_value).to eq 10
             end
@@ -636,9 +634,8 @@ module Spree
         end
 
         context "when the quantity is zero" do
-          before do
-            li.quantity = 0
-          end
+          before { li.quantity = 0 }
+
           it "returns the unit_value of the variant" do
             expect(li.unit_value).to eq 10
           end
