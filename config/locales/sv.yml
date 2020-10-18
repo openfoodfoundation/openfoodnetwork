@@ -2086,8 +2086,8 @@ sv:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"
           footer_tos_url: "Användarvillkor URL"
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'åå-mm-dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     orders:
       bought:
         item: "Redan beställd i denna beställningsomgång"

@@ -3336,8 +3336,8 @@ ca:
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
     date_picker:
-      format: '%d-% m-% Y'
-      js_format: 'dd-mm-yy'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."
       edit:

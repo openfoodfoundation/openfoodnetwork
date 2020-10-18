@@ -3237,8 +3237,8 @@ de_DE:
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
           remember_this_card: Diese Karte speichern?
     date_picker:
-      format: '% Y-% m-%d'
-      js_format: 'JJ-MM-TT'
+      format: ! '%d.%m.%Y'
+      js_format: 'dd.mm.yy'
     orders:
       edit:
         login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."

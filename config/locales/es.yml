@@ -3337,7 +3337,7 @@ es:
           remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:

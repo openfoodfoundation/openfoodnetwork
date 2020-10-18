@@ -3321,8 +3321,8 @@ pt_BR:
           or_enter_new_card: "Ou, adicione os dados para um novo cartão:"
           remember_this_card: Lembrar deste cartão?
     date_picker:
-      format: '%A-%m-'
-      js_format: 'aa-mm-dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível. Por favor atualize as quantidades selecionadas. "
       edit:

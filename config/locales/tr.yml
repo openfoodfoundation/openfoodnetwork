@@ -3324,8 +3324,8 @@ tr:
           or_enter_new_card: "Veya yeni bir kart için bilgileri girin:"
           remember_this_card: Bu kart hatırlansın mı?
     date_picker:
-      format: '% Y-% A-%d'
-      js_format: 'yy-aa-gg'
+      format: ! '%Y-%m-%d'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:

@@ -3019,8 +3019,8 @@ pt:
           or_enter_new_card: "Ou, introduza detalhes para um novo cartão:"
           remember_this_card: Lembra-se deste cartão?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'aa-mm-dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     orders:
       edit:
         login_to_view_order: "Por favor faça login para ver a sua encomenda."
