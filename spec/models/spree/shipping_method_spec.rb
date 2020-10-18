@@ -4,7 +4,7 @@ module Spree
   describe ShippingMethod do
     it "is valid when built from factory" do
       expect(
-        build_stubbed(
+        build(
           :shipping_method,
           shipping_categories: [Spree::ShippingCategory.new(name: 'Test')]
         )
