@@ -56,10 +56,9 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
 
     @unitScales: (unitType, availableUnits = null) ->
       scales = Object.keys(@units[unitType])
-      units = @units
       if availableUnits
         scales = scales.filter (scale) ->
-          availableUnits.includes(units[unitType][scale]['name'])
+          availableUnits.includes(VariantUnitManager.getUnitName(scale, unitType))
 
       (parseFloat(scale) for scale in scales).sort (a, b) ->
          a - b
