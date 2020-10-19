@@ -3033,7 +3033,6 @@ pl:
     inventory_error_flash_for_insufficient_quantity: "Produkt w Twoim koszyku stał się niedostępny."
     inventory: Zapasy
     zipcode: Kod pocztowy
-    weight: Waga (na kg)
     error_user_destroy_with_orders: "Nie można usunąć użytkowników ze zrealizowanymi zamówieniami"
     cannot_create_payment_without_payment_methods: "Nie możesz utworzyć płatności za zamówienie bez zdefiniowanych metod płatności."
     please_define_payment_methods: "Najpierw określ niektóre metody płatności."

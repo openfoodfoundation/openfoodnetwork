@@ -2828,7 +2828,6 @@ en_AU:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     options: "Options"
     actions:

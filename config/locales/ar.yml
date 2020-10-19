@@ -3078,7 +3078,6 @@ ar:
     inventory_error_flash_for_insufficient_quantity: "المواد في سلة التسوق غير متاح."
     inventory: المخزون
     zipcode: الرمز البريدي
-    weight: الوزن (لكل كجم)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
     cannot_create_payment_without_payment_methods: "لا يمكنك إنشاء دفعة لطلب بدون تحديد طرقة الدفع."
     please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."

@@ -2733,7 +2733,6 @@ pt:
     inventory_error_flash_for_insufficient_quantity: "Um item do seu carrinho ficou indisponível."
     inventory: Inventário
     zipcode: Código postal
-    weight: Peso (por kg)
     actions:
       update: "Atualizar"
     shared:

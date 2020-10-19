@@ -2928,7 +2928,6 @@ fil_PH:
     inventory_error_flash_for_insufficient_quantity: "ang isang item sa inyong cart ay hindi na available."
     inventory: imbentaryo
     zipcode: Postcode
-    weight: timbang (per kg)
     error_user_destroy_with_orders: "ang mga gumagamit na may kumpletong order ay hindi maaaring tanggalin"
     cannot_create_payment_without_payment_methods: "hindi maaaring magbayad para sa isang order na walang nakasaad na paraan ng pagbabayad."
     please_define_payment_methods: "isaad muna ang paraan ng pagbabayad"

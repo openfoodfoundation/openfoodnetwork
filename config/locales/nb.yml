@@ -2979,7 +2979,6 @@ nb:
     inventory_error_flash_for_insufficient_quantity: "Et element i handlekurven din er blitt utilgjengelig."
     inventory: Varelager
     zipcode: Postnummer
-    weight: Vekt (per kg)
     error_user_destroy_with_orders: "Brukere med fullførte ordrer kan ikke slettes"
     cannot_create_payment_without_payment_methods: "Du kan ikke opprette en betaling for en bestilling uten at det er definert noen betalingsmetoder."
     please_define_payment_methods: "Vennligst angi noen betalingsmetoder først."

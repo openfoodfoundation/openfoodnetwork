@@ -3042,7 +3042,6 @@ ru:
     inventory_error_flash_for_insufficient_quantity: "Один из товаров вашей корзины стал недоступен."
     inventory: Товарная Номенклатура
     zipcode: Почтовый индекс
-    weight: Вес (за кг)
     error_user_destroy_with_orders: "Пользователи с выполненными заказами не могут быть удалены"
     cannot_create_payment_without_payment_methods: "Нельзя создать платеж для заказа, если не настроен ни один из способов оплаты."
     please_define_payment_methods: "Сначала определите способ оплаты."

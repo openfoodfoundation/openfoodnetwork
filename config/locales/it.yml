@@ -2958,7 +2958,6 @@ it:
     inventory_error_flash_for_insufficient_quantity: "Un articolo nel tuo carrello è diventato non disponibile."
     inventory: Inventario
     zipcode: CAP
-    weight: Peso (kg)
     error_user_destroy_with_orders: "Gli utenti con ordini completi non dovrebbero essere cancellati"
     cannot_create_payment_without_payment_methods: "Non è possibile creare un pagamento per un ordine senza alcun metodo di pagamento definito."
     please_define_payment_methods: "Definisci prima alcuni metodi di pagamento."

@@ -2983,7 +2983,6 @@ tr:
     inventory_error_flash_for_insufficient_quantity: "Sepetinizdeki bir ürün artık mevcut değil."
     inventory: Stok
     zipcode: posta kodu
-    weight: Ağırlık (kg başına)
     error_user_destroy_with_orders: "Siparişleri tamamlanmış kullanıcılar silinemez"
     cannot_create_payment_without_payment_methods: "Herhangi bir ödeme yöntemi belirlemeden bir sipariş oluşturamazsınız."
     please_define_payment_methods: "Lütfen önce ödeme bir yöntemi belirleyin."

@@ -1923,7 +1923,6 @@ sv:
     amount: "Belopp"
     inventory: Lager
     zipcode: Postkod
-    weight: Vikt (kg)
     actions:
       update: "Uppdatera"
     shared:

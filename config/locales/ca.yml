@@ -2986,7 +2986,6 @@ ca:
     inventory_error_flash_for_insufficient_quantity: "Un article de la teva cistella ha deixat d'estar disponible."
     inventory: Inventari
     zipcode: Codi postal
-    weight: Pes (per kg)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
     cannot_create_payment_without_payment_methods: "No podeu crear un pagament per a una comanda sense que hi hagi definit cap mètode de pagament."
     please_define_payment_methods: "Primer definiu alguns mètodes de pagament."

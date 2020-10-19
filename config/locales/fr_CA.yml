@@ -2995,7 +2995,6 @@ fr_CA:
     inventory_error_flash_for_insufficient_quantity: "Un produit de votre panier n'est plus disponible."
     inventory: Catalogue boutique
     zipcode: Code postal
-    weight: Poids (au kg)
     error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas ajouter un paiement pour une commande sans avoir défini de méthode de paiement au préalable."
     please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
