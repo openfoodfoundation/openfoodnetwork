@@ -58,7 +58,7 @@ button.add-variant {
 button.variant-quantity {
   width: 3rem;
 
-  &:nth-of-type(1) {
+  &:nth-of-type(1):not(.bulk-buy):not(.bulk-buy-add) {
     border-right: .1em solid $orange-400;
   }
 }
