@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'concerns/payment_method_distributors'
+require 'spree/core/calculated_adjustments'
+
 module Spree
   class PaymentMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
@@ -99,7 +102,7 @@ module Spree
         self.class.include Spree::Core::CalculatedAdjustments
       end
 
-      self.calculator ||= Calculator::FlatRate.new(preferred_amount: 0)
+      self.calculator ||= ::Calculator::FlatRate.new(preferred_amount: 0)
     end
 
     def has_distributor?(distributor)

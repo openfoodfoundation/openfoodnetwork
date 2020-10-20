@@ -7,7 +7,6 @@
 # config.setting_name = 'new value'
 
 require "spree/core/environment"
-require 'spree/product_filters'
 
 # Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
 # should have inherited it from its parent PaymentMethod.

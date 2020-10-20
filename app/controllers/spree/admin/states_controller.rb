@@ -14,7 +14,7 @@ module Spree
       protected
 
       def location_after_save
-        admin_country_states_url(@country)
+        spree.admin_country_states_url(@country)
       end
 
       def collection
