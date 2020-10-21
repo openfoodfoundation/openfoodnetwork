@@ -78,11 +78,7 @@ module Spree
         discard_empty_line_items
         with_open_adjustments { update_totals_and_taxes }
 
-        if @order == current_order
-          fire_event('spree.order.contents_changed')
-        else
-          @order.update_distribution_charge!
-        end
+        @order.update_distribution_charge!
 
         respond_with(@order) do |format|
           format.html do

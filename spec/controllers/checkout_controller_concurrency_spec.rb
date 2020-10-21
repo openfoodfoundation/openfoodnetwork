@@ -48,12 +48,6 @@ describe CheckoutController, concurrency: true, type: :controller do
     # New threads start running straight away. The breakpoint is after loading
     # the order and before advancing the order's state and making payments.
     breakpoint.lock
-    expect(controller).to receive(:fire_event).with("spree.checkout.update") do
-      breakpoint.synchronize {}
-      # This is what fire_event does.
-      # I did not find out how to call the original code otherwise.
-      ActiveSupport::Notifications.instrument("spree.checkout.update")
-    end
 
     # Starting two checkout threads. The controller code will determine if
     # these two threads are synchronised correctly or run into a race condition.
