@@ -23,6 +23,10 @@ fr:
         variant_unit_name: "Unité de la variante"
       spree/credit_card:
         base: "Carte de crédit"
+        number: "N° commande"
+        month: "Mois"
+        verification_value: "Valeur de vérification"
+        year: "Année"
       order_cycle:
         orders_close_at: Date de fermeture
       variant_override:
@@ -1387,7 +1391,7 @@ fr:
       cookies_policy_link: "politique de cookies"
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
-  brandstory_headline: "NOUVEAU : on change de nom !"
+  brandstory_headline: "On change de nom !"
   brandstory_intro: "Votre plateforme Open Food France change de nom et devient CoopCircuits, une plateforme libre, cogérée et accessible à tous."
   brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative CoopCircuits. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
   brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, CoopCircuits vous accompagne :-)"
@@ -3017,6 +3021,13 @@ fr:
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas ajouter un paiement pour une commande sans avoir défini de méthode de paiement au préalable."
     please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
     options: "Options"
+    has_no_shipped_units: "n'a pas d'éléments envoyés"
+    successfully_created: '%{resource} a été créé avec succès !'
+    successfully_updated: '%{resource} a été mis à jour avec succès !'
+    payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
+    not_available: "N/A"
+    order_populator:
+      out_of_stock: '%{item}est en rupture de stock.'
     actions:
       update: "Mettre à jour"
     shared:
