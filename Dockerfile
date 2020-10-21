@@ -27,8 +27,11 @@ RUN sh -c "echo 'deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main'
     apt-get update && \
     apt-get install -yqq --no-install-recommends postgresql-client-9.5 libpq-dev
 
-# Install node
-RUN apt-get install -y nodejs
+# Install node & yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y nodejs yarn
 
 # Install Chrome
 RUN wget --quiet -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
@@ -43,5 +46,9 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
 
 # Copy code and install app dependencies
 COPY . /usr/src/app/
+
+# Install front-end dependencies
+RUN yarn install
+
 # Run bundler install in parallel with the amount of available CPUs
 RUN bundle install --jobs="$(nproc)"
