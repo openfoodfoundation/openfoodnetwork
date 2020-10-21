@@ -25,3 +25,6 @@ Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $rootScope, $timeout, Orde
     Cart.reloadFinalisedLineItems()
     ChangeableOrdersAlert.reload()
     $rootScope.$broadcast 'orderCycleSelected'
+
+  $scope.closesInLessThan3Months = () ->
+    moment().diff(moment(OrderCycle.orders_close_at(),  "YYYY-MM-DD HH:mm:SS Z"), 'days') > -75

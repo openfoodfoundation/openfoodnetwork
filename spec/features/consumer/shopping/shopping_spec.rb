@@ -49,11 +49,24 @@ feature "As a consumer I want to shop with a distributor", js: true do
     describe "selecting an order cycle" do
       let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
 
-      it "selects an order cycle if only one is open" do
-        exchange1.update_attribute :pickup_time, "turtles"
-        visit shop_path
-        expect(page).to have_selector "p", text: 'turtles'
-        expect(page).not_to have_content "choose when you want your order"
+      describe "with only one open order cycle" do
+        before { exchange1.update_attribute :pickup_time, "turtles" }
+
+        it "selects an order cycle" do
+          visit shop_path
+          expect(page).to have_selector "p", text: 'turtles'
+          expect(page).not_to have_content "choose when you want your order"
+          expect(page).to have_content "Next order closing in 2 days"
+        end
+
+        describe "when order cycle closes in more than 3 months" do
+          before { oc1.update orders_close_at: 5.months.from_now }
+
+          it "does not show 'closing in' message" do
+            visit shop_path
+            expect(page).not_to have_content "Next order closing in 2 days"
+          end
+        end
       end
 
       describe "with multiple order cycles" do
