@@ -134,8 +134,6 @@ Spree::Core::Engine.routes.draw do
       post :testmail, :on => :collection
     end
 
-    resource :image_settings
-
     resources :zones
     resources :countries do
       resources :states
