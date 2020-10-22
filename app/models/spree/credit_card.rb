@@ -20,6 +20,7 @@ module Spree
 
     after_create :ensure_single_default_card
     after_save :ensure_single_default_card, if: :default_card_needs_updating?
+    after_save :remove_shop_authorizations, if: :default_card_needs_updating?
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
@@ -150,6 +151,10 @@ module Spree
 
       user.credit_cards.update_all(['is_default=(id=?)', id])
       self.is_default = true
+    end
+
+    def remove_shop_authorizations
+      user.customers.update_all(allow_charges: false)
     end
   end
 end
