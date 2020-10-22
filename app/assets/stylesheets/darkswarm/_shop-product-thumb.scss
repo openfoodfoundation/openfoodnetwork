@@ -24,6 +24,10 @@
           top: .8em;
           padding: .25em .5em;
         }
+
+        &:hover {
+          filter: brightness(96%);
+        }
       }
     }
   }
