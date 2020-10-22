@@ -23,6 +23,10 @@ nb:
         variant_unit_name: "Enhetsnavn Variant"
       spree/credit_card:
         base: "Kredittkort"
+        number: "Antall"
+        month: "Måned"
+        verification_value: "Verifiseringsverdi"
+        year: "År"
       order_cycle:
         orders_close_at: Lukkedato
       variant_override:
@@ -1995,6 +1999,7 @@ nb:
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorverdier"
   calculator_settings_warning: "Hvis du endrer kalkulatortypen, må du lagre først før du kan redigere kalkulatorinnstillingene"
+  calculator_preferred_unit_error: "må være kg eller lb."
   flat_percent_per_item: "Flat prosent (per stk)"
   flat_rate_per_item: "Flat rate (per vare)"
   flat_rate_per_order: "Flat Rate (per bestilling)"
@@ -2979,11 +2984,18 @@ nb:
     inventory_error_flash_for_insufficient_quantity: "Et element i handlekurven din er blitt utilgjengelig."
     inventory: Varelager
     zipcode: Postnummer
-    weight: Vekt (per kg)
+    weight: Vekt (per kg eller lb)
     error_user_destroy_with_orders: "Brukere med fullførte ordrer kan ikke slettes"
     cannot_create_payment_without_payment_methods: "Du kan ikke opprette en betaling for en bestilling uten at det er definert noen betalingsmetoder."
     please_define_payment_methods: "Vennligst angi noen betalingsmetoder først."
     options: "Valg"
+    has_no_shipped_units: "har ingen sendte enheter"
+    successfully_created: 'Opprettelsen av %{resource} var vellykket!'
+    successfully_updated: 'Oppdatering av%{resource} var vellykket!'
+    payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
+    not_available: "Ikke relevant"
+    order_populator:
+      out_of_stock: '%{item} er utsolgt.'
     actions:
       update: "Oppdater"
     shared:
