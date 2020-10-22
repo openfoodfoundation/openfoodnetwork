@@ -27,6 +27,7 @@ module Spree
       authorize! :update, @credit_card
 
       if @credit_card.update(credit_card_params)
+        remove_shop_authorizations if credit_card_params["is_default"]
         render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
       else
         update_failed
@@ -55,6 +56,10 @@ module Spree
     end
 
     private
+
+    def remove_shop_authorizations
+      @credit_card.user.customers.update_all(allow_charges: false)
+    end
 
     # It destroys the whole customer object
     def destroy_at_stripe
