@@ -22,6 +22,7 @@ en_DE:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
+        number: "Number"
       order_cycle:
         orders_close_at: Close date
       variant_override:
@@ -2792,8 +2793,10 @@ en_DE:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    successfully_created: '%{resource} has been successfully created!'
+    successfully_updated: '%{resource} has been successfully updated!'
+    payment_processing_failed: "Payment could not be processed, please check the details you entered"
     actions:
       update: "Update"
     shared:

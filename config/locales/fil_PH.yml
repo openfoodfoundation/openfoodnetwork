@@ -22,6 +22,7 @@ fil_PH:
         variant_unit_name: "pangalan ng yunit ng variant"
       spree/credit_card:
         base: "Credit Card"
+        number: "Bilang"
       order_cycle:
         orders_close_at: petsa ng pagsasara
       variant_override:
@@ -2928,11 +2929,13 @@ fil_PH:
     inventory_error_flash_for_insufficient_quantity: "ang isang item sa inyong cart ay hindi na available."
     inventory: imbentaryo
     zipcode: Postcode
-    weight: timbang (per kg)
     error_user_destroy_with_orders: "ang mga gumagamit na may kumpletong order ay hindi maaaring tanggalin"
     cannot_create_payment_without_payment_methods: "hindi maaaring magbayad para sa isang order na walang nakasaad na paraan ng pagbabayad."
     please_define_payment_methods: "isaad muna ang paraan ng pagbabayad"
     options: "pagpipilian"
+    successfully_created: '%{resource}ay matagumpay na nagawa!'
+    successfully_updated: '%{resource}ay matagumpay na na-update'
+    payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     actions:
       update: "i-update"
     shared:

@@ -1246,7 +1246,7 @@ fr:
   ticket_column_item: "Produit"
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
-  menu_1_title: "Boutiques"
+  menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
   menu_2_url: "/map"
@@ -3027,7 +3027,7 @@ fr:
     payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
     not_available: "N/A"
     order_populator:
-      out_of_stock: '%{item}est en rupture de stock.'
+      out_of_stock: '%{item} est en rupture de stock.'
     actions:
       update: "Mettre à jour"
     shared:

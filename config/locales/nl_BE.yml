@@ -23,6 +23,7 @@ nl_BE:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Kredietkaart"
+        number: "Nummer"
       order_cycle:
         orders_close_at: Sluitingsdatum
       variant_override:
@@ -2901,11 +2902,13 @@ nl_BE:
     inventory_error_flash_for_insufficient_quantity: "Een gegeven op je kaart is onbereikbaar."
     inventory: Inventarisatie
     zipcode: Postcode
-    weight: Gewicht (per kg)
     error_user_destroy_with_orders: "Gebruiker met voltooide besteling mag niet woden verwijderd"
     cannot_create_payment_without_payment_methods: "U kunt niet een betaling maken voor een besteling met geen betalingsmethode toegewezen"
     please_define_payment_methods: "Bepaal een geldige betaalmethode eerst."
     options: "Opties"
+    successfully_created: '%{resource}is met succes gedaan! '
+    successfully_updated: '%{resource}is succesvol bijgewerkt!'
+    payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
     actions:
       update: "Update"
     shared:

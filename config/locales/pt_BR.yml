@@ -23,6 +23,7 @@ pt_BR:
         variant_unit_name: "Nome da unidade variante"
       spree/credit_card:
         base: "Cartão de Crédito"
+        number: "Número"
       order_cycle:
         orders_close_at: Dia de fechamento
       variant_override:
@@ -2964,7 +2965,6 @@ pt_BR:
     inventory_error_flash_for_insufficient_quantity: "Um item no seu carrinho ficou indisponível."
     inventory: Inventário
     zipcode: CEP
-    weight: Peso (por kg)
     error_user_destroy_with_orders: "Usuários com pedidos concluídos não podem ser excluídos"
     cannot_create_payment_without_payment_methods: "Você não pode criar um pagamento para um pedido sem métodos de pagamento definidos."
     please_define_payment_methods: "Defina primeiro algum método de pagamento."

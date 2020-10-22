@@ -23,6 +23,7 @@ ca:
         variant_unit_name: "Nom de la unitat de la variant"
       spree/credit_card:
         base: "Targeta de crèdit"
+        number: "Número"
       order_cycle:
         orders_close_at: Data de tancament
       variant_override:
@@ -2986,11 +2987,13 @@ ca:
     inventory_error_flash_for_insufficient_quantity: "Un article de la teva cistella ha deixat d'estar disponible."
     inventory: Inventari
     zipcode: Codi postal
-    weight: Pes (per kg)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
     cannot_create_payment_without_payment_methods: "No podeu crear un pagament per a una comanda sense que hi hagi definit cap mètode de pagament."
     please_define_payment_methods: "Primer definiu alguns mètodes de pagament."
     options: "Opcions"
+    successfully_created: '%{resource} s''ha creat correctament.'
+    successfully_updated: '%{resource} s''ha actualitzat correctament.'
+    payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
     actions:
       update: "Actualitzar"
     shared:

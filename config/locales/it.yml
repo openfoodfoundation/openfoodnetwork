@@ -23,6 +23,7 @@ it:
         variant_unit_name: "Nome Unità Variante"
       spree/credit_card:
         base: "Carta di Credito"
+        number: "Numero"
       order_cycle:
         orders_close_at: Data chiusura
       variant_override:
@@ -2958,11 +2959,13 @@ it:
     inventory_error_flash_for_insufficient_quantity: "Un articolo nel tuo carrello è diventato non disponibile."
     inventory: Inventario
     zipcode: CAP
-    weight: Peso (kg)
     error_user_destroy_with_orders: "Gli utenti con ordini completi non dovrebbero essere cancellati"
     cannot_create_payment_without_payment_methods: "Non è possibile creare un pagamento per un ordine senza alcun metodo di pagamento definito."
     please_define_payment_methods: "Definisci prima alcuni metodi di pagamento."
     options: "Opzioni"
+    successfully_created: '%{resource} è stato creato con successo!'
+    successfully_updated: '%{resource} è stato aggiornato con successo!'
+    payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     actions:
       update: "Aggiorna"
     shared:
@@ -3322,7 +3325,7 @@ it:
           remember_this_card: Ricordare questa Carta?
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'aa-mm-gg'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:

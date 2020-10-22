@@ -22,6 +22,7 @@ de_DE:
         variant_unit_name: "Name der Varianteneinheit"
       spree/credit_card:
         base: "Kreditkarte"
+        number: "Nummer"
       order_cycle:
         orders_close_at: Schlussdatum
       variant_override:
@@ -2909,7 +2910,6 @@ de_DE:
     inventory_error_flash_for_insufficient_quantity: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
     inventory: Katalog
     zipcode: Postleitzahl
-    weight: Gewicht (pro kg)
     error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden"
     cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsmethoden definiert sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsmethoden."
