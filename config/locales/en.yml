@@ -1286,6 +1286,9 @@ en:
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
         select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
+    products:
+      summary:
+        bulk: "Bulk"
 
   # Front-end controller translations
   card_could_not_be_updated: Card could not be updated
@@ -2053,7 +2056,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
   shop_at: "Shop now at:"
-  price_breakdown: "Full price breakdown"
   admin_fee: "Admin fee"
   sales_fee: "Sales fee"
   packing_fee: "Packing fee"
@@ -2726,6 +2728,15 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    shopfront:
+      variant:
+        add_to_cart: "Add"
+        in_cart: "in cart"
+        quantity_in_cart: "%{quantity} in cart"
+      bulk_buy_modal:
+        min_quantity: "Min quantity"
+        max_quantity: "Max quantity"
+      price_breakdown: "Price breakdown"
     variants:
       on_demand:
         "yes": "On demand"

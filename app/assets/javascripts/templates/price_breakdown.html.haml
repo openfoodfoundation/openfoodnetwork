@@ -1,37 +1,28 @@
-.joyride-tip-guide.price_breakdown{"ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
-  %span.joyride-nub.right
+.joyride-tip-guide.price_breakdown{ng: {class: "{ in: tt_isOpen, fade: tt_animation }", show: "tt_isOpen"}}
+  %span.joyride-nub.top
+  .background{ng: {click: "tt_isOpen = false"}}
   .joyride-content-wrapper
-    .collapsed{"ng-show" => "!expanded"}
-      %price-percentage{percentage: 'variant.base_price_percentage'}
-      %a{"ng-click" => "expanded = !expanded"}
-        %span{"ng-bind" => "::'price_breakdown' | t"}
-        %i.ofn-i_005-caret-down
-
-    .expanded{"ng-show" => "expanded"}
-      %ul
-        %li.cost
-          .right {{ ::variant.price | localizeCurrency }}
-          %span{"ng-bind" => "::'item_cost' | t"}
-        %li.admin-fee{"ng-if" => "::variant.fees.admin"}
-          .right {{ ::variant.fees.admin | localizeCurrency }}
-          %span{"ng-bind" => "::'admin_fee' | t"}
-        %li.sales-fee{"ng-if" => "::variant.fees.sales"}
-          .right {{ ::variant.fees.sales | localizeCurrency }}
-          %span{"ng-bind" => "::'sales_fee' | t"}
-        %li.packing-fee{"ng-if" => "::variant.fees.packing"}
-          .right {{ ::variant.fees.packing | localizeCurrency }}
-          %span{"ng-bind" => "::'packing_fee' | t"}
-        %li.transport-fee{"ng-if" => "::variant.fees.transport"}
-          .right {{ ::variant.fees.transport | localizeCurrency }}
-          %span{"ng-bind" => "::'transport_fee' | t"}
-        %li.fundraising-fee{"ng-if" => "::variant.fees.fundraising"}
-          .right {{ ::variant.fees.fundraising | localizeCurrency }}
-          %span{"ng-bind" => "::'fundraising_fee' | t"}
-        %li.total
-          %strong
-            .right = {{ ::variant.price_with_fees | localizeCurrency }}
-            &nbsp;
-
-      %a{"ng-click" => "expanded = !expanded"}
-        %span{"ng-bind" => "::'price_graph' | t"}
-        %i.ofn-i_006-caret-up
+    %h6 {{ "js.shopfront.price_breakdown" | t }}
+    %ul
+      %li
+        .right {{ ::variant.price | localizeCurrency }}
+        %span{"ng-bind" => "::'item_cost' | t"}
+      %li{"ng-if" => "::variant.fees.admin"}
+        .right {{ ::variant.fees.admin | localizeCurrency }}
+        %span{"ng-bind" => "::'admin_fee' | t"}
+      %li{"ng-if" => "::variant.fees.sales"}
+        .right {{ ::variant.fees.sales | localizeCurrency }}
+        %span{"ng-bind" => "::'sales_fee' | t"}
+      %li{"ng-if" => "::variant.fees.packing"}
+        .right {{ ::variant.fees.packing | localizeCurrency }}
+        %span{"ng-bind" => "::'packing_fee' | t"}
+      %li{"ng-if" => "::variant.fees.transport"}
+        .right {{ ::variant.fees.transport | localizeCurrency }}
+        %span{"ng-bind" => "::'transport_fee' | t"}
+      %li{"ng-if" => "::variant.fees.fundraising"}
+        .right {{ ::variant.fees.fundraising | localizeCurrency }}
+        %span{"ng-bind" => "::'fundraising_fee' | t"}
+      %li
+        %strong
+          .right = {{ ::variant.price_with_fees | localizeCurrency }}
+          &nbsp;

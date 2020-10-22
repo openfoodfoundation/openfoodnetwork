@@ -4,86 +4,69 @@
 // Pop over
 // Foundation overrides
 .joyride-tip-guide.price_breakdown {
+  width: 16rem;
+  max-width: 65%;
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
-  background-color: #999;
-  color: #1f1f1f;
-  margin-left: -8px;
+  margin-left: -7.4rem;
+  margin-top: 0.1rem;
 
-  @include box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.7));
+  @include box-shadow(0 2px 8px 0 rgba(0, 0, 0, 0.35));
 
   .joyride-content-wrapper {
-    padding: 1.125rem 1.25rem 1.5rem;
-    padding: 1rem;
-    margin: 1%;
+    padding: .625rem;
     width: 98%;
-    background-color: white;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: #1f1f1f;
-  }
-
-  .joyride-nub.right {
-    top: 38px;
-    border-color: #999 !important;
-    border-top-color: transparent !important;
-    border-right-color: transparent !important;
-    border-bottom-color: transparent !important;
-  }
-
-  .progress {
-    background-color: #13bf85;
-    padding: 0;
-    border: none;
+    background-color: $grey-800;
     color: white;
-    font-size: 0.75rem;
-    font-style: oblique;
-    line-height: 1;
-    height: auto;
-
-    .right {
-      padding: 0.5rem 0.25rem 0 0;
-    }
-
-    .meter {
-      background-color: #0b8c61;
-      padding: 0.5rem 0.25rem;
-      border-right: 1px solid #539f92;
-    }
   }
 
-  .expanded {
-    ul, li {
-      list-style: none;
-      margin: 0;
-      font-size: 0.875rem;
-    }
+  h6 {
+    font-size: 0.937rem;
+    line-height: 1;
+    border-bottom: .1em solid $grey-700;
+    padding: 0 0 .625em 0;
+    margin-bottom: 2px;
+  }
 
-    li {
-      background-color: #13bf85;
-      padding: 0 0.25rem;
-      margin-bottom: 2px;
-      color: white;
-    }
+  .joyride-nub.top {
+    left: 7.4rem;
+    z-index: -1;
+  }
 
-    li.cost {
-      background-color: #0b8c61;
-    }
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    cursor: pointer;
+  }
 
-    li:last-child {
-      margin-bottom: 0.75rem;
-    }
+  ul, li {
+    list-style: none;
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  li {
+    line-height: 1;
+    border-bottom: .1em solid $grey-700;
+    padding: 0.625rem 0;
+    margin-bottom: 2px;
+  }
+
+  li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
   }
 }
 
 button.graph-button {
   // z-index: 9999999
-  border: 1px solid transparent;
   padding: 0;
   margin: 0;
-  display: inline;
+  display: inline-block;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 4px;
 
   @include box-shadow(none);
 
@@ -97,7 +80,6 @@ button.graph-button {
   }
 
   &:focus {
-    border: 1px solid #e0e0e0;
     background-color: rgba(255, 255, 255, 1);
 
     &:before {
@@ -107,22 +89,15 @@ button.graph-button {
 
   &:hover, &:active {
     background-color: rgba(255, 255, 255, 1);
-    border: 1px solid transparent;
 
     &:before {
-      color: $clr-brick-bright;
+      color: $teal-500;
     }
-  }
-
-  @include breakpoint(tablet) {
-    // Hide for small
-    display: none;
   }
 }
 
 button.graph-button.open {
-  border: 1px solid transparent;
-  background-color: $clr-brick-bright;
+  background-color: $teal-500;
 
   &:before {
     content: "";

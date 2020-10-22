@@ -6,93 +6,110 @@
 .darkswarm {
   // #search
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
+}
 
-  // ordering
-  product {
-    input {
-      @include border-radius(0);
+.reveal-modal.product-bulk-modal {
+  width: 26em;
+}
 
-      @include csstrans;
+// Components to add variants to cart and change quantities
+//
+// They are not nested so that they can be used in modals.
+button.add-variant, button.variant-quantity {
+  height: 2.5rem;
+  border-radius: 0;
+  background-color: $orange-500;
+  color: white;
+  // Override foundation button styles:
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  transition: none;
 
-      margin: 0;
-      width: 10rem;
-      display: inline;
-
-      @include box-shadow(none);
-
-      border-color: #b3b3b3;
-      text-align: right;
-
-      @include breakpoint(desktop) {
-        width: 8rem;
-      }
-
-      @include breakpoint(tablet) {
-        width: 7rem;
-      }
-
-      @include breakpoint(phablet) {
-        float: left !important;
-        font-size: 0.75rem;
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-      }
-
-      @include breakpoint(mobile) {
-        width: 5.8rem;
-      }
-
-      &:hover {
-        @include box-shadow(none);
-
-        border-color: #888;
-        background-color: #fafafa;
-      }
-
-      &:active, &:focus, &.active {
-        @include box-shadow(none);
-
-        background-color: #f9f4b9;
-        border-color: #666;
-      }
-    }
-
-    // BULK
-
-    input.bulk {
-      width: 5rem;
-
-      @include breakpoint(desktop) {
-        width: 4rem;
-      }
-
-      @include breakpoint(tablet) {
-        width: 3.5rem;
-      }
-
-      @include breakpoint(mobile) {
-        width: 2.8rem;
-      }
-    }
-
-    input.bulk.first {
-      border-right: 0;
-    }
-
-    input.bulk.second {
-      border-left: 0;
-    }
-
-    .bulk-input-container {
-      float: right;
-
-      @include breakpoint(phablet) {
-        float: left !important;
-      }
-
-      .bulk-input {
-        float: left;
-      }
+  &:hover {
+    background-color: $orange-600;
+  }
+  &[disabled] {
+    &:hover, &:focus {
+      background-color: $orange-500;
     }
   }
+  &:nth-of-type(1) {
+    border-bottom-left-radius: 0.25em;
+    border-top-left-radius: 0.25em;
+  }
+  &:nth-last-of-type(1) {
+    border-top-right-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+  }
+}
+
+button.add-variant {
+  min-width: 6rem;
+  padding: 0 1em;
+
+  &[disabled] {
+    &:hover, &:focus {
+      background-color: $orange-500;
+    }
+  }
+}
+
+button.variant-quantity {
+  width: 3rem;
+
+  &:nth-of-type(1):not(.bulk-buy):not(.bulk-buy-add) {
+    border-right: .1em solid $orange-400;
+  }
+}
+
+.variant-quantity-display {
+  display: inline-block;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+  text-align: center;
+  width: 6rem;
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+  }
+}
+
+button.bulk-buy.variant-quantity {
+  background-color: transparent;
+  border: .1em solid $grey-200;
+  color: inherit;
+}
+
+button.bulk-buy-add.variant-quantity {
+  width: 2.5rem;
+
+  &[disabled] {
+    background-color: $grey-400;
+
+    &:hover, &:focus {
+      background-color: $grey-400;
+    }
+  }
+}
+
+span.bulk-buy.variant-quantity {
+  border: .1em solid $grey-200;
+  height: 2.5rem;
+  display: inline-block;
+  min-width: 3em;
+  padding: .5em;
+  text-align: center;
+  vertical-align: top;
+}
+
+.variant-bulk-buy-price-summary {
+  color: $disabled-med;
+  margin-bottom: 1em;
+}
+
+.variant-bulk-buy-quantity-label {
+  font-size: 0.875rem;
+  margin-bottom: .5em;
 }

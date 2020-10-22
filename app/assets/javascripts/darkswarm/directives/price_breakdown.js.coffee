@@ -2,7 +2,7 @@ Darkswarm.directive "priceBreakdown", ($tooltip)->
   # We use the $tooltip service from Angular foundation to give us boilerplate
   # Subsequently we patch the scope, template and restrictions
   tooltip = $tooltip 'priceBreakdown', 'priceBreakdown', 'click'
-  tooltip.scope = 
+  tooltip.scope =
     variant: "="
   tooltip.templateUrl = "price_breakdown_button.html"
   tooltip.replace = true
@@ -15,6 +15,3 @@ Darkswarm.directive 'priceBreakdownPopup', ->
   replace: true
   templateUrl: 'price_breakdown.html'
   scope: false
-
-  link: (scope, elem, attrs) ->
-    scope.expanded = false unless scope.expanded?

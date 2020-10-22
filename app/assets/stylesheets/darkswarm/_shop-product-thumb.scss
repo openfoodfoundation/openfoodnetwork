@@ -1,80 +1,32 @@
-@import "mixins";
-@import "branding";
-@import "animations";
-
 .darkswarm {
   products {
     product {
       .product-thumb {
-        @include csstrans;
-
-        position: absolute;
-        top: 2px;
-        left: 0px;
-        width: 7rem;
-        height: 7rem;
+        // Desktop: the product summary is nine columns wide. Use two
+        // for the image. 100% / 9 * 2 = 22.222% <= 192px
+        width: calc(22.222%);
         float: left;
-        display: block;
-        z-index: 1;
-        background-color: white;
-        overflow: hidden;
 
-        i {
-          @include csstrans;
-
-          transition-delay: 150ms;
-          position: absolute;
-          left: 45%;
-          top: 45%;
-          z-index: 99999;
-          color: white;
-          font-size: 1rem;
-          opacity: 0;
-        }
-
-        img {
-          @include csstrans;
-
-          opacity: 1;
-
-          @include transform-scale(scale(1));
-        }
-
-        &:hover, &:focus, &:active {
-          background-color: $clr-brick;
-
-          i {
-            left: 32%;
-            top: 30%;
-            font-size: 3rem;
-            opacity: 1;
-          }
-
-          img {
-            opacity: 0.5;
-
-            @include transform-scale(scale(1.1));
-          }
-        }
-
-        @include breakpoint(tablet) {
-          top: 2px;
-          width: 4rem;
-          height: 4rem;
-
-          &:hover, &:focus, &:active {
-            i {
-              left: 30%;
-              top: 30%;
-              font-size: 2rem;
-            }
-          }
-        }
-
+        // Mobile: the summary has full twelve columns and the image
+        // should take four of them. 100% / 12 * 4 = 33.333% <= 227px
         @include breakpoint(phablet) {
-          display: none;
-          width: 0rem;
-          height: 0rem;
+          width: calc(33.333%);
+        }
+
+        // Make this an anchor for the bulk label.
+        position: relative;
+
+        .product-thumb__bulk-label {
+          background-color: $grey-700;
+          color: white;
+          position: absolute;
+          right: 0;
+          top: .8em;
+          padding: .25em .5em;
+        }
+
+        &:hover {
+          filter: brightness(96%);
         }
       }
     }
