@@ -61,6 +61,11 @@ module Spree
         set_attachment_attributes(:s3_headers,
                                   ActiveSupport::JSON.decode(Spree::Config[:s3_headers]))
         set_attachment_attributes(:bucket, Spree::Config[:s3_bucket])
+
+        # When using S3, we set the URL on property s3_host_name
+        set_attachment_attributes(:s3_host_name, attachment_definitions[:attachment][:url])
+        set_attachment_attributes(:url, ":s3_domain_url")
+        # :s3_alias_url
       else
         attachment_definitions[:attachment].delete :storage
       end
