@@ -1,4 +1,4 @@
-Darkswarm.factory 'CreditCards', ($http, $filter, savedCreditCards, Messages)->
+Darkswarm.factory 'CreditCards', ($http, $filter, savedCreditCards, Messages, Customers)->
   new class CreditCard
     saved: $filter('orderBy')(savedCreditCards,'-is_default')
 
@@ -12,6 +12,8 @@ Darkswarm.factory 'CreditCards', ($http, $filter, savedCreditCards, Messages)->
           othercard.is_default = false
         $http.put("/credit_cards/#{card.id}", is_default: true).then (data) ->
           Messages.success(t('js.default_card_updated'))
+          for customer in Customers.index()
+            customer.allow_charges = false
         , (response) ->
           Messages.flash(response.data.flash)
       else
