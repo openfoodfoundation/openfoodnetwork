@@ -10,7 +10,7 @@
     %td.number{ ng: { bind: '::card.number' } }
     %td.expiry{ ng: { bind: '::card.expiry' } }
     %td.is-default
-      %input{ type: 'radio', name: 'default_card', ng: { model: 'card.is_default', change: 'setDefault(card)', value: "true"} }
+      %input{ type: 'radio', name: 'default_card', ng: { model: 'card.is_default', click: 'confirmSetDefault(card, $event)', value: "true"} }
     %td.actions
       %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
         = t(:delete)
