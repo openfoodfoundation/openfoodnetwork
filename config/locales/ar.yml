@@ -23,6 +23,10 @@ ar:
         variant_unit_name: "اسم وحدة النوع"
       spree/credit_card:
         base: "بطاقة ائتمان"
+        number: "رقم "
+        month: "شهر"
+        verification_value: "قيمة التحقق"
+        year: "عام"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
       variant_override:
@@ -2002,6 +2006,7 @@ ar:
   calculator: "آلة حاسبة"
   calculator_values: "القيم المحوسبة"
   calculator_settings_warning: "إذا كنت تقوم بتغيير نوع الحاسبة ، فيجب عليك الحفظ أولاً قبل أن تتمكن من تحرير إعدادات الحاسبة"
+  calculator_preferred_unit_error: "يجب أن تكون كجم أو رطل"
   flat_percent_per_item: "نسبة ثابتة (لكل بند)"
   flat_rate_per_item: "سعر ثابت (لكل بند)"
   flat_rate_per_order: "تسعيرة ثابته (لكل طلب)"
@@ -3078,11 +3083,18 @@ ar:
     inventory_error_flash_for_insufficient_quantity: "المواد في سلة التسوق غير متاح."
     inventory: المخزون
     zipcode: الرمز البريدي
-    weight: الوزن (لكل كجم)
+    weight: الوزن (لكل كجم أو رطل)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
     cannot_create_payment_without_payment_methods: "لا يمكنك إنشاء دفعة لطلب بدون تحديد طرقة الدفع."
     please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."
     options: "خيارات"
+    has_no_shipped_units: "لا يوجد لديه طلبات مشحونة"
+    successfully_created: '%{resource} تم إنشاؤه بنجاح!'
+    successfully_updated: 'تم تحديث %{resource} بنجاح!'
+    payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
+    not_available: "غير متاح"
+    order_populator:
+      out_of_stock: '%{item} غير متوفر.'
     actions:
       update: "تحديث"
     shared:
