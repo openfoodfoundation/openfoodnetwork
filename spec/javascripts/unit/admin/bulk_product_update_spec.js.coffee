@@ -357,6 +357,15 @@ describe "AdminProductEditCtrl", ->
     it "resets dirtyProducts", ->
       expect(DirtyProducts.clear).toHaveBeenCalled()
 
+  describe "sorting products", ->
+    it "sorts products", ->
+      spyOn $scope, "fetchProducts"
+
+      $scope.sortOptions.toggle('name')
+      $scope.$apply()
+
+      expect($scope.q.sorting).toEqual 'name asc'
+      expect($scope.fetchProducts).toHaveBeenCalled()
 
   describe "updating the product on hand count", ->
     it "updates when product is not available on demand", ->
