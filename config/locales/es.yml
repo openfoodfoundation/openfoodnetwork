@@ -24,6 +24,9 @@ es:
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
+        month: "Mes"
+        verification_value: "Valor de verificación"
+        year: "Año"
       order_cycle:
         orders_close_at: Fecha de cierre
       variant_override:
@@ -1216,6 +1219,9 @@ es:
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
       select_oc:
         select_oc_html: "Por favor <span class='highlighted'>debes elegir cuando quieres tu pedido</span>, para poder ver qué productos hay disponibles."
+    products:
+      summary:
+        bulk: "Agrupar"
   card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con tu información de pago: %{error}"
@@ -1923,7 +1929,6 @@ es:
   shop_for_products_html: "Comprar productos de <span class=\"turquoise\">%{enterprise}</span> en:"
   change_shop: "Cambiar de tienda:"
   shop_at: "Comprar en:"
-  price_breakdown: "Desglose de precios completo"
   admin_fee: "Comisión de administración"
   sales_fee: "Comisión de ventas"
   packing_fee: "Comisión de empaquetado"
@@ -1998,6 +2003,7 @@ es:
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
   calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
+  calculator_preferred_unit_error: "debe ser kg o lb"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
   flat_rate_per_item: "Tarifa plana (por artículo)"
   flat_rate_per_order: "Tarifa plana (por pedido)"
@@ -2600,6 +2606,15 @@ es:
           de tu carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de stock.
       only_n_remainging: "Solo quedan %{num} ."
+    shopfront:
+      variant:
+        add_to_cart: "Añadir"
+        in_cart: "en el carrito"
+        quantity_in_cart: "%{quantity} en el carrito"
+      bulk_buy_modal:
+        min_quantity: "Cantidad mínima"
+        max_quantity: "Cantidad máxima"
+      price_breakdown: "Desglose de el precio"
     variants:
       on_demand:
         'yes': "Bajo demanda"
@@ -2905,15 +2920,6 @@ es:
     smtp_send_copy_to_this_addresses: "Envía una copia de todos los correos salientes a esta dirección. Para direcciones múltiples, sepárelas con comas."
     intercept_email_address: "Interceptar la dirección de correo electrónico"
     intercept_email_instructions: "Anular destinatario de correo electrónico y reemplazar con esta dirección."
-    image_settings: "Ajustes de imagen"
-    image_settings_warning: "Deberá regenerar las miniaturas si actualiza los estilos de paperclip. Utilize rake paperclip:refresh:thumbnails CLASS=Spree::Image para hacer esto."
-    attachment_default_style: Estilo de los archivos adjuntos
-    attachment_default_url: "URL predeterminada de los archivos adjuntos"
-    attachment_path: "Ruta de los archivos adjuntos"
-    attachment_styles: "Estilos de clip"
-    attachment_url: "URL de los archivos adjuntos"
-    add_new_style: "Añadir nuevo estilo"
-    image_settings_updated: "Configuración de la imagen se actualizó correctamente."
     tax_categories: "Categorías de impuestos"
     listing_tax_categories: "Listado de categorías de impuestos"
     back_to_tax_categories_list: "Volver a la lista de categorías de impuestos"
@@ -2987,13 +2993,18 @@ es:
     inventory_error_flash_for_insufficient_quantity: "Un artículo de su carrito ya no está disponible."
     inventory: Inventario
     zipcode: Código Postal
+    weight: Peso (por kg o lb)
     error_user_destroy_with_orders: "Los usuarios con pedidos completados no pueden ser eliminados"
     cannot_create_payment_without_payment_methods: "No se puede crear un pago para una orden sin un medio de pago definido"
     please_define_payment_methods: "por favor definir métodos de pago"
     options: "Opciones"
+    has_no_shipped_units: "no tiene unidades enviadas"
     successfully_created: '%{resource} se ha creado exitosamente!'
     successfully_updated: '%{resource} ha sido actualizado exitosamente!'
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
+    not_available: "No disponible"
+    order_populator:
+      out_of_stock: '%{item} está agotado.'
     actions:
       update: "Actualizar"
     shared:
