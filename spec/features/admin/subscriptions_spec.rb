@@ -431,7 +431,7 @@ feature 'Subscriptions' do
     end
 
     describe "allowed variants" do
-      let!(:customer) { create(:customer, enterprise: shop, allow_charges: true) }
+      let!(:customer) { create(:customer, enterprise: shop) }
       let!(:credit_card) { create(:stored_credit_card, user: customer.user) }
       let!(:shop_product) { create(:product, supplier: shop) }
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
@@ -468,6 +468,7 @@ feature 'Subscriptions' do
       end
 
       it "permit creating and editing of the subscription" do
+        customer.update_attributes(allow_charges: true)
         # Fill in other details
         fill_in_subscription_basic_details
         click_button "Next"
