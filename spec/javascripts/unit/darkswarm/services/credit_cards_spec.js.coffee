@@ -36,6 +36,7 @@ describe 'CreditCards service', ->
 
       it "loads a success flash", ->
         CreditCards.setDefault(card2)
+        $httpBackend.expectGET('/api/customers.json').respond 200, []
         $httpBackend.flush()
         expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({success: t('js.default_card_updated')})
 
