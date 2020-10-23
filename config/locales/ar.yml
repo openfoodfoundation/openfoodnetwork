@@ -1216,6 +1216,9 @@ ar:
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
       select_oc:
         select_oc_html: "يرجى <span class='highlighted'>اختيار الوقت الذي تريده لطلبك</span> ، لمعرفة المنتجات المتوفرة."
+    products:
+      summary:
+        bulk: "جملة"
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1931,7 +1934,6 @@ ar:
   shop_for_products_html: "متجر لمنتجات <span class=\"turquoise\">%{enterprise}</span> على:"
   change_shop: "تغيير المتجر إلى:"
   shop_at: "تسوق الآن عبر:"
-  price_breakdown: "تفاصيل السعر الكامل"
   admin_fee: "رسوم الاشراف"
   sales_fee: "رسوم المبيعات"
   packing_fee: "رسوم التعبئة"
@@ -2598,6 +2600,15 @@ ar:
           إليك ما تغير:
       now_out_of_stock: الآن لا يوجد مخزون.
       only_n_remainging: "الآن ليس لديه %{num} متبقية."
+    shopfront:
+      variant:
+        add_to_cart: "إضافة"
+        in_cart: "في السلة"
+        quantity_in_cart: "%{quantity} في السلة"
+      bulk_buy_modal:
+        min_quantity: "اقل كمية "
+        max_quantity: "اعلى كمية"
+      price_breakdown: "تفاصيل السعر"
     variants:
       on_demand:
         'yes': "حسب الطلب"
@@ -3001,15 +3012,6 @@ ar:
     smtp_send_copy_to_this_addresses: "يرسل نسخة من جميع الرسائل الصادرة إلى هذا العنوان. لعناوين متعددة ، افصل بينها بفواصل."
     intercept_email_address: "اعتراض عنوان البريد الإلكتروني"
     intercept_email_instructions: "تجاوز مستلم البريد الإلكتروني واستبداله بهذا العنوان."
-    image_settings: "إعدادات الصورة"
-    image_settings_warning: "ستحتاج إلى تجديد الصور المصغرة إذا قمت بتحديث أنماط مشبك الورق. استخدم rap paperclip: refresh: الصور المصغرة CLASS = Spree :: Image للقيام بذلك."
-    attachment_default_style: نمط المرفقات
-    attachment_default_url: "المرفقات عنوان URL الافتراضي"
-    attachment_path: "مسار المرفقات"
-    attachment_styles: "أنماط الورق"
-    attachment_url: "مرفقات URL"
-    add_new_style: "إضافة نمط جديد"
-    image_settings_updated: "تم تحديث إعدادات الصورة بنجاح."
     tax_categories: "فئات الضرائب"
     listing_tax_categories: "قائمة فئات الضرائب"
     back_to_tax_categories_list: "العودة إلى قائمة فئات الضرائب"
