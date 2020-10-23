@@ -1219,6 +1219,9 @@ fr:
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
         select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."
+    products:
+      summary:
+        bulk: "Vrac"
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1926,7 +1929,6 @@ fr:
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
   change_shop: "Changer de boutique pour:"
   shop_at: "Acheter maintenant :"
-  price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
   sales_fee: "Frais de ventes/marketing"
   packing_fee: "Frais de packaging"
@@ -2627,6 +2629,15 @@ fr:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    shopfront:
+      variant:
+        add_to_cart: "Ajouter"
+        in_cart: "au panier"
+        quantity_in_cart: "%{quantity} au panier"
+      bulk_buy_modal:
+        min_quantity: "Quantité min"
+        max_quantity: "Quantité max"
+      price_breakdown: "Détail du prix"
     variants:
       on_demand:
         'yes': "A volonté"
@@ -2934,15 +2945,6 @@ fr:
     smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les mails sortants à cette adresse. Si plusieurs adresses, les séparer par une virgule."
     intercept_email_address: "Adresse email d'interception"
     intercept_email_instructions: "Modifier l'email destinataire et le remplacer avec cette adresse."
-    image_settings: "Paramètres des images"
-    image_settings_warning: "Vous devrez générer de nouvelles vignettes si vous mettez à jour les styles paperclip. Utilisez rake paperclip:refresh:thumbnails CLASS=Spree::Image pour le faire."
-    attachment_default_style: Style des pièces jointes
-    attachment_default_url: "URL par défaut des pièces jointes"
-    attachment_path: "Chemin des pièces jointes"
-    attachment_styles: "Styles paperclip"
-    attachment_url: "URL des pièces jointes"
-    add_new_style: "Ajouter nouveau style"
-    image_settings_updated: "Paramètre des images mis à jour avec succès."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Catégories de taxe en cours d'affichage"
     back_to_tax_categories_list: "Retour à la liste des catégories de taxe"
