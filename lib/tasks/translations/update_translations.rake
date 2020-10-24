@@ -7,7 +7,7 @@ namespace :ofn do
     desc "Pull new translations from Transifex"
 
     task update: :environment do
-      TransifexUpdater.new
+      TransifexUpdater.new.update
     end
   end
 end

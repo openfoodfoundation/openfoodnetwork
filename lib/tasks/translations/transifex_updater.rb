@@ -3,7 +3,7 @@
 require 'yaml'
 
 class TransifexUpdater
-  def initialize
+  def update
     return unless updatable_locales.present? && tx_client_present?
 
     fetch_translations
