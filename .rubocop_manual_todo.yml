@@ -845,7 +845,6 @@ Metrics/ModuleLength:
   - spec/models/spree/variant_spec.rb
   - spec/services/permissions/order_spec.rb
   - spec/services/variant_units/option_value_namer_spec.rb
-  - spec/support/request/stripe_helper.rb
 
 Metrics/ParameterLists:
   Max: 5

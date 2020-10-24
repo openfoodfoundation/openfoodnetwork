@@ -5,6 +5,7 @@ require 'spree/core/gateway_error'
 
 describe Spree::Admin::PaymentsController, type: :controller do
   include StripeHelper
+  include StripeStubs
 
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
