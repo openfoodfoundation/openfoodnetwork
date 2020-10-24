@@ -4,8 +4,21 @@ require 'spec_helper'
 require 'tasks/translations/transifex_updater'
 
 describe TransifexUpdater do
+  let(:subject) { TransifexUpdater.new }
+
+  describe "#updatable_locales" do
+    before do
+      allow(ENV).to receive(:fetch).with("AVAILABLE_LOCALES", "") { "en,fr,es" }
+    end
+
+    it "returns an array of available locales excluding `en`" do
+      updatable_locales = subject.__send__(:updatable_locales)
+
+      expect(updatable_locales).to eq ["fr", "es"]
+    end
+  end
+
   describe "#deep_diff_merge" do
-    let(:subject) { TransifexUpdater.new }
     let(:current_translations) {
       { "es" =>
         { "fruits" =>
