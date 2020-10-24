@@ -1220,6 +1220,9 @@ ru:
         require_customer_html: "Если Вы хотите покупать здесь, пожалуйста %{contact} %{enterprise} и спросите о присоединении."
       select_oc:
         select_oc_html: "Пожалуйста, <span class='highlighted'>выберите, когда вы хотите заказать</span>, чтобы увидеть какие товары доступны."
+    products:
+      summary:
+        bulk: "Массовый"
   card_could_not_be_updated: Карта не может быть обновлена
   card_could_not_be_saved: карта не может быть сохранена
   spree_gateway_error_flash_for_checkout: "Возникла проблема с вашей платежной информацией: %{error}"
@@ -1931,7 +1934,6 @@ ru:
   shop_for_products_html: "Покупайте товары <span class=\"turquoise\">%{enterprise}</span> по адресу:"
   change_shop: "Изменить магазин на:"
   shop_at: "Магазин сейчас на:"
-  price_breakdown: "Полная разбивка цен"
   admin_fee: "Административный сбор"
   sales_fee: "Сбор с продаж"
   packing_fee: "Оплата упаковки"
@@ -2610,6 +2612,15 @@ ru:
           в вашей корзине снизился. Вот что изменилось:
       now_out_of_stock: сейчас нет в наличии.
       only_n_remainging: "теперь осталось только %{num}."
+    shopfront:
+      variant:
+        add_to_cart: "Добавить"
+        in_cart: "в корзине"
+        quantity_in_cart: "%{quantity} в корзине"
+      bulk_buy_modal:
+        min_quantity: "Мин. количество"
+        max_quantity: "Макс количество"
+      price_breakdown: "Разбивка цен"
     variants:
       on_demand:
         'yes': "По Запросу"
@@ -2965,15 +2976,6 @@ ru:
     smtp_send_copy_to_this_addresses: "Копии всех исходящих писем отправляются на этот адрес. Для указания нескольких адресов, разделяйте запятыми"
     intercept_email_address: "Перехватить адрес электронной почты"
     intercept_email_instructions: "Переопределить получателя электронной почты и заменить его на этот адрес."
-    image_settings: "Настройки Изображения"
-    image_settings_warning: "Вам нужно будет восстановить миниатюры, если вы обновите paperclip стили. Для этого выполните: rake paperclip:refresh:thumbnails CLASS=Spree::Image."
-    attachment_default_style: Стиль вложений
-    attachment_default_url: "URL По Умолчанию Для Вложений"
-    attachment_path: "Путь К Вложениям"
-    attachment_styles: "Paperclip Стили"
-    attachment_url: "URL вложений"
-    add_new_style: "Добавить Новый Стиль"
-    image_settings_updated: "Настройки Изображения успешно обновлены."
     tax_categories: "Налоговые Категории"
     listing_tax_categories: "Список Налоговых Категорий"
     back_to_tax_categories_list: "Назад К Списку Налоговых Категорий"
