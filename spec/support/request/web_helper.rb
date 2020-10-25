@@ -136,6 +136,10 @@ module WebHelper
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
 
+  def fill_in_tag(tag_name, selector = "tags-input .tags input")
+    find(:css, selector).set "#{tag_name}\n"
+  end
+
   private
 
   # Takes an optional angular controller name eg: "LineItemsCtrl",
