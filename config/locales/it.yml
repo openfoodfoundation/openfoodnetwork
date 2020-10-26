@@ -3423,6 +3423,7 @@ it:
         issue_text: |
             Se l'URL qui sopra non funziona, prova a copiarlo e incollarlo nel tuo browser.
             Se continui ad avere problemi, contattaci.
+        subject: "Istruzioni per il reset della password"
       confirmation_instructions:
         subject: "Per favore conferma il tuo account OFN"
     shipment_mailer:
