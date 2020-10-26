@@ -18,7 +18,46 @@ describe TransifexUpdater do
     end
   end
 
-  describe "#deep_diff_merge" do
+  describe "#merge_keys" do
+    let(:current_translations) {
+      { "fruits" =>
+        { "apples" => "Manzanas",
+          "oranges" => "Naranjas" },
+        "vegetables" =>
+          { "tomatos" => "Tomates" },
+        "baked_goods" =>
+          { "bread" => "Pan" } }
+    }
+    let(:base_translations) {
+      { "fruits" =>
+        { "apples" => "Apples",
+          "pears" => "Pears",
+          "bags" =>
+            { "grapes" => "Grapes" } },
+        "vegetables" =>
+          { "tomatos" => "Tomatos" } }
+    }
+    let(:expected_output) {
+      { "fruits" =>
+        { "apples" => "Manzanas",
+          "pears" => "Pears",
+          "oranges" => "Naranjas",
+          "bags" =>
+            { "grapes" => "Grapes" } },
+        "vegetables" =>
+          { "tomatos" => "Tomates" },
+        "baked_goods" =>
+          { "bread" => "Pan" } }
+    }
+
+    it "merges new keys from base locale" do
+      merged_data = subject.__send__(:merge_keys, current_translations, base_translations)
+
+      expect(merged_data).to eq expected_output
+    end
+  end
+
+  describe "#merge_values" do
     let(:current_translations) {
       { "es" =>
         { "fruits" =>
@@ -51,7 +90,7 @@ describe TransifexUpdater do
     }
 
     it "merges compatible upstream translations" do
-      merged_data = subject.__send__(:deep_diff_merge, current_translations, new_translations)
+      merged_data = subject.__send__(:merge_values, current_translations, new_translations)
 
       expect(merged_data).to eq expected_output
     end
