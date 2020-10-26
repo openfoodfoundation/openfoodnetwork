@@ -19,6 +19,7 @@ class TransifexUpdater
   end
 
   def tx_client_present?
+    log "Transifex Client:"
     system("tx --version")
   end
 
@@ -49,13 +50,15 @@ class TransifexUpdater
     current_translations = YAML.load_file(current_file)
     upstream_translations = YAML.load_file(new_file)
 
-    puts "\n####### Locale: #{root_key(current_translations)} #######\n\n"
+    locale_key = root_key(current_translations)
 
-    puts "####### New compatible keys in basefile:\n\n"
-    updated_structure = { root_key(current_translations) =>
+    log "\n####### Processing locale: #{locale_key} #######\n"
+
+    log "####### New compatible keys in basefile for #{locale_key}:\n"
+    updated_structure = { locale_key =>
                               merge_keys(keys(current_translations), keys(base_translations)) }
 
-    puts "\n####### New/updated compatible translations:\n\n"
+    log "\n####### New/updated compatible translations for #{locale_key}:\n"
     merge_values(updated_structure, upstream_translations)
   end
 
@@ -88,7 +91,7 @@ class TransifexUpdater
       if second_value.is_a?(Hash) && first_value.is_a?(Hash)
         first_hash[second_key] = merge_keys(first_value, second_value)
       elsif !first_hash.key? second_key
-        puts JSON.pretty_generate({second_key => second_value})
+        log JSON.pretty_generate(second_key => second_value)
         first_hash[second_key] = second_value
       end
     end
@@ -109,11 +112,16 @@ class TransifexUpdater
       if current_value.is_a?(Hash) && new_value.is_a?(Hash)
         first_hash[current_key] = merge_values(current_value, new_value)
       elsif new_value.present? && new_value != current_value
-        puts "#{current_key}: #{new_value}"
+        log "#{current_key}: #{new_value}"
         first_hash[current_key] = new_value
       end
     end
 
     first_hash
+  end
+
+  def log(message)
+    @logger ||= ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    @logger.info(message)
   end
 end
