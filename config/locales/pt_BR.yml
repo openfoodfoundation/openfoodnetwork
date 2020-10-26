@@ -24,6 +24,9 @@ pt_BR:
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
+        month: "Mês"
+        verification_value: "Valor de Verificação"
+        year: "Ano"
       order_cycle:
         orders_close_at: Dia de fechamento
       variant_override:
@@ -122,7 +125,9 @@ pt_BR:
       not_array_error: "deve ser uma matriz"
       invalid_element_error: "deve conter apenas números inteiros válidos"
   datetime_picker_ui:
+    current_text: Agora
     close_text: Feito
+    time_text: Data
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de e-mail para %{enterprise}"
@@ -230,6 +235,7 @@ pt_BR:
   enterprises: Iniciativas
   enterprise_groups: Grupos
   reports: Relatórios
+  listing_reports: Relatório dos registros
   variant_overrides: Inventário
   import: Importar
   spree_products: Produtos Spree
@@ -599,6 +605,7 @@ pt_BR:
         order_date: "Concluído em"
         max: "Máximo"
         product_unit: "Produto: Unidade"
+        weight_volume: "Peso/Volume (g)"
         ask: "Perguntar?"
         page_title: "Gestão de Pedidos em Massa"
         actions_delete: "Deletar selecionado"
@@ -635,6 +642,8 @@ pt_BR:
           acn_placeholder: 'ex: 987 654 321'
           display_invoice_logo: Exibir logo nas faturas
           invoice_text: 'Adicionar texto customizado no final das faturas '
+          terms_and_conditions: "Termos e Condições"
+          remove_terms_and_conditions: "Remover Arquivo"
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -1141,12 +1150,17 @@ pt_BR:
       destroy_attachment_does_not_exist: "Logo não existe"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Imagem promocional não existe"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "O arquivo de Termos e Condições não existe"
     orders:
       failed_to_update: "Falha ao atualizar o pedido"
   checkout:
     already_ordered:
       cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
+    terms_and_conditions:
+      message_html: "Ao fazer esse pedido você concorda com os%{terms_and_conditions_link}"
+      link_text: "Termos de serviço"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
     hubs:
@@ -1201,6 +1215,9 @@ pt_BR:
         require_customer_html: "Se quiser começar a comprar aqui, entre em contato com %{enterprise}para saber como."
       select_oc:
         select_oc_html: "Favor <span class='highlighted'>escolher a data que quer receber seu pedido</span> para saber quais produtos estão disponíveis."
+    products:
+      summary:
+        bulk: "Atacado"
   card_could_not_be_updated: Não foi possível atualizar o cartão
   card_could_not_be_saved: o cartão não pôde ser salvo
   spree_gateway_error_flash_for_checkout: "Ocorreu um problema com os seus dados de pagamento: %{error}"
@@ -1908,7 +1925,6 @@ pt_BR:
   shop_for_products_html: "Compre produtos da <span class=\"turquoise\">%{enterprise}</span> em:"
   change_shop: "Mudar loja para:"
   shop_at: "Compre agora em:"
-  price_breakdown: "Preço detalhado"
   admin_fee: "Taxa de manejo"
   sales_fee: "Taxa de venda"
   packing_fee: "Taxa de embalagem"
@@ -1983,6 +1999,7 @@ pt_BR:
   calculator: "Calculadora"
   calculator_values: "Valores da calculadora"
   calculator_settings_warning: "Se você estiver alterando o tipo de calculadora, salve primeiro antes de poder editar as configurações da calculadora."
+  calculator_preferred_unit_error: "Deve ser kg ou lb"
   flat_percent_per_item: "Percentual (por unidade)"
   flat_rate_per_item: "Taxa fixa (por item)"
   flat_rate_per_order: "Taxa fixa ( por pedido)"
@@ -2292,6 +2309,7 @@ pt_BR:
   enterprise_name_error: "já foi tomada. Se esta é sua empresa e você deseja reivindicar a propriedade, ou se deseja negociar com esta empresa, entre em contato com o gerente atual desse perfil em %{email}."
   enterprise_owner_error: "^ %{email} não possui permissão para ter mais iniciativas (o limite é %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Esse papel já está presente."
+  enterprise_terms_and_conditions_type_error: "Somente PDFs são aceitos"
   inventory_item_visibility_error: deve ser verdadeiro ou falso
   product_importer_file_error: "erro: nenhum arquivo carregado"
   product_importer_spreadsheet_error: "não foi possível processar o arquivo: tipo de arquivo inválido"
@@ -2573,6 +2591,10 @@ pt_BR:
           images:
             removed_logo_successfully: "Logo removida com sucesso"
             immediate_logo_removal_warning: "A logo será removida imediatamente após a confirmação."
+            removed_promo_image_successfully: "Imagem promocional removida com sucesso"
+            immediate_promo_image_removal_warning: "A imagem promocional será removida imediatamente após a confirmação"
+            immediate_terms_and_conditions_removal_warning: "O arquivo de Termos e Condições será removido imediatamente após confirmação"
+            removed_terms_and_conditions_successfully: "Arquivo de Termos e Condições removido com sucesso"
     insufficient_stock: "Estoque insuficiente disponível, apenas %{on_hand} restante"
     out_of_stock:
       reduced_stock_available: Estoque reduzido disponível
@@ -2581,6 +2603,15 @@ pt_BR:
           em seu carrinho foram reduzidos. Aqui está o que mudou:
       now_out_of_stock: está agora fora de estoque.
       only_n_remainging: "agora só tem %{num} restantes."
+    shopfront:
+      variant:
+        add_to_cart: "Adicionar"
+        in_cart: "no carrinho"
+        quantity_in_cart: "%{quantity}no carrinho"
+      bulk_buy_modal:
+        min_quantity: "quantidade min. "
+        max_quantity: "Quantidade máxima"
+      price_breakdown: "Detalhamento do preço"
     variants:
       on_demand:
         'yes': "Sob encomenda"
@@ -2646,6 +2677,11 @@ pt_BR:
       signup_or_login: "Faça seu cadastro ou login para começar"
       have_an_account: "Já possui um conta?"
       action_login: "Entrar agora"
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Houve um problema ao configurar seu cartão no nosso serviço de pagamento.
+          Favor recarregar a página e tentar novamente. Se não funcionar,
+          por favor entre em contato com o nosso suporte.
   inflections:
     each:
       one: "cada"
@@ -2883,15 +2919,6 @@ pt_BR:
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os correios enviados para este endereço. Para vários endereços, separe com vírgulas."
     intercept_email_address: "Interceptar endereço de email"
     intercept_email_instructions: "Substitua o destinatário do email e substitua por este endereço."
-    image_settings: "Configurações de imagem"
-    image_settings_warning: "Você precisará gerar novamente as miniaturas se atualizar os estilos de clipes de papel. Use o clipe de papel rake: refresh: miniaturas CLASS = Spree :: Image para fazer isso."
-    attachment_default_style: Estilo dos Anexos
-    attachment_default_url: "URL padrão de anexos"
-    attachment_path: "Caminho dos Anexos"
-    attachment_styles: "Estilos de clipes de papel"
-    attachment_url: "URL de anexos"
-    add_new_style: "Adicionar novo estilo"
-    image_settings_updated: "Configurações de imagem atualizadas com sucesso."
     tax_categories: "Categorias fiscais"
     listing_tax_categories: "Listando categorias de impostos"
     back_to_tax_categories_list: "Voltar à lista de categorias de impostos"
@@ -2965,10 +2992,18 @@ pt_BR:
     inventory_error_flash_for_insufficient_quantity: "Um item no seu carrinho ficou indisponível."
     inventory: Inventário
     zipcode: CEP
+    weight: Peso (por kg ou lb)
     error_user_destroy_with_orders: "Usuários com pedidos concluídos não podem ser excluídos"
     cannot_create_payment_without_payment_methods: "Você não pode criar um pagamento para um pedido sem métodos de pagamento definidos."
     please_define_payment_methods: "Defina primeiro algum método de pagamento."
     options: "Opções"
+    has_no_shipped_units: "não tem itens enviados"
+    successfully_created: '%{resource}foi criado com sucesso!'
+    successfully_updated: '%{resource}foi atualizado com sucesso!'
+    payment_processing_failed: "O pagamento não pôde ser processado, favor verificar os dados informados. "
+    not_available: "N/A"
+    order_populator:
+      out_of_stock: '%{item}fora de estoque. '
     actions:
       update: "Atualizar"
     shared:

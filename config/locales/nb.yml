@@ -1217,6 +1217,9 @@ nb:
         require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
       select_oc:
         select_oc_html: "Vennligst <span class='highlighted'>velg når du vil ha bestillingen din</span> , for å se hvilke produkter som er tilgjengelige."
+    products:
+      summary:
+        bulk: "Bulk"
   card_could_not_be_updated: Kortet kunne ikke oppdateres
   card_could_not_be_saved: kort kunne ikke lagres
   spree_gateway_error_flash_for_checkout: "Det oppstod et problem med betalingsinformasjonen din: %{error}"
@@ -1924,7 +1927,6 @@ nb:
   shop_for_products_html: "Handle produkter fra <span class=\"turquoise\">%{enterprise}</span> på:"
   change_shop: "Endre butikk til:"
   shop_at: "Handle nå på:"
-  price_breakdown: "Prisfordeling"
   admin_fee: "Administrasjonsgebyr"
   sales_fee: "Salgsgebyr"
   packing_fee: "Pakkegebyr"
@@ -2598,6 +2600,11 @@ nb:
           i din handlekurv gått ned. Her er hva som er endret.
       now_out_of_stock: er nå ikke på lager.
       only_n_remainging: "har nå kun %{num} igjen."
+    shopfront:
+      variant:
+        add_to_cart: "Legg til"
+      bulk_buy_modal:
+        max_quantity: "Max mengde"
     variants:
       on_demand:
         'yes': "Ved forespørsel"
@@ -2902,15 +2909,6 @@ nb:
     smtp_send_copy_to_this_addresses: "Sender en kopi av alle utgående eposter til denne adressen. For flere adresser, skill med komma."
     intercept_email_address: "Avskjær epostadresse"
     intercept_email_instructions: "Overstyr epost mottaker og erstatt med denne adressen."
-    image_settings: "Bildeinnstillinger"
-    image_settings_warning: "Du må regenerere miniatyrbilder hvis du oppdaterer paperclip-stiler. Bruk rake paperclip:refresh:thumbnails CLASS=Spree::Image for å gjøre dette"
-    attachment_default_style: Vedlegg Stil
-    attachment_default_url: "Vedlegg Standard URL"
-    attachment_path: "Vedlegg Sti"
-    attachment_styles: "Paperclip Stiler"
-    attachment_url: "Vedlegg URL"
-    add_new_style: "Legg til ny stil"
-    image_settings_updated: "Oppdatering av bildeinnstillinger var vellykket."
     tax_categories: "Avgiftskategorier"
     listing_tax_categories: "Oppføring av Avgiftskategorier"
     back_to_tax_categories_list: "Tilbake til Avgiftskategorier Liste"
