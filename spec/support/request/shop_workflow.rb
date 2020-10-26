@@ -71,7 +71,7 @@ module ShopWorkflow
     wait_for_cart
   end
 
-  def click_add_bulk_max_to_cart(variant = nil, quantity = 1)
+  def click_add_bulk_max_to_cart(_variant = nil, quantity = 1)
     within(".reveal-modal") do
       quantity.times do
         page.all("button", text: increase_quantity_symbol).last.click
