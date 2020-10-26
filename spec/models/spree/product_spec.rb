@@ -16,6 +16,10 @@ module Spree
         expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
       end
 
+      it "requires a unit value" do
+        expect(build(:simple_product, unit_value: nil)).not_to be_valid
+      end
+
       it "requires a supplier" do
         expect(build(:simple_product, supplier: nil)).not_to be_valid
       end

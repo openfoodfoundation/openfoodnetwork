@@ -90,6 +90,27 @@ feature '
       variant = product.variants.first
       expect(variant.on_demand).to be true
     end
+
+    scenario "creating product with empty unit value", js: true do
+      login_as_admin_and_visit spree.admin_products_path
+
+      click_link 'New Product'
+
+      fill_in 'product_name', with: 'Hot Cakes'
+      select 'New supplier', from: 'product_supplier_id'
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '1.99'
+      fill_in 'product_on_hand', with: 0
+      check 'product_on_demand'
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      page.find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
+
+      click_button 'Create'
+
+      expect(current_path).to eq spree.admin_products_path
+      expect(page).to have_content "Unit value can't be blank"
+    end
   end
 
   context "as an enterprise user" do
