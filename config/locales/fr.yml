@@ -3449,6 +3449,7 @@ fr:
         issue_text: |
             Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
             Si le problème persiste, n'hésitez pas à nous contacter.
+        subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
     shipment_mailer:
