@@ -1,4 +1,5 @@
-Spree::Core::Engine.routes.append do
+# Overriding Devise routes to use our own controller
+Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
