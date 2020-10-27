@@ -60,7 +60,7 @@ module Spree
     def destroy_at_stripe
       stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
 
-      stripe_customer&.delete
+      stripe_customer&.delete unless stripe_customer.deleted?
     end
 
     def stripe_account_id
