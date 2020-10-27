@@ -21,7 +21,8 @@ module Spree
     after_create :ensure_single_default_card
     after_save :ensure_single_default_card, if: :default_card_needs_updating?
     after_save :remove_shop_authorizations, if: :default_card_needs_updating?
-
+    after_destroy :remove_shop_authorizations, if: :is_default
+    
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
