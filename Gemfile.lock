@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 3ae54d8eaeee6c0a8bc4f0e5ee03b1e48b2450c0
+  revision: 1a477e9f7763297944cc99b6f4dd3d962aa963e9
   branch: 2-1-0-stable
   specs:
     spree_paypal_express (2.0.3)
