@@ -369,18 +369,18 @@ ru:
       edit:
         title: "Stripe Connect"
         settings: "Настройки"
-        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
-        no_api_key_msg: No Stripe account exists for this enterprise.
-        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        stripe_connect_enabled: Разрешить магазинам принимать платежи с помощью Stripe Connect?
+        no_api_key_msg: У этого предприятия нет учетной записи Stripe.
+        configuration_explanation_html: Подробные инструкции по настройке интеграции Stripe Connect <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>см. в этом руководстве</a> .
         status: Статус
         ok: Ok
-        instance_secret_key: Instance Secret Key
-        account_id: Account ID
-        business_name: Business Name
-        charges_enabled: Charges Enabled
-        charges_enabled_warning: "Warning: Charges are not enabled for your account"
-        auth_fail_error: The API key you provided is invalid
-        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
+        instance_secret_key: Секретный ключ экземпляра
+        account_id: ID аккаунта
+        business_name: Наименование фирмы
+        charges_enabled: Сборы Включены
+        charges_enabled_warning: "Предупреждение: для вашей учетной записи не включена оплата"
+        auth_fail_error: Указанный вами ключ API недействителен.
+        empty_api_key_error_html: Ключ Stripe API не предоставлен. Чтобы установить ключ API, следуйте <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">этим инструкциям.</a>
     matomo_settings:
       edit:
         title: "Настройки Matomo"
@@ -762,15 +762,15 @@ ru:
           facebook_placeholder: "напр. www.facebook.com/PageNameHere"
           linkedin_placeholder: "напр. www.linkedin.com/in/YourNameHere"
         stripe_connect:
-          connect_with_stripe: "Connect with Stripe"
-          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
-          stripe_account_connected: "Stripe account connected."
-          disconnect: "Disconnect account"
+          connect_with_stripe: "Подключиться к Stripe"
+          stripe_connect_intro: "Чтобы принимать платежи с помощью кредитной карты, вам необходимо подключить свою учетную запись Stripe к Открытой Сети Продуктов. Используйте кнопку справа, чтобы начать."
+          stripe_account_connected: "Аккаунт Stripe подключен."
+          disconnect: "Отключить аккаунт"
           confirm_modal:
-            title: Connect with Stripe
-            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
-            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
-            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you willneed to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            title: Подключиться к Stripe
+            part1: Stripe - это служба обработки платежей, которая позволяет магазинам в сети ОСП принимать платежи по кредитным картам от клиентов.
+            part2: Чтобы использовать эту функцию, вы должны подключить свою учетную запись Stripe к ОСП. Нажав «Я согласен» ниже, вы перейдете на веб-сайт Stripe, на котором вы можете подключить существующую учетную запись Stripe или создать новую, если у вас ее еще нет.
+            part3: Это позволит Открытой Сети Продуктов принимать платежи по кредитным картам от клиентов от вашего имени. Обратите внимание, что вам нужно будет вести свою учетную запись Stripe, оплачивать сборы Stripe и самостоятельно обрабатывать любые возвратные платежи и обслуживание клиентов.
             i_agree: Согласен
             cancel: Выход
         tag_rules:
@@ -1130,7 +1130,7 @@ ru:
       pause_failure_msg: "Извините, приостановка не удалась!"
       confirm_unpause_msg: "Если в расписании этой подписки есть открытый Цикл заказа, для этого клиента будет создан заказ. Вы уверены, что хотите отменить эту подписку?"
       unpause_failure_msg: "Извините, не удалось возобновить!"
-      confirm_cancel_open_orders_msg: "В настоящее время открыты некоторые заказы на эту подписку. Клиент уже был уведомлен о том, что заказ будет размещен. Вы хотите отменить эти заказы или оставить их?"
+      confirm_cancel_open_orders_msg: "В настоящее время открыты некоторые заказы на эту подписку. Клиент уже был уведомлен о том, что заказ будет размещен. Вы хотите отменить этот заказ(ы) или оставить его?"
       resume_canceled_orders_msg: "Некоторые заказы по этой подписке могут быть возобновлены прямо сейчас. Вы можете возобновить их из выпадающего списка заказов."
       yes_cancel_them: Отменить их
       no_keep_them: Оставить их
@@ -1145,11 +1145,11 @@ ru:
         associated_subscriptions_error: Это расписание не может быть удалено, потому что оно имеет связанные подписки
     controllers:
       enterprises:
-        stripe_connect_cancelled: "Connection to Stripe has been cancelled"
-        stripe_connect_success: "Stripe account connected successfully"
-        stripe_connect_fail: Sorry, the connection of your Stripe account failed
+        stripe_connect_cancelled: "Подключение к Stripe было отменено"
+        stripe_connect_success: "Аккаунт Stripe успешно подключен"
+        stripe_connect_fail: К сожалению, не удалось подключиться к вашей учетной записи Stripe
       stripe_connect_settings:
-        resource: Stripe Connect configuration
+        resource: Конфигурация Stripe Connect
   api:
     enterprise_logo:
       destroy_attachment_does_not_exist: "Логотип не существует"
@@ -1340,7 +1340,7 @@ ru:
   card_securitycode: "Секретный код"
   card_expiry_date: Срок действия
   card_masked_digit: "X"
-  card_expiry_abbreviation: "Exp"
+  card_expiry_abbreviation: "Срок действия"
   new_credit_card: "Новая кредитная карта"
   my_credit_cards: Мои кредитные карты
   add_new_credit_card: Добавить новую кредитную карту
@@ -1372,7 +1372,7 @@ ru:
       cookie_consent_desc: "Используется для поддержания статуса согласия пользователя на хранение куки"
       cookie_remember_me_desc: "Используется, если пользователь запросил сайт, чтобы запомнить его. Этот файл cookie автоматически удаляется через 12 дней. Если вы как пользователь хотите удалить этот файл cookie, вам нужно только выйти из системы. Если вы не хотите, чтобы этот файл cookie устанавливался на ваш компьютер, не следует ставить флажок “запомнить меня” при входе в систему."
       cookie_openstreemap_desc: "Используется нашим дружественным картографическим провайдером с открытым исходным кодом (OpenStreetMap), чтобы гарантировать, что он не получает слишком много запросов в течение определенного периода времени, чтобы предотвратить злоупотребление их услугами."
-      cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
+      cookie_stripe_desc: "Данные, собираемые нашей платежной системой Stripe для обнаружения мошенничества https://stripe.com/cookies-policy/legal. Не все магазины используют Stripe в качестве метода оплаты, но для предотвращения мошенничества рекомендуется применять его ко всем страницам. Stripe, вероятно, создаст картину того, какие из наших страниц обычно взаимодействуют со своим API, а затем пометит что-то необычное. Таким образом, установка Stripe cookie имеет более широкую функцию, чем просто предоставление пользователю способа оплаты. Его удаление может повлиять на безопасность самой службы. Вы можете узнать больше о Stripe и ознакомиться с его политикой конфиденциальности на https://stripe.com/privacy."
       statistics_cookies: "Статистика Cookies"
       statistics_cookies_desc: "Следующие указания не являются строго необходимыми, но помогают предоставить вам лучший пользовательский опыт, позволяя нам анализировать поведение пользователей, определять, какие функции вы используете чаще всего или не используете, понимать проблемы взаимодействия с пользователем и т.д."
       statistics_cookies_matomo_desc_html: "Для сбора и анализа данных об использовании платформы мы используем <a href='https://matomo.org/' target='_blank'>Matomo</a> (бывший Piwik), инструмент для анализа с открытым исходным кодом, совместимый с GDPR и защищающий вашу конфиденциальность."
@@ -1587,7 +1587,7 @@ ru:
   products_clear: Сбросить
   products_showing: "Показать:"
   products_results_for: "Результаты для"
-  products_or: "ИЛИ"
+  products_or: "или"
   products_and: "и"
   products_filters_in: "в"
   products_with: с
@@ -2143,7 +2143,7 @@ ru:
   report_header_suburb: Город
   report_header_address: Адрес
   report_header_billing_address: Платёжный Адрес
-  report_header_relationship: Relationship
+  report_header_relationship: Отношения
   report_header_hub: Центр
   report_header_hub_address: Адрес Центра
   report_header_to_hub: В Центр
@@ -2159,13 +2159,13 @@ ru:
   report_header_ship_city: Город Доставки
   report_header_ship_postcode: Индекс Доставки
   report_header_ship_state: Область Доставки
-  report_header_billing_street: Billing Street
-  report_header_billing_street_2: Billing Street 2
-  report_header_billing_street_3: Billing Street 3
-  report_header_billing_street_4: Billing Street 4
-  report_header_billing_city: Billing City
-  report_header_billing_postcode: Billing Zip code
-  report_header_billing_state: Billing State
+  report_header_billing_street: Платежная улица
+  report_header_billing_street_2: Платежная улица 2
+  report_header_billing_street_3: Платежная улица 3
+  report_header_billing_street_4: Платежная улица 4
+  report_header_billing_city: Город платежа
+  report_header_billing_postcode: Почтовый индекс платежа
+  report_header_billing_state: Область платежа
   report_header_incoming_transport: Входящий Транспорт
   report_header_special_instructions: Специальные Инструкции
   report_header_order_number: Номер заказа
@@ -2198,7 +2198,7 @@ ru:
   report_header_producer: Производитель
   report_header_producer_suburb: Город Производителя
   report_header_unit: Единица измерения
-  report_header_group_buy_unit_quantity: Group Buy Unit Количество
+  report_header_group_buy_unit_quantity: Группа покупает количество единиц
   report_header_cost: Стоимость
   report_header_shipping_cost: Стоимость доставки
   report_header_curr_cost_per_unit: Текущ. Стоимость за единицу
@@ -2312,14 +2312,14 @@ ru:
   validation_msg_at_least_one_hub: "^Должен быть выбран хотя бы один Центр"
   validation_msg_tax_category_cant_be_blank: "^Налоговая Категория не может быть пустой"
   validation_msg_is_associated_with_an_exising_customer: "связан с существующим клиентом"
-  content_configuration_pricing_table: "(TODO: Pricing table)"
-  content_configuration_case_studies: "(TODO: Case studies)"
-  content_configuration_detail: "(TODO: Detail)"
+  content_configuration_pricing_table: "(СДЕЛАТЬ: таблица цен)"
+  content_configuration_case_studies: "(СДЕЛАТЬ: Примеры из практики)"
+  content_configuration_detail: "(СДЕЛАТЬ: Подробно)"
   enterprise_name_error: "уже использовано. Если это Ваше предприятие и Вы хотите претендовать на право владения или если Вы хотите торговать с этим Предприятием, пожалуйста, свяжитесь с текущим менеджером этого профиля по адресу %{email}."
   enterprise_owner_error: "^%{email} не разрешается владеть другими предприятиями (лимит %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Эта роль уже существует."
   enterprise_terms_and_conditions_type_error: "Разрешены только PDF файлы"
-  inventory_item_visibility_error: должен быть true или false
+  inventory_item_visibility_error: должен быть Истина или Ложь
   product_importer_file_error: "ошибка: файл не загружен"
   product_importer_spreadsheet_error: "не удалось обработать файл: неверный тип файла"
   product_importer_products_save_error: ни один из товаров не сохранён
@@ -2567,7 +2567,7 @@ ru:
           invalid: "Недействительный"
       resend_user_email_confirmation:
         resend: "Повторно отправить"
-        sending: "П\"овторная Отправка...\""
+        sending: "Повторная Отправка..."
         done: "Повторно Отправлено ✓"
         failed: "Неудачная повторная отправка ✗"
       order_cycles:
@@ -3074,7 +3074,7 @@ ru:
       payments_list:
         date_time: "Дата/Время"
         amount: "К оплате"
-        payment_method: "Payment Method"
+        payment_method: "Способ Оплаты"
         payment_state: "Состояние Платежа"
     errors:
       messages:
@@ -3482,6 +3482,7 @@ ru:
             Если указанный выше URL не работает, попробуйте скопировать и вставить
             его в браузер.
             Если у вас возникли проблемы, пожалуйста, свяжитесь с нами.
+        subject: "Инструкции по сбросу пароля"
       confirmation_instructions:
         subject: "Пожалуйста, подтвердите Вашу ОСП учетную запись"
     shipment_mailer:
