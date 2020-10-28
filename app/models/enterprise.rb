@@ -470,6 +470,8 @@ class Enterprise < ActiveRecord::Base
   end
 
   def initialize_permalink
+    return unless name
+
     self.permalink = Enterprise.find_available_permalink(name)
   end
 

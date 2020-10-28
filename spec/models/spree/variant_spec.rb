@@ -333,27 +333,27 @@ module Spree
 
       describe "getting name for display" do
         it "returns display_name if present" do
-          v = create(:variant, display_name: "foo")
+          v = build_stubbed(:variant, display_name: "foo")
           expect(v.name_to_display).to eq("foo")
         end
 
         it "returns product name if display_name is empty" do
-          v = create(:variant, product: create(:product))
+          v = build_stubbed(:variant)
           expect(v.name_to_display).to eq(v.product.name)
-          v1 = create(:variant, display_name: "", product: create(:product))
+          v1 = build_stubbed(:variant, display_name: "")
           expect(v1.name_to_display).to eq(v1.product.name)
         end
       end
 
       describe "getting unit for display" do
         it "returns display_as if present" do
-          v = create(:variant, display_as: "foo")
+          v = build_stubbed(:variant, display_as: "foo")
           expect(v.unit_to_display).to eq("foo")
         end
 
         it "returns options_text if display_as is blank" do
-          v = create(:variant)
-          v1 = create(:variant, display_as: "")
+          v = build_stubbed(:variant)
+          v1 = build_stubbed(:variant, display_as: "")
           allow(v).to receive(:options_text).and_return "ponies"
           allow(v1).to receive(:options_text).and_return "ponies"
           expect(v.unit_to_display).to eq("ponies")
@@ -477,7 +477,7 @@ module Spree
     end
 
     context "extends LocalizedNumber" do
-      subject! { build(:variant) }
+      subject! { build_stubbed(:variant) }
 
       it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
     end

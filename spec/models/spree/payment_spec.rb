@@ -12,8 +12,6 @@ describe Spree::Payment do
 
     let(:card) { create(:credit_card) }
 
-    before { allow(card).to receive(:has_payment_profile?).and_return(true) }
-
     let(:payment) do
       payment = create(:payment)
       payment.source = card
@@ -24,7 +22,7 @@ describe Spree::Payment do
 
     let(:amount_in_cents) { payment.amount.to_f * 100 }
 
-    let!(:success_response) do
+    let(:success_response) do
       double('success_response', :success? => true,
              :authorization => '123',
              :avs_result => { 'code' => 'avs-code' },
@@ -33,18 +31,14 @@ describe Spree::Payment do
 
     let(:failed_response) { double('gateway_response', :success? => false) }
 
-    before(:each) do
-      # So it doesn't create log entries every time a processing method is called
-      allow(payment).to receive(:record_response)
-    end
-
     context "extends LocalizedNumber" do
+      subject { build_stubbed(:payment) }
       it_behaves_like "a model using the LocalizedNumber module", [:amount]
     end
 
     context 'validations' do
       it "returns useful error messages when source is invalid" do
-        payment.source = Spree::CreditCard.new
+        payment = build_stubbed(:payment, source: Spree::CreditCard.new)
         expect(payment).not_to be_valid
         cc_errors = payment.errors['Credit Card']
         expect(cc_errors).to include("Number can't be blank")
@@ -80,18 +74,22 @@ describe Spree::Payment do
 
     context "processing" do
       before do
+        allow(payment).to receive(:record_response)
+        allow(card).to receive(:has_payment_profile?).and_return(true)
         payment.stub(:update_order)
         payment.stub(:create_payment_profile)
       end
 
       context "#process!" do
         it "should purchase if with auto_capture" do
+          payment = build_stubbed(:payment, payment_method: gateway)
           payment.payment_method.should_receive(:auto_capture?).and_return(true)
           payment.should_receive(:purchase!)
           payment.process!
         end
 
         it "should authorize without auto_capture" do
+          payment = build_stubbed(:payment, payment_method: gateway)
           payment.payment_method.should_receive(:auto_capture?).and_return(false)
           payment.should_receive(:authorize!)
           payment.process!
@@ -257,11 +255,8 @@ describe Spree::Payment do
 
         # Regression test for #2119
         context "when payment is completed" do
-          before do
-            payment.state = 'completed'
-          end
-
           it "should do nothing" do
+            payment = build_stubbed(:payment, state: 'completed')
             payment.should_not_receive(:complete)
             payment.payment_method.should_not_receive(:capture)
             payment.log_entries.should_not_receive(:create)
@@ -299,6 +294,7 @@ describe Spree::Payment do
 
         context "when gateway does not match the environment" do
           it "should raise an exception" do
+            payment = build_stubbed(:payment, payment_method: gateway)
             gateway.stub :environment => "foo"
             expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
           end
@@ -323,11 +319,8 @@ describe Spree::Payment do
 
         # Regression test for #2119
         context "if payment is already voided" do
-          before do
-            payment.state = 'void'
-          end
-
           it "should not void the payment" do
+            payment = build_stubbed(:payment, payment_method: gateway, state: 'void')
             payment.payment_method.should_not_receive(:void)
             payment.void_transaction!
           end
@@ -381,6 +374,7 @@ describe Spree::Payment do
 
         context "when gateway does not match the environment" do
           it "should raise an exception" do
+            payment = build_stubbed(:payment, payment_method: gateway)
             gateway.stub :environment => "foo"
             expect { payment.credit! }.to raise_error(Spree::Core::GatewayError)
           end
@@ -435,6 +429,7 @@ describe Spree::Payment do
 
     context "when already processing" do
       it "should return nil without trying to process the source" do
+        payment = build_stubbed(:payment)
         payment.state = 'processing'
 
         payment.should_not_receive(:authorize!)
@@ -445,11 +440,8 @@ describe Spree::Payment do
 
     context "with source required" do
       context "raises an error if no source is specified" do
-        before do
-          payment.source = nil
-        end
-
         specify do
+          payment = build_stubbed(:payment, source: nil, payment_method: gateway)
           expect { payment.process! }.to raise_error(Spree::Core::GatewayError, Spree.t(:payment_processing_failed))
         end
       end
@@ -457,12 +449,9 @@ describe Spree::Payment do
 
     context "with source optional" do
       context "raises no error if source is not specified" do
-        before do
-          payment.source = nil
-          payment.payment_method.stub(:source_required? => false)
-        end
-
         specify do
+          payment = build_stubbed(:payment, source: nil, payment_method: gateway)
+          payment.payment_method.stub(:source_required? => false)
           expect { payment.process! }.not_to raise_error
         end
       end
@@ -470,7 +459,7 @@ describe Spree::Payment do
 
     context "#credit_allowed" do
       it "is the difference between offsets total and payment amount" do
-        payment.amount = 100
+        payment = build_stubbed(:payment, amount: 100)
         payment.stub(:offsets_total).and_return(0)
         expect(payment.credit_allowed).to eq(100)
         payment.stub(:offsets_total).and_return(80)
@@ -480,10 +469,12 @@ describe Spree::Payment do
 
     context "#can_credit?" do
       it "is true if credit_allowed > 0" do
+        payment = build_stubbed(:payment)
         payment.stub(:credit_allowed).and_return(100)
         expect(payment.can_credit?).to be true
       end
       it "is false if credit_allowed is 0" do
+        payment = build_stubbed(:payment)
         payment.stub(:credit_allowed).and_return(0)
         expect(payment.can_credit?).to be false
       end
@@ -512,6 +503,7 @@ describe Spree::Payment do
       end
       context "when amount > credit_allowed" do
         it "should not call credit on the source" do
+          payment = build_stubbed(:payment)
           payment.state = 'completed'
           payment.stub(:credit_allowed).and_return(10)
           payment.partial_credit(20)
@@ -626,14 +618,15 @@ describe Spree::Payment do
     end
 
     context "#currency" do
-      before { order.stub(:currency) { "ABC" } }
       it "returns the order currency" do
+        payment = build_stubbed(:payment, order: build_stubbed(:order, currency: "ABC"))
         expect(payment.currency).to eq("ABC")
       end
     end
 
     context "#display_amount" do
       it "returns a Spree::Money for this amount" do
+        payment = build_stubbed(:payment)
         expect(payment.display_amount).to eq(Spree::Money.new(payment.amount))
       end
     end
@@ -685,7 +678,7 @@ describe Spree::Payment do
 
     describe "available actions" do
       context "for most gateways" do
-        let(:payment) { create(:payment, source: create(:credit_card)) }
+        let(:payment) { build_stubbed(:payment, source: build_stubbed(:credit_card)) }
 
         it "can capture and void" do
           expect(payment.actions).to match_array %w(capture void)
@@ -738,6 +731,8 @@ describe Spree::Payment do
       end
 
       describe "calculating refund amount" do
+        let(:payment) { build_stubbed(:payment) }
+
         it "returns the parameter amount when given" do
           expect(payment.send(:calculate_refund_amount, 123)).to be === 123.0
         end

@@ -58,7 +58,9 @@ describe Spree::Shipment do
   end
 
   it "#item_cost" do
-    shipment = create(:shipment, order: create(:order_with_totals))
+    shipment = Spree::Shipment.new(
+      order: build_stubbed(:order_with_totals, line_items: [build_stubbed(:line_item)])
+    )
     expect(shipment.item_cost).to eql(10.0)
   end
 
@@ -152,12 +154,25 @@ describe Spree::Shipment do
 
       context 'to_package' do
         it 'should use symbols for states when adding contents to package' do
+          shipment = Spree::Shipment.new(order: build_stubbed(:order))
           allow(shipment).
-            to receive_message_chain(:inventory_units,
-                                     includes: [build(:inventory_unit, variant: variant,
-                                                                       state: 'on_hand'),
-                                                build(:inventory_unit, variant: variant,
-                                                                       state: 'backordered')] )
+            to receive_message_chain(
+              :inventory_units,
+              includes: [
+                build_stubbed(
+                  :inventory_unit,
+                  shipment: shipment,
+                  variant: build_stubbed(:variant),
+                  state: 'on_hand'
+                ),
+                build_stubbed(
+                  :inventory_unit,
+                  shipment: shipment,
+                  variant: build_stubbed(:variant),
+                  state: 'backordered'
+                )
+              ]
+            )
           package = shipment.to_package
           expect(package.on_hand.count).to eq 1
           expect(package.backordered.count).to eq 1

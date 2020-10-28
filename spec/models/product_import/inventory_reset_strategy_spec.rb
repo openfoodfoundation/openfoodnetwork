@@ -4,20 +4,18 @@ describe ProductImport::InventoryResetStrategy do
   let(:inventory_reset) { described_class.new(excluded_items_ids) }
 
   describe '#reset' do
-    let(:supplier_ids) { enterprise.id }
-    let(:enterprise) { variant.product.supplier }
-    let(:variant) { create(:variant) }
-
-    let!(:variant_override) do
-      create(
-        :variant_override,
-        count_on_hand: 10,
-        hub: enterprise,
-        variant: variant
-      )
-    end
 
     context 'when there are excluded_items_ids' do
+      let(:enterprise) { variant.product.supplier }
+      let(:variant) { build_stubbed(:variant) }
+      let!(:variant_override) do
+        build_stubbed(
+          :variant_override,
+          count_on_hand: 10,
+          hub: enterprise,
+          variant: variant
+        )
+      end
       let(:excluded_items_ids) { [variant_override.id] }
 
       context 'and supplier_ids is []' do
@@ -49,6 +47,16 @@ describe ProductImport::InventoryResetStrategy do
       end
 
       context 'and supplier_ids is set' do
+        let(:supplier_ids) { enterprise.id }
+        let(:variant) { create(:variant) }
+        let!(:variant_override) do
+          create(
+            :variant_override,
+            count_on_hand: 10,
+            hub: enterprise,
+            variant: variant
+          )
+        end
         it 'does not update the count_on_hand of the excluded items' do
           inventory_reset.reset(supplier_ids)
           expect(variant_override.reload.count_on_hand).to eq(10)
@@ -99,6 +107,17 @@ describe ProductImport::InventoryResetStrategy do
       end
 
       context 'and supplier_ids is set' do
+        let(:supplier_ids) { enterprise.id }
+        let(:enterprise) { variant.product.supplier }
+        let(:variant) { create(:variant) }
+        let!(:variant_override) do
+          create(
+            :variant_override,
+            count_on_hand: 10,
+            hub: enterprise,
+            variant: variant
+          )
+        end
         it 'sets all count_on_hand to 0' do
           inventory_reset.reset(supplier_ids)
           expect(variant_override.reload.count_on_hand).to eq(0)
@@ -138,6 +157,17 @@ describe ProductImport::InventoryResetStrategy do
       end
 
       context 'and supplier_ids is set' do
+        let(:supplier_ids) { enterprise.id }
+        let(:enterprise) { variant.product.supplier }
+        let(:variant) { create(:variant) }
+        let!(:variant_override) do
+          create(
+            :variant_override,
+            count_on_hand: 10,
+            hub: enterprise,
+            variant: variant
+          )
+        end
         it 'sets all count_on_hand to 0' do
           inventory_reset.reset(supplier_ids)
           expect(variant_override.reload.count_on_hand).to eq(0)
