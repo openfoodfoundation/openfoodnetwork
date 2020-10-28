@@ -149,7 +149,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt (3.1.13)
-    bugsnag (6.17.0)
+    bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
     builder (3.1.4)
     byebug (11.0.1)
