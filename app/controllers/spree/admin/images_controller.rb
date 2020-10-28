@@ -61,7 +61,7 @@ module Spree
       private
 
       def location_after_save
-        admin_product_images_url(@product)
+        spree.admin_product_images_url(@product)
       end
 
       def load_data

@@ -20,6 +20,7 @@ pt:
         variant_unit: "Unidade da Variante"
       spree/credit_card:
         base: "Cartão de Crédito"
+        number: "Número"
       order_cycle:
         orders_close_at: Data de fecho
       variant_override:
@@ -1115,6 +1116,9 @@ pt:
       customer_required:
         login: "Entrar"
         contact: "contacto"
+    products:
+      summary:
+        bulk: "Em Massa"
   card_could_not_be_updated: O cartão não pode ser actualizado
   card_could_not_be_saved: o cartão não pode ser guardado
   spree_gateway_error_flash_for_checkout: "Houve um problema com a sua informação de pagamento: %{error}"
@@ -1809,7 +1813,6 @@ pt:
   shop_for_products_html: "Compre produtos da <span class=\"turquoise\">%{enterprise}</span> em:"
   change_shop: "Mudar loja para:"
   shop_at: "Compre agora em:"
-  price_breakdown: "Preço detalhado"
   admin_fee: "Taxa de administração"
   sales_fee: "Taxa de venda"
   packing_fee: "Taxa de embalagem"
@@ -2451,6 +2454,11 @@ pt:
           carrinho baixou. Aqui está o que mudou:
       now_out_of_stock: está agora sem stock.
       only_n_remainging: "agora só tem %{num}restantes."
+    shopfront:
+      variant:
+        add_to_cart: "Adicionar"
+      bulk_buy_modal:
+        max_quantity: "Quantidade máxima"
     variants:
       on_demand:
         'yes': "Sob encomenda"
@@ -2667,15 +2675,6 @@ pt:
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os email enviados para este endereço. Para múltiplos endereços, separar por vírgulas."
     intercept_email_address: "Interceptar Endereço de Email"
     intercept_email_instructions: "Substituir destinatário de todos os email por este endereço."
-    image_settings: "Configurações de Imagens"
-    image_settings_warning: "Terá de regenerar os ícones se alterar is estilos. Para tal execute rake paperclip:refresh:thumbnails CLASS=Spree::Image"
-    attachment_default_style: Estilo dos Anexos
-    attachment_default_url: "URL por defeito dos Anexos"
-    attachment_path: "Localização dos Anexos"
-    attachment_styles: "Estilos do Anexo"
-    attachment_url: "URL do Anexo"
-    add_new_style: "Adicionar Novo Estilo"
-    image_settings_updated: "Configurações de Imagens actualizadas com sucesso."
     tax_categories: "Categorias de Impostos"
     listing_tax_categories: "Lista de Categorias de Impostos"
     back_to_tax_categories_list: "Voltar à Lista de Categorias de Impostos"
@@ -2733,7 +2732,9 @@ pt:
     inventory_error_flash_for_insufficient_quantity: "Um item do seu carrinho ficou indisponível."
     inventory: Inventário
     zipcode: Código postal
-    weight: Peso (por kg)
+    successfully_created: '%{resource} foi criado/a com sucesso!'
+    successfully_updated: '%{resource} foi actualizado/a com sucesso!'
+    payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
     actions:
       update: "Atualizar"
     shared:

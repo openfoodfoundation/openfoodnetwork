@@ -23,6 +23,10 @@ ar:
         variant_unit_name: "اسم وحدة النوع"
       spree/credit_card:
         base: "بطاقة ائتمان"
+        number: "رقم "
+        month: "شهر"
+        verification_value: "قيمة التحقق"
+        year: "عام"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
       variant_override:
@@ -1212,6 +1216,9 @@ ar:
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
       select_oc:
         select_oc_html: "يرجى <span class='highlighted'>اختيار الوقت الذي تريده لطلبك</span> ، لمعرفة المنتجات المتوفرة."
+    products:
+      summary:
+        bulk: "جملة"
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1606,8 +1613,8 @@ ar:
   components_filters_nofilters: "لا يوجد مرشحات"
   components_filters_clearfilters: "مسح جميع المرشحات"
   groups_title: مجموعات
-  groups_headline: المجموعات / المناطق
-  groups_text: "كل منتج فريد من نوعه. كل الأعمال لديها شيء مختلف للعرض. مجموعاتنا هي مجموعات من المنتجين والمحاور والموزعين الذين يشتركون في شيء مثل الموقع أو سوق المزارعين أو الفلسفة. هذا يجعل تجربة التسوق أسهل. لذلك استكشف مجموعاتنا وقمنا بتنظيمها لك."
+  groups_headline: المجموعات
+  groups_text: "كل منتج فريد من نوعه. كل الأعمال لديها شيء مختلف للعرض. مجموعاتنا هي مجموعات من المنتجين ومراكز البيع والموزعين الذين يشتركون في خصلة مثل الموقع أو سوق المزارعين أو الفلسفة. هذا يجعل تجربة التسوق أسهل. لذلك استكشف مجموعاتنا التي قمنا بتنظيمها لك."
   groups_search: "البحث عن اسم أو كلمة أساسية"
   groups_no_groups: "لم يتم العثور على مجموعات"
   groups_about: "معلومات عنا"
@@ -1927,7 +1934,6 @@ ar:
   shop_for_products_html: "متجر لمنتجات <span class=\"turquoise\">%{enterprise}</span> على:"
   change_shop: "تغيير المتجر إلى:"
   shop_at: "تسوق الآن عبر:"
-  price_breakdown: "تفاصيل السعر الكامل"
   admin_fee: "رسوم الاشراف"
   sales_fee: "رسوم المبيعات"
   packing_fee: "رسوم التعبئة"
@@ -2002,6 +2008,7 @@ ar:
   calculator: "آلة حاسبة"
   calculator_values: "القيم المحوسبة"
   calculator_settings_warning: "إذا كنت تقوم بتغيير نوع الحاسبة ، فيجب عليك الحفظ أولاً قبل أن تتمكن من تحرير إعدادات الحاسبة"
+  calculator_preferred_unit_error: "يجب أن تكون كجم أو رطل"
   flat_percent_per_item: "نسبة ثابتة (لكل بند)"
   flat_rate_per_item: "سعر ثابت (لكل بند)"
   flat_rate_per_order: "تسعيرة ثابته (لكل طلب)"
@@ -2593,6 +2600,15 @@ ar:
           إليك ما تغير:
       now_out_of_stock: الآن لا يوجد مخزون.
       only_n_remainging: "الآن ليس لديه %{num} متبقية."
+    shopfront:
+      variant:
+        add_to_cart: "إضافة"
+        in_cart: "في السلة"
+        quantity_in_cart: "%{quantity} في السلة"
+      bulk_buy_modal:
+        min_quantity: "اقل كمية "
+        max_quantity: "اعلى كمية"
+      price_breakdown: "تفاصيل السعر"
     variants:
       on_demand:
         'yes': "حسب الطلب"
@@ -2996,15 +3012,6 @@ ar:
     smtp_send_copy_to_this_addresses: "يرسل نسخة من جميع الرسائل الصادرة إلى هذا العنوان. لعناوين متعددة ، افصل بينها بفواصل."
     intercept_email_address: "اعتراض عنوان البريد الإلكتروني"
     intercept_email_instructions: "تجاوز مستلم البريد الإلكتروني واستبداله بهذا العنوان."
-    image_settings: "إعدادات الصورة"
-    image_settings_warning: "ستحتاج إلى تجديد الصور المصغرة إذا قمت بتحديث أنماط مشبك الورق. استخدم rap paperclip: refresh: الصور المصغرة CLASS = Spree :: Image للقيام بذلك."
-    attachment_default_style: نمط المرفقات
-    attachment_default_url: "المرفقات عنوان URL الافتراضي"
-    attachment_path: "مسار المرفقات"
-    attachment_styles: "أنماط الورق"
-    attachment_url: "مرفقات URL"
-    add_new_style: "إضافة نمط جديد"
-    image_settings_updated: "تم تحديث إعدادات الصورة بنجاح."
     tax_categories: "فئات الضرائب"
     listing_tax_categories: "قائمة فئات الضرائب"
     back_to_tax_categories_list: "العودة إلى قائمة فئات الضرائب"
@@ -3078,11 +3085,18 @@ ar:
     inventory_error_flash_for_insufficient_quantity: "المواد في سلة التسوق غير متاح."
     inventory: المخزون
     zipcode: الرمز البريدي
-    weight: الوزن (لكل كجم)
+    weight: الوزن (لكل كجم أو رطل)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
     cannot_create_payment_without_payment_methods: "لا يمكنك إنشاء دفعة لطلب بدون تحديد طرقة الدفع."
     please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."
     options: "خيارات"
+    has_no_shipped_units: "لا يوجد لديه طلبات مشحونة"
+    successfully_created: '%{resource} تم إنشاؤه بنجاح!'
+    successfully_updated: 'تم تحديث %{resource} بنجاح!'
+    payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
+    not_available: "غير متاح"
+    order_populator:
+      out_of_stock: '%{item} غير متوفر.'
     actions:
       update: "تحديث"
     shared:

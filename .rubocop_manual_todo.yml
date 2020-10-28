@@ -167,7 +167,6 @@ Layout/LineLength:
   - spec/features/admin/enterprises/index_spec.rb
   - spec/features/admin/enterprises_spec.rb
   - spec/features/admin/enterprise_user_spec.rb
-  - spec/features/admin/image_settings_spec.rb
   - spec/features/admin/multilingual_spec.rb
   - spec/features/admin/order_cycles/complex_creating_specific_time_spec.rb
   - spec/features/admin/order_cycles/complex_editing_multiple_product_pages_spec.rb
@@ -345,7 +344,6 @@ Metrics/AbcSize:
   - app/controllers/cart_controller.rb
   - app/controllers/discourse_sso_controller.rb
   - app/controllers/enterprises_controller.rb
-  - app/controllers/spree/admin/image_settings_controller.rb
   - app/controllers/spree/admin/orders_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller.rb
   - app/controllers/spree/admin/overview_controller.rb
@@ -665,7 +663,6 @@ Metrics/MethodLength:
   - app/controllers/api/variants_controller.rb
   - app/controllers/cart_controller.rb
   - app/controllers/shop_controller.rb
-  - app/controllers/spree/admin/image_settings_controller.rb
   - app/controllers/spree/admin/orders_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
@@ -814,42 +811,17 @@ Metrics/ModuleLength:
   - app/helpers/spree/admin/navigation_helper.rb
   - app/models/spree/order/checkout.rb
   - app/models/spree/payment/processing.rb
-  - engines/catalog/spec/services/catalog/product_import/products_reset_strategy_spec.rb
-  - engines/order_management/spec/services/order_management/order/updater_spec.rb
-  - engines/order_management/spec/services/order_management/stock/package_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/form_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/summarizer_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
-  - spec/controllers/api/order_cycles_controller_spec.rb
   - spec/controllers/api/orders_controller_spec.rb
-  - spec/controllers/spree/admin/payment_methods_controller_spec.rb
-  - spec/lib/open_food_network/address_finder_spec.rb
-  - spec/lib/open_food_network/customers_report_spec.rb
-  - spec/lib/open_food_network/enterprise_fee_calculator_spec.rb
-  - spec/lib/open_food_network/order_cycle_form_applicator_spec.rb
   - spec/lib/open_food_network/order_cycle_permissions_spec.rb
-  - spec/lib/open_food_network/order_grouper_spec.rb
-  - spec/lib/open_food_network/packing_report_spec.rb
-  - spec/lib/open_food_network/permissions_spec.rb
-  - spec/lib/open_food_network/products_and_inventory_report_spec.rb
-  - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
-  - spec/lib/open_food_network/tag_rule_applicator_spec.rb
-  - spec/lib/open_food_network/user_balance_calculator_spec.rb
-  - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
   - spec/models/spree/adjustment_spec.rb
   - spec/models/spree/credit_card_spec.rb
   - spec/models/spree/line_item_spec.rb
   - spec/models/spree/product_spec.rb
-  - spec/models/spree/shipping_method_spec.rb
   - spec/models/spree/variant_spec.rb
-  - spec/services/permissions/order_spec.rb
-  - spec/services/variant_units/option_value_namer_spec.rb
-  - spec/support/request/stripe_helper.rb
 
 Metrics/ParameterLists:
   Max: 5

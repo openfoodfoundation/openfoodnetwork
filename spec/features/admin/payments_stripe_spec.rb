@@ -8,6 +8,7 @@ feature '
 ' do
   include AuthenticationHelper
   include StripeHelper
+  include StripeStubs
 
   let!(:order) { create(:completed_order_with_fees) }
   let!(:stripe_payment_method) do

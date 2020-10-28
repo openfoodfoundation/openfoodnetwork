@@ -23,6 +23,7 @@ pl:
         variant_unit_name: "Nazwa jednostki wariantu"
       spree/credit_card:
         base: "Karta kredytowa"
+        number: "Numer zamówienia"
       order_cycle:
         orders_close_at: Data zakończenia
       variant_override:
@@ -1923,7 +1924,6 @@ pl:
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> - te produkty kupisz w następujących miejscach: "
   change_shop: "Zmień sklep na:"
   shop_at: "Kup teraz na:"
-  price_breakdown: "Pełne zestawienie cen"
   admin_fee: "opłata administracyjna"
   sales_fee: "Opłata za sprzedaż"
   packing_fee: "Opłata za pakowanie"
@@ -2599,6 +2599,9 @@ pl:
           w Twoim koszyku. Oto, co się zmieniło:
       now_out_of_stock: jest teraz niedostępny.
       only_n_remainging: "teraz pozostało tylko %{num}."
+    shopfront:
+      variant:
+        add_to_cart: "Dodaj"
     variants:
       on_demand:
         'yes': "Na żądanie"
@@ -2951,15 +2954,6 @@ pl:
     smtp_send_copy_to_this_addresses: "Wysyła kopię wszystkich wychodzących wiadomości na ten adres. W przypadku wielu adresów, oddziel je przecinkami."
     intercept_email_address: "Przechwyć adres e-mail"
     intercept_email_instructions: "Zastąp adresata wiadomości e-mail i zastąp tym adresem."
-    image_settings: "Ustawienia obrazu"
-    image_settings_warning: "Jeśli zaktualizujesz style spinaczy, będziesz musiał ponownie wygenerować miniatury. Użyj rake paperclip:refresh:thumbnails CLASS=Spree::Image , aby to zrobić."
-    attachment_default_style: Styl załączników
-    attachment_default_url: "Załączniki Domyślny adres URL"
-    attachment_path: "Ścieżka załączników"
-    attachment_styles: "Style spinaczy"
-    attachment_url: "URL załączników"
-    add_new_style: "Dodaj nowy styl"
-    image_settings_updated: "Ustawienia obrazu zostały pomyślnie zaktualizowane."
     tax_categories: "Kategorie podatków"
     listing_tax_categories: "Lista kategorii podatkowych"
     back_to_tax_categories_list: "Powrót do listy kategorii podatkowych"
@@ -3033,7 +3027,6 @@ pl:
     inventory_error_flash_for_insufficient_quantity: "Produkt w Twoim koszyku stał się niedostępny."
     inventory: Zapasy
     zipcode: Kod pocztowy
-    weight: Waga (na kg)
     error_user_destroy_with_orders: "Nie można usunąć użytkowników ze zrealizowanymi zamówieniami"
     cannot_create_payment_without_payment_methods: "Nie możesz utworzyć płatności za zamówienie bez zdefiniowanych metod płatności."
     please_define_payment_methods: "Najpierw określ niektóre metody płatności."

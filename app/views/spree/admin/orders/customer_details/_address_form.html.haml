@@ -16,10 +16,6 @@
   %div{class: "field"}
     = f.label :lastname, Spree.t(:last_name) + ':'
     = f.text_field :lastname, class: 'fullwidth'
-  - if Spree::Config[:company]
-    %div{class: "field"}
-      = f.label :company, Spree.t(:company) + ':'
-      = f.text_field :company, class: 'fullwidth'
   %div{class: "field"}
     = f.label :address1, Spree.t(:street_address) + ':'
     = f.text_field :address1, class: 'fullwidth'

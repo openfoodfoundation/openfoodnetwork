@@ -48,10 +48,10 @@ module Spree
       else
         flash[:error] = I18n.t(:card_could_not_be_removed)
       end
-      redirect_to account_path(anchor: 'cards')
+      redirect_to spree.account_path(anchor: 'cards')
     rescue Stripe::CardError
       flash[:error] = I18n.t(:card_could_not_be_removed)
-      redirect_to account_path(anchor: 'cards')
+      redirect_to spree.account_path(anchor: 'cards')
     end
 
     private

@@ -6,6 +6,8 @@ require 'stripe/credit_card_cloner'
 module Stripe
   describe CreditCardCloner do
     describe "#clone" do
+      include StripeStubs
+
       let(:cloner) { Stripe::CreditCardCloner.new }
 
       let(:customer_id) { "cus_A123" }
@@ -13,7 +15,6 @@ module Stripe
       let(:new_customer_id) { "cus_A456" }
       let(:new_payment_method_id) { "pm_456" }
       let(:stripe_account_id) { "acct_456" }
-      let(:customer_response_mock) { { status: 200, body: customer_response_body } }
       let(:payment_method_response_mock) { { status: 200, body: payment_method_response_body } }
 
       let(:credit_card) { create(:credit_card, user: create(:user)) }
@@ -21,18 +22,13 @@ module Stripe
       let(:payment_method_response_body) {
         JSON.generate(id: new_payment_method_id)
       }
-      let(:customer_response_body) {
-        JSON.generate(id: new_customer_id)
-      }
 
       before do
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
-        stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: credit_card.user.email },
-                headers: { 'Stripe-Account' => stripe_account_id })
-          .to_return(customer_response_mock)
-
+        stub_customers_post_request email: credit_card.user.email,
+                                   response: { customer_id: new_customer_id },
+                                   stripe_account_header: true
         stub_request(:post,
                      "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
           .with(body: { customer: new_customer_id },

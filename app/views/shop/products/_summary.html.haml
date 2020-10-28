@@ -1,20 +1,20 @@
 .product-thumb
   %a{"ng-click" => "triggerProductModal()"}
-    %i.ofn-i_057-expand
-    %img{"ng-src" => "{{::product.primaryImageOrMissing}}", "ng-click" => "triggerProductModal()"}
+    %span.product-thumb__bulk-label{"ng-if" => "::product.group_buy"}
+      = t(".bulk")
+    %img{"ng-src" => "{{::product.primaryImageOrMissing}}"}
 
-.row.summary
-  .small-10.medium-10.large-11.columns.summary-header
+.summary
+  .summary-header
     %h3
       %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
         %span{"ng-bind" => "::product.name"}
-        %i.ofn-i_057-expand
-    %small
-      %em
-        = t :products_from
+    %p.product-description{ng: {bind: "::product.description", click: "triggerProductModal()", show: "product.description.length"}}
+    .product-producer
+      = t :products_from
       %span
         %enterprise-modal
-          %i.ofn-i_036-producers
           %span{"ng-bind" => "::enterprise.name"}
-  .small-2.medium-2.large-1.columns.text-center
-    .taxon-flag
+
+    .product-properties.filter-shopfront.property-selectors
+      %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }

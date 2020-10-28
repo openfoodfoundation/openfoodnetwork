@@ -22,6 +22,7 @@ fil_PH:
         variant_unit_name: "pangalan ng yunit ng variant"
       spree/credit_card:
         base: "Credit Card"
+        number: "Bilang"
       order_cycle:
         orders_close_at: petsa ng pagsasara
       variant_override:
@@ -1182,6 +1183,9 @@ fil_PH:
         contact: "makipag-ugnayan"
         require_customer_login: "ang mga inaprubahang customer lamang ang maaaring gumamit ng shop na ito."
         require_customer_html: "kung nais mong magsimulang mamili rito, maaaring%{contact}%{enterprise} at magtanong kung paano sumali."
+    products:
+      summary:
+        bulk: "Bulto"
   card_could_not_be_updated: hindi ma-update ang card
   card_could_not_be_saved: hindi ma-save ang card
   spree_gateway_error_flash_for_checkout: "mayroong problema sa ibinigay na impormasyon ng pagbabayad:%{error}"
@@ -1881,7 +1885,6 @@ fil_PH:
   shop_for_products_html: "mamili ng<span class=\"turquoise\">%{enterprise}</span>na mga produkto sa:"
   change_shop: "palitan ang shop ng:"
   shop_at: "mamili ngayon sa:"
-  price_breakdown: "ibaba ang listahan ng presyo"
   admin_fee: "bayad sa admin"
   sales_fee: "bayad sa pagbebenta"
   packing_fee: "bayad sa pagbabalot"
@@ -2552,6 +2555,11 @@ fil_PH:
           produkto sa inyong cart ay nabawasan. ito ang nagbago:
       now_out_of_stock: ay out of stock na ngayon
       only_n_remainging: "ngayon ay may%{num}na natitira"
+    shopfront:
+      variant:
+        add_to_cart: "idagdag"
+      bulk_buy_modal:
+        max_quantity: "sagad na dami"
     variants:
       on_demand:
         'yes': "on demand"
@@ -2846,15 +2854,6 @@ fil_PH:
     smtp_send_copy_to_this_addresses: "nagpapadala ng kopya ng lahat ng lumalabas na mga sulat sa address na ito, para sa maraming address, paghiwalayin gamit ang kuwit."
     intercept_email_address: "harangin ang email address"
     intercept_email_instructions: "pawalang halaga ang tatanggap ng email at palitan ng address na ito"
-    image_settings: "mga setting ng larawan"
-    image_settings_warning: "kinakailangang gumawa muli ng mga thumbnail kung ia-update ang mga estilo ng paperclip. gumamit ng rake paperclip:refresh:thumbnails CLASS=Spree::Image para gawin ito."
-    attachment_default_style: estilo ng mga attachment
-    attachment_default_url: "Default URL ng mga attachment"
-    attachment_path: "landas ng mga attachment"
-    attachment_styles: "estilo ng Paperclips"
-    attachment_url: "URL ng mga attachment"
-    add_new_style: "magdagdag ng bagong estilo"
-    image_settings_updated: "matagumpay na na-update ang settings ng larawan"
     tax_categories: "kategorya ng tax"
     listing_tax_categories: "kategorya ng nakalistang tax"
     back_to_tax_categories_list: "bumalik sa listahan ng kategorya ng tax"
@@ -2928,11 +2927,13 @@ fil_PH:
     inventory_error_flash_for_insufficient_quantity: "ang isang item sa inyong cart ay hindi na available."
     inventory: imbentaryo
     zipcode: Postcode
-    weight: timbang (per kg)
     error_user_destroy_with_orders: "ang mga gumagamit na may kumpletong order ay hindi maaaring tanggalin"
     cannot_create_payment_without_payment_methods: "hindi maaaring magbayad para sa isang order na walang nakasaad na paraan ng pagbabayad."
     please_define_payment_methods: "isaad muna ang paraan ng pagbabayad"
     options: "pagpipilian"
+    successfully_created: '%{resource}ay matagumpay na nagawa!'
+    successfully_updated: '%{resource}ay matagumpay na na-update'
+    payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     actions:
       update: "i-update"
     shared:

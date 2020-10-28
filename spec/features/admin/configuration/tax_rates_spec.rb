@@ -10,7 +10,7 @@ describe "Tax Rates" do
     login_as_admin_and_visit spree.edit_admin_general_settings_path
   end
 
-  # Regression test for #535
+  # Regression test for Spree #535
   it "can see a tax rate in the list if the tax category has been deleted" do
     tax_rate.tax_category.update_column(:deleted_at, Time.zone.now)
     expect { click_link "Tax Rates" }.not_to raise_error

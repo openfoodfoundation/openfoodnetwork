@@ -22,6 +22,7 @@ de_DE:
         variant_unit_name: "Name der Varianteneinheit"
       spree/credit_card:
         base: "Kreditkarte"
+        number: "Nummer"
       order_cycle:
         orders_close_at: Schlussdatum
       variant_override:
@@ -1874,7 +1875,6 @@ de_DE:
   shop_for_products_html: "Suche nach <span class=\"turquoise\">%{enterprise}</span> Produkten unter:"
   change_shop: "Laden ändern auf:"
   shop_at: "Kaufe jetzt bei:"
-  price_breakdown: "Vollständige Preisaufschlüsselung"
   admin_fee: "Gebühr Administration"
   sales_fee: "Gebühr Verkauf"
   packing_fee: "Gebühr Umverpackung"
@@ -2537,6 +2537,9 @@ de_DE:
           in Ihrem Warenkorb verringert. Das Folgende hat sich geändert:
       now_out_of_stock: ist jetzt ausverkauft.
       only_n_remainging: "Jetzt hat nur noch %{num} übrig."
+    shopfront:
+      variant:
+        add_to_cart: "Hinzufügen"
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -2827,15 +2830,6 @@ de_DE:
     smtp_send_copy_to_this_addresses: "Sendet eine Kopie aller ausgehenden Mails an diese Adresse. Bei mehreren Adressen trennen Sie diese durch Kommas."
     intercept_email_address: "E-Mail-Adresse abfangen"
     intercept_email_instructions: "Überschreiben Sie den E-Mail-Empfänger und ersetzen Sie ihn mit dieser Adresse."
-    image_settings: "Bildeinstellungen"
-    image_settings_warning: "Sie müssen die Miniaturbilder neu erstellen, wenn Sie die Büroklammerformate aktualisieren. Verwenden Sie dazu die Rake-Büroklammer: Refresh: thumbnails CLASS = Spree :: Image."
-    attachment_default_style: Anhänge-Stil
-    attachment_default_url: "Anhänge Standard-URL"
-    attachment_path: "Pfad der Anhänge"
-    attachment_styles: "Büroklammer-Stile"
-    attachment_url: "Anhänge-URL"
-    add_new_style: "Neuen Stil hinzufügen"
-    image_settings_updated: "Bildeinstellungen erfolgreich aktualisiert."
     tax_categories: "Steuerkategorien"
     listing_tax_categories: "Steuerkategorien auflisten"
     back_to_tax_categories_list: "Zurück zur Liste der Steuerkategorien"
@@ -2909,7 +2903,6 @@ de_DE:
     inventory_error_flash_for_insufficient_quantity: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
     inventory: Katalog
     zipcode: Postleitzahl
-    weight: Gewicht (pro kg)
     error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden"
     cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsmethoden definiert sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsmethoden."

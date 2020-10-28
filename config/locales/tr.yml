@@ -23,6 +23,7 @@ tr:
         variant_unit_name: "Varyant Birim Adı"
       spree/credit_card:
         base: "Kredİ kartı"
+        number: "Numara"
       order_cycle:
         orders_close_at: BİTİŞ TARİHİ
       variant_override:
@@ -1213,6 +1214,9 @@ tr:
         require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen sorun: %{contact} %{enterprise} "
       select_oc:
         select_oc_html: "Hangi ürünlerin uygun olduğunu görmek için lütfen <span class='highlighted'>ne zaman için sipariş vermek istediğinizi seçin</span> "
+    products:
+      summary:
+        bulk: "toplu"
   card_could_not_be_updated: Kart güncellenemedi
   card_could_not_be_saved: kart kaydedilemedi
   spree_gateway_error_flash_for_checkout: "Ödeme bilgilerinizde bir sorun oluştu: %{error}"
@@ -1920,7 +1924,6 @@ tr:
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ÜRÜNLERİNİ SATIN ALIN:"
   change_shop: "Dükkanı şuna değiştir:"
   shop_at: "ŞİMDİ ALIŞVERİŞ YAPIN:"
-  price_breakdown: "Fiyat dökümü"
   admin_fee: "Yönetim Ücreti"
   sales_fee: "Satış Ücreti"
   packing_fee: "Paketleme Ücreti"
@@ -2595,6 +2598,11 @@ tr:
           stok seviyesi düşürüldü. Değişiklikler:
       now_out_of_stock: artık stokta yok.
       only_n_remainging: "artık sadece %{num} kaldı."
+    shopfront:
+      variant:
+        add_to_cart: "Ekle"
+      bulk_buy_modal:
+        max_quantity: "Maks miktar"
     variants:
       on_demand:
         'yes': "Talep üzerine"
@@ -2901,15 +2909,6 @@ tr:
     smtp_send_copy_to_this_addresses: "Tüm giden postaların bir kopyasını bu adrese gönderir. Birden çok adres için virgülle ayırın."
     intercept_email_address: "Durdurma E-posta Adresi"
     intercept_email_instructions: "E-posta alıcısını geçersiz kılın ve bu adresle değiştirin."
-    image_settings: "Görüntü Ayarları"
-    image_settings_warning: "Ataç stillerini güncellerseniz küçük resimleri yeniden oluşturmanız gerekir. Bunu yapmak için rake ataç kullanın: refresh: thumbnail CLASS = Spree :: Image."
-    attachment_default_style: Ekler Stili
-    attachment_default_url: "Ekler Varsayılan URL"
-    attachment_path: "Ekler Yolu"
-    attachment_styles: "Ataç Stilleri"
-    attachment_url: "Ek URL'si"
-    add_new_style: "Yeni Stil Ekle"
-    image_settings_updated: "Görüntü Ayarları başarıyla güncellendi."
     tax_categories: "Vergi Kategorileri"
     listing_tax_categories: "Vergi Kategorileri Listeleniyor"
     back_to_tax_categories_list: "Vergi Kategorileri Listesine Geri Dön"
@@ -2983,11 +2982,13 @@ tr:
     inventory_error_flash_for_insufficient_quantity: "Sepetinizdeki bir ürün artık mevcut değil."
     inventory: Stok
     zipcode: posta kodu
-    weight: Ağırlık (kg başına)
     error_user_destroy_with_orders: "Siparişleri tamamlanmış kullanıcılar silinemez"
     cannot_create_payment_without_payment_methods: "Herhangi bir ödeme yöntemi belirlemeden bir sipariş oluşturamazsınız."
     please_define_payment_methods: "Lütfen önce ödeme bir yöntemi belirleyin."
     options: "Seçenekler"
+    successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
+    successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
+    payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
     actions:
       update: "Güncelle"
     shared:

@@ -7,7 +7,7 @@ require "spree/core/controller_helpers/ssl"
 
 module Spree
   class UserRegistrationsController < Devise::RegistrationsController
-    helper 'spree/base', 'spree/store'
+    helper 'spree/base'
 
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common

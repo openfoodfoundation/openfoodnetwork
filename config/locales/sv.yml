@@ -659,6 +659,9 @@ sv:
       customer_required:
         login: "Logga in"
         contact: "kontakta"
+    products:
+      summary:
+        bulk: "Grupp"
   invoice_billing_address: "Faktureringsadress"
   invoice_column_tax: "VAT"
   invoice_column_price: "Pris"
@@ -1243,7 +1246,6 @@ sv:
   shop_for_products_html: "Köp för <span class=\"turquoise\">%{enterprise}</span> produkter vid:"
   change_shop: "Ändra butik till:"
   shop_at: "Köp nu vid:"
-  price_breakdown: "Prisfördelning"
   admin_fee: "Administrationsavgift"
   sales_fee: "Försäljningsavgift"
   packing_fee: "Förpackningsvgift"
@@ -1799,6 +1801,11 @@ sv:
           kundvagn minskat. Detta har ändrats:
       now_out_of_stock: Är nu slut
       only_n_remainging: "nu  återstår endast %{num}"
+    shopfront:
+      variant:
+        add_to_cart: "Tillägga"
+      bulk_buy_modal:
+        max_quantity: "Maxkvantitet"
     variants:
       on_demand:
         'yes': "På begäran "
@@ -1923,7 +1930,6 @@ sv:
     amount: "Belopp"
     inventory: Lager
     zipcode: Postkod
-    weight: Vikt (kg)
     actions:
       update: "Uppdatera"
     shared:

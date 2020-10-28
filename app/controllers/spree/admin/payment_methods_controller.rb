@@ -22,7 +22,7 @@ module Spree
         if @payment_method.save
           invoke_callbacks(:create, :after)
           flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
-          redirect_to edit_admin_payment_method_path(@payment_method)
+          redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:create, :fails)
           respond_with(@payment_method)
@@ -43,7 +43,7 @@ module Spree
         if @payment_method.update(params_for_update)
           invoke_callbacks(:update, :after)
           flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
-          redirect_to edit_admin_payment_method_path(@payment_method)
+          redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:update, :fails)
           respond_with(@payment_method)
@@ -122,7 +122,7 @@ module Spree
         return if valid_payment_methods.include?(params[:payment_method][:type])
 
         flash[:error] = Spree.t(:invalid_payment_provider)
-        redirect_to new_admin_payment_method_path
+        redirect_to spree.new_admin_payment_method_path
       end
 
       def load_hubs

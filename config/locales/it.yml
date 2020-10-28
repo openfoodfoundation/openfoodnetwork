@@ -23,6 +23,10 @@ it:
         variant_unit_name: "Nome Unità Variante"
       spree/credit_card:
         base: "Carta di Credito"
+        number: "Numero"
+        month: "Mese"
+        verification_value: "Valore di verifica"
+        year: "Anno"
       order_cycle:
         orders_close_at: Data chiusura
       variant_override:
@@ -121,6 +125,7 @@ it:
       not_array_error: "deve essere un array"
       invalid_element_error: "deve contenere solo numeri interi"
   datetime_picker_ui:
+    current_text: Adesso
     close_text: Fatto
     time_text: Ora
   enterprise_mailer:
@@ -230,6 +235,7 @@ it:
   enterprises: Aziende
   enterprise_groups: Gruppi
   reports: Resoconti
+  listing_reports: Lista Report
   variant_overrides: Inventario
   import: Importazione
   spree_products: Prodotti Spree
@@ -276,6 +282,9 @@ it:
   on hand: "Disponibile"
   ship: "Spedizione"
   shipping_category: "Categoria Spedizioni"
+  height: "Altezza"
+  width: "Larghezza"
+  depth: "Profondità"
   actions:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
@@ -596,6 +605,7 @@ it:
         order_date: "Completato al"
         max: "Max"
         product_unit: "Prodotto: Unità"
+        weight_volume: "Peso/Volume (g)"
         ask: "Chiedi?"
         page_title: "Gestione di ordine all'ingrosso"
         actions_delete: "Cancella i selezionati"
@@ -632,6 +642,8 @@ it:
           acn_placeholder: es. 123 456 789
           display_invoice_logo: Mostra logo nelle fatture
           invoice_text: Aggiungere testo personalizzato alla fine delle fatture
+          terms_and_conditions: "Termini e Condizioni"
+          remove_terms_and_conditions: "Rimuovi File"
         contact:
           name: Nome
           name_placeholder: es. Gustav Plum
@@ -723,6 +735,8 @@ it:
           enable_subscriptions_tip: "Abilita la funzionalità \"sottoscrizioni\"?"
           enable_subscriptions_false: "Disabilitata"
           enable_subscriptions_true: "Abilitata"
+          customer_names_in_reports: "Report con Nomi Clienti"
+          customer_names_tip: "Permetti ai tuoi fornitori di visualizzare i nomi dei tuoi clienti nei report."
           customer_names_false: "Disabilitata"
           customer_names_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
@@ -1032,8 +1046,8 @@ it:
       packing:
         name: Resoconti smistamento/imballaggio
       enterprise_fee_summary:
-        name: "Riepilogo commissioni dell'azienda"
-        description: "Riepilogo delle commissioni dell'azienda"
+        name: "Riepilogo tariffe dell'azienda"
+        description: "Riepilogo delle Tariffe applicate dall'azienda"
     subscriptions:
       index:
         title: "Abbonamenti"
@@ -1139,12 +1153,17 @@ it:
       destroy_attachment_does_not_exist: "Logo inesistente"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Immagine promozionale inesistente"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "Il file Termini e Condizioni non esiste"
     orders:
       failed_to_update: "Aggiornamento ordine fallito"
   checkout:
     already_ordered:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
+    terms_and_conditions:
+      message_html: "Confermando la tua gentile richiesta acconsenti ai%{terms_and_conditions_link}."
+      link_text: "Termini di Servizio"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
     hubs:
@@ -1162,6 +1181,7 @@ it:
         items_in_cart_plural: "%{num} articoli nel tuo carrello"
         close: "Chiuso"
         cart_empty: "Il tuo carrello è vuoto"
+        take_me_shopping: "Portami ad acquistare!"
       signed_in:
         profile: "Profilo"
       mobile_menu:
@@ -1198,6 +1218,9 @@ it:
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
         select_oc_html: "Per favore <span class='highlighted'>scegli quando vuoi il tuo ordine </span>, per vedere quali prodotti sono disponibili."
+    products:
+      summary:
+        bulk: "Volume"
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata
   card_could_not_be_saved: La Carta non ha potuto essere salvata
   spree_gateway_error_flash_for_checkout: "C'è stato un problema con le informazioni sul pagamento: %{error}"
@@ -1905,7 +1928,6 @@ it:
   shop_for_products_html: "Acquista prodotti di <span class=\"turquoise\">%{enterprise}</span>:"
   change_shop: "Cambia negozio:"
   shop_at: "Acquista ora a:"
-  price_breakdown: "Scomposizione del prezzo"
   admin_fee: "Contributo amministrativo"
   sales_fee: "Commissione di vendita"
   packing_fee: "Tariffa imballaggio"
@@ -1966,11 +1988,12 @@ it:
   supplier: "Fornitore"
   product_name: "Nome Prodotto"
   product_description: "Descrizione prodotto"
+  permalink: "Permalink"
   shipping_categories: "Categorie Spedizioni"
   units: "Unità di misura"
   coordinator: "Coordinatore"
   distributor: "Distributore"
-  enterprise_fees: "Contributi dell'azienda"
+  enterprise_fees: "Tariffe dell'azienda"
   process_my_order: "Elabora la mia gentile richiesta"
   delivery_instructions: Istruzioni di consegna
   delivery_method: Metodo di consegna
@@ -1979,6 +2002,7 @@ it:
   calculator: "Calcolatore"
   calculator_values: "Valori del calcolatore"
   calculator_settings_warning: "Se stai modificando il tipo di calcolatore, devi prima salvare prima di editare i setting del calcolatore"
+  calculator_preferred_unit_error: "deve essere kg"
   flat_percent_per_item: "Percentuale (per prodotto)"
   flat_rate_per_item: "Tariffa fissa (per articolo)"
   flat_rate_per_order: "Tariffa fissa (per gentile richiesta)"
@@ -2016,7 +2040,7 @@ it:
   spree_admin_enterprises_hubs_name: "Nome"
   spree_admin_enterprises_create_new: "CREA NUOVO"
   spree_admin_enterprises_shipping_methods: "Metodi di Spedizione"
-  spree_admin_enterprises_fees: "Contributi dell'azienda"
+  spree_admin_enterprises_fees: "Tariffe dell'azienda"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREA NUOVA AZIENDA"
   spree_admin_enterprises_none_text: "Non hai nessua azienda al momento"
   spree_admin_enterprises_tabs_hubs: "HUBS"
@@ -2062,6 +2086,7 @@ it:
   remove_tax: "Rimuovi tassa"
   first_name_begins_with: "Il nome inizia con"
   last_name_begins_with: "Il cognome inizia con"
+  shipping_method: "Metodi di spedizione"
   new_order: "Nuovo ordine"
   enterprise_tos_link: "link Termini di Servizio Aziende"
   enterprise_tos_message: "Abbiamo bisogno di lavorare con persone che condividono i nostri scopi e i nostri valori. Per questo chiediamo alle nuove aziende di sottoscrivere i nostri"
@@ -2287,6 +2312,7 @@ it:
   enterprise_name_error: "è già stato utilizzato. Se questo è il nome della tua azienda e vorresti reclamarne la proprietà, o se vuoi contattare questa azienda, puoi contattare l'attuale referente di questo profilo a %{email}."
   enterprise_owner_error: "^%{email}non può gestire altre aziende (il limite è %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Questo ruolo è già presente."
+  enterprise_terms_and_conditions_type_error: "Solo PDF "
   inventory_item_visibility_error: deve essere vero o falso
   product_importer_file_error: "errore: nessun documento caricato"
   product_importer_spreadsheet_error: "non è stato possibile elaborare il documento: tipo di documento non valido"
@@ -2568,6 +2594,8 @@ it:
             immediate_logo_removal_warning: "Il logo verrà rimosso immediatamente dopo la conferma."
             removed_promo_image_successfully: "Immagine promozionale rimossa con successo"
             immediate_promo_image_removal_warning: "L'immagine promozionale verrà rimossa immediatamente dopo la conferma da parte tua.."
+            immediate_terms_and_conditions_removal_warning: "I Termini e Condizioni verranno rimossi non appena darai la tua conferma."
+            removed_terms_and_conditions_successfully: "File di Termini e Condizioni rimosso con successo"
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
     out_of_stock:
       reduced_stock_available: Quantità disponibile ridotta
@@ -2576,6 +2604,15 @@ it:
           nel tuo carrello sono diminuite. Ecco cosa è cambiato:
       now_out_of_stock: non è al momento disponibile
       only_n_remainging: "attualmente solo %{num} rimasto."
+    shopfront:
+      variant:
+        add_to_cart: "Aggiungi"
+        in_cart: "nel carrello"
+        quantity_in_cart: "%{quantity} nel carrello"
+      bulk_buy_modal:
+        min_quantity: "Quantità minima"
+        max_quantity: "Quantità massima"
+      price_breakdown: "Composizione del prezzo"
     variants:
       on_demand:
         'yes': "A richiesta"
@@ -2641,6 +2678,11 @@ it:
       signup_or_login: "Inizia registrandoti (o accedendo)"
       have_an_account: "Hai già un account?"
       action_login: "Accedi ora."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          C'è stato un problema nell'impostare la tua carta nel nostro portale di pagamento.
+          Per favore aggiorna la pagina e prova ancora, se dovesse ripresentarsi l'errore,
+          contattaci per avere supporto.
   inflections:
     each:
       one: "ogni"
@@ -2771,6 +2813,8 @@ it:
   adjustments: "Regolazioni"
   payments: "Pagamenti"
   return_authorizations: "Authorizationi reso"
+  credit_owed: "Credito dovuto"
+  new_adjustment: "Nuove regolazioni"
   payment: "Pagamento"
   payment_method: "Metodo di pagamento"
   shipment: "Spedizione"
@@ -2876,15 +2920,6 @@ it:
     smtp_send_copy_to_this_addresses: "Invia una copia di tutti i messaggi in uscita a questo indirizzo. Per più indirizzi, separare con virgole."
     intercept_email_address: "Intercettare l'indirizzo email"
     intercept_email_instructions: "Sostituire il destinatario della posta elettronica con questo indirizzo."
-    image_settings: "Impostazioni immagine"
-    image_settings_warning: "Avrai bisogno di rigenerare le miniature se aggiorni gli stili di graffetta. Usa rake paperclip: refresh: miniature CLASS = Spree :: Immagine per farlo."
-    attachment_default_style: Stile allegati
-    attachment_default_url: "Allegati URL predefinito"
-    attachment_path: "Percorso degli allegati"
-    attachment_styles: "Stili di graffetta"
-    attachment_url: "URL allegati"
-    add_new_style: "Aggiungi nuovo stile"
-    image_settings_updated: "Impostazioni immagine aggiornate con successo."
     tax_categories: "Categorie imposte"
     listing_tax_categories: "Elenco delle categorie fiscali"
     back_to_tax_categories_list: "Torna all'elenco delle categorie fiscali"
@@ -2958,11 +2993,18 @@ it:
     inventory_error_flash_for_insufficient_quantity: "Un articolo nel tuo carrello è diventato non disponibile."
     inventory: Inventario
     zipcode: CAP
-    weight: Peso (kg)
+    weight: Peso (per kg)
     error_user_destroy_with_orders: "Gli utenti con ordini completi non dovrebbero essere cancellati"
     cannot_create_payment_without_payment_methods: "Non è possibile creare un pagamento per un ordine senza alcun metodo di pagamento definito."
     please_define_payment_methods: "Definisci prima alcuni metodi di pagamento."
     options: "Opzioni"
+    has_no_shipped_units: "non ha unità spedite"
+    successfully_created: '%{resource} è stato creato con successo!'
+    successfully_updated: '%{resource} è stato aggiornato con successo!'
+    payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
+    not_available: "N/A"
+    order_populator:
+      out_of_stock: '%{item} non è al momento disponibile.'
     actions:
       update: "Aggiorna"
     shared:
@@ -2972,6 +3014,7 @@ it:
           other: "%{count} errori hanno proibito il salvataggio di questo record:"
         there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
       payments_list:
+        date_time: "Data/ora"
         amount: "Quantità"
         payment_method: "Metodo di pagamento"
         payment_state: "Stato Pagamento"
@@ -3189,6 +3232,8 @@ it:
           stripe:
             error_saving_payment: Errore memorizzando il pagamento
             submitting_payment: Eseguendo il pagamento
+          paypal:
+            no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
         image_upload_error: "L'immagine del prodotto non è stata riconosciuta. Carica un'immagine in formato PNG o JPG."
         new:
@@ -3242,6 +3287,8 @@ it:
           bulk_coop_allocation: 'Assegnazione - tabella'
           bulk_coop_packing_sheets: 'Imballaggio - tabella'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagamenti Clienti'
+        customer_names_message:
+          customer_names_tip: "Se i nomi dei clienti sono nascosti nelle gentili richieste che hai evaso, puoi contattare il distributore e chiedergli di aggiornare le sue impostazioni per permettere ai suoi fornitori di visualizzare i nomi dei clienti."
       users:
         index:
           listing_users: "Elenco Utenti"
@@ -3322,7 +3369,7 @@ it:
           remember_this_card: Ricordare questa Carta?
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'aa-mm-gg'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:
@@ -3387,6 +3434,11 @@ it:
         thanks: "Grazie per il tuo lavoro."
         track_information: "Informazioni Tracking: %{tracking}"
         track_link: "Tracking Link: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Congratulazioni!"
+        message: "Se hai ricevuto questa mail, le tue impostazioni email sono corrette."
+        subject: "Mail prova"
     order_state:
       address: indirizzo
       adjustments: aggiustamenti
@@ -3469,3 +3521,8 @@ it:
       shipment:
         cannot_ready: "Impossibile spedizione immediata."
       invalid_taxonomy_id: "ID tassonomia non valido."
+    activerecord:
+      models:
+        spree/payment:
+          one: Pagamento
+          other: Pagamenti

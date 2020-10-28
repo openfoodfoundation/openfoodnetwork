@@ -23,6 +23,10 @@ ca:
         variant_unit_name: "Nom de la unitat de la variant"
       spree/credit_card:
         base: "Targeta de crèdit"
+        number: "Número"
+        month: "Mes"
+        verification_value: "Valor de verificació"
+        year: "Any"
       order_cycle:
         orders_close_at: Data de tancament
       variant_override:
@@ -1216,6 +1220,9 @@ ca:
         require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
       select_oc:
         select_oc_html: "<span class='highlighted'>Trieu quan voleu la vostra comanda</span> per veure quins productes estan disponibles."
+    products:
+      summary:
+        bulk: "A granel"
   card_could_not_be_updated: No s'ha pogut actualitzar la targeta
   card_could_not_be_saved: no s'ha pogut desar la targeta
   spree_gateway_error_flash_for_checkout: "Hi ha hagut un problema amb la vostra informació de pagament: %{error}"
@@ -1923,7 +1930,6 @@ ca:
   shop_for_products_html: "Compra productes de <span class = \"turquesa\"> %{enterprise} </ span> a:"
   change_shop: "Canvia la botiga a:"
   shop_at: "Compra ara a:"
-  price_breakdown: "Desglossament complet del preu"
   admin_fee: "Comissió d'administració"
   sales_fee: "Comissió de venda"
   packing_fee: "Comissió d'embalatge"
@@ -1998,6 +2004,7 @@ ca:
   calculator: "Calculadora"
   calculator_values: "Valors de la calculadora"
   calculator_settings_warning: "Si canvieu el tipus de calculadora, primer heu de desar abans de poder editar la configuració de la calculadora"
+  calculator_preferred_unit_error: "ha de ser kg o lliures"
   flat_percent_per_item: "Percentatge fixe (per article)"
   flat_rate_per_item: "Tarifa fixa (per article)"
   flat_rate_per_order: "Tarifa fixa (per comanda)"
@@ -2599,6 +2606,15 @@ ca:
           més dels productes de la cistella. Aquí podeu veure el que ha canviat:
       now_out_of_stock: ara està fora d'estoc.
       only_n_remainging: "ara només n'hi ha %{num}restants."
+    shopfront:
+      variant:
+        add_to_cart: "Afegeix"
+        in_cart: "a la cistella"
+        quantity_in_cart: "%{quantity} a la cistella"
+      bulk_buy_modal:
+        min_quantity: "Quantitat mínima"
+        max_quantity: "Quantitat màxima"
+      price_breakdown: "Desglossament del preu"
     variants:
       on_demand:
         'yes': "Sota demanda"
@@ -2904,15 +2920,6 @@ ca:
     smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
     intercept_email_address: "Intercepta adreça de correu"
     intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
-    image_settings: "Configuració de la imatge"
-    image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
-    attachment_default_style: Estil de fitxers adjunts
-    attachment_default_url: "URL predeterminada de fitxers adjunts"
-    attachment_path: "Ruta de fitxers adjunts"
-    attachment_styles: "Estils de paperclip"
-    attachment_url: "URL dels fitxers adjunts"
-    add_new_style: "Afegeix un estil nou"
-    image_settings_updated: "La configuració de la imatge s'ha actualitzat correctament."
     tax_categories: "Tipus d'impostos"
     listing_tax_categories: "Llista de categories d'impostos"
     back_to_tax_categories_list: "Tornar a la llista de categories d'impostos"
@@ -2986,11 +2993,18 @@ ca:
     inventory_error_flash_for_insufficient_quantity: "Un article de la teva cistella ha deixat d'estar disponible."
     inventory: Inventari
     zipcode: Codi postal
-    weight: Pes (per kg)
+    weight: Pes (per kg o lliures)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
     cannot_create_payment_without_payment_methods: "No podeu crear un pagament per a una comanda sense que hi hagi definit cap mètode de pagament."
     please_define_payment_methods: "Primer definiu alguns mètodes de pagament."
     options: "Opcions"
+    has_no_shipped_units: "no té cap unitat enviada"
+    successfully_created: '%{resource} s''ha creat correctament.'
+    successfully_updated: '%{resource} s''ha actualitzat correctament.'
+    payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
+    not_available: "No disponible"
+    order_populator:
+      out_of_stock: '%{item} està esgotat.'
     actions:
       update: "Actualitzar"
     shared:

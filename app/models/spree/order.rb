@@ -6,11 +6,6 @@ require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
-ActiveSupport::Notifications
-  .subscribe('spree.order.contents_changed') do |_name, _start, _finish, _id, payload|
-  payload[:order].reload.update_distribution_charge!
-end
-
 module Spree
   class Order < ActiveRecord::Base
     prepend OrderShipment
