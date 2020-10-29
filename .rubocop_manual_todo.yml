@@ -452,6 +452,7 @@ Metrics/AbcSize:
   - spec/services/order_checkout_restart_spec.rb
   - spec/support/i18n_translations_checker.rb
   - spec/support/performance_helper.rb
+  - spec/support/request/web_helper.rb
 
 Metrics/BlockLength:
   Max: 25
