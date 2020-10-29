@@ -192,20 +192,14 @@ feature "As a guest I want to check out my cart", js: true do
         checkout_as_guest
       end
 
-      it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
+      it "shows a link to the T&Cs, makes accepting terms mandatory and allows user to checkout" do
         expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
-
         expect(page).to have_button("Place order now", disabled: true)
 
         check "accept_terms"
         expect(page).to have_button("Place order now", disabled: false)
-      end
-
-      it "allows user to successfully checkout" do
-        check "accept_terms"
 
         fill_out_form(shipping_with_fee.name, check_without_fee.name, save_default_addresses: false)
-
         place_order
         expect(page).to have_content "Your order has been processed successfully"
       end
