@@ -3,6 +3,9 @@ describe "OptionValueNamer", ->
 
   beforeEach ->
     module('admin.products')
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
     inject (_OptionValueNamer_) ->
       subject = new _OptionValueNamer_
 

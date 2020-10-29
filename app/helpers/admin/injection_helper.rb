@@ -184,6 +184,12 @@ module Admin
                        json: "'#{@spree_api_key}'" }
     end
 
+    def admin_inject_available_units
+      admin_inject_json "admin.products",
+                        "availableUnits",
+                        Spree::Config.available_units
+    end
+
     def admin_inject_json(ng_module, name, data)
       json = data.to_json
       render partial: "admin/json/injection_ams",

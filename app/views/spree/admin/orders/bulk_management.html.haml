@@ -10,6 +10,7 @@
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
 = admin_inject_column_preferences module: 'admin.lineItems'
+= admin_inject_available_units
 
 %div{ ng: { controller: 'LineItemsCtrl' } }
   %save-bar{ dirty: "bulk_order_form.$dirty", persist: "false" }
