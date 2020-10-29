@@ -104,7 +104,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.$watch 'sortOptions', (sort) ->
     return unless sort && sort.predicate != ""
 
-    $scope.sorting = sort.getSortingExpr()
+    $scope.q.sorting = sort.getSortingExpr()
     $scope.fetchProducts()
   , true
 
