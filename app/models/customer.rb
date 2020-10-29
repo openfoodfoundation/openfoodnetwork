@@ -25,6 +25,8 @@ class Customer < ActiveRecord::Base
 
   before_create :associate_user
 
+  attr_accessor :gateway_recurring_payment_client_secret
+
   private
 
   def downcase_email
