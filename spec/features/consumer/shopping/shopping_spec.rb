@@ -251,7 +251,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           # -- Max quantity
           open_bulk_quantity_modal(variant)
-          click_add_bulk_max_to_cart variant, 1
+          click_add_bulk_max_to_cart 1
 
           expect(order.reload.line_items.first.max_quantity).to eq(7)
 
@@ -406,7 +406,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             it "does not update max_quantity" do
               click_add_bulk_to_cart variant, 2
-              click_add_bulk_max_to_cart variant, 1
+              click_add_bulk_max_to_cart 1
               close_modal
 
               variant.update! on_hand: 1
