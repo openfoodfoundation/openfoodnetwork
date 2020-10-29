@@ -3044,6 +3044,7 @@ ar:
     new_taxonomy: "تصنيف جديد"
     back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
     shipping_methods: "طرق الشحن"
+    shipping_method: "طريقة الشحن"
     shipping_categories: "فئات الشحن"
     new_shipping_category: "فئة الشحن الجديدة"
     back_to_shipping_categories: "العودة إلى فئات الشحن"
