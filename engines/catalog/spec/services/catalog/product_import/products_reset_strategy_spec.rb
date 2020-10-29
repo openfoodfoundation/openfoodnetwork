@@ -91,6 +91,16 @@ module Catalog
                 expect { products_reset.reset(supplier_ids) }.to raise_error RuntimeError
               end
             end
+
+            context 'and the variant is on demand' do
+              before { variant.on_demand = true }
+
+              it 'turns off the on demand setting on the variant' do
+                products_reset.reset(supplier_ids)
+
+                expect(variant.reload.on_demand).to eq(false)
+              end
+            end
           end
         end
 
