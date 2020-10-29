@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "As a consumer I want to check out my cart", js: true do
+feature "As a guest I want to check out my cart", js: true do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutHelper
@@ -35,245 +35,243 @@ feature "As a consumer I want to check out my cart", js: true do
     distributor.shipping_methods << tagged_shipping
   end
 
-  context "guest checkout" do
+  before do
+    visit checkout_path
+    checkout_as_guest
+  end
+
+  it "shows the current distributor" do
+    visit checkout_path
+    expect(page).to have_content distributor.name
+  end
+
+  it 'does not show the save as default address checkbox' do
+    expect(page).not_to have_content "Save as default billing address"
+    expect(page).not_to have_content "Save as default shipping address"
+  end
+
+  it "shows a breakdown of the order price" do
+    choose shipping_with_fee.name
+
+    expect(page).to have_selector 'orderdetails .cart-total', text: with_currency(11.23)
+    expect(page).to have_selector 'orderdetails .shipping', text: with_currency(4.56)
+    expect(page).to have_selector 'orderdetails .total', text: with_currency(15.79)
+
+    # Tax should not be displayed in checkout, as the customer's choice of shipping method
+    # affects the tax and we haven't written code to live-update the tax amount when they
+    # make a change.
+    expect(page).not_to have_content product.tax_category.name
+  end
+
+  it "shows all shipping methods in order by name" do
+    within '#shipping' do
+      expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
+      labels = page.all('label').map(&:text)
+      expect(labels[0]).to start_with("Donkeys") # shipping_with_fee
+      expect(labels[1]).to start_with("Frogs") # free_shipping
+      expect(labels[2]).to start_with("Local") # tagged_shipping
+    end
+  end
+
+  context "when shipping method requires an address" do
     before do
+      choose free_shipping.name
+    end
+
+    it "shows ship address forms when 'same as billing address' is unchecked" do
+      uncheck "Shipping address same as billing address?"
+      expect(find("#ship_address > div.visible").visible?).to be true
+    end
+  end
+
+  it "filters out 'Back office only' shipping methods" do
+    expect(page).to have_content shipping_with_fee.name
+    shipping_with_fee.update_attribute :display_on, 'back_end' # Back office only
+
+    visit checkout_path
+    checkout_as_guest
+    expect(page).not_to have_content shipping_with_fee.name
+  end
+
+  context "using FilterShippingMethods" do
+    let(:user) { create(:user) }
+    let(:customer) { create(:customer, user: user, enterprise: distributor) }
+
+    it "shows shipping methods allowed by the rule" do
+      # No rules in effect
+      expect(page).to have_content "Frogs"
+      expect(page).to have_content "Donkeys"
+      expect(page).to have_content "Local"
+
+      create(:filter_shipping_methods_tag_rule,
+             enterprise: distributor,
+             preferred_customer_tags: "local",
+             preferred_shipping_method_tags: "local",
+             preferred_matched_shipping_methods_visibility: 'visible')
+      create(:filter_shipping_methods_tag_rule,
+             enterprise: distributor,
+             is_default: true,
+             preferred_shipping_method_tags: "local",
+             preferred_matched_shipping_methods_visibility: 'hidden')
       visit checkout_path
       checkout_as_guest
-    end
 
-    it "shows the current distributor" do
+      # Default rule in effect, disallows access to 'Local'
+      expect(page).to have_content "Frogs"
+      expect(page).to have_content "Donkeys"
+      expect(page).not_to have_content "Local"
+
+      login_as(user)
       visit checkout_path
-      expect(page).to have_content distributor.name
+
+      # Default rule in still effect, disallows access to 'Local'
+      expect(page).to have_content "Frogs"
+      expect(page).to have_content "Donkeys"
+      expect(page).not_to have_content "Local"
+
+      customer.update_attribute(:tag_list, "local")
+      visit checkout_path
+
+      # #local Customer can access 'Local' shipping method
+      expect(page).to have_content "Frogs"
+      expect(page).to have_content "Donkeys"
+      expect(page).to have_content "Local"
     end
+  end
 
-    it 'does not show the save as default address checkbox' do
-      expect(page).not_to have_content "Save as default billing address"
-      expect(page).not_to have_content "Save as default shipping address"
-    end
+  it "shows all available payment methods" do
+    expect(page).to have_content check_without_fee.name
+    expect(page).to have_content check_with_fee.name
+  end
 
-    it "shows a breakdown of the order price" do
-      choose shipping_with_fee.name
+  describe "purchasing" do
+    it "takes us to the order confirmation page when we submit a complete form" do
+      fill_out_details
+      fill_out_billing_address
 
-      expect(page).to have_selector 'orderdetails .cart-total', text: with_currency(11.23)
-      expect(page).to have_selector 'orderdetails .shipping', text: with_currency(4.56)
-      expect(page).to have_selector 'orderdetails .total', text: with_currency(15.79)
-
-      # Tax should not be displayed in checkout, as the customer's choice of shipping method
-      # affects the tax and we haven't written code to live-update the tax amount when they
-      # make a change.
-      expect(page).not_to have_content product.tax_category.name
-    end
-
-    it "shows all shipping methods in order by name" do
-      within '#shipping' do
-        expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
-        labels = page.all('label').map(&:text)
-        expect(labels[0]).to start_with("Donkeys") # shipping_with_fee
-        expect(labels[1]).to start_with("Frogs") # free_shipping
-        expect(labels[2]).to start_with("Local") # tagged_shipping
+      within "#shipping" do
+        choose shipping_with_fee.name
+        fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
       end
+
+      within "#payment" do
+        choose check_without_fee.name
+      end
+
+      expect do
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
+      end.to enqueue_job ConfirmOrderJob
+
+      # And the order's special instructions should be set
+      order = Spree::Order.complete.first
+      expect(order.special_instructions).to eq "SpEcIaL NoTeS"
+
+      # And the Spree tax summary should not be displayed
+      expect(page).not_to have_content product.tax_category.name
+
+      # And the total tax for the order, including shipping and fee tax, should be displayed
+      # product tax    ($10.00 @ 10% = $0.91)
+      # + fee tax      ($ 1.23 @ 10% = $0.11)
+      # + shipping tax ($ 4.56 @ 25% = $0.91)
+      #                              = $1.93
+      expect(page).to have_content '(includes tax)'
+      expect(page).to have_content with_currency(1.93)
+      expect(page).to have_content 'Back To Store'
     end
 
-    context "when shipping method requires an address" do
+    context "with basic details filled" do
       before do
         choose free_shipping.name
-      end
-
-      it "shows ship address forms when 'same as billing address' is unchecked" do
-        uncheck "Shipping address same as billing address?"
-        expect(find("#ship_address > div.visible").visible?).to be true
-      end
-    end
-
-    it "filters out 'Back office only' shipping methods" do
-      expect(page).to have_content shipping_with_fee.name
-      shipping_with_fee.update_attribute :display_on, 'back_end' # Back office only
-
-      visit checkout_path
-      checkout_as_guest
-      expect(page).not_to have_content shipping_with_fee.name
-    end
-
-    context "using FilterShippingMethods" do
-      let(:user) { create(:user) }
-      let(:customer) { create(:customer, user: user, enterprise: distributor) }
-
-      it "shows shipping methods allowed by the rule" do
-        # No rules in effect
-        expect(page).to have_content "Frogs"
-        expect(page).to have_content "Donkeys"
-        expect(page).to have_content "Local"
-
-        create(:filter_shipping_methods_tag_rule,
-               enterprise: distributor,
-               preferred_customer_tags: "local",
-               preferred_shipping_method_tags: "local",
-               preferred_matched_shipping_methods_visibility: 'visible')
-        create(:filter_shipping_methods_tag_rule,
-               enterprise: distributor,
-               is_default: true,
-               preferred_shipping_method_tags: "local",
-               preferred_matched_shipping_methods_visibility: 'hidden')
-        visit checkout_path
-        checkout_as_guest
-
-        # Default rule in effect, disallows access to 'Local'
-        expect(page).to have_content "Frogs"
-        expect(page).to have_content "Donkeys"
-        expect(page).not_to have_content "Local"
-
-        login_as(user)
-        visit checkout_path
-
-        # Default rule in still effect, disallows access to 'Local'
-        expect(page).to have_content "Frogs"
-        expect(page).to have_content "Donkeys"
-        expect(page).not_to have_content "Local"
-
-        customer.update_attribute(:tag_list, "local")
-        visit checkout_path
-
-        # #local Customer can access 'Local' shipping method
-        expect(page).to have_content "Frogs"
-        expect(page).to have_content "Donkeys"
-        expect(page).to have_content "Local"
-      end
-    end
-
-    it "shows all available payment methods" do
-      expect(page).to have_content check_without_fee.name
-      expect(page).to have_content check_with_fee.name
-    end
-
-    describe "purchasing" do
-      it "takes us to the order confirmation page when we submit a complete form" do
+        choose check_without_fee.name
         fill_out_details
         fill_out_billing_address
-
-        within "#shipping" do
-          choose shipping_with_fee.name
-          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-        end
-
-        within "#payment" do
-          choose check_without_fee.name
-        end
-
-        expect do
-          place_order
-          expect(page).to have_content "Your order has been processed successfully"
-        end.to enqueue_job ConfirmOrderJob
-
-        # And the order's special instructions should be set
-        order = Spree::Order.complete.first
-        expect(order.special_instructions).to eq "SpEcIaL NoTeS"
-
-        # And the Spree tax summary should not be displayed
-        expect(page).not_to have_content product.tax_category.name
-
-        # And the total tax for the order, including shipping and fee tax, should be displayed
-        # product tax    ($10.00 @ 10% = $0.91)
-        # + fee tax      ($ 1.23 @ 10% = $0.11)
-        # + shipping tax ($ 4.56 @ 25% = $0.91)
-        #                              = $1.93
-        expect(page).to have_content '(includes tax)'
-        expect(page).to have_content with_currency(1.93)
-        expect(page).to have_content 'Back To Store'
+        check "Shipping address same as billing address?"
       end
 
-      context "with basic details filled" do
-        before do
-          choose free_shipping.name
-          choose check_without_fee.name
-          fill_out_details
-          fill_out_billing_address
-          check "Shipping address same as billing address?"
-        end
+      it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
+      end
 
-        it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+      it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
+        variant.on_demand = false
+        variant.on_hand = 0
+        variant.save!
+
+        place_order
+
+        expect(page).not_to have_content "Your order has been processed successfully"
+        expect(page).to have_selector 'closing', text: "Your shopping cart"
+        expect(page).to have_content "An item in your cart has become unavailable."
+      end
+
+      context "when we are charged a shipping fee" do
+        before { choose shipping_with_fee.name }
+
+        it "creates a payment for the full amount inclusive of shipping" do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
-        end
 
-        it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
-          variant.on_demand = false
-          variant.on_hand = 0
-          variant.save!
+          # There are two orders - our order and our new cart
+          o = Spree::Order.complete.first
+          expect(o.adjustments.shipping.first.amount).to eq(4.56)
+          expect(o.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
+        end
+      end
+
+      context "when we are charged a payment method fee (transaction fee)" do
+        it "creates a payment including the transaction fee" do
+          # Selecting the transaction fee, it is displayed
+          expect(page).to have_selector ".transaction-fee td", text: with_currency(0.00)
+          expect(page).to have_selector ".total", text: with_currency(11.23)
+
+          choose "#{check_with_fee.name} (#{with_currency(5.67)})"
+
+          expect(page).to have_selector ".transaction-fee td", text: with_currency(5.67)
+          expect(page).to have_selector ".total", text: with_currency(16.90)
 
           place_order
+          expect(page).to have_content "Your order has been processed successfully"
 
-          expect(page).not_to have_content "Your order has been processed successfully"
-          expect(page).to have_selector 'closing', text: "Your shopping cart"
-          expect(page).to have_content "An item in your cart has become unavailable."
+          # There are two orders - our order and our new cart
+          o = Spree::Order.complete.first
+          expect(o.adjustments.payment_fee.first.amount).to eq 5.67
+          expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
         end
+      end
 
-        context "when we are charged a shipping fee" do
-          before { choose shipping_with_fee.name }
+      describe "credit card payments" do
+        ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
+          context "with a credit card payment method using #{gateway_type}" do
+            let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
 
-          it "creates a payment for the full amount inclusive of shipping" do
-            place_order
-            expect(page).to have_content "Your order has been processed successfully"
+            it "takes us to the order confirmation page when submitted with a valid credit card" do
+              fill_in 'Card Number', with: "4111111111111111"
+              select 'February', from: 'secrets.card_month'
+              select (Date.current.year + 1).to_s, from: 'secrets.card_year'
+              fill_in 'Security Code', with: '123'
 
-            # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.adjustments.shipping.first.amount).to eq(4.56)
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
-          end
-        end
+              place_order
+              expect(page).to have_content "Your order has been processed successfully"
 
-        context "when we are charged a payment method fee (transaction fee)" do
-          it "creates a payment including the transaction fee" do
-            # Selecting the transaction fee, it is displayed
-            expect(page).to have_selector ".transaction-fee td", text: with_currency(0.00)
-            expect(page).to have_selector ".total", text: with_currency(11.23)
+              # Order should have a payment with the correct amount
+              o = Spree::Order.complete.first
+              expect(o.payments.first.amount).to eq(11.23)
+            end
 
-            choose "#{check_with_fee.name} (#{with_currency(5.67)})"
+            it "shows the payment processing failed message when submitted with an invalid credit card" do
+              fill_in 'Card Number', with: "9999999988887777"
+              select 'February', from: 'secrets.card_month'
+              select (Date.current.year + 1).to_s, from: 'secrets.card_year'
+              fill_in 'Security Code', with: '123'
 
-            expect(page).to have_selector ".transaction-fee td", text: with_currency(5.67)
-            expect(page).to have_selector ".total", text: with_currency(16.90)
+              place_order
+              expect(page).to have_content 'Bogus Gateway: Forced failure'
 
-            place_order
-            expect(page).to have_content "Your order has been processed successfully"
-
-            # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.adjustments.payment_fee.first.amount).to eq 5.67
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
-          end
-        end
-
-        describe "credit card payments" do
-          ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
-            context "with a credit card payment method using #{gateway_type}" do
-              let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
-
-              it "takes us to the order confirmation page when submitted with a valid credit card" do
-                fill_in 'Card Number', with: "4111111111111111"
-                select 'February', from: 'secrets.card_month'
-                select (Date.current.year + 1).to_s, from: 'secrets.card_year'
-                fill_in 'Security Code', with: '123'
-
-                place_order
-                expect(page).to have_content "Your order has been processed successfully"
-
-                # Order should have a payment with the correct amount
-                o = Spree::Order.complete.first
-                expect(o.payments.first.amount).to eq(11.23)
-              end
-
-              it "shows the payment processing failed message when submitted with an invalid credit card" do
-                fill_in 'Card Number', with: "9999999988887777"
-                select 'February', from: 'secrets.card_month'
-                select (Date.current.year + 1).to_s, from: 'secrets.card_year'
-                fill_in 'Security Code', with: '123'
-
-                place_order
-                expect(page).to have_content 'Bogus Gateway: Forced failure'
-
-                # Does not show duplicate shipping fee
-                visit checkout_path
-                expect(page).to have_selector "th", text: "Shipping", count: 1
-              end
+              # Does not show duplicate shipping fee
+              visit checkout_path
+              expect(page).to have_selector "th", text: "Shipping", count: 1
             end
           end
         end
