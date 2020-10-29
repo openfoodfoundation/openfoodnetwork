@@ -50,30 +50,36 @@ module Spree
       false
     end
 
-    def self.set_attachment_attributes(attribute_name, attribute_value)
+    def self.set_attachment_attribute(attribute_name, attribute_value)
       attachment_definitions[:attachment][attribute_name] = attribute_value
     end
 
-    def self.set_s3_attachment_definitions
+    def self.set_storage_attachment_attributes
       if Spree::Config[:use_s3]
-        set_attachment_attributes(:storage, :s3)
-        set_attachment_attributes(:s3_credentials, s3_credentials)
-        set_attachment_attributes(:s3_headers,
-                                  ActiveSupport::JSON.decode(Spree::Config[:s3_headers]))
-        set_attachment_attributes(:bucket, Spree::Config[:s3_bucket])
-
-        # We use :s3_alias_url (virtual host url style) and set the URL on property s3_host_alias
-        set_attachment_attributes(:s3_host_alias, attachment_definitions[:attachment][:url])
-        set_attachment_attributes(:url, ":s3_alias_url")
+        set_s3_attachment_attributes
       else
-        attachment_definitions[:attachment].delete :storage
+        attachment_definitions[:attachment].delete(:storage)
       end
     end
+
+    def self.set_s3_attachment_attributes
+      set_attachment_attribute(:storage, :s3)
+      set_attachment_attribute(:s3_credentials, s3_credentials)
+      set_attachment_attribute(:s3_headers,
+                               ActiveSupport::JSON.decode(Spree::Config[:s3_headers]))
+      set_attachment_attribute(:bucket, Spree::Config[:s3_bucket])
+
+      # We use :s3_alias_url (virtual host url style) and set the URL on property s3_host_alias
+      set_attachment_attribute(:s3_host_alias, attachment_definitions[:attachment][:url])
+      set_attachment_attribute(:url, ":s3_alias_url")
+    end
+    private_class_method :set_s3_attachment_attributes
 
     def self.s3_credentials
       { access_key_id: Spree::Config[:s3_access_key],
         secret_access_key: Spree::Config[:s3_secret],
         bucket: Spree::Config[:s3_bucket] }
     end
+    private_class_method :s3_credentials
   end
 end
