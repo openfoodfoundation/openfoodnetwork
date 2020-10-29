@@ -16,6 +16,7 @@ describe ExchangeProductsRenderer do
       end
 
       it "loads products in order" do
+        products = renderer.exchange_products(true, exchange.sender)
         sorted_products_names = products.map(&:name).sort
 
         expect(products.map(&:name)).to eq(sorted_products_names)
@@ -34,6 +35,7 @@ describe ExchangeProductsRenderer do
       end
 
       it "loads products in order" do
+        products = renderer.exchange_products(false, exchange.receiver)
         sorted_products_names = products.map(&:name).sort
 
         expect(products.map(&:name)).to eq(sorted_products_names)
