@@ -18,16 +18,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
   let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Calculator::FlatRate.new(preferred_amount: 0.00)) }
   let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
-  let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
   let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-  let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
-  let!(:paypal) do
-    Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
-      pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
-      pm.preferred_password = '1406163716'
-      pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'
-    end
-  end
 
   before do
     Spree::Config.shipment_inc_vat = true
@@ -39,7 +30,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
-    distributor.shipping_methods << tagged_shipping
   end
 
   describe "when I have an out of stock product in my cart" do

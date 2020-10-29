@@ -21,13 +21,6 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
   let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
-  let!(:paypal) do
-    Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
-      pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
-      pm.preferred_password = '1406163716'
-      pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'
-    end
-  end
 
   before do
     Spree::Config.shipment_inc_vat = true
@@ -150,7 +143,6 @@ feature "As a consumer I want to check out my cart", js: true do
     it "shows all available payment methods" do
       expect(page).to have_content check_without_fee.name
       expect(page).to have_content check_with_fee.name
-      expect(page).to have_content paypal.name
     end
 
     describe "purchasing" do
