@@ -144,6 +144,27 @@ feature "As a guest I want to check out my cart", js: true do
     expect(page).to have_content check_with_fee.name
   end
 
+  context "when distributor has T&Cs" do
+    let(:fake_terms_and_conditions_path) { Rails.root.join("app/assets/images/logo-white.png") }
+    let(:terms_and_conditions_file) { Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf") }
+
+    before do
+      order.distributor.terms_and_conditions = terms_and_conditions_file
+      order.distributor.save
+    end
+
+    it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
+      visit checkout_path
+      checkout_as_guest
+      expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
+
+      expect(page).to have_button("Place order now", disabled: true)
+
+      check "accept_terms"
+      expect(page).to have_button("Place order now", disabled: false)
+    end
+  end
+
   describe "purchasing" do
     it "takes us to the order confirmation page when we submit a complete form" do
       fill_out_details
