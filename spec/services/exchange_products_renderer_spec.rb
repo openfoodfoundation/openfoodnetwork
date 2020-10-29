@@ -16,9 +16,9 @@ describe ExchangeProductsRenderer do
       end
 
       it "loads products in order" do
-        sorted_products_names = products.pluck(:name).sort
+        sorted_products_names = products.map(&:name).sort
 
-        expect(products.pluck(:name)).to eq(sorted_products_names)
+        expect(products.map(&:name)).to eq(sorted_products_names)
       end
     end
 
@@ -34,9 +34,9 @@ describe ExchangeProductsRenderer do
       end
 
       it "loads products in order" do
-        sorted_products_names = products.pluck(:name).sort
+        sorted_products_names = products.map(&:name).sort
 
-        expect(products.pluck(:name)).to eq(sorted_products_names)
+        expect(products.map(&:name)).to eq(sorted_products_names)
       end
 
       context "showing products from coordinator inventory only" do
