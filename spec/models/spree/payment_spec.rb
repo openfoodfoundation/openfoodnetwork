@@ -24,9 +24,9 @@ describe Spree::Payment do
 
     let(:success_response) do
       double('success_response', :success? => true,
-             :authorization => '123',
-             :avs_result => { 'code' => 'avs-code' },
-             :cvv_result => { 'code' => 'cvv-code', 'message' => "CVV Result"})
+                                 :authorization => '123',
+                                 :avs_result => { 'code' => 'avs-code' },
+                                 :cvv_result => { 'code' => 'cvv-code', 'message' => "CVV Result"})
     end
 
     let(:failed_response) { double('gateway_response', :success? => false) }
@@ -589,7 +589,7 @@ describe Spree::Payment do
       it "should build the payment's source" do
         params = { :amount => 100, :payment_method => gateway,
                    :source_attributes => {
-                     :expiry =>"1 / 99",
+                     :expiry => "1 / 99",
                      :number => '1234567890123',
                      :verification_value => '123'
                    }
@@ -818,7 +818,7 @@ describe Spree::Payment do
 
           it "creates adjustment" do
             payment = create(:payment, order: order, payment_method: payment_method,
-                             amount: order.total)
+                                       amount: order.total)
             expect(payment.adjustment).to be_present
             expect(payment.adjustment.amount).not_to eq(0)
           end
