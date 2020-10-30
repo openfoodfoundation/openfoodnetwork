@@ -61,7 +61,6 @@ describe Spree::Payment do
         payment.failure
         expect(payment.state).to eql('failed')
       end
-
     end
 
     context 'invalidate' do
@@ -105,7 +104,6 @@ describe Spree::Payment do
           expect { payment.process!}.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
         end
-
       end
 
       context "#authorize" do
@@ -566,7 +564,6 @@ describe Spree::Payment do
             )
           end
         end
-
       end
 
       context "when profiles are not supported" do
