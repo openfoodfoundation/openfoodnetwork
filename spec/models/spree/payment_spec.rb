@@ -530,7 +530,6 @@ describe Spree::Payment do
           payment.source.stub :has_payment_profile? => false
         end
 
-
         context "when there is an error connecting to the gateway" do
           it "should call gateway_error " do
             pending '[Spree build] Failing spec'
@@ -567,7 +566,6 @@ describe Spree::Payment do
             )
           end
         end
-
 
       end
 
