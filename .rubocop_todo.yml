@@ -1281,22 +1281,6 @@ Style/NumericPredicate:
     - 'lib/spree/money_decorator.rb'
     - 'lib/tasks/sample_data.rake'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'lib/spree/core/controller_helpers/auth.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Exclude:
-    - 'lib/spree/core/delegate_belongs_to.rb'
-
 # Offense count: 231
 Style/Send:
   Exclude:
