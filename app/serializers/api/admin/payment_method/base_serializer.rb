@@ -1,13 +1,19 @@
-module Api::Admin::PaymentMethod
-  class BaseSerializer < ActiveModel::Serializer
-    attributes :id, :name, :type, :tag_list, :tags
+# frozen_string_literal: true
 
-    def tag_list
-      object.tag_list.join(",")
-    end
+module Api
+  module Admin
+    module PaymentMethod
+      class BaseSerializer < ActiveModel::Serializer
+        attributes :id, :name, :type, :tag_list, :tags
 
-    def tags
-      object.tag_list.map{ |t| { text: t } }
+        def tag_list
+          object.tag_list.join(",")
+        end
+
+        def tags
+          object.tag_list.map{ |t| { text: t } }
+        end
+      end
     end
   end
 end
