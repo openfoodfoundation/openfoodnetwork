@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This patch fixes the Rails issue where ActionDispatch::Request#deep_munge was converting empty
 # array paramters into nils, see https://github.com/rails/rails/issues/13420
 #
@@ -28,7 +30,7 @@
 module ActionDispatch
   class Request
     def deep_munge(hash)
-      hash.each do |k, v|
+      hash.each do |_k, v|
         case v
         when Array
           v.grep(Hash) { |x| deep_munge(x) }
