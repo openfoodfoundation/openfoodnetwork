@@ -83,7 +83,7 @@ describe CheckoutController, type: :controller do
           call_count = 0
           allow(order_checkout_restart).to receive(:call) do
             call_count += 1
-            raise Spree::Core::GatewayError.new("Gateway blow up") if call_count == 1
+            raise Spree::Core::GatewayError, "Gateway blow up" if call_count == 1
           end
 
           spree_post :edit
