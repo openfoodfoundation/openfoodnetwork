@@ -9,7 +9,7 @@
 
   - if order.line_items.exists?
     %fieldset#order-total.no-border-bottom{"data-hook" => "order_details_total"}
-      %legend= t(".order_total")
+      %legend{ align: 'center' }= t(".order_total")
       %span.order-total= order.display_total
 
   = form_for @order, url: admin_order_url(@order), method: :put do |f|
