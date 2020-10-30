@@ -589,10 +589,10 @@ describe Spree::Payment do
       it "should build the payment's source" do
         params = { :amount => 100, :payment_method => gateway,
                    :source_attributes => {
-          :expiry =>"1 / 99",
-          :number => '1234567890123',
-          :verification_value => '123'
-        }
+                     :expiry =>"1 / 99",
+                     :number => '1234567890123',
+                     :verification_value => '123'
+                   }
         }
 
         payment = Spree::Payment.new(params)
