@@ -65,6 +65,7 @@ describe 'Checkout service', ->
     inject ($injector, _$httpBackend_, $rootScope)->
       $httpBackend = _$httpBackend_
       Checkout = $injector.get("Checkout")
+      spyOn(Checkout, "terms_and_conditions_accepted")
       scope = $rootScope.$new()
       scope.Checkout = Checkout
       Navigation = $injector.get("Navigation")
