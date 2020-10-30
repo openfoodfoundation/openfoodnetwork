@@ -19,13 +19,6 @@ Lint/IneffectiveAccessModifier:
     - 'app/services/mail_configuration.rb'
     - 'lib/open_food_network/feature_toggle.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'spec/factories/stock_location_factory.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
