@@ -15,9 +15,9 @@ describe "spree/admin/payment_methods/index.html.haml" do
     end
 
     assign(:payment_methods, [
-      create(:payment_method),
-      create(:payment_method)
-    ])
+             create(:payment_method),
+             create(:payment_method)
+           ])
   end
 
   describe "payment methods index page" do
