@@ -30,8 +30,8 @@ describe 'api/orders', type: :request do
         context "when there are four orders with different properties set" do
           let!(:order_dist_1) { create(:order_with_distributor, email: "specific_name@example.com") }
           let!(:order_dist_2) { create(:order_with_totals_and_distribution) }
-          let!(:order_dist_1_complete) { create(:order,  distributor: order_dist_1.distributor, state: 'complete', completed_at: Time.zone.today - 7.days) }
-          let!(:order_dist_1_credit_owed) { create(:order,  distributor: order_dist_1.distributor, payment_state: 'credit_owed', completed_at: Time.zone.today) }
+          let!(:order_dist_1_complete) { create(:order, distributor: order_dist_1.distributor, state: 'complete', completed_at: Time.zone.today - 7.days) }
+          let!(:order_dist_1_credit_owed) { create(:order, distributor: order_dist_1.distributor, payment_state: 'credit_owed', completed_at: Time.zone.today) }
 
           let(:user) { order_dist_1.distributor.owner }
           let(:'X-Spree-Token') do

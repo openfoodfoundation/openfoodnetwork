@@ -181,7 +181,7 @@ describe Spree::Payment do
         context "when gateway does not match the environment" do
           it "should raise an exception" do
             gateway.stub :environment => "foo"
-            expect { payment.purchase!  }.to raise_error(Spree::Core::GatewayError)
+            expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
           end
         end
 
