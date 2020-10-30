@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/core/s3_support'
+
 module Spree
   class Image < Asset
     validates_attachment_presence :attachment
