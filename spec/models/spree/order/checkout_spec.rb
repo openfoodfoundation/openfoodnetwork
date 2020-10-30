@@ -122,7 +122,7 @@ describe Spree::Order::Checkout do
         order.state = 'payment'
       end
 
-     context "when payment is required" do
+      context "when payment is required" do
         before do
           allow(order).to receive_messages confirmation_required?: false
           allow(order).to receive_messages payment_required?: true
