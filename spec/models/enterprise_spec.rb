@@ -512,9 +512,9 @@ describe Enterprise do
   describe "presentation of attributes" do
     let(:distributor) {
       build_stubbed(:distributor_enterprise,
-             website: "http://www.google.com",
-             facebook: "www.facebook.com/roger",
-             linkedin: "https://linkedin.com")
+                    website: "http://www.google.com",
+                    facebook: "www.facebook.com/roger",
+                    linkedin: "https://linkedin.com")
     }
 
     it "strips http from url fields" do
