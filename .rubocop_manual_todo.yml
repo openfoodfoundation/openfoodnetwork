@@ -62,11 +62,10 @@ Layout/LineLength:
   - app/models/product_import/unit_converter.rb
   - app/models/proxy_order.rb
   - app/models/schedule.rb
-  - app/models/spree/app_configuration_decorator.rb
+  - app/models/spree/app_configuration.rb
   - app/models/spree/gateway/stripe_connect.rb
   - app/models/spree/image.rb
-  - app/models/spree/line_item_decorator.rb
-  - app/models/spree/order_decorator.rb
+  - app/models/spree/order.rb
   - app/models/spree/payment_method.rb
   - app/models/spree/product_decorator.rb
   - app/models/spree/user.rb
@@ -75,6 +74,7 @@ Layout/LineLength:
   - app/models/variant_override_set.rb
   - app/serializers/api/admin/subscription_line_item_serializer.rb
   - app/services/cart_service.rb
+  - app/services/checkout/post_checkout_actions.rb
   - app/services/default_stock_location.rb
   - app/services/embedded_page_service.rb
   - app/services/order_cycle_form.rb
@@ -101,7 +101,6 @@ Layout/LineLength:
   - lib/open_food_network/scope_variants_for_search.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/localized_number.rb
-  - lib/spree/product_filters.rb
   - lib/tasks/data.rake
   - lib/tasks/enterprises.rake
   - spec/controllers/admin/bulk_line_items_controller_spec.rb
@@ -263,12 +262,17 @@ Layout/LineLength:
   - spec/models/spree/adjustment_spec.rb
   - spec/models/spree/classification_spec.rb
   - spec/models/spree/gateway/stripe_connect_spec.rb
+  - spec/models/spree/inventory_unit_spec.rb
   - spec/models/spree/line_item_spec.rb
+  - spec/models/spree/order/checkout_spec.rb
+  - spec/models/spree/order_inventory_spec.rb
   - spec/models/spree/order_spec.rb
+  - spec/models/spree/order/state_machine_spec.rb
   - spec/models/spree/payment_method_spec.rb
   - spec/models/spree/payment_spec.rb
   - spec/models/spree/product_set_spec.rb
   - spec/models/spree/product_spec.rb
+  - spec/models/spree/return_authorization_spec.rb
   - spec/models/spree/shipping_method_spec.rb
   - spec/models/spree/stock_item_spec.rb
   - spec/models/spree/taxon_spec.rb
@@ -298,6 +302,7 @@ Layout/LineLength:
   - spec/serializers/api/order_serializer_spec.rb
   - spec/services/cart_service_spec.rb
   - spec/services/checkout/form_data_adapter_spec.rb
+  - spec/services/checkout/post_checkout_actions_spec.rb
   - spec/services/embedded_page_service_spec.rb
   - spec/services/exchange_products_renderer_spec.rb
   - spec/services/order_cycle_distributed_products_spec.rb
