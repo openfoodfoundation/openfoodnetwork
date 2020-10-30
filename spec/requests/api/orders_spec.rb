@@ -20,9 +20,9 @@ describe 'api/orders', type: :request do
       response(200, 'get orders') do
         # Adds model metadata for Swagger UI. Ideally we'd be able to just add:
         # schema '$ref' => '#/components/schemas/Order_Concise'
-        # Which would also validate the response in the test, this is an open 
+        # Which would also validate the response in the test, this is an open
         # issue with rswag: https://github.com/rswag/rswag/issues/268
-        metadata[:response][:content] = { 
+        metadata[:response][:content] = {
           "application/json": {
             schema: { '$ref' => '#/components/schemas/Order_Concise' }
           }
@@ -64,7 +64,7 @@ describe 'api/orders', type: :request do
             end
           end
 
-          context "and queried within a date range" do  
+          context "and queried within a date range" do
             let(:'q[completed_at_gt]') { Time.zone.today - 7.days - 1.second }
             let(:'q[completed_at_lt]') { Time.zone.today - 6.days }
 
@@ -116,7 +116,7 @@ describe 'api/orders', type: :request do
 
           context "and queried by a specific order_cycle" do
             let(:'q[order_cycle_id_eq]') {
-              order_dist_2.order_cycle.id 
+              order_dist_2.order_cycle.id
             }
 
             before { order_dist_2.distributor.update_attributes owner: user }

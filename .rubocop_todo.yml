@@ -6,25 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Exclude:
-    - 'spec/factories.rb'
-    - 'spec/factories/address_factory.rb'
-    - 'spec/support/request/stripe_helper.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: AllowInHeredoc.
-Layout/TrailingWhitespace:
-  Exclude:
-    - 'spec/features/consumer/shopping/shopping_spec.rb'
-    - 'spec/lib/open_food_network/orders_and_fulfillments_report/customer_totals_report_spec.rb'
-    - 'spec/requests/api/orders_spec.rb'
-
 # Offense count: 2
 Lint/DuplicateMethods:
   Exclude:

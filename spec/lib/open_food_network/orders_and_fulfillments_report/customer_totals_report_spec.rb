@@ -83,7 +83,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
 
   context "displaying payment fees" do
     context "with both failed and completed payments present" do
-      let!(:order) { 
+      let!(:order) {
         create(:order_ready_to_ship, user: customer.user,
                                      customer: customer, distributor: distributor)
       }
