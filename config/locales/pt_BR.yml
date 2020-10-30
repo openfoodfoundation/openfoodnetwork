@@ -351,6 +351,7 @@ pt_BR:
     has_n_rules: "tem %{num} regras"
     unsaved_confirm_leave: "Existem alterações não salvas nesta página. Continuar sem salvar? "
     unsaved_changes: "Você tem alterações não salvas"
+    available_units: "Unidades Disponíveis"
     shopfront_settings:
       embedded_shopfront_settings: "Configurações incorporadas à loja virtual"
       enable_embedded_shopfronts: "Ativar lojas virtuais incorporadas"
@@ -396,20 +397,23 @@ pt_BR:
         duplicate_code: "Esse código já está sendo usado."
         bill_address: "Endereço de faturamento"
         ship_address: "Endereço de entrega"
-        update_address_success: 'Endereço atualizado com sucesso'
-        update_address_error: 'Por favor preencha todos os campos obrigatórios'
-        edit_bill_address: 'Editar endereço de faturamento'
-        edit_ship_address: 'Editar endereço de entrega'
-        required_fileds: 'Os campos obrigatórios estão marcados com um asterisco'
-        select_country: 'Selecione país'
-        select_state: 'Selecione estado'
-        edit: 'Editar'
-        update_address: 'Atualizar Endereço'
-        confirm_delete: 'Certeza que quer excluir?'
+        balance: "Balanço"
+        update_address_success: "Endereço atualizado com sucesso"
+        update_address_error: "Por favor preencha todos os campos obrigatórios"
+        edit_bill_address: "Editar endereço de faturamento"
+        edit_ship_address: "Editar endereço de entrega"
+        required_fileds: "Os campos obrigatórios estão marcados com um asterisco"
+        select_country: "Selecione país"
+        select_state: "Selecione estado"
+        edit: "Editar"
+        update_address: "Atualizar Endereço"
+        confirm_delete: "Certeza que quer excluir?"
         search_by_email: "Busca por e-mail/código"
-        guest_label: 'Checkout de convidado'
+        guest_label: "Checkout de convidado"
+        credit_owed: "Crédito Devido"
+        balance_due: "Saldo Devedor"
       destroy:
-        has_associated_orders: 'Apagar falhou: o cliente tem pedidos associados à sua loja'
+        has_associated_orders: "Apagar falhou: o cliente tem pedidos associados à sua loja"
     contents:
       edit:
         title: Conteúdo
@@ -1788,7 +1792,7 @@ pt_BR:
   action_signup: "Cadastre-se agora"
   forgot_password: "Esqueceu sua senha?"
   password_reset_sent: "Um e-mail foi enviado com instruções para redefinir sua senha!"
-  reset_password: "Resetar password"
+  reset_password: "Redefinir senha"
   update_and_recalculate_fees: "Atualizar e recalcular taxas"
   registration:
     steps:
@@ -1938,7 +1942,7 @@ pt_BR:
   payment_state: "Status do Pagamento"
   shipping_state: "Status da entrega"
   value: "Quantidade"
-  balance_due: "saldo devedor"
+  balance_due: "Saldo devedor"
   credit: "Crédito"
   Paid: "Pago"
   Ready: "Pronto"
@@ -2951,6 +2955,7 @@ pt_BR:
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Voltar à lista de taxonomias"
     shipping_methods: "Métodos de envio"
+    shipping_method: "Método de envio"
     shipping_categories: "Categorias de Remessa"
     new_shipping_category: "Nova categoria de frete"
     back_to_shipping_categories: "Voltar para categorias de remessa"
@@ -3367,8 +3372,8 @@ pt_BR:
           or_enter_new_card: "Ou, adicione os dados para um novo cartão:"
           remember_this_card: Lembrar deste cartão?
     date_picker:
-      format: '%A-%m-'
-      js_format: 'aa-mm-dd'
+      format: '%Y-%m-%d'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível. Por favor atualize as quantidades selecionadas. "
       edit:
@@ -3422,6 +3427,7 @@ pt_BR:
         issue_text: |
             Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
             Se continuar a ter problemas, por favor não hesite em contactar-nos.
+        subject: "Instruções para redefinição de senha"
       confirmation_instructions:
         subject: "Confirme sua conta na OFB"
     shipment_mailer:
