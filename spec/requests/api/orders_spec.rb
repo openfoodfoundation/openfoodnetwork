@@ -24,7 +24,7 @@ describe 'api/orders', type: :request do
         # issue with rswag: https://github.com/rswag/rswag/issues/268
         metadata[:response][:content] = { 
           "application/json": {
-            schema: {'$ref' => '#/components/schemas/Order_Concise'}
+            schema: { '$ref' => '#/components/schemas/Order_Concise' }
           }
         }
         context "when there are four orders with different properties set" do
