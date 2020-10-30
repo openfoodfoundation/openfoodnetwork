@@ -19,13 +19,6 @@ Lint/IneffectiveAccessModifier:
     - 'app/services/mail_configuration.rb'
     - 'lib/open_food_network/feature_toggle.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'spec/views/spree/admin/payment_methods/index.html.haml_spec.rb'
-
 # Offense count: 3
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:
