@@ -122,14 +122,6 @@ Rails/Delegate:
   Exclude:
     - 'engines/order_management/app/services/order_management/reports/bulk_coop/renderers/html_renderer.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Whitelist.
-# Whitelist: find_by_sql
-Rails/DynamicFindBy:
-  Exclude:
-    - 'spec/factories/state_factory.rb'
-
 # Offense count: 16
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: slashes, arguments
