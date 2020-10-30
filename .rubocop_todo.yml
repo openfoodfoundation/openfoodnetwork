@@ -1283,12 +1283,6 @@ Style/NumericPredicate:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/RandomWithOffset:
-  Exclude:
-    - 'spec/factories.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
