@@ -24,6 +24,9 @@ tr:
       spree/credit_card:
         base: "Kredİ kartı"
         number: "Numara"
+        month: "Ay"
+        verification_value: "Doğrulama Değeri"
+        year: "Yıl"
       order_cycle:
         orders_close_at: BİTİŞ TARİHİ
       variant_override:
@@ -393,20 +396,22 @@ tr:
         duplicate_code: "Bu kod zaten kullanılıyor."
         bill_address: "Fatura Adresi"
         ship_address: "Teslimat Adresi"
-        update_address_success: 'Adres başarıyla güncellendi.'
-        update_address_error: 'Afedersiniz! Lütfen tüm zorunlu alanları giriniz!'
-        edit_bill_address: 'Fatura Adresini Düzenle'
-        edit_ship_address: 'Teslimat Adresini Düzenle'
-        required_fileds: 'Zorunlu alanlar yıldızla belirtilmiştir'
-        select_country: 'Ülke Seçin'
-        select_state: 'Şehir Seçin'
-        edit: 'Düzenle'
-        update_address: 'Adresi Güncelle'
-        confirm_delete: 'Silmek istediğinizden emin misiniz?'
+        balance: "Bakiye"
+        update_address_success: "Adres başarıyla güncellendi."
+        update_address_error: "Afedersiniz! Lütfen tüm zorunlu alanları giriniz!"
+        edit_bill_address: "Fatura Adresini Düzenle"
+        edit_ship_address: "Teslimat Adresini Düzenle"
+        required_fileds: "Zorunlu alanlar yıldızla belirtilmiştir"
+        select_country: "Ülke Seçin"
+        select_state: "Şehir Seçin"
+        edit: "Düzenle"
+        update_address: "Adresi Güncelle"
+        confirm_delete: "Silmek istediğinizden emin misiniz?"
         search_by_email: "E-posta/kod ile arama ..."
-        guest_label: 'Misafir Ödemesi'
+        guest_label: "Misafir Ödemesi"
+        credit_owed: "Artı Bakiye"
       destroy:
-        has_associated_orders: 'Silme başarısız oldu: müşterinin bağlantılı siparişleri var'
+        has_associated_orders: "Silme başarısız oldu: müşterinin bağlantılı siparişleri var"
     contents:
       edit:
         title: İÇERİK
@@ -1158,8 +1163,7 @@ tr:
       cart: "Sepet"
       message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     terms_and_conditions:
-      message_html: "Bu siparişi vererek %{terms_and_conditions_link} 'ı onaylamış oluyorsunuz."
-      link_text: "Üyelik Sözleşmesi"
+      link_text: "Şartlar ve Koşullar"
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
     hubs:
@@ -1998,6 +2002,7 @@ tr:
   calculator: "Hesaplama"
   calculator_values: "Hesaplama Değerleri"
   calculator_settings_warning: "Hesaplama türünü değiştiriyorsanız, ayarları düzenlemeden önce kaydetmeniz gerekir"
+  calculator_preferred_unit_error: "Kg olmalı"
   flat_percent_per_item: "Sabit Yüzde (ürün başına)"
   flat_rate_per_item: "Sabit Ücret (ürün başına)"
   flat_rate_per_order: "Sabit Ücret (sipariş başına) "
@@ -2374,8 +2379,9 @@ tr:
     admin:
       enterprise_limit_reached: "Hesap başına standart işletme sınırına ulaştınız. Artırmanız gerekiyorsa %{contact_email}'a yazın."
       modals:
-        got_it: Anladım
+        got_it: "Anladım"
         close: "Kapat"
+        continue: "Devam et"
         invite: "Davet et"
         invite_title: "Kayıtlı olmayan bir kullanıcıyı davet et"
         tag_rule_help:
@@ -2602,7 +2608,9 @@ tr:
       variant:
         add_to_cart: "Ekle"
       bulk_buy_modal:
+        min_quantity: "Minimum miktar"
         max_quantity: "Maks miktar"
+      price_breakdown: "Fiyat dökümü"
     variants:
       on_demand:
         'yes': "Talep üzerine"
@@ -2941,6 +2949,7 @@ tr:
     new_taxonomy: "YENİ KATEGORİ"
     back_to_taxonomies_list: "Kategori Listesine Geri Dön"
     shipping_methods: "TESLİMAT YÖNTEMLERİ"
+    shipping_method: "TESLİMAT YÖNTEMİ"
     shipping_categories: "Nakliye Kategorileri"
     new_shipping_category: "Yeni Nakliye Kategorisi"
     back_to_shipping_categories: "Teslimat Kategorilerine Geri Dön"
@@ -2982,6 +2991,7 @@ tr:
     inventory_error_flash_for_insufficient_quantity: "Sepetinizdeki bir ürün artık mevcut değil."
     inventory: Stok
     zipcode: posta kodu
+    weight: Ağırlık (kg cinsinde)
     error_user_destroy_with_orders: "Siparişleri tamamlanmış kullanıcılar silinemez"
     cannot_create_payment_without_payment_methods: "Herhangi bir ödeme yöntemi belirlemeden bir sipariş oluşturamazsınız."
     please_define_payment_methods: "Lütfen önce ödeme bir yöntemi belirleyin."
@@ -2989,6 +2999,8 @@ tr:
     successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
     successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
+    order_populator:
+      out_of_stock: '%{item} stokta yok'
     actions:
       update: "Güncelle"
     shared:
@@ -3352,8 +3364,8 @@ tr:
           or_enter_new_card: "Veya yeni bir kart için bilgileri girin:"
           remember_this_card: Bu kart hatırlansın mı?
     date_picker:
-      format: '% Y-% A-%d'
-      js_format: 'yy-aa-gg'
+      format: '%Y-%m-%d'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:
@@ -3407,6 +3419,7 @@ tr:
         issue_text: |
             Üstteki URL çalışmıyor ise tarayıcınızın adres çubuğuna kopyalayıp yapıştırmayı deneyebilirsiniz.
             Sorun yaşamaya devam ederseniz bizimle iletişime geçmekten çekinmeyin.
+        subject: "Şifre talimatlarını sıfırla"
       confirmation_instructions:
         subject: "Lütfen AGA hesabınızı onaylayın"
     shipment_mailer:

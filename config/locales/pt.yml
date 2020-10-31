@@ -360,20 +360,21 @@ pt:
         duplicate_code: "Este código já está a ser usado."
         bill_address: "Morada de Faturação"
         ship_address: "Morada de Envio"
-        update_address_success: 'Morada actualizada com sucesso'
-        update_address_error: 'Perdão! Por favor preencha todos os campos obrigatórios!'
-        edit_bill_address: 'Editar Morada de Faturação'
-        edit_ship_address: 'Editar Morada de Envio'
-        required_fileds: 'Os campos obrigatórios estão marcados com um asterisco'
-        select_country: 'Seleccionar País'
-        select_state: 'Seleccionar Região'
-        edit: 'Editar'
-        update_address: 'Actualizar Morada'
-        confirm_delete: 'De certeza que é para apagar? '
+        balance: "Saldo"
+        update_address_success: "Morada actualizada com sucesso"
+        update_address_error: "Perdão! Por favor preencha todos os campos obrigatórios!"
+        edit_bill_address: "Editar Morada de Faturação"
+        edit_ship_address: "Editar Morada de Envio"
+        required_fileds: "Os campos obrigatórios estão marcados com um asterisco"
+        select_country: "Seleccionar País"
+        select_state: "Seleccionar Região"
+        edit: "Editar"
+        update_address: "Actualizar Morada"
+        confirm_delete: "De certeza que é para apagar? "
         search_by_email: "Pesquisar por e-mail/código"
-        guest_label: 'Finalizar compra como convidado'
+        guest_label: "Finalizar compra como convidado"
       destroy:
-        has_associated_orders: 'Não foi possível apagar: o/a consumidor/a tem encomendas associadas a esta loja.'
+        has_associated_orders: "Não foi possível apagar: o/a consumidor/a tem encomendas associadas a esta loja."
     contents:
       edit:
         title: Conteúdo
@@ -2249,8 +2250,9 @@ pt:
     admin:
       enterprise_limit_reached: "Atingiu o número limite de organizações por conta. Escreva para %{contact_email} se precisar de aumentá-lo."
       modals:
-        got_it: Percebi
+        got_it: "Percebi"
         close: "Fechar"
+        continue: "Continuar"
         invite: "Convidar"
         invite_title: "Convidar um/a utilizador/a não-registado/a"
         tag_rule_help:
@@ -2707,6 +2709,7 @@ pt:
     new_taxonomy: "Nova Taxonomia"
     back_to_taxonomies_list: "Voltar à Lista de Taxonomias"
     shipping_methods: "Métodos de Envio"
+    shipping_method: "Método de Envio"
     shipping_categories: "Categorias de Envio"
     new_shipping_category: "Nova Categoria de Envio"
     back_to_shipping_categories: "Voltar à Lista de Categorias de Envio"
@@ -3022,8 +3025,8 @@ pt:
           or_enter_new_card: "Ou, introduza detalhes para um novo cartão:"
           remember_this_card: Lembra-se deste cartão?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'aa-mm-dd'
+      format: '%d-%m-%Y'
+      js_format: 'dd/mm/yy'
     orders:
       edit:
         login_to_view_order: "Por favor faça login para ver a sua encomenda."

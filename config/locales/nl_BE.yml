@@ -392,20 +392,22 @@ nl_BE:
         duplicate_code: "Deze code wordt al gebruikt."
         bill_address: "Factuuradres"
         ship_address: "Adres Levering"
-        update_address_success: 'Adres succesvol bijgewerkt.'
-        update_address_error: 'Sorry! Gelieve alle verplichte velden in te vullen!'
-        edit_bill_address: 'Factuuradres bewerken'
-        edit_ship_address: 'Verzendadres bewerken'
-        required_fileds: 'Verplichte velden zijn aangegeven met een sterretje '
-        select_country: 'Selecteer land'
-        select_state: 'Selecteer Provincie'
-        edit: 'bewerking'
-        update_address: 'Update Adres'
-        confirm_delete: 'Zeker te verwijderen?'
+        balance: "Saldo"
+        update_address_success: "Adres succesvol bijgewerkt."
+        update_address_error: "Sorry! Gelieve alle verplichte velden in te vullen!"
+        edit_bill_address: "Factuuradres bewerken"
+        edit_ship_address: "Verzendadres bewerken"
+        required_fileds: "Verplichte velden zijn aangegeven met een sterretje "
+        select_country: "Selecteer land"
+        select_state: "Selecteer Provincie"
+        edit: "bewerking"
+        update_address: "Update Adres"
+        confirm_delete: "Zeker te verwijderen?"
         search_by_email: "Zoeken per e-mail/code..."
-        guest_label: 'Gasten afrekenen'
+        guest_label: "Gasten afrekenen"
+        credit_owed: "Krediet tegoed"
       destroy:
-        has_associated_orders: 'Verwijderen mislukt: klant heeft gerelateerde bestellingen met zijn winkel'
+        has_associated_orders: "Verwijderen mislukt: klant heeft gerelateerde bestellingen met zijn winkel"
     contents:
       edit:
         title: Gelukkig
@@ -2367,8 +2369,9 @@ nl_BE:
     admin:
       enterprise_limit_reached: "Het  toegelaten aantal bedrijven per rekening,  standaard bepaald,  is bereikt. Gelieve naar %{contact_email}te schrijven om de beperking te verhogen indien nodig."
       modals:
-        got_it: Ik heb begrepen
+        got_it: "Ik heb begrepen"
         close: "Sluit"
+        continue: "Ga verder"
         invite: "Uitnodigen "
         invite_title: "Een nieuwe gebruiker uitnodigen"
         tag_rule_help:
@@ -2859,6 +2862,7 @@ nl_BE:
     new_taxonomy: "Nieuwe taxonomie "
     back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
     shipping_methods: "Methode Verzending"
+    shipping_method: "Het verschepen Methode"
     shipping_categories: "Verzendingscategorieën"
     new_shipping_category: "Nieuwe verzendingscategorie"
     back_to_shipping_categories: "Terug naar verzendingscategoriëen"

@@ -397,20 +397,22 @@ ru:
         duplicate_code: "Этот код уже используется."
         bill_address: "Платежный Адрес"
         ship_address: "Адрес Доставки"
-        update_address_success: 'Адрес успешно обновлён.'
-        update_address_error: 'Извините! Пожалуйста, заполните все требуемые поля!'
-        edit_bill_address: 'Изменить Платёжный Адрес'
-        edit_ship_address: 'Изменить Адрес Доставки'
-        required_fileds: 'Требуемые поля помечены звёздочкой '
-        select_country: 'Выберите Страну'
-        select_state: 'Выберите Область'
-        edit: 'Изменить'
-        update_address: 'Обновить Адрес'
-        confirm_delete: 'Обязательно удалить?'
+        balance: "Баланс"
+        update_address_success: "Адрес успешно обновлён."
+        update_address_error: "Извините! Пожалуйста, заполните все требуемые поля!"
+        edit_bill_address: "Изменить Платёжный Адрес"
+        edit_ship_address: "Изменить Адрес Доставки"
+        required_fileds: "Требуемые поля помечены звёздочкой "
+        select_country: "Выберите Страну"
+        select_state: "Выберите Область"
+        edit: "Изменить"
+        update_address: "Обновить Адрес"
+        confirm_delete: "Обязательно удалить?"
         search_by_email: "Поиск по email/коду..."
-        guest_label: 'Оформить как Гость'
+        guest_label: "Оформить как Гость"
+        credit_owed: "Кредит"
       destroy:
-        has_associated_orders: 'Не удалось удалить: у клиента есть заказы в своём магазине'
+        has_associated_orders: "Не удалось удалить: у клиента есть заказы в своём магазине"
     contents:
       edit:
         title: Содержание
@@ -1164,8 +1166,7 @@ ru:
       cart: "корзина"
       message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     terms_and_conditions:
-      message_html: "Размещая этот заказ, вы соглашаетесь с %{terms_and_conditions_link}."
-      link_text: "Условия Сервиса"
+      link_text: "Условия и Положения"
     failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
   shops:
     hubs:
@@ -2385,8 +2386,9 @@ ru:
     admin:
       enterprise_limit_reached: "Вы достигли стандартного лимита количества предприятий на один аккаунт. Напишите на %{contact_email}, если Вам нужно увеличить его."
       modals:
-        got_it: Понятно
+        got_it: "Понятно"
         close: "Закрыть"
+        continue: "Продолжить"
         invite: "Пригласить"
         invite_title: "Пригласить не зарегистрированного пользователя"
         tag_rule_help:
@@ -3008,6 +3010,7 @@ ru:
     new_taxonomy: "Новая Таксономия"
     back_to_taxonomies_list: "Назад к Списку Таксономий"
     shipping_methods: "Способы Доставки"
+    shipping_method: "Способ Доставки"
     shipping_categories: "Категории Доставки"
     new_shipping_category: "Новая Категория Доставки"
     back_to_shipping_categories: "Назад в Категории Доставки"

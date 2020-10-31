@@ -391,20 +391,22 @@ fr_BE:
         duplicate_code: "Ce code est déjà utilisé."
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
-        update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Pardon! Veuillez remplir tous les champs obligatoires!'
-        edit_bill_address: 'Modifier l''adresse de facturation'
-        edit_ship_address: 'Modifier l''adresse de livraison'
-        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
-        select_country: 'Choisir le pays'
-        select_state: 'Choisir la Province'
-        edit: 'Modifier'
-        update_address: 'Mettre à jour l''adresse'
-        confirm_delete: 'Confirmer suppression?'
+        balance: "Solde"
+        update_address_success: "Adresse mise à jour avec succès."
+        update_address_error: "Pardon! Veuillez remplir tous les champs obligatoires!"
+        edit_bill_address: "Modifier l'adresse de facturation"
+        edit_ship_address: "Modifier l'adresse de livraison"
+        required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
+        select_country: "Choisir le pays"
+        select_state: "Choisir la Province"
+        edit: "Modifier"
+        update_address: "Mettre à jour l'adresse"
+        confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
-        guest_label: 'Commande en mode invité'
+        guest_label: "Commande en mode invité"
+        credit_owed: "Crédit redevable"
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir'
+        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir"
     contents:
       edit:
         title: Contenu
@@ -2367,8 +2369,9 @@ fr_BE:
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
-        got_it: J'ai compris
+        got_it: "J'ai compris"
         close: "Fermer"
+        continue: "Suivant"
         invite: "Inviter"
         invite_title: "Inviter un·e nouvel·le utilisateur·trice"
         tag_rule_help:
@@ -2864,6 +2867,7 @@ fr_BE:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
+    shipping_method: "Méthode de Livraison"
     shipping_categories: "Condition de transport"
     new_shipping_category: "Nouvelle catégorie d'expédition "
     back_to_shipping_categories: "Retour vers les catégories d'expédition"

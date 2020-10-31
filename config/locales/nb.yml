@@ -396,20 +396,22 @@ nb:
         duplicate_code: "Denne koden er allerede brukt."
         bill_address: "Fakturaadresse"
         ship_address: "Leveringsadresse"
-        update_address_success: 'Adresse oppdatert.'
-        update_address_error: 'Beklager! Vennligst skriv alle de obligatoriske feltene!'
-        edit_bill_address: 'Rediger fakturaadresse'
-        edit_ship_address: 'Rediger Leveringsadresse'
-        required_fileds: 'Obligatoriske felt er merket med en stjerne'
-        select_country: 'Velg Land'
-        select_state: 'Velg Fylke'
-        edit: 'Rediger'
-        update_address: 'Oppdater Adresse'
-        confirm_delete: 'Sikker på å slette?'
+        balance: "Balanse"
+        update_address_success: "Adresse oppdatert."
+        update_address_error: "Beklager! Vennligst skriv alle de obligatoriske feltene!"
+        edit_bill_address: "Rediger fakturaadresse"
+        edit_ship_address: "Rediger Leveringsadresse"
+        required_fileds: "Obligatoriske felt er merket med en stjerne"
+        select_country: "Velg Land"
+        select_state: "Velg Fylke"
+        edit: "Rediger"
+        update_address: "Oppdater Adresse"
+        confirm_delete: "Sikker på å slette?"
         search_by_email: "Søk på epost/kode..."
-        guest_label: 'Gjesteutsjekk'
+        guest_label: "Gjesteutsjekk"
+        credit_owed: "Kreditt skyldig"
       destroy:
-        has_associated_orders: 'Sletting mislyktes: kunden har tilknyttede ordrer med sin butikk'
+        has_associated_orders: "Sletting mislyktes: kunden har tilknyttede ordrer med sin butikk"
     contents:
       edit:
         title: Innhold
@@ -1161,8 +1163,7 @@ nb:
       cart: "handlekurv"
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     terms_and_conditions:
-      message_html: "Ved å gjøre denne bestillingen godtar du %{terms_and_conditions_link}."
-      link_text: "Vilkår for bruk"
+      link_text: "Vilkår og Betingelser"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
     hubs:
@@ -2378,8 +2379,9 @@ nb:
     admin:
       enterprise_limit_reached: "Du har nådd standardgrensen for bedrifter per konto. Skriv til %{contact_email} hvis du trenger å øke den."
       modals:
-        got_it: Jeg forstår
+        got_it: "Jeg forstår"
         close: "Lukk"
+        continue: "Fortsett"
         invite: "Inviter"
         invite_title: "Inviter en uregistrert bruker"
         tag_rule_help:
@@ -2941,6 +2943,7 @@ nb:
     new_taxonomy: "Ny Taksonomi"
     back_to_taxonomies_list: "Tilbake til Taksonomiliste"
     shipping_methods: "Leveringsmetoder"
+    shipping_method: "Leveringsmetode"
     shipping_categories: "Fraktkategorier"
     new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"

@@ -1163,8 +1163,7 @@ pt_BR:
       cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     terms_and_conditions:
-      message_html: "Ao fazer esse pedido você concorda com os%{terms_and_conditions_link}"
-      link_text: "Termos de serviço"
+      link_text: "Termos e Condições"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
     hubs:
@@ -2380,8 +2379,9 @@ pt_BR:
     admin:
       enterprise_limit_reached: "Você atingiu o limite padrão de empresas por conta. Escreva para %{contact_email} se precisar aumentá-lo."
       modals:
-        got_it: Consegui
+        got_it: "Consegui"
         close: "Fechar"
+        continue: "Continuar"
         invite: "Convidar"
         invite_title: "Convidar um usuário não registrado"
         tag_rule_help:

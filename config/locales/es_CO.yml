@@ -391,20 +391,21 @@ es_CO:
         duplicate_code: "Este código ya ha sido utilizado."
         bill_address: "Dirección de facturación"
         ship_address: "Dirección de envío"
-        update_address_success: 'Dirección actualizada correctamente.'
-        update_address_error: 'Introduce todos los campos requeridos'
-        edit_bill_address: 'Editar la dirección de facturación'
-        edit_ship_address: 'Editar dirección de envío'
-        required_fileds: 'Los campos obligatorios se indican con un asterisco'
-        select_country: 'Selecciona País'
-        select_state: 'Selecciona Departamento'
-        edit: 'Editar'
-        update_address: 'Actualizar dirección'
-        confirm_delete: '¿Confirmas que quieres borrar?'
+        balance: "Saldo"
+        update_address_success: "Dirección actualizada correctamente."
+        update_address_error: "Introduce todos los campos requeridos"
+        edit_bill_address: "Editar la dirección de facturación"
+        edit_ship_address: "Editar dirección de envío"
+        required_fileds: "Los campos obligatorios se indican con un asterisco"
+        select_country: "Selecciona País"
+        select_state: "Selecciona Departamento"
+        edit: "Editar"
+        update_address: "Actualizar dirección"
+        confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
-        guest_label: 'Retirar como invitado'
+        guest_label: "Retirar como invitado"
       destroy:
-        has_associated_orders: 'Error al eliminar: el cliente tiene pedidos asociados a su tienda.'
+        has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
       edit:
         title: Contenido
@@ -2365,8 +2366,9 @@ es_CO:
     admin:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
-        got_it: Lo entiendo
+        got_it: "Lo entiendo"
         close: "Cerrar"
+        continue: "Continuar"
         invite: "Invitar"
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
@@ -2932,6 +2934,7 @@ es_CO:
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la lista de taxonomías"
     shipping_methods: "Métodos de envío"
+    shipping_method: "Método de envío"
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"

@@ -393,20 +393,22 @@ en_GB:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'Address updated successfully.'
-        update_address_error: 'Sorry! Please input all of the required fields!'
-        edit_bill_address: 'Edit Billing Address'
-        edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk'
-        select_country: 'Select Country'
-        select_state: 'Select County'
-        edit: 'Edit'
-        update_address: 'Update Address'
-        confirm_delete: 'Sure to delete?'
+        balance: "Balance"
+        update_address_success: "Address updated successfully."
+        update_address_error: "Sorry! Please input all of the required fields!"
+        edit_bill_address: "Edit Billing Address"
+        edit_ship_address: "Edit Shipping Address"
+        required_fileds: "Required fields are denoted with an asterisk"
+        select_country: "Select Country"
+        select_state: "Select County"
+        edit: "Edit"
+        update_address: "Update Address"
+        confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
+        credit_owed: "Credit Owed"
       destroy:
-        has_associated_orders: 'Delete failed: customer has associated orders with this shop'
+        has_associated_orders: "Delete failed: customer has associated orders with this shop"
     contents:
       edit:
         title: Content
@@ -1158,8 +1160,7 @@ en_GB:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "By placing this order you agree to the %{terms_and_conditions_link}."
-      link_text: "Terms of Service"
+      link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -2374,8 +2375,9 @@ en_GB:
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
-        got_it: Got it
+        got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2946,6 +2948,7 @@ en_GB:
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
+    shipping_method: "Shipping Method"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"

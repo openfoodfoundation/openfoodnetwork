@@ -1164,8 +1164,7 @@ ar:
       cart: "سلة التسوق"
       message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     terms_and_conditions:
-      message_html: "من خلال تقديم هذا الطلب ، فإنك توافق على %{terms_and_conditions_link}."
-      link_text: "شروط الخدمة"
+      link_text: "الأحكام والشروط"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
   shops:
     hubs:
@@ -2387,8 +2386,9 @@ ar:
     admin:
       enterprise_limit_reached: "لقد وصلت إلى الحد القياسي للمؤسسات لكل حساب. اكتب %{contact_email} إذا كنت بحاجة إلى زيادته."
       modals:
-        got_it: فهمتك
+        got_it: "فهمتك"
         close: "إغلاق"
+        continue: "تابع"
         invite: "ادعو"
         invite_title: "دعوة مستخدم غير مسجل"
         tag_rule_help:

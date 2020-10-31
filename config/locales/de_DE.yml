@@ -379,20 +379,21 @@ de_DE:
         duplicate_code: "Dieser Kode wird bereits verwendet."
         bill_address: "Rechnungsadresse"
         ship_address: "Lieferadresse"
-        update_address_success: 'Adresse wurde erfolgreich aktualisiert.'
-        update_address_error: 'Es tut uns leid! Bitte füllen Sie alle erforderlichen Felder aus!'
-        edit_bill_address: 'Rechnungsadresse bearbeiten'
-        edit_ship_address: 'Lieferadresse bearbeiten'
-        required_fileds: 'Die erforderlichen Felder sind mit einem Sternchen gekennzeichnet.'
-        select_country: 'Land wählen'
-        select_state: 'Bundesland wählen'
-        edit: 'Bearbeiten'
-        update_address: 'Adresse aktualisieren'
-        confirm_delete: 'Sicher zu löschen?'
+        balance: "Saldo"
+        update_address_success: "Adresse wurde erfolgreich aktualisiert."
+        update_address_error: "Es tut uns leid! Bitte füllen Sie alle erforderlichen Felder aus!"
+        edit_bill_address: "Rechnungsadresse bearbeiten"
+        edit_ship_address: "Lieferadresse bearbeiten"
+        required_fileds: "Die erforderlichen Felder sind mit einem Sternchen gekennzeichnet."
+        select_country: "Land wählen"
+        select_state: "Bundesland wählen"
+        edit: "Bearbeiten"
+        update_address: "Adresse aktualisieren"
+        confirm_delete: "Sicher zu löschen?"
         search_by_email: "Suche nach Email/Kode"
-        guest_label: 'Gäste Kasse'
+        guest_label: "Gäste Kasse"
       destroy:
-        has_associated_orders: 'Löschen fehlgeschlagen: Kunde hat Bestellungen mit diesem Laden'
+        has_associated_orders: "Löschen fehlgeschlagen: Kunde hat Bestellungen mit diesem Laden"
     contents:
       edit:
         title: Inhalt
@@ -2314,8 +2315,9 @@ de_DE:
     admin:
       enterprise_limit_reached: "Sie haben die Standardgrenze für Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie es erhöhen müssen."
       modals:
-        got_it: Ich habs
+        got_it: "Ich habs"
         close: "Schließen"
+        continue: "Fortsetzen"
         invite: "Einladen"
         invite_title: "Laden Sie einen nicht registrierten Benutzer ein"
         tag_rule_help:
@@ -2862,6 +2864,7 @@ de_DE:
     new_taxonomy: "Neue Taxonomie"
     back_to_taxonomies_list: "Zurück zur Taxonomieliste"
     shipping_methods: "Lieferart"
+    shipping_method: "Lieferart"
     shipping_categories: "Versandkategorien"
     new_shipping_category: "Neue Versandkategorie"
     back_to_shipping_categories: "Zurück zu den Versandkategorien"
@@ -3230,8 +3233,8 @@ de_DE:
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
           remember_this_card: Diese Karte speichern?
     date_picker:
-      format: '% Y-% m-%d'
-      js_format: 'JJ-MM-TT'
+      format: '%Y.%m.%d'
+      js_format: 'dd.mm.yy'
     orders:
       edit:
         login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."

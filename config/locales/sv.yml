@@ -173,19 +173,20 @@ sv:
         duplicate_code: "Denna kod används redan"
         bill_address: "Fakturaadress"
         ship_address: "Leveransadress"
-        update_address_success: 'Adressen uppdaterades'
-        update_address_error: 'Oj! Du måste fylla i alla obligatoriska fält'
-        edit_bill_address: 'Ändra fakturaadress'
-        edit_ship_address: 'Ändra leveransadress'
-        required_fileds: 'Obligatoriska fält är markerade med en asterisk'
-        select_country: 'Välj land'
-        select_state: 'Välj län'
-        edit: 'Ändra'
-        update_address: 'Uppdatera adress'
-        confirm_delete: 'Vill du verkligen radera?'
+        balance: "Saldo"
+        update_address_success: "Adressen uppdaterades"
+        update_address_error: "Oj! Du måste fylla i alla obligatoriska fält"
+        edit_bill_address: "Ändra fakturaadress"
+        edit_ship_address: "Ändra leveransadress"
+        required_fileds: "Obligatoriska fält är markerade med en asterisk"
+        select_country: "Välj land"
+        select_state: "Välj län"
+        edit: "Ändra"
+        update_address: "Uppdatera adress"
+        confirm_delete: "Vill du verkligen radera?"
         search_by_email: "Sök via e-post/kod..."
       destroy:
-        has_associated_orders: 'Radering misslyckades: kunden har associerade order med sin butik'
+        has_associated_orders: "Radering misslyckades: kunden har associerade order med sin butik"
     contents:
       edit:
         title: Innehåll
@@ -1643,7 +1644,8 @@ sv:
     more_items: "+ %{count} Mer"
     admin:
       modals:
-        got_it: Förstått
+        got_it: "Förstått"
+        continue: "Fortsätt"
         tag_rule_help:
           title: Regler för etiketter
           overview: Översikt
@@ -1922,6 +1924,7 @@ sv:
     tax_settings: "Skatteskalor"
     payment_methods: "Betalningssätt"
     shipping_methods: "Transportsätt"
+    shipping_method: "Fraktmetod"
     name: "Namn"
     description: "Beskrivning"
     type: "Typ"
@@ -2092,7 +2095,7 @@ sv:
           footer_tos_url: "Användarvillkor URL"
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'åå-mm-dd'
+      js_format: 'yy-mm-dd'
     orders:
       bought:
         item: "Redan beställd i denna beställningsomgång"

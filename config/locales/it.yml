@@ -396,20 +396,22 @@ it:
         duplicate_code: "Questo codice è già usato."
         bill_address: "Indirizzo di fatturazione"
         ship_address: "Indirizzo di spedizione"
-        update_address_success: 'Indirizzo aggiornato.'
-        update_address_error: 'Completa i campi obbligatori per favore!'
-        edit_bill_address: 'Modifica l''indirizzo di fatturazione'
-        edit_ship_address: 'Modifica l''indirizzo di spedizione'
-        required_fileds: 'I campi obbligatori sono segnati con un asterisco'
-        select_country: 'Seleziona il paese'
-        select_state: 'Selezione la provincia'
-        edit: 'Modifica'
-        update_address: 'Aggiorna indirizzo'
-        confirm_delete: 'Sei sicuro di cancellare?'
+        balance: "Saldo"
+        update_address_success: "Indirizzo aggiornato."
+        update_address_error: "Completa i campi obbligatori per favore!"
+        edit_bill_address: "Modifica l'indirizzo di fatturazione"
+        edit_ship_address: "Modifica l'indirizzo di spedizione"
+        required_fileds: "I campi obbligatori sono segnati con un asterisco"
+        select_country: "Seleziona il paese"
+        select_state: "Selezione la provincia"
+        edit: "Modifica"
+        update_address: "Aggiorna indirizzo"
+        confirm_delete: "Sei sicuro di cancellare?"
         search_by_email: "Cerca per email/codice..."
-        guest_label: 'Check-out ospite'
+        guest_label: "Check-out ospite"
+        credit_owed: "Credito dovuto"
       destroy:
-        has_associated_orders: 'Cancellazione fallita: l''utente ha ordini associati al negozio'
+        has_associated_orders: "Cancellazione fallita: l'utente ha ordini associati al negozio"
     contents:
       edit:
         title: Contenuto
@@ -1162,8 +1164,7 @@ it:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     terms_and_conditions:
-      message_html: "Confermando la tua gentile richiesta acconsenti ai%{terms_and_conditions_link}."
-      link_text: "Termini di Servizio"
+      link_text: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
     hubs:
@@ -2379,8 +2380,9 @@ it:
     admin:
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
       modals:
-        got_it: Capito
+        got_it: "Capito"
         close: "Chiuso"
+        continue: "Continua"
         invite: "Invita"
         invite_title: "Invita un utente non registrato"
         tag_rule_help:
@@ -2952,6 +2954,7 @@ it:
     new_taxonomy: "Nuova tassonomia"
     back_to_taxonomies_list: "Torna all'elenco delle tassonomie"
     shipping_methods: "Metodi di spedizione"
+    shipping_method: "Metodo di spedizione"
     shipping_categories: "Categorie Spedizioni"
     new_shipping_category: "Nuova categoria di spedizione"
     back_to_shipping_categories: "Torna alle categorie di spedizione"

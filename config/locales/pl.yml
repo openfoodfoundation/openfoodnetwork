@@ -393,20 +393,20 @@ pl:
         duplicate_code: "Ten kod jest już używany."
         bill_address: "Adres rozliczeniowy"
         ship_address: "Adres dostawy"
-        update_address_success: 'Adres został zaktualizowany pomyślnie.'
-        update_address_error: 'Przepraszamy! Wprowadź wszystkie wymagane pola!'
-        edit_bill_address: 'Edytuj adres rozliczeniowy'
-        edit_ship_address: 'Edytuj adres dostawy'
-        required_fileds: 'Wymagane pola są oznaczone gwiazdką'
-        select_country: 'Wybierz kraj'
-        select_state: 'Wybierz rejon'
-        edit: 'Edytuj'
-        update_address: 'Zaktualizuj adres'
-        confirm_delete: 'Na pewno chcesz usunąć?'
+        update_address_success: "Adres został zaktualizowany pomyślnie."
+        update_address_error: "Przepraszamy! Wprowadź wszystkie wymagane pola!"
+        edit_bill_address: "Edytuj adres rozliczeniowy"
+        edit_ship_address: "Edytuj adres dostawy"
+        required_fileds: "Wymagane pola są oznaczone gwiazdką"
+        select_country: "Wybierz kraj"
+        select_state: "Wybierz rejon"
+        edit: "Edytuj"
+        update_address: "Zaktualizuj adres"
+        confirm_delete: "Na pewno chcesz usunąć?"
         search_by_email: "Szukaj według adresu e-mail / kodu ..."
-        guest_label: 'Kasa dla gości'
+        guest_label: "Kasa dla gości"
       destroy:
-        has_associated_orders: 'Usunięcie nie powiodło się: klient ma zamówienia w swoim sklepie'
+        has_associated_orders: "Usunięcie nie powiodło się: klient ma zamówienia w swoim sklepie"
     contents:
       edit:
         title: Zawartość
@@ -1156,9 +1156,6 @@ pl:
     already_ordered:
       cart: "Koszyk"
       message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
-    terms_and_conditions:
-      message_html: "Składając to zamówienie, wyrażasz zgodę na %{terms_and_conditions_link}."
-      link_text: "Warunki usługi"
     failed: "Płatność nie powiodła się. Daj nam znać, abyśmy mogli zrealizować Twoje zamówienie."
   shops:
     hubs:
@@ -2374,7 +2371,7 @@ pl:
     admin:
       enterprise_limit_reached: "Osiągnąłeś standardowy limit podmiotów na konto. Napisz do %{contact_email}, jeśli chcesz go zwiększyć."
       modals:
-        got_it: Rozumiem
+        got_it: "Rozumiem"
         close: "Zamknij"
         invite: "Zapraszam"
         invite_title: "Zaproś niezarejestrowanego użytkownika"
@@ -2986,6 +2983,7 @@ pl:
     new_taxonomy: "Nowa taksonomia"
     back_to_taxonomies_list: "Powrót do listy taksonomii"
     shipping_methods: "Metody dostaw"
+    shipping_method: "Metoda dostawy"
     shipping_categories: "Kategorie dostaw"
     new_shipping_category: "Nowa kategoria dostaw"
     back_to_shipping_categories: "Powrót do kategorii dostaw"

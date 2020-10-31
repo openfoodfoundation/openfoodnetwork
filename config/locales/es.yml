@@ -396,20 +396,22 @@ es:
         duplicate_code: "Este código ya se ha usado."
         bill_address: "Dirección de Facturación"
         ship_address: "Dirección de Envío"
-        update_address_success: 'Dirección actualizada correctamente.'
-        update_address_error: 'Introduce todos los campos requeridos'
-        edit_bill_address: 'Edita la Dirección de Facturación'
-        edit_ship_address: 'Editar Dirección de Envío'
-        required_fileds: 'Los campos obligatorios se indican con un asterisco'
-        select_country: 'Selecciona país'
-        select_state: 'Selecciona Provincia'
-        edit: 'Editar'
-        update_address: 'Actualizar Dirección'
-        confirm_delete: '¿Confirmas que quieres borrar?'
+        balance: "Saldo"
+        update_address_success: "Dirección actualizada correctamente."
+        update_address_error: "Introduce todos los campos requeridos"
+        edit_bill_address: "Edita la Dirección de Facturación"
+        edit_ship_address: "Editar Dirección de Envío"
+        required_fileds: "Los campos obligatorios se indican con un asterisco"
+        select_country: "Selecciona país"
+        select_state: "Selecciona Provincia"
+        edit: "Editar"
+        update_address: "Actualizar Dirección"
+        confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por email/código"
-        guest_label: 'Hacer pedido como invitado'
+        guest_label: "Hacer pedido como invitado"
+        credit_owed: "Crédito debido"
       destroy:
-        has_associated_orders: 'Se ha producido un error en la eliminación: la consumidora tiene pedidos asociados en su tienda.'
+        has_associated_orders: "Se ha producido un error en la eliminación: la consumidora tiene pedidos asociados en su tienda."
     contents:
       edit:
         title: Contenido
@@ -1163,8 +1165,7 @@ es:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     terms_and_conditions:
-      message_html: "Al realizar este pedido acepta %{terms_and_conditions_link}."
-      link_text: "Términos de servicio"
+      link_text: "Términos y Condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:
@@ -2380,8 +2381,9 @@ es:
     admin:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
-        got_it: Lo entiendo
+        got_it: "Lo entiendo"
         close: "Cerrar"
+        continue: "Continuar"
         invite: "Invitar"
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
@@ -2952,6 +2954,7 @@ es:
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
     shipping_methods: "Métodos de envío"
+    shipping_method: "Método de envío"
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
@@ -3369,7 +3372,7 @@ es:
           remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      js_format: 'yy/mm/dd'
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:

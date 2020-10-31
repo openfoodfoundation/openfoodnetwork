@@ -396,20 +396,22 @@ ca:
         duplicate_code: "Aquest codi ja s'ha utilitzat."
         bill_address: "Adreça de facturació"
         ship_address: "Adreça d'enviament"
-        update_address_success: 'L''adreça s''ha actualitzat correctament.'
-        update_address_error: 'Ho sentim! Introduïu tots els camps obligatoris.'
-        edit_bill_address: 'Edita l''adreça de facturació'
-        edit_ship_address: 'Edita l''adreça d''enviament'
-        required_fileds: 'Els camps obligatoris es denoten amb un asterisc'
-        select_country: 'Selecciona país'
-        select_state: 'Selecciona província'
-        edit: 'Editar'
-        update_address: 'Actualitza l''adreça'
-        confirm_delete: 'Estàs segur que vols suprimir?'
+        balance: "Balanç"
+        update_address_success: "L'adreça s'ha actualitzat correctament."
+        update_address_error: "Ho sentim! Introduïu tots els camps obligatoris."
+        edit_bill_address: "Edita l'adreça de facturació"
+        edit_ship_address: "Edita l'adreça d'enviament"
+        required_fileds: "Els camps obligatoris es denoten amb un asterisc"
+        select_country: "Selecciona país"
+        select_state: "Selecciona província"
+        edit: "Editar"
+        update_address: "Actualitza l'adreça"
+        confirm_delete: "Estàs segur que vols suprimir?"
         search_by_email: "Cerca per correu electrònic/codi ..."
-        guest_label: 'Fer comanda com a convidat'
+        guest_label: "Fer comanda com a convidat"
+        credit_owed: "Crèdit a deure"
       destroy:
-        has_associated_orders: 'S''ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga'
+        has_associated_orders: "S'ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga"
     contents:
       edit:
         title: Contingut
@@ -1164,8 +1166,7 @@ ca:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     terms_and_conditions:
-      message_html: "En fer aquesta comanda accepteu %{terms_and_conditions_link}."
-      link_text: "Termes del servei"
+      link_text: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:
@@ -2381,8 +2382,9 @@ ca:
     admin:
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
-        got_it: Ho tinc
+        got_it: "Ho tinc"
         close: "Tanca"
+        continue: "Continua"
         invite: "Convida"
         invite_title: "Convida un usuari no registrat"
         tag_rule_help:
@@ -2952,6 +2954,7 @@ ca:
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
     shipping_methods: "Mètodes d'enviament"
+    shipping_method: "Mètode d'enviament"
     shipping_categories: "Tipus d'enviament"
     new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
@@ -3368,7 +3371,7 @@ ca:
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
     date_picker:
-      format: '%d-% m-% Y'
+      format: '%d-%m-%Y'
       js_format: 'dd-mm-yy'
     orders:
       error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."

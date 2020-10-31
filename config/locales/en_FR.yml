@@ -1165,8 +1165,7 @@ en_FR:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "By placing this order you agree to the%{terms_and_conditions_link}."
-      link_text: "Terms of Service"
+      link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1260,9 +1259,9 @@ en_FR:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "Open my shop"
-  menu_5_url: "https://apropos.coopcircuits.fr/"
+  menu_5_url: "/sell"
   menu_6_title: "About"
-  menu_6_url: "https://apropos.coopcircuits.fr/blog/"
+  menu_6_url: "https://apropos.coopcircuits.fr/"
   menu_7_title: "Learn"
   menu_7_url: "https://apropos.coopcircuits.fr/ressources/"
   logo: "Logo (640x130)"
@@ -2382,8 +2381,9 @@ en_FR:
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
-        got_it: Got it
+        got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:

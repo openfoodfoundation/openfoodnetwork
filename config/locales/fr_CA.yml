@@ -397,20 +397,22 @@ fr_CA:
         duplicate_code: "Ce code est déjà utilisé."
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
-        update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Oups! Veuillez remplir tous les champs obligatoires!'
-        edit_bill_address: 'Modifier l''adresse de facturation'
-        edit_ship_address: 'Modifier l''adresse de livraison'
-        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
-        select_country: 'Choisir le pays'
-        select_state: 'Choisir le département'
-        edit: 'Modifier'
-        update_address: 'Mettre à jour l''adresse'
-        confirm_delete: 'Confirmer suppression?'
+        balance: "Solde"
+        update_address_success: "Adresse mise à jour avec succès."
+        update_address_error: "Oups! Veuillez remplir tous les champs obligatoires!"
+        edit_bill_address: "Modifier l'adresse de facturation"
+        edit_ship_address: "Modifier l'adresse de livraison"
+        required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
+        select_country: "Choisir le pays"
+        select_state: "Choisir le département"
+        edit: "Modifier"
+        update_address: "Mettre à jour l'adresse"
+        confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
-        guest_label: 'Commande en mode invite'
+        guest_label: "Commande en mode invite"
+        credit_owed: "Crédit dû"
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cette boutique'
+        has_associated_orders: "Suppression impossible: des commandes sont associées à cette boutique"
     contents:
       edit:
         title: Contenu
@@ -1163,8 +1165,7 @@ fr_CA:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     terms_and_conditions:
-      message_html: "En confirmant votre commande, vous acceptez les %{terms_and_conditions_link}."
-      link_text: "Conditions Générales d'Utilisation"
+      link_text: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
   shops:
     hubs:
@@ -2382,8 +2383,9 @@ fr_CA:
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
-        got_it: J'ai compris
+        got_it: "J'ai compris"
         close: "Fermer"
+        continue: "Suivant"
         invite: "Inviter"
         invite_title: "Inviter un nouvel utilisateur"
         tag_rule_help:
@@ -2961,6 +2963,7 @@ fr_CA:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
+    shipping_method: "Option d'expédition"
     shipping_categories: "Condition de transport"
     new_shipping_category: "Créer nouvelle méthode de livraison"
     back_to_shipping_categories: "Retour aux catégories d'expédition"

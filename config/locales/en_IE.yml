@@ -396,20 +396,22 @@ en_IE:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'Address updated successfully.'
-        update_address_error: 'Sorry! Please input all of the required fields!'
-        edit_bill_address: 'Edit Billing Address'
-        edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk'
-        select_country: 'Select Country'
-        select_state: 'Select County'
-        edit: 'Edit'
-        update_address: 'Update Address'
-        confirm_delete: 'Sure to delete?'
+        balance: "Balance"
+        update_address_success: "Address updated successfully."
+        update_address_error: "Sorry! Please input all of the required fields!"
+        edit_bill_address: "Edit Billing Address"
+        edit_ship_address: "Edit Shipping Address"
+        required_fileds: "Required fields are denoted with an asterisk"
+        select_country: "Select Country"
+        select_state: "Select County"
+        edit: "Edit"
+        update_address: "Update Address"
+        confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
+        credit_owed: "Credit Owed"
       destroy:
-        has_associated_orders: 'Delete failed: customer has associated orders with this shop'
+        has_associated_orders: "Delete failed: customer has associated orders with this shop"
     contents:
       edit:
         title: Content
@@ -1161,8 +1163,7 @@ en_IE:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "By placing this order you agree to the %{terms_and_conditions_link}."
-      link_text: "Terms of Service"
+      link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1392,9 +1393,9 @@ en_IE:
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
   home_shop: Shop Now
-  brandstory_headline: "Growing Local Food Online"
-  brandstory_intro: "THE online community helping you to build a successful food enterprise"
-  brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
+  brandstory_headline: "Powering a new food system"
+  brandstory_intro: "Our open source platform enables new, ethical supply chains. Food producers can sell online, wholesalers can manage buying groups and supply produce through networks of food hubs and shops. Communities can bring together producers to create a virtual farmers’ market, building a resilient local food economy."
+  brandstory_part1: "The Open Food Network software platform allows farmers and producers to sell at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   brandstory_part2: "Food Producers can create an online shop, collect payments, sell through other shops on the platform and access reduced-rate courier services."
   brandstory_part3: "Wholesalers can integrate OFN with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
   brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
@@ -2378,8 +2379,9 @@ en_IE:
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
-        got_it: Got it
+        got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2954,6 +2956,7 @@ en_IE:
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
+    shipping_method: "Shipping Method"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
