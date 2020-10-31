@@ -336,6 +336,7 @@ Metrics/AbcSize:
   - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
   - app/controllers/admin/product_import_controller.rb
+  - app/controllers/admin/resource_controller.rb
   - app/controllers/admin/stripe_accounts_controller.rb
   - app/controllers/admin/subscription_line_items_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
@@ -356,7 +357,6 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/payments_controller.rb
   - app/controllers/spree/admin/products_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
-  - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/search_controller.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/admin/users_controller.rb
@@ -618,6 +618,7 @@ Metrics/MethodLength:
   - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/manager_invitations_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
+  - app/controllers/admin/resource_controller.rb
   - app/controllers/admin/stripe_accounts_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/api/products_controller.rb
@@ -632,7 +633,6 @@ Metrics/MethodLength:
   - app/controllers/spree/admin/payments_controller.rb
   - app/controllers/spree/admin/products_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
-  - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/tax_categories_controller.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/admin/users_controller.rb
@@ -732,6 +732,7 @@ Metrics/ClassLength:
   Exclude:
   - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
+  - app/controllers/admin/resource_controller.rb
   - app/controllers/admin/schedules_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/api/products_controller.rb
@@ -741,7 +742,6 @@ Metrics/ClassLength:
   - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/products_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
-  - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/users_controller.rb
   - app/controllers/spree/orders_controller.rb
   - app/models/enterprise.rb
