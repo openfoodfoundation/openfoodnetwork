@@ -1,7 +1,7 @@
 # This controller is used by super admin users to update the settings the app is using
 
 module Admin
-  class StripeConnectSettingsController < Spree::Admin::BaseController
+  class StripeConnectSettingsController < ::Admin::BaseController
     StripeConnectSettings = Struct.new(:stripe_connect_enabled)
 
     before_action :load_settings, only: [:edit]

@@ -2,7 +2,7 @@
 
 module OrderManagement
   module Reports
-    class BulkCoopController < Spree::Admin::BaseController
+    class BulkCoopController < ::Admin::BaseController
       before_filter :load_report_parameters
       before_filter :load_permissions
 

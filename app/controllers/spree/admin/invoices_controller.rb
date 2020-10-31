@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class InvoicesController < Spree::Admin::BaseController
+    class InvoicesController < ::Admin::BaseController
       respond_to :json
       authorize_resource class: false
 

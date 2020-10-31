@@ -2,7 +2,7 @@ require 'action_callbacks'
 
 module Spree
   module Admin
-    class ResourceController < Spree::Admin::BaseController
+    class ResourceController < ::Admin::BaseController
       helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
       before_action :load_resource, except: [:update_positions]
       rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
