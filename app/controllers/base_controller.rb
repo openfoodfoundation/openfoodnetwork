@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require 'spree/core/controller_helpers/order'
 require 'open_food_network/tag_rule_applicator'
 
 class BaseController < ApplicationController
+  layout 'darkswarm'
+
   include Spree::Core::ControllerHelpers::Order
 
   include I18nHelper
