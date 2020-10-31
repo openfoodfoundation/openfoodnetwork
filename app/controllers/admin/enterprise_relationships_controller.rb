@@ -1,5 +1,5 @@
 module Admin
-  class EnterpriseRelationshipsController < ResourceController
+  class EnterpriseRelationshipsController < Admin::ResourceController
     def index
       @my_enterprises = Enterprise.
         includes(:shipping_methods, :payment_methods).

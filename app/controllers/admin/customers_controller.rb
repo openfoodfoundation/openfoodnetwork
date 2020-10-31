@@ -42,7 +42,7 @@ module Admin
       end
     end
 
-    # copy of Spree::Admin::ResourceController without flash notice
+    # copy of Admin::ResourceController without flash notice
     def destroy
       invoke_callbacks(:destroy, :before)
       if @object.destroy
@@ -95,7 +95,7 @@ module Admin
       )
     end
 
-    # Used in ResourceController#update
+    # Used in Admin::ResourceController#update
     def permitted_resource_params
       customer_params
     end

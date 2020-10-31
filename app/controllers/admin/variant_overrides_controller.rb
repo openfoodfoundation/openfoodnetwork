@@ -1,7 +1,7 @@
 require 'open_food_network/spree_api_key_loader'
 
 module Admin
-  class VariantOverridesController < ResourceController
+  class VariantOverridesController < Admin::ResourceController
     include OpenFoodNetwork::SpreeApiKeyLoader
     include EnterprisesHelper
 

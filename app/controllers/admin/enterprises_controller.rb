@@ -326,7 +326,7 @@ module Admin
       )
     end
 
-    # Used in ResourceController#create
+    # Used in Admin::ResourceController#create
     def permitted_resource_params
       enterprise_params
     end
