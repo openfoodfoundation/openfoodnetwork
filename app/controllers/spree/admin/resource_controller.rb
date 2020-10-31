@@ -124,7 +124,7 @@ module Spree
       end
 
       def model_class
-        "Spree::#{controller_name.classify}".constantize
+        controller_class_name.constantize
       end
 
       def model_name
@@ -276,6 +276,20 @@ module Spree
 
       def new_actions
         [:new, :create]
+      end
+
+      private
+
+      def controller_class_name
+        if spree_controller?
+          "Spree::#{controller_name.classify}"
+        else
+          controller_name.classify.to_s
+        end
+      end
+
+      def spree_controller?
+        controller_path.starts_with? "spree"
       end
     end
   end
