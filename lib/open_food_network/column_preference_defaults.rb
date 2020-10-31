@@ -32,7 +32,8 @@ module OpenFoodNetwork
         code: { name: I18n.t("#{node}.code"),         visible: true },
         tags: { name: I18n.t("admin.tags"),           visible: true },
         bill_address: { name: I18n.t("#{node}.bill_address"), visible: true },
-        ship_address: { name: I18n.t("#{node}.ship_address"), visible: true }
+        ship_address: { name: I18n.t("#{node}.ship_address"), visible: true },
+        balance: { name: I18n.t("#{node}.balance"), visible: true }
       }
     end
 

@@ -8,10 +8,12 @@ module Spree
     def reset_password_instructions(user, token, _opts = {})
       @edit_password_reset_url = spree.
         edit_spree_user_password_url(reset_password_token: token)
+      subject = "#{Spree::Config[:site_name]} " \
+        "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
 
-      mail(to: user.email, from: from_address,
-           subject: Spree::Config[:site_name] + ' ' +
-             I18n.t(:subject, scope: [:devise, :mailer, :reset_password_instructions]))
+      I18n.with_locale valid_locale(user) do
+        mail(to: user.email, from: from_address, subject: subject)
+      end
     end
 
     # This is a OFN specific email, not from Devise::Mailer

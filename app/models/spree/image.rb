@@ -64,7 +64,7 @@ module Spree
       end
     end
 
-    def s3_credentials
+    def self.s3_credentials
       { access_key_id: Spree::Config[:s3_access_key],
         secret_access_key: Spree::Config[:s3_secret],
         bucket: Spree::Config[:s3_bucket] }

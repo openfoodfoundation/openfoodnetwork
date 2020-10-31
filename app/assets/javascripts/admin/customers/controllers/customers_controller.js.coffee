@@ -47,3 +47,8 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
         tag.text.toLowerCase().indexOf(query.toLowerCase()) != -1
       defer.resolve filtered
     defer.promise
+
+  $scope.displayBalanceStatus = (customer) ->
+    return unless customer.balance_status
+
+    t('admin.customers.index.' + customer.balance_status)

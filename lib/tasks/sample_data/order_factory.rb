@@ -57,7 +57,7 @@ class OrderFactory
       bill_address: order_address,
       ship_address: order_address
     )
-    order.line_items.create( variant_id: first_variant.id, quantity: 5 )
+    order.line_items.create(variant_id: first_variant.id, quantity: 5)
     order.payments.create(payment_method_id: first_payment_method_id)
     order
   end

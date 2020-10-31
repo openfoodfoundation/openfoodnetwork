@@ -48,23 +48,35 @@ describe Spree::UserMailer do
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     describe 'message contents' do
-      before do
-        @message = described_class.reset_password_instructions(user, nil)
-      end
+      let(:message) { described_class.reset_password_instructions(user, nil) }
 
       context 'subject includes' do
         it 'translated devise instructions' do
-          expect(@message.subject).to include "Reset password instructions"
+          expect(message.subject).to include "Reset password instructions"
         end
 
         it 'Spree site name' do
-          expect(@message.subject).to include Spree::Config[:site_name]
+          expect(message.subject).to include Spree::Config[:site_name]
         end
       end
 
       context 'body includes' do
         it 'password reset url' do
-          expect(@message.body.raw_source).to include spree.edit_spree_user_password_url
+          expect(message.body.raw_source).to include spree.edit_spree_user_password_url
+        end
+      end
+
+      context 'when the language is Spanish' do
+        let(:user) { build(:user, locale: 'es') }
+
+        it 'calls with_locale method with user selected locale' do
+          expect(I18n).to receive(:with_locale).with('es')
+          message
+        end
+
+        it 'calls devise reset_password_instructions subject' do
+          expect(I18n).to receive(:t).with('spree.user_mailer.reset_password_instructions.subject')
+          message
         end
       end
     end

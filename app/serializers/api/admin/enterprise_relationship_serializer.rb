@@ -1,13 +1,19 @@
-class Api::Admin::EnterpriseRelationshipSerializer < ActiveModel::Serializer
-  attributes :id, :parent_id, :parent_name, :child_id, :child_name
+# frozen_string_literal: true
 
-  has_many :permissions
+module Api
+  module Admin
+    class EnterpriseRelationshipSerializer < ActiveModel::Serializer
+      attributes :id, :parent_id, :parent_name, :child_id, :child_name
 
-  def parent_name
-    object.parent.name
-  end
+      has_many :permissions
 
-  def child_name
-    object.child.name
+      def parent_name
+        object.parent.name
+      end
+
+      def child_name
+        object.child.name
+      end
+    end
   end
 end

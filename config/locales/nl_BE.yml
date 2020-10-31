@@ -1208,6 +1208,9 @@ nl_BE:
         require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
       select_oc:
         select_oc_html: "Alstublief<span class='highlighted'>kies waneer uw u orde wilt</span>, om te zien welke producten beschikbaar zijn."
+    products:
+      summary:
+        bulk: "Bulk (grote hoeveelheid)"
   card_could_not_be_updated: De bankkaart kon niet worden geüpdatet.
   card_could_not_be_saved: De bankkaart kon niet worden bewaard.
   spree_gateway_error_flash_for_checkout: "Er was een probleem met betaalinformatie: %{error}"
@@ -1915,7 +1918,6 @@ nl_BE:
   shop_for_products_html: "Koop voor <span class=\"turquoise\">%{enterprise}</span>producten bij:"
   change_shop: "Verander winkel naar:"
   shop_at: "Winkel nu bij:"
-  price_breakdown: "De volledige prijs ontleedt"
   admin_fee: "Adminkost"
   sales_fee: "Verkoopskost"
   packing_fee: "Verpakkingskost"
@@ -2591,6 +2593,11 @@ nl_BE:
           van uw produkten  onvoldoende. Ziehier de wijzigingen :
       now_out_of_stock: is niet meer in stock
       only_n_remainging: "%{num}blijven over."
+    shopfront:
+      variant:
+        add_to_cart: "Voeg toe"
+      bulk_buy_modal:
+        max_quantity: "Maximale hoeveelheid"
     variants:
       on_demand:
         'yes': "Op Aanvraag"
@@ -2820,15 +2827,6 @@ nl_BE:
     smtp_send_copy_to_this_addresses: "Stuurt een kopie van alle uitgaande mails naar dit adres. In geval van meerdere adressen, die met een comma scheiden."
     intercept_email_address: "Email adres onderscheppen"
     intercept_email_instructions: "De mailontvanger omzeilen en door dit adres vervangen. "
-    image_settings: "Beeldinstellingen "
-    image_settings_warning: "Logos regeneren als de paperclips stylen bijgewerkt worden. Paperclip harken gebruiken :opfrissen:logos CLASS=Spree::Image om het doen. "
-    attachment_default_style: Bijlagestijl
-    attachment_default_url: "Standaard Band met URL"
-    attachment_path: "Pad bijlagen"
-    attachment_styles: "Paperclipstijlen"
-    attachment_url: "URL bijlagen"
-    add_new_style: "Een nieuwe stijl toevoegen"
-    image_settings_updated: "Beeldinstellingen zijn met succes bijgewerkt."
     tax_categories: "Belastingcategorieën"
     listing_tax_categories: "Lijst BTW categoriëen "
     back_to_tax_categories_list: "Terug naar de lijst BTW categoriëen "

@@ -1214,6 +1214,9 @@ en_US:
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
         select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
+    products:
+      summary:
+        bulk: "Bulk"
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1921,7 +1924,6 @@ en_US:
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
   shop_at: "Shop now at:"
-  price_breakdown: "Full price breakdown"
   admin_fee: "Admin fee"
   sales_fee: "Sales fee"
   packing_fee: "Packing fee"
@@ -2595,6 +2597,11 @@ en_US:
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    shopfront:
+      variant:
+        add_to_cart: "Add"
+      bulk_buy_modal:
+        max_quantity: "Max quantity"
     variants:
       on_demand:
         'yes': "On demand"
@@ -2902,15 +2909,6 @@ en_US:
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mail to this address. For multiple addresses, separate with commas."
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
-    image_settings: "Image Settings"
-    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
-    attachment_default_style: Attachments Style
-    attachment_default_url: "Attachments Default URL"
-    attachment_path: "Attachments Path"
-    attachment_styles: "Paperclip Styles"
-    attachment_url: "Attachments URL"
-    add_new_style: "Add New Style"
-    image_settings_updated: "Image Settings successfully updated."
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"

@@ -7,6 +7,10 @@ describe "LineItemsCtrl", ->
     module ($provide) ->
       $provide.value 'columns', []
       null
+    module "admin.products"
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
 
     jasmine.addMatchers
       toDeepEqual: (util, customEqualityTesters) ->

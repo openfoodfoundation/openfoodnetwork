@@ -1,29 +1,35 @@
-class Api::Admin::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume,
-             :units_product, :units_variant
+# frozen_string_literal: true
 
-  has_one :order, serializer: Api::Admin::IdSerializer
+module Api
+  module Admin
+    class LineItemSerializer < ActiveModel::Serializer
+      attributes :id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume,
+                 :units_product, :units_variant
 
-  def supplier
-    { id: object.product.supplier_id }
-  end
+      has_one :order, serializer: Api::Admin::IdSerializer
 
-  def units_product
-    Api::Admin::UnitsProductSerializer.new(object.product).serializable_hash
-  end
+      def supplier
+        { id: object.product.supplier_id }
+      end
 
-  def units_variant
-    Api::Admin::UnitsVariantSerializer.new(object.variant).serializable_hash
-  end
+      def units_product
+        Api::Admin::UnitsProductSerializer.new(object.product).serializable_hash
+      end
 
-  def final_weight_volume
-    object.final_weight_volume.to_f
-  end
+      def units_variant
+        Api::Admin::UnitsVariantSerializer.new(object.variant).serializable_hash
+      end
 
-  def max_quantity
-    return object.quantity unless object.max_quantity.present? &&
-                                  object.max_quantity > object.quantity
+      def final_weight_volume
+        object.final_weight_volume.to_f
+      end
 
-    object.max_quantity
+      def max_quantity
+        return object.quantity unless object.max_quantity.present? &&
+                                      object.max_quantity > object.quantity
+
+        object.max_quantity
+      end
+    end
   end
 end

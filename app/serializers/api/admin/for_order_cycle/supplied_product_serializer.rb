@@ -1,31 +1,39 @@
-class Api::Admin::ForOrderCycle::SuppliedProductSerializer < ActiveModel::Serializer
-  attributes :name, :supplier_name, :image_url, :master_id, :variants
+# frozen_string_literal: true
 
-  def supplier_name
-    object.supplier.andand.name
-  end
+module Api
+  module Admin
+    module ForOrderCycle
+      class SuppliedProductSerializer < ActiveModel::Serializer
+        attributes :name, :supplier_name, :image_url, :master_id, :variants
 
-  def image_url
-    object.images.present? ? object.images.first.attachment.url(:mini) : nil
-  end
+        def supplier_name
+          object.supplier.andand.name
+        end
 
-  def master_id
-    object.master.id
-  end
+        def image_url
+          object.images.present? ? object.images.first.attachment.url(:mini) : nil
+        end
 
-  def variants
-    variants = if order_cycle.present? &&
-                  order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-                 object.variants.visible_for(order_cycle.coordinator)
-               else
-                 object.variants
-               end
-    variants.map { |variant| { id: variant.id, label: variant.full_name } }
-  end
+        def master_id
+          object.master.id
+        end
 
-  private
+        def variants
+          variants = if order_cycle.present? &&
+                        order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+                       object.variants.visible_for(order_cycle.coordinator)
+                     else
+                       object.variants
+                     end
+          variants.map { |variant| { id: variant.id, label: variant.full_name } }
+        end
 
-  def order_cycle
-    options[:order_cycle]
+        private
+
+        def order_cycle
+          options[:order_cycle]
+        end
+      end
+    end
   end
 end

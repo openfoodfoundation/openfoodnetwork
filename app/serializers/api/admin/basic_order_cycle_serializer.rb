@@ -1,20 +1,26 @@
-class Api::Admin::BasicOrderCycleSerializer < ActiveModel::Serializer
-  include OrderCyclesHelper
+# frozen_string_literal: true
 
-  attributes :id, :name, :status, :orders_open_at, :orders_close_at
+module Api
+  module Admin
+    class BasicOrderCycleSerializer < ActiveModel::Serializer
+      include OrderCyclesHelper
 
-  has_many :suppliers, serializer: Api::Admin::IdNameSerializer
-  has_many :distributors, serializer: Api::Admin::IdNameSerializer
+      attributes :id, :name, :status, :orders_open_at, :orders_close_at
 
-  def status
-    order_cycle_status_class object
-  end
+      has_many :suppliers, serializer: Api::Admin::IdNameSerializer
+      has_many :distributors, serializer: Api::Admin::IdNameSerializer
 
-  def orders_open_at
-    object.orders_open_at.andand.strftime("%F %T %z")
-  end
+      def status
+        order_cycle_status_class object
+      end
 
-  def orders_close_at
-    object.orders_close_at.andand.strftime("%F %T %z")
+      def orders_open_at
+        object.orders_open_at.andand.strftime("%F %T %z")
+      end
+
+      def orders_close_at
+        object.orders_close_at.andand.strftime("%F %T %z")
+      end
+    end
   end
 end

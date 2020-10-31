@@ -3,6 +3,10 @@ describe "Option Value Namer", ->
 
   beforeEach ->
     module "ofn.admin"
+    module "admin.products"
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
 
   beforeEach inject (_OptionValueNamer_) ->
     OptionValueNamer = _OptionValueNamer_

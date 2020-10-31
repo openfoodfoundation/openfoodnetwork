@@ -1,71 +1,77 @@
-class Api::Admin::OrderSerializer < ActiveModel::Serializer
-  attributes :id, :number, :user_id, :full_name, :email, :phone, :completed_at, :display_total,
-             :edit_path, :state, :payment_state, :shipment_state,
-             :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
-             :distributor_name, :special_instructions,
-             :item_total, :adjustment_total, :payment_total, :total, :display_outstanding_balance
+# frozen_string_literal: true
 
-  has_one :distributor, serializer: Api::Admin::IdSerializer
-  has_one :order_cycle, serializer: Api::Admin::IdSerializer
+module Api
+  module Admin
+    class OrderSerializer < ActiveModel::Serializer
+      attributes :id, :number, :user_id, :full_name, :email, :phone, :completed_at, :display_total,
+                 :edit_path, :state, :payment_state, :shipment_state,
+                 :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
+                 :distributor_name, :special_instructions, :display_outstanding_balance,
+                 :item_total, :adjustment_total, :payment_total, :total
 
-  def full_name
-    object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
-  end
+      has_one :distributor, serializer: Api::Admin::IdSerializer
+      has_one :order_cycle, serializer: Api::Admin::IdSerializer
 
-  def distributor_name
-    object.distributor.andand.name
-  end
+      def full_name
+        object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
+      end
 
-  def display_outstanding_balance
-    return "" if object.outstanding_balance.zero?
+      def distributor_name
+        object.distributor.andand.name
+      end
 
-    object.display_outstanding_balance.to_s
-  end
+      def display_outstanding_balance
+        return "" if object.outstanding_balance.zero?
 
-  def edit_path
-    return '' unless object.id
+        object.display_outstanding_balance.to_s
+      end
 
-    spree_routes_helper.edit_admin_order_path(object)
-  end
+      def edit_path
+        return '' unless object.id
 
-  def payments_path
-    return '' unless object.payment_state
+        spree_routes_helper.edit_admin_order_path(object)
+      end
 
-    spree_routes_helper.admin_order_payments_path(object)
-  end
+      def payments_path
+        return '' unless object.payment_state
 
-  def ready_to_capture
-    pending_payment = object.pending_payments.first
-    object.payment_required? && pending_payment
-  end
+        spree_routes_helper.admin_order_payments_path(object)
+      end
 
-  def ready_to_ship
-    object.ready_to_ship?
-  end
+      def ready_to_capture
+        pending_payment = object.pending_payments.first
+        object.payment_required? && pending_payment
+      end
 
-  def display_total
-    object.display_total.to_html
-  end
+      def ready_to_ship
+        object.ready_to_ship?
+      end
 
-  def email
-    object.email || ""
-  end
+      def display_total
+        object.display_total.to_html
+      end
 
-  def phone
-    object.billing_address.nil? ? "a" : ( object.billing_address.phone || "" )
-  end
+      def email
+        object.email || ""
+      end
 
-  def created_at
-    object.created_at.blank? ? "" : I18n.l(object.created_at, format: '%B %d, %Y')
-  end
+      def phone
+        object.billing_address.nil? ? "a" : ( object.billing_address.phone || "" )
+      end
 
-  def completed_at
-    object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: '%B %d, %Y')
-  end
+      def created_at
+        object.created_at.blank? ? "" : I18n.l(object.created_at, format: '%B %d, %Y')
+      end
 
-  private
+      def completed_at
+        object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: '%B %d, %Y')
+      end
 
-  def spree_routes_helper
-    Spree::Core::Engine.routes.url_helpers
+      private
+
+      def spree_routes_helper
+        Spree::Core::Engine.routes.url_helpers
+      end
+    end
   end
 end

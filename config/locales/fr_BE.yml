@@ -1206,6 +1206,9 @@ fr_BE:
         require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
       select_oc:
         select_oc_html: "Veuillez <span class='highlighted'>choisir quand vous voulez votre commande</span> , pour voir quels produits sont disponibles."
+    products:
+      summary:
+        bulk: "Vrac"
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1913,7 +1916,6 @@ fr_BE:
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les comptoirs suivants:"
   change_shop: "Changer de comptoir pour:"
   shop_at: "Acheter maintenant :"
-  price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
   sales_fee: "Frais de ventes/marketing"
   packing_fee: "Frais d'emballage"
@@ -2596,6 +2598,11 @@ fr_BE:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    shopfront:
+      variant:
+        add_to_cart: "Ajouter"
+      bulk_buy_modal:
+        max_quantity: "Quantité max"
     variants:
       on_demand:
         'yes': "A volonté"
@@ -2825,15 +2832,6 @@ fr_BE:
     smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
     intercept_email_address: "Intercepter les adresses mail"
     intercept_email_instructions: "Ignorer le destinataire et le remplacer par cette adresse."
-    image_settings: "Paramètres image"
-    image_settings_warning: "Il est nécessaire de régénérer des logos lors de la mise à jour des styles de trombones . Utiliser ratisser trombone:rafraîchir:logos CLASS=Spree::Image pour faire ceci. "
-    attachment_default_style: Style Pièces  jointes
-    attachment_default_url: "Joint à URL par défaut"
-    attachment_path: "Pièces jointes liés"
-    attachment_styles: "Styles trombones"
-    attachment_url: "URL lié"
-    add_new_style: "Ajouter un nouveau style "
-    image_settings_updated: "Paramètres Image mis à jour avec succès."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Liste catégories TVA"
     back_to_tax_categories_list: "Retour à la liste des catégories de TVA"
