@@ -6,7 +6,7 @@ module OpenFoodNetwork
     end
 
     def balance
-      -completed_orders.sum(&:outstanding_balance)
+      -completed_orders.to_a.sum(&:outstanding_balance)
     end
 
     private

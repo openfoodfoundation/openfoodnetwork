@@ -420,7 +420,7 @@ module Spree
         allow(li).to receive(:price) { 55.55 }
         allow(li).to receive_message_chain(:order, :adjustments, :loaded?)
         allow(li).to receive_message_chain(:order, :adjustments, :select)
-        allow(li).to receive_message_chain(:order, :adjustments, :where, :sum) { 11.11 }
+        allow(li).to receive_message_chain(:order, :adjustments, :where, :to_a, :sum) { 11.11 }
         allow(li).to receive(:quantity) { 2 }
         expect(li.price_with_adjustments).to eq(61.11)
       end
@@ -433,7 +433,7 @@ module Spree
         allow(li).to receive(:price) { 55.55 }
         allow(li).to receive_message_chain(:order, :adjustments, :loaded?)
         allow(li).to receive_message_chain(:order, :adjustments, :select)
-        allow(li).to receive_message_chain(:order, :adjustments, :where, :sum) { 11.11 }
+        allow(li).to receive_message_chain(:order, :adjustments, :where, :to_a, :sum) { 11.11 }
         allow(li).to receive(:quantity) { 2 }
         expect(li.amount_with_adjustments).to eq(122.22)
       end

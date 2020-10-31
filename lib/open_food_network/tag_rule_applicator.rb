@@ -14,7 +14,7 @@ module OpenFoodNetwork
     def filter!(subject)
       return unless subject.respond_to?(:any?) && subject.any?
 
-      subject.reject! do |element|
+      subject.to_a.reject! do |element|
         if rule_class.respond_to?(:tagged_children_for)
           children = rule_class.tagged_children_for(element)
           children.reject! { |child| reject?(child) }
