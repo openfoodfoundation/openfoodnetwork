@@ -811,6 +811,7 @@ en:
             closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
           shopfront_category_ordering: "Shopfront Category Ordering"
+          shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
         social:
