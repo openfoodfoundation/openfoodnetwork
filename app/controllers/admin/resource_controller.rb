@@ -1,9 +1,5 @@
 module Admin
   class ResourceController < Spree::Admin::ResourceController
-    def model_class
-      controller_name.classify.to_s.constantize
-    end
-
     # URL helpers
     def new_object_url(options = {})
       if parent_data.present?
