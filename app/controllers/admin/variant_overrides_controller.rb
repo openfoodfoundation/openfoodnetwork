@@ -67,7 +67,7 @@ module Admin
 
     def load_collection
       collection_hash = Hash[variant_overrides_params.each_with_index.map { |vo, i| [i, vo] }]
-      @vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
+      @vo_set = Sets::VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
     end
 
     def collection

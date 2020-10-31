@@ -81,7 +81,7 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(collection, bulk_params)
+      @enterprise_set = Sets::EnterpriseSet.new(collection, bulk_params)
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
@@ -129,7 +129,7 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new(collection) if spree_current_user.admin?
+      @enterprise_set = Sets::EnterpriseSet.new(collection) if spree_current_user.admin?
     end
 
     def load_countries

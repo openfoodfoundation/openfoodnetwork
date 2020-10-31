@@ -1,5 +1,5 @@
 -# Render only the calculator settings and not the surrounding form
-- enterprise_fee_set = ModelSet.new(EnterpriseFee, EnterpriseFee.where(:id => enterprise_fee.id))
+- enterprise_fee_set = Sets::ModelSet.new(EnterpriseFee, EnterpriseFee.where(:id => enterprise_fee.id))
 - calculator_form_string = nil
 - form_for enterprise_fee_set, :as => :enterprise_fee_set, :url => '' do |form|
   - form.fields_for :collection do |f|

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ProductSet do
+describe Sets::ProductSet do
   describe '#save' do
     context 'when passing :collection_attributes' do
       let(:product_set) do

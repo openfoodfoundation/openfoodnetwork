@@ -1,5 +1,5 @@
 module Sets
-  class Spree::ProductSet < ModelSet
+  class ProductSet < ModelSet
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
     end
