@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ShippingMethodsController < ResourceController
+    class ShippingMethodsController < ::Admin::ResourceController
       before_action :load_data, except: [:index]
       before_action :set_shipping_category, only: [:create, :update]
       before_action :set_zones, only: [:create, :update]

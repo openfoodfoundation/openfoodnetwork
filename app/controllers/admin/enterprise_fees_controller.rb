@@ -1,5 +1,5 @@
 module Admin
-  class EnterpriseFeesController < ResourceController
+  class EnterpriseFeesController < Admin::ResourceController
     before_action :load_enterprise_fee_set, only: :index
     before_action :load_data
 

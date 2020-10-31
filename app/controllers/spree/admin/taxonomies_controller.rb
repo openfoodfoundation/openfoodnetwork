@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class TaxonomiesController < ResourceController
+    class TaxonomiesController < ::Admin::ResourceController
       respond_to :json, only: [:get_children]
 
       def get_children

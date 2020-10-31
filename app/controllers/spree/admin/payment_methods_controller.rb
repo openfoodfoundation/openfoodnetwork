@@ -51,7 +51,7 @@ module Spree
       end
 
       # Only show payment methods that user has access to and sort by distributor name
-      # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
+      # ! Redundant code copied from Admin::ResourceController with modifications marked
       def collection
         return parent.public_send(controller_name) if parent_data.present?
 

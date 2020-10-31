@@ -1,5 +1,5 @@
 module Admin
-  class OrderCyclesController < ResourceController
+  class OrderCyclesController < Admin::ResourceController
     include OrderCyclesHelper
     include PaperTrailLogging
 

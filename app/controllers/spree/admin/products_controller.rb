@@ -4,7 +4,7 @@ require 'open_food_network/permissions'
 
 module Spree
   module Admin
-    class ProductsController < ResourceController
+    class ProductsController < ::Admin::ResourceController
       helper 'spree/products'
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper

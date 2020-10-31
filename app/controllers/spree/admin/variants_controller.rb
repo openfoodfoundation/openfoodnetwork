@@ -2,7 +2,7 @@ require 'open_food_network/scope_variants_for_search'
 
 module Spree
   module Admin
-    class VariantsController < ResourceController
+    class VariantsController < ::Admin::ResourceController
       helper 'spree/products'
 
       belongs_to 'spree/product', find_by: :permalink
