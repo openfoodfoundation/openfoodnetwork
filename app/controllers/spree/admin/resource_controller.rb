@@ -225,29 +225,28 @@ module Spree
       end
 
       # URL helpers
-
       def new_object_url(options = {})
         if parent_data.present?
-          spree.new_polymorphic_url([:admin, parent, model_class], options)
+          url_helper.new_polymorphic_url([:admin, parent, model_class], options)
         else
-          spree.new_polymorphic_url([:admin, model_class], options)
+          url_helper.new_polymorphic_url([:admin, model_class], options)
         end
       end
 
       def edit_object_url(object, options = {})
         if parent_data.present?
-          spree.public_send "edit_admin_#{model_name}_#{object_name}_url", parent, object, options
+          url_helper.public_send "edit_admin_#{model_name}_#{object_name}_url", parent, object, options
         else
-          spree.public_send "edit_admin_#{object_name}_url", object, options
+          url_helper.public_send "edit_admin_#{object_name}_url", object, options
         end
       end
 
       def object_url(object = nil, options = {})
         target = object || @object
         if parent_data.present?
-          spree.public_send "admin_#{model_name}_#{object_name}_url", parent, target, options
+          url_helper.public_send "admin_#{model_name}_#{object_name}_url", parent, target, options
         else
-          spree.public_send "admin_#{object_name}_url", target, options
+          url_helper.public_send "admin_#{object_name}_url", target, options
         end
       end
 
@@ -260,9 +259,9 @@ module Spree
 
       def collection_url(options = {})
         if parent_data.present?
-          spree.polymorphic_url([:admin, parent, model_class], options)
+          url_helper.polymorphic_url([:admin, parent, model_class], options)
         else
-          spree.polymorphic_url([:admin, model_class], options)
+          url_helper.polymorphic_url([:admin, model_class], options)
         end
       end
 
@@ -285,6 +284,14 @@ module Spree
           "Spree::#{controller_name.classify}"
         else
           controller_name.classify.to_s
+        end
+      end
+
+      def url_helper
+        if spree_controller?
+          spree
+        else
+          main_app
         end
       end
 
