@@ -1687,6 +1687,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   shop_changeable_orders_alert_html:
     one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    few: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+    many: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
 
@@ -1846,6 +1848,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
     one: An additional item is already confirmed for this order cycle
+    few: "%{count} additional items already confirmed for this order cycle"
+    many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
@@ -3171,6 +3175,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       error_messages:
         errors_prohibited_this_record_from_being_saved:
           one: "1 error prohibited this record from being saved:"
+          few: "%{count} errors prohibited this record from being saved:"
+          many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
       payments_list:
@@ -3302,6 +3308,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
+            few: "You have %{count} active products"
+            many: "You have %{count} active products"
             other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
@@ -3309,6 +3317,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           you_have_active:
             zero: "You don't have any active order cycles."
             one: "You have one active order cycle."
+            few: "You have %{count} active order cycles."
+            many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:
