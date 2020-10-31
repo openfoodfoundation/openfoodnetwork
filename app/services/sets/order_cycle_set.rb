@@ -1,5 +1,7 @@
-class OrderCycleSet < ModelSet
-  def initialize(collection, attributes = {})
-    super(OrderCycle, collection, attributes)
+module Sets
+  class OrderCycleSet < ModelSet
+    def initialize(collection, attributes = {})
+      super(OrderCycle, collection, attributes)
+    end
   end
 end
