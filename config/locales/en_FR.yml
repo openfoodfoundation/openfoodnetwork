@@ -351,6 +351,7 @@ en_FR:
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
+    available_units: "Available Units"
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -396,20 +397,23 @@ en_FR:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'Address updated successfully.'
-        update_address_error: 'Sorry! Please input all of the required fields!'
-        edit_bill_address: 'Edit Billing Address'
-        edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk '
-        select_country: 'Select Country'
-        select_state: 'Select State'
-        edit: 'Edit'
-        update_address: 'Update Address'
-        confirm_delete: 'Sure to delete?'
+        balance: "Balance"
+        update_address_success: "Address updated successfully."
+        update_address_error: "Sorry! Please input all of the required fields!"
+        edit_bill_address: "Edit Billing Address"
+        edit_ship_address: "Edit Shipping Address"
+        required_fileds: "Required fields are denoted with an asterisk "
+        select_country: "Select Country"
+        select_state: "Select State"
+        edit: "Edit"
+        update_address: "Update Address"
+        confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
+        credit_owed: "Credit Owed"
+        balance_due: "Balance Due"
       destroy:
-        has_associated_orders: 'Delete failed: customer has associated orders with his shop'
+        has_associated_orders: "Delete failed: customer has associated orders with his shop"
     contents:
       edit:
         title: Content
@@ -2948,6 +2952,7 @@ en_FR:
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
+    shipping_method: "Shipping Method"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
@@ -3419,6 +3424,7 @@ en_FR:
         issue_text: |
             If the above URL does not work try copying and pasting it into your browser.
             If you continue to have problems please feel free to contact us.
+        subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
     shipment_mailer:

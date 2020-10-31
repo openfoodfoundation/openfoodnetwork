@@ -351,6 +351,7 @@ fr:
     has_n_rules: "a %{num} règles"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     unsaved_changes: "Des modifications n'ont pas été sauvegardées."
+    available_units: "Unités disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
@@ -396,20 +397,23 @@ fr:
         duplicate_code: "Ce code est déjà utilisé."
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
-        update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Oups! Veuillez remplir tous les champs obligatoires!'
-        edit_bill_address: 'Modifier l''adresse de facturation'
-        edit_ship_address: 'Modifier l''adresse de livraison'
-        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
-        select_country: 'Choisir le pays'
-        select_state: 'Choisir le département'
-        edit: 'Modifier'
-        update_address: 'Mettre à jour l''adresse'
-        confirm_delete: 'Confirmer suppression?'
+        balance: "Solde"
+        update_address_success: "Adresse mise à jour avec succès."
+        update_address_error: "Oups! Veuillez remplir tous les champs obligatoires!"
+        edit_bill_address: "Modifier l'adresse de facturation"
+        edit_ship_address: "Modifier l'adresse de livraison"
+        required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
+        select_country: "Choisir le pays"
+        select_state: "Choisir le département"
+        edit: "Modifier"
+        update_address: "Mettre à jour l'adresse"
+        confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
-        guest_label: 'Commande en mode invité'
+        guest_label: "Commande en mode invité"
+        credit_owed: "Crédit dû"
+        balance_due: "Solde dû"
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique'
+        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique"
     contents:
       edit:
         title: Contenu
@@ -2977,6 +2981,7 @@ fr:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
+    shipping_method: "Option d'expédition"
     shipping_categories: "Conditions de transport"
     new_shipping_category: "Nouvelle condition de transport"
     back_to_shipping_categories: "Retour aux conditions de transport"
@@ -3449,6 +3454,7 @@ fr:
         issue_text: |
             Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
             Si le problème persiste, n'hésitez pas à nous contacter.
+        subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
     shipment_mailer:
