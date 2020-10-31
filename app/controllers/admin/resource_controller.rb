@@ -234,9 +234,11 @@ module Admin
 
     def edit_object_url(object, options = {})
       if parent_data.present?
-        url_helper.public_send "edit_admin_#{model_name}_#{object_name}_url", parent, object, options
+        url_helper.public_send "edit_admin_#{model_name}_#{object_name}_url",
+                               parent, object, options
       else
-        url_helper.public_send "edit_admin_#{object_name}_url", object, options
+        url_helper.public_send "edit_admin_#{object_name}_url",
+                               object, options
       end
     end
 

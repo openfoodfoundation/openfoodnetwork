@@ -272,8 +272,8 @@ Rails/ReflectionClassName:
 # Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
 Rails/SkipsModelValidations:
   Exclude:
+    - 'app/controllers/admin/resource_controller.rb'
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
-    - 'app/controllers/spree/admin/resource_controller.rb'
     - 'app/controllers/spree/admin/shipping_methods_controller.rb'
     - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
@@ -513,7 +513,6 @@ Style/FrozenStringLiteralComment:
     - 'app/controllers/spree/admin/products_controller.rb'
     - 'app/controllers/spree/admin/properties_controller.rb'
     - 'app/controllers/spree/admin/reports_controller.rb'
-    - 'app/controllers/spree/admin/resource_controller.rb'
     - 'app/controllers/spree/admin/return_authorizations_controller.rb'
     - 'app/controllers/spree/admin/search_controller.rb'
     - 'app/controllers/spree/admin/shipping_categories_controller.rb'
