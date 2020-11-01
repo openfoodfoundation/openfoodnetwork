@@ -80,7 +80,7 @@ module Admin
     end
 
     def enterprise_fee_bulk_params
-      params.require(:enterprise_fee_set).permit(
+      params.require(:sets_enterprise_fee_set).permit(
         collection_attributes: [
           :id, :enterprise_id, :fee_type, :name, :tax_category_id,
           :inherits_tax_category, :calculator_type,
