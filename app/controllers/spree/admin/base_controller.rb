@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class BaseController < Spree::BaseController
+    class BaseController < ApplicationController
       ssl_required
 
       helper 'spree/admin/navigation'

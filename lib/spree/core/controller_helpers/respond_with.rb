@@ -16,7 +16,7 @@ module ActionController
 
       # Fix spree issues #3531 and #2210 (patch provided by leiyangyou)
       if (defined_response = collector.response) &&
-         !Spree::BaseController.spree_responders[self.class.to_s.to_sym].try(:[],
+         !ApplicationController.spree_responders[self.class.to_s.to_sym].try(:[],
                                                                              action_name.to_sym)
         if action = options.delete(:action)
           render action: action
