@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tableless model to handle updating multiple models at once from a single form
 module Sets
   class ModelSet

@@ -8,7 +8,9 @@ describe Sets::ModelSet do
       attrs = { collection_attributes: { '1' => { name: 's1' },
                                          '2' => { name: 's2' } } }
 
-      ms = Sets::ModelSet.new(EnterpriseRelationshipPermission, EnterpriseRelationshipPermission.all, attrs)
+      ms = Sets::ModelSet.new(EnterpriseRelationshipPermission,
+                              EnterpriseRelationshipPermission.all,
+                              attrs)
 
       expect { ms.save }.to change(EnterpriseRelationshipPermission, :count).by(2)
 
@@ -37,7 +39,7 @@ describe Sets::ModelSet do
                                               '2' => { id: e2.id, name: 'e2' } } }
 
       ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
-                        proc { |attrs| attrs['name'] == 'deleteme' })
+                              proc { |attrs| attrs['name'] == 'deleteme' })
 
       expect { ms.save }.to change(Enterprise, :count).by(-1)
 
@@ -49,7 +51,7 @@ describe Sets::ModelSet do
       attributes = { collection_attributes: { '1' => { name: 'deleteme' } } }
 
       ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
-                        proc { |attrs| attrs['name'] == 'deleteme' })
+                              proc { |attrs| attrs['name'] == 'deleteme' })
 
       expect { ms.save }.to change(Enterprise, :count).by(0)
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sets
   class ColumnPreferenceSet < ModelSet
     def initialize(collection, attributes = {})

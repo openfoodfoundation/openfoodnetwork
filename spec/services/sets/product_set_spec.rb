@@ -88,7 +88,11 @@ describe Sets::ProductSet do
           end
 
           let(:distributor) { create(:distributor_enterprise) }
-          let!(:order_cycle) { create(:simple_order_cycle, variants: [product.variants.first], coordinator: distributor, distributors: [distributor]) }
+          let!(:order_cycle) {
+            create(:simple_order_cycle, variants: [product.variants.first],
+                                        coordinator: distributor,
+                                        distributors: [distributor])
+          }
 
           it 'updates the product and removes the product from order cycles' do
             product_set.save

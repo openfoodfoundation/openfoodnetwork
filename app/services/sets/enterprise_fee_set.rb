@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sets
   class EnterpriseFeeSet < ModelSet
     def initialize(attributes = {})

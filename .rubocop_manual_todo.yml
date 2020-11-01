@@ -71,7 +71,6 @@ Layout/LineLength:
   - app/models/spree/variant.rb
   - app/models/subscription.rb
   - app/models/variant_override.rb
-  - app/models/variant_override_set.rb
   - app/serializers/api/admin/subscription_line_item_serializer.rb
   - app/services/cart_service.rb
   - app/services/checkout/post_checkout_actions.rb
@@ -254,7 +253,6 @@ Layout/LineLength:
   - spec/models/enterprise_relationship_spec.rb
   - spec/models/enterprise_spec.rb
   - spec/models/exchange_spec.rb
-  - spec/models/model_set_spec.rb
   - spec/models/order_cycle_spec.rb
   - spec/models/product_importer_spec.rb
   - spec/models/product_import/reset_absent_spec.rb
@@ -385,7 +383,6 @@ Metrics/AbcSize:
   - app/models/enterprise_group.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
-  - app/models/model_set.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
   - app/models/product_import/product_importer.rb
@@ -413,6 +410,7 @@ Metrics/AbcSize:
   - app/serializers/api/variant_serializer.rb
   - app/services/cart_service.rb
   - app/services/create_order_cycle.rb
+  - app/services/sets/model_set.rb
   - app/services/order_cycle_form.rb
   - app/services/order_syncer.rb
   - app/services/variant_units/option_value_namer.rb
@@ -538,8 +536,8 @@ Metrics/CyclomaticComplexity:
   - app/models/spree/product.rb
   - app/models/spree/return_authorization.rb
   - app/models/spree/zone.rb
-  - app/models/variant_override_set.rb
   - app/services/cart_service.rb
+  - app/services/sets/variant_override_set.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
   - engines/order_management/app/services/order_management/stock/estimator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
