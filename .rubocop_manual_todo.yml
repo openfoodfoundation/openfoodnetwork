@@ -33,7 +33,6 @@ Layout/LineLength:
   - app/controllers/admin/product_import_controller.rb
   - app/controllers/admin/schedules_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
-  - app/controllers/admin/variant_overrides_controller.rb
   - app/controllers/api/enterprise_attachment_controller.rb
   - app/controllers/api/product_images_controller.rb
   - app/controllers/spree/paypal_controller_decorator.rb
