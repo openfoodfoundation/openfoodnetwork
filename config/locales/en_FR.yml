@@ -648,7 +648,7 @@ en_FR:
           invoice_text: Add customized text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
-          uploaded_on: "mis en ligne le"
+          uploaded_on: "uploaded on"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -3025,7 +3025,7 @@ en_FR:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "Une erreur a empêché la sauvegarde :"
+          one: "1 erreur a empêché la sauvegarde :"
           few: "%{count} errors prohibited this record from being saved:"
           many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
