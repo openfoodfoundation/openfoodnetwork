@@ -31,8 +31,8 @@ module Spree
 
         it "should be true if payment is checkout" do
           payment = build_stubbed(:payment, created_at: Time.zone.now)
-          allow(payment).to receive_messages :pending? => false,
-                                             :checkout? => true
+          allow(payment).to receive_messages pending?: false,
+                                             checkout?: true
           expect(credit_card.can_capture?(payment)).to be_truthy
         end
       end
@@ -54,16 +54,16 @@ module Spree
 
         it "should be false when order payment_state is not 'credit_owed'" do
           payment = build_stubbed(:payment,
-                           order: create(:order, payment_state: 'paid'))
+                                  order: create(:order, payment_state: 'paid'))
           allow(payment).to receive(:completed?) { true }
           expect(credit_card.can_credit?(payment)).to be_falsy
         end
 
         it "should be false when credit_allowed is zero" do
           payment = build_stubbed(:payment,
-                           order: create(:order, payment_state: 'credit_owed'))
-          allow(payment).to receive_messages :completed? => true,
-                                             :credit_allowed => 0
+                                  order: create(:order, payment_state: 'credit_owed'))
+          allow(payment).to receive_messages completed?: true,
+                                             credit_allowed: 0
 
           expect(credit_card.can_credit?(payment)).to be_falsy
         end

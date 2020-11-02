@@ -61,11 +61,10 @@ Layout/LineLength:
   - app/models/product_import/unit_converter.rb
   - app/models/proxy_order.rb
   - app/models/schedule.rb
-  - app/models/spree/app_configuration_decorator.rb
+  - app/models/spree/app_configuration.rb
   - app/models/spree/gateway/stripe_connect.rb
   - app/models/spree/image.rb
-  - app/models/spree/line_item_decorator.rb
-  - app/models/spree/order_decorator.rb
+  - app/models/spree/order.rb
   - app/models/spree/payment_method.rb
   - app/models/spree/product_decorator.rb
   - app/models/spree/user.rb
@@ -74,6 +73,7 @@ Layout/LineLength:
   - app/models/variant_override_set.rb
   - app/serializers/api/admin/subscription_line_item_serializer.rb
   - app/services/cart_service.rb
+  - app/services/checkout/post_checkout_actions.rb
   - app/services/default_stock_location.rb
   - app/services/embedded_page_service.rb
   - app/services/order_cycle_form.rb
@@ -101,7 +101,6 @@ Layout/LineLength:
   - lib/open_food_network/scope_variants_for_search.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/localized_number.rb
-  - lib/spree/product_filters.rb
   - lib/tasks/data.rake
   - lib/tasks/enterprises.rake
   - spec/controllers/admin/bulk_line_items_controller_spec.rb
@@ -263,12 +262,17 @@ Layout/LineLength:
   - spec/models/spree/adjustment_spec.rb
   - spec/models/spree/classification_spec.rb
   - spec/models/spree/gateway/stripe_connect_spec.rb
+  - spec/models/spree/inventory_unit_spec.rb
   - spec/models/spree/line_item_spec.rb
+  - spec/models/spree/order/checkout_spec.rb
+  - spec/models/spree/order_inventory_spec.rb
   - spec/models/spree/order_spec.rb
+  - spec/models/spree/order/state_machine_spec.rb
   - spec/models/spree/payment_method_spec.rb
   - spec/models/spree/payment_spec.rb
   - spec/models/spree/product_set_spec.rb
   - spec/models/spree/product_spec.rb
+  - spec/models/spree/return_authorization_spec.rb
   - spec/models/spree/shipping_method_spec.rb
   - spec/models/spree/stock_item_spec.rb
   - spec/models/spree/taxon_spec.rb
@@ -298,6 +302,7 @@ Layout/LineLength:
   - spec/serializers/api/order_serializer_spec.rb
   - spec/services/cart_service_spec.rb
   - spec/services/checkout/form_data_adapter_spec.rb
+  - spec/services/checkout/post_checkout_actions_spec.rb
   - spec/services/embedded_page_service_spec.rb
   - spec/services/exchange_products_renderer_spec.rb
   - spec/services/order_cycle_distributed_products_spec.rb
@@ -384,17 +389,22 @@ Metrics/AbcSize:
   - app/models/proxy_order.rb
   - app/models/spree/ability.rb
   - app/models/spree/address.rb
-  - app/models/spree/line_item_decorator.rb
+  - app/models/spree/line_item.rb
   - app/models/spree/order/checkout.rb
-  - app/models/spree/order_decorator.rb
+  - app/models/spree/order_contents.rb
+  - app/models/spree/order_inventory.rb
+  - app/models/spree/order.rb
   - app/models/spree/payment/processing.rb
   - app/models/spree/payment.rb
+  - app/models/spree/preference.rb
+  - app/models/spree/preferences/preferable_class_methods.rb
+  - app/models/spree/preferences/preferable.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/return_authorization.rb
   - app/models/spree/shipment.rb
   - app/models/spree/taxon.rb
   - app/models/spree/tax_rate.rb
   - app/models/spree/zone.rb
-  - app/serializers/api/admin/enterprise_serializer.rb
   - app/serializers/api/product_serializer.rb
   - app/serializers/api/variant_serializer.rb
   - app/services/cart_service.rb
@@ -517,7 +527,11 @@ Metrics/CyclomaticComplexity:
   - app/models/spree/order/checkout.rb
   - app/models/spree/payment_method.rb
   - app/models/spree/payment.rb
+  - app/models/spree/preference.rb
+  - app/models/spree/preferences/preferable.rb
+  - app/models/spree/preferences/preferable_class_methods.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/return_authorization.rb
   - app/models/spree/zone.rb
   - app/models/variant_override_set.rb
   - app/services/cart_service.rb
@@ -551,7 +565,10 @@ Metrics/PerceivedComplexity:
   - app/models/spree/order/checkout.rb
   - app/models/spree/payment_method.rb
   - app/models/spree/payment.rb
+  - app/models/spree/preferences/preferable.rb
+  - app/models/spree/preferences/preferable_class_methods.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/return_authorization.rb
   - app/models/spree/zone.rb
   - app/models/variant_override_set.rb
   - app/services/cart_service.rb
@@ -577,7 +594,7 @@ Metrics/PerceivedComplexity:
   - app/models/spree/ability.rb
   - app/models/spree/address.rb
   - app/models/spree/order/checkout.rb
-  - app/models/spree/order_decorator.rb
+  - app/models/spree/order.rb
   - app/models/spree/product_decorator.rb
   - app/models/spree/zone.rb
   - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
@@ -595,61 +612,6 @@ Metrics/PerceivedComplexity:
 Metrics/MethodLength:
   Max: 10
   Exclude:
-  - app/controllers/admin/enterprise_fees_controller.rb
-  - app/controllers/admin/enterprises_controller.rb
-  - app/controllers/spree/admin/taxons_controller.rb
-  - app/controllers/spree/orders_controller.rb
-  - app/helpers/checkout_helper.rb
-  - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/base_helper.rb
-  - app/helpers/spree/admin/navigation_helper.rb
-  - app/models/enterprise.rb
-  - app/models/enterprise_relationship.rb
-  - app/models/spree/ability.rb
-  - app/models/spree/address.rb
-  - app/models/spree/order/checkout.rb
-  - app/models/spree/payment_method.rb
-  - app/models/spree/payment.rb
-  - app/models/spree/product_decorator.rb
-  - app/models/spree/zone.rb
-  - app/models/variant_override_set.rb
-  - app/services/cart_service.rb
-  - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
-  - engines/order_management/app/services/order_management/stock/estimator.rb
-  - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
-  - lib/discourse/single_sign_on.rb
-  - lib/open_food_network/enterprise_issue_validator.rb
-  - lib/spree/core/calculated_adjustments.rb
-  - lib/spree/core/controller_helpers/order.rb
-  - lib/spree/core/controller_helpers/respond_with.rb
-  - lib/spree/core/controller_helpers/ssl.rb
-  - lib/spree/localized_number.rb
-  - spec/models/product_importer_spec.rb
-  - app/controllers/admin/enterprises_controller.rb
-  - app/controllers/api/variants_controller.rb
-  - app/controllers/spree/admin/taxons_controller.rb
-  - app/controllers/spree/orders_controller.rb
-  - app/helpers/checkout_helper.rb
-  - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/navigation_helper.rb
-  - app/models/enterprise_relationship.rb
-  - app/models/spree/ability.rb
-  - app/models/spree/address.rb
-  - app/models/spree/order/checkout.rb
-  - app/models/spree/order_decorator.rb
-  - app/models/spree/product_decorator.rb
-  - app/models/spree/zone.rb
-  - engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb
-  - engines/order_management/app/services/order_management/stock/estimator.rb
-  - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
-  - lib/discourse/single_sign_on.rb
-  - lib/open_food_network/enterprise_issue_validator.rb
-  - lib/spree/core/calculated_adjustments.rb
-  - lib/spree/core/controller_helpers/order.rb
-  - lib/spree/core/controller_helpers/respond_with.rb
-  - lib/spree/core/controller_helpers/ssl.rb
-  - lib/spree/localized_number.rb
-  - spec/models/product_importer_spec.rb
   - app/controllers/admin/contents_controller.rb
   - app/controllers/admin/customers_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
@@ -699,10 +661,17 @@ Metrics/MethodLength:
   - app/models/spree/address.rb
   - app/models/spree/credit_card.rb
   - app/models/spree/order/checkout.rb
-  - app/models/spree/order_decorator.rb
+  - app/models/spree/order_contents.rb
+  - app/models/spree/order_inventory.rb
+  - app/models/spree/order.rb
   - app/models/spree/payment_method.rb
   - app/models/spree/payment/processing.rb
+  - app/models/spree/preference.rb
+  - app/models/spree/preferences/preferable_class_methods.rb
+  - app/models/spree/preferences/preferable.rb
+  - app/models/spree/preferences/store.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/return_authorization.rb
   - app/models/spree/shipment.rb
   - app/models/spree/taxon.rb
   - app/models/spree/tax_rate.rb
@@ -783,6 +752,8 @@ Metrics/ClassLength:
   - app/models/spree/ability.rb
   - app/models/spree/address.rb
   - app/models/spree/credit_card.rb
+  - app/models/spree/line_item.rb
+  - app/models/spree/order.rb
   - app/models/spree/payment.rb
   - app/models/spree/shipment.rb
   - app/models/spree/user.rb
@@ -817,6 +788,7 @@ Metrics/ModuleLength:
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
   - spec/controllers/api/orders_controller_spec.rb
+  - spec/lib/open_food_network/order_cycle_form_applicator_spec.rb
   - spec/lib/open_food_network/order_cycle_permissions_spec.rb
   - spec/models/spree/adjustment_spec.rb
   - spec/models/spree/credit_card_spec.rb
@@ -831,3 +803,9 @@ Metrics/ParameterLists:
   - app/models/product_import/entry_processor.rb
   - lib/open_food_network/xero_invoices_report.rb
   - spec/features/admin/reports_spec.rb
+
+Lint/UselessAssignment:
+  Exclude:
+  - 'spec/**/*'
+  - 'app/models/spree/taxon.rb'
+  - 'lib/spree/core/controller_helpers/common.rb'

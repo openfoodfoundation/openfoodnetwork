@@ -27,8 +27,8 @@ module Stripe
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
         stub_customers_post_request email: credit_card.user.email,
-                                   response: { customer_id: new_customer_id },
-                                   stripe_account_header: true
+                                    response: { customer_id: new_customer_id },
+                                    stripe_account_header: true
         stub_request(:post,
                      "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
           .with(body: { customer: new_customer_id },

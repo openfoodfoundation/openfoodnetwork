@@ -3,7 +3,7 @@ FactoryBot.define do
     name 'Alabama'
     abbr 'AL'
     country do |country|
-      if usa = Spree::Country.find_by_numcode(840)
+      if usa = Spree::Country.find_by(numcode: 840)
         country = usa
       else
         country.association(:country)

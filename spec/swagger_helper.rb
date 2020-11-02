@@ -17,9 +17,9 @@ Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork',
       components: {
         securitySchemes: {
           api_key: {
-              type: :apiKey,
-              name: 'X-Spree-Token',
-              in: :header
+            type: :apiKey,
+            name: 'X-Spree-Token',
+            in: :header
           }
         },
         schemas: {

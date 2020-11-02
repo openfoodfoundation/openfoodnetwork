@@ -4,7 +4,6 @@ describe ProductImport::InventoryResetStrategy do
   let(:inventory_reset) { described_class.new(excluded_items_ids) }
 
   describe '#reset' do
-
     context 'when there are excluded_items_ids' do
       let(:enterprise) { variant.product.supplier }
       let(:variant) { build_stubbed(:variant) }

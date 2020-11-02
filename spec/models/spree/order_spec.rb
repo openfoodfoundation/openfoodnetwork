@@ -27,7 +27,7 @@ describe Spree::Order do
   context "#generate_order_number" do
     it "should generate a random string" do
       expect(order.generate_order_number.is_a?(String)).to be_truthy
-      expect((!order.generate_order_number.to_s.empty?)).to be_truthy
+      expect(!order.generate_order_number.to_s.empty?).to be_truthy
     end
   end
 

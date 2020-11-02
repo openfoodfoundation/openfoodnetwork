@@ -61,7 +61,7 @@ module DelegateBelongsTo
         methods.reject!{ |x| default_rejected_delegate_columns.include?(x.to_s) }
       end
       methods
-    rescue
+    rescue StandardError
       []
     end
 
