@@ -4,12 +4,9 @@ namespace :ofn do
   namespace :subs do
     desc "Repeat placement job for a specific Order Cycle"
     task repeat_placement_job: :environment do
-      puts "WARNING: this task will generate new, and potentially duplicate, orders for customers"
+      puts "WARNING: this task will generate new, and potentially duplicate, customer orders"
 
-      puts "Please input Order Cycle ID to reset"
-      input = STDIN.gets.chomp
-      exit if input.blank? || !Integer(input)
-      order_cycle_id = Integer(input)
+      order_cycle_id = request_order_cycle_id
 
       # Open Order Cycle by moving open_at to the past
       OrderCycle.find_by(id: order_cycle_id).update(orders_open_at: Time.zone.now - 1000)
@@ -22,6 +19,26 @@ namespace :ofn do
 
       # Run placement job to create orders
       SubscriptionPlacementJob.new.perform
+    end
+
+    desc "Force confirmation job for a specific Order Cycle"
+    task force_confirmation_job: :environment do
+      puts "WARNING: this task will process payments in customer orders"
+
+      order_cycle_id = request_order_cycle_id
+
+      # Close Orde Cycle by moving close_at to the past
+      OrderCycle.find_by(id: order_cycle_id).update(orders_close_at: Time.zone.now - 1000)
+
+      # Run Confirm Job to process payments
+      SubscriptionConfirmJob.new.perform
+    end
+
+    def request_order_cycle_id
+      puts "Please input Order Cycle ID to reset"
+      input = STDIN.gets.chomp
+      exit if input.blank? || !Integer(input)
+      Integer(input)
     end
   end
 end
