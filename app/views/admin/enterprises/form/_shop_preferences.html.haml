@@ -19,7 +19,7 @@
     .three.columns.alpha
       = f.label "enterprise_preferred_shopfront_taxon_order", t('.shopfront_category_ordering')
       %br
-      (top to bottom)
+      = t('.shopfront_category_ordering_note')
     .eight.columns.omega
       %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, 'ng-model' => 'Enterprise.preferred_shopfront_taxon_order', 'ofn-taxon-autocomplete' => '', 'multiple-selection' => 'true', placeholder: 'Category' }
 
