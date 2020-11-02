@@ -351,6 +351,7 @@ ca:
     has_n_rules: "té%{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
     unsaved_changes: "Teniu canvis sense desar"
+    available_units: "Unitats disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
@@ -410,6 +411,7 @@ ca:
         search_by_email: "Cerca per correu electrònic/codi ..."
         guest_label: "Fer comanda com a convidat"
         credit_owed: "Crèdit a deure"
+        balance_due: "A pagar"
       destroy:
         has_associated_orders: "S'ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga"
     contents:
@@ -646,6 +648,7 @@ ca:
           invoice_text: Afegeix text personalitzat al final de les factures
           terms_and_conditions: "Termes i condicions"
           remove_terms_and_conditions: "Elimina el fitxer"
+          uploaded_on: "carregat el"
         contact:
           name: Nom
           name_placeholder: 'p. ex: Josep Ribes'
@@ -1166,6 +1169,7 @@ ca:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     terms_and_conditions:
+      message_html: "Accepto el %{terms_and_conditions_link} del venedor."
       link_text: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
@@ -1580,7 +1584,9 @@ ca:
   hubs_distance: El més proper a
   hubs_distance_filter: "Mostra'm botigues properes a%{location}"
   shop_changeable_orders_alert_html:
-    one: El vostre ordre amb <a href='%{path}' target='_blank'> %{shop} / %{order} </ a> està obert per a la seva revisió. Podeu fer canvis fins %{oc_close}.
+    one: La vostra comanda amb <a href='%{path}' target='_blank'>%{shop} / %{order}</a> està oberta per revisió. Podeu fer canvis fins %{oc_close}.
+    few: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
+    many: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
     other: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
   orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </strong>.
   products_clear: Netejar
@@ -1726,7 +1732,9 @@ ca:
   orders_could_not_cancel: "Disculpa, no s'ha pogut cancel·lar la teva comanda "
   orders_cannot_remove_the_final_item: "No es pot eliminar l'article final d'una comanda, si us plau, en comptes d'això cancel·leu la comanda."
   orders_bought_items_notice:
-    one: "Ja s'ha confirmat un element addicional per al cicle d'aquest ordre"
+    one: Ja s'ha confirmat un article addicional per a aquest cicle de comanda
+    few: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
+    many: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     other: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
   orders_bought_edit_button: Edita articles confirmats
   orders_bought_already_confirmed: "* ja confirmat"
@@ -2406,6 +2414,14 @@ ca:
               En crear regles relacionades amb una etiqueta de client específica,
               podeu anul·lar el comportament predeterminat (ja sigui per mostrar o
               ocultar elements) per als clients amb l'etiqueta especificada.
+        terms_and_conditions_info:
+          title: "S'estan penjant els termes i condicions"
+          message_1: "Els Termes i condicions són el contracte entre el venedor i el comprador. Si pengeu un fitxer aquí, els compradors han d’acceptar els vostres Termes i condicions per completar el pagament. Per al comprador, apareixerà com a casella de selecció a la comanda que s’ha de marcar per continuar amb la compra. Us recomanem que pengeu els Termes i condicions d'acord amb la legislació nacional."
+          message_2: "Els compradors només hauran d’acceptar els Termes i condicions una vegada. Tanmateix, si canvieu els vostres Termes i condicions, els compradors hauran de tornar a acceptar-los abans de poder fer la comanda."
+        terms_and_conditions_warning:
+          title: "S'estan penjant els termes i condicions"
+          message_1: "Tots els compradors hauran d’acceptar-los al fer la comanda. Si actualitzeu el fitxer, tots els compradors hauran d’acceptar-los de nou a la finalització de la compra."
+          message_2: "Per als compradors que tinguin subscripcions, heu d’enviar-los per correu electrònic els Termes i condicions (o els canvis que s’hi apliquen) per ara, res els notificarà sobre aquests nous Termes i condicions."
       panels:
         save: DESA
         saved: DESAT
@@ -3013,7 +3029,9 @@ ca:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "Un error va prohibir guardar aquest registre:"
+          one: "1 error ha impedit que es guardi aquest registre:"
+          few: "%{count} errors han impedit guardar aquest registre:"
+          many: "%{count} errors han impedit guardar aquest registre:"
           other: "%{count} errors han impedit guardar aquest registre:"
         there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
       payments_list:
@@ -3145,6 +3163,8 @@ ca:
           active_products:
             zero: "No tens cap producte actiu."
             one: "Teniu un producte actiu"
+            few: "Teniu %{count} productes actius"
+            many: "Teniu %{count} productes actius"
             other: "Teniu %{count} productes actius"
         order_cycles:
           order_cycles: "Cicles de comanda"
@@ -3152,6 +3172,8 @@ ca:
           you_have_active:
             zero: "No tens cicles de comanda actius."
             one: "Tens un cicle de comanda actiu."
+            few: "Tens %{count} cicles de comanda actius"
+            many: "Tens %{count} cicles de comanda actius"
             other: "Tens %{count} cicles de comanda actius"
           manage_order_cycles: "GESTIONA ELS CICLES DE COMANDA"
       shipping_methods:
@@ -3426,6 +3448,7 @@ ca:
         issue_text: |
             Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
             Si continues tenint problemes, no dubtis en contactar-nos.
+        subject: "Instruccions per restablir la contrasenya"
       confirmation_instructions:
         subject: "Si us plau confirma el teu compte d'OFN"
     shipment_mailer:
