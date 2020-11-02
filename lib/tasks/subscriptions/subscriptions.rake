@@ -8,8 +8,9 @@ namespace :ofn do
 
       order_cycle_id = request_order_cycle_id
 
-      # Open Order Cycle by moving open_at to the past
-      OrderCycle.find_by(id: order_cycle_id).update(orders_open_at: Time.zone.now - 1000)
+      # Open Order Cycle by moving close_at to the future and open_at to the past
+      OrderCycle.find_by(id: order_cycle_id).update(orders_open_at: Time.zone.now - 15.minutes,
+                                                    orders_close_at: Time.zone.now + 15.minutes)
 
       # Reset Proxy Orders of the Order Cycle
       #   by detatching them from existing orders and resetting placed and confirmed dates
@@ -28,7 +29,8 @@ namespace :ofn do
       order_cycle_id = request_order_cycle_id
 
       # Close Orde Cycle by moving close_at to the past
-      OrderCycle.find_by(id: order_cycle_id).update(orders_close_at: Time.zone.now - 1000)
+      OrderCycle.find_by(id: order_cycle_id).update(orders_open_at: Time.zone.now - 30.minutes,
+                                                    orders_close_at: Time.zone.now - 15.minutes)
 
       # Run Confirm Job to process payments
       SubscriptionConfirmJob.new.perform
