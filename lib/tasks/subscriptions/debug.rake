@@ -37,7 +37,14 @@ namespace :ofn do
                 puts "Payment #{payment.id} with state #{payment.state}"
                 puts "Amount #{payment.amount}"
                 puts "Source #{payment.source_type} #{payment.source_id}"
-                puts "Source #{payment.source.to_json}" if payment.source_type == "Spree::CreditCard"
+                if payment.source_type == "Spree::CreditCard"
+                  puts "Source #{payment.source.to_json}"
+                end
+                Spree::LogEntry.where(source_type: "Spree::Payment",
+                                        source_id: payment.id).each do |log_entry|
+                  puts "Log Entries found"
+                  puts log_entry.details
+                end
               end
             end
           end
