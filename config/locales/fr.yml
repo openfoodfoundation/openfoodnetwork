@@ -648,6 +648,7 @@ fr:
           invoice_text: Ajouter une mention spécifique en bas des factures
           terms_and_conditions: "CGU & CGV"
           remove_terms_and_conditions: "Supprimer le fichier"
+          uploaded_on: "mis en ligne le"
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -1167,6 +1168,7 @@ fr:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     terms_and_conditions:
+      message_html: "J'accepte les %{terms_and_conditions_link}."
       link_text: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
   shops:
@@ -1581,7 +1583,9 @@ fr:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les boutiques près de %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    one: Votre commande avec <a href='%{path}' target='_blank'>%{shop}/%{order}</a> est disponible pour vérification. Vous pouvez réaliser des modifications jusqu'au %{oc_close}.
+    few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Annuler
@@ -1727,7 +1731,9 @@ fr:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    one: Un produit additionnel est déjà confirmé pour ce cycle de vente.
+    few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
+    many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
@@ -2407,6 +2413,14 @@ fr:
               En créant une règle spécifique à un tag, vous pouvez modifier le contenu
               vu par défaut (afficher ou masquer) par les acheteurs associés à ce
               tag.
+        terms_and_conditions_info:
+          title: "Mise à jour des CGU & CGV"
+          message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
+          message_2: "Lorsque vous mettez à jour vos CGV, vos clients habituels verront une petite notification leur indiquant que le document a été modifié."
+        terms_and_conditions_warning:
+          title: "Mise à jour des CGU & CGV"
+          message_1: "Vos acheteurs devront valider vos CGV lors de leur commande."
+          message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
       panels:
         save: Enregistrer
         saved: Enregistré
@@ -3040,7 +3054,9 @@ fr:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erreur n'a pas permis de sauvegarder:"
+          one: "1 erreur a empêché la sauvegarde :"
+          few: "%{count} erreurs ne permettent pas de sauvegarder:"
+          many: "%{count} erreurs ne permettent pas de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
       payments_list:
@@ -3172,6 +3188,8 @@ fr:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
+            few: "Vous avez %{count} produits actifs"
+            many: "Vous avez %{count} produits actifs"
             other: "Vous avez %{count} produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
@@ -3179,6 +3197,8 @@ fr:
           you_have_active:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
+            few: "Vous avez %{count} cycles de vente actifs."
+            many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GÉRER LES CYCLES DE VENTE"
       shipping_methods:
