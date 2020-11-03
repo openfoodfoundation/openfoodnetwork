@@ -759,6 +759,7 @@ fr:
               il n'y a pas de cycle de vente en cours (donc quand votre boutique est
               fermée).
           shopfront_category_ordering: "Ordre d'affichage des catégories"
+          shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
         social:
