@@ -648,6 +648,7 @@ pt_BR:
           invoice_text: 'Adicionar texto customizado no final das faturas '
           terms_and_conditions: "Termos e Condições"
           remove_terms_and_conditions: "Remover Arquivo"
+          uploaded_on: "upload feito em"
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -755,6 +756,7 @@ pt_BR:
               a loja estar fechada e quando os consumidores podem esperar que abra
               novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo.
           shopfront_category_ordering: "Organização da Loja Virtual por Categorias"
+          shopfront_category_ordering_note: "(de cima para baixo)"
           open_date: "Dia de abertura"
           close_date: "Dia de fechamento"
         social:
@@ -1017,7 +1019,7 @@ pt_BR:
       payment_methods: Relatório de métodos de pagamento
       delivery: Relatório de entrega
       tax_types: Tipos de taxas
-      tax_rates: Taxas de imposto
+      tax_rates: Alíquotas das Taxas
       pack_by_customer: Pacote por cliente
       pack_by_supplier: Pacote por fornecedor
       orders_and_distributors:
@@ -1163,6 +1165,7 @@ pt_BR:
       cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     terms_and_conditions:
+      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
@@ -1233,10 +1236,10 @@ pt_BR:
   invoice_column_unit_price_without_taxes: "Preço unitário (sem taxa)"
   invoice_column_price_with_taxes: "Preço total (com taxas)"
   invoice_column_price_without_taxes: "Preço total (sem taxas)"
-  invoice_column_tax_rate: "Taxa de imposto"
+  invoice_column_tax_rate: "Alíquota da taxa"
   invoice_tax_total: "Total de Imposto sobre Bens e Serviços"
   tax_invoice: "FATURA"
-  tax_total: "Total de imposto (%{rate}):"
+  tax_total: "Total de taxas (%{rate}):"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
   abn: "CNPJ"
@@ -1577,7 +1580,9 @@ pt_BR:
   hubs_distance: Mais próximo a
   hubs_distance_filter: "Mostrar lojas próximas a %{location}"
   shop_changeable_orders_alert_html:
-    one: Seu pedido com <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    one: Seu pedido com <a href='%{path}' target='_blank'>%{shop}%{order}</a> está aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    few: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    many: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
     other: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
   orders_changeable_orders_alert_html: Este pedido foi confirmado, mas você pode fazer alterações até <strong> %{oc_close}.
   products_clear: Limpar
@@ -1723,7 +1728,9 @@ pt_BR:
   orders_could_not_cancel: "Desculpa, seu pedido não pode ser cancelado"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de um pedido, ao invés disso, por favor cancele o pedido"
   orders_bought_items_notice:
-    one: "Um item adicional já está confirmado para este ciclo de ordem"
+    one: 'Um item adicional já está confirmado para este ciclo de pedidos. '
+    few: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
+    many: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
     other: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
   orders_bought_edit_button: Editar itens confirmados
   orders_bought_already_confirmed: "* já confirmado"
@@ -2124,7 +2131,7 @@ pt_BR:
   report_order_cycle: "Ciclo de pedidos:"
   report_enterprises: "Iniciativas:"
   report_users: "Usuários:"
-  report_tax_rates: Taxas de imposto
+  report_tax_rates: Alíquotas das taxas
   report_tax_types: Tipos de impostos
   report_header_order_cycle: Ciclo de pedidos
   report_header_user: Usuário
@@ -2321,7 +2328,7 @@ pt_BR:
   product_import_no_data_in_spreadsheet_notice: 'Nenhum dado encontrado na planilha'
   order_choosing_hub_notice: Sua central foi selecionado.
   order_cycle_selecting_notice: O seu ciclo de pedidos foi selecionado.
-  adjustments_tax_rate_error: "^ Por favor verifique se a taxa de imposto para este ajuste está correta."
+  adjustments_tax_rate_error: "^ Por favor verifique se a alíquota da taxa para este ajuste está correta."
   active_distributors_not_ready_for_checkout_message_singular: >-
       A central %{distributor_names} está listado em um ciclo de pedidos ativo, mas
       não possui métodos de envio e pagamento válidos. Até que você configure eles,
@@ -2401,6 +2408,14 @@ pt_BR:
               Ao criar regras relacionadas a uma tag de cliente específica, você pode
               substituir o comportamento padrão (seja para mostrar ou para ocultar
               itens) para clientes com a tagespecificada.
+        terms_and_conditions_info:
+          title: "Fazendo o upload dos Termos e Condições"
+          message_1: "Os Termos e Condições são o contrato entre você (vendedor) e o comprador. Se você fizer o upload de um arquivo aqui, seus compradores precisarão aceitar seus Termos e Condições para completar o checkout. Para o comprador, isto é feito na tela de checkout, marcando a caixa de seleção para continuar com o checkout. Recomendamos que você adicione seus Termos e Condições em alinhamento com a legislação nacional.  "
+          message_2: "Os compradores precisarão aceitar os Termos e Condições somente uma vez. Entretanto, se você mudar os Termos e Condições, os compradores precisarão aceitá-los novamente antes de fazer o checkout. "
+        terms_and_conditions_warning:
+          title: "Fazendo o upload dos Termos e Condições"
+          message_1: "Todos os compradores deverão concordar com eles uma vez ao fazer o checkout. Se você atualizar o arquivo, eles deverão concordar novamente no próximo checkout."
+          message_2: "Para compradores por assinatura, você precisará enviar os Termos e Condições (ou suas atualizações) por email."
       panels:
         save: SALVAR
         saved: SALVO
@@ -2822,7 +2837,7 @@ pt_BR:
   payment_method: "Método de Pagamento"
   shipment: "Envio"
   shipment_inc_vat: "Envio incluindo IVA"
-  shipping_tax_rate: "Taxa de imposto do frete"
+  shipping_tax_rate: "Taxa do frete"
   category: "Categoria"
   delivery: "Entrega"
   temperature_controlled: "Temperatura Controlada"
@@ -2926,14 +2941,14 @@ pt_BR:
     tax_categories: "Categorias fiscais"
     listing_tax_categories: "Listando categorias de impostos"
     back_to_tax_categories_list: "Voltar à lista de categorias de impostos"
-    tax rate: "Taxas de imposto"
-    new_tax_rate: "Nova taxa de imposto"
+    tax rate: "Alíquotas da taxas"
+    new_tax_rate: "Nova alíquota de taxa"
     tax_category: "Categoria de taxa"
     rate: "Taxa"
-    tax_rate_amount_explanation: "As taxas de imposto são um valor decimal para ajudar nos cálculos (por exemplo, se a taxa de imposto for de 5%, digite 0,05)"
+    tax_rate_amount_explanation: "As alíquotas são um valor decimal para ajudar nos cálculos (por exemplo, se a alíquota for de 5%, digite 0,05)"
     included_in_price: "Incluído no preço"
     show_rate_in_label: "Mostrar taxa no rótulo"
-    back_to_tax_rates_list: "Voltar à lista de taxas de imposto"
+    back_to_tax_rates_list: "Voltar à lista de alíquotas."
     tax_settings: "Configurações de Taxas"
     zones: "Zonas"
     new_zone: "Nova Zona"
@@ -3014,7 +3029,9 @@ pt_BR:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erro não permitiu que este registro fosse salvo:"
+          one: "1 erro proibiu que este registro fosse salvo:"
+          few: "%{count}erros não permitiram que esse registro fosse salvo:"
+          many: "%{count}erros não permitiram que esse registro fosse salvo:"
           other: "%{count}erros não permitiram que esse registro fosse salvo:"
         there_were_problems_with_the_following_fields: "Houve problemas com os seguintes campos"
       payments_list:
@@ -3146,6 +3163,8 @@ pt_BR:
           active_products:
             zero: "Você ainda não tem nenhum produto ativo."
             one: "Você tem um produto ativo"
+            few: "Você tem %{count} produtos ativos "
+            many: "Você tem %{count} produtos ativos "
             other: "Você tem %{count} produtos ativos"
         order_cycles:
           order_cycles: "Ciclos de pedidos"
@@ -3153,6 +3172,8 @@ pt_BR:
           you_have_active:
             zero: "Você não possui ciclos de pedidos ativos."
             one: "Você tem um ciclo de pedidos ativo."
+            few: "Você tem %{count} ciclos de pedidos ativos."
+            many: "Você tem %{count} ciclos de pedidos ativos."
             other: "Você tem %{count} ciclos de pedidos ativos."
           manage_order_cycles: "GERENCIAR CICLOS DE PEDIDOS"
       shipping_methods:
