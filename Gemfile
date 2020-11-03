@@ -9,6 +9,7 @@ gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
+gem 'responders', '~> 2.0'
 
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
