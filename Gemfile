@@ -58,7 +58,7 @@ gem 'kaminari', '~> 0.14.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk', '1.11.1' # temporarily locked down due to https://github.com/aws/aws-sdk-ruby/issues/273
+gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'

@@ -119,10 +119,11 @@ GEM
     awesome_nested_set (3.0.3)
       activerecord (>= 4.0.0, < 5)
     awesome_print (1.8.0)
-    aws-sdk (1.11.1)
+    aws-sdk (1.67.0)
+      aws-sdk-v1 (= 1.67.0)
+    aws-sdk-v1 (1.67.0)
       json (~> 1.4)
-      nokogiri (>= 1.4.4)
-      uuidtools (~> 2.1)
+      nokogiri (~> 1)
     bcrypt (3.1.13)
     bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
@@ -653,7 +654,6 @@ GEM
     unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
-    uuidtools (2.1.5)
     warden (1.2.7)
       rack (>= 1.0)
     webdrivers (4.2.0)
@@ -693,7 +693,7 @@ DEPENDENCIES
   atomic
   awesome_nested_set (~> 3.0.0.rc.1)
   awesome_print
-  aws-sdk (= 1.11.1)
+  aws-sdk (= 1.67.0)
   bugsnag
   byebug (~> 11.0.0)
   cancan (~> 1.6.10)
