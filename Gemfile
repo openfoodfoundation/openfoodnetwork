@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'i18n', '~> 0.6.11'
+gem 'i18n'
 gem 'i18n-js', '~> 3.8.0'
-gem 'rails', '~> 4.1.16'
-gem 'rails-i18n', '~> 4.0'
+gem 'rails', '~> 4.2'
+gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
@@ -23,8 +23,8 @@ gem 'awesome_nested_set', '~> 3.0.0.rc.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker', '~> 1.16'
 gem 'highline', '2.0.3' # Necessary for the install generator
-gem 'json', '>= 1.7.7'
-gem 'money', '5.1.1'
+gem 'json'
+gem 'money', '< 6.1.0'
 gem 'paranoia', '~> 2.0'
 gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
