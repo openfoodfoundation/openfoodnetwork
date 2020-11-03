@@ -3,10 +3,20 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 plugin 'bootboot', '~> 0.1.1'
+Plugin.send(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
+
+if ENV['DEPENDENCIES_NEXT']
+  enable_dual_booting if Plugin.installed?('bootboot')
+
+  # This will only be loaded when running
+  # bundler command prefixed with `DEPENDENCIES_NEXT=1`
+  gem 'rails', '~> 4.1.16'
+else
+  gem 'rails', '~> 4.0.13'
+end
 
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.8.0'
-gem 'rails', '~> 4.0.13'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
@@ -181,11 +191,5 @@ group :development do
 
   gem 'rack-mini-profiler', '< 3.0.0'
 end
-Plugin.send(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
 
-if ENV['DEPENDENCIES_NEXT']
-  enable_dual_booting if Plugin.installed?('bootboot')
 
-  # Add any gem you want here, they will be loaded only when running
-  # bundler command prefixed with `DEPENDENCIES_NEXT=1`.
-end
