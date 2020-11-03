@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require 'spree/core/s3_support'
-
 class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100

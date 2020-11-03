@@ -1,6 +1,5 @@
 require 'open_food_network/locking'
 require 'open_food_network/permalink_generator'
-require 'spree/core/s3_support'
 
 class EnterpriseGroup < ActiveRecord::Base
   include PermalinkGenerator
