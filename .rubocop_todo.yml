@@ -396,7 +396,6 @@ Style/CaseEquality:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/models/calculator/flat_percent_per_item.rb'
-    - 'app/models/spree/gateway/migs.rb'
     - 'app/models/spree/gateway/pin.rb'
     - 'app/models/tag_rule/discount_order.rb'
     - 'app/models/tag_rule/filter_order_cycles.rb'
@@ -613,7 +612,6 @@ Style/FrozenStringLiteralComment:
     - 'app/models/product_import/unit_converter.rb'
     - 'app/models/proxy_order.rb'
     - 'app/models/schedule.rb'
-    - 'app/models/spree/gateway/migs.rb'
     - 'app/models/spree/gateway/pin.rb'
     - 'app/models/spree/gateway/stripe_connect.rb'
     - 'app/models/spree/preferences/file_configuration.rb'
