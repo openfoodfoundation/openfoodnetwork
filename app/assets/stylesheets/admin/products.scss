@@ -121,3 +121,10 @@ form#image_upload {
   }
 }
 
+form.edit_image {
+  .field {
+    img {
+      max-width: 150px;
+    }
+  }
+}
