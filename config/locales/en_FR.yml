@@ -757,6 +757,7 @@ en_FR:
               is displayed on your shop only when you have no active order cycles
               (ie. shop is closed).
           shopfront_category_ordering: "Shopfront Category Ordering"
+          shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
         social:
@@ -1166,7 +1167,7 @@ en_FR:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link}."
+      message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
@@ -1581,7 +1582,7 @@ en_FR:
   hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande avec <a href='%{path}' target='_blank'>%{shop}/ %{order}</a> est disponible pour vérification. Vous pouvez réaliser des modifications jusqu'au %{oc_close}.
+    one: Your order with <a href='%{path}' target='_blank'>%{shop}/%{order}</a> is open for review. You can make changes until %{oc_close}.
     few: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     many: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
@@ -1729,7 +1730,7 @@ en_FR:
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: Un produit additionnel est déjà confirmé pour ce cycle de vente.
+    one: An additional item is already confirmed for this order cycle
     few: "%{count} additional items already confirmed for this order cycle"
     many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
@@ -2410,13 +2411,13 @@ en_FR:
               the default behaviour (whether it be to show or to hide items) for customers
               with the specified tag.
         terms_and_conditions_info:
-          title: "Mise à jour des CGU & CGV"
-          message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
-          message_2: "Lorsque vous mettez à jour vos CGV, vos clients habituels verront une petite notification leur indiquant que le document a été modifié."
+          title: "Uploading Terms and Conditions"
+          message_1: "Terms and Conditions are the contract between you, the seller, and the shopper. If you upload a file here shoppers must accept your Terms and Conditions in order to complete checkout. For the shopper this will appear as a checkbox at checkout that must be checked in order to proceed with checkout. We highly recommend you upload Terms and Conditions in alignment with national legislation."
+          message_2: "Shoppers will only be required to accept Terms and Conditions once. However if you change you Terms and Conditions shoppers will again be required to accept them before they can checkout."
         terms_and_conditions_warning:
-          title: "Mise à jour des CGU & CGV"
-          message_1: "Vos acheteurs devront valider vos CGV lors de leur commande."
-          message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
+          title: "Uploading Terms and Conditions"
+          message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
+          message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
       panels:
         save: SAVE
         saved: SAVED
@@ -3025,7 +3026,7 @@ en_FR:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erreur a empêché la sauvegarde :"
+          one: "1 error prohibited this record from being saved:"
           few: "%{count} errors prohibited this record from being saved:"
           many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
