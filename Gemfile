@@ -28,7 +28,7 @@ gem 'json'
 gem 'money', '< 6.1.0'
 gem 'paranoia', '~> 2.0'
 gem 'ransack', '~> 1.8.10'
-gem 'state_machine', '1.2.0'
+gem 'state_machines-activerecord'
 gem 'stringex', '~> 1.5.1'
 
 gem 'spree_i18n', github: 'openfoodfoundation/spree_i18n', branch: '1-3-stable'

@@ -49,7 +49,7 @@ describe OrderWorkflow do
       end
 
       it "raises error" do
-        expect { service.complete! }.to raise_error(StateMachine::InvalidTransition)
+        expect { service.complete! }.to raise_error(StateMachines::InvalidTransition)
       end
     end
   end
