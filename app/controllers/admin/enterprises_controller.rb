@@ -214,7 +214,8 @@ module Admin
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
-          rule.update(attrs)
+
+          rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end
       end
     end
