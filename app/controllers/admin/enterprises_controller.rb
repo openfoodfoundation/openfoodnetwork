@@ -81,7 +81,7 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
+      @enterprise_set = EnterpriseSet.new(collection, bulk_params)
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
@@ -317,6 +317,12 @@ module Admin
 
     def enterprise_params
       PermittedAttributes::Enterprise.new(params).call
+    end
+
+    def bulk_params
+      params.require(:enterprise_set).permit(
+        collection_attributes: PermittedAttributes::Enterprise.attributes
+      )
     end
 
     # Used in ResourceController#create
