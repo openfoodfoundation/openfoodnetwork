@@ -11,6 +11,7 @@ module Api
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
 
+    self.responder = ApplicationResponder
     respond_to :json
 
     attr_accessor :current_api_user
