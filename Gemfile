@@ -92,7 +92,6 @@ gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-gem 'foreigner'
 gem 'immigrant'
 gem 'roo', '~> 2.8.3'
 
