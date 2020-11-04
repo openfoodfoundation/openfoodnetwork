@@ -13,7 +13,6 @@ module Spree
           include ActionController::Rendering
           include ActionController::ImplicitRender
           include ActionController::Rescue
-          include ActionController::MimeResponds
           include ActionController::Head
 
           include CanCan::ControllerAdditions
@@ -21,8 +20,6 @@ module Spree
 
           prepend_view_path Rails.root + "app/views"
           append_view_path File.expand_path("../../../app/views", File.dirname(__FILE__))
-
-          respond_to :json
         end
       end
     end
