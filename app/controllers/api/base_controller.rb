@@ -4,12 +4,13 @@ require "spree/core/controller_helpers/ssl"
 require "application_responder"
 
 module Api
-  class BaseController < ActionController::Metal
+  class BaseController < ActionController::Base
     include ActionController::RespondWith
     include Spree::Api::ControllerSetup
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
 
+    self.responder = ApplicationResponder
     respond_to :json
 
     attr_accessor :current_api_user
