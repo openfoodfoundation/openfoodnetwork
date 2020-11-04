@@ -78,11 +78,7 @@ module Spree
 
           it 'redirects to admin_product_variants_url' do
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
-            expect(response).to redirect_to(
-              controller: 'spree/admin/variants',
-              action: :index,
-              product_id: variant.product.permalink
-            )
+            expect(response).to redirect_to spree.admin_product_variants_url(variant.product.permalink)
           end
 
           it 'destroys all its exchanges' do

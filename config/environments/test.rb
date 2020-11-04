@@ -55,4 +55,3 @@ end
 
 # Allows us to use _url helpers in Rspec
 Rails.application.routes.default_url_options[:host] = 'test.host'
-Spree::Core::Engine.routes.default_url_options[:host] = 'test.host'

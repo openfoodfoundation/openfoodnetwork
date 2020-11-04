@@ -29,7 +29,7 @@ class PaymentMethodFactory
       enterprise,
       "Cash on collection",
       "Pay on collection!",
-      Calculator::FlatRate.new
+      ::Calculator::FlatRate.new
     )
   end
 
@@ -39,7 +39,7 @@ class PaymentMethodFactory
       enterprise,
       "Credit card (fake)",
       "We charge 1%, but won't ask for your details. ;-)",
-      Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 1)
+      ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 1)
     )
   end
 

@@ -19,12 +19,12 @@ describe "Tax Rates" do
     end
   end
 
-  # Regression test for #1422
+  # Regression test for Spree #1422
   it "can create a new tax rate" do
     click_link "Tax Rates"
     click_link "New Tax Rate"
     fill_in "Rate", with: "0.05"
     click_button "Create"
-    expect(page).to have_content("Tax Rate has been successfully created!")
+    expect(page).to have_content("Tax rate has been successfully created!")
   end
 end
