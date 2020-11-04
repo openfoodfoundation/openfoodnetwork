@@ -49,6 +49,7 @@ require 'support/api_helper'
 # Capybara config
 require 'selenium-webdriver'
 Capybara.javascript_driver = :chrome
+Capybara.server = :webrick
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
