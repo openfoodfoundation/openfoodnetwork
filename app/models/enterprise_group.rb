@@ -4,7 +4,6 @@ require 'spree/core/s3_support'
 
 class EnterpriseGroup < ActiveRecord::Base
   include PermalinkGenerator
-  acts_as_list
 
   has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_groups
