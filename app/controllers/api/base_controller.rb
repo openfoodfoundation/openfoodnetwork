@@ -1,9 +1,11 @@
 # Base controller for OFN's API
 require_dependency 'spree/api/controller_setup'
 require "spree/core/controller_helpers/ssl"
+require "application_responder"
 
 module Api
   class BaseController < ActionController::Metal
+    include ActionController::RespondWith
     include Spree::Api::ControllerSetup
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
