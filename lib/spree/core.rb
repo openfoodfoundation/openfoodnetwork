@@ -10,7 +10,7 @@ require 'mail'
 require 'paperclip'
 require 'paranoia'
 require 'ransack'
-require 'state_machine'
+require 'state_machines'
 
 module Spree
   mattr_accessor :user_class

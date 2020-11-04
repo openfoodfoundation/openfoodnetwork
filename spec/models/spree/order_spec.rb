@@ -1322,7 +1322,7 @@ describe Spree::Order do
 
       it 'raises' do
         expect { order.restart_checkout! }
-          .to raise_error(StateMachine::InvalidTransition)
+          .to raise_error(StateMachines::InvalidTransition)
       end
     end
 
