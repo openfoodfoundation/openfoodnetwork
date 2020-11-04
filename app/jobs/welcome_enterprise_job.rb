@@ -1,5 +1,5 @@
-WelcomeEnterpriseJob = Struct.new(:enterprise_id) do
-  def perform
+class WelcomeEnterpriseJob < ActiveJob::Base
+  def perform(enterprise_id)
     enterprise = Enterprise.find enterprise_id
     EnterpriseMailer.welcome(enterprise).deliver
   end

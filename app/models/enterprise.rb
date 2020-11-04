@@ -400,7 +400,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    Delayed::Job.enqueue WelcomeEnterpriseJob.new(id)
+    WelcomeEnterpriseJob.perform_later(id)
   end
 
   def strip_url(url)

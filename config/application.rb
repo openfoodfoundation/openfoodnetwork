@@ -199,5 +199,7 @@ module Openfoodnetwork
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     config.active_support.escape_html_entities_in_json = true
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end
