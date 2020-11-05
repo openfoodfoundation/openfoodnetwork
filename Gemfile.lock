@@ -410,7 +410,7 @@ GEM
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
     jwt (2.2.2)
-    kaminari (0.14.1)
+    kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.11.3)
@@ -731,7 +731,7 @@ DEPENDENCIES
   json (>= 1.7.7)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
-  kaminari (~> 0.14.1)
+  kaminari (~> 0.17.0)
   knapsack
   letter_opener (>= 1.4.1)
   mini_racer (= 0.2.15)
