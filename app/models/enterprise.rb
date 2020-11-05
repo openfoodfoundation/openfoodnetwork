@@ -132,7 +132,7 @@ class Enterprise < ActiveRecord::Base
       where(nil)
     end
   }
-  scope :is_primary_producer, -> { where(is_primary_producer: true) }
+  scope :is_primary_producer, -> { where("enterprises.is_primary_producer IS TRUE") }
   scope :is_distributor, -> { where('sells != ?', 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
