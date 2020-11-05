@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 xdescribe Spree::Admin::InvoicesController, type: :controller do

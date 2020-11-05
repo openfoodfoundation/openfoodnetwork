@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module HtmlHelper
     def html_save_and_open(html)

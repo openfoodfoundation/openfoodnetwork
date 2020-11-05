@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   sequence(:random_float) { BigDecimal("#{rand(200)}.#{rand(99)}") }
 

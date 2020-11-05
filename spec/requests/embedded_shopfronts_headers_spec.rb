@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "setting response headers for embedded shopfronts", type: :request do

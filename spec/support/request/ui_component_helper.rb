@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UIComponentHelper
   def browse_as_medium
     Capybara.current_session.current_window

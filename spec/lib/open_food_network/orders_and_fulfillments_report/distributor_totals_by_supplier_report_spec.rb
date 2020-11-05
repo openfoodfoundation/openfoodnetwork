@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report'
 

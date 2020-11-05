@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'variant_units/option_value_namer'
 require 'spree/localized_number'

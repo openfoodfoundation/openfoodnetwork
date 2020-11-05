@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :order_cycle, parent: :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }

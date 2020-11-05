@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AbilityHelper
   shared_examples "allows access to Enterprise Fee Summary" do
     it "should be able to see link and read report" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'cancan/matchers'
 require 'support/ability_helpers'
@@ -13,7 +15,7 @@ describe Spree::Ability do
     user.spree_roles.clear
   end
 
-  TOKEN = 'token123'.freeze
+  TOKEN = 'token123'
 
   after(:each) {
     user.spree_roles = []
