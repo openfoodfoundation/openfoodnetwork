@@ -23,7 +23,7 @@ require 'rspec/retry'
 require 'coverage_helper'
 require 'paper_trail/frameworks/rspec'
 
-require 'webdrivers'
+require 'webdrivers/chromedriver'
 
 require 'shoulda/matchers'
 Shoulda::Matchers.configure do |config|
