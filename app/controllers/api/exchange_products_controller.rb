@@ -31,9 +31,7 @@ module Api
     private
 
     def render_variant_count
-      render text: {
-        count: variants.count
-      }.to_json
+      render json: { count: variants.count }
     end
 
     def variants
@@ -86,7 +84,7 @@ module Api
       result = { products: serializer }
       result = result.merge(pagination: pagination_data(paginated_products)) if pagination_required?
 
-      render text: result.to_json
+      render json: result
     end
 
     def pagination_data(paginated_products)

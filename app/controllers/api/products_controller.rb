@@ -135,13 +135,13 @@ module Api
         each_serializer: product_serializer
       )
 
-      render text: {
+      render json: {
         products: serializer,
         # This line is used by the PagedFetcher JS service (inventory).
         pages: products.num_pages,
         # This hash is used by the BulkProducts JS service.
         pagination: pagination_data(products)
-      }.to_json
+      }
     end
 
     def query_params_with_defaults
