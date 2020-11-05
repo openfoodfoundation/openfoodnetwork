@@ -137,7 +137,6 @@ group :test, :development do
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry'
   gem 'rswag'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'unicorn-rails'
