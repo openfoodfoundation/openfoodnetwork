@@ -18,7 +18,7 @@ gem 'web', path: './engines/web'
 gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
-gem 'acts_as_list', '= 0.2.0'
+gem 'acts_as_list', '= 0.3.0'
 gem 'awesome_nested_set', '~> 3.0.0.rc.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker', '~> 1.16'
