@@ -52,7 +52,10 @@ Capybara.javascript_driver = :chrome
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu no-sandbox window-size=1280,768]
+    args: %w[headless disable-gpu no-sandbox window-size=1280,768
+             --browser-test --disable-dev-shm-usage
+             --enable-features=NetworkService,NetworkServiceInProcess
+             --disable-features=VizDisplayCompositor]
   )
   Capybara::Selenium::Driver
     .new(app, browser: :chrome, options: options)
