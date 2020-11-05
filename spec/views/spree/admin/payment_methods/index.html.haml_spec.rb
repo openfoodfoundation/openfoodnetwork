@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe "spree/admin/payment_methods/index.html.haml" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_table_row do |row|
   match do |node|
     @row = row

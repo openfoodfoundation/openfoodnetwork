@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
     enterprise factory: :distributor_enterprise

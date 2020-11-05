@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module FeatureToggleHelper
     def set_feature_toggle(feature, status)

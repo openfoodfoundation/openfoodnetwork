@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module EnterpriseGroupsHelper
     def create_enterprise_group_for(distributor)

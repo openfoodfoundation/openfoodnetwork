@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MenuHelper
   def open_login_modal
     find("a", text: "Log in").click

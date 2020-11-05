@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module DistributionHelper
     def select_distribution(distributor, order_cycle = nil)

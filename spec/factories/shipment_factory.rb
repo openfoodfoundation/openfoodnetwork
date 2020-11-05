@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :shipment, class: Spree::Shipment do
     # keeps test shipments unique per order

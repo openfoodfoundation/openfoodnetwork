@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShopWorkflow
   # If a spec uses `within` but we want to check something outside of that
   # scope, we can search from the body element instead.

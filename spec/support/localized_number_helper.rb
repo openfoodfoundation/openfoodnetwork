@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples "a model using the LocalizedNumber module" do |attributes|
   before do
     allow(Spree::Config).to receive(:enable_localized_number?).and_return true

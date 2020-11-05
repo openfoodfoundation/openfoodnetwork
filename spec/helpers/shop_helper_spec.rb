@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe ShopHelper, type: :helper do
   it "should build order cycle select options" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   sequence :user_authentication_token do |n|
     "xxxx#{Time.now.to_i}#{rand(1000)}#{n}xxxxxxxxxxxxx"
