@@ -48,9 +48,8 @@ require 'support/api_helper'
 
 # Capybara config
 require 'selenium-webdriver'
-Capybara.javascript_driver = :chrome
 
-Capybara.register_driver :chrome do |app|
+Capybara.register_driver :headless_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[headless disable-gpu no-sandbox window-size=1280,768
              --browser-test --disable-dev-shm-usage
@@ -61,6 +60,9 @@ Capybara.register_driver :chrome do |app|
     .new(app, browser: :chrome, options: options)
     .tap { |driver| driver.browser.download_path = DownloadsHelper.path.to_s }
 end
+
+Capybara.default_driver = :headless_chrome
+Capybara.javascript_driver = :headless_chrome
 
 Capybara.default_max_wait_time = 30
 
