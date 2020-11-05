@@ -289,10 +289,16 @@ en_FR:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    resume: "Resume"
     save: "Save"
     edit: "Edit"
     update: "Update"
     delete: "Delete"
+    add: "Add"
+    cut: "Cut"
+    paste: "Paste"
+    destroy: "Destroy"
+    rename: "Rename"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -600,6 +606,8 @@ en_FR:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
+      edit:
+        order_sure_want_to: Are you sure you want to %{event} this order?
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -2897,6 +2905,7 @@ en_FR:
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
@@ -2908,6 +2917,8 @@ en_FR:
     server: "Server"
     test_mode: "Test Mode"
     logourl: "Logourl"
+    are_you_sure_delete: "Are you sure you want to delete this record?"
+    confirm_delete: "Confirm Deletion"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -3017,6 +3028,7 @@ en_FR:
     has_no_shipped_units: "has no shipped units"
     successfully_created: '%{resource} has been successfully created!'
     successfully_updated: '%{resource} has been successfully updated!'
+    payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"
     order_populator:
@@ -3067,7 +3079,6 @@ en_FR:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
           add_product_properties: "Add Product Properties"
-          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
