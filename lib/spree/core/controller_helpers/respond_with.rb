@@ -27,7 +27,7 @@ module ActionController
         # The action name is needed for processing
         options[:action_name] = action_name.to_sym
         # If responder is not specified then pass in Spree::Responder
-        (options.delete(:responder) || Spree::Responder).call(self, resources, options)
+        (options.delete(:responder) || ::Spree::Responder).call(self, resources, options)
       end
     end
 
