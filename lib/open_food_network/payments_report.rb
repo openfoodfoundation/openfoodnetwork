@@ -106,8 +106,22 @@ module OpenFoodNetwork
          proc { |orders| orders.sum(:item_total) },
          proc { |orders| orders.sum(&:ship_total) },
          proc { |orders| orders.sum(:total) },
-         proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "EFT") }.sum(:amount) } },
-         proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "PayPal") }.sum(:amount) } },
+         proc { |orders|
+           orders.sum { |o|
+             o.payments.select { |payment|
+               payment.completed? &&
+                 (payment.payment_method.name.to_s.include? "EFT")
+             } .sum(:amount)
+           }
+         },
+         proc { |orders|
+           orders.sum { |o|
+             o.payments.select { |payment|
+               payment.completed? &&
+                 (payment.payment_method.name.to_s.include? "PayPal")
+             } .sum(:amount)
+           }
+         },
          proc { |orders| orders.sum(&:outstanding_balance) }]
       else
         [proc { |payments| payments.first.order.payment_state },
