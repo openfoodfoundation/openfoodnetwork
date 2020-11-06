@@ -30,7 +30,6 @@
 module ActionDispatch
   class Request < Rack::Request
     class Utils # :nodoc:
-
       mattr_accessor :perform_deep_munge
       self.perform_deep_munge = true
 
@@ -47,10 +46,11 @@ module ActionDispatch
               v.compact!
 
               # This patch removes the following lines
-              #if v.empty?
-              #  hash[k] = nil
-              #  ActiveSupport::Notifications.instrument("deep_munge.action_controller", keys: keys)
-              #end
+              # if v.empty?
+              #   hash[k] = nil
+              # ActiveSupport::Notifications.instrument("deep_munge.action_controller",
+              #                                         keys: keys)
+              # end
             when Hash
               deep_munge(v, keys)
             end
