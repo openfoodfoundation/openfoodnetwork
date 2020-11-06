@@ -2913,6 +2913,8 @@ fr:
     delete: "Supprimer"
     cannot_set_shipping_method_without_address: "Impossible de choisir une méthode de livraison tant que les informations acheteur ne sont pas fournies."
     no_tracking_present: "Pas d'informations de traçabilité fournies."
+    tracking: "Suivi"
+    tracking_number: "Numéro de suivi"
     order_total: "Total Commande"
     customer_details: "Informations acheteur"
     customer_search: "Recherche Acheteur"
