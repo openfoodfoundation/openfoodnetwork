@@ -145,7 +145,7 @@ module Api
     end
 
     def query_params_with_defaults
-      params[:q].to_h.reverse_merge(s: 'created_at desc')
+      (params[:q] || {}).reverse_merge(s: 'created_at desc')
     end
 
     def pagination_data(results)
