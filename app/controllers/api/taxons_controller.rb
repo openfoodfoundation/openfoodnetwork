@@ -22,7 +22,7 @@ module Api
 
     def create
       authorize! :create, Spree::Taxon
-      @taxon = Spree::Taxon.new(params[:taxon])
+      @taxon = Spree::Taxon.new(taxon_params[:taxon])
       @taxon.taxonomy_id = params[:taxonomy_id]
       taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
@@ -42,7 +42,7 @@ module Api
 
     def update
       authorize! :update, Spree::Taxon
-      if taxon.update(params[:taxon])
+      if taxon.update(taxon_params)
         render json: taxon, serializer: Api::TaxonSerializer, status: :ok
       else
         invalid_resource!(taxon)
@@ -65,6 +65,10 @@ module Api
 
     def taxon
       @taxon ||= taxonomy.taxons.find(params[:id])
+    end
+
+    def taxon_params
+      params.permit(taxon: [:name, :parent_id])
     end
   end
 end
