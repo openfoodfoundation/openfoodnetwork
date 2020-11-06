@@ -201,5 +201,7 @@ module Openfoodnetwork
     config.active_support.escape_html_entities_in_json = true
 
     config.active_job.queue_adapter = :delayed_job
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
