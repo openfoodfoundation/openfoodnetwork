@@ -48,7 +48,7 @@ describe Spree::UserMailer do
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     describe 'message contents' do
-      let(:message) { described_class.reset_password_instructions(user, nil) }
+      let(:message) { described_class.reset_password_instructions(user, nil).deliver }
 
       context 'subject includes' do
         it 'translated devise instructions' do
