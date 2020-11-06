@@ -1,5 +1,7 @@
 = render :partial => 'spree/admin/shared/product_sub_menu'
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @product }
+= admin_inject_available_units
+
 = form_for [:admin, @product], :html => { :multipart => true } do |f|
   .twelve.columns.alpha
     %fieldset.no-border-bottom{ id: "new_product" }
