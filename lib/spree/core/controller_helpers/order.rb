@@ -17,7 +17,7 @@ module Spree
         def current_order(create_order_if_necessary = false)
           order = spree_current_order(create_order_if_necessary)
 
-          if order
+          if order&.line_items.present?
             scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
             order.line_items.each do |li|
               scoper.scope(li.variant)
