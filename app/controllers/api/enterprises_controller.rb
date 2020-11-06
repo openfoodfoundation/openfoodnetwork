@@ -12,7 +12,7 @@ module Api
       # params[:user_ids] breaks the enterprise creation
       # We remove them from params and save them after creating the enterprise
       user_ids = params[:enterprise].delete(:user_ids)
-      @enterprise = Enterprise.new(params[:enterprise])
+      @enterprise = Enterprise.new(enterprise_params)
       if @enterprise.save
         @enterprise.user_ids = user_ids
         render json: @enterprise.id, status: :created
@@ -25,7 +25,7 @@ module Api
       @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
-      if @enterprise.update(params[:enterprise])
+      if @enterprise.update(enterprise_params)
         render json: @enterprise.id, status: :ok
       else
         invalid_resource!(@enterprise)
@@ -68,6 +68,10 @@ module Api
 
     def override_visible
       params[:enterprise][:visible] = false
+    end
+
+    def enterprise_params
+      PermittedAttributes::Enterprise.new(params).call
     end
   end
 end
