@@ -60,7 +60,10 @@ module OpenFoodNetwork
     def filter_to_supplier(orders)
       if params[:supplier_id].to_i > 0
         orders.select do |order|
-          order.line_items.includes(:product).references(:product).where("spree_products.supplier_id = ?", params[:supplier_id].to_i).count > 0
+          order.line_items.includes(:product)
+            .where("spree_products.supplier_id = ?", params[:supplier_id].to_i)
+            .references(:product)
+            .count > 0
         end
       else
         orders
