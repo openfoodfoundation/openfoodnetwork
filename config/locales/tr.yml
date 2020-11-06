@@ -293,6 +293,7 @@ tr:
     edit: "Düzenle"
     update: "Güncelle"
     delete: "Sil"
+    add: "Ekle"
   admin:
     begins_at: Başlangıç
     begins_on: Başlangıç vakti
@@ -1577,7 +1578,8 @@ tr:
   hubs_distance: En yakın
   hubs_distance_filter: "Bana %{location} yakınındaki dükkanları göster"
   shop_changeable_orders_alert_html:
-    one: <a href='%{path}' target='_blank'>%{shop} / %{order}</a> ile siparişiniz incelemeye açık. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
+    few: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
+    many: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
     other: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
   orders_changeable_orders_alert_html: Bu sipariş onaylandı, ancak <strong>%{oc_close}</strong> tarihine kadar değişiklik <strong>yapabilirsiniz</strong> .
   products_clear: Temizle
@@ -1723,7 +1725,8 @@ tr:
   orders_could_not_cancel: "Maalesef sipariş iptal edilemedi"
   orders_cannot_remove_the_final_item: "Son ürün siparişten kaldırılamaz, lütfen bunun yerine siparişi iptal edin."
   orders_bought_items_notice:
-    one: "Bu sipariş döngüsü için ek bir öğe zaten onaylandı"
+    few: "%{count} ürün bu sipariş dönemi için onaylandı bile"
+    many: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     other: "%{count} ürün bu sipariş dönemi için onaylandı bile"
   orders_bought_edit_button: Onaylanan ürünleri düzenle
   orders_bought_already_confirmed: "* zaten onaylandı"
@@ -2879,6 +2882,7 @@ tr:
     adjustments: "Düzeltmeler"
     continue: "Devam et"
     fill_in_customer_info: "Lütfen müşteri bilgilerini doldurun"
+    credit_card: "Kredİ kartı"
     new_payment: "Yeni Ödeme"
     capture: "Tahsilat"
     void: "Geçersiz"
@@ -2998,6 +3002,7 @@ tr:
     options: "Seçenekler"
     successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
     successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
+    payment_method: "ÖDEME YÖNTEMİ"
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
     order_populator:
       out_of_stock: '%{item} stokta yok'
@@ -3006,7 +3011,8 @@ tr:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 hata kaydedilmesini engelledi:"
+          few: "%{count}hata kaydedilmeyi engelledi:"
+          many: "%{count}hata kaydedilmeyi engelledi:"
           other: "%{count}hata kaydedilmeyi engelledi:"
         there_were_problems_with_the_following_fields: "Belirtilen alanlar ile ilgili sorun oluştu:"
       payments_list:
@@ -3045,7 +3051,6 @@ tr:
         index:
           inherits_properties_checkbox_hint: "Özellikler %{supplier}'den devralınsın mı? (yukarıda geçersiz kılınmadıkça)"
           add_product_properties: "Ürün Özelliği Ekle"
-          select_from_prototype: "Prototipten Seç"
       properties:
         index:
           properties: "ÖZELLİKLER"
@@ -3138,6 +3143,8 @@ tr:
           active_products:
             zero: "Aktif ürününüz yok."
             one: "Bir aktif ürününüz var"
+            few: "%{count} aktif ürününüz var"
+            many: "%{count} aktif ürününüz var"
             other: "%{count} aktif ürününüz var"
         order_cycles:
           order_cycles: "SİPARİŞ DÖNEMLERİ"
@@ -3145,6 +3152,8 @@ tr:
           you_have_active:
             zero: "Aktif sipariş döneminiz yok."
             one: "Bir aktif sipariş döneminiz var."
+            few: "%{count} aktif sipariş döneminiz var."
+            many: "%{count} aktif sipariş döneminiz var."
             other: "%{count} aktif sipariş döneminiz var."
           manage_order_cycles: "SİPARİŞ DÖNEMLERİNİ YÖNET"
       shipping_methods:

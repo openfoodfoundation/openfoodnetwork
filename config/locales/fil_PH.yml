@@ -282,6 +282,7 @@ fil_PH:
     edit: "i-edit"
     update: "i-update"
     delete: "Tanggalin"
+    add: "idagdag"
   admin:
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
@@ -1543,7 +1544,8 @@ fil_PH:
   hubs_distance: pinakamalapit sa
   hubs_distance_filter: "ipakita ang mga shop malapit sa%{location}"
   shop_changeable_orders_alert_html:
-    one: ang iyong order sa<a href='%{path}' target='_blank'>%{shop}/%{order}</a> ay maaaring tignan. maaaring gumawa ng pagbabago hanggang%{oc_close}.
+    few: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
+    many: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
     other: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
   orders_changeable_orders_alert_html: ang order na ito ay nakumpirma na ngunit maaari pang gumawa ng mga pagbabago hanggang<strong>%{oc_close}</strong>.
   products_clear: alisin
@@ -1682,7 +1684,8 @@ fil_PH:
   orders_could_not_cancel: "paumanhin, hindi makansela ang inyong order"
   orders_cannot_remove_the_final_item: "hindi matanggal ang huling item mula sa isang order, maaaring kanselahin na lamang ang order."
   orders_bought_items_notice:
-    one: "isang karagdagang item ang nakumpirma na para sa order cycle na ito"
+    few: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
+    many: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
     other: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
   orders_bought_edit_button: ayusin ang kumpirmadong mga item
   orders_bought_already_confirmed: "* kumpirmado na"
@@ -2824,6 +2827,7 @@ fil_PH:
     adjustments: "mga pagsasa-ayos"
     continue: "Magpatuloy"
     fill_in_customer_info: "sagutan ang impormasyon tungkol sa customer"
+    credit_card: "Credit Card"
     new_payment: "Bagong Pagbabayad"
     capture: "kunan"
     void: "walang bisa"
@@ -2936,6 +2940,7 @@ fil_PH:
     options: "pagpipilian"
     successfully_created: '%{resource}ay matagumpay na nagawa!'
     successfully_updated: '%{resource}ay matagumpay na na-update'
+    payment_method: "Paraan ng pagbayad"
     payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     actions:
       update: "i-update"
@@ -2975,7 +2980,6 @@ fil_PH:
         index:
           inherits_properties_checkbox_hint: "kopyahin ang mga katangian mula sa%{supplier}? (maliban kung napatungan ang nasa itaas)"
           add_product_properties: "magdagdag ng katangian ng produkto"
-          select_from_prototype: "pumili mula sa prototype"
       properties:
         index:
           properties: "mga katangian"
@@ -3068,6 +3072,8 @@ fil_PH:
           active_products:
             zero: "wala kang aktibong mga produkto"
             one: "Mayroon kang isang aktibong produkto"
+            few: "mayroon kang%{count}aktibong produkto."
+            many: "mayroon kang%{count}aktibong produkto."
             other: "mayroon kang%{count}aktibong produkto."
         order_cycles:
           order_cycles: "order cycles"
@@ -3075,6 +3081,8 @@ fil_PH:
           you_have_active:
             zero: "wala kang mga aktibong order cycle"
             one: "mayroon kang isang aktibong order cycle"
+            few: "mayroon kang%{count}aktibong order cycle."
+            many: "mayroon kang%{count}aktibong order cycle."
             other: "mayroon kang%{count}aktibong order cycle."
           manage_order_cycles: "PAMAHALAAN ANG MGA ORDER CYCLE"
       shipping_methods:

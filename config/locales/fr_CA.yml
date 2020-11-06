@@ -294,6 +294,7 @@ fr_CA:
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
+    add: "Ajouter"
   admin:
     begins_at: Commence à
     begins_on: Commence le
@@ -1579,7 +1580,8 @@ fr_CA:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les boutiques près de %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande avec <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modification jusqu'à %{oc_close}.
+    few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a>ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'à %{oc_close}.
+    many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a>ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'à %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a>ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'à %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Effacer
@@ -1725,7 +1727,8 @@ fr_CA:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    few: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
+    many: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
@@ -2893,6 +2896,7 @@ fr_CA:
     adjustments: "ajustements"
     continue: "Suivant"
     fill_in_customer_info: "Veuillez saisir les informations acheteur"
+    credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
@@ -3013,6 +3017,7 @@ fr_CA:
     has_no_shipped_units: "n'a pas d'éléments envoyés"
     successfully_created: '%{resource} a été créé avec succès !'
     successfully_updated: ' %{resource}été mis à jour avec succès !'
+    payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
     not_available: "N/A"
     order_populator:
@@ -3022,7 +3027,8 @@ fr_CA:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erreur n'a pas permis de sauvegarder:"
+          few: "1 %{count} erreurs ne permettent pas de sauvegarder:"
+          many: "1 %{count} erreurs ne permettent pas de sauvegarder:"
           other: "1 %{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
       payments_list:
@@ -3061,7 +3067,6 @@ fr_CA:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier}? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des propriétés/labels"
-          select_from_prototype: "Sélectionnez depuis le prototype"
       properties:
         index:
           properties: "Labels / propriétés"
@@ -3154,6 +3159,8 @@ fr_CA:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
+            few: "Vous avez %{count}produits actifs"
+            many: "Vous avez %{count}produits actifs"
             other: "Vous avez %{count}produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
@@ -3161,6 +3168,8 @@ fr_CA:
           you_have_active:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
+            few: "Vous avez %{count} cycles de vente actifs."
+            many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       shipping_methods:

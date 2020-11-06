@@ -262,6 +262,7 @@ pt:
     edit: "Editar"
     update: "Atualizar"
     delete: "Apagar"
+    add: "Adicionar"
   admin:
     begins_at: Começa às
     begins_on: Começa em
@@ -1474,7 +1475,8 @@ pt:
   hubs_distance: Mais próximo a
   hubs_distance_filter: "Mostrar lojas próximas a %{location}"
   shop_changeable_orders_alert_html:
-    one: Tem encomendas com actualmente abertas para revisão. Pode fazer alterações até .
+    few: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
+    many: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
     other: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
   orders_changeable_orders_alert_html: Esta encomenda está confirmada, mas pode fazer alterações até <strong>%{oc_close}</strong>.
   products_clear: Limpar
@@ -1612,7 +1614,8 @@ pt:
   orders_could_not_cancel: "Pedimos desculpa, a sua encomenda não pode ser cancelada"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de uma encomenda, em vez disso, por favor cancele a encomenda."
   orders_bought_items_notice:
-    one: "Um item adicional já está confirmado para este ciclo de encomendas"
+    few: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
+    many: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
     other: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
   orders_bought_edit_button: Editar itens confirmados
   orders_bought_already_confirmed: "* já confirmado"
@@ -2646,6 +2649,7 @@ pt:
     adjustments: "Ajustes"
     continue: "Continuar"
     fill_in_customer_info: "Por favor preencha informação do/a consumidor/a"
+    credit_card: "Cartão de Crédito"
     new_payment: "Novo Pagamento"
     capture: "Capturar"
     login: "Entrar"
@@ -2737,6 +2741,7 @@ pt:
     zipcode: Código postal
     successfully_created: '%{resource} foi criado/a com sucesso!'
     successfully_updated: '%{resource} foi actualizado/a com sucesso!'
+    payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
     actions:
       update: "Atualizar"
@@ -2838,6 +2843,8 @@ pt:
           active_products:
             zero: "Não tem nenhum produto ativo."
             one: "Tem um produto ativo"
+            few: "Tem %{count} produtos ativos"
+            many: "Tem %{count} produtos ativos"
             other: "Tem %{count} produtos ativos"
         order_cycles:
           order_cycles: "Ciclos de Encomendas"
@@ -2845,6 +2852,8 @@ pt:
           you_have_active:
             zero: "Não tem nenhum ciclo de encomendas activo."
             one: "Tem um ciclo de encomendas activo."
+            few: "Tem %{count}ciclos de encomendas activos."
+            many: "Tem %{count}ciclos de encomendas activos."
             other: "Tem %{count}ciclos de encomendas activos."
           manage_order_cycles: "GERIR CICLOS DE ENCOMENDAS"
       shipping_methods:

@@ -1499,7 +1499,7 @@ en_US:
   email_confirm_customer_details_html: "Here are your order details from <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Kind regards,"
   email_confirm_shop_greeting: "Hi %{name},"
-  email_confirm_shop_order_html: "Awesome! You have a new order for <strong>%{distributor}</strong>!"
+  email_confirm_shop_order_html: "Woo hoo! You have a new order for <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"

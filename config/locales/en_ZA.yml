@@ -283,6 +283,7 @@ en_ZA:
     edit: "Edit"
     update: "Update"
     delete: "Delete"
+    add: "Add"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -1547,7 +1548,8 @@ en_ZA:
   hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
   shop_changeable_orders_alert_html:
-    one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    few: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+    many: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
@@ -1693,7 +1695,8 @@ en_ZA:
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: "An additional item is already confirmed for this order cycle"
+    few: "%{count} additional items already confirmed for this order cycle"
+    many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
@@ -2756,6 +2759,7 @@ en_ZA:
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
@@ -2858,6 +2862,7 @@ en_ZA:
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     successfully_created: '%{resource} has been successfully created!'
     successfully_updated: '%{resource} has been successfully updated!'
+    payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     actions:
       update: "Update"
@@ -2959,6 +2964,8 @@ en_ZA:
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
+            few: "You have %{count} active products"
+            many: "You have %{count} active products"
             other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
@@ -2966,6 +2973,8 @@ en_ZA:
           you_have_active:
             zero: "You don't have any active order cycles."
             one: "You have one active order cycle."
+            few: "You have %{count} active order cycles."
+            many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:

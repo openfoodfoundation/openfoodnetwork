@@ -36,7 +36,7 @@ it:
         spree/user:
           attributes:
             email:
-              taken: "Esiste già un account con questa email. Ti preghiamo di effettuare il login o impostare una nuova password."
+              taken: "Esiste già un account con questa email. Ti preghiamo di accedere o impostare una nuova password."
         spree/order:
           no_card: Non ci sono carte di credito autorizzate disponibili per l'addebito
         spree/credit_card:
@@ -293,6 +293,10 @@ it:
     edit: "Modifica"
     update: "Aggiorna"
     delete: "Annulla"
+    add: "Aggiungi"
+    cut: "Taglia"
+    paste: "Incolla"
+    rename: "Rinomina"
   admin:
     begins_at: Inizia a
     begins_on: Inizia da
@@ -727,7 +731,7 @@ it:
           recommend_require_login: "Consigliamo di richiedere la registrazione quando si dà la possibilità di modificare gli ordini."
           allow_guest_orders: "Gentili richieste ospiti"
           allow_guest_orders_tip: "Permetti l'acquisto come ospite o richiedi di registrarsi"
-          allow_guest_orders_false: "Richiedi il login per ordinare"
+          allow_guest_orders_false: "Richiedi accesso per ordinare"
           allow_guest_orders_true: "Permetti acquisto come ospite"
           allow_order_changes: "Modifica gentili richieste"
           allow_order_changes_tip: "Permetti ai clienti di modificare i propri ordini fino a quando il ciclo degli ordini è aperto."
@@ -1210,7 +1214,7 @@ it:
   shop:
     messages:
       customer_required:
-        login: "fai il login"
+        login: "accedi"
         signup: "Registrati"
         contact: "contatta"
         require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
@@ -1318,7 +1322,7 @@ it:
   label_blog: "Blog"
   label_support: "Aiuto"
   label_shopping: "Acquisto"
-  label_login: "Login"
+  label_login: "Accedi"
   label_logout: "Logout"
   label_signup: "Iscriviti"
   label_administration: "Amministrazione"
@@ -1578,7 +1582,8 @@ it:
   hubs_distance: Più vicino a
   hubs_distance_filter: "Mostrami negozi vicino a %{location}"
   shop_changeable_orders_alert_html:
-    one: La tua gentile richiesta con <a href='%{path}' target='_blank'>%{shop} / %{order}</a> è aperta. Puoi apportare modifiche fino a%{oc_close}.
+    few: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
+    many: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
     other: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
   orders_changeable_orders_alert_html: Questa gentile richiesta è stata confermata, ma puoi effettuare modifiche fino a <strong>%{oc_close}</strong>.
   products_clear: Pulisci
@@ -1724,7 +1729,8 @@ it:
   orders_could_not_cancel: "Ci dispiace, la gentile richiesta non ha potuto essere annullata"
   orders_cannot_remove_the_final_item: "Non si può rimuovere l'articolo definitivo da una gentile richiesta, per favore annulla piuttosto la gentile richiesta."
   orders_bought_items_notice:
-    one: "Un articolo aggiuntivo è già stato confermato per questo ciclo di richieste"
+    few: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
+    many: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     other: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
   orders_bought_edit_button: Modifica gli articoli confermati
   orders_bought_already_confirmed: "* già confermato"
@@ -2884,10 +2890,11 @@ it:
     adjustments: "Regolazioni"
     continue: "Continua"
     fill_in_customer_info: "Per favore compila le informazioni del cliente"
+    credit_card: "Carta di Credito"
     new_payment: "Nuovo pagamento"
     capture: "Cattura"
     void: "vuoto"
-    login: "Login"
+    login: "Accedi"
     password: "Password"
     signature: "Firma"
     solution: "Soluzione"
@@ -3004,6 +3011,7 @@ it:
     has_no_shipped_units: "non ha unità spedite"
     successfully_created: '%{resource} è stato creato con successo!'
     successfully_updated: '%{resource} è stato aggiornato con successo!'
+    payment_method: "Metodo di pagamento"
     payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     not_available: "N/A"
     order_populator:
@@ -3013,7 +3021,8 @@ it:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 errore ha proibito il salvataggio di questo record:"
+          few: "%{count} errori hanno proibito il salvataggio di questo record:"
+          many: "%{count} errori hanno proibito il salvataggio di questo record:"
           other: "%{count} errori hanno proibito il salvataggio di questo record:"
         there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
       payments_list:
@@ -3052,7 +3061,6 @@ it:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"
           add_product_properties: "Aggiungi proprietà prodotto"
-          select_from_prototype: "Seleziona da un prototipo"
       properties:
         index:
           properties: "Proprietà"
@@ -3145,6 +3153,8 @@ it:
           active_products:
             zero: "Non hai prodotti attivi."
             one: "Hai un prodotto attivo"
+            few: "Hai il %{count} di prodotti disponibili"
+            many: "Hai il %{count} di prodotti disponibili"
             other: "Hai il %{count} di prodotti disponibili"
         order_cycles:
           order_cycles: "Cicli di richieste"
@@ -3152,6 +3162,8 @@ it:
           you_have_active:
             zero: "Non hai nessun ciclo di richieste attivo."
             one: "Hai un ciclo di richieste attivo."
+            few: "Hai %{count} cicli di richieste attivi."
+            many: "Hai %{count} cicli di richieste attivi."
             other: "Hai %{count} cicli di richieste attivi."
           manage_order_cycles: "GESTISCI CICLI DI RICHIESTE"
       shipping_methods:

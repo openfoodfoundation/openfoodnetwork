@@ -293,6 +293,7 @@ en_NZ:
     edit: "Edit"
     update: "Update"
     delete: "Delete"
+    add: "Add"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -2897,6 +2898,7 @@ en_NZ:
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
@@ -3017,6 +3019,7 @@ en_NZ:
     has_no_shipped_units: "has no shipped units"
     successfully_created: '%{resource} has been successfully created!'
     successfully_updated: '%{resource} has been successfully updated!'
+    payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"
     order_populator:
@@ -3067,7 +3070,6 @@ en_NZ:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
           add_product_properties: "Add Product Properties"
-          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
