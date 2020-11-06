@@ -48,7 +48,7 @@ describe ProductImport::InventoryResetStrategy do
       context 'and supplier_ids is set' do
         let(:supplier_ids) { enterprise.id }
         let(:variant) { create(:variant) }
-        let!(:variant_override) do
+        let!(:variant_override_with_count_on_hand) do
           create(
             :variant_override,
             count_on_hand: 10,
@@ -56,20 +56,42 @@ describe ProductImport::InventoryResetStrategy do
             variant: variant
           )
         end
-        it 'does not update the count_on_hand of the excluded items' do
-          inventory_reset.reset(supplier_ids)
-          expect(variant_override.reload.count_on_hand).to eq(10)
+        let!(:variant_override_on_demand) do
+          create(
+            :variant_override,
+            count_on_hand: nil,
+            on_demand: true,
+            hub: enterprise,
+            variant: variant
+          )
+        end
+        let(:excluded_items_ids) do
+          [variant_override_with_count_on_hand.id, variant_override_on_demand.id]
         end
 
-        it 'updates the count_on_hand of the non-excluded items' do
-          non_excluded_variant_override = create(
+        it 'does not update the count_on_hand or on_demand setting of the excluded items' do
+          inventory_reset.reset(supplier_ids)
+          expect(variant_override_with_count_on_hand.reload.count_on_hand).to eq(10)
+          expect(variant_override_on_demand.reload.on_demand).to eq(true)
+        end
+
+        it 'updates the count_on_hand or on_demand setting of the non-excluded items' do
+          non_excluded_variant_override_with_count_on_hand = create(
             :variant_override,
             count_on_hand: 3,
             hub: enterprise,
             variant: variant
           )
+          non_excluded_variant_override_on_demand = create(
+            :variant_override,
+            count_on_hand: nil,
+            on_demand: true,
+            hub: enterprise,
+            variant: variant
+          )
           inventory_reset.reset(supplier_ids)
-          expect(non_excluded_variant_override.reload.count_on_hand).to eq(0)
+          expect(non_excluded_variant_override_with_count_on_hand.reload.count_on_hand).to eq(0)
+          expect(non_excluded_variant_override_on_demand.reload.on_demand).to eq(false)
         end
       end
     end
@@ -109,17 +131,38 @@ describe ProductImport::InventoryResetStrategy do
         let(:supplier_ids) { enterprise.id }
         let(:enterprise) { variant.product.supplier }
         let(:variant) { create(:variant) }
-        let!(:variant_override) do
-          create(
-            :variant_override,
-            count_on_hand: 10,
-            hub: enterprise,
-            variant: variant
-          )
+
+        context "and variant overrides with count on hand" do
+          let!(:variant_override) do
+            create(
+              :variant_override,
+              count_on_hand: 10,
+              hub: enterprise,
+              variant: variant
+            )
+          end
+
+          it 'sets their count_on_hand to 0' do
+            inventory_reset.reset(supplier_ids)
+            expect(variant_override.reload.count_on_hand).to eq(0)
+          end
         end
-        it 'sets all count_on_hand to 0' do
-          inventory_reset.reset(supplier_ids)
-          expect(variant_override.reload.count_on_hand).to eq(0)
+
+        context 'and variant overides on demand' do
+          let!(:variant_override) do
+            create(
+              :variant_override,
+              count_on_hand: nil,
+              on_demand: true,
+              hub: enterprise,
+              variant: variant
+            )
+          end
+
+          it 'turns off their on_demand setting' do
+            inventory_reset.reset(supplier_ids)
+            expect(variant_override.reload.on_demand).to eq(false)
+          end
         end
       end
     end
@@ -159,17 +202,38 @@ describe ProductImport::InventoryResetStrategy do
         let(:supplier_ids) { enterprise.id }
         let(:enterprise) { variant.product.supplier }
         let(:variant) { create(:variant) }
-        let!(:variant_override) do
-          create(
-            :variant_override,
-            count_on_hand: 10,
-            hub: enterprise,
-            variant: variant
-          )
+
+        context "and variant overrides with count on hand" do
+          let!(:variant_override) do
+            create(
+              :variant_override,
+              count_on_hand: 10,
+              hub: enterprise,
+              variant: variant
+            )
+          end
+
+          it 'sets their count_on_hand to 0' do
+            inventory_reset.reset(supplier_ids)
+            expect(variant_override.reload.count_on_hand).to eq(0)
+          end
         end
-        it 'sets all count_on_hand to 0' do
-          inventory_reset.reset(supplier_ids)
-          expect(variant_override.reload.count_on_hand).to eq(0)
+
+        context "and variant overrides on demand" do
+          let!(:variant_override) do
+            create(
+              :variant_override,
+              count_on_hand: nil,
+              on_demand: true,
+              hub: enterprise,
+              variant: variant
+            )
+          end
+
+          it 'turns off their on_demand setting' do
+            inventory_reset.reset(supplier_ids)
+            expect(variant_override.reload.on_demand).to eq(false)
+          end
         end
       end
     end
