@@ -13,10 +13,20 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'rails', '~> 4.2'
   gem 'i18n'
   gem 'rails-i18n'
+
+  gem 'json'
+  gem 'money', '< 6.1.0'
+  gem 'aws-sdk', '1.67.0'
+  gem 'state_machines-activerecord'
 else
   gem 'rails', '~> 4.1.16'
   gem 'i18n', '~> 0.6.11'
   gem 'rails-i18n', '~> 4.0'
+
+  gem 'json', '>= 1.7.7'
+  gem 'money', '5.1.1'
+  gem 'aws-sdk', '1.11.1'
+  gem 'state_machine', '1.2.0'
 end
 
 gem 'i18n-js', '~> 3.8.0'
@@ -36,11 +46,8 @@ gem 'awesome_nested_set', '~> 3.0.0.rc.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker', '~> 1.16'
 gem 'highline', '= 1.6.18' # Necessary for the install generator
-gem 'json', '>= 1.7.7'
-gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
 gem 'ransack', '~> 1.8.10'
-gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
 gem 'spree_i18n', github: 'openfoodfoundation/spree_i18n', branch: '1-3-stable'
@@ -71,7 +78,6 @@ gem 'kaminari', '~> 0.14.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk', '1.11.1' # temporarily locked down due to https://github.com/aws/aws-sdk-ruby/issues/273
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'
