@@ -2887,6 +2887,8 @@ de_DE:
     delete: "Löschen"
     cannot_set_shipping_method_without_address: "Versandart kann nicht festgelegt werden, bis Kundendaten angegeben werden."
     no_tracking_present: "Keine Tracking-Details angegeben."
+    tracking: "Sendungsverfolgung"
+    tracking_number: "Sendungscode"
     order_total: "Auftrag insgesamt"
     customer_details: "Kundendetails"
     customer_search: "Kundensuche"
