@@ -18,6 +18,8 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'money', '< 6.1.0'
   gem 'aws-sdk', '1.67.0'
   gem 'state_machines-activerecord'
+
+  gem 'responders', '~> 2.0'
 else
   gem 'rails', '~> 4.1.16'
   gem 'i18n', '~> 0.6.11'
@@ -27,6 +29,8 @@ else
   gem 'money', '5.1.1'
   gem 'aws-sdk', '1.11.1'
   gem 'state_machine', '1.2.0'
+
+  gem 'foreigner'
 end
 
 gem 'i18n-js', '~> 3.8.0'
@@ -110,7 +114,6 @@ gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-gem 'foreigner'
 gem 'immigrant'
 gem 'roo', '~> 2.8.3'
 
@@ -146,7 +149,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
-  gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
+  gem 'capybara', '= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '4.10.0', require: false
   gem 'fuubar', '~> 2.5.0'
