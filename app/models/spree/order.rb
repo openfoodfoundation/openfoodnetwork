@@ -466,7 +466,7 @@ module Spree
     def deliver_order_confirmation_email
       return if subscription.present?
 
-      Delayed::Job.enqueue ConfirmOrderJob.new(id)
+      ConfirmOrderJob.perform_later(id)
     end
 
     # Helper methods for checkout steps
