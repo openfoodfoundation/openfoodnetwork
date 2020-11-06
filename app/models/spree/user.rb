@@ -101,7 +101,7 @@ module Spree
     end
 
     def send_signup_confirmation
-      Delayed::Job.enqueue ConfirmSignupJob.new(id)
+      ConfirmSignupJob.perform_later(id)
     end
 
     def associate_customers
