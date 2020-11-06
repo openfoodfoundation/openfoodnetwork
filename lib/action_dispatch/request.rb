@@ -38,26 +38,30 @@ module ActionDispatch
         def deep_munge(hash, keys = [])
           return hash unless perform_deep_munge
 
-          hash.each do |k, v|
-            keys << k
-            case v
-            when Array
-              v.grep(Hash) { |x| deep_munge(x, keys) }
-              v.compact!
-
-              # This patch removes the following lines
-              # if v.empty?
-              #   hash[k] = nil
-              # ActiveSupport::Notifications.instrument("deep_munge.action_controller",
-              #                                         keys: keys)
-              # end
-            when Hash
-              deep_munge(v, keys)
-            end
-            keys.pop
+          hash.each do |key, value|
+            deep_munge_value(key, value, keys)
           end
 
           hash
+        end
+
+        def deep_munge_value(key, value, keys)
+          keys << key
+          case value
+          when Array
+            value.grep(Hash) { |x| deep_munge(x, keys) }
+            value.compact!
+
+            # This patch removes the following lines
+            # if v.empty?
+            #   hash[k] = nil
+            # ActiveSupport::Notifications.instrument("deep_munge.action_controller",
+            #                                         keys: keys)
+            # end
+          when Hash
+            deep_munge(value, keys)
+          end
+          keys.pop
         end
       end
     end
