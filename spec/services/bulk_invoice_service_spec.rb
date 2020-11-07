@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe BulkInvoiceService do
+  include ActiveJob::TestHelper
+
   let(:service) { BulkInvoiceService.new }
 
   describe "#start_pdf_job" do
@@ -15,7 +17,9 @@ describe BulkInvoiceService do
       order.bill_address = order.ship_address
       order.save!
 
-      service.start_pdf_job_without_delay([order.id])
+      perform_enqueued_jobs do
+        service.start_pdf_job([order.id])
+      end
 
       expect(service.invoice_created?(service.id)).to be_truthy
     end
@@ -63,7 +67,9 @@ describe BulkInvoiceService do
       expect(renderer).to receive(:render_to_string).with(order_oldest).ordered.and_return("")
 
       order_ids = [order_oldest, order_old, order_older].map(&:id)
-      service.start_pdf_job_without_delay(order_ids)
+      perform_enqueued_jobs do
+        service.start_pdf_job(order_ids)
+      end
     end
   end
 end
