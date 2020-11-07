@@ -30,7 +30,7 @@ module Api
         @shipment.adjustment.open
       end
 
-      @shipment.update(params[:shipment])
+      @shipment.update(shipment_params[:shipment])
 
       if unlock == 'yes'
         @shipment.adjustment.close
@@ -88,7 +88,7 @@ module Api
 
     def find_and_update_shipment
       @shipment = @order.shipments.find_by!(number: params[:id])
-      @shipment.update(params[:shipment])
+      @shipment.update(shipment_params[:shipment]) if shipment_params[:shipment].present?
       @shipment.reload
     end
 
@@ -100,6 +100,13 @@ module Api
 
     def get_or_create_shipment(stock_location_id)
       @order.shipment || @order.shipments.create(stock_location_id: stock_location_id)
+    end
+
+    def shipment_params
+      params.permit(
+        [:id, :order_id, :variant_id, :quantity,
+         { shipment: [:tracking, :selected_shipping_rate_id] }]
+      )
     end
   end
 end
