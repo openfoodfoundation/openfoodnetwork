@@ -7,9 +7,7 @@ describe BulkInvoiceService do
     it "starts a background process to create a pdf with multiple invoices" do
       expect do
         service.start_pdf_job [1, 2]
-      end.to enqueue_job Delayed::PerformableMethod
-
-      expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
+      end.to enqueue_job BulkInvoiceJob
     end
 
     it "creates a PDF invoice" do
