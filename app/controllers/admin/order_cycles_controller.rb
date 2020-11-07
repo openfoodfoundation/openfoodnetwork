@@ -223,7 +223,7 @@ module Admin
     end
 
     def order_cycle_set
-      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
+      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
     end
 
     def require_order_cycle_set_params
@@ -239,6 +239,12 @@ module Admin
 
     def order_cycle_params
       PermittedAttributes::OrderCycle.new(params).call
+    end
+
+    def order_cycle_bulk_params
+      params.require(:order_cycle_set).permit(
+        collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
+      )
     end
   end
 end
