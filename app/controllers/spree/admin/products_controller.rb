@@ -179,7 +179,7 @@ module Spree
       end
 
       def bulk_index_query(params)
-        params[:filters].to_h.merge(page: params[:page], per_page: params[:per_page])
+        (params[:filters] || {}).merge(page: params[:page], per_page: params[:per_page])
       end
 
       def load_form_data
