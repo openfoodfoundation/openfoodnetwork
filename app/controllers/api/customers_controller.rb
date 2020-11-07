@@ -11,11 +11,15 @@ module Api
       @customer = Customer.find(params[:id])
       authorize! :update, @customer
 
-      if @customer.update(params[:customer])
+      if @customer.update(customer_params)
         render json: @customer, serializer: CustomerSerializer, status: :ok
       else
         invalid_resource!(@customer)
       end
+    end
+
+    def customer_params
+      params.require(:customer).permit(:code, :email, :enterprise_id, :allow_charges)
     end
   end
 end
