@@ -30,7 +30,7 @@ module Api
         @shipment.adjustment.open
       end
 
-      @shipment.update(params[:shipment])
+      @shipment.update(shipment_params[:shipment])
 
       if unlock == 'yes'
         @shipment.adjustment.close
@@ -104,7 +104,8 @@ module Api
 
     def shipment_params
       params.permit(
-        [:id, :order_id, :variant_id, :quantity, { shipment: :tracking}]
+        [:id, :order_id, :variant_id, :quantity,
+         { shipment: [:tracking, :selected_shipping_rate_id] }]
       )
     end
   end
