@@ -1977,6 +1977,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         state_field_error: "State required"
         country_field: "Country:"
         country_field_error: "Please select a country"
+        map_location: "Map Location"
+        locate_address: "Locate address on map"
+        confirm_location: "Is this map pin location accurate?"
+        confirm_address_yes: "Yes - it's accurate"
+        confirm_address_no: "No - not accurate" 
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
