@@ -101,7 +101,7 @@ module OrderManagement
 
       def inspect
         out = "#{order} - "
-        out << contents.map do |content_item|
+        out.dup << contents.map do |content_item|
           "#{content_item.variant.name} #{content_item.quantity} #{content_item.state}"
         end.join('/')
         out
