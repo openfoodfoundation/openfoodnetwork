@@ -27,7 +27,7 @@
           #footer
     %loading
 
-    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places"}
+    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''}"}
     = javascript_include_tag "darkswarm/all"
     = yield :scripts
 
