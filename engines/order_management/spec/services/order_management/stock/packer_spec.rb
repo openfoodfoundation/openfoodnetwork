@@ -10,7 +10,7 @@ module OrderManagement
 
       subject { Packer.new(stock_location, order) }
 
-      before { order.line_items.first.variant.update(weight: 1) }
+      before { order.line_items.first.variant.weight = 1 }
 
       it 'builds a package with all the items' do
         package = subject.package
