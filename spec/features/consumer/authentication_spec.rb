@@ -82,7 +82,7 @@ feature "Authentication", js: true do
               expect do
                 click_signup_button
                 expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-              end.to send_confirmation_instructions
+              end.to enqueue_job ActionMailer::DeliveryJob
             end
           end
         end
@@ -104,8 +104,7 @@ feature "Authentication", js: true do
             expect do
               click_reset_password_button
               expect(page).to have_reset_password
-            end.to enqueue_job Delayed::PerformableMethod
-            expect(Delayed::Job.last.payload_object.method_name).to eq(:send_reset_password_instructions_without_delay)
+            end.to enqueue_job ActionMailer::DeliveryJob
           end
 
           context "user with unconfirmed email" do

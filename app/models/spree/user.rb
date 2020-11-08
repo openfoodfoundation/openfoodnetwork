@@ -58,9 +58,11 @@ module Spree
       has_spree_role?('admin')
     end
 
-    # handle_asynchronously will define send_reset_password_instructions_with_delay.
-    # If handle_asynchronously is called twice, we get an infinite job loop.
-    handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
+    # Send devise-based user emails asyncronously via ActiveJob
+    # See: https://github.com/heartcombo/devise/tree/v3.5.10#activejob-integration
+    def send_devise_notification(notification, *args)
+      devise_mailer.public_send(notification, self, *args).deliver_later
+    end
 
     def regenerate_reset_password_token
       set_reset_password_token
