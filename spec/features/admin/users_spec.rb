@@ -124,7 +124,7 @@ feature "Managing users" do
           # The `a` element doesn't have an href, so we can't use click_link.
           find("a", text: "Resend").click
           expect(page).to have_text "Resend done"
-        end.to send_confirmation_instructions
+        end.to enqueue_job ActionMailer::DeliveryJob
       end
     end
   end

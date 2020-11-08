@@ -194,6 +194,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include DownloadsHelper, type: :feature
+  config.include ActiveJob::TestHelper
 
   # FactoryBot
   require 'factory_bot_rails'

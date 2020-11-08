@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree.user_class do
+describe Spree::User do
   include OpenFoodNetwork::EmailHelper
 
   describe "associations" do
@@ -81,11 +81,10 @@ describe Spree.user_class do
       performing_deliveries do
         expect do
           create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
-        end.to send_confirmation_instructions
+        end.to enqueue_job ActionMailer::DeliveryJob
       end
 
-      sent_mail = ActionMailer::Base.deliveries.last
-      expect(sent_mail.to).to eq ['new_user@example.com']
+      expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
     end
 
     context "with the the same email as existing customers" do
