@@ -217,8 +217,11 @@ feature '
         select 'Permitted distributor', from: 'new_distributor_id'
         click_button 'Add distributor'
 
+        expect(page).to have_input 'order_cycle_outgoing_exchange_0_pickup_time'
         fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
         fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
+        expect(page).to have_input 'order_cycle_outgoing_exchange_1_pickup_time'
         fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'pickup time 2'
         fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'pickup instructions'
 
@@ -389,12 +392,15 @@ feature '
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
+        expect(page).to_not have_content "Loading..."
+
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
           page.find("td.products").click
         end
 
         # I should be able to see and toggle v1
+        expect(page).to have_selector ".exchange-product-variant"
         expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
         uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
 
