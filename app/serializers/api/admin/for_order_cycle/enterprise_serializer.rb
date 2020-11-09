@@ -17,7 +17,7 @@ module Api
               issues_summary(confirmation_only: true)
 
           if issues.nil? && products.empty?
-            issues = "no products in inventory"
+            issues = I18n.t(:no_products)
           end
           issues
         end
