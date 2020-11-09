@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-plugin 'bootboot', '~> 0.1.1'
+plugin 'bootboot', '~> 0.1.1' unless Bundler.settings[:frozen]
 Plugin.send(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
 
 if ENV['DEPENDENCIES_NEXT']
