@@ -65,7 +65,7 @@ gem 'haml'
 gem 'redcarpet'
 gem 'sass'
 gem 'sass-rails'
-gem 'truncate_html', '0.9.2'
+gem 'truncate_html', '0.9.3'
 gem 'unicorn'
 
 gem 'actionpack-action_caching'
