@@ -66,6 +66,28 @@ feature '
       expect(product.master.options_text).to eq("5kg")
     end
 
+    scenario "creating directly from the new product path", js: true do
+      login_as_admin_and_visit spree.new_admin_product_path
+
+      select 'New supplier', from: 'product_supplier_id'
+      fill_in 'product_name', with: 'A new product !!!'
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value_with_description', with: 5
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '19.99'
+      fill_in 'product_on_hand', with: 5
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      page.find("div[id^='taTextElement']").native.send_keys('A description...')
+
+      click_button 'Create'
+
+      expect(current_path).to eq spree.admin_products_path
+      expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
+      product = Spree::Product.find_by(name: 'A new product !!!')
+      expect(product.variant_unit).to eq('weight')
+      expect(product.variant_unit_scale).to eq(1000)
+    end
+
     scenario "creating an on-demand product", js: true do
       login_as_admin_and_visit spree.admin_products_path
 
@@ -445,6 +467,18 @@ feature '
 
       uri = URI.parse(current_url)
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+    end
+
+    scenario "editing a product's variant unit scale", js: true do
+      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+
+      visit spree.edit_admin_product_path product
+      select 'Weight (kg)', from: 'product_variant_unit_with_scale'
+      click_button 'Update'
+      expect(flash_message).to eq('Product "a product" has been successfully updated!')
+      product.reload
+      expect(product.variant_unit).to eq('weight')
+      expect(product.variant_unit_scale).to eq(1000)
     end
   end
 end
