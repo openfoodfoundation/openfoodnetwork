@@ -112,6 +112,13 @@ module OrderManagement
 
           expect(shipment.shipping_method).to eq shipping_method
         end
+
+        describe "#inpsect" do
+          xit "prints the package contents" do
+            subject.add variant, 5
+            expect(subject.inspect).to match("#{variant.name} 5")
+          end
+        end
       end
 
       context "#shipping_methods and #shipping_categories" do
