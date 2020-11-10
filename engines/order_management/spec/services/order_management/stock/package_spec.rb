@@ -114,7 +114,7 @@ module OrderManagement
         end
 
         describe "#inpsect" do
-          xit "prints the package contents" do
+          it "prints the package contents" do
             subject.add variant, 5
             expect(subject.inspect).to match("#{variant.name} 5")
           end

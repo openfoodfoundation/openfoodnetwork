@@ -104,7 +104,6 @@ module OrderManagement
         out.dup << contents.map do |content_item|
           "#{content_item.variant.name} #{content_item.quantity} #{content_item.state}"
         end.join('/')
-        out
       end
 
       def to_shipment
