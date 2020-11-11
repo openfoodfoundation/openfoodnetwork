@@ -783,4 +783,17 @@ module Spree
       expect(e.reload.variant_ids).to be_empty
     end
   end
+
+  describe "#ensure_unit_value" do
+    let(:product) { create(:product, variant_unit: "weight") }
+    let(:variant) { create(:variant, product_id: product.id) }
+
+    context "when a product's variant_unit value is changed from weight to items" do
+      it "sets the variant's unit_value to 1" do
+        product.update(variant_unit: "items")
+
+        expect(variant.unit_value).to eq 1
+      end
+    end
+  end
 end
