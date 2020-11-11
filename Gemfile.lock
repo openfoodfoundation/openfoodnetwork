@@ -634,7 +634,6 @@ GEM
     thread_safe (0.3.6)
     tilt (1.4.1)
     timecop (0.9.2)
-    truncate_html (0.9.2)
     tzinfo (0.3.57)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -778,7 +777,6 @@ DEPENDENCIES
   test-prof
   test-unit (~> 3.3)
   timecop
-  truncate_html (= 0.9.2)
   uglifier (>= 1.0.3)
   unicorn
   unicorn-rails
