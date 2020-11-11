@@ -8,7 +8,7 @@ def set_mail_configuration
     mail_host: ENV.fetch('MAIL_HOST'),
     mail_domain: ENV.fetch('MAIL_DOMAIN'),
     mail_port: ENV.fetch('MAIL_PORT'),
-    mail_auth_type: 'login',
+    mail_auth_type: ENV.fetch('MAIL_AUTH_TYPE', 'login'),
     smtp_username: ENV.fetch('SMTP_USERNAME'),
     smtp_password: ENV.fetch('SMTP_PASSWORD'),
     secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
