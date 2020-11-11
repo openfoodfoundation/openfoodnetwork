@@ -66,7 +66,12 @@ module Admin
       return Customer.where("1=0") unless json_request? && params[:enterprise_id].present?
 
       Customer.of(managed_enterprise_id).
-        includes(:bill_address, :ship_address, user: :credit_cards)
+        includes(:bill_address, :ship_address, user: :credit_cards).
+        joins(:orders).
+        merge(Spree::Order.complete.not_state(:canceled)).
+        group("customers.id").
+        select("customers.*").
+        select("SUM(total - payment_total) AS balance_value")
     end
 
     def managed_enterprise_id

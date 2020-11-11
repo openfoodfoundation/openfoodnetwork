@@ -9,6 +9,8 @@ module Api
       has_one :ship_address, serializer: Api::AddressSerializer
       has_one :bill_address, serializer: Api::AddressSerializer
 
+      delegate :balance_value, to: :object
+
       def name
         object.name.presence || object.bill_address.andand.full_name
       end
@@ -50,11 +52,6 @@ module Api
         return object.tag_list unless options[:customer_tags]
 
         options[:customer_tags].andand[object.id] || []
-      end
-
-      def balance_value
-        @balance_value ||=
-          OpenFoodNetwork::UserBalanceCalculator.new(object.email, object.enterprise).balance
       end
     end
   end

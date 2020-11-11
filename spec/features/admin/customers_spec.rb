@@ -97,9 +97,9 @@ feature 'Customers' do
 
       describe "for a shop with multiple customers" do
         before do
-          mock_balance(customer1.email, managed_distributor1, 88)
-          mock_balance(customer2.email, managed_distributor1, -99)
-          mock_balance(customer4.email, managed_distributor1, 0)
+          build_balance(customer1, managed_distributor1, 88)
+          build_balance(customer2, managed_distributor1, -99)
+          build_balance(customer4, managed_distributor1, 0)
 
           customer4.update enterprise: managed_distributor1
         end
@@ -122,11 +122,12 @@ feature 'Customers' do
           end
         end
 
-        def mock_balance(email, enterprise, balance)
-          user_balance_calculator = instance_double(OpenFoodNetwork::UserBalanceCalculator)
-          expect(OpenFoodNetwork::UserBalanceCalculator).to receive(:new).
-            with(email, enterprise).and_return(user_balance_calculator)
-          expect(user_balance_calculator).to receive(:balance).and_return(balance)
+        def build_balance(customer, enterprise, balance)
+          order = build(:order, total: balance, payment_total: 0, distributor: enterprise)
+          order.email = customer.email
+          order.customer_id = customer.id
+          order.completed_at = Time.zone.now
+          order.save!
         end
       end
 
