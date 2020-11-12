@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "application_responder"
 require 'open_food_network/referer_parser'
 require_dependency 'spree/authentication_helpers'

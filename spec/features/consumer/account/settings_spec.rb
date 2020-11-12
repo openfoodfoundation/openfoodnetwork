@@ -36,7 +36,8 @@ feature "Account Settings", js: true do
       expect(user.email).to eq 'old@email.com'
       expect(user.unconfirmed_email).to eq 'new@email.com'
       click_link I18n.t('spree.users.show.tabs.settings')
-      expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email', unconfirmed_email: 'new@email.com')
+      expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email',
+                                          unconfirmed_email: 'new@email.com')
     end
 
     it "allows the user to change their password" do

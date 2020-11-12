@@ -63,7 +63,8 @@ module OpenFoodNetwork
           order.line_items.includes(:product)
             .where("spree_products.supplier_id = ?", params[:supplier_id].to_i)
             .references(:product)
-            .count > 0
+            .count
+            .positive?
         end
       else
         orders
