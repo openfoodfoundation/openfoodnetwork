@@ -1,3 +1,5 @@
+= admin_inject_available_units
+
 - content_for :page_actions do
   %li= button_link_to t('admin.products.back_to_products_list'), "#{admin_products_path}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", :icon => 'icon-arrow-left'
   %li#new_product_link
