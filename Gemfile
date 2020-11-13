@@ -10,12 +10,16 @@ if ENV['DEPENDENCIES_NEXT']
 
   # This will only be loaded when running
   # bundler command prefixed with `DEPENDENCIES_NEXT=1
+  gem 'rails', '~> 5.0.7'
+  gem 'rails-i18n', '~> 5.0.0'
+else
+  gem 'rails', '~> 4.2'
+  gem 'db2fog'
+  gem 'rails-i18n'
 end
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.0'
-gem 'rails', '~> 4.2'
-gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
@@ -58,6 +62,7 @@ gem 'activemerchant', '~> 1.78.0'
 gem 'devise', '~> 3.5.10' # v4.0.0 needs rails 4.1
 gem 'devise-encryptable'
 gem 'devise-token_authenticatable', '~> 0.4.10' # v0.5.0 needs devise v4
+
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 
@@ -71,7 +76,6 @@ gem 'andand'
 gem 'angularjs-rails', '1.5.5'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
-gem 'db2fog'
 gem 'haml'
 gem 'redcarpet'
 gem 'sass'
