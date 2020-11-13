@@ -1299,7 +1299,7 @@ de_DE:
   email: 'E-Mail:'
   phone: Telefonnummer
   next: Weiter
-  address: Adresse
+  address: Straße + Hausnummer
   address_placeholder: z.B. Gartenstrasse 123
   address2: Adresse (Fortsetzung)
   city: Ort

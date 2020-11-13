@@ -2947,7 +2947,7 @@ fr:
     landing_page: "Page d'accueil (landing page)"
     server: "Serveur"
     test_mode: "Mode test"
-    logourl: "URL du logo"
+    logourl: "URL logo"
     are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
     confirm_delete: "Confirmer la suppression"
     configurations: "Configurations"
