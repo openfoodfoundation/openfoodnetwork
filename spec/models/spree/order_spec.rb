@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/core/gateway_error'
 
 describe Spree::Order do
   include OpenFoodNetwork::EmailHelper
