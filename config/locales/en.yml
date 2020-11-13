@@ -1381,6 +1381,12 @@ en:
   address2: Address (contd.)
   city: City
   city_placeholder: eg. Northcote
+  latitude: Latitude
+  latitude_placeholder: eg. -37.4713077
+  latitude_longitude_tip: Latitude and longitude are needed to display your enterprise on the map.
+  longitude: Longitude
+  longitude_placeholder: eg. 144.7851531
+  use_geocoder: Calculate latitude and longitude automatically from address?
   state: State
   postcode: Postcode
   postcode_placeholder: eg. 3070
