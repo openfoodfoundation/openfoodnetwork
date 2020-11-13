@@ -1,9 +1,9 @@
 require 'ffaker'
 
 FactoryBot.define do
-  sequence(:random_string)      { Faker::Lorem.sentence }
-  sequence(:random_description) { Faker::Lorem.paragraphs(Kernel.rand(1..5)).join("\n") }
-  sequence(:random_email)       { Faker::Internet.email }
+  sequence(:random_string)      { FFaker::Lorem.sentence }
+  sequence(:random_description) { FFaker::Lorem.paragraphs(Kernel.rand(1..5)).join("\n") }
+  sequence(:random_email)       { FFaker::Internet.email }
 
   factory :classification, class: Spree::Classification do
   end
@@ -112,7 +112,7 @@ FactoryBot.define do
   end
 
   factory :customer, class: Customer do
-    email { Faker::Internet.email }
+    email { generate(:random_email) }
     enterprise
     code { SecureRandom.base64(150) }
     user
