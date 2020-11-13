@@ -2972,6 +2972,8 @@ ar:
     delete: "حذف"
     cannot_set_shipping_method_without_address: "لا يمكن ضبط طريقة الشحن حتى يتم تقديم تفاصيل العميل."
     no_tracking_present: "لم يتم تقديم تفاصيل التتبع."
+    tracking: "تتبع"
+    tracking_number: "أرقام التتبع"
     order_total: "مجموع الطلب "
     customer_details: "تفاصيل العميل"
     customer_search: "بحث العملاء"
