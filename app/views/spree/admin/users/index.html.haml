@@ -26,7 +26,9 @@
         %td.user_enterprise_limit= user.enterprise_limit
         %td.actions
           = link_to_delete user, no_text: true
-= paginate @users
+- _with_routes Spree::Core::Engine.routes do
+  = paginate @users
+
 - content_for :sidebar_title do
   = t(".search")
 - content_for :sidebar do
