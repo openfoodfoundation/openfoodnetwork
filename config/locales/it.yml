@@ -247,7 +247,7 @@ it:
   unused: non in uso
   admin_and_handling: Admin
   profile: Profilo
-  supplier_only: Solo Fornitori
+  supplier_only: Solo Fornitore
   has_shopfront: Ha una Vetrina
   weight: Peso
   volume: Volume
@@ -289,6 +289,7 @@ it:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
     cancel: "Annulla"
+    resume: "Continuare"
     save: "Salva"
     edit: "Modifica"
     update: "Aggiorna"
@@ -296,6 +297,7 @@ it:
     add: "Aggiungi"
     cut: "Taglia"
     paste: "Incolla"
+    destroy: "Eliminare"
     rename: "Rinomina"
   admin:
     begins_at: Inizia a
@@ -355,6 +357,7 @@ it:
     has_n_rules: "ha %{num} regole"
     unsaved_confirm_leave: "Ci sono cambiamenti non salvati in questa pagina. Continuare senza salvare?"
     unsaved_changes: "Hai modifiche non salvate"
+    available_units: "Unità disponibili"
     shopfront_settings:
       embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
       enable_embedded_shopfronts: "Abilita vetrine incorporate"
@@ -414,6 +417,7 @@ it:
         search_by_email: "Cerca per email/codice..."
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
+        balance_due: "Da pagare"
       destroy:
         has_associated_orders: "Cancellazione fallita: l'utente ha ordini associati al negozio"
     contents:
@@ -602,6 +606,8 @@ it:
       controls:
         back_to_my_inventory: Indietro al mio inventario
     orders:
+      edit:
+        order_sure_want_to: Sei sicuro di voler %{event} questa gentile richiesta?
       invoice_email_sent: 'La mail con la fattura è stata inviata'
       order_email_resent: 'La mail con la gentile richiesta è stata re-inviata'
       bulk_management:
@@ -650,6 +656,7 @@ it:
           invoice_text: Aggiungere testo personalizzato alla fine delle fatture
           terms_and_conditions: "Termini e Condizioni"
           remove_terms_and_conditions: "Rimuovi File"
+          uploaded_on: "caricato il"
         contact:
           name: Nome
           name_placeholder: es. Gustav Plum
@@ -759,6 +766,7 @@ it:
               nuova apertura. Questo viene visualizzato sul tuo negozio solo quando
               non hai cicli d'ordine attivi (es. il negozio è chiuso).
           shopfront_category_ordering: "Categorie disponibili in Vetrina"
+          shopfront_category_ordering_note: "(dall'alto in basso)"
           open_date: "Data apertura"
           close_date: "Data chiusura"
         social:
@@ -825,7 +833,7 @@ it:
       change_type_form:
         producer_profile: Profilo produttore
         connect_ofn: Connetti attraverso OFN
-        always_free: SEMPRE LIBERO
+        always_free: SEMPRE GRATUITO
         producer_description_text: Aggiungi i tuoi prodotti, permettendo agli hubs di inserire i tuoi prodotti nei loro negozi.
         producer_shop: Negozio produttore
         sell_your_produce: Vendi i tuoi prodotti
@@ -1168,6 +1176,7 @@ it:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     terms_and_conditions:
+      message_html: "Accetto i %{terms_and_conditions_link} del venditore."
       link_text: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
@@ -1582,6 +1591,7 @@ it:
   hubs_distance: Più vicino a
   hubs_distance_filter: "Mostrami negozi vicino a %{location}"
   shop_changeable_orders_alert_html:
+    one: La tua gentile richiesta con <a href='%{path}' target='_blank'>%{shop} / %{order}</a> può essere modificata fino al %{oc_close}.
     few: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
     many: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
     other: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
@@ -1729,6 +1739,7 @@ it:
   orders_could_not_cancel: "Ci dispiace, la gentile richiesta non ha potuto essere annullata"
   orders_cannot_remove_the_final_item: "Non si può rimuovere l'articolo definitivo da una gentile richiesta, per favore annulla piuttosto la gentile richiesta."
   orders_bought_items_notice:
+    one: E' già stato confermato un articolo aggiuntivo per questo ciclo di richieste
     few: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     many: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     other: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
@@ -2408,6 +2419,14 @@ it:
               Creando regole relative ad una specifica tag per clienti, puoi superare
               il comportamento predefinito (che prevede elementi visibili o nascosti)
               per clienti con le tag specificate.
+        terms_and_conditions_info:
+          title: "Caricamento dei Termini e Condizioni"
+          message_1: "I Termini e Condizioni sono il contratto tra te, il venditore, e l'acquirente. Se carichi un documento qui, i tuoi clienti dovranno accettare i tuoi Termini e Condizioni per poter confermare la loro gentile richiesta. Ti consigliamo vivamente di caricare i tuoi Termini e Condizioni, in linea con la legislazione nazionale."
+          message_2: "I clienti dovranno accettare i tuoi Termini e Condizioni solo una volta. Se modificherai il documento, ai tuoi clienti sarà nuovamente richiesto di accettare la nuova versione prima di poter confermare la loro gentile richiesta."
+        terms_and_conditions_warning:
+          title: "Caricamento dei Termini e Condizioni"
+          message_1: "Tutti i tuoi clienti dovranno accettarli alla conferma delle loro gentili richieste. Se aggiorni il documento, tutti i tuoi clienti dovranno accettarli nuovamente alla prossima conferma di richiesta."
+          message_2: "Per i clienti in abbonamento, per ora è necessario mandare loro una mail con i Termini e le Condizioni (o con le modifiche ad essi). Non è al momento prevista alcuna notifica automatica."
       panels:
         save: SALVA
         saved: SALVATO
@@ -2472,7 +2491,7 @@ it:
               quindi, indipendentemente dalla tua situazione, vogliamo fornire gli
               strumenti necessari per gestire la tua organizzazione alimentare locale.
           get_listing: Ottieni un listino
-          always_free: SEMPRE LIBERO
+          always_free: SEMPRE GRATUITO
           sell_produce_others: Vendi prodotti di altri
           sell_own_produce: Vendi i tuoi prodotti
           sell_both: Vendi prodotti tuoi e di altri
@@ -2869,6 +2888,8 @@ it:
     delete: "Annulla"
     cannot_set_shipping_method_without_address: "Impossibile impostare il metodo di spedizione finché non vengono forniti i dettagli del cliente."
     no_tracking_present: "Nessun dettaglio di tracciamento fornito."
+    tracking: "Tracciamento"
+    tracking_number: "Numero Tracciamento"
     order_total: "Ordine totale"
     customer_details: "Dettagli Cliente"
     customer_search: "Ricerca Clienti"
@@ -2902,6 +2923,8 @@ it:
     server: "Server"
     test_mode: "Modalità di Test"
     logourl: "Logourl"
+    are_you_sure_delete: "Sei sicuro di voler eliminare questo elemento?"
+    confirm_delete: "Conferma eliminazione"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -3021,6 +3044,7 @@ it:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
+          one: "1 errore ha impedito il salvataggio di questo record:"
           few: "%{count} errori hanno proibito il salvataggio di questo record:"
           many: "%{count} errori hanno proibito il salvataggio di questo record:"
           other: "%{count} errori hanno proibito il salvataggio di questo record:"
