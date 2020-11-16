@@ -109,6 +109,8 @@ nav.top-bar {
   ul.dropdown {
     border: 1px solid $smoke;
     border-top: none;
+    left: auto;
+    right: 0;
   }
 
   .nav-icons-menu {
