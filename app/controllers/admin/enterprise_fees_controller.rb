@@ -84,7 +84,12 @@ module Admin
         collection_attributes: [
           :id, :enterprise_id, :fee_type, :name, :tax_category_id,
           :inherits_tax_category, :calculator_type,
-          { calculator_attributes: [:id, :preferred_flat_percent] }
+          { calculator_attributes:
+              [:id, :preferred_currency, :preferred_amount, :preferred_flat_percent,
+               :preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount,
+               :preferred_unit_from_list, :preferred_per_unit, :preferred_first_item,
+               :preferred_additional_item, :preferred_max_items]
+          }
         ]
       )
     end
