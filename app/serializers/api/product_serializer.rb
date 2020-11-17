@@ -16,16 +16,30 @@ class Api::ProductSerializer < ActiveModel::Serializer
   has_many :images, serializer: Api::ImageSerializer
   has_one :supplier, serializer: Api::IdSerializer
 
+  ALLOWED_CHARACTERS = {
+    "&amp;" => "&",
+    "&nbsp;" => " "
+  }.freeze
+
   # return an unformatted descripton
   def description
-    strip_tags object.description&.strip
+    return unless d = strip_tags(object.description&.strip)
+
+    ALLOWED_CHARACTERS.each do |character, sub|
+      d = d.gsub(character, sub)
+    end
+    d
   end
 
   # return a sanitized html description
   def description_html
     d = sanitize(object.description, tags: ["p", "b", "strong", "em", "i", "a", "u"],
                                      attributes: ["href", "target"])
-    d.to_s.html_safe
+    d = d.to_s.html_safe
+    ALLOWED_CHARACTERS.each do |character, sub|
+      d = d.gsub(character, sub)
+    end
+    d
   end
 
   def properties_with_values
