@@ -22,7 +22,7 @@ module Api
 
     def create
       authorize! :create, Spree::Taxon
-      @taxon = Spree::Taxon.new(taxon_params[:taxon])
+      @taxon = Spree::Taxon.new(taxon_params)
       @taxon.taxonomy_id = params[:taxonomy_id]
       taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
@@ -68,7 +68,9 @@ module Api
     end
 
     def taxon_params
-      params.permit(taxon: [:name, :parent_id])
+      return if params[:taxon].blank?
+
+      params.require(:taxon).permit([:name, :parent_id])
     end
   end
 end
