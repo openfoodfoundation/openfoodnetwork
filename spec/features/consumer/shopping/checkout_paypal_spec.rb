@@ -3,6 +3,7 @@ require "spec_helper"
 feature "Check out with Paypal", js: true do
   include ShopWorkflow
   include CheckoutHelper
+  include PaypalHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -41,20 +42,13 @@ feature "Check out with Paypal", js: true do
     add_product_to_cart order, product
   end
 
-  describe "as a guest" do
+  context "as a guest" do
     it "fails with an error message" do
       visit checkout_path
       checkout_as_guest
       fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
 
-      paypal_response = double(:response, success?: false, errors: [])
-      paypal_provider = double(
-        :provider,
-        build_set_express_checkout: nil,
-        set_express_checkout: paypal_response
-      )
-      allow_any_instance_of(Spree::PaypalController).to receive(:provider).
-        and_return(paypal_provider)
+      stub_paypal_response success: false
 
       place_order
       expect(page).to have_content "PayPal failed."
