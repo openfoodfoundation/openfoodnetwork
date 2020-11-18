@@ -51,6 +51,27 @@ Spree::PaypalController.class_eval do
     end
   end
 
+  def confirm
+    order = current_order || raise(ActiveRecord::RecordNotFound)
+    order.payments.create!({
+      source: Spree::PaypalExpressCheckout.create({
+        token: params[:token],
+        payer_id: params[:PayerID]
+      }),
+      amount: order.total,
+      payment_method: payment_method
+    })
+    order.next
+    if order.complete?
+      flash.notice = Spree.t(:order_processed_successfully)
+      flash[:commerce_tracking] = "nothing special"
+      session[:order_id] = nil
+      redirect_to completion_route(order)
+    else
+      redirect_to checkout_state_path(order.state)
+    end
+  end
+
   def cancel
     flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
     redirect_to main_app.checkout_path
