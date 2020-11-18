@@ -46,6 +46,19 @@ module Spree
       end
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
+      def charge_offline(money, creditcard, gateway_options)
+        options = basic_options(gateway_options)
+        customer_id, payment_method_id = Stripe::CreditCardCloner.new.clone(creditcard,
+                                                                            stripe_account_id)
+
+        options[:customer] = customer_id
+        options[:off_session] = true
+        provider.purchase(money, payment_method_id, options)
+      rescue Stripe::StripeError => e
+        failed_activemerchant_billing_response(e.message)
+      end
+
+      # NOTE: the name of this method is determined by Spree::Payment::Processing
       def authorize(money, creditcard, gateway_options)
         authorize_response = provider.authorize(*options_for_authorize(money,
                                                                        creditcard,
