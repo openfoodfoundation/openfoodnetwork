@@ -40,6 +40,9 @@ Spree::PaypalController.class_eval do
     begin
       pp_response = provider.set_express_checkout(pp_request)
       if pp_response.success?
+        # At this point Paypal has *provisionally* accepted that the payment can now be placed,
+        # and the user will be redirected to a Paypal payment page. On completion, the user is
+        # sent back and the response is handled in the #confirm action in this controller.
         redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
       else
         flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
