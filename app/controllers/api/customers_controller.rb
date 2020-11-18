@@ -13,8 +13,9 @@ module Api
 
       client_secret = RecurringPayments.setup_for(@customer) if params[:customer][:allow_charges]
 
-      if @customer.update(customer_params)
-        @customer.gateway_recurring_payment_client_secret = client_secret if client_secret
+      if @customer.update(params[:customer])
+        @customer.gateway_recurring_payment_client_secret = client_secret
+        @customer.gateway_shop_id = @customer.enterprise.stripe_account&.stripe_user_id
         render json: @customer, serializer: CustomerSerializer, status: :ok
       else
         invalid_resource!(@customer)
