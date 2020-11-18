@@ -67,7 +67,7 @@ Spree::PaypalController.class_eval do
   private
 
   def payment_method
-    Spree::PaymentMethod.find(params[:payment_method_id])
+    @payment_method ||= Spree::PaymentMethod.find(params[:payment_method_id])
   end
 
   def permit_parameters!
