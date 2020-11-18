@@ -2509,6 +2509,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
+    authorising: "Authorising..."
     save_changes_first: Save changes first.
     all_changes_saved: All changes saved
     unsaved_changes: You have unsaved changes
