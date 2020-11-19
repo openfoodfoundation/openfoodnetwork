@@ -73,7 +73,7 @@ module Stripe
 
       loop do
         response = Stripe::Customer.list({ email: email, starting_after: starting_after },
-                                         { stripe_account: connected_account_id })
+                                         stripe_account: connected_account_id)
         customers += response.data
         break unless response.has_more
 
@@ -88,7 +88,7 @@ module Stripe
 
       loop do
         options = { customer: customer_id, type: 'card', starting_after: starting_after }
-        response = Stripe::PaymentMethod.list(options, { stripe_account: connected_account_id })
+        response = Stripe::PaymentMethod.list(options, stripe_account: connected_account_id)
         payment_methods += response.data
         break unless response.has_more
 

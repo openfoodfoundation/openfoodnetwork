@@ -15,10 +15,8 @@ module Spree
           raise Core::GatewayError, Spree.t(:payment_method_not_supported)
         end
 
-        if offline
-          charge_offline!
-        elsif payment_method.auto_capture?
-          purchase!
+        if payment_method.auto_capture?
+          purchase!(offline)
         else
           authorize!
         end
@@ -29,14 +27,9 @@ module Spree
         gateway_action(source, :authorize, :pend)
       end
 
-      def purchase!
+      def purchase!(offline = false)
         started_processing!
-        gateway_action(source, :purchase, :complete)
-      end
-
-      def charge_offline!
-        started_processing!
-        gateway_action(source, :charge_offline, :complete)
+        gateway_action(source, offline ? :charge_offline : :purchase, :complete)
       end
 
       def capture!
