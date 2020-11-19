@@ -33,5 +33,9 @@ module Api
       customer.gateway_recurring_payment_client_secret = client_secret
       customer.gateway_shop_id = customer.enterprise.stripe_account&.stripe_user_id
     end
+
+    def customer_params
+      params.require(:customer).permit(:code, :email, :enterprise_id, :allow_charges)
+    end
   end
 end
