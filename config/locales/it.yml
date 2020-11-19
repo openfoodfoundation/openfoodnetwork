@@ -638,7 +638,7 @@ it:
         title: Aziende
         new_enterprise: Nuova Azienda
         producer?: "Produttore?"
-        package: Imballaggio
+        package: Tipo Profilo
         status: Stato
         manage: Gestisci
       form:
@@ -834,7 +834,7 @@ it:
         producer_profile: Profilo produttore
         connect_ofn: Connetti attraverso OFN
         always_free: SEMPRE GRATUITO
-        producer_description_text: Aggiungi i tuoi prodotti, permettendo agli hubs di inserire i tuoi prodotti nei loro negozi.
+        producer_description_text: Aggiungi i tuoi prodotti a Open Food Network, consentendo agli hub di vendere i tuoi prodotti attraverso la loro vetrina.
         producer_shop: Negozio produttore
         sell_your_produce: Vendi i tuoi prodotti
         producer_shop_description_text: Vendi i tuoi prodotti direttamente ai clienti tramite la tua personale vetrina su Open Food Network.
@@ -843,11 +843,11 @@ it:
         producer_hub_text: Vendi prodotti tuoi e di altri
         producer_hub_description_text: La tua azienda è un pilastro della nostra filiera del cibo. Puoi vendere i tuoi prodotti, ma anche prodotti di tuoi produttori fidati attraverso la tua vetrina di Open Food Network.
         profile: Solo Profilo
-        get_listing: Ottieni un listino
+        get_listing: Compari su OFN
         profile_description_text: Le persone ti possono trovare e contattare su OFN. La tua azienda sarà visibile sulla mappa e potrà essere trovata nelle ricerche degli utenti.
-        hub_shop: Isola logistica
+        hub_shop: Negozio Hub
         hub_shop_text: Vendi prodotti di altri
-        hub_shop_description_text: La tua azienda è la spina dorsale della vostra filiera locale del cibo. Puoi aggregare i prodotti di altre aziende e venderli attraverso il tuo negozio su Open Food Network.
+        hub_shop_description_text: La tua azienda è la colonna vertebrale della tua filiera alimentare locale. Puoi aggregare i prodotti di diversi produttori presenti su Open Food Network e venderli attraverso la tua vetrina.
         choose_option: Per favore seleziona una delle opzioni.
         change_now: Modifica ora
       enterprise_user_index:
@@ -857,7 +857,7 @@ it:
         manage: Gestisci
         manage_link: Impostazioni
         producer?: "Produttore?"
-        package: "Imballaggio"
+        package: "Tipo Profilo"
         status: "Stato"
       new_form:
         owner: Proprietario
@@ -2440,11 +2440,11 @@ it:
           hub_profile_text2: >
               Avere un profilo e costruire connessioni all'interno del proprio sistema
               alimentare locale attraverso Open Food Network sarà sempre gratuito..
-          hub_shop: Isola logistica
+          hub_shop: Negozio Hub
           hub_shop_text1: >
-              La tua azienda è la spina dorsale della vostra filiera alimentare locale.
-              Puoi aggregare i prodotti di altre aziende e venderli attraverso il
-              tuo negozio su Open Food Network.
+              La tua azienda è la colonna vertebrale della tua filiera alimentare
+              locale. Puoi aggregare i prodotti di diversi produttori presenti su
+              Open Food Network e venderli attraverso la tua vetrina.
           hub_shop_text2: >
               Gli hub possono assumere molte forme: possono essere una cooperativa
               alimentare, un gruppo di acquisto, una csa o un negozio di alimentari
@@ -2470,7 +2470,7 @@ it:
               su Open Food Network.
           profile_only_text3: >
               Aggiungi i tuoi prodotti a Open Food Network, consentendo agli hub di
-              immagazzinare i tuoi prodotti nei loro negozi.
+              vendere i tuoi prodotti attraverso la loro vetrina.
           producer_shop: Negozio produttore
           producer_shop_text1: >
               Vendi i tuoi prodotti direttamente ai clienti attraverso la tua vetrina
@@ -2480,9 +2480,9 @@ it:
               coltivati / prodotti al di fuori della tua azienda, seleziona "Hub Produttore".
           producer_hub: Hub produttore
           producer_hub_text1: >
-              La tua azienda è la spina dorsale del tuo sistema alimentare locale.
-              Puoi vendere i tuoi prodotti e anche aggiungere prodotti di altre imprese
-              attraverso il tuo negozio su Open Food Network
+              La tua azienda è la colonna vertebrale della tua filiera alimentare
+              locale. Puoi vendere i tuoi prodotti ma anche anche quelli di altri
+              produttori attraverso la tua vetrina su Open Food Network
           producer_hub_text2: >
               Gli Hub dei produttori possono assumere molte forme: CSA,  cooperative
               alimentari, produttori che compongono cassette.. .
@@ -2490,7 +2490,7 @@ it:
               Open Food Network mira a supportare quanti più modelli di hub possibile,
               quindi, indipendentemente dalla tua situazione, vogliamo fornire gli
               strumenti necessari per gestire la tua organizzazione alimentare locale.
-          get_listing: Ottieni un listino
+          get_listing: Compari su OFN
           always_free: SEMPRE GRATUITO
           sell_produce_others: Vendi prodotti di altri
           sell_own_produce: Vendi i tuoi prodotti

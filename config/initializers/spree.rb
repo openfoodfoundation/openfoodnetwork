@@ -37,9 +37,9 @@ Spree.config do |config|
 end
 
 # Attachments settings
-Spree::Image.set_attachment_attributes(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
-Spree::Image.set_attachment_attributes(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
-Spree::Image.set_s3_attachment_definitions
+Spree::Image.set_attachment_attribute(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
+Spree::Image.set_attachment_attribute(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
+Spree::Image.set_storage_attachment_attributes
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'

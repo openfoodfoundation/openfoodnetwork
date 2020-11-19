@@ -17,7 +17,7 @@ module Api
     def create
       authorize! :create, Spree::Product
       params[:product][:available_on] ||= Time.zone.now
-      @product = Spree::Product.new(params[:product])
+      @product = Spree::Product.new(product_params)
       begin
         if @product.save
           render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
@@ -33,7 +33,7 @@ module Api
     def update
       authorize! :update, Spree::Product
       @product = find_product(params[:id])
-      if @product.update(params[:product])
+      if @product.update(product_params)
         render json: @product, serializer: Api::Admin::ProductSerializer, status: :ok
       else
         invalid_resource!(@product)
@@ -155,6 +155,10 @@ module Api
         page: (params[:page] || DEFAULT_PAGE).to_i,
         per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
       }
+    end
+
+    def product_params
+      params.require(:product).permit PermittedAttributes::Product.attributes
     end
   end
 end
