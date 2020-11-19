@@ -3,6 +3,7 @@ require "spec_helper"
 feature "Check out with Paypal", js: true do
   include ShopWorkflow
   include CheckoutHelper
+  include AuthenticationHelper
   include PaypalHelper
 
   let(:distributor) { create(:distributor_enterprise) }
@@ -35,6 +36,7 @@ feature "Check out with Paypal", js: true do
       distributor_ids: [distributor.id]
     )
   end
+  let(:user) { create(:user) }
 
   before do
     distributor.shipping_methods << free_shipping
@@ -52,6 +54,33 @@ feature "Check out with Paypal", js: true do
 
       place_order
       expect(page).to have_content "PayPal failed."
+    end
+  end
+
+  context "as a registered user" do
+    before { login_as user }
+
+    it "completes the checkout after successful Paypal payment" do
+      visit checkout_path
+      fill_out_details
+      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
+
+      # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
+      # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
+      # jump straight to being redirected back to OFN with a "confirmed" payment.
+      stub_paypal_response(
+        success: true,
+        redirect: spree.confirm_paypal_path(
+          payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+        )
+      )
+      stub_paypal_confirm
+
+      place_order
+      expect(page).to have_content "Your order has been processed successfully"
+
+      expect(order.reload.state).to eq "complete"
+      expect(order.payments.count).to eq 1
     end
   end
 end
