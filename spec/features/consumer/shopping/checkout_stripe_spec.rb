@@ -97,6 +97,12 @@ feature "Check out with Stripe", js: true do
     end
 
     context "with guest checkout" do
+      before do
+        stub_retrieve_payment_method_request("pm_123")
+        stub_list_customers_request(email: order.user.email, response: {})
+        stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+      end
+
       context "when the card is accepted" do
         before do
           stub_payment_intents_post_request order: order
@@ -205,7 +211,12 @@ feature "Check out with Stripe", js: true do
 
       context "saving a card and re-using it" do
         before do
+          stub_retrieve_payment_method_request("pm_123")
+          stub_list_customers_request(email: order.user.email, response: {})
+          stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+          stub_get_customer_payment_methods_request(customer: "cus_A123", response: {})
           stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
+          stub_add_metadata_request(payment_method: "pm_123", response: {})
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
           stub_customers_post_request email: user.email
