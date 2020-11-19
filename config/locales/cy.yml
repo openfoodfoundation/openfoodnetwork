@@ -1,20 +1,20 @@
 cy:
-  language_name: "English"
+  language_name: "Saesneg"
   activerecord:
     attributes:
       enterprise_fee:
-        fee_type: Fee Type
+        fee_type: Math o Ffi
       spree/order:
-        payment_state: Payment State
-        shipment_state: Shipment State
-        completed_at: Completed At
-        number: Number
-        state: State
-        email: Customer E-Mail
+        payment_state: Cyflwr Talu
+        shipment_state: Gwladwriaeth Cludo
+        completed_at: Wedi&#39;i gwblhau yn
+        number: Rhif
+        state: Nodwch
+        email: E-bost Cwsmer
       spree/payment:
-        amount: Amount
-        state: State
-        source: Source
+        amount: Swm
+        state: Nodwch
+        source: Ffynhonnell
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
