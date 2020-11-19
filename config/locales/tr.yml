@@ -289,11 +289,16 @@ tr:
     create_and_add_another: "Oluştur ve Yeni Ekle"
     create: "Oluştur"
     cancel: "İptal Et"
+    resume: "Devam Et"
     save: "Kaydet"
     edit: "Düzenle"
     update: "Güncelle"
     delete: "Sil"
     add: "Ekle"
+    cut: "Kes"
+    paste: "Yapıştır"
+    destroy: "İmha Et"
+    rename: "Yeniden Adlandır"
   admin:
     begins_at: Başlangıç
     begins_on: Başlangıç vakti
@@ -352,6 +357,7 @@ tr:
     has_n_rules: "%{num} kural var"
     unsaved_confirm_leave: "Kaydedilmemiş değişiklikler var. Kaydetmeden devam etmek istiyor musunuz?"
     unsaved_changes: "Kaydedilmemiş değişiklikleriniz var"
+    available_units: "Mevcut Miktar"
     shopfront_settings:
       embedded_shopfront_settings: "YERLEŞTİRİLMİŞ DÜKKAN AYARLARI"
       enable_embedded_shopfronts: "YERLEŞTİRİLMİŞ DÜKKANLARI ETKİNLEŞTİR"
@@ -411,6 +417,7 @@ tr:
         search_by_email: "E-posta/kod ile arama ..."
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
+        balance_due: "Ödenmesi Gereken Bakiye"
       destroy:
         has_associated_orders: "Silme başarısız oldu: müşterinin bağlantılı siparişleri var"
     contents:
@@ -599,6 +606,8 @@ tr:
       controls:
         back_to_my_inventory: Stoklarıma geri dön
     orders:
+      edit:
+        order_sure_want_to: Bu siparişi %{event}istediğinizden emin misiniz?
       invoice_email_sent: 'Fatura e-postası gönderildi'
       order_email_resent: 'Sipariş e-postası yeniden gönderildi'
       bulk_management:
@@ -647,6 +656,7 @@ tr:
           invoice_text: Faturaların sonuna özelleştirilmiş metin ekle
           terms_and_conditions: "Şartlar ve Koşullar"
           remove_terms_and_conditions: "Dosyayı Kaldır"
+          uploaded_on: "yüklendi"
         contact:
           name: Ad
           name_placeholder: Örn. Toprak Güneş
@@ -755,6 +765,7 @@ tr:
               sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
               ve ne zaman açılacağını belirtebilirsiniz)
           shopfront_category_ordering: "DÜKKAN KATEGORİ SIRALAMASI"
+          shopfront_category_ordering_note: "(yukarıdan aşağıya)"
           open_date: "AÇILIŞ TARİHİ"
           close_date: "KAPANIŞ TARİHİ"
         social:
@@ -1164,6 +1175,7 @@ tr:
       cart: "Sepet"
       message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     terms_and_conditions:
+      message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
       link_text: "Şartlar ve Koşullar"
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
@@ -1578,6 +1590,7 @@ tr:
   hubs_distance: En yakın
   hubs_distance_filter: "Bana %{location} yakınındaki dükkanları göster"
   shop_changeable_orders_alert_html:
+    one: '%{shop}/%{order}siparişiniz gözden geçirilmeye hazır. %{oc_close}''a kadar değişiklik yapabilirsiniz.'
     few: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
     many: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
     other: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
@@ -1725,6 +1738,7 @@ tr:
   orders_could_not_cancel: "Maalesef sipariş iptal edilemedi"
   orders_cannot_remove_the_final_item: "Son ürün siparişten kaldırılamaz, lütfen bunun yerine siparişi iptal edin."
   orders_bought_items_notice:
+    one: Bu sipariş döngüsü için ek bir ürün zaten onaylandı.
     few: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     many: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     other: "%{count} ürün bu sipariş dönemi için onaylandı bile"
@@ -2403,6 +2417,14 @@ tr:
           customer_tagged_rules_text: >
               Spesifik bir müşteri etiketi için kural oluşturarak, varsayılan görünürlük
               kuralını da güncellemiş olursunuz. (yalnızca ilgili müşteriler için)
+        terms_and_conditions_info:
+          title: "Şartlar ve Koşullar yükleniyor"
+          message_1: "Şartlar ve Koşullar siz satıcı ve müşteriler arasındaki sözleşmedir. Buraya bir dosya yüklediğinizde müşteriler ödemeyi tamamlamak için sizin Şartlar ve Koşullar'ınızı kabul etmek zorundadır. Bu, müşterilerin ödemelerini tamamlamaları için onaylamaları gereken bir kutucuk olarak görünecektir. Ulusal mevzuatla uyumlu Şartlar ve Koşullar dosyanızı yüklemenizi tavsiye ederiz. "
+          message_2: "Müşterilerden bu Şartlar ve Koşullar'ı onaylamaları yalnızca bir kez istenecektir. Fakat Şarlar ve Koşullar'ınızı değiştirirseniz müşterilerin ödemelerini tamamlayabilmeleri için bunu tekrar onaylamaları gerekir. "
+        terms_and_conditions_warning:
+          title: "Şartlar ve Koşullar yükleniyor"
+          message_1: "Ödemeyi tamamlayabilmeleri için tüm müşterilerinizin bunu onaylaması gerekir. Dosyayı güncellerseniz tüm müşterilerinizin buna tekrar onay vermesi gerekir. "
+          message_2: "Üyeliği olan müşteriler için, Şartlar ve Koşullar'ınızı (veya bunda yapılan değişiklikleri) onlara mail atmanız gerekir, şimdilik yeni Şarlar ve Koşullar ile ilgili hiçbir şey onları bilgilendirmez."
       panels:
         save: KAYDET
         saved: KAYDEDİLDİ
@@ -2610,6 +2632,8 @@ tr:
     shopfront:
       variant:
         add_to_cart: "Ekle"
+        in_cart: "Sepette"
+        quantity_in_cart: "%{quantity}sepette"
       bulk_buy_modal:
         min_quantity: "Minimum miktar"
         max_quantity: "Maks miktar"
@@ -2861,6 +2885,8 @@ tr:
     delete: "Sil"
     cannot_set_shipping_method_without_address: "Müşteri bilgileri girilmeden teslimat yöntemi belirlenemez.."
     no_tracking_present: "Hiçbir takip detayı sağlanmadı."
+    tracking: "Takip"
+    tracking_number: "Takip Numarası"
     order_total: "sipariş toplamı"
     customer_details: "MÜŞTERİ DETAYLARI"
     customer_search: "Müşteri Arama"
@@ -2894,6 +2920,8 @@ tr:
     server: "Server"
     test_mode: "Test Modu"
     logourl: "Logourl"
+    are_you_sure_delete: "Bu kaydı silmek istediğinizden emin misiniz?"
+    confirm_delete: "Silmeyi Onayla"
     configurations: "yapılandırmalar"
     general_settings: "Genel Ayarlar"
     site_name: "Site adı"
@@ -3000,6 +3028,7 @@ tr:
     cannot_create_payment_without_payment_methods: "Herhangi bir ödeme yöntemi belirlemeden bir sipariş oluşturamazsınız."
     please_define_payment_methods: "Lütfen önce ödeme bir yöntemi belirleyin."
     options: "Seçenekler"
+    has_no_shipped_units: "gönderilmiş birim yok"
     successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
     successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
     payment_method: "ÖDEME YÖNTEMİ"
@@ -3011,6 +3040,7 @@ tr:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
+          one: "Bir hata kaydedilmeyi engelledi:"
           few: "%{count}hata kaydedilmeyi engelledi:"
           many: "%{count}hata kaydedilmeyi engelledi:"
           other: "%{count}hata kaydedilmeyi engelledi:"
