@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 namespace :ofn do
   namespace :subs do
     namespace :debug do
@@ -41,7 +42,7 @@ namespace :ofn do
                   puts "Source #{payment.source.to_json}"
                 end
                 Spree::LogEntry.where(source_type: "Spree::Payment",
-                                        source_id: payment.id).each do |log_entry|
+                                      source_id: payment.id).each do |log_entry|
                   puts "Log Entries found"
                   puts log_entry.details
                 end
@@ -60,3 +61,4 @@ namespace :ofn do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
