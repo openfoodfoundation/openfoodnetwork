@@ -289,10 +289,16 @@ pt_BR:
     create_and_add_another: "Criar e adicionar outro"
     create: "Criar"
     cancel: "Cancelar"
+    resume: "Retomar"
     save: "Salvar"
     edit: "Editar"
     update: "Atualizar"
     delete: "Deletar"
+    add: "Adicionar"
+    cut: "Cortar"
+    paste: "Colar"
+    destroy: "Destruir"
+    rename: "Renomear"
   admin:
     begins_at: Começa em
     begins_on: Começa em
@@ -600,6 +606,8 @@ pt_BR:
       controls:
         back_to_my_inventory: Voltar ao meu inventário
     orders:
+      edit:
+        order_sure_want_to: Tem certeza que você quer %{event}este pedido?
       invoice_email_sent: 'Fatura enviada por e-mail'
       order_email_resent: 'E-mail com o pedido foi reenviado'
       bulk_management:
@@ -608,7 +616,7 @@ pt_BR:
         order_no: "Pedido nº"
         order_date: "Concluído em"
         max: "Máximo"
-        product_unit: "Produto: Unidade"
+        product_unit: "Produto: Unidade de Medida"
         weight_volume: "Peso/Volume (g)"
         ask: "Perguntar?"
         page_title: "Gestão de Pedidos em Massa"
@@ -638,7 +646,7 @@ pt_BR:
           desc_short: Descrição curta
           desc_short_placeholder: Conte-nos sobre a sua iniciativa em uma ou duas frases
           desc_long: Sobre nós
-          desc_long_placeholder: Conte aos consumidores sobre você. Esta informação aparece no seu perfil público.
+          desc_long_placeholder: Conte mais sobre você aqui. Esta informação aparece no seu perfil público.
         business_details:
           abn: CNPJ
           abn_placeholder: 'ex: 11 987 654 321'
@@ -648,6 +656,7 @@ pt_BR:
           invoice_text: 'Adicionar texto customizado no final das faturas '
           terms_and_conditions: "Termos e Condições"
           remove_terms_and_conditions: "Remover Arquivo"
+          uploaded_on: "upload feito em"
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -693,7 +702,7 @@ pt_BR:
           name: 'Nome '
           name_placeholder: 'ex: Trufas Biodinâmicas do Pereira'
           groups: Grupos
-          groups_tip: Selecione grupos e regiões das quais você é membro. Isso ajudará os consumidores a encontrar a sua iniciativa.
+          groups_tip: Selecione grupos e regiões das quais você é membro. Isso ajudará os compradores a encontrarem a sua iniciativa.
           groups_placeholder: Comece a digitar para pesquisar grupos disponíveis...
           primary_producer: Produtor primário?
           primary_producer_tip: Selecione 'produtor' se você é primeiramente um produtor de alimentos
@@ -702,7 +711,7 @@ pt_BR:
           none: Nenhum
           own: Próprio
           sells: Vende
-          sells_tip: "Nenhum - iniciativa não vende diretamente para clientes. <br /> Próprio - iniciativa vende produtos próprios para consumidores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
+          sells_tip: "Nenhum - iniciativa não vende diretamente para compradores. <br /> Próprio - iniciativa vende produtos próprios para compradores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
           visible_in_search: Visível na busca?
           visible_in_search_tip: Determine se esta iniciativa estará visível para clientes quando pesquisarem no site.
           visible: Visível
@@ -731,7 +740,7 @@ pt_BR:
           allow_guest_orders_false: "Requisitar o login para fazer pedidos"
           allow_guest_orders_true: "Permitir checkout de convidados"
           allow_order_changes: "Mudar pedidos"
-          allow_order_changes_tip: "Permitir que os consumidores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
+          allow_order_changes_tip: "Permitir que os compradores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
           allow_order_changes_false: "Pedidos enviados não podem ser mudados ou cancelados."
           allow_order_changes_true: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
           enable_subscriptions: "Assinaturas"
@@ -752,9 +761,10 @@ pt_BR:
           shopfront_closed_message: "Mensagem de loja virtual fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação detalhada sobre o porque de
-              a loja estar fechada e quando os consumidores podem esperar que abra
+              a loja estar fechada e quando os compradores podem esperar que abra
               novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo.
           shopfront_category_ordering: "Organização da Loja Virtual por Categorias"
+          shopfront_category_ordering_note: "(de cima para baixo)"
           open_date: "Dia de abertura"
           close_date: "Dia de fechamento"
         social:
@@ -769,7 +779,7 @@ pt_BR:
           disconnect: "Desconectar conta"
           confirm_modal:
             title: Conectar com Stripe
-            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da OFB aceitarem pagamentos com cartão de crédito dos consumidores.
+            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da OFB aceitarem pagamentos com cartão de crédito dos compradores.
             part2: Para usar esse recurso, você deve conectar sua conta Stripe à OFB. Ao clicar em "Concordo" abaixo, você será redirecionado para o site Stripe onde você pode conectar uma conta já existente ou criar uma nova, caso você ainda não tenha uma.
             part3: Isso irá permitir que a Open Food Brasil aceite pagamentos com cartão de crédito em seu nome. Por favor, note que você deverá manter a sua própria conta Stripe, pagar as taxas e lidar com todos os estornos e serviço ao cliente.
             i_agree: Eu concordo
@@ -781,7 +791,7 @@ pt_BR:
             add_new_button: '+ Adicionar nova regra padrão'
           no_tags_yet: Nenhuma tag foi aplicada a esta iniciativa
           no_rules_yet: Nenhuma regra foi aplicada a essa tag
-          for_customers_tagged: 'Para consumidores marcados:'
+          for_customers_tagged: 'Para compradores marcados:'
           add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova tag'
         users:
@@ -825,7 +835,7 @@ pt_BR:
         producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que as centrais os comercialize em suas lojas.
         producer_shop: Loja do produtor
         sell_your_produce: 'Venda seus próprios produtos '
-        producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja virtual na Open Food Brasil.
+        producer_shop_description_text: Venda seus produtos diretamente aos compradores através da sua própria loja virtual na Open Food Brasil.
         producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Central de produtor'.
         producer_hub: Central de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
@@ -913,9 +923,9 @@ pt_BR:
         incoming: "2. Entrada de Produtos"
         outgoing: "3. Saída de Produtos"
       exchange_form:
-        pickup_time_tip: Quando os pedidos desse ciclo de pedidos estarão prontos para os consumidores
-        pickup_instructions_placeholder: "Instruções para retirada"
-        pickup_instructions_tip: Estas instruções são mostradas aos consumidores depois de concluir um pedido
+        pickup_time_tip: Quando os pedidos desse ciclo de pedidos estarão prontos para os compradores
+        pickup_instructions_placeholder: "Informações de entrega"
+        pickup_instructions_tip: Estas instruções são mostradas aos compradores depois de concluir um pedido
         pickup_time_placeholder: "Pronto para (dia/hora)"
         receival_instructions_placeholder: "Instruções de recebimento"
         add_fee: 'Adicionar taxa'
@@ -1017,7 +1027,7 @@ pt_BR:
       payment_methods: Relatório de métodos de pagamento
       delivery: Relatório de entrega
       tax_types: Tipos de taxas
-      tax_rates: Taxas de imposto
+      tax_rates: Alíquotas das Taxas
       pack_by_customer: Pacote por cliente
       pack_by_supplier: Pacote por fornecedor
       orders_and_distributors:
@@ -1163,6 +1173,7 @@ pt_BR:
       cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     terms_and_conditions:
+      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
@@ -1233,10 +1244,10 @@ pt_BR:
   invoice_column_unit_price_without_taxes: "Preço unitário (sem taxa)"
   invoice_column_price_with_taxes: "Preço total (com taxas)"
   invoice_column_price_without_taxes: "Preço total (sem taxas)"
-  invoice_column_tax_rate: "Taxa de imposto"
+  invoice_column_tax_rate: "Alíquota da taxa"
   invoice_tax_total: "Total de Imposto sobre Bens e Serviços"
   tax_invoice: "FATURA"
-  tax_total: "Total de imposto (%{rate}):"
+  tax_total: "Total de taxas (%{rate}):"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
   abn: "CNPJ"
@@ -1403,7 +1414,7 @@ pt_BR:
   brandstory_part6: "–"
   learn_body: "Explore modelos, histórias e recursos para te dar suporte para desenvolver seu próprio negócio ou organização justa de alimentos. Encontre treinamento, eventos e outras oportunidades para aprender com quem faz parte do seu setor. "
   learn_cta: "Inspire-se"
-  connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
+  connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os compradores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
   connect_cta: "Explore"
   system_headline: "Como comprar:"
   system_step1: "1. Busca"
@@ -1417,7 +1428,7 @@ pt_BR:
   stats_headline: "Estamos trabalhando para relocalizar os sistemas agroalimentares"
   stats_producers: "produtores"
   stats_shops: "lojas"
-  stats_shoppers: "consumidores"
+  stats_shoppers: "compradores"
   stats_orders: "pedidos"
   checkout_title: Fechar pedido
   checkout_now: Fechar pedido agora
@@ -1577,7 +1588,9 @@ pt_BR:
   hubs_distance: Mais próximo a
   hubs_distance_filter: "Mostrar lojas próximas a %{location}"
   shop_changeable_orders_alert_html:
-    one: Seu pedido com <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    one: Seu pedido com <a href='%{path}' target='_blank'>%{shop}%{order}</a> está aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    few: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
+    many: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
     other: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
   orders_changeable_orders_alert_html: Este pedido foi confirmado, mas você pode fazer alterações até <strong> %{oc_close}.
   products_clear: Limpar
@@ -1678,7 +1691,7 @@ pt_BR:
   sell_producers: "Produtores"
   sell_hubs: "Centrais"
   sell_groups: "Grupos"
-  sell_producers_detail: "Crie um perfil para a sua atividade em apenas alguns minutos. A qualquer momento você pode transformá-lo em uma loja online e vender seus produtos diretamente aos consumidores."
+  sell_producers_detail: "Crie um perfil para a sua atividade em apenas alguns minutos. A qualquer momento você pode transformá-lo em uma loja online e vender seus produtos diretamente aos compradores."
   sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil e comece a distribuir os produtos dos seus fornecedores locais. "
   sell_groups_detail: "Organize um lista personalizada de iniciativas (cultivos, cooperativas, feiras, grupos de compra, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
@@ -1723,7 +1736,9 @@ pt_BR:
   orders_could_not_cancel: "Desculpa, seu pedido não pode ser cancelado"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de um pedido, ao invés disso, por favor cancele o pedido"
   orders_bought_items_notice:
-    one: "Um item adicional já está confirmado para este ciclo de ordem"
+    one: 'Um item adicional já está confirmado para este ciclo de pedidos. '
+    few: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
+    many: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
     other: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
   orders_bought_edit_button: Editar itens confirmados
   orders_bought_already_confirmed: "* já confirmado"
@@ -2021,9 +2036,9 @@ pt_BR:
   started_at: "Começou em "
   queued: "Aguardando"
   scheduled_for: "Agendado para"
-  customers: "Consumidores"
+  customers: "Compradores"
   please_select_hub: "Por favor selecione uma central"
-  loading_customers: "Carregando consumidores"
+  loading_customers: "Carregando compradores"
   no_customers_found: "Nenhum consumidor encontrado"
   go: "Ir"
   hub: "Central"
@@ -2124,7 +2139,7 @@ pt_BR:
   report_order_cycle: "Ciclo de pedidos:"
   report_enterprises: "Iniciativas:"
   report_users: "Usuários:"
-  report_tax_rates: Taxas de imposto
+  report_tax_rates: Alíquotas das taxas
   report_tax_types: Tipos de impostos
   report_header_order_cycle: Ciclo de pedidos
   report_header_user: Usuário
@@ -2298,7 +2313,7 @@ pt_BR:
   payment_method_not_supported: "Esse método de pagamento não é suportado. Por favor escolha outro."
   payment_updated: "Pagamento atualizado"
   inventory_settings: "Configurações de inventário"
-  tag_rules: "Regras para tag"
+  tag_rules: "Regras de tag"
   shop_preferences: "Preferências da loja"
   enterprise_fee_whole_order: Pedido inteiro
   enterprise_fee_by: "%{type} taxa por %{role} %{enterprise_name}"
@@ -2321,15 +2336,15 @@ pt_BR:
   product_import_no_data_in_spreadsheet_notice: 'Nenhum dado encontrado na planilha'
   order_choosing_hub_notice: Sua central foi selecionado.
   order_cycle_selecting_notice: O seu ciclo de pedidos foi selecionado.
-  adjustments_tax_rate_error: "^ Por favor verifique se a taxa de imposto para este ajuste está correta."
+  adjustments_tax_rate_error: "^ Por favor verifique se a alíquota da taxa para este ajuste está correta."
   active_distributors_not_ready_for_checkout_message_singular: >-
       A central %{distributor_names} está listado em um ciclo de pedidos ativo, mas
       não possui métodos de envio e pagamento válidos. Até que você configure eles,
-      os consumidores não poderão fazer compras nesta central.
+      os compradores não poderão fazer compras nesta central.
   active_distributors_not_ready_for_checkout_message_plural: >-
       As centrais %{distributor_names} estão listados em um ciclo de pedido ativo,
       mas não possuem métodos de envio e pagamento válidos. Até que você configure
-      eles, os consumidores não poderão fazer compras nessas centrais.
+      eles, os compradores não poderão fazer compras nessas centrais.
   enterprise_fees_update_notice: As tarifas da sua iniciativa foram atualizadas.
   enterprise_register_package_error: "Por favor selecione um tipo de perfil"
   enterprise_register_error: "Não foi possível completar o registro para %{enterprise}"
@@ -2385,7 +2400,7 @@ pt_BR:
         invite: "Convidar"
         invite_title: "Convidar um usuário não registrado"
         tag_rule_help:
-          title: Regras para tag
+          title: Regras de tag
           overview: Visão geral
           overview_text: >
               As regras de tag fornecem uma maneira para descrever quais itens são
@@ -2401,6 +2416,14 @@ pt_BR:
               Ao criar regras relacionadas a uma tag de cliente específica, você pode
               substituir o comportamento padrão (seja para mostrar ou para ocultar
               itens) para clientes com a tagespecificada.
+        terms_and_conditions_info:
+          title: "Fazendo o upload dos Termos e Condições"
+          message_1: "Os Termos e Condições são o contrato entre você (vendedor) e o comprador. Se você fizer o upload de um arquivo aqui, seus compradores precisarão aceitar seus Termos e Condições para completar o checkout. Para o comprador, isto é feito na tela de checkout, marcando a caixa de seleção para continuar com o checkout. Recomendamos que você adicione seus Termos e Condições em alinhamento com a legislação nacional.  "
+          message_2: "Os compradores precisarão aceitar os Termos e Condições somente uma vez. Entretanto, se você mudar os Termos e Condições, os compradores precisarão aceitá-los novamente antes de fazer o checkout. "
+        terms_and_conditions_warning:
+          title: "Fazendo o upload dos Termos e Condições"
+          message_1: "Todos os compradores deverão concordar com eles uma vez ao fazer o checkout. Se você atualizar o arquivo, eles deverão concordar novamente no próximo checkout."
+          message_2: "Para compradores por assinatura, você precisará enviar os Termos e Condições (ou suas atualizações) por email."
       panels:
         save: SALVAR
         saved: SALVO
@@ -2447,7 +2470,7 @@ pt_BR:
               armazenem seus produtos em suas lojas.
           producer_shop: Loja do produtor
           producer_shop_text1: >
-              Venda os seus produtos diretamente aos consumidores através da sua própria
+              Venda os seus produtos diretamente aos compradores através da sua própria
               loja na Open Food Brasil.
           producer_shop_text2: >
               Uma loja de produtor é individual, somente para comercialização de produtos
@@ -2822,7 +2845,7 @@ pt_BR:
   payment_method: "Método de Pagamento"
   shipment: "Envio"
   shipment_inc_vat: "Envio incluindo IVA"
-  shipping_tax_rate: "Taxa de imposto do frete"
+  shipping_tax_rate: "Taxa do frete"
   category: "Categoria"
   delivery: "Entrega"
   temperature_controlled: "Temperatura Controlada"
@@ -2864,6 +2887,8 @@ pt_BR:
     delete: "Deletar"
     cannot_set_shipping_method_without_address: "Não é possível definir o método de envio até que os detalhes do cliente sejam fornecidos."
     no_tracking_present: "Nenhum detalhe de rastreamento fornecido."
+    tracking: "Rastreamento"
+    tracking_number: "Número de Rastreamento"
     order_total: "total de pedidos"
     customer_details: "Detalhes do cliente"
     customer_search: "Pesquisa de Clientes"
@@ -2885,6 +2910,7 @@ pt_BR:
     adjustments: "Ajustes"
     continue: "Continuar"
     fill_in_customer_info: "Por favor, preencha as informações do cliente"
+    credit_card: "Cartão de Crédito"
     new_payment: "Novo Pagamento"
     capture: "Capturar"
     void: "Apagar"
@@ -2896,6 +2922,8 @@ pt_BR:
     server: "Servidor"
     test_mode: "Modo Teste"
     logourl: "url da logo"
+    are_you_sure_delete: "Tem certeza de que quer apagar este registro?"
+    confirm_delete: "Confirmar Apagamento"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do site"
@@ -2926,14 +2954,14 @@ pt_BR:
     tax_categories: "Categorias fiscais"
     listing_tax_categories: "Listando categorias de impostos"
     back_to_tax_categories_list: "Voltar à lista de categorias de impostos"
-    tax rate: "Taxas de imposto"
-    new_tax_rate: "Nova taxa de imposto"
+    tax rate: "Alíquotas da taxas"
+    new_tax_rate: "Nova alíquota de taxa"
     tax_category: "Categoria de taxa"
     rate: "Taxa"
-    tax_rate_amount_explanation: "As taxas de imposto são um valor decimal para ajudar nos cálculos (por exemplo, se a taxa de imposto for de 5%, digite 0,05)"
+    tax_rate_amount_explanation: "As alíquotas são um valor decimal para ajudar nos cálculos (por exemplo, se a alíquota for de 5%, digite 0,05)"
     included_in_price: "Incluído no preço"
     show_rate_in_label: "Mostrar taxa no rótulo"
-    back_to_tax_rates_list: "Voltar à lista de taxas de imposto"
+    back_to_tax_rates_list: "Voltar à lista de alíquotas."
     tax_settings: "Configurações de Taxas"
     zones: "Zonas"
     new_zone: "Nova Zona"
@@ -3005,6 +3033,7 @@ pt_BR:
     has_no_shipped_units: "não tem itens enviados"
     successfully_created: '%{resource}foi criado com sucesso!'
     successfully_updated: '%{resource}foi atualizado com sucesso!'
+    payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pôde ser processado, favor verificar os dados informados. "
     not_available: "N/A"
     order_populator:
@@ -3014,7 +3043,9 @@ pt_BR:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erro não permitiu que este registro fosse salvo:"
+          one: "1 erro proibiu que este registro fosse salvo:"
+          few: "%{count}erros não permitiram que esse registro fosse salvo:"
+          many: "%{count}erros não permitiram que esse registro fosse salvo:"
           other: "%{count}erros não permitiram que esse registro fosse salvo:"
         there_were_problems_with_the_following_fields: "Houve problemas com os seguintes campos"
       payments_list:
@@ -3047,13 +3078,12 @@ pt_BR:
         order_cycles: "Ciclos de pedidos"
         enterprises: "Iniciativas"
         enterprise_relationships: "Permissões"
-        customers: "Consumidores"
+        customers: "Compradores"
         groups: "Grupos"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (a menos que substituído acima)"
           add_product_properties: "Adicionar Propriedades do Produtos"
-          select_from_prototype: "Selecionar do Protótipo"
       properties:
         index:
           properties: "Propriedades"
@@ -3146,6 +3176,8 @@ pt_BR:
           active_products:
             zero: "Você ainda não tem nenhum produto ativo."
             one: "Você tem um produto ativo"
+            few: "Você tem %{count} produtos ativos "
+            many: "Você tem %{count} produtos ativos "
             other: "Você tem %{count} produtos ativos"
         order_cycles:
           order_cycles: "Ciclos de pedidos"
@@ -3153,6 +3185,8 @@ pt_BR:
           you_have_active:
             zero: "Você não possui ciclos de pedidos ativos."
             one: "Você tem um ciclo de pedidos ativo."
+            few: "Você tem %{count} ciclos de pedidos ativos."
+            many: "Você tem %{count} ciclos de pedidos ativos."
             other: "Você tem %{count} ciclos de pedidos ativos."
           manage_order_cycles: "GERENCIAR CICLOS DE PEDIDOS"
       shipping_methods:

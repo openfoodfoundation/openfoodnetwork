@@ -289,6 +289,7 @@ nl_BE:
     edit: "bewerking"
     update: "Update"
     delete: "Uitwissen "
+    add: "Voeg toe"
   admin:
     begins_at: Begint Bij
     begins_on: Begint Op
@@ -1569,7 +1570,8 @@ nl_BE:
   hubs_distance: Dichtst bij
   hubs_distance_filter: "Toon me winkels in de buurt van %{location}"
   shop_changeable_orders_alert_html:
-    one: Je bestelling bij <a href='%{path}' target='_blank'>%{shop}/%{order}</a> wordt op dit moment nagekeken. Je kan veranderingen maken tot %{oc_close}.
+    few: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
+    many: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
     other: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
   orders_changeable_orders_alert_html: Deze bestelling is bevestigd, maar je kan aanpassingen maken tot <strong>%{oc_close}</strong>.
   products_clear: Duidelijk
@@ -1715,7 +1717,8 @@ nl_BE:
   orders_could_not_cancel: "Sorry, de bestelling kon niet worden geannuleerd"
   orders_cannot_remove_the_final_item: "Het is niet mogelijk om het laatste artikel van de bestelling te verwijderen, verwijder in plaats daarvan alsjeblieft de bestelling."
   orders_bought_items_notice:
-    one: "Een bijkomend artikel is al bevestigd voor deze artikelcyclus"
+    few: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
+    many: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
     other: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
   orders_bought_edit_button: Pas de bevestigde artikels aan
   orders_bought_already_confirmed: "* reeds bevestigd"
@@ -2792,6 +2795,7 @@ nl_BE:
     adjustments: "Correcties "
     continue: "Ga verder"
     fill_in_customer_info: "Gelieve informatie over klant in te vullen"
+    credit_card: "Kredietkaart"
     new_payment: "Nieuwe betaling"
     capture: "Capture"
     void: "leegte"
@@ -2910,6 +2914,7 @@ nl_BE:
     options: "Opties"
     successfully_created: '%{resource}is met succes gedaan! '
     successfully_updated: '%{resource}is succesvol bijgewerkt!'
+    payment_method: "Betaalmethode"
     payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
     actions:
       update: "Update"
@@ -2952,7 +2957,6 @@ nl_BE:
         index:
           inherits_properties_checkbox_hint: "De kenmerken van 1%{supplier} krijgen ? (niet ter toepassing in geval van invoer van de vervanging)"
           add_product_properties: "Voeg producteigenschappen toe."
-          select_from_prototype: "Selecteer tussen de prototypes"
       properties:
         index:
           properties: "Eigenschappen"
@@ -3045,6 +3049,8 @@ nl_BE:
           active_products:
             zero: "U heeft geen aktieve producten."
             one: "U heeft een aktief product"
+            few: "U heeft 1%{count} aktieve producten"
+            many: "U heeft 1%{count} aktieve producten"
             other: "U heeft 1%{count} aktieve producten"
         order_cycles:
           order_cycles: "Bestel cycli"
@@ -3052,6 +3058,8 @@ nl_BE:
           you_have_active:
             zero: "U heeft geen aktieve bestelcycli."
             one: "U heeft een aktieve bestelcyclus."
+            few: "U heeft 1%{count} aktieve ordercycli."
+            many: "U heeft 1%{count} aktieve ordercycli."
             other: "U heeft 1%{count} aktieve ordercycli."
           manage_order_cycles: "BESTELCYCLI BEHEREN"
       shipping_methods:

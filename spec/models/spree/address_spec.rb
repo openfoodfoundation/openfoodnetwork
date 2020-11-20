@@ -7,18 +7,18 @@ describe Spree::Address do
     it "creates a copy of the address with the exception of the id, updated_at and created_at attributes" do
       state = build_stubbed(:state)
       original = build_stubbed(:address,
-                        address1: 'address1',
-                        address2: 'address2',
-                        alternative_phone: 'alternative_phone',
-                        city: 'city',
-                        country: state.country,
-                        firstname: 'firstname',
-                        lastname: 'lastname',
-                        company: 'company',
-                        phone: 'phone',
-                        state_id: state.id,
-                        state_name: state.name,
-                        zipcode: 'zip_code')
+                               address1: 'address1',
+                               address2: 'address2',
+                               alternative_phone: 'alternative_phone',
+                               city: 'city',
+                               country: state.country,
+                               firstname: 'firstname',
+                               lastname: 'lastname',
+                               company: 'company',
+                               phone: 'phone',
+                               state_id: state.id,
+                               state_name: state.name,
+                               zipcode: 'zip_code')
 
       cloned = original.clone
 

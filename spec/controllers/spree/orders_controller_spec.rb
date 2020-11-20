@@ -134,12 +134,7 @@ describe Spree::OrdersController, type: :controller do
       describe "the page" do
         render_views
 
-        pending "provides the right registration path" do
-          # We have an issue with the registration link within Spree controllers.
-          # The `registration_path` helper resolves to `/signup` due to
-          # spree_auth_device > config > routes.rb, but it should be `/register`.
-          #
-          # When this is true, we can use registration_path in views again.
+        it "provides the right registration path" do
           expect(subject.registration_path).to eq registration_path
         end
 

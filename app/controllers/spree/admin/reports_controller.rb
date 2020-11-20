@@ -294,7 +294,7 @@ module Spree
         if report_in_order_management_engine?(report)
           main_app.public_send("new_order_management_reports_#{report}_url".to_sym)
         else
-          public_send("#{report}_admin_reports_url".to_sym)
+          spree.public_send("#{report}_admin_reports_url".to_sym)
         end
       rescue NoMethodError
         url_for([:new, :admin, :reports, report.to_s.singularize])

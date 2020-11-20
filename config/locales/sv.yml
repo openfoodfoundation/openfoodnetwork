@@ -117,6 +117,7 @@ sv:
     cancel: "Avbryt"
     edit: "Redigera"
     update: "Uppdatera"
+    add: "Tillägga"
   admin:
     date: Datum
     email: epost
@@ -921,7 +922,8 @@ sv:
   hubs_distance: Närmast till
   hubs_distance_filter: "Visa mig butiker nära %{location}"
   shop_changeable_orders_alert_html:
-    one: Din beställning med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> är öppen för recension. Du kan göra ändringar till %{oc_close}.
+    few: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
+    many: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
   orders_changeable_orders_alert_html: Denna beställning har bekräftats, men du kan göra ändringar till och med <strong>%{oc_close}</strong>.
   products_clear: Rensa
@@ -1055,7 +1057,8 @@ sv:
   orders_could_not_cancel: "Tyvärr kan denna beställning inte avbrytas"
   orders_cannot_remove_the_final_item: "Det går inte att ta bort det sista varan från en beställning, var god och avbryt beställningen istället."
   orders_bought_items_notice:
-    one: "Ett ytterligare objekt är redan bekräftat för denna ordercykel"
+    few: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
+    many: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
     other: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
   orders_bought_edit_button: Redigera bekräftade varor
   orders_bought_already_confirmed: "* redan bekräftad"
@@ -1933,6 +1936,7 @@ sv:
     amount: "Belopp"
     inventory: Lager
     zipcode: Postkod
+    payment_method: "Betalningsmetod"
     actions:
       update: "Uppdatera"
     shared:
@@ -2007,6 +2011,8 @@ sv:
           you_have_active:
             zero: "Du har inga aktiva beställningsomgångar."
             one: "Du har en aktiv beställningsomgång."
+            few: "Du har %{count} aktiva beställningsomgångar."
+            many: "Du har %{count} aktiva beställningsomgångar."
             other: "Du har %{count} aktiva beställningsomgångar."
           manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
       shipping_methods:

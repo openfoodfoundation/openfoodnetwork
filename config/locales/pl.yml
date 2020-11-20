@@ -290,6 +290,7 @@ pl:
     edit: "Edytuj"
     update: "Aktualizuj"
     delete: "Usuń"
+    add: "Dodaj"
   admin:
     begins_at: Początek o
     begins_on: Początek się w dniu
@@ -1565,11 +1566,6 @@ pl:
   hubs_intro: Kupuj w swojej okolicy
   hubs_distance: Najbliżej
   hubs_distance_filter: "Pokaż mi sklepy w pobliżu %{location}"
-  shop_changeable_orders_alert_html:
-    one: Twoje zamówienie z <a href='%{path}' target='_blank'>%{shop} / %{order}</a> jest otwarte do sprawdzenia. Możesz wprowadzać zmiany do %{oc_close}.
-    few: Masz <a href='%{path}' target='_blank'>zamówienia %{count} z %{shop}, które jest</a> obecnie otwarte do sprawdzenia. Możesz wprowadzać zmiany do %{oc_close}.
-    many: Masz <a href='%{path}' target='_blank'>zamówienia %{count} z %{shop}, które jest</a> obecnie otwarte do sprawdzenia. Możesz wprowadzać zmiany do %{oc_close}.
-    other: Masz <a href='%{path}' target='_blank'>zamówienia %{count} z %{shop}, które jest</a> obecnie otwarte do sprawdzenia. Możesz wprowadzać zmiany do %{oc_close}.
   orders_changeable_orders_alert_html: To zamówienie zostało potwierdzone, ale możesz wprowadzać zmiany do <strong>%{oc_close}</strong> .
   products_clear: Wyczyść
   products_showing: "Seans:"
@@ -1714,9 +1710,8 @@ pl:
   orders_could_not_cancel: "Przepraszamy, nie można anulować zamówienia"
   orders_cannot_remove_the_final_item: "Nie można usunąć ostatniej pozycji z zamówienia. Zamiast tego anuluj zamówienie."
   orders_bought_items_notice:
-    one: "Dodatkowa pozycja jest już potwierdzona dla tego cyklu zamówienia"
-    few: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówienia"
-    many: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówienia"
+    few: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
+    many: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
     other: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
   orders_bought_edit_button: Edytuj potwierdzone pozycje
   orders_bought_already_confirmed: "* już potwierdzony"
@@ -2913,6 +2908,7 @@ pl:
     adjustments: "Korekty"
     continue: "Kontyntynuj"
     fill_in_customer_info: "Podaj informacje o kliencie"
+    credit_card: "Karta kredytowa"
     new_payment: "Nowa płatność"
     capture: "Zdobyć"
     void: "Unieważnić"
@@ -3029,15 +3025,11 @@ pl:
     cannot_create_payment_without_payment_methods: "Nie możesz utworzyć płatności za zamówienie bez zdefiniowanych metod płatności."
     please_define_payment_methods: "Najpierw określ niektóre metody płatności."
     options: "Opcje"
+    payment_method: "Metoda płatności"
     actions:
       update: "Aktualizuj"
     shared:
       error_messages:
-        errors_prohibited_this_record_from_being_saved:
-          one: "1 błąd uniemożliwił zapisanie tego rekordu:"
-          few: "Błędy %{count} uniemożliwiły zapisanie tego rekordu:"
-          many: "Błędy %{count} uniemożliwiły zapisanie tego rekordu:"
-          other: "Błędy %{count} uniemożliwiły zapisanie tego rekordu:"
         there_were_problems_with_the_following_fields: "Wystąpiły problemy z następującymi polami"
       payments_list:
         date_time: "Data / godzina"
@@ -3075,7 +3067,6 @@ pl:
         index:
           inherits_properties_checkbox_hint: "Odziedziczyć właściwości z %{supplier}? (chyba że zastąpiono powyżej)"
           add_product_properties: "Dodaj właściwości produktu"
-          select_from_prototype: "Wybierz opcję Z prototypu"
       properties:
         index:
           properties: "Właściwości"

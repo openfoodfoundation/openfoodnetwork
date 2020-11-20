@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/core/gateway_error'
 
 describe Spree::Admin::PaymentsController, type: :controller do
   include StripeHelper

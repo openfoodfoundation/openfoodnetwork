@@ -289,6 +289,7 @@ fr_BE:
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
+    add: "Ajouter"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -1567,7 +1568,8 @@ fr_BE:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les comptoirs près de %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Annuler
@@ -1713,7 +1715,8 @@ fr_BE:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
+    many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
@@ -2797,6 +2800,7 @@ fr_BE:
     adjustments: "Corrections"
     continue: "Suivant"
     fill_in_customer_info: "Merci de remplir les informations client"
+    credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Vide"
@@ -2915,6 +2919,7 @@ fr_BE:
     options: "Options"
     successfully_created: '%{resource}est crée avec succès! '
     successfully_updated: '%{resource}a été enregistrée avec succès'
+    payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
     actions:
       update: "Mettre à jour"
@@ -2957,7 +2962,6 @@ fr_BE:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des caractéristiques au produit"
-          select_from_prototype: "Sélectionner à partir d'un prototype"
       properties:
         index:
           properties: "Labels / propriétés"
@@ -3050,6 +3054,8 @@ fr_BE:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "U heeft één aktieve product"
+            few: "Vous avez %{count}des produits actifs"
+            many: "Vous avez %{count}des produits actifs"
             other: "Vous avez %{count}des produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
@@ -3057,6 +3063,8 @@ fr_BE:
           you_have_active:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
+            few: "Vous avez %{count} cycles de vente actifs."
+            many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       shipping_methods:

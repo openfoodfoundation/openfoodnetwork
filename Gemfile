@@ -18,18 +18,11 @@ gem 'web', path: './engines/web'
 gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
-# OFN-maintained and patched version of Spree v2.0.4. See
-# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Tech-Doc:-OFN's-Spree-fork%F0%9F%8D%B4
-# for details.
-gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
-
-### Dependencies brought from spree core
-gem 'acts_as_list', '= 0.2.0'
-gem 'awesome_nested_set', '~> 3.0.0.rc.1'
+gem 'acts_as_list', '= 0.3.0'
+gem 'awesome_nested_set', '~> 3.2.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker', '~> 1.16'
-gem 'highline', '= 1.6.18' # Necessary for the install generator
-gem 'httparty', '~> 0.18' # Used to check alerts in spree_core, this is not used in OFN.
+gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json', '>= 1.7.7'
 gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
@@ -37,7 +30,7 @@ gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
-gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
+gem 'spree_i18n', github: 'openfoodfoundation/spree_i18n', branch: '1-3-stable'
 
 # Our branch contains the following changes:
 # - Pass customer email and phone number to PayPal (merged to upstream master)
@@ -61,13 +54,11 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 
-# Spree's default pagination gem (locked to the current version used by Spree)
-# We use it's methods in OFN code as well, so this is a direct dependency
-gem 'kaminari', '~> 0.14.1'
+gem 'kaminari', '~> 0.17.0'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk', '1.11.1' # temporarily locked down due to https://github.com/aws/aws-sdk-ruby/issues/273
+gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'

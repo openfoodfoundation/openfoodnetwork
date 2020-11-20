@@ -1,12 +1,11 @@
 require 'spec_helper'
-require 'spree/core/gateway_error'
 
 describe Spree::Payment do
   context 'original specs from Spree' do
     let(:order) { create(:order) }
     let(:gateway) do
-      gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true)
-      gateway.stub :source_required => true
+      gateway = Spree::Gateway::Bogus.new(environment: 'test', active: true)
+      gateway.stub source_required: true
       gateway
     end
 
@@ -23,13 +22,13 @@ describe Spree::Payment do
     let(:amount_in_cents) { payment.amount.to_f * 100 }
 
     let(:success_response) do
-      double('success_response', :success? => true,
-             :authorization => '123',
-             :avs_result => { 'code' => 'avs-code' },
-             :cvv_result => { 'code' => 'cvv-code', 'message' => "CVV Result"})
+      double('success_response', success?: true,
+                                 authorization: '123',
+                                 avs_result: { 'code' => 'avs-code' },
+                                 cvv_result: { 'code' => 'cvv-code', 'message' => "CVV Result" })
     end
 
-    let(:failed_response) { double('gateway_response', :success? => false) }
+    let(:failed_response) { double('gateway_response', success?: false) }
 
     context "extends LocalizedNumber" do
       subject { build_stubbed(:payment) }
@@ -61,7 +60,6 @@ describe Spree::Payment do
         payment.failure
         expect(payment.state).to eql('failed')
       end
-
     end
 
     context 'invalidate' do
@@ -102,10 +100,9 @@ describe Spree::Payment do
 
         it "should invalidate if payment method doesnt support source" do
           payment.payment_method.should_receive(:supports?).with(payment.source).and_return(false)
-          expect { payment.process!}.to raise_error(Spree::Core::GatewayError)
+          expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
         end
-
       end
 
       context "#authorize" do
@@ -117,10 +114,10 @@ describe Spree::Payment do
         end
 
         it "should call authorize on the gateway with the currency code" do
-          payment.stub :currency => 'GBP'
+          payment.stub currency: 'GBP'
           payment.payment_method.should_receive(:authorize).with(amount_in_cents,
                                                                  card,
-                                                                 hash_including({:currency => "GBP"})).and_return(success_response)
+                                                                 hash_including({ currency: "GBP" })).and_return(success_response)
           payment.authorize!
         end
 
@@ -131,7 +128,7 @@ describe Spree::Payment do
 
         context "when gateway does not match the environment" do
           it "should raise an exception" do
-            gateway.stub :environment => "foo"
+            gateway.stub environment: "foo"
             expect { payment.authorize! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -182,8 +179,8 @@ describe Spree::Payment do
 
         context "when gateway does not match the environment" do
           it "should raise an exception" do
-            gateway.stub :environment => "foo"
-            expect { payment.purchase!  }.to raise_error(Spree::Core::GatewayError)
+            gateway.stub environment: "foo"
+            expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
           end
         end
 
@@ -237,7 +234,7 @@ describe Spree::Payment do
             end
 
             it "should store the response_code" do
-              gateway.stub :capture => success_response
+              gateway.stub capture: success_response
               payment.capture!
               expect(payment.response_code).to eq('123')
             end
@@ -245,7 +242,7 @@ describe Spree::Payment do
 
           context "if unsuccessful" do
             it "should not make payment complete" do
-              gateway.stub :capture => failed_response
+              gateway.stub capture: failed_response
               payment.should_receive(:failure)
               payment.should_not_receive(:complete)
               expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
@@ -273,7 +270,7 @@ describe Spree::Payment do
 
         context "when profiles are supported" do
           it "should call payment_gateway.void with the payment's response_code" do
-            gateway.stub :payment_profiles_supported? => true
+            gateway.stub payment_profiles_supported?: true
             gateway.should_receive(:void).with('123', card, anything).and_return(success_response)
             payment.void_transaction!
           end
@@ -281,7 +278,7 @@ describe Spree::Payment do
 
         context "when profiles are not supported" do
           it "should call payment_gateway.void with the payment's response_code" do
-            gateway.stub :payment_profiles_supported? => false
+            gateway.stub payment_profiles_supported?: false
             gateway.should_receive(:void).with('123', anything).and_return(success_response)
             payment.void_transaction!
           end
@@ -295,7 +292,7 @@ describe Spree::Payment do
         context "when gateway does not match the environment" do
           it "should raise an exception" do
             payment = build_stubbed(:payment, payment_method: gateway)
-            gateway.stub :environment => "foo"
+            gateway.stub environment: "foo"
             expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -311,7 +308,7 @@ describe Spree::Payment do
 
         context "if unsuccessful" do
           it "should not void the payment" do
-            gateway.stub :void => failed_response
+            gateway.stub void: failed_response
             payment.should_not_receive(:void)
             expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
           end
@@ -335,8 +332,8 @@ describe Spree::Payment do
 
         context "when outstanding_balance is less than payment amount" do
           before do
-            payment.order.stub :outstanding_balance => 10
-            payment.stub :credit_allowed => 1000
+            payment.order.stub outstanding_balance: 10
+            payment.stub credit_allowed: 1000
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
@@ -347,7 +344,7 @@ describe Spree::Payment do
 
         context "when outstanding_balance is equal to payment amount" do
           before do
-            payment.order.stub :outstanding_balance => payment.amount
+            payment.order.stub outstanding_balance: payment.amount
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
@@ -358,7 +355,7 @@ describe Spree::Payment do
 
         context "when outstanding_balance is greater than payment amount" do
           before do
-            payment.order.stub :outstanding_balance => 101
+            payment.order.stub outstanding_balance: 101
           end
 
           it "should call credit on the gateway with the original payment amount and response_code" do
@@ -375,7 +372,7 @@ describe Spree::Payment do
         context "when gateway does not match the environment" do
           it "should raise an exception" do
             payment = build_stubbed(:payment, payment_method: gateway)
-            gateway.stub :environment => "foo"
+            gateway.stub environment: "foo"
             expect { payment.credit! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -421,7 +418,7 @@ describe Spree::Payment do
 
     context "when response is unsuccessful" do
       it "should not create a payment" do
-        gateway.stub :credit => failed_response
+        gateway.stub credit: failed_response
         Spree::Payment.should_not_receive(:create)
         expect { payment.credit! }.to raise_error(Spree::Core::GatewayError)
       end
@@ -451,7 +448,7 @@ describe Spree::Payment do
       context "raises no error if source is not specified" do
         specify do
           payment = build_stubbed(:payment, source: nil, payment_method: gateway)
-          payment.payment_method.stub(:source_required? => false)
+          payment.payment_method.stub(source_required?: false)
           expect { payment.process! }.not_to raise_error
         end
       end
@@ -519,17 +516,16 @@ describe Spree::Payment do
         gateway.save!
 
         order = create(:order)
-        payment = Spree::Payment.create(:amount => 100, :order => order, :payment_method => gateway)
+        payment = Spree::Payment.create(amount: 100, order: order, payment_method: gateway)
         order.should_receive(:update!)
         payment.save
       end
 
       context "when profiles are supported" do
         before do
-          gateway.stub :payment_profiles_supported? => true
-          payment.source.stub :has_payment_profile? => false
+          gateway.stub payment_profiles_supported?: true
+          payment.source.stub has_payment_profile?: false
         end
-
 
         context "when there is an error connecting to the gateway" do
           it "should call gateway_error " do
@@ -539,10 +535,10 @@ describe Spree::Payment do
             expect(gateway).to receive(:create_profile).and_raise(connection_error)
             expect do
               Spree::Payment.create(
-                :amount => 100,
-                :order => order,
-                :source => card,
-                :payment_method => gateway
+                amount: 100,
+                order: order,
+                source: card,
+                payment_method: gateway
               )
             end.should raise_error(Spree::Core::GatewayError)
           end
@@ -560,19 +556,17 @@ describe Spree::Payment do
             expect(gateway).to receive(:create_profile)
 
             Spree::Payment.create(
-              :amount => 100,
-              :order => create(:order),
-              :source => card,
-              :payment_method => gateway
+              amount: 100,
+              order: create(:order),
+              source: card,
+              payment_method: gateway
             )
           end
         end
-
-
       end
 
       context "when profiles are not supported" do
-        before { gateway.stub :payment_profiles_supported? => false }
+        before { gateway.stub payment_profiles_supported?: false }
 
         it "should not create a payment profile" do
           gateway.name = 'Gateway'
@@ -581,10 +575,10 @@ describe Spree::Payment do
 
           gateway.should_not_receive :create_profile
           payment = Spree::Payment.create(
-            :amount => 100,
-            :order => create(:order),
-            :source => card,
-            :payment_method => gateway
+            amount: 100,
+            order: create(:order),
+            source: card,
+            payment_method: gateway
           )
         end
       end
@@ -592,13 +586,12 @@ describe Spree::Payment do
 
     context "#build_source" do
       it "should build the payment's source" do
-        params = { :amount => 100, :payment_method => gateway,
-                   :source_attributes => {
-          :expiry =>"1 / 99",
-          :number => '1234567890123',
-          :verification_value => '123'
-        }
-        }
+        params = { amount: 100, payment_method: gateway,
+                   source_attributes: {
+                     expiry: "1 / 99",
+                     number: '1234567890123',
+                     verification_value: '123'
+                   } }
 
         payment = Spree::Payment.new(params)
         expect(payment).to be_valid
@@ -606,8 +599,8 @@ describe Spree::Payment do
       end
 
       it "errors when payment source not valid" do
-        params = { :amount => 100, :payment_method => gateway,
-                   :source_attributes => {:expiry => "1 / 12" }}
+        params = { amount: 100, payment_method: gateway,
+                   source_attributes: { expiry: "1 / 12" } }
 
         payment = Spree::Payment.new(params)
         expect(payment).not_to be_valid
@@ -633,7 +626,7 @@ describe Spree::Payment do
 
     # Regression test for #2216
     context "#gateway_options" do
-      before { order.stub(:last_ip_address => "192.168.1.1") }
+      before { order.stub(last_ip_address: "192.168.1.1") }
 
       it "contains an IP" do
         expect(payment.gateway_options[:ip]).to eq(order.last_ip_address)
@@ -823,7 +816,7 @@ describe Spree::Payment do
 
           it "creates adjustment" do
             payment = create(:payment, order: order, payment_method: payment_method,
-                             amount: order.total)
+                                       amount: order.total)
             expect(payment.adjustment).to be_present
             expect(payment.adjustment.amount).not_to eq(0)
           end

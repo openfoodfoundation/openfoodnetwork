@@ -36,7 +36,7 @@ it:
         spree/user:
           attributes:
             email:
-              taken: "Esiste già un account con questa email. Ti preghiamo di effettuare il login o impostare una nuova password."
+              taken: "Esiste già un account con questa email. Ti preghiamo di accedere o impostare una nuova password."
         spree/order:
           no_card: Non ci sono carte di credito autorizzate disponibili per l'addebito
         spree/credit_card:
@@ -247,7 +247,7 @@ it:
   unused: non in uso
   admin_and_handling: Admin
   profile: Profilo
-  supplier_only: Solo Fornitori
+  supplier_only: Solo Fornitore
   has_shopfront: Ha una Vetrina
   weight: Peso
   volume: Volume
@@ -289,10 +289,16 @@ it:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
     cancel: "Annulla"
+    resume: "Continuare"
     save: "Salva"
     edit: "Modifica"
     update: "Aggiorna"
     delete: "Annulla"
+    add: "Aggiungi"
+    cut: "Taglia"
+    paste: "Incolla"
+    destroy: "Eliminare"
+    rename: "Rinomina"
   admin:
     begins_at: Inizia a
     begins_on: Inizia da
@@ -351,6 +357,7 @@ it:
     has_n_rules: "ha %{num} regole"
     unsaved_confirm_leave: "Ci sono cambiamenti non salvati in questa pagina. Continuare senza salvare?"
     unsaved_changes: "Hai modifiche non salvate"
+    available_units: "Unità disponibili"
     shopfront_settings:
       embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
       enable_embedded_shopfronts: "Abilita vetrine incorporate"
@@ -410,6 +417,7 @@ it:
         search_by_email: "Cerca per email/codice..."
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
+        balance_due: "Da pagare"
       destroy:
         has_associated_orders: "Cancellazione fallita: l'utente ha ordini associati al negozio"
     contents:
@@ -598,6 +606,8 @@ it:
       controls:
         back_to_my_inventory: Indietro al mio inventario
     orders:
+      edit:
+        order_sure_want_to: Sei sicuro di voler %{event} questa gentile richiesta?
       invoice_email_sent: 'La mail con la fattura è stata inviata'
       order_email_resent: 'La mail con la gentile richiesta è stata re-inviata'
       bulk_management:
@@ -628,7 +638,7 @@ it:
         title: Aziende
         new_enterprise: Nuova Azienda
         producer?: "Produttore?"
-        package: Imballaggio
+        package: Tipo Profilo
         status: Stato
         manage: Gestisci
       form:
@@ -646,6 +656,7 @@ it:
           invoice_text: Aggiungere testo personalizzato alla fine delle fatture
           terms_and_conditions: "Termini e Condizioni"
           remove_terms_and_conditions: "Rimuovi File"
+          uploaded_on: "caricato il"
         contact:
           name: Nome
           name_placeholder: es. Gustav Plum
@@ -727,7 +738,7 @@ it:
           recommend_require_login: "Consigliamo di richiedere la registrazione quando si dà la possibilità di modificare gli ordini."
           allow_guest_orders: "Gentili richieste ospiti"
           allow_guest_orders_tip: "Permetti l'acquisto come ospite o richiedi di registrarsi"
-          allow_guest_orders_false: "Richiedi il login per ordinare"
+          allow_guest_orders_false: "Richiedi accesso per ordinare"
           allow_guest_orders_true: "Permetti acquisto come ospite"
           allow_order_changes: "Modifica gentili richieste"
           allow_order_changes_tip: "Permetti ai clienti di modificare i propri ordini fino a quando il ciclo degli ordini è aperto."
@@ -755,6 +766,7 @@ it:
               nuova apertura. Questo viene visualizzato sul tuo negozio solo quando
               non hai cicli d'ordine attivi (es. il negozio è chiuso).
           shopfront_category_ordering: "Categorie disponibili in Vetrina"
+          shopfront_category_ordering_note: "(dall'alto in basso)"
           open_date: "Data apertura"
           close_date: "Data chiusura"
         social:
@@ -821,8 +833,8 @@ it:
       change_type_form:
         producer_profile: Profilo produttore
         connect_ofn: Connetti attraverso OFN
-        always_free: SEMPRE LIBERO
-        producer_description_text: Aggiungi i tuoi prodotti, permettendo agli hubs di inserire i tuoi prodotti nei loro negozi.
+        always_free: SEMPRE GRATUITO
+        producer_description_text: Aggiungi i tuoi prodotti a Open Food Network, consentendo agli hub di vendere i tuoi prodotti attraverso la loro vetrina.
         producer_shop: Negozio produttore
         sell_your_produce: Vendi i tuoi prodotti
         producer_shop_description_text: Vendi i tuoi prodotti direttamente ai clienti tramite la tua personale vetrina su Open Food Network.
@@ -831,11 +843,11 @@ it:
         producer_hub_text: Vendi prodotti tuoi e di altri
         producer_hub_description_text: La tua azienda è un pilastro della nostra filiera del cibo. Puoi vendere i tuoi prodotti, ma anche prodotti di tuoi produttori fidati attraverso la tua vetrina di Open Food Network.
         profile: Solo Profilo
-        get_listing: Ottieni un listino
+        get_listing: Compari su OFN
         profile_description_text: Le persone ti possono trovare e contattare su OFN. La tua azienda sarà visibile sulla mappa e potrà essere trovata nelle ricerche degli utenti.
-        hub_shop: Isola logistica
+        hub_shop: Negozio Hub
         hub_shop_text: Vendi prodotti di altri
-        hub_shop_description_text: La tua azienda è la spina dorsale della vostra filiera locale del cibo. Puoi aggregare i prodotti di altre aziende e venderli attraverso il tuo negozio su Open Food Network.
+        hub_shop_description_text: La tua azienda è la colonna vertebrale della tua filiera alimentare locale. Puoi aggregare i prodotti di diversi produttori presenti su Open Food Network e venderli attraverso la tua vetrina.
         choose_option: Per favore seleziona una delle opzioni.
         change_now: Modifica ora
       enterprise_user_index:
@@ -845,7 +857,7 @@ it:
         manage: Gestisci
         manage_link: Impostazioni
         producer?: "Produttore?"
-        package: "Imballaggio"
+        package: "Tipo Profilo"
         status: "Stato"
       new_form:
         owner: Proprietario
@@ -862,7 +874,7 @@ it:
         welcome_title: Benvenuto su Open Food Network!
         welcome_text: Hai creato con successo una
         next_step: Prossimo passo
-        choose_starting_point: 'Scegli il tuo imballaggio:'
+        choose_starting_point: 'Scegli il tuo "pacchetto" OFN (tipo di profilo):'
         profile: 'Profilo'
         producer_profile: 'Profilo produttore'
       invite_manager:
@@ -1164,6 +1176,7 @@ it:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     terms_and_conditions:
+      message_html: "Accetto i %{terms_and_conditions_link} del venditore."
       link_text: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
@@ -1210,7 +1223,7 @@ it:
   shop:
     messages:
       customer_required:
-        login: "fai il login"
+        login: "accedi"
         signup: "Registrati"
         contact: "contatta"
         require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
@@ -1318,7 +1331,7 @@ it:
   label_blog: "Blog"
   label_support: "Aiuto"
   label_shopping: "Acquisto"
-  label_login: "Login"
+  label_login: "Accedi"
   label_logout: "Logout"
   label_signup: "Iscriviti"
   label_administration: "Amministrazione"
@@ -1578,7 +1591,9 @@ it:
   hubs_distance: Più vicino a
   hubs_distance_filter: "Mostrami negozi vicino a %{location}"
   shop_changeable_orders_alert_html:
-    one: La tua gentile richiesta con <a href='%{path}' target='_blank'>%{shop} / %{order}</a> è aperta. Puoi apportare modifiche fino a%{oc_close}.
+    one: La tua gentile richiesta con <a href='%{path}' target='_blank'>%{shop} / %{order}</a> può essere modificata fino al %{oc_close}.
+    few: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
+    many: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
     other: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
   orders_changeable_orders_alert_html: Questa gentile richiesta è stata confermata, ma puoi effettuare modifiche fino a <strong>%{oc_close}</strong>.
   products_clear: Pulisci
@@ -1724,7 +1739,9 @@ it:
   orders_could_not_cancel: "Ci dispiace, la gentile richiesta non ha potuto essere annullata"
   orders_cannot_remove_the_final_item: "Non si può rimuovere l'articolo definitivo da una gentile richiesta, per favore annulla piuttosto la gentile richiesta."
   orders_bought_items_notice:
-    one: "Un articolo aggiuntivo è già stato confermato per questo ciclo di richieste"
+    one: E' già stato confermato un articolo aggiuntivo per questo ciclo di richieste
+    few: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
+    many: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     other: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
   orders_bought_edit_button: Modifica gli articoli confermati
   orders_bought_already_confirmed: "* già confermato"
@@ -1849,12 +1866,12 @@ it:
         yes_producer: "Sì, sono un produttore"
         no_producer: "No, non sono un produttore"
         producer_field_error: "Per favore scegline uno. Sei un produttore?"
-        yes_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
+        yes_producer_help: "I produttori creano cose buone da mangiare e/o bere, ma non solo. Sei un produttore se coltivi, allevi, trasformi, inforni, cucini, fai fermentare, mungi o modelli."
         no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce. Potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
         create_profile: "Crea profilo"
       about:
         title: "Descrizione"
-        headline: "Bello!"
+        headline: "Bene!"
         message: "Adesso completiamo i dettagli su"
         success: "Bene! %{enterprise} aggiunto a Open Food Network"
         registration_exit_message: "Se esci da questa procedura guidata in qualsiasi momento, puoi continuare a creare il tuo profilo dall'interfaccia diell'amministrazione."
@@ -1912,9 +1929,9 @@ it:
         action: "Ritorna alla pagina iniziale"
       finished:
         headline: "Finito!"
-        thanks: "Grazie per aver riempito i dettagli per %{enterprise}."
-        login: "Puoi cambiare o aggiornare la tua azienda ad ogni passo accedendo a Open Food Network e andando su Amministrazione."
-        action: "Vai alla dashboard aziendale"
+        thanks: "Grazie per aver completato i dettagli per %{enterprise}."
+        login: "Puoi cambiare o aggiornare il tuo profilo aziendale quando vuoi accedendo a Open Food Network e andando su Amministrazione."
+        action: "Vai al Pannello di Controllo per le aziende"
   back: "Indietro"
   continue: "Continua"
   action_or: "O"
@@ -2402,6 +2419,14 @@ it:
               Creando regole relative ad una specifica tag per clienti, puoi superare
               il comportamento predefinito (che prevede elementi visibili o nascosti)
               per clienti con le tag specificate.
+        terms_and_conditions_info:
+          title: "Caricamento dei Termini e Condizioni"
+          message_1: "I Termini e Condizioni sono il contratto tra te, il venditore, e l'acquirente. Se carichi un documento qui, i tuoi clienti dovranno accettare i tuoi Termini e Condizioni per poter confermare la loro gentile richiesta. Ti consigliamo vivamente di caricare i tuoi Termini e Condizioni, in linea con la legislazione nazionale."
+          message_2: "I clienti dovranno accettare i tuoi Termini e Condizioni solo una volta. Se modificherai il documento, ai tuoi clienti sarà nuovamente richiesto di accettare la nuova versione prima di poter confermare la loro gentile richiesta."
+        terms_and_conditions_warning:
+          title: "Caricamento dei Termini e Condizioni"
+          message_1: "Tutti i tuoi clienti dovranno accettarli alla conferma delle loro gentili richieste. Se aggiorni il documento, tutti i tuoi clienti dovranno accettarli nuovamente alla prossima conferma di richiesta."
+          message_2: "Per i clienti in abbonamento, per ora è necessario mandare loro una mail con i Termini e le Condizioni (o con le modifiche ad essi). Non è al momento prevista alcuna notifica automatica."
       panels:
         save: SALVA
         saved: SALVATO
@@ -2415,11 +2440,11 @@ it:
           hub_profile_text2: >
               Avere un profilo e costruire connessioni all'interno del proprio sistema
               alimentare locale attraverso Open Food Network sarà sempre gratuito..
-          hub_shop: Isola logistica
+          hub_shop: Negozio Hub
           hub_shop_text1: >
-              La tua azienda è la spina dorsale della vostra filiera alimentare locale.
-              Puoi aggregare i prodotti di altre aziende e venderli attraverso il
-              tuo negozio su Open Food Network.
+              La tua azienda è la colonna vertebrale della tua filiera alimentare
+              locale. Puoi aggregare i prodotti di diversi produttori presenti su
+              Open Food Network e venderli attraverso la tua vetrina.
           hub_shop_text2: >
               Gli hub possono assumere molte forme: possono essere una cooperativa
               alimentare, un gruppo di acquisto, una csa o un negozio di alimentari
@@ -2445,7 +2470,7 @@ it:
               su Open Food Network.
           profile_only_text3: >
               Aggiungi i tuoi prodotti a Open Food Network, consentendo agli hub di
-              immagazzinare i tuoi prodotti nei loro negozi.
+              vendere i tuoi prodotti attraverso la loro vetrina.
           producer_shop: Negozio produttore
           producer_shop_text1: >
               Vendi i tuoi prodotti direttamente ai clienti attraverso la tua vetrina
@@ -2455,9 +2480,9 @@ it:
               coltivati / prodotti al di fuori della tua azienda, seleziona "Hub Produttore".
           producer_hub: Hub produttore
           producer_hub_text1: >
-              La tua azienda è la spina dorsale del tuo sistema alimentare locale.
-              Puoi vendere i tuoi prodotti e anche aggiungere prodotti di altre imprese
-              attraverso il tuo negozio su Open Food Network
+              La tua azienda è la colonna vertebrale della tua filiera alimentare
+              locale. Puoi vendere i tuoi prodotti ma anche anche quelli di altri
+              produttori attraverso la tua vetrina su Open Food Network
           producer_hub_text2: >
               Gli Hub dei produttori possono assumere molte forme: CSA,  cooperative
               alimentari, produttori che compongono cassette.. .
@@ -2465,17 +2490,17 @@ it:
               Open Food Network mira a supportare quanti più modelli di hub possibile,
               quindi, indipendentemente dalla tua situazione, vogliamo fornire gli
               strumenti necessari per gestire la tua organizzazione alimentare locale.
-          get_listing: Ottieni un listino
-          always_free: SEMPRE LIBERO
+          get_listing: Compari su OFN
+          always_free: SEMPRE GRATUITO
           sell_produce_others: Vendi prodotti di altri
           sell_own_produce: Vendi i tuoi prodotti
           sell_both: Vendi prodotti tuoi e di altri
         enterprise_producer:
           producer: Produttore
           producer_text1: >
-              I produttori fanno cose gustose da mangiare o da bere. Sei un produttore
-              se ti dedichi a coltivare, allevare, birrificare, infornare, far fermentare,
-              mungere o modellare il tuo prodotto
+              I produttori creano cose buone da mangiare e/o bere, ma non solo. Sei
+              un produttore se coltivi, allevi, trasformi, inforni, cucini, fai fermentare,
+              mungi o modelli.
           producer_text2: >
               I produttori possono anche svolgere altre funzioni, come aggregare alimenti
               provenienti da altre imprese e venderli attraverso un negozio su Open
@@ -2863,6 +2888,8 @@ it:
     delete: "Annulla"
     cannot_set_shipping_method_without_address: "Impossibile impostare il metodo di spedizione finché non vengono forniti i dettagli del cliente."
     no_tracking_present: "Nessun dettaglio di tracciamento fornito."
+    tracking: "Tracciamento"
+    tracking_number: "Numero Tracciamento"
     order_total: "Ordine totale"
     customer_details: "Dettagli Cliente"
     customer_search: "Ricerca Clienti"
@@ -2884,10 +2911,11 @@ it:
     adjustments: "Regolazioni"
     continue: "Continua"
     fill_in_customer_info: "Per favore compila le informazioni del cliente"
+    credit_card: "Carta di Credito"
     new_payment: "Nuovo pagamento"
     capture: "Cattura"
     void: "vuoto"
-    login: "Login"
+    login: "Accedi"
     password: "Password"
     signature: "Firma"
     solution: "Soluzione"
@@ -2895,6 +2923,8 @@ it:
     server: "Server"
     test_mode: "Modalità di Test"
     logourl: "Logourl"
+    are_you_sure_delete: "Sei sicuro di voler eliminare questo elemento?"
+    confirm_delete: "Conferma eliminazione"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -3004,6 +3034,7 @@ it:
     has_no_shipped_units: "non ha unità spedite"
     successfully_created: '%{resource} è stato creato con successo!'
     successfully_updated: '%{resource} è stato aggiornato con successo!'
+    payment_method: "Metodo di pagamento"
     payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     not_available: "N/A"
     order_populator:
@@ -3013,7 +3044,9 @@ it:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 errore ha proibito il salvataggio di questo record:"
+          one: "1 errore ha impedito il salvataggio di questo record:"
+          few: "%{count} errori hanno proibito il salvataggio di questo record:"
+          many: "%{count} errori hanno proibito il salvataggio di questo record:"
           other: "%{count} errori hanno proibito il salvataggio di questo record:"
         there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
       payments_list:
@@ -3052,7 +3085,6 @@ it:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"
           add_product_properties: "Aggiungi proprietà prodotto"
-          select_from_prototype: "Seleziona da un prototipo"
       properties:
         index:
           properties: "Proprietà"
@@ -3145,6 +3177,8 @@ it:
           active_products:
             zero: "Non hai prodotti attivi."
             one: "Hai un prodotto attivo"
+            few: "Hai il %{count} di prodotti disponibili"
+            many: "Hai il %{count} di prodotti disponibili"
             other: "Hai il %{count} di prodotti disponibili"
         order_cycles:
           order_cycles: "Cicli di richieste"
@@ -3152,6 +3186,8 @@ it:
           you_have_active:
             zero: "Non hai nessun ciclo di richieste attivo."
             one: "Hai un ciclo di richieste attivo."
+            few: "Hai %{count} cicli di richieste attivi."
+            many: "Hai %{count} cicli di richieste attivi."
             other: "Hai %{count} cicli di richieste attivi."
           manage_order_cycles: "GESTISCI CICLI DI RICHIESTE"
       shipping_methods:

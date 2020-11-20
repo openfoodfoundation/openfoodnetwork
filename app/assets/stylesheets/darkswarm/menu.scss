@@ -44,6 +44,13 @@ nav.top-bar {
 
 .top-bar-section {
   border-bottom: 1px solid $light-grey-transparency;
+  display: flex;
+  justify-content: space-between;
+
+  .nav-main-menu,
+  .nav-icons-menu {
+    flex-shrink: 0;
+  }
 
   a.icon {
     &:hover {
@@ -99,21 +106,14 @@ nav.top-bar {
     }
   }
 
-  ul.center {
-    display: inline-block;
-
-    // By default, we center between the left and right uls, but we want to be centered
-    // relative to the whole page. The difference in width between the other uls is 74px,
-    // so we offset by that amount here.
-    margin-left: -74px;
-  }
-
   ul.dropdown {
     border: 1px solid $smoke;
     border-top: none;
+    left: auto;
+    right: 0;
   }
 
-  ul.right {
+  .nav-icons-menu {
     > li {
       border-left: 1px solid #ddd;
       padding: 0 14px;
@@ -244,9 +244,7 @@ nav.top-bar {
 
 .top-bar .ofn-logo img {
   height: auto;
-  width: auto;
   max-height: 44px;
-  max-width: 250px;
 }
 
 .left-off-canvas-menu {
@@ -288,10 +286,6 @@ nav.top-bar {
     ul li a,
     .has-dropdown > a {
       padding: 0 ($topbar-height / 8) !important;
-    }
-
-    ul.center {
-      margin-left: -24px;
     }
   }
 }

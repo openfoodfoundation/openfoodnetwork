@@ -6,7 +6,7 @@ module Spree
   describe Spree::Order do
     let(:order) { build(:order) }
     let(:updater) { OrderManagement::Order::Updater.new(order) }
-    let(:bogus) { create(:bogus_payment_method, distributors: [create(:enterprise)]) }    
+    let(:bogus) { create(:bogus_payment_method, distributors: [create(:enterprise)]) }
 
     before do
       # So that Payment#purchase! is called during processing

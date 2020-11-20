@@ -45,7 +45,7 @@ module OpenFoodNetwork
         context "that has granted P-OC to the distributor" do
           let(:order2) {
             create(:order, distributor: distributor, completed_at: 1.day.ago,
-                   bill_address: create(:address), ship_address: create(:address))
+                           bill_address: create(:address), ship_address: create(:address))
           }
           let(:line_item2) {
             build(:line_item_with_shipment, product: create(:simple_product, supplier: supplier))
@@ -54,7 +54,7 @@ module OpenFoodNetwork
           before do
             order2.line_items << line_item2
             create(:enterprise_relationship, parent: supplier, child: distributor,
-                   permissions_list: [:add_to_order_cycle])
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "shows line items supplied by my producers, with names hidden" do
@@ -78,7 +78,7 @@ module OpenFoodNetwork
         context "that has not granted P-OC to the distributor" do
           let(:order2) {
             create(:order, distributor: distributor, completed_at: 1.day.ago,
-                   bill_address: create(:address), ship_address: create(:address))
+                           bill_address: create(:address), ship_address: create(:address))
           }
           let(:line_item2) {
             build(:line_item_with_shipment, product: create(:simple_product, supplier: supplier))
