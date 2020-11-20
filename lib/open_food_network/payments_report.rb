@@ -111,7 +111,7 @@ module OpenFoodNetwork
              o.payments.select { |payment|
                payment.completed? &&
                  (payment.payment_method.name.to_s.include? "EFT")
-             } .sum(:amount)
+             }.sum(:amount)
            }
          },
          proc { |orders|
@@ -119,7 +119,7 @@ module OpenFoodNetwork
              o.payments.select { |payment|
                payment.completed? &&
                  (payment.payment_method.name.to_s.include? "PayPal")
-             } .sum(:amount)
+             }.sum(:amount)
            }
          },
          proc { |orders| orders.sum(&:outstanding_balance) }]
