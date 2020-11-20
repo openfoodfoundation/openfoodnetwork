@@ -49,6 +49,7 @@ If you are using Windows and having issues related to the ruby-build not finding
 * docker/build: This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations.  After you use "git clone" to download this repository, run the docker/build script to start the setup process.
 * docker/server: Use this script to run this app in the Rails server.  This script executes the "docker-compose up" command and logs the results.  If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
 * docker/test: Use this script to run the entire test suite.
+* docker/qtest: Use this script to run the entire test suite in quiet mode.  The deprecation warnings are removed to make the test results easier to read.
 * docker/run: Use this script to run commands within the Docker container.  If you want shell access, enter "docker/run bash".  To execute "ls -l" within the Docker container, enter "docker/run ls -l".
 * docker/seed: Use this script to seed the database.  Please note that this process is not compatible with simultaneously running the Rails server or tests.
 * docker/nuke: Use this script to delete all Docker images and containers.  This fully resets your Docker setup and is useful for making sure that the setup procedure specified for this app is complete.

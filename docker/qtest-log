@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo '--------------------------------------------------------------'
+echo 'BEGIN: docker-compose run web bundle exec rake db:test:prepare'
+echo '--------------------------------------------------------------'
+docker-compose run web bundle exec rake db:test:prepare
+echo '------------------------------------------------------------'
+echo 'END: docker-compose run web bundle exec rake db:test:prepare'
+echo '------------------------------------------------------------'
+
+echo '--------------------------------------'
+echo 'BEGIN: running test suite (quiet mode)'
+echo '--------------------------------------'
+docker-compose run web bundle exec rspec spec | grep -v 'DEPRECATION WARNING' | grep -v 'Post.includes(:comments)' | grep -v 'Currently, Active Record recognizes the table in the string' | grep -v "If you don't rely on implicit join references"
+echo '------------------------------------'
+echo 'END: running test suite (quiet mode)'
+echo '------------------------------------'
