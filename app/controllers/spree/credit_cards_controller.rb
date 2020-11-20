@@ -68,13 +68,6 @@ module Spree
       stripe_customer&.delete unless stripe_customer.deleted?
     end
 
-    def stripe_account_id
-      StripeAccount.
-        find_by(enterprise_id: @credit_card.payment_method.preferred_enterprise_id).
-        andand.
-        stripe_user_id
-    end
-
     def create_customer(token)
       Stripe::Customer.create(email: spree_current_user.email, source: token)
     end
