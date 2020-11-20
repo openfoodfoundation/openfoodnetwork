@@ -32,7 +32,7 @@ module Stripe
         customer_id, _payment_method_id = find_cloned_card(card, stripe_account)
         next unless customer_id
 
-        customer = Stripe::Customer.retrieve(customer_id, { stripe_account: stripe_account })
+        customer = Stripe::Customer.retrieve(customer_id, stripe_account: stripe_account)
         customer&.delete unless customer.deleted?
       end
     end
@@ -80,31 +80,31 @@ module Stripe
     end
 
     def find_customers(email, connected_account_id)
-      starting_after = nil
+      start_after = nil
       customers = []
 
       loop do
-        response = Stripe::Customer.list({ email: email, starting_after: starting_after },
+        response = Stripe::Customer.list({ email: email, starting_after: start_after, limit: 100 },
                                          stripe_account: connected_account_id)
         customers += response.data
         break unless response.has_more
 
-        starting_after = response.data.last.id
+        start_after = response.data.last.id
       end
       customers
     end
 
     def find_payment_methods(customer_id, connected_account_id)
-      starting_after = nil
+      start_after = nil
       payment_methods = []
 
       loop do
-        options = { customer: customer_id, type: 'card', starting_after: starting_after }
+        options = { customer: customer_id, type: 'card', starting_after: start_after, limit: 100 }
         response = Stripe::PaymentMethod.list(options, stripe_account: connected_account_id)
         payment_methods += response.data
         break unless response.has_more
 
-        starting_after = response.data.last.id
+        start_after = response.data.last.id
       end
       payment_methods
     end
