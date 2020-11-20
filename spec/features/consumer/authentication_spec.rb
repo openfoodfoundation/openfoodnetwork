@@ -105,6 +105,8 @@ feature "Authentication", js: true do
               click_reset_password_button
               expect(page).to have_reset_password
             end.to enqueue_job ActionMailer::DeliveryJob
+
+            expect(enqueued_jobs.last.to_s).to match "reset_password_instructions"
           end
 
           context "user with unconfirmed email" do
