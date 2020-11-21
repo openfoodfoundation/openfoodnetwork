@@ -63,17 +63,18 @@
           %ui-gmap-google-map{options: "map.options", center: "map.center", zoom: "map.zoom"}
             %ui-gmap-marker{idKey: 1, coords: "latLong"}
           
-      .row.buttons.center.small-12.medium-9.large-12.columns.end
-        %input.button.primary{ type: "button", value: "{{'locate_address' | t}}", ng: { click: "locateAddress()" } }
+      .center
+        %input.button.primary{ type: "button", value: "{{'registration.steps.details.locate_address' | t}}", ng: { click: "locateAddress()" } }
 
-      .row.center.small-12.medium-9.large-12.columns.end{ ng: {if: "latLong"}}
-        %p
-        %strong = {{'confirm_location' | t}}
+      .center{ ng: {if: "latLong"}} 
+        .field
+          %strong {{'registration.steps.details.confirm_location' | t}}
+
         .field
           %input{ id: 'confirm_address_true', type: 'radio', name: 'confirm_address', value: 'true', required: true, ng: { model: 'confirmAddress' } }
-          %label{ for: 'confirm_address_true' } {{'confirm_address_yes' | t}}
+          %label{ for: 'confirm_address_true' } {{'registration.steps.details.confirm_address_yes' | t}}
           %input{ id: 'confirm_address_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, ng: { model: 'confirmAddress' } }
-          %label{ for: 'confirm_address_false' } {{'confirm_address_no' | t}}
+          %label{ for: 'confirm_address_false' } {{'registration.steps.details.confirm_address_no' | t}}
 
       .row.buttons
         .small-12.columns
