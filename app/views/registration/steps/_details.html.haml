@@ -71,9 +71,9 @@
           %strong {{'registration.steps.details.confirm_location' | t}}
 
         .field
-          %input{ id: 'confirm_address_true', type: 'radio', name: 'confirm_address', value: 'true', required: true, ng: { model: 'confirmAddress' } }
+          %input{ id: 'confirm_address_true', type: 'radio', name: 'confirm_address', ng: { model: 'confirmAddress', change: 'confirmAddressChange(confirmAddress)', value: 'true' } }
           %label{ for: 'confirm_address_true' } {{'registration.steps.details.confirm_address_yes' | t}}
-          %input{ id: 'confirm_address_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, ng: { model: 'confirmAddress' } }
+          %input{ id: 'confirm_address_false', type: 'radio', name: 'confirm_address', ng: { model: 'confirmAddress', change: 'confirmAddressChange(confirmAddress)', value: 'false' } }
           %label{ for: 'confirm_address_false' } {{'registration.steps.details.confirm_address_no' | t}}
 
       .row.buttons
