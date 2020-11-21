@@ -19,7 +19,7 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 gem 'acts_as_list', '= 0.3.0'
-gem 'awesome_nested_set', '~> 3.0.0.rc.1'
+gem 'awesome_nested_set', '~> 3.2.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker', '~> 1.16'
 gem 'highline', '2.0.3' # Necessary for the install generator
@@ -54,7 +54,7 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 
-gem 'kaminari', '~> 0.14.1'
+gem 'kaminari', '~> 0.17.0'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'

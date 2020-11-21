@@ -1,6 +1,6 @@
 %nav.top-bar.show-for-large-up{'data-topbar' => true}
   %section.top-bar-section
-    %ul.left
+    %ul.nav-logo
       %li.ofn-logo
         %a{href: main_app.root_path}
           %img{src: ContentConfig.logo.url}
@@ -10,7 +10,7 @@
           = t 'powered_by'
           %a{href: '/'}
             = t 'title'
-    %ul.center
+    %ul.nav-main-menu
       - [*1..7].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
         - if ContentConfig[menu_name].present?
@@ -18,7 +18,7 @@
             %a{href: t("#{menu_name}_url") }
               %span.nav-primary
                 = t "#{menu_name}_title"
-    %ul.menu.icons.right
+    %ul.nav-icons-menu
       - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
         = render 'shared/menu/language_selector'
 

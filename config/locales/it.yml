@@ -866,7 +866,7 @@ it:
         welcome_title: Benvenuto su Open Food Network!
         welcome_text: Hai creato con successo una
         next_step: Prossimo passo
-        choose_starting_point: 'Scegli il tuo imballaggio:'
+        choose_starting_point: 'Scegli il tuo "pacchetto" OFN (tipo di profilo):'
         profile: 'Profilo'
         producer_profile: 'Profilo produttore'
       invite_manager:
@@ -1855,12 +1855,12 @@ it:
         yes_producer: "Sì, sono un produttore"
         no_producer: "No, non sono un produttore"
         producer_field_error: "Per favore scegline uno. Sei un produttore?"
-        yes_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
+        yes_producer_help: "I produttori creano cose buone da mangiare e/o bere, ma non solo. Sei un produttore se coltivi, allevi, trasformi, inforni, cucini, fai fermentare, mungi o modelli."
         no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce. Potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
         create_profile: "Crea profilo"
       about:
         title: "Descrizione"
-        headline: "Bello!"
+        headline: "Bene!"
         message: "Adesso completiamo i dettagli su"
         success: "Bene! %{enterprise} aggiunto a Open Food Network"
         registration_exit_message: "Se esci da questa procedura guidata in qualsiasi momento, puoi continuare a creare il tuo profilo dall'interfaccia diell'amministrazione."
@@ -1918,9 +1918,9 @@ it:
         action: "Ritorna alla pagina iniziale"
       finished:
         headline: "Finito!"
-        thanks: "Grazie per aver riempito i dettagli per %{enterprise}."
-        login: "Puoi cambiare o aggiornare la tua azienda ad ogni passo accedendo a Open Food Network e andando su Amministrazione."
-        action: "Vai alla dashboard aziendale"
+        thanks: "Grazie per aver completato i dettagli per %{enterprise}."
+        login: "Puoi cambiare o aggiornare il tuo profilo aziendale quando vuoi accedendo a Open Food Network e andando su Amministrazione."
+        action: "Vai al Pannello di Controllo per le aziende"
   back: "Indietro"
   continue: "Continua"
   action_or: "O"
@@ -2479,9 +2479,9 @@ it:
         enterprise_producer:
           producer: Produttore
           producer_text1: >
-              I produttori fanno cose gustose da mangiare o da bere. Sei un produttore
-              se ti dedichi a coltivare, allevare, birrificare, infornare, far fermentare,
-              mungere o modellare il tuo prodotto
+              I produttori creano cose buone da mangiare e/o bere, ma non solo. Sei
+              un produttore se coltivi, allevi, trasformi, inforni, cucini, fai fermentare,
+              mungi o modelli.
           producer_text2: >
               I produttori possono anche svolgere altre funzioni, come aggregare alimenti
               provenienti da altre imprese e venderli attraverso un negozio su Open

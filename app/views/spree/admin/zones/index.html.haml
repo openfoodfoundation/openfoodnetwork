@@ -7,7 +7,8 @@
   %li
     = button_link_to t("spree.new_zone"), new_object_url, icon: 'icon-plus', id: 'admin_new_zone_link'
 
-= paginate @zones
+- _with_routes Spree::Core::Engine.routes do
+  = paginate @zones
 
 - if @zones.empty?
   .no-objects-found
@@ -38,4 +39,5 @@
           %td.actions
             = link_to_edit zone, no_text: true
             = link_to_delete zone, no_text: true
-= paginate @zones
+- _with_routes Spree::Core::Engine.routes do
+  = paginate @zones

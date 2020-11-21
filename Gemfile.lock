@@ -114,8 +114,8 @@ GEM
     arel (4.0.2)
     ast (2.4.0)
     atomic (1.1.101)
-    awesome_nested_set (3.0.3)
-      activerecord (>= 4.0.0, < 5)
+    awesome_nested_set (3.2.1)
+      activerecord (>= 4.0.0, < 7.0)
     awesome_print (1.8.0)
     aws-sdk (1.11.1)
       json (~> 1.4)
@@ -410,7 +410,7 @@ GEM
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
     jwt (2.2.2)
-    kaminari (0.14.1)
+    kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.11.3)
@@ -655,7 +655,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webmock (3.9.4)
+    webmock (3.9.5)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -686,7 +686,7 @@ DEPENDENCIES
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.5.5)
   atomic
-  awesome_nested_set (~> 3.0.0.rc.1)
+  awesome_nested_set (~> 3.2.1)
   awesome_print
   aws-sdk (= 1.11.1)
   bugsnag
@@ -731,7 +731,7 @@ DEPENDENCIES
   json (>= 1.7.7)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
-  kaminari (~> 0.14.1)
+  kaminari (~> 0.17.0)
   knapsack
   letter_opener (>= 1.4.1)
   mini_racer (= 0.2.15)

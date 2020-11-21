@@ -1299,7 +1299,7 @@ de_DE:
   email: 'E-Mail:'
   phone: Telefonnummer
   next: Weiter
-  address: Adresse
+  address: Straße + Hausnummer
   address_placeholder: z.B. Gartenstrasse 123
   address2: Adresse (Fortsetzung)
   city: Ort
@@ -1552,7 +1552,7 @@ de_DE:
     set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
     mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen."
   producer_mail_greeting: "Liebe/r"
-  producer_mail_text_before: "Wir haben jetzt alle Verbraucherbestellungen für den nächsten Essenstropfen."
+  producer_mail_text_before: "Wir haben jetzt alle Verbraucherbestellungen für die nächste Auslieferung."
   producer_mail_order_text: "Hier finden Sie eine Zusammenfassung der Bestellungen für Ihre Produkte:"
   producer_mail_delivery_instructions: "Lagerabholung / Lieferanweisungen:"
   producer_mail_signoff: "Danke und die besten Wünsche"
@@ -2887,6 +2887,8 @@ de_DE:
     delete: "Löschen"
     cannot_set_shipping_method_without_address: "Versandart kann nicht festgelegt werden, bis Kundendaten angegeben werden."
     no_tracking_present: "Keine Tracking-Details angegeben."
+    tracking: "Sendungsverfolgung"
+    tracking_number: "Sendungscode"
     order_total: "Auftrag insgesamt"
     customer_details: "Kundendetails"
     customer_search: "Kundensuche"

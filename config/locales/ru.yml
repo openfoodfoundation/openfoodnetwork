@@ -290,11 +290,16 @@ ru:
     create_and_add_another: "Создать и Добавить Другой"
     create: "Создать"
     cancel: "Отмена"
+    resume: "Продолжить"
     save: "Сохранить"
     edit: "Изменить"
     update: "Обновить"
     delete: "Удалить"
     add: "Добавить"
+    cut: "Вырезать"
+    paste: "Вставить"
+    destroy: "Уничтожить"
+    rename: "Переименовать"
   admin:
     begins_at: Начинается С
     begins_on: Начинается На
@@ -602,6 +607,8 @@ ru:
       controls:
         back_to_my_inventory: Назад в мою товарную номенклатуру
     orders:
+      edit:
+        order_sure_want_to: Вы уверены, что хотите %{event} этот заказ?
       invoice_email_sent: 'Письмо Счета отправлено'
       order_email_resent: 'Письмо Заказа отправлено'
       bulk_management:
@@ -2933,6 +2940,8 @@ ru:
     delete: "Удалить"
     cannot_set_shipping_method_without_address: "Невозможно установить способ доставки, пока не будут предоставлены данные клиента."
     no_tracking_present: "Сведения об отслеживании не предоставлены."
+    tracking: "Отслеживание"
+    tracking_number: "Номер Отслеживания"
     order_total: "Итоговый Заказ"
     customer_details: "Информация о Клиенте"
     customer_search: "Поиск Клиента"
@@ -2966,6 +2975,8 @@ ru:
     server: "Сервер"
     test_mode: "Режим тестирования"
     logourl: "URL логотипа"
+    are_you_sure_delete: "Вы уверены, что хотите удалить эту запись?"
+    confirm_delete: "Подтвердить Удаление"
     configurations: "Настройки"
     general_settings: "Основные Настройки"
     site_name: "Имя Сайта"
