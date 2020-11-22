@@ -25,7 +25,7 @@ class CheckoutController < Spree::StoreController
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
-  before_action :ensure_sufficient_stock_lines
+  before_action :handle_insufficient_stock
 
   before_action :associate_user
   before_action :check_authorization
