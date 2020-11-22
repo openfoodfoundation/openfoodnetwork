@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Spree::PaypalController.class_eval do
+  include OrderStockCheck
+
   before_action :enable_embedded_shopfront
   before_action :destroy_orphaned_paypal_payments, only: :confirm
   after_action :reset_order_when_complete, only: :confirm
@@ -55,23 +57,26 @@ Spree::PaypalController.class_eval do
   end
 
   def confirm
-    order = current_order || raise(ActiveRecord::RecordNotFound)
-    order.payments.create!({
+    @order = current_order || raise(ActiveRecord::RecordNotFound)
+    # At this point the user has come back from the Paypal form, and we get one
+    # last chance to interact with the payment process before the money moves...
+    ensure_sufficient_stock_lines
+    @order.payments.create!({
       source: Spree::PaypalExpressCheckout.create({
         token: params[:token],
         payer_id: params[:PayerID]
       }),
-      amount: order.total,
+      amount: @order.total,
       payment_method: payment_method
     })
-    order.next
-    if order.complete?
+    @order.next
+    if @order.complete?
       flash.notice = Spree.t(:order_processed_successfully)
       flash[:commerce_tracking] = "nothing special"
       session[:order_id] = nil
-      redirect_to completion_route(order)
+      redirect_to completion_route(@order)
     else
-      redirect_to checkout_state_path(order.state)
+      redirect_to checkout_state_path(@order.state)
     end
   end
 
