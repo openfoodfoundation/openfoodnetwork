@@ -60,7 +60,8 @@ Spree::PaypalController.class_eval do
     @order = current_order || raise(ActiveRecord::RecordNotFound)
     # At this point the user has come back from the Paypal form, and we get one
     # last chance to interact with the payment process before the money moves...
-    ensure_sufficient_stock_lines
+    return unless ensure_sufficient_stock_lines
+
     @order.payments.create!({
       source: Spree::PaypalExpressCheckout.create({
         token: params[:token],
