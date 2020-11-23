@@ -33,7 +33,9 @@ We also have a [Super Admin Guide][super-admin-guide] to help with configuration
 
 ## Testing
 
-We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them!
+If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite] and download the [ZenHub browser extension][zenhub] to view the development pipeline.
+
+We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them! 
 
 ## Licence
 
@@ -45,3 +47,4 @@ Copyright (c) 2012 - 2020 Open Food Foundation, released under the AGPL licence.
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
 [welcome-dev]: https://github.com/openfoodfoundation/openfoodnetwork/projects/27
+[zenhub]: https://www.zenhub.com/extension
