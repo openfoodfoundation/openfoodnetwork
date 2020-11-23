@@ -2888,6 +2888,8 @@ es:
     delete: "Borrar"
     cannot_set_shipping_method_without_address: "No se puede establecer el método de envío hasta que se proporcionen los detalles de la consumidora."
     no_tracking_present: "No se han proporcionado detalles de seguimiento."
+    tracking: "Seguimiento"
+    tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
     customer_details: "Detalles de la consumidora"
     customer_search: "Búsqueda de consumidores"
