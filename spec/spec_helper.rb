@@ -1,3 +1,5 @@
+system('cat /etc/os-release')
+
 require 'simplecov'
 SimpleCov.start 'rails'
 
