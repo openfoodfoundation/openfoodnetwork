@@ -18,6 +18,8 @@ class CustomersWithBalance
 
   attr_reader :enterprise_id
 
+  # Arel doesn't support CASE statements until v7.1.0 so we'll have to wait with SQL literals
+  # a little longer. See https://github.com/rails/arel/pull/400 for details.
   def outstanding_balance
     <<-SQL.strip_heredoc
        SUM(
