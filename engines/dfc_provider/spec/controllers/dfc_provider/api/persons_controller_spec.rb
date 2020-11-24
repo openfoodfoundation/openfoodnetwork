@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'spec_helper.rb'
+require Rails.root.join('engines/dfc_provider/spec/spec_helper.rb')
 
 describe DfcProvider::Api::PersonsController, type: :controller do
   render_views
@@ -39,6 +40,17 @@ describe DfcProvider::Api::PersonsController, type: :controller do
             expect(response.status).to eq 404
           end
         end
+      end
+    end
+
+    context 'when the feature is not activated' do
+      before do
+        Spree::Config[:enable_dfc_api?] = false
+        api_get :show, id: create(:user).id
+      end
+
+      it 'returns a forbidden response' do
+        expect(response).to be_forbidden
       end
     end
   end

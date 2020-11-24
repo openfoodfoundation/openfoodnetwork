@@ -6,13 +6,20 @@ module DfcProvider
     class BaseController < ActionController::Base
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-      before_action :check_authorization,
+      before_action :check_feature_activation,
+                    :check_authorization,
                     :check_user,
                     :set_enterprise
 
       respond_to :json
 
       private
+
+      def check_feature_activation
+        return if Spree::Config[:enable_dfc_api?]
+
+        head :forbidden
+      end
 
       def check_authorization
         return if access_token.present?

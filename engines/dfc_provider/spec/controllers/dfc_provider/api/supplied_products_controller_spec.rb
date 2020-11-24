@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'spec_helper.rb'
+require Rails.root.join('engines/dfc_provider/spec/spec_helper.rb')
 
 describe DfcProvider::Api::SuppliedProductsController, type: :controller do
   render_views

@@ -146,5 +146,8 @@ module Spree
 
     # Available units
     preference :available_units, :string, default: "g,kg,T,mL,L,kL"
+
+    # Enable DFC API
+    preference :enable_dfc_api?, :boolean, default: false
   end
 end
