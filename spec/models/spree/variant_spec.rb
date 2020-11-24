@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'spec_helper'
 require 'variant_units/option_value_namer'
