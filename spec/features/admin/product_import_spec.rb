@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'spec_helper'
 require 'open_food_network/permissions'
