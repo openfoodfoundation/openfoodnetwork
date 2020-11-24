@@ -24,7 +24,8 @@ class CustomersWithBalance
     <<-SQL.strip_heredoc
        SUM(
          CASE WHEN state = 'canceled' THEN payment_total
-         ELSE payment_total - total END
+              WHEN state IS NOT NULL THEN payment_total - total
+         ELSE 0 END
        ) AS balance_value
     SQL
   end

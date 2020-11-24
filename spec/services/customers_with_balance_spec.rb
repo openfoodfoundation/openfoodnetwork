@@ -117,9 +117,10 @@ describe CustomersWithBalance do
       end
     end
 
+    context 'when there are no orders' do
       it 'returns the customer balance' do
         customer = customers_with_balance.query.first
-        expect(customer.balance_value).to eq(payment_total - complete_orders_total)
+        expect(customer.balance_value).to eq(0)
       end
     end
   end
