@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Finds a unique permalink for a new or updated record.
 # It considers soft-deleted records which are ignored by Spree.
 # Spree's work:
