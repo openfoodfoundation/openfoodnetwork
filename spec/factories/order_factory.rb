@@ -9,7 +9,7 @@ FactoryBot.define do
     user
     bill_address
     completed_at { nil }
-    email { user.email }
+    email { user&.email || customer.email }
 
     factory :order_with_totals do
       after(:create) do |order|
