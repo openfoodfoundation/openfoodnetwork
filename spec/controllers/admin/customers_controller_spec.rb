@@ -41,6 +41,11 @@ module Admin
               expect(ActiveModel::ArraySerializer).to receive(:new)
               spree_get :index, params
             end
+
+            it 'includes the customer balance in the response' do
+              spree_get :index, params
+              expect(json_response.first["balance"]).to eq("$0.00")
+            end
           end
 
           context "and enterprise_id is not given in params" do

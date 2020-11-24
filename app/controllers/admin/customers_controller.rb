@@ -17,9 +17,10 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render_as_json @collection,
-                         tag_rule_mapping: tag_rule_mapping,
-                         customer_tags: customer_tags_by_id
+          render json: @collection,
+                 each_serializer: ::Api::Admin::CustomerWithBalanceSerializer,
+                 tag_rule_mapping: tag_rule_mapping,
+                 customer_tags: customer_tags_by_id
         end
       end
     end
@@ -63,9 +64,11 @@ module Admin
     private
 
     def collection
-      return Customer.where("1=0") unless json_request? && params[:enterprise_id].present?
-
-      CustomersWithBalance.new(managed_enterprise_id).query
+      if json_request? && params[:enterprise_id].present?
+        CustomersWithBalance.new(managed_enterprise_id).query
+      else
+        Customer.where('1=0')
+      end
     end
 
     def managed_enterprise_id

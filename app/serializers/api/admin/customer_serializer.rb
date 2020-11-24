@@ -4,12 +4,10 @@ module Api
   module Admin
     class CustomerSerializer < ActiveModel::Serializer
       attributes :id, :email, :enterprise_id, :user_id, :code, :tags, :tag_list, :name,
-                 :allow_charges, :default_card_present?, :balance, :balance_status
+                 :allow_charges, :default_card_present?
 
       has_one :ship_address, serializer: Api::AddressSerializer
       has_one :bill_address, serializer: Api::AddressSerializer
-
-      delegate :balance_value, to: :object
 
       def name
         object.name.presence || object.bill_address.andand.full_name
@@ -17,20 +15,6 @@ module Api
 
       def tag_list
         customer_tag_list.join(",")
-      end
-
-      def balance
-        Spree::Money.new(balance_value, currency: Spree::Config[:currency]).to_s
-      end
-
-      def balance_status
-        if balance_value.positive?
-          "credit_owed"
-        elsif balance_value.negative?
-          "balance_due"
-        else
-          ""
-        end
       end
 
       def tags

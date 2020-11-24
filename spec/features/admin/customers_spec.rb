@@ -97,9 +97,33 @@ feature 'Customers' do
 
       describe "for a shop with multiple customers" do
         before do
-          build_balance(customer1, managed_distributor1, 88)
-          build_balance(customer2, managed_distributor1, -99)
-          build_balance(customer4, managed_distributor1, 0)
+          create(
+            :order,
+            total: 0,
+            payment_total: 88,
+            distributor: managed_distributor1,
+            user: nil,
+            completed_at: Time.zone.now,
+            customer: customer1
+          )
+          create(
+            :order,
+            total: 99,
+            payment_total: 0,
+            distributor: managed_distributor1,
+            user: nil,
+            completed_at: Time.zone.now,
+            customer: customer2
+          )
+          create(
+            :order,
+            total: 0,
+            payment_total: 0,
+            distributor: managed_distributor1,
+            user: nil,
+            completed_at: Time.zone.now,
+            customer: customer4
+          )
 
           customer4.update enterprise: managed_distributor1
         end
@@ -120,14 +144,6 @@ feature 'Customers' do
             expect(page).to_not have_content "BALANCE DUE"
             expect(page).to have_content "$0.00"
           end
-        end
-
-        def build_balance(customer, enterprise, balance)
-          order = build(:order, total: balance, payment_total: 0, distributor: enterprise)
-          order.email = customer.email
-          order.customer_id = customer.id
-          order.completed_at = Time.zone.now
-          order.save!
         end
       end
 
