@@ -33,15 +33,11 @@ module DfcProvider
     end
 
     def supplies
-      Spree::Variant.
-        joins(product: :supplier).
-        where('enterprises.id' => object.id)
+      DfcProvider::VariantFetcher.new(object).scope
     end
 
     def manages
-      Spree::Variant.
-        joins(product: :supplier).
-        where('enterprises.id' => object.id)
+      DfcProvider::VariantFetcher.new(object).scope
     end
   end
 end
