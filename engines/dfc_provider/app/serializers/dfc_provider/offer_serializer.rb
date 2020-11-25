@@ -3,7 +3,7 @@
 # Serializer used to render the DFC Offer from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class OfferSerializer < ActiveModel::Serializer
+  class OfferSerializer < BaseSerializer
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :offers_to, key: 'dfc:offers_to'
