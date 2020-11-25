@@ -30,7 +30,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
             end
 
             it 'is successful' do
-              expect(response.status).to eq 200
+              expect(response).to be_success
             end
 
             it 'renders the required content' do
@@ -39,10 +39,10 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
           end
 
           context 'given with a wrong id' do
-            before { api_get :show, id: 999 }
+            before { api_get :show, enterprise_id: 'default', id: 999 }
 
             it 'is not found' do
-              expect(response.status).to eq 404
+              expect(response).to be_not_found
             end
           end
         end

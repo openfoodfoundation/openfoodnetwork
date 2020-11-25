@@ -24,7 +24,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           before { api_get :show, id: user.id }
 
           it 'is successful' do
-            expect(response.status).to eq 200
+            expect(response).to be_success
           end
 
           it 'renders the required content' do
@@ -36,7 +36,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           before { api_get :show, id: create(:user).id }
 
           it 'is not found' do
-            expect(response.status).to eq 404
+            expect(response).to be_not_found
           end
         end
       end
