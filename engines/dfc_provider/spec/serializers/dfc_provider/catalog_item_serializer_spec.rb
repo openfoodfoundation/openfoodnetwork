@@ -23,15 +23,13 @@ describe DfcProvider::CatalogItemSerializer do
   describe '#references' do
     it 'returns the expected value' do
       expect(subject.references).to eq(
-        {
-          "@id" =>
-            DfcProvider::Engine.routes.url_helpers.api_dfc_provider_enterprise_supplied_product_url(
-              enterprise_id: product.supplier_id,
-              id: product.id,
-              host: 'http://test.host'
-            ),
-          "@type" => "@id"
-        }
+        "@id" =>
+          DfcProvider::Engine.routes.url_helpers.api_dfc_provider_enterprise_supplied_product_url(
+            enterprise_id: product.supplier_id,
+            id: product.id,
+            host: 'http://test.host'
+          ),
+        "@type" => "@id"
       )
     end
   end
