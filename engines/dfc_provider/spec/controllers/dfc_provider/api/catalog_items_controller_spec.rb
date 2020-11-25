@@ -30,7 +30,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
               before { api_get :index, enterprise_id: 'default' }
 
               it 'is successful' do
-                expect(response.status).to eq 200
+                expect(response).to be_success
               end
 
               it 'renders the required content' do
@@ -48,7 +48,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
               it 'returns not_found head' do
                 api_get :index, enterprise_id: enterprise.id
-                expect(response.status).to eq 404
+                expect(response).to be_not_found
               end
             end
           end
@@ -76,7 +76,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
           it 'is not found' do
             api_get :index, enterprise_id: 'default'
-            expect(response.status).to eq 404
+            expect(response).to be_not_found
           end
         end
       end
@@ -88,7 +88,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             .and_return(nil)
 
           api_get :index, enterprise_id: 'default'
-          expect(response.status).to eq 401
+          expect(response.response_code).to eq(401)
         end
       end
     end
@@ -96,7 +96,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
     context 'without an authorization token' do
       it 'returns unprocessable_entity head' do
         api_get :index, enterprise_id: enterprise.id
-        expect(response.status).to eq 422
+        expect(response).to be_unprocessable
       end
     end
   end
@@ -121,7 +121,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             end
 
             it 'is successful' do
-              expect(response.status).to eq 200
+              expect(response).to be_success
             end
 
             it 'renders the required content' do
@@ -138,7 +138,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             end
 
             it 'is not found' do
-              expect(response.status).to eq 404
+              expect(response).to be_not_found
             end
           end
         end

@@ -39,10 +39,13 @@ module DfcProvider
 
       def current_enterprise
         @current_enterprise ||=
-          if params[enterprise_id_param_name] == 'default'
-            current_user.enterprises.first!
+          case params[enterprise_id_param_name]
+          when 'default'
+            return current_user.enterprises.first!
+          when nil
+            return nil
           else
-            current_user.enterprises.find(params[enterprise_id_param_name])
+            return current_user.enterprises.find(params[enterprise_id_param_name])
           end
       end
 
