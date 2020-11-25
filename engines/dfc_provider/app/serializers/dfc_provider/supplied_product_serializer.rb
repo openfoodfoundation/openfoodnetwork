@@ -20,7 +20,7 @@ module DfcProvider
       dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
         enterprise_id: object.product.supplier_id,
         id: object.id,
-        host: root_url
+        host: host
       )
     end
 
