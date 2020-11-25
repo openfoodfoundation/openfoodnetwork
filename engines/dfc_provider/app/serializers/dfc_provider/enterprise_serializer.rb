@@ -18,7 +18,7 @@ module DfcProvider
     def id
       dfc_provider_routes.api_dfc_provider_enterprise_url(
         id: object.id,
-        host: root_url
+        host: host
       )
     end
 
