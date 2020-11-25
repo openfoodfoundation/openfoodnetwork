@@ -12,28 +12,14 @@ describe CustomersWithBalance do
       let(:total) { 200.00 }
       let(:order_total) { 100.00 }
 
-      context 'when non-guest order' do
-        before do
-          create(:order, customer: customer, total: order_total, payment_total: 0)
-          create(:order, customer: customer, total: order_total, payment_total: 0)
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(-total)
-        end
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0)
+        create(:order, customer: customer, total: order_total, payment_total: 0)
       end
 
-      context 'when guest order' do
-        before do
-          create(:order, customer: customer, user: nil, total: order_total, payment_total: 0)
-          create(:order, customer: customer, user: nil, total: order_total, payment_total: 0)
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(-total)
-        end
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(-total)
       end
     end
 
@@ -42,34 +28,14 @@ describe CustomersWithBalance do
       let(:order_total) { 100.00 }
       let(:payment_total) { order_total }
 
-      context 'when non-guest order' do
-        before do
-          create(:order, customer: customer, total: order_total, payment_total: 0)
-          create(:order, customer: customer, total: order_total, payment_total: payment_total)
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(payment_total - total)
-        end
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0)
+        create(:order, customer: customer, total: order_total, payment_total: payment_total)
       end
 
-      context 'when guest order' do
-        before do
-          create(:order, customer: customer, user: nil, total: order_total, payment_total: 0)
-          create(
-            :order,
-            customer: customer,
-            user: nil,
-            total: order_total,
-            payment_total: payment_total
-          )
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(payment_total - total)
-        end
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - total)
       end
     end
 
@@ -77,43 +43,22 @@ describe CustomersWithBalance do
       let(:total) { 200.00 }
       let(:order_total) { 100.00 }
       let(:payment_total) { 100.00 }
-      let(:complete_orders_total) { order_total }
+      let(:non_canceled_orders_total) { order_total }
 
-      context 'when non-guest order' do
-        before do
-          create(:order, customer: customer, total: order_total, payment_total: 0)
-          create(
-            :order,
-            customer: customer,
-            total: order_total,
-            payment_total: order_total,
-            state: 'canceled'
-          )
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(payment_total - complete_orders_total)
-        end
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0)
+        create(
+          :order,
+          customer: customer,
+          total: order_total,
+          payment_total: order_total,
+          state: 'canceled'
+        )
       end
 
-      context 'when guest order' do
-        before do
-          create(:order, customer: customer, user: nil, total: order_total, payment_total: 0)
-          create(
-            :order,
-            customer: customer,
-            user: nil,
-            total: order_total,
-            payment_total: order_total,
-            state: 'canceled'
-          )
-        end
-
-        it 'returns the customer balance' do
-          customer = customers_with_balance.query.first
-          expect(customer.balance_value).to eq(payment_total - complete_orders_total)
-        end
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - non_canceled_orders_total)
       end
     end
 
