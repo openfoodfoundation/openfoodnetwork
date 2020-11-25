@@ -23,10 +23,8 @@ describe DfcProvider::SuppliedProductSerializer do
   describe '#unit' do
     it 'returns the rdfs label value' do
       expect(subject.unit).to eq(
-        {
-          '@id' => '/unit/piece',
-          'rdfs:label' => 'piece'
-        }
+        '@id' => '/unit/piece',
+        'rdfs:label' => 'piece'
       )
     end
   end
