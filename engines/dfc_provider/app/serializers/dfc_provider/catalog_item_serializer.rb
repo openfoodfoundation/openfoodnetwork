@@ -28,7 +28,7 @@ module DfcProvider
     def references
       {
         '@type' => '@id',
-        '@id' => "/supplied_products/#{object.product_id}"
+        '@id' => reference_id
       }
     end
 
@@ -44,7 +44,7 @@ module DfcProvider
       dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
         enterprise_id: object.product.supplier_id,
         id: object.product_id,
-        host: root_url
+        host: host
       )
     end
   end
