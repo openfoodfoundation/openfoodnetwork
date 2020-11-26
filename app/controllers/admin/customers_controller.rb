@@ -65,7 +65,8 @@ module Admin
 
     def collection
       if json_request? && params[:enterprise_id].present?
-        CustomersWithBalance.new(managed_enterprise_id).query
+        CustomersWithBalance.new(managed_enterprise_id).query.
+          includes(:bill_address, :ship_address, user: :credit_cards)
       else
         Customer.where('1=0')
       end

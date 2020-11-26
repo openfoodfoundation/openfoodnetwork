@@ -7,7 +7,6 @@ class CustomersWithBalance
 
   def query
     Customer.of(enterprise_id).
-      includes(:bill_address, :ship_address, user: :credit_cards).
       joins(left_join_non_cart_orders).
       group("customers.id").
       select("customers.*").
