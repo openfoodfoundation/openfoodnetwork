@@ -8,13 +8,30 @@ describe CustomersWithBalance do
   describe '#query' do
     let(:customer) { create(:customer) }
 
+    context 'when orders are in cart state' do
+      let(:total) { 200.00 }
+      let(:order_total) { 100.00 }
+
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0, state: 'cart')
+        create(:order, customer: customer, total: order_total, payment_total: 0, state: 'cart')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(0)
+      end
+    end
+
     context 'when no orders where paid' do
       let(:total) { 200.00 }
       let(:order_total) { 100.00 }
 
       before do
-        create(:order, customer: customer, total: order_total, payment_total: 0)
-        create(:order, customer: customer, total: order_total, payment_total: 0)
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
       end
 
       it 'returns the customer balance' do
@@ -29,8 +46,10 @@ describe CustomersWithBalance do
       let(:payment_total) { order_total }
 
       before do
-        create(:order, customer: customer, total: order_total, payment_total: 0)
-        create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order.update_attribute(:state, 'checkout')
       end
 
       it 'returns the customer balance' do
@@ -46,7 +65,8 @@ describe CustomersWithBalance do
       let(:non_canceled_orders_total) { order_total }
 
       before do
-        create(:order, customer: customer, total: order_total, payment_total: 0)
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
         create(
           :order,
           customer: customer,

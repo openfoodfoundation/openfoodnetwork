@@ -103,7 +103,7 @@ feature 'Customers' do
             payment_total: 88,
             distributor: managed_distributor1,
             user: nil,
-            completed_at: Time.zone.now,
+            state: 'complete',
             customer: customer1
           )
           create(
@@ -112,7 +112,7 @@ feature 'Customers' do
             payment_total: 0,
             distributor: managed_distributor1,
             user: nil,
-            completed_at: Time.zone.now,
+            state: 'complete',
             customer: customer2
           )
           create(
@@ -121,7 +121,7 @@ feature 'Customers' do
             payment_total: 0,
             distributor: managed_distributor1,
             user: nil,
-            completed_at: Time.zone.now,
+            state: 'complete',
             customer: customer4
           )
 

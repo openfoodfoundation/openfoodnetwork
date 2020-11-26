@@ -8,7 +8,7 @@ class CustomersWithBalance
   def query
     Customer.of(enterprise_id).
       includes(:bill_address, :ship_address, user: :credit_cards).
-      joins("LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id").
+      joins(left_join_non_cart_orders).
       group("customers.id").
       select("customers.*").
       select(outstanding_balance)
@@ -27,6 +27,13 @@ class CustomersWithBalance
               WHEN state IS NOT NULL THEN payment_total - total
          ELSE 0 END
        ) AS balance_value
+    SQL
+  end
+
+  def left_join_non_cart_orders
+    <<-SQL.strip_heredoc
+      LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id
+        AND spree_orders.state != 'cart'
     SQL
   end
 end
