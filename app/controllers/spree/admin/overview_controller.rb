@@ -1,7 +1,7 @@
 # this clas was inspired (heavily) from the mephisto admin architecture
 module Spree
   module Admin
-    class OverviewController < Spree::Admin::BaseController
+    class OverviewController < ::Admin::BaseController
       def index
         @enterprises = Enterprise
           .managed_by(spree_current_user)

@@ -2,7 +2,7 @@
 
 module OrderManagement
   module Reports
-    class EnterpriseFeeSummariesController < Spree::Admin::BaseController
+    class EnterpriseFeeSummariesController < ::Admin::BaseController
       before_filter :load_report_parameters
       before_filter :load_permissions
 

@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class TaxSettingsController < Spree::Admin::BaseController
+    class TaxSettingsController < ::Admin::BaseController
       def update
         Spree::Config.set(params[:preferences])
 

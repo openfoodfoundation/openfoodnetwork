@@ -1,7 +1,7 @@
 require 'stripe/account_connector'
 
 module Admin
-  class StripeAccountsController < Spree::Admin::BaseController
+  class StripeAccountsController < ::Admin::BaseController
     def connect
       payload = params.slice(:enterprise_id)
       key = Openfoodnetwork::Application.config.secret_token
