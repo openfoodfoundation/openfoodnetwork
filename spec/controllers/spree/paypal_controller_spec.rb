@@ -37,8 +37,11 @@ module Spree
           expect(spree_post(:confirm, payment_method_id: payment_method.id)).
             to redirect_to cart_path
 
-          # And does not complete processing of the payment
-          expect(controller.current_order.reload.payments.count).to eq 0
+          order = controller.current_order.reload
+
+          # Order is in "cart" state and did not complete processing of the payment
+          expect(order.state).to eq "cart"
+          expect(order.payments.count).to eq 0
         end
       end
     end
