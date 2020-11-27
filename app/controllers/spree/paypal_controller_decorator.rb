@@ -61,7 +61,7 @@ Spree::PaypalController.class_eval do
 
     # At this point the user has come back from the Paypal form, and we get one
     # last chance to interact with the payment process before the money moves...
-    return handle_insufficient_stock unless sufficient_stock?
+    return reset_to_cart unless sufficient_stock?
 
     @order.payments.create!({
       source: Spree::PaypalExpressCheckout.create({
@@ -112,6 +112,11 @@ Spree::PaypalController.class_eval do
       OrderCompletionReset.new(self, current_order).call
       session[:access_token] = current_order.token
     end
+  end
+
+  def reset_to_cart
+    OrderCheckoutRestart.new(@order).call
+    handle_insufficient_stock
   end
 
   # See #1074 and #1837 for more detail on why we need this
