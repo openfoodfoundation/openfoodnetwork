@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Spree::PaypalController.class_eval do
+  include OrderStockCheck
+
   before_action :enable_embedded_shopfront
   before_action :destroy_orphaned_paypal_payments, only: :confirm
   after_action :reset_order_when_complete, only: :confirm
@@ -40,6 +42,9 @@ Spree::PaypalController.class_eval do
     begin
       pp_response = provider.set_express_checkout(pp_request)
       if pp_response.success?
+        # At this point Paypal has *provisionally* accepted that the payment can now be placed,
+        # and the user will be redirected to a Paypal payment page. On completion, the user is
+        # sent back and the response is handled in the #confirm action in this controller.
         redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
       else
         flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
@@ -48,6 +53,32 @@ Spree::PaypalController.class_eval do
     rescue SocketError
       flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
       redirect_to spree.checkout_state_path(:payment)
+    end
+  end
+
+  def confirm
+    @order = current_order || raise(ActiveRecord::RecordNotFound)
+
+    # At this point the user has come back from the Paypal form, and we get one
+    # last chance to interact with the payment process before the money moves...
+    return reset_to_cart unless sufficient_stock?
+
+    @order.payments.create!({
+      source: Spree::PaypalExpressCheckout.create({
+        token: params[:token],
+        payer_id: params[:PayerID]
+      }),
+      amount: @order.total,
+      payment_method: payment_method
+    })
+    @order.next
+    if @order.complete?
+      flash.notice = Spree.t(:order_processed_successfully)
+      flash[:commerce_tracking] = "nothing special"
+      session[:order_id] = nil
+      redirect_to completion_route(@order)
+    else
+      redirect_to checkout_state_path(@order.state)
     end
   end
 
@@ -66,6 +97,10 @@ Spree::PaypalController.class_eval do
 
   private
 
+  def payment_method
+    @payment_method ||= Spree::PaymentMethod.find(params[:payment_method_id])
+  end
+
   def permit_parameters!
     params.permit(:token, :payment_method_id, :PayerID)
   end
@@ -77,6 +112,11 @@ Spree::PaypalController.class_eval do
       OrderCompletionReset.new(self, current_order).call
       session[:access_token] = current_order.token
     end
+  end
+
+  def reset_to_cart
+    OrderCheckoutRestart.new(@order).call
+    handle_insufficient_stock
   end
 
   # See #1074 and #1837 for more detail on why we need this
