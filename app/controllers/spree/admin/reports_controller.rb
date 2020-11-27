@@ -17,7 +17,7 @@ require 'open_food_network/orders_and_fulfillments_report'
 
 module Spree
   module Admin
-    class ReportsController < ::Admin::BaseController
+    class ReportsController < Spree::Admin::BaseController
       include Spree::ReportsHelper
 
       ORDER_MANAGEMENT_ENGINE_REPORTS = [

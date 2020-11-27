@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class MailMethodsController < ::Admin::BaseController
+    class MailMethodsController < Spree::Admin::BaseController
       after_action :initialize_mail_settings
 
       def update

@@ -1,5 +1,5 @@
 module Admin
-  class BulkLineItemsController < ::Admin::BaseController
+  class BulkLineItemsController < Spree::Admin::BaseController
     # GET /admin/bulk_line_items.json
     #
     def index

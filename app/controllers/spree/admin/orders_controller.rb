@@ -2,7 +2,7 @@ require 'open_food_network/spree_api_key_loader'
 
 module Spree
   module Admin
-    class OrdersController < ::Admin::BaseController
+    class OrdersController < Spree::Admin::BaseController
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 

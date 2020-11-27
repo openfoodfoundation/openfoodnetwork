@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class GeneralSettingsController < ::Admin::BaseController
+    class GeneralSettingsController < Spree::Admin::BaseController
       def edit
         @preferences_general = [:site_name, :default_seo_title, :default_meta_keywords,
                                 :default_meta_description, :site_url, :bugherd_api_key]
