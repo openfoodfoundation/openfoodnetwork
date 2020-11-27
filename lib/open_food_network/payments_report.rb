@@ -92,26 +92,26 @@ module OpenFoodNetwork
         [proc { |payments| payments.first.order.payment_state },
          proc { |payments| payments.first.order.distributor.name },
          proc { |payments| payments.first.payment_method.name },
-         proc { |payments| payments.sum(:amount) }]
+         proc { |payments| payments.sum(&:amount) }]
       when "itemised_payment_totals"
         [proc { |orders| orders.first.payment_state },
          proc { |orders| orders.first.distributor.name },
-         proc { |orders| orders.sum(:item_total) },
+         proc { |orders| orders.to_a.sum(&:item_total) },
          proc { |orders| orders.sum(&:ship_total) },
          proc { |orders| orders.sum(&:outstanding_balance) },
-         proc { |orders| orders.sum(:total) }]
+         proc { |orders| orders.map(&:total).sum }]
       when "payment_totals"
         [proc { |orders| orders.first.payment_state },
          proc { |orders| orders.first.distributor.name },
-         proc { |orders| orders.sum(:item_total) },
+         proc { |orders| orders.to_a.sum(&:item_total) },
          proc { |orders| orders.sum(&:ship_total) },
-         proc { |orders| orders.sum(:total) },
+         proc { |orders| orders.map(&:total).sum },
          proc { |orders|
            orders.sum { |o|
              o.payments.select { |payment|
                payment.completed? &&
                  (payment.payment_method.name.to_s.include? "EFT")
-             }.sum(:amount)
+             }.sum(&:amount)
            }
          },
          proc { |orders|
@@ -119,7 +119,7 @@ module OpenFoodNetwork
              o.payments.select { |payment|
                payment.completed? &&
                  (payment.payment_method.name.to_s.include? "PayPal")
-             }.sum(:amount)
+             }.sum(&:amount)
            }
          },
          proc { |orders| orders.sum(&:outstanding_balance) }]
@@ -127,7 +127,7 @@ module OpenFoodNetwork
         [proc { |payments| payments.first.order.payment_state },
          proc { |payments| payments.first.order.distributor.name },
          proc { |payments| payments.first.payment_method.name },
-         proc { |payments| payments.sum(:amount) }]
+         proc { |payments| payments.sum(&:amount) }]
       end
     end
   end
