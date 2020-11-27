@@ -1,7 +1,7 @@
 require 'roo'
 
 module Admin
-  class ProductImportController < ::Admin::BaseController
+  class ProductImportController < Spree::Admin::BaseController
     before_action :validate_upload_presence, except: %i[index guide validate_data]
 
     def index

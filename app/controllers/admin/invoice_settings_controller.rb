@@ -1,5 +1,5 @@
 module Admin
-  class InvoiceSettingsController < ::Admin::BaseController
+  class InvoiceSettingsController < Spree::Admin::BaseController
     def update
       Spree::Config.set(params[:preferences])
 

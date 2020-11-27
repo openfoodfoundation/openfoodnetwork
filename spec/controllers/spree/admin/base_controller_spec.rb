@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Admin::BaseController, type: :controller do
-  controller(Admin::BaseController) do
+describe Spree::Admin::BaseController, type: :controller do
+  controller(Spree::Admin::BaseController) do
     def index
       before_filter :unauthorized
       render text: ""
@@ -10,7 +10,7 @@ describe Admin::BaseController, type: :controller do
 
   it "redirects to Angular login" do
     spree_get :index
-    expect(response).to redirect_to root_path(anchor: "login?after_login=/admin/base")
+    expect(response).to redirect_to root_path(anchor: "login?after_login=/spree/admin/base")
   end
 
   describe "rendering as json ActiveModelSerializer" do

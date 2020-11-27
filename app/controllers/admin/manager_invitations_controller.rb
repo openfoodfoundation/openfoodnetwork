@@ -1,5 +1,5 @@
 module Admin
-  class ManagerInvitationsController < ::Admin::BaseController
+  class ManagerInvitationsController < Spree::Admin::BaseController
     authorize_resource class: false
 
     def create

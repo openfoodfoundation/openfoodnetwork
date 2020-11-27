@@ -1,5 +1,5 @@
 module Admin
-  class MatomoSettingsController < ::Admin::BaseController
+  class MatomoSettingsController < Spree::Admin::BaseController
     def update
       Spree::Config.set(params[:preferences])
 
