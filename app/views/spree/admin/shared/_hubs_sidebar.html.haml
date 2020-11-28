@@ -1,27 +1,28 @@
 - hubs_color = @hubs.count > 0 ? "blue" : "red"
 - hubs_color = 'red' if (controller.action_name == 'create' || controller.action_name == 'update') && @object.errors.full_messages.include?(t(:hub_sidebar_at_least))
+
 .sidebar_item.omega.four.columns#hubs
-  .four.columns.alpha.header{ class: "#{hubs_color}" }
+  .sixteen.columns.alpha.header{ class: "#{hubs_color}" }
     %span.four.columns.alpha.centered
       = t(:hub_sidebar_hubs)
-  .four.columns.alpha.list{ class: "#{hubs_color}" }
+  .sixteen.columns.alpha.list{ class: "#{hubs_color}" }
     - if @hubs.count > 0
       = hidden_field klass, :distributor_ids, :multiple => true, value: nil
       - @hubs.each do |hub|
-        %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}" }
-          %span.four.columns
-            %span.three.columns.alpha
+        %span.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}" }
+          %span.sixteen.columns
+            %span.fourteen.columns.alpha
               %label
                 = check_box klass, :distributor_ids, { multiple: true }.merge(add_check_if_single(@hubs.count)), hub.id, nil
                 = hub.name
-            %a.one.column.omega{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }
+            %a.two.columns.omega{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }
               %span.icon-arrow-right
     - else
-      .four.columns.alpha.list-item
-        %span.three.columns.alpha
+      .sixteen.columns.alpha.list-item
+        %span.twelve.columns.alpha
           = t(:hub_sidebar_none_available)
-        %span.one.column.omega
+        %span.four.column.omega
           %span.icon-remove-sign
-  %a.four.columns.alpha.button{ href: "#{main_app.admin_enterprises_path}", class: "#{hubs_color}" }
+  %a.sixteen.columns.alpha.button{ href: "#{main_app.admin_enterprises_path}", class: "#{hubs_color}" }
     = t(:hub_sidebar_manage)
     %span.icon-arrow-right
