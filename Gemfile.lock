@@ -19,15 +19,6 @@ GIT
   specs:
     ofn-qz (0.1.0)
 
-GIT
-  remote: https://github.com/openfoodfoundation/spree_i18n.git
-  revision: 12f18312232f0ce70270d47859d2951d12f7791c
-  branch: 1-3-stable
-  specs:
-    spree_i18n (1.0.0)
-      i18n (~> 0.5)
-      rails-i18n
-
 PATH
   remote: engines/catalog
   specs:
@@ -767,7 +758,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
-  spree_i18n!
   spree_paypal_express!
   spring
   spring-commands-rspec

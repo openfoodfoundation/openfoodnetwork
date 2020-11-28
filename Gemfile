@@ -30,8 +30,6 @@ gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
-gem 'spree_i18n', github: 'openfoodfoundation/spree_i18n', branch: '1-3-stable'
-
 # Our branch contains the following changes:
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
