@@ -2213,6 +2213,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
+  spree_order_cycle_error: "Please choose an order cycle for this order."
   spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
   spree_distributors_error: "At least one hub must be selected"
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
