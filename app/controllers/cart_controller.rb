@@ -11,7 +11,8 @@ class CartController < BaseController
     Spree::Adjustment.without_callbacks do
       cart_service = CartService.new(order)
 
-      if cart_service.populate(params.slice(:products, :variants, :quantity), true)
+      errors = cart_service.populate(params.slice(:products, :variants, :quantity), true)[:errors]
+      if errors.blank?
         order.update_distribution_charge!
         order.cap_quantity_at_stock!
         order.update!
@@ -22,7 +23,7 @@ class CartController < BaseController
                        stock_levels: VariantsStockLevels.new.call(order, variant_ids) },
                status: :ok
       else
-        render json: { error: true }, status: :precondition_failed
+        render json: { error: errors.full_messages.join(",") }, status: :precondition_failed
       end
     end
     populate_variant_attributes

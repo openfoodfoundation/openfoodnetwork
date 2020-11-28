@@ -19,7 +19,7 @@ class CartService
       attempt_cart_add_variants variants_data
       overwrite_variants variants_data if overwrite
     end
-    valid?
+    { errors: errors }
   end
 
   private
@@ -109,10 +109,6 @@ class CartService
     end
   end
 
-  def valid?
-    errors.empty?
-  end
-
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)
     @order.remove_variant(variant)
@@ -145,7 +141,7 @@ class CartService
 
   def check_order_cycle_provided
     order_cycle_provided = @order_cycle.present?
-    errors.add(:base, "Please choose an order cycle for this order.") unless order_cycle_provided
+    errors.add(:base, I18n.t(:spree_order_cycle_error)) unless order_cycle_provided
     order_cycle_provided
   end
 
