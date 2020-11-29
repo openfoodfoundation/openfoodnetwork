@@ -59,10 +59,10 @@
 
         // Variant price
         .variant-price {
+          white-space: nowrap;
           @include breakpoint(phablet) {
             padding-left: 1rem;
           }
-          white-space: nowrap;
         }
 
         // Total price
