@@ -5,33 +5,37 @@ describe CartController, type: :controller do
 
   describe "basic behaviour" do
     let(:cart_service) { double }
+    let(:errors) { double }
 
     before do
       allow(CartService).to receive(:new).and_return(cart_service)
     end
 
     it "returns HTTP success when successful" do
-      allow(cart_service).to receive(:populate) { true }
+      allow(cart_service).to receive(:populate).and_return({ errors: {} })
       allow(cart_service).to receive(:variants_h) { {} }
       xhr :post, :populate, use_route: :spree, format: :json
       expect(response.status).to eq(200)
     end
 
     it "returns failure when unsuccessful" do
-      allow(cart_service).to receive(:populate).and_return false
+      allow(errors).to receive(:empty?).and_return(false)
+      allow(errors).to receive(:full_messages).and_return(["Error: foo"])
+      allow(cart_service).to receive(:populate).and_return({ errors: errors })
       xhr :post, :populate, use_route: :spree, format: :json
       expect(response.status).to eq(412)
     end
 
     it "tells cart_service to overwrite" do
-      expect(cart_service).to receive(:populate).with({}, true)
+      allow(cart_service).to receive(:variants_h) { {} }
+      expect(cart_service).to receive(:populate).with({}, true).and_return({ errors: {} })
       xhr :post, :populate, use_route: :spree, format: :json
     end
 
     it "returns stock levels as JSON on success" do
       allow(controller).to receive(:variant_ids_in) { [123] }
       allow_any_instance_of(VariantsStockLevels).to receive(:call).and_return("my_stock_levels")
-      allow(cart_service).to receive(:populate) { true }
+      allow(cart_service).to receive(:populate).and_return({ errors: {} })
       allow(cart_service).to receive(:variants_h) { {} }
 
       xhr :post, :populate, use_route: :spree, format: :json

@@ -14,7 +14,7 @@ class CartController < BaseController
       cart_service = CartService.new(order)
 
       errors = cart_service.populate(params.slice(:products, :variants, :quantity), true)[:errors]
-      if errors.blank?
+      if errors.empty?
         order.update_distribution_charge!
         order.cap_quantity_at_stock!
         order.update!
