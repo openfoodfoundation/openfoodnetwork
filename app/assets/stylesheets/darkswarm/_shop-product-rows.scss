@@ -62,6 +62,7 @@
           @include breakpoint(phablet) {
             padding-left: 1rem;
           }
+          white-space: nowrap;
         }
 
         // Total price
