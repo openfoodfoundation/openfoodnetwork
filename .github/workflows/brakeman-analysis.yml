@@ -13,7 +13,7 @@ on:
 jobs:
   brakeman-scan:
     name: Brakeman Scan
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -23,7 +23,7 @@ jobs:
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: '2.4'
+        ruby-version: '2.7'
 
     - name: Setup Brakeman
       env:
