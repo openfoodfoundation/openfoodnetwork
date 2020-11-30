@@ -62,9 +62,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         describe "when order cycle closes in more than 3 months" do
           before { oc1.update orders_close_at: 5.months.from_now }
 
-          it "does not show 'closing in' message" do
+          it "shows alternative to 'closing in' message" do
             visit shop_path
-            expect(page).not_to have_content "Next order closing in 2 days"
+            expect(page).to have_content "Orders are currently open"
           end
         end
       end
