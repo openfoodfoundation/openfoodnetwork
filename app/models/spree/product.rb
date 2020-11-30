@@ -96,6 +96,7 @@ module Spree
 
     validates :variant_unit, presence: true
     validates :unit_value, presence: true
+    validates :unit_value, numericality: true
     validates :variant_unit_scale,
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
