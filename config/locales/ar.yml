@@ -3492,7 +3492,7 @@ ar:
           remember_this_card: تذكر هذه البطاقة؟
     date_picker:
       format: '٪ س-٪ م-%d'
-      js_format: 'يوم-شهر-سنة'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:

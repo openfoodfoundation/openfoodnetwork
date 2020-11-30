@@ -829,17 +829,17 @@ pt_BR:
         owner: Proprietário
         producer: Produtor
       change_type_form:
-        producer_profile: Perfil do produtor
+        producer_profile: Perfil Simples
         connect_ofn: Conecte-se através da OFB
         always_free: SEMPRE GRATUITO
         producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que as centrais os comercialize em suas lojas.
-        producer_shop: Loja do produtor
+        producer_shop: Loja de Produtor
         sell_your_produce: 'Venda seus próprios produtos '
         producer_shop_description_text: Venda seus produtos diretamente aos compradores através da sua própria loja virtual na Open Food Brasil.
-        producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Central de produtor'.
+        producer_shop_description_text2: Uma Loja de Produtor vende ou distribui apenas produtos próprios. Se você quiser vender produtos produzidos por outras pessoas ou iniciativas, selecione 'Central de Produtor'.
         producer_hub: Central de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
-        producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Open Food Brasil.
+        producer_hub_description_text: Escolha este tipo de perfil se a sua iniciativa funciona como um intermediário, ou seja, ela vende / distribui produtos seus e de outros produtores também
         profile: Perfil Simples
         get_listing: Obter uma listagem
         profile_description_text: As pessoas podem te encontrar e te contactar na Open Food Brasil. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
@@ -874,7 +874,7 @@ pt_BR:
         next_step: Próximo passo
         choose_starting_point: 'Escolha o seu tipo de perfil:'
         profile: 'Perfil'
-        producer_profile: 'Perfil do produtor'
+        producer_profile: 'Perfil Simples'
       invite_manager:
         user_already_exists: "Usuário já existe"
         error: "Algo deu errado"
@@ -1015,10 +1015,10 @@ pt_BR:
       unitsize: Unidade de Medida
       total: TOTAL
       total_items: TOTAL DE ITEMS
-      supplier_totals: Total do fornecedor do ciclo de pedidos
-      supplier_totals_by_distributor: Total do fornecedor do ciclo de pedidos por distribuidor
-      totals_by_supplier: Total do distribuidor do ciclo da pedidos pelo fornecedor
-      customer_totals: Total do consumidor do ciclo de pedidos
+      supplier_totals: 'Fechamento do Ciclo: por Fornecedor'
+      supplier_totals_by_distributor: 'Fechamento do Ciclo: por Fornecedor / Distribuidor'
+      totals_by_supplier: 'Fechamento do Ciclo: por Distribuidor / Fornecedor'
+      customer_totals: 'Fechamento do Ciclo: por Consumidor'
       all_products: Todos os produtos
       inventory: Inventário (disponível)
       lettuce_share: LettuceShare
@@ -1198,8 +1198,8 @@ pt_BR:
       mobile_menu:
         cart: "Carrinho"
     register_call:
-      selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
-      register: "Registre-se aqui"
+      selling_on_ofn: "Quer fazer parte da Open Food Brasil?"
+      register: "Registre aqui a sua iniciativa"
     footer:
       footer_secure: "Seguro e confiável."
       footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
@@ -1812,7 +1812,7 @@ pt_BR:
     steps:
       introduction:
         registration_greeting: "Olá!"
-        registration_intro: "Você pode criar um perfil de produtor ou central"
+        registration_intro: "Vamos criar um perfil para a sua iniciativa? "
         registration_checklist: "O que eu preciso?"
         registration_time: "5-10 minutos"
         registration_enterprise_address: "Endereço da iniciativa"
@@ -1822,14 +1822,14 @@ pt_BR:
         registration_about_us: "'Sobre Nós'"
         registration_outcome_headline: "O que eu ganho?"
         registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Brasil."
-        registration_outcome2: "Use esse espaço para contar a história da sua iniciativa e ajudar a impulsionar as conexões com sua presença social e online."
-        registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Open Food Brasil, ou abrir uma loja online."
+        registration_outcome2: "Use esse espaço para contar a história da sua iniciativa e divulgar o seu trabalho."
+        registration_outcome3: "Esse é também o primeiro passo para começar a fornecer ou comercializar seus produtos na Open Food Brasil."
         registration_action: "Vamos começar!"
       details:
         title: "Detalhes"
         headline: "Vamos começar"
-        enterprise: "Woot! Primeiro, você precisa conhecer um pouco da sua empresa:"
-        producer: "Primeiro precisamos saber mais sobre sua produção:"
+        enterprise: "Boa! Primeiro, precisamos saber um pouco mais sobre a sua iniciativa:"
+        producer: "Boa! Primeiro, precisamos saber um pouco mais sobre a sua produção:"
         enterprise_name_field: "Nome da iniciativa:"
         producer_name_field: "Nome da Produção"
         producer_name_field_placeholder: "ex. Fazenda da Nina"
@@ -1863,9 +1863,9 @@ pt_BR:
         yes_producer: "Sim, sou um produtor"
         no_producer: "Não, não sou um produtor"
         producer_field_error: "Por favor escolha um. Você é um produtor?"
-        yes_producer_help: "Produtores fazem coisas deliciosas de comer e beber. "
+        yes_producer_help: "Produtores são aqueles que cultivam, colhem, beneficiam, cozinham, preparam e produzem alimentos e/ou produtos artesanais. "
         no_producer_help: "Se você não é um produtor, você provavelmente é alguém que vende e distribui alimentos. Você pode ser uma cooperativa, grupo de consumo, varejista, atacadista ou outro. Nos referimos a você como central, já que centraliza pessoas e produtos, independente do modelo organizacional. "
-        create_profile: "Crir perfil"
+        create_profile: "Criar perfil"
       about:
         title: "Sobre"
         headline: "Boa!"
@@ -2468,15 +2468,14 @@ pt_BR:
           profile_only_text3: >
               Adicione seus produtos à Open Food Brasil, permitindo que as centrais
               armazenem seus produtos em suas lojas.
-          producer_shop: Loja do produtor
+          producer_shop: Loja de Produtor
           producer_shop_text1: >
               Venda os seus produtos diretamente aos compradores através da sua própria
               loja na Open Food Brasil.
           producer_shop_text2: >
-              Uma loja de produtor é individual, somente para comercialização de produtos
-              feitos por você. Se quiser vender bens produzidos em outros lugares
-              e/ou pessoas, para além dos seus próprios, por favor selecione 'Central
-              de Produtor'.
+              Uma Loja de Produtor comercializa ou distribui somente produções próprias.
+              Se quiser movimentar bens produzidos por outras pessoas ou iniciativas,
+              além dos seus próprios, por favor selecione 'Central de Produtor'.
           producer_hub: Central de produtor
           producer_hub_text1: >
               A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
@@ -2498,8 +2497,8 @@ pt_BR:
         enterprise_producer:
           producer: Produtor
           producer_text1: >
-              Os produtores fazem coisas deliciosas para comer ou beber. Você é um
-              produtor se você cultiva, cria, prepara, cozinha, fermenta, ou ordenha.
+              Produtores são aqueles que cultivam, colhem, beneficiam, cozinham, preparam
+              e produzem alimentos e/ou produtos artesanais.
           producer_text2: >
               Os produtores também podem desempenhar outras funções, como agregar
               alimentos de outras iniciativas e vendê-lo através de uma loja da Open
