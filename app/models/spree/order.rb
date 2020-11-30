@@ -612,10 +612,8 @@ module Spree
       adjustments.shipping.delete_all
       shipments.destroy_all
 
-      packages = OrderManagement::Stock::Coordinator.new(self).packages
-      packages.each do |package|
-        shipments << package.to_shipment
-      end
+      package = OrderManagement::Stock::Coordinator.new(self).package
+      shipments << package.to_shipment
 
       shipments
     end

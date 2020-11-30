@@ -9,35 +9,33 @@ module OrderManagement
         @order = order
       end
 
-      def packages
-        packages = build_packages
-        packages = prioritize_packages(packages)
-        estimate_packages(packages)
+      def package
+        package = build_package
+        package = prioritize_package(package)
+        estimate_package(package)
       end
 
       # Build package with default stock location
       # No need to check items are in the stock location,
       #   there is only one stock location so the items will be on that stock location.
       #
-      # Returns an array with a single Package for the default stock location
-      def build_packages
+      # Returns a single Package for the default stock location
+      def build_package
         packer = build_packer(order)
-        [packer.package]
+        packer.package
       end
 
       private
 
-      def prioritize_packages(packages)
+      def prioritize_package(package)
         prioritizer = OrderManagement::Stock::Prioritizer.new(order, packages)
-        prioritizer.prioritized_packages
+        prioritizer.prioritized_package
       end
 
-      def estimate_packages(packages)
+      def estimate_package(package)
         estimator = OrderManagement::Stock::Estimator.new(order)
-        packages.each do |package|
-          package.shipping_rates = estimator.shipping_rates(package)
-        end
-        packages
+        package.shipping_rates = estimator.shipping_rates(package)
+        package
       end
 
       def build_packer(order)
