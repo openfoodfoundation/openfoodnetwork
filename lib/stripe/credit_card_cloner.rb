@@ -18,7 +18,7 @@
 module Stripe
   class CreditCardCloner
     def find_or_clone(card, connected_account_id)
-      if cloned_card = find_cloned_card(card, connected_account_id)
+      if card.user && cloned_card = find_cloned_card(card, connected_account_id)
         cloned_card
       else
         clone(card, connected_account_id)
@@ -57,9 +57,9 @@ module Stripe
     end
 
     def find_cloned_card(card, connected_account_id)
-      matches = []
-      return matches unless fingerprint = fingerprint_for_card(card)
+      return nil unless fingerprint = fingerprint_for_card(card)
 
+      matches = []
       find_customers(card.user.email, connected_account_id).each do |customer|
         find_payment_methods(customer.id, connected_account_id).each do |payment_method|
           if payment_method_is_clone?(payment_method, fingerprint)
