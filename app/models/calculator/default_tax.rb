@@ -28,6 +28,10 @@ module Calculator
       round_to_two_places(shipment.discounted_cost * rate.amount)
     end
 
+    # In the adjustments changes, #compute_order is completely removed. Our version differs
+    # substantially from the original, as it includes custom application of enterprise fees.
+    # These will need to be re-worked separately as they are an OFN customisation on top of Spree...
+
     # Enable calculation of tax for enterprise fees with tax rates where included_in_price = false
     def compute_order(order)
       calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(order.distributor,
