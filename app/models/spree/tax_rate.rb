@@ -16,6 +16,8 @@ module Spree
   class TaxRate < ActiveRecord::Base
     acts_as_paranoid
     include Spree::Core::CalculatedAdjustments
+
+    has_many :adjustments, as: :source, dependent: :destroy
     belongs_to :zone, class_name: "Spree::Zone"
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
@@ -35,12 +37,9 @@ module Spree
       end
     end
 
-    def self.adjust(order)
-      order.adjustments.tax.destroy_all
-      order.line_item_adjustments.where(originator_type: 'Spree::TaxRate').destroy_all
-
+    def self.adjust(order, items)
       match(order).each do |rate|
-        rate.adjust(order)
+        items.each { |item| rate.adjust(order, item) }
       end
     end
 
@@ -58,33 +57,36 @@ module Spree
     end
 
     # Creates necessary tax adjustments for the order.
-    def adjust(order)
-      label = create_label
-      if included_in_price
-        if Zone.default_tax.contains? order.tax_zone
-          order.line_items.each { |line_item| create_adjustment(label, line_item, line_item) }
-        else
-          amount = -1 * calculator.compute(order)
-          label = Spree.t(:refund) + label
+    def adjust(order, item)
+      item.adjustments.tax.delete_all
+      amount = compute_amount(item)
+      return if amount.zero?
 
-          order.adjustments.create(
-            amount: amount,
-            source: order,
-            originator: self,
-            state: "closed",
-            label: label
-          )
-        end
-      else
-        create_adjustment(label, order, order)
+      if amount.negative?
+        label = Spree.t(:refund) + ' ' + create_label
       end
 
-      order.adjustments(:reload)
-      order.line_items(:reload)
-      # TaxRate adjustments (order.adjustments.tax)
-      #   and price adjustments (tax included on line items) consist of 100% tax
-      (order.adjustments.tax + order.price_adjustments).each do |adjustment|
-        adjustment.set_absolute_included_tax! adjustment.amount
+      self.adjustments.create!(
+        {
+          adjustable: item,
+          amount: amount,
+          order: order,
+          label: label || create_label
+        }
+      )
+    end
+
+    # This method is used by Adjustment#update to recalculate the cost.
+    def compute_amount(item)
+      if included_in_price
+        if Zone.default_tax.contains? item.order.tax_zone
+          calculator.compute(item)
+        else
+          # In this case, it's a refund.
+          calculator.compute(item) * - 1
+        end
+      else
+        calculator.compute(item)
       end
     end
 
