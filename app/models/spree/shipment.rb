@@ -12,10 +12,10 @@ module Spree
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :inventory_units, dependent: :delete_all
-    has_one :adjustment, as: :source, dependent: :destroy
+    has_many :adjustments, as: :adjustable, dependent: :destroy
 
     before_create :generate_shipment_number
-    after_save :ensure_correct_adjustment, :update_order
+    before_validation :set_cost_zero_when_nil
 
     attr_accessor :special_instructions
 
@@ -141,20 +141,11 @@ module Spree
       order ? order.currency : Spree::Config[:currency]
     end
 
-    # The adjustment amount associated with this shipment (if any)
-    #   Returns only the first adjustment to match the shipment
-    #   There should never really be more than one.
-    def cost
-      adjustment ? adjustment.amount : 0
-    end
-
-    alias_method :amount, :cost
-
     def display_cost
       Spree::Money.new(cost, currency: currency)
     end
 
-    alias_method :display_amount, :display_cost
+    alias display_amount display_cost
 
     def item_cost
       line_items.map(&:amount).sum
@@ -164,16 +155,20 @@ module Spree
       Spree::Money.new(item_cost, currency: currency)
     end
 
-    def total_cost
-      cost + item_cost
-    end
-
-    def display_total_cost
-      Spree::Money.new(total_cost, currency: currency)
-    end
-
     def editable_by?(_user)
       !shipped?
+    end
+
+    def persist_cost
+      self.cost = selected_shipping_rate.cost
+      update_amounts
+    end
+
+    def update_amounts
+      self.update_columns(
+        cost: selected_shipping_rate.cost,
+        adjustment_total: adjustments.map(&:update!).compact.sum
+      )
     end
 
     def manifest
@@ -259,25 +254,6 @@ module Spree
       inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
     end
 
-    def ensure_correct_adjustment
-      if adjustment
-        adjustment.originator = shipping_method
-        adjustment.label = shipping_method.adjustment_label
-        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
-        adjustment.save!
-        adjustment.reload
-      elsif selected_shipping_rate_id
-        shipping_method.create_adjustment(shipping_method.adjustment_label,
-                                          order,
-                                          self,
-                                          true,
-                                          "open")
-        reload # ensure adjustment is present on later saves
-      end
-
-      update_adjustment_included_tax if adjustment
-    end
-
     private
 
     def manifest_unstock(item)
@@ -313,7 +289,7 @@ module Spree
 
     def after_ship
       inventory_units.each(&:ship!)
-      adjustment.finalize!
+      adjustments.map(&:finalize!)
       send_shipped_email
       touch :shipped_at
     end
@@ -330,8 +306,8 @@ module Spree
       end
     end
 
-    def update_order
-      order.update!
+    def set_cost_zero_when_nil
+      self.cost = 0 unless self.cost
     end
   end
 end
