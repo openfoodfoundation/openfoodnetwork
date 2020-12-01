@@ -73,6 +73,11 @@ module Spree
       end
 
       if @order.contents.update_cart(order_params)
+        # Various bits were cut here in the previous commit. They need to be checked and possibly
+        # re-written in the context of adapting enterprise_fees (which will come in a later phase).
+
+        # We should also review this #discard_empty_line_items call as well and see if it can be improved.
+        # It looks a pretty suspect, and it appears in the backtraces for some of our nasty deadlocks...
         discard_empty_line_items
 
         respond_with(@order) do |format|
