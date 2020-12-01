@@ -98,6 +98,9 @@ module Openfoodnetwork
         Calculator::Weight
       ]
 
+      # There are some new calculator classes added, but they haven't yet been added
+      # to any lists of registered calculators...
+
       app.config.spree.calculators.add_class('enterprise_fees')
       config.spree.calculators.enterprise_fees = [
         Calculator::FlatPercentPerItem,
