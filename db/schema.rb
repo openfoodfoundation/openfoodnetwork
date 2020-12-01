@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201113163227) do
+ActiveRecord::Schema.define(version: 20201201143222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,12 +387,11 @@ ActiveRecord::Schema.define(version: 20201113163227) do
     t.datetime "created_at",                                                          null: false
     t.datetime "updated_at",                                                          null: false
     t.boolean  "mandatory"
-    t.integer  "originator_id"
-    t.string   "originator_type", limit: 255
     t.boolean  "eligible",                                             default: true
     t.string   "adjustable_type", limit: 255
     t.decimal  "included_tax",                precision: 10, scale: 2, default: 0.0,  null: false
     t.string   "state",           limit: 255
+    t.integer  "order_id"
   end
 
   add_index "spree_adjustments", ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
@@ -493,16 +492,18 @@ ActiveRecord::Schema.define(version: 20201113163227) do
   create_table "spree_line_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                                 null: false
-    t.decimal  "price",                           precision: 8,  scale: 2, null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.integer  "quantity",                                                               null: false
+    t.decimal  "price",                           precision: 8,  scale: 2,               null: false
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
     t.integer  "max_quantity"
     t.string   "currency",            limit: 255
     t.decimal  "distribution_fee",                precision: 10, scale: 2
     t.decimal  "final_weight_volume",             precision: 10, scale: 2
     t.decimal  "cost_price",                      precision: 8,  scale: 2
     t.integer  "tax_category_id"
+    t.decimal  "adjustment_total",                precision: 10, scale: 2, default: 0.0
+    t.decimal  "tax_total",                       precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
@@ -571,6 +572,8 @@ ActiveRecord::Schema.define(version: 20201113163227) do
     t.string   "last_ip_address",      limit: 255
     t.integer  "customer_id"
     t.integer  "created_by_id"
+    t.decimal  "shipment_total",                   precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "tax_total",                        precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx", using: :btree
@@ -811,14 +814,16 @@ ActiveRecord::Schema.define(version: 20201113163227) do
   create_table "spree_shipments", force: :cascade do |t|
     t.string   "tracking",          limit: 255
     t.string   "number",            limit: 255
-    t.decimal  "cost",                          precision: 8, scale: 2
+    t.decimal  "cost",                          precision: 8,  scale: 2
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.string   "state",             limit: 255
     t.integer  "stock_location_id"
+    t.decimal  "adjustment_total",              precision: 10, scale: 2, default: 0.0
+    t.decimal  "tax_total",                     precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_shipments", ["number"], name: "index_shipments_on_number", using: :btree
