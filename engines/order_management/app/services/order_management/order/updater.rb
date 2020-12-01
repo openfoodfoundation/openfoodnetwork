@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Previously Spree::OrderUpdater
+
 module OrderManagement
   module Order
     class Updater
