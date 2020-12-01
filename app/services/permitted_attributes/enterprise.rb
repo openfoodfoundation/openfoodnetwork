@@ -9,19 +9,19 @@ module PermittedAttributes
     def call
       return @params[:enterprise] if @params[:enterprise].blank?
 
-      @params.require(:enterprise).permit(
-        basic_permitted_attributes + [
-          group_ids: [], user_ids: [],
-          shipping_method_ids: [], payment_method_ids: [],
-          address_attributes: PermittedAttributes::Address.attributes,
-          producer_properties_attributes: [:id, :property_name, :value, :_destroy]
-        ]
-      )
+      @params.require(:enterprise).permit(self.class.attributes)
     end
 
-    private
+    def self.attributes
+      basic_permitted_attributes + [
+        group_ids: [], user_ids: [],
+        shipping_method_ids: [], payment_method_ids: [],
+        address_attributes: PermittedAttributes::Address.attributes,
+        producer_properties_attributes: [:id, :property_name, :value, :_destroy]
+      ]
+    end
 
-    def basic_permitted_attributes
+    def self.basic_permitted_attributes
       [
         :id, :name, :visible, :permalink, :owner_id, :contact_name, :email_address, :phone,
         :is_primary_producer, :sells, :website, :facebook, :instagram, :linkedin, :twitter,

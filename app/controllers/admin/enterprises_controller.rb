@@ -81,14 +81,14 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
+      @enterprise_set = EnterpriseSet.new(collection, bulk_params)
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
         redirect_to main_app.admin_enterprises_path
       else
         touched_enterprises = @enterprise_set.collection.select(&:changed?)
-        @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
+        @enterprise_set.collection.to_a.select! { |e| touched_enterprises.include? e }
         flash[:error] = I18n.t(:enterprise_bulk_update_error)
         render :index
       end
@@ -214,7 +214,8 @@ module Admin
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
-          rule.update(attrs)
+
+          rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end
       end
     end
@@ -317,6 +318,12 @@ module Admin
 
     def enterprise_params
       PermittedAttributes::Enterprise.new(params).call
+    end
+
+    def bulk_params
+      params.require(:enterprise_set).permit(
+        collection_attributes: PermittedAttributes::Enterprise.attributes
+      )
     end
 
     # Used in ResourceController#create

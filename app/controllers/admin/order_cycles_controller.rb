@@ -91,7 +91,7 @@ module Admin
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
-      Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
+      OrderCycleNotificationJob.perform_later params[:id].to_i
 
       redirect_to main_app.admin_order_cycles_path,
                   notice: I18n.t(:order_cycles_email_to_producers_notice)

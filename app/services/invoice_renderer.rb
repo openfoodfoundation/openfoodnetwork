@@ -1,5 +1,6 @@
 class InvoiceRenderer
   def render_to_string(order)
+    renderer.instance_variable_set(:@order, order)
     renderer.render_to_string(args(order))
   end
 
@@ -8,15 +9,14 @@ class InvoiceRenderer
       pdf: "invoice-#{order.number}.pdf",
       template: invoice_template,
       formats: [:html],
-      encoding: "UTF-8",
-      locals: { :@order => order }
+      encoding: "UTF-8"
     }
   end
 
   private
 
   def renderer
-    ApplicationController.new
+    @renderer ||= ApplicationController.new
   end
 
   def invoice_template

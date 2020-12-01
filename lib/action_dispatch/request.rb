@@ -28,22 +28,42 @@
 # https://gist.github.com/victorblasco/f675b4cbaf9c0bc19f81
 
 module ActionDispatch
-  class Request
-    def deep_munge(hash)
-      hash.each do |_k, v|
-        case v
-        when Array
-          v.grep(Hash) { |x| deep_munge(x) }
-          v.compact!
+  class Request < Rack::Request
+    class Utils # :nodoc:
+      mattr_accessor :perform_deep_munge
+      self.perform_deep_munge = true
 
-          # This patch removes the next line
-          # hash[k] = nil if v.empty?
-        when Hash
-          deep_munge(v)
+      class << self
+        # Remove nils from the params hash
+        def deep_munge(hash, keys = [])
+          return hash unless perform_deep_munge
+
+          hash.each do |key, value|
+            deep_munge_value(key, value, keys)
+          end
+
+          hash
+        end
+
+        def deep_munge_value(key, value, keys)
+          keys << key
+          case value
+          when Array
+            value.grep(Hash) { |x| deep_munge(x, keys) }
+            value.compact!
+
+            # This patch removes the following lines
+            # if v.empty?
+            #   hash[k] = nil
+            # ActiveSupport::Notifications.instrument("deep_munge.action_controller",
+            #                                         keys: keys)
+            # end
+          when Hash
+            deep_munge(value, keys)
+          end
+          keys.pop
         end
       end
-
-      hash
     end
   end
 end

@@ -466,7 +466,7 @@ module Spree
     def deliver_order_confirmation_email
       return if subscription.present?
 
-      Delayed::Job.enqueue ConfirmOrderJob.new(id)
+      ConfirmOrderJob.perform_later(id)
     end
 
     # Helper methods for checkout steps
@@ -729,15 +729,15 @@ module Spree
     end
 
     def shipping_tax
-      adjustments(:reload).shipping.sum(&:included_tax)
+      adjustments(:reload).shipping.sum(:included_tax)
     end
 
     def enterprise_fee_tax
-      adjustments(:reload).enterprise_fee.sum(&:included_tax)
+      adjustments(:reload).enterprise_fee.sum(:included_tax)
     end
 
     def total_tax
-      (adjustments + price_adjustments).sum(&:included_tax)
+      (adjustments.to_a + price_adjustments.to_a).sum(&:included_tax)
     end
 
     def price_adjustments

@@ -2,7 +2,6 @@
 
 module Spree
   class OrderMailer < BaseMailer
-    helper HtmlHelper
     helper ::CheckoutHelper
     helper SpreeCurrencyHelper
     helper Spree::Admin::PaymentsHelper
