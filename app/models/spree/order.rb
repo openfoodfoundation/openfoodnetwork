@@ -15,7 +15,6 @@ module Spree
       go_to_state :address
       go_to_state :delivery
       go_to_state :payment, if: ->(order) {
-        order.update_totals
         order.payment_required?
       }
       go_to_state :complete
@@ -47,6 +46,7 @@ module Spree
              dependent: :destroy
 
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :shipment_adjustments, through: :shipments, source: :adjustments
 
     has_many :shipments, dependent: :destroy do
       def states
@@ -84,10 +84,8 @@ module Spree
     attr_accessor :use_billing
 
     before_create :link_by_email
-    after_create :create_tax_charge!
 
     validate :has_available_shipment
-    validate :has_available_payment
     validates :email, presence: true,
                       format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
                       if: :require_email
@@ -400,14 +398,11 @@ module Spree
       adjustments.shipping.map(&:amount).sum
     end
 
-    def tax_total
-      adjustments.tax.map(&:amount).sum
-    end
-
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      Spree::TaxRate.adjust(self)
+      Spree::TaxRate.adjust(self, line_items)
+      Spree::TaxRate.adjust(self, shipments)
     end
 
     def outstanding_balance
@@ -530,7 +525,7 @@ module Spree
     end
 
     def insufficient_stock_lines
-      line_items.select(&:insufficient_stock?)
+      @insufficient_stock_lines ||= line_items.select(&:insufficient_stock?)
     end
 
     def empty!
@@ -538,11 +533,8 @@ module Spree
       adjustments.destroy_all
       payments.clear
       shipments.destroy_all
-    end
-
-    def clear_adjustments!
-      adjustments.destroy_all
-      line_item_adjustments.destroy_all
+      updater.update_totals
+      updater.persist_totals
     end
 
     def state_changed(name)
@@ -737,21 +729,6 @@ module Spree
       (adjustments.to_a + price_adjustments.to_a).sum(&:included_tax)
     end
 
-    def price_adjustments
-      adjustments = []
-
-      line_items.each { |line_item| adjustments.concat line_item.adjustments }
-
-      adjustments
-    end
-
-    def price_adjustment_totals
-      Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
-        [tax_rate.name,
-         Spree::Money.new(tax_amount, currency: currency)]
-      end]
-    end
-
     def has_taxes_included
       !line_items.with_tax.empty?
     end
@@ -771,6 +748,12 @@ module Spree
     def update_attributes_without_callbacks(attributes)
       assign_attributes(attributes)
       Spree::Order.where(id: id).update_all(attributes)
+    end
+
+    def set_shipments_cost
+      shipments.each(&:update_amounts)
+      updater.update_shipment_total
+      updater.persist_totals
     end
 
     private
@@ -814,11 +797,6 @@ module Spree
       return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
 
       errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
-    end
-
-    def has_available_payment
-      return unless delivery?
-      # errors.add(:base, :no_payment_methods_available) if available_payment_methods.empty?
     end
 
     def after_cancel
