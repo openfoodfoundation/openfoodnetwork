@@ -32,12 +32,12 @@ module Spree
     validates_with Stock::AvailabilityValidator
 
     before_save :update_inventory
+    after_save :update_adjustments
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
-    after_save :update_order
     after_save :update_units
+    after_create :create_tax_charge
     before_destroy :update_inventory_before_destroy
-    after_destroy :update_order
 
     delegate :product, :unit_description, :display_name, to: :variant
 
@@ -118,7 +118,16 @@ module Spree
     def amount
       price * quantity
     end
-    alias total amount
+    alias subtotal amount
+
+    def discounted_amount
+      amount + promo_total
+    end
+
+    def final_amount
+      amount + adjustment_total.to_f
+    end
+    alias total final_amount
 
     def single_money
       Spree::Money.new(price, currency: currency)
@@ -232,12 +241,18 @@ module Spree
       Spree::OrderInventory.new(order).verify(self, target_shipment)
     end
 
-    def update_order
-      return unless changed? || destroyed?
+    def update_adjustments
+      if quantity_changed?
+        recalculate_adjustments
+      end
+    end
 
-      # update the order totals, etc.
-      order.create_tax_charge!
-      order.update!
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
+    end
+
+    def create_tax_charge
+      Spree::TaxRate.adjust(order, [self])
     end
 
     def update_inventory_before_destroy
