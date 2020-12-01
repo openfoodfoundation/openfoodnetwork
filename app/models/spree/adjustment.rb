@@ -38,15 +38,15 @@ module Spree
 
     belongs_to :adjustable, polymorphic: true
     belongs_to :source, polymorphic: true
-    belongs_to :originator, polymorphic: true
+    belongs_to :order
+
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
                foreign_key: 'originator_id'
 
     validates :label, presence: true
     validates :amount, numericality: true
 
-    after_save :update_adjustable
-    after_destroy :update_adjustable
+    after_create :update_adjustable_adjustment_total
 
     state_machine :state, initial: :open do
       event :close do
@@ -62,7 +62,8 @@ module Spree
       end
     end
 
-    scope :tax, -> { where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::Order') }
+    scope :open, -> { where(state: 'open') }
+    scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
@@ -83,36 +84,20 @@ module Spree
 
     localize_number :amount
 
-    # Update the boolean _eligible_ attribute which determines which adjustments
-    # count towards the order's adjustment_total.
-    def set_eligibility
-      result = mandatory || amount != 0
-      update_column(:eligible, result)
-    end
-
-    # Update both the eligibility and amount of the adjustment. Adjustments
-    # delegate updating of amount to their Originator when present, but only if
-    # +locked+ is false. Adjustments that are +locked+ will never change their amount.
+    # Recalculate amount given a target e.g. Order, Shipment, LineItem
     #
-    # Adjustments delegate updating of amount to their Originator when present,
-    # but only if when they're in "open" state, closed or finalized adjustments
-    # are not recalculated.
-    #
-    # It receives +calculable+ as the updated source here so calculations can be
-    # performed on the current values of that source. If we used +source+ it
-    # could load the old record from db for the association. e.g. when updating
-    # more than on line items at once via accepted_nested_attributes the order
-    # object on the association would be in a old state and therefore the
-    # adjustment calculations would not performed on proper values
-    def update!(calculable = nil)
-      return if immutable?
+    # Passing a target here would always be recommended as it would avoid
+    # hitting the database again and would ensure you're compute values over
+    # the specific object amount passed here
+    def update!(target = nil)
+      return amount if immutable?
 
-      # Fix for Spree issue #3381
-      # If we attempt to call 'source' before the reload, then source is currently
-      # the order object. After calling a reload, the source is the Shipment.
-      reload
-      originator.update_adjustment(self, calculable || source) if originator.present?
-      set_eligibility
+      amount = source.compute_amount(target || adjustable)
+      self.update_column(:amount, amount)
+      if promotion?
+        self.update_column(:eligible, source.promotion.eligible?(adjustable))
+      end
+      amount
     end
 
     def currency
@@ -162,8 +147,9 @@ module Spree
 
     private
 
-    def update_adjustable
-      adjustable.update! if adjustable.is_a? Order
+    def update_adjustable_adjustment_total
+      # Cause adjustable's total to be recalculated
+      Spree::ItemAdjustments.new(adjustable).update if adjustable
     end
   end
 end

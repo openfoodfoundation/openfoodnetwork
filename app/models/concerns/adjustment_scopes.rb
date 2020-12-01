@@ -2,7 +2,7 @@ module AdjustmentScopes
   extend ActiveSupport::Concern
 
   PAYMENT_FEE_SCOPE = { originator_type: 'Spree::PaymentMethod' }.freeze
-  SHIPPING_SCOPE = { originator_type: 'Spree::ShippingMethod' }.freeze
+  SHIPPING_SCOPE = { adjustable_type: 'Spree::Shipment' }.freeze
   ELIGIBLE_SCOPE = { eligible: true }.freeze
 
   def payment_fee_scope
