@@ -4,6 +4,16 @@ source 'https://rubygems.org'
 ruby "2.4.4"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
+plugin 'bootboot', '~> 0.1.1' unless Bundler.settings[:frozen]
+Plugin.send(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
+
+if ENV['DEPENDENCIES_NEXT']
+  enable_dual_booting if Plugin.installed?('bootboot')
+
+  # This will only be loaded when running
+  # bundler command prefixed with `DEPENDENCIES_NEXT=1
+end
+
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.0'
 gem 'rails', '~> 4.2'
