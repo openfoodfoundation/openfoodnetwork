@@ -20,34 +20,23 @@ module OrderManagement
       # object with callbacks (otherwise you will end up in an infinite recursion as the
       # associations try to save and then in turn try to call +update!+ again.)
       def update
-        update_totals
-
         if order.completed?
           update_payment_state
-
-          # give each of the shipments a chance to update themselves
-          shipments.each { |shipment| shipment.update!(order) }
+          update_shipments
           update_shipment_state
         end
 
-        update_all_adjustments
-        # update totals a second time in case updated adjustments have an effect on the total
         update_totals
-
-        order.update_attributes_without_callbacks(
-          payment_state: order.payment_state,
-          shipment_state: order.shipment_state,
-          item_total: order.item_total,
-          adjustment_total: order.adjustment_total,
-          payment_total: order.payment_total,
-          total: order.total
-        )
-
         run_hooks
+        persist_totals
       end
 
       def run_hooks
         update_hooks.each { |hook| order.__send__(hook) }
+      end
+
+      def recalculate_adjustments
+        adjustments.includes(:source).open.each { |adjustment| adjustment.update! order }
       end
 
       # Updates the following Order total values:
@@ -57,10 +46,50 @@ module OrderManagement
       # - adjustment_total - total value of all adjustments
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
-        order.payment_total = payments.completed.map(&:amount).sum
+        order.payment_total = payments.completed.sum(:amount)
+        update_item_total
+        update_shipment_total
+        update_adjustment_total
+      end
+
+      # Give each of the shipments a chance to update themselves
+      def update_shipments
+        shipments.each { |shipment| shipment.update!(order) }
+      end
+
+      def update_shipment_total
+        order.shipment_total = shipments.sum(:cost)
+        update_order_total
+      end
+
+      def update_order_total
+        order.total = order.item_total + order.shipment_total + order.adjustment_total
+      end
+
+      def update_adjustment_total
+        recalculate_adjustments
+        order.adjustment_total = line_items.sum(:adjustment_total) +
+                                 shipments.sum(:adjustment_total) +
+                                 adjustments.eligible.sum(:amount)
+        order.tax_total = line_items.sum(:tax_total) + shipments.sum(:tax_total)
+        update_order_total
+      end
+
+      def update_item_total
         order.item_total = line_items.map(&:amount).sum
-        order.adjustment_total = adjustments.eligible.map(&:amount).sum
-        order.total = order.item_total + order.adjustment_total
+        update_order_total
+      end
+
+      def persist_totals
+        order.update_columns(
+          payment_state: order.payment_state,
+          shipment_state: order.shipment_state,
+          item_total: order.item_total,
+          adjustment_total: order.adjustment_total,
+          tax_total: order.tax_total,
+          payment_total: order.payment_total,
+          total: order.total
+        )
       end
 
       # Updates the +shipment_state+ attribute according to the following logic:
