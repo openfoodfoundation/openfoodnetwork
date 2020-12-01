@@ -94,9 +94,6 @@ module Spree
 
       amount = source.compute_amount(target || adjustable)
       self.update_column(:amount, amount)
-      if promotion?
-        self.update_column(:eligible, source.promotion.eligible?(adjustable))
-      end
       amount
     end
 
