@@ -628,7 +628,7 @@ module Spree
       shipments.each do |shipment|
         next if shipment.shipped?
 
-        update_adjustment! shipment.adjustment if shipment.adjustment
+        shipment.adjustments.each{ |adjustment| update_adjustment! adjustment }
         save_or_rescue_shipment(shipment)
       end
     end
