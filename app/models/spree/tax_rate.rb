@@ -90,6 +90,9 @@ module Spree
       end
     end
 
+    # This #compute_tax method below looks really suspect. It's not part of Spree's original code here,
+    # and the way we are using this method probably needs to be removed or adjusted during cleanup.
+
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
     # LineItems or Orders, so we mock out a line item here to fit the interface
     # that our calculator (usually DefaultTax) expects.
