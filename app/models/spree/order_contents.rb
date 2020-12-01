@@ -3,6 +3,7 @@
 module Spree
   class OrderContents
     attr_accessor :order, :currency
+    delegate :line_items, to: :order
 
     def initialize(order)
       @order = order
