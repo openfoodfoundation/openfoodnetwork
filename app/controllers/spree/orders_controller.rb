@@ -65,17 +65,15 @@ module Spree
 
     def update
       @insufficient_stock_lines = []
+
       @order = order_to_update
       unless @order
         flash[:error] = t(:order_not_found)
         redirect_to(main_app.root_path) && return
       end
 
-      if @order.update(order_params)
+      if @order.contents.update_cart(order_params)
         discard_empty_line_items
-        with_open_adjustments { update_totals_and_taxes }
-
-        @order.update_distribution_charge!
 
         respond_with(@order) do |format|
           format.html do
