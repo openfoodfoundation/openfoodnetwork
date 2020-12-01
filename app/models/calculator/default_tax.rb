@@ -11,8 +11,8 @@ module Calculator
 
     def compute(computable)
       case computable
-      when Spree::Order
-        compute_order(computable)
+      when Spree::Shipment
+        compute_shipment(computable)
       when Spree::LineItem
         compute_line_item(computable)
       end
@@ -22,6 +22,10 @@ module Calculator
 
     def rate
       calculable
+    end
+
+    def compute_shipment(shipment)
+      round_to_two_places(shipment.discounted_cost * rate.amount)
     end
 
     # Enable calculation of tax for enterprise fees with tax rates where included_in_price = false
@@ -73,9 +77,9 @@ module Calculator
     def compute_line_item(line_item)
       if line_item.tax_category == rate.tax_category
         if rate.included_in_price
-          deduced_total_by_rate(line_item.total, rate)
+          deduced_total_by_rate(line_item.discounted_amount, rate)
         else
-          round_to_two_places(line_item.total * rate.amount)
+          round_to_two_places(line_item.discounted_amount * rate.amount)
         end
       else
         0
