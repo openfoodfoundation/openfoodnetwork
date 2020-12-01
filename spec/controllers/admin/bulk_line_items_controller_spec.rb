@@ -195,7 +195,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
           it "returns an empty JSON response" do
             spree_put :update, params
-            expect(response.body).to eq ' '
+            expect(response.body).to eq ""
           end
 
           it 'returns a 204 response' do
@@ -273,7 +273,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       it 'returns an empty JSON response' do
         spree_delete :destroy, params
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ""
       end
 
       it 'returns a 204 response' do

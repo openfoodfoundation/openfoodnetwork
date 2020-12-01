@@ -1,7 +1,13 @@
+# frozen_string_literal: true
+
+require "application_responder"
 require 'open_food_network/referer_parser'
 require_dependency 'spree/authentication_helpers'
 
 class ApplicationController < ActionController::Base
+  self.responder = ApplicationResponder
+  respond_to :html
+
   protect_from_forgery
 
   prepend_before_action :restrict_iframes
@@ -9,6 +15,12 @@ class ApplicationController < ActionController::Base
 
   include EnterprisesHelper
   include Spree::AuthenticationHelpers
+
+  # Helper for debugging strong_parameters
+  rescue_from ActiveModel::ForbiddenAttributesError, with: :print_params
+  def print_params
+    raise ActiveModel::ForbiddenAttributesError, params.to_s
+  end
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{begin

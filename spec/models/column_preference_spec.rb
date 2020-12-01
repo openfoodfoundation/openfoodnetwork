@@ -53,7 +53,7 @@ describe ColumnPreference, type: :model do
 
       it "uses defaults where no stored preference exists" do
         expect(preferences.all?(&:new_record?)).to be true
-        expect(preferences.map(&:column_name)).to eq [:col1, :col2, :col3]
+        expect(preferences.map(&:column_name)).to eq ["col1", "col2", "col3"]
         expect(preferences.map(&:visible)).to eq [false, true, false]
       end
     end

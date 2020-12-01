@@ -59,7 +59,7 @@ describe Spree::Order::Checkout do
 
     it "cannot transition to address without any line items" do
       expect(order.line_items).to be_blank
-      expect(lambda { order.next! }).to raise_error(StateMachine::InvalidTransition,
+      expect(lambda { order.next! }).to raise_error(StateMachines::InvalidTransition,
                                                     /#{Spree.t(:there_are_no_items_for_this_order)}/)
     end
 
@@ -82,7 +82,7 @@ describe Spree::Order::Checkout do
         context "if there are no shipping rates for any shipment" do
           specify do
             transition = lambda { order.next! }
-            expect(transition).to raise_error(StateMachine::InvalidTransition,
+            expect(transition).to raise_error(StateMachines::InvalidTransition,
                                               /#{Spree.t(:items_cannot_be_shipped)}/)
           end
         end
@@ -167,7 +167,7 @@ describe Spree::Order::Checkout do
       it 'raises' do
         expect { order.restart_checkout! }
           .to raise_error(
-            StateMachine::InvalidTransition,
+            StateMachines::InvalidTransition,
             /Cannot transition state via :restart_checkout/
           )
       end

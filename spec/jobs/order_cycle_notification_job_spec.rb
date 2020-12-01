@@ -9,7 +9,7 @@ describe OrderCycleNotificationJob do
   end
 
   it 'sends a mail to each supplier' do
-    run_job OrderCycleNotificationJob.new(order_cycle.id)
+    OrderCycleNotificationJob.perform_now order_cycle.id
     expect(ProducerMailer).to have_received(:order_cycle_report).twice
   end
 end

@@ -5,11 +5,11 @@ require "spree/core/controller_helpers/ssl"
 module Api
   class BaseController < ActionController::Metal
     include ActionController::StrongParameters
+    include ActionController::RespondWith
     include Spree::Api::ControllerSetup
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
-
-    respond_to :json
+    include ::ActionController::ConditionalGet
 
     attr_accessor :current_api_user
 

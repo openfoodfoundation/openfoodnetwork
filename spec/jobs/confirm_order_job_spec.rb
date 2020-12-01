@@ -11,6 +11,6 @@ describe ConfirmOrderJob do
     expect(customer_confirm_fake).to receive :deliver
     expect(shop_confirm_fake).to receive :deliver
 
-    run_job ConfirmOrderJob.new order.id
+    ConfirmOrderJob.perform_now order.id
   end
 end
