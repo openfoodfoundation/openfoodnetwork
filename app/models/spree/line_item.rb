@@ -121,7 +121,9 @@ module Spree
     alias subtotal amount
 
     def discounted_amount
-      amount + promo_total
+      # This should be removed in cleanup phase. Promo total will not exist, and #discounted_amount
+      # should be deleted. This method is referenced elsewhere in the updated adjustments code though.
+      amount
     end
 
     def final_amount
