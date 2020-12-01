@@ -131,6 +131,11 @@ module OrderManagement
       end
 
       def update_all_adjustments
+        # Maybe dead code now (previous commit removed the call to it in #update above).
+        # In the original spree version this was #update_shipping_adjustments, not all adjustments,
+        # so it's likely this ties in to enterprise_fees and could need some adapting. Regardless,
+        # this will probably need removing, as it looks like the calculations are not done here
+        # anymore, but have shifted out of the order updater processes.
         order.adjustments.reload.each(&:update!)
       end
 
