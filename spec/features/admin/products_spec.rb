@@ -126,7 +126,7 @@ feature '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
+      find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
 
