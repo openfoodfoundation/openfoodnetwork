@@ -21,10 +21,6 @@ module Api
       end
     end
 
-    def customer_params
-      params.require(:customer).permit(:code, :email, :enterprise_id, :allow_charges)
-    end
-
     private
 
     def add_recurring_payment_info(client_secret)
