@@ -25,7 +25,7 @@ module Calculator
     end
 
     def compute_shipment(shipment)
-      round_to_two_places(shipment.discounted_cost * rate.amount)
+      round_to_two_places(shipment.cost * rate.amount)
     end
 
     # In the adjustments changes, #compute_order is completely removed. Our version differs
