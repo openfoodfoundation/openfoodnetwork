@@ -25,7 +25,8 @@ class CartController < BaseController
                        stock_levels: VariantsStockLevels.new.call(order, variant_ids) },
                status: :ok
       else
-        render json: { error: cart_service.errors.full_messages.join(",") }, status: :precondition_failed
+        render json: { error: cart_service.errors.full_messages.join(",") },
+               status: :precondition_failed
       end
     end
     populate_variant_attributes
