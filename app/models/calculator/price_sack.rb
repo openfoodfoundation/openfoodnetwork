@@ -21,14 +21,19 @@ module Calculator
     end
 
     def compute(object)
-      min = preferred_minimal_amount.to_f
-      order_amount = line_items_for(object).map { |x| x.price * x.quantity }.sum
+      #order_amount = line_items_for(object).map { |x| x.price * x.quantity }.sum
 
-      if order_amount < min
-        cost = preferred_normal_amount.to_f
-      elsif order_amount >= min
-        cost = preferred_discount_amount.to_f
-      end
+      amount = if object.is_a?(Array)
+                 object.map { |o| o.respond_to?(:amount) ? o.amount : BigDecimal(o.to_s) }.sum
+               else
+                 object.respond_to?(:amount) ? object.amount : BigDecimal(object.to_s)
+               end
+
+      cost = if amount < preferred_minimal_amount.to_f
+               preferred_normal_amount.to_f
+             else
+               preferred_discount_amount.to_f
+             end
 
       cost
     end
