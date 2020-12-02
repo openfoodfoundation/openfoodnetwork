@@ -26,14 +26,14 @@ module Spree
         end
 
         it "triggers adjustment total recalculation" do
-          line_item.should_receive(:recalculate_adjustments)
+          expect(line_item).to receive(:recalculate_adjustments)
           line_item.save
         end
       end
 
       context "line item does not change" do
         it "does not trigger adjustment total recalculation" do
-          line_item.should_not_receive(:recalculate_adjustments)
+          expect(line_item).to_not receive(:recalculate_adjustments)
           line_item.save
         end
       end
@@ -43,18 +43,18 @@ module Spree
       let(:variant) { create(:variant) }
 
       before do
-        create(:tax_rate, :zone => order.tax_zone, :tax_category => variant.tax_category)
+        create(:tax_rate, zone: order.tax_zone, tax_category: variant.tax_category)
       end
 
       context "when order has a tax zone" do
         before do
-          order.tax_zone.should be_present
+          expect(order.tax_zone).to be_present
         end
 
         it "creates a tax adjustment" do
           order.contents.add(variant)
           line_item = order.find_line_item_by_variant(variant)
-          line_item.adjustments.tax.count.should == 1
+          expect(line_item.adjustments.tax.count).to eq 1
         end
       end
 
@@ -63,13 +63,13 @@ module Spree
           order.bill_address = nil
           order.ship_address = nil
           order.save
-          order.tax_zone.should be_nil
+          expect(order.tax_zone).to be_nil
         end
 
         it "does not create a tax adjustment" do
           order.contents.add(variant)
           line_item = order.find_line_item_by_variant(variant)
-          line_item.adjustments.tax.count.should == 0
+          expect(line_item.adjustments.tax.count).to eq 0
         end
       end
     end
