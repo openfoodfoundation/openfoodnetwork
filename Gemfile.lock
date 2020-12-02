@@ -674,7 +674,7 @@ GEM
     state_machines-activerecord (0.6.0)
       activerecord (>= 4.1)
       state_machines-activemodel (>= 0.5.0)
-    stringex (1.5.1)
+    stringex (2.8.5)
     stripe (5.28.0)
     temple (0.8.2)
     test-prof (0.7.5)
@@ -825,7 +825,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   state_machines-activerecord
-  stringex (~> 1.5.1)
+  stringex (~> 2.8.5)
   stripe
   test-prof
   test-unit (~> 3.3)
