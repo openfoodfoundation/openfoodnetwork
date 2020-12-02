@@ -678,7 +678,7 @@ GEM
     stripe (5.28.0)
     temple (0.8.2)
     test-prof (0.7.5)
-    test-unit (3.3.6)
+    test-unit (3.3.7)
       power_assert
     thor (0.20.3)
     thread_safe (0.3.6)
