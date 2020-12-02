@@ -75,16 +75,16 @@ describe Spree::Order::Checkout do
       end
 
       it "updates totals" do
-        order.stub(:ensure_available_shipping_rates => true)
-        line_item = FactoryGirl.create(:line_item, :price => 10, :adjustment_total => 10)
+        allow(order).to receive(:ensure_available_shipping_rates) { true }
+        line_item = create(:line_item, price: 10, adjustment_total: 10)
         order.line_items << line_item
-        tax_rate = create(:tax_rate, :tax_category => line_item.tax_category, :amount => 0.05)
-        FactoryGirl.create(:tax_adjustment, :adjustable => line_item, :source => tax_rate)
+        tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
+        create(:tax_adjustment, adjustable: line_item, source: tax_rate)
         order.email = "user@example.com"
         order.next!
-        order.adjustment_total.should == 0.5
-        order.tax_total.should == 0.5
-        order.total.should == 10.5
+        expect(order.adjustment_total).to eq 0.5
+        expect(order.tax_total).to eq 0.5
+        expect(order.total).to eq 10.5
       end
 
       it "transitions to delivery" do
@@ -115,7 +115,7 @@ describe Spree::Order::Checkout do
         end
 
         it "transitions to payment" do
-          order.should_receive(:set_shipments_cost)
+          expect(order).to receive(:set_shipments_cost)
           order.next!
           expect(order.state).to eq 'payment'
         end
