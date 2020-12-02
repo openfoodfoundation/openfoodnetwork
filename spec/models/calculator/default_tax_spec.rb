@@ -33,7 +33,7 @@ describe Calculator::DefaultTax do
     context "when given a line item" do
       context "when the variant does not match the tax category" do
         before do
-          line_item.stub tax_category: nil
+          allow(line_item).to receive(:tax_category) { nil }
         end
 
         it "should be 0" do
