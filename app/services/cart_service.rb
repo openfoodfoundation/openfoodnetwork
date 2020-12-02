@@ -19,7 +19,11 @@ class CartService
       attempt_cart_add_variants variants_data
       overwrite_variants variants_data if overwrite
     end
-    { errors: errors }
+    valid?
+  end
+
+  def valid?
+    errors.empty?
   end
 
   private
