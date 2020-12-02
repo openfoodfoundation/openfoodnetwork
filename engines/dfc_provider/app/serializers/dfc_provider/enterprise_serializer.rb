@@ -3,7 +3,9 @@
 # Serializer used to render a DFC Enterprise from an OFN Enterprise
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class EnterpriseSerializer < BaseSerializer
+  class EnterpriseSerializer < ActiveModel::Serializer
+    include RouteHelper
+
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :vat_number, key: 'dfc:VATnumber'

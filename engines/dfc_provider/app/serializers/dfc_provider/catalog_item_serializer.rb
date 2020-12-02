@@ -3,7 +3,9 @@
 # Serializer used to render a DFC CatalogItem from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class CatalogItemSerializer < BaseSerializer
+  class CatalogItemSerializer < ActiveModel::Serializer
+    include RouteHelper
+
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :references, key: 'dfc:references'

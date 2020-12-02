@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-# Serializer used to render the DFC Address from an OFN User
-# into JSON-LD format based on DFC ontology
+# Helper used to easily build DFC routes inside classes
+# which need it such as serilaizers.
 module DfcProvider
-  class BaseSerializer < ActiveModel::Serializer
-    private
-
+  module RouteHelper
     def host
       Rails.application.routes.default_url_options[:host]
     end

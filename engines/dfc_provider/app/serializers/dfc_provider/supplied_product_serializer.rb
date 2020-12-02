@@ -3,7 +3,9 @@
 # Serializer used to render a DFC SuppliedProduct from an OFN Variant
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class SuppliedProductSerializer < BaseSerializer
+  class SuppliedProductSerializer < ActiveModel::Serializer
+    include RouteHelper
+
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :unit, key: 'dfc:hasUnit'

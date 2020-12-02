@@ -3,7 +3,9 @@
 # Serializer used to render the DFC Person from an OFN User
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class PersonSerializer < BaseSerializer
+  class PersonSerializer < ActiveModel::Serializer
+    include RouteHelper
+
     attribute :context, key: '@context'
     attribute :id, key: '@id'
     attribute :type, key: '@type'
