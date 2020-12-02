@@ -7,89 +7,26 @@ module Spree
     let(:order) { build(:order) }
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
-    describe "scopes" do
-      let!(:arbitrary_adjustment) { create(:adjustment, source: nil, label: "Arbitrary") }
-      let!(:return_authorization_adjustment) { create(:adjustment, source: create(:return_authorization)) }
-
-      it "returns return_authorization adjustments" do
-        expect(Spree::Adjustment.return_authorization.to_a).to eq [return_authorization_adjustment]
-      end
-    end
-
     context "#update!" do
-      context "when originator present" do
-        let(:originator) { double("originator", update_adjustment: nil) }
-        before do
-          allow(originator).to receive_messages update_amount: true
-          allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
-        end
+      context "when adjustment is immutable" do
+        before { adjustment.stub immutable?: true }
 
-        it "should do nothing when closed" do
-          adjustment.close
-          expect(originator).not_to receive(:update_adjustment)
-          adjustment.update!
-        end
-
-        it "should do nothing when finalized" do
-          adjustment.finalize
-          expect(originator).not_to receive(:update_adjustment)
-          adjustment.update!
-        end
-
-        it "should set the eligibility" do
-          expect(adjustment).to receive(:set_eligibility)
-          adjustment.update!
-        end
-
-        it "should ask the originator to update_adjustment" do
-          expect(originator).to receive(:update_adjustment)
+        it "does not update the adjustment" do
+          adjustment.should_not_receive(:update_column)
           adjustment.update!
         end
       end
 
-      it "should do nothing when originator is nil" do
-        allow(adjustment).to receive_messages originator: nil
-        expect(adjustment).not_to receive(:amount=)
-        adjustment.update!
-      end
-    end
+      context "when adjustment is mutable" do
+        before { adjustment.stub immutable?: false }
 
-    context "#eligible? after #set_eligibility" do
-      context "when amount is 0" do
-        before { adjustment.amount = 0 }
-        it "should be eligible if mandatory?" do
-          adjustment.mandatory = true
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
+        it "updates the amount" do
+          adjustment.stub adjustable: double("Adjustable")
+          adjustment.stub source: double("Source")
+          adjustment.source.should_receive("compute_amount").with(adjustment.adjustable).and_return(5)
+          adjustment.should_receive(:update_column).with(:amount, 5)
+          adjustment.update!
         end
-
-        it "should not be eligible unless mandatory?" do
-          adjustment.mandatory = false
-          adjustment.set_eligibility
-          expect(adjustment).to_not be_eligible
-        end
-      end
-
-      context "when amount is greater than 0" do
-        before { adjustment.amount = 25.00 }
-
-        it "should be eligible if mandatory?" do
-          adjustment.mandatory = true
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
-        end
-      end
-    end
-
-    context "#save" do
-      it "should call order#update!" do
-        adjustment = Spree::Adjustment.new(
-          adjustable: order,
-          amount: 10,
-          label: "Foo"
-        )
-        expect(order).to receive(:update!)
-        adjustment.save
       end
     end
 
