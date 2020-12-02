@@ -39,6 +39,8 @@ describe Spree::OrderMailer do
     let(:order) { create(:order_with_totals_and_distribution) }
 
     before do
+      # There are currently some issues with factories and associated objects. Needs looking at.
+      # A calculator factory is called but it doesn't correctly associate with it's calculable object.
       create(:adjustment, order: order, eligible: true, label: "Eligible Adjustment")
       create(:adjustment, order: order, eligible: false, label: "Ineligible Adjustment")
     end
