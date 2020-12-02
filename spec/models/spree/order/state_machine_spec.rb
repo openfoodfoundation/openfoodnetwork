@@ -49,25 +49,17 @@ describe Spree::Order do
       end
     end
 
-    context "when current state is address" do
+    context "when current state is delivery" do
       before do
-        allow(order).to receive(:has_available_payment)
-        allow(order).to receive(:ensure_available_shipping_rates)
-        order.state = "address"
+        order.stub :payment_required? => true
+        order.state = "delivery"
       end
 
       it "adjusts tax rates when transitioning to delivery" do
-        # Once because the record is being saved
-        # Twice because it is transitioning to the delivery state
+        # Once for the line items, once for the shipments
         expect(Spree::TaxRate).to receive(:adjust).twice
+        order.should_receive(:set_shipments_cost)
         order.next!
-      end
-    end
-
-    context "when current state is delivery" do
-      before do
-        order.state = "delivery"
-        allow(order).to receive_messages total: 10.0
       end
     end
   end
