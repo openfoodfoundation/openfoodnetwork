@@ -12,71 +12,95 @@ describe Calculator::PriceSack do
   end
   let(:line_item) { build_stubbed(:line_item, price: price, quantity: 2) }
 
-  context 'when the order amount is below preferred minimal' do
-    let(:price) { 2 }
-
-    it "uses the preferred normal amount" do
-      expect(calculator.compute(line_item)).to eq(10)
-    end
-  end
-
-  context 'when the order amount is above preferred minimal' do
-    let(:price) { 6 }
-
-    it "uses the preferred discount amount" do
-      expect(calculator.compute(line_item)).to eq(1)
-    end
-  end
-
-  context "preferred discount amount is float" do
-    before do
-      calculator.preferred_normal_amount = 10.4
-      calculator.preferred_discount_amount = 1.2
-    end
-
+  context "with line items" do
     context 'when the order amount is below preferred minimal' do
       let(:price) { 2 }
 
-      it "uses the float preferred normal amount" do
-        expect(calculator.compute(line_item)).to eq(10.4)
+      it "uses the preferred normal amount" do
+        expect(calculator.compute(line_item)).to eq(10)
       end
     end
 
     context 'when the order amount is above preferred minimal' do
       let(:price) { 6 }
 
-      it "uses the float preferred discount amount" do
-        expect(calculator.compute(line_item)).to eq(1.2)
+      it "uses the preferred discount amount" do
+        expect(calculator.compute(line_item)).to eq(1)
+      end
+    end
+
+    context "preferred discount amount is float" do
+      before do
+        calculator.preferred_normal_amount = 10.4
+        calculator.preferred_discount_amount = 1.2
+      end
+
+      context 'when the order amount is below preferred minimal' do
+        let(:price) { 2 }
+
+        it "uses the float preferred normal amount" do
+          expect(calculator.compute(line_item)).to eq(10.4)
+        end
+      end
+
+      context 'when the order amount is above preferred minimal' do
+        let(:price) { 6 }
+
+        it "uses the float preferred discount amount" do
+          expect(calculator.compute(line_item)).to eq(1.2)
+        end
+      end
+    end
+
+    context "minimal amount is float" do
+      before do
+        calculator.preferred_minimal_amount = 16.5
+        calculator.preferred_normal_amount = 5
+        calculator.preferred_discount_amount = 1
+        line_item.quantity = 2
+      end
+
+      context "with price bellow minimal amount" do
+        let(:price) { 8 }
+
+        it "returns the correct value of cost" do
+          expect(calculator.compute(line_item)).to eq(5)
+        end
+      end
+
+      context "with price above minimal amount" do
+        let(:price) { 8.5 }
+
+        it "returns the correct value of cost" do
+          expect(calculator.compute(line_item)).to eq(1)
+        end
       end
     end
   end
 
-  context "minimal amount is float" do
-    before do
-      calculator.preferred_minimal_amount = 16.5
-      calculator.preferred_normal_amount = 5
-      calculator.preferred_discount_amount = 1
-      line_item.quantity = 2
+  context "with orders and shipments" do
+    let(:order) { build_stubbed(:order) }
+    let(:shipment) { create(:shipment) }
+
+    # Regression test for Spree #714 and #739
+    it "computes with an order object" do
+      calculator.compute(order)
     end
 
-    context "with price bellow minimal amount" do
-      let(:price) { 8 }
-
-      it "returns the correct value of cost" do
-        expect(calculator.compute(line_item)).to eq(5)
-      end
+    # Regression test for Spree #1156
+    it "computes with a shipment object" do
+      calculator.compute(shipment)
     end
 
-    context "with price above minimal amount" do
-      let(:price) { 8.5 }
-
-      it "returns the correct value of cost" do
-        expect(calculator.compute(line_item)).to eq(1)
-      end
+    # Regression test for Spree #2055
+    it "computes the correct amount" do
+      expect(calculator.compute(2)).to eq calculator.preferred_normal_amount
+      expect(calculator.compute(6)).to eq calculator.preferred_discount_amount
     end
   end
 
   context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module", [:preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount]
+    it_behaves_like "a model using the LocalizedNumber module",
+                    [:preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount]
   end
 end
