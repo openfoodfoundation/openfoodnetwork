@@ -40,8 +40,11 @@ module Spree
     belongs_to :source, polymorphic: true
     belongs_to :order
 
-    belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
-               foreign_key: 'originator_id'
+    # The diffs with Spree 2.2 don't have this association listed at all and it seems to break adjustments.
+    # This needs to be removed / re-adjusted.
+    # See https://github.com/openfoodfoundation/openfoodnetwork/commit/2d2792225a607a06dbd06aab694030a5cfa04d95#diff-7e5462a3bd9c8321c204cfba2377a185494da02b4e6dbef00763416a9957398aR7
+    belongs_to :tax_rate, -> { where spree_adjustments: { source_type: 'Spree::TaxRate' } },
+               foreign_key: 'source_id'
 
     validates :label, presence: true
     validates :amount, numericality: true
