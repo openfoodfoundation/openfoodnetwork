@@ -7,6 +7,7 @@ module Spree
   class PaymentMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
     include PaymentMethodDistributors
+    include AdjustmentHandling
 
     acts_as_taggable
     acts_as_paranoid
