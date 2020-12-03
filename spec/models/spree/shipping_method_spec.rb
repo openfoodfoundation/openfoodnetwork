@@ -4,6 +4,11 @@ require 'spec_helper'
 
 module Spree
   describe ShippingMethod do
+    # There are some changes here in the diff that don't match up to our calculators for ShippingMethod.
+    # It seems like Spree has shipping-related calculators namespaced under Spree::Calculators::Shipping::<type>
+    # but we don't do that. Not 100% sure whether the duplication vs re-use strategies are important here...
+    # Investigate this later. See diff for `core/spec/models/spree/shipping_method_spec.rb`.
+
     it "is valid when built from factory" do
       expect(
         build(
