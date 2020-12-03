@@ -140,7 +140,7 @@ describe Spree::Order do
   context "creates shipments cost" do
     let(:shipment) { double }
 
-    before { order.stub shipments: [shipment] }
+    before { allow(order).to receive(:shipments) { [shipment] } }
 
     it "update and persist totals" do
       expect(shipment).to receive :update_amounts
@@ -344,11 +344,13 @@ describe Spree::Order do
   end
 
   context "empty!" do
-    let(:order) { stub_model(Spree::Order) }
+    let(:order) { build_stubbed(:order) }
+    let(:line_items) { build_stubbed_list(:line_item, 1) }
+    let(:adjustments) { build_stubbed_list(:adjustment, 1) }
 
     before do
-      order.stub(:line_items => line_items = [])
-      order.stub(:adjustments => adjustments = [])
+      allow(order).to receive(:line_items) { line_items }
+      allow(order).to receive(:adjustments) { adjustments }
     end
 
     it "clears out line items, adjustments and update totals" do
@@ -422,7 +424,7 @@ describe Spree::Order do
       # Don't care about available payment methods in this test
       allow(persisted_order).to receive_messages(has_available_payment: false)
       persisted_order.line_items << line_item
-      create(:adjustment, :amount => -line_item.amount, :label => "Promotion", :adjustable => line_item)
+      create(:adjustment, amount: -line_item.amount, label: "Promotion", adjustable: line_item)
       persisted_order.state = 'delivery'
       persisted_order.save # To ensure new state_change event
     end
