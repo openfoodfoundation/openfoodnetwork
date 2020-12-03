@@ -1,6 +1,8 @@
 class TagRule::DiscountOrder < TagRule
   include Spree::Core::CalculatedAdjustments
 
+  # This needs looking at...
+
   private
 
   # Warning: this should only EVER be called via TagRule#apply
