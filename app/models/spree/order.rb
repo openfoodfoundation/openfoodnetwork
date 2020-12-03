@@ -256,6 +256,7 @@ module Spree
     # adjustments on an invoice. For example, you can display tax breakout for
     # cases where tax is included in price.
     def line_item_adjustment_totals
+      # Needs looking at
       Hash[line_item_adjustments.eligible.group_by(&:label).map do |label, adjustments|
         total = adjustments.sum(&:amount)
         [label, Spree::Money.new(total, currency: currency)]
@@ -434,7 +435,7 @@ module Spree
     def finalize!
       touch :completed_at
 
-      adjustments.update_all state: 'closed'
+      adjustments.update_all state: 'closed' # Needs looking at
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state
@@ -623,6 +624,7 @@ module Spree
       errors.add(:base, I18n.t('devise.failure.already_registered'))
     end
 
+    # Needs looking at
     # After changing line items of a completed order
     def update_shipping_fees!
       shipments.each do |shipment|
@@ -649,6 +651,7 @@ module Spree
       end
     end
 
+    # Needs looking at
     # After changing line items of a completed order
     def update_payment_fees!
       payments.each do |payment|
@@ -659,6 +662,7 @@ module Spree
       end
     end
 
+    # Needs looking at
     def update_distribution_charge!
       # `with_lock` acquires an exclusive row lock on order so no other
       # requests can update it until the transaction is commited.
@@ -717,18 +721,22 @@ module Spree
       distributor && order_cycle
     end
 
+    # Needs looking at
     def shipping_tax
       adjustments(:reload).shipping.sum(:included_tax)
     end
 
+    # Needs looking at
     def enterprise_fee_tax
       adjustments(:reload).enterprise_fee.sum(:included_tax)
     end
 
+    # Needs looking at
     def total_tax
       (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
     end
 
+    # Needs looking at
     def has_taxes_included
       !line_items.with_tax.empty?
     end
@@ -819,6 +827,7 @@ module Spree
       Spree.user_class.exists?(email: email)
     end
 
+    # Needs looking at
     def adjustments_fetcher
       @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
     end
@@ -862,6 +871,7 @@ module Spree
                                       ship_address: ship_address.andand.clone)
     end
 
+    # Needs looking at
     def update_adjustment!(adjustment)
       return if adjustment.finalized?
 

@@ -85,12 +85,14 @@ module Spree
       where("spree_line_items.variant_id IN (?)", variant_ids)
     }
 
+    # Needs looking at
     scope :with_tax, -> {
       joins(:adjustments).
         where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
         select('DISTINCT spree_line_items.*')
     }
 
+    # Needs looking at
     # Line items without a Spree::TaxRate-originated adjustment
     scope :without_tax, -> {
       joins("
@@ -178,15 +180,15 @@ module Spree
       update!(quantity: variant.on_hand) if quantity > variant.on_hand
     end
 
-    def has_tax?
+    def has_tax? # Needs looking at
       adjustments.included_tax.any?
     end
 
-    def included_tax
+    def included_tax ## Needs looking at
       adjustments.included_tax.sum(:included_tax)
     end
 
-    def tax_rates
+    def tax_rates # Needs looking at
       product.tax_category.andand.tax_rates || []
     end
 
