@@ -214,7 +214,7 @@ module Spree
 
       describe "finding line items with and without tax" do
         let(:tax_rate) { create(:tax_rate, calculator: ::Calculator::DefaultTax.new) }
-        let!(:adjustment1) { create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
+        let!(:adjustment1) { create(:adjustment, source: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
         before do
           li1
@@ -484,7 +484,7 @@ module Spree
       let(:li_no_tax)   { create(:line_item) }
       let(:li_tax)      { create(:line_item) }
       let(:tax_rate)    { create(:tax_rate, calculator: ::Calculator::DefaultTax.new) }
-      let!(:adjustment) { create(:adjustment, adjustable: li_tax, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
+      let!(:adjustment) { create(:adjustment, adjustable: li_tax, source: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
       context "checking if a line item has tax included" do
         it "returns true when it does" do

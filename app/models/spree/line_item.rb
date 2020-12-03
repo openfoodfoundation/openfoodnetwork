@@ -88,7 +88,7 @@ module Spree
     # Needs looking at
     scope :with_tax, -> {
       joins(:adjustments).
-        where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+        where('spree_adjustments.source_type = ?', 'Spree::TaxRate').
         select('DISTINCT spree_line_items.*')
     }
 
@@ -99,7 +99,7 @@ module Spree
         LEFT OUTER JOIN spree_adjustments
           ON (spree_adjustments.adjustable_id=spree_line_items.id
             AND spree_adjustments.adjustable_type = 'Spree::LineItem'
-            AND spree_adjustments.originator_type='Spree::TaxRate')").
+            AND spree_adjustments.source_type='Spree::TaxRate')").
         where('spree_adjustments.id IS NULL')
     }
 
