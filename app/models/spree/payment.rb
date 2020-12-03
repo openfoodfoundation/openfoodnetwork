@@ -135,7 +135,7 @@ module Spree
         adjustment.label = adjustment_label
         adjustment.save
       else
-        payment_method.create_adjustment(adjustment_label, order, self, true)
+        payment_method.create_adjustment(adjustment_label, order, order, self, true)
         association(:adjustment).reload
       end
     end
