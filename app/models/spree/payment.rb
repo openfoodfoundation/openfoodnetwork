@@ -11,6 +11,7 @@ module Spree
 
     delegate :line_items, to: :order
     delegate :currency, to: :order
+    delegate :compute_amount, to: :payment_method
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
@@ -20,7 +21,7 @@ module Spree
              class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source, dependent: :destroy
 
-    has_one :adjustment, as: :source, dependent: :destroy
+    has_many :adjustments, as: :source, dependent: :destroy
 
     validate :validate_source
     before_save :set_unique_identifier
@@ -126,17 +127,24 @@ module Spree
       res || payment_method
     end
 
+    def adjustment
+      adjustments.first
+    end
+
     def ensure_correct_adjustment
       revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
       return if adjustment.try(:finalized?)
 
       if adjustment
-        adjustment.source = payment_method
+        adjustment.source = self
         adjustment.label = adjustment_label
         adjustment.save
       else
-        payment_method.create_adjustment(adjustment_label, order, order, payment_method, true)
-        association(:adjustment).reload
+        target = self
+        calculable = order
+        adjustable = order
+        payment_method.create_adjustment(adjustment_label, order, target, calculable, adjustable, true)
+        association(:adjustments).reload
       end
     end
 

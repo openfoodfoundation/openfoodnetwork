@@ -5,7 +5,7 @@ module AdjustmentHandling
   #   (which is any class that has_many :adjustments) and sets amount based on the
   #   calculator as applied to the given calculable (Order, LineItems[], Shipment, etc.)
   # By default the adjustment will not be considered mandatory
-  def create_adjustment(label, order, target, calculable, mandatory = false, state = "closed")
+  def create_adjustment(label, order, target, calculable, adjustable, mandatory = false, state = "closed")
     # Adjustment calculations done on Spree::Shipment objects MUST
     # be done on their to_package'd variants instead
     # It's only the package that contains the correct information.
@@ -17,7 +17,7 @@ module AdjustmentHandling
 
     target.adjustments.create(
       amount: amount,
-      source: old_calculable,
+      adjustable: adjustable,
       order: order,
       label: label,
       mandatory: mandatory,
