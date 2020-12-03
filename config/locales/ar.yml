@@ -1282,13 +1282,13 @@ ar:
   footer_logo: "الشعار (220 × 76)"
   footer_facebook_url: "رابط الفيسبوك"
   footer_twitter_url: "رابط تويتر"
-  footer_instagram_url: "عنوان انستغرام"
+  footer_instagram_url: "رابط انستغرام"
   footer_linkedin_url: "رابط لينكدن"
   footer_googleplus_url: "رابط جوجل بلس"
   footer_pinterest_url: "رابط بنتيريست"
   footer_email: "البريد الإلكتروني"
   footer_links_md: "الروابط"
-  footer_about_url: "حول الرابط "
+  footer_about_url: "رابط نحن"
   user_guide_link: "رابط دليل المستخدم"
   name: اسم
   first_name: الاسم الاول
@@ -3006,7 +3006,7 @@ ar:
     landing_page: "الصفحة المقصودة"
     server: "الخادم"
     test_mode: "وضع الاختبار"
-    logourl: "وحدة"
+    logourl: "رابط الشعار"
     are_you_sure_delete: "هل أنت متأكد أنك تريد حذف هذا السجل؟"
     confirm_delete: "تأكيد الحذف"
     configurations: "تهيئة"
@@ -3472,10 +3472,10 @@ ar:
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
-          privacy_policy_url: "URL سياسة الخصوصية"
+          privacy_policy_url: "رابط سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
-          footer_tos_url: "شروط الخدمة URL"
+          footer_tos_url: "رابط شروط الخدمة "
     checkout:
       payment:
         stripe:
