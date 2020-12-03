@@ -13,36 +13,36 @@ module OrderManagement
       context "order totals" do
         before do
           2.times do
-            create(:line_item, :order => order, price: 10)
+            create(:line_item, order: order, price: 10)
           end
         end
 
         it "updates payment totals" do
-          order.stub_chain(:payments, :completed, :sum).and_return(10)
+          allow(order).to receive_message_chain(:payments, :completed, :sum).and_return(10)
 
           updater.update_totals
-          order.payment_total.should == 10
+          expect(order.payment_total).to eq 10
         end
 
         it "update item total" do
           updater.update_item_total
-          order.item_total.should == 20
+          expect(order.item_total).to eq 20
         end
 
         it "update shipment total" do
-          create(:shipment, :order => order, :cost => 10)
+          create(:shipment, order: order, cost: 10)
           updater.update_shipment_total
-          order.shipment_total.should == 10
+          expect(order.shipment_total).to eq 10
         end
 
         it "update order adjustments" do
-          order.line_items.first.update_columns({
-            :adjustment_total => 10.05,
-            :tax_total => 0.05
-          })
+          order.line_items.first.update_columns(
+            adjustment_total: 10.05,
+            tax_total: 0.05
+          )
           updater.update_adjustment_total
-          order.adjustment_total.should == 10.05
-          order.tax_total.should == 0.05
+          expect(order.adjustment_total).to eq 10.05
+          expect(order.tax_total).to eq 0.05
         end
       end
 
