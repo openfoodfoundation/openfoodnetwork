@@ -5,6 +5,6 @@ FactoryBot.define do
     zone
     amount { 100.00 }
     tax_category
-    association(:calculator, factory: :default_tax_calculator)
+    association(:calculator, factory: :default_tax_calculator, strategy: :build)
   end
 end
