@@ -10,21 +10,40 @@ module OrderManagement
 
       before { allow(order).to receive(:backordered?) { false } }
 
-      it "updates totals" do
-        payments = [double(amount: 5), double(amount: 5)]
-        allow(order).to receive_message_chain(:payments, :completed).and_return(payments)
+      context "order totals" do
+        before do
+          2.times do
+            create(:line_item, :order => order, price: 10)
+          end
+        end
 
-        line_items = [double(amount: 10), double(amount: 20)]
-        allow(order).to receive_messages line_items: line_items
+        it "updates payment totals" do
+          order.stub_chain(:payments, :completed, :sum).and_return(10)
 
-        adjustments = [double(amount: 10), double(amount: -20)]
-        allow(order).to receive_message_chain(:adjustments, :eligible).and_return(adjustments)
+          updater.update_totals
+          order.payment_total.should == 10
+        end
 
-        updater.update_totals
-        expect(order.payment_total).to eq 10
-        expect(order.item_total).to eq 30
-        expect(order.adjustment_total).to eq(-10)
-        expect(order.total).to eq 20
+        it "update item total" do
+          updater.update_item_total
+          order.item_total.should == 20
+        end
+
+        it "update shipment total" do
+          create(:shipment, :order => order, :cost => 10)
+          updater.update_shipment_total
+          order.shipment_total.should == 10
+        end
+
+        it "update order adjustments" do
+          order.line_items.first.update_columns({
+            :adjustment_total => 10.05,
+            :tax_total => 0.05
+          })
+          updater.update_adjustment_total
+          order.adjustment_total.should == 10.05
+          order.tax_total.should == 0.05
+        end
       end
 
       context "updating shipment state" do
@@ -90,7 +109,7 @@ module OrderManagement
           allow(order).to receive_messages shipments: [shipment]
 
           expect(shipment).to receive(:update!).with(order)
-          updater.update
+          updater.update_shipments
         end
       end
 
@@ -112,18 +131,9 @@ module OrderManagement
           allow(order).to receive_messages shipments: [shipment]
 
           expect(shipment).not_to receive(:update!).with(order)
+          expect(updater).not_to receive(:update_shipments).with(order)
           updater.update
         end
-      end
-
-      it "updates totals twice" do
-        expect(updater).to receive(:update_totals).twice
-        updater.update
-      end
-
-      it "updates all adjustments" do
-        expect(updater).to receive(:update_all_adjustments)
-        updater.update
       end
 
       it "is failed if no valid payments" do
