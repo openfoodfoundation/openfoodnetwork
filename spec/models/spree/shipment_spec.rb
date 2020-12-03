@@ -370,11 +370,11 @@ describe Spree::Shipment do
   context "create adjustments" do
     let(:shipment) { create(:shipment) }
 
-    before { shipment.stub_chain :selected_shipping_rate, cost: 5 }
+    before { allow(shipment).to receive_message_chain :selected_shipping_rate, cost: 5 }
 
     it "updates shipment totals" do
       shipment.update_amounts
-      shipment.reload.cost.should == 5
+      expect(shipment.reload.cost).to eq 5
     end
   end
 
@@ -390,12 +390,12 @@ describe Spree::Shipment do
       pending "not sure when and if shipment adjustments are recalculated"
       # Need a persisted order for this
       shipment.order = create(:order)
-      tax_rate = create(:tax_rate, :amount => 10)
-      adjustment = create(:adjustment, :source => tax_rate)
+      tax_rate = create(:tax_rate, amount: 10)
+      adjustment = create(:adjustment, source: tax_rate)
       shipment.cost = 10
       shipment.adjustments << adjustment
       shipment.save
-      shipment.reload.adjustment_total.should == 100
+      expect(shipment.reload.adjustment_total).to eq 100
     end
   end
 
