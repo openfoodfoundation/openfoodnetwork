@@ -1,6 +1,10 @@
 # Finds tax rates on which an adjustment is based on.
 # For example a packaging fee may contain VAT. This service finds the VAT rate
 # for the tax included in the packaging fee.
+
+# Adjustment#originator no longer exists, and finding the tax rate for an adjustment will not be
+# handled in this way any more. :fire:
+
 class TaxRateFinder
   # @return [Array<Spree::TaxRate>]
   def self.tax_rates_of(adjustment)
