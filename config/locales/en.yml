@@ -3700,7 +3700,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         delete?: Delete?
       cards:
         authorised_shops: Authorised Shops
-        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
+        authorised_shops_agreement: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged. By checking the box for a shop, you are agreeing to authorise that shop to send instructions to the financial institution that issued your card to take payments in accordance with the terms of any subscription you create with that shop.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
