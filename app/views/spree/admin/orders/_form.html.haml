@@ -4,7 +4,7 @@
 
   = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => order }
 
-  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.price_adjustments, :title => t(".line_item_adjustments")}
+  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.line_item_adjustments, :title => t(".line_item_adjustments")}
   = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => order_adjustments_for_display(@order), :title => t(".order_adjustments")}
 
   - if order.line_items.exists?
