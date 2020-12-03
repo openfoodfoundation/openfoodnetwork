@@ -133,18 +133,6 @@ module Spree
       included_tax.positive?
     end
 
-    def self.without_callbacks
-      skip_callback :save, :after, :update_adjustable
-      skip_callback :destroy, :after, :update_adjustable
-
-      result = yield
-    ensure
-      set_callback :save, :after, :update_adjustable
-      set_callback :destroy, :after, :update_adjustable
-
-      result
-    end
-
     private
 
     def update_adjustable_adjustment_total
