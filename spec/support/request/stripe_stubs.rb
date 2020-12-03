@@ -75,7 +75,9 @@ module StripeStubs
                           amount_received: 2000,
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
-                          charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+                          charges: {
+                            data: [{ id: "ch_1234", amount: 2000, amount_refunded: 0 }] })
+                          }
   end
 
   def payment_intent_redirect_response_mock(redirect_url)
