@@ -76,7 +76,7 @@ module Spree
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
     scope :admin,          -> { where(source_type: nil, originator_type: nil) }
     scope :included_tax,   -> {
-      where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
+      where(source_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
     }
 
     scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
