@@ -7,12 +7,10 @@ Darkswarm.factory 'Tabsets', ->
         @tabsets.push { ctrl: ctrl, id: id, selected: selected }
         ctrl.select(selected) if selected?
 
-    toggle: (id, name, state=null) ->
+    toggle: (id, name) ->
       tabset = @findTabsetByObject(id)
-      if tabset.selected == name
-        @select(tabset, null) unless state == "open"
-      else
-        @select(tabset, name) unless state == "closed"
+      if tabset.selected != name
+        @select(tabset, name)
 
     select: (tabset, name) ->
       tabset.selected = name
