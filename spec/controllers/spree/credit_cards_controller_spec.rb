@@ -69,7 +69,7 @@ describe Spree::CreditCardsController, type: :controller do
     end
   end
 
-  describe "#update" do
+  describe "#update card to be the default card" do
     let(:params) { { format: :json, credit_card: { is_default: true } } }
     context "when the specified credit card is not found" do
       before { params[:id] = 123 }
@@ -110,6 +110,23 @@ describe Spree::CreditCardsController, type: :controller do
             spree_put :update, params
             json_response = JSON.parse(response.body)
             expect(json_response['flash']['error']).to eq I18n.t(:card_could_not_be_updated)
+          end
+        end
+
+        context "and there are existing authorizations for the user" do
+          let!(:customer1) { create(:customer, allow_charges: true) }
+          let!(:customer2) { create(:customer, allow_charges: true) }
+
+          it "removes the authorizations" do
+            customer1.user = card.user
+            customer2.user = card.user
+            customer1.save
+            customer2.save
+            expect(customer1.reload.allow_charges).to be true
+            expect(customer2.reload.allow_charges).to be true
+            spree_put :update, params
+            expect(customer1.reload.allow_charges).to be false
+            expect(customer2.reload.allow_charges).to be false
           end
         end
       end
