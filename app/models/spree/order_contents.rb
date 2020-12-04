@@ -28,7 +28,6 @@ module Spree
       if order.update_attributes(params)
         order.line_items = order.line_items.select { |li| li.quantity > 0 }
 
-        order.ensure_updated_shipments
         reload_totals
         true
       else
