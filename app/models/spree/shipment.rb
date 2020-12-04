@@ -71,6 +71,10 @@ module Spree
       number.to_s.to_url.upcase
     end
 
+    def adjustment
+      adjustments.first
+    end
+
     def backordered?
       inventory_units.any?(&:backordered?)
     end
