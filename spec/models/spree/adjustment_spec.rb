@@ -139,6 +139,10 @@ module Spree
       end
     end
 
+    # In the Spree 2.2 specs, most of these tests related to applying a TaxRate to a LineItem are moved to
+    # the TaxRate specs and aren't present here. The responsibility for this behavior is not in this class.
+    # See core/spec/models/spree/tax_rate_spec.rb and core/spec/models/spree/adjustment_spec.rb
+
     describe "recording included tax" do
       describe "TaxRate adjustments" do
         let!(:zone)        { create(:zone_with_member) }
