@@ -1,6 +1,7 @@
 module OpenFoodNetwork
   class EnterpriseFeeApplicator < Struct.new(:enterprise_fee, :variant, :role)
     def create_line_item_adjustment(line_item)
+      # This all needs a big refactor after it's working correctly...
       create_adjustment(line_item_adjustment_label, line_item.order, line_item, line_item, line_item)
     end
 
