@@ -669,6 +669,9 @@ module Spree
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       with_lock do
+        # Clearing all enterprise fees and rebuilding them is really expensive. There are lots of types
+        # of enterprise fee, some apply to order and some to line items. It's likely that we can selectively
+        # update them here in a more efficient way. Also this locking needs looking at...
         EnterpriseFee.clear_all_adjustments_on_order self
 
         loaded_line_items =
