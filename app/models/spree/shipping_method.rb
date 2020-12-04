@@ -112,10 +112,6 @@ module Spree
 
     private
 
-    def compute_amount(calculable)
-      self.calculator.compute(calculable)
-    end
-
     def at_least_one_shipping_category
       return unless shipping_categories.empty?
 
