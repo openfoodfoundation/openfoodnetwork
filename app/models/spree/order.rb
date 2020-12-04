@@ -683,6 +683,11 @@ module Spree
           end
         end
 
+        # There are different sets of fees here, applying to line items or to orders, and in different contexts,
+        # like coordinator fees or admin fees. It might be sensible to break these down into distinct types, eg
+        # CoordinatorFee, and handle them as separate sets of adjustments instead of lumping them all together
+        # under the EnterpriseFee class.
+
         if order_cycle
           OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
         end
