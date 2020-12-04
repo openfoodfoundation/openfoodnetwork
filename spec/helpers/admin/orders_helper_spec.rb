@@ -13,7 +13,7 @@ describe Admin::OrdersHelper, type: :helper do
     end
 
     it "filters shipping method adjustments" do
-      create(:adjustment, adjustable: order, amount: 1, originator_type: "Spree::ShippingMethod")
+      create(:adjustment, adjustable: order, amount: 1, adjustable_type: "Spree::Shipment")
 
       expect(helper.order_adjustments_for_display(order)).to eq []
     end
