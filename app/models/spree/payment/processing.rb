@@ -3,20 +3,21 @@
 module Spree
   class Payment < ActiveRecord::Base
     module Processing
-      def process!(offline = false)
-        return unless payment_method&.source_required?
-
-        raise Core::GatewayError, Spree.t(:payment_processing_failed) unless source
-
-        return if processing?
-
-        unless payment_method.supports?(source)
-          invalidate!
-          raise Core::GatewayError, Spree.t(:payment_method_not_supported)
-        end
+      def process!
+        return unless ready_to_process?
 
         if payment_method.auto_capture?
-          purchase!(offline)
+          purchase!
+        else
+          authorize!
+        end
+      end
+
+      def process_offline!
+        return unless ready_to_process?
+
+        if payment_method.auto_capture?
+          charge_offline!
         else
           authorize!
         end
@@ -27,9 +28,14 @@ module Spree
         gateway_action(source, :authorize, :pend)
       end
 
-      def purchase!(offline = false)
+      def purchase!
         started_processing!
-        gateway_action(source, offline ? :charge_offline : :purchase, :complete)
+        gateway_action(source, :purchase, :complete)
+      end
+
+      def charge_offline!
+        started_processing!
+        gateway_action(source, :charge_offline, :complete)
       end
 
       def capture!
@@ -192,6 +198,20 @@ module Spree
       end
 
       private
+
+      def ready_to_process?
+        return false unless payment_method&.source_required?
+
+        raise Core::GatewayError, Spree.t(:payment_processing_failed) unless source
+
+        return false if processing?
+
+        unless payment_method.supports?(source)
+          invalidate!
+          raise Core::GatewayError, Spree.t(:payment_method_not_supported)
+        end
+        true
+      end
 
       def calculate_refund_amount(refund_amount = nil)
         refund_amount ||= if credit_allowed >= order.outstanding_balance.abs

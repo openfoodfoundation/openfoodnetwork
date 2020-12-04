@@ -499,13 +499,13 @@ module Spree
     #   which gets rescued and converted to FALSE when
     #   :allow_checkout_on_gateway_error is set to false
     #
-    def process_payments!(offline: false)
+    def process_payments!
       raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
 
       pending_payments.each do |payment|
         break if payment_total >= total
 
-        payment.process!(offline)
+        payment.process!
 
         if payment.completed?
           self.payment_total += payment.amount
@@ -514,6 +514,23 @@ module Spree
     rescue Core::GatewayError => e
       result = !!Spree::Config[:allow_checkout_on_gateway_error]
       errors.add(:base, e.message) && (return result)
+    end
+
+    def process_payments_offline!
+      raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
+
+      pending_payments.each do |payment|
+        break if payment_total >= total
+
+        payment.process_offline!
+
+        if payment.completed?
+          self.payment_total += payment.amount
+        end
+      end
+    rescue Core::GatewayError => e
+      errors.add(:base, e.message)
+      false
     end
 
     def billing_firstname
