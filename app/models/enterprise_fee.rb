@@ -40,7 +40,7 @@ class EnterpriseFee < ActiveRecord::Base
   }
 
   def self.clear_all_adjustments_on_order(order)
-    order.adjustments.where(originator_type: 'EnterpriseFee').destroy_all
+    order.adjustments.where(source_type: 'EnterpriseFee').destroy_all
   end
 
   private

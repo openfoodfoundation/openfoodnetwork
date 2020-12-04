@@ -73,7 +73,7 @@ module Spree
     scope :credit, -> { where('amount < 0') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
 
-    scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
+    scope :enterprise_fee, -> { where(source_type: 'EnterpriseFee') }
     scope :admin,          -> { where(source_type: nil, originator_type: nil) }
     scope :included_tax,   -> {
       where(source_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
