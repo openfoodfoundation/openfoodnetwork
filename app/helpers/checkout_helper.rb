@@ -28,7 +28,7 @@ module CheckoutHelper
   end
 
   def display_checkout_admin_and_handling_adjustments_total_for(order)
-    adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
+    adjustments = order.adjustments.eligible.where('source_type = ? AND adjustable_type = ? ', 'EnterpriseFee', 'Spree::Order')
     Spree::Money.new adjustments.map(&:amount).sum, currency: order.currency
   end
 
