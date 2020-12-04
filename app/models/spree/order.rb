@@ -691,6 +691,9 @@ module Spree
         if order_cycle
           OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
         end
+
+        updater.update_adjustment_total
+        updater.persist_totals
       end
     end
 
