@@ -98,20 +98,20 @@ describe EnterpriseFee do
   end
 
   describe "clearing all enterprise fee adjustments on an order" do
-    it "clears adjustments from many fees and on all line items" do
+    it "clears adjustments from per-line-item fees" do
       order_cycle = create(:order_cycle)
       order = create(:order, order_cycle: order_cycle)
       line_item1 = create(:line_item, order: order, variant: order_cycle.variants.first)
       line_item2 = create(:line_item, order: order, variant: order_cycle.variants.second)
 
-      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, line_item1, true)
-      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, line_item2, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1.order, line_item1, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2.order, line_item2, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, line_item1, line_item1, line_item1, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, line_item2, line_item2, line_item2, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1.order, line_item1, line_item1, line_item1, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2.order, line_item2, line_item2, line_item2, true)
 
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
-      end.to change(order.adjustments, :count).by(-4)
+      end.to change(order.line_item_adjustments, :count).by(-4)
     end
 
     it "clears adjustments from per-order fees" do
@@ -129,11 +129,12 @@ describe EnterpriseFee do
       order = create(:order)
       tax_rate = create(:tax_rate, calculator: build(:calculator))
       order.adjustments.create({ amount: 12.34,
-                                 source: order,
-                                 originator: tax_rate,
+                                 adjustable: order,
+                                 source: tax_rate,
                                  state: 'closed',
                                  label: 'hello' })
 
+      expect(order.adjustments.count).to be 1
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
       end.to change(order.adjustments, :count).by(0)
