@@ -17,6 +17,7 @@ module AdjustmentHandling
 
     target.adjustments.create(
       amount: amount,
+      source: self,
       adjustable: adjustable,
       order: order,
       label: label,

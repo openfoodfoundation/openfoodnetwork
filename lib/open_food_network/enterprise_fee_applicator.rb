@@ -1,30 +1,26 @@
 module OpenFoodNetwork
   class EnterpriseFeeApplicator < Struct.new(:enterprise_fee, :variant, :role)
     def create_line_item_adjustment(line_item)
-      create_adjustment(line_item_adjustment_label, line_item.order, line_item)
+      create_adjustment(line_item_adjustment_label, line_item.order, line_item, line_item, line_item)
     end
 
     def create_order_adjustment(order)
-      create_adjustment(order_adjustment_label, order, order)
+      create_adjustment(order_adjustment_label, order, order, order, order)
     end
 
     private
 
-    def create_adjustment(label, target, calculable)
-      adjustment = create_enterprise_fee_adjustment(label, target, calculable)
+    def create_adjustment(label, order, target, calculable, adjustable)
+      adjustment = create_enterprise_fee_adjustment(label, order, target, calculable, adjustable)
 
       AdjustmentMetadata.create! adjustment: adjustment, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
 
       adjustment.set_absolute_included_tax! adjustment_tax(adjustment)
     end
 
-    def create_enterprise_fee_adjustment(label, target, calculable)
-      adjustment = enterprise_fee.create_adjustment(label, target, calculable, true)
+    def create_enterprise_fee_adjustment(label, order, target, calculable, adjustable)
+      adjustment = enterprise_fee.create_adjustment(label, order, target, calculable, adjustable, true)
 
-      # This is necessary when source is a line_item
-      #   probably because the association order.adjustments contains "inverse_of :source"
-      #   which overrides the value (the line item) set in calculated_adjustment.create_adjustment
-      adjustment.source = calculable
       adjustment
     end
 
@@ -41,11 +37,24 @@ module OpenFoodNetwork
     end
 
     def adjustment_tax(adjustment)
-      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
+      tax_rate = enterprise_fee&.tax_category&.tax_rates&.first
+      # A given TaxCategory object can have lots of tax rates...
+      # Maybe enterprise should know what rate it is using...?
 
-      tax_rates.select(&:included_in_price).sum do |rate|
-        rate.compute_tax adjustment.amount
+      if tax_rate.present?
+        # tax_rate.compute_amount(adjustment.adjustable)
+        tax_rate.compute_tax(adjustment.amount)
+      else
+        0
       end
+
+      # TaxRateFinder needs work...
+
+      # tax_rates = TaxRateFinder.tax_rates_of(adjustment)
+      #
+      # tax_rates.select(&:included_in_price).sum do |rate|
+      #   rate.compute_tax adjustment.amount
+      # end
     end
   end
 end
