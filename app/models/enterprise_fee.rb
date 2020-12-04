@@ -40,9 +40,8 @@ class EnterpriseFee < ActiveRecord::Base
   }
 
   def self.clear_all_adjustments_on_order(order)
-    # Some enterprise fees are added on line items, and this will *not* clear them...
-    # And they can contribute to the order's adjustment total and tax total, so this needs looking at.
     order.adjustments.where(source_type: 'EnterpriseFee').destroy_all
+    order.line_item_adjustments.where(source_type: 'EnterpriseFee').destroy_all
   end
 
   private
