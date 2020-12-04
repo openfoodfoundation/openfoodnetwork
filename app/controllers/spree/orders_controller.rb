@@ -78,10 +78,6 @@ module Spree
 
         @order.update_distribution_charge!
 
-        # We should also review this #discard_empty_line_items call as well and see if it can be improved.
-        # It looks a pretty suspect, and it appears in the backtraces for some of our nasty deadlocks...
-        discard_empty_line_items
-
         respond_with(@order) do |format|
           format.html do
             if params.key?(:checkout)
@@ -182,10 +178,6 @@ module Spree
         previous_state = previous_states[adjustment.id]
         adjustment.update_attribute(:state, previous_state) if previous_state
       end
-    end
-
-    def discard_empty_line_items
-      @order.line_items = @order.line_items.select { |li| li.quantity > 0 }
     end
 
     def require_order_authentication
