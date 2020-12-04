@@ -5,6 +5,8 @@ require 'spec_helper'
 module Spree
   describe Adjustment do
     let(:order) { build(:order) }
+    # This hack is included in the Spree specs, possibly for performance reasons:
+    # before { allow_any_instance_of(Spree::Order).to receive(:update!) { nil } }
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
     context "#update!" do
