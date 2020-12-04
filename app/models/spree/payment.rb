@@ -21,6 +21,9 @@ module Spree
              class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source, dependent: :destroy
 
+    # On Spree::Shipment, has_one :adjustment changed to has_many :adjustments,
+    # and at the same time; as: :source changed to as: :adjustable
+    # We might need the same thing here. Needs careful investigation.
     has_many :adjustments, as: :source, dependent: :destroy
 
     validate :validate_source
