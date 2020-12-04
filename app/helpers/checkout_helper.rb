@@ -4,6 +4,7 @@ module CheckoutHelper
   end
 
   def checkout_adjustments_for(order, opts = {})
+    # This is a hot mess and needs serious looking at once adapting fees is a bit closer to being finished...
     adjustments = order.adjustments.eligible
     exclude = opts[:exclude] || {}
 
