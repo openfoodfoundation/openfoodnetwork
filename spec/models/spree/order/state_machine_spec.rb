@@ -123,7 +123,6 @@ describe Spree::Order do
     context "restocking inventory" do
       before do
         allow(shipment).to receive(:ensure_correct_adjustment)
-        allow(shipment).to receive(:update_order)
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
         allow(mail_message).to receive :deliver_later
 

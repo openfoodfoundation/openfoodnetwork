@@ -326,7 +326,7 @@ describe Spree::Shipment do
   context "#ship" do
     before do
       allow(order).to receive(:update!)
-      allow(shipment).to receive_messages(update_order: true, state: 'ready')
+      allow(shipment).to receive_messages(state: 'ready')
     end
 
     it "should update shipped_at timestamp" do
@@ -375,13 +375,6 @@ describe Spree::Shipment do
     it "updates shipment totals" do
       shipment.update_amounts
       expect(shipment.reload.cost).to eq 5
-    end
-  end
-
-  context "update_order" do
-    it "should update order" do
-      expect(order).to receive(:update!)
-      shipment.__send__(:update_order)
     end
   end
 
