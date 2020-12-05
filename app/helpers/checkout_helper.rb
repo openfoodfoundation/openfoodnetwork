@@ -11,13 +11,14 @@ module CheckoutHelper
     adjustments = adjustments.to_a
 
     # Remove empty tax adjustments and (optionally) shipping fees
-    adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
-    adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if exclude.include? :shipping
-    adjustments.reject! { |a| a.originator_type == 'Spree::PaymentMethod' } if exclude.include? :payment
+    adjustments.reject! { |a| a.source_type == 'Spree::TaxRate' && a.amount == 0 }
+    adjustments.reject! { |a| a.adjustable_type == 'Spree::Shipment' } if exclude.include? :shipping
+    adjustments.reject! { |a| a.source_type == 'Spree::Payment' } if exclude.include? :payment
     adjustments.reject! { |a| a.source_type == 'Spree::LineItem' } if exclude.include? :line_item
 
-    enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
-    adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
+    enterprise_fee_adjustments = adjustments.select { |a| a.source_type == 'EnterpriseFee' && a.adjustable_type != 'Spree::LineItem' }
+    adjustments.reject! { |a| a.source_type == 'EnterpriseFee' && a.adjustable_type != 'Spree::LineItem' }
+
     unless exclude.include? :admin_and_handling
       adjustments << Spree::Adjustment.new(
         label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.map(&:amount).sum
@@ -64,6 +65,7 @@ module CheckoutHelper
   def display_adjustment_tax_rates(adjustment)
     tax_rates = TaxRateFinder.tax_rates_of(adjustment)
     tax_rates.map { |tr| number_to_percentage(tr.amount * 100, precision: 1) }.join(", ")
+    # Why would this be more than one rate (above)?
   end
 
   def display_adjustment_amount(adjustment)
