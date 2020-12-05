@@ -813,6 +813,8 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
+      # This line is added in Spree 2.2 stable, and might be a good idea:
+      # payments.completed.each { |payment| payment.cancel! }
 
       OrderMailer.cancel_email(id).deliver_later
       self.payment_state = 'credit_owed' unless shipped?
