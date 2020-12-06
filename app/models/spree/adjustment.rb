@@ -72,6 +72,8 @@ module Spree
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+    scope :included, -> { where(included: true)  }
+    scope :excluded, -> { where(included: false) }
 
     scope :enterprise_fee, -> { where(source_type: 'EnterpriseFee') }
     scope :admin,          -> { where(source_type: nil, originator_type: nil) }

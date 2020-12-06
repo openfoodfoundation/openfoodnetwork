@@ -183,7 +183,7 @@ module Spree
 
               context "when the tax is a VAT" do
                 let(:included_in_price) { true }
-                it { expect(subject).to be_empty }
+                it { is_expected.to eq [rate] }
               end
             end
 
@@ -211,9 +211,9 @@ module Spree
               context "when the order does not have a tax_address" do
                 let(:tax_address) { nil }
 
-                context "when the tax is not a VAT" do
+                context "when the tax is a VAT" do
                   let(:included_in_price) { true }
-                  it { is_expected.to be_empty }
+                  it { is_expected.to eq [rate] }
                 end
 
                 context "when the tax is not a VAT" do

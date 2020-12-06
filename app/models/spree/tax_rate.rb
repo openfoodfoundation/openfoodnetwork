@@ -33,7 +33,8 @@ module Spree
       return [] unless order.tax_zone
 
       all.select do |rate|
-        rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || rate.zone.default_tax
+        (!rate.included_in_price && (rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || (order.tax_address.nil? && rate.zone.default_tax))) ||
+          rate.included_in_price
       end
     end
 
@@ -66,12 +67,16 @@ module Spree
         label = Spree.t(:refund) + ' ' + create_label
       end
 
+      included = included_in_price &&
+        Zone.default_tax.contains?(item.order.tax_zone)
+
       self.adjustments.create!(
         {
           adjustable: item,
           amount: amount,
           order: order,
-          label: label || create_label
+          label: label || create_label,
+          included: included
         }
       )
     end
