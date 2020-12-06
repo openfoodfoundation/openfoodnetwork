@@ -38,7 +38,7 @@ module Spree
 
     belongs_to :adjustable, polymorphic: true
     belongs_to :source, polymorphic: true
-    belongs_to :order
+    belongs_to :order, class_name: 'Spree::Order'
 
     # The diffs with Spree 2.2 don't have this association listed at all and it seems to break adjustments.
     # This needs to be removed / re-adjusted.
