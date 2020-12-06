@@ -155,7 +155,7 @@ module Spree
 
         before do
           order.reload
-          tax_rate.adjust(order)
+          tax_rate.adjust(order, line_item)
         end
 
         it "has 100% tax included" do
@@ -165,7 +165,7 @@ module Spree
 
         it "does not crash when order data has been updated previously" do
           order.line_item_adjustments.first.destroy
-          tax_rate.adjust(order)
+          tax_rate.adjust(order, line_item)
         end
       end
 
