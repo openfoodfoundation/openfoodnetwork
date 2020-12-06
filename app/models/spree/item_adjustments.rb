@@ -31,12 +31,12 @@ module Spree
 
       included_tax_total = adjustments.tax.included.reload.map(&:update!).compact.sum
       additional_tax_total = adjustments.tax.additional.reload.map(&:update!).compact.sum
-      adjustment_total = adjustments.map(&:amount).compact.sum
+      adjustment_total = adjustments.reload.map(&:amount).compact.sum
 
       item.update_columns(
         included_tax_total: included_tax_total,
         additional_tax_total: additional_tax_total,
-        adjustment_total: adjustment_total + additional_tax_total,
+        adjustment_total: adjustment_total - included_tax_total,
         updated_at: Time.now
       )
     end
