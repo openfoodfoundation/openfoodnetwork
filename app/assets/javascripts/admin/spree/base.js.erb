@@ -1,5 +1,6 @@
 //= require_self
 //= require admin/spree/orders/variant_autocomplete
+//= require admin/spree/datepicker-Translations
 
 /**
 This is a collection of javascript functions and whatnot
@@ -127,6 +128,7 @@ $(document).ready(function() {
         nextText: Spree.translations.next,
         showOn: "focus"
       });
+      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale] );
 
       // Correctly display range dates
       $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
@@ -136,7 +138,6 @@ $(document).ready(function() {
         $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
       });
     }
-
     handle_date_picker_fields();
   }
 
