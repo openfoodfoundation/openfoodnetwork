@@ -38,11 +38,13 @@ module OrderManagement
         it "update order adjustments" do
           order.line_items.first.update_columns(
             adjustment_total: 10.05,
-            tax_total: 0.05
+            additional_tax_total: 0.05,
+            included_tax_total: 0.06
           )
           updater.update_adjustment_total
           expect(order.adjustment_total).to eq 10.05
-          expect(order.tax_total).to eq 0.05
+          expect(order.additional_tax_total).to eq 0.05
+          expect(order.included_tax_total).to eq 0.06
         end
       end
 

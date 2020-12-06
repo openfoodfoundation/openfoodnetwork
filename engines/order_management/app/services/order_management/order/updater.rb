@@ -71,7 +71,8 @@ module OrderManagement
         order.adjustment_total = line_items.sum(:adjustment_total) +
                                  shipments.sum(:adjustment_total) +
                                  adjustments.eligible.sum(:amount)
-        order.tax_total = line_items.sum(:tax_total) + shipments.map(&:tax_total).sum
+        order.included_tax_total = line_items.sum(:included_tax_total) + shipments.sum(:included_tax_total)
+        order.additional_tax_total = line_items.sum(:additional_tax_total) + shipments.sum(:additional_tax_total)
         update_order_total
       end
 
@@ -86,7 +87,8 @@ module OrderManagement
           shipment_state: order.shipment_state,
           item_total: order.item_total,
           adjustment_total: order.adjustment_total,
-          tax_total: order.tax_total,
+          included_tax_total: order.included_tax_total,
+          additional_tax_total: order.additional_tax_total,
           payment_total: order.payment_total,
           total: order.total
         )

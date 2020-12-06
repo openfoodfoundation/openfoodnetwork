@@ -18,7 +18,43 @@ module Spree
 
         subject.update
         expect(line_item.adjustment_total).to eq 0.5
-        expect(line_item.tax_total).to eq 0.5
+        expect(line_item.additional_tax_total).to eq 0.5
+      end
+    end
+
+    context "tax included in price" do
+      before do
+        create(:adjustment,
+               source: tax_rate,
+               adjustable: line_item,
+               included: true
+        )
+      end
+
+      it "tax has no bearing on final price" do
+        subject.update_adjustments
+        line_item.reload
+        expect(line_item.included_tax_total).to eq 0.5
+        expect(line_item.additional_tax_total).to eq 0
+        expect(line_item.adjustment_total).to eq(-10)
+      end
+    end
+
+    context "tax excluded from price" do
+      before do
+        create(:adjustment,
+               source: tax_rate,
+               adjustable: line_item,
+               included: false
+        )
+      end
+
+      it "tax applies to line item" do
+        subject.update_adjustments
+        line_item.reload
+        expect(line_item.included_tax_total).to eq 0
+        expect(line_item.additional_tax_total).to eq 0.5
+        expect(line_item.adjustment_total).to eq(-9.5)
       end
     end
   end

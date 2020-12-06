@@ -83,7 +83,8 @@ describe Spree::Order::Checkout do
         order.email = "user@example.com"
         order.next!
         expect(order.adjustment_total).to eq 0.5
-        expect(order.tax_total).to eq 0.5
+        expect(order.additional_tax_total).to eq 0.5
+        expect(order.included_tax_total).to eq 0
         expect(order.total).to eq 10.5
       end
 

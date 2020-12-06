@@ -24,10 +24,21 @@ module Spree
     end
 
     def update_adjustments
-      tax_total = adjustments.tax.excluded.reload.map(&:update!).compact.sum
+      # Tax adjustments come in not one but *two* exciting flavours: Included & additional
+      # Included tax adjustments are those which are included in the price.
+      # These ones should not effect the eventual total price.
+      # Additional tax adjustments are the opposite; effecting the final total.
+
+      included_tax_total = adjustments.tax.included.reload.map(&:update!).compact.sum
+      additional_tax_total = adjustments.tax.additional.reload.map(&:update!).compact.sum
       adjustment_total = adjustments.map(&:amount).compact.sum
 
-      item.update_columns(tax_total: tax_total, adjustment_total: adjustment_total)
+      item.update_columns(
+        included_tax_total: included_tax_total,
+        additional_tax_total: additional_tax_total,
+        adjustment_total: adjustment_total + additional_tax_total,
+        updated_at: Time.now
+      )
     end
   end
 end
