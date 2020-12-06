@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# We should probably adapt OFN fees to go through this class. It was origianlly designed for
+# applying adjustments to different items and included a lot of promotions-related code, which function
+# a bit like our fees...
+
 module Spree
   # Manage (recalculate) item (LineItem or Shipment) adjustments
   class ItemAdjustments
