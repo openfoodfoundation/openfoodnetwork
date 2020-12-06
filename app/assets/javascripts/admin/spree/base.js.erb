@@ -9,6 +9,7 @@ Hopefully, this will evolve into a propper class.
 
 jQuery(function($) {
   // Make main menu use full width
+
   mainMenu = $('.fullwidth-menu')
   if (typeof mainMenu.horizontalNav === 'function' )
     mainMenu.horizontalNav({
@@ -118,16 +119,15 @@ $(document).ready(function() {
   if (typeof Spree !== 'undefined' &&
     typeof Spree.translations !== 'undefined') {
     handle_date_picker_fields = function(){
-      $('.datepicker').datepicker({
-        dateFormat: Spree.translations.date_picker,
-        dayNames: Spree.translations.abbr_day_names,
-        dayNamesMin: Spree.translations.abbr_day_names,
-        monthNames: Spree.translations.month_names,
-        prevText: Spree.translations.previous,
-        nextText: Spree.translations.next,
-        showOn: "focus"
-      });
-      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale] );
+       $.datepicker.regional[I18n.locale] = {
+          prevText: Spree.translations.previous,
+          nextText: Spree.translations.next,
+          monthNames: Spree.translations.month_names,
+          dayNames: Spree.translations.abbr_day_names,
+          dayNamesMin: Spree.translations.abbr_day_names,
+          dateFormat: Spree.translations.date_picker,
+      };
+      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale]);
 
       // Correctly display range dates
       $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
