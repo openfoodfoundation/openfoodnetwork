@@ -289,11 +289,16 @@ nb:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
     cancel: "Avbryt"
+    resume: "Gjenoppta"
     save: "Lagre"
     edit: "Rediger"
     update: "Oppdater"
     delete: "Slett"
     add: "Legg til"
+    cut: "Klipp"
+    paste: "Lim inn"
+    destroy: "Fjern"
+    rename: "Gi nytt navn"
   admin:
     begins_at: Begynner på
     begins_on: Begynner på
@@ -352,6 +357,7 @@ nb:
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finnes ulagrede endringer på denne siden. Fortsett uten å lagre?"
     unsaved_changes: "Du har ulagrede endringer"
+    available_units: "Tilgjengelige Enheter"
     shopfront_settings:
       embedded_shopfront_settings: "Innstillinger Innebygd Nettbutikk"
       enable_embedded_shopfronts: "Aktiver Innebygd Nettbutikk"
@@ -411,6 +417,7 @@ nb:
         search_by_email: "Søk på epost/kode..."
         guest_label: "Gjesteutsjekk"
         credit_owed: "Kreditt skyldig"
+        balance_due: "Til Forfall"
       destroy:
         has_associated_orders: "Sletting mislyktes: kunden har tilknyttede ordrer med sin butikk"
     contents:
@@ -599,6 +606,8 @@ nb:
       controls:
         back_to_my_inventory: Tilbake til min varelager
     orders:
+      edit:
+        order_sure_want_to: Er du sikker på at du vil %{event} denne bestillingen?
       invoice_email_sent: 'Faktura-e-post er sendt'
       order_email_resent: 'Bestillings-e-post har blitt angitt'
       bulk_management:
@@ -647,6 +656,7 @@ nb:
           invoice_text: Legg til tilpasset tekst på slutten av fakturaer
           terms_and_conditions: "Vilkår og Betingelser"
           remove_terms_and_conditions: "Fjern Fil"
+          uploaded_on: "lastet opp den"
         contact:
           name: Navn
           name_placeholder: f.eks. Gustav Plum
@@ -755,6 +765,7 @@ nb:
               vises på din butikk kun når du ikke har noen aktive bestillingsrunder
               (dvs. butikk er stengt).
           shopfront_category_ordering: "Kategorisortering Butikk"
+          shopfront_category_ordering_note: "(topp til bunn)"
           open_date: "Åpningsdato"
           close_date: "Stengedato"
         social:
@@ -1164,6 +1175,7 @@ nb:
       cart: "handlekurv"
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     terms_and_conditions:
+      message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
       link_text: "Vilkår og Betingelser"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
@@ -1578,6 +1590,7 @@ nb:
   hubs_distance: Nærmest
   hubs_distance_filter: "Vis meg butikker nær %{location}"
   shop_changeable_orders_alert_html:
+    one: Bestillingen din med <a href='%{path}' target='_blank'>%{shop} / %{order}</a> er åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
     few: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
     many: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
@@ -1725,6 +1738,7 @@ nb:
   orders_could_not_cancel: "Beklager, bestillingen kunne ikke avbrytes"
   orders_cannot_remove_the_final_item: "Kan ikke fjerne den siste varen fra en bestilling, vennligst avbryt bestillingen i stedet."
   orders_bought_items_notice:
+    one: En ekstra vare er allerede bekreftet for denne bestillingsrunden
     few: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     many: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     other: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
@@ -2404,6 +2418,14 @@ nb:
               Ved å opprette regler relatert til en spesifikk kundemerkelapp, kan
               du overstyre standard oppførsel (enten det er for å vise eller skjule
               elementer) for kunder med den spesifikke merkelappen.
+        terms_and_conditions_info:
+          title: "Laster opp vilkår og betingelser"
+          message_1: "Vilkår og betingelser er kontrakten mellom deg, selgeren og kunden. Hvis du laster opp en fil her må kundene godta vilkårene for å fullføre utsjekk. For kunden vises dette som en avkrysningsrute i kassen som må fylles ut for å fortsette til kassen. Vi anbefaler på det sterkeste at du laster opp vilkårene i samsvar med nasjonal lovgivning."
+          message_2: "Kundene må bare godta vilkårene én gang. Men hvis du endrer vilkårene vil kundene igjen bli bedt om å godta dem før de kan bestille."
+        terms_and_conditions_warning:
+          title: "Laster opp vilkår og betingelser"
+          message_1: "Alle kundene dine må godta dem én gang i kassen. Hvis du oppdaterer filen, må alle dine kunder godta dem igjen i kassen."
+          message_2: "For kunder med abonnement, må du sende dem en epost med vilkårene (eller endringene) for nå, ingenting vil varsle dem om disse nye vilkårene."
       panels:
         save: LAGRE
         saved: LAGRET
@@ -2608,8 +2630,12 @@ nb:
     shopfront:
       variant:
         add_to_cart: "Legg til"
+        in_cart: "i handlekurv"
+        quantity_in_cart: "%{quantity} i handlekurven"
       bulk_buy_modal:
+        min_quantity: "Min. mengde"
         max_quantity: "Max mengde"
+      price_breakdown: "Prisfordeling"
     variants:
       on_demand:
         'yes': "Ved forespørsel"
@@ -2855,6 +2881,8 @@ nb:
     delete: "Slett"
     cannot_set_shipping_method_without_address: "Kan ikke angi leveringsmetode før kundedetaljer er oppgitt."
     no_tracking_present: "Ingen sporingsdetaljer gitt."
+    tracking: "Sporing"
+    tracking_number: "Sporingsnummer"
     order_total: "Bestilling Totalt"
     customer_details: "Kundedetaljer"
     customer_search: "Kundesøk"
@@ -2888,6 +2916,8 @@ nb:
     server: "Server"
     test_mode: "Testmodus"
     logourl: "Logourl"
+    are_you_sure_delete: "Er du sikker på at du vil slette denne posten?"
+    confirm_delete: "Bekreft Sletting"
     configurations: "Konfigurasjoner"
     general_settings: "Generelle innstillinger"
     site_name: "Sidenavn"
@@ -3007,6 +3037,7 @@ nb:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
+          one: "1 feil forbød lagring av denne posten:"
           few: "%{count} feil forbød at denne posten ble lagret:"
           many: "%{count} feil forbød at denne posten ble lagret:"
           other: "%{count} feil forbød at denne posten ble lagret:"
@@ -3424,6 +3455,7 @@ nb:
         issue_text: |
             Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
             Hvis du fortsatt har problemer vennligst ta kontakt.
+        subject: "Tilbakestill passordinstruksjonene"
       confirmation_instructions:
         subject: "Vennligst bekreft OFN-kontoen din"
     shipment_mailer:
