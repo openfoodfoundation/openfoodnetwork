@@ -306,6 +306,8 @@ module Spree
       end
 
       context "#adjust" do
+        # Some of these tests currently fail because the calculator object is not being instantiated correctly
+        # in the test setup, so calculator.compute fails as calculator is nil (which is not possible).
         before do
           @category    = Spree::TaxCategory.create(name: "Taxable Foo")
           @category2   = Spree::TaxCategory.create(name: "Non Taxable")
