@@ -119,6 +119,18 @@ module Spree
       set_absolute_included_tax! tax
     end
 
+    # We probably need corresponding methods for additional_tax here. This "included_tax" attribute is
+    # at the database level. The calculations for included and additional are very different. If we're
+    # recording one accurately we should record the other accurately as well. It looks like the current
+    # setup creates additional adjustments in the case where the rate is not inclusive, but these could
+    # easily be orphaned when there is no "originator" (removed in the new datamodel). A tax adjustment
+    # for a fee adjustment can't know where it was originated from, and can't clearly be separated from
+    # "regular" tax adjustments applied via the product's tax_category.
+
+    # LineItem, Order, and Shipment now all have `included_tax_total` and `additional_tax_total`. Adjustments
+    # must have `included_tax` and `additional_tax`. This means an adjustment for a fee could correctly record
+    # either its included or additional tax in one record instead of two.
+
     def set_absolute_included_tax!(tax)
       # This rubocop issue can now fixed by renaming Adjustment#update! to something else,
       #   then AR's update! can be used instead of update_attributes!
