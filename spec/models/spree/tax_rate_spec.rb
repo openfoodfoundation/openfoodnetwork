@@ -75,7 +75,7 @@ module Spree
       # These "match" specs were imported in the previous commit but some are failing and need looking at.
       # The failures relate to the two different setups where tax is either included or excluded.
       # It's not clear how much we have modified this class and how much these specs are still relevant.
-      pending "match" do
+      context "match" do
         let(:order) { create(:order) }
         let(:country) { create(:country) }
         let(:tax_category) { create(:tax_category) }
