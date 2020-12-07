@@ -18,14 +18,20 @@ module Calculator
       end
     end
 
+    def compute_shipping_rate(shipping_rate)
+      if rate.included_in_price
+        pre_tax_amount = shipping_rate.cost / (1 + rate.amount)
+        deduced_total_by_rate(pre_tax_amount, rate)
+      else
+        with_tax_amount = shipping_rate.cost * rate.amount
+        round_to_two_places(with_tax_amount)
+      end
+    end
+
     private
 
     def rate
       calculable
-    end
-
-    def compute_shipment(shipment)
-      round_to_two_places(shipment.cost * rate.amount)
     end
 
     # In the adjustments changes, #compute_order is completely removed. Our version differs
@@ -78,24 +84,22 @@ module Calculator
         .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
     end
 
-    def compute_line_item(line_item)
-      if line_item.tax_category == rate.tax_category
-        if rate.included_in_price
-          deduced_total_by_rate(line_item.amount, rate)
-        else
-          round_to_two_places(line_item.amount * rate.amount)
-        end
+    def compute_shipment_or_line_item(item)
+      if rate.included_in_price
+        deduced_total_by_rate(item.pre_tax_amount, rate)
       else
-        0
+        round_to_two_places(item.amount * rate.amount)
       end
     end
+    alias_method :compute_shipment, :compute_shipment_or_line_item
+    alias_method :compute_line_item, :compute_shipment_or_line_item
 
     def round_to_two_places(amount)
       BigDecimal(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
     end
 
-    def deduced_total_by_rate(total, rate)
-      round_to_two_places(total - ( total / (1 + rate.amount) ) )
+    def deduced_total_by_rate(pre_tax_amount, rate)
+      round_to_two_places(pre_tax_amount * rate.amount)
     end
   end
 end

@@ -11,14 +11,8 @@ module OrderManagement
       end
 
       def shipping_rates(package, frontend_only = true)
-        shipping_rates = []
-        shipping_methods = shipping_methods(package)
-        return [] unless shipping_methods
-
-        shipping_methods.each do |shipping_method|
-          cost = calculate_cost(shipping_method, package)
-          shipping_rates << shipping_method.shipping_rates.new(cost: cost) unless cost.nil?
-        end
+        shipping_rates = calculate_shipping_rates(package)
+        shipping_rates.select! { |rate| rate.shipping_method.frontend? } if frontend_only
 
         shipping_rates.sort_by! { |r| r.cost || 0 }
 
@@ -40,6 +34,26 @@ module OrderManagement
 
       private
 
+      def calculate_shipping_rates(package)
+        shipping_methods(package).map do |shipping_method|
+          cost = shipping_method.calculator.compute(package)
+          tax_category = shipping_method.tax_category
+
+          if tax_category
+            tax_rate = tax_category.tax_rates.detect do |rate|
+              rate.zone == package.order.tax_zone
+            end
+          end
+
+          if cost
+            rate = shipping_method.shipping_rates.new(cost: cost)
+            rate.tax_rate = tax_rate if tax_rate
+          end
+
+          rate
+        end.compact
+      end
+
       def shipping_methods(package)
         shipping_methods = package.shipping_methods
         shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
@@ -49,10 +63,6 @@ module OrderManagement
             ship_method.calculator.preferences[:currency] == currency)
         }
         shipping_methods
-      end
-
-      def calculate_cost(shipping_method, package)
-        shipping_method.calculator.compute(package)
       end
     end
   end

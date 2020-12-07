@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201206163757) do
+ActiveRecord::Schema.define(version: 20201207171214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -506,6 +506,7 @@ ActiveRecord::Schema.define(version: 20201206163757) do
     t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: 0.0
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "pre_tax_amount",                   precision: 8,  scale: 2
   end
 
   add_index "spree_line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
@@ -828,6 +829,7 @@ ActiveRecord::Schema.define(version: 20201206163757) do
     t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: 0.0
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "pre_tax_amount",                   precision: 8,  scale: 2
   end
 
   add_index "spree_shipments", ["number"], name: "index_shipments_on_number", using: :btree
@@ -859,6 +861,7 @@ ActiveRecord::Schema.define(version: 20201206163757) do
     t.boolean  "require_ship_address",             default: true
     t.text     "description"
     t.string   "tracking_url",         limit: 255
+    t.integer  "tax_category_id"
   end
 
   create_table "spree_shipping_methods_zones", id: false, force: :cascade do |t|
@@ -873,6 +876,7 @@ ActiveRecord::Schema.define(version: 20201206163757) do
     t.decimal  "cost",               precision: 8, scale: 2, default: 0.0
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
+    t.integer  "tax_rate_id"
   end
 
   add_index "spree_shipping_rates", ["shipment_id", "shipping_method_id"], name: "spree_shipping_rates_join_index", unique: true, using: :btree

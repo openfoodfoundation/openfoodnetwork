@@ -38,9 +38,34 @@ module Spree
       end
     end
 
+    # Pre-tax amounts must be stored so that we can calculate
+    # correct rate amounts in the future. For example:
+    # https://github.com/spree/spree/issues/4318#issuecomment-34723428
+    def self.store_pre_tax_amount(item, rates)
+      if rates.any? { |r| r.included_in_price }
+        case item
+        when Spree::LineItem
+          item_amount = item.amount
+        when Spree::Shipment
+          item_amount = item.cost
+        end
+        pre_tax_amount = item_amount / (1 + rates.map(&:amount).sum)
+        item.update_column(:pre_tax_amount, pre_tax_amount)
+      end
+    end
+
     def self.adjust(order, items)
-      match(order).each do |rate|
-        items.each { |item| rate.adjust(order, item) }
+      rates = self.match(order)
+      tax_categories = rates.map(&:tax_category)
+      relevant_items = items.select { |item| tax_categories.include?(item.tax_category) }
+
+      relevant_items.each do |item|
+        item.adjustments.tax.delete_all
+        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
+        store_pre_tax_amount(item, relevant_rates)
+        relevant_rates.each do |rate|
+          rate.adjust(order, item)
+        end
       end
     end
 
@@ -59,16 +84,15 @@ module Spree
 
     # Creates necessary tax adjustments for the order.
     def adjust(order, item)
-      item.adjustments.tax.delete_all
-      amount = compute_amount(item)
-      return if amount.zero?
-
-      if amount.negative?
-        label = Spree.t(:refund) + ' ' + create_label
-      end
+      amount = calculator.compute(item)
+      return if amount == 0
 
       included = included_in_price &&
         Zone.default_tax.contains?(item.order.tax_zone)
+
+      if amount < 0
+        label = Spree.t(:refund) + ' ' + create_label
+      end
 
       self.adjustments.create!(
         {

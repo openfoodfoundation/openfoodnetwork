@@ -25,6 +25,8 @@ module Spree
                                     class_name: 'Spree::Zone',
                                     foreign_key: 'shipping_method_id'
 
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category
@@ -108,6 +110,10 @@ module Spree
 
     def self.on_frontend_query
       "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
+    end
+
+    def tax_category
+      Spree::TaxCategory.unscoped { super }
     end
 
     private
