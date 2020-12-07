@@ -77,7 +77,7 @@ module OrderManagement
       end
 
       def update_item_total
-        order.item_total = line_items.map(&:amount).sum
+        order.item_total = line_items.sum('price * quantity')
         update_order_total
       end
 
