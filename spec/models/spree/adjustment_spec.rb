@@ -115,6 +115,8 @@ module Spree
     end
 
     describe "querying included tax" do
+      # These specs need to e updated to reflect the new TaxRate#included boolean
+      # and the general move towards included_tax, additional_tax, or no_tax.
       let!(:adjustment_with_tax) { create(:adjustment, included_tax: 123) }
       let!(:adjustment_without_tax) { create(:adjustment, included_tax: 0) }
 
