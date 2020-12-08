@@ -456,10 +456,11 @@ describe Spree::Payment do
 
     context "#credit_allowed" do
       it "is the difference between offsets total and payment amount" do
+        # Regression test for #4403 & #4407
         payment = build_stubbed(:payment, amount: 100)
         payment.stub(:offsets_total).and_return(0)
         expect(payment.credit_allowed).to eq(100)
-        payment.stub(:offsets_total).and_return(80)
+        payment.stub(:offsets_total).and_return(-80)
         expect(payment.credit_allowed).to eq(20)
       end
     end
