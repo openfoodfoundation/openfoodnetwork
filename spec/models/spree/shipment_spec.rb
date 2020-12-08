@@ -395,7 +395,7 @@ describe Spree::Shipment do
     end
   end
 
-  context "create adjustments" do
+  context "updates cost when selected shipping rate is present" do
     let(:shipment) { create(:shipment) }
 
     before { allow(shipment).to receive_message_chain :selected_shipping_rate, cost: 5 }
