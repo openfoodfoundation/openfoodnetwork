@@ -6,6 +6,7 @@ namespace :ofn do
       desc "Repeat placement job for a specific Order Cycle"
       task repeat_placement_job: :environment do
         puts "WARNING: this task will generate new, and potentially duplicate, customer orders"
+        exit_in_production
 
         order_cycle_id = request_order_cycle_id
 
@@ -27,6 +28,7 @@ namespace :ofn do
       desc "Force confirmation job for a specific Order Cycle"
       task force_confirmation_job: :environment do
         puts "WARNING: this task will process payments in customer orders"
+        exit_in_production
 
         order_cycle_id = request_order_cycle_id
 
@@ -37,6 +39,13 @@ namespace :ofn do
 
         # Run Confirm Job to process payments
         SubscriptionConfirmJob.new.perform
+      end
+
+      def exit_in_production
+        return unless Rails.env.production?
+
+        puts "Oops, we are in production environment. Exiting."
+        exit
       end
 
       def set_order_cycle_times(order_cycle_id, open_at, close_at)
