@@ -7,6 +7,7 @@ module Spree
 
     DISPLAY = [:both, :front_end, :back_end].freeze
 
+    acts_as_paranoid
     acts_as_taggable
 
     default_scope -> { where(deleted_at: nil) }
