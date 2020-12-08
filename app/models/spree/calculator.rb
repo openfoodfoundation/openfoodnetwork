@@ -7,8 +7,16 @@ module Spree
     # This method must be overriden in concrete calculator.
     #
     # It should return amount computed based on #calculable and/or optional parameter
-    def compute(_something = nil)
-      raise NotImplementedError, 'please use concrete calculator'
+    def compute(computable = nil)
+      # Spree::LineItem -> :compute_line_item
+      computable_name = computable.class.name.demodulize.underscore
+      method = "compute_#{computable_name}".to_sym
+      calculator_class = self.class
+      if respond_to?(method)
+        self.send(method, computable)
+      else
+        raise NotImplementedError, "Please implement '#{method}(#{computable_name})' in your calculator: #{calculator_class.name}"
+      end
     end
 
     # overwrite to provide description for your calculators
