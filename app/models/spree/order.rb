@@ -14,9 +14,10 @@ module Spree
     checkout_flow do
       go_to_state :address
       go_to_state :delivery
-      go_to_state :payment, if: ->(order) {
+      go_to_state :payment, if: ->(order) do
+        order.set_shipments_cost if order.shipments.any?
         order.payment_required?
-      }
+      end
       go_to_state :complete
     end
 
