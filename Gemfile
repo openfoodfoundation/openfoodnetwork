@@ -45,9 +45,9 @@ gem 'stripe'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
-gem 'devise', '~> 3.5.10' # v4.0.0 needs rails 4.1
+gem 'devise'
 gem 'devise-encryptable'
-gem 'devise-token_authenticatable', '~> 0.4.10' # v0.5.0 needs devise v4
+gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 
@@ -146,6 +146,7 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
+  gem 'test_after_commit' # needed to test Devise callbacks
   gem 'webmock'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
