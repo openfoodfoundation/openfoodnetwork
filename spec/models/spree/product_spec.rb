@@ -96,6 +96,11 @@ module Spree
           product.available_on = 1.day.from_now
           expect(product).to_not be_available
         end
+
+        it "should not be available if destroyed" do
+          product.destroy
+          expect(product).to_not be_available
+        end
       end
 
       describe 'Variants sorting' do

@@ -274,7 +274,7 @@ module Spree
     end
 
     def available?
-      !(available_on.nil? || available_on.future?)
+      !(available_on.nil? || available_on.future?) && !deleted?
     end
 
     # split variants list into hash which shows mapping of opt value onto matching variants
