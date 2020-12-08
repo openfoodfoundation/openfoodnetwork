@@ -31,6 +31,13 @@ describe Spree::Shipment do
     end
   end
 
+  context "display_final_price" do
+    it "returns a Spree::Money" do
+      allow(shipment).to receive(:final_price) { 21.22 }
+      expect(shipment.display_final_price).to eq Spree::Money.new(21.22)
+    end
+  end
+
   context "display_item_cost" do
     it "retuns a Spree::Money" do
       allow(shipment).to receive(:item_cost) { 21.22 }

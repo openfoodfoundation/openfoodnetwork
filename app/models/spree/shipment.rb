@@ -170,6 +170,10 @@ module Spree
       line_items.map(&:amount).sum
     end
 
+    def display_final_price
+      Spree::Money.new(final_price, { currency: currency })
+    end
+
     def display_item_cost
       Spree::Money.new(item_cost, currency: currency)
     end
