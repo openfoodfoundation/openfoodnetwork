@@ -9,7 +9,7 @@
     "jasmine-core": "~2.4.1",
     "karma": "~0.13.22",
     "karma-chrome-launcher": "~2.2.0",
-    "karma-coffee-preprocessor": "~0.3.0",
+    "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8"
   },
   "license": "AGPL-3.0",

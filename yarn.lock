@@ -990,12 +990,13 @@ karma-chrome-launcher@~2.2.0:
     fs-access "^1.0.0"
     which "^1.2.1"
 
-karma-coffee-preprocessor@~0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/karma-coffee-preprocessor/-/karma-coffee-preprocessor-0.3.0.tgz#a4d8dc2b145bfef458a203d308b63bc03c9b4259"
-  integrity sha1-pNjcKxRb/vRYogPTCLY7wDybQlk=
+karma-coffee-preprocessor@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/karma-coffee-preprocessor/-/karma-coffee-preprocessor-1.0.1.tgz#3b78872b17b3f42db53fd51591b5e051d7de81bf"
+  integrity sha1-O3iHKxez9C21P9UVkbXgUdfegb8=
   dependencies:
     coffee-script "~1"
+    object-assign "^4.1.0"
 
 karma-jasmine@~0.3.8:
   version "0.3.8"
@@ -1236,6 +1237,11 @@ object-assign@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
   integrity sha1-ejs9DpgGPUP0wD8uiubNUahog6A=
+
+object-assign@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
+  integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
 
 object-component@0.0.3:
   version "0.0.3"
