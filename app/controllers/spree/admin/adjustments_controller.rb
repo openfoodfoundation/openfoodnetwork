@@ -76,6 +76,9 @@ module Spree
         )
       end
 
+      # This needs some additional test coverage in the controller and feature specs (see previous commit).
+      # The spree specs here were not especially compatible, so left out.
+      # All the specs around admin adjustments editing will need careful review anyway.
       def update_totals
         @order.updater.update_adjustment_total
         @order.persist_totals
