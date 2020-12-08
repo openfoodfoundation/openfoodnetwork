@@ -3,6 +3,9 @@ module Spree
     class AdjustmentsController < ::Admin::ResourceController
       belongs_to 'spree/order', find_by: :number
       destroy.after :reload_order
+      destroy.after :update_totals
+      create.after :update_totals
+      update.after :update_totals
 
       prepend_before_action :set_included_tax, only: [:create, :update]
       before_action :set_default_tax_rate, only: :edit
@@ -71,6 +74,11 @@ module Spree
         params.require(:adjustment).permit(
           :label, :amount, :included_tax
         )
+      end
+
+      def update_totals
+        @order.updater.update_adjustment_total
+        @order.persist_totals
       end
     end
   end
