@@ -187,10 +187,12 @@ module Spree
               end
             end
 
-            context "when there order has a different tax zone" do
+            context "when the order has a different tax zone" do
+              let(:other_zone) { create(:zone, name: "Other Zone") }
+
               before do
-                order.stub tax_zone: create(:zone, name: "Other Zone")
-                order.stub billing_address: tax_address
+                allow(order).to receive(:tax_zone) { other_zone }
+                allow(order).to receive(:billing_address) { tax_address }
               end
 
               context "when the order has a tax_address" do
@@ -198,7 +200,10 @@ module Spree
 
                 context "when the tax is a VAT" do
                   let(:included_in_price) { true }
-                  it { is_expected.to eq [rate] }
+                  # No rate should match in this instance because:
+                  # 1) The Order's zone is not the default tax zone
+                  # 2) The Order's zone does not match the rate's zone
+                  it { is_expected.to eq [] }
                 end
 
                 context "when the tax is not VAT" do
@@ -213,6 +218,11 @@ module Spree
 
                 context "when the tax is a VAT" do
                   let(:included_in_price) { true }
+                  # The rate should match in this instance because:
+                  # 1) The order has no tax address by this stage
+                  # 2) With no tax address, it has no tax zone
+                  # 3) Therefore, we assume the default tax zone
+                  # 4) This default zone has a default tax rate.
                   it { is_expected.to eq [rate] }
                 end
 
@@ -309,18 +319,23 @@ module Spree
         # Some of these tests currently fail because the calculator object is not being instantiated correctly
         # in the test setup, so calculator.compute fails as calculator is nil (which is not possible).
         before do
+          @country = create(:country)
+          @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
+          @zone.zone_members.create(zoneable: @country)
           @category    = Spree::TaxCategory.create(name: "Taxable Foo")
           @category2   = Spree::TaxCategory.create(name: "Non Taxable")
           @calculator  = ::Calculator::DefaultTax.new
           @rate1       = Spree::TaxRate.create(
             amount: 0.10,
             calculator: @calculator,
-            tax_category: @category
+            tax_category: @category,
+            zone: @zone
           )
           @rate2       = Spree::TaxRate.create(
             amount: 0.05,
             calculator: @calculator,
-            tax_category: @category
+            tax_category: @category,
+            zone: @zone
           )
           @order       = Spree::Order.create!
           @taxable     = create(:product, tax_category: @category)
@@ -352,8 +367,6 @@ module Spree
             end
 
             context "when zone is contained by default tax zone" do
-              before { Spree::Zone.stub_chain :default_tax, contains?: true }
-
               it "should create two adjustments, one for each tax rate" do
                 Spree::TaxRate.adjust(@order, @order.line_items)
                 expect(line_item.adjustments.count).to eq 2
@@ -366,7 +379,10 @@ module Spree
             end
 
             context "when zone is not contained by default tax zone" do
-              before { Spree::Zone.stub_chain :default_tax, contains?: false }
+              before do
+                # With no zone members, this zone will not contain anything
+                @zone.zone_members.delete_all
+              end
 
               it "should not create an adjustment" do
                 Spree::TaxRate.adjust(@order, @order.line_items)
@@ -382,7 +398,6 @@ module Spree
 
           context "when price does not include tax" do
             before do
-              @zone = create(:zone, name: "Country Zone", default_tax: false, zone_members: [])
               allow(@order).to receive(:tax_zone) { @zone }
 
               [@rate1, @rate2].each do |rate|
@@ -405,12 +420,12 @@ module Spree
 
           context "when two rates apply" do
             before do
-              Spree::Zone.stub_chain :default_tax, contains?: true
-
               @price_before_taxes = line_item.price / (1 + @rate1.amount + @rate2.amount)
               # Use the same rounding method as in DefaultTax calculator
               @price_before_taxes = BigDecimal.new(@price_before_taxes).round(2, BigDecimal::ROUND_HALF_UP)
               line_item.update_column(:pre_tax_amount, @price_before_taxes)
+              # Clear out any previously automatically-applied adjustments
+              @order.all_adjustments.delete_all
               @rate1.adjust(@order, line_item)
               @rate2.adjust(@order, line_item)
             end
