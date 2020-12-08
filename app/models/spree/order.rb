@@ -440,7 +440,7 @@ module Spree
     def finalize!
       touch :completed_at
 
-      all_adjustments.update_all state: 'closed' # Needs looking at
+      all_adjustments.each{|a| a.close} # Needs looking at
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state

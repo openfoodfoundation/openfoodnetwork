@@ -194,9 +194,11 @@ describe Spree::Order do
       # and it's irrelevant to this test
       allow(order).to receive :has_available_shipment
       allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
-      adjustments = double
+      adjustments = [double]
       expect(order).to receive(:all_adjustments).and_return(adjustments)
-      expect(adjustments).to receive(:update_all).with(state: 'closed')
+      adjustments.each do |adjustment|
+        expect(adjustment).to receive(:close)
+      end
       order.finalize!
     end
 
