@@ -41,6 +41,10 @@ module OrderManagement
 
           if tax_category
             tax_rate = tax_category.tax_rates.detect do |rate|
+              # If the rate's zone matches the order's zone, a positive adjustment will be applied.
+              # If the rate is from the default tax zone, then a negative adjustment will be applied.
+              # See the tests in shipping_rate_spec.rb for an example of this.
+              rate.zone == package.order.tax_zone || rate.zone.default_tax?
               rate.zone == package.order.tax_zone
             end
           end
