@@ -180,5 +180,19 @@ module Spree
         expect(shipping_method.calculator.calculable).to eq(shipping_method)
       end
     end
+
+    # Regression test for Spree #4492
+    context "#shipments" do
+      let!(:shipping_method) { create(:shipping_method) }
+      let!(:shipment) do
+        shipment = create(:shipment)
+        shipment.shipping_rates.create!(shipping_method: shipping_method)
+        shipment
+      end
+
+      it "can gather all the related shipments" do
+        expect(shipping_method.shipments).to include(shipment)
+      end
+    end
   end
 end
