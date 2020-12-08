@@ -149,6 +149,17 @@ module Spree
       order ? order.currency : Spree::Config[:currency]
     end
 
+    # Only one of either included_tax_total or additional_tax_total is set
+    # This method returns the total of the two. Saves having to check if
+    # tax is included or additional.
+    def tax_total
+      included_tax_total + additional_tax_total
+    end
+
+    def final_price
+      cost + tax_total
+    end
+
     def display_cost
       Spree::Money.new(cost, currency: currency)
     end
