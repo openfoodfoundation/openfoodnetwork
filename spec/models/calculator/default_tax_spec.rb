@@ -80,6 +80,7 @@ describe Calculator::DefaultTax do
 
       context "when the variant matches the tax category" do
         it "should be equal to the item total * rate" do
+          Spree::TaxRate.store_pre_tax_amount(line_item, [rate])
           expect(calculator.compute(line_item)).to eq 1.43
         end
       end
