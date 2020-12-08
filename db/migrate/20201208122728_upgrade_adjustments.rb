@@ -21,6 +21,7 @@ class UpgradeAdjustments < ActiveRecord::Migration
 
     # This bit below needs to be removed, but we will have to do something similar for migrating the
     # originator fields on OFN fees.
+    # This whole migration needs to be moved prior to the others that change the columns...
 
     # Promotion adjustments have their source altered also
     Spree::Adjustment.where(:originator_type => "Spree::PromotionAction").find_each do |adjustment|
