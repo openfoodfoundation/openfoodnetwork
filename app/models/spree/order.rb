@@ -605,7 +605,7 @@ module Spree
     # to delivery again so that proper updated shipments are created.
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
-      return unless shipments.any?
+      return unless shipments.any? && !self.completed?
 
       shipments.destroy_all
       update_column(:state, "address")

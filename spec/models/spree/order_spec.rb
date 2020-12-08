@@ -487,6 +487,25 @@ describe Spree::Order do
       order.ensure_updated_shipments
       expect(order.state).to eql "address"
     end
+
+    context "except when order is completed, that's OrderInventory job" do
+      it "doesn't touch anything" do
+        allow(order).to receive(:completed?) { true }
+        order.update_column(:shipment_total, 5)
+
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipment_total }
+
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipments }
+
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.state }
+      end
+    end
   end
 
   describe ".tax_address" do
