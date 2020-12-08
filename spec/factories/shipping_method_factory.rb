@@ -9,7 +9,9 @@ FactoryBot.define do
     display_on { '' }
 
     before(:create) do |shipping_method, _evaluator|
-      shipping_method.shipping_categories << DefaultShippingCategory.find_or_create
+      if shipping_method.shipping_categories.empty?
+        shipping_method.shipping_categories << DefaultShippingCategory.find_or_create
+      end
     end
 
     trait :flat_rate do
