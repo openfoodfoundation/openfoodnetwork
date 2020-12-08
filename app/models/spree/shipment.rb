@@ -179,9 +179,12 @@ module Spree
     end
 
     def update_amounts
+      return unless selected_shipping_rate
+
       self.update_columns(
         cost: selected_shipping_rate.cost,
-        adjustment_total: adjustments.map(&:update!).compact.sum
+        adjustment_total: adjustments.map(&:update!).compact.sum,
+        updated_at: Time.now
       )
     end
 
