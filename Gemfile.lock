@@ -72,8 +72,8 @@ GEM
     activejob (4.2.11.3)
       activesupport (= 4.2.11.3)
       globalid (>= 0.3.0)
-    activemerchant (1.78.0)
-      activesupport (>= 3.2.14, < 6.x)
+    activemerchant (1.107.4)
+      activesupport (>= 4.2)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
       nokogiri (~> 1.4)
@@ -721,7 +721,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (= 0.8.4)
-  activemerchant (~> 1.78.0)
+  activemerchant (~> 1.107.4)
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store

@@ -43,7 +43,7 @@ gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
-gem 'activemerchant', '~> 1.78.0'
+gem 'activemerchant', '~> 1.107.4'
 
 gem 'devise'
 gem 'devise-encryptable'
