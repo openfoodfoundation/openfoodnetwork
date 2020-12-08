@@ -178,11 +178,6 @@ module Spree
       !shipped?
     end
 
-    def persist_cost
-      self.cost = selected_shipping_rate.cost
-      update_amounts
-    end
-
     def update_amounts
       self.update_columns(
         cost: selected_shipping_rate.cost,
