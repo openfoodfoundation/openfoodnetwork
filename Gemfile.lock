@@ -740,7 +740,7 @@ DEPENDENCIES
   bugsnag
   byebug (~> 11.0.0)
   cancan (~> 1.6.10)
-  capybara (>= 2.18.0)
+  capybara
   catalog!
   coffee-rails (~> 4.2.2)
   combine_pdf
