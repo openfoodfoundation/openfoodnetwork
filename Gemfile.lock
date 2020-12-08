@@ -456,7 +456,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
-    newrelic_rpm (3.18.1.330)
+    newrelic_rpm (6.14.0)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.4)
@@ -781,7 +781,7 @@ DEPENDENCIES
   letter_opener (>= 1.4.1)
   mini_racer (= 0.2.15)
   money (< 6.1.0)
-  newrelic_rpm (~> 3.0)
+  newrelic_rpm (~> 6.14)
   oauth2 (~> 1.4.4)
   ofn-qz!
   oj
