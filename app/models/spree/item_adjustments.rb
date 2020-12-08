@@ -13,9 +13,7 @@ module Spree
 
     def initialize(item)
       @item = item
-
-      # This line is added in a later PR in Spree 2.2 (stable):
-      # @item.reload if @item.persisted?
+      @item.reload if @item.persisted?
     end
 
     def update
