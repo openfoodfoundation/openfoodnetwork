@@ -24,6 +24,9 @@ module Spree
     end
 
     def update_adjustments
+      # OFN fees should be applied here. Fees should be added before the tax calculations are done.
+      # See the promotions-related code here in 2-2-stable for reference, it's doing something similar.
+
       # Tax adjustments come in not one but *two* exciting flavours: Included & additional
       # Included tax adjustments are those which are included in the price.
       # These ones should not effect the eventual total price.
