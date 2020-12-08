@@ -19,7 +19,7 @@ namespace :ofn do
 
         # Reset Proxy Orders of the Order Cycle
         #   by detatching them from existing orders and resetting placed and confirmed dates
-        ProxyOrder.find_by(order_cycle_id: order_cycle_id)&.update(
+        ProxyOrder.find_by(order_cycle_id: order_cycle_id)&.update!(
           order_id: nil,
           confirmed_at: nil,
           placed_at: nil)
@@ -54,7 +54,7 @@ namespace :ofn do
       end
 
       def set_order_cycle_times(order_cycle_id, open_at, close_at)
-        OrderCycle.find_by(id: order_cycle_id).update(
+        OrderCycle.find_by(id: order_cycle_id).update!(
           orders_open_at: open_at,
           orders_close_at: close_at
         )
