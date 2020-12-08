@@ -58,7 +58,7 @@ describe Spree::Order do
       it "adjusts tax rates when transitioning to delivery" do
         # Once for the line items
         expect(Spree::TaxRate).to receive(:adjust).once
-        expect(order).to receive(:set_shipments_cost)
+        allow(order).to receive(:set_shipments_cost)
         order.next!
       end
 
@@ -66,7 +66,7 @@ describe Spree::Order do
         # Once for the line items, once for the shipments
         order.shipments.build
         expect(Spree::TaxRate).to receive(:adjust).twice
-        expect(order).to receive(:set_shipments_cost)
+        allow(order).to receive(:set_shipments_cost)
         order.next!
       end
     end
