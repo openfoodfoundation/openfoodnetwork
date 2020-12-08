@@ -12,8 +12,8 @@ namespace :ofn do
 
         # Open Order Cycle by moving close_at to the future and open_at to the past
         set_order_cycle_times(order_cycle_id,
-                              Time.zone.now - 15.minutes,
-                              Time.zone.now + 15.minutes)
+                              15.minutes.ago,
+                              15.minutes.from_now)
 
         # Reset Proxy Orders of the Order Cycle
         #   by detatching them from existing orders and resetting placed and confirmed dates
@@ -34,8 +34,8 @@ namespace :ofn do
 
         # Close Orde Cycle by moving close_at to the past
         set_order_cycle_times(order_cycle_id,
-                              Time.zone.now - 30.minutes,
-                              Time.zone.now - 15.minutes)
+                              30.minutes.ago,
+                              15.minutes.from_now)
 
         # Run Confirm Job to process payments
         SubscriptionConfirmJob.new.perform
