@@ -54,7 +54,7 @@ namespace :ofn do
       end
 
       def set_order_cycle_times(order_cycle_id, open_at, close_at)
-        OrderCycle.find_by(id: order_cycle_id).update!(
+        OrderCycle.find(order_cycle_id).update!(
           orders_open_at: open_at,
           orders_close_at: close_at
         )
