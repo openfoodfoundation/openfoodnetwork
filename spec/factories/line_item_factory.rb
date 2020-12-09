@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :line_item, class: Spree::LineItem do
-    quantity 1
+    quantity { 1 }
     price { BigDecimal('10.00') }
     order
     variant
@@ -10,7 +10,7 @@ FactoryBot.define do
 
   factory :line_item_with_shipment, parent: :line_item do
     transient do
-      shipping_fee 3
+      shipping_fee { 3 }
       shipping_method nil
     end
 

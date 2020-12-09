@@ -78,9 +78,9 @@ FactoryBot.define do
     coordinator { Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
 
     transient do
-      suppliers []
-      distributors []
-      variants []
+      suppliers { [] }
+      distributors { [] }
+      variants { [] }
     end
 
     after(:create) do |oc, proxy|

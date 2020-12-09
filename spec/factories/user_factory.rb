@@ -7,17 +7,17 @@ FactoryBot.define do
 
   factory :user, class: Spree.user_class do
     transient do
-      enterprises []
+      enterprises { [] }
     end
 
     email { generate(:random_email) }
     login { email }
-    password 'secret'
+    password { 'secret' }
     password_confirmation { password }
     authentication_token { generate(:user_authentication_token) } if Spree.user_class.attribute_method? :authentication_token
 
-    confirmation_sent_at '1970-01-01 00:00:00'
-    confirmed_at '1970-01-01 00:00:01'
+    confirmation_sent_at { '1970-01-01 00:00:00' }
+    confirmed_at { '1970-01-01 00:00:01' }
 
     before(:create) do |user, evaluator|
       if evaluator.confirmation_sent_at
