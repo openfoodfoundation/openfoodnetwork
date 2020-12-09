@@ -40,7 +40,7 @@ module Api
 
       def ready_to_capture
         pending_payment = object.pending_payments.first
-        object.payment_required? && pending_payment
+        object.payment_required? && pending_payment && (order.state != "canceled")
       end
 
       def ready_to_ship
