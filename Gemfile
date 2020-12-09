@@ -58,7 +58,7 @@ gem 'delayed_job_web'
 gem 'kaminari', '~> 0.17.0'
 
 gem 'andand'
-gem 'angularjs-rails', '1.5.5'
+gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
 gem 'db2fog'
