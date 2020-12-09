@@ -9,6 +9,7 @@ Hopefully, this will evolve into a propper class.
 
 jQuery(function($) {
   // Make main menu use full width
+
   mainMenu = $('.fullwidth-menu')
   if (typeof mainMenu.horizontalNav === 'function' )
     mainMenu.horizontalNav({
@@ -127,6 +128,15 @@ $(document).ready(function() {
         nextText: Spree.translations.next,
         showOn: "focus"
       });
+       $.datepicker.regional[I18n.locale] = {
+          prevText: Spree.translations.previous,
+          nextText: Spree.translations.next,
+          monthNames: Spree.translations.month_names,
+          dayNames: Spree.translations.abbr_day_names,
+          dayNamesMin: Spree.translations.abbr_day_names,
+          dateFormat: Spree.translations.date_picker
+      };
+      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale]);
 
       // Correctly display range dates
       $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
@@ -136,7 +146,6 @@ $(document).ready(function() {
         $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
       });
     }
-
     handle_date_picker_fields();
   }
 
