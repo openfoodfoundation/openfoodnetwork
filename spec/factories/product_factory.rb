@@ -8,7 +8,7 @@ FactoryBot.define do
     cost_price { 17.00 }
     sku { 'ABC' }
     available_on { 1.year.ago }
-    deleted_at nil
+    deleted_at { nil }
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
@@ -69,7 +69,7 @@ FactoryBot.define do
     transient do
       tax_rate_amount { 0 }
       tax_rate_name { "" }
-      zone nil
+      zone { nil }
     end
 
     tax_category { create(:tax_category) }

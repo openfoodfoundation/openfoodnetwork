@@ -106,8 +106,8 @@ FactoryBot.define do
   end
 
   factory :undated_order_cycle, parent: :simple_order_cycle do
-    orders_open_at  nil
-    orders_close_at nil
+    orders_open_at { nil }
+    orders_close_at { nil }
   end
 
   factory :upcoming_order_cycle, parent: :simple_order_cycle do

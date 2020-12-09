@@ -8,7 +8,7 @@ FactoryBot.define do
 
     user
     bill_address
-    completed_at nil
+    completed_at { nil }
     email { user.email }
 
     factory :order_with_totals do

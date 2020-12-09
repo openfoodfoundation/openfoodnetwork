@@ -11,7 +11,7 @@ FactoryBot.define do
   factory :line_item_with_shipment, parent: :line_item do
     transient do
       shipping_fee { 3 }
-      shipping_method nil
+      shipping_method { nil }
     end
 
     after(:build) do |line_item, evaluator|
