@@ -6,6 +6,10 @@
 .darkswarm {
   // #search
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
+
+  .row .columns.variant-quantity-column {
+    padding-left: 0;
+  }
 }
 
 .reveal-modal.product-bulk-modal {
