@@ -18,18 +18,16 @@
 module Stripe
   class CreditCardCloner
     def find_or_clone(card, connected_account_id)
-      if card.user && cloned_card = find_cloned_card(card, connected_account_id)
-        cloned_card
-      else
-        clone(card, connected_account_id)
-      end
+      cloned_card = CreditCardCloneFinder.new(card, connected_account_id).find_cloned_card
+      cloned_card || clone(card, connected_account_id)
     end
 
     def destroy_clones(card)
       card.user.customers.each do |customer|
         next unless stripe_account = customer.enterprise.stripe_account&.stripe_user_id
 
-        customer_id, _payment_method_id = find_cloned_card(card, stripe_account)
+        customer_id, _payment_method_id =
+          CreditCardCloneFinder.new(card, stripe_account).find_cloned_card
         next unless customer_id
 
         customer = Stripe::Customer.retrieve(customer_id, stripe_account: stripe_account)
@@ -54,30 +52,6 @@ module Stripe
       add_metadata_to_payment_method(new_payment_method.id, connected_account_id)
 
       [new_customer.id, new_payment_method.id]
-    end
-
-    def find_cloned_card(card, connected_account_id)
-      return nil unless fingerprint = fingerprint_for_card(card)
-
-      customers = Stripe::Customer.list({ email: card.user.email, limit: 100 },
-                                        stripe_account: connected_account_id)
-
-      customers.auto_paging_each do |customer|
-        options = { customer: customer.id, type: 'card', limit: 100 }
-        payment_methods = Stripe::PaymentMethod.list(options, stripe_account: connected_account_id)
-        payment_methods.auto_paging_each do |payment_method|
-          return [customer.id, payment_method.id] if clone?(payment_method, fingerprint)
-        end
-      end
-      nil
-    end
-
-    def clone?(payment_method, fingerprint)
-      payment_method.card.fingerprint == fingerprint && payment_method.metadata["ofn-clone"]
-    end
-
-    def fingerprint_for_card(card)
-      Stripe::PaymentMethod.retrieve(card.gateway_payment_profile_id).card.fingerprint
     end
 
     def notify_limit(request_number, retrieving)
