@@ -34,6 +34,10 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
     wantedQuantity = variant.line_item.max_quantity + quantity
     $scope.quantityValid(wantedQuantity) && variant.line_item.quantity > 0
 
+  $scope.available = ->
+    variant = $scope.variant
+    variant.on_demand && Infinity || variant.on_hand
+
   $scope.quantityValid = (quantity) ->
     variant = $scope.variant
     minimum = 0

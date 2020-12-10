@@ -9,7 +9,7 @@
 }
 
 .reveal-modal.product-bulk-modal {
-  width: 26em;
+  width: 27em;
 }
 
 // Components to add variants to cart and change quantities
@@ -89,14 +89,17 @@ button.bulk-buy-add.variant-quantity {
   width: 2.5rem;
 }
 
-span.bulk-buy.variant-quantity {
+input[type="number"].bulk-buy.variant-quantity {
   border: .1em solid $grey-200;
   height: 2.5rem;
   display: inline-block;
-  min-width: 3em;
+  width: 5em;
   padding: .5em;
   text-align: center;
   vertical-align: top;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 .variant-bulk-buy-price-summary {
