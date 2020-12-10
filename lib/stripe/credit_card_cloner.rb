@@ -22,19 +22,6 @@ module Stripe
       cloned_card || clone(card, connected_account_id)
     end
 
-    def destroy_clones(card)
-      card.user.customers.each do |customer|
-        next unless stripe_account = customer.enterprise.stripe_account&.stripe_user_id
-
-        customer_id, _payment_method_id =
-          CreditCardCloneFinder.new(card, stripe_account).find_cloned_card
-        next unless customer_id
-
-        customer = Stripe::Customer.retrieve(customer_id, stripe_account: stripe_account)
-        customer&.delete unless customer.deleted?
-      end
-    end
-
     private
 
     def clone(credit_card, connected_account_id)

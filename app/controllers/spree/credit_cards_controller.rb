@@ -63,7 +63,7 @@ module Spree
 
     # It destroys the whole customer object
     def destroy_at_stripe
-      Stripe::CreditCardCloner.new.destroy_clones(@credit_card)
+      Stripe::CreditCardCloneDestroyer.new.destroy_clones(@credit_card)
 
       stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
       stripe_customer&.delete unless stripe_customer.deleted?
