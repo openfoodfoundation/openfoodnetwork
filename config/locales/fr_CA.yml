@@ -3548,11 +3548,9 @@ fr_CA:
         delete?: Effacer?
       cards:
         authorised_shops: Boutiques autorisées
-        authorised_shops_popover: Ceci est la liste des magasins qui sont autorisés à facturer votre carte de crédit par défaut pour les abonnements (c'est-à-dire les commandes répétées) que vous pourriez avoir. Les détails de votre carte seront conservés en sécurité et ne seront pas partagés avec les propriétaires de boutique. Vous serez toujours informé lorsque vous êtes facturé.
         saved_cards_popover: C'est la liste des cartes que vous avez choisi d'enregistrer pour une utilisation ultérieure. Votre carte 'par défaut' sera automatiquement sélectionnée lorsque vous passerez votre commande, et pourra être facturé par tous les magasins que vous avez autorisés à le faire (voir à droite).
       authorised_shops:
         shop_name: "Nom de la boutique"
-        allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:

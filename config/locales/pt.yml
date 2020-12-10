@@ -3315,11 +3315,9 @@ pt:
         delete?: Apagar?
       cards:
         authorised_shops: Lojas Autorizadas
-        authorised_shops_popover: Esta é uma lista de organizações que está autorizada a cobrar o seu cartão de crédito por defeito para as subscrições que tem. Os detalhes do seu cartão não serão partilhados com os vendedores. Será sempre notificado quando houver alguma cobrança.
         saved_cards_popover: Esta é a lista de cartões que optou por guardar para uso futuro. O seu cartão por defeito será selecionado quando fizer checkout e pode ser cobrado pelas organizações que autorizou (veja à direita).
       authorised_shops:
         shop_name: "Nome da Loja"
-        allow_charges?: "Permitir Taxas?"
     localized_number:
       invalid_format: tem um formato inválido. Por favor introduza um número.
     activerecord:

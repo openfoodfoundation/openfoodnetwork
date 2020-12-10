@@ -3538,11 +3538,9 @@ it:
         delete?: Elimina?
       cards:
         authorised_shops: Negozi autorizzati
-        authorised_shops_popover: Questa è la lista di negozi a cui è consentito addebitare sulla carta di credito predefinita qualsiasi abbonamento (ad esempio, ordini ripetuti) che potresti avere. I dati della tua carta saranno protetti e non saranno condivisi con i proprietari dei negozi. Sarai sempre avvisato quando ti verranno addebitati.
         saved_cards_popover: Questa è la lista di carte che hai scelto di salvare per un uso successivo. Il tuo 'predefinito' sarà selezionato automaticamente quando esegui il checkout di un ordine, e può essere addebitato da qualsiasi negozio che hai autorizzato a farlo (vedi a destra).
       authorised_shops:
         shop_name: "Nome del negozio"
-        allow_charges?: "Consentire ricarichi"
     localized_number:
       invalid_format: 'Formato non valido: inserire un numero.'
     api:

@@ -3531,11 +3531,9 @@ nb:
         delete?: Slett?
       cards:
         authorised_shops: Autoriserte Butikker
-        authorised_shops_popover: Dette er listen over butikker som har lov til å belaste ditt standard kredittkort for eventuelle abonnementer (dvs. gjentatte ordre) du måtte ha. Kortinformasjonen din vil bli holdt sikker og vil ikke bli delt med butikkeiere. Du vil alltid bli varslet når du blir belastet.
         saved_cards_popover: Dette er listen over kort du har valgt å lagre for senere bruk. Din standard vil bli valgt automatisk når du gjør en bestilling, og kan belastes av butikker du har gitt lov til å gjøre det (se høyre).
       authorised_shops:
         shop_name: "Butikknavn"
-        allow_charges?: "Tillat å belaste?"
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.
     api:

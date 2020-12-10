@@ -3513,11 +3513,9 @@ pl:
         delete?: Kasować?
       cards:
         authorised_shops: Autoryzowane sklepy
-        authorised_shops_popover: To jest lista sklepów, które mogą obciążać Twoją domyślną kartę kredytową za wszelkie posiadane przez Ciebie subskrypcje (tj. Powtarzające się zamówienia). Dane Twojej karty będą bezpieczne i nie będą udostępniane właścicielom sklepów. Zawsze otrzymasz powiadomienie, gdy zostanie naliczona opłata.
         saved_cards_popover: To jest lista kart, które zdecydowałeś się zapisać do późniejszego wykorzystania. Twoja „domyślna” zostanie wybrana automatycznie podczas realizacji zamówienia i może zostać obciążona przez wszystkie sklepy, którym zezwolisz (patrz po prawej).
       authorised_shops:
         shop_name: "Nazwa sklepu"
-        allow_charges?: "Zezwolić na opłaty?"
     localized_number:
       invalid_format: ma nieprawidłowy format. Proszę wpisać numer.
     api:

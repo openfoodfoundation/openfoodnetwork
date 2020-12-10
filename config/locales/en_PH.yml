@@ -3387,11 +3387,9 @@ en_PH:
         delete?: Delete?
       cards:
         authorised_shops: Authorised Shops
-        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
-        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:

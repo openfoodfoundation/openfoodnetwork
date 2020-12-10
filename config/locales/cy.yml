@@ -3582,11 +3582,9 @@ cy:
         delete?: Dileu?
       cards:
         authorised_shops: Siopau Awdurdodedig
-        authorised_shops_popover: Dyma&#39;r rhestr o siopau y caniateir iddynt godi tâl ar eich cerdyn credyd diofyn am unrhyw danysgrifiadau (h.y. ailadrodd archebion) a allai fod gennych. Bydd manylion eich cerdyn yn cael eu cadw&#39;n ddiogel ac ni fyddant yn cael eu rhannu â pherchnogion siopau. Fe&#39;ch hysbysir bob amser pan godir tâl arnoch.
         saved_cards_popover: Dyma&#39;r rhestr o gardiau rydych chi wedi dewis eu cadw i&#39;w defnyddio&#39;n ddiweddarach. Bydd eich &#39;rhagosodiad&#39; yn cael ei ddewis yn awtomatig pan fyddwch chi&#39;n talu archeb, a gall unrhyw siopau rydych chi wedi caniatáu gwneud hynny godi tâl arnyn nhw (gweler ar y dde).
       authorised_shops:
         shop_name: "Enw&#39;r Siop"
-        allow_charges?: "Caniatáu Taliadau?"
     localized_number:
       invalid_format: mae fformat annilys. Rhowch rif.
     api:
