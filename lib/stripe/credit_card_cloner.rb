@@ -41,10 +41,6 @@ module Stripe
       [new_customer.id, new_payment_method.id]
     end
 
-    def notify_limit(request_number, retrieving)
-      Bugsnag.notify("Reached limit of #{request_number} requests retrieving #{retrieving}.")
-    end
-
     def clone_payment_method(credit_card, connected_account_id)
       platform_acct_payment_method_id = credit_card.gateway_payment_profile_id
       customer_id = credit_card.gateway_customer_profile_id
