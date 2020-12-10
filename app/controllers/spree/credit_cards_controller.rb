@@ -1,3 +1,5 @@
+require 'stripe/credit_card_clone_destroyer'
+
 module Spree
   class CreditCardsController < BaseController
     def new_from_token

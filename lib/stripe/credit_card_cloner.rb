@@ -15,6 +15,8 @@
 # clone it and look for a card with the same fingerprint (hash of the card number) and
 # that metadata key to avoid cloning it multiple times.
 
+require 'stripe/credit_card_clone_finder'
+
 module Stripe
   class CreditCardCloner
     def initialize(card, stripe_account)
@@ -23,7 +25,7 @@ module Stripe
     end
 
     def find_or_clone
-      cloned_card = CreditCardCloneFinder.new(@card, @stripe_account).find_cloned_card
+      cloned_card = Stripe::CreditCardCloneFinder.new(@card, @stripe_account).find_cloned_card
       cloned_card || clone
     end
 
