@@ -8,16 +8,16 @@ module Stripe
     describe "#find_or_clone" do
       include StripeStubs
 
-      let(:cloner) { Stripe::CreditCardCloner.new }
+      let(:credit_card) { create(:credit_card, user: create(:user)) }
+      let(:stripe_account_id) { "abc123" }
+
+      let(:cloner) { Stripe::CreditCardCloner.new(credit_card, stripe_account_id) }
 
       let(:customer_id) { "cus_A123" }
       let(:payment_method_id) { "pm_1234" }
       let(:new_customer_id) { "cus_A456" }
       let(:new_payment_method_id) { "pm_456" }
-      let(:stripe_account_id) { "abc123" }
       let(:payment_method_response_mock) { { status: 200, body: payment_method_response_body } }
-
-      let(:credit_card) { create(:credit_card, user: create(:user)) }
 
       let(:payment_method_response_body) {
         JSON.generate(id: new_payment_method_id)
@@ -53,7 +53,7 @@ module Stripe
         end
 
         it "clones the payment method only" do
-          customer_id, payment_method_id = cloner.find_or_clone(credit_card, stripe_account_id)
+          customer_id, payment_method_id = cloner.find_or_clone
 
           expect(payment_method_id).to eq new_payment_method_id
           expect(customer_id).to eq nil
@@ -71,7 +71,7 @@ module Stripe
         end
 
         it "clones both the payment method and the customer" do
-          customer_id, payment_method_id = cloner.find_or_clone(credit_card, stripe_account_id)
+          customer_id, payment_method_id = cloner.find_or_clone
 
           expect(payment_method_id).to eq new_payment_method_id
           expect(customer_id).to eq new_customer_id
