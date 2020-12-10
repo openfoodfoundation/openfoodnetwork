@@ -48,7 +48,7 @@ module Spree
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def charge_offline(money, creditcard, gateway_options)
         customer, payment_method =
-          Stripe::CreditCardCloner.new.find_or_clone(creditcard, stripe_account_id)
+          Stripe::CreditCardCloner.new(creditcard, stripe_account_id).find_or_clone
 
         options = basic_options(gateway_options).merge(customer: customer, off_session: true)
         provider.purchase(money, payment_method, options)
@@ -108,7 +108,7 @@ module Spree
         options[:return_url] = full_checkout_path
 
         customer_id, payment_method_id =
-          Stripe::CreditCardCloner.new.find_or_clone(creditcard, stripe_account_id)
+          Stripe::CreditCardCloner.new(creditcard, stripe_account_id).find_or_clone
         options[:customer] = customer_id
         [money, payment_method_id, options]
       end

@@ -17,49 +17,53 @@
 
 module Stripe
   class CreditCardCloner
-    def find_or_clone(card, connected_account_id)
-      cloned_card = CreditCardCloneFinder.new(card, connected_account_id).find_cloned_card
-      cloned_card || clone(card, connected_account_id)
+    def initialize(card, stripe_account)
+      @card = card
+      @stripe_account = stripe_account
+    end
+
+    def find_or_clone
+      cloned_card = CreditCardCloneFinder.new(@card, @stripe_account).find_cloned_card
+      cloned_card || clone
     end
 
     private
 
-    def clone(credit_card, connected_account_id)
-      new_payment_method = clone_payment_method(credit_card, connected_account_id)
+    def clone
+      new_payment_method = clone_payment_method
 
       # If no customer is given, it will clone the payment method only
-      return [nil, new_payment_method.id] if credit_card.gateway_customer_profile_id.blank?
+      return [nil, new_payment_method.id] if @card.gateway_customer_profile_id.blank?
 
-      new_customer = Stripe::Customer.create({ email: credit_card.user.email },
-                                             stripe_account: connected_account_id)
+      new_customer = Stripe::Customer.create({ email: @card.user.email },
+                                             stripe_account: @stripe_account)
       attach_payment_method_to_customer(new_payment_method.id,
-                                        new_customer.id,
-                                        connected_account_id)
+                                        new_customer.id)
 
-      add_metadata_to_payment_method(new_payment_method.id, connected_account_id)
+      add_metadata_to_payment_method(new_payment_method.id)
 
       [new_customer.id, new_payment_method.id]
     end
 
-    def clone_payment_method(credit_card, connected_account_id)
-      platform_acct_payment_method_id = credit_card.gateway_payment_profile_id
-      customer_id = credit_card.gateway_customer_profile_id
+    def clone_payment_method
+      platform_acct_payment_method_id = @card.gateway_payment_profile_id
+      customer_id = @card.gateway_customer_profile_id
 
       Stripe::PaymentMethod.create({ customer: customer_id,
                                      payment_method: platform_acct_payment_method_id },
-                                   stripe_account: connected_account_id)
+                                   stripe_account: @stripe_account)
     end
 
-    def attach_payment_method_to_customer(payment_method_id, customer_id, connected_account_id)
+    def attach_payment_method_to_customer(payment_method_id, customer_id)
       Stripe::PaymentMethod.attach(payment_method_id,
                                    { customer: customer_id },
-                                   stripe_account: connected_account_id)
+                                   stripe_account: @stripe_account)
     end
 
-    def add_metadata_to_payment_method(payment_method_id, connected_account_id)
+    def add_metadata_to_payment_method(payment_method_id)
       Stripe::PaymentMethod.update(payment_method_id,
                                    { metadata: { "ofn-clone": true } },
-                                   stripe_account: connected_account_id)
+                                   stripe_account: @stripe_account)
     end
   end
 end
