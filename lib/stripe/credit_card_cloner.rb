@@ -59,52 +59,25 @@ module Stripe
     def find_cloned_card(card, connected_account_id)
       return nil unless fingerprint = fingerprint_for_card(card)
 
-      find_customers(card.user.email, connected_account_id).each do |customer|
-        find_payment_methods(customer.id, connected_account_id).each do |payment_method|
-          if payment_method_is_clone?(payment_method, fingerprint)
-            return [customer.id, payment_method.id]
-          end
+      customers = Stripe::Customer.list({ email: card.user.email, limit: 100 },
+                                        stripe_account: connected_account_id)
+
+      customers.auto_paging_each do |customer|
+        options = { customer: customer.id, type: 'card', limit: 100 }
+        payment_methods = Stripe::PaymentMethod.list(options, stripe_account: connected_account_id)
+        payment_methods.auto_paging_each do |payment_method|
+          return [customer.id, payment_method.id] if clone?(payment_method, fingerprint)
         end
       end
       nil
     end
 
-    def payment_method_is_clone?(payment_method, fingerprint)
+    def clone?(payment_method, fingerprint)
       payment_method.card.fingerprint == fingerprint && payment_method.metadata["ofn-clone"]
     end
 
     def fingerprint_for_card(card)
       Stripe::PaymentMethod.retrieve(card.gateway_payment_profile_id).card.fingerprint
-    end
-
-    def find_customers(email, connected_account_id)
-      start_after, customers = nil, []
-
-      (1..request_limit = 100).each do |request_number|
-        response = Stripe::Customer.list({ email: email, starting_after: start_after, limit: 100 },
-                                         stripe_account: connected_account_id)
-        customers += response.data
-        break unless response.has_more
-
-        start_after = response.data.last.id
-        notify_limit(request_number, "customers") if request_limit == request_number
-      end
-      customers
-    end
-
-    def find_payment_methods(customer_id, connected_account_id)
-      start_after, payment_methods = nil, []
-
-      (1..request_limit = 10).each do |request_number|
-        options = { customer: customer_id, type: 'card', starting_after: start_after, limit: 100 }
-        response = Stripe::PaymentMethod.list(options, stripe_account: connected_account_id)
-        payment_methods += response.data
-        break unless response.has_more
-
-        start_after = response.data.last.id
-        notify_limit(request_number, "payment methods") if request_limit == request_number
-      end
-      payment_methods
     end
 
     def notify_limit(request_number, retrieving)
