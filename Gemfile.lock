@@ -99,8 +99,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (4.0.0)
-      activerecord (>= 4.0)
+    acts-as-taggable-on (5.0.0)
+      activerecord (>= 4.2.8)
     acts_as_list (0.9.19)
       activerecord (>= 3.0)
     addressable (2.7.0)
@@ -724,7 +724,7 @@ DEPENDENCIES
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store
-  acts-as-taggable-on (~> 4.0)
+  acts-as-taggable-on (~> 5.0)
   acts_as_list (= 0.9.19)
   andand
   angular-rails-templates (~> 0.3.0)
