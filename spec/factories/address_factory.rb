@@ -20,11 +20,11 @@ FactoryBot.define do
     end
 
     trait :randomized do
-      firstname { Faker::Name.first_name }
-      lastname { Faker::Name.last_name }
-      address1 { Faker::Address.street_address }
+      firstname { FFaker::Name.first_name }
+      lastname { FFaker::Name.last_name }
+      address1 { FFaker::Address.street_address }
       address2 nil
-      phone { Faker::PhoneNumber.phone_number }
+      phone { FFaker::PhoneNumber.phone_number }
     end
   end
 end

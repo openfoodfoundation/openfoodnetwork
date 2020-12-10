@@ -88,7 +88,7 @@ describe Spree::User do
     end
 
     context "with the the same email as existing customers" do
-      let(:email) { Faker::Internet.email }
+      let(:email) { generate(:random_email) }
       let(:enterprise1) { create(:enterprise) }
       let(:enterprise2) { create(:enterprise) }
       let!(:customer1) { create(:customer, user: nil, email: email, enterprise: enterprise1) }
