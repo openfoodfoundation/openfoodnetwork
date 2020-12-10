@@ -78,7 +78,7 @@ FactoryBot.define do
   end
 
   factory :enterprise_fee, class: EnterpriseFee do
-    transient { amount nil }
+    transient { amount { nil } }
 
     sequence(:name) { |n| "Enterprise fee #{n}" }
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
