@@ -4,18 +4,18 @@ describe "ShopVariantCtrl", ->
 
   beforeEach ->
     module 'Darkswarm'
-    scope =
-      $watchGroup: ->
-      variant: {
+
+    inject ($rootScope, $controller, $modal)->
+      scope = $rootScope.$new()
+      scope.$watchGroup = ->
+      scope.variant = {
         on_demand: true
-        product: {group_buy: false}
+        product: {group_buy: true}
         line_item: {
           quantity: 0
           max_quantity: 0
         }
       }
-
-    inject ($controller, $modal)->
       ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: null}
 
   it "adds an item to the cart", ->
@@ -33,20 +33,22 @@ describe "ShopVariantCtrl", ->
     expect(scope.variant.line_item.max_quantity).toEqual 5
 
   it "adds to the max quantity to be at least min quantity", ->
-    scope.variant.product.group_buy = true
-    scope.variant.line_item.max_quantity = 2
+    scope.$apply ->
+      scope.variant.line_item.max_quantity = 2
 
-    scope.add 3
+    scope.$apply ->
+      scope.add 3
 
     expect(scope.variant.line_item.quantity).toEqual 3
     expect(scope.variant.line_item.max_quantity).toEqual 3
 
   it "decreases the min quantity to not exceed max quantity", ->
-    scope.variant.product.group_buy = true
-    scope.variant.line_item.quantity = 3
-    scope.variant.line_item.max_quantity = 5
+    scope.$apply ->
+      scope.variant.line_item.quantity = 3
+      scope.variant.line_item.max_quantity = 5
 
-    scope.addMax -3
+    scope.$apply ->
+      scope.addMax -3
 
     expect(scope.variant.line_item.quantity).toEqual 2
     expect(scope.variant.line_item.max_quantity).toEqual 2

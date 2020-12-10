@@ -6,18 +6,24 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
     return if old_value[0] == null && new_value[0] == null
     Cart.adjust($scope.variant.line_item)
 
+  if $scope.variant.product.group_buy
+    $scope.$watch "variant.line_item.quantity", ->
+      item = $scope.variant.line_item
+      if item.quantity < 1 || item.max_quantity < item.quantity
+        item.max_quantity = item.quantity
+
+    $scope.$watch "variant.line_item.max_quantity", ->
+      item = $scope.variant.line_item
+      if item.max_quantity < item.quantity
+        item.quantity = item.max_quantity
+
   $scope.add = (quantity) ->
     item = $scope.variant.line_item
     item.quantity += quantity
-    if $scope.variant.product.group_buy
-      if item.quantity < 1 || item.max_quantity < item.quantity
-        item.max_quantity = item.quantity
 
   $scope.addMax = (quantity) ->
     item = $scope.variant.line_item
     item.max_quantity += quantity
-    if item.max_quantity < item.quantity
-      item.quantity = item.max_quantity
 
   $scope.canAdd = (quantity) ->
     wantedQuantity = $scope.variant.line_item.quantity + quantity
