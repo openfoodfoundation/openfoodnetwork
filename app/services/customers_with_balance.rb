@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class CustomersWithBalance
-  def initialize(enterprise_id)
-    @enterprise_id = enterprise_id
+  def initialize(enterprise)
+    @enterprise = enterprise
   end
 
   def query
-    Customer.of(enterprise_id).
+    Customer.of(enterprise).
       joins(left_join_non_cart_orders).
       group("customers.id").
       select("customers.*").
@@ -15,7 +15,7 @@ class CustomersWithBalance
 
   private
 
-  attr_reader :enterprise_id
+  attr_reader :enterprise
 
   # Arel doesn't support CASE statements until v7.1.0 so we'll have to wait with SQL literals
   # a little longer. See https://github.com/rails/arel/pull/400 for details.

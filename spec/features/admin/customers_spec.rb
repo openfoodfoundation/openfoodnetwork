@@ -97,6 +97,9 @@ feature 'Customers' do
 
       describe "for a shop with multiple customers" do
         before do
+          allow(OpenFoodNetwork::FeatureToggle)
+            .to receive(:enabled?).with(:customer_balance, user) { true }
+
           create(
             :order,
             total: 0,

@@ -18,10 +18,18 @@ module Admin
         format.html
         format.json do
           render json: @collection,
-                 each_serializer: ::Api::Admin::CustomerWithBalanceSerializer,
+                 each_serializer: index_each_serializer,
                  tag_rule_mapping: tag_rule_mapping,
                  customer_tags: customer_tags_by_id
         end
+      end
+    end
+
+    def index_each_serializer
+      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
+        ::Api::Admin::CustomerWithBalanceSerializer
+      else
+        ::Api::Admin::CustomerWithCalculatedBalanceSerializer
       end
     end
 
@@ -65,10 +73,18 @@ module Admin
 
     def collection
       if json_request? && params[:enterprise_id].present?
-        CustomersWithBalance.new(managed_enterprise_id).query.
+        customers_relation.
           includes(:bill_address, :ship_address, user: :credit_cards)
       else
         Customer.where('1=0')
+      end
+    end
+
+    def customers_relation
+      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
+        CustomersWithBalance.new(managed_enterprise_id).query
+      else
+        Customer.of(managed_enterprise_id)
       end
     end
 
