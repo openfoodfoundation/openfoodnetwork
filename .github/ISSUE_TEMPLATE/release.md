@@ -9,6 +9,9 @@ assignees: ''
 
 Steps: 
 
+- [ ] Remove Transifex' [auto update] if present.
+- [ ] Upload source to Transifex: `tx push -s`
+- [ ] Merge [transifex pull request].
 - [ ] Include translations: `tx pull --force`
 - [ ] [Draft new release]
 - [ ] Notify #instance-managers of user-facing changes.
@@ -20,4 +23,6 @@ Steps:
 
 The full process is described at https://github.com/openfoodfoundation/openfoodnetwork/wiki/Releasing.
 
+[auto update]: https://www.transifex.com/open-food-foundation/open-food-network/content/
+[transifex pull request]: https://github.com/openfoodfoundation/openfoodnetwork/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+head%3Atransifex
 [Draft new release]: https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=v&title=v+Code+Name&body=Congrats%0A%0ADescription%0A%0A%23%23+User+facing+changes+:eyes:%0A%0A%0A%0A%23%23+Technical+changes+:wrench:%0A%0A
