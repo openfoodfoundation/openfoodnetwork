@@ -22,8 +22,8 @@ FactoryBot.define do
       bill_address
       ship_address
 
-      ignore do
-        line_items_count 5
+      transient do
+        line_items_count { 5 }
       end
 
       after(:create) do |order, evaluator|
