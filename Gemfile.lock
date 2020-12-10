@@ -433,7 +433,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (7.3.492.27.1)
+    libv8 (8.4.255.0)
     loofah (2.8.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -445,8 +445,8 @@ GEM
     mime-types-data (3.2020.0512)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.2.15)
-      libv8 (> 7.3)
+    mini_racer (0.3.1)
+      libv8 (~> 8.4.255)
     minitest (5.14.2)
     money (5.0.0)
       i18n (~> 0.4)
@@ -778,7 +778,7 @@ DEPENDENCIES
   kaminari (~> 0.17.0)
   knapsack
   letter_opener (>= 1.4.1)
-  mini_racer (= 0.2.15)
+  mini_racer (= 0.3.1)
   money (< 6.1.0)
   oauth2 (~> 1.4.4)
   ofn-qz!
