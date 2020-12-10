@@ -4,7 +4,7 @@ module Spree
   class Payment < ActiveRecord::Base
     module Processing
       def process!
-        return unless ready_to_process?
+        return unless validate!
 
         if payment_method.auto_capture?
           purchase!
@@ -14,7 +14,7 @@ module Spree
       end
 
       def process_offline!
-        return unless ready_to_process?
+        return unless validate!
 
         if payment_method.auto_capture?
           charge_offline!
@@ -199,7 +199,7 @@ module Spree
 
       private
 
-      def ready_to_process?
+      def validate!
         return false unless payment_method&.source_required?
 
         raise Core::GatewayError, Spree.t(:payment_processing_failed) unless source
