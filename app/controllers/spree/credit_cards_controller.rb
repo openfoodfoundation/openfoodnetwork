@@ -47,6 +47,7 @@ module Spree
 
       # Using try because we may not have a card here
       if @credit_card.try(:destroy)
+        remove_shop_authorizations if @credit_card.is_default
         flash[:success] = I18n.t(:card_has_been_removed, number: "x-#{@credit_card.last_digits}")
       else
         flash[:error] = I18n.t(:card_could_not_be_removed)
