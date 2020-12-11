@@ -304,7 +304,6 @@ feature "
 
             # Clearing values manually
             fill_in "variant-overrides-#{variant.id}-price", with: ''
-            fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
             select_on_demand variant, :use_producer_settings
             fill_in "variant-overrides-#{variant.id}-default_stock", with: ''
             within "tr#v_#{variant.id}" do
