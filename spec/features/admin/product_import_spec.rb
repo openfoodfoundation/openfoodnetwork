@@ -534,8 +534,8 @@ feature "Product Import", js: true do
         proceed_to_validation
 
         # Check that all rows are validated.
-        heading = "120 #{I18n.t('admin.product_import.import.products_to_create')}"
-        find(".panel-header", text: heading).click
+        heading = I18n.t('admin.product_import.import.products_to_create')
+        find(".header-description", text: heading).click
         expect(page).to have_content "Imported Product 10"
         expect(page).to have_content "Imported Product 60"
         expect(page).to have_content "Imported Product 110"
