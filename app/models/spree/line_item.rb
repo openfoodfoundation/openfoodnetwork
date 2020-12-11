@@ -36,7 +36,7 @@ module Spree
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
     after_save :update_units
-    after_create :create_tax_charge
+    after_create :update_tax_charge
     before_destroy :update_inventory_before_destroy
 
     delegate :product, :unit_description, :display_name, to: :variant
@@ -241,6 +241,7 @@ module Spree
 
     def update_adjustments
       if quantity_changed?
+        update_tax_charge # Called to ensure pre_tax_amount is updated.
         recalculate_adjustments
       end
     end
@@ -249,7 +250,7 @@ module Spree
       Spree::ItemAdjustments.new(self).update
     end
 
-    def create_tax_charge
+    def update_tax_charge
       Spree::TaxRate.adjust(order, [self])
     end
 
