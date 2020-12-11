@@ -63,7 +63,7 @@ module Spree
           order.bill_address = nil
           order.ship_address = nil
           order.save
-          expect(order.tax_zone).to be_nil
+          expect(order.reload.tax_zone).to be_nil
         end
 
         it "does not create a tax adjustment" do

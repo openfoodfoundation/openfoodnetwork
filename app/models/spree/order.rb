@@ -242,7 +242,7 @@ module Spree
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone
-      Zone.match(tax_address) || Zone.default_tax
+      @tax_zone ||= Zone.match(tax_address) || Zone.default_tax
     end
 
     # Indicates whether tax should be backed out of the price calcualtions in
@@ -773,6 +773,11 @@ module Spree
       shipments.each(&:update_amounts)
       updater.update_shipment_total
       updater.persist_totals
+    end
+
+    def reload
+      remove_instance_variable(:@tax_zone) if defined?(@tax_zone)
+      super
     end
 
     private
