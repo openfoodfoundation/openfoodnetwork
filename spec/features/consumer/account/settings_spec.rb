@@ -49,7 +49,7 @@ feature "Account Settings", js: true do
       fill_in 'user_password_confirmation', with: 'NewPassword'
 
       click_button I18n.t(:update)
-      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')} ×"
+      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')}\n×"
 
       expect(user.reload.encrypted_password).to_not eq initial_password
     end
