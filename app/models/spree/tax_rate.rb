@@ -32,7 +32,7 @@ module Spree
       return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
 
-      all.select do |rate|
+      includes(zone: { zone_members: :zoneable }).load.select do |rate|
         rate.potentially_applicable?(order)
       end
     end
