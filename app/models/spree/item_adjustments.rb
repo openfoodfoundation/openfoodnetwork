@@ -7,6 +7,9 @@
 module Spree
   # Manage (recalculate) item (LineItem or Shipment) adjustments
   class ItemAdjustments
+    include ActiveSupport::Callbacks
+    define_callbacks :tax_adjustments
+
     attr_reader :item
 
     delegate :adjustments, :order, to: :item
@@ -30,9 +33,14 @@ module Spree
       # These ones should not effect the eventual total price.
       # Additional tax adjustments are the opposite; effecting the final total.
 
-      included_tax_total = adjustments.tax.included.reload.map(&:update!).compact.sum
-      additional_tax_total = adjustments.tax.additional.reload.map(&:update!).compact.sum
       adjustment_total = adjustments.reload.map(&:amount).compact.sum
+
+      included_tax_total = 0
+      additional_tax_total = 0
+      run_callbacks :tax_adjustments do
+        included_tax_total = adjustments.tax.included.reload.map(&:update!).compact.sum
+        additional_tax_total = adjustments.tax.additional.reload.map(&:update!).compact.sum
+      end
 
       item.update_columns(
         included_tax_total: included_tax_total,
