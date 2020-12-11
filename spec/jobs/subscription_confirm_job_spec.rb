@@ -160,7 +160,7 @@ describe SubscriptionConfirmJob do
 
         context "when an error occurs while processing the payment" do
           before do
-            expect(payment).to receive(:process!).and_raise Spree::Core::GatewayError, "payment failure error"
+            expect(payment).to receive(:process_offline!).and_raise Spree::Core::GatewayError, "payment failure error"
           end
 
           it "sends a failed payment email" do
@@ -176,7 +176,7 @@ describe SubscriptionConfirmJob do
           end
 
           before do
-            expect(payment).to receive(:process!) { true }
+            expect(payment).to receive(:process_offline!) { true }
             expect(payment).to receive(:completed?) { true }
           end
 

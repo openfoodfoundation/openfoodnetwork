@@ -1,3 +1,5 @@
+require 'stripe/credit_card_clone_destroyer'
+
 module Spree
   class CreditCardsController < BaseController
     def new_from_token
@@ -45,6 +47,7 @@ module Spree
 
       # Using try because we may not have a card here
       if @credit_card.try(:destroy)
+        remove_shop_authorizations if @credit_card.is_default
         flash[:success] = I18n.t(:card_has_been_removed, number: "x-#{@credit_card.last_digits}")
       else
         flash[:error] = I18n.t(:card_could_not_be_removed)
@@ -63,16 +66,10 @@ module Spree
 
     # It destroys the whole customer object
     def destroy_at_stripe
+      Stripe::CreditCardCloneDestroyer.new.destroy_clones(@credit_card)
+
       stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
-
-      stripe_customer&.delete
-    end
-
-    def stripe_account_id
-      StripeAccount.
-        find_by(enterprise_id: @credit_card.payment_method.preferred_enterprise_id).
-        andand.
-        stripe_user_id
+      stripe_customer&.delete unless stripe_customer.deleted?
     end
 
     def create_customer(token)

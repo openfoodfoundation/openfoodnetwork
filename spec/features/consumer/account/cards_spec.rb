@@ -4,11 +4,14 @@ require 'spec_helper'
 
 feature "Credit Cards", js: true do
   include AuthenticationHelper
+  include StripeHelper
+  include StripeStubs
+
   describe "as a logged in user" do
     let(:user) { create(:user) }
     let!(:customer) { create(:customer, user: user) }
-    let!(:default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ', is_default: true) }
-    let!(:non_default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
+    let!(:default_card) { create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ', is_default: true) }
+    let!(:non_default_card) { create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
 
     around do |example|
       original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
@@ -19,7 +22,7 @@ feature "Credit Cards", js: true do
     before do
       login_as user
 
-      allow(Stripe).to receive(:api_key) { "sk_test_xxxx" }
+      allow(Stripe).to receive(:api_key) { "sk_test_12345" }
       allow(Stripe).to receive(:publishable_key) { "some_token" }
       Spree::Config.set(stripe_connect_enabled: true)
 
@@ -28,6 +31,9 @@ feature "Credit Cards", js: true do
 
       stub_request(:delete, "https://api.stripe.com/v1/customers/cus_AZNMJ").
         to_return(status: 200, body: JSON.generate(deleted: true, id: "cus_AZNMJ"))
+      stub_retrieve_payment_method_request("card_1EY...")
+      stub_list_customers_request(email: user.email, response: {})
+      stub_get_customer_payment_methods_request(customer: "cus_AZNMJ", response: {})
     end
 
     it "passes the smoke test" do
