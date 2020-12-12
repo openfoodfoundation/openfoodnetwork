@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'stripe/credit_card_remover'
+
 module Spree
   class CreditCardsController < BaseController
     def new_from_token
