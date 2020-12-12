@@ -79,6 +79,7 @@ describe Spree::Order::Checkout do
         line_item = create(:line_item, price: 10, adjustment_total: 10)
         order.line_items << line_item
         tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
+        allow(Spree::TaxRate).to receive(:match) { [tax_rate] }
         create(:tax_adjustment, adjustable: line_item, source: tax_rate)
         order.email = "user@example.com"
         order.next!
