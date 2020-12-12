@@ -6,7 +6,7 @@ module OrderManagement
   module Order
     class Updater
       attr_reader :order
-      delegate :payments, :line_items, :adjustments, :shipments, :update_hooks, to: :order
+      delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :update_hooks, to: :order
 
       def initialize(order)
         @order = order
@@ -36,7 +36,9 @@ module OrderManagement
       end
 
       def recalculate_adjustments
-        adjustments.includes(:source).open.each { |adjustment| adjustment.update! order }
+        all_adjustments.includes(:adjustable).map(&:adjustable).uniq.each do |adjustable|
+          Spree::ItemAdjustments.new(adjustable).update
+        end
       end
 
       # Updates the following Order total values:
