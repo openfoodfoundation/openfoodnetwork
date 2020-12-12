@@ -140,6 +140,9 @@ en:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+    shipping_rate:
+      including_tax: "incl."
+      excluding_tax: "excl."
 
   validators:
     date_time_string_validator:

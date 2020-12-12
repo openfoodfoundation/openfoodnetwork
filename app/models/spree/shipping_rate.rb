@@ -36,10 +36,10 @@ module Spree
           if tax_rate.included_in_price?
             if tax_amount > 0
               amount = "#{display_tax_amount(tax_amount)} #{tax_rate.name}"
-              price += " (incl. #{amount})"
+              price += " (#{I18n.t('models.shipping_rate.including_tax')} #{amount})"
             else
               amount = "#{display_tax_amount(tax_amount * -1)} #{tax_rate.name}"
-              price += " (excl. #{amount})"
+              price += " (#{I18n.t('models.shipping_rate.excluding_tax')} #{amount})"
             end
           else
             amount = "#{display_tax_amount(tax_amount)} #{tax_rate.name}"
