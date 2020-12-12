@@ -115,6 +115,7 @@ module Spree
         when :password
           value.to_s
         when :decimal
+          value = 0 if value.blank?
           BigDecimal(value.to_s).round(2, BigDecimal::ROUND_HALF_UP)
         when :integer
           value.to_i
