@@ -775,7 +775,7 @@ module Spree
       updater.persist_totals
     end
 
-    def reload
+    def reload(options = nil)
       remove_instance_variable(:@tax_zone) if defined?(@tax_zone)
       super
     end

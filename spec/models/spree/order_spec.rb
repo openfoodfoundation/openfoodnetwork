@@ -1434,4 +1434,13 @@ describe Spree::Order do
       end
     end
   end
+
+  # Regression test for Spree #4923
+  context "locking" do
+    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+
+    it 'can lock' do
+      expect { order.with_lock {} }.to_not raise_error
+    end
+  end
 end
