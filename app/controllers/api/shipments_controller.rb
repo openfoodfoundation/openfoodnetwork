@@ -25,7 +25,7 @@ module Api
       @shipment = @order.shipments.find_by!(number: params[:id])
       params[:shipment] ||= []
 
-      @shipment.update(shipment_params[:shipment])
+      @shipment.update_attributes_and_order(shipment_params[:shipment])
 
       render json: @shipment.reload, serializer: Api::ShipmentSerializer, status: :ok
     end
