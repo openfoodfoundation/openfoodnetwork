@@ -83,10 +83,9 @@ describe Spree::ReturnAuthorization do
     it "should add credit for specified amount" do
       return_authorization.amount = 20
       mock_adjustment = double
-      expect(mock_adjustment).to receive(:source=).with(return_authorization)
-      expect(mock_adjustment).to receive(:adjustable=).with(order)
-      expect(mock_adjustment).to receive(:save)
-      expect(Spree::Adjustment).to receive(:new).with(amount: -20, label: Spree.t(:rma_credit)).and_return(mock_adjustment)
+      expect(Spree::Adjustment).to receive(:create).
+        with(adjustable: order, amount: -20, label: Spree.t(:rma_credit), source: return_authorization).
+        and_return(mock_adjustment)
       return_authorization.receive!
     end
 
