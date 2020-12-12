@@ -539,8 +539,8 @@ module Spree
     def empty!
       line_items.destroy_all
       adjustments.destroy_all
-      payments.clear          # These two lines were not present in the diff of the adjustments update PR.
-      shipments.destroy_all   # They must be OFN-specific, which means we need to figure out if they should be here or not.
+      payments.clear          # This line was not present in the diff of the adjustments update PR. Needs looking at.
+      shipments.destroy_all
       updater.update_totals
       updater.persist_totals
     end
