@@ -24,17 +24,8 @@ module Api
       authorize! :read, Spree::Shipment
       @shipment = @order.shipments.find_by!(number: params[:id])
       params[:shipment] ||= []
-      unlock = params[:shipment].delete(:unlock)
-
-      if unlock == 'yes'
-        @shipment.adjustment.open
-      end
 
       @shipment.update(shipment_params[:shipment])
-
-      if unlock == 'yes'
-        @shipment.adjustment.close
-      end
 
       render json: @shipment.reload, serializer: Api::ShipmentSerializer, status: :ok
     end
