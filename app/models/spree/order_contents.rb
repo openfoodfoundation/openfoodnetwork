@@ -11,7 +11,8 @@ module Spree
 
     def add(variant, quantity = 1, currency = nil, shipment = nil)
       line_item = add_to_line_item(variant, quantity, currency, shipment)
-      order_updater.update_item_total
+      reload_totals
+      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
       ItemAdjustments.new(line_item).update
       reload_totals
       line_item
@@ -19,6 +20,8 @@ module Spree
 
     def remove(variant, quantity = 1, shipment = nil)
       line_item = remove_from_line_item(variant, quantity, shipment)
+      reload_totals
+      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
       ItemAdjustments.new(line_item).update
       reload_totals
       line_item
@@ -42,12 +45,7 @@ module Spree
     end
 
     def reload_totals
-      order_updater.update_item_total
-      order_updater.update_adjustment_total
-
-      order_updater.update_payment_state if order.completed?
-      order_updater.persist_totals
-
+      order_updater.update
       order.reload
     end
 

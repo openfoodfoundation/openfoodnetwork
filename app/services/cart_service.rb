@@ -19,6 +19,7 @@ class CartService
       attempt_cart_add_variants variants_data
       overwrite_variants variants_data if overwrite
     end
+    @order.ensure_updated_shipments
     valid?
   end
 

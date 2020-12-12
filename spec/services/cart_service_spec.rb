@@ -26,6 +26,7 @@ describe CartService do
 
     describe "#populate" do
       it "adds a variant" do
+        expect(order).to receive(:ensure_updated_shipments)
         cart_service.populate(
           { variants: { variant.id.to_s => { quantity: '1', max_quantity: '2' } } },
           true
