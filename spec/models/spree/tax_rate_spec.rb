@@ -426,13 +426,24 @@ module Spree
               end
             end
 
+            it "should delete adjustments for open order when taxrate is deleted" do
+              @rate1.destroy!
+              @rate2.destroy!
+              expect(line_item.adjustments.count).to eq 0
+            end
+
+            it "should not delete adjustments for complete order when taxrate is deleted" do
+              @order.update_column :completed_at, Time.now
+              @rate1.destroy!
+              @rate2.destroy!
+              expect(line_item.adjustments.count).to eq 2
+            end
+
             it "should create an adjustment" do
-              Spree::TaxRate.adjust(@order, @order.line_items)
               expect(line_item.adjustments.count).to eq 2
             end
 
             it "should not create a tax refund" do
-              Spree::TaxRate.adjust(@order, @order.line_items)
               expect(line_item.adjustments.credit.count).to eq 0
             end
           end
