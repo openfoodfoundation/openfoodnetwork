@@ -239,6 +239,8 @@ feature "Check out with Stripe", js: true do
           new_order = create(:order, user: user, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil)
           set_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)
+          stub_payment_intents_post_request order: new_order
+          stub_successful_capture_request order: new_order
 
           # Checkout with saved card
           visit checkout_path

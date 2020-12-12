@@ -329,7 +329,7 @@ feature '
     expect(page).to have_field "variant_price", with: "3.0"
     expect(page).to have_field "variant_unit_value_with_description", with: "250 (bottle)"
     expect(page).to have_field "variant_on_hand", with: "9"
-    expect(page).to have_selector "span[name='on_hand']", "9"
+    expect(page).to have_selector "span[name='on_hand']", text: "9"
 
     select "Volume (L)", from: "variant_unit_with_scale"
     fill_in "variant_sku", with: "NEWSKU"

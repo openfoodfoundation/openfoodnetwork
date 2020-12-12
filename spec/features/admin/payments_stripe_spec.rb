@@ -81,8 +81,8 @@ feature '
           click_button "Update"
 
           expect(page).to have_link "StripeSCA"
-          expect(page).to have_content "PROCESSING"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "processing"
+          expect(page).to have_content "PENDING"
+          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "pending"
         end
       end
     end
