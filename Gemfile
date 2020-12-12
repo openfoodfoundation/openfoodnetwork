@@ -128,7 +128,7 @@ group :test, :development do
   gem 'awesome_print'
   gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', require: false
-  gem "factory_bot_rails", '4.10.0', require: false
+  gem "factory_bot_rails", '5.2.0', require: false
   gem 'fuubar', '~> 2.5.0'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'

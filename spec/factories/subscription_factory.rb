@@ -12,8 +12,8 @@ FactoryBot.define do
     begins_at { 1.month.ago }
 
     transient do
-      with_items false
-      with_proxy_orders false
+      with_items { false }
+      with_proxy_orders { false }
     end
 
     after(:create) do |subscription, proxy|
@@ -46,6 +46,6 @@ FactoryBot.define do
   factory :subscription_line_item, class: SubscriptionLineItem do
     subscription
     variant
-    quantity 1
+    quantity { 1 }
   end
 end
