@@ -133,4 +133,16 @@ describe Spree::ReturnAuthorization do
       expect(return_authorization.returnable_inventory).to eq []
     end
   end
+
+  context "destroy" do
+    before do
+      return_authorization.add_variant(variant.id, 1)
+      return_authorization.destroy
+    end
+
+    # Regression test for Spree #4935
+    it "disassociates inventory units" do
+      expect(Spree::InventoryUnit.where(return_authorization_id: return_authorization.id).count).to eq 0
+    end
+  end
 end
