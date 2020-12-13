@@ -315,24 +315,21 @@ module Spree
       end
 
       context "#adjust" do
-        # Some of these tests currently fail because the calculator object is not being instantiated correctly
-        # in the test setup, so calculator.compute fails as calculator is nil (which is not possible).
         before do
           @country = create(:country)
           @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
           @zone.zone_members.create(zoneable: @country)
           @category    = Spree::TaxCategory.create(name: "Taxable Foo")
           @category2   = Spree::TaxCategory.create(name: "Non Taxable")
-          @calculator  = ::Calculator::DefaultTax.new
           @rate1       = Spree::TaxRate.create(
             amount: 0.10,
-            calculator: @calculator,
+            calculator: ::Calculator::DefaultTax.new,
             tax_category: @category,
             zone: @zone
           )
           @rate2       = Spree::TaxRate.create(
             amount: 0.05,
-            calculator: @calculator,
+            calculator: ::Calculator::DefaultTax.new,
             tax_category: @category,
             zone: @zone
           )
