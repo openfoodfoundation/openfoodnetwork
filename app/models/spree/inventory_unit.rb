@@ -5,7 +5,8 @@ module Spree
     belongs_to :variant, class_name: "Spree::Variant"
     belongs_to :order, class_name: "Spree::Order"
     belongs_to :shipment, class_name: "Spree::Shipment"
-    belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization"
+    belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization",
+                                      inverse_of: :inventory_units
 
     scope :backordered, -> { where state: 'backordered' }
     scope :shipped, -> { where state: 'shipped' }
