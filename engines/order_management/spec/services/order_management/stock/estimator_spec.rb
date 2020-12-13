@@ -111,15 +111,18 @@ module OrderManagement
           let(:backend_method) { create(:shipping_method, display_on: "back_end") }
           let(:generic_method) { create(:shipping_method) }
 
+          before do
+            allow(subject).to receive(:shipping_methods).
+              and_return([backend_method, generic_method])
+          end
+
+          it "does not return backend rates at all" do
+            expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([generic_method.id])
+          end
+
           # regression for #3287
           it "doesn't select backend rates even if they're more affordable" do
-            allow(backend_method).to receive_message_chain(:calculator, :compute).and_return(0.00)
-            allow(generic_method).to receive_message_chain(:calculator, :compute).and_return(5.00)
-
-            allow(subject).
-              to receive(:shipping_methods).and_return([backend_method, generic_method])
-
-            expect(subject.shipping_rates(package).map(&:selected)).to eq [false, true]
+            expect(subject.shipping_rates(package).map(&:selected)).to eq [true]
           end
         end
 
