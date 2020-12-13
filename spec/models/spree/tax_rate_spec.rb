@@ -258,9 +258,11 @@ module Spree
         end
 
         context "with shipments" do
-          let(:shipments) { [build_stubbed(:shipment, tax_category: tax_category_1)] }
+          let(:shipment) { build_stubbed(:shipment) }
+          let(:shipments) { [shipment] }
 
           before do
+            allow(shipment).to receive(:tax_category) { tax_category_1 }
             allow(Spree::TaxRate).to receive(:match) { [rate_1, rate_2] }
           end
 
