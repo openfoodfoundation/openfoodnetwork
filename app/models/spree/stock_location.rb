@@ -2,7 +2,7 @@
 
 module Spree
   class StockLocation < ActiveRecord::Base
-    has_many :stock_items, dependent: :delete_all
+    has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
 
     belongs_to :state, class_name: 'Spree::State'

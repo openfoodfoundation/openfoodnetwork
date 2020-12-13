@@ -19,8 +19,8 @@ module Spree
     include Spree::Core::AdjustmentSource
 
     has_many :adjustments, as: :source
-    belongs_to :zone, class_name: "Spree::Zone"
-    belongs_to :tax_category, class_name: "Spree::TaxCategory"
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
 
     validates :amount, presence: true, numericality: true
     validates :tax_category_id, presence: true
