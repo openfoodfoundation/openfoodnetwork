@@ -36,7 +36,7 @@ module Spree
     # AdjustmentMetadata has no destroy logic itself.
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
-    belongs_to :adjustable, polymorphic: true
+    belongs_to :adjustable, polymorphic: true, touch: true
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: 'Spree::Order'
 
