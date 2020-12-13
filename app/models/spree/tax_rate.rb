@@ -15,6 +15,9 @@ end
 module Spree
   class TaxRate < ActiveRecord::Base
     acts_as_paranoid
+
+    before_destroy :deals_with_adjustments_for_deleted_source
+
     include Spree::Core::CalculatedAdjustments
     include Spree::Core::AdjustmentSource
 
@@ -25,8 +28,6 @@ module Spree
     validates :amount, presence: true, numericality: true
     validates :tax_category_id, presence: true
     validates_with DefaultTaxZoneValidator
-
-    before_destroy :deals_with_adjustments_for_deleted_source
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
