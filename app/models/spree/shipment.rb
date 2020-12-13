@@ -163,8 +163,13 @@ module Spree
     def display_cost
       Spree::Money.new(cost, currency: currency)
     end
-
     alias display_amount display_cost
+
+    def amount
+      # In Spree 2.2 this returns `cost` modified by `promo_total`. We might need this to be `cost`
+      # plus price adjustments from fees.
+      cost
+    end
 
     def item_cost
       line_items.map(&:amount).sum
