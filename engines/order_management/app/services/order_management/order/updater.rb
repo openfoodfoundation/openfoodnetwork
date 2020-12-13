@@ -56,7 +56,13 @@ module OrderManagement
 
       # Give each of the shipments a chance to update themselves
       def update_shipments
-        shipments.each { |shipment| shipment.update!(order) if shipment.persisted? }
+        shipments.each do |shipment|
+          next unless shipment.persisted?
+
+          shipment.update!(order)
+          shipment.refresh_rates
+          shipment.update_amounts
+        end
       end
 
       def update_shipment_total

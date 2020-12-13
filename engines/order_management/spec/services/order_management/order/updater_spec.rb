@@ -113,6 +113,22 @@ module OrderManagement
           expect(shipment).to receive(:update!).with(order)
           updater.update_shipments
         end
+
+        it "refreshes shipment rates" do
+          shipment = build(:shipment, order: order)
+          allow(order).to receive_messages shipments: [shipment]
+
+          expect(shipment).to receive(:refresh_rates)
+          updater.update_shipments
+        end
+
+        it "updates the shipment amount" do
+          shipment = build(:shipment, order: order)
+          allow(order).to receive_messages shipments: [shipment]
+
+          expect(shipment).to receive(:update_amounts)
+          updater.update_shipments
+        end
       end
 
       context "incompleted order" do

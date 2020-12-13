@@ -99,7 +99,7 @@ describe Spree::Order do
     }
     let!(:shipment) do
       shipment = build(:shipment)
-      allow(shipment).to receive_messages inventory_units: inventory_units
+      allow(shipment).to receive_messages(inventory_units: inventory_units, order: order)
       allow(order).to receive_messages shipments: [shipment]
       shipment
     end
