@@ -210,6 +210,8 @@ module Spree
       label = ""
       label << (name.presence || tax_category.name) + " "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
+      label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
+      label
     end
 
     def with_tax_included_in_price
