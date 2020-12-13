@@ -9,14 +9,31 @@ module Calculator
       Spree.t(:default_tax)
     end
 
-    def compute(computable)
-      case computable
-      when Spree::Shipment
-        compute_shipment(computable)
-      when Spree::LineItem
-        compute_line_item(computable)
+    # Default tax calculator still needs to support orders for legacy reasons
+    # Orders created before Spree 2.1 had tax adjustments applied to the order, as a whole.
+    # Orders created with Spree 2.2 and after, have them applied to the line items individually.
+    def compute_order(order)
+      matched_line_items = order.line_items.select do |line_item|
+        line_item.tax_category == rate.tax_category
+      end
+      line_items_total = matched_line_items.sum(&:total)
+
+      if rate.included_in_price
+        round_to_two_places(line_items_total - ( line_items_total / (1 + rate.amount) ) )
+      else
+        round_to_two_places(line_items_total * rate.amount)
       end
     end
+
+    def compute_shipment_or_line_item(item)
+      if rate.included_in_price
+        deduced_total_by_rate(item.pre_tax_amount, rate)
+      else
+        round_to_two_places(item.amount * rate.amount)
+      end
+    end
+    alias_method :compute_shipment, :compute_shipment_or_line_item
+    alias_method :compute_line_item, :compute_shipment_or_line_item
 
     def compute_shipping_rate(shipping_rate)
       if rate.included_in_price
@@ -36,24 +53,6 @@ module Calculator
 
     def rate
       calculable
-    end
-
-    # In the adjustments changes, #compute_order is completely removed. Our version differs
-    # substantially from the original, as it includes custom application of enterprise fees.
-    # These will need to be re-worked separately as they are an OFN customisation on top of Spree...
-
-    # Enable calculation of tax for enterprise fees with tax rates where included_in_price = false
-    def compute_order(order)
-      calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(order.distributor,
-                                                                order.order_cycle)
-
-      [
-        line_items_total(order),
-        per_item_fees_total(order, calculator),
-        per_order_fees_total(order, calculator)
-      ].sum do |total|
-        round_to_two_places(total * rate.amount)
-      end
     end
 
     def line_items_total(order)
@@ -87,16 +86,6 @@ module Calculator
         .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
         .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
     end
-
-    def compute_shipment_or_line_item(item)
-      if rate.included_in_price
-        deduced_total_by_rate(item.pre_tax_amount, rate)
-      else
-        round_to_two_places(item.amount * rate.amount)
-      end
-    end
-    alias_method :compute_shipment, :compute_shipment_or_line_item
-    alias_method :compute_line_item, :compute_shipment_or_line_item
 
     def round_to_two_places(amount)
       BigDecimal(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
