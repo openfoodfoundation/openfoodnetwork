@@ -95,6 +95,7 @@ module Spree
     # hitting the database again and would ensure you're compute values over
     # the specific object amount passed here
     def update!(target = nil)
+      amount = self.amount
       return amount if immutable?
 
       amount = source.compute_amount(target || adjustable)

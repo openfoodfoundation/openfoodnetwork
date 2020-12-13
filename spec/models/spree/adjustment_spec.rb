@@ -10,6 +10,11 @@ module Spree
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
     context "#update!" do
+      # Regression test for Spree #6689
+      it "correctly calculates for adjustments with no source" do
+        expect(adjustment.update!).to eq 5
+      end
+
       context "when adjustment is immutable" do
         before { adjustment.stub immutable?: true }
 
