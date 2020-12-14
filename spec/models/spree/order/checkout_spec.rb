@@ -68,6 +68,7 @@ describe Spree::Order::Checkout do
     context "from address" do
       before do
         order.state = 'address'
+        order.distributor = create(:distributor_enterprise)
         allow(order).to receive(:has_available_payment)
         order.shipments << create(:shipment)
         order.email = "user@example.com"
@@ -80,7 +81,7 @@ describe Spree::Order::Checkout do
         order.line_items << line_item
         tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
         allow(Spree::TaxRate).to receive(:match) { [tax_rate] }
-        create(:tax_adjustment, adjustable: line_item, source: tax_rate)
+        create(:tax_adjustment, adjustable: line_item, source: tax_rate, order: order)
         order.email = "user@example.com"
         order.next!
         expect(order.adjustment_total).to eq 0.5
