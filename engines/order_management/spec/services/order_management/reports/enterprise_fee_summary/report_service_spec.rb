@@ -194,7 +194,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         # Change "eligible" in enterprise fee adjustment to false. $0 adjustments that are not
         # mandatory are set to be ineligible, but there are no non-mandatory adjustments supported
         # by the report yet.
-        adjustment = Spree::Adjustment.where(originator_type: "EnterpriseFee").first
+        adjustment = Spree::Adjustment.where(source_type: "EnterpriseFee").first
         adjustment.eligible = false
         adjustment.save!
       end
