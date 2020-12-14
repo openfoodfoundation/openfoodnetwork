@@ -14,7 +14,12 @@ module Spree
 
       return unless is_default && tax_category = self.class.find_by(is_default: true)
 
-      tax_category.update_column(:is_default, false) unless tax_category == self
+      unless tax_category == self
+        tax_category.update_columns(
+          is_default: false,
+          updated_at: Time.now,
+        )
+      end
     end
   end
 end

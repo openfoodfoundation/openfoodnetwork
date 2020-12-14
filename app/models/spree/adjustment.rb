@@ -99,7 +99,10 @@ module Spree
       return amount if immutable?
 
       amount = source.compute_amount(target || adjustable)
-      self.update_column(:amount, amount)
+      self.update_columns(
+        amount: amount,
+        updated_at: Time.now
+      )
       amount
     end
 
