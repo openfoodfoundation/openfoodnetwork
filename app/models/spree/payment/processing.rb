@@ -23,9 +23,9 @@ module Spree
         end
       end
 
-      def authorize!
+      def authorize!(return_url = nil)
         started_processing!
-        gateway_action(source, :authorize, :pend)
+        gateway_action(source, :authorize, :pend, return_url: return_url)
       end
 
       def purchase!
@@ -222,7 +222,7 @@ module Spree
         refund_amount.to_f
       end
 
-      def gateway_action(source, action, success_state)
+      def gateway_action(source, action, success_state, options = {})
         protect_from_connection_error do
           check_environment
 
@@ -230,7 +230,7 @@ module Spree
             action,
             (amount * 100).round,
             source,
-            gateway_options
+            gateway_options.merge(options)
           )
           handle_response(response, success_state, :failure)
         end
