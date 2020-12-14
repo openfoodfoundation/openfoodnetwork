@@ -170,7 +170,7 @@ describe Spree::OrderContents do
         subject.add variant
       }.to change { order.payment_state }
 
-      order.payments.create! amount: order.total
+      order.payments.create! amount: order.total, payment_method: create(:payment_method)
 
       expect {
         subject.remove variant
