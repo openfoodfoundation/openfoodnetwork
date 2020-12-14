@@ -47,6 +47,7 @@ class SubscriptionConfirmJob < ActiveJob::Base
 
     process_payment!(order)
     send_confirmation_email(order)
+    send_payment_authorization_emails(order)
   rescue StandardError => e
     if order.errors.any?
       send_failed_payment_email(order)
@@ -91,6 +92,14 @@ class SubscriptionConfirmJob < ActiveJob::Base
     order.update!
     record_success(order)
     SubscriptionMailer.confirmation_email(order).deliver_now
+  end
+
+  def send_payment_authorization_emails(order)
+    order.payments.each do |payment|
+      if payment.cvv_response_message.present?
+        Spree::PaymentMailer.authorize_payment(payment).deliver
+      end
+    end
   end
 
   def send_failed_payment_email(order, error_message = nil)

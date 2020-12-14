@@ -130,6 +130,7 @@ describe SubscriptionConfirmJob do
     before do
       OrderWorkflow.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
+      allow(job).to receive(:send_payment_authorization_emails).and_call_original
       setup_email
       expect(job).to receive(:record_order)
     end
@@ -213,6 +214,7 @@ describe SubscriptionConfirmJob do
           it "sends a failed payment email" do
             expect(job).to receive(:send_failed_payment_email)
             expect(job).to_not receive(:send_confirmation_email)
+            expect(job).to_not receive(:send_payment_authorization_emails)
             job.send(:confirm_order!, order)
           end
         end
@@ -231,6 +233,7 @@ describe SubscriptionConfirmJob do
             ActionMailer::Base.deliveries.clear
             expect{ job.send(:confirm_order!, order) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirmation_email).once
+            expect(job).to have_received(:send_payment_authorization_emails).once
             expect(ActionMailer::Base.deliveries.count).to be 1
           end
         end
@@ -269,6 +272,31 @@ describe SubscriptionConfirmJob do
       job.send(:send_failed_payment_email, order)
       expect(SubscriptionMailer).to have_received(:failed_payment_email).with(order)
       expect(mail_mock).to have_received(:deliver_now)
+    end
+  end
+
+  describe "#send_payment_authorization_emails" do
+    let(:order) { instance_double(Spree::Order) }
+    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+    let(:payment) { create(:payment, amount: 10) }
+
+    before do
+      allow(order).to receive(:payments) { [payment] }
+      allow(Spree::PaymentMailer).to receive(:authorize_payment) { mail_mock }
+    end
+
+    it "sends authorization email if a payment requires it" do
+      allow(payment).to receive(:cvv_response_message) { "http://redirect_url" }
+      job.send(:send_payment_authorization_emails, order)
+      expect(Spree::PaymentMailer).to have_received(:authorize_payment)
+      expect(mail_mock).to have_received(:deliver)
+    end
+
+    it "does not send authorization email if no payment requires it" do
+      allow(payment).to receive(:cvv_response_message) { nil }
+      job.send(:send_payment_authorization_emails, order)
+      expect(Spree::PaymentMailer).not_to have_received(:authorize_payment)
+      expect(mail_mock).not_to have_received(:deliver)
     end
   end
 end
