@@ -16,6 +16,7 @@ module Spree
 
     before_create :generate_shipment_number
     before_validation :set_cost_zero_when_nil
+    after_save :update_adjustments
 
     attr_accessor :special_instructions
 
@@ -363,6 +364,16 @@ module Spree
 
     def set_cost_zero_when_nil
       self.cost = 0 unless self.cost
+    end
+
+    def update_adjustments
+      return unless cost_changed? && state != 'shipped'
+
+      recalculate_adjustments
+    end
+
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
     end
   end
 end

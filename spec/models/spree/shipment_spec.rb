@@ -10,6 +10,8 @@ describe Spree::Shipment do
     shipment = Spree::Shipment.new order: order
     allow(shipment).to receive_messages(shipping_method: shipping_method)
     shipment.state = 'pending'
+    shipment.cost = 1
+    shipment.save
     shipment
   end
 
@@ -454,16 +456,28 @@ describe Spree::Shipment do
   end
 
   context "after_save" do
-    it "updates a linked adjustment" do
-      pending "not sure when and if shipment adjustments are recalculated"
-      # Need a persisted order for this
-      shipment.order = create(:order)
-      tax_rate = create(:tax_rate, amount: 10)
-      adjustment = create(:adjustment, source: tax_rate)
-      shipment.cost = 10
-      shipment.adjustments << adjustment
-      shipment.save
-      expect(shipment.reload.adjustment_total).to eq 100
+    context "line item changes" do
+      before do
+        shipment.cost = shipment.cost + 10
+      end
+
+      it "triggers adjustment total recalculation" do
+        expect(shipment).to receive(:recalculate_adjustments)
+        shipment.save
+      end
+
+      it "does not trigger adjustment recalculation if shipment has shipped" do
+        shipment.state = 'shipped'
+        expect(shipment).to_not receive(:recalculate_adjustments)
+        shipment.save
+      end
+    end
+
+    context "line item does not change" do
+      it "does not trigger adjustment total recalculation" do
+        expect(shipment).to_not receive(:recalculate_adjustments)
+        shipment.save
+      end
     end
   end
 
