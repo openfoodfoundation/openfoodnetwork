@@ -91,6 +91,19 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
         end
 
+        context "where further action is required" do
+          before do
+            allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
+              payment.update cvv_response_message: "http://redirect_url"
+            end
+          end
+          it "redirects to new payment page with flash error" do
+            spree_post :create, payment: params, order_id: order.number
+
+            redirects_to_new_payment_page_with_flash_error(I18n.t('action_required'))
+          end
+        end
+
         context "where both payment.process! and payment.authorize! work" do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
