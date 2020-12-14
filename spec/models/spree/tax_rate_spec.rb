@@ -399,7 +399,8 @@ module Spree
               @new_zone = create(:zone, name: "New Zone", default_tax: false)
               @new_country = create(:country, name: "New Country")
               @new_zone.zone_members.create(zoneable: @new_country)
-              @order.ship_address = create(:address, country: @new_country)
+              @new_state = create(:state, country: @new_country)
+              @order.ship_address = create(:address, country: @new_country, state: @new_state)
               @order.save
             end
 
