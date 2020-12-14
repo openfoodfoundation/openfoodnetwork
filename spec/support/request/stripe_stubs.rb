@@ -101,6 +101,7 @@ module StripeStubs
   private
 
   def payment_intent_authorize_response_mock(options)
+    chargedata = [{ id: "ch_1234", amount: 2000, amount_refunded: options[:amount_refunded] || 0 }]
     { status: options[:code] || 200,
       body: JSON.generate(id: "pi_123",
                           object: "payment_intent",
@@ -108,7 +109,7 @@ module StripeStubs
                           amount_received: 2000,
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
-                          charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+                          charges: { data: chargedata }) }
   end
 
   def payment_intent_redirect_response_mock(redirect_url)
