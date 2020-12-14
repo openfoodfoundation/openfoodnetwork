@@ -3,6 +3,15 @@
 # This class will be used to get Tax Adjustments related to an order,
 # and proceed basic calcultation over them.
 
+# This class is not good and needs to be revised/deleted. It's currently used in 2 places:
+# - Displaying a few tax adjustment values on te checkout page
+# - Displaying tax adjustment data in the SalesTaxReport
+#
+# It relies on TaxRate#compute_tax, which also needs to be revised/deleted. The method only
+# works correctly for tax regimes with *inclusive* tax and does not work for others. The TaxRate
+# class now has greatly improved methods for applying either inclusive or additional tax rates
+# correctly, and we need to use them directly and remove our hacks.
+
 class OrderTaxAdjustmentsFetcher
   def initialize(order)
     @order = order
