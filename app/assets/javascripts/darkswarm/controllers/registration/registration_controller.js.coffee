@@ -41,6 +41,6 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
         )
 
   $scope.confirmAddressChange = (isConfirmed) ->
-    console.log('isConfirmed', isConfirmed);
     if isConfirmed
-      $scope.enterprise.address.latLong = $scope.latLong;
+      $scope.enterprise.address.latitude = $scope.latLong.latitude;
+      $scope.enterprise.address.longitude = $scope.latLong.longitude;
