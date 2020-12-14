@@ -45,6 +45,11 @@ module Spree
         failed_activemerchant_billing_response(e.message)
       end
 
+      def capture(money, payment_intent_id, gateway_options)
+        options = basic_options(gateway_options)
+        provider.capture(money, payment_intent_id, options)
+      end
+
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def charge_offline(money, creditcard, gateway_options)
         customer, payment_method =

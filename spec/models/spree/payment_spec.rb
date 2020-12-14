@@ -227,7 +227,7 @@ describe Spree::Payment do
 
           context "if successful" do
             before do
-              payment.payment_method.should_receive(:capture).with(payment, card, anything).and_return(success_response)
+              payment.payment_method.should_receive(:capture).and_return(success_response)
             end
 
             it "should make payment complete" do
