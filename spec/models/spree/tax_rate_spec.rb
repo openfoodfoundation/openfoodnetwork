@@ -235,7 +235,7 @@ module Spree
       end
 
       context "adjust" do
-        let(:order) { build_stubbed(:order) }
+        let(:order) { create(:order) }
         let(:tax_category_1) { build_stubbed(:tax_category) }
         let(:tax_category_2) { build_stubbed(:tax_category) }
         let(:rate_1) { build_stubbed(:tax_rate, tax_category: tax_category_1) }
@@ -258,7 +258,7 @@ module Spree
         end
 
         context "with shipments" do
-          let(:shipment) { build_stubbed(:shipment) }
+          let(:shipment) { build_stubbed(:shipment, order: order) }
           let(:shipments) { [shipment] }
 
           before do
