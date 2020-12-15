@@ -121,6 +121,12 @@ module Spree
       actions
     end
 
+    def resend_authorization_email!
+      return unless cvv_response_message.present?
+
+      PaymentMailer.authorize_payment(self).deliver
+    end
+
     def payment_source
       res = source.is_a?(Payment) ? source.source : source
       res || payment_method
