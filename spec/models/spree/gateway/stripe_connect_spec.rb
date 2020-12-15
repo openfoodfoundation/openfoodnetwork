@@ -91,4 +91,15 @@ describe Spree::Gateway::StripeConnect, type: :model do
       expect(provider).to have_received(:refund).with(money, response_code, hash_including(stripe_account: stripe_account_id))
     end
   end
+
+  describe "#charging offline" do
+    let(:gateway_options) { { some: 'option' } }
+    let(:money) { double(:money) }
+    let(:card) { double(:creditcard) }
+
+    it "uses #purchase to charge offline" do
+      subject.charge_offline(money, card, gateway_options)
+      expect(provider).to have_received(:purchase).with('money', 'cc', 'opts')
+    end
+  end
 end
