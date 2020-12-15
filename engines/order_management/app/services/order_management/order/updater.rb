@@ -45,7 +45,8 @@ module OrderManagement
       #
       # - payment_total - total value of all finalized Payments (excludes non-finalized Payments)
       # - item_total - total value of all LineItems
-      # - adjustment_total - total value of all adjustments
+      # - fee_total - total value of all fee adjustments that modify price (not including added tax)
+      # - adjustment_total - total value of all adjustments (including all fees and added taxes)
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
         order.payment_total = payments.completed.sum(:amount)
@@ -81,6 +82,11 @@ module OrderManagement
                                  adjustments.eligible.sum(:amount)
         order.included_tax_total = line_items.sum(:included_tax_total) + shipments.sum(:included_tax_total)
         order.additional_tax_total = line_items.sum(:additional_tax_total) + shipments.sum(:additional_tax_total)
+
+        order.fee_total = line_items.sum(:fee_total) +
+                          shipments.sum(:fee_total) +
+                          adjustments.eligible.sum(:amount)
+
         update_order_total
       end
 
@@ -98,6 +104,7 @@ module OrderManagement
           included_tax_total: order.included_tax_total,
           additional_tax_total: order.additional_tax_total,
           payment_total: order.payment_total,
+          fee_total: order.fee_total,
           total: order.total,
           updated_at: Time.now
         )

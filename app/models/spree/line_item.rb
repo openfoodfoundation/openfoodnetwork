@@ -122,6 +122,10 @@ module Spree
     end
     alias subtotal amount
 
+    def adjusted_amount
+      amount + fee_total
+    end
+
     def final_amount
       amount + adjustment_total.to_f
     end

@@ -166,10 +166,8 @@ module Spree
     end
     alias display_amount display_cost
 
-    def amount
-      # In Spree 2.2 this returns `cost` modified by `promo_total`. We might need this to be `cost`
-      # plus price adjustments from fees.
-      cost
+    def adjusted_amount
+      cost + fee_total
     end
 
     def item_cost

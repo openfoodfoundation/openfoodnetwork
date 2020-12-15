@@ -67,6 +67,7 @@ module Spree
 
     scope :open, -> { where(state: 'open') }
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
+    scope :excluding_tax, -> { where.not(source_type: 'Spree::TaxRate') }
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }

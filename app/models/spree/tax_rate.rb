@@ -48,7 +48,7 @@ module Spree
       if rates.any? { |r| r.included_in_price }
         case item
         when Spree::LineItem
-          item_amount = item.amount
+          item_amount = item.adjusted_amount
         when Spree::Shipment
           item_amount = item.cost
         end
