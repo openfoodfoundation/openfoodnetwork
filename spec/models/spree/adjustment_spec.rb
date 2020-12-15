@@ -152,27 +152,43 @@ module Spree
     # the TaxRate specs and aren't present here. The responsibility for this behavior is not in this class.
     # See core/spec/models/spree/tax_rate_spec.rb and core/spec/models/spree/adjustment_spec.rb
 
-    describe "recording included tax" do
+    describe "recording included and additional tax" do
       describe "TaxRate adjustments" do
         let!(:zone)        { create(:zone_with_member) }
-        let!(:order)       { create(:order, bill_address: create(:address)) }
-        let!(:line_item)   { create(:line_item, order: order) }
-        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1)) }
+        let!(:order)       { create(:order_with_line_items, line_items_count: 1, bill_address: create(:address)) }
+        let(:tax_rate)     { create(:tax_rate, included_in_price: true, amount: 0.10) } # 10% rate
+        let(:line_item) { order.line_items.first }
         let(:adjustment)   { line_item.adjustments(:reload).first }
 
         before do
           order.reload
+          TaxRate.store_pre_tax_amount(line_item, [tax_rate])
           tax_rate.adjust(order, line_item)
         end
 
-        it "has 100% tax included" do
-          expect(adjustment.amount).to be > 0
-          expect(adjustment.included_tax).to eq(adjustment.amount)
+        context "when the tax rate is included" do
+          it "has 10% inclusive tax correctly recorded" do
+            amount = line_item.amount * tax_rate.amount / (1 + tax_rate.amount)
+            rounded_amount = tax_rate.calculator.__send__(:round_to_two_places, amount)
+            expect(adjustment.amount).to eq rounded_amount
+            expect(adjustment.amount).to eq 0.91
+            expect(adjustment.included).to be true
+          end
+
+          it "does not crash when order data has been updated previously" do
+            order.line_item_adjustments.first.destroy
+            tax_rate.adjust(order, line_item)
+          end
         end
 
-        it "does not crash when order data has been updated previously" do
-          order.line_item_adjustments.first.destroy
-          tax_rate.adjust(order, line_item)
+        context "when the tax rate is additional" do
+          let(:tax_rate) { create(:tax_rate, included_in_price: false, amount: 0.10) }
+
+          it "has 10% added tax correctly recorded" do
+            expect(adjustment.amount).to eq line_item.amount * tax_rate.amount
+            expect(adjustment.amount).to eq 1.0
+            expect(adjustment.included).to be false
+          end
         end
       end
 
