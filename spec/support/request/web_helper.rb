@@ -141,7 +141,10 @@ module WebHelper
   def fill_in_tag(tag_name, selector = "tags-input .tags input")
     expect(page).to have_selector selector
     find(:css, selector).send_keys(tag_name, :return)
-    expect(page).to have_selector ".tag-list .tag-item span", text: tag_name
+    tag_selector = ".tag-list .tag-item span"
+    expect(page).to have_selector tag_selector
+    tag = find(:css, tag_selector)
+    expect(tag.text(:all)).to eq(tag_name)
   end
 
   private
