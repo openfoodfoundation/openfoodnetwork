@@ -29,6 +29,8 @@ class CustomersWithBalance
     SQL
   end
 
+  # The resulting orders are in states that belong after the checkout. Only these can be considered
+  # for a customer's balance.
   def left_join_complete_orders
     <<-SQL.strip_heredoc
       LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id

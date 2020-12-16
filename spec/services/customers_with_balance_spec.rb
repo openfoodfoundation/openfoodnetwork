@@ -110,6 +110,38 @@ describe CustomersWithBalance do
       end
     end
 
+    context 'when an order is resumed' do
+      let(:payment_total) { order_total }
+
+      before do
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order.update_attribute(:state, 'resumed')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - total)
+      end
+    end
+
+    context 'when an order is in payment' do
+      let(:payment_total) { order_total }
+
+      before do
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order.update_attribute(:state, 'payment')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - total)
+      end
+    end
+
     context 'when there are no orders' do
       it 'returns the customer balance' do
         customer = customers_with_balance.query.first
