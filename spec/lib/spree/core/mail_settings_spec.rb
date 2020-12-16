@@ -7,17 +7,7 @@ module Spree
     describe MailSettings do
       let!(:subject) { MailSettings.new }
 
-      context "override option is true" do
-        before { Config.override_actionmailer_config = true }
-
-        context "init" do
-          it "calls override!" do
-            expect(MailSettings).to receive(:new).and_return(subject)
-            expect(subject).to receive(:override!)
-            MailSettings.init
-          end
-        end
-
+      context "overriding ActionMailer config" do
         context "enable delivery" do
           before { Config.enable_mail_delivery = true }
 
@@ -72,17 +62,6 @@ module Spree
           end
 
           it { expect(ActionMailer::Base.perform_deliveries).to be_falsy }
-        end
-      end
-
-      context "override option is false" do
-        before { Config.override_actionmailer_config = false }
-
-        context "init" do
-          it "doesnt calls override!" do
-            expect(subject).not_to receive(:override!)
-            MailSettings.init
-          end
         end
       end
     end
