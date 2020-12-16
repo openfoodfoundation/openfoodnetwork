@@ -22,7 +22,7 @@ class CustomersWithBalance
   def outstanding_balance
     <<-SQL.strip_heredoc
        SUM(
-         CASE WHEN state = 'canceled' THEN payment_total
+         CASE WHEN state IN #{non_fulfilled_states_group.to_sql} THEN payment_total
               WHEN state IS NOT NULL THEN payment_total - total
          ELSE 0 END
        ) AS balance_value
@@ -43,8 +43,19 @@ class CustomersWithBalance
     Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states_group)
   end
 
+  def non_fulfilled_states_group
+    states_group = non_fulfilled_states.map { |state| Arel::Nodes.build_quoted(state) }
+    Arel::Nodes::Grouping.new(states_group)
+  end
+
   # All the states an order can be in before completing the checkout
   def prior_to_completion_states
     %w(cart address delivery payment)
+  end
+
+  # All the states of a complete order but that shouldn't count towards the balance. Those that the
+  # customer won't enjoy.
+  def non_fulfilled_states
+    %w(canceled returned)
   end
 end

@@ -142,6 +142,39 @@ describe CustomersWithBalance do
       end
     end
 
+    context 'when an order is awaiting_return' do
+      let(:payment_total) { order_total }
+
+      before do
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order.update_attribute(:state, 'awaiting_return')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - total)
+      end
+    end
+
+    context 'when an order is returned' do
+      let(:payment_total) { order_total }
+      let(:non_returned_orders_total) { order_total }
+
+      before do
+        order = create(:order, customer: customer, total: order_total, payment_total: 0)
+        order.update_attribute(:state, 'checkout')
+        order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
+        order.update_attribute(:state, 'returned')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(payment_total - non_returned_orders_total)
+      end
+    end
+
     context 'when there are no orders' do
       it 'returns the customer balance' do
         customer = customers_with_balance.query.first
