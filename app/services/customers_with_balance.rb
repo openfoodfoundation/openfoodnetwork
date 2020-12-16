@@ -7,7 +7,7 @@ class CustomersWithBalance
 
   def query
     Customer.of(enterprise).
-      joins(left_join_non_cart_orders).
+      joins(left_join_complete_orders).
       group("customers.id").
       select("customers.*").
       select(outstanding_balance)
@@ -29,10 +29,20 @@ class CustomersWithBalance
     SQL
   end
 
-  def left_join_non_cart_orders
+  def left_join_complete_orders
     <<-SQL.strip_heredoc
       LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id
-        AND spree_orders.state != 'cart'
+        AND #{complete_orders.to_sql}
     SQL
+  end
+
+  def complete_orders
+    states_group = prior_to_completion_states.map { |state| Arel::Nodes.build_quoted(state) }
+    Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states_group)
+  end
+
+  # All the states an order can be in before completing the checkout
+  def prior_to_completion_states
+    %w(cart address delivery payment)
   end
 end

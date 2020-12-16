@@ -7,11 +7,10 @@ describe CustomersWithBalance do
 
   describe '#query' do
     let(:customer) { create(:customer) }
+    let(:total) { 200.00 }
+    let(:order_total) { 100.00 }
 
     context 'when orders are in cart state' do
-      let(:total) { 200.00 }
-      let(:order_total) { 100.00 }
-
       before do
         create(:order, customer: customer, total: order_total, payment_total: 0, state: 'cart')
         create(:order, customer: customer, total: order_total, payment_total: 0, state: 'cart')
@@ -23,10 +22,43 @@ describe CustomersWithBalance do
       end
     end
 
-    context 'when no orders where paid' do
-      let(:total) { 200.00 }
-      let(:order_total) { 100.00 }
+    context 'when orders are in address state' do
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0, state: 'address')
+        create(:order, customer: customer, total: order_total, payment_total: 50, state: 'address')
+      end
 
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(0)
+      end
+    end
+
+    context 'when orders are in delivery state' do
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0, state: 'delivery')
+        create(:order, customer: customer, total: order_total, payment_total: 50, state: 'delivery')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(0)
+      end
+    end
+
+    context 'when orders are in payment state' do
+      before do
+        create(:order, customer: customer, total: order_total, payment_total: 0, state: 'payment')
+        create(:order, customer: customer, total: order_total, payment_total: 50, state: 'payment')
+      end
+
+      it 'returns the customer balance' do
+        customer = customers_with_balance.query.first
+        expect(customer.balance_value).to eq(0)
+      end
+    end
+
+    context 'when no orders where paid' do
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'checkout')
@@ -41,8 +73,6 @@ describe CustomersWithBalance do
     end
 
     context 'when an order was paid' do
-      let(:total) { 200.00 }
-      let(:order_total) { 100.00 }
       let(:payment_total) { order_total }
 
       before do
@@ -59,8 +89,6 @@ describe CustomersWithBalance do
     end
 
     context 'when an order is canceled' do
-      let(:total) { 200.00 }
-      let(:order_total) { 100.00 }
       let(:payment_total) { 100.00 }
       let(:non_canceled_orders_total) { order_total }
 
