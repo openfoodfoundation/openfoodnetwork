@@ -4,6 +4,8 @@ require 'ostruct'
 
 module Spree
   class Shipment < ActiveRecord::Base
+    include AdjustmentHandling
+
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :address, class_name: 'Spree::Address'
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
@@ -16,7 +18,7 @@ module Spree
 
     before_create :generate_shipment_number
     before_validation :set_cost_zero_when_nil
-    after_save :update_adjustments
+    after_save :ensure_correct_adjustment, :update_adjustment_totals, :update_order
 
     attr_accessor :special_instructions
 
@@ -373,7 +375,25 @@ module Spree
       self.cost = 0 unless self.cost
     end
 
-    def update_adjustments
+    def ensure_correct_adjustment
+      if adjustment
+        adjustment.label = I18n.t('shipping')
+        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
+        adjustment.save!
+        adjustment.reload
+      elsif selected_shipping_rate_id
+        self.create_adjustment(I18n.t('shipping'), order, shipping_method,self,true,"open")
+        reload # ensure adjustment is present on later saves
+      end
+
+      update_adjustment_included_tax if adjustment
+    end
+
+    def update_order
+      order.update!
+    end
+
+    def update_adjustment_totals
       return unless cost_changed? && state != 'shipped'
 
       recalculate_adjustments

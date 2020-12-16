@@ -203,7 +203,7 @@ module Spree
         describe "the shipping charge" do
           it "is the adjustment amount" do
             order.shipments = [shipment]
-            expect(order.adjustments.first.amount).to eq(50)
+            expect(order.shipment_adjustments.first.amount).to eq(50)
           end
         end
 
