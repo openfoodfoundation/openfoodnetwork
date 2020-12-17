@@ -8,7 +8,8 @@ module Stripe
     end
 
     def find_cloned_card
-      return nil unless fingerprint = fingerprint_for_card(@card) && email = @card.user&.email
+      return nil unless fingerprint = fingerprint_for_card(@card)
+      return nil unless email = @card.user&.email
 
       customers = Stripe::Customer.list({ email: email, limit: 100 }, stripe_account: @stripe_account)
 
