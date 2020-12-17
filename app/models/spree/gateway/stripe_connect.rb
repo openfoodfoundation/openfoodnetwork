@@ -31,6 +31,10 @@ module Spree
         failed_activemerchant_billing_response(e.message)
       end
 
+      def charge_offline(money, creditcard, gateway_options)
+        purchase(money, creditcard, gateway_options)
+      end
+
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def void(response_code, _creditcard, gateway_options)
         gateway_options[:stripe_account] = stripe_account_id
