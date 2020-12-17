@@ -110,23 +110,9 @@ module Spree
     end
 
     def self.clean_name
-      case name
-      when "Spree::PaymentMethod::Check"
-        "Cash/EFT/etc. (payments for which automatic validation is not required)"
-      when "Spree::Gateway::Migs"
-        "MasterCard Internet Gateway Service (MIGS)"
-      when "Spree::Gateway::Pin"
-        "Pin Payments"
-      when "Spree::Gateway::StripeConnect"
-        "Stripe"
-      when "Spree::Gateway::StripeSCA"
-        "Stripe SCA"
-      when "Spree::Gateway::PayPalExpress"
-        "PayPal Express"
-      else
-        i = name.rindex('::') + 2
-        name[i..-1]
-      end
+      i = name.rindex('::') + 2
+      i18n_name = "spree.admin.payment_methods.providers." + name[i..-1].downcase
+      I18n.t(i18n_name)
     end
 
     private
