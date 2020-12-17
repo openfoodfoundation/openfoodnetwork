@@ -379,7 +379,11 @@ class Enterprise < ActiveRecord::Base
   end
 
   def instagram=(value)
-    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').gsub('@', '')
+    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').delete('@')
+  end
+
+  def instagram_regex
+    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
   end
 
   protected
@@ -390,9 +394,7 @@ class Enterprise < ActiveRecord::Base
 
   private
 
-  def instagram_regex
-    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
-  end
+
 
   def current_exchange_variants
     ExchangeVariant.joins(exchange: :order_cycle)
