@@ -110,9 +110,8 @@ module Spree
     end
 
     def self.clean_name
-      i = name.rindex('::') + 2
-      i18n_name = "spree.admin.payment_methods.providers." + name[i..-1].downcase
-      I18n.t(i18n_name)
+      I18n_key = "spree.admin.payment_methods.providers." + name.demodulize.downcase
+      I18n.t(I18n_key)
     end
 
     private
