@@ -28,7 +28,7 @@ gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json'
 gem 'money', '< 6.1.0'
-gem 'paranoia', '~> 2.0'
+gem 'paranoia', '~> 2.4'
 gem 'ransack', '~> 1.8.10'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5'
