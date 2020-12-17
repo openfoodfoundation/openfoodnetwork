@@ -1569,6 +1569,7 @@ nb:
   shopping_groups_part_of: "er del av:"
   shopping_producers_of_hub: "%{hub}s produsenter:"
   enterprises_next_closing: "Neste runde stenger"
+  enterprises_currently_open: "Åpen for Bestilling"
   enterprises_ready_for: "Klar til"
   enterprises_choose: "Velg når du ønsker din bestilling:"
   maps_open: "Åpne"
@@ -2082,6 +2083,7 @@ nb:
   spree_classification_primary_taxon_error: "Gruppe %{taxon} er hovedgruppe til %{product} og kan ikke slettes"
   spree_order_availability_error: "Distributør eller bestillingsrunde kan ikke levere produktene i handlekurven din"
   spree_order_populator_error: "Den distributøren eller bestillingsrunden kan ikke levere alle produktene i handlekurven din. Vennligst velg en annen."
+  spree_order_cycle_error: "Vennligst velg en bestillingsrunde for denne bestillingen."
   spree_order_populator_availability_error: "Det produktet er ikke tilgjengelig fra den valgte distributøren eller bestillingsrunden."
   spree_distributors_error: "Minst en hub må velges"
   spree_user_enterprise_limit_error: "^ %{email} kan ikke eie flere bedrifter (grense er %{enterprise_limit})."
@@ -2389,6 +2391,7 @@ nb:
     resolve_errors: Vennligst løse følgende feil
     more_items: "+ %{count} Flere"
     default_card_updated: Standardkort oppdatert
+    default_card_voids_auth: Hvis du endrer standardkortet ditt, fjernes butikkens eksisterende autorisasjoner til å belaste det. Du kan autorisere butikker på nytt etter oppdatering av standardkortet. Ønsker du å endre standardkortet?
     cart:
       add_to_cart_failed: >
           Det oppsto et problem med å legge dette produktet til handlekurven. Kanskje
@@ -3531,9 +3534,11 @@ nb:
         delete?: Slett?
       cards:
         authorised_shops: Autoriserte Butikker
+        authorised_shops_agreement: Dette er listen over butikker som har tillatelse til å belaste standardkredittkortet ditt for eventuelle abonnementer (dvs. gjentatte bestillinger) du måtte ha. Kortopplysningene dine blir beskyttet og deles ikke med butikkeiere. Du vil alltid bli varslet når du blir belastet. Ved å merke av i boksen for en butikk, godtar du å autorisere den butikken til å sende instruksjoner til finansinstitusjonen som utstedte kortet ditt, til å ta betaling i samsvar med vilkårene for abonnementet du oppretter med den butikken.
         saved_cards_popover: Dette er listen over kort du har valgt å lagre for senere bruk. Din standard vil bli valgt automatisk når du gjør en bestilling, og kan belastes av butikker du har gitt lov til å gjøre det (se høyre).
       authorised_shops:
         shop_name: "Butikknavn"
+        allow_charges?: "Tillate at standardkort blir belastet?"
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.
     api:
