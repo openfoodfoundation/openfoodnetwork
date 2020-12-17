@@ -103,6 +103,8 @@ class Enterprise < ActiveRecord::Base
   after_validation :geocode_address
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
 
+  validates :instagram, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
+
   after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
@@ -376,6 +378,10 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
+  def instagram=(value)
+    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').gsub('@', '')
+  end
+
   protected
 
   def devise_mailer
@@ -383,6 +389,10 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def instagram_regex
+    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
+  end
 
   def current_exchange_variants
     ExchangeVariant.joins(exchange: :order_cycle)
