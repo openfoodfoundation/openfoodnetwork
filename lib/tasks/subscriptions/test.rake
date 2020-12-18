@@ -39,7 +39,7 @@ namespace :ofn do
         set_order_cycle_times(
           order_cycle_id,
           30.minutes.ago,
-          15.minutes.from_now
+          15.minutes.ago
         )
 
         # Run Confirm Job to process payments
