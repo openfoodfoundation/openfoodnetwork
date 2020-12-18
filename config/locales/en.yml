@@ -1656,7 +1656,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
   producer_mail_greeting: "Dear"
-  producer_mail_text_before: "We now have all the consumer orders for the next food drop."
+  producer_mail_text_before: "Please find below an update about the order cycle ready for %{ready_for}."
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_text_after: ""

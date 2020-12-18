@@ -1,6 +1,6 @@
 #{t :producer_mail_greeting} #{@producer.name},
 \
-= t :producer_mail_text_before
+= t :producer_mail_text_before, ready_for: @ready_for
 \
 - if @receival_instructions
   = t :producer_mail_delivery_instructions

@@ -36,6 +36,7 @@ class ProducerMailer < Spree::BaseMailer
     line_items = line_items_from(@order_cycle, @producer)
 
     @grouped_line_items = line_items.group_by(&:product_and_full_name)
+    @ready_for = @order_cycle.pickup_time_for(@coordinator)
     @receival_instructions = @order_cycle.receival_instructions_for(@producer)
     @total = total_from_line_items(line_items)
     @tax_total = tax_total_from_line_items(line_items)
