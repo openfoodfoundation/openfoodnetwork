@@ -5,6 +5,7 @@ require 'spree/core/s3_support'
 class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
+  INSTAGRAM_REGEX = %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
 
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
@@ -379,11 +380,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def instagram=(value)
-    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').delete('@')
-  end
-
-  def instagram_regex
-    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
+    self[:instagram] = value.downcase.try(:gsub, INSTAGRAM_REGEX, '\1').delete('@')
   end
 
   protected
@@ -393,8 +390,6 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
-
-
 
   def current_exchange_variants
     ExchangeVariant.joins(exchange: :order_cycle)
