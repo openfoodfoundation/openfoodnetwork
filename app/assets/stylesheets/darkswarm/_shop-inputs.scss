@@ -19,6 +19,12 @@
 // Components to add variants to cart and change quantities
 //
 // They are not nested so that they can be used in modals.
+
+.variant-quantity-inputs {
+  height: 2.5rem;
+  white-space: nowrap;
+}
+
 button.add-variant, button.variant-quantity {
   height: 2.5rem;
   border-radius: 0;
