@@ -1569,6 +1569,7 @@ en_US:
   shopping_groups_part_of: "is part of:"
   shopping_producers_of_hub: "%{hub}'s producers:"
   enterprises_next_closing: "Next order closing"
+  enterprises_currently_open: "Orders are currently open"
   enterprises_ready_for: "Ready for"
   enterprises_choose: "Choose when you want your order:"
   maps_open: "Open"
@@ -2082,6 +2083,7 @@ en_US:
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
+  spree_order_cycle_error: "Please choose an order cycle for this order."
   spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
   spree_distributors_error: "At least one hub must be selected"
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
@@ -2389,6 +2391,7 @@ en_US:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    default_card_voids_auth: Changing your default card will remove shops' existing authorizations to charge it. You can re-authorize shops after updating the default card. Do you wish to change the default card?"
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to the cart. Perhaps it has become
@@ -3534,9 +3537,11 @@ en_US:
         delete?: Delete?
       cards:
         authorised_shops: Authorized Shops
+        authorised_shops_agreement: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged. By checking the box for a shop, you are agreeing to authorise that shop to send instructions to the financial institution that issued your card to take payments in accordance with the terms of any subscription you create with that shop.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
+        allow_charges?: "Allow Charges to Default Card?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:
