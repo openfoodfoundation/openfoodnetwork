@@ -48,9 +48,11 @@ module Spree
       if rates.any? { |r| r.included_in_price }
         case item
         when Spree::LineItem
-          item_amount = item.adjusted_amount
+          item_amount = item.amount
         when Spree::Shipment
           item_amount = item.cost
+        when Spree::Adjustment
+          return
         end
         pre_tax_amount = item_amount / (1 + rates.map(&:amount).sum)
         item.update_column(:pre_tax_amount, pre_tax_amount)
@@ -58,13 +60,16 @@ module Spree
     end
 
     def self.adjust(order, items)
-      rates = self.match(order)
-      tax_categories = rates.map(&:tax_category)
-      relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
+      applicable_rates = self.match(order)
+      applicable_tax_categories = applicable_rates.map(&:tax_category)
+
+      relevant_items, non_relevant_items = items.partition do |item|
+        applicable_tax_categories.include?(item.tax_category)
+      end
 
       relevant_items.each do |item|
         item.adjustments.tax.delete_all
-        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
+        relevant_rates = applicable_rates.select { |rate| rate.tax_category == item.tax_category }
         store_pre_tax_amount(item, relevant_rates)
         relevant_rates.each do |rate|
           rate.adjust(order, item)
@@ -142,7 +147,7 @@ module Spree
       (self.included_in_price? && self.zone.default_tax)
     end
 
-    # Creates necessary tax adjustments for the order.
+    # Creates necessary tax adjustments for the item.
     def adjust(order, item)
       amount = compute_amount(item)
       return if amount == 0

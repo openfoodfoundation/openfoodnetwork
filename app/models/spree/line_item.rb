@@ -7,6 +7,7 @@ module Spree
   class LineItem < ActiveRecord::Base
     include VariantUnits::VariantAndLineItemNaming
     include LineItemBasedAdjustmentHandling
+    include AdjustmentHandling
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
     belongs_to :variant, class_name: "Spree::Variant"
@@ -14,6 +15,7 @@ module Spree
 
     has_one :product, through: :variant
     has_many :adjustments, as: :adjustable, dependent: :destroy
+    has_many :fee_taxes, through: :adjustments, source: :adjustments
 
     has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items',
                                             class_name: 'Spree::OptionValue'
@@ -102,6 +104,10 @@ module Spree
             AND spree_adjustments.source_type='Spree::TaxRate')").
         where('spree_adjustments.id IS NULL')
     }
+
+    def all_adjustments
+      Spree::Adjustment.where("spree_adjustments.id IN (:adjustments) OR (spree_adjustments.adjustable_type = 'Spree::Adjustment' AND spree_adjustments.adjustable_id IN (:adjustments))", adjustments: adjustment_ids)
+    end
 
     def copy_price
       return unless variant

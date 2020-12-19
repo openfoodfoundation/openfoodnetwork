@@ -6,7 +6,7 @@ class CartController < BaseController
     cart_service = CartService.new(order)
 
     if cart_service.populate(params.slice(:products, :variants, :quantity), true)
-      order.update_distribution_charge!
+      order.update_distribution_charge! # DO NOT CALL THIS AS-IS!
       order.cap_quantity_at_stock!
       order.update! # This might not be necessary any more. Needs investigating. See previous commit.
 

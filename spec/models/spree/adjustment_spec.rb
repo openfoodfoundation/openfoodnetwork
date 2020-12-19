@@ -153,12 +153,14 @@ module Spree
     # See core/spec/models/spree/tax_rate_spec.rb and core/spec/models/spree/adjustment_spec.rb
 
     describe "recording included and additional tax" do
+      let!(:zone) { create(:zone_with_member) }
+      let(:tax_rate) { create(:tax_rate, included_in_price: true, amount: 0.10) } # 10% rate
+      let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
+      let!(:order) { create(:order, bill_address: create(:address)) }
+      let!(:line_item) { create(:line_item, order: order) }
+
       describe "TaxRate adjustments" do
-        let!(:zone)        { create(:zone_with_member) }
-        let!(:order)       { create(:order_with_line_items, line_items_count: 1, bill_address: create(:address)) }
-        let(:tax_rate)     { create(:tax_rate, included_in_price: true, amount: 0.10) } # 10% rate
-        let(:line_item) { order.line_items.first }
-        let(:adjustment)   { line_item.adjustments(:reload).first }
+        let(:adjustment) { line_item.adjustments(:reload).first }
 
         before do
           order.reload
@@ -166,9 +168,9 @@ module Spree
           tax_rate.adjust(order, line_item)
         end
 
-        context "when the tax rate is included" do
+        context "when the tax rate is inclusive" do
           it "has 10% inclusive tax correctly recorded" do
-            amount = line_item.amount * tax_rate.amount / (1 + tax_rate.amount)
+            amount = line_item.amount - (line_item.amount / (1 + tax_rate.amount))
             rounded_amount = tax_rate.calculator.__send__(:round_to_two_places, amount)
             expect(adjustment.amount).to eq rounded_amount
             expect(adjustment.amount).to eq 0.91
@@ -216,14 +218,19 @@ module Spree
             allow(Config).to receive(:shipping_tax_rate).and_return(0)
             order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            expect(order.shipment_adjustments.first.included_tax).to eq(0)
           end
 
-          it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has a tax rate" do
+            before do
+              shipment.selected_shipping_rate.update(tax_rate: tax_rate)
+            end
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
+              order.shipments = [shipment]
+
+              expect(order.shipment_adjustments.first.included_tax).to eq(0)
+            end
           end
         end
 
@@ -232,126 +239,215 @@ module Spree
             allow(Config).to receive(:shipment_inc_vat).and_return(true)
           end
 
-          it "takes the shipment adjustment tax included from the system setting" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has an inclusive tax rate" do
+            before do
+              allow(shipment).to receive(:tax_rate) { tax_rate }
+              allow(tax_rate).to receive(:amount) { 0.25 }
+            end
 
-            # Finding the tax included in an amount that's already inclusive of tax:
-            # total - ( total / (1 + rate) )
-            # 50    - ( 50    / (1 + 0.25) )
-            # = 10
-            expect(order.adjustments.first.included_tax).to eq(10.00)
+            it "calculates the shipment tax from the tax rate" do
+              order.shipments = [shipment]
+              shipment.save
+
+              # Finding the tax included in an amount that's already inclusive of tax:
+              # total - ( total / (1 + rate) )
+              # 50    - ( 50    / (1 + 0.25) )
+              # = 10
+              expect(order.shipment_adjustments.first.included_tax).to eq(10.00)
+              expect(order.shipment_adjustments.first.additional_tax).to eq(0.0)
+            end
           end
 
-          it "records 0% tax on shipments when shipping_tax_rate is not set" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0)
-            order.shipments = [shipment]
+          context "when the shipment has an added tax rate" do
+            before do
+              allow(shipment).to receive(:tax_rate) { tax_rate }
+              allow(tax_rate).to receive(:amount) { 0.25 }
+              allow(tax_rate).to receive(:included_in_price) { false }
+            end
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            it "calculates the shipment tax from the tax rate" do
+              order.shipments = [shipment]
+              shipment.save
+
+              # Finding the added tax for an amount:
+              # total * rate
+              # 50    * 0.25
+              # = 12.5
+              expect(order.shipment_adjustments.first.included_tax).to eq(0.0)
+              expect(order.shipment_adjustments.first.additional_tax).to eq(12.50)
+            end
           end
 
-          it "records 0% tax on shipments when the distributor does not charge sales tax" do
-            order.distributor.update! charges_sales_tax: false
-            order.shipments = [shipment]
+          context "when the distributor does not charge sales tax" do
+            it "records 0% tax on shipments" do
+              order.distributor.update! charges_sales_tax: false
+              order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+              expect(order.shipment_adjustments.first.included_tax).to eq(0)
+            end
+          end
+
+          context "when the shipment has no applicable tax rate" do
+            it "records 0% tax on shipments" do
+              allow(shipment).to receive(:tax_rate) { nil }
+              order.shipments = [shipment]
+
+              expect(order.shipment_adjustments.first.included_tax).to eq(0)
+            end
           end
         end
       end
 
       describe "EnterpriseFee adjustments" do
         let(:zone)             { create(:zone_with_member) }
-        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:tax_included)     { true }
+        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: tax_included, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
         let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
-        let(:variant)     { create(:variant, product: create(:product, tax_category: nil)) }
+        let(:product_tax_category) { nil }
+        let(:variant)     { create(:variant, product: create(:product, tax_category: product_tax_category)) }
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
         let(:line_item)   { create(:line_item, variant: variant) }
         let(:order)       { create(:order, line_items: [line_item], order_cycle: order_cycle, distributor: coordinator) }
-        let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
+        let(:fee_adjustment) { order.adjustments(:reload).enterprise_fee.first }
 
         context "when enterprise fees have a fixed tax_category" do
-          before do
-            order.reload.update_distribution_charge!
-          end
-
-          context "when enterprise fees are taxed per-order" do
+          context "when enterprise fees are per-order" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0)) }
 
-            describe "when the tax rate includes the tax in the price" do
-              it "records the tax on the enterprise fee adjustments" do
-                # The fee is $50, tax is 10%, and the fee is inclusive of tax
-                # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+            it "applies the fee on the order" do
+              order.create_order_fees!
 
-                expect(adjustment.included_tax).to eq(4.55)
-              end
+              expect(fee_adjustment.amount).to eq(50)
             end
 
-            describe "when the tax rate does not include the tax in the price" do
-              before do
-                fee_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
+            describe "applying tax" do
+              describe "when the tax rate includes the tax in the price" do
+                before do
+                  order.create_order_fees!
+                  order.create_tax_charge!
+                  order.reload
+                end
+
+                it "records the tax on the enterprise fee adjustments" do
+                  # The fee is $50, tax is 10%, and the fee is inclusive of tax
+                  # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+
+                  # Adjustments:
+                  expect(order.adjustments.enterprise_fee.first.amount).to eq(50)
+                  expect(order.all_adjustments.tax.first.amount).to eq(4.55)
+                  expect(order.all_adjustments.tax.first.included).to eq true
+
+                  # Order Totals:
+                  expect(order.fee_total).to eq(50)
+                  expect(order.included_tax_total).to eq(4.55)
+                  expect(order.additional_tax_total).to eq(0)
+                end
               end
 
-              it "records the tax on TaxRate adjustment on the order" do
-                expect(adjustment.included_tax).to eq(0)
-                expect(order.adjustments.tax.first.amount).to eq(5.0)
-              end
-            end
+              describe "when the tax rate does not include the tax in the price" do
+                let(:tax_included) { false }
 
-            describe "when enterprise fees have no tax" do
-              before do
-                enterprise_fee.tax_category = nil
-                enterprise_fee.save!
-                order.update_distribution_charge!
+                before do
+                  order.create_order_fees!
+                  order.create_tax_charge!
+                  order.reload
+                end
+
+                it "records the tax on TaxRate adjustment on the order" do
+                  expect(order.adjustments.enterprise_fee.first.amount).to eq(50)
+                  expect(order.all_adjustments.tax.first.amount).to eq(5.0)
+                  expect(order.all_adjustments.tax.first.included).to eq false
+
+                  expect(order.fee_total).to eq(50)
+                  expect(order.included_tax_total).to eq(0)
+                  expect(order.additional_tax_total).to eq(5.0)
+                end
               end
 
-              it "records no tax as charged" do
-                expect(adjustment.included_tax).to eq(0)
+              describe "when enterprise fees have no tax" do
+                before do
+                  enterprise_fee.tax_category = nil
+                  enterprise_fee.save!
+                  order.update_distribution_charge!
+                end
+
+                it "records no tax as charged" do
+                  expect(fee_adjustment.included_tax).to eq(0)
+                end
               end
             end
           end
 
-          context "when enterprise fees are taxed per-item" do
+          context "when enterprise fees are per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: ::Calculator::PerItem.new(preferred_amount: 50.0)) }
+            let(:fee_adjustment) { line_item.adjustments(:reload).enterprise_fee.first }
 
-            describe "when the tax rate includes the tax in the price" do
-              it "records the tax on the enterprise fee adjustments" do
-                expect(adjustment.included_tax).to eq(4.55)
-              end
+            before do
+              order.create_line_item_fees!
             end
 
-            describe "when the tax rate does not include the tax in the price" do
+            it "applies the fee adjustments" do
+              expect(fee_adjustment.amount).to eq(50)
+            end
+
+            describe "applying taxes" do
               before do
-                fee_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
+                order.create_tax_charge!
+                line_item.reload
+                order.reload
               end
 
-              it "records the tax on TaxRate adjustment on the order" do
-                expect(adjustment.included_tax).to eq(0)
-                expect(order.adjustments.tax.first.amount).to eq(5.0)
+              describe "when the tax rate includes the tax in the price" do
+                it "records the tax on the enterprise fee adjustments" do
+                  # Adjustments:
+                  expect(line_item.adjustments.enterprise_fee.first.amount).to eq(50)
+                  expect(line_item.all_adjustments.tax.first.amount).to eq(4.55)
+                  expect(line_item.all_adjustments.tax.first.included).to eq true
+
+                  # LineItem Totals:
+                  expect(line_item.fee_total).to eq(50)
+                  expect(line_item.included_tax_total).to eq(4.55)
+                  expect(line_item.additional_tax_total).to eq(0)
+                end
+              end
+
+              describe "when the tax rate does not include the tax in the price" do
+                let(:tax_included) { false }
+
+                it "records the tax on TaxRate adjustment on the order" do
+                  # Adjustments:
+                  expect(line_item.adjustments.enterprise_fee.first.amount).to eq(50)
+                  expect(line_item.all_adjustments.tax.first.amount).to eq(5.0)
+                  expect(line_item.all_adjustments.tax.first.included).to eq false
+
+                  # LineItem Totals:
+                  expect(line_item.fee_total).to eq(50)
+                  expect(line_item.included_tax_total).to eq(0)
+                  expect(line_item.additional_tax_total).to eq(5.0)
+                end
               end
             end
           end
         end
 
         context "when enterprise fees inherit their tax_category from the product they are applied to" do
+          let(:product_tax_included) { true }
           let(:product_tax_rate) {
-            create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.2)
+            create(:tax_rate, included_in_price: product_tax_included, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.2)
           }
           let(:product_tax_category) { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
-            variant.product.update_attribute(:tax_category_id, product_tax_category.id)
-
-            order.create_tax_charge! # Updating line_item or order has the same effect
-            order.update_distribution_charge!
+            order.create_order_fees!
+            order.create_line_item_fees!
+            order.create_tax_charge!
+            order.reload
+            line_item.reload
           end
 
-          context "when enterprise fees are taxed per-order" do
+          context "when enterprise fees are per-order" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
@@ -359,29 +455,51 @@ module Spree
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
                 # so tax on the enterprise_fee adjustment will be 0
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
-                expect(adjustment.included_tax).to eq(0.0)
-                expect(line_item.adjustments.first.included_tax).to eq(1.67)
+
+                # Adjustments:
+                expect(line_item.adjustments.enterprise_fee.count).to eq(0)
+
+                expect(line_item.adjustments.tax.first.amount).to eq(1.67)
+                expect(line_item.adjustments.tax.first.included).to eq true
+
+                # Totals:
+                expect(line_item.fee_total).to eq(0)
+                expect(line_item.included_tax_total).to eq(1.67)
+                expect(line_item.additional_tax_total).to eq(0)
+
+                expect(order.fee_total).to eq(50)
+                expect(order.included_tax_total).to eq(0)
+                expect(order.additional_tax_total).to eq(0)
               end
             end
 
             describe "when the tax rate does not include the tax in the price" do
-              before do
-                product_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.reload.update_distribution_charge!
-              end
+              let(:product_tax_included) { false }
 
               it "records the no tax on TaxRate adjustment on the order" do
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
                 # so total tax on the order is only that which applies to the line_item itself
                 # ie. $10 x 0.2 = $2.0
-                expect(adjustment.included_tax).to eq(0)
-                expect(order.adjustments.tax.first.amount).to eq(2.0)
+
+                # Adjustments:
+                expect(line_item.adjustments.enterprise_fee.count).to eq(0)
+
+                expect(line_item.adjustments.tax.first.amount).to eq(2.0)
+                expect(line_item.adjustments.tax.first.included).to eq false
+
+                # Totals:
+                expect(line_item.fee_total).to eq(0)
+                expect(line_item.included_tax_total).to eq(0)
+                expect(line_item.additional_tax_total).to eq(2.0)
+
+                expect(order.fee_total).to eq(50)
+                expect(order.included_tax_total).to eq(0)
+                expect(order.additional_tax_total).to eq(0)
               end
             end
           end
 
-          context "when enterprise fees are taxed per-item" do
+          context "when enterprise fees are per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: ::Calculator::PerItem.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
@@ -389,36 +507,51 @@ module Spree
                 # Applying product tax rate of 0.2 to enterprise fee of $50
                 # gives tax on fee of 0.2/1.2 x $50 = $8.33
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
-                expect(adjustment.included_tax).to eq(8.33)
-                expect(line_item.adjustments.first.included_tax).to eq(1.67)
+
+                # Adjustments:
+                expect(line_item.adjustments.enterprise_fee.count).to eq(1)
+                expect(line_item.all_adjustments.tax.count).to eq(2)
+
+                expect(line_item.adjustments.tax.first.amount).to eq(1.67)
+                expect(line_item.adjustments.tax.first.included).to eq true
+                expect(line_item.fee_taxes.first.amount).to eq(8.33)
+                expect(line_item.fee_taxes.first.included).to eq true
+
+                # Totals:
+                expect(line_item.amount).to eq(10)
+                expect(line_item.fee_total).to eq(50)
+                expect(line_item.included_tax_total).to eq(1.67 + 8.33)
+                expect(line_item.additional_tax_total).to eq(0)
               end
             end
 
             describe "when the tax rate does not include the tax in the price" do
-              before do
-                product_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
-              end
+              let(:product_tax_included) { false }
 
               it "records the tax on TaxRate adjustment on the order" do
                 # EnterpriseFee inherits tax_category from product so total tax on
-                # the order is that which applies to the line item itself, plus the
+                # the line item is that which applies to the line item itself, plus the
                 # same rate applied to the fee of $50. ie. ($10 + $50) x 0.2 = $12.0
-                expect(adjustment.included_tax).to eq(0)
-                expect(order.adjustments.tax.first.amount).to eq(12.0)
+                # Tax on line item: 10 x 0.2 = 2.0
+                # Tax on fee: 50 x 0.2 = 10.0
+
+                # Adjustments:
+                expect(line_item.adjustments.enterprise_fee.count).to eq(1)
+                expect(line_item.all_adjustments.tax.count).to eq(2)
+
+                expect(line_item.adjustments.tax.first.amount).to eq(2.0)
+                expect(line_item.adjustments.tax.first.included).to eq false
+                expect(line_item.fee_taxes.first.amount).to eq(10.0)
+                expect(line_item.fee_taxes.first.included).to eq false
+
+                # Totals:
+                expect(line_item.amount).to eq(10)
+                expect(line_item.fee_total).to eq(50)
+                expect(line_item.included_tax_total).to eq(0)
+                expect(line_item.additional_tax_total).to eq(2 + 10)
               end
             end
           end
-        end
-      end
-
-      describe "setting the included tax by tax rate" do
-        let(:adjustment) { Adjustment.new label: 'foo', amount: 50 }
-
-        it "sets it, rounding to two decimal places" do
-          adjustment.set_included_tax! 0.25
-          expect(adjustment.included_tax).to eq(10.00)
         end
       end
     end

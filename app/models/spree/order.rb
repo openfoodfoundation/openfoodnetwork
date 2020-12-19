@@ -9,6 +9,7 @@ require 'concerns/order_shipment'
 module Spree
   class Order < ActiveRecord::Base
     prepend OrderShipment
+    include AdjustmentHandling
     include Checkout
 
     checkout_flow do
@@ -411,6 +412,15 @@ module Spree
     def create_tax_charge!
       Spree::TaxRate.adjust(self, line_items)
       Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      create_taxes_on_fees!
+    end
+
+    def create_taxes_on_fees!
+      order_fees = adjustments.enterprise_fee
+      line_item_fees = line_item_adjustments.enterprise_fee
+
+      Spree::TaxRate.adjust(self, order_fees)
+      Spree::TaxRate.adjust(self, line_item_fees)
     end
 
     def outstanding_balance
@@ -672,7 +682,11 @@ module Spree
       end
     end
 
-    # Needs looking at
+    # Needs looking at. This is insanely expensive and is called form lots of places! Totally recreates
+    # all fees on line items and the order from scratch. Called from Cart#populate!!
+    # We need to separate these things; updating fees on a single line item; updating order-level fees, and
+    # then; creating taxes on those fees (which should be done completely separately and not all the time!)
+    # Also the name needs to be updated, it currently covers literally all imaginable enterprise fees...
     def update_distribution_charge!
       # `with_lock` acquires an exclusive row lock on order so no other
       # requests can update it until the transaction is commited.
@@ -682,28 +696,38 @@ module Spree
         # Clearing all enterprise fees and rebuilding them is really expensive. There are lots of types
         # of enterprise fee, some apply to order and some to line items. It's likely that we can selectively
         # update them here in a more efficient way. Also this locking needs looking at...
+
+        # This clears all enterprise_fee adjustments on order and all line items!
         EnterpriseFee.clear_all_adjustments_on_order self
 
-        loaded_line_items =
-          line_items.includes(variant: :product, order: [:distributor, :order_cycle]).all
-
-        loaded_line_items.each do |line_item|
-          if provided_by_order_cycle? line_item
-            OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
-          end
-        end
+        create_line_item_fees!
 
         # There are different sets of fees here, applying to line items or to orders, and in different contexts,
         # like coordinator fees or admin fees. It might be sensible to break these down into distinct types, eg
         # CoordinatorFee, and handle them as separate sets of adjustments instead of lumping them all together
         # under the EnterpriseFee class.
 
-        if order_cycle
-          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
-        end
+        create_order_fees!
 
         updater.update_adjustment_total
         updater.persist_totals
+      end
+    end
+
+    def create_order_fees!
+      return unless order_cycle
+
+      OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+    end
+
+    def create_line_item_fees!
+      loaded_line_items =
+        line_items.includes(variant: :product, order: [:distributor, :order_cycle]).all
+
+      loaded_line_items.each do |line_item|
+        if provided_by_order_cycle? line_item
+          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
+        end
       end
     end
 

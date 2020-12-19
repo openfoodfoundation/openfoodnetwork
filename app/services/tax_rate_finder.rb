@@ -9,7 +9,7 @@ class TaxRateFinder
   # @return [Array<Spree::TaxRate>]
   def self.tax_rates_of(adjustment)
     new.tax_rates(
-      adjustment.originator,
+      adjustment.adjustable,
       adjustment.source,
       adjustment.amount,
       adjustment.included_tax
@@ -17,29 +17,29 @@ class TaxRateFinder
   end
 
   # @return [Array<Spree::TaxRate>]
-  def tax_rates(originator, source, amount, included_tax)
-    find_associated_tax_rate(originator, source) ||
+  def tax_rates(adjustable, source, amount, included_tax)
+    find_associated_tax_rate(adjustable, source) ||
       find_closest_tax_rates_from_included_tax(amount, included_tax)
   end
 
   private
 
-  def find_associated_tax_rate(originator, source)
-    case originator
+  def find_associated_tax_rate(adjustable, source)
+    case source
     when Spree::TaxRate
-      [originator]
+      [source]
     when EnterpriseFee
-      enterprise_fee_tax_rates(originator, source)
+      enterprise_fee_tax_rates(adjustable, source)
     end
   end
 
-  def enterprise_fee_tax_rates(enterprise_fee, source)
-    case source
+  def enterprise_fee_tax_rates(adjustable, enterprise_fee)
+    case adjustable
     when Spree::LineItem
-      tax_category = line_item_tax_category(enterprise_fee, source)
-      tax_category ? tax_category.tax_rates.match(source.order) : []
+      tax_category = line_item_tax_category(enterprise_fee, adjustable)
+      tax_category ? tax_category.tax_rates.match(adjustable.order) : []
     when Spree::Order
-      enterprise_fee.tax_category ? enterprise_fee.tax_category.tax_rates.match(source) : []
+      enterprise_fee.tax_category ? enterprise_fee.tax_category.tax_rates.match(adjustable) : []
     end
   end
 

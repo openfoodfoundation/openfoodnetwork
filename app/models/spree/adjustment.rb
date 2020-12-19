@@ -40,6 +40,8 @@ module Spree
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: 'Spree::Order'
 
+    has_many :adjustments, as: :adjustable, dependent: :destroy
+
     # The diffs with Spree 2.2 don't have this association listed at all and it seems to break adjustments.
     # This needs to be removed / re-adjusted.
     # See https://github.com/openfoodfoundation/openfoodnetwork/commit/2d2792225a607a06dbd06aab694030a5cfa04d95#diff-7e5462a3bd9c8321c204cfba2377a185494da02b4e6dbef00763416a9957398aR7
@@ -124,9 +126,16 @@ module Spree
       state != "open"
     end
 
-    def set_included_tax!(rate)
-      tax = amount - (amount / (1 + rate))
-      set_absolute_included_tax! tax
+    def tax_category
+      return unless source_type == 'EnterpriseFee'
+
+      if source.inherits_tax_category && adjustable_type != 'Spree::Order'
+        # fails when applying an inherits-from-product tax rate on an order fee
+        # which is a ridiculous case...
+        adjustable.tax_category
+      else
+        source.tax_category
+      end
     end
 
     # We probably need corresponding methods for additional_tax here. This "included_tax" attribute is
@@ -161,7 +170,20 @@ module Spree
 
     def update_adjustable_adjustment_total
       # Cause adjustable's total to be recalculated
-      Spree::ItemAdjustments.new(adjustable).update if adjustable
+
+      # We may need some different log here when adding a tax on an adjustment...
+      # Do we need to update the totals on the item instead?
+      # If we've just created a tax and added it to a line item or an order, we will need to
+      # update the totals on the line item or the order...
+      # In the case that adjustable is an EnterpriseFee, fee.adjustable will contain the parent
+
+      if adjustable.respond_to? :adjustable
+        pp "ADJUSTING A FEE!"
+        item = adjustable.adjustable
+      else
+        item = adjustable
+      end
+      Spree::ItemAdjustments.new(item).update if item
     end
   end
 end

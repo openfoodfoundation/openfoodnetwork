@@ -110,8 +110,12 @@ module Spree
       save!
     end
 
+    def tax_rate
+      selected_shipping_rate.try(:tax_rate)
+    end
+
     def tax_category
-      selected_shipping_rate.try(:tax_rate).try(:tax_category)
+      tax_rate.try(:tax_category)
     end
 
     def refresh_rates
@@ -363,12 +367,29 @@ module Spree
       ShipmentMailer.shipped_email(id).deliver_later
     end
 
-    def update_adjustment_included_tax
-      if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
-        adjustment.set_included_tax! Config.shipping_tax_rate
+    def update_adjustment_tax
+      # We have to apply tax correctly here based on Zone, via order.tax_address / order.tax_zone
+      # Whatever we do here we should return early in cases where we can't compute tax, eg:
+      # distributor doesn't charge tax, order does not have an address yet, etc.
+      #
+      # We need to get the TaxRate for this shipment via the (selected) shipping_method's TaxCategory.
+      # We have to see if that rate is applicable in this case (based on the order's tax_zone).
+      # We have to find out if the rate is included or additional.
+      # Then we have to calculate the tax amount (different depending on inclusive/additional).
+      # Then we need to persist the value in adjustment.included_tax or adjustment.additional_tax
+      # Then we probably need to update all the order totals...
+
+      if shipping_includes_tax?
+        adjustment.set_adjustment_tax! tax_rate
       else
-        adjustment.set_included_tax! 0
+        adjustment.clear_adjustment_tax!
       end
+    end
+
+    def shipping_includes_tax?
+      Config.shipment_inc_vat &&
+        (order.distributor.nil? || order.distributor.charges_sales_tax) &&
+        tax_rate.present?
     end
 
     def set_cost_zero_when_nil
@@ -386,7 +407,7 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
-      update_adjustment_included_tax if adjustment
+      update_adjustment_tax if adjustment
     end
 
     def update_order

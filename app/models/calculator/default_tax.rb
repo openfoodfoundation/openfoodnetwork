@@ -25,6 +25,15 @@ module Calculator
       end
     end
 
+    def compute_adjustment(fee)
+      if rate.included_in_price
+        pre_tax_amount = fee.amount / (1 + rate.amount)
+        deduced_total_by_rate(pre_tax_amount, rate)
+      else
+        round_to_two_places(fee.amount * rate.amount)
+      end
+    end
+
     def compute_shipment_or_line_item(item)
       if rate.included_in_price
         deduced_total_by_rate(item.pre_tax_amount, rate)
