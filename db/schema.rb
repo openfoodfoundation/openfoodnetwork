@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201207171214) do
+ActiveRecord::Schema.define(version: 20201215205058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -494,19 +494,20 @@ ActiveRecord::Schema.define(version: 20201207171214) do
     t.integer  "order_id"
     t.integer  "variant_id"
     t.integer  "quantity",                                                                null: false
-    t.decimal  "price",                            precision: 8,  scale: 2,               null: false
+    t.decimal  "price",                            precision: 10, scale: 2,               null: false
     t.datetime "created_at",                                                              null: false
     t.datetime "updated_at",                                                              null: false
     t.integer  "max_quantity"
     t.string   "currency",             limit: 255
     t.decimal  "distribution_fee",                 precision: 10, scale: 2
     t.decimal  "final_weight_volume",              precision: 10, scale: 2
-    t.decimal  "cost_price",                       precision: 8,  scale: 2
+    t.decimal  "cost_price",                       precision: 10, scale: 2
     t.integer  "tax_category_id"
     t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: 0.0
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "pre_tax_amount",                   precision: 8,  scale: 2
+    t.decimal  "fee_total",                        precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
@@ -578,6 +579,7 @@ ActiveRecord::Schema.define(version: 20201207171214) do
     t.decimal  "shipment_total",                   precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "fee_total",                        precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx", using: :btree
@@ -656,8 +658,8 @@ ActiveRecord::Schema.define(version: 20201207171214) do
   add_index "spree_preferences", ["key"], name: "index_spree_preferences_on_key", unique: true, using: :btree
 
   create_table "spree_prices", force: :cascade do |t|
-    t.integer  "variant_id",                                     null: false
-    t.decimal  "amount",                 precision: 8, scale: 2
+    t.integer  "variant_id",                                      null: false
+    t.decimal  "amount",                 precision: 10, scale: 2
     t.string   "currency",   limit: 255
     t.datetime "deleted_at"
   end
@@ -818,7 +820,7 @@ ActiveRecord::Schema.define(version: 20201207171214) do
   create_table "spree_shipments", force: :cascade do |t|
     t.string   "tracking",             limit: 255
     t.string   "number",               limit: 255
-    t.decimal  "cost",                             precision: 8,  scale: 2
+    t.decimal  "cost",                             precision: 10, scale: 2, default: 0.0
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
@@ -830,6 +832,7 @@ ActiveRecord::Schema.define(version: 20201207171214) do
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "pre_tax_amount",                   precision: 8,  scale: 2
+    t.decimal  "fee_total",                        precision: 10, scale: 2, default: 0.0
   end
 
   add_index "spree_shipments", ["number"], name: "index_shipments_on_number", using: :btree
@@ -1071,19 +1074,19 @@ ActiveRecord::Schema.define(version: 20201207171214) do
   add_index "spree_users", ["persistence_token"], name: "index_users_on_persistence_token", using: :btree
 
   create_table "spree_variants", force: :cascade do |t|
-    t.string   "sku",              limit: 255,                         default: "",    null: false
-    t.decimal  "weight",                       precision: 8, scale: 2
-    t.decimal  "height",                       precision: 8, scale: 2
-    t.decimal  "width",                        precision: 8, scale: 2
-    t.decimal  "depth",                        precision: 8, scale: 2
+    t.string   "sku",              limit: 255,                          default: "",    null: false
+    t.decimal  "weight",                       precision: 8,  scale: 2
+    t.decimal  "height",                       precision: 8,  scale: 2
+    t.decimal  "width",                        precision: 8,  scale: 2
+    t.decimal  "depth",                        precision: 8,  scale: 2
     t.datetime "deleted_at"
-    t.boolean  "is_master",                                            default: false
+    t.boolean  "is_master",                                             default: false
     t.integer  "product_id"
-    t.decimal  "cost_price",                   precision: 8, scale: 2
+    t.decimal  "cost_price",                   precision: 10, scale: 2
     t.integer  "position"
     t.string   "cost_currency",    limit: 255
     t.float    "unit_value"
-    t.string   "unit_description", limit: 255,                         default: ""
+    t.string   "unit_description", limit: 255,                          default: ""
     t.string   "display_name",     limit: 255
     t.string   "display_as",       limit: 255
     t.datetime "import_date"
