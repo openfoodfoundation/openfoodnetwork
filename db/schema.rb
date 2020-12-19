@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201113163227) do
+ActiveRecord::Schema.define(version: 20201219120055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -393,6 +393,7 @@ ActiveRecord::Schema.define(version: 20201113163227) do
     t.string   "adjustable_type", limit: 255
     t.decimal  "included_tax",                precision: 10, scale: 2, default: 0.0,  null: false
     t.string   "state",           limit: 255
+    t.integer  "order_id"
   end
 
   add_index "spree_adjustments", ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree

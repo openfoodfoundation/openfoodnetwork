@@ -40,6 +40,7 @@ module Spree
               amount: amount,
               source: old_calculable,
               originator: self,
+              order: order_object_for(target),
               label: label,
               mandatory: mandatory,
               state: state
@@ -74,6 +75,17 @@ module Spree
             Rails.application.config.spree.calculators
           end
           private_class_method :spree_calculators
+
+          private
+
+          def order_object_for(target)
+            # Temporary method for adjustments transition.
+            if target.is_a? Spree::Order
+              target
+            elsif target.respond_to?(:order)
+              target.order
+            end
+          end
         end
       end
     end

@@ -71,6 +71,7 @@ module Spree
             amount: amount,
             source: order,
             originator: self,
+            order: order,
             state: "closed",
             label: label
           )
