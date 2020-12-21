@@ -341,7 +341,7 @@ module Spree
         end
 
         context "not taxable line item " do
-          let!(:line_item) { @order.contents.add(@nontaxable.master, 1) }
+          let!(:line_item) { @order.contents.add(@nontaxable.variants.first, 1) }
 
           it "should not create a tax adjustment" do
             Spree::TaxRate.adjust(@order, @order.line_items)
@@ -355,7 +355,7 @@ module Spree
         end
 
         context "taxable line item" do
-          let!(:line_item) { @order.contents.add(@taxable.master, 1) }
+          let!(:line_item) { @order.contents.add(@taxable.variants.first, 1) }
 
           context "when price includes tax" do
             before do
