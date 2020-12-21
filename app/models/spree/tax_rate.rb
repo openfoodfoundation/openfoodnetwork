@@ -68,18 +68,21 @@ module Spree
       end
 
       relevant_items.each do |item|
+        pp "REL"
         item.adjustments.tax.delete_all
         relevant_rates = applicable_rates.select { |rate| rate.tax_category == item.tax_category }
         store_pre_tax_amount(item, relevant_rates)
+        # we could pass relevant_rates down here so we don't need to persist pre_tax_amount
         relevant_rates.each do |rate|
           rate.adjust(order, item)
         end
       end
 
       non_relevant_items.each do |item|
+        pp "non-REL"
         if item.adjustments.tax.present?
           item.adjustments.tax.delete_all
-          item.update_column(:pre_tax_amount, nil)
+          item.update_column(:pre_tax_amount, nil) # will currently break with fees...
           Spree::ItemAdjustments.new(item).update
         end
       end

@@ -361,7 +361,6 @@ module Spree
             before do
               @rate1.update_column(:included_in_price, true)
               @rate2.update_column(:included_in_price, true)
-              Spree::TaxRate.store_pre_tax_amount(line_item, [@rate1, @rate2])
             end
 
             context "when zone is contained by default tax zone" do
@@ -439,7 +438,7 @@ module Spree
               expect(line_item.adjustments.count).to eq 2
             end
 
-            it "should create an adjustment" do
+            it "should create adjustments" do
               expect(line_item.adjustments.count).to eq 2
             end
 
@@ -461,11 +460,12 @@ module Spree
               @price_before_taxes = line_item.price / (1 + @rate1.amount + @rate2.amount)
               # Use the same rounding method as in DefaultTax calculator
               @price_before_taxes = BigDecimal.new(@price_before_taxes).round(2, BigDecimal::ROUND_HALF_UP)
-              line_item.update_column(:pre_tax_amount, @price_before_taxes)
+              #line_item.update_column(:pre_tax_amount, @price_before_taxes)
               # Clear out any previously automatically-applied adjustments
               @order.all_adjustments.delete_all
-              @rate1.adjust(@order, line_item)
-              @rate2.adjust(@order, line_item)
+              # @rate1.adjust(@order, line_item)
+              # @rate2.adjust(@order, line_item)
+              Spree::TaxRate.adjust(@order, @order.line_items)
             end
 
             it "should create two price adjustments" do
