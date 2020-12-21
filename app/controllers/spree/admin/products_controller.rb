@@ -4,7 +4,7 @@ require 'open_food_network/permissions'
 
 module Spree
   module Admin
-    class ProductsController < ResourceController
+    class ProductsController < ::Admin::ResourceController
       helper 'spree/products'
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
@@ -29,9 +29,9 @@ module Spree
           if @object.save
             flash[:success] = flash_message_for(@object, :successfully_created)
             if params[:button] == "add_another"
-              redirect_to new_admin_product_path
+              redirect_to spree.new_admin_product_path
             else
-              redirect_to admin_products_path
+              redirect_to spree.admin_products_path
             end
           else
             render :new
@@ -70,7 +70,7 @@ module Spree
 
             flash[:success] = flash_message_for(@object, :successfully_updated)
           end
-          redirect_to edit_admin_product_url(@object, @url_filters)
+          redirect_to spree.edit_admin_product_url(@object, @url_filters)
         end
       end
 
@@ -97,7 +97,7 @@ module Spree
                             Spree.t('notice_messages.product_not_cloned')
                           end
 
-        redirect_to edit_admin_product_url(@new)
+        redirect_to spree.edit_admin_product_url(@new)
       end
 
       def group_buy_options
@@ -179,7 +179,7 @@ module Spree
       end
 
       def bulk_index_query(params)
-        params[:filters].to_h.merge(page: params[:page], per_page: params[:per_page])
+        (params[:filters] || {}).merge(page: params[:page], per_page: params[:per_page])
       end
 
       def load_form_data

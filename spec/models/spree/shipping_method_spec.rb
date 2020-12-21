@@ -1,9 +1,16 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
   describe ShippingMethod do
     it "is valid when built from factory" do
-      expect(create(:shipping_method)).to be_valid
+      expect(
+        build(
+          :shipping_method,
+          shipping_categories: [Spree::ShippingCategory.new(name: 'Test')]
+        )
+      ).to be_valid
     end
 
     it "can have distributors" do
@@ -94,7 +101,7 @@ module Spree
     end
 
     describe "#include?" do
-      let(:shipping_method) { create(:shipping_method) }
+      let(:shipping_method) { build_stubbed(:shipping_method) }
 
       it "does not include a nil address" do
         expect(shipping_method.include?(nil)).to be false
@@ -121,21 +128,33 @@ module Spree
     end
 
     context "validations" do
-      let!(:shipping_method) { create(:shipping_method, distributors: [create(:distributor_enterprise)]) }
-
       it "validates presence of name" do
-        shipping_method.update name: ''
+        shipping_method = build_stubbed(
+          :shipping_method,
+          name: ''
+        )
+        expect(shipping_method).not_to be_valid
         expect(shipping_method.errors[:name].first).to eq "can't be blank"
       end
 
       context "shipping category" do
         it "validates presence of at least one" do
-          shipping_method.update shipping_categories: []
-          expect(shipping_method.reload.errors[:base].first).to eq "You need to select at least one shipping category"
+          shipping_method = build_stubbed(
+            :shipping_method,
+            shipping_categories: []
+          )
+          expect(shipping_method).not_to be_valid
+          expect(shipping_method.errors[:base].first).to eq "You need to select at least one shipping category"
         end
 
         context "one associated" do
-          it { expect(shipping_method.reload.errors[:base]).to be_empty }
+          let(:shipping_method) do
+            build_stubbed(
+              :shipping_method,
+              shipping_categories: [Spree::ShippingCategory.new(name: 'Test')]
+            )
+          end
+          it { expect(shipping_method).to be_valid }
         end
       end
     end

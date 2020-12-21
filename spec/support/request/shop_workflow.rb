@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShopWorkflow
   # If a spec uses `within` but we want to check something outside of that
   # scope, we can search from the body element instead.
@@ -6,12 +8,6 @@ module ShopWorkflow
   end
 
   def wait_for_cart
-    # Wait for debounce
-    #
-    # The auto-submit on these specific form elements (add to cart) now has a small built-in
-    # waiting period before submitting the data...
-    sleep 0.6
-
     within find_body do
       # We ignore visibility in case the cart dropdown is not open.
       within '.cart-sidebar', visible: false do
@@ -30,7 +26,7 @@ module ShopWorkflow
   end
 
   def have_price(price)
-    have_selector ".price", text: price
+    have_selector ".variant-price", text: price
   end
 
   def add_enterprise_fee(enterprise_fee)
@@ -50,46 +46,38 @@ module ShopWorkflow
   end
 
   # Add an item to the cart
-  #
-  # At the moment, the user enters the quantity into an input field.
-  # But with the coming mobile-friendly UX, the user will click a button to
-  # add an item, hence the naming.
-  #
-  # This is temporary code. The duplication will be removed by the mobile
-  # product listings feature. This has been backported to avoid merge
-  # conflicts and to make the current build more stable.
   def click_add_to_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+      click_button "Add"
+      (quantity - 1).times { click_button increase_quantity_symbol }
     end
     wait_for_cart
   end
 
   def click_remove_from_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i - quantity
-      fill_in input[:name], with: new_quantity
+      quantity.times { click_button decrease_quantity_symbol }
     end
     wait_for_cart
   end
 
   def click_add_bulk_to_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+      click_button "Add"
+    end
+    within(".reveal-modal") do
+      (quantity - 1).times do
+        first(:button, increase_quantity_symbol).click
+      end
     end
     wait_for_cart
   end
 
-  def click_add_bulk_max_to_cart(variant = nil, quantity = 1)
-    within_variant(variant) do
-      input = page.find(:field, "variant_attributes[#{variant.id}][max_quantity]")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+  def click_add_bulk_max_to_cart(quantity = 1)
+    within(".reveal-modal") do
+      quantity.times do
+        page.all("button", text: increase_quantity_symbol).last.click
+      end
     end
     wait_for_cart
   end
@@ -100,6 +88,20 @@ module ShopWorkflow
     within(selector) do
       yield
     end
+  end
+
+  def open_bulk_quantity_modal(variant)
+    within_variant(variant) do
+      page.first("button.bulk-buy").click
+    end
+  end
+
+  def increase_quantity_symbol
+    "＋"
+  end
+
+  def decrease_quantity_symbol
+    "－"
   end
 
   def toggle_accordion(name)

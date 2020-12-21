@@ -1,5 +1,3 @@
-require 'spree/core/controller_helpers/order'
-
 class CartController < BaseController
   before_action :check_authorization
 
@@ -13,7 +11,8 @@ class CartController < BaseController
     Spree::Adjustment.without_callbacks do
       cart_service = CartService.new(order)
 
-      if cart_service.populate(params.slice(:products, :variants, :quantity), true)
+      cart_service.populate(params.slice(:products, :variants, :quantity), true)
+      if cart_service.valid?
         order.update_distribution_charge!
         order.cap_quantity_at_stock!
         order.update!
@@ -24,7 +23,8 @@ class CartController < BaseController
                        stock_levels: VariantsStockLevels.new.call(order, variant_ids) },
                status: :ok
       else
-        render json: { error: true }, status: :precondition_failed
+        render json: { error: cart_service.errors.full_messages.join(",") },
+               status: :precondition_failed
       end
     end
     populate_variant_attributes

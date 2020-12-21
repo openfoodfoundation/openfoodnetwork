@@ -5,15 +5,13 @@ Darkswarm.directive "tabsetCtrl", (Tabsets, $location) ->
     selected: "@"
     navigate: "="
     prefix: "@?"
-    alwaysopen: "="
   controller: ($scope, $element) ->
     if $scope.navigate
       path = $location.path()?.match(/^\/\w+$/)?[0]
       $scope.selected = path[1..] if path
 
     this.toggle = (name) ->
-      state = if $scope.alwaysopen then 'open' else null
-      Tabsets.toggle($scope.id, name, state)
+      Tabsets.toggle($scope.id, name)
 
     this.select = (selection) ->
       $scope.$broadcast("selection:changed", selection)

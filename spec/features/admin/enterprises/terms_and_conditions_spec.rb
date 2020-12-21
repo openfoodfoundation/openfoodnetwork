@@ -16,7 +16,7 @@ feature "Uploading Terms and Conditions PDF" do
       visit edit_admin_enterprise_path(distributor)
     end
 
-    describe "images for an enterprise" do
+    describe "with terms and conditions to upload" do
       def go_to_business_details
         within(".side_menu") do
           click_link "Business Details"
@@ -43,21 +43,27 @@ feature "Uploading Terms and Conditions PDF" do
 
         # Add PDF
         attach_file "enterprise[terms_and_conditions]", white_pdf_file_name
-        click_button "Update"
+
+        Timecop.freeze(run_time = Time.zone.local(2002, 4, 13, 0, 0, 0)) do
+          click_button "Update"
+          expect(distributor.reload.terms_and_conditions_updated_at).to eq run_time
+        end
         expect(page).
-          to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+          to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
 
         go_to_business_details
-        expect(page).to have_selector("a[href*='logo-white.pdf']")
+        expect(page).to have_selector "a[href*='logo-white.pdf'][target=\"_blank\"]"
+        expect(page).to have_content "2002-04-13 00:00:00 +1000"
 
         # Replace PDF
         attach_file "enterprise[terms_and_conditions]", black_pdf_file_name
         click_button "Update"
         expect(page).
-          to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+          to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
+        expect(distributor.reload.terms_and_conditions_updated_at).to_not eq run_time
 
         go_to_business_details
-        expect(page).to have_selector("a[href*='logo-black.pdf']")
+        expect(page).to have_selector "a[href*='logo-black.pdf']"
       end
     end
   end

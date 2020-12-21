@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe "spree/admin/payment_methods/index.html.haml" do
@@ -9,15 +11,15 @@ describe "spree/admin/payment_methods/index.html.haml" do
 
       def new_object_url() "" end
 
-      def edit_object_url(object, options = {}) "" end
+      def edit_object_url(_object, _options = {}) "" end
 
-      def object_url(object = nil, options = {}) "" end
+      def object_url(_object = nil, _options = {}) "" end
     end
 
     assign(:payment_methods, [
-      create(:payment_method),
-      create(:payment_method)
-    ])
+             create(:payment_method),
+             create(:payment_method)
+           ])
   end
 
   describe "payment methods index page" do

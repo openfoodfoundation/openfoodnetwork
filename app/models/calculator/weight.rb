@@ -3,22 +3,36 @@ require 'spree/localized_number'
 module Calculator
   class Weight < Spree::Calculator
     extend Spree::LocalizedNumber
-    preference :per_kg, :decimal, default: 0.0
-    localize_number :preferred_per_kg
+    preference :unit_from_list, :string, default: "kg"
+    preference :per_unit, :decimal, default: 0.0
+
+    localize_number :preferred_per_unit
 
     def self.description
       I18n.t('spree.weight')
     end
 
+    def set_preference(name, value)
+      if name == :unit_from_list && !["kg", "lb"].include?(value)
+        calculable.errors.add(:preferred_unit_from_list, I18n.t(:calculator_preferred_unit_error))
+      else
+        __send__ self.class.preference_setter_method(name), value
+      end
+    end
+
     def compute(object)
       line_items = line_items_for object
-      (total_weight(line_items) * preferred_per_kg).round(2)
+      (total_weight(line_items) * preferred_per_unit).round(2)
+    end
+
+    def preferred_unit_from_list_values
+      ["kg", "lb"]
     end
 
     private
 
     def total_weight(line_items)
-      line_items.sum do |line_item|
+      line_items.to_a.sum do |line_item|
         line_item_weight(line_item)
       end
     end
@@ -33,8 +47,8 @@ module Calculator
 
     def weight_per_variant(line_item)
       if variant_unit(line_item) == 'weight'
-        # The calculator price is per_kg so we need to convert unit_value to kg
-        convert_g_to_kg(line_item.variant.andand.unit_value)
+        # Convert unit_value to the preferred unit
+        convert_weight(line_item.variant.andand.unit_value)
       else
         line_item.variant.andand.weight || 0
       end
@@ -42,8 +56,8 @@ module Calculator
 
     def weight_per_final_weight_volume(line_item)
       if variant_unit(line_item) == 'weight'
-        # The calculator price is per_kg so we need to convert final_weight_volume to kg
-        convert_g_to_kg(line_item.final_weight_volume)
+        # Convert final_weight_volume to the preferred unit
+        convert_weight(line_item.final_weight_volume)
       else
         weight_per_variant(line_item) * quantity_implied_in_final_weight_volume(line_item)
       end
@@ -66,10 +80,14 @@ module Calculator
       line_item.variant.product.andand.variant_unit
     end
 
-    def convert_g_to_kg(value)
-      return 0 unless value
+    def convert_weight(value)
+      return 0 unless value && ["kg", "lb"].include?(preferences[:unit_from_list])
 
-      value / 1000
+      if preferences[:unit_from_list] == "kg"
+        value / 1000
+      elsif preferences[:unit_from_list] == "lb"
+        value / 453.6
+      end
     end
   end
 end

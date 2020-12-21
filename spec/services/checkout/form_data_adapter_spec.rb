@@ -38,7 +38,7 @@ describe Checkout::FormDataAdapter do
 
       describe "and a credit card is provided" do
         before do
-          params[:order][:payments_attributes].first[:source_attributes] = {number: "4444333322221111"}
+          params[:order][:payments_attributes].first[:source_attributes] = { number: "4444333322221111" }
         end
 
         it "fills in missing credit card brand" do

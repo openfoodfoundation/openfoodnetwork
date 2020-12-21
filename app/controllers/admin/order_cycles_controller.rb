@@ -1,5 +1,5 @@
 module Admin
-  class OrderCyclesController < ResourceController
+  class OrderCyclesController < Admin::ResourceController
     include OrderCyclesHelper
     include PaperTrailLogging
 
@@ -91,7 +91,7 @@ module Admin
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
-      Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
+      OrderCycleNotificationJob.perform_later params[:id].to_i
 
       redirect_to main_app.admin_order_cycles_path,
                   notice: I18n.t(:order_cycles_email_to_producers_notice)
@@ -223,7 +223,7 @@ module Admin
     end
 
     def order_cycle_set
-      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
+      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
     end
 
     def require_order_cycle_set_params
@@ -239,6 +239,12 @@ module Admin
 
     def order_cycle_params
       PermittedAttributes::OrderCycle.new(params).call
+    end
+
+    def order_cycle_bulk_params
+      params.require(:order_cycle_set).permit(
+        collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
+      )
     end
   end
 end

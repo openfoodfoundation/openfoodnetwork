@@ -4,7 +4,7 @@ Darkswarm.factory "CookiesBannerService", (Navigation, $modal, $location, Redire
     modalMessage: null
     isEnabled: false
 
-    open: (path, template = 'angular-templates/cookies_banner.html') =>
+    open: (path, template = '/angular-templates/cookies_banner.html') =>
       return unless @isEnabled
       @modalInstance = $modal.open
         templateUrl: template

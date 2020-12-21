@@ -1,5 +1,4 @@
 //= require_self
-//= require admin/handlebar_extensions
 //= require admin/spree/orders/variant_autocomplete
 
 /**
@@ -116,7 +115,8 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
 }
 
 $(document).ready(function() {
-  if (typeof Spree !== 'undefined') {
+  if (typeof Spree !== 'undefined' &&
+    typeof Spree.translations !== 'undefined') {
     handle_date_picker_fields = function(){
       $('.datepicker').datepicker({
         dateFormat: Spree.translations.date_picker,
@@ -127,7 +127,16 @@ $(document).ready(function() {
         nextText: Spree.translations.next,
         showOn: "focus"
       });
-
+      
+       $.datepicker.regional[I18n.locale] = {
+          prevText: Spree.translations.previous,
+          nextText: Spree.translations.next,
+          monthNames: Spree.translations.month_names,
+          dayNames: Spree.translations.abbr_day_names,
+          dayNamesMin: Spree.translations.abbr_day_names,
+          dateFormat: Spree.translations.date_picker
+      };
+      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale]);
       // Correctly display range dates
       $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
         $(".date-range-filter .datepicker-to" ).datepicker( "option", "minDate", selectedDate );

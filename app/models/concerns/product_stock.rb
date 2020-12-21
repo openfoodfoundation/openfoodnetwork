@@ -4,7 +4,7 @@ module ProductStock
   extend ActiveSupport::Concern
 
   def on_demand
-    if has_variants?
+    if variants?
       raise 'Cannot determine product on_demand value of product with multiple variants' if variants.size > 1
 
       variants.first.on_demand
@@ -14,7 +14,7 @@ module ProductStock
   end
 
   def on_hand
-    if has_variants?
+    if variants?
       variants.map(&:on_hand).reduce(:+)
     else
       master.on_hand

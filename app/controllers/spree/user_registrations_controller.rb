@@ -7,7 +7,7 @@ require "spree/core/controller_helpers/ssl"
 
 module Spree
   class UserRegistrationsController < Devise::RegistrationsController
-    helper 'spree/base', 'spree/store'
+    helper 'spree/base'
 
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
@@ -17,26 +17,6 @@ module Spree
     ssl_required
     before_action :check_permissions, only: [:edit, :update]
     skip_before_action :require_no_authentication
-
-    # GET /resource/sign_up
-    def new
-      super
-      @user = resource
-    end
-
-    # POST /resource/sign_up
-    def create
-      @user = build_resource(params[:spree_user])
-      if resource.save
-        set_flash_message(:notice, :signed_up)
-        sign_in(:spree_user, @user)
-        associate_user
-        respond_with resource, location: after_sign_up_path_for(resource)
-      else
-        clean_up_passwords(resource)
-        render :new
-      end
-    end
 
     # GET /resource/edit
     def edit

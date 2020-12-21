@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class UsersController < ResourceController
+    class UsersController < ::Admin::ResourceController
       rescue_from Spree::User::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
@@ -60,14 +60,14 @@ module Spree
         if @user.generate_spree_api_key!
           flash[:success] = t('spree.api.key_generated')
         end
-        redirect_to edit_admin_user_path(@user)
+        redirect_to spree.edit_admin_user_path(@user)
       end
 
       def clear_api_key
         if @user.clear_spree_api_key!
           flash[:success] = t('spree.api.key_cleared')
         end
-        redirect_to edit_admin_user_path(@user)
+        redirect_to spree.edit_admin_user_path(@user)
       end
 
       protected
@@ -100,7 +100,7 @@ module Spree
 
       private
 
-      # handling raise from Spree::Admin::ResourceController#destroy
+      # handling raise from Admin::ResourceController#destroy
       def user_destroy_with_orders_error
         invoke_callbacks(:destroy, :fails)
         render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)

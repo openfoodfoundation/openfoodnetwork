@@ -23,6 +23,10 @@ fr:
         variant_unit_name: "Unité de la variante"
       spree/credit_card:
         base: "Carte de crédit"
+        number: "N° commande"
+        month: "Mois"
+        verification_value: "Valeur de vérification"
+        year: "Année"
       order_cycle:
         orders_close_at: Date de fermeture
       variant_override:
@@ -285,10 +289,16 @@ fr:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
     cancel: "Annuler"
+    resume: "Reprendre"
     save: "Sauvegarder"
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
+    add: "Ajouter"
+    cut: "Couper"
+    paste: "Coller"
+    destroy: "Détruire"
+    rename: "Renommer"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -347,6 +357,7 @@ fr:
     has_n_rules: "a %{num} règles"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     unsaved_changes: "Des modifications n'ont pas été sauvegardées."
+    available_units: "Unités disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
@@ -392,20 +403,23 @@ fr:
         duplicate_code: "Ce code est déjà utilisé."
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
-        update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Oups! Veuillez remplir tous les champs obligatoires!'
-        edit_bill_address: 'Modifier l''adresse de facturation'
-        edit_ship_address: 'Modifier l''adresse de livraison'
-        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
-        select_country: 'Choisir le pays'
-        select_state: 'Choisir le département'
-        edit: 'Modifier'
-        update_address: 'Mettre à jour l''adresse'
-        confirm_delete: 'Confirmer suppression?'
+        balance: "Solde"
+        update_address_success: "Adresse mise à jour avec succès."
+        update_address_error: "Oups! Veuillez remplir tous les champs obligatoires!"
+        edit_bill_address: "Modifier l'adresse de facturation"
+        edit_ship_address: "Modifier l'adresse de livraison"
+        required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
+        select_country: "Choisir le pays"
+        select_state: "Choisir le département"
+        edit: "Modifier"
+        update_address: "Mettre à jour l'adresse"
+        confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
-        guest_label: 'Commande en mode invité'
+        guest_label: "Commande en mode invité"
+        credit_owed: "Crédit dû"
+        balance_due: "Solde dû"
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique'
+        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique"
     contents:
       edit:
         title: Contenu
@@ -592,6 +606,8 @@ fr:
       controls:
         back_to_my_inventory: Retour à mon catalogue boutique
     orders:
+      edit:
+        order_sure_want_to: Etes-vous sûr de vouloir %{event}cette commande ?
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -640,6 +656,7 @@ fr:
           invoice_text: Ajouter une mention spécifique en bas des factures
           terms_and_conditions: "CGU & CGV"
           remove_terms_and_conditions: "Supprimer le fichier"
+          uploaded_on: "mis en ligne le"
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -750,6 +767,7 @@ fr:
               il n'y a pas de cycle de vente en cours (donc quand votre boutique est
               fermée).
           shopfront_category_ordering: "Ordre d'affichage des catégories"
+          shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
         social:
@@ -1159,8 +1177,8 @@ fr:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     terms_and_conditions:
-      message_html: "En confirmant votre commande, vous acceptez les %{terms_and_conditions_link}."
-      link_text: "Conditions Générales d'Utilisation"
+      message_html: "J'accepte les %{terms_and_conditions_link}."
+      link_text: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
   shops:
     hubs:
@@ -1215,6 +1233,9 @@ fr:
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
         select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."
+    products:
+      summary:
+        bulk: "Vrac"
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1242,7 +1263,7 @@ fr:
   ticket_column_item: "Produit"
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
-  menu_1_title: "Boutiques"
+  menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
   menu_2_url: "/map"
@@ -1387,7 +1408,7 @@ fr:
       cookies_policy_link: "politique de cookies"
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
-  brandstory_headline: "NOUVEAU : on change de nom !"
+  brandstory_headline: "On change de nom !"
   brandstory_intro: "Votre plateforme Open Food France change de nom et devient CoopCircuits, une plateforme libre, cogérée et accessible à tous."
   brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative CoopCircuits. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
   brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, CoopCircuits vous accompagne :-)"
@@ -1550,6 +1571,7 @@ fr:
   shopping_groups_part_of: "fait partie de:"
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes"
+  enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
@@ -1571,7 +1593,9 @@ fr:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les boutiques près de %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    one: Votre commande avec <a href='%{path}' target='_blank'>%{shop}/%{order}</a> est disponible pour vérification. Vous pouvez réaliser des modifications jusqu'au %{oc_close}.
+    few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Annuler
@@ -1717,7 +1741,9 @@ fr:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    one: Un produit additionnel est déjà confirmé pour ce cycle de vente.
+    few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
+    many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
@@ -1922,7 +1948,6 @@ fr:
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
   change_shop: "Changer de boutique pour:"
   shop_at: "Acheter maintenant :"
-  price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
   sales_fee: "Frais de ventes/marketing"
   packing_fee: "Frais de packaging"
@@ -1997,6 +2022,7 @@ fr:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
+  calculator_preferred_unit_error: "doit être kg ou lb"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe par article"
   flat_rate_per_order: "Montant fixe par commande"
@@ -2059,6 +2085,7 @@ fr:
   spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
+  spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
   spree_order_populator_availability_error: "Ce produit n'est pas disponible pour ce cycle de vente / distributeur."
   spree_distributors_error: "Veuillez sélectionner au moins une boutique"
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
@@ -2368,6 +2395,7 @@ fr:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    default_card_voids_auth: Modifier votre carte de paiement par défaut va supprimer les autorisations attribuées à certaines boutiques. vous pouvez les remettre en place dans les paramètres de votre compte. Souhaitez-vous modifier la carte par défaut ?
     cart:
       add_to_cart_failed: >
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
@@ -2375,8 +2403,9 @@ fr:
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
-        got_it: J'ai compris
+        got_it: "J'ai compris"
         close: "Fermer"
+        continue: "Suivant"
         invite: "Inviter"
         invite_title: "Inviter un nouvel utilisateur"
         tag_rule_help:
@@ -2396,6 +2425,14 @@ fr:
               En créant une règle spécifique à un tag, vous pouvez modifier le contenu
               vu par défaut (afficher ou masquer) par les acheteurs associés à ce
               tag.
+        terms_and_conditions_info:
+          title: "Mise à jour des CGU & CGV"
+          message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
+          message_2: "Lorsque vous mettez à jour vos CGV, vos clients habituels verront une petite notification leur indiquant que le document a été modifié."
+        terms_and_conditions_warning:
+          title: "Mise à jour des CGU & CGV"
+          message_1: "Vos acheteurs devront valider vos CGV lors de leur commande."
+          message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
       panels:
         save: Enregistrer
         saved: Enregistré
@@ -2622,6 +2659,15 @@ fr:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    shopfront:
+      variant:
+        add_to_cart: "Ajouter"
+        in_cart: "au panier"
+        quantity_in_cart: "%{quantity} au panier"
+      bulk_buy_modal:
+        min_quantity: "Quantité min"
+        max_quantity: "Quantité max"
+      price_breakdown: "Détail du prix"
     variants:
       on_demand:
         'yes': "A volonté"
@@ -2870,6 +2916,8 @@ fr:
     delete: "Supprimer"
     cannot_set_shipping_method_without_address: "Impossible de choisir une méthode de livraison tant que les informations acheteur ne sont pas fournies."
     no_tracking_present: "Pas d'informations de traçabilité fournies."
+    tracking: "Suivi"
+    tracking_number: "Numéro de suivi"
     order_total: "Total Commande"
     customer_details: "Informations acheteur"
     customer_search: "Recherche Acheteur"
@@ -2891,6 +2939,7 @@ fr:
     adjustments: "Ajustements"
     continue: "Suivant"
     fill_in_customer_info: "Veuillez saisir les informations acheteur"
+    credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
@@ -2901,7 +2950,9 @@ fr:
     landing_page: "Page d'accueil (landing page)"
     server: "Serveur"
     test_mode: "Mode test"
-    logourl: "URL du logo"
+    logourl: "URL logo"
+    are_you_sure_delete: "Etes-vous certain de vouloir supprimer cet élément ?"
+    confirm_delete: "Confirmer la suppression"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
@@ -2929,15 +2980,6 @@ fr:
     smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les mails sortants à cette adresse. Si plusieurs adresses, les séparer par une virgule."
     intercept_email_address: "Adresse email d'interception"
     intercept_email_instructions: "Modifier l'email destinataire et le remplacer avec cette adresse."
-    image_settings: "Paramètres des images"
-    image_settings_warning: "Vous devrez générer de nouvelles vignettes si vous mettez à jour les styles paperclip. Utilisez rake paperclip:refresh:thumbnails CLASS=Spree::Image pour le faire."
-    attachment_default_style: Style des pièces jointes
-    attachment_default_url: "URL par défaut des pièces jointes"
-    attachment_path: "Chemin des pièces jointes"
-    attachment_styles: "Styles paperclip"
-    attachment_url: "URL des pièces jointes"
-    add_new_style: "Ajouter nouveau style"
-    image_settings_updated: "Paramètre des images mis à jour avec succès."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Catégories de taxe en cours d'affichage"
     back_to_tax_categories_list: "Retour à la liste des catégories de taxe"
@@ -2970,6 +3012,7 @@ fr:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
+    shipping_method: "Option d'expédition"
     shipping_categories: "Conditions de transport"
     new_shipping_category: "Nouvelle condition de transport"
     back_to_shipping_categories: "Retour aux conditions de transport"
@@ -3011,17 +3054,27 @@ fr:
     inventory_error_flash_for_insufficient_quantity: "Un produit de votre panier n'est plus disponible."
     inventory: Catalogue boutique
     zipcode: Code postal
-    weight: Poids (au kg)
+    weight: Poids (par kg ou lb)
     error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas ajouter un paiement pour une commande sans avoir défini de méthode de paiement au préalable."
     please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
     options: "Options"
+    has_no_shipped_units: "n'a pas d'éléments envoyés"
+    successfully_created: '%{resource} a été créé avec succès !'
+    successfully_updated: '%{resource} a été mis à jour avec succès !'
+    payment_method: "Méthode de paiement"
+    payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
+    not_available: "N/A"
+    order_populator:
+      out_of_stock: '%{item} est en rupture de stock.'
     actions:
       update: "Mettre à jour"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 erreur n'a pas permis de sauvegarder:"
+          one: "1 erreur a empêché la sauvegarde :"
+          few: "%{count} erreurs ne permettent pas de sauvegarder:"
+          many: "%{count} erreurs ne permettent pas de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
       payments_list:
@@ -3060,7 +3113,6 @@ fr:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des propriétés/labels"
-          select_from_prototype: "Sélectionnez depuis le prototype"
       properties:
         index:
           properties: "Propriétés / labels"
@@ -3153,6 +3205,8 @@ fr:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
+            few: "Vous avez %{count} produits actifs"
+            many: "Vous avez %{count} produits actifs"
             other: "Vous avez %{count} produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
@@ -3160,6 +3214,8 @@ fr:
           you_have_active:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
+            few: "Vous avez %{count} cycles de vente actifs."
+            many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GÉRER LES CYCLES DE VENTE"
       shipping_methods:
@@ -3435,6 +3491,7 @@ fr:
         issue_text: |
             Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
             Si le problème persiste, n'hésitez pas à nous contacter.
+        subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
     shipment_mailer:
@@ -3510,11 +3567,11 @@ fr:
         delete?: Supprimer?
       cards:
         authorised_shops: Boutiques autorisées
-        authorised_shops_popover: Voilà la liste des boutiques que vous avez autorisées à débiter votre carte de paiement par défaut dans le cadre de vos abonnements en cours (commandes récurrentes). Les informations concernant votre carte de paiement sont sécurisées et ne sont pas accessibles par le gérant de la boutique. Vous recevrez systématiquement une notification avant tout débit sur votre carte.
+        authorised_shops_agreement: 'Cette liste de boutique correspond aux boutiques ayant l''autorisation d''utiliser votre carte pour les commandes récurrentes auxquelles vous avez souscrit. Les détails de votre carte ne sont pas partagés avec les gérants des boutiques en question. Vous serez toujours notifié d''un paiement dès qu''il a lieu. '
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les boutiques auxquelles vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom de la boutique"
-        allow_charges?: "Autoriser les prélèvements ?"
+        allow_charges?: "Souhaitez-vous autoriser les paiements sur la carte par défaut ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:

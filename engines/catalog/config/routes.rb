@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-Openfoodnetwork::Application.routes.prepend do
+Openfoodnetwork::Application.routes.append do
 end

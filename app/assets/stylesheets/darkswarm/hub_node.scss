@@ -16,6 +16,22 @@
 
     .active_table_row {
       line-height: 1rem;
+
+      @include breakpoint(phablet) {
+        display: inline-block;
+        width: 100%;
+        background-color: rgba($white, 0.75);
+
+        &:not(.open) {
+          .columns:last-child {
+            padding-left: 0;
+          }
+        }
+
+        a.hub {
+          display: inline-block;
+        }
+      }
     }
 
     //Generic text link style
@@ -44,13 +60,6 @@
       }
     }
 
-    //Hub Link
-    @include breakpoint(phablet) {
-      a.hub {
-        display: block;
-      }
-    }
-
     //Hub Name
     span.hub-name-listing {
       font-weight: 700;
@@ -67,11 +76,11 @@
       .active_table_row {
         border: 1px solid transparent;
 
-        @include breakpoint(phablet) {
-          border-color: $clr-brick-light;
+        &:hover, &:active, &:focus {
+          border-color: $clr-brick-light-bright;
         }
 
-        &:hover, &:active, &:focus {
+        @include breakpoint(phablet) {
           border-color: $clr-brick-light-bright;
         }
       }
@@ -165,8 +174,9 @@
         }
 
         @include breakpoint(phablet) {
-          .active_table_row:first-child .skinny-head {
-            background-color: rgba(255, 255, 255, 0.85);
+          .active_table_row:first-child,
+          .active_table_row:last-child, {
+            background-color: rgba($white, 0.75);
           }
         }
       }

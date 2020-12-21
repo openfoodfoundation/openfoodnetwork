@@ -8,7 +8,7 @@ module Stripe
     describe "#call" do
       let(:validator) { Stripe::PaymentIntentValidator.new }
       let(:payment_intent_id) { "pi_123" }
-      let(:stripe_account_id) { "acct_456" }
+      let(:stripe_account_id) { "abc123" }
       let(:payment_intent_response_mock) { { status: 200, body: payment_intent_response_body } }
 
       before do

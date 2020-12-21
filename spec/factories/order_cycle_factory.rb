@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :order_cycle, parent: :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
@@ -76,9 +78,9 @@ FactoryBot.define do
     coordinator { Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
 
     transient do
-      suppliers []
-      distributors []
-      variants []
+      suppliers { [] }
+      distributors { [] }
+      variants { [] }
     end
 
     after(:create) do |oc, proxy|
@@ -104,8 +106,8 @@ FactoryBot.define do
   end
 
   factory :undated_order_cycle, parent: :simple_order_cycle do
-    orders_open_at  nil
-    orders_close_at nil
+    orders_open_at { nil }
+    orders_close_at { nil }
   end
 
   factory :upcoming_order_cycle, parent: :simple_order_cycle do

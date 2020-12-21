@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module CheckoutHelpers
     def click_checkout_continue_button

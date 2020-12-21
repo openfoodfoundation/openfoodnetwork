@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe WelcomeEnterpriseJob do
@@ -8,6 +10,6 @@ describe WelcomeEnterpriseJob do
     expect(EnterpriseMailer).to receive(:welcome).with(enterprise).and_return(mail)
     expect(mail).to receive(:deliver)
 
-    run_job WelcomeEnterpriseJob.new(enterprise.id)
+    WelcomeEnterpriseJob.perform_now(enterprise.id)
   end
 end

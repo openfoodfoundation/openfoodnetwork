@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :send_confirmation_instructions do
   match do |event_proc|
     expect(&event_proc).to change { ActionMailer::Base.deliveries.count }.by 1

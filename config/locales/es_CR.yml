@@ -22,6 +22,7 @@ es_CR:
         variant_unit_name: "Nombre de la unidad de la variante"
       spree/credit_card:
         base: "Tarjeta de crédito"
+        number: "Número"
       order_cycle:
         orders_close_at: Fecha de cierre
       variant_override:
@@ -281,6 +282,7 @@ es_CR:
     edit: "Editar"
     update: "Actualizar"
     delete: "Borrar"
+    add: "Añadir"
   admin:
     begins_at: Empieza en
     begins_on: Comienza en
@@ -381,20 +383,21 @@ es_CR:
         duplicate_code: "Este código ya ha sido utilizado."
         bill_address: "Dirección de facturación"
         ship_address: "Dirección de envío"
-        update_address_success: 'Dirección actualizada correctamente.'
-        update_address_error: 'Introduce todos los campos requeridos'
-        edit_bill_address: 'Editar la dirección de facturación'
-        edit_ship_address: 'Editar dirección de envío'
-        required_fileds: 'Los campos obligatorios se indican con un asterisco'
-        select_country: 'Selecciona país'
-        select_state: 'Selecciona provincia'
-        edit: 'Editar'
-        update_address: 'Actualizar dirección'
-        confirm_delete: '¿Confirmas que quieres borrar?'
+        balance: "Saldo"
+        update_address_success: "Dirección actualizada correctamente."
+        update_address_error: "Introduce todos los campos requeridos"
+        edit_bill_address: "Editar la dirección de facturación"
+        edit_ship_address: "Editar dirección de envío"
+        required_fileds: "Los campos obligatorios se indican con un asterisco"
+        select_country: "Selecciona país"
+        select_state: "Selecciona provincia"
+        edit: "Editar"
+        update_address: "Actualizar dirección"
+        confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
-        guest_label: 'Retirar como invitado'
+        guest_label: "Retirar como invitado"
       destroy:
-        has_associated_orders: 'Error al eliminar: el cliente tiene pedidos asociados a su tienda.'
+        has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
       edit:
         title: Contenido
@@ -1182,6 +1185,9 @@ es_CR:
         contact: "contactar"
         require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
+    products:
+      summary:
+        bulk: "Agrupar"
   card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con su información de pago: %{error}"
@@ -1538,7 +1544,8 @@ es_CR:
   hubs_distance: Más cercano a
   hubs_distance_filter: "Muéstrame tiendas cerca de %{location}"
   shop_changeable_orders_alert_html:
-    one: Su pedido con <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está abierto para revisión. Puede realizar cambios hasta %{oc_close}.
+    few: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
+    many: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
     other: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
   orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
   products_clear: Limpiar
@@ -1677,7 +1684,8 @@ es_CR:
   orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
   orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
   orders_bought_items_notice:
-    one: "Un elemento adicional ya está confirmado para este ciclo de pedido"
+    few: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
+    many: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     other: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
   orders_bought_edit_button: Editar artículos confirmados
   orders_bought_already_confirmed: "* ya confirmados"
@@ -1881,7 +1889,6 @@ es_CR:
   shop_for_products_html: "Comprar productos de <span class=\"turquoise\">%{enterprise}</span> en:"
   change_shop: "Cambiar de tienda a:"
   shop_at: "Comprar ahora en:"
-  price_breakdown: "Desglose de precios completo"
   admin_fee: "Comisión de administración"
   sales_fee: "Comisión de ventas"
   packing_fee: "Cuota de empaquetado"
@@ -2323,8 +2330,9 @@ es_CR:
     admin:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
-        got_it: Lo entiendo
+        got_it: "Lo entiendo"
         close: "Cerrar"
+        continue: "Continuar"
         invite: "Invitar"
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
@@ -2547,6 +2555,11 @@ es_CR:
           de los productos de su carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de inventario.
       only_n_remainging: "ahora solo hay %{num} restantes."
+    shopfront:
+      variant:
+        add_to_cart: "Añadir"
+      bulk_buy_modal:
+        max_quantity: "Cantidad máxima"
     variants:
       on_demand:
         'yes': "Bajo demanda"
@@ -2809,6 +2822,7 @@ es_CR:
     adjustments: "Ajustes"
     continue: "Continuar"
     fill_in_customer_info: "Por favor complete la información del cliente"
+    credit_card: "Tarjeta de crédito"
     new_payment: "Nuevo pago"
     capture: "Captura"
     void: "Vacío"
@@ -2841,15 +2855,6 @@ es_CR:
     smtp_send_copy_to_this_addresses: "Envía una copia de todos los correos salientes a esta dirección. Para direcciones múltiples, sepárelas con comas."
     intercept_email_address: "Interceptar la dirección de correo electrónico"
     intercept_email_instructions: "Anular destinatario de correo electrónico y reemplazar con esta dirección."
-    image_settings: "Ajustes de imágen"
-    image_settings_warning: "Deberá regenerar las miniaturas si actualiza los estilos de paperclip. Utilize rake paperclip:refresh:thumbnails CLASS=Spree::Image para hacer esto."
-    attachment_default_style: Estilo de los archivos adjuntos
-    attachment_default_url: "URL predeterminada de los archivos adjuntos"
-    attachment_path: "Ruta de los archivos adjuntos"
-    attachment_styles: "Estilos de clip"
-    attachment_url: "URL de los archivos adjuntos"
-    add_new_style: "Añadir nuevo estilo"
-    image_settings_updated: "Configuración de la imagen se actualizó correctamente."
     tax_categories: "Categorías de impuestos"
     listing_tax_categories: "Listado de categorías de impuestos"
     back_to_tax_categories_list: "Volver a la lista de categorías de impuestos"
@@ -2882,6 +2887,7 @@ es_CR:
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la lista de taxonomías"
     shipping_methods: "Métodos de envío"
+    shipping_method: "Método de envío"
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
@@ -2923,11 +2929,14 @@ es_CR:
     inventory_error_flash_for_insufficient_quantity: "Un artículo de su carrito ya no está disponible."
     inventory: Inventario
     zipcode: Código postal
-    weight: Peso (en kg)
     error_user_destroy_with_orders: "Los usuarios con pedidos completados no pueden ser eliminados"
     cannot_create_payment_without_payment_methods: "No se puede crear un pago para una orden sin un método de pago definido."
     please_define_payment_methods: "Por favor definir métodos de pago primero."
     options: "Opciones"
+    successfully_created: '%{resource} se ha creado exitosamente!'
+    successfully_updated: '%{resource} ha sido actualizado exitosamente!'
+    payment_method: "Método de pago"
+    payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     actions:
       update: "Actualizar"
     shared:
@@ -2966,7 +2975,6 @@ es_CR:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"
           add_product_properties: "Agregar propiedades del producto"
-          select_from_prototype: "Seleccionar de prototipo"
       properties:
         index:
           properties: "Propiedades"
@@ -3059,6 +3067,8 @@ es_CR:
           active_products:
             zero: "No tienes ningún producto activo"
             one: "Tiene un producto activo."
+            few: "Tiene %{count} productos activos"
+            many: "Tiene %{count} productos activos"
             other: "Tiene %{count} productos activos"
         order_cycles:
           order_cycles: "Ciclos de Pedido"
@@ -3066,6 +3076,8 @@ es_CR:
           you_have_active:
             zero: "No tienes ningún ciclo de pedido activo."
             one: "Tienes un ciclo de pedido activo."
+            few: "Tienes %{count} ciclos de pedido activos."
+            many: "Tienes %{count} ciclos de pedido activos."
             other: "Tienes %{count} ciclos de pedido activos."
           manage_order_cycles: "GESTIONA LOS CICLOS DE PEDIDO"
       shipping_methods:
@@ -3383,11 +3395,9 @@ es_CR:
         delete?: ¿Borrar?
       cards:
         authorised_shops: Tiendas autorizadas
-        authorised_shops_popover: Esta es la lista de tiendas a las que se les permite cobrar a su tarjeta de crédito predeterminada por las suscripciones (como por ejemplo, pedidos repetidos) que pueda tener. Los detalles de su tarjeta se mantendrán seguros y no se compartirán con los propietarios de las tiendas. Siempre se le notificará cuando se le cobra.
         saved_cards_popover: Esta es la lista de tarjetas que ha optado por guardar para su uso posterior. Su "valor predeterminado" se seleccionará automáticamente al momento de realizar un pedido, y puede ser cobrado por cualquier tienda que tenga permitido hacerlo (ver a la derecha).
       authorised_shops:
         shop_name: "Nombre de la tienda"
-        allow_charges?: "¿Permitir cobros?"
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un número.
     api:

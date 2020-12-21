@@ -47,7 +47,7 @@ module Spree
       end
 
       add_shopping_abilities user
-      add_base_abilities user if new_user? user
+      add_base_abilities user if is_new_user? user
       add_enterprise_management_abilities user if can_manage_enterprises? user
       add_group_management_abilities user if can_manage_groups? user
       add_product_management_abilities user if can_manage_products? user
@@ -57,7 +57,7 @@ module Spree
     end
 
     # New users have no enterprises.
-    def new_user?(user)
+    def is_new_user?(user)
       user.enterprises.blank?
     end
 

@@ -13,21 +13,11 @@ Provide context for others to understand it. -->
 
 
 #### Release notes
-<!-- Write a line or two to be included in the release notes.
-Everything is worth mentioning, because you did it for a reason. -->
+<!-- Write a one liner description of the change to be included in the release notes.
+Every PR is worth mentioning, because you did it for a reason. -->
 
-
-
-<!-- Please assign one category to your PR and delete the others. 
-The categories are based on https://keepachangelog.com/en/1.0.0/. -->
-
-Changelog Category: Added | Changed | Deprecated | Removed | Fixed | Security
-
-
-
-#### Discourse thread
-<!-- Is there a discussion about this in Discourse?
-Add the link or remove this section. -->
+<!-- Please select one for your PR and delete the other. -->
+Changelog Category: User facing changes | Technical changes
 
 
 

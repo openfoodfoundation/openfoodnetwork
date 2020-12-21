@@ -1,7 +1,240 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
+require 'spree/core/product_duplicator'
 
 module Spree
   describe Product do
+    context 'product instance' do
+      let(:product) { create(:product) }
+
+      context '#duplicate' do
+        before do
+          allow(product).to receive_messages taxons: [create(:taxon)]
+        end
+
+        it 'duplicates product' do
+          clone = product.duplicate
+          expect(clone.name).to eq 'COPY OF ' + product.name
+          expect(clone.master.sku).to eq ''
+          expect(clone.images.size).to eq product.images.size
+        end
+      end
+
+      context "product has no variants" do
+        context "#destroy" do
+          it "should set deleted_at value" do
+            product.destroy
+            expect(product.deleted_at).to_not be_nil
+            expect(product.master.deleted_at).to_not be_nil
+          end
+        end
+      end
+
+      context "product has variants" do
+        before do
+          create(:variant, product: product)
+        end
+
+        context "#destroy" do
+          it "should set deleted_at value" do
+            product.destroy
+            expect(product.deleted_at).to_not be_nil
+            expect(product.variants_including_master.all? { |v| !v.deleted_at.nil? }).to be_truthy
+          end
+        end
+      end
+
+      context "#price" do
+        # Regression test for Spree #1173
+        it 'strips non-price characters' do
+          product.price = "$10"
+          expect(product.price).to eq 10.0
+        end
+      end
+
+      context "#display_price" do
+        before { product.price = 10.55 }
+
+        context "with display_currency set to true" do
+          before { Spree::Config[:display_currency] = true }
+
+          it "shows the currency" do
+            expect(product.display_price.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
+          end
+        end
+
+        context "with display_currency set to false" do
+          before { Spree::Config[:display_currency] = false }
+
+          it "does not include the currency" do
+            expect(product.display_price.to_s).to eq "$10.55"
+          end
+        end
+
+        context "with currency set to JPY" do
+          before do
+            product.master.default_price.currency = 'JPY'
+            product.master.default_price.save!
+            Spree::Config[:currency] = 'JPY'
+          end
+
+          it "displays the currency in yen" do
+            expect(product.display_price.to_s).to eq "¥11"
+          end
+        end
+      end
+
+      context "#available?" do
+        it "should be available if date is in the past" do
+          product.available_on = 1.day.ago
+          expect(product).to be_available
+        end
+
+        it "should not be available if date is nil or in the future" do
+          product.available_on = nil
+          expect(product).to_not be_available
+
+          product.available_on = 1.day.from_now
+          expect(product).to_not be_available
+        end
+      end
+
+      describe 'Variants sorting' do
+        context 'without master variant' do
+          it 'sorts variants by position' do
+            expect(product.variants.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          end
+        end
+
+        context 'with master variant' do
+          it 'sorts variants by position' do
+            expect(product.variants_including_master.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          end
+        end
+      end
+    end
+
+    context "permalink" do
+      context "build product with similar name" do
+        let!(:other) { create(:product, name: 'foo bar') }
+        let(:product) { build(:product, name: 'foo') }
+
+        before { product.valid? }
+
+        it "increments name" do
+          expect(product.permalink).to eq 'foo-1'
+        end
+      end
+
+      context "build permalink with quotes" do
+        it "does not save quotes" do
+          product = create(:product, name: "Joe's", permalink: "joe's")
+          expect(product.permalink).to eq "joe-s"
+        end
+      end
+
+      context "permalinks must be unique" do
+        before do
+          @product1 = create(:product, name: 'foo')
+        end
+
+        it "cannot create another product with the same permalink" do
+          pending '[Spree build] Failing spec'
+          @product2 = create(:product, name: 'foo')
+          expect do
+            @product2.update(permalink: @product1.permalink)
+          end.to raise_error(ActiveRecord::RecordNotUnique)
+        end
+      end
+
+      it "supports Chinese" do
+        expect(create(:product, name: "你好").permalink).to eq "ni-hao"
+      end
+
+      context "manual permalink override" do
+        let(:product) { create(:product, name: "foo") }
+
+        it "calling save_permalink with a parameter" do
+          product.name = "foobar"
+          product.save
+          expect(product.permalink).to eq "foo"
+
+          product.save_permalink(product.name)
+          expect(product.permalink).to eq "foobar"
+        end
+      end
+
+      context "override permalink of deleted product" do
+        let(:product) { create(:product, name: "foo") }
+
+        it "should create product with same permalink from name like deleted product" do
+          expect(product.permalink).to eq "foo"
+          product.destroy
+
+          new_product = create(:product, name: "foo")
+          expect(new_product.permalink).to eq "foo"
+        end
+      end
+    end
+
+    context "properties" do
+      let(:product) { create(:product) }
+
+      it "should properly assign properties" do
+        product.set_property('the_prop', 'value1')
+        expect(product.property('the_prop')).to eq 'value1'
+
+        product.set_property('the_prop', 'value2')
+        expect(product.property('the_prop')).to eq 'value2'
+      end
+
+      it "should not create duplicate properties when set_property is called" do
+        expect {
+          product.set_property('the_prop', 'value2')
+          product.save
+          product.reload
+        }.not_to change(product.properties, :length)
+
+        expect {
+          product.set_property('the_prop_new', 'value')
+          product.save
+          product.reload
+          expect(product.property('the_prop_new')).to eq 'value'
+        }.to change { product.properties.length }.by(1)
+      end
+
+      # Regression test for #2455
+      it "should not overwrite properties' presentation names" do
+        Spree::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
+        product.set_property('foo', 'value1')
+        product.set_property('bar', 'value2')
+        expect(Spree::Property.where(name: 'foo').first.presentation).to eq "Foo's Presentation Name"
+        expect(Spree::Property.where(name: 'bar').first.presentation).to eq "bar"
+      end
+    end
+
+    # Regression tests for Spree #2352
+    context "classifications and taxons" do
+      it "is joined through classifications" do
+        reflection = Spree::Product.reflect_on_association(:taxons)
+        reflection.options[:through] = :classifications
+      end
+
+      it "will delete all classifications" do
+        reflection = Spree::Product.reflect_on_association(:classifications)
+        reflection.options[:dependent] = :delete_all
+      end
+    end
+
+    describe '#total_on_hand' do
+      it 'returns sum of stock items count_on_hand' do
+        product = build(:product)
+        allow(product).to receive_messages stock_items: [double(Spree::StockItem, count_on_hand: 5)]
+        expect(product.total_on_hand).to eql(5)
+      end
+    end
+
     describe "associations" do
       it { is_expected.to belong_to(:supplier) }
       it { is_expected.to belong_to(:primary_taxon) }
@@ -14,6 +247,10 @@ module Spree
 
       it "requires a primary taxon" do
         expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
+      end
+
+      it "requires a unit value" do
+        expect(build(:simple_product, unit_value: nil)).not_to be_valid
       end
 
       it "requires a supplier" do
@@ -40,7 +277,8 @@ module Spree
 
         it "generates a unique permalink" do
           product1 = create(:product, name: "Banana Permanenta", permalink: nil)
-          product2 = create(:product, name: "Banana Permanenta", permalink: nil)
+          product2 = build_stubbed(:product, name: "Banana Permanenta", permalink: nil)
+          expect(product2).to be_valid
           expect(product2.permalink).to_not eq product1.permalink
           # "banana-permanenta" != "banana-permanenta-1" # generated by Spree
         end
@@ -149,7 +387,7 @@ module Spree
       end
 
       context "a basic product" do
-        let(:product) { create(:simple_product) }
+        let(:product) { build_stubbed(:simple_product) }
 
         it "requires variant unit fields" do
           product.variant_unit = nil

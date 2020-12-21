@@ -138,10 +138,10 @@ describe 'Cart service', ->
       expect(Cart.popQueue).not.toHaveBeenCalled()
 
     it "shows an error on cart update failure", ->
-      $httpBackend.expectPOST("/cart/populate", data).respond 404, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 412, {}
       Cart.update()
       $httpBackend.flush()
-      expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: t('js.cart.add_to_cart_failed')})
+      expect(RailsFlashLoader.loadFlash).toHaveBeenCalled()
 
   describe "verifying stock levels after update", ->
     describe "when an item is out of stock", ->

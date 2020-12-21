@@ -19,4 +19,4 @@ function cleanup {
 
 trap cleanup EXIT
 
-docker-compose run --rm web $@
+docker-compose run web $@

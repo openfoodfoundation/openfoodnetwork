@@ -8,10 +8,30 @@
 @import "shop-inputs";
 @import "shop-navigation";
 @import "shop-product-rows";
-@import "shop-taxon-flag";
 @import "shop-popovers";
 
 .darkswarm {
+  .product-listing {
+    @include breakpoint(desktop) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .row.full {
+      width: 100%;
+      margin: 0;
+
+      .columns.full {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+
+  .filter-header {
+    margin-top: 1.1em;
+  }
+
   products {
     display: block;
 
@@ -51,31 +71,17 @@
     product {
       @include csstrans;
 
-      border-bottom: 1px solid #e5e5e5;
-      border-top: 1px solid #e5e5e5;
+      // Avoid margin collapsing which breaks the flush alignment of the first
+      // image.
+      overflow: auto;
+
+      &:nth-child(n + 2) {
+        border-top: 1px solid $grey-100;
+      }
       padding-bottom: 1px;
-      margin-bottom: 20px !important;
       position: relative;
       display: block;
       color: $med-drk-grey;
-
-      &:hover, &:focus, &:active {
-        border-bottom: 1px solid $clr-brick-med-bright;
-        border-top: 1px solid $clr-brick-med-bright;
-      }
-
-      // BULK
-      .bulk-buy {
-        font-size: 0.875rem;
-
-        @include breakpoint(tablet) {
-          font-size: 0.75rem;
-        }
-      }
-
-      .bulk-buy, .bulk-buy i {
-        color: #888;
-      }
 
       .inline {
         display: inline;
@@ -84,27 +90,6 @@
       .spinner {
         width: 100px;
         margin-bottom: 20px;
-      }
-
-      // ICONS
-      i {
-        font-size: 0.75em;
-        padding-right: 0.9375rem;
-
-        @include breakpoint(phablet) {
-          padding-right: 0.25rem;
-        }
-      }
-
-      i.ofn-i_056-bulk {
-        font-size: 1rem;
-        padding-right: 0rem;
-      }
-
-      i.ofn-i_036-producers {
-        padding-left: 0.2rem;
-        padding-right: 0rem;
-        font-size: 0.8rem;
       }
     }
   }

@@ -3,7 +3,6 @@ require 'open_food_network/spree_api_key_loader'
 module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
-      require 'spree/core/gateway_error'
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
@@ -29,7 +28,7 @@ module Spree
         @order = Order.create
         @order.created_by = spree_current_user
         @order.save
-        redirect_to edit_admin_order_url(@order)
+        redirect_to spree.edit_admin_order_url(@order)
       end
 
       def edit
@@ -44,20 +43,20 @@ module Spree
       end
 
       def update
-        unless @order.update(order_params) && @order.line_items.present?
+        unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
-          return redirect_to(edit_admin_order_path(@order),
+          return redirect_to(spree.edit_admin_order_path(@order),
                              flash: { error: @order.errors.full_messages.join(', ') })
         end
 
         @order.update!
         if @order.complete?
-          redirect_to edit_admin_order_path(@order)
+          redirect_to spree.edit_admin_order_path(@order)
         else
           # Jump to next step if order is not complete
-          redirect_to admin_order_customer_path(@order)
+          redirect_to spree.admin_order_customer_path(@order)
         end
       end
 
@@ -91,7 +90,9 @@ module Spree
         Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
         flash[:success] = t('admin.orders.invoice_email_sent')
 
-        respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+        respond_with(@order) { |format|
+          format.html { redirect_to spree.edit_admin_order_path(@order) }
+        }
       end
 
       def print
@@ -131,7 +132,9 @@ module Spree
 
         flash[:error] = t(:must_have_valid_business_number,
                           enterprise_name: @order.distributor.name)
-        respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+        respond_with(@order) { |format|
+          format.html { redirect_to spree.edit_admin_order_path(@order) }
+        }
       end
 
       def load_distribution_choices

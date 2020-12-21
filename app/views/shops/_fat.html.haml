@@ -1,6 +1,6 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : open()}"}
   .columns.small-12.fat.text-center{"ng-show" => "open() && shopfront_loading"}
-    %p
+    %p.fullwidth
       %img.spinner.text-center{ src: image_path("spinning-circles.svg") }
 
   .columns.small-12.medium-6.large-5.fat{"ng-show" => "open() && !shopfront_loading"}

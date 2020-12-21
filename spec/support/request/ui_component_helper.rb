@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UIComponentHelper
   def browse_as_medium
     Capybara.current_session.current_window
@@ -52,6 +54,10 @@ module UIComponentHelper
     within ".reveal-modal" do
       expect(page).to have_content object.name
     end
+  end
+
+  def close_modal
+    find("a.close-reveal-modal").click
   end
 
   def have_reset_password

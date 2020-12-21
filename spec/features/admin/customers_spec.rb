@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature 'Customers' do
@@ -91,6 +93,41 @@ feature 'Customers' do
           end
           expect(page).to have_no_selector "tr#c_#{customer2.id}"
         }.to change{ Customer.count }.by(-1)
+      end
+
+      describe "for a shop with multiple customers" do
+        before do
+          mock_balance(customer1.email, managed_distributor1, 88)
+          mock_balance(customer2.email, managed_distributor1, -99)
+          mock_balance(customer4.email, managed_distributor1, 0)
+
+          customer4.update enterprise: managed_distributor1
+        end
+
+        it "displays customer balances" do
+          select2_select managed_distributor1.name, from: "shop_id"
+
+          within "tr#c_#{customer1.id}" do
+            expect(page).to have_content "CREDIT OWED"
+            expect(page).to have_content "$88.00"
+          end
+          within "tr#c_#{customer2.id}" do
+            expect(page).to have_content "BALANCE DUE"
+            expect(page).to have_content "$-99.00"
+          end
+          within "tr#c_#{customer4.id}" do
+            expect(page).to_not have_content "CREDIT OWED"
+            expect(page).to_not have_content "BALANCE DUE"
+            expect(page).to have_content "$0.00"
+          end
+        end
+
+        def mock_balance(email, enterprise, balance)
+          user_balance_calculator = instance_double(OpenFoodNetwork::UserBalanceCalculator)
+          expect(OpenFoodNetwork::UserBalanceCalculator).to receive(:new).
+            with(email, enterprise).and_return(user_balance_calculator)
+          expect(user_balance_calculator).to receive(:balance).and_return(balance)
+        end
       end
 
       it "allows updating of attributes" do

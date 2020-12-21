@@ -108,7 +108,7 @@ describe UserLocaleSetter do
         end
 
         context "with a locale set in cookies" do
-          let(:cookies) { {locale: "es"} }
+          let(:cookies) { { locale: "es" } }
 
           it "set the user's locale to the cookie value" do
             service.ensure_valid_locale_persisted

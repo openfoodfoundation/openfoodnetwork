@@ -7,8 +7,8 @@ module Spree
     let(:taxon) { Spree::Taxon.new(name: "Ruby on Rails") }
 
     let(:e) { create(:supplier_enterprise) }
-    let!(:t1) { create(:taxon) }
-    let!(:t2) { create(:taxon) }
+    let(:t1) { create(:taxon) }
+    let(:t2) { create(:taxon) }
 
     describe "finding all supplied taxons" do
       let!(:p1) { create(:simple_product, supplier: e, taxons: [t1, t2]) }
@@ -66,7 +66,7 @@ module Spree
       context "with parent taxon" do
         before do
           allow(taxon).to receive_messages parent_id: 123
-          allow(taxon).to receive_messages parent: build(:taxon, permalink: "brands")
+          allow(taxon).to receive_messages parent: build_stubbed(:taxon, permalink: "brands")
         end
 
         it "should set permalink correctly when taxon has parent" do

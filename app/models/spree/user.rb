@@ -1,7 +1,8 @@
 module Spree
   class User < ActiveRecord::Base
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable, :encryptable, encryptor: 'authlogic_sha512'
+           :rememberable, :trackable, :validatable,
+           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true
 
     has_many :orders
     belongs_to :ship_address, foreign_key: 'ship_address_id', class_name: 'Spree::Address'
@@ -39,9 +40,6 @@ module Spree
 
     validate :limit_owned_enterprises
 
-    # We use the same options as Spree and add :confirmable
-    devise :confirmable, reconfirmable: true
-
     class DestroyWithOrdersError < StandardError; end
 
     def self.admin_created?
@@ -58,9 +56,11 @@ module Spree
       has_spree_role?('admin')
     end
 
-    # handle_asynchronously will define send_reset_password_instructions_with_delay.
-    # If handle_asynchronously is called twice, we get an infinite job loop.
-    handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
+    # Send devise-based user emails asyncronously via ActiveJob
+    # See: https://github.com/heartcombo/devise/tree/v3.5.10#activejob-integration
+    def send_devise_notification(notification, *args)
+      devise_mailer.public_send(notification, self, *args).deliver_later
+    end
 
     def regenerate_reset_password_token
       set_reset_password_token
@@ -72,6 +72,7 @@ module Spree
       else
         Spree::User
           .includes(:enterprises)
+          .references(:enterprises)
           .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)",
                  id)
       end
@@ -100,7 +101,7 @@ module Spree
     end
 
     def send_signup_confirmation
-      Delayed::Job.enqueue ConfirmSignupJob.new(id)
+      ConfirmSignupJob.perform_later(id)
     end
 
     def associate_customers

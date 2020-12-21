@@ -1,8 +1,11 @@
 %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
   %closing
     %div{"ng-if" => "OrderCycle.selected()"}
-      = t :enterprises_next_closing
-      %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+      %div{"ng-if" => "closesInLessThan3Months()"}
+        = t :enterprises_next_closing
+        %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+      %div{"ng-if" => "!closesInLessThan3Months()"}
+        = t :enterprises_currently_open
     %div{"ng-if" => "!OrderCycle.selected()"}
       = t :enterprises_choose
 

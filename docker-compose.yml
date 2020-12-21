@@ -8,6 +8,8 @@ services:
       POSTGRES_PASSWORD: f00d
       POSTGRES_USER: ofn
       POSTGRES_DB: open_food_network_dev
+    ports:
+      - 5432:5432
     volumes:
       - 'postgres:/var/lib/postgresql/data'
   web:
@@ -28,6 +30,8 @@ services:
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                rm -f tmp/pids/server.pid &&
+               (bundle check || bundle install)
+               yarn install &&
                bundle exec rails s -p 3000 -b '0.0.0.0'"
   worker:
     tty: true
@@ -44,6 +48,7 @@ services:
       OFN_DB_HOST: db
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
+               (bundle check || bundle install)
                bundle exec rake jobs:work"
 volumes:
   gems:

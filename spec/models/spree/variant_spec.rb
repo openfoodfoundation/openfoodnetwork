@@ -1,13 +1,284 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 require 'variant_units/option_value_namer'
+require 'spree/localized_number'
 
 module Spree
   describe Variant do
-    describe "double loading" do
-      # app/models/spree/variant_decorator.rb  may be double-loaded in delayed job environment,
-      # so we need to be able to do so without error.
-      it "succeeds without error" do
-        load "#{Rails.root}/app/models/spree/variant_decorator.rb"
+    let!(:variant) { create(:variant) }
+
+    context "validations" do
+      it "should validate price is greater than 0" do
+        variant.price = -1
+        expect(variant).to be_invalid
+      end
+
+      it "should validate price is 0" do
+        variant.price = 0
+        expect(variant).to be_valid
+      end
+    end
+
+    context "product has other variants" do
+      describe "option value accessors" do
+        before {
+          @multi_variant = create(:variant, product: variant.product)
+          variant.product.reload
+        }
+
+        let(:multi_variant) { @multi_variant }
+
+        it "should set option value" do
+          expect(multi_variant.option_value('media_type')).to be_nil
+
+          multi_variant.set_option_value('media_type', 'DVD')
+          expect(multi_variant.option_value('media_type')).to eq 'DVD'
+
+          multi_variant.set_option_value('media_type', 'CD')
+          expect(multi_variant.option_value('media_type')).to eq 'CD'
+        end
+
+        it "should not duplicate associated option values when set multiple times" do
+          multi_variant.set_option_value('media_type', 'CD')
+
+          expect {
+            multi_variant.set_option_value('media_type', 'DVD')
+          }.to_not change(multi_variant.option_values, :count)
+
+          expect {
+            multi_variant.set_option_value('coolness_type', 'awesome')
+          }.to change(multi_variant.option_values, :count).by(1)
+        end
+      end
+
+      context "product has other variants" do
+        describe "option value accessors" do
+          before {
+            @multi_variant = create(:variant, product: variant.product)
+            variant.product.reload
+          }
+
+          let(:multi_variant) { @multi_variant }
+
+          it "should set option value" do
+            expect(multi_variant.option_value('media_type')).to be_nil
+
+            multi_variant.set_option_value('media_type', 'DVD')
+            expect(multi_variant.option_value('media_type')).to eq 'DVD'
+
+            multi_variant.set_option_value('media_type', 'CD')
+            expect(multi_variant.option_value('media_type')).to eq 'CD'
+          end
+
+          it "should not duplicate associated option values when set multiple times" do
+            multi_variant.set_option_value('media_type', 'CD')
+
+            expect {
+              multi_variant.set_option_value('media_type', 'DVD')
+            }.to_not change(multi_variant.option_values, :count)
+
+            expect {
+              multi_variant.set_option_value('coolness_type', 'awesome')
+            }.to change(multi_variant.option_values, :count).by(1)
+          end
+        end
+      end
+    end
+
+    context "price parsing" do
+      before(:each) do
+        I18n.locale = I18n.default_locale
+        I18n.backend.store_translations(:de, { number: { currency: { format: { delimiter: '.', separator: ',' } } } })
+      end
+
+      after do
+        I18n.locale = I18n.default_locale
+      end
+
+      context "price=" do
+        context "with decimal point" do
+          it "captures the proper amount for a formatted price" do
+            variant.price = '1,599.99'
+            expect(variant.price).to eq 1599.99
+          end
+        end
+
+        context "with decimal comma" do
+          it "captures the proper amount for a formatted price" do
+            I18n.locale = :es
+            variant.price = '1.599,99'
+            expect(variant.price).to eq 1599.99
+          end
+        end
+
+        context "with a numeric price" do
+          it "uses the price as is" do
+            I18n.locale = :es
+            variant.price = 1599.99
+            expect(variant.price).to eq 1599.99
+          end
+        end
+      end
+    end
+
+    context "#currency" do
+      it "returns the globally configured currency" do
+        expect(variant.currency).to eq Spree::Config[:currency]
+      end
+    end
+
+    context "#display_amount" do
+      it "returns a Spree::Money" do
+        variant.price = 21.22
+        expect(variant.display_amount.to_s).to eq "$21.22"
+      end
+    end
+
+    context "#cost_currency" do
+      context "when cost currency is nil" do
+        before { variant.cost_currency = nil }
+
+        it "populates cost currency with the default value on save" do
+          variant.save!
+          expect(variant.cost_currency).to eq Spree::Config[:currency]
+        end
+      end
+    end
+
+    describe '.price_in' do
+      before do
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
+      end
+      subject { variant.price_in(currency).display_amount }
+
+      context "when currency is not specified" do
+        let(:currency) { nil }
+
+        it "returns 0" do
+          expect(subject.to_s).to eq "$0.00"
+        end
+      end
+
+      context "when currency is EUR" do
+        let(:currency) { 'EUR' }
+
+        it "returns the value in EUR" do
+          expect(subject.to_s).to eq "€33.33"
+        end
+      end
+
+      context "when currency is AUD" do
+        let(:currency) { 'AUD' }
+
+        it "returns the value in AUD" do
+          expect(subject.to_s).to eq "$19.99"
+        end
+      end
+    end
+
+    describe '.amount_in' do
+      before do
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
+      end
+
+      subject { variant.amount_in(currency) }
+
+      context "when currency is not specified" do
+        let(:currency) { nil }
+
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+
+      context "when currency is EUR" do
+        let(:currency) { 'EUR' }
+
+        it "returns the value in EUR" do
+          expect(subject).to eq 33.33
+        end
+      end
+
+      context "when currency is AUD" do
+        let(:currency) { 'AUD' }
+
+        it "returns the value in AUD" do
+          expect(subject).to eq 19.99
+        end
+      end
+    end
+
+    # Regression test for #2744
+    describe "set_position" do
+      it "sets variant position after creation" do
+        variant = create(:variant)
+        expect(variant.position).to_not be_nil
+      end
+    end
+
+    describe '#in_stock?' do
+      context 'when stock_items are not backorderable' do
+        before do
+          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
+        end
+
+        context 'when stock_items in stock' do
+          before do
+            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 10)
+          end
+
+          it 'returns true if stock_items in stock' do
+            expect(variant.in_stock?).to be_truthy
+          end
+        end
+
+        context 'when stock_items out of stock' do
+          before do
+            allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
+            allow_any_instance_of(Spree::Stock::Quantifier).to receive_messages(total_on_hand: 0)
+          end
+
+          it 'return false if stock_items out of stock' do
+            expect(variant.in_stock?).to be_falsy
+          end
+        end
+
+        context 'when providing quantity param' do
+          before do
+            variant.stock_items.first.update_attribute(:count_on_hand, 10)
+          end
+
+          it 'returns correct value' do
+            expect(variant.in_stock?).to be_truthy
+            expect(variant.in_stock?(2)).to be_truthy
+            expect(variant.in_stock?(10)).to be_truthy
+            expect(variant.in_stock?(11)).to be_falsy
+          end
+        end
+      end
+
+      context 'when stock_items are backorderable' do
+        before do
+          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable?: true)
+        end
+
+        context 'when stock_items out of stock' do
+          before do
+            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+          end
+
+          it 'returns true if stock_items in stock' do
+            expect(variant.in_stock?).to be_truthy
+          end
+        end
+      end
+    end
+
+    describe '#total_on_hand' do
+      it 'matches quantifier total_on_hand' do
+        variant = build(:variant)
+        expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
       end
     end
 
@@ -333,27 +604,27 @@ module Spree
 
       describe "getting name for display" do
         it "returns display_name if present" do
-          v = create(:variant, display_name: "foo")
+          v = build_stubbed(:variant, display_name: "foo")
           expect(v.name_to_display).to eq("foo")
         end
 
         it "returns product name if display_name is empty" do
-          v = create(:variant, product: create(:product))
+          v = build_stubbed(:variant)
           expect(v.name_to_display).to eq(v.product.name)
-          v1 = create(:variant, display_name: "", product: create(:product))
+          v1 = build_stubbed(:variant, display_name: "")
           expect(v1.name_to_display).to eq(v1.product.name)
         end
       end
 
       describe "getting unit for display" do
         it "returns display_as if present" do
-          v = create(:variant, display_as: "foo")
+          v = build_stubbed(:variant, display_as: "foo")
           expect(v.unit_to_display).to eq("foo")
         end
 
         it "returns options_text if display_as is blank" do
-          v = create(:variant)
-          v1 = create(:variant, display_as: "")
+          v = build_stubbed(:variant)
+          v1 = build_stubbed(:variant, display_as: "")
           allow(v).to receive(:options_text).and_return "ponies"
           allow(v1).to receive(:options_text).and_return "ponies"
           expect(v.unit_to_display).to eq("ponies")
@@ -477,7 +748,7 @@ module Spree
     end
 
     context "extends LocalizedNumber" do
-      subject! { build(:variant) }
+      subject! { build_stubbed(:variant) }
 
       it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
     end

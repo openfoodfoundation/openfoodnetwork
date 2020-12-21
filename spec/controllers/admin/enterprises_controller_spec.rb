@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 

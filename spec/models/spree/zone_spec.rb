@@ -107,7 +107,6 @@ describe Spree::Zone do
       before { state_zone.members.create(zoneable: state) }
 
       it "should be true" do
-
         expect(state_zone.include?(address)).to be_truthy
       end
     end

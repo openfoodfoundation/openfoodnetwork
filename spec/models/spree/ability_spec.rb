@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'cancan/matchers'
 require 'support/ability_helpers'
@@ -13,7 +15,7 @@ describe Spree::Ability do
     user.spree_roles.clear
   end
 
-  TOKEN = 'token123'.freeze
+  TOKEN = 'token123'
 
   after(:each) {
     user.spree_roles = []
@@ -306,7 +308,7 @@ describe Spree::Ability do
       it { expect(subject.can_manage_order_cycles?(user)).to be false }
 
       it "can create enterprises straight off the bat" do
-        expect(subject.new_user?(user)).to be true
+        expect(subject.is_new_user?(user)).to be true
         expect(user).to have_ability :create, for: Enterprise
       end
     end

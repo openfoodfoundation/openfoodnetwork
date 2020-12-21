@@ -12,3 +12,7 @@ angular.module("Darkswarm").factory 'Customers', (Customer) ->
       for customer in customers
         @all.push customer
         @byID[customer.id] = customer
+
+    clearAllAllowCharges: () ->
+      for customer in @index()
+        customer.allow_charges = false

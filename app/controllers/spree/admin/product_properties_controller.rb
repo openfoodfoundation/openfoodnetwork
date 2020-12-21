@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ProductPropertiesController < ResourceController
+    class ProductPropertiesController < ::Admin::ResourceController
       belongs_to 'spree/product', find_by: :permalink
       before_action :find_properties
       before_action :setup_property, only: [:index]
@@ -16,7 +16,7 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_removed)
         end
         # if destroy fails it won't show any errors to the user
-        redirect_to admin_product_product_properties_url(params[:product_id], @url_filters)
+        redirect_to spree.admin_product_product_properties_url(params[:product_id], @url_filters)
       end
 
       private

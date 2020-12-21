@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module LocalizedNumber
     # This method overwrites the attribute setters of a model

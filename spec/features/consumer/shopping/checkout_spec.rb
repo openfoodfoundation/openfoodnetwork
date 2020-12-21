@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "As a consumer I want to check out my cart", js: true do
@@ -122,11 +124,11 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "doesn't show link to terms and conditions" do
-        expect(page).to have_no_link("Terms of Service")
+        expect(page).to have_no_link("Terms and Conditions")
       end
     end
 
-    context "when distributor has terms and conditions" do
+    context "when distributor has T&Cs" do
       let(:fake_terms_and_conditions_path) { Rails.root.join("app/assets/images/logo-white.png") }
       let(:terms_and_conditions_file) { Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf") }
 
@@ -135,9 +137,37 @@ feature "As a consumer I want to check out my cart", js: true do
         order.distributor.save
       end
 
-      it "shows a link to the terms and conditions" do
-        visit checkout_path
-        expect(page).to have_link("Terms of Service", href: order.distributor.terms_and_conditions.url)
+      describe "when customer has not accepted T&Cs before" do
+        it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
+          visit checkout_path
+          expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
+
+          expect(page).to have_button("Place order now", disabled: true)
+
+          check "accept_terms"
+          expect(page).to have_button("Place order now", disabled: false)
+        end
+      end
+
+      describe "when customer has already accepted T&Cs before" do
+        before do
+          customer = create(:customer, enterprise: order.distributor, user: user)
+          customer.update terms_and_conditions_accepted_at: Time.zone.now
+        end
+
+        it "enables checkout button (because T&Cs are accepted by default)" do
+          visit checkout_path
+          expect(page).to have_button("Place order now", disabled: false)
+        end
+
+        describe "but afterwards the enterprise has uploaded a new T&Cs file" do
+          before { order.distributor.update terms_and_conditions_updated_at: Time.zone.now }
+
+          it "disables checkout button until terms are accepted" do
+            visit checkout_path
+            expect(page).to have_button("Place order now", disabled: true)
+          end
+        end
       end
     end
 

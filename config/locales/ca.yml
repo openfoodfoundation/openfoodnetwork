@@ -23,6 +23,10 @@ ca:
         variant_unit_name: "Nom de la unitat de la variant"
       spree/credit_card:
         base: "Targeta de crèdit"
+        number: "Número"
+        month: "Mes"
+        verification_value: "Valor de verificació"
+        year: "Any"
       order_cycle:
         orders_close_at: Data de tancament
       variant_override:
@@ -285,10 +289,16 @@ ca:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
     cancel: "Cancel·lar"
+    resume: "Continuar"
     save: "Desa"
     edit: "Editar"
     update: "Actualitzar"
     delete: "Suprimir"
+    add: "Afegeix"
+    cut: "Tallar"
+    paste: "Enganxar"
+    destroy: "Eliminar"
+    rename: "Reanomenar"
   admin:
     begins_at: Comença a
     begins_on: Comença
@@ -347,6 +357,7 @@ ca:
     has_n_rules: "té%{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
     unsaved_changes: "Teniu canvis sense desar"
+    available_units: "Unitats disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
@@ -392,20 +403,23 @@ ca:
         duplicate_code: "Aquest codi ja s'ha utilitzat."
         bill_address: "Adreça de facturació"
         ship_address: "Adreça d'enviament"
-        update_address_success: 'L''adreça s''ha actualitzat correctament.'
-        update_address_error: 'Ho sentim! Introduïu tots els camps obligatoris.'
-        edit_bill_address: 'Edita l''adreça de facturació'
-        edit_ship_address: 'Edita l''adreça d''enviament'
-        required_fileds: 'Els camps obligatoris es denoten amb un asterisc'
-        select_country: 'Selecciona país'
-        select_state: 'Selecciona província'
-        edit: 'Editar'
-        update_address: 'Actualitza l''adreça'
-        confirm_delete: 'Estàs segur que vols suprimir?'
+        balance: "Balanç"
+        update_address_success: "L'adreça s'ha actualitzat correctament."
+        update_address_error: "Ho sentim! Introduïu tots els camps obligatoris."
+        edit_bill_address: "Edita l'adreça de facturació"
+        edit_ship_address: "Edita l'adreça d'enviament"
+        required_fileds: "Els camps obligatoris es denoten amb un asterisc"
+        select_country: "Selecciona país"
+        select_state: "Selecciona província"
+        edit: "Editar"
+        update_address: "Actualitza l'adreça"
+        confirm_delete: "Estàs segur que vols suprimir?"
         search_by_email: "Cerca per correu electrònic/codi ..."
-        guest_label: 'Fer comanda com a convidat'
+        guest_label: "Fer comanda com a convidat"
+        credit_owed: "Crèdit a deure"
+        balance_due: "A pagar"
       destroy:
-        has_associated_orders: 'S''ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga'
+        has_associated_orders: "S'ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga"
     contents:
       edit:
         title: Contingut
@@ -592,6 +606,8 @@ ca:
       controls:
         back_to_my_inventory: Torna al meu inventari
     orders:
+      edit:
+        order_sure_want_to: Esteu segur que voleu %{event} aquesta comanda?
       invoice_email_sent: 'S''ha enviat el correu electrònic de la factura'
       order_email_resent: 'S''ha reenviat el correu electrònic de la comanda'
       bulk_management:
@@ -640,6 +656,7 @@ ca:
           invoice_text: Afegeix text personalitzat al final de les factures
           terms_and_conditions: "Termes i condicions"
           remove_terms_and_conditions: "Elimina el fitxer"
+          uploaded_on: "carregat el"
         contact:
           name: Nom
           name_placeholder: 'p. ex: Josep Ribes'
@@ -751,6 +768,7 @@ ca:
               no hi hagi cicles de comanda actius (és a dir, quan la botiga estigui
               tancada).
           shopfront_category_ordering: "Ordre de les categories de la botiga"
+          shopfront_category_ordering_note: "(de dalt a baix)"
           open_date: "Data d'obertura"
           close_date: "Data de tancament"
         social:
@@ -1160,8 +1178,8 @@ ca:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     terms_and_conditions:
-      message_html: "En fer aquesta comanda accepteu %{terms_and_conditions_link}."
-      link_text: "Termes del servei"
+      message_html: "Accepto el %{terms_and_conditions_link} del venedor."
+      link_text: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:
@@ -1216,6 +1234,9 @@ ca:
         require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
       select_oc:
         select_oc_html: "<span class='highlighted'>Trieu quan voleu la vostra comanda</span> per veure quins productes estan disponibles."
+    products:
+      summary:
+        bulk: "A granel"
   card_could_not_be_updated: No s'ha pogut actualitzar la targeta
   card_could_not_be_saved: no s'ha pogut desar la targeta
   spree_gateway_error_flash_for_checkout: "Hi ha hagut un problema amb la vostra informació de pagament: %{error}"
@@ -1572,7 +1593,9 @@ ca:
   hubs_distance: El més proper a
   hubs_distance_filter: "Mostra'm botigues properes a%{location}"
   shop_changeable_orders_alert_html:
-    one: El vostre ordre amb <a href='%{path}' target='_blank'> %{shop} / %{order} </ a> està obert per a la seva revisió. Podeu fer canvis fins %{oc_close}.
+    one: La vostra comanda amb <a href='%{path}' target='_blank'>%{shop} / %{order}</a> està oberta per revisió. Podeu fer canvis fins %{oc_close}.
+    few: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
+    many: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
     other: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
   orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </strong>.
   products_clear: Netejar
@@ -1718,7 +1741,9 @@ ca:
   orders_could_not_cancel: "Disculpa, no s'ha pogut cancel·lar la teva comanda "
   orders_cannot_remove_the_final_item: "No es pot eliminar l'article final d'una comanda, si us plau, en comptes d'això cancel·leu la comanda."
   orders_bought_items_notice:
-    one: "Ja s'ha confirmat un element addicional per al cicle d'aquest ordre"
+    one: Ja s'ha confirmat un article addicional per a aquest cicle de comanda
+    few: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
+    many: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     other: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
   orders_bought_edit_button: Edita articles confirmats
   orders_bought_already_confirmed: "* ja confirmat"
@@ -1923,7 +1948,6 @@ ca:
   shop_for_products_html: "Compra productes de <span class = \"turquesa\"> %{enterprise} </ span> a:"
   change_shop: "Canvia la botiga a:"
   shop_at: "Compra ara a:"
-  price_breakdown: "Desglossament complet del preu"
   admin_fee: "Comissió d'administració"
   sales_fee: "Comissió de venda"
   packing_fee: "Comissió d'embalatge"
@@ -1998,6 +2022,7 @@ ca:
   calculator: "Calculadora"
   calculator_values: "Valors de la calculadora"
   calculator_settings_warning: "Si canvieu el tipus de calculadora, primer heu de desar abans de poder editar la configuració de la calculadora"
+  calculator_preferred_unit_error: "ha de ser kg o lliures"
   flat_percent_per_item: "Percentatge fixe (per article)"
   flat_rate_per_item: "Tarifa fixa (per article)"
   flat_rate_per_order: "Tarifa fixa (per comanda)"
@@ -2374,8 +2399,9 @@ ca:
     admin:
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
-        got_it: Ho tinc
+        got_it: "Ho tinc"
         close: "Tanca"
+        continue: "Continua"
         invite: "Convida"
         invite_title: "Convida un usuari no registrat"
         tag_rule_help:
@@ -2397,6 +2423,14 @@ ca:
               En crear regles relacionades amb una etiqueta de client específica,
               podeu anul·lar el comportament predeterminat (ja sigui per mostrar o
               ocultar elements) per als clients amb l'etiqueta especificada.
+        terms_and_conditions_info:
+          title: "S'estan penjant els termes i condicions"
+          message_1: "Els Termes i condicions són el contracte entre el venedor i el comprador. Si pengeu un fitxer aquí, els compradors han d’acceptar els vostres Termes i condicions per completar el pagament. Per al comprador, apareixerà com a casella de selecció a la comanda que s’ha de marcar per continuar amb la compra. Us recomanem que pengeu els Termes i condicions d'acord amb la legislació nacional."
+          message_2: "Els compradors només hauran d’acceptar els Termes i condicions una vegada. Tanmateix, si canvieu els vostres Termes i condicions, els compradors hauran de tornar a acceptar-los abans de poder fer la comanda."
+        terms_and_conditions_warning:
+          title: "S'estan penjant els termes i condicions"
+          message_1: "Tots els compradors hauran d’acceptar-los al fer la comanda. Si actualitzeu el fitxer, tots els compradors hauran d’acceptar-los de nou a la finalització de la compra."
+          message_2: "Per als compradors que tinguin subscripcions, heu d’enviar-los per correu electrònic els Termes i condicions (o els canvis que s’hi apliquen) per ara, res els notificarà sobre aquests nous Termes i condicions."
       panels:
         save: DESA
         saved: DESAT
@@ -2599,6 +2633,15 @@ ca:
           més dels productes de la cistella. Aquí podeu veure el que ha canviat:
       now_out_of_stock: ara està fora d'estoc.
       only_n_remainging: "ara només n'hi ha %{num}restants."
+    shopfront:
+      variant:
+        add_to_cart: "Afegeix"
+        in_cart: "a la cistella"
+        quantity_in_cart: "%{quantity} a la cistella"
+      bulk_buy_modal:
+        min_quantity: "Quantitat mínima"
+        max_quantity: "Quantitat màxima"
+      price_breakdown: "Desglossament del preu"
     variants:
       on_demand:
         'yes': "Sota demanda"
@@ -2845,6 +2888,8 @@ ca:
     delete: "Suprimir"
     cannot_set_shipping_method_without_address: "No es pot establir el mètode d'enviament fins que no es proporcionin les dades del client."
     no_tracking_present: "No es proporcionen dades de seguiment."
+    tracking: "Seguiment"
+    tracking_number: "Número de seguiment"
     order_total: "Total comanda"
     customer_details: "Detalls de la consumidora"
     customer_search: "Cerca la consumidora"
@@ -2866,6 +2911,7 @@ ca:
     adjustments: "Ajustaments"
     continue: "Continua"
     fill_in_customer_info: "Ompliu la informació de la consumidora"
+    credit_card: "Targeta de crèdit"
     new_payment: "Nou pagament"
     capture: "Pagat"
     void: "Pendent"
@@ -2877,6 +2923,8 @@ ca:
     server: "Servidor"
     test_mode: "Mode de prova"
     logourl: "URL del logo"
+    are_you_sure_delete: "Esteu segur que voleu suprimir aquest registre?"
+    confirm_delete: "Confirmeu l'eliminació"
     configurations: "Configuracions"
     general_settings: "Configuració general"
     site_name: "Nom del lloc"
@@ -2904,15 +2952,6 @@ ca:
     smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
     intercept_email_address: "Intercepta adreça de correu"
     intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
-    image_settings: "Configuració de la imatge"
-    image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
-    attachment_default_style: Estil de fitxers adjunts
-    attachment_default_url: "URL predeterminada de fitxers adjunts"
-    attachment_path: "Ruta de fitxers adjunts"
-    attachment_styles: "Estils de paperclip"
-    attachment_url: "URL dels fitxers adjunts"
-    add_new_style: "Afegeix un estil nou"
-    image_settings_updated: "La configuració de la imatge s'ha actualitzat correctament."
     tax_categories: "Tipus d'impostos"
     listing_tax_categories: "Llista de categories d'impostos"
     back_to_tax_categories_list: "Tornar a la llista de categories d'impostos"
@@ -2945,6 +2984,7 @@ ca:
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
     shipping_methods: "Mètodes d'enviament"
+    shipping_method: "Mètode d'enviament"
     shipping_categories: "Tipus d'enviament"
     new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
@@ -2986,17 +3026,27 @@ ca:
     inventory_error_flash_for_insufficient_quantity: "Un article de la teva cistella ha deixat d'estar disponible."
     inventory: Inventari
     zipcode: Codi postal
-    weight: Pes (per kg)
+    weight: Pes (per kg o lliures)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
     cannot_create_payment_without_payment_methods: "No podeu crear un pagament per a una comanda sense que hi hagi definit cap mètode de pagament."
     please_define_payment_methods: "Primer definiu alguns mètodes de pagament."
     options: "Opcions"
+    has_no_shipped_units: "no té cap unitat enviada"
+    successfully_created: '%{resource} s''ha creat correctament.'
+    successfully_updated: '%{resource} s''ha actualitzat correctament.'
+    payment_method: "Mètode de pagament"
+    payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
+    not_available: "No disponible"
+    order_populator:
+      out_of_stock: '%{item} està esgotat.'
     actions:
       update: "Actualitzar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "Un error va prohibir guardar aquest registre:"
+          one: "1 error ha impedit que es guardi aquest registre:"
+          few: "%{count} errors han impedit guardar aquest registre:"
+          many: "%{count} errors han impedit guardar aquest registre:"
           other: "%{count} errors han impedit guardar aquest registre:"
         there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
       payments_list:
@@ -3035,7 +3085,6 @@ ca:
         index:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
           add_product_properties: "Afegeix propietats del producte"
-          select_from_prototype: "Seleccioneu d'un prototip"
       properties:
         index:
           properties: "Propietats"
@@ -3128,6 +3177,8 @@ ca:
           active_products:
             zero: "No tens cap producte actiu."
             one: "Teniu un producte actiu"
+            few: "Teniu %{count} productes actius"
+            many: "Teniu %{count} productes actius"
             other: "Teniu %{count} productes actius"
         order_cycles:
           order_cycles: "Cicles de comanda"
@@ -3135,6 +3186,8 @@ ca:
           you_have_active:
             zero: "No tens cicles de comanda actius."
             one: "Tens un cicle de comanda actiu."
+            few: "Tens %{count} cicles de comanda actius"
+            many: "Tens %{count} cicles de comanda actius"
             other: "Tens %{count} cicles de comanda actius"
           manage_order_cycles: "GESTIONA ELS CICLES DE COMANDA"
       shipping_methods:
@@ -3354,7 +3407,7 @@ ca:
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
     date_picker:
-      format: '%d-% m-% Y'
+      format: '%d-%m-%Y'
       js_format: 'dd-mm-yy'
     orders:
       error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."
@@ -3409,6 +3462,7 @@ ca:
         issue_text: |
             Si l'URL anterior no funciona, prova de copiar-lo i enganxar-lo al navegador.
             Si continues tenint problemes, no dubtis en contactar-nos.
+        subject: "Instruccions per restablir la contrasenya"
       confirmation_instructions:
         subject: "Si us plau confirma el teu compte d'OFN"
     shipment_mailer:
@@ -3484,11 +3538,9 @@ ca:
         delete?: Suprimeix?
       cards:
         authorised_shops: Botigues autoritzades
-        authorised_shops_popover: Aquesta és la llista de botigues que tenen permís per carregar la teva targeta de crèdit predeterminada per a qualsevol subscripció (és a dir, comandes de repetició) que puguis tenir. Les dades de la targeta es mantindran segures i no es compartiran amb els propietaris de botigues. Sempre se us notificarà quan se us faci un càrrec.
         saved_cards_popover: Aquesta és la llista de targetes que heu optat per guardar per a un ús posterior. El vostre "valor predeterminat" es seleccionarà automàticament quan valideu una comanda i es pot carregar per qualsevol botiga a la que li hagueu permès fer-ho (vegeu a la dreta).
       authorised_shops:
         shop_name: "Nom de la botiga"
-        allow_charges?: "Permetre càrrecs?"
     localized_number:
       invalid_format: té un format no vàlid. Si us plau introdueix un número.
     api:

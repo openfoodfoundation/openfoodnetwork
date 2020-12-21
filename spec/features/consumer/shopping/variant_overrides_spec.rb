@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "shopping with variant overrides defined", js: true do
@@ -58,10 +60,9 @@ feature "shopping with variant overrides defined", js: true do
 
     it "calculates fees correctly" do
       page.find("#variant-#{product1_variant1.id} .graph-button").click
-      page.find(".price_breakdown a").click
-      expect(page).to have_selector 'li.cost div', text: with_currency(55.55)
-      expect(page).to have_selector 'li.packing-fee div', text: with_currency(5.56)
-      expect(page).to have_selector 'li.total div', text: "= #{with_currency(61.11)}"
+      expect(page).to have_selector 'li', text: "#{with_currency(55.55)}\nItem cost"
+      expect(page).to have_selector 'li', text: "#{with_currency(5.56)}\nPacking fee"
+      expect(page).to have_selector 'li', text: "= #{with_currency(61.11)}"
     end
 
     it "shows the correct prices when products are in the cart" do

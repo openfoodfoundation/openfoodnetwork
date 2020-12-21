@@ -23,6 +23,7 @@ nl_BE:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Kredietkaart"
+        number: "Nummer"
       order_cycle:
         orders_close_at: Sluitingsdatum
       variant_override:
@@ -288,6 +289,7 @@ nl_BE:
     edit: "bewerking"
     update: "Update"
     delete: "Uitwissen "
+    add: "Voeg toe"
   admin:
     begins_at: Begint Bij
     begins_on: Begint Op
@@ -391,20 +393,22 @@ nl_BE:
         duplicate_code: "Deze code wordt al gebruikt."
         bill_address: "Factuuradres"
         ship_address: "Adres Levering"
-        update_address_success: 'Adres succesvol bijgewerkt.'
-        update_address_error: 'Sorry! Gelieve alle verplichte velden in te vullen!'
-        edit_bill_address: 'Factuuradres bewerken'
-        edit_ship_address: 'Verzendadres bewerken'
-        required_fileds: 'Verplichte velden zijn aangegeven met een sterretje '
-        select_country: 'Selecteer land'
-        select_state: 'Selecteer Provincie'
-        edit: 'bewerking'
-        update_address: 'Update Adres'
-        confirm_delete: 'Zeker te verwijderen?'
+        balance: "Saldo"
+        update_address_success: "Adres succesvol bijgewerkt."
+        update_address_error: "Sorry! Gelieve alle verplichte velden in te vullen!"
+        edit_bill_address: "Factuuradres bewerken"
+        edit_ship_address: "Verzendadres bewerken"
+        required_fileds: "Verplichte velden zijn aangegeven met een sterretje "
+        select_country: "Selecteer land"
+        select_state: "Selecteer Provincie"
+        edit: "bewerking"
+        update_address: "Update Adres"
+        confirm_delete: "Zeker te verwijderen?"
         search_by_email: "Zoeken per e-mail/code..."
-        guest_label: 'Gasten afrekenen'
+        guest_label: "Gasten afrekenen"
+        credit_owed: "Krediet tegoed"
       destroy:
-        has_associated_orders: 'Verwijderen mislukt: klant heeft gerelateerde bestellingen met zijn winkel'
+        has_associated_orders: "Verwijderen mislukt: klant heeft gerelateerde bestellingen met zijn winkel"
     contents:
       edit:
         title: Gelukkig
@@ -1207,6 +1211,9 @@ nl_BE:
         require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
       select_oc:
         select_oc_html: "Alstublief<span class='highlighted'>kies waneer uw u orde wilt</span>, om te zien welke producten beschikbaar zijn."
+    products:
+      summary:
+        bulk: "Bulk (grote hoeveelheid)"
   card_could_not_be_updated: De bankkaart kon niet worden geüpdatet.
   card_could_not_be_saved: De bankkaart kon niet worden bewaard.
   spree_gateway_error_flash_for_checkout: "Er was een probleem met betaalinformatie: %{error}"
@@ -1563,7 +1570,8 @@ nl_BE:
   hubs_distance: Dichtst bij
   hubs_distance_filter: "Toon me winkels in de buurt van %{location}"
   shop_changeable_orders_alert_html:
-    one: Je bestelling bij <a href='%{path}' target='_blank'>%{shop}/%{order}</a> wordt op dit moment nagekeken. Je kan veranderingen maken tot %{oc_close}.
+    few: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
+    many: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
     other: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
   orders_changeable_orders_alert_html: Deze bestelling is bevestigd, maar je kan aanpassingen maken tot <strong>%{oc_close}</strong>.
   products_clear: Duidelijk
@@ -1709,7 +1717,8 @@ nl_BE:
   orders_could_not_cancel: "Sorry, de bestelling kon niet worden geannuleerd"
   orders_cannot_remove_the_final_item: "Het is niet mogelijk om het laatste artikel van de bestelling te verwijderen, verwijder in plaats daarvan alsjeblieft de bestelling."
   orders_bought_items_notice:
-    one: "Een bijkomend artikel is al bevestigd voor deze artikelcyclus"
+    few: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
+    many: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
     other: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
   orders_bought_edit_button: Pas de bevestigde artikels aan
   orders_bought_already_confirmed: "* reeds bevestigd"
@@ -1914,7 +1923,6 @@ nl_BE:
   shop_for_products_html: "Koop voor <span class=\"turquoise\">%{enterprise}</span>producten bij:"
   change_shop: "Verander winkel naar:"
   shop_at: "Winkel nu bij:"
-  price_breakdown: "De volledige prijs ontleedt"
   admin_fee: "Adminkost"
   sales_fee: "Verkoopskost"
   packing_fee: "Verpakkingskost"
@@ -2364,8 +2372,9 @@ nl_BE:
     admin:
       enterprise_limit_reached: "Het  toegelaten aantal bedrijven per rekening,  standaard bepaald,  is bereikt. Gelieve naar %{contact_email}te schrijven om de beperking te verhogen indien nodig."
       modals:
-        got_it: Ik heb begrepen
+        got_it: "Ik heb begrepen"
         close: "Sluit"
+        continue: "Ga verder"
         invite: "Uitnodigen "
         invite_title: "Een nieuwe gebruiker uitnodigen"
         tag_rule_help:
@@ -2590,6 +2599,11 @@ nl_BE:
           van uw produkten  onvoldoende. Ziehier de wijzigingen :
       now_out_of_stock: is niet meer in stock
       only_n_remainging: "%{num}blijven over."
+    shopfront:
+      variant:
+        add_to_cart: "Voeg toe"
+      bulk_buy_modal:
+        max_quantity: "Maximale hoeveelheid"
     variants:
       on_demand:
         'yes': "Op Aanvraag"
@@ -2781,6 +2795,7 @@ nl_BE:
     adjustments: "Correcties "
     continue: "Ga verder"
     fill_in_customer_info: "Gelieve informatie over klant in te vullen"
+    credit_card: "Kredietkaart"
     new_payment: "Nieuwe betaling"
     capture: "Capture"
     void: "leegte"
@@ -2819,15 +2834,6 @@ nl_BE:
     smtp_send_copy_to_this_addresses: "Stuurt een kopie van alle uitgaande mails naar dit adres. In geval van meerdere adressen, die met een comma scheiden."
     intercept_email_address: "Email adres onderscheppen"
     intercept_email_instructions: "De mailontvanger omzeilen en door dit adres vervangen. "
-    image_settings: "Beeldinstellingen "
-    image_settings_warning: "Logos regeneren als de paperclips stylen bijgewerkt worden. Paperclip harken gebruiken :opfrissen:logos CLASS=Spree::Image om het doen. "
-    attachment_default_style: Bijlagestijl
-    attachment_default_url: "Standaard Band met URL"
-    attachment_path: "Pad bijlagen"
-    attachment_styles: "Paperclipstijlen"
-    attachment_url: "URL bijlagen"
-    add_new_style: "Een nieuwe stijl toevoegen"
-    image_settings_updated: "Beeldinstellingen zijn met succes bijgewerkt."
     tax_categories: "Belastingcategorieën"
     listing_tax_categories: "Lijst BTW categoriëen "
     back_to_tax_categories_list: "Terug naar de lijst BTW categoriëen "
@@ -2860,6 +2866,7 @@ nl_BE:
     new_taxonomy: "Nieuwe taxonomie "
     back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
     shipping_methods: "Methode Verzending"
+    shipping_method: "Het verschepen Methode"
     shipping_categories: "Verzendingscategorieën"
     new_shipping_category: "Nieuwe verzendingscategorie"
     back_to_shipping_categories: "Terug naar verzendingscategoriëen"
@@ -2901,11 +2908,14 @@ nl_BE:
     inventory_error_flash_for_insufficient_quantity: "Een gegeven op je kaart is onbereikbaar."
     inventory: Inventarisatie
     zipcode: Postcode
-    weight: Gewicht (per kg)
     error_user_destroy_with_orders: "Gebruiker met voltooide besteling mag niet woden verwijderd"
     cannot_create_payment_without_payment_methods: "U kunt niet een betaling maken voor een besteling met geen betalingsmethode toegewezen"
     please_define_payment_methods: "Bepaal een geldige betaalmethode eerst."
     options: "Opties"
+    successfully_created: '%{resource}is met succes gedaan! '
+    successfully_updated: '%{resource}is succesvol bijgewerkt!'
+    payment_method: "Betaalmethode"
+    payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
     actions:
       update: "Update"
     shared:
@@ -2947,7 +2957,6 @@ nl_BE:
         index:
           inherits_properties_checkbox_hint: "De kenmerken van 1%{supplier} krijgen ? (niet ter toepassing in geval van invoer van de vervanging)"
           add_product_properties: "Voeg producteigenschappen toe."
-          select_from_prototype: "Selecteer tussen de prototypes"
       properties:
         index:
           properties: "Eigenschappen"
@@ -3040,6 +3049,8 @@ nl_BE:
           active_products:
             zero: "U heeft geen aktieve producten."
             one: "U heeft een aktief product"
+            few: "U heeft 1%{count} aktieve producten"
+            many: "U heeft 1%{count} aktieve producten"
             other: "U heeft 1%{count} aktieve producten"
         order_cycles:
           order_cycles: "Bestel cycli"
@@ -3047,6 +3058,8 @@ nl_BE:
           you_have_active:
             zero: "U heeft geen aktieve bestelcycli."
             one: "U heeft een aktieve bestelcyclus."
+            few: "U heeft 1%{count} aktieve ordercycli."
+            many: "U heeft 1%{count} aktieve ordercycli."
             other: "U heeft 1%{count} aktieve ordercycli."
           manage_order_cycles: "BESTELCYCLI BEHEREN"
       shipping_methods:
@@ -3397,11 +3410,9 @@ nl_BE:
         delete?: 'Schrappen? '
       cards:
         authorised_shops: 'Toegestane winkel '
-        authorised_shops_popover: 'Hierna de lijst van de winkels die U hebt toegestaan met uw standaard kredietkaart te betalen in verband met de abonnementen in gang  (terugkerende bestellingen). De gegevens in verband met uw kaart zijn beveiligd en zijn niet bereikbaar door de winkelbeheerder. U krijgt systematisch een notificatie voor elke debiet op uw kaart. '
         saved_cards_popover: Hierna de lijst van de betalingen opgeslaan op uw kaart. De standaardkaart wordt automatisch geselecteerd bij het voltooien van de bestelling en mag gedebiteerd worden  door de winkels waaraan U de toelating gegeven hebt (zie rechts)
       authorised_shops:
         shop_name: "Naam van de winkel "
-        allow_charges?: "Een encasso toelaten ?"
     localized_number:
       invalid_format: ' heeft incorrect invoer . Voer alsjeblieft een nummer in.'
     api:

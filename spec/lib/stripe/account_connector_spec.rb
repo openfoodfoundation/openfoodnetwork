@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'stripe/account_connector'
 require 'stripe/oauth'

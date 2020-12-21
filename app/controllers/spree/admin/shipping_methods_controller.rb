@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ShippingMethodsController < ResourceController
+    class ShippingMethodsController < ::Admin::ResourceController
       before_action :load_data, except: [:index]
       before_action :set_shipping_category, only: [:create, :update]
       before_action :set_zones, only: [:create, :update]
@@ -50,7 +50,7 @@ module Spree
 
       def load_hubs
         # rubocop:disable Style/TernaryParentheses
-        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by! do |d|
+        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.to_a.sort_by! do |d|
           [(@shipping_method.has_distributor? d) ? 0 : 1, d.name]
         end
         # rubocop:enable Style/TernaryParentheses
@@ -74,7 +74,7 @@ module Spree
       end
 
       def location_after_save
-        edit_admin_shipping_method_path(@shipping_method)
+        spree.edit_admin_shipping_method_path(@shipping_method)
       end
 
       def load_data
@@ -84,14 +84,9 @@ module Spree
 
       def permitted_resource_params
         params.require(:shipping_method).permit(
-          :name, :description, :display_on,
-          :require_ship_address, :tag_list, :calculator_type,
+          :name, :description, :display_on, :require_ship_address, :tag_list, :calculator_type,
           distributor_ids: [],
-          calculator_attributes: [
-            :id, :preferred_currency, :preferred_amount, :preferred_per_kg, :preferred_flat_percent,
-            :preferred_first_item, :preferred_additional_item, :preferred_max_items,
-            :preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount
-          ]
+          calculator_attributes: PermittedAttributes::Calculator.attributes
         )
       end
     end

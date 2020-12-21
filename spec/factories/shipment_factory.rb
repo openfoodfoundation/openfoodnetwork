@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :shipment, class: Spree::Shipment do
     # keeps test shipments unique per order
     initialize_with { Spree::Shipment.find_or_create_by(order_id: order.id) }
 
-    tracking 'U10000'
-    number '100'
-    cost 100.00
-    state 'pending'
+    tracking { 'U10000' }
+    number { '100' }
+    cost { 100.00 }
+    state { 'pending' }
     order
     address
     stock_location { Spree::StockLocation.first || create(:stock_location) }
@@ -21,10 +23,10 @@ FactoryBot.define do
   end
 
   factory :shipment_with, class: Spree::Shipment do
-    tracking 'U10000'
-    number '100'
-    cost 100.00
-    state 'pending'
+    tracking { 'U10000' }
+    number { '100' }
+    cost { 100.00 }
+    state { 'pending' }
     order
     address
     stock_location { Spree::StockLocation.first || create(:stock_location) }

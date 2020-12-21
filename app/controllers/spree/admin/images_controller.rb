@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ImagesController < ResourceController
+    class ImagesController < ::Admin::ResourceController
       # This will make resource controller redirect correctly after deleting product images.
       # This can be removed after upgrading to Spree 2.1.
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
@@ -25,7 +25,7 @@ module Spree
         @object.attributes = permitted_resource_params
         if @object.save
           flash[:success] = flash_message_for(@object, :successfully_created)
-          redirect_to admin_product_images_url(params[:product_id], @url_filters)
+          redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
         else
           respond_with(@object)
         end
@@ -41,7 +41,7 @@ module Spree
 
         if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
-          redirect_to admin_product_images_url(params[:product_id], @url_filters)
+          redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
         else
           respond_with(@object)
         end
@@ -55,13 +55,13 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_removed)
         end
 
-        redirect_to admin_product_images_url(params[:product_id], @url_filters)
+        redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
       end
 
       private
 
       def location_after_save
-        admin_product_images_url(@product)
+        spree.admin_product_images_url(@product)
       end
 
       def load_data

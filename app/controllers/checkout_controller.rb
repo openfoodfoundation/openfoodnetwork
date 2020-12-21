@@ -5,6 +5,7 @@ require 'open_food_network/address_finder'
 class CheckoutController < Spree::StoreController
   layout 'darkswarm'
 
+  include OrderStockCheck
   include CheckoutHelper
   include OrderCyclesHelper
   include EnterprisesHelper
@@ -24,7 +25,7 @@ class CheckoutController < Spree::StoreController
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
-  before_action :ensure_sufficient_stock_lines
+  before_action :handle_insufficient_stock
 
   before_action :associate_user
   before_action :check_authorization
@@ -46,8 +47,6 @@ class CheckoutController < Spree::StoreController
   def update
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
     return action_failed unless @order.update(params_adapter.params[:order])
-
-    fire_event('spree.checkout.update')
 
     checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
@@ -77,13 +76,6 @@ class CheckoutController < Spree::StoreController
 
   def ensure_order_not_completed
     redirect_to main_app.cart_path if @order.completed?
-  end
-
-  def ensure_sufficient_stock_lines
-    if @order.insufficient_stock_lines.present?
-      flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-      redirect_to main_app.cart_path
-    end
   end
 
   def load_order
@@ -150,7 +142,7 @@ class CheckoutController < Spree::StoreController
   def handle_redirect_from_stripe
     if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
-      redirect_to(order_path(@order)) && return
+      redirect_to(spree.order_path(@order)) && return
     else
       checkout_failed
     end
@@ -210,10 +202,10 @@ class CheckoutController < Spree::StoreController
   def update_succeeded_response
     respond_to do |format|
       format.html do
-        respond_with(@order, location: order_path(@order))
+        respond_with(@order, location: spree.order_path(@order))
       end
       format.json do
-        render json: { path: order_path(@order) }, status: :ok
+        render json: { path: spree.order_path(@order) }, status: :ok
       end
     end
   end

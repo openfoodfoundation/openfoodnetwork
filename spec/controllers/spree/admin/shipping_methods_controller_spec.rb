@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Admin::ShippingMethodsController, type: :controller do
@@ -29,13 +31,22 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       expect(shipping_method.reload.calculator.preferred_currency).to eq "EUR"
     end
 
-    it "updates preferred_per_kg of a Weight calculator" do
+    it "updates preferred_per_unit of a Weight calculator" do
       shipping_method.calculator = create(:weight_calculator, calculable: shipping_method)
-      params[:shipping_method][:calculator_attributes][:preferred_per_kg] = 10
+      params[:shipping_method][:calculator_attributes][:preferred_per_unit] = 10
 
       spree_post :update, params
 
-      expect(shipping_method.reload.calculator.preferred_per_kg).to eq 10
+      expect(shipping_method.reload.calculator.preferred_per_unit).to eq 10
+    end
+
+    it "updates preferred_unit of a Weight calculator" do
+      shipping_method.calculator = create(:weight_calculator, calculable: shipping_method)
+      params[:shipping_method][:calculator_attributes][:preferred_unit_from_list] = "kg"
+
+      spree_post :update, params
+
+      expect(shipping_method.reload.calculator.preferred_unit_from_list).to eq "kg"
     end
 
     it "updates preferred_flat_percent of a FlatPercentPerItem calculator" do

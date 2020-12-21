@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe InjectionHelper, type: :helper do
@@ -11,7 +13,7 @@ describe InjectionHelper, type: :helper do
   let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id) }
 
   it "will inject via AMS" do
-    expect(helper.inject_json_ams("test", [enterprise], Api::IdSerializer)).to match /#{enterprise.id}/
+    expect(helper.inject_json_array("test", [enterprise], Api::IdSerializer)).to match /#{enterprise.id}/
   end
 
   it "injects enterprises" do

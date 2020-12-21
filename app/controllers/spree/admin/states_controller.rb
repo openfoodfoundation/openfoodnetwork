@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class StatesController < ResourceController
+    class StatesController < ::Admin::ResourceController
       belongs_to 'spree/country'
       before_action :load_data
 
@@ -14,7 +14,7 @@ module Spree
       protected
 
       def location_after_save
-        admin_country_states_url(@country)
+        spree.admin_country_states_url(@country)
       end
 
       def collection

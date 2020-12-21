@@ -23,6 +23,7 @@ fr_BE:
         variant_unit_name: "Nom de la variante"
       spree/credit_card:
         base: "Carte de crédit"
+        number: "N° commande"
       order_cycle:
         orders_close_at: Date de fermeture
       variant_override:
@@ -288,6 +289,7 @@ fr_BE:
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
+    add: "Ajouter"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -390,20 +392,22 @@ fr_BE:
         duplicate_code: "Ce code est déjà utilisé."
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
-        update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Pardon! Veuillez remplir tous les champs obligatoires!'
-        edit_bill_address: 'Modifier l''adresse de facturation'
-        edit_ship_address: 'Modifier l''adresse de livraison'
-        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
-        select_country: 'Choisir le pays'
-        select_state: 'Choisir la Province'
-        edit: 'Modifier'
-        update_address: 'Mettre à jour l''adresse'
-        confirm_delete: 'Confirmer suppression?'
+        balance: "Solde"
+        update_address_success: "Adresse mise à jour avec succès."
+        update_address_error: "Pardon! Veuillez remplir tous les champs obligatoires!"
+        edit_bill_address: "Modifier l'adresse de facturation"
+        edit_ship_address: "Modifier l'adresse de livraison"
+        required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
+        select_country: "Choisir le pays"
+        select_state: "Choisir la Province"
+        edit: "Modifier"
+        update_address: "Mettre à jour l'adresse"
+        confirm_delete: "Confirmer suppression?"
         search_by_email: "Recherche par email/code..."
-        guest_label: 'Commande en mode invité'
+        guest_label: "Commande en mode invité"
+        credit_owed: "Crédit redevable"
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir'
+        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir"
     contents:
       edit:
         title: Contenu
@@ -1205,6 +1209,9 @@ fr_BE:
         require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
       select_oc:
         select_oc_html: "Veuillez <span class='highlighted'>choisir quand vous voulez votre commande</span> , pour voir quels produits sont disponibles."
+    products:
+      summary:
+        bulk: "Vrac"
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1561,7 +1568,8 @@ fr_BE:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les comptoirs près de %{location}"
   shop_changeable_orders_alert_html:
-    one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
+    many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear: Annuler
@@ -1707,7 +1715,8 @@ fr_BE:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
+    many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
@@ -1912,7 +1921,6 @@ fr_BE:
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les comptoirs suivants:"
   change_shop: "Changer de comptoir pour:"
   shop_at: "Acheter maintenant :"
-  price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
   sales_fee: "Frais de ventes/marketing"
   packing_fee: "Frais d'emballage"
@@ -2364,8 +2372,9 @@ fr_BE:
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
-        got_it: J'ai compris
+        got_it: "J'ai compris"
         close: "Fermer"
+        continue: "Suivant"
         invite: "Inviter"
         invite_title: "Inviter un·e nouvel·le utilisateur·trice"
         tag_rule_help:
@@ -2595,6 +2604,11 @@ fr_BE:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    shopfront:
+      variant:
+        add_to_cart: "Ajouter"
+      bulk_buy_modal:
+        max_quantity: "Quantité max"
     variants:
       on_demand:
         'yes': "A volonté"
@@ -2786,6 +2800,7 @@ fr_BE:
     adjustments: "Corrections"
     continue: "Suivant"
     fill_in_customer_info: "Merci de remplir les informations client"
+    credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Vide"
@@ -2824,15 +2839,6 @@ fr_BE:
     smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
     intercept_email_address: "Intercepter les adresses mail"
     intercept_email_instructions: "Ignorer le destinataire et le remplacer par cette adresse."
-    image_settings: "Paramètres image"
-    image_settings_warning: "Il est nécessaire de régénérer des logos lors de la mise à jour des styles de trombones . Utiliser ratisser trombone:rafraîchir:logos CLASS=Spree::Image pour faire ceci. "
-    attachment_default_style: Style Pièces  jointes
-    attachment_default_url: "Joint à URL par défaut"
-    attachment_path: "Pièces jointes liés"
-    attachment_styles: "Styles trombones"
-    attachment_url: "URL lié"
-    add_new_style: "Ajouter un nouveau style "
-    image_settings_updated: "Paramètres Image mis à jour avec succès."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Liste catégories TVA"
     back_to_tax_categories_list: "Retour à la liste des catégories de TVA"
@@ -2865,6 +2871,7 @@ fr_BE:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
+    shipping_method: "Méthode de Livraison"
     shipping_categories: "Condition de transport"
     new_shipping_category: "Nouvelle catégorie d'expédition "
     back_to_shipping_categories: "Retour vers les catégories d'expédition"
@@ -2906,11 +2913,14 @@ fr_BE:
     inventory_error_flash_for_insufficient_quantity: "Une donnée n'est plus disponible sur votre carte."
     inventory: Catalogue boutique
     zipcode: Code postal
-    weight: Poids (au kg)
     error_user_destroy_with_orders: "Les utilisateurs avec une commande finalisée ne peuvent pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
     please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."
     options: "Options"
+    successfully_created: '%{resource}est crée avec succès! '
+    successfully_updated: '%{resource}a été enregistrée avec succès'
+    payment_method: "Méthode de paiement"
+    payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
     actions:
       update: "Mettre à jour"
     shared:
@@ -2952,7 +2962,6 @@ fr_BE:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des caractéristiques au produit"
-          select_from_prototype: "Sélectionner à partir d'un prototype"
       properties:
         index:
           properties: "Labels / propriétés"
@@ -3045,6 +3054,8 @@ fr_BE:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "U heeft één aktieve product"
+            few: "Vous avez %{count}des produits actifs"
+            many: "Vous avez %{count}des produits actifs"
             other: "Vous avez %{count}des produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
@@ -3052,6 +3063,8 @@ fr_BE:
           you_have_active:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
+            few: "Vous avez %{count} cycles de vente actifs."
+            many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       shipping_methods:
@@ -3402,11 +3415,9 @@ fr_BE:
         delete?: Supprimer?
       cards:
         authorised_shops: Comptoirs autorisés.
-        authorised_shops_popover: Voilà la liste des comptoirs que vous avez autorisées à débiter votre carte de paiement par défaut dans le cadre de vos abonnements en cours (commandes récurrentes). Les informations concernant votre carte de paiement sont sécurisées et ne sont pas accessibles par le gérant de la boutique. Vous recevrez systématiquement une notification avant tout débit sur votre carte.
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les comptoirs auxquels vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom du comptoir"
-        allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:

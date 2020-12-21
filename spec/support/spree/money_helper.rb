@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module MoneyHelper
     def with_currency(amount, options = {})

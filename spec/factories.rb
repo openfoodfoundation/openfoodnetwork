@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'ffaker'
 
 FactoryBot.define do
-  sequence(:random_string)      { Faker::Lorem.sentence }
-  sequence(:random_description) { Faker::Lorem.paragraphs(1 + Kernel.rand(5)).join("\n") }
-  sequence(:random_email)       { Faker::Internet.email }
+  sequence(:random_string)      { FFaker::Lorem.sentence }
+  sequence(:random_description) { FFaker::Lorem.paragraphs(Kernel.rand(1..5)).join("\n") }
+  sequence(:random_email)       { FFaker::Internet.email }
 
   factory :classification, class: Spree::Classification do
   end
 
   factory :exchange, class: Exchange do
-    incoming    false
+    incoming    { false }
     order_cycle { OrderCycle.first || FactoryBot.create(:simple_order_cycle) }
     sender      { incoming ? FactoryBot.create(:enterprise) : order_cycle.coordinator }
     receiver    { incoming ? order_cycle.coordinator : FactoryBot.create(:enterprise) }
@@ -38,27 +40,27 @@ FactoryBot.define do
   end
 
   factory :variant_override, class: VariantOverride do
-    price 77.77
-    on_demand false
-    count_on_hand 11_111
-    default_stock 2000
-    resettable false
+    price { 77.77 }
+    on_demand { false }
+    count_on_hand { 11_111 }
+    default_stock { 2000 }
+    resettable { false }
 
     trait :on_demand do
-      on_demand true
-      count_on_hand nil
+      on_demand { true }
+      count_on_hand { nil }
     end
 
     trait :use_producer_stock_settings do
-      on_demand nil
-      count_on_hand nil
+      on_demand { nil }
+      count_on_hand { nil }
     end
   end
 
   factory :inventory_item, class: InventoryItem do
     enterprise
     variant
-    visible true
+    visible { true }
   end
 
   factory :enterprise_relationship do
@@ -68,15 +70,15 @@ FactoryBot.define do
   end
 
   factory :enterprise_group, class: EnterpriseGroup do
-    name 'Enterprise group'
+    name { 'Enterprise group' }
     sequence(:permalink) { |n| "group#{n}" }
-    description 'this is a group'
-    on_front_page false
+    description { 'this is a group' }
+    on_front_page { false }
     address { FactoryBot.build(:address) }
   end
 
   factory :enterprise_fee, class: EnterpriseFee do
-    transient { amount nil }
+    transient { amount { nil } }
 
     sequence(:name) { |n| "Enterprise fee #{n}" }
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
@@ -87,12 +89,12 @@ FactoryBot.define do
     after(:create) { |ef| ef.calculator.save! }
 
     trait :flat_rate do
-      transient { amount 1 }
+      transient { amount { 1 } }
       calculator { build(:calculator_flat_rate, preferred_amount: amount) }
     end
 
     trait :per_item do
-      transient { amount 1 }
+      transient { amount { 1 } }
       calculator { build(:calculator_per_item, preferred_amount: amount) }
     end
   end
@@ -100,19 +102,19 @@ FactoryBot.define do
   factory :adjustment_metadata, class: AdjustmentMetadata do
     adjustment { FactoryBot.create(:adjustment) }
     enterprise { FactoryBot.create(:distributor_enterprise) }
-    fee_name 'fee'
-    fee_type 'packing'
-    enterprise_role 'distributor'
+    fee_name { 'fee' }
+    fee_type { 'packing' }
+    enterprise_role { 'distributor' }
   end
 
   factory :producer_property, class: ProducerProperty do
-    value 'abc123'
+    value { 'abc123' }
     producer { create(:supplier_enterprise) }
     property
   end
 
   factory :customer, class: Customer do
-    email { Faker::Internet.email }
+    email { generate(:random_email) }
     enterprise
     code { SecureRandom.base64(150) }
     user
@@ -121,7 +123,7 @@ FactoryBot.define do
 
   factory :stripe_account do
     enterprise { FactoryBot.create(:distributor_enterprise) }
-    stripe_user_id "abc123"
-    stripe_publishable_key "xyz456"
+    stripe_user_id { "abc123" }
+    stripe_publishable_key { "xyz456" }
   end
 end

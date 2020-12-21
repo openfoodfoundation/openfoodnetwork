@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -11,7 +13,6 @@ feature '
     scenario "creating a new variant" do
       # Given a product with a unit-related option type
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
-
 
       # When I create a variant on the product
       login_as_admin_and_visit spree.admin_product_variants_path product

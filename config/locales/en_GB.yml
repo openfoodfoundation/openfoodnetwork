@@ -23,6 +23,10 @@ en_GB:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
+        number: "Number"
+        month: "Month"
+        verification_value: "Verification Value"
+        year: "Year"
       order_cycle:
         orders_close_at: Close date
       variant_override:
@@ -285,10 +289,16 @@ en_GB:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    resume: "Resume"
     save: "Save"
     edit: "Edit"
     update: "Update"
     delete: "Delete"
+    add: "Add"
+    cut: "Cut"
+    paste: "Paste"
+    destroy: "Destroy"
+    rename: "Rename"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -347,6 +357,7 @@ en_GB:
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
+    available_units: "Available Units"
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -392,20 +403,23 @@ en_GB:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'Address updated successfully.'
-        update_address_error: 'Sorry! Please input all of the required fields!'
-        edit_bill_address: 'Edit Billing Address'
-        edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk'
-        select_country: 'Select Country'
-        select_state: 'Select County'
-        edit: 'Edit'
-        update_address: 'Update Address'
-        confirm_delete: 'Sure to delete?'
+        balance: "Balance"
+        update_address_success: "Address updated successfully."
+        update_address_error: "Sorry! Please input all of the required fields!"
+        edit_bill_address: "Edit Billing Address"
+        edit_ship_address: "Edit Shipping Address"
+        required_fileds: "Required fields are denoted with an asterisk"
+        select_country: "Select Country"
+        select_state: "Select County"
+        edit: "Edit"
+        update_address: "Update Address"
+        confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
+        credit_owed: "Credit Owed"
+        balance_due: "Balance Due"
       destroy:
-        has_associated_orders: 'Delete failed: customer has associated orders with this shop'
+        has_associated_orders: "Delete failed: customer has associated orders with this shop"
     contents:
       edit:
         title: Content
@@ -592,6 +606,8 @@ en_GB:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
+      edit:
+        order_sure_want_to: Are you sure you want to %{event} this order?
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -640,6 +656,7 @@ en_GB:
           invoice_text: Add customized text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
+          uploaded_on: "uploaded on"
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
@@ -748,6 +765,7 @@ en_GB:
               is displayed on your shop only when you have no active order cycles
               (ie. shop is closed).
           shopfront_category_ordering: "Shopfront Category Ordering"
+          shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
         social:
@@ -1157,8 +1175,8 @@ en_GB:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
-      message_html: "By placing this order you agree to the %{terms_and_conditions_link}."
-      link_text: "Terms of Service"
+      message_html: "I agree to the seller's %{terms_and_conditions_link}."
+      link_text: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1213,6 +1231,9 @@ en_GB:
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
         select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
+    products:
+      summary:
+        bulk: "Bulk"
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1570,6 +1591,8 @@ en_GB:
   hubs_distance_filter: "Show me shops near %{location}"
   shop_changeable_orders_alert_html:
     one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    few: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+    many: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
@@ -1715,7 +1738,9 @@ en_GB:
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: "An additional item is already confirmed for this order cycle"
+    one: An additional item is already confirmed for this order cycle
+    few: "%{count} additional items already confirmed for this order cycle"
+    many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
@@ -1920,7 +1945,6 @@ en_GB:
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
   shop_at: "Shop now at:"
-  price_breakdown: "Full price breakdown"
   admin_fee: "Admin fee"
   sales_fee: "Sales fee"
   packing_fee: "Packing fee"
@@ -1995,6 +2019,7 @@ en_GB:
   calculator: "Calculator"
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  calculator_preferred_unit_error: "must be kg or lb"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2091,7 +2116,7 @@ en_GB:
   admin_share_city: "City"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Country"
-  admin_share_state: "State"
+  admin_share_state: "County"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
@@ -2144,14 +2169,14 @@ en_GB:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ship Postcode
-  report_header_ship_state: Ship State
+  report_header_ship_state: Ship County
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
-  report_header_billing_state: Billing State
+  report_header_billing_state: Billing County
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
@@ -2371,8 +2396,9 @@ en_GB:
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
-        got_it: Got it
+        got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2392,6 +2418,14 @@ en_GB:
               By creating rules related to a specific customer tag, you can override
               the default behaviour (whether it be to show or to hide items) for customers
               with the specified tag.
+        terms_and_conditions_info:
+          title: "Uploading Terms and Conditions"
+          message_1: "Terms and Conditions are the contract between you, the seller, and the shopper. If you upload a file here shoppers must accept your Terms and Conditions in order to complete checkout. For the shopper this will appear as a checkbox at checkout that must be checked in order to proceed with checkout. We highly recommend you upload Terms and Conditions in alignment with national legislation."
+          message_2: "Shoppers will only be required to accept Terms and Conditions once. However if you change you Terms and Conditions shoppers will again be required to accept them before they can checkout."
+        terms_and_conditions_warning:
+          title: "Uploading Terms and Conditions"
+          message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
+          message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
       panels:
         save: SAVE
         saved: SAVED
@@ -2599,6 +2633,15 @@ en_GB:
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    shopfront:
+      variant:
+        add_to_cart: "Add"
+        in_cart: "in cart"
+        quantity_in_cart: "%{quantity} in cart"
+      bulk_buy_modal:
+        min_quantity: "Min quantity"
+        max_quantity: "Max quantity"
+      price_breakdown: "Price breakdown"
     variants:
       on_demand:
         'yes': "Unlimited"
@@ -2847,6 +2890,8 @@ en_GB:
     delete: "Delete"
     cannot_set_shipping_method_without_address: "Cannot set shipping method until customer details are provided."
     no_tracking_present: "No tracking details provided."
+    tracking: "Tracking"
+    tracking_number: "Tracking Number"
     order_total: "Order Total"
     customer_details: "Customer Details"
     customer_search: "Customer Search"
@@ -2868,6 +2913,7 @@ en_GB:
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
@@ -2879,6 +2925,8 @@ en_GB:
     server: "Server"
     test_mode: "Test Mode"
     logourl: "Logo url"
+    are_you_sure_delete: "Are you sure you want to delete this record?"
+    confirm_delete: "Confirm Deletion"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2906,15 +2954,6 @@ en_GB:
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
-    image_settings: "Image Settings"
-    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
-    attachment_default_style: Attachments Style
-    attachment_default_url: "Attachments Default URL"
-    attachment_path: "Attachments Path"
-    attachment_styles: "Paperclip Styles"
-    attachment_url: "Attachments URL"
-    add_new_style: "Add New Style"
-    image_settings_updated: "Image Settings successfully updated."
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"
@@ -2947,6 +2986,7 @@ en_GB:
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
+    shipping_method: "Shipping Method"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
@@ -2988,17 +3028,27 @@ en_GB:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    weight: Weight (per kg)
+    weight: Weight (per kg or lb)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
+    has_no_shipped_units: "has no shipped units"
+    successfully_created: '%{resource} has been successfully created!'
+    successfully_updated: '%{resource} has been successfully updated!'
+    payment_method: "Payment Method"
+    payment_processing_failed: "Payment could not be processed, please check the details you entered"
+    not_available: "N/A"
+    order_populator:
+      out_of_stock: '%{item} is out of stock.'
     actions:
       update: "Update"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
           one: "1 error prohibited this record from being saved:"
+          few: "%{count} errors prohibited this record from being saved:"
+          many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
       payments_list:
@@ -3037,7 +3087,6 @@ en_GB:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
           add_product_properties: "Add Product Properties"
-          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
@@ -3130,6 +3179,8 @@ en_GB:
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
+            few: "You have %{count} active products"
+            many: "You have %{count} active products"
             other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
@@ -3137,6 +3188,8 @@ en_GB:
           you_have_active:
             zero: "You don't have any active order cycles."
             one: "You have one active order cycle."
+            few: "You have %{count} active order cycles."
+            many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:
@@ -3393,7 +3446,7 @@ en_GB:
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
         unpaid_order: "Your order was unpaid so no refund has been made"
-        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        paid_order: "Your order was paid so %{distributor} will refund the full amount. Please don't hesitate to get in touch to notify them that you cancelled your order.  Many business reconcile payments at the end of the month but will happily issue refunds sooner, if they are aware you are waiting."
         credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
@@ -3411,6 +3464,7 @@ en_GB:
         issue_text: |
             If the above URL does not work try copying and pasting it into your browser.
             If you continue to have problems please feel free to contact us.
+        subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
     shipment_mailer:
@@ -3486,11 +3540,9 @@ en_GB:
         delete?: Delete?
       cards:
         authorised_shops: Authorised Shops
-        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
-        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:

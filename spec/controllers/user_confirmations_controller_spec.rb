@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe UserConfirmationsController, type: :controller do
@@ -70,7 +72,9 @@ describe UserConfirmationsController, type: :controller do
       performing_deliveries do
         expect do
           spree_post :create, spree_user: { email: unconfirmed_user.email }
-        end.to send_confirmation_instructions
+        end.to enqueue_job ActionMailer::DeliveryJob
+
+        expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
       end
     end
   end

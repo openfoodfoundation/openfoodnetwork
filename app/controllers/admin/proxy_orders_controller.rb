@@ -1,5 +1,5 @@
 module Admin
-  class ProxyOrdersController < ResourceController
+  class ProxyOrdersController < Admin::ResourceController
     respond_to :json
 
     def edit

@@ -16,20 +16,6 @@ module Spree
 
           protected
 
-          # Convenience method for firing instrumentation events with the default payload hash
-          def fire_event(name, extra_payload = {})
-            ActiveSupport::Notifications.instrument(name, default_notification_payload.
-                                                            merge(extra_payload))
-          end
-
-          # Creates the hash that is sent as the payload for all notifications.
-          #   Specific notifications will add additional keys as appropriate.
-          #   This method can be overriden to provide additional data when
-          # responding to a notification
-          def default_notification_payload
-            { user: spree_current_user, order: current_order }
-          end
-
           # This can be used in views as well as controllers.
           # e.g. <% self.title = 'This is a custom title for this view' %>
           attr_writer :title
@@ -37,11 +23,7 @@ module Spree
           def title
             title_string = @title.presence || accurate_title
             if title_string.present?
-              if Spree::Config[:always_put_site_name_in_title]
-                [title_string, default_title].join(' - ')
-              else
-                title_string
-              end
+              [title_string, default_title].join(' - ')
             else
               default_title
             end

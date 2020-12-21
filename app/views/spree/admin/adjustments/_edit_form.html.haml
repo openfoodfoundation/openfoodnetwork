@@ -8,7 +8,8 @@
   .four.columns
     = f.field_container :included_tax do
       = f.label :included_tax, t(:included_tax)
-      = text_field :adjustment, :included_tax, disabled: true, class: 'fullwidth'
+      = f.text_field :included_tax, disabled: true, class: 'fullwidth',
+        value: number_with_precision(f.object.included_tax, precision: 2)
       = f.error_message_on :included_tax
 
   .omega.four.columns

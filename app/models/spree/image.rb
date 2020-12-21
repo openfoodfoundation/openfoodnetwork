@@ -1,17 +1,25 @@
 # frozen_string_literal: true
 
+require 'spree/core/s3_support'
+
 module Spree
   class Image < Asset
     validates_attachment_presence :attachment
     validate :no_attachment_errors
 
+    # This is where the styles are used in the app:
+    # - mini: used in the BackOffice: Bulk Product Edit page and Order Cycle edit page
+    # - small: used in the FrontOffice: Product List page
+    # - product: used in the BackOffice: Product Image upload modal in the Bulk Product Edit page
+    #                                      and Product image edit page
+    # - large: used in the FrontOffice: product modal
     has_attached_file :attachment,
-                      styles: { mini: '48x48>', small: '100x100>',
-                                product: '240x240>', large: '600x600>' },
+                      styles: { mini: "48x48#", small: "227x227#",
+                                product: "240x240>", large: "600x600>" },
                       default_style: :product,
                       url: '/spree/products/:id/:style/:basename.:extension',
                       path: ':rails_root/public/spree/products/:id/:style/:basename.:extension',
-                      convert_options: { all: '-strip -auto-orient -colorspace RGB' }
+                      convert_options: { all: '-strip -auto-orient -colorspace sRGB' }
 
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
@@ -20,27 +28,28 @@ module Spree
     include Spree::Core::S3Support
     supports_s3 :attachment
 
-    Spree::Image.attachment_definitions[:attachment][:styles] =
-      ActiveSupport::JSON.decode(Spree::Config[:attachment_styles]).symbolize_keys!
-    Spree::Image.attachment_definitions[:attachment][:path] = Spree::Config[:attachment_path]
-    Spree::Image.attachment_definitions[:attachment][:url] = Spree::Config[:attachment_url]
-    Spree::Image.attachment_definitions[:attachment][:default_url] =
-      Spree::Config[:attachment_default_url]
-    Spree::Image.attachment_definitions[:attachment][:default_style] =
-      Spree::Config[:attachment_default_style]
-
     # used by admin products autocomplete
     def mini_url
       attachment.url(:mini, false)
     end
 
     def find_dimensions
-      temporary = attachment.queued_for_write[:original]
-      filename = temporary.path unless temporary.nil?
-      filename = attachment.path if filename.blank?
-      geometry = Paperclip::Geometry.from_file(filename)
+      return if attachment.errors.present?
+
+      geometry = Paperclip::Geometry.from_file(local_filename_of_original)
+
       self.attachment_width  = geometry.width
       self.attachment_height = geometry.height
+    end
+
+    def local_filename_of_original
+      temporary = attachment.queued_for_write[:original]
+
+      if temporary&.path.present?
+        temporary.path
+      else
+        attachment.path
+      end
     end
 
     # if there are errors from the plugin, then add a more meaningful message
@@ -51,26 +60,36 @@ module Spree
       false
     end
 
-    # Spree stores attachent definitions in JSON. This converts the style name and format to
-    # strings. However, when paperclip encounters these, it doesn't recognise the format.
-    # Here we solve that problem by converting format and style name to symbols.
-    # See also: ImageSettingsController decorator.
-    #
-    # eg. {'mini' => ['48x48>', 'png']} is converted to {mini: ['48x48>', :png]}
-    def self.format_styles(styles)
-      styles_a = styles.map do |name, style|
-        style[1] = style[1].to_sym if style.is_a? Array
-        [name.to_sym, style]
+    def self.set_attachment_attribute(attribute_name, attribute_value)
+      attachment_definitions[:attachment][attribute_name] = attribute_value
+    end
+
+    def self.set_storage_attachment_attributes
+      if Spree::Config[:use_s3]
+        set_s3_attachment_attributes
+      else
+        attachment_definitions[:attachment].delete(:storage)
       end
-
-      Hash[styles_a]
     end
 
-    def self.reformat_styles
-      Spree::Image.attachment_definitions[:attachment][:styles] =
-        format_styles(Spree::Image.attachment_definitions[:attachment][:styles])
-    end
+    def self.set_s3_attachment_attributes
+      set_attachment_attribute(:storage, :s3)
+      set_attachment_attribute(:s3_credentials, s3_credentials)
+      set_attachment_attribute(:s3_headers,
+                               ActiveSupport::JSON.decode(Spree::Config[:s3_headers]))
+      set_attachment_attribute(:bucket, Spree::Config[:s3_bucket])
 
-    reformat_styles
+      # We use :s3_alias_url (virtual host url style) and set the URL on property s3_host_alias
+      set_attachment_attribute(:s3_host_alias, attachment_definitions[:attachment][:url])
+      set_attachment_attribute(:url, ":s3_alias_url")
+    end
+    private_class_method :set_s3_attachment_attributes
+
+    def self.s3_credentials
+      { access_key_id: Spree::Config[:s3_access_key],
+        secret_access_key: Spree::Config[:s3_secret],
+        bucket: Spree::Config[:s3_bucket] }
+    end
+    private_class_method :s3_credentials
   end
 end

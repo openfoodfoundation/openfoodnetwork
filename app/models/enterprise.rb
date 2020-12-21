@@ -132,7 +132,7 @@ class Enterprise < ActiveRecord::Base
       where(nil)
     end
   }
-  scope :is_primary_producer, -> { where(is_primary_producer: true) }
+  scope :is_primary_producer, -> { where("enterprises.is_primary_producer IS TRUE") }
   scope :is_distributor, -> { where('sells != ?', 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
@@ -400,7 +400,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    Delayed::Job.enqueue WelcomeEnterpriseJob.new(id)
+    WelcomeEnterpriseJob.perform_later(id)
   end
 
   def strip_url(url)
@@ -470,6 +470,8 @@ class Enterprise < ActiveRecord::Base
   end
 
   def initialize_permalink
+    return unless name
+
     self.permalink = Enterprise.find_available_permalink(name)
   end
 

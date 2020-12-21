@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Api::Admin::VariantOverrideSerializer do
   let(:variant) { create(:variant) }
   let(:hub) { create(:distributor_enterprise) }

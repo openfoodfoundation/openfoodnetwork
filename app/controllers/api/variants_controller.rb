@@ -17,7 +17,7 @@ module Api
 
     def create
       authorize! :create, Spree::Variant
-      @variant = scope.new(params[:variant])
+      @variant = scope.new(variant_params)
       if @variant.save
         render json: @variant, serializer: Api::VariantSerializer, status: :created
       else
@@ -28,7 +28,7 @@ module Api
     def update
       authorize! :update, Spree::Variant
       @variant = scope.find(params[:id])
-      if @variant.update(params[:variant])
+      if @variant.update(variant_params)
         render json: @variant, serializer: Api::VariantSerializer, status: :ok
       else
         invalid_resource!(@product)
@@ -68,6 +68,10 @@ module Api
         end
       end
       variants
+    end
+
+    def variant_params
+      params.require(:variant).permit(PermittedAttributes::Variant.attributes)
     end
   end
 end

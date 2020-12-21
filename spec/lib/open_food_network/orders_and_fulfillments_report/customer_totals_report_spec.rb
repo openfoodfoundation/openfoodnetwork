@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require 'open_food_network/orders_and_fulfillments_report'
 require 'open_food_network/orders_and_fulfillments_report/customer_totals_report'
@@ -83,7 +85,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
 
   context "displaying payment fees" do
     context "with both failed and completed payments present" do
-      let!(:order) { 
+      let!(:order) {
         create(:order_ready_to_ship, user: customer.user,
                                      customer: customer, distributor: distributor)
       }

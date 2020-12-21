@@ -35,12 +35,15 @@
 .row
   .alpha.three.columns
     = f.label :terms_and_conditions, t('.terms_and_conditions')
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/terms_and_conditions_info.html' }
 
   .omega.eight.columns
-    %a{ href: '{{ Enterprise.terms_and_conditions }}', ng: { if: 'Enterprise.terms_and_conditions' } }
+    %a{ href: '{{ Enterprise.terms_and_conditions }}', target: '_blank', ng: { if: 'Enterprise.terms_and_conditions' } }
       = '{{ Enterprise.terms_and_conditions_file_name }}'
+      = t('.uploaded_on')
+      = '{{ Enterprise.terms_and_conditions_updated_at }}'
     .pad-top
-      = f.file_field :terms_and_conditions
+      = f.file_field :terms_and_conditions, accept: 'application/pdf', 'terms-and-conditions-warning' => 'true'
     .pad-top
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')

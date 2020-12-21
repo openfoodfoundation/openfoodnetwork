@@ -257,6 +257,10 @@ describe "AdminProductEditCtrl", ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'columns', []
       null
+    module "admin.products"
+    module ($provide)->
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      null
 
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_, _ProductFiltersUrl_) ->
     $scope = $rootScope.$new()
@@ -357,6 +361,15 @@ describe "AdminProductEditCtrl", ->
     it "resets dirtyProducts", ->
       expect(DirtyProducts.clear).toHaveBeenCalled()
 
+  describe "sorting products", ->
+    it "sorts products", ->
+      spyOn $scope, "fetchProducts"
+
+      $scope.sortOptions.toggle('name')
+      $scope.$apply()
+
+      expect($scope.q.sorting).toEqual 'name asc'
+      expect($scope.fetchProducts).toHaveBeenCalled()
 
   describe "updating the product on hand count", ->
     it "updates when product is not available on demand", ->

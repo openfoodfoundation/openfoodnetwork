@@ -1,6 +1,3 @@
-require 'spree/core/controller_helpers/order'
-require 'spree/core/controller_helpers/auth'
-
 module Spree
   class OrdersController < Spree::StoreController
     include OrderCyclesHelper
@@ -78,11 +75,7 @@ module Spree
         discard_empty_line_items
         with_open_adjustments { update_totals_and_taxes }
 
-        if @order == current_order
-          fire_event('spree.order.contents_changed')
-        else
-          @order.update_distribution_charge!
-        end
+        @order.update_distribution_charge!
 
         respond_with(@order) do |format|
           format.html do
@@ -90,7 +83,7 @@ module Spree
               @order.next_transition.run_callbacks if @order.cart?
               redirect_to checkout_state_path(@order.checkout_steps.first)
             elsif @order.complete?
-              redirect_to order_path(@order)
+              redirect_to spree.order_path(@order)
             else
               redirect_to main_app.cart_path
             end
@@ -157,7 +150,7 @@ module Spree
       else
         flash[:error] = I18n.t(:orders_could_not_cancel)
       end
-      redirect_to request.referer || order_path(@order)
+      redirect_to request.referer || spree.order_path(@order)
     end
 
     private
@@ -221,7 +214,7 @@ module Spree
 
       if items.empty?
         flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
-        redirect_to order_path(order_to_update)
+        redirect_to spree.order_path(order_to_update)
       end
     end
 

@@ -23,6 +23,21 @@ describe Checkout::PostCheckoutActions do
       postCheckoutActions.success(controller, params, current_user)
     end
 
+    describe "setting customer terms_and_conditions_accepted_at" do
+      before { order.customer = build(:customer) }
+
+      it "does not set customer's terms_and_conditions to the current time if terms have not been accepted" do
+        postCheckoutActions.success(controller, params, current_user)
+        expect(order.customer.terms_and_conditions_accepted_at).to be_nil
+      end
+
+      it "sets customer's terms_and_conditions to the current time if terms have been accepted" do
+        params = { order: { terms_and_conditions_accepted: true } }
+        postCheckoutActions.success(controller, params, current_user)
+        expect(order.customer.terms_and_conditions_accepted_at).to_not be_nil
+      end
+    end
+
     describe "setting the user default address" do
       let(:user_default_address_setter) { instance_double(UserDefaultAddressSetter) }
 

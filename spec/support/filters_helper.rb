@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   # Helper for customer-facing filters (eg. producers, shops, groups, etc.)
   module FiltersHelper

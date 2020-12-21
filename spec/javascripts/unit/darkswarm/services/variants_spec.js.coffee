@@ -35,9 +35,6 @@ describe 'Variants service', ->
       it "initialises the total_price", ->
         expect(Variants.register(variant).line_item.total_price).toEqual 400
 
-  it "initialises base price percentage", ->
-    expect(Variants.register(variant).base_price_percentage).toEqual 81
-
   it "clears registered variants", ->
     Variants.register(variant)
     expect(Variants.variants[variant.id]).toBe variant

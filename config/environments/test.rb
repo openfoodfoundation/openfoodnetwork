@@ -51,8 +51,9 @@ Openfoodnetwork::Application.configure do
   require 'open_food_network/rack_request_blocker'
   # Make sure the middleware is inserted first in middleware chain
   config.middleware.insert_before('ActionDispatch::Static', 'RackRequestBlocker')
+
+  config.active_job.queue_adapter = :test
 end
 
 # Allows us to use _url helpers in Rspec
 Rails.application.routes.default_url_options[:host] = 'test.host'
-Spree::Core::Engine.routes.default_url_options[:host] = 'test.host'

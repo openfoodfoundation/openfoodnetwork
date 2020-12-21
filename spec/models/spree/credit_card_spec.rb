@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 
 module Spree
@@ -22,44 +24,24 @@ module Spree
 
       let(:credit_card) { Spree::CreditCard.new }
 
-      before(:each) do
-        @order = create(:order)
-        @payment = create(:payment, amount: 100, order: @order)
-
-        @success_response = double('gateway_response', success?: true,
-                                                       authorization: '123',
-                                                       avs_result: { 'code' => 'avs-code' })
-        @fail_response = double('gateway_response', success?: false)
-
-        @payment_gateway = create(:payment_method,
-                                  environment: 'test')
-        allow(@payment_gateway).to receive_messages :payment_profiles_supported? => true,
-                                                    :authorize => @success_response,
-                                                    :purchase => @success_response,
-                                                    :capture => @success_response,
-                                                    :void => @success_response,
-                                                    :credit => @success_response
-        allow(@payment).to receive_messages payment_method: @payment_gateway
-      end
-
       context "#can_capture?" do
         it "should be true if payment is pending" do
-          payment = create(:payment, created_at: Time.zone.now)
+          payment = build_stubbed(:payment, created_at: Time.zone.now)
           allow(payment).to receive(:pending?) { true }
           expect(credit_card.can_capture?(payment)).to be_truthy
         end
 
         it "should be true if payment is checkout" do
-          payment = create(:payment, created_at: Time.zone.now)
-          allow(payment).to receive_messages :pending? => false,
-                                             :checkout? => true
+          payment = build_stubbed(:payment, created_at: Time.zone.now)
+          allow(payment).to receive_messages pending?: false,
+                                             checkout?: true
           expect(credit_card.can_capture?(payment)).to be_truthy
         end
       end
 
       context "#can_void?" do
         it "should be true if payment is not void" do
-          payment = create(:payment)
+          payment = build_stubbed(:payment)
           allow(payment).to receive(:void?) { false }
           expect(credit_card.can_void?(payment)).to be_truthy
         end
@@ -67,23 +49,23 @@ module Spree
 
       context "#can_credit?" do
         it "should be false if payment is not completed" do
-          payment = create(:payment)
+          payment = build_stubbed(:payment)
           allow(payment).to receive(:completed?) { false }
           expect(credit_card.can_credit?(payment)).to be_falsy
         end
 
         it "should be false when order payment_state is not 'credit_owed'" do
-          payment = create(:payment,
-                           order: create(:order, payment_state: 'paid'))
+          payment = build_stubbed(:payment,
+                                  order: create(:order, payment_state: 'paid'))
           allow(payment).to receive(:completed?) { true }
           expect(credit_card.can_credit?(payment)).to be_falsy
         end
 
         it "should be false when credit_allowed is zero" do
-          payment = create(:payment,
-                           order: create(:order, payment_state: 'credit_owed'))
-          allow(payment).to receive_messages :completed? => true,
-                                             :credit_allowed => 0
+          payment = build_stubbed(:payment,
+                                  order: create(:order, payment_state: 'credit_owed'))
+          allow(payment).to receive_messages completed?: true,
+                                             credit_allowed: 0
 
           expect(credit_card.can_credit?(payment)).to be_falsy
         end

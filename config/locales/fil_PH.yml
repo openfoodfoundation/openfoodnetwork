@@ -22,6 +22,7 @@ fil_PH:
         variant_unit_name: "pangalan ng yunit ng variant"
       spree/credit_card:
         base: "Credit Card"
+        number: "Bilang"
       order_cycle:
         orders_close_at: petsa ng pagsasara
       variant_override:
@@ -281,6 +282,7 @@ fil_PH:
     edit: "i-edit"
     update: "i-update"
     delete: "Tanggalin"
+    add: "idagdag"
   admin:
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
@@ -381,20 +383,21 @@ fil_PH:
         duplicate_code: "ang code na ito ay nagamit na"
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'matagumpay na na-update ang address'
-        update_address_error: 'Paunawa! Sagutan lahat ng mga kailangang impormasyon!'
-        edit_bill_address: 'i-edit ang Billing Address'
-        edit_ship_address: 'i-edit ang shipping address'
-        required_fileds: 'ang mga patlang na kailangang may sagot ay may nakalagay na asterisk'
-        select_country: 'Piliin ang bansa'
-        select_state: 'pumili ng Lalawigan'
-        edit: 'i-edit'
-        update_address: 'i-update ang address'
-        confirm_delete: 'siguradong tatanggalin na?'
+        balance: "Balanse"
+        update_address_success: "matagumpay na na-update ang address"
+        update_address_error: "Paunawa! Sagutan lahat ng mga kailangang impormasyon!"
+        edit_bill_address: "i-edit ang Billing Address"
+        edit_ship_address: "i-edit ang shipping address"
+        required_fileds: "ang mga patlang na kailangang may sagot ay may nakalagay na asterisk"
+        select_country: "Piliin ang bansa"
+        select_state: "pumili ng Lalawigan"
+        edit: "i-edit"
+        update_address: "i-update ang address"
+        confirm_delete: "siguradong tatanggalin na?"
         search_by_email: "hanapin gamit ang email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
       destroy:
-        has_associated_orders: 'hindi tagumpay ang pagtanggal: ang customer ay may iniugnay na mga order sa kaniyang shop'
+        has_associated_orders: "hindi tagumpay ang pagtanggal: ang customer ay may iniugnay na mga order sa kaniyang shop"
     contents:
       edit:
         title: nilalaman
@@ -1182,6 +1185,9 @@ fil_PH:
         contact: "makipag-ugnayan"
         require_customer_login: "ang mga inaprubahang customer lamang ang maaaring gumamit ng shop na ito."
         require_customer_html: "kung nais mong magsimulang mamili rito, maaaring%{contact}%{enterprise} at magtanong kung paano sumali."
+    products:
+      summary:
+        bulk: "Bulto"
   card_could_not_be_updated: hindi ma-update ang card
   card_could_not_be_saved: hindi ma-save ang card
   spree_gateway_error_flash_for_checkout: "mayroong problema sa ibinigay na impormasyon ng pagbabayad:%{error}"
@@ -1538,7 +1544,8 @@ fil_PH:
   hubs_distance: pinakamalapit sa
   hubs_distance_filter: "ipakita ang mga shop malapit sa%{location}"
   shop_changeable_orders_alert_html:
-    one: ang iyong order sa<a href='%{path}' target='_blank'>%{shop}/%{order}</a> ay maaaring tignan. maaaring gumawa ng pagbabago hanggang%{oc_close}.
+    few: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
+    many: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
     other: ikaw ay mayroong<a href='%{path}' target='_blank'>%{count} na order sa%{shop}</a> na maaari ngayong tignan. maaaring gumawa ng mga pagbabago hanggang%{oc_close}.
   orders_changeable_orders_alert_html: ang order na ito ay nakumpirma na ngunit maaari pang gumawa ng mga pagbabago hanggang<strong>%{oc_close}</strong>.
   products_clear: alisin
@@ -1677,7 +1684,8 @@ fil_PH:
   orders_could_not_cancel: "paumanhin, hindi makansela ang inyong order"
   orders_cannot_remove_the_final_item: "hindi matanggal ang huling item mula sa isang order, maaaring kanselahin na lamang ang order."
   orders_bought_items_notice:
-    one: "isang karagdagang item ang nakumpirma na para sa order cycle na ito"
+    few: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
+    many: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
     other: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
   orders_bought_edit_button: ayusin ang kumpirmadong mga item
   orders_bought_already_confirmed: "* kumpirmado na"
@@ -1881,7 +1889,6 @@ fil_PH:
   shop_for_products_html: "mamili ng<span class=\"turquoise\">%{enterprise}</span>na mga produkto sa:"
   change_shop: "palitan ang shop ng:"
   shop_at: "mamili ngayon sa:"
-  price_breakdown: "ibaba ang listahan ng presyo"
   admin_fee: "bayad sa admin"
   sales_fee: "bayad sa pagbebenta"
   packing_fee: "bayad sa pagbabalot"
@@ -2325,8 +2332,9 @@ fil_PH:
     admin:
       enterprise_limit_reached: "naabot mo na ang pamantayang lmitasyon ng dami ng bilang ng mga enterprise sa bawat account. makipag-ugnayan sa%{contact_email}kung kailangan mo itong dagdagan."
       modals:
-        got_it: nakuha na
+        got_it: "nakuha na"
         close: "isara"
+        continue: "Magpatuloy"
         invite: "mag-imbita"
         invite_title: "mag-imbita ng hindi rehistradong user"
         tag_rule_help:
@@ -2552,6 +2560,11 @@ fil_PH:
           produkto sa inyong cart ay nabawasan. ito ang nagbago:
       now_out_of_stock: ay out of stock na ngayon
       only_n_remainging: "ngayon ay may%{num}na natitira"
+    shopfront:
+      variant:
+        add_to_cart: "idagdag"
+      bulk_buy_modal:
+        max_quantity: "sagad na dami"
     variants:
       on_demand:
         'yes': "on demand"
@@ -2814,6 +2827,7 @@ fil_PH:
     adjustments: "mga pagsasa-ayos"
     continue: "Magpatuloy"
     fill_in_customer_info: "sagutan ang impormasyon tungkol sa customer"
+    credit_card: "Credit Card"
     new_payment: "Bagong Pagbabayad"
     capture: "kunan"
     void: "walang bisa"
@@ -2846,15 +2860,6 @@ fil_PH:
     smtp_send_copy_to_this_addresses: "nagpapadala ng kopya ng lahat ng lumalabas na mga sulat sa address na ito, para sa maraming address, paghiwalayin gamit ang kuwit."
     intercept_email_address: "harangin ang email address"
     intercept_email_instructions: "pawalang halaga ang tatanggap ng email at palitan ng address na ito"
-    image_settings: "mga setting ng larawan"
-    image_settings_warning: "kinakailangang gumawa muli ng mga thumbnail kung ia-update ang mga estilo ng paperclip. gumamit ng rake paperclip:refresh:thumbnails CLASS=Spree::Image para gawin ito."
-    attachment_default_style: estilo ng mga attachment
-    attachment_default_url: "Default URL ng mga attachment"
-    attachment_path: "landas ng mga attachment"
-    attachment_styles: "estilo ng Paperclips"
-    attachment_url: "URL ng mga attachment"
-    add_new_style: "magdagdag ng bagong estilo"
-    image_settings_updated: "matagumpay na na-update ang settings ng larawan"
     tax_categories: "kategorya ng tax"
     listing_tax_categories: "kategorya ng nakalistang tax"
     back_to_tax_categories_list: "bumalik sa listahan ng kategorya ng tax"
@@ -2887,6 +2892,7 @@ fil_PH:
     new_taxonomy: "bagong taxonomy"
     back_to_taxonomies_list: "bumalik sa listahan ng mga taxonomy"
     shipping_methods: "mga paraan ng pagpapadala"
+    shipping_method: "paraan ng pagpapadala"
     shipping_categories: "mga kategorya ng pagpapadala"
     new_shipping_category: "bagong kategorya ng pagpapadala"
     back_to_shipping_categories: "bumalik sa mga kategorya ng pagpapadala"
@@ -2928,11 +2934,14 @@ fil_PH:
     inventory_error_flash_for_insufficient_quantity: "ang isang item sa inyong cart ay hindi na available."
     inventory: imbentaryo
     zipcode: Postcode
-    weight: timbang (per kg)
     error_user_destroy_with_orders: "ang mga gumagamit na may kumpletong order ay hindi maaaring tanggalin"
     cannot_create_payment_without_payment_methods: "hindi maaaring magbayad para sa isang order na walang nakasaad na paraan ng pagbabayad."
     please_define_payment_methods: "isaad muna ang paraan ng pagbabayad"
     options: "pagpipilian"
+    successfully_created: '%{resource}ay matagumpay na nagawa!'
+    successfully_updated: '%{resource}ay matagumpay na na-update'
+    payment_method: "Paraan ng pagbayad"
+    payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     actions:
       update: "i-update"
     shared:
@@ -2971,7 +2980,6 @@ fil_PH:
         index:
           inherits_properties_checkbox_hint: "kopyahin ang mga katangian mula sa%{supplier}? (maliban kung napatungan ang nasa itaas)"
           add_product_properties: "magdagdag ng katangian ng produkto"
-          select_from_prototype: "pumili mula sa prototype"
       properties:
         index:
           properties: "mga katangian"
@@ -3064,6 +3072,8 @@ fil_PH:
           active_products:
             zero: "wala kang aktibong mga produkto"
             one: "Mayroon kang isang aktibong produkto"
+            few: "mayroon kang%{count}aktibong produkto."
+            many: "mayroon kang%{count}aktibong produkto."
             other: "mayroon kang%{count}aktibong produkto."
         order_cycles:
           order_cycles: "order cycles"
@@ -3071,6 +3081,8 @@ fil_PH:
           you_have_active:
             zero: "wala kang mga aktibong order cycle"
             one: "mayroon kang isang aktibong order cycle"
+            few: "mayroon kang%{count}aktibong order cycle."
+            many: "mayroon kang%{count}aktibong order cycle."
             other: "mayroon kang%{count}aktibong order cycle."
           manage_order_cycles: "PAMAHALAAN ANG MGA ORDER CYCLE"
       shipping_methods:
@@ -3388,11 +3400,9 @@ fil_PH:
         delete?: tanggalin?
       cards:
         authorised_shops: awtorisadong mga shop
-        authorised_shops_popover: ito ang listahan ng mga shop na may permisong singilin ang iyong default na credit card para sa kahit anong subscription (hal.nauulit na mga order) na mayroon ka. Ang mga detalye ng iyong card ay pananatilihing ligtas at hindi ipapaalam sa mga may-ari ng shop. Ikaw ay aabisuhan kapag ikaw ay nasingil na.
         saved_cards_popover: ito ang listahan ng mga card na pinili mong i-save para magamit sa hinaharap. ang iyong 'default' ay awtomatikong mapipili kapag ikaw ay nagcheckout ng order, at maaari ring singilin ng mga shop na binigyan mo ng permiso (tignan sa kanan).
       authorised_shops:
         shop_name: "pangalan ng shop"
-        allow_charges?: "pumayag na masingil?"
     localized_number:
       invalid_format: ay may hindi valid na format. mag.pasok ng numero
     api:

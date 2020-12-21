@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdminHelper
   def toggle_columns(*labels)
     # open dropdown

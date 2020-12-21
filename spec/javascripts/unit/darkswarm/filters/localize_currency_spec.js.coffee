@@ -26,7 +26,7 @@ describe 'convert number to localised currency ', ->
 
   it "can place symbols after the amount", ->
     currencyconfig.symbol_position = "after"
-    expect(filter(333.3)).toEqual "333.30 $"
+    expect(filter(333.3)).toEqual "333.30$"
 
   it "can add a currency string", ->
     currencyconfig.display_currency = "true"

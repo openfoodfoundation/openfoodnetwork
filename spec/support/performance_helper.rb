@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module PerformanceHelper
     def multi_benchmark(num_samples, cache_key_patterns: [])

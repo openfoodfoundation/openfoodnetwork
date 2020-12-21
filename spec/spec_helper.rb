@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start 'rails'
 
@@ -20,6 +22,7 @@ require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
 require 'rspec/retry'
+require 'coverage_helper'
 require 'paper_trail/frameworks/rspec'
 
 require 'webdrivers'
@@ -48,6 +51,7 @@ require 'support/api_helper'
 # Capybara config
 require 'selenium-webdriver'
 Capybara.javascript_driver = :chrome
+Capybara.server = :webrick
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
@@ -120,6 +124,7 @@ RSpec.configure do |config|
       .select { |s| s.driver.is_a?(Capybara::Selenium::Driver) }
       .each { |s| s.driver.reset! }
   end
+  config.before(:all) { restart_driver }
 
   # Enable caching in any specs tagged with `caching: true`. Usage is exactly the same as the
   # well-known `js: true` tag used to enable javascript in feature specs.
@@ -139,7 +144,18 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:all) { restart_driver }
+  # Webmock raises errors that inherit directly from Exception (not StandardError).
+  # The messages contain useful information for debugging stubbed requests to external
+  # services (in tests), but they normally don't appear in the test output.
+  config.before(:all) do
+    ApplicationController.class_eval do
+      rescue_from WebMock::NetConnectNotAllowedError, with: :handle_webmock_error
+
+      def handle_webmock_error(exception)
+        raise exception.message
+      end
+    end
+  end
 
   # Geocoding
   config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1]) }
@@ -180,6 +196,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include DownloadsHelper, type: :feature
+  config.include ActiveJob::TestHelper
 
   # FactoryBot
   require 'factory_bot_rails'
@@ -221,3 +238,5 @@ RSpec.configure do |config|
   # end
   config.infer_spec_type_from_file_location!
 end
+
+FactoryBot.use_parent_strategy = false

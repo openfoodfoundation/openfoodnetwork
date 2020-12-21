@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'open_food_network/group_buy_report'
 
@@ -13,24 +15,23 @@ module OpenFoodNetwork
       @variant1 = create(:variant)
       @variant1.product.supplier = @supplier1
       @variant1.product.save!
+      @variant1.reload
+
       shipping_instructions = "pick up on thursday please!"
 
       order1 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
       line_item11 = create(:line_item, variant: @variant1, order: order1)
-      order1.line_items << line_item11
-      @orders << order1
+      @orders << order1.reload
 
       order2 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
       line_item21 = create(:line_item, variant: @variant1, order: order2)
-      order2.line_items << line_item21
 
       @variant2 = create(:variant)
       @variant2.product.supplier = @supplier1
       @variant2.product.save!
 
       line_item22 = create(:line_item, variant: @variant2, order: order2)
-      order2.line_items << line_item22
-      @orders << order2
+      @orders << order2.reload
 
       @supplier2 = create(:supplier_enterprise)
       @variant3 = create(:variant, weight: nil)
@@ -39,8 +40,7 @@ module OpenFoodNetwork
 
       order3 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
       line_item31 = create(:line_item, variant: @variant3, order: order3)
-      order3.line_items << line_item31
-      @orders << order3
+      @orders << order3.reload
     end
 
     it "should return a header row describing the report" do

@@ -49,7 +49,7 @@ module Calculator
     # Finds relevant fees for each line_item,
     #   calculates the tax on them, and returns the total tax
     def per_item_fees_total(order, calculator)
-      order.line_items.sum do |line_item|
+      order.line_items.to_a.sum do |line_item|
         calculator.per_item_enterprise_fee_applicators_for(line_item.variant)
           .select { |applicator| applicable_rate?(applicator, line_item) }
           .sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }

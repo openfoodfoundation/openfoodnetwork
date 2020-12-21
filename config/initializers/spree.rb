@@ -6,8 +6,7 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-require "spree/core/environment"
-require 'spree/product_filters'
+require 'spree/core'
 
 # Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
 # should have inherited it from its parent PaymentMethod.
@@ -33,8 +32,14 @@ Spree.config do |config|
   config.s3_access_key = ENV['S3_ACCESS_KEY'] if ENV['S3_ACCESS_KEY']
   config.s3_secret = ENV['S3_SECRET'] if ENV['S3_SECRET']
   config.use_s3 = true if ENV['S3_BUCKET']
+  config.s3_headers = ENV['S3_HEADERS'] if ENV['S3_HEADERS']
   config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
+
+# Attachments settings
+Spree::Image.set_attachment_attribute(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
+Spree::Image.set_attachment_attribute(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
+Spree::Image.set_storage_attachment_attributes
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'

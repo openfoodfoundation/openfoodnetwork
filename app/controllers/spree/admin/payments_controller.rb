@@ -12,7 +12,7 @@ module Spree
 
       def index
         @payments = @order.payments
-        redirect_to new_admin_order_payment_url(@order) if @payments.empty?
+        redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
       end
 
       def new
@@ -25,7 +25,7 @@ module Spree
 
         begin
           unless @payment.save
-            redirect_to admin_order_payments_path(@order)
+            redirect_to spree.admin_order_payments_path(@order)
             return
           end
 
@@ -35,16 +35,16 @@ module Spree
             @payment.process!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
-            redirect_to admin_order_payments_path(@order)
+            redirect_to spree.admin_order_payments_path(@order)
           else
             OrderWorkflow.new(@order).complete!
 
             flash[:success] = Spree.t(:new_order_completed)
-            redirect_to edit_admin_order_url(@order)
+            redirect_to spree.edit_admin_order_url(@order)
           end
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
-          redirect_to new_admin_order_payment_path(@order)
+          redirect_to spree.new_admin_order_payment_path(@order)
         end
       end
 
@@ -118,7 +118,7 @@ module Spree
         return if @order.payment? || @order.complete?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
-        redirect_to edit_admin_order_customer_url(@order)
+        redirect_to spree.edit_admin_order_customer_url(@order)
       end
 
       def load_order
@@ -135,7 +135,9 @@ module Spree
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
         @payment.authorize!
-        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
+        return if @payment.pending? && @payment.cvv_response_message.nil?
+
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure')
       end
     end
   end

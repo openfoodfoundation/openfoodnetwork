@@ -5,33 +5,35 @@ require 'stripe/credit_card_cloner'
 
 module Stripe
   describe CreditCardCloner do
-    describe "#clone" do
-      let(:cloner) { Stripe::CreditCardCloner.new }
+    describe "#find_or_clone" do
+      include StripeStubs
+
+      let(:credit_card) { create(:credit_card, user: create(:user)) }
+      let(:stripe_account_id) { "abc123" }
+
+      let(:cloner) { Stripe::CreditCardCloner.new(credit_card, stripe_account_id) }
 
       let(:customer_id) { "cus_A123" }
       let(:payment_method_id) { "pm_1234" }
       let(:new_customer_id) { "cus_A456" }
       let(:new_payment_method_id) { "pm_456" }
-      let(:stripe_account_id) { "acct_456" }
-      let(:customer_response_mock) { { status: 200, body: customer_response_body } }
       let(:payment_method_response_mock) { { status: 200, body: payment_method_response_body } }
-
-      let(:credit_card) { create(:credit_card, user: create(:user)) }
 
       let(:payment_method_response_body) {
         JSON.generate(id: new_payment_method_id)
-      }
-      let(:customer_response_body) {
-        JSON.generate(id: new_customer_id)
       }
 
       before do
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
-        stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: credit_card.user.email },
-                headers: { 'Stripe-Account' => stripe_account_id })
-          .to_return(customer_response_mock)
+        stub_customers_post_request email: credit_card.user.email,
+                                    response: { customer_id: new_customer_id },
+                                    stripe_account_header: true
+
+        stub_retrieve_payment_method_request(payment_method_id)
+        stub_list_customers_request(email: credit_card.user.email, response: {})
+        stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+        stub_add_metadata_request(payment_method: "pm_456", response: {})
 
         stub_request(:post,
                      "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
@@ -51,7 +53,7 @@ module Stripe
         end
 
         it "clones the payment method only" do
-          customer_id, payment_method_id = cloner.clone(credit_card, stripe_account_id)
+          customer_id, payment_method_id = cloner.find_or_clone
 
           expect(payment_method_id).to eq new_payment_method_id
           expect(customer_id).to eq nil
@@ -69,7 +71,7 @@ module Stripe
         end
 
         it "clones both the payment method and the customer" do
-          customer_id, payment_method_id = cloner.clone(credit_card, stripe_account_id)
+          customer_id, payment_method_id = cloner.find_or_clone
 
           expect(payment_method_id).to eq new_payment_method_id
           expect(customer_id).to eq new_customer_id

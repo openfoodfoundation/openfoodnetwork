@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe ConfirmSignupJob do
@@ -8,6 +10,6 @@ describe ConfirmSignupJob do
     expect(Spree::UserMailer).to receive(:signup_confirmation).with(user).and_return(mail)
     expect(mail).to receive(:deliver)
 
-    run_job ConfirmSignupJob.new user.id
+    ConfirmSignupJob.perform_now(user.id)
   end
 end

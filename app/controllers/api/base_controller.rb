@@ -4,11 +4,12 @@ require "spree/core/controller_helpers/ssl"
 
 module Api
   class BaseController < ActionController::Metal
+    include ActionController::StrongParameters
+    include ActionController::RespondWith
     include Spree::Api::ControllerSetup
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
-
-    respond_to :json
+    include ::ActionController::ConditionalGet
 
     attr_accessor :current_api_user
 
@@ -72,7 +73,7 @@ module Api
     end
 
     def error_during_processing(exception)
-      render(text: { exception: exception.message }.to_json,
+      render(json: { exception: exception.message },
              status: :unprocessable_entity) && return
     end
 

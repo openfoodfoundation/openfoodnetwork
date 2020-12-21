@@ -117,6 +117,7 @@ sv:
     cancel: "Avbryt"
     edit: "Redigera"
     update: "Uppdatera"
+    add: "Tillägga"
   admin:
     date: Datum
     email: epost
@@ -173,19 +174,20 @@ sv:
         duplicate_code: "Denna kod används redan"
         bill_address: "Fakturaadress"
         ship_address: "Leveransadress"
-        update_address_success: 'Adressen uppdaterades'
-        update_address_error: 'Oj! Du måste fylla i alla obligatoriska fält'
-        edit_bill_address: 'Ändra fakturaadress'
-        edit_ship_address: 'Ändra leveransadress'
-        required_fileds: 'Obligatoriska fält är markerade med en asterisk'
-        select_country: 'Välj land'
-        select_state: 'Välj län'
-        edit: 'Ändra'
-        update_address: 'Uppdatera adress'
-        confirm_delete: 'Vill du verkligen radera?'
+        balance: "Saldo"
+        update_address_success: "Adressen uppdaterades"
+        update_address_error: "Oj! Du måste fylla i alla obligatoriska fält"
+        edit_bill_address: "Ändra fakturaadress"
+        edit_ship_address: "Ändra leveransadress"
+        required_fileds: "Obligatoriska fält är markerade med en asterisk"
+        select_country: "Välj land"
+        select_state: "Välj län"
+        edit: "Ändra"
+        update_address: "Uppdatera adress"
+        confirm_delete: "Vill du verkligen radera?"
         search_by_email: "Sök via e-post/kod..."
       destroy:
-        has_associated_orders: 'Radering misslyckades: kunden har associerade order med sin butik'
+        has_associated_orders: "Radering misslyckades: kunden har associerade order med sin butik"
     contents:
       edit:
         title: Innehåll
@@ -659,6 +661,9 @@ sv:
       customer_required:
         login: "Logga in"
         contact: "kontakta"
+    products:
+      summary:
+        bulk: "Grupp"
   invoice_billing_address: "Faktureringsadress"
   invoice_column_tax: "VAT"
   invoice_column_price: "Pris"
@@ -917,7 +922,8 @@ sv:
   hubs_distance: Närmast till
   hubs_distance_filter: "Visa mig butiker nära %{location}"
   shop_changeable_orders_alert_html:
-    one: Din beställning med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> är öppen för recension. Du kan göra ändringar till %{oc_close}.
+    few: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
+    many: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
   orders_changeable_orders_alert_html: Denna beställning har bekräftats, men du kan göra ändringar till och med <strong>%{oc_close}</strong>.
   products_clear: Rensa
@@ -1051,7 +1057,8 @@ sv:
   orders_could_not_cancel: "Tyvärr kan denna beställning inte avbrytas"
   orders_cannot_remove_the_final_item: "Det går inte att ta bort det sista varan från en beställning, var god och avbryt beställningen istället."
   orders_bought_items_notice:
-    one: "Ett ytterligare objekt är redan bekräftat för denna ordercykel"
+    few: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
+    many: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
     other: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
   orders_bought_edit_button: Redigera bekräftade varor
   orders_bought_already_confirmed: "* redan bekräftad"
@@ -1243,7 +1250,6 @@ sv:
   shop_for_products_html: "Köp för <span class=\"turquoise\">%{enterprise}</span> produkter vid:"
   change_shop: "Ändra butik till:"
   shop_at: "Köp nu vid:"
-  price_breakdown: "Prisfördelning"
   admin_fee: "Administrationsavgift"
   sales_fee: "Försäljningsavgift"
   packing_fee: "Förpackningsvgift"
@@ -1641,7 +1647,8 @@ sv:
     more_items: "+ %{count} Mer"
     admin:
       modals:
-        got_it: Förstått
+        got_it: "Förstått"
+        continue: "Fortsätt"
         tag_rule_help:
           title: Regler för etiketter
           overview: Översikt
@@ -1799,6 +1806,11 @@ sv:
           kundvagn minskat. Detta har ändrats:
       now_out_of_stock: Är nu slut
       only_n_remainging: "nu  återstår endast %{num}"
+    shopfront:
+      variant:
+        add_to_cart: "Tillägga"
+      bulk_buy_modal:
+        max_quantity: "Maxkvantitet"
     variants:
       on_demand:
         'yes': "På begäran "
@@ -1915,6 +1927,7 @@ sv:
     tax_settings: "Skatteskalor"
     payment_methods: "Betalningssätt"
     shipping_methods: "Transportsätt"
+    shipping_method: "Fraktmetod"
     name: "Namn"
     description: "Beskrivning"
     type: "Typ"
@@ -1923,7 +1936,7 @@ sv:
     amount: "Belopp"
     inventory: Lager
     zipcode: Postkod
-    weight: Vikt (kg)
+    payment_method: "Betalningsmetod"
     actions:
       update: "Uppdatera"
     shared:
@@ -1998,6 +2011,8 @@ sv:
           you_have_active:
             zero: "Du har inga aktiva beställningsomgångar."
             one: "Du har en aktiv beställningsomgång."
+            few: "Du har %{count} aktiva beställningsomgångar."
+            many: "Du har %{count} aktiva beställningsomgångar."
             other: "Du har %{count} aktiva beställningsomgångar."
           manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
       shipping_methods:
@@ -2086,7 +2101,7 @@ sv:
           footer_tos_url: "Användarvillkor URL"
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'åå-mm-dd'
+      js_format: 'yy-mm-dd'
     orders:
       bought:
         item: "Redan beställd i denna beställningsomgång"

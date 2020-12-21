@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe VariantStock do
@@ -52,7 +54,7 @@ describe VariantStock do
     end
 
     context 'when the variant has no stock item' do
-      let(:variant) { build(:variant) }
+      let(:variant) { build_stubbed(:variant) }
 
       it 'raises' do
         expect { variant.on_hand = 3 }
@@ -78,20 +80,25 @@ describe VariantStock do
       end
 
       context 'when the stock items is not backorderable' do
-        before do
-          variant.stock_items.first.update_attribute(
-            :backorderable, false
-          )
-        end
-
         it 'returns false' do
+          variant = build_stubbed(
+            :variant,
+            stock_locations: [build_stubbed(:stock_location)]
+          )
           expect(variant.on_demand).to be_falsy
         end
       end
     end
 
     context 'when the variant has not been saved yet' do
-      let(:variant) { build(:variant) }
+      let(:variant) do
+        build_stubbed(
+          :variant,
+          stock_locations: [
+            build_stubbed(:stock_location, backorderable_default: false)
+          ]
+        )
+      end
 
       it 'has no stock items' do
         expect(variant.stock_items.count).to eq 0
@@ -127,7 +134,7 @@ describe VariantStock do
     end
 
     context 'when the variant has no stock item' do
-      let(:variant) { build(:variant) }
+      let(:variant) { build_stubbed(:variant) }
 
       it 'raises' do
         expect { variant.on_demand = 3 }.to raise_error(StandardError)
@@ -137,11 +144,23 @@ describe VariantStock do
 
   describe '#can_supply?' do
     context 'when variant on_demand' do
-      let(:variant) { create(:variant, on_demand: true) }
+      let(:variant) do
+        build_stubbed(
+          :variant,
+          on_demand: true,
+          stock_locations: [build_stubbed(:stock_location)]
+        )
+      end
+      let(:stock_item) { Spree::StockItem.new(backorderable: true) }
+
+      before do
+        allow(variant).to receive(:stock_items).and_return([stock_item])
+      end
 
       it "returns true for zero" do
         expect(variant.can_supply?(0)).to eq(true)
       end
+
       it "returns true for large quantity" do
         expect(variant.can_supply?(100_000)).to eq(true)
       end
@@ -149,9 +168,18 @@ describe VariantStock do
 
     context 'when variant not on_demand' do
       context 'when variant in stock' do
+        let(:variant) do
+          build_stubbed(
+            :variant,
+            on_demand: false,
+            stock_locations: [build_stubbed(:stock_location)]
+          )
+        end
+
         it "returns true for zero" do
           expect(variant.can_supply?(0)).to eq(true)
         end
+
         it "returns true for number equal to stock level" do
           expect(variant.can_supply?(variant.total_on_hand)).to eq(true)
         end

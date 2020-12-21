@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe ExchangeProductsRenderer do
@@ -14,6 +16,13 @@ describe ExchangeProductsRenderer do
 
         expect(products.first.supplier.name).to eq exchange.variants.first.product.supplier.name
       end
+
+      it "loads products in order" do
+        products = renderer.exchange_products(true, exchange.sender)
+        sorted_products_names = products.map(&:name).sort
+
+        expect(products.map(&:name)).to eq(sorted_products_names)
+      end
     end
 
     describe "for an outgoing exchange" do
@@ -25,6 +34,13 @@ describe ExchangeProductsRenderer do
         suppliers = [exchange.variants[0].product.supplier.name, exchange.variants[1].product.supplier.name]
         expect(suppliers).to include products.first.supplier.name
         expect(suppliers).to include products.second.supplier.name
+      end
+
+      it "loads products in order" do
+        products = renderer.exchange_products(false, exchange.receiver)
+        sorted_products_names = products.map(&:name).sort
+
+        expect(products.map(&:name)).to eq(sorted_products_names)
       end
 
       context "showing products from coordinator inventory only" do

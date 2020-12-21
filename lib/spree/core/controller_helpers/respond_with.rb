@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/responder'
+
 module ActionController
   class Base
     def respond_with(*resources, &block)
@@ -26,6 +28,22 @@ module ActionController
         options[:action_name] = action_name.to_sym
         # If responder is not specified then pass in Spree::Responder
         (options.delete(:responder) || Spree::Responder).call(self, resources, options)
+      end
+    end
+
+    private
+
+    def retrieve_collector_from_mimes(mimes = nil, &block)
+      mimes ||= collect_mimes_from_class_level
+      collector = Collector.new(mimes, request.variant)
+      block.call(collector) if block_given?
+      format = collector.negotiate_format(request)
+
+      if format
+        _process_format(format)
+        collector
+      else
+        raise ActionController::UnknownFormat
       end
     end
   end

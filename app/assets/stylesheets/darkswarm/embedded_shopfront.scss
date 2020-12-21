@@ -5,7 +5,7 @@ $large-menu-height: 4.6875rem;
 $medium-menu-height: 3rem;
 $gutter-width: 0.9375rem;
 
-nav.top-bar ul.left li.powered-by {
+.top-bar .powered-by {
   display: none;
 }
 
@@ -59,13 +59,6 @@ body.embedded {
         line-height: $large-menu-height;
         height: $large-menu-height;
         vertical-align: top;
-
-        &.cart {
-          div.joyride-tip-guide { // Cart Dropdown
-            top: 75px;
-            overflow: visible;
-          }
-        }
       }
     }
 

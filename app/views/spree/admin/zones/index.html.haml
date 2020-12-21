@@ -7,7 +7,8 @@
   %li
     = button_link_to t("spree.new_zone"), new_object_url, icon: 'icon-plus', id: 'admin_new_zone_link'
 
-= paginate @zones
+- _with_routes Spree::Core::Engine.routes do
+  = paginate @zones
 
 - if @zones.empty?
   .no-objects-found
@@ -22,9 +23,9 @@
       %col{style: "width: 15%"}/
     %thead
       %tr
-        %th= sort_link @search,:name, t("spree.name"), title: 'zones_order_by_name_title'
+        %th= sort_link [:spree, @search], :name, t("spree.name"), title: 'zones_order_by_name_title'
         %th
-          = sort_link @search,:description, t("spree.description"), {}, {title: 'zones_order_by_description_title'}
+          = sort_link [:spree, @search], :description, t("spree.description"), {}, {title: 'zones_order_by_description_title'}
         %th= t("spree.default_tax")
         %th.actions
     %tbody
@@ -38,4 +39,5 @@
           %td.actions
             = link_to_edit zone, no_text: true
             = link_to_delete zone, no_text: true
-= paginate @zones
+- _with_routes Spree::Core::Engine.routes do
+  = paginate @zones

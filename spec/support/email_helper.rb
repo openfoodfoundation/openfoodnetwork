@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module EmailHelper
     # Some specs trigger actions that send emails, for example creating an order.

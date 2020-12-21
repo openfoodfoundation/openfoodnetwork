@@ -1,10 +1,86 @@
 # frozen_string_literal: true
 
 Spree::PaypalController.class_eval do
+  include OrderStockCheck
+
   before_action :enable_embedded_shopfront
   before_action :destroy_orphaned_paypal_payments, only: :confirm
   after_action :reset_order_when_complete, only: :confirm
   before_action :permit_parameters!
+
+  def express
+    order = current_order || raise(ActiveRecord::RecordNotFound)
+    items = order.line_items.map(&method(:line_item))
+
+    tax_adjustments = order.adjustments.tax
+    # TODO: Remove in Spree 2.2
+    tax_adjustments = tax_adjustments.additional if tax_adjustments.respond_to?(:additional)
+    shipping_adjustments = order.adjustments.shipping
+
+    order.adjustments.eligible.each do |adjustment|
+      next if (tax_adjustments + shipping_adjustments).include?(adjustment)
+
+      items << {
+        Name: adjustment.label,
+        Quantity: 1,
+        Amount: {
+          currencyID: order.currency,
+          value: adjustment.amount
+        }
+      }
+    end
+
+    # Because PayPal doesn't accept $0 items at all.
+    # See #10
+    # https://cms.paypal.com/uk/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_ECCustomizing
+    # "It can be a positive or negative value but not zero."
+    items.reject! do |item|
+      item[:Amount][:value].zero?
+    end
+    pp_request = provider.build_set_express_checkout(express_checkout_request_details(order, items))
+
+    begin
+      pp_response = provider.set_express_checkout(pp_request)
+      if pp_response.success?
+        # At this point Paypal has *provisionally* accepted that the payment can now be placed,
+        # and the user will be redirected to a Paypal payment page. On completion, the user is
+        # sent back and the response is handled in the #confirm action in this controller.
+        redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
+      else
+        flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
+        redirect_to spree.checkout_state_path(:payment)
+      end
+    rescue SocketError
+      flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
+      redirect_to spree.checkout_state_path(:payment)
+    end
+  end
+
+  def confirm
+    @order = current_order || raise(ActiveRecord::RecordNotFound)
+
+    # At this point the user has come back from the Paypal form, and we get one
+    # last chance to interact with the payment process before the money moves...
+    return reset_to_cart unless sufficient_stock?
+
+    @order.payments.create!({
+      source: Spree::PaypalExpressCheckout.create({
+        token: params[:token],
+        payer_id: params[:PayerID]
+      }),
+      amount: @order.total,
+      payment_method: payment_method
+    })
+    @order.next
+    if @order.complete?
+      flash.notice = Spree.t(:order_processed_successfully)
+      flash[:commerce_tracking] = "nothing special"
+      session[:order_id] = nil
+      redirect_to completion_route(@order)
+    else
+      redirect_to checkout_state_path(@order.state)
+    end
+  end
 
   def cancel
     flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
@@ -21,6 +97,10 @@ Spree::PaypalController.class_eval do
 
   private
 
+  def payment_method
+    @payment_method ||= Spree::PaymentMethod.find(params[:payment_method_id])
+  end
+
   def permit_parameters!
     params.permit(:token, :payment_method_id, :PayerID)
   end
@@ -32,6 +112,11 @@ Spree::PaypalController.class_eval do
       OrderCompletionReset.new(self, current_order).call
       session[:access_token] = current_order.token
     end
+  end
+
+  def reset_to_cart
+    OrderCheckoutRestart.new(@order).call
+    handle_insufficient_stock
   end
 
   # See #1074 and #1837 for more detail on why we need this
@@ -48,5 +133,25 @@ Spree::PaypalController.class_eval do
 
     orphaned_payments = current_order.payments.where(payment_method_id: payment_method.id, source_id: nil)
     orphaned_payments.each(&:destroy)
+  end
+
+  def completion_route(order)
+    spree.order_path(order, token: order.token)
+  end
+
+  def express_checkout_request_details(order, items)
+    {
+      SetExpressCheckoutRequestDetails: {
+        InvoiceID: order.number,
+        BuyerEmail: order.email,
+        ReturnURL: spree.confirm_paypal_url(payment_method_id: params[:payment_method_id], utm_nooverride: 1),
+        CancelURL: spree.cancel_paypal_url,
+        SolutionType: payment_method.preferred_solution.presence || "Mark",
+        LandingPage: payment_method.preferred_landing_page.presence || "Billing",
+        cppheaderimage: payment_method.preferred_logourl.presence || "",
+        NoShipping: 1,
+        PaymentDetails: [payment_details(items)]
+      }
+    }
   end
 end

@@ -10,6 +10,7 @@ module Spree
       end
 
       def update
+        merge_available_units_params unless params[:available_units].nil?
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 
@@ -17,7 +18,14 @@ module Spree
         end
         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
 
-        redirect_to edit_admin_general_settings_path
+        redirect_to spree.edit_admin_general_settings_path
+      end
+
+      private
+
+      def merge_available_units_params
+        params[:available_units] =
+          params[:available_units].select { |_unit, checked| checked == "1" }.keys.join(",")
       end
     end
   end

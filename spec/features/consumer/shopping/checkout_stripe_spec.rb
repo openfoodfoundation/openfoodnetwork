@@ -7,6 +7,7 @@ feature "Check out with Stripe", js: true do
   include ShopWorkflow
   include CheckoutHelper
   include StripeHelper
+  include StripeStubs
 
   let(:distributor) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
@@ -90,10 +91,16 @@ feature "Check out with Stripe", js: true do
     let!(:shipping_method) { create(:shipping_method) }
     let(:error_message) { "Card was declined: insufficient funds." }
 
+    before do
+      stub_payment_intent_get_request
+      stub_payment_methods_post_request
+    end
+
     context "with guest checkout" do
       before do
-        stub_payment_intent_get_request
-        stub_hub_payment_methods_request
+        stub_retrieve_payment_method_request("pm_123")
+        stub_list_customers_request(email: order.user.email, response: {})
+        stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
       end
 
       context "when the card is accepted" do
@@ -126,22 +133,11 @@ feature "Check out with Stripe", js: true do
         end
       end
 
-      context "when the card needs extra SCA authorization", js: true do
-        let(:stripe_redirect_url) { checkout_path(payment_intent: "pi_123") }
-        let(:payment_intent_authorize_response) do
-          { status: 200, body: JSON.generate(id: "pi_123",
-                                             object: "payment_intent",
-                                             next_source_action: {
-                                               type: "authorize_with_url",
-                                               authorize_with_url: { url: stripe_redirect_url }
-                                             },
-                                             status: "requires_source_action") }
-        end
-
+      context "when the card needs extra SCA authorization" do
         before do
-          stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-            .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
-            .to_return(payment_intent_authorize_response)
+          stripe_redirect_url = checkout_path(payment_intent: "pi_123")
+          stub_payment_intents_post_request_with_redirect order: order,
+                                                          redirect_url: stripe_redirect_url
         end
 
         describe "and the authorization succeeds" do
@@ -202,6 +198,57 @@ feature "Check out with Stripe", js: true do
           expect(order.reload.payments.count).to eq 2
           expect(order.state).to eq "complete"
           expect(order.payments.last.state).to eq "completed"
+        end
+      end
+    end
+
+    context "with a logged in user" do
+      let(:user) { order.user }
+
+      before do
+        login_as user
+      end
+
+      context "saving a card and re-using it" do
+        before do
+          stub_retrieve_payment_method_request("pm_123")
+          stub_list_customers_request(email: order.user.email, response: {})
+          stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+          stub_get_customer_payment_methods_request(customer: "cus_A123", response: {})
+          stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
+          stub_add_metadata_request(payment_method: "pm_123", response: {})
+          stub_payment_intents_post_request order: order
+          stub_successful_capture_request order: order
+          stub_customers_post_request email: user.email
+          stub_payment_method_attach_request
+        end
+
+        it "allows saving a card and re-using it" do
+          checkout_with_stripe guest_checkout: false, remember_card: true
+
+          expect(page).to have_content "Confirmed"
+          expect(order.reload.completed?).to eq true
+          expect(order.payments.first.state).to eq "completed"
+
+          # Verify card has been saved with correct stripe IDs
+          user_credit_card = order.reload.user.credit_cards.first
+          expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
+          expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
+
+          # Prepare a second order
+          new_order = create(:order, user: user, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil)
+          set_order(new_order)
+          add_product_to_cart(new_order, product, quantity: 10)
+          stub_payment_intents_post_request order: new_order
+          stub_successful_capture_request order: new_order
+
+          # Checkout with saved card
+          visit checkout_path
+          choose free_shipping.name
+          choose stripe_sca_payment_method.name
+          expect(page).to have_content "Use a saved card"
+          expect(page).to have_select 'selected_card', selected: "Visa x-4242 Exp:10/2050"
+          place_order
         end
       end
     end

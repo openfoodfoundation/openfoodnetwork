@@ -9,7 +9,6 @@ module Spree
           class_attribute :previous_states
           class_attribute :checkout_flow
           class_attribute :checkout_steps
-          class_attribute :removed_transitions
 
           def self.checkout_flow(&block)
             if block_given?
@@ -24,7 +23,6 @@ module Spree
             self.checkout_steps = {}
             self.next_event_transitions = []
             self.previous_states = [:cart]
-            self.removed_transitions = []
 
             # Build the checkout flow using the checkout_flow defined either
             # within the Order class, or a decorator for that class.
@@ -36,7 +34,7 @@ module Spree
             klass = self
 
             # To avoid a ton of warnings when the state machine is re-defined
-            StateMachine::Machine.ignore_method_conflicts = true
+            StateMachines::Machine.ignore_method_conflicts = true
             # To avoid multiple occurrences of the same transition being defined
             # On first definition, state_machines will not be defined
             state_machines.clear if respond_to?(:state_machines)
@@ -95,43 +93,6 @@ module Spree
             end
           end
 
-          def self.insert_checkout_step(name, options = {})
-            before = options.delete(:before)
-            after = options.delete(:after) unless before
-            after = checkout_steps.keys.last unless before || after
-
-            cloned_steps = checkout_steps.clone
-            cloned_removed_transitions = removed_transitions.clone
-            checkout_flow do
-              cloned_steps.each_pair do |key, value|
-                go_to_state(name, options) if key == before
-                go_to_state(key, value)
-                go_to_state(name, options) if key == after
-              end
-              cloned_removed_transitions.each do |transition|
-                remove_transition(transition)
-              end
-            end
-          end
-
-          def self.remove_checkout_step(name)
-            cloned_steps = checkout_steps.clone
-            cloned_removed_transitions = removed_transitions.clone
-            checkout_flow do
-              cloned_steps.each_pair do |key, value|
-                go_to_state(key, value) unless key == name
-              end
-              cloned_removed_transitions.each do |transition|
-                remove_transition(transition)
-              end
-            end
-          end
-
-          def self.remove_transition(options = {})
-            removed_transitions << options
-            next_event_transitions.delete(find_transition(options))
-          end
-
           def self.find_transition(options = {})
             return nil if options.nil? || !options.include?(:from) || !options.include?(:to)
 
@@ -171,10 +132,6 @@ module Spree
 
           def checkout_step_index(step)
             checkout_steps.index(step)
-          end
-
-          def self.removed_transitions
-            @removed_transitions ||= []
           end
 
           def can_go_to_state?(state)

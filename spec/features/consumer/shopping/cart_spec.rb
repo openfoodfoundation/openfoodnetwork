@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "full-page cart", js: true do
@@ -118,7 +120,7 @@ feature "full-page cart", js: true do
     describe "admin weight calculated fees" do
       context "order with 2 line items" do
         let(:admin_fee) {
-          create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_kg: 1),
+          create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_unit: 1, preferred_unit_from_list: "kg"),
                                   enterprise: order_cycle.coordinator, fee_type: 'admin')
         }
 

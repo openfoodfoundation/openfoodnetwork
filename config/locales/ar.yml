@@ -23,6 +23,10 @@ ar:
         variant_unit_name: "اسم وحدة النوع"
       spree/credit_card:
         base: "بطاقة ائتمان"
+        number: "رقم "
+        month: "شهر"
+        verification_value: "قيمة التحقق"
+        year: "عام"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
       variant_override:
@@ -285,10 +289,16 @@ ar:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
     cancel: "إلغاء"
+    resume: "اكمل"
     save: "حفظ"
     edit: "تعديل"
     update: "تحديث"
     delete: "حذف"
+    add: "إضافة"
+    cut: "قص"
+    paste: "لصق"
+    destroy: "الغاء"
+    rename: "إعادة تسمية"
   admin:
     begins_at: يبدأ عند
     begins_on: يبدأ في
@@ -347,6 +357,7 @@ ar:
     has_n_rules: "لديه %{num} قواعد"
     unsaved_confirm_leave: "هناك تغييرات لم يتم حفظها في هذه الصفحة. أكمل بدون حفظ؟"
     unsaved_changes: "لم تحفظ التغييرات"
+    available_units: "الوحدات المتاحة"
     shopfront_settings:
       embedded_shopfront_settings: "إعدادات واجهة المتجر المدمجة "
       enable_embedded_shopfronts: "تمكين واجهة المتجر المدمجة"
@@ -392,20 +403,23 @@ ar:
         duplicate_code: "هذا الكود مستخدم بالفعل"
         bill_address: "عنوان وصول الفواتير"
         ship_address: "عنوان الشحن"
-        update_address_success: 'تم تحديث العنوان بنجاح.'
-        update_address_error: 'آسف! يرجى إدخال جميع الحقول المطلوبة!'
-        edit_bill_address: 'تحرير عنوان الفواتير'
-        edit_ship_address: 'تحرير عنوان الشحن'
-        required_fileds: 'تتم الإشارة إلى الحقول المطلوبة بعلامة النجمة'
-        select_country: 'اختر الدولة'
-        select_state: 'اختر ولايه'
-        edit: 'تعديل'
-        update_address: 'تحديث العنوان'
-        confirm_delete: 'متأكد من ان يتم حذف؟'
+        balance: "الباقي"
+        update_address_success: "تم تحديث العنوان بنجاح."
+        update_address_error: "آسف! يرجى إدخال جميع الحقول المطلوبة!"
+        edit_bill_address: "تحرير عنوان الفواتير"
+        edit_ship_address: "تحرير عنوان الشحن"
+        required_fileds: "تتم الإشارة إلى الحقول المطلوبة بعلامة النجمة"
+        select_country: "اختر الدولة"
+        select_state: "اختر ولايه"
+        edit: "تعديل"
+        update_address: "تحديث العنوان"
+        confirm_delete: "متأكد من ان يتم حذف؟"
         search_by_email: "البحث عن طريق البريد الإلكتروني / الرمز ..."
-        guest_label: 'الخروج كضيف'
+        guest_label: "الخروج كضيف"
+        credit_owed: "الائتمان مدين"
+        balance_due: "الرصيد المستحق"
       destroy:
-        has_associated_orders: 'فشل الحذف: قام العميل بربط الطلبات مع متجره'
+        has_associated_orders: "فشل الحذف: قام العميل بربط الطلبات مع متجره"
     contents:
       edit:
         title: المحتوى
@@ -592,6 +606,8 @@ ar:
       controls:
         back_to_my_inventory: العودة إلى المخزون الخاص بي
     orders:
+      edit:
+        order_sure_want_to: هل أنت متأكد أنك تريد %{event} هذا الطلب؟
       invoice_email_sent: 'تم إرسال فاتورة البريد الإلكتروني'
       order_email_resent: 'تم اعادة ارسال الطلب لبريدك الإلكتروني'
       bulk_management:
@@ -640,6 +656,7 @@ ar:
           invoice_text: أضف نصًا مخصصًا في نهاية الفواتير
           terms_and_conditions: "الأحكام والشروط"
           remove_terms_and_conditions: "إزالة الملف"
+          uploaded_on: "تم الرفع في"
         contact:
           name: اسم
           name_placeholder: على سبيل المثال. برقوق غوستاف
@@ -747,6 +764,7 @@ ar:
               للعملاء توقع فتحه مرة أخرى. يتم عرض هذا في متجرك فقط عندما لا يكون لديك
               دورات طلبات نشطة (على سبيل المثال ، المتجر مغلق).
           shopfront_category_ordering: "ترتيب فئة واجهة المتجر"
+          shopfront_category_ordering_note: "(من اعلى لاسفل)"
           open_date: "تاريخ الفتح "
           close_date: "تاريخ الاغلاق"
         social:
@@ -1156,8 +1174,8 @@ ar:
       cart: "سلة التسوق"
       message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     terms_and_conditions:
-      message_html: "من خلال تقديم هذا الطلب ، فإنك توافق على %{terms_and_conditions_link}."
-      link_text: "شروط الخدمة"
+      message_html: "أوافق على %{terms_and_conditions_link} للبائع."
+      link_text: "الأحكام والشروط"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
   shops:
     hubs:
@@ -1212,6 +1230,9 @@ ar:
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
       select_oc:
         select_oc_html: "يرجى <span class='highlighted'>اختيار الوقت الذي تريده لطلبك</span> ، لمعرفة المنتجات المتوفرة."
+    products:
+      summary:
+        bulk: "جملة"
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1261,13 +1282,13 @@ ar:
   footer_logo: "الشعار (220 × 76)"
   footer_facebook_url: "رابط الفيسبوك"
   footer_twitter_url: "رابط تويتر"
-  footer_instagram_url: "عنوان انستغرام"
+  footer_instagram_url: "رابط انستغرام"
   footer_linkedin_url: "رابط لينكدن"
   footer_googleplus_url: "رابط جوجل بلس"
   footer_pinterest_url: "رابط بنتيريست"
   footer_email: "البريد الإلكتروني"
   footer_links_md: "الروابط"
-  footer_about_url: "حول الرابط "
+  footer_about_url: "رابط نحن"
   user_guide_link: "رابط دليل المستخدم"
   name: اسم
   first_name: الاسم الاول
@@ -1547,6 +1568,7 @@ ar:
   shopping_groups_part_of: "جزء من:"
   shopping_producers_of_hub: "منتجو %{hub}:"
   enterprises_next_closing: "إغلاق الطلب التالي"
+  enterprises_currently_open: "الطلبات متاحة حاليا"
   enterprises_ready_for: "جاهز ل"
   enterprises_choose: "اختر عندما تريد طلبك:"
   maps_open: "افتح"
@@ -1568,9 +1590,7 @@ ar:
   hubs_distance: الأقرب إلى
   hubs_distance_filter: "أرني المتاجر بالقرب من %{location}"
   shop_changeable_orders_alert_html:
-    zero: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     one: طلبك مع <a href='%{path}' target='_blank'>%{shop} / %{order}</a> مفتوح للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
-    two: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     few: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     many: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     other: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
@@ -1606,8 +1626,8 @@ ar:
   components_filters_nofilters: "لا يوجد مرشحات"
   components_filters_clearfilters: "مسح جميع المرشحات"
   groups_title: مجموعات
-  groups_headline: المجموعات / المناطق
-  groups_text: "كل منتج فريد من نوعه. كل الأعمال لديها شيء مختلف للعرض. مجموعاتنا هي مجموعات من المنتجين والمحاور والموزعين الذين يشتركون في شيء مثل الموقع أو سوق المزارعين أو الفلسفة. هذا يجعل تجربة التسوق أسهل. لذلك استكشف مجموعاتنا وقمنا بتنظيمها لك."
+  groups_headline: المجموعات
+  groups_text: "كل منتج فريد من نوعه. كل الأعمال لديها شيء مختلف للعرض. مجموعاتنا هي مجموعات من المنتجين ومراكز البيع والموزعين الذين يشتركون في خصلة مثل الموقع أو سوق المزارعين أو الفلسفة. هذا يجعل تجربة التسوق أسهل. لذلك استكشف مجموعاتنا التي قمنا بتنظيمها لك."
   groups_search: "البحث عن اسم أو كلمة أساسية"
   groups_no_groups: "لم يتم العثور على مجموعات"
   groups_about: "معلومات عنا"
@@ -1718,9 +1738,7 @@ ar:
   orders_could_not_cancel: "عذرًا ، تعذر إلغاء الطلب"
   orders_cannot_remove_the_final_item: "لا يمكن إزالة العنصر الأخير من الطلب ، يرجى إلغاء الطلب بدلاً من ذلك."
   orders_bought_items_notice:
-    zero: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
-    one: "تم تأكيد عنصر إضافي بالفعل لدورة الطلب هذه"
-    two: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
+    one: تم بالفعل تأكيد عنصر إضافي لدورة الطلب هذه
     few: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     many: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     other: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
@@ -1927,7 +1945,6 @@ ar:
   shop_for_products_html: "متجر لمنتجات <span class=\"turquoise\">%{enterprise}</span> على:"
   change_shop: "تغيير المتجر إلى:"
   shop_at: "تسوق الآن عبر:"
-  price_breakdown: "تفاصيل السعر الكامل"
   admin_fee: "رسوم الاشراف"
   sales_fee: "رسوم المبيعات"
   packing_fee: "رسوم التعبئة"
@@ -2002,6 +2019,7 @@ ar:
   calculator: "آلة حاسبة"
   calculator_values: "القيم المحوسبة"
   calculator_settings_warning: "إذا كنت تقوم بتغيير نوع الحاسبة ، فيجب عليك الحفظ أولاً قبل أن تتمكن من تحرير إعدادات الحاسبة"
+  calculator_preferred_unit_error: "يجب أن تكون كجم أو رطل"
   flat_percent_per_item: "نسبة ثابتة (لكل بند)"
   flat_rate_per_item: "سعر ثابت (لكل بند)"
   flat_rate_per_order: "تسعيرة ثابته (لكل طلب)"
@@ -2064,6 +2082,7 @@ ar:
   spree_classification_primary_taxon_error: "Taxon %{taxon} هو التصنيف الأساسي %{product} ولا يمكن حذفه"
   spree_order_availability_error: "لا يمكن لموزع أو دورة طلب توفير المنتجات في سلة التسوق"
   spree_order_populator_error: "لا يمكن لهذا الموزع أو دورة الطلب توفير جميع المنتجات في سلة التسوق. الرجاء اختيار آخر."
+  spree_order_cycle_error: "الرجاء اختيار دورة الطلب لهذا الطلب."
   spree_order_populator_availability_error: "هذا المنتج غير متوفر من الموزع المختار أو دورة الطلب."
   spree_distributors_error: "يجب تحديد مركز واحد على الأقل"
   spree_user_enterprise_limit_error: "^ %{email} غير مسموح به لامتلاك أي مؤسسات أخرى (الحد الأقصى هو %{enterprise_limit})."
@@ -2369,6 +2388,7 @@ ar:
     resolve_errors: يرجى حل الأخطاء التالية
     more_items: "+ %{count} ايضا"
     default_card_updated: تم تحديث البطاقة الافتراضية
+    default_card_voids_auth: سيؤدي تغيير بطاقتك الافتراضية إلى إزالة تفويضات المتاجر الحالية لشحنها. يمكنك إعادة تفويض المحلات التجارية بعد تحديث البطاقة الافتراضية. هل ترغب في تغيير البطاقة الافتراضية؟"
     cart:
       add_to_cart_failed: >
           حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو
@@ -2376,8 +2396,9 @@ ar:
     admin:
       enterprise_limit_reached: "لقد وصلت إلى الحد القياسي للمؤسسات لكل حساب. اكتب %{contact_email} إذا كنت بحاجة إلى زيادته."
       modals:
-        got_it: فهمتك
+        got_it: "فهمتك"
         close: "إغلاق"
+        continue: "تابع"
         invite: "ادعو"
         invite_title: "دعوة مستخدم غير مسجل"
         tag_rule_help:
@@ -2395,6 +2416,14 @@ ar:
           customer_tagged_rules_text: >
               من خلال إنشاء قواعد متعلقة بوسم عميل معين ، يمكنك تجاوز السلوك الافتراضي
               (سواء كان لإظهار أو إخفاء عناصر) للعملاء الذين لديهم وسم محدد.
+        terms_and_conditions_info:
+          title: "تحميل الشروط والأحكام"
+          message_1: "الشروط والأحكام هي العقد المبرم بينك وبين البائع والمتسوق. إذا قمت بتحميل ملف هنا ، يجب على المتسوقين قبول الشروط والأحكام الخاصة بك لإكمال عملية الدفع. بالنسبة للمتسوق ، سيظهر هذا على شكل مربع اختيار عند الخروج يجب تحديده من أجل متابعة عملية الدفع. نوصي بشدة بتحميل الشروط والأحكام بما يتماشى مع التشريعات الوطنية."
+          message_2: "سيُطلب من المتسوقين قبول البنود والشروط مرة واحدة فقط. ومع ذلك ، إذا قمت بتغيير الشروط والأحكام ، فسيُطلب من المتسوقين مرة أخرى قبولها قبل أن يتمكنوا من الدفع."
+        terms_and_conditions_warning:
+          title: "تحميل الشروط والأحكام"
+          message_1: "سيتعين على جميع المشترين الموافقة عليهم مرة واحدة عند الخروج. إذا قمت بتحديث الملف ، فسيتعين على جميع المشترين الموافقة عليهم مرة أخرى عند الخروج."
+          message_2: "بالنسبة للمشترين الذين لديهم اشتراكات ، يجب أن ترسل إليهم الشروط والأحكام (أو التغييرات عليها) عبر البريد الإلكتروني في الوقت الحالي ، ولن يخطرهم أي شيء بهذه الشروط والأحكام الجديدة."
       panels:
         save: حفظ
         saved: تم الحفظ
@@ -2593,6 +2622,15 @@ ar:
           إليك ما تغير:
       now_out_of_stock: الآن لا يوجد مخزون.
       only_n_remainging: "الآن ليس لديه %{num} متبقية."
+    shopfront:
+      variant:
+        add_to_cart: "إضافة"
+        in_cart: "في السلة"
+        quantity_in_cart: "%{quantity} في السلة"
+      bulk_buy_modal:
+        min_quantity: "اقل كمية "
+        max_quantity: "اعلى كمية"
+      price_breakdown: "تفاصيل السعر"
     variants:
       on_demand:
         'yes': "حسب الطلب"
@@ -2937,6 +2975,8 @@ ar:
     delete: "حذف"
     cannot_set_shipping_method_without_address: "لا يمكن ضبط طريقة الشحن حتى يتم تقديم تفاصيل العميل."
     no_tracking_present: "لم يتم تقديم تفاصيل التتبع."
+    tracking: "تتبع"
+    tracking_number: "أرقام التتبع"
     order_total: "مجموع الطلب "
     customer_details: "تفاصيل العميل"
     customer_search: "بحث العملاء"
@@ -2958,6 +2998,7 @@ ar:
     adjustments: "التعديلات"
     continue: "تابع"
     fill_in_customer_info: "يرجى ملء معلومات العملاء"
+    credit_card: "بطاقة ائتمان"
     new_payment: "دفعة جديد"
     capture: "إلتقاط"
     void: "فارغ"
@@ -2968,7 +3009,9 @@ ar:
     landing_page: "الصفحة المقصودة"
     server: "الخادم"
     test_mode: "وضع الاختبار"
-    logourl: "وحدة"
+    logourl: "رابط الشعار"
+    are_you_sure_delete: "هل أنت متأكد أنك تريد حذف هذا السجل؟"
+    confirm_delete: "تأكيد الحذف"
     configurations: "تهيئة"
     general_settings: "الاعدادات العامة"
     site_name: "اسم الموقع"
@@ -2996,15 +3039,6 @@ ar:
     smtp_send_copy_to_this_addresses: "يرسل نسخة من جميع الرسائل الصادرة إلى هذا العنوان. لعناوين متعددة ، افصل بينها بفواصل."
     intercept_email_address: "اعتراض عنوان البريد الإلكتروني"
     intercept_email_instructions: "تجاوز مستلم البريد الإلكتروني واستبداله بهذا العنوان."
-    image_settings: "إعدادات الصورة"
-    image_settings_warning: "ستحتاج إلى تجديد الصور المصغرة إذا قمت بتحديث أنماط مشبك الورق. استخدم rap paperclip: refresh: الصور المصغرة CLASS = Spree :: Image للقيام بذلك."
-    attachment_default_style: نمط المرفقات
-    attachment_default_url: "المرفقات عنوان URL الافتراضي"
-    attachment_path: "مسار المرفقات"
-    attachment_styles: "أنماط الورق"
-    attachment_url: "مرفقات URL"
-    add_new_style: "إضافة نمط جديد"
-    image_settings_updated: "تم تحديث إعدادات الصورة بنجاح."
     tax_categories: "فئات الضرائب"
     listing_tax_categories: "قائمة فئات الضرائب"
     back_to_tax_categories_list: "العودة إلى قائمة فئات الضرائب"
@@ -3037,6 +3071,7 @@ ar:
     new_taxonomy: "تصنيف جديد"
     back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
     shipping_methods: "طرق الشحن"
+    shipping_method: "طريقة الشحن"
     shipping_categories: "فئات الشحن"
     new_shipping_category: "فئة الشحن الجديدة"
     back_to_shipping_categories: "العودة إلى فئات الشحن"
@@ -3078,19 +3113,25 @@ ar:
     inventory_error_flash_for_insufficient_quantity: "المواد في سلة التسوق غير متاح."
     inventory: المخزون
     zipcode: الرمز البريدي
-    weight: الوزن (لكل كجم)
+    weight: الوزن (لكل كجم أو رطل)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
     cannot_create_payment_without_payment_methods: "لا يمكنك إنشاء دفعة لطلب بدون تحديد طرقة الدفع."
     please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."
     options: "خيارات"
+    has_no_shipped_units: "لا يوجد لديه طلبات مشحونة"
+    successfully_created: '%{resource} تم إنشاؤه بنجاح!'
+    successfully_updated: 'تم تحديث %{resource} بنجاح!'
+    payment_method: "طريقة الدفع او السداد"
+    payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
+    not_available: "غير متاح"
+    order_populator:
+      out_of_stock: '%{item} غير متوفر.'
     actions:
       update: "تحديث"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          zero: "منعت أخطاء %{count} حفظ هذا السجل:"
-          one: "حظر خطأ واحد حفظ هذا السجل:"
-          two: "منعت أخطاء %{count} حفظ هذا السجل:"
+          one: "خطأ 1 منع حفظ هذا السجل:"
           few: "منعت أخطاء %{count} حفظ هذا السجل:"
           many: "منعت أخطاء %{count} حفظ هذا السجل:"
           other: "منعت أخطاء %{count} حفظ هذا السجل:"
@@ -3131,7 +3172,6 @@ ar:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"
           add_product_properties: "إضافة خصائص المنتج"
-          select_from_prototype: "حدد من النموذج الأولي"
       properties:
         index:
           properties: "الخصائص"
@@ -3224,6 +3264,8 @@ ar:
           active_products:
             zero: "ليس لديك أي منتجات نشطة."
             one: "لديك منتج نشط واحد"
+            few: "لديك %{count} من المنتجات النشطة"
+            many: "لديك %{count} من المنتجات النشطة"
             other: "لديك %{count} من المنتجات النشطة"
         order_cycles:
           order_cycles: "دورات الطلب"
@@ -3231,6 +3273,8 @@ ar:
           you_have_active:
             zero: "ليس لديك أي دورات طلب نشطة."
             one: "لديك دورة طلب نشطة واحدة."
+            few: "لديك %{count} دورات طلب نشط."
+            many: "لديك %{count} دورات طلب نشط."
             other: "لديك %{count} دورات طلب نشط."
           manage_order_cycles: "ادارة دورات الطلب"
       shipping_methods:
@@ -3431,10 +3475,10 @@ ar:
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
-          privacy_policy_url: "URL سياسة الخصوصية"
+          privacy_policy_url: "رابط سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
-          footer_tos_url: "شروط الخدمة URL"
+          footer_tos_url: "رابط شروط الخدمة "
     checkout:
       payment:
         stripe:
@@ -3451,7 +3495,7 @@ ar:
           remember_this_card: تذكر هذه البطاقة؟
     date_picker:
       format: '٪ س-٪ م-%d'
-      js_format: 'يوم-شهر-سنة'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:
@@ -3505,6 +3549,7 @@ ar:
         issue_text: |
             إذا لم يعمل عنوان URL أعلاه ، فحاول نسخه ولصقه في متصفحك.
             إذا كنت لا تزال تواجه مشاكل ، فلا تتردد في الاتصال بنا.
+        subject: "تعليمات إعادة تعيين كلمة المرور"
       confirmation_instructions:
         subject: "يرجى تأكيد حسابك OFN"
     shipment_mailer:
@@ -3574,17 +3619,17 @@ ar:
         items: المواد
         total: المجموع
         paid?: دفع؟
-        view: العرض
+        view: عرض
       saved_cards:
         default?: الإفتراضي؟
         delete?: حذف؟
       cards:
         authorised_shops: المتاجر المعتمدة
-        authorised_shops_popover: هذه هي قائمة المتاجر التي يُسمح لها باستحقاق الدفع عن طريق بطاقتك الائتمانية الافتراضية عن أي اشتراكات (على سبيل المثال ، الطلبات المتكررة) التي قد قمت بعملها. سيتم الاحتفاظ بتفاصيل بطاقتك بأمان ولن تتم مشاركتها مع أصحاب المتاجر. سيتم إخطارك دائمًا عند تحصيل الرسوم منك.
+        authorised_shops_agreement: هذه قائمة بالمحلات التجارية المسموح لها بشحن بطاقة الائتمان الافتراضية الخاصة بك مقابل أي اشتراكات (مثل تكرار الطلبات) قد تكون لديك. سيتم الاحتفاظ بتفاصيل بطاقتك بشكل آمن ولن يتم مشاركتها مع أصحاب المتاجر. سيتم إخطارك دائمًا عند محاسبتك. من خلال تحديد المربع الخاص بمتجر ، فإنك توافق على تخويل هذا المتجر بإرسال تعليمات إلى المؤسسة المالية التي أصدرت بطاقتك لتلقي المدفوعات وفقًا لشروط أي اشتراك تقوم بإنشائه مع هذا المتجر.
         saved_cards_popover: هذه قائمة البطاقات التي اخترت حفظها لاستخدامها لاحقًا. سيتم تحديد &quot;الافتراضي&quot; الخاص بك تلقائيًا عند إتمام طلب الشراء ، ويمكن أن يتم تحصيل رسوم من أي متاجر سمحت لها بالقيام بذلك (انظر إلى اليمين).
       authorised_shops:
         shop_name: "اسم المتجر"
-        allow_charges?: "السماح للرسوم؟"
+        allow_charges?: "السماح بالسحب من البطاقة الافتراضية؟"
     localized_number:
       invalid_format: لديه تنسيق غير صالح. الرجاء إدخال رقم.
     api:

@@ -87,6 +87,14 @@
             .field
               = preference_field_tag(:enable_localized_number?, Spree::Config[:enable_localized_number?], type: Spree::Config.preference_type(:enable_localized_number?))
               = label_tag(:enable_localized_number?, t('admin.number_localization.enable_localized_number')) + tag(:br)
+          %fieldset.available_units.no-border-bottom
+            %legend{:align => "center"}= t('admin.available_units')
+            .field
+              - available_units = Spree::Config[:available_units].split(",")
+              - all_units.each do |unit|
+                - selected = available_units.include?(unit)
+                = preference_field_tag("available_units[#{unit}]", selected, { type: :boolean, selected: selected })
+                = label_tag(unit, unit.downcase) + tag(:br)
 
       .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
         = button Spree.t('actions.update'), 'icon-refresh'

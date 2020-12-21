@@ -1,5 +1,5 @@
 module Admin
-  class TagRulesController < ResourceController
+  class TagRulesController < Admin::ResourceController
     respond_to :json
 
     respond_override destroy: { json: {

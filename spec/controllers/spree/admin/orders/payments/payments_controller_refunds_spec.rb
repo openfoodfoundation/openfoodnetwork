@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe Spree::Admin::PaymentsController, type: :controller do
   include StripeHelper
+  include StripeStubs
 
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
@@ -153,12 +154,11 @@ describe Spree::Admin::PaymentsController, type: :controller do
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
           allow(StripeAccount).to receive(:find_by) { stripe_account }
-
-          stub_payment_intent_get_request
         end
 
         context "where the request succeeds" do
           before do
+            stub_payment_intent_get_request
             # Issues the refund
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
@@ -180,6 +180,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
+            stub_payment_intent_get_request
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
@@ -195,6 +196,27 @@ describe Spree::Admin::PaymentsController, type: :controller do
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
             expect(flash[:error]).to eq "Bup-bow!"
+          end
+        end
+
+        context "when a partial refund has already been issued" do
+          before do
+            stub_payment_intent_get_request(response: { amount_refunded: 200 })
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
+              with(basic_auth: ["sk_test_12345", ""]).
+              to_return(status: 200,
+                        body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+          end
+
+          it "can still void the payment" do
+            order.reload
+            expect(order.payment_total).to_not eq 0
+            expect(order.outstanding_balance).to eq 0
+            spree_put :fire, params
+            expect(payment.reload.state).to eq 'void'
+            order.reload
+            expect(order.payment_total).to eq 0
+            expect(order.outstanding_balance).to_not eq 0
           end
         end
       end

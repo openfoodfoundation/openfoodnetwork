@@ -15,7 +15,7 @@ module Spree
         # may still be in an active cart after it's deleted, so this will mark it as out of stock.
         return 0 if @variant.deleted?
 
-        stock_items.sum(&:count_on_hand)
+        stock_items.sum(:count_on_hand)
       end
 
       def backorderable?
@@ -30,7 +30,7 @@ module Spree
 
       def fetch_stock_items
         # Don't re-fetch associated stock items from the DB if we've already eager-loaded them
-        return @variant.stock_items.to_a if @variant.stock_items.loaded?
+        return @variant.stock_items if @variant.stock_items.loaded?
 
         Spree::StockItem.joins(:stock_location).
           where(:variant_id => @variant, Spree::StockLocation.table_name => { active: true })

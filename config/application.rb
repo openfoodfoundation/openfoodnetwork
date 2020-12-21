@@ -3,6 +3,9 @@ require_relative 'boot'
 require 'rails/all'
 require_relative "../lib/open_food_network/i18n_config"
 
+require_relative '../lib/spree/core/environment'
+require_relative '../lib/spree/core/mail_interceptor'
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -18,6 +21,49 @@ module Openfoodnetwork
       Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
+    end
+
+    config.after_initialize do
+      # We need this here because the test env file loads before the Spree engine is loaded
+      Spree::Core::Engine.routes.default_url_options[:host] = 'test.host' if Rails.env == 'test'
+    end
+
+    # We reload the routes here
+    #   so that the appended/prepended routes are available to the application.
+    config.after_initialize do
+      Rails.application.routes_reloader.reload!
+    end
+
+    initializer "spree.environment", before: :load_config_initializers do |app|
+      app.config.spree = Spree::Core::Environment.new
+      Spree::Config = app.config.spree.preferences # legacy access
+    end
+
+    initializer "spree.load_preferences", before: "spree.environment" do
+      ::ActiveRecord::Base.include Spree::Preferences::Preferable
+    end
+
+    initializer "spree.register.payment_methods" do |app|
+      app.config.spree.payment_methods = [
+        Spree::Gateway::Bogus,
+        Spree::Gateway::BogusSimple,
+        Spree::PaymentMethod::Check
+      ]
+    end
+
+    initializer "spree.mail.settings" do |_app|
+      Spree::Core::MailSettings.init
+      Mail.register_interceptor(Spree::Core::MailInterceptor)
+    end
+
+    # filter sensitive information during logging
+    initializer "spree.params.filter" do |app|
+      app.config.filter_parameters += [
+        :password,
+        :password_confirmation,
+        :number,
+        :verification_value
+      ]
     end
 
     # Settings dependent on locale
@@ -153,5 +199,9 @@ module Openfoodnetwork
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     config.active_support.escape_html_entities_in_json = true
+
+    config.active_job.queue_adapter = :delayed_job
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

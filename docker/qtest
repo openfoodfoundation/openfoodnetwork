@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+# This script runs the entire test suite AND logs the screen output.
+# This is the quiet version of docker/test.
+# The deprecation warnings that obscure the test results are omitted.
+
+DATE=`date +%Y%m%d-%H%M%S-%3N`
+docker/qtest-log 2>&1 | tee log/qtest-$DATE.log

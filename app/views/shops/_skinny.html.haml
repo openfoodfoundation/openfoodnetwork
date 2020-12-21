@@ -10,23 +10,23 @@
     %span.margin-top{"ng-bind" => "::hub.address.state_name"}
     %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
-  .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
+  .columns.small-5.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
     %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-      %i.ofn-i_068-shop-reversed
+      %i.ofn-i_068-shop-reversed.show-for-medium-up
       %span.margin-top{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
       %span.margin-top{ ng: { if: "::!current()" } }
         %span{"ng-bind" => "::hub.orders_close_at | sensible_timeframe"}
 
-  .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::!hub.active"}
+  .columns.small-5.medium-3.large-3.text-right{"ng-if" => "::!hub.active"}
     %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %span.margin-top{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
       %span.margin-top{ ng: { if: "::!current()" } }
         = t :hubs_orders_closed
-      %i.ofn-i_068-shop-reversed
+      %i.ofn-i_068-shop-reversed.show-for-medium-up
 
-  .columns.small-2.medium-1.large-1.text-right
+  .columns.small-1.medium-1.large-1.text-right
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 

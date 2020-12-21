@@ -2,9 +2,14 @@ module OpenFoodNetwork
   class AvailablePaymentMethodFilter
     def filter!(payment_methods)
       if stripe_enabled?
-        payment_methods.reject!{ |p| p.type.ends_with?("StripeConnect") && stripe_configuration_incomplete?(p) }
+        payment_methods.to_a.reject! do |payment_method|
+          payment_method.type.ends_with?("StripeConnect") &&
+            stripe_configuration_incomplete?(payment_method)
+        end
       else
-        payment_methods.reject!{ |p| p.type.ends_with?("StripeConnect") }
+        payment_methods.to_a.reject! do |payment_method|
+          payment_method.type.ends_with?("StripeConnect")
+        end
       end
     end
 

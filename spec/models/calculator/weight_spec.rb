@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Calculator::Weight do
-  it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_kg]
+  it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_unit]
 
   it "computes shipping cost for an order by total weight" do
     variant1 = build_stubbed(:variant, unit_value: 10_000)
@@ -14,7 +16,8 @@ describe Calculator::Weight do
 
     order = double(:order, line_items: [line_item1, line_item2, line_item3])
 
-    subject.set_preference(:per_kg, 5)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit_from_list, "kg")
     expect(subject.compute(order)).to eq(350) # (10 * 1 + 20 * 3) * 5
   end
 
@@ -22,7 +25,10 @@ describe Calculator::Weight do
     let(:variant) { build_stubbed(:variant, unit_value: 10_000) }
     let(:line_item) { build_stubbed(:line_item, variant: variant, quantity: 2) }
 
-    before { subject.set_preference(:per_kg, 5) }
+    before {
+      subject.set_preference(:per_unit, 5)
+      subject.set_preference(:unit_from_list, "kg")
+    }
 
     it "computes shipping cost for a line item" do
       expect(subject.compute(line_item)).to eq(100) # 10 * 2 * 5
@@ -57,15 +63,18 @@ describe Calculator::Weight do
     order = double(:order, line_items: [line_item1, line_item2])
     object_with_order = double(:object_with_order, order: order)
 
-    subject.set_preference(:per_kg, 5)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit_from_list, "kg")
     expect(subject.compute(object_with_order)).to eq(250) # (10 * 1 + 20 * 2) * 5
+    subject.set_preference(:unit_from_list, "lb")
+    expect(subject.compute(object_with_order)).to eq(551.15) # (10 * 1 + 20 * 2) * 5 * 2.2
   end
 
   context "when line item final_weight_volume is set" do
     let!(:product) { build_stubbed(:product, product_attributes) }
     let!(:variant) { build_stubbed(:variant, variant_attributes.merge(product: product)) }
 
-    let(:calculator) { described_class.new(preferred_per_kg: 6) }
+    let(:calculator) { described_class.new(preferred_per_unit: 6, preferred_unit_from_list: "kg") }
     let(:line_item) do
       build_stubbed(:line_item, variant: variant, quantity: 2).tap do |object|
         object.send(:calculate_final_weight_volume)
@@ -182,7 +191,10 @@ describe Calculator::Weight do
     }
     let(:line_item) { build_stubbed(:line_item, variant: variant, quantity: 1) }
 
-    before { subject.set_preference(:per_kg, 5) }
+    before {
+      subject.set_preference(:per_unit, 5)
+      subject.set_preference(:unit_from_list, "kg")
+    }
 
     context "when unit_value is zero variant.weight is present" do
       let(:variant) { build_stubbed(:variant, product: product, unit_value: 0, weight: 10.0) }
@@ -223,5 +235,21 @@ describe Calculator::Weight do
         expect(subject.compute(line_item)).to eq 0
       end
     end
+  end
+
+  it "allows a preferred_unit of 'kg' and 'lb'" do
+    subject.calculable = build(:shipping_method)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit_from_list, "kg")
+    expect(subject.calculable.errors.count).to eq(0)
+    subject.set_preference(:unit_from_list, "lb")
+    expect(subject.calculable.errors.count).to eq(0)
+  end
+
+  it "does not allow a preferred_unit of anything but 'kg' or 'lb'" do
+    subject.calculable = build(:shipping_method)
+    subject.set_preference(:per_unit, 5)
+    subject.set_preference(:unit_from_list, "kb")
+    expect(subject.calculable.errors.count).to eq(1)
   end
 end

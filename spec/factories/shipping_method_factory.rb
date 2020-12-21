@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :base_shipping_method, class: Spree::ShippingMethod do
     zones { [] }
-    name 'UPS Ground'
+    name { 'UPS Ground' }
 
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
-    display_on ''
+    display_on { '' }
 
     before(:create) do |shipping_method, _evaluator|
       shipping_method.shipping_categories << DefaultShippingCategory.find_or_create
     end
 
     trait :flat_rate do
-      transient { amount 1 }
+      transient { amount { 1 } }
       calculator { build(:calculator_flat_rate, preferred_amount: amount) }
     end
 
     trait :per_item do
-      transient { amount 1 }
+      transient { amount { 1 } }
       calculator { build(:calculator_per_item, preferred_amount: amount) }
     end
 
@@ -57,7 +59,7 @@ FactoryBot.define do
 
     trait :shipping_fee do
       transient do
-        shipping_fee 3
+        shipping_fee { 3 }
       end
 
       calculator { build(:calculator_per_item, preferred_amount: shipping_fee) }

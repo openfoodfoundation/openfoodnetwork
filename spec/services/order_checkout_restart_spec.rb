@@ -23,7 +23,7 @@ describe OrderCheckoutRestart do
         order.update_attribute(:state, "payment")
       end
 
-      xcontext "when order ship address is nil" do
+      context "when order ship address is nil" do
         before { order.ship_address = nil }
 
         it "resets the order state, and clears incomplete shipments and payments" do
@@ -33,7 +33,7 @@ describe OrderCheckoutRestart do
         end
       end
 
-      xcontext "when order ship address is not empty" do
+      context "when order ship address is not empty" do
         before { order.ship_address = order.address_from_distributor }
 
         it "resets the order state, and clears incomplete shipments and payments" do
@@ -49,7 +49,7 @@ describe OrderCheckoutRestart do
         it "does not reset the order state nor clears incomplete shipments and payments" do
           expect do
             OrderCheckoutRestart.new(order).call
-          end.to raise_error(StateMachine::InvalidTransition)
+          end.to raise_error(StateMachines::InvalidTransition)
 
           expect(order.state).to eq 'payment'
           expect(order.shipments.count).to eq 1

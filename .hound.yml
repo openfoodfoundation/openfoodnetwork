@@ -1,0 +1,4 @@
+rubocop:
+  config_file: .rubocop_styleguide.yml
+scss:
+  config_file: .scss-lint.yml

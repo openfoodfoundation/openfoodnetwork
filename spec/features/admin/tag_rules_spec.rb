@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature 'Tag Rules', js: true do
@@ -16,7 +18,7 @@ feature 'Tag Rules', js: true do
       expect(page).to have_content 'No tags apply to this enterprise yet'
       expect(page).to have_no_selector '.customer_tag'
       click_button '+ Add A New Tag'
-      find(:css, "tags-input .tags input").set "volunteer\n"
+      fill_in_tag "volunteer"
 
       # New FilterShippingMethods Rule
       expect(page).to have_content 'No rules apply to this tag yet'
@@ -24,7 +26,7 @@ feature 'Tag Rules', js: true do
       select2_select 'Show or Hide shipping methods at checkout', from: 'rule_type_selector'
       click_button "Add Rule"
       within(".customer_tag #tr_0") do
-        find(:css, "tags-input .tags input").set "volunteers-only\n"
+        fill_in_tag "volunteers-only"
         select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_0_preferred_matched_shipping_methods_visibility"
       end
 
@@ -33,7 +35,7 @@ feature 'Tag Rules', js: true do
       select2_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
       click_button "Add Rule"
       within(".customer_tag #tr_1") do
-        find(:css, "tags-input .tags input").set "volunteers-only1\n"
+        fill_in_tag "volunteers-only1"
         select2_select "VISIBLE", from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
       end
 
@@ -42,7 +44,7 @@ feature 'Tag Rules', js: true do
       select2_select 'Show or Hide payment methods at checkout', from: 'rule_type_selector'
       click_button "Add Rule"
       within(".customer_tag #tr_2") do
-        find(:css, "tags-input .tags input").set "volunteers-only2\n"
+        fill_in_tag "volunteers-only2"
         select2_select "VISIBLE", from: "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility"
       end
 
@@ -51,7 +53,7 @@ feature 'Tag Rules', js: true do
       select2_select 'Show or Hide order cycles in my shopfront', from: 'rule_type_selector'
       click_button "Add Rule"
       within(".customer_tag #tr_3") do
-        find(:css, "tags-input .tags input").set "volunteers-only3\n"
+        fill_in_tag "volunteers-only3"
         select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility"
       end
 
@@ -60,7 +62,7 @@ feature 'Tag Rules', js: true do
       select2_select 'Show or Hide order cycles in my shopfront', from: 'rule_type_selector'
       click_button "Add Rule"
       within(".default_rules #tr_0") do
-        find(:css, "tags-input .tags input").set "wholesale\n"
+        fill_in_tag "wholesale"
         expect(page).to have_content "not visible"
       end
 
@@ -124,20 +126,20 @@ feature 'Tag Rules', js: true do
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "trusted", count: 1
       all(:css, ".customer_tag .header tags-input").each do |node|
         node.find("li.tag-item a.remove-button").click
-        node.find(".tags input").set "volunteer\n"
+        within(:xpath, node.path) { fill_in_tag "volunteer", ".tags input" }
       end
 
       # DEFAULT FilterShippingMethods rule
       within ".default_rules #tr_0" do
         within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
-        find(:css, "tags-input .tags input").set "volunteers-only\n"
+        fill_in_tag "volunteers-only"
         expect(page).to have_content "not visible"
       end
 
       # FilterProducts rule
       within ".customer_tag #tr_1" do
         within "li.tag-item", text: "member ✖" do find("a.remove-button").click end
-        find(:css, "tags-input .tags input").set "volunteers-only1\n"
+        fill_in_tag "volunteers-only1"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
       end
@@ -145,7 +147,7 @@ feature 'Tag Rules', js: true do
       # FilterPaymentMethods rule
       within ".customer_tag #tr_2" do
         within "li.tag-item", text: "trusted ✖" do find("a.remove-button").click end
-        find(:css, "tags-input .tags input").set "volunteers-only2\n"
+        fill_in_tag "volunteers-only2"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility"
       end
@@ -153,7 +155,7 @@ feature 'Tag Rules', js: true do
       # FilterOrderCycles rule
       within ".customer_tag #tr_3" do
         within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").click end
-        find(:css, "tags-input .tags input").set "volunteers-only3\n"
+        fill_in_tag "volunteers-only3"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility"
       end
@@ -161,7 +163,7 @@ feature 'Tag Rules', js: true do
       # FilterShippingMethods rule
       within ".customer_tag #tr_4" do
         within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
-        find(:css, "tags-input .tags input").set "volunteers-only4\n"
+        fill_in_tag "volunteers-only4"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility"
       end

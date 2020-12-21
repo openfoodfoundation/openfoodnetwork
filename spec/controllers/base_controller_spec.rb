@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe BaseController, type: :controller do
@@ -90,6 +92,11 @@ describe BaseController, type: :controller do
       expect(session[:order_id]).to_not eq just_completed_order.id
       expect(session[:order_id]).to_not eq last_cart.id
       expect(controller.current_order.line_items.count).to eq 0
+    end
+
+    it "doesn't load variant overrides without line items" do
+      expect(VariantOverride).to_not receive(:indexed)
+      controller.current_order(true)
     end
   end
 

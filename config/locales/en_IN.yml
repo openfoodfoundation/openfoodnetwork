@@ -22,6 +22,7 @@ en_IN:
         variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
+        number: "Number"
       order_cycle:
         orders_close_at: Close date
       variant_override:
@@ -283,6 +284,7 @@ en_IN:
     edit: "Edit"
     update: "Update"
     delete: "Delete"
+    add: "Add"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -386,20 +388,21 @@ en_IN:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
-        update_address_success: 'Address updated successfully.'
-        update_address_error: 'Sorry! Please input all of the required fields!'
-        edit_bill_address: 'Edit Billing Address'
-        edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk'
-        select_country: 'Select Country'
-        select_state: 'Select State'
-        edit: 'Edit'
-        update_address: 'Update Address'
-        confirm_delete: 'Sure to delete?'
+        balance: "Balance"
+        update_address_success: "Address updated successfully."
+        update_address_error: "Sorry! Please input all of the required fields!"
+        edit_bill_address: "Edit Billing Address"
+        edit_ship_address: "Edit Shipping Address"
+        required_fileds: "Required fields are denoted with an asterisk"
+        select_country: "Select Country"
+        select_state: "Select State"
+        edit: "Edit"
+        update_address: "Update Address"
+        confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
-        guest_label: 'Guest checkout'
+        guest_label: "Guest checkout"
       destroy:
-        has_associated_orders: 'Delete failed: customer has associated orders with this shop'
+        has_associated_orders: "Delete failed: customer has associated orders with this shop"
     contents:
       edit:
         title: Content
@@ -1197,6 +1200,9 @@ en_IN:
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
         select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
+    products:
+      summary:
+        bulk: "Bulk"
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1553,7 +1559,8 @@ en_IN:
   hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
   shop_changeable_orders_alert_html:
-    one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    few: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+    many: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
@@ -1699,7 +1706,8 @@ en_IN:
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: "An additional item is already confirmed for this order cycle"
+    few: "%{count} additional items already confirmed for this order cycle"
+    many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
@@ -1904,7 +1912,6 @@ en_IN:
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
   shop_at: "Shop now at:"
-  price_breakdown: "Full price breakdown"
   admin_fee: "Admin fee"
   sales_fee: "Sales fee"
   packing_fee: "Packing fee"
@@ -2352,8 +2359,9 @@ en_IN:
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
-        got_it: Got it
+        got_it: "Got it"
         close: "Close"
+        continue: "Continue"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2578,6 +2586,11 @@ en_IN:
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    shopfront:
+      variant:
+        add_to_cart: "Add"
+      bulk_buy_modal:
+        max_quantity: "Max quantity"
     variants:
       on_demand:
         'yes': "Unlimited"
@@ -2840,6 +2853,7 @@ en_IN:
     adjustments: "Adjustments"
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
+    credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
@@ -2878,15 +2892,6 @@ en_IN:
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
-    image_settings: "Image Settings"
-    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
-    attachment_default_style: Attachments Style
-    attachment_default_url: "Attachments Default URL"
-    attachment_path: "Attachments Path"
-    attachment_styles: "Paperclip Styles"
-    attachment_url: "Attachments URL"
-    add_new_style: "Add New Style"
-    image_settings_updated: "Image Settings successfully updated."
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"
@@ -2919,6 +2924,7 @@ en_IN:
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
+    shipping_method: "Shipping Method"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
@@ -2960,17 +2966,21 @@ en_IN:
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
-    weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
+    successfully_created: '%{resource} has been successfully created!'
+    successfully_updated: '%{resource} has been successfully updated!'
+    payment_method: "Payment Method"
+    payment_processing_failed: "Payment could not be processed, please check the details you entered"
     actions:
       update: "Update"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 error prohibited this record from being saved:"
+          few: "%{count} errors prohibited this record from being saved:"
+          many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
       payments_list:
@@ -3008,7 +3018,6 @@ en_IN:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
           add_product_properties: "Add Product Properties"
-          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
@@ -3101,6 +3110,8 @@ en_IN:
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
+            few: "You have %{count} active products"
+            many: "You have %{count} active products"
             other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
@@ -3108,6 +3119,8 @@ en_IN:
           you_have_active:
             zero: "You don't have any active order cycles."
             one: "You have one active order cycle."
+            few: "You have %{count} active order cycles."
+            many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:
@@ -3448,11 +3461,9 @@ en_IN:
         delete?: Delete?
       cards:
         authorised_shops: Authorised Shops
-        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
-        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:

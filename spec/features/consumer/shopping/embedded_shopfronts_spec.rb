@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
@@ -33,9 +35,9 @@ feature "Using embedded shopfront functionality", js: true do
 
     it "displays modified shopfront layout" do
       on_embedded_page do
-        within 'nav.top-bar' do
-          expect(page).to have_selector 'ul.left', visible: false
-          expect(page).to have_selector 'ul.center', visible: false
+        within '.top-bar' do
+          expect(page).to have_selector '.nav-logo', visible: false
+          expect(page).to have_selector '.nav-main-menu', visible: false
         end
 
         expect(page).to have_content "My Embedded Hub"
@@ -91,11 +93,11 @@ feature "Using embedded shopfront functionality", js: true do
     it "redirects to embedded hub on logout when embedded" do
       on_embedded_page do
         wait_for_cart
-        find('ul.right li#login-link a').click
+        find('#login-link a').click
         login_with_modal
 
         wait_for_cart
-        wait_until { page.find('ul.right li.user-menu.has-dropdown').value.present? }
+        wait_until { page.find('.user-menu.has-dropdown').value.present? }
         logout_via_navigation
 
         expect(page).to have_text 'My Embedded Hub'
@@ -118,7 +120,7 @@ feature "Using embedded shopfront functionality", js: true do
   end
 
   def logout_via_navigation
-    first('ul.right li.user-menu a').click
-    find('ul.right ul.dropdown li a[title="Logout"]').click
+    first('.user-menu a').click
+    find('.nav-icons-menu a[title="Logout"]').click
   end
 end
