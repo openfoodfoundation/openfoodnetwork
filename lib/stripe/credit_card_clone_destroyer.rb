@@ -16,8 +16,8 @@ module Stripe
           Stripe::CreditCardCloneFinder.new(card, stripe_account).find_cloned_card
         next unless customer_id
 
-        customer = Stripe::Customer.retrieve(customer_id, stripe_account: stripe_account)
-        customer&.delete unless customer.deleted?
+        stripe_customer = Stripe::Customer.retrieve(customer_id, stripe_account: stripe_account)
+        stripe_customer.delete if stripe_customer && !stripe_customer.deleted?
       end
     end
   end
