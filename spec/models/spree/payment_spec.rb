@@ -854,6 +854,10 @@ describe Spree::Payment do
 
           before do
             allow(payment_method).to receive(:purchase) { failed_response }
+            # If the payment_method object get reloaded by ItemAdjustments, it means the above
+            # stub doesn't work... The line below fixes it, but this needs more investigation...
+            # Either we need to remove the reloading, or add a conditional.
+            # allow_any_instance_of(payment_method.class).to receive(:purchase) { failed_response }
           end
 
           it "makes the transaction fee ineligible and finalizes it" do
@@ -865,8 +869,8 @@ describe Spree::Payment do
             expect(payment.state).to eq "failed"
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
           end
         end
 
@@ -884,8 +888,8 @@ describe Spree::Payment do
             expect(payment.state).to eq "invalid"
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
           end
         end
 
@@ -904,8 +908,8 @@ describe Spree::Payment do
             expect(order.payments).to include payment
             expect(payment.state).to eq "completed"
             expect(payment.adjustment.eligible?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to include payment.adjustment
             expect(payment.adjustment.amount).to eq 1.5
           end
         end

@@ -16,11 +16,11 @@ module Spree
 
     def initialize(item)
       @item = item
-      @item.reload if @item.persisted?
+      @item.reload if updatable_totals?(item)
     end
 
     def update
-      update_adjustments if item.persisted?
+      update_adjustments if updatable_totals?(item)
       item
     end
 
@@ -53,6 +53,12 @@ module Spree
         adjustment_total: fee_total + additional_tax_total,
         updated_at: Time.now
       )
+    end
+
+    private
+
+    def updatable_totals?(item)
+      item.persisted? && !item.is_a?(Spree::Payment)
     end
   end
 end

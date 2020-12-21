@@ -3,6 +3,7 @@
 module Spree
   class Payment < ActiveRecord::Base
     include Spree::Payment::Processing
+    include AdjustmentHandling
     extend Spree::LocalizedNumber
 
     localize_number :amount
@@ -11,7 +12,6 @@ module Spree
 
     delegate :line_items, to: :order
     delegate :currency, to: :order
-    delegate :compute_amount, to: :payment_method
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
@@ -21,10 +21,7 @@ module Spree
              class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source, dependent: :destroy
 
-    # On Spree::Shipment, has_one :adjustment changed to has_many :adjustments,
-    # and at the same time; as: :source changed to as: :adjustable
-    # We might need the same thing here. Needs careful investigation.
-    has_many :adjustments, as: :source, dependent: :destroy
+    has_many :adjustments, as: :adjustable, dependent: :destroy
 
     validate :validate_source
     before_save :set_unique_identifier
@@ -139,14 +136,11 @@ module Spree
       return if adjustment.try(:finalized?)
 
       if adjustment
-        adjustment.source = self
+        adjustment.source = payment_method
         adjustment.label = adjustment_label
         adjustment.save
       else
-        target = self
-        calculable = order
-        adjustable = order
-        payment_method.create_adjustment(adjustment_label, order, target, calculable, adjustable, true)
+        create_adjustment(adjustment_label, order, payment_method, self, true)
         association(:adjustments).reload
       end
     end
