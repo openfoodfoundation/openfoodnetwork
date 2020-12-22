@@ -35,7 +35,8 @@ module Spree
 
       fee_total = 0
       run_callbacks :fee_adjustments do
-        fee_total = adjustments.excluding_tax.reload.map(&:update!).compact.sum
+        fees = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).excluding_tax
+        fee_total = fees.reload.map(&:update!).compact.sum
       end
 
       included_tax_total = 0
