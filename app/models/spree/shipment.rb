@@ -163,6 +163,10 @@ module Spree
       included_tax_total + additional_tax_total
     end
 
+    def amount
+      cost
+    end
+
     def final_price
       cost + adjustment_total
     end
