@@ -71,7 +71,7 @@ describe Spree::Shipment do
   it "#final_price" do
     shipment = Spree::Shipment.new
     shipment.cost = 10
-    shipment.included_tax_total = 1
+    shipment.adjustment_total = 1
     expect(shipment.final_price).to eq(11)
   end
 

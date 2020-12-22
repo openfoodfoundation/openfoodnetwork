@@ -164,7 +164,7 @@ module Spree
     end
 
     def final_price
-      cost + tax_total
+      cost + adjustment_total
     end
 
     def display_cost
