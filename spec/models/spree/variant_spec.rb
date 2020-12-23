@@ -535,6 +535,7 @@ module Spree
         before do
           product.update_attribute :variant_unit, 'items'
           product.reload
+          variant.reload
         end
 
         it "is valid with only unit value set" do
@@ -549,10 +550,11 @@ module Spree
           expect(variant).to be_valid
         end
 
-        it "is invalid when neither unit value nor unit description are set" do
+        it "sets unit_value to 1.0 before validation if it's nil" do
           variant.unit_value = nil
           variant.unit_description = nil
-          expect(variant).not_to be_valid
+          expect(variant).to be_valid
+          expect(variant.unit_value).to eq 1.0
         end
 
         it "has a valid master variant" do
