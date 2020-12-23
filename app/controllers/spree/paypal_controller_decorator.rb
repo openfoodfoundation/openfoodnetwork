@@ -64,16 +64,12 @@ Spree::PaypalController.class_eval do
     return reset_to_cart unless sufficient_stock?
 
     @order.payments.create!(
-      {
-        source: Spree::PaypalExpressCheckout.create(
-          {
-            token: params[:token],
-            payer_id: params[:PayerID]
-          }
-        ),
-        amount: @order.total,
-        payment_method: payment_method
-      }
+      source: Spree::PaypalExpressCheckout.create(
+        token: params[:token],
+        payer_id: params[:PayerID]
+      ),
+      amount: @order.total,
+      payment_method: payment_method
     )
     @order.next
     if @order.complete?
