@@ -32,7 +32,7 @@ describe Spree::ProductSet do
       end
 
       context 'when the product does exist' do
-        context 'when a different varian_unit is passed' do
+        context 'when a different variant_unit is passed' do
           let!(:product) do
             create(
               :simple_product,
@@ -54,22 +54,22 @@ describe Spree::ProductSet do
             }
           end
 
-          it 'does not update the product' do
+          it 'updates the product' do
             product_set.save
 
             expect(product.reload.attributes).to include(
-              'variant_unit' => 'items'
+              'variant_unit' => 'weight'
             )
           end
 
-          it 'adds an error' do
+          it 'does not add an error' do
             product_set.save
-            expect(product_set.errors.get(:base))
-              .to include("Unit value can't be blank")
+            expect(product_set.errors)
+              .to be_empty
           end
 
-          it 'returns false' do
-            expect(product_set.save).to eq(false)
+          it 'returns true' do
+            expect(product_set.save).to eq(true)
           end
         end
 
