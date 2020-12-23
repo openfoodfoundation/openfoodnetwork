@@ -63,14 +63,18 @@ Spree::PaypalController.class_eval do
     # last chance to interact with the payment process before the money moves...
     return reset_to_cart unless sufficient_stock?
 
-    @order.payments.create!({
-      source: Spree::PaypalExpressCheckout.create({
-        token: params[:token],
-        payer_id: params[:PayerID]
-      }),
-      amount: @order.total,
-      payment_method: payment_method
-    })
+    @order.payments.create!(
+      {
+        source: Spree::PaypalExpressCheckout.create(
+          {
+            token: params[:token],
+            payer_id: params[:PayerID]
+          }
+        ),
+        amount: @order.total,
+        payment_method: payment_method
+      }
+    )
     @order.next
     if @order.complete?
       flash.notice = Spree.t(:order_processed_successfully)
