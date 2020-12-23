@@ -36,6 +36,7 @@ module OrderManagement
       end
 
       def recalculate_adjustments
+        pp "Updater#recalculate_adjustments"
         all_adjustments.includes(:adjustable).map(&:adjustable).uniq.each do |adjustable|
           Spree::ItemAdjustments.new(adjustable).update
         end
@@ -49,6 +50,7 @@ module OrderManagement
       # - adjustment_total - total value of all adjustments (including all fees and added taxes)
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
+        pp "Updater#update_totals"
         order.payment_total = payments.completed.sum(:amount)
         update_item_total
         update_shipment_total
@@ -67,6 +69,7 @@ module OrderManagement
       end
 
       def update_shipment_total
+        pp "Updater#update_shipment_total"
         order.shipment_total = shipments.sum(:cost)
         update_order_total
       end
@@ -76,6 +79,7 @@ module OrderManagement
       end
 
       def update_adjustment_total
+        pp "Updater#update_adjustment_total"
         recalculate_adjustments
         order.adjustment_total = line_items.sum(:adjustment_total) +
                                  shipments.sum(:adjustment_total) +
@@ -96,6 +100,7 @@ module OrderManagement
       end
 
       def persist_totals
+        pp "Updater#persist_totals"
         order.update_columns(
           payment_state: order.payment_state,
           shipment_state: order.shipment_state,

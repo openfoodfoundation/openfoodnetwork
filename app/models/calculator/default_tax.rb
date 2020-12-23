@@ -35,6 +35,8 @@ module Calculator
     end
 
     def compute_shipment_or_line_item(item)
+      pp "#compute_shipment" if item.is_a? Spree::Shipment
+
       # This can very nearly serve for adjustment adjustments as well...
       # The only difference is the item.pre_tax_amount, and it's possible we can sack it off anyway.
       # In that case we can rename it #compute_item and alias compute_shipment, compute_line_item,

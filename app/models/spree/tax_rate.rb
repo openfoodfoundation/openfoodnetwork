@@ -71,7 +71,7 @@ module Spree
         pp "REL"
         item.adjustments.tax.delete_all
         relevant_rates = applicable_rates.select { |rate| rate.tax_category == item.tax_category }
-        store_pre_tax_amount(item, relevant_rates)
+        store_pre_tax_amount(item, relevant_rates) # only needed if multiple rates apply..?
         # we could pass relevant_rates down here so we don't need to persist pre_tax_amount
         relevant_rates.each do |rate|
           rate.adjust(order, item)

@@ -16,15 +16,19 @@ module Spree
 
     def initialize(item)
       @item = item
-      @item.reload if updatable_totals?(item)
+      # @item.reload if updatable_totals?(item)
     end
 
     def update
+      pp caller_locations(1,1)[0]
       update_adjustments if updatable_totals?(item)
       item
     end
 
     def update_adjustments
+      pp "ItemAdjustments#update_adjustments"
+      # pp caller_locations(1,1)[0]
+      # 1 / 0 if item.is_a? Spree::Payment
       # OFN fees should be applied here. Fees should be added before the tax calculations are done.
       # See the promotions-related code here in 2-2-stable for reference, it's doing something similar.
 
@@ -43,9 +47,15 @@ module Spree
       additional_tax_total = 0
       run_callbacks :tax_adjustments do
         tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
+        pp "tax count:"
+        pp tax.count
         included_tax_total = tax.included.reload.map(&:update!).compact.sum
         additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
+        pp included_tax_total.to_s
+        pp additional_tax_total.to_s
       end
+
+      pp item.class.to_s + " " + item.id.to_s + ": " + fee_total.to_s
 
       item.update_columns(
         fee_total: fee_total,

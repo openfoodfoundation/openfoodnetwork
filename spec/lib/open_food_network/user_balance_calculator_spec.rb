@@ -8,15 +8,20 @@ module OpenFoodNetwork
     describe "finding the account balance of a user with a hub" do
       let!(:user1) { create(:user) }
       let!(:hub1) { create(:distributor_enterprise) }
+      let(:address) { create(:address)}
 
       let!(:o1) {
         create(:order_with_totals_and_distribution,
                user: user1, distributor: hub1,
+               bill_address: address,
+               ship_address: address,
                completed_at: 1.day.ago)
       } # total=13 (10 + 3 shipping fee)
       let!(:o2) {
         create(:order_with_totals_and_distribution,
                user: user1, distributor: hub1,
+               bill_address: address,
+               ship_address: address,
                completed_at: 1.day.ago)
       } # total=13 (10 + 3 shipping fee)
       let!(:p1) {

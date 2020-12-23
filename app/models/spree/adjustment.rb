@@ -36,7 +36,7 @@ module Spree
     # AdjustmentMetadata has no destroy logic itself.
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
-    belongs_to :adjustable, polymorphic: true, touch: true
+    belongs_to :adjustable, polymorphic: true #, touch: true
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: 'Spree::Order'
 
@@ -151,6 +151,7 @@ module Spree
     # either its included or additional tax in one record instead of two.
 
     def set_absolute_included_tax!(tax)
+      pp "#set_absolute_included_tax!"
       # This rubocop issue can now fixed by renaming Adjustment#update! to something else,
       #   then AR's update! can be used instead of update_attributes!
       # rubocop:disable Rails/ActiveRecordAliases
@@ -178,8 +179,13 @@ module Spree
       # In the case that adjustable is an EnterpriseFee, fee.adjustable will contain the parent
 
       if adjustable.respond_to? :adjustable
-        pp "ADJUSTING A FEE!"
         item = adjustable.adjustable
+      elsif adjustable.is_a? Spree::Payment
+        pp "PAYMENT FEE!"
+        item = adjustable.order
+      # elsif adjustable.is_a? Spree::Shipment
+      #   pp "SHIPMENT FEE!"
+      #   item = adjustable.order
       else
         item = adjustable
       end

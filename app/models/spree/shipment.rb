@@ -18,7 +18,7 @@ module Spree
 
     before_create :generate_shipment_number
     before_validation :set_cost_zero_when_nil
-    after_save :ensure_correct_adjustment, :update_adjustment_totals, :update_order
+    after_save :update_adjustments
 
     attr_accessor :special_instructions
 
@@ -115,6 +115,8 @@ module Spree
     end
 
     def tax_category
+      # Bad! It should be shipping_method.try(:tax_category) right?
+      # This is from Spree's logic...
       tax_rate.try(:tax_category)
     end
 
@@ -177,7 +179,7 @@ module Spree
     alias display_amount display_cost
 
     def adjusted_amount
-      cost + fee_total
+      cost + fee_total # This is probably not needed at all
     end
 
     def item_cost
@@ -198,6 +200,9 @@ module Spree
 
     def update_amounts
       return unless selected_shipping_rate
+
+      # Sets the cost on the object (no adjustment)
+      # And sets the adjustment total to be the added tax amount
 
       self.update_columns(
         cost: selected_shipping_rate.cost,
@@ -400,26 +405,9 @@ module Spree
       self.cost = 0 unless self.cost
     end
 
-    def ensure_correct_adjustment
-      if adjustment
-        adjustment.label = I18n.t('shipping')
-        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
-        adjustment.save!
-        adjustment.reload
-      elsif selected_shipping_rate_id
-        self.create_adjustment(I18n.t('shipping'), order, shipping_method,self,true,"open")
-        reload # ensure adjustment is present on later saves
-      end
-
-      update_adjustment_tax if adjustment
-    end
-
-    def update_order
-      order.update!
-    end
-
-    def update_adjustment_totals
-      return unless cost_changed? && state != 'shipped'
+    def update_adjustments
+      # return unless cost_changed? && state != 'shipped'
+      return unless state != 'shipped'
 
       recalculate_adjustments
     end

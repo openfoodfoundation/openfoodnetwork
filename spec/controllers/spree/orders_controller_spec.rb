@@ -229,12 +229,17 @@ describe Spree::OrdersController, type: :controller do
       let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
 
       before do
+        # This is all wrong, obviously. Create a Zone and a tax rate for shipping...
         allow(Spree::Config).to receive(:shipment_inc_vat) { true }
         allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
 
         # Sanity check the fees
-        expect(order.adjustments.length).to eq 2
+        pp order.all_adjustments
+        expect(order.all_adjustments.length).to eq 2
         expect(item_num).to eq 2
+        pp order.fee_total.to_s
+        pp order.id
+        expect(order.fee_total).to eq expected_fees
         expect(order.adjustment_total).to eq expected_fees
         expect(order.shipment.adjustment.included_tax).to eq 1.2
 

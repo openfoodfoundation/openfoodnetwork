@@ -766,7 +766,7 @@ describe Spree::Order do
       let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
 
       it "returns the shipping tax" do
-        expect(order.shipping_tax).to eq(10)
+        expect(order.shipping_tax).to eq(10) # Fails. Needs shipping-method-tax-category adaptations.
       end
     end
 
