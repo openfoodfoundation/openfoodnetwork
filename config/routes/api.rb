@@ -31,6 +31,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprises do
       post :update_image, on: :member
 
+      get :shopfront, to: redirect('/api/shops/%{enterprise_id}')
       resource :logo, only: [:destroy]
       resource :promo_image, only: [:destroy]
       resource :terms_and_conditions, only: [:destroy]
