@@ -1980,7 +1980,7 @@ ru:
   admin_enterprise_relationships_permits: "разрешения"
   admin_enterprise_relationships_seach_placeholder: "Поиск"
   admin_enterprise_relationships_button_create: "Создать"
-  admin_enterprise_relationships_to: "к"
+  admin_enterprise_relationships_to: "\"\""
   admin_enterprise_groups: "Группы Предприятий"
   admin_enterprise_groups_name: "Имя"
   admin_enterprise_groups_owner: "Владелец"
