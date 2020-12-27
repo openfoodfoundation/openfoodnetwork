@@ -61,7 +61,7 @@ module Spree
     def adjust(order)
       label = create_label
       if included_in_price
-        if Zone.default_tax.contains? order.tax_zone
+        if default_zone_or_zone_match? order
           order.line_items.each { |line_item| create_adjustment(label, line_item, line_item) }
         else
           amount = -1 * calculator.compute(order)
@@ -89,6 +89,10 @@ module Spree
       end
     end
 
+    def default_zone_or_zone_match?(order)
+      Zone.default_tax.contains?(order.tax_zone) || order.tax_zone == zone
+    end
+
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
     # LineItems or Orders, so we mock out a line item here to fit the interface
     # that our calculator (usually DefaultTax) expects.
@@ -114,6 +118,8 @@ module Spree
       label = ""
       label << (name.presence || tax_category.name) + " "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
+      label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
+      label
     end
 
     def with_tax_included_in_price
