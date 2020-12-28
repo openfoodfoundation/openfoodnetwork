@@ -149,6 +149,202 @@ describe Enterprise do
       it "sets the enterprise contact to the owner by default" do
         expect(enterprise.contact).to eq enterprise.owner
       end
+
+      context "prevent a wrong facebook link pattern" do
+        it "invalidates the facebook attribute https://instagram.com/user" do
+          e = build(:enterprise, facebook: 'https://instagram.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "invalidates the facebook attribute https://facebook.com/user/preferences" do
+          e = build(:enterprise, facebook: 'https://facebook.com/user/preferences')
+          expect(e).to_not be_valid
+        end
+      end
+
+      context "accepted pattern" do
+        it "validates empty facebook attribute" do
+          e = build(:enterprise, facebook: '')
+          expect(e).to be_valid
+          expect(e.facebook).to eq ""
+        end
+
+        it "validates the facebook attribute user" do
+          e = build(:enterprise, facebook: 'user')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "user"
+        end
+
+        it "validates the facebook attribute my_www5.example" do
+          e = build(:enterprise, facebook: 'my_www5.example')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "my_www5.example"
+        end
+
+        it "validates the facebook attribute http://facebook.com/user" do
+          e = build(:enterprise, facebook: 'http://facebook.com/user')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "user"
+        end
+
+        it "validates the facebook attribute https://facebook.com/user/" do
+          e = build(:enterprise, facebook: 'https://facebook.com/user/')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "user"
+        end
+
+        it "validates the facebook attribute https://www.facebook.com/user" do
+          e = build(:enterprise, facebook: 'https://www.facebook.com/user')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "user"
+        end
+
+        it "validates the facebook attribute facebook.com/user" do
+          e = build(:enterprise, facebook: 'facebook.com/user')
+          expect(e).to be_valid
+          expect(e.facebook).to eq "user"
+        end
+
+        it "renders the expected pattern" do
+          e = build(:enterprise, facebook: 'facebook.com/user')
+          expect(e.facebook).to eq "user"
+        end
+      end
+
+      context "prevent a wrong twitter link pattern" do
+        it "invalidates the twitter attribute https://facebook.com/user" do
+          e = build(:enterprise, twitter: 'https://facebook.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "invalidates the twitter attribute https://twitter.com/user/preferences" do
+          e = build(:enterprise, twitter: 'https://twitter.com/user/preferences')
+          expect(e).to_not be_valid
+        end
+      end
+
+      context "accepted pattern" do
+        it "validates empty twitter attribute" do
+          e = build(:enterprise, twitter: '')
+          expect(e).to be_valid
+          expect(e.twitter).to eq ""
+        end
+
+        it "validates the twitter attribute @my-user" do
+          e = build(:enterprise, twitter: '@my-user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "my-user"
+        end
+
+        it "validates the twitter attribute user" do
+          e = build(:enterprise, twitter: 'user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute my_www5.example" do
+          e = build(:enterprise, twitter: 'my_www5.example')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "my_www5.example"
+        end
+
+        it "validates the twitter attribute http://twitter.com/user" do
+          e = build(:enterprise, twitter: 'http://twitter.com/user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute https://twitter.com/user/" do
+          e = build(:enterprise, twitter: 'https://twitter.com/user/')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute https://www.twitter.com/user" do
+          e = build(:enterprise, twitter: 'https://www.twitter.com/user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute https://www.twitter.com/@user" do
+          e = build(:enterprise, twitter: 'https://www.twitter.com/@user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute twitter.com/@user" do
+          e = build(:enterprise, twitter: 'twitter.com/@user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "validates the twitter attribute twitter.com/user" do
+          e = build(:enterprise, twitter: 'twitter.com/user')
+          expect(e).to be_valid
+          expect(e.twitter).to eq "user"
+        end
+
+        it "renders the expected pattern" do
+          e = build(:enterprise, twitter: 'twitter.com/user')
+          expect(e.twitter).to eq "user"
+        end
+      end
+
+      context "prevent a wrong linkedin link pattern" do
+        it "invalidates the linkedin attribute https://facebook.com/user" do
+          e = build(:enterprise, linkedin: 'https://facebook.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "invalidates the linkedin attribute https://linkedin.com/user/" do
+          e = build(:enterprise, linkedin: 'https://linkedin.com/user/')
+          expect(e).to_not be_valid
+        end
+      end
+
+      context "accepted pattern" do
+        it "validates empty linkedin attribute" do
+          e = build(:enterprise, linkedin: '')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq ""
+        end
+
+        it "validates the linkedin attribute user" do
+          e = build(:enterprise, linkedin: 'user')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq "user"
+        end
+
+        it "validates the linkedin attribute http://linkedin.com/company/user" do
+          e = build(:enterprise, linkedin: 'http://linkedin.com/company/user')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq "user"
+        end
+
+        it "validates the linkedin attribute https://linkedin.com/company/user/" do
+          e = build(:enterprise, linkedin: 'https://linkedin.com/company/user/')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq "user"
+        end
+
+        it "validates the linkedin attribute https://www.linkedin.com/company/user" do
+          e = build(:enterprise, linkedin: 'https://www.linkedin.com/company/user')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq "user"
+        end
+
+        it "validates the linkedin attribute linkedin.com/company/user" do
+          e = build(:enterprise, linkedin: 'linkedin.com/company/user')
+          expect(e).to be_valid
+          expect(e.linkedin).to eq "user"
+        end
+
+        it "renders the expected pattern" do
+          e = build(:enterprise, linkedin: 'linkedin.com/company/user')
+          expect(e.linkedin).to eq "user"
+        end
+      end
+
     end
 
     describe "preferred_shopfront_taxon_order" do
