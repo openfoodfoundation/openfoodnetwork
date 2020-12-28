@@ -6,6 +6,10 @@ class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 
+  FACEBOOK_REGEX = %r{\A(?:https?://)?(?:www\.)?facebook\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
+  TWITTER_REGEX = %r{\A(?:https?://)?(?:www\.)?twitter\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
+  LINKEDIN_REGEX = %r{\A(?:https?://)?(?:www\.)?linkedin\.com/company/([a-zA-Z0-9._@-]{1,30})/?\z}
+
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
@@ -102,6 +106,10 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+
+  validates :facebook, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
+  validates :twitter, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
+  validates :linkedin, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
 
   after_touch :touch_distributors
   after_create :set_default_contact
@@ -269,14 +277,6 @@ class Enterprise < ActiveRecord::Base
     strip_url self[:website]
   end
 
-  def facebook
-    strip_url self[:facebook]
-  end
-
-  def linkedin
-    strip_url self[:linkedin]
-  end
-
   def inventory_variants
     if prefers_product_selection_from_inventory_only?
       Spree::Variant.visible_for(self)
@@ -374,6 +374,18 @@ class Enterprise < ActiveRecord::Base
 
   def can_invoice?
     abn.present?
+  end
+
+  def facebook=(value)
+    self[:facebook] = value.downcase.try(:gsub, FACEBOOK_REGEX, '\1').delete('@')
+  end
+
+  def twitter=(value)
+    self[:twitter] = value.downcase.try(:gsub, TWITTER_REGEX, '\1').delete('@')
+  end
+
+  def linkedin=(value)
+    self[:linkedin] = value.downcase.try(:gsub, LINKEDIN_REGEX, '\1').delete('@')
   end
 
   protected
