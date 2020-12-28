@@ -2,7 +2,7 @@ require 'open_food_network/permissions'
 require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
-  class SchedulesController < ResourceController
+  class SchedulesController < Admin::ResourceController
     include PaperTrailLogging
 
     before_action :adapt_params, only: [:update]

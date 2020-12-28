@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RSpec matcher to spec delegations.
 #
 # Usage:

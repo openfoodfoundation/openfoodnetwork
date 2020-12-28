@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module ProductsHelper
     def with_products_require_tax_category(value)

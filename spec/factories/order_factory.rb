@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :order, class: Spree::Order do
     transient do
@@ -6,7 +8,7 @@ FactoryBot.define do
 
     user
     bill_address
-    completed_at nil
+    completed_at { nil }
     email { user.email }
 
     factory :order_with_totals do
@@ -20,8 +22,8 @@ FactoryBot.define do
       bill_address
       ship_address
 
-      ignore do
-        line_items_count 5
+      transient do
+        line_items_count { 5 }
       end
 
       after(:create) do |order, evaluator|
@@ -34,7 +36,7 @@ FactoryBot.define do
       end
 
       factory :completed_order_with_totals do
-        state 'complete'
+        state { 'complete' }
         completed_at { Time.zone.now }
 
         distributor { create(:distributor_enterprise) }
@@ -42,8 +44,8 @@ FactoryBot.define do
         after(:create, &:refresh_shipment_rates)
 
         factory :order_ready_to_ship do
-          payment_state 'paid'
-          shipment_state 'ready'
+          payment_state { 'paid' }
+          shipment_state { 'ready' }
           after(:create) do |order|
             create(:payment, amount: order.total, order: order, state: 'completed')
             order.shipments.each do |shipment|
@@ -98,7 +100,7 @@ FactoryBot.define do
 
   factory :order_with_totals_and_distribution, parent: :order_with_distributor do
     transient do
-      shipping_fee 3
+      shipping_fee { 3 }
     end
 
     order_cycle { create(:simple_order_cycle) }
@@ -118,9 +120,9 @@ FactoryBot.define do
 
   factory :order_with_taxes, parent: :completed_order_with_totals do
     transient do
-      product_price 0
-      tax_rate_amount 0
-      tax_rate_name ""
+      product_price { 0 }
+      tax_rate_amount { 0 }
+      tax_rate_name { "" }
       zone { create(:zone_with_member) }
     end
 
@@ -168,8 +170,8 @@ FactoryBot.define do
 
   factory :completed_order_with_fees, parent: :order_with_distributor do
     transient do
-      payment_fee 5
-      shipping_fee 3
+      payment_fee { 5 }
+      shipping_fee { 3 }
     end
 
     ship_address { create(:address) }

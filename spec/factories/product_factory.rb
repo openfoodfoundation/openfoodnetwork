@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
     description { generate(:random_description) }
-    price 19.99
-    cost_price 17.00
-    sku 'ABC'
+    price { 19.99 }
+    cost_price { 17.00 }
+    sku { 'ABC' }
     available_on { 1.year.ago }
-    deleted_at nil
+    deleted_at { nil }
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
 
-    unit_value 1
-    unit_description ''
+    unit_value { 1 }
+    unit_description { '' }
 
-    variant_unit 'weight'
-    variant_unit_scale 1
-    variant_unit_name ''
+    variant_unit { 'weight' }
+    variant_unit_scale { 1 }
+    variant_unit_name { '' }
 
     shipping_category { DefaultShippingCategory.find_or_create }
 
@@ -65,9 +67,9 @@ FactoryBot.define do
 
   factory :taxed_product, parent: :product do
     transient do
-      tax_rate_amount 0
-      tax_rate_name ""
-      zone nil
+      tax_rate_amount { 0 }
+      tax_rate_name { "" }
+      zone { nil }
     end
 
     tax_category { create(:tax_category) }

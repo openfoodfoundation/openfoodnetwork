@@ -3,7 +3,7 @@ require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
 
 module Admin
-  class EnterprisesController < ResourceController
+  class EnterprisesController < Admin::ResourceController
     # These need to run before #load_resource so that @object is initialised with sanitised values
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
@@ -326,7 +326,7 @@ module Admin
       )
     end
 
-    # Used in ResourceController#create
+    # Used in Admin::ResourceController#create
     def permitted_resource_params
       enterprise_params
     end

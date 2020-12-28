@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "checking out an order with a Stripe Connect payment method", type: :request do

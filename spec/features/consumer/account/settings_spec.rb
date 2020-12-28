@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "Account Settings", js: true do
@@ -31,7 +33,7 @@ feature "Account Settings", js: true do
 
       expect(enqueued_jobs.last.to_s).to match "new@email.com"
 
-      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')} ×"
+      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')}\n×"
       user.reload
       expect(user.email).to eq 'old@email.com'
       expect(user.unconfirmed_email).to eq 'new@email.com'
@@ -47,7 +49,7 @@ feature "Account Settings", js: true do
       fill_in 'user_password_confirmation', with: 'NewPassword'
 
       click_button I18n.t(:update)
-      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')} ×"
+      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')}\n×"
 
       expect(user.reload.encrypted_password).to_not eq initial_password
     end

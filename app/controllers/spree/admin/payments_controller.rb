@@ -135,7 +135,9 @@ module Spree
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
         @payment.authorize!
-        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
+        return if @payment.pending? && @payment.cvv_response_message.nil?
+
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure')
       end
     end
   end

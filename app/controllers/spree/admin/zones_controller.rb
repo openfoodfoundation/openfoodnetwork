@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ZonesController < ResourceController
+    class ZonesController < ::Admin::ResourceController
       before_action :load_data, except: [:index]
 
       def new

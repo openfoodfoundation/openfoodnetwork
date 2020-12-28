@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # From: https://github.com/ryanb/cancan/wiki/Testing-Abilities#rspec
 
 require "cancan/matchers"

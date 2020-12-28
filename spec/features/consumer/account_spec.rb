@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -63,8 +65,8 @@ feature '
                                   href: "#{distributor2.permalink}/shop", count: 1)
         expect(page).not_to have_content distributor_without_orders.name
 
-        expect(page).to have_content distributor1.name + " " + "Balance due"
-        expect(page).to have_content distributor_credit.name + " Credit"
+        expect(page).to have_content distributor1.name + "\n" + "Balance due"
+        expect(page).to have_content distributor_credit.name + "\nCredit"
 
         # It reveals table of orders for distributors when clicked
         expand_active_table_node distributor1.name
@@ -96,7 +98,7 @@ feature '
     context "without any completed orders" do
       it "displays an appropriate message" do
         visit "/account"
-        expect(page).to have_content { t :you_have_no_orders_yet }
+        expect(page).to have_content I18n.t(:you_have_no_orders_yet)
       end
     end
   end

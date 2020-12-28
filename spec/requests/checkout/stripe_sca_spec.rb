@@ -6,6 +6,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   include ShopWorkflow
   include AuthenticationHelper
   include OpenFoodNetwork::ApiHelper
+  include StripeHelper
+  include StripeStubs
 
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:enterprise) { create(:distributor_enterprise) }
@@ -104,6 +106,11 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
       .with(basic_auth: ["sk_test_12345", ""], body: { amount_to_capture: "1234" })
       .to_return(payment_intent_response_mock)
+
+    stub_retrieve_payment_method_request("pm_123")
+    stub_list_customers_request(email: order.user.email, response: {})
+    stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+    stub_add_metadata_request(payment_method: "pm_456", response: {})
   end
 
   context "when the user submits a new card and doesn't request that the card is saved for later" do

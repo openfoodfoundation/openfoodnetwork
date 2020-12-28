@@ -3536,11 +3536,9 @@ pt_BR:
         delete?: Excluir?
       cards:
         authorised_shops: Lojas autorizadas
-        authorised_shops_popover: Esta é a lista de lojas que estão autorizadas a cobrar seu cartão de crédito padrão por quaisquer assinaturas (ou seja, pedidos repetidas) que você possa ter. Os detalhes do seu cartão serão mantidos em segurança e não serão compartilhados com os proprietários da loja. Você sempre será notificado quando for cobrado.
         saved_cards_popover: Esta é a lista de cartões que você optou por salvar para uso posterior. O seu 'padrão' será selecionado automaticamente quando você finalizar um pedido, e pode ser cobrado por qualquer loja que você tenha permissão para fazer (veja à direita).
       authorised_shops:
         shop_name: "Nome da loja"
-        allow_charges?: "Permitir cobranças?"
     localized_number:
       invalid_format: tem um formato inválido. Por favor, coloque um numero.
     api:

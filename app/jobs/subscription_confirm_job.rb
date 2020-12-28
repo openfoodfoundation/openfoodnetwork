@@ -62,7 +62,7 @@ class SubscriptionConfirmJob
     return unless order.payment_required?
 
     prepare_for_payment!(order)
-    order.process_payments!
+    order.process_payments_offline!
     raise if order.errors.any?
   end
 

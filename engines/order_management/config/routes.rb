@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Openfoodnetwork::Application.routes.append do
   namespace :order_management do
     namespace :reports do

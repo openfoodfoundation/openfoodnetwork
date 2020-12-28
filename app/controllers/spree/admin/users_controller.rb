@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class UsersController < ResourceController
+    class UsersController < ::Admin::ResourceController
       rescue_from Spree::User::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
@@ -100,7 +100,7 @@ module Spree
 
       private
 
-      # handling raise from Spree::Admin::ResourceController#destroy
+      # handling raise from Admin::ResourceController#destroy
       def user_destroy_with_orders_error
         invoke_callbacks(:destroy, :fails)
         render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)

@@ -1571,6 +1571,7 @@ fr:
   shopping_groups_part_of: "fait partie de:"
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes"
+  enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
@@ -2084,6 +2085,7 @@ fr:
   spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
+  spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
   spree_order_populator_availability_error: "Ce produit n'est pas disponible pour ce cycle de vente / distributeur."
   spree_distributors_error: "Veuillez sélectionner au moins une boutique"
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
@@ -2393,6 +2395,7 @@ fr:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    default_card_voids_auth: Modifier votre carte de paiement par défaut va supprimer les autorisations attribuées à certaines boutiques. vous pouvez les remettre en place dans les paramètres de votre compte. Souhaitez-vous modifier la carte par défaut ?
     cart:
       add_to_cart_failed: >
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
@@ -3564,11 +3567,11 @@ fr:
         delete?: Supprimer?
       cards:
         authorised_shops: Boutiques autorisées
-        authorised_shops_popover: Voilà la liste des boutiques que vous avez autorisées à débiter votre carte de paiement par défaut dans le cadre de vos abonnements en cours (commandes récurrentes). Les informations concernant votre carte de paiement sont sécurisées et ne sont pas accessibles par le gérant de la boutique. Vous recevrez systématiquement une notification avant tout débit sur votre carte.
+        authorised_shops_agreement: 'Cette liste de boutique correspond aux boutiques ayant l''autorisation d''utiliser votre carte pour les commandes récurrentes auxquelles vous avez souscrit. Les détails de votre carte ne sont pas partagés avec les gérants des boutiques en question. Vous serez toujours notifié d''un paiement dès qu''il a lieu. '
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les boutiques auxquelles vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom de la boutique"
-        allow_charges?: "Autoriser les prélèvements ?"
+        allow_charges?: "Souhaitez-vous autoriser les paiements sur la carte par défaut ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:

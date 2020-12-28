@@ -1,28 +1,52 @@
-require 'open_food_network/feature_toggle'
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 module OpenFoodNetwork
   describe FeatureToggle do
-    it "returns true when feature is on" do
-      stub_foo("true")
-      expect(FeatureToggle.enabled?(:foo)).to be true
+    context 'when users are not specified' do
+      it "returns true when feature is on" do
+        stub_foo("true")
+        expect(FeatureToggle.enabled?(:foo)).to be true
+      end
+
+      it "returns false when feature is off" do
+        stub_foo("false")
+        expect(FeatureToggle.enabled?(:foo)).to be false
+      end
+
+      it "returns false when feature is unspecified" do
+        stub_foo("maybe")
+        expect(FeatureToggle.enabled?(:foo)).to be false
+      end
+
+      it "returns false when feature is undefined" do
+        expect(FeatureToggle.enabled?(:foo)).to be false
+      end
+
+      def stub_foo(value)
+        allow(ENV).to receive(:fetch).with("OFN_FEATURE_FOO", nil).and_return(value)
+      end
     end
 
-    it "returns false when feature is off" do
-      stub_foo("false")
-      expect(FeatureToggle.enabled?(:foo)).to be false
-    end
+    context 'when specifying users' do
+      let(:user) { build(:user) }
 
-    it "returns false when feature is unspecified" do
-      stub_foo("maybe")
-      expect(FeatureToggle.enabled?(:foo)).to be false
-    end
+      context 'and the feature is enabled for them' do
+        before { FeatureToggle.enable(:foo, [user.email]) }
 
-    it "returns false when feature is undefined" do
-      expect(FeatureToggle.enabled?(:foo)).to be false
-    end
+        it 'returns true' do
+          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
+        end
+      end
 
-    def stub_foo(value)
-      allow(ENV).to receive(:fetch).with("OFN_FEATURE_FOO", nil).and_return(value)
+      context 'and the feature is disabled for them' do
+        before { FeatureToggle.enable(:foo, []) }
+
+        it 'returns false' do
+          expect(FeatureToggle.enabled?(:foo, user)).to eq(false)
+        end
+      end
     end
   end
 end

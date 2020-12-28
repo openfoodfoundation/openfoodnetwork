@@ -15,8 +15,6 @@ Spree::Core::Engine.routes.draw do
   devise_scope :spree_user do
     post '/login' => 'user_sessions#create', :as => :create_new_session
     get '/logout' => 'user_sessions#destroy', :as => :logout
-    get '/signup' => 'user_registrations#new', :as => :signup
-    post '/signup' => 'user_registrations#create', :as => :registration
     get '/password/recover' => 'user_passwords#new', :as => :recover_password
     post '/password/recover' => 'user_passwords#create', :as => :reset_password
     get '/password/change' => 'user_passwords#edit', :as => :edit_password

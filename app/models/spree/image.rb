@@ -34,12 +34,22 @@ module Spree
     end
 
     def find_dimensions
-      temporary = attachment.queued_for_write[:original]
-      filename = temporary.path unless temporary.nil?
-      filename = attachment.path if filename.blank?
-      geometry = Paperclip::Geometry.from_file(filename)
+      return if attachment.errors.present?
+
+      geometry = Paperclip::Geometry.from_file(local_filename_of_original)
+
       self.attachment_width  = geometry.width
       self.attachment_height = geometry.height
+    end
+
+    def local_filename_of_original
+      temporary = attachment.queued_for_write[:original]
+
+      if temporary&.path.present?
+        temporary.path
+      else
+        attachment.path
+      end
     end
 
     # if there are errors from the plugin, then add a more meaningful message

@@ -27,31 +27,31 @@ namespace :ofn do
   task sample_data: :environment do
     raise "Please run `rake db:seed` first." unless seeded?
 
-    users = UserFactory.new.create_samples
+    users = SampleData::UserFactory.new.create_samples
 
-    enterprises = EnterpriseFactory.new.create_samples(users)
+    enterprises = SampleData::EnterpriseFactory.new.create_samples(users)
 
-    PermissionFactory.new.create_samples(enterprises)
+    SampleData::PermissionFactory.new.create_samples(enterprises)
 
-    FeeFactory.new.create_samples(enterprises)
+    SampleData::FeeFactory.new.create_samples(enterprises)
 
-    ShippingMethodFactory.new.create_samples(enterprises)
+    SampleData::ShippingMethodFactory.new.create_samples(enterprises)
 
-    PaymentMethodFactory.new.create_samples(enterprises)
+    SampleData::PaymentMethodFactory.new.create_samples(enterprises)
 
-    TaxonFactory.new.create_samples
+    SampleData::TaxonFactory.new.create_samples
 
-    products = ProductFactory.new.create_samples(enterprises)
+    products = SampleData::ProductFactory.new.create_samples(enterprises)
 
-    InventoryFactory.new.create_samples(products)
+    SampleData::InventoryFactory.new.create_samples(products)
 
-    OrderCycleFactory.new.create_samples
+    SampleData::OrderCycleFactory.new.create_samples
 
-    CustomerFactory.new.create_samples(users)
+    SampleData::CustomerFactory.new.create_samples(users)
 
-    GroupFactory.new.create_samples
+    SampleData::GroupFactory.new.create_samples
 
-    OrderFactory.new.create_samples
+    SampleData::OrderFactory.new.create_samples
   end
 
   def seeded?

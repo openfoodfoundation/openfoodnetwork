@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 class Spree::Gateway::Test < Spree::Gateway
@@ -56,14 +58,14 @@ module Spree
     end
 
     it "generates a clean name for known Payment Method types" do
-      expect(Spree::PaymentMethod::Check.clean_name).to eq("Cash/EFT/etc. (payments for which automatic validation is not required)")
-      expect(Spree::Gateway::Migs.clean_name).to eq("MasterCard Internet Gateway Service (MIGS)")
-      expect(Spree::Gateway::Pin.clean_name).to eq("Pin Payments")
-      expect(Spree::Gateway::PayPalExpress.clean_name).to eq("PayPal Express")
-      expect(Spree::Gateway::StripeConnect.clean_name).to eq("Stripe")
-
-      # Testing else condition
-      expect(Spree::Gateway::BogusSimple.clean_name).to eq("BogusSimple")
+      expect(Spree::PaymentMethod::Check.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.check"))
+      expect(Spree::Gateway::Migs.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.migs"))
+      expect(Spree::Gateway::Pin.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.pin"))
+      expect(Spree::Gateway::PayPalExpress.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.paypalexpress"))
+      expect(Spree::Gateway::StripeConnect.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.stripeconnect"))
+      expect(Spree::Gateway::StripeSCA.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.stripesca"))
+      expect(Spree::Gateway::BogusSimple.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.bogussimple"))
+      expect(Spree::Gateway::Bogus.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.bogus"))
     end
 
     it "computes the amount of fees" do

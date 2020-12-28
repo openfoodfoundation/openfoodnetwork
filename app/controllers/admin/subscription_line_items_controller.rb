@@ -3,7 +3,7 @@ require 'open_food_network/order_cycle_permissions'
 require 'open_food_network/scope_variant_to_hub'
 
 module Admin
-  class SubscriptionLineItemsController < ResourceController
+  class SubscriptionLineItemsController < Admin::ResourceController
     before_action :load_build_context, only: [:build]
     before_action :ensure_shop, only: [:build]
     before_action :ensure_variant, only: [:build]

@@ -500,20 +500,17 @@ module Spree
     #   :allow_checkout_on_gateway_error is set to false
     #
     def process_payments!
-      raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
-
-      pending_payments.each do |payment|
-        break if payment_total >= total
-
-        payment.process!
-
-        if payment.completed?
-          self.payment_total += payment.amount
-        end
-      end
+      process_each_payment(&:process!)
     rescue Core::GatewayError => e
       result = !!Spree::Config[:allow_checkout_on_gateway_error]
       errors.add(:base, e.message) && (return result)
+    end
+
+    def process_payments_offline!
+      process_each_payment(&:process_offline!)
+    rescue Core::GatewayError => e
+      errors.add(:base, e.message)
+      false
     end
 
     def billing_firstname
@@ -777,6 +774,20 @@ module Spree
     end
 
     private
+
+    def process_each_payment
+      raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
+
+      pending_payments.each do |payment|
+        break if payment_total >= total
+
+        yield payment
+
+        if payment.completed?
+          self.payment_total += payment.amount
+        end
+      end
+    end
 
     def link_by_email
       self.email = user.email if user

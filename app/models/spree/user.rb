@@ -1,7 +1,8 @@
 module Spree
   class User < ActiveRecord::Base
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable, :encryptable, encryptor: 'authlogic_sha512'
+           :rememberable, :trackable, :validatable,
+           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true
 
     has_many :orders
     belongs_to :ship_address, foreign_key: 'ship_address_id', class_name: 'Spree::Address'
@@ -38,9 +39,6 @@ module Spree
     after_create :associate_customers
 
     validate :limit_owned_enterprises
-
-    # We use the same options as Spree and add :confirmable
-    devise :confirmable, reconfirmable: true
 
     class DestroyWithOrdersError < StandardError; end
 

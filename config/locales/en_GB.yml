@@ -2116,7 +2116,7 @@ en_GB:
   admin_share_city: "City"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Country"
-  admin_share_state: "State"
+  admin_share_state: "County"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
@@ -2169,14 +2169,14 @@ en_GB:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ship Postcode
-  report_header_ship_state: Ship State
+  report_header_ship_state: Ship County
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
-  report_header_billing_state: Billing State
+  report_header_billing_state: Billing County
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
@@ -3446,7 +3446,7 @@ en_GB:
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
         unpaid_order: "Your order was unpaid so no refund has been made"
-        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        paid_order: "Your order was paid so %{distributor} will refund the full amount. Please don't hesitate to get in touch to notify them that you cancelled your order.  Many business reconcile payments at the end of the month but will happily issue refunds sooner, if they are aware you are waiting."
         credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
@@ -3540,11 +3540,9 @@ en_GB:
         delete?: Delete?
       cards:
         authorised_shops: Authorised Shops
-        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
       authorised_shops:
         shop_name: "Shop Name"
-        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:

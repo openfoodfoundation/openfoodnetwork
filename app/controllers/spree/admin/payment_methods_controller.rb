@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class PaymentMethodsController < ResourceController
+    class PaymentMethodsController < ::Admin::ResourceController
       skip_before_action :load_resource, only: [:create, :show_provider_preferences]
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
@@ -51,7 +51,7 @@ module Spree
       end
 
       # Only show payment methods that user has access to and sort by distributor name
-      # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
+      # ! Redundant code copied from Admin::ResourceController with modifications marked
       def collection
         return parent.public_send(controller_name) if parent_data.present?
 

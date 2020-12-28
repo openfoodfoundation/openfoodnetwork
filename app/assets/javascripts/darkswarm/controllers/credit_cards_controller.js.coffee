@@ -1,7 +1,7 @@
 Darkswarm.controller "CreditCardsCtrl", ($scope, CreditCard, CreditCards) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.savedCreditCards = CreditCards.saved
-  $scope.setDefault = CreditCards.setDefault
+  $scope.confirmSetDefault = CreditCards.confirmSetDefault
   $scope.CreditCard = CreditCard
   $scope.secrets = CreditCard.secrets
   $scope.showForm = CreditCard.show

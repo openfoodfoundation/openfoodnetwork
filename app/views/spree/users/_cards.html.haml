@@ -18,9 +18,7 @@
         .new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
           %h3= t(:add_new_credit_card)
           = render 'new_card_form'
-        .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible' } }
+        .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible || savedCreditCards.length == 0' } }
           %h3
             = t('.authorised_shops')
-            %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.authorised_shops_popover') }
-              %i.ofn-i_013-help
           = render 'authorised_shops'

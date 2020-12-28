@@ -5,6 +5,7 @@
   - if Stripe.publishable_key
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
+      angular.module('Darkswarm').value("stripePublishableKey", "#{Stripe.publishable_key}")
 
 .darkswarm
   .row.pad-top

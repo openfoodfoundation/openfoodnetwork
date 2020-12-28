@@ -3400,11 +3400,9 @@ fil_PH:
         delete?: tanggalin?
       cards:
         authorised_shops: awtorisadong mga shop
-        authorised_shops_popover: ito ang listahan ng mga shop na may permisong singilin ang iyong default na credit card para sa kahit anong subscription (hal.nauulit na mga order) na mayroon ka. Ang mga detalye ng iyong card ay pananatilihing ligtas at hindi ipapaalam sa mga may-ari ng shop. Ikaw ay aabisuhan kapag ikaw ay nasingil na.
         saved_cards_popover: ito ang listahan ng mga card na pinili mong i-save para magamit sa hinaharap. ang iyong 'default' ay awtomatikong mapipili kapag ikaw ay nagcheckout ng order, at maaari ring singilin ng mga shop na binigyan mo ng permiso (tignan sa kanan).
       authorised_shops:
         shop_name: "pangalan ng shop"
-        allow_charges?: "pumayag na masingil?"
     localized_number:
       invalid_format: ay may hindi valid na format. mag.pasok ng numero
     api:

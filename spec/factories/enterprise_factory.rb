@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :enterprise, class: Enterprise do
     transient do
-      users []
+      users { [] }
       logo {}
       promo_image {}
     end
 
     owner factory: :user
     sequence(:name) { |n| "Enterprise #{n}" }
-    sells 'any'
-    description 'enterprise'
-    long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
+    sells { 'any' }
+    description { 'enterprise' }
+    long_description { '<p>Hello, world!</p><p>This is a paragraph.</p>' }
     address
 
     after(:create) do |enterprise, proxy|
@@ -22,16 +24,16 @@ FactoryBot.define do
   end
 
   factory :supplier_enterprise, parent: :enterprise do
-    is_primary_producer true
-    sells "none"
+    is_primary_producer { true }
+    sells { "none" }
   end
 
   factory :distributor_enterprise, parent: :enterprise do
-    is_primary_producer false
-    sells "any"
+    is_primary_producer { false }
+    sells { "any" }
 
     transient do
-      with_payment_and_shipping false
+      with_payment_and_shipping { false }
     end
 
     after(:create) do |enterprise, proxy|

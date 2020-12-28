@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Features
   module DatepickerHelper
     def choose_today_from_datepicker
