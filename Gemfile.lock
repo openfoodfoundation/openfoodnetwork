@@ -5,14 +5,6 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
-  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 1a477e9f7763297944cc99b6f4dd3d962aa963e9
-  branch: 2-1-0-stable
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-
-GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
   revision: 467f6ea1c44529c7c91cac4c8211bbd863588c0b
   branch: ofn-rails-4
@@ -490,11 +482,6 @@ GEM
       activerecord (>= 4.0, < 6.2)
     parser (3.0.0.0)
       ast (~> 2.4.1)
-    paypal-sdk-core (0.2.10)
-      multi_json (~> 1.0)
-      xml-simple
-    paypal-sdk-merchant (1.106.1)
-      paypal-sdk-core (~> 0.2.3)
     pg (0.21.0)
     power_assert (1.2.0)
     pry (0.13.1)
@@ -822,7 +809,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
-  spree_paypal_express!
   spring
   spring-commands-rspec
   state_machines-activerecord
