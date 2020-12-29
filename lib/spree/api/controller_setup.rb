@@ -1,3 +1,5 @@
+require 'spree/core/controller_helpers/auth'
+
 module Spree
   module Api
     module ControllerSetup
