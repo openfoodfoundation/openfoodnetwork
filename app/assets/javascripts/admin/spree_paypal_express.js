@@ -10,7 +10,7 @@ SpreePaypalExpress = {
     } else if (SpreePaypalExpress.paymentMethodID) {
       $('.payment-method-settings').children().show();
       $('button[type=submit]').prop('disabled', '');
-      $('#payment_amount').prop('disabled', '')
+      $('#payment_amount').prop('disabled', '');
       $('#paypal-warning').hide();
     }
   }
@@ -22,4 +22,4 @@ $(document).ready(function() {
   paymentMethods = $('[data-hook="payment_method_field"] input[type="radio"]').click(function (e) {
     SpreePaypalExpress.hideSettings($(e.target));
   });
-})
+});
