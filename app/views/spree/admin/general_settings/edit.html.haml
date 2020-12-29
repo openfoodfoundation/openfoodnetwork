@@ -60,10 +60,6 @@
                 = preference_field_tag(key, Spree::Config[key], :type => type)
                 = label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean
             .field
-              = label_tag :currency, Spree.t(:choose_currency)
-              %br/
-              = select_tag :currency, currency_options, :class => 'fullwidth'
-            .field
               = label_tag Spree.t(:currency_symbol_position)
               %br/
               .choices
