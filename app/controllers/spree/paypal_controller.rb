@@ -40,7 +40,10 @@ module Spree
       items.reject! do |item|
         item[:Amount][:value].zero?
       end
-      pp_request = provider.build_set_express_checkout(express_checkout_request_details(order, items))
+
+      pp_request = provider.build_set_express_checkout(
+        express_checkout_request_details(order, items)
+      )
 
       begin
         pp_response = provider.set_express_checkout(pp_request)
@@ -66,14 +69,14 @@ module Spree
       # last chance to interact with the payment process before the money moves...
       return reset_to_cart unless sufficient_stock?
 
-      @order.payments.create!({
-        source: Spree::PaypalExpressCheckout.create({
+      @order.payments.create!(
+        source: Spree::PaypalExpressCheckout.create(
           token: params[:token],
           payer_id: params[:PayerID]
-        }),
+        ),
         amount: @order.total,
         payment_method: payment_method
-      })
+      )
       @order.next
       if @order.complete?
         flash.notice = Spree.t(:order_processed_successfully)
@@ -106,8 +109,8 @@ module Spree
         Number: item.variant.sku,
         Quantity: item.quantity,
         Amount: {
-            currencyID: item.order.currency,
-            value: item.price
+          currencyID: item.order.currency,
+          value: item.price
         },
         ItemCategory: "Physical"
       }
@@ -140,12 +143,11 @@ module Spree
     end
 
     def reset_order_when_complete
-      if current_order.complete?
-        flash[:notice] = t(:order_processed_successfully)
+      return unless current_order.complete?
 
-        OrderCompletionReset.new(self, current_order).call
-        session[:access_token] = current_order.token
-      end
+      flash[:notice] = t(:order_processed_successfully)
+      OrderCompletionReset.new(self, current_order).call
+      session[:access_token] = current_order.token
     end
 
     def reset_to_cart
@@ -174,7 +176,7 @@ module Spree
       payment_method.provider
     end
 
-    def payment_details items
+    def payment_details(items)
       item_sum = items.sum { |i| i[:Quantity] * i[:Amount][:value] }
       # Would use tax_total here, but it can include "included" taxes as well.
       # For instance, tax_total would include the 10% GST in Australian stores.
