@@ -102,14 +102,14 @@ module Spree
 
     def line_item(item)
       {
-          :Name => item.product.name,
-          :Number => item.variant.sku,
-          :Quantity => item.quantity,
-          :Amount => {
-              :currencyID => item.order.currency,
-              :value => item.price
-          },
-          :ItemCategory => "Physical"
+        Name: item.product.name,
+        Number: item.variant.sku,
+        Quantity: item.quantity,
+        Amount: {
+            currencyID: item.order.currency,
+            value: item.price
+        },
+        ItemCategory: "Physical"
       }
     end
 
@@ -118,7 +118,9 @@ module Spree
         SetExpressCheckoutRequestDetails: {
           InvoiceID: order.number,
           BuyerEmail: order.email,
-          ReturnURL: spree.confirm_paypal_url(payment_method_id: params[:payment_method_id], utm_nooverride: 1),
+          ReturnURL: spree.confirm_paypal_url(
+            payment_method_id: params[:payment_method_id], utm_nooverride: 1
+          ),
           CancelURL: spree.cancel_paypal_url,
           SolutionType: payment_method.preferred_solution.presence || "Mark",
           LandingPage: payment_method.preferred_landing_page.presence || "Billing",
@@ -163,7 +165,8 @@ module Spree
     def destroy_orphaned_paypal_payments
       return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
 
-      orphaned_payments = current_order.payments.where(payment_method_id: payment_method.id, source_id: nil)
+      orphaned_payments = current_order.payments.
+        where(payment_method_id: payment_method.id, source_id: nil)
       orphaned_payments.each(&:destroy)
     end
 
@@ -185,33 +188,33 @@ module Spree
         # Paypal does not support no items or a zero dollar ItemTotal
         # This results in the order summary being simply "Current purchase"
         {
-          :OrderTotal => {
-            :currencyID => current_order.currency,
-            :value => current_order.total
+          OrderTotal: {
+            currencyID: current_order.currency,
+            value: current_order.total
           }
         }
       else
         {
-          :OrderTotal => {
-            :currencyID => current_order.currency,
-            :value => current_order.total
+          OrderTotal: {
+            currencyID: current_order.currency,
+            value: current_order.total
           },
-          :ItemTotal => {
-            :currencyID => current_order.currency,
-            :value => item_sum
+          ItemTotal: {
+            currencyID: current_order.currency,
+            value: item_sum
           },
-          :ShippingTotal => {
-            :currencyID => current_order.currency,
-            :value => current_order.ship_total
+          ShippingTotal: {
+            currencyID: current_order.currency,
+            value: current_order.ship_total
           },
-          :TaxTotal => {
-            :currencyID => current_order.currency,
-            :value => tax_adjustments_total,
+          TaxTotal: {
+            currencyID: current_order.currency,
+            value: tax_adjustments_total,
           },
-          :ShipToAddress => address_options,
-          :PaymentDetailsItem => items,
-          :ShippingMethod => "Shipping Method Name Goes Here",
-          :PaymentAction => "Sale"
+          ShipToAddress: address_options,
+          PaymentDetailsItem: items,
+          ShippingMethod: "Shipping Method Name Goes Here",
+          PaymentAction: "Sale"
         }
       end
     end
@@ -220,14 +223,14 @@ module Spree
       return {} unless address_required?
 
       {
-          :Name => current_order.bill_address.try(:full_name),
-          :Street1 => current_order.bill_address.address1,
-          :Street2 => current_order.bill_address.address2,
-          :CityName => current_order.bill_address.city,
-          :Phone => current_order.bill_address.phone,
-          :StateOrProvince => current_order.bill_address.state_text,
-          :Country => current_order.bill_address.country.iso,
-          :PostalCode => current_order.bill_address.zipcode
+        Name: current_order.bill_address.try(:full_name),
+        Street1: current_order.bill_address.address1,
+        Street2: current_order.bill_address.address2,
+        CityName: current_order.bill_address.city,
+        Phone: current_order.bill_address.phone,
+        StateOrProvince: current_order.bill_address.state_text,
+        Country: current_order.bill_address.country.iso,
+        PostalCode: current_order.bill_address.zipcode
       }
     end
 
