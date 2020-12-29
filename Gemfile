@@ -33,6 +33,7 @@ gem 'ransack', '~> 1.8.10'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5'
 
+gem 'paypal-sdk-merchant', '1.106.1'
 gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
