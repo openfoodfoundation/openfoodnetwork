@@ -63,13 +63,7 @@ module Api
     end
 
     def set_content_type
-      content_type = case params[:format]
-                     when "json"
-                       "application/json"
-                     when "xml"
-                       "text/xml"
-                     end
-      headers["Content-Type"] = content_type
+      headers["Content-Type"] = "application/json"
     end
 
     def error_during_processing(exception)
