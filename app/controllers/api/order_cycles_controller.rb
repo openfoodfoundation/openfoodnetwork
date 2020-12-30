@@ -45,7 +45,7 @@ module Api
     private
 
     def render_no_products
-      render status: :not_found, json: ''
+      render status: :not_found, plain: {}.to_json, content_type: "application/json"
     end
 
     def product_properties
