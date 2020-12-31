@@ -34,7 +34,7 @@ module CheckoutHelper
   end
 
   def checkout_line_item_adjustments(order)
-    order.adjustments.eligible.where(source_type: "Spree::LineItem")
+    order.all_adjustments.eligible.where(adjustable_type: "Spree::LineItem")
   end
 
   def checkout_subtotal(order)
