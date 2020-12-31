@@ -778,7 +778,7 @@ module Spree
 
     # Needs looking at
     def total_tax
-      (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
+      all_adjustments.tax.sum(:amount)
     end
 
     # Needs looking at
