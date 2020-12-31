@@ -151,6 +151,7 @@ feature "full-page cart", js: true do
       before do
         add_enterprise_fee enterprise_fee
         add_product_to_cart order, product_with_tax
+        order.create_tax_charge!
         visit main_app.cart_path
       end
 
