@@ -1398,6 +1398,7 @@ en:
   unconfirmed: unconfirmed
   days: days
   authorization_failure: "Authorization Failure"
+  description: "Description"
 
   label_shop: "Shop"
   label_shops: "Shops"
