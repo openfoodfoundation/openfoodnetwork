@@ -58,8 +58,7 @@ module OrderManagement
 
         def for_supported_adjustments
           chain_to_scope do
-            where(originator_type: ["EnterpriseFee", "Spree::PaymentMethod",
-                                    "Spree::ShippingMethod"])
+            where("spree_adjustments.source_type = 'EnterpriseFee' OR spree_adjustments.adjustable_type IN ('Spree::PaymentMethod','Spree::ShippingMethod')")
           end
         end
 
@@ -107,8 +106,8 @@ module OrderManagement
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN spree_payment_methods
                 ON (
-                  spree_adjustments.originator_type = 'Spree::PaymentMethod'
-                    AND spree_payment_methods.id = spree_adjustments.originator_id
+                  spree_adjustments.adjustable_type = 'Spree::PaymentMethod'
+                    AND spree_payment_methods.id = spree_adjustments.adjustable_id
                 )
             JOIN_STRING
           )
@@ -133,8 +132,8 @@ module OrderManagement
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN spree_shipping_methods
                 ON (
-                  spree_adjustments.originator_type = 'Spree::ShippingMethod'
-                    AND spree_shipping_methods.id = spree_adjustments.originator_id
+                  spree_adjustments.adjustable_type = 'Spree::ShippingMethod'
+                    AND spree_shipping_methods.id = spree_adjustments.adjustable_id
                 )
             JOIN_STRING
           )
@@ -149,8 +148,8 @@ module OrderManagement
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN enterprise_fees
                 ON (
-                  spree_adjustments.originator_type = 'EnterpriseFee'
-                    AND enterprise_fees.id = spree_adjustments.originator_id
+                  spree_adjustments.source_type = 'EnterpriseFee'
+                    AND enterprise_fees.id = spree_adjustments.source_id
                 )
             JOIN_STRING
           )
