@@ -4,7 +4,8 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.select = RegistrationService.select
   $scope.geocodedAddress = '';
   $scope.latLong = null;
-  $scope.confirmAddress;
+  $scope.addressConfirmed;
+  $scope.markerDraggable = false;
 
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
 
@@ -26,7 +27,7 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.countryHasStates = ->
     $scope.enterprise.country.states.length > 0
 
-  $scope.map = {center: {latitude: 43.078598, longitude: 12.249547 }, zoom: 2 };
+  $scope.map = {center: {latitude: 43.078598, longitude: 12.249547 }, zoom: 2};
   $scope.options = {scrollwheel: false};
   $scope.locateAddress = () ->
     { address1, address2, city, state_id, zipcode } = $scope.enterprise.address
@@ -41,6 +42,12 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
         )
 
   $scope.confirmAddressChange = (isConfirmed) ->
+    $scope.addressConfirmed = isConfirmed;
     if isConfirmed
+      $scope.markerDraggable = false;
       $scope.enterprise.address.latitude = $scope.latLong.latitude;
       $scope.enterprise.address.longitude = $scope.latLong.longitude;
+    else
+      $scope.markerDraggable = true;
+      $scope.enterprise.address.latitude = null;
+      $scope.enterprise.address.longitude = null;

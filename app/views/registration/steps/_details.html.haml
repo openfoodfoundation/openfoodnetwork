@@ -58,10 +58,10 @@
                 %span.error{ ng: { show: "details.country.$error.required && submitted" } }
                   = t(".country_field_error")
       .small-12.medium-9.large-12.columns.end
-        .map-container--registration{id: "registration-map"}
+        .map-container--registration{id: "registration-map", ng: {if: "!!map"}}
           %label{ for: 'map_location' }= t(".map_location")
-          %ui-gmap-google-map{options: "map.options", center: "map.center", zoom: "map.zoom"}
-            %ui-gmap-marker{idKey: 1, coords: "latLong"}
+          %ui-gmap-google-map{ center: "map.center", zoom: "map.zoom"}
+            %ui-gmap-marker{idKey: 1, coords: "latLong", options: '{ draggable: markerDraggable}'}
           
       .center
         %input.button.primary{ type: "button", value: "{{'registration.steps.details.locate_address' | t}}", ng: { click: "locateAddress()" } }
@@ -75,6 +75,10 @@
           %label{ for: 'confirm_address_true' } {{'registration.steps.details.confirm_address_yes' | t}}
           %input{ id: 'confirm_address_false', type: 'radio', name: 'confirm_address', ng: { model: 'confirmAddress', change: 'confirmAddressChange(confirmAddress)', value: 'false' } }
           %label{ for: 'confirm_address_false' } {{'registration.steps.details.confirm_address_no' | t}}
+
+      .small-12.medium-9.large-12.columns.end{ ng: {if: "addressConfirmed === false"}} 
+        .field
+          %strong {{'registration.steps.details.drag_map_marker' | t}}
 
       .row.buttons
         .small-12.columns
