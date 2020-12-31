@@ -145,8 +145,7 @@ module OrderManagement
         end
 
         it "doesnt update the order shipment" do
-          shipment = build(:shipment)
-          allow(order).to receive_messages shipments: [shipment]
+          shipment = create(:shipment, order: order)
 
           expect(shipment).not_to receive(:update!).with(order)
           expect(updater).not_to receive(:update_shipments).with(order)
