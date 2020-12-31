@@ -13,7 +13,7 @@ feature 'Tag Rules', js: true do
       visit_tag_rules
     end
 
-    it "allows creation of rules of each type" do
+    xit "allows creation of rules of each type" do
       # Creating a new tag
       expect(page).to have_content 'No tags apply to this enterprise yet'
       expect(page).to have_no_selector '.customer_tag'
