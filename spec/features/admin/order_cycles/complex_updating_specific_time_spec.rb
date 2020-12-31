@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+xfeature '
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
