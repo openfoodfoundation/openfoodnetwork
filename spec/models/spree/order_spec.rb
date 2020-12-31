@@ -593,19 +593,19 @@ describe Spree::Order do
   end
 
   describe "updating the distribution charge" do
-    let(:order) { build(:order) }
+    let(:order) { create(:order) }
 
     it "clears all enterprise fee adjustments on the order" do
-      expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(subject)
-      subject.update_distribution_charge!
+      expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(order)
+      order.update_distribution_charge!
     end
 
     it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
       allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
 
-      allow(subject).to receive(:order_cycle) { nil }
+      allow(order).to receive(:order_cycle) { nil }
 
-      subject.update_distribution_charge!
+      order.update_distribution_charge!
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
@@ -629,11 +629,11 @@ describe Spree::Order do
       order_cycle = double(:order_cycle)
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
         to receive(:create_order_adjustments_for).
-        with(subject)
+        with(order)
 
-      allow(subject).to receive(:order_cycle) { order_cycle }
+      allow(order).to receive(:order_cycle) { order_cycle }
 
-      subject.update_distribution_charge!
+      order.update_distribution_charge!
     end
   end
 
