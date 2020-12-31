@@ -2888,6 +2888,8 @@ es:
     delete: "Borrar"
     cannot_set_shipping_method_without_address: "No se puede establecer el método de envío hasta que se proporcionen los detalles de la consumidora."
     no_tracking_present: "No se han proporcionado detalles de seguimiento."
+    tracking: "Seguimiento"
+    tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
     customer_details: "Detalles de la consumidora"
     customer_search: "Búsqueda de consumidores"
@@ -3536,11 +3538,9 @@ es:
         delete?: ¿Borrar?
       cards:
         authorised_shops: Tiendas autorizadas
-        authorised_shops_popover: Esta es la lista de tiendas a las que se les permite cobrar a su tarjeta de crédito predeterminada por sus suscripciones (es decir, pedidos repetidos) que pueda tener. Los detalles de su tarjeta se mantendrán seguros y no se compartirán con los propietarios de las tiendas. Siempre se le notificará cuando se le cobra.
         saved_cards_popover: Esta es la lista de tarjetas que ha optado por guardar para su uso posterior. Su "valor predeterminado" se seleccionará automáticamente al momento de realizar un pedido, y puede ser cobrado por cualquier tienda que tenga permitido hacerlo (ver a la derecha).
       authorised_shops:
         shop_name: "Nombre de tienda"
-        allow_charges?: "¿Permitir cargos?"
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un numero.
     api:

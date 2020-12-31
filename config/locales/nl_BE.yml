@@ -3410,11 +3410,9 @@ nl_BE:
         delete?: 'Schrappen? '
       cards:
         authorised_shops: 'Toegestane winkel '
-        authorised_shops_popover: 'Hierna de lijst van de winkels die U hebt toegestaan met uw standaard kredietkaart te betalen in verband met de abonnementen in gang  (terugkerende bestellingen). De gegevens in verband met uw kaart zijn beveiligd en zijn niet bereikbaar door de winkelbeheerder. U krijgt systematisch een notificatie voor elke debiet op uw kaart. '
         saved_cards_popover: Hierna de lijst van de betalingen opgeslaan op uw kaart. De standaardkaart wordt automatisch geselecteerd bij het voltooien van de bestelling en mag gedebiteerd worden  door de winkels waaraan U de toelating gegeven hebt (zie rechts)
       authorised_shops:
         shop_name: "Naam van de winkel "
-        allow_charges?: "Een encasso toelaten ?"
     localized_number:
       invalid_format: ' heeft incorrect invoer . Voer alsjeblieft een nummer in.'
     api:

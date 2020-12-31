@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'open_food_network/address_finder'
-require 'spree/core/gateway_error'
 
 class CheckoutController < Spree::StoreController
   layout 'darkswarm'
 
+  include OrderStockCheck
   include CheckoutHelper
   include OrderCyclesHelper
   include EnterprisesHelper
@@ -25,7 +25,7 @@ class CheckoutController < Spree::StoreController
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
-  before_action :ensure_sufficient_stock_lines
+  before_action :handle_insufficient_stock
 
   before_action :associate_user
   before_action :check_authorization
@@ -76,13 +76,6 @@ class CheckoutController < Spree::StoreController
 
   def ensure_order_not_completed
     redirect_to main_app.cart_path if @order.completed?
-  end
-
-  def ensure_sufficient_stock_lines
-    if @order.insufficient_stock_lines.present?
-      flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-      redirect_to main_app.cart_path
-    end
   end
 
   def load_order

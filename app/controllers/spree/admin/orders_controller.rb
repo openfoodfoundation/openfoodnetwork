@@ -3,7 +3,6 @@ require 'open_food_network/spree_api_key_loader'
 module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
-      require 'spree/core/gateway_error'
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
@@ -44,7 +43,7 @@ module Spree
       end
 
       def update
-        unless @order.update(order_params) && @order.line_items.present?
+        unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end

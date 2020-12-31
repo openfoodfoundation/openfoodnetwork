@@ -1,15 +1,17 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 
 describe BulkInvoiceService do
+  include ActiveJob::TestHelper
+
   let(:service) { BulkInvoiceService.new }
 
   describe "#start_pdf_job" do
     it "starts a background process to create a pdf with multiple invoices" do
       expect do
         service.start_pdf_job [1, 2]
-      end.to enqueue_job Delayed::PerformableMethod
-
-      expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
+      end.to enqueue_job BulkInvoiceJob
     end
 
     it "creates a PDF invoice" do
@@ -17,7 +19,9 @@ describe BulkInvoiceService do
       order.bill_address = order.ship_address
       order.save!
 
-      service.start_pdf_job_without_delay([order.id])
+      perform_enqueued_jobs do
+        service.start_pdf_job([order.id])
+      end
 
       expect(service.invoice_created?(service.id)).to be_truthy
     end
@@ -65,7 +69,9 @@ describe BulkInvoiceService do
       expect(renderer).to receive(:render_to_string).with(order_oldest).ordered.and_return("")
 
       order_ids = [order_oldest, order_old, order_older].map(&:id)
-      service.start_pdf_job_without_delay(order_ids)
+      perform_enqueued_jobs do
+        service.start_pdf_job(order_ids)
+      end
     end
   end
 end

@@ -24,6 +24,9 @@ feature '
     before do
       stub_payment_methods_post_request
       stub_payment_intent_get_request
+      stub_retrieve_payment_method_request("pm_123")
+      stub_list_customers_request(email: order.user.email, response: {})
+      stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
     end
 
     context "for a complete order" do
@@ -78,8 +81,8 @@ feature '
           click_button "Update"
 
           expect(page).to have_link "StripeSCA"
-          expect(page).to have_content "PROCESSING"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "processing"
+          expect(page).to have_content "PENDING"
+          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "pending"
         end
       end
     end

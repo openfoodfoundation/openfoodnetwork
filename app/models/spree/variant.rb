@@ -136,7 +136,7 @@ module Spree
     end
 
     def self.indexed
-      scoped.index_by(&:id)
+      where(nil).index_by(&:id)
     end
 
     def self.active(currency = nil)

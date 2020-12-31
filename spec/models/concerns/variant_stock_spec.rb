@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe VariantStock do
@@ -26,7 +28,7 @@ describe VariantStock do
       end
 
       it 'returns the total items in stock anyway' do
-        expect(variant.on_hand).to eq(variant.stock_items.sum(&:count_on_hand))
+        expect(variant.on_hand).to eq(variant.stock_items.sum(:count_on_hand))
       end
     end
 
@@ -39,7 +41,7 @@ describe VariantStock do
 
       it 'returns the total items in stock' do
         expect(variant.on_hand)
-          .to eq(variant.stock_items.sum(&:count_on_hand))
+          .to eq(variant.stock_items.sum(:count_on_hand))
       end
     end
   end

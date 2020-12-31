@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "Order Management", js: true do
@@ -186,6 +188,6 @@ feature "Order Management", js: true do
   end
 
   def be_confirmed_order_page
-    have_content /Order #\w+ Confirmed PAID/
+    have_content "Order ##{order.number} Confirmed"
   end
 end

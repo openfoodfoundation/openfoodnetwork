@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
 require 'spree/core/product_duplicator'
 
@@ -245,6 +247,10 @@ module Spree
 
       it "requires a primary taxon" do
         expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
+      end
+
+      it "requires a unit value" do
+        expect(build(:simple_product, unit_value: nil)).not_to be_valid
       end
 
       it "requires a supplier" do

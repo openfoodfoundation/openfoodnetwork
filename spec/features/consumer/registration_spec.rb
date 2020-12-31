@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "Registration", js: true do
@@ -40,7 +42,7 @@ feature "Registration", js: true do
       expect(URI.parse(current_url).path).to eq registration_path
 
       # Done reading introduction
-      page.has_content?
+      expect(page).to have_text "What do I get?"
       click_button "Let's get started!"
       expect(page).to have_content 'Woot!'
 
@@ -51,7 +53,7 @@ feature "Registration", js: true do
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
-      expect(page).to have_select('enterprise_country', options: %w(Albania Australia), selected: 'Australia')
+      expect(page).to have_select('enterprise_country', options: ["Albania", "Australia"], selected: 'Australia')
       select 'Vic', from: 'enterprise_state'
       click_button "Continue"
       expect(page).to have_content 'Who is responsible for managing My Awesome Enterprise?'

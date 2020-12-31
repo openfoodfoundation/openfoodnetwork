@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'open_food_network/referer_parser'
 require 'spec_helper'
 

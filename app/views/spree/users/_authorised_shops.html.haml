@@ -1,5 +1,8 @@
 %table
   %tr
+    %td{ colspan: 2 }
+      = t('spree.users.cards.authorised_shops_agreement')
+  %tr
     %th= t(".shop_name")
     %th= t(".allow_charges?")
   %tr.customer{ id: "customer{{ customer.id }}", ng: { repeat: "customer in customers" } }

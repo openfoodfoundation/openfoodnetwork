@@ -61,6 +61,8 @@ module Spree
       end
 
       def delete(key)
+        return if key.nil?
+
         @cache.delete(key)
         destroy(key)
       end

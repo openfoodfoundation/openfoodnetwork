@@ -1,6 +1,3 @@
-require 'spree/core/controller_helpers/order'
-require 'spree/core/controller_helpers/auth'
-
 module Spree
   class OrdersController < Spree::StoreController
     include OrderCyclesHelper

@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class TaxRatesController < ResourceController
+    class TaxRatesController < ::Admin::ResourceController
       before_action :load_data
 
       private

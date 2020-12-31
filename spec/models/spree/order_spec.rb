@@ -1,5 +1,6 @@
+# frozen_string_literal: false
+
 require 'spec_helper'
-require 'spree/core/gateway_error'
 
 describe Spree::Order do
   include OpenFoodNetwork::EmailHelper
@@ -1322,7 +1323,7 @@ describe Spree::Order do
 
       it 'raises' do
         expect { order.restart_checkout! }
-          .to raise_error(StateMachine::InvalidTransition)
+          .to raise_error(StateMachines::InvalidTransition)
       end
     end
 

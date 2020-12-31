@@ -20,7 +20,7 @@ module Api
         search_params
       ).products_json
 
-      render json: products
+      render plain: products, content_type: "application/json"
     rescue ProductsRenderer::NoProducts
       render_no_products
     end
@@ -31,13 +31,15 @@ module Api
         where(spree_products: { id: distributed_products }).
         select('DISTINCT spree_taxons.*')
 
-      render json: ActiveModel::ArraySerializer.new(taxons, each_serializer: Api::TaxonSerializer)
+      render plain: ActiveModel::ArraySerializer.new(
+        taxons, each_serializer: Api::TaxonSerializer
+      ).to_json, content_type: "application/json"
     end
 
     def properties
-      render json: ActiveModel::ArraySerializer.new(
+      render plain: ActiveModel::ArraySerializer.new(
         product_properties | producer_properties, each_serializer: Api::PropertySerializer
-      )
+      ).to_json, content_type: "application/json"
     end
 
     private

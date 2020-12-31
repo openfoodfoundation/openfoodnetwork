@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :calculator, class: Calculator::FlatRate do
     after(:create) { |c| c.set_preference(:amount, 10.0) }

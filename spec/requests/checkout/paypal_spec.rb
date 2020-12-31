@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "checking out an order with a paypal express payment method", type: :request do
   include ShopWorkflow
+  include PaypalHelper
 
   let!(:address) { create(:address) }
   let!(:shop) { create(:enterprise) }
@@ -25,18 +28,6 @@ describe "checking out an order with a paypal express payment method", type: :re
     )
   end
   let(:params) { { token: 'lalalala', PayerID: 'payer1', payment_method_id: payment_method.id } }
-  let(:mocked_xml_response) {
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-    <Envelope><Body>
-      <GetExpressCheckoutDetailsResponse>
-        <Ack>Success</Ack>
-        <PaymentDetails>Something</PaymentDetails>
-        <DoExpressCheckoutPaymentResponseDetails>
-          <PaymentInfo><TransactionID>s0metran$act10n</TransactionID></PaymentInfo>
-        </DoExpressCheckoutPaymentResponseDetails>
-      </GetExpressCheckoutDetailsResponse>
-    </Body></Envelope>"
-  }
 
   before do
     order.reload.update_totals
@@ -45,8 +36,7 @@ describe "checking out an order with a paypal express payment method", type: :re
     expect(order.next).to be true # => payment
     set_order order
 
-    stub_request(:post, "https://api-3t.sandbox.paypal.com/2.0/")
-      .to_return(status: 200, body: mocked_xml_response )
+    stub_paypal_confirm
   end
 
   context "with a flat percent calculator" do

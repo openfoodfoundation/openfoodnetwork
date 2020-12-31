@@ -1282,13 +1282,13 @@ ar:
   footer_logo: "الشعار (220 × 76)"
   footer_facebook_url: "رابط الفيسبوك"
   footer_twitter_url: "رابط تويتر"
-  footer_instagram_url: "عنوان انستغرام"
+  footer_instagram_url: "رابط انستغرام"
   footer_linkedin_url: "رابط لينكدن"
   footer_googleplus_url: "رابط جوجل بلس"
   footer_pinterest_url: "رابط بنتيريست"
   footer_email: "البريد الإلكتروني"
   footer_links_md: "الروابط"
-  footer_about_url: "حول الرابط "
+  footer_about_url: "رابط نحن"
   user_guide_link: "رابط دليل المستخدم"
   name: اسم
   first_name: الاسم الاول
@@ -1568,6 +1568,7 @@ ar:
   shopping_groups_part_of: "جزء من:"
   shopping_producers_of_hub: "منتجو %{hub}:"
   enterprises_next_closing: "إغلاق الطلب التالي"
+  enterprises_currently_open: "الطلبات متاحة حاليا"
   enterprises_ready_for: "جاهز ل"
   enterprises_choose: "اختر عندما تريد طلبك:"
   maps_open: "افتح"
@@ -2081,6 +2082,7 @@ ar:
   spree_classification_primary_taxon_error: "Taxon %{taxon} هو التصنيف الأساسي %{product} ولا يمكن حذفه"
   spree_order_availability_error: "لا يمكن لموزع أو دورة طلب توفير المنتجات في سلة التسوق"
   spree_order_populator_error: "لا يمكن لهذا الموزع أو دورة الطلب توفير جميع المنتجات في سلة التسوق. الرجاء اختيار آخر."
+  spree_order_cycle_error: "الرجاء اختيار دورة الطلب لهذا الطلب."
   spree_order_populator_availability_error: "هذا المنتج غير متوفر من الموزع المختار أو دورة الطلب."
   spree_distributors_error: "يجب تحديد مركز واحد على الأقل"
   spree_user_enterprise_limit_error: "^ %{email} غير مسموح به لامتلاك أي مؤسسات أخرى (الحد الأقصى هو %{enterprise_limit})."
@@ -2386,6 +2388,7 @@ ar:
     resolve_errors: يرجى حل الأخطاء التالية
     more_items: "+ %{count} ايضا"
     default_card_updated: تم تحديث البطاقة الافتراضية
+    default_card_voids_auth: سيؤدي تغيير بطاقتك الافتراضية إلى إزالة تفويضات المتاجر الحالية لشحنها. يمكنك إعادة تفويض المحلات التجارية بعد تحديث البطاقة الافتراضية. هل ترغب في تغيير البطاقة الافتراضية؟"
     cart:
       add_to_cart_failed: >
           حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو
@@ -3006,7 +3009,7 @@ ar:
     landing_page: "الصفحة المقصودة"
     server: "الخادم"
     test_mode: "وضع الاختبار"
-    logourl: "وحدة"
+    logourl: "رابط الشعار"
     are_you_sure_delete: "هل أنت متأكد أنك تريد حذف هذا السجل؟"
     confirm_delete: "تأكيد الحذف"
     configurations: "تهيئة"
@@ -3472,10 +3475,10 @@ ar:
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
-          privacy_policy_url: "URL سياسة الخصوصية"
+          privacy_policy_url: "رابط سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
-          footer_tos_url: "شروط الخدمة URL"
+          footer_tos_url: "رابط شروط الخدمة "
     checkout:
       payment:
         stripe:
@@ -3492,7 +3495,7 @@ ar:
           remember_this_card: تذكر هذه البطاقة؟
     date_picker:
       format: '٪ س-٪ م-%d'
-      js_format: 'يوم-شهر-سنة'
+      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:
@@ -3622,11 +3625,11 @@ ar:
         delete?: حذف؟
       cards:
         authorised_shops: المتاجر المعتمدة
-        authorised_shops_popover: هذه هي قائمة المتاجر التي يُسمح لها باستحقاق الدفع عن طريق بطاقتك الائتمانية الافتراضية عن أي اشتراكات (على سبيل المثال ، الطلبات المتكررة) التي قد قمت بعملها. سيتم الاحتفاظ بتفاصيل بطاقتك بأمان ولن تتم مشاركتها مع أصحاب المتاجر. سيتم إخطارك دائمًا عند تحصيل الرسوم منك.
+        authorised_shops_agreement: هذه قائمة بالمحلات التجارية المسموح لها بشحن بطاقة الائتمان الافتراضية الخاصة بك مقابل أي اشتراكات (مثل تكرار الطلبات) قد تكون لديك. سيتم الاحتفاظ بتفاصيل بطاقتك بشكل آمن ولن يتم مشاركتها مع أصحاب المتاجر. سيتم إخطارك دائمًا عند محاسبتك. من خلال تحديد المربع الخاص بمتجر ، فإنك توافق على تخويل هذا المتجر بإرسال تعليمات إلى المؤسسة المالية التي أصدرت بطاقتك لتلقي المدفوعات وفقًا لشروط أي اشتراك تقوم بإنشائه مع هذا المتجر.
         saved_cards_popover: هذه قائمة البطاقات التي اخترت حفظها لاستخدامها لاحقًا. سيتم تحديد &quot;الافتراضي&quot; الخاص بك تلقائيًا عند إتمام طلب الشراء ، ويمكن أن يتم تحصيل رسوم من أي متاجر سمحت لها بالقيام بذلك (انظر إلى اليمين).
       authorised_shops:
         shop_name: "اسم المتجر"
-        allow_charges?: "السماح للرسوم؟"
+        allow_charges?: "السماح بالسحب من البطاقة الافتراضية؟"
     localized_number:
       invalid_format: لديه تنسيق غير صالح. الرجاء إدخال رقم.
     api:

@@ -1,5 +1,5 @@
 module Admin
-  class InventoryItemsController < ResourceController
+  class InventoryItemsController < Admin::ResourceController
     respond_to :json
 
     respond_override update: { json: {

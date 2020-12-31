@@ -1,4 +1,4 @@
-angular.module("Darkswarm").factory 'Customer', ($resource, Messages) ->
+angular.module("Darkswarm").factory 'Customer', ($resource, $injector, Messages) ->
   Customer = $resource('/api/customers/:id/:action.json', {}, {
     'index':
       method: 'GET'
@@ -12,8 +12,21 @@ angular.module("Darkswarm").factory 'Customer', ($resource, Messages) ->
   })
 
   Customer.prototype.update = ->
+    if @allow_charges
+      Messages.loading(t('js.authorising'))
     @$update().then (response) =>
-      Messages.success(t('js.changes_saved'))
+      if response.gateway_recurring_payment_client_secret && $injector.has('stripePublishableKey')
+        Messages.clear()
+        stripe = Stripe($injector.get('stripePublishableKey'), { stripeAccount: response.gateway_shop_id })
+        stripe.confirmCardSetup(response.gateway_recurring_payment_client_secret).then (result) =>
+          if result.error
+            @allow_charges = false
+            @$update(allow_charges: false)
+            Messages.error(result.error.message)
+          else
+            Messages.success(t('js.changes_saved'))
+      else
+        Messages.success(t('js.changes_saved'))
     , (response) =>
       Messages.error(response.data.error)
 

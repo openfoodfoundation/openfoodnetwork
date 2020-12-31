@@ -50,7 +50,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
         @popQueue() if @update_enqueued
 
       .error (response, status)=>
-        Messages.flash({error: t('js.cart.add_to_cart_failed')})
+        Messages.flash({error: response.error})
         @update_running = false
 
     compareAndNotifyStockLevels: (stockLevels) =>

@@ -2,7 +2,7 @@ require 'open_food_network/scope_variants_for_search'
 
 module Spree
   module Admin
-    class VariantsController < ResourceController
+    class VariantsController < ::Admin::ResourceController
       helper 'spree/products'
 
       belongs_to 'spree/product', find_by: :permalink
@@ -23,7 +23,9 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_updated)
           redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
         else
-          redirect_to spree.edit_admin_product_variant_url(params[:product_id], @object, @url_filters)
+          redirect_to spree.edit_admin_product_variant_url(params[:product_id],
+                                                           @object,
+                                                           @url_filters)
         end
       end
 

@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class PaymentMethodsController < ResourceController
+    class PaymentMethodsController < ::Admin::ResourceController
       skip_before_action :load_resource, only: [:create, :show_provider_preferences]
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
@@ -15,7 +15,7 @@ module Spree
         @payment_method = params[:payment_method].
           delete(:type).
           constantize.
-          new(payment_method_params)
+          new(PermittedAttributes::PaymentMethod.new(params[:payment_method]).call)
         @object = @payment_method
 
         invoke_callbacks(:create, :before)
@@ -51,7 +51,7 @@ module Spree
       end
 
       # Only show payment methods that user has access to and sort by distributor name
-      # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
+      # ! Redundant code copied from Admin::ResourceController with modifications marked
       def collection
         return parent.public_send(controller_name) if parent_data.present?
 
@@ -91,17 +91,6 @@ module Spree
       end
 
       private
-
-      def payment_method_params
-        params.require(:payment_method).permit(
-          :name, :description, :type, :active,
-          :environment, :display_on, :tag_list,
-          :preferred_enterprise_id, :preferred_server, :preferred_login, :preferred_password,
-          :calculator_type, :preferred_api_key,
-          :preferred_signature, :preferred_solution, :preferred_landing_page, :preferred_logourl,
-          :preferred_test_mode, distributor_ids: []
-        )
-      end
 
       def force_environment
         params[:payment_method][:environment] = Rails.env unless spree_current_user.admin?
@@ -164,7 +153,7 @@ module Spree
       # Also, remove password if present and blank
       def params_for_update
         gateway_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
-        params_for_update = payment_method_params.merge(gateway_params)
+        params_for_update = params[:payment_method].merge(gateway_params)
 
         params_for_update.each do |key, _value|
           if key.include?("password") && params_for_update[key].blank?
@@ -172,7 +161,7 @@ module Spree
           end
         end
 
-        params_for_update
+        PermittedAttributes::PaymentMethod.new(params_for_update).call
       end
     end
   end

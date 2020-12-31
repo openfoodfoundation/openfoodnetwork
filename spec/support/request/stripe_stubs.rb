@@ -35,12 +35,45 @@ module StripeStubs
       .to_return(hub_payment_method_response_mock({ pm_id: "pm_123" }))
   end
 
+  def stub_retrieve_payment_method_request(payment_method_id = "pm_1234")
+    stub_request(:get, "https://api.stripe.com/v1/payment_methods/#{payment_method_id}")
+      .with(headers: { 'Authorization' => 'Bearer sk_test_12345' })
+      .to_return(retrieve_payment_method_response_mock({}))
+  end
+
   # Stubs the customers call to both the main stripe account and the connected account
   def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
     stub = stub_request(:post, "https://api.stripe.com/v1/customers")
       .with(body: { email: email })
-    stub = stub.with(headers: { 'Stripe-Account' => 'acct_456' }) if stripe_account_header
+    stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(customers_response_mock(response))
+  end
+
+  def stub_list_customers_request(email:, response: {})
+    stub = stub_request(:get, "https://api.stripe.com/v1/customers?email=#{email}&limit=100")
+    stub = stub.with(
+      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+    )
+    stub.to_return(list_customers_response_mock(response))
+  end
+
+  def stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
+    stub = stub_request(
+      :get, "https://api.stripe.com/v1/payment_methods?customer=#{customer}&limit=100&type=card"
+    )
+    stub = stub.with(
+      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+    )
+    stub.to_return(get_customer_payment_methods_response_mock(response))
+  end
+
+  def stub_add_metadata_request(payment_method: "pm_456", response: {})
+    stub = stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{payment_method}")
+    stub = stub.with(body: { metadata: { "ofn-clone": true } })
+    stub = stub.with(
+      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+    )
+    stub.to_return(add_metadata_response_mock(response))
   end
 
   def stub_successful_capture_request(order:, response: {})
@@ -68,6 +101,7 @@ module StripeStubs
   private
 
   def payment_intent_authorize_response_mock(options)
+    chargedata = [{ id: "ch_1234", amount: 2000, amount_refunded: options[:amount_refunded] || 0 }]
     { status: options[:code] || 200,
       body: JSON.generate(id: "pi_123",
                           object: "payment_intent",
@@ -75,7 +109,7 @@ module StripeStubs
                           amount_received: 2000,
                           status: options[:intent_status] || "requires_capture",
                           last_payment_error: nil,
-                          charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+                          charges: { data: chargedata }) }
   end
 
   def payment_intent_redirect_response_mock(redirect_url)
@@ -118,5 +152,31 @@ module StripeStubs
       body: JSON.generate(object: "refund",
                           amount: 2000,
                           charge: "ch_1234") }
+  end
+
+  def retrieve_payment_method_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate(
+        id: options[:pm_id] || "pm_456", customer: "cus_A123", card: { fingerprint: "12345" }
+      ) }
+  end
+
+  def list_customers_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate(has_more: false, data: [{ id: "cus_A456" }]) }
+  end
+
+  def get_customer_payment_methods_response_mock(options)
+    payment_method = options[:payment_method] || "pm_456"
+    fingerprint = options[:fingerprint] || "7890"
+    { status: options[:code] || 200,
+      body: JSON.generate(
+        has_more: false, data: [{ id: payment_method, card: { fingerprint: fingerprint } }]
+      ) }
+  end
+
+  def add_metadata_response_mock(options)
+    { status: options[:code] || 200,
+      body: JSON.generate({}) }
   end
 end

@@ -2888,6 +2888,8 @@ ca:
     delete: "Suprimir"
     cannot_set_shipping_method_without_address: "No es pot establir el mètode d'enviament fins que no es proporcionin les dades del client."
     no_tracking_present: "No es proporcionen dades de seguiment."
+    tracking: "Seguiment"
+    tracking_number: "Número de seguiment"
     order_total: "Total comanda"
     customer_details: "Detalls de la consumidora"
     customer_search: "Cerca la consumidora"
@@ -3536,11 +3538,9 @@ ca:
         delete?: Suprimeix?
       cards:
         authorised_shops: Botigues autoritzades
-        authorised_shops_popover: Aquesta és la llista de botigues que tenen permís per carregar la teva targeta de crèdit predeterminada per a qualsevol subscripció (és a dir, comandes de repetició) que puguis tenir. Les dades de la targeta es mantindran segures i no es compartiran amb els propietaris de botigues. Sempre se us notificarà quan se us faci un càrrec.
         saved_cards_popover: Aquesta és la llista de targetes que heu optat per guardar per a un ús posterior. El vostre "valor predeterminat" es seleccionarà automàticament quan valideu una comanda i es pot carregar per qualsevol botiga a la que li hagueu permès fer-ho (vegeu a la dreta).
       authorised_shops:
         shop_name: "Nom de la botiga"
-        allow_charges?: "Permetre càrrecs?"
     localized_number:
       invalid_format: té un format no vàlid. Si us plau introdueix un número.
     api:

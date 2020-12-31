@@ -1,5 +1,5 @@
 module Admin
-  class EnterpriseRolesController < ResourceController
+  class EnterpriseRolesController < Admin::ResourceController
     def index
       @enterprise_roles = EnterpriseRole.by_user_email
       @users = Spree::User.order('spree_users.email')

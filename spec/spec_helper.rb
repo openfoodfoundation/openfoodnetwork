@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start 'rails'
 
@@ -49,6 +51,7 @@ require 'support/api_helper'
 # Capybara config
 require 'selenium-webdriver'
 Capybara.javascript_driver = :chrome
+Capybara.server = :webrick
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
@@ -193,6 +196,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include DownloadsHelper, type: :feature
+  config.include ActiveJob::TestHelper
 
   # FactoryBot
   require 'factory_bot_rails'
@@ -234,3 +238,5 @@ RSpec.configure do |config|
   # end
   config.infer_spec_type_from_file_location!
 end
+
+FactoryBot.use_parent_strategy = false
