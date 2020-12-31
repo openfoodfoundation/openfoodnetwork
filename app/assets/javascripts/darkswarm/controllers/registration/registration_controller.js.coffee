@@ -6,7 +6,6 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.latLong = null;
   $scope.addressConfirmed;
   $scope.markerDraggable = false;
-
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
 
   # Filter countries without states since the form requires a state to be selected.
