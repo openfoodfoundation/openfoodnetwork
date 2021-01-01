@@ -16,7 +16,7 @@ describe Spree::CreditCardsController, type: :controller do
       {
         format: :json,
         exp_month: 12,
-        exp_year: 2020,
+        exp_year: Time.now.year.next,
         last4: 4242,
         token: token,
         cc_type: "visa"
@@ -33,6 +33,10 @@ describe Spree::CreditCardsController, type: :controller do
       let(:response_mock) { { status: 200, body: JSON.generate(id: "cus_AZNMJ", default_source: "card_1AEEb") } }
 
       it "saves the card locally" do
+        spree_post :new_from_token, params
+
+        pp response
+
         expect{ spree_post :new_from_token, params }.to change(Spree::CreditCard, :count).by(1)
 
         card = Spree::CreditCard.last
