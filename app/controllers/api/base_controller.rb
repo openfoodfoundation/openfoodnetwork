@@ -15,7 +15,6 @@ module Api
 
     before_action :set_content_type
     before_action :authenticate_user
-    after_action  :set_jsonp_format
 
     rescue_from Exception, with: :error_during_processing
     rescue_from CanCan::AccessDenied, with: :unauthorized
@@ -33,13 +32,6 @@ module Api
 
     use_renderers :json
     check_authorization
-
-    def set_jsonp_format
-      return unless params[:callback] && request.get?
-
-      self.response_body = "#{params[:callback]}(#{response_body})"
-      headers["Content-Type"] = 'application/javascript'
-    end
 
     def respond_with_conflict(json_hash)
       render json: json_hash, status: :conflict
