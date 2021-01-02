@@ -153,7 +153,7 @@ group :test do
 end
 
 group :development do
-  gem 'byebug', '~> 11.0.0' # 11.1 requires ruby 2.4
+  gem 'byebug', '~> 11.1.3' # 11.1 requires ruby 2.4
   gem 'debugger-linecache'
   gem "pry", "~> 0.12.0" # pry 0.13 is not compatible with pry-byebug 3.7
   gem 'pry-byebug', '~> 3.7.0' # 3.8 requires ruby 2.4
