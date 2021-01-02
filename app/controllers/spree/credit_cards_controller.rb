@@ -1,4 +1,6 @@
-require 'stripe/credit_card_clone_destroyer'
+# frozen_string_literal: true
+
+require 'stripe/credit_card_remover'
 
 module Spree
   class CreditCardsController < BaseController
@@ -42,7 +44,7 @@ module Spree
       @credit_card = Spree::CreditCard.find_by(id: params[:id])
       if @credit_card
         authorize! :destroy, @credit_card
-        destroy_at_stripe
+        Stripe::CreditCardRemover.new(@credit_card).call
       end
 
       # Using try because we may not have a card here
@@ -62,14 +64,6 @@ module Spree
 
     def remove_shop_authorizations
       @credit_card.user.customers.update_all(allow_charges: false)
-    end
-
-    # It destroys the whole customer object
-    def destroy_at_stripe
-      Stripe::CreditCardCloneDestroyer.new.destroy_clones(@credit_card)
-
-      stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
-      stripe_customer&.delete unless stripe_customer.deleted?
     end
 
     def create_customer(token)
