@@ -7,7 +7,7 @@ module Spree
 
       return if Zone.default_tax
 
-      record.errors.add(:included_in_price, Spree.t(:included_price_validation))
+      record.errors.add(:included_in_price, Spree.t("errors.messages.included_price_validation"))
     end
   end
 end
