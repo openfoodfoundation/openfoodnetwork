@@ -78,20 +78,6 @@ module Spree
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
         end
-
-        it "should be eligible if not mandatory and eligible for the originator" do
-          adjustment.mandatory = false
-          allow(adjustment).to receive_messages(eligible_for_originator?: true)
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
-        end
-
-        it "should not be eligible if not mandatory not eligible for the originator" do
-          adjustment.mandatory = false
-          allow(adjustment).to receive_messages(eligible_for_originator?: false)
-          adjustment.set_eligibility
-          expect(adjustment).to_not be_eligible
-        end
       end
     end
 
@@ -135,32 +121,6 @@ module Spree
           expect(adjustment).to_not be_finalized
           adjustment.state = "open"
           expect(adjustment).to_not be_finalized
-        end
-      end
-    end
-
-    context "#eligible_for_originator?" do
-      context "with no originator" do
-        specify { expect(adjustment).to be_eligible_for_originator }
-      end
-
-      context "with originator that doesn't have 'eligible?'" do
-        before { adjustment.originator = build(:tax_rate) }
-        specify { expect(adjustment).to be_eligible_for_originator }
-      end
-
-      context "with originator that has 'eligible?'" do
-        let(:originator) { Spree::TaxRate.new }
-        before { adjustment.originator = originator }
-
-        context "and originator is eligible for order" do
-          before { allow(originator).to receive_messages(eligible?: true) }
-          specify { expect(adjustment).to be_eligible_for_originator }
-        end
-
-        context "and originator is not eligible for order" do
-          before { allow(originator).to receive_messages(eligible?: false) }
-          specify { expect(adjustment).to_not be_eligible_for_originator }
         end
       end
     end
