@@ -58,7 +58,7 @@ describe "Tax Rates" do
     it "can be deleted", js: true do
       click_link "Tax Rates"
       accept_alert do
-        find(:xpath, "/html/body/div[1]/div[3]/div/div/div/table/tbody/tr[1]/td[8]/a[2]").click
+        find(".delete-resource").click
       end
       expect(page).not_to have_content("IVA")
     end
