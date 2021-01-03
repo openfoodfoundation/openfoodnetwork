@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'open_food_network/sales_tax_report'
 
 module OpenFoodNetwork
@@ -13,7 +14,7 @@ module OpenFoodNetwork
       let(:totals) { report.send(:totals_of, [li1, li2]) }
 
       before do
-        allow(report).to receive(:tax_included_in).and_return(2, 4)
+        allow(report).to receive(:tax_for).and_return(2, 4)
       end
 
       it "calculates total quantity" do
@@ -43,7 +44,7 @@ module OpenFoodNetwork
 
       context "when there is no tax on a line item" do
         before do
-          allow(report).to receive(:tax_included_in) { 0 }
+          allow(report).to receive(:tax_for) { 0 }
         end
 
         it "does not appear in taxable total" do

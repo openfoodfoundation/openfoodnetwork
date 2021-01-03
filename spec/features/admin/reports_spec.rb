@@ -186,6 +186,7 @@ feature '
       2.times { order1.next }
       order1.select_shipping_method shipping_method.id
       order1.reload.update_distribution_charge!
+      order1.create_tax_charge!
       order1.finalize!
 
       login_as_admin_and_visit spree.admin_reports_path

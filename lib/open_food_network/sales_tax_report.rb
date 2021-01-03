@@ -58,9 +58,18 @@ module OpenFoodNetwork
           totals = totals_of order.line_items
           shipping_cost = shipping_cost_for order
 
-          [order.number, order.completed_at.strftime("%F %T"), totals[:items], totals[:items_total],
-           totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
-           order.bill_address.full_name, order.distributor.andand.name]
+          [order.number,
+           order.completed_at.strftime("%F %T"),
+           totals[:items],
+           totals[:items_total],
+           totals[:taxable_total],
+           totals[:sales_tax],
+           shipping_cost,
+           order.shipping_tax,
+           order.enterprise_fee_tax,
+           order.total_tax,
+           order.bill_address.full_name,
+           order.distributor.andand.name]
         end
       end
     end
@@ -80,7 +89,7 @@ module OpenFoodNetwork
         totals[:items] += line_item.quantity
         totals[:items_total] += line_item.amount
 
-        sales_tax = tax_included_in line_item
+        sales_tax = tax_for line_item
 
         if sales_tax > 0
           totals[:taxable_total] += line_item.amount
@@ -96,12 +105,11 @@ module OpenFoodNetwork
     end
 
     def shipping_cost_for(order)
-      shipping_cost = order.adjustments.find_by(label: "Shipping").andand.amount
-      shipping_cost.nil? ? 0.0 : shipping_cost
+      order.shipments.first&.cost || 0.0
     end
 
-    def tax_included_in(line_item)
-      line_item.adjustments.sum(:included_tax)
+    def tax_for(line_item)
+      line_item.included_tax_total + line_item.additional_tax_total
     end
 
     def shipment_inc_vat
