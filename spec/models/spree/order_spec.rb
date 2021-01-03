@@ -928,6 +928,7 @@ describe Spree::Order do
   end
 
   describe "setting the order cycle" do
+    let(:subject) { create(:order) }
     let(:oc) { create(:simple_order_cycle) }
 
     it "empties the cart when changing the order cycle" do
