@@ -105,9 +105,11 @@ module Spree
     end
 
     def selected_shipping_rate_id=(id)
+      rate_changed = (selected_shipping_rate_id != id)
       shipping_rates.update_all(selected: false)
       shipping_rates.update(id, selected: true)
-      save!
+
+      shipping_rate_selected if save! && rate_changed
     end
 
     def tax_rate
@@ -301,26 +303,7 @@ module Spree
     def update_attributes_and_order(params = {})
       if self.update_attributes params
         if params.has_key? :selected_shipping_rate_id
-          # Changing the selected Shipping Rate won't update the cost (for now)
-          # so we persist the Shipment#cost before calculating order shipment
-          # total and updating payment state (given a change in shipment cost
-          # might change the Order#payment_state)
-          self.update_amounts
-
-          order.updater.update_shipment_total
-          order.updater.update_payment_state
-
-          # Update shipment state only after order total is updated because it
-          # (via Order#paid?) affects the shipment state (YAY)
-          self.update_columns(
-            state: determine_state(order),
-            updated_at: Time.now
-          )
-
-          # And then it's time to update shipment states and finally persist
-          # order changes
-          order.updater.update_shipment_state
-          order.updater.persist_totals
+          shipping_rate_selected
         end
 
         true
@@ -414,6 +397,29 @@ module Spree
 
     def recalculate_adjustments
       Spree::ItemAdjustments.new(self).update
+    end
+
+    def shipping_rate_selected
+      # Changing the selected Shipping Rate won't update the cost (for now)
+      # so we persist the Shipment#cost before calculating order shipment
+      # total and updating payment state (given a change in shipment cost
+      # might change the Order#payment_state)
+      self.update_amounts
+
+      order.updater.update_shipment_total
+      order.updater.update_payment_state
+
+      # Update shipment state only after order total is updated because it
+      # (via Order#paid?) affects the shipment state (YAY)
+      self.update_columns(
+        state: determine_state(order),
+        updated_at: Time.now
+      )
+
+      # And then it's time to update shipment states and finally persist
+      # order changes
+      order.updater.update_shipment_state
+      order.updater.persist_totals
     end
   end
 end
