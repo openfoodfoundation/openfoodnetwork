@@ -6,8 +6,8 @@ describe "Tax Rates" do
 
   let!(:calculator) { create(:calculator_per_item, calculable: create(:order)) }
   let!(:tax_rate) { create(:tax_rate, name: "IVA", calculator: calculator) }
-  let!(:zone_id) { create(:zone, name: "Ilhas") }
-  let!(:tax_category_id) { create(:tax_category, name: "Full") }
+  let!(:zone) { create(:zone, name: "Ilhas") }
+  let!(:tax_category) { create(:tax_category, name: "Full") }
 
   before do
     login_as_admin_and_visit spree.edit_admin_general_settings_path
