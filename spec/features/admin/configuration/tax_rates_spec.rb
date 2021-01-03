@@ -52,7 +52,7 @@ describe "Tax Rates" do
       uncheck("tax_rate[show_rate_in_label]")
       check("tax_rate[included_in_price]")
       click_button "Update"
-      expect(page).to have_content("Included Price Validation")
+      expect(page).to have_content("cannot be selected unless you have set a Default Tax Zone")
     end
 
     it "can be deleted", js: true do
