@@ -768,7 +768,7 @@ module Spree
 
     # Needs looking at
     def shipping_tax
-      adjustments(:reload).shipping.sum(:included_tax)
+      all_adjustments.tax.where(adjustable_type: 'Spree::Shipment').sum(:amount)
     end
 
     # Needs looking at
