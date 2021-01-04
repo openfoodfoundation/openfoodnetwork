@@ -129,7 +129,7 @@ group :test, :development do
   gem 'capybara'
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '5.2.0', require: false
-  gem 'fuubar', '~> 2.5.0'
+  gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
   gem 'letter_opener', '>= 1.4.1'
