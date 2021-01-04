@@ -669,7 +669,7 @@ GEM
     stringex (2.8.5)
     stripe (5.28.0)
     temple (0.8.2)
-    test-prof (0.7.5)
+    test-prof (0.11.3)
     test-unit (3.3.9)
       power_assert
     test_after_commit (1.2.2)
