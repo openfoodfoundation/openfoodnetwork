@@ -223,7 +223,7 @@ GEM
       railties (>= 4.2.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    ffaker (2.11.0)
+    ffaker (2.16.0)
     ffi (1.13.1)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
