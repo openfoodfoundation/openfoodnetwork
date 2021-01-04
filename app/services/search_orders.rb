@@ -8,17 +8,6 @@ class SearchOrders
     @orders = fetch_orders
   end
 
-  def pagination_data
-    return unless using_pagination?
-
-    {
-      results: @orders.total_count,
-      pages: @orders.num_pages,
-      page: params[:page].to_i,
-      per_page: params[:per_page].to_i
-    }
-  end
-
   private
 
   attr_reader :params, :current_user
@@ -50,6 +39,6 @@ class SearchOrders
   end
 
   def using_pagination?
-    params[:per_page]
+    params[:page]
   end
 end

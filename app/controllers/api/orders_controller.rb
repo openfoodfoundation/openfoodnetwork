@@ -1,5 +1,7 @@
 module Api
   class OrdersController < Api::BaseController
+    include PaginationData
+
     def show
       authorize! :read, order
       render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
@@ -10,9 +12,11 @@ module Api
 
       search_results = SearchOrders.new(params, current_api_user)
 
+      orders = search_results.orders
+
       render json: {
-        orders: serialized_orders(search_results.orders),
-        pagination: search_results.pagination_data
+        orders: orders,
+        pagination: pagination_required? ? pagination_data(orders) : nil
       }
     end
 
