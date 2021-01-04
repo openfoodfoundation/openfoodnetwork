@@ -9,6 +9,7 @@ module Api
 
     skip_authorization_check only: [:index]
 
+    include PaginationData
     # If exchange_id is present in the URL:
     #   Lists Products that can be added to that Exchange
     #
@@ -84,22 +85,14 @@ module Api
       )
 
       result = { products: serializer }
-      result = result.merge(pagination: pagination_data(paginated_products)) if pagination_required?
+      if pagination_required?
+        result = result.merge(
+          pagination: pagination_data(paginated_products,
+                                      default_per_page: DEFAULT_PER_PAGE)
+        )
+      end
 
       render text: result.to_json
-    end
-
-    def pagination_data(paginated_products)
-      {
-        results: paginated_products.total_count,
-        pages: paginated_products.num_pages,
-        page: params[:page].to_i,
-        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
-      }
-    end
-
-    def pagination_required?
-      params[:page].present?
     end
   end
 end
