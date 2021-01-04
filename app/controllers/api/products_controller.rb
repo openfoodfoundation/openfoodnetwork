@@ -7,6 +7,8 @@ module Api
     DEFAULT_PAGE = 1
     DEFAULT_PER_PAGE = 15
 
+    include PaginationData
+
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
     def show
@@ -140,21 +142,14 @@ module Api
         # This line is used by the PagedFetcher JS service (inventory).
         pages: products.num_pages,
         # This hash is used by the BulkProducts JS service.
-        pagination: pagination_data(products)
+        pagination: pagination_data(products,
+                                    default_page: DEFAULT_PAGE,
+                                    default_per_page: DEFAULT_PER_PAGE)
       }.to_json
     end
 
     def query_params_with_defaults
       (params[:q] || {}).reverse_merge(s: 'created_at desc')
-    end
-
-    def pagination_data(results)
-      {
-        results: results.total_count,
-        pages: results.num_pages,
-        page: (params[:page] || DEFAULT_PAGE).to_i,
-        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
-      }
     end
 
     def product_params
