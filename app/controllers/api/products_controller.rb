@@ -4,10 +4,8 @@ require 'spree/core/product_duplicator'
 module Api
   class ProductsController < Api::BaseController
     include PaginationData
-    
     respond_to :json
     DEFAULT_PER_PAGE = 15
-
 
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
