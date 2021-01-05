@@ -34,8 +34,7 @@ module Spree
       end
 
       # Because PayPal doesn't accept $0 items at all.
-      # See #10
-      # https://cms.paypal.com/uk/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_ECCustomizing
+      # See https://github.com/spree-contrib/better_spree_paypal_express/issues/10
       # "It can be a positive or negative value but not zero."
       items.reject! do |item|
         item[:Amount][:value].zero?
