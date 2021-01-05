@@ -22,7 +22,7 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 gem 'acts_as_list', '0.9.19'
-gem 'awesome_nested_set', '~> 3.2.1'
+gem 'awesome_nested_set', '~> 3.3.1'
 gem 'cancan', '~> 1.6.10'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
