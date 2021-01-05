@@ -140,8 +140,7 @@ module Api
         # This line is used by the PagedFetcher JS service (inventory).
         pages: products.num_pages,
         # This hash is used by the BulkProducts JS service.
-        pagination: pagination_data(products,
-                                    default_per_page: DEFAULT_PER_PAGE)
+        pagination: pagination_data(products)
       }.to_json
     end
 

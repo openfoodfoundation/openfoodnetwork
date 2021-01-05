@@ -86,7 +86,7 @@ module Api
 
       render json: {
         products: serialized_products,
-        pagination: pagination_required? ? pagination_data(paginated_products, default_per_page: DEFAULT_PER_PAGE) : nil
+        pagination: pagination_required? ? pagination_data(paginated_products) : nil
       }
     end
   end
