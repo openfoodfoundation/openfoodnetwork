@@ -5,11 +5,12 @@
 # Pagination is optional and can be required by using param[:page]
 module Api
   class ExchangeProductsController < Api::BaseController
+    include PaginationData
+    
     DEFAULT_PER_PAGE = 100
 
     skip_authorization_check only: [:index]
 
-    include PaginationData
     # If exchange_id is present in the URL:
     #   Lists Products that can be added to that Exchange
     #
