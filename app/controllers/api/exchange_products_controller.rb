@@ -78,21 +78,16 @@ module Api
     end
 
     def render_paginated_products(paginated_products)
-      serializer = ActiveModel::ArraySerializer.new(
+      serialized_products = ActiveModel::ArraySerializer.new(
         paginated_products,
         each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
         order_cycle: @order_cycle
       )
 
-      result = { products: serializer }
-      if pagination_required?
-        result = result.merge(
-          pagination: pagination_data(paginated_products,
-                                      default_per_page: DEFAULT_PER_PAGE)
-        )
-      end
-
-      render text: result.to_json
+      render json: {
+        products: serialized_products,
+        pagination: pagination_required? ? pagination_data(paginated_products, default_per_page: DEFAULT_PER_PAGE) : nil
+      }
     end
   end
 end
