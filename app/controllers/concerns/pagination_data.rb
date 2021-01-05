@@ -16,11 +16,9 @@ module PaginationData
     params[:page].present? || params[:per_page].present?
   end
 
-  private
-
   def default_per_page
-    return unless defined? DEFAULT_PER_PAGE
+    return unless defined? self.class::DEFAULT_PER_PAGE
 
-    DEFAULT_PER_PAGE
+    self.class::DEFAULT_PER_PAGE
   end
 end

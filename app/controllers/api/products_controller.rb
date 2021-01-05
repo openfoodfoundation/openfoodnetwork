@@ -63,7 +63,7 @@ module Api
       @products = product_query.
         ransack(query_params_with_defaults).
         result.
-        page(params[:page] || DEFAULT_PAGE).
+        page(params[:page] || 1).
         per(params[:per_page] || DEFAULT_PER_PAGE)
 
       render_paged_products @products
