@@ -130,18 +130,15 @@ module Api
     end
 
     def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
-      serializer = ActiveModel::ArraySerializer.new(
+      serialized_products = ActiveModel::ArraySerializer.new(
         products,
         each_serializer: product_serializer
       )
 
-      render text: {
-        products: serializer,
-        # This line is used by the PagedFetcher JS service (inventory).
-        pages: products.num_pages,
-        # This hash is used by the BulkProducts JS service.
+      render json: {
+        products: serialized_products,
         pagination: pagination_data(products)
-      }.to_json
+      }
     end
 
     def query_params_with_defaults
