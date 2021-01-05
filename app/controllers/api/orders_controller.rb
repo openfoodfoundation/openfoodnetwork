@@ -15,7 +15,7 @@ module Api
       orders = search_results.orders
 
       render json: {
-        orders: orders,
+        orders: serialized_orders(orders),
         pagination: pagination_required? ? pagination_data(orders) : nil
       }
     end
