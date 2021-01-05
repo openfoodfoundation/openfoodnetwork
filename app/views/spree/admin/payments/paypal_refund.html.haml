@@ -11,7 +11,7 @@
 = form_tag paypal_refund_admin_order_payment_path(@order, @payment) do
   .label-block.left.five.columns.alpha
     %div
-      %fieldset{"data-hook" => "admin_variant_new_form"}
+      %fieldset
         %legend= Spree.t('refund', scope: :paypal)
         .field
           = label_tag 'refund_amount', Spree.t(:refund_amount, scope: 'paypal')
