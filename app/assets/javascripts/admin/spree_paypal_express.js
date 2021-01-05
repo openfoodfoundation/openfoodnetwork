@@ -15,11 +15,3 @@ SpreePaypalExpress = {
     }
   }
 }
-
-$(document).ready(function() {
-  checkedPaymentMethod = $('[data-hook="payment_method_field"] input[type="radio"]:checked');
-  SpreePaypalExpress.hideSettings(checkedPaymentMethod);
-  paymentMethods = $('[data-hook="payment_method_field"] input[type="radio"]').click(function (e) {
-    SpreePaypalExpress.hideSettings($(e.target));
-  });
-});
