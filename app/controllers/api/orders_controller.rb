@@ -10,9 +10,7 @@ module Api
     def index
       authorize! :admin, Spree::Order
 
-      search_results = SearchOrders.new(params, current_api_user)
-
-      orders = search_results.orders
+      orders = SearchOrders.new(params, current_api_user).orders
 
       render json: {
         orders: serialized_orders(orders),
