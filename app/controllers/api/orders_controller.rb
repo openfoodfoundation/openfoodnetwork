@@ -16,7 +16,7 @@ module Api
 
       render json: {
         orders: serialized_orders(orders),
-        pagination: pagination_required? ? pagination_data(orders) : nil
+        pagination: pagination_data(orders)
       }
     end
 

@@ -15,7 +15,10 @@ module Admin
 
       @line_items = @line_items.page(page).per(params[:per_page]) if pagination_required?
 
-      render json: { line_items: serialized_line_items, pagination: (pagination_required? ? pagination_data(@line_items) : nil) }
+      render json: {
+        line_items: serialized_line_items,
+        pagination: pagination_data(@line_items)
+      }
     end
 
     # PUT /admin/bulk_line_items/:id.json

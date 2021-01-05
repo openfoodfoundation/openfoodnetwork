@@ -4,6 +4,8 @@ module PaginationData
   extend ActiveSupport::Concern
 
   def pagination_data(objects)
+    return unless objects.respond_to? :total_count
+
     {
       results: objects.total_count,
       pages: objects.total_pages,
