@@ -1,8 +1,6 @@
 module Admin
   class BulkLineItemsController < Spree::Admin::BaseController
     include PaginationData
-
-    DEFAULT_PAGE = 1
     # GET /admin/bulk_line_items.json
     #
     def index
@@ -17,7 +15,7 @@ module Admin
 
       @line_items = @line_items.page(page).per(params[:per_page]) if pagination_required?
 
-      render json: { line_items: serialized_line_items, pagination: (pagination_required? ? pagination_data(@line_items, default_page: DEFAULT_PAGE) : nil) }
+      render json: { line_items: serialized_line_items, pagination: (pagination_required? ? pagination_data(@line_items) : nil) }
     end
 
     # PUT /admin/bulk_line_items/:id.json

@@ -6,7 +6,6 @@ module Api
     include PaginationData
     
     respond_to :json
-    DEFAULT_PAGE = 1
     DEFAULT_PER_PAGE = 15
 
 
@@ -144,7 +143,6 @@ module Api
         pages: products.num_pages,
         # This hash is used by the BulkProducts JS service.
         pagination: pagination_data(products,
-                                    default_page: DEFAULT_PAGE,
                                     default_per_page: DEFAULT_PER_PAGE)
       }.to_json
     end
