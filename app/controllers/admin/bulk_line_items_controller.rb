@@ -92,7 +92,7 @@ module Admin
     end
 
     def page
-      params[:page] || DEFAULT_PAGE
+      params[:page] || 1
     end
   end
 end
