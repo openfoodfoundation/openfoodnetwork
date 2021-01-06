@@ -148,6 +148,19 @@ module Api
           expect(product_ids).to include product3.id
         end
       end
+
+      context "when the order cycle is closed" do
+        before do
+          allow_any_instance_of(OrderCycle).to receive(:open?) { false }
+        end
+
+        xit "throws an error, ActionView::MissingTemplate: Missing template api/order_cycles/products" do
+          api_get :products, id: order_cycle.id, distributor: distributor.id
+
+          expect(json_response).to eq({})
+          expect(response).to have_http_status :not_found
+        end
+      end
     end
 
     describe "#taxons" do
