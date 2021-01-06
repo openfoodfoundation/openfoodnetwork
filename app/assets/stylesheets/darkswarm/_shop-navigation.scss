@@ -41,15 +41,16 @@ ordercycle {
 
   .order-cycle-select {
     border: 1px solid $teal-300;
-    display: inline-block;
+    display: flex;
     font-size: 1em;
     border-radius: $radius-small;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: $radius-small 0 0 $radius-small;
-      float: left;
       font-size: 1em;
       line-height: 1.3em;
       padding: 0.5em 0.75em;
