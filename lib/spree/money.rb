@@ -21,6 +21,11 @@ module Spree
       @options[:symbol_position] = @options[:symbol_position].to_sym
     end
 
+    # Return the currency symbol (on its own) for the current default currency
+    def self.currency_symbol
+      ::Money.new(0, Spree::Config[:currency]).symbol
+    end
+
     def to_s
       @money.format(@options)
     end
@@ -30,9 +35,13 @@ module Spree
       if options[:html]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
-        output = output.gsub(" ", "&nbsp;").html_safe
+        output = output.sub(" ", "&nbsp;").html_safe
       end
       output
+    end
+
+    def format(options = {})
+      @money.format(@options.merge!(options))
     end
 
     def ==(other)
