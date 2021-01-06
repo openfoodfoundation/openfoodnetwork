@@ -67,14 +67,11 @@ ordercycle {
       background-image: image-url('white-caret.svg');
       background-size: 30px auto;
       background-position-x: 102%;
+      height: 2.35em;
     }
 
     p {
       text-align: left;
-    }
-
-    select {
-      height: 2.35em;
     }
 
     select,
