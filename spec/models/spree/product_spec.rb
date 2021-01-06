@@ -235,6 +235,17 @@ module Spree
       end
     end
 
+    context "has stock movements" do
+      let(:product) { create(:product) }
+      let(:variant) { product.master }
+      let(:stock_item) { variant.stock_items.first }
+
+      xit "doesnt raise ReadOnlyRecord error" do
+        Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
+        expect { product.destroy }.not_to raise_error
+      end
+    end
+
     describe "associations" do
       it { is_expected.to belong_to(:supplier) }
       it { is_expected.to belong_to(:primary_taxon) }
