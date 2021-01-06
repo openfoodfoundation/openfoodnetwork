@@ -750,7 +750,7 @@ feature '
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
         select supplier_managed2.name, from: 'producer_id'
-        fill_in "available_on", with: 3.days.ago.beginning_of_day.strftime("%F %T")
+        fill_in "available_on", with: 3.days.ago.beginning_of_day.strftime("%F %T"), fill_options: { clear: :backspace }
         select "Weight (kg)", from: "variant_unit_with_scale"
 
         find("a.view-variants").click
