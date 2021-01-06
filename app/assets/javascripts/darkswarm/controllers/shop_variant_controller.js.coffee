@@ -8,6 +8,16 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
 
   $scope.variant.line_item.quantity ||= 0
 
+  $scope.$watch "variant.line_item.quantity", ->
+    item = $scope.variant.line_item
+    if item.quantity > $scope.available()
+      item.quantity = $scope.available()
+
+  $scope.$watch "variant.line_item.max_quantity", ->
+    item = $scope.variant.line_item
+    if item.max_quantity > $scope.available()
+      item.max_quantity = $scope.available()
+
   if $scope.variant.product.group_buy
     $scope.$watch "variant.line_item.quantity", ->
       item = $scope.variant.line_item

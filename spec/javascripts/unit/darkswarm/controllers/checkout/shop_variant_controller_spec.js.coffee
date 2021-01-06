@@ -74,6 +74,16 @@ describe "ShopVariantCtrl", ->
     expect(scope.variant.line_item.quantity).toEqual 2
     expect(scope.variant.line_item.max_quantity).toEqual 2
 
+  it "caps at the available quantity", ->
+    scope.$apply ->
+      scope.variant.on_demand = false
+      scope.variant.on_hand = 3
+      scope.variant.line_item.quantity = 5
+      scope.variant.line_item.max_quantity = 7
+
+    expect(scope.variant.line_item.quantity).toEqual 3
+    expect(scope.variant.line_item.max_quantity).toEqual 3
+
   it "allows adding when variant is on demand", ->
     expect(scope.canAdd(5000)).toEqual true
 
