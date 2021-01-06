@@ -118,7 +118,7 @@ GEM
     arel (6.0.4)
     ast (2.4.1)
     atomic (1.1.101)
-    awesome_nested_set (3.2.1)
+    awesome_nested_set (3.3.1)
       activerecord (>= 4.0.0, < 7.0)
     awesome_print (1.8.0)
     aws-sdk (1.67.0)
@@ -733,7 +733,7 @@ DEPENDENCIES
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.5.5)
   atomic
-  awesome_nested_set (~> 3.2.1)
+  awesome_nested_set (~> 3.3.1)
   awesome_print
   aws-sdk (= 1.67.0)
   bugsnag
