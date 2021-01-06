@@ -16,7 +16,7 @@ angular.module("admin.indexUtils").factory "PagedFetcher", (dataFetcher) ->
     fetchPages: (url, page, pageCallback) ->
       dataFetcher(@urlForPage(url, page)).then (data) =>
         @page++
-        @last_page = data.pages
+        @last_page = data.pagination.pages
 
         pageCallback(data) if pageCallback
 

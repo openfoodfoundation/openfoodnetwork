@@ -2,7 +2,6 @@ require 'open_food_network/scope_product_to_hub'
 
 class ProductsRenderer
   class NoProducts < RuntimeError; end
-  DEFAULT_PAGE = 1
   DEFAULT_PER_PAGE = 10
 
   def initialize(distributor, order_cycle, customer, args = {})
@@ -51,7 +50,7 @@ class ProductsRenderer
     query.
       ransack(args[:q]).
       result.
-      page(args[:page] || DEFAULT_PAGE).
+      page(args[:page] || 1).
       per(args[:per_page] || DEFAULT_PER_PAGE)
   end
 

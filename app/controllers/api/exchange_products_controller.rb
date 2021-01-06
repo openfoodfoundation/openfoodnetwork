@@ -5,6 +5,7 @@
 # Pagination is optional and can be required by using param[:page]
 module Api
   class ExchangeProductsController < Api::BaseController
+    include PaginationData
     DEFAULT_PER_PAGE = 100
 
     skip_authorization_check only: [:index]
@@ -77,29 +78,16 @@ module Api
     end
 
     def render_paginated_products(paginated_products)
-      serializer = ActiveModel::ArraySerializer.new(
+      serialized_products = ActiveModel::ArraySerializer.new(
         paginated_products,
         each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
         order_cycle: @order_cycle
       )
 
-      result = { products: serializer }
-      result = result.merge(pagination: pagination_data(paginated_products)) if pagination_required?
-
-      render text: result.to_json
-    end
-
-    def pagination_data(paginated_products)
-      {
-        results: paginated_products.total_count,
-        pages: paginated_products.num_pages,
-        page: params[:page].to_i,
-        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
+      render json: {
+        products: serialized_products,
+        pagination: pagination_data(paginated_products)
       }
-    end
-
-    def pagination_required?
-      params[:page].present?
     end
   end
 end

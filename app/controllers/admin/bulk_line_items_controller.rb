@@ -1,5 +1,6 @@
 module Admin
   class BulkLineItemsController < Spree::Admin::BaseController
+    include PaginationData
     # GET /admin/bulk_line_items.json
     #
     def index
@@ -12,9 +13,12 @@ module Admin
         ransack(params[:q]).result.
         reorder('spree_line_items.order_id ASC, spree_line_items.id ASC')
 
-      @line_items = @line_items.page(page).per(params[:per_page]) if using_pagination?
+      @line_items = @line_items.page(page).per(params[:per_page]) if pagination_required?
 
-      render json: { line_items: serialized_line_items, pagination: pagination_data }
+      render json: {
+        line_items: serialized_line_items,
+        pagination: pagination_data(@line_items)
+      }
     end
 
     # PUT /admin/bulk_line_items/:id.json
@@ -85,21 +89,6 @@ module Admin
 
     def order_permissions
       ::Permissions::Order.new(spree_current_user)
-    end
-
-    def using_pagination?
-      params[:per_page]
-    end
-
-    def pagination_data
-      return unless using_pagination?
-
-      {
-        results: @line_items.total_count,
-        pages: @line_items.num_pages,
-        page: page.to_i,
-        per_page: params[:per_page].to_i
-      }
     end
 
     def page
