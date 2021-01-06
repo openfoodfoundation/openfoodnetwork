@@ -53,7 +53,6 @@ ordercycle {
       font-size: 1em;
       line-height: 1.3em;
       padding: 0.5em 0.75em;
-      height: 2.35em;
 
       span {
         width: max-content;
@@ -71,6 +70,10 @@ ordercycle {
       text-align: left;
     }
 
+    select {
+      height: 2.35em;
+    }
+
     select,
     p {
       display: inline-block;
@@ -82,7 +85,6 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       font-size: 1em;
       line-height: 1.3em;
-      height: 2.35em;
       min-width: 13em;
       width: 200px;
 
