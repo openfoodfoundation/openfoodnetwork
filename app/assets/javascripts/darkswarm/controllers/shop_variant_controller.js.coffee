@@ -17,21 +17,33 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
       if item.max_quantity < item.quantity
         item.quantity = item.max_quantity
 
+  $scope.quantity = ->
+    $scope.variant.line_item.quantity || 0
+
+  $scope.maxQuantity = ->
+    $scope.variant.line_item.max_quantity || $scope.sanitizedQuantity()
+
+  $scope.sanitizedQuantity = ->
+    Math.max(0, Math.min($scope.quantity(), $scope.available()))
+
+  $scope.sanitizedMaxQuantity = ->
+    Math.max($scope.sanitizedQuantity(), Math.min($scope.maxQuantity(), $scope.available()))
+
   $scope.add = (quantity) ->
     item = $scope.variant.line_item
-    item.quantity += quantity
+    item.quantity = $scope.sanitizedQuantity() + quantity
 
   $scope.addMax = (quantity) ->
     item = $scope.variant.line_item
-    item.max_quantity += quantity
+    item.max_quantity = $scope.sanitizedMaxQuantity() + quantity
 
   $scope.canAdd = (quantity) ->
-    wantedQuantity = $scope.variant.line_item.quantity + quantity
+    wantedQuantity = $scope.sanitizedQuantity() + quantity
     $scope.quantityValid(wantedQuantity)
 
   $scope.canAddMax = (quantity) ->
     variant = $scope.variant
-    wantedQuantity = variant.line_item.max_quantity + quantity
+    wantedQuantity = $scope.sanitizedMaxQuantity() + quantity
     $scope.quantityValid(wantedQuantity) && variant.line_item.quantity > 0
 
   $scope.available = ->
