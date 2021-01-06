@@ -240,7 +240,7 @@ module Spree
       let(:variant) { product.master }
       let(:stock_item) { variant.stock_items.first }
 
-      xit "doesnt raise ReadOnlyRecord error" do
+      it "doesnt raise ReadOnlyRecord error" do
         Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
         expect { product.destroy }.not_to raise_error
       end
