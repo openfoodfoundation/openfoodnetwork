@@ -29,6 +29,6 @@
   %td.actions
     %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)", 'ofn-with-tip' => t(:edit)  }
   %td.actions
-    %span.icon-warning-sign{ 'ng-if' => 'variant.variant_overrides', 'ofn-with-tip' => "{{ 'spree.admin.products.index.products_variant.variant_has_n_overrides' | t:{n: variant.variant_overrides.length} }}" }
+    %span.icon-warning-sign{ 'ng-if' => 'variant.variant_overrides_count > 0', 'ofn-with-tip' => "{{ 'spree.admin.products.index.products_variant.variant_has_n_overrides' | t:{n: variant.variant_overrides_count} }}" }
   %td.actions
     %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text", 'ofn-with-tip' => t(:remove)  }
