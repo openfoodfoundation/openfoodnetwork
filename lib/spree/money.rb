@@ -9,7 +9,7 @@ module Spree
     delegate :cents, to: :money
 
     def initialize(amount, options = {})
-      @money = ::Money.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
+      @money = ::Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
       @options = {}
       @options[:with_currency] = Spree::Config[:display_currency]
       @options[:symbol_position] = Spree::Config[:currency_symbol_position].to_sym
