@@ -12,11 +12,14 @@ describe "ShopVariantCtrl", ->
         on_demand: true
         product: {group_buy: true}
         line_item: {
-          quantity: 0
-          max_quantity: 0
+          quantity: undefined
+          max_quantity: undefined
         }
       }
       ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: null}
+
+  it "initializes the quantity for shop display", ->
+    expect(scope.variant.line_item.quantity).toEqual 0
 
   it "adds an item to the cart", ->
     scope.add 1

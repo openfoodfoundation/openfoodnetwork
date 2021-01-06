@@ -6,6 +6,8 @@ Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
     return if old_value[0] == null && new_value[0] == null
     Cart.adjust($scope.variant.line_item)
 
+  $scope.variant.line_item.quantity ||= 0
+
   if $scope.variant.product.group_buy
     $scope.$watch "variant.line_item.quantity", ->
       item = $scope.variant.line_item
