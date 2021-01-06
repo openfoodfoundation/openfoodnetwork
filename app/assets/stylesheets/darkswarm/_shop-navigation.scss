@@ -44,6 +44,8 @@ ordercycle {
     display: flex;
     font-size: 1em;
     border-radius: $radius-small;
+    margin-right: 10px;
+    margin-left: 10px;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
