@@ -10,6 +10,9 @@ module Api
     include Spree::Core::ControllerHelpers::SSL
     include ::ActionController::Head
     include ::ActionController::ConditionalGet
+    include ActionView::Layouts
+
+    layout false
 
     attr_accessor :current_api_user
 

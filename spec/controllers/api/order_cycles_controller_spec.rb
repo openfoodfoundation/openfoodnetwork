@@ -154,7 +154,8 @@ module Api
           allow_any_instance_of(OrderCycle).to receive(:open?) { false }
         end
 
-        xit "throws an error, ActionView::MissingTemplate: Missing template api/order_cycles/products" do
+        # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/6491
+        it "renders no products without error" do
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
           expect(json_response).to eq({})
