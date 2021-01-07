@@ -85,21 +85,6 @@ module Spree
         end
       end
 
-      context "#available?" do
-        it "should be available if date is in the past" do
-          product.available_on = 1.day.ago
-          expect(product).to be_available
-        end
-
-        it "should not be available if date is nil or in the future" do
-          product.available_on = nil
-          expect(product).to_not be_available
-
-          product.available_on = 1.day.from_now
-          expect(product).to_not be_available
-        end
-      end
-
       describe 'Variants sorting' do
         context 'without master variant' do
           it 'sorts variants by position' do
