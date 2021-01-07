@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-xfeature '
+feature '
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
@@ -90,9 +90,10 @@ xfeature '
     expect(page).to have_content 'Your order cycle has been updated.'
 
     # And I add a distributor and some products
+    expect(page).to_not have_content "Loading..."
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
-    expect(page).to have_field("order_cycle_outgoing_exchange_2_pickup_time")
+    expect(page).to have_selector "tr.distributor-#{distributor.id}"
 
     fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'New time 0'
     fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
