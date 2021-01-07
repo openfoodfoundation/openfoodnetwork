@@ -204,11 +204,14 @@ feature '
         click_button 'Add supplier'
         select 'Permitted supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
+        expect(page).to have_content "Permitted supplier"
 
         select_incoming_variant supplier_managed, 0, variant_managed
         select_incoming_variant supplier_permitted, 1, variant_permitted
 
         click_button 'Save and Next'
+        expect(page).to have_content 'Your order cycle has been updated.'
+        expect(page).to_not have_content "Loading..."
 
         expect(page).to have_select 'new_distributor_id'
         expect(page).not_to have_select 'new_distributor_id', with_options: [distributor_unmanaged.name]
@@ -216,6 +219,7 @@ feature '
         click_button 'Add distributor'
         select 'Permitted distributor', from: 'new_distributor_id'
         click_button 'Add distributor'
+        expect(page).to have_content "Permitted distributor"
 
         expect(page).to have_input 'order_cycle_outgoing_exchange_0_pickup_time'
         fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
@@ -612,6 +616,7 @@ feature '
   end
 
   def select_incoming_variant(supplier, exchange_no, variant)
+    expect(page).to have_selector "table.exchanges tr.supplier-#{supplier.id} td.products"
     page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
     check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
   end
