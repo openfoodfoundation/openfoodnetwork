@@ -83,25 +83,25 @@ describe Spree::Payment do
       context "#process!" do
         it "should purchase if with auto_capture" do
           payment = build_stubbed(:payment, payment_method: gateway)
-          payment.payment_method.should_receive(:auto_capture?).and_return(true)
-          payment.should_receive(:purchase!)
+          expect(payment.payment_method).to receive(:auto_capture?).and_return(true)
+          expect(payment).to receive(:purchase!)
           payment.process!
         end
 
         it "should authorize without auto_capture" do
           payment = build_stubbed(:payment, payment_method: gateway)
-          payment.payment_method.should_receive(:auto_capture?).and_return(false)
-          payment.should_receive(:authorize!)
+          expect(payment.payment_method).to receive(:auto_capture?).and_return(false)
+          expect(payment).to receive(:authorize!)
           payment.process!
         end
 
         it "should make the state 'processing'" do
-          payment.should_receive(:started_processing!)
+          expect(payment).to receive(:started_processing!)
           payment.process!
         end
 
         it "should invalidate if payment method doesnt support source" do
-          payment.payment_method.should_receive(:supports?).with(payment.source).and_return(false)
+          expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
           expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
         end
@@ -109,17 +109,17 @@ describe Spree::Payment do
 
       context "#authorize" do
         it "should call authorize on the gateway with the payment amount" do
-          payment.payment_method.should_receive(:authorize).with(amount_in_cents,
-                                                                 card,
-                                                                 anything).and_return(success_response)
+          expect(payment.payment_method).to receive(:authorize).with(
+            amount_in_cents, card, anything
+          ).and_return(success_response)
           payment.authorize!
         end
 
         it "should call authorize on the gateway with the currency code" do
           payment.stub currency: 'GBP'
-          payment.payment_method.should_receive(:authorize).with(amount_in_cents,
-                                                                 card,
-                                                                 hash_including({ currency: "GBP" })).and_return(success_response)
+          expect(payment.payment_method).to receive(:authorize).with(
+            amount_in_cents, card, hash_including({ currency: "GBP" })
+          ).and_return(success_response)
           payment.authorize!
         end
 
@@ -137,9 +137,9 @@ describe Spree::Payment do
 
         context "if successful" do
           before do
-            payment.payment_method.should_receive(:authorize).with(amount_in_cents,
-                                                                   card,
-                                                                   anything).and_return(success_response)
+            expect(payment.payment_method).to receive(:authorize).with(
+              amount_in_cents, card, anything
+            ).and_return(success_response)
           end
 
           it "should store the response_code, avs_response and cvv_response fields" do
@@ -151,7 +151,7 @@ describe Spree::Payment do
           end
 
           it "should make payment pending" do
-            payment.should_receive(:pend!)
+            expect(payment).to receive(:pend!)
             payment.authorize!
           end
         end
@@ -159,8 +159,8 @@ describe Spree::Payment do
         context "if unsuccessful" do
           it "should mark payment as failed" do
             gateway.stub(:authorize).and_return(failed_response)
-            payment.should_receive(:failure)
-            payment.should_not_receive(:pend)
+            expect(payment).to receive(:failure)
+            expect(payment).to_not receive(:pend)
             expect {
               payment.authorize!
             }.to raise_error(Spree::Core::GatewayError)
@@ -170,7 +170,7 @@ describe Spree::Payment do
 
       context "purchase" do
         it "should call purchase on the gateway with the payment amount" do
-          gateway.should_receive(:purchase).with(amount_in_cents, card, anything).and_return(success_response)
+          expect(gateway).to receive(:purchase).with(amount_in_cents, card, anything).and_return(success_response)
           payment.purchase!
         end
 
@@ -188,9 +188,9 @@ describe Spree::Payment do
 
         context "if successful" do
           before do
-            payment.payment_method.should_receive(:purchase).with(amount_in_cents,
-                                                                  card,
-                                                                  anything).and_return(success_response)
+            expect(payment.payment_method).to receive(:purchase).with(
+              amount_in_cents, card, anything
+            ).and_return(success_response)
           end
 
           it "should store the response_code and avs_response" do
@@ -200,7 +200,7 @@ describe Spree::Payment do
           end
 
           it "should make payment complete" do
-            payment.should_receive(:complete!)
+            expect(payment).to receive(:complete!)
             payment.purchase!
           end
         end
@@ -208,8 +208,8 @@ describe Spree::Payment do
         context "if unsuccessful" do
           it "should make payment failed" do
             gateway.stub(:purchase).and_return(failed_response)
-            payment.should_receive(:failure)
-            payment.should_not_receive(:pend)
+            expect(payment).to receive(:failure)
+            expect(payment).not_to receive(:pend)
             expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -227,11 +227,11 @@ describe Spree::Payment do
 
           context "if successful" do
             before do
-              payment.payment_method.should_receive(:capture).and_return(success_response)
+              expect(payment.payment_method).to receive(:capture).and_return(success_response)
             end
 
             it "should make payment complete" do
-              payment.should_receive(:complete)
+              expect(payment).to receive(:complete)
               payment.capture!
             end
 
@@ -245,8 +245,8 @@ describe Spree::Payment do
           context "if unsuccessful" do
             it "should not make payment complete" do
               gateway.stub capture: failed_response
-              payment.should_receive(:failure)
-              payment.should_not_receive(:complete)
+              expect(payment).to receive(:failure)
+              expect(payment).to_not receive(:complete)
               expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
             end
           end
@@ -256,9 +256,9 @@ describe Spree::Payment do
         context "when payment is completed" do
           it "should do nothing" do
             payment = build_stubbed(:payment, state: 'completed')
-            payment.should_not_receive(:complete)
-            payment.payment_method.should_not_receive(:capture)
-            payment.log_entries.should_not_receive(:create)
+            expect(payment).to_not receive(:complete)
+            expect(payment.payment_method).to_not receive(:capture)
+            expect(payment.log_entries).to_not receive(:create)
             payment.capture!
           end
         end
@@ -273,7 +273,7 @@ describe Spree::Payment do
         context "when profiles are supported" do
           it "should call payment_gateway.void with the payment's response_code" do
             gateway.stub payment_profiles_supported?: true
-            gateway.should_receive(:void).with('123', card, anything).and_return(success_response)
+            expect(gateway).to receive(:void).with('123', card, anything).and_return(success_response)
             payment.void_transaction!
           end
         end
@@ -281,7 +281,7 @@ describe Spree::Payment do
         context "when profiles are not supported" do
           it "should call payment_gateway.void with the payment's response_code" do
             gateway.stub payment_profiles_supported?: false
-            gateway.should_receive(:void).with('123', anything).and_return(success_response)
+            expect(gateway).to receive(:void).with('123', anything).and_return(success_response)
             payment.void_transaction!
           end
         end
@@ -311,7 +311,7 @@ describe Spree::Payment do
         context "if unsuccessful" do
           it "should not void the payment" do
             gateway.stub void: failed_response
-            payment.should_not_receive(:void)
+            expect(payment).to_not receive(:void)
             expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -320,7 +320,7 @@ describe Spree::Payment do
         context "if payment is already voided" do
           it "should not void the payment" do
             payment = build_stubbed(:payment, payment_method: gateway, state: 'void')
-            payment.payment_method.should_not_receive(:void)
+            expect(payment.payment_method).to_not receive(:void)
             payment.void_transaction!
           end
         end
@@ -339,7 +339,7 @@ describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
-            gateway.should_receive(:credit).with(1000, card, '123', anything).and_return(success_response)
+            expect(gateway).to receive(:credit).with(1000, card, '123', anything).and_return(success_response)
             payment.credit!
           end
         end
@@ -350,7 +350,9 @@ describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
-            gateway.should_receive(:credit).with(amount_in_cents, card, '123', anything).and_return(success_response)
+            expect(gateway).to receive(:credit).with(
+              amount_in_cents, card, '123', anything
+            ).and_return(success_response)
             payment.credit!
           end
         end
@@ -361,7 +363,9 @@ describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the original payment amount and response_code" do
-            gateway.should_receive(:credit).with(amount_in_cents.to_f, card, '123', anything).and_return(success_response)
+            expect(gateway).to receive(:credit).with(
+              amount_in_cents.to_f, card, '123', anything
+            ).and_return(success_response)
             payment.credit!
           end
         end
@@ -431,8 +435,8 @@ describe Spree::Payment do
         payment = build_stubbed(:payment)
         payment.state = 'processing'
 
-        payment.should_not_receive(:authorize!)
-        payment.should_not_receive(:purchase!)
+        expect(payment).to_not receive(:authorize!)
+        expect(payment).to_not receive(:purchase!)
         expect(payment.process!).to be_nil
       end
     end
@@ -496,7 +500,7 @@ describe Spree::Payment do
         it "calls credit on the source with the payment and amount" do
           payment.state = 'completed'
           payment.stub(:credit_allowed).and_return(10)
-          payment.should_receive(:credit!).with(10)
+          expect(payment).to receive(:credit!).with(10)
           payment.partial_credit(10)
         end
       end
@@ -519,7 +523,7 @@ describe Spree::Payment do
 
         order = create(:order)
         payment = Spree::Payment.create(amount: 100, order: order, payment_method: gateway)
-        order.should_receive(:update!)
+        expect(order).to receive(:update!)
         payment.save
       end
 
