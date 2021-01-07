@@ -94,7 +94,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where further action is required" do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
-              payment.update cvv_response_message: "http://redirect_url"
+              payment.update cvv_response_message: "https://www.stripe.com/authorize"
               payment.update state: "pending"
             end
           end

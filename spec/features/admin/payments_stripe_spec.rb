@@ -70,7 +70,7 @@ feature '
       context "with a card that fails on registration because it requires(redirects) extra auth" do
         before do
           stub_payment_intents_post_request_with_redirect order: order,
-                                                          redirect_url: "www.dummy.org"
+                                                          redirect_url: "https://www.stripe.com/authorize"
         end
 
         it "fails to add a payment due to card error" do
