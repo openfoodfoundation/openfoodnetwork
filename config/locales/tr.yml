@@ -1569,6 +1569,7 @@ tr:
   shopping_groups_part_of: "şunun parçası:"
   shopping_producers_of_hub: "%{hub} üreticileri:"
   enterprises_next_closing: "Bir sonraki sipariş kapanışı"
+  enterprises_currently_open: "Siparişler şu anda açık"
   enterprises_ready_for: "Teslimat"
   enterprises_choose: "Siparişinizi ne zaman istediğinizi seçin:"
   maps_open: "Açık"
@@ -2082,6 +2083,7 @@ tr:
   spree_classification_primary_taxon_error: "%{taxon} cinsi, %{product}ürününün birincil cinsidir ve silinemez"
   spree_order_availability_error: "Dağıtımcı veya sipariş dönemi sepetinizdeki ürünleri tedarik edemiyor"
   spree_order_populator_error: "Bu dağıtımcı veya sipariş dönemi, sepetinizdeki tüm ürünleri tedarik edemiyor. Lütfen başka birini seçin."
+  spree_order_cycle_error: "Bu sipariş için bir sipariş dönemi seçin."
   spree_order_populator_availability_error: "Bu ürün, seçilen dağıtımcıda veya sipariş döneminde mevcut değil."
   spree_distributors_error: "En az bir pazar seçilmelidir"
   spree_user_enterprise_limit_error: "^ %{email}'ın daha fazla işletmeye sahip olmasına izin verilmiyor (limit %{enterprise_limit})."
@@ -2389,6 +2391,7 @@ tr:
     resolve_errors: Lütfen aşağıdaki hataları düzeltin
     more_items: "+ %{count} Daha "
     default_card_updated: Varsayılan Kart Güncellendi
+    default_card_voids_auth: Varsayılan kartınızı değiştirmeniz mevcut üyelik hakkı verdiğiniz satıcıların izinlerini sıfırlar. Kartınızı güncelledikten sonra tekrar izin vermeniz gerekmektedir. Varsayılan kartınızı değiştirmek istiyor musunuz?
     cart:
       add_to_cart_failed: >
           Bu ürünü sepete eklerken bir hata oluştu. Ürün stokları bitmiş veya dükkan
@@ -2908,7 +2911,7 @@ tr:
     adjustments: "Düzeltmeler"
     continue: "Devam et"
     fill_in_customer_info: "Lütfen müşteri bilgilerini doldurun"
-    credit_card: "Kredİ kartı"
+    credit_card: "Kredi Kartı"
     new_payment: "Yeni Ödeme"
     capture: "Tahsilat"
     void: "Geçersiz"
@@ -3033,6 +3036,7 @@ tr:
     successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
     payment_method: "ÖDEME YÖNTEMİ"
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
+    not_available: "Yok"
     order_populator:
       out_of_stock: '%{item} stokta yok'
     actions:
@@ -3534,9 +3538,11 @@ tr:
         delete?: Sil?
       cards:
         authorised_shops: Yetkili Pazarlar
+        authorised_shops_agreement: 'Varsayılan kredi kartınızdan üyeliklerinize istinaden ödeme almakla yetkilendirilmiş dükkanların listesini görebilirsiniz. Kart bilgileriniz gizli tutulacak ve satıcılar ile asla paylaşılmayacaktır. Kartınıza ödeme yansıtıldığında hemen bilgilendirileceksiniz. İlgili dükkanın yanındaki kutucuğu işaretlediğinizde sizden üyelik masraflarına ilişkin ödemelerini kartınıza yansıtması için izin vermiş olursunuz.  '
         saved_cards_popover: Bu, daha sonra kullanmak üzere kaydetmeyi seçtiğiniz kartların listesidir. Bir siparişin ödemesi tamamlandığında 'varsayılan'ınız otomatik olarak seçilir ve izin verdiğiniz satıcılar tarafından ücretlendirilebilir (sağa bakın).
       authorised_shops:
         shop_name: "DÜKKAN ADI"
+        allow_charges?: "Kayıtlı kredi kartı ile ödeme alınmasına izin verilsin mi?"
     localized_number:
       invalid_format: geçersiz bir biçime sahip. Lütfen bir numara giriniz.
     api:

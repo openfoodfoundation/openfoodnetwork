@@ -1567,6 +1567,7 @@ pt_BR:
   shopping_groups_part_of: "é parte de:"
   shopping_producers_of_hub: "produtores de %{hub}:"
   enterprises_next_closing: "Próximo fechamento"
+  enterprises_currently_open: "Aberto para pedidos"
   enterprises_ready_for: "Pronto para"
   enterprises_choose: "Escolha para quando você quer seu pedido:"
   maps_open: "Aberto"
@@ -2080,6 +2081,7 @@ pt_BR:
   spree_classification_primary_taxon_error: "O táxon %{taxon} é o táxon principal de %{product} e não pode ser excluído"
   spree_order_availability_error: "O distribuidor ou o ciclo de pedidos não pode fornecer os produtos no seu carrinho"
   spree_order_populator_error: "Distribuidor ou ciclo de pedidos não pode fornecer os produtos no seu carrinho. Por favor, escolha outro."
+  spree_order_cycle_error: "Favor escolher um ciclo de pedidos para este pedido"
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor escolhido ou no ciclo de pedidos."
   spree_distributors_error: "Pelo menos uma central deve ser selecionado"
   spree_user_enterprise_limit_error: "^ %{email} não é permitido possuir mais iniciativas (o limite é %{enterprise_limit})."
@@ -2387,6 +2389,7 @@ pt_BR:
     resolve_errors: Por favor resolva os seguintes erros
     more_items: "+ %{count} Mais"
     default_card_updated: Cartão padrão atualizado
+    default_card_voids_auth: Ao atualizar seu cartão, você automaticamente remove as autorizações existentes para que uma loja possa cobrá-lo. Você conceder novamente as autorizações após atualizar o cartão. Você deseja atualizar o seu cartão?
     cart:
       add_to_cart_failed: >
           Houve um problema ao adicionar este produto ao carrinho. Talvez ele tenha
@@ -3536,9 +3539,11 @@ pt_BR:
         delete?: Excluir?
       cards:
         authorised_shops: Lojas autorizadas
+        authorised_shops_agreement: 'Esta é a lista de lojas que tem permissão para fazer cobranças no seu cartão para quaisquer assinaturas (ou pedidos recorrentes) que você tiver. Os detalhes do seu cartão estarão protegidos e não serão compartilhados com as lojas. Você será sempre notificado quando houver uma cobrança. Ao marcar a caixa para uma loja, você a autoriza a fazer cobranças no seu cartão, de acordo com os termos da assinatura que você fez com ela.  '
         saved_cards_popover: Esta é a lista de cartões que você optou por salvar para uso posterior. O seu 'padrão' será selecionado automaticamente quando você finalizar um pedido, e pode ser cobrado por qualquer loja que você tenha permissão para fazer (veja à direita).
       authorised_shops:
         shop_name: "Nome da loja"
+        allow_charges?: "Permitir Cobranças no sue Cartão Principal?"
     localized_number:
       invalid_format: tem um formato inválido. Por favor, coloque um numero.
     api:

@@ -1572,6 +1572,7 @@ ru:
   shopping_groups_part_of: "часть:"
   shopping_producers_of_hub: "%{hub} производители:"
   enterprises_next_closing: "Закрытие заказа через"
+  enterprises_currently_open: "Заказы в настоящее время открыты"
   enterprises_ready_for: "Готов к"
   enterprises_choose: "Выберите, когда вы хотите свой заказ:"
   maps_open: "Открыт"
@@ -1979,7 +1980,7 @@ ru:
   admin_enterprise_relationships_permits: "разрешения"
   admin_enterprise_relationships_seach_placeholder: "Поиск"
   admin_enterprise_relationships_button_create: "Создать"
-  admin_enterprise_relationships_to: "к"
+  admin_enterprise_relationships_to: "\"\""
   admin_enterprise_groups: "Группы Предприятий"
   admin_enterprise_groups_name: "Имя"
   admin_enterprise_groups_owner: "Владелец"
@@ -2085,6 +2086,7 @@ ru:
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Дистрибьютор или цикл заказа не могут поставить продукты в Вашей корзине"
   spree_order_populator_error: "Этот дистрибьютор или цикл заказа не может поставить все продукты в Вашей корзине. Пожалуйста, выберите другой."
+  spree_order_cycle_error: "Выберите цикл для этого заказа."
   spree_order_populator_availability_error: "Этот продукт недоступен у выбранного дистрибьютора или цикла заказа."
   spree_distributors_error: "Должен быть выбран хотя бы один Центр"
   spree_user_enterprise_limit_error: "^%{email} не разрешается иметь больше предприятий (ограничение %{enterprise_limit})."
@@ -2392,6 +2394,7 @@ ru:
     resolve_errors: Пожалуйста исправьте следующие ошибки
     more_items: "+ %{count} Больше"
     default_card_updated: Карта По Умолчанию Обновлена
+    default_card_voids_auth: Смена карты по умолчанию приведет к удалению существующих разрешений магазинов на снятие с нее средств. Вы можете повторно авторизовать магазины после обновления карты по умолчанию. Вы хотите изменить карту по умолчанию? &quot;
     cart:
       add_to_cart_failed: >
           При добавлении этого товара в корзину возникла проблема. Возможно, он стал
@@ -3591,9 +3594,11 @@ ru:
         delete?: Удалить?
       cards:
         authorised_shops: Авторизованные магазины
+        authorised_shops_agreement: Это список магазинов, которым разрешено взимать плату с вашей кредитной карты по умолчанию за любые подписки (напр. повторяющиеся заказы), которые у вас могут быть. Данные вашей карты будут храниться в безопасности и не будут переданы владельцам магазинов. Вы всегда будете уведомлены, когда с вас будет снята оплата. Устанавливая флажок для магазина, вы разрешаете этому магазину отправлять инструкции финансовому учреждению, выпустившему вашу карту, принимать платежи в соответствии с условиями любой подписки, которую вы создаете в этом магазине.
         saved_cards_popover: Это список карт, которые Вы решили сохранить для дальнейшего использования. Ваше 'по умолчанию' будет выбрано автоматически при оформлении заказа и может быть списано любым магазином, которому Вы позволили это сделать (см. Справа).
       authorised_shops:
         shop_name: "Имя Магазина"
+        allow_charges?: "Разрешить Списания с Карты по Умолчанию?"
     localized_number:
       invalid_format: имеет неверный формат. Пожалуйста, введите номер.
     api:

@@ -721,7 +721,7 @@ it:
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
           link_to_front: Link alla tua vetrina
           link_to_front_tip: Un link diretto alla tua vetrina su Open Food Network
-          ofn_uid: OFN UID
+          ofn_uid: OFN ID
           ofn_uid_tip: Il codice univoco utilizzato per identificare l'azienda su OFN
         shipping_methods:
           name: "Nome"
@@ -1570,6 +1570,7 @@ it:
   shopping_groups_part_of: "è parte di:"
   shopping_producers_of_hub: "Produttori di %{hub}:"
   enterprises_next_closing: "Prossimo ordine in chiusura"
+  enterprises_currently_open: "Le gentili richieste sono attualmente aperte"
   enterprises_ready_for: "Pronto per"
   enterprises_choose: "Scegli quando vuoi il tuo ordine:"
   maps_open: "Aperto"
@@ -2083,6 +2084,7 @@ it:
   spree_classification_primary_taxon_error: "La classificazione %{taxon} è la classificazione primaria di %{product} e non può essere cancellata"
   spree_order_availability_error: "Il distributore o il ciclo di richiesta non possono rifornire i prodotti nel tuo carrello"
   spree_order_populator_error: "Il distributore o il ciclo di richieste non hanno disponibilità di alcuni prodotti nel tuo carrello. Per favore scegline un altro."
+  spree_order_cycle_error: "Per favore seleziona un ciclo di richieste per questa gentile richiesta."
   spree_order_populator_availability_error: "Questo prodotto non è disponibile dal distributore o nel ciclo di richieste selezionati."
   spree_distributors_error: "Seleziona almeno un hub"
   spree_user_enterprise_limit_error: "^%{email}non può gestire altre aziende (il limite è %{enterprise_limit})."
@@ -2390,6 +2392,7 @@ it:
     resolve_errors: 'Per favore risolvi i seguenti errori:'
     more_items: "+ %{count} ancora"
     default_card_updated: Carta predefinita aggiornata
+    default_card_voids_auth: La modifica della carta predefinita rimuoverà le autorizzazioni esistenti dei negozi per l'addebito. Puoi autorizzare nuovamente i negozi dopo aver aggiornato la carta predefinita. Vuoi cambiare la carta predefinita? "
     cart:
       add_to_cart_failed: >
           C'è stato un problema nell'aggiungere questo prodotto al carrello. Forse
@@ -3538,9 +3541,11 @@ it:
         delete?: Elimina?
       cards:
         authorised_shops: Negozi autorizzati
+        authorised_shops_agreement: Questo è l'elenco dei negozi a cui è consentito addebitare sulla tua carta di credito predefinita eventuali abbonamenti (ad esempio ordini ripetuti) che potresti avere. I dettagli della tua carta saranno tenuti al sicuro e non saranno condivisi con i proprietari dei negozi. Riceverai una notifica per ciascun addebito. Selezionando la casella di un negozio, accetti di autorizzare tale negozio a inviare istruzioni all'istituto finanziario che ha emesso la tua carta per accettare pagamenti in conformità con i termini degli abbonamenti che crei con quel negozio.
         saved_cards_popover: Questa è la lista di carte che hai scelto di salvare per un uso successivo. Il tuo 'predefinito' sarà selezionato automaticamente quando esegui il checkout di un ordine, e può essere addebitato da qualsiasi negozio che hai autorizzato a farlo (vedi a destra).
       authorised_shops:
         shop_name: "Nome del negozio"
+        allow_charges?: "Consenti addebiti sulla carta predefinita?"
     localized_number:
       invalid_format: 'Formato non valido: inserire un numero.'
     api:
