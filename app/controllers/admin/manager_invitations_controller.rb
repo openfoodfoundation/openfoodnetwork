@@ -35,7 +35,7 @@ module Admin
       new_user.save!
 
       @enterprise.users << new_user
-      Delayed::Job.enqueue ManagerInvitationJob.new(@enterprise.id, new_user.id)
+      ManagerInvitationJob.perform_later(@enterprise.id, new_user.id)
 
       new_user
     end
