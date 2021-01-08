@@ -1,6 +1,6 @@
 require 'order_management/subscriptions/summarizer'
 
-class SubscriptionPlacementJob
+class SubscriptionPlacementJob < ActiveJob::Base
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(placed_at: Time.zone.now)

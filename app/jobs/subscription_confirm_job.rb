@@ -1,7 +1,7 @@
 require 'order_management/subscriptions/summarizer'
 
 # Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
-class SubscriptionConfirmJob
+class SubscriptionConfirmJob < ActiveJob::Base
   def perform
     confirm_proxy_orders!
   end
