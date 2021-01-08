@@ -75,6 +75,7 @@ module Spree
     end
 
     def adjustment
+      # This needs to be removed. Various other bits need updating at the same time.
       adjustments.first
     end
 
