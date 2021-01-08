@@ -55,7 +55,7 @@ linters:
 
   SpaceInsideHashAttributes:
     enabled: true
-    style: space
+    style: no_space
 
   TagName:
     enabled: true
