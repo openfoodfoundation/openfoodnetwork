@@ -648,9 +648,9 @@ it:
           desc_long: Chi siamo
           desc_long_placeholder: Racconta di te ai tuoi clienti. Questa informazione comparirà nel tuo profilo pubblico.
         business_details:
-          abn: ABN
+          abn: P. IVA
           abn_placeholder: es. 99 123 456 789
-          acn: ACN
+          acn: C.F.
           acn_placeholder: es. 123 456 789
           display_invoice_logo: Mostra logo nelle fatture
           invoice_text: Aggiungere testo personalizzato alla fine delle fatture
@@ -660,7 +660,7 @@ it:
         contact:
           name: Nome
           name_placeholder: es. Gustav Plum
-          email_address: 'Pubblica Indirizzo mail '
+          email_address: Email (pubblica)
           email_address_placeholder: es. inquiries@fresh-food.com
           email_address_tip: "Questo indirizzo mail sarà visualizzato nel tuo profilo pubblico"
           phone: Telefono
@@ -765,7 +765,7 @@ it:
               il tuo negozio è chiuso e/o quando i clienti potranno aspettarsi una
               nuova apertura. Questo viene visualizzato sul tuo negozio solo quando
               non hai cicli d'ordine attivi (es. il negozio è chiuso).
-          shopfront_category_ordering: "Categorie disponibili in Vetrina"
+          shopfront_category_ordering: "Ordine Categorie in Vetrina"
           shopfront_category_ordering_note: "(dall'alto in basso)"
           open_date: "Data apertura"
           close_date: "Data chiusura"
@@ -1225,7 +1225,7 @@ it:
       customer_required:
         login: "accedi"
         signup: "Registrati"
-        contact: "contatta"
+        contact: "contatti"
         require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
         require_login_html: "Se sei già un cliente approvato, %{login} o %{signup} per procedere."
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
@@ -1254,7 +1254,7 @@ it:
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
   abn: "CF:"
-  acn: "ACN:"
+  acn: "C.F.:"
   invoice_issued_on: "Fattura emessa il"
   order_number: "Numero fattura:"
   date_of_transaction: "Data della transazione:"
@@ -1270,7 +1270,7 @@ it:
   menu_3_url: "/producers"
   menu_4_title: "Gruppi"
   menu_4_url: "/groups"
-  menu_5_title: "About"
+  menu_5_title: "Chi siamo"
   menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Blog"
   menu_6_url: "https://apropos.openfoodfrance.org/blog/"
@@ -1290,7 +1290,7 @@ it:
   footer_pinterest_url: "URL Pinterest"
   footer_email: "Email"
   footer_links_md: "Collegamenti"
-  footer_about_url: "URL About"
+  footer_about_url: "URL Chi siamo"
   user_guide_link: "Link alla guida utente"
   name: Nome
   first_name: Nome
@@ -1325,7 +1325,7 @@ it:
   label_producer: "Produttore"
   label_producers: "Produttori"
   label_groups: "Gruppi"
-  label_about: "About"
+  label_about: "Chi siamo"
   label_connect: "Connetti"
   label_learn: "Impara"
   label_blog: "Blog"
@@ -1563,9 +1563,9 @@ it:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Negozio"
   shopping_tabs_about: "Descrizione"
-  shopping_tabs_contact: "Contatta"
+  shopping_tabs_contact: "Contatti"
   shopping_contact_address: "Indirizzo"
-  shopping_contact_web: "Contatta"
+  shopping_contact_web: "Contatti"
   shopping_contact_social: "Segui"
   shopping_groups_part_of: "è parte di:"
   shopping_producers_of_hub: "Produttori di %{hub}:"
@@ -1635,7 +1635,7 @@ it:
   groups_about: "Su di noi"
   groups_producers: "I nostri produttori"
   groups_hubs: "I nostri hub"
-  groups_contact_web: Contatta
+  groups_contact_web: Contatti
   groups_contact_social: Segui
   groups_contact_address: Indirizzo
   groups_contact_email: Scrivici
@@ -1662,7 +1662,7 @@ it:
   login_invalid: "Email o password invalida"
   producers_about: Su di noi
   producers_buy: Acquista per
-  producers_contact: Contatta
+  producers_contact: Contatti
   producers_contact_phone: Chiama
   producers_contact_social: Segui
   producers_buy_at_html: "Compra prodotti di %{enterprise} presso:"
@@ -1881,9 +1881,9 @@ it:
         enterprise_long_desc: "Descrizione lunga"
         enterprise_long_desc_placeholder: "Questa è la tua opportunità per raccontare la storia della tua azienda - cosa ti rende differente e fantastico? Ti suggeriamo di mantenere la descrizione sotto i 600 caratteri o le 150 parole."
         enterprise_long_desc_length: "%{num} caratteri / fino a 600 raccomandati"
-        enterprise_abn: "ABN"
+        enterprise_abn: "P. IVA"
         enterprise_abn_placeholder: "es. 99 123 456 789"
-        enterprise_acn: "ACN"
+        enterprise_acn: "C.F."
         enterprise_acn_placeholder: "es. 123 456 789"
         enterprise_tax_required: "Devi fare una selezione."
       images:
@@ -2301,7 +2301,7 @@ it:
   user_invited: "%{email} è stata/o invitata/o a gestire questa azienda"
   add_manager: "Aggiungi un utente esistente"
   users: "Utenti"
-  about: "About"
+  about: "Chi siamo"
   images: "Immagini"
   web: "Web"
   primary_details: "Dettagli principali"
