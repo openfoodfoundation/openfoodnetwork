@@ -1,4 +1,4 @@
-require 'spree/money_decorator'
+require 'spree/money'
 
 module Spree
   module ReportsHelper

@@ -27,7 +27,7 @@ gem 'cancan', '~> 1.6.10'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json'
-gem 'money', '< 6.1.0'
+gem 'monetize', '~> 1.1'
 gem 'paranoia', '~> 2.4'
 gem 'ransack', '~> 1.8.10'
 gem 'state_machines-activerecord'
