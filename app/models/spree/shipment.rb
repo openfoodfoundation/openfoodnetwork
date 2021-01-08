@@ -319,7 +319,7 @@ module Spree
     end
 
     def send_shipped_email
-      ShipmentMailer.shipped_email(id).deliver_now
+      ShipmentMailer.shipped_email(id).deliver_later
     end
 
     def update_adjustment_included_tax
