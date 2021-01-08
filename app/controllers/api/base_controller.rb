@@ -59,6 +59,8 @@ module Api
     end
 
     def error_during_processing(exception)
+      Bugsnag.notify(exception)
+
       render(json: { exception: exception.message },
              status: :unprocessable_entity) && return
     end
