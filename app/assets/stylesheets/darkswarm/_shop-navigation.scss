@@ -41,19 +41,21 @@ ordercycle {
 
   .order-cycle-select {
     border: 1px solid $teal-300;
-    display: inline-block;
+    display: flex;
     font-size: 1em;
     border-radius: $radius-small;
+    margin-right: 10px;
+    margin-left: 10px;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: $radius-small 0 0 $radius-small;
-      float: left;
       font-size: 1em;
       line-height: 1.3em;
       padding: 0.5em 0.75em;
-      height: 2.35em;
 
       span {
         width: max-content;
@@ -65,6 +67,7 @@ ordercycle {
       background-image: image-url('white-caret.svg');
       background-size: 30px auto;
       background-position-x: 102%;
+      height: 2.35em;
     }
 
     p {
@@ -82,7 +85,6 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       font-size: 1em;
       line-height: 1.3em;
-      height: 2.35em;
       min-width: 13em;
       width: 200px;
 
