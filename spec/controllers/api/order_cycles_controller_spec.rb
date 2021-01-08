@@ -151,7 +151,8 @@ module Api
 
       context "when the order cycle is closed" do
         before do
-          allow_any_instance_of(OrderCycle).to receive(:open?) { false }
+          allow(controller).to receive(:order_cycle) { order_cycle }
+          allow(order_cycle).to receive(:open?) { false }
         end
 
         # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/6491
