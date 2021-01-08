@@ -95,6 +95,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
               payment.update cvv_response_message: "http://redirect_url"
+              payment.update state: "pending"
             end
           end
           it "redirects to new payment page with flash error" do
