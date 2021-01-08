@@ -376,7 +376,7 @@ describe Spree::Shipment do
         shipment_id = args[0]
         mail_message
       }
-      expect(mail_message).to receive :deliver
+      expect(mail_message).to receive :deliver_now
       shipment.ship!
       expect(shipment_id).to eq shipment.id
     end

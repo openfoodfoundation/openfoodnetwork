@@ -37,13 +37,13 @@ module OrderManagement
 
       def send_placement_summary_emails
         @summaries.values.each do |summary|
-          SubscriptionMailer.placement_summary_email(summary).deliver
+          SubscriptionMailer.placement_summary_email(summary).deliver_now
         end
       end
 
       def send_confirmation_summary_emails
         @summaries.values.each do |summary|
-          SubscriptionMailer.confirmation_summary_email(summary).deliver
+          SubscriptionMailer.confirmation_summary_email(summary).deliver_now
         end
       end
 

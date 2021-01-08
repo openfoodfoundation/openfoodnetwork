@@ -87,11 +87,11 @@ class SubscriptionPlacementJob
   def send_placement_email(order, changes)
     record_issue(:changes, order) if changes.present?
     record_success(order) if changes.blank?
-    SubscriptionMailer.placement_email(order, changes).deliver
+    SubscriptionMailer.placement_email(order, changes).deliver_now
   end
 
   def send_empty_email(order, changes)
     record_issue(:empty, order)
-    SubscriptionMailer.empty_email(order, changes).deliver
+    SubscriptionMailer.empty_email(order, changes).deliver_now
   end
 end

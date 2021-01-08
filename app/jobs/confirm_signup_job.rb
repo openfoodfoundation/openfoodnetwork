@@ -3,6 +3,6 @@
 class ConfirmSignupJob < ActiveJob::Base
   def perform(user_id)
     user = Spree::User.find user_id
-    Spree::UserMailer.signup_confirmation(user).deliver
+    Spree::UserMailer.signup_confirmation(user).deliver_now
   end
 end

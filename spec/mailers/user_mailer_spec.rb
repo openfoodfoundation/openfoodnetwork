@@ -21,7 +21,7 @@ describe Spree::UserMailer do
 
   describe '#signup_confirmation' do
     it "sends email when given a user" do
-      Spree::UserMailer.signup_confirmation(user).deliver
+      Spree::UserMailer.signup_confirmation(user).deliver_now
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
@@ -35,13 +35,13 @@ describe Spree::UserMailer do
 
       it "sends email in user locale when user locale is defined" do
         user.locale = 'es'
-        Spree::UserMailer.signup_confirmation(user).deliver
+        Spree::UserMailer.signup_confirmation(user).deliver_now
         expect(ActionMailer::Base.deliveries.first.body).to include "Gracias por unirte"
       end
 
       it "sends email in default locale when user locale is not available" do
         user.locale = 'cn'
-        Spree::UserMailer.signup_confirmation(user).deliver
+        Spree::UserMailer.signup_confirmation(user).deliver_now
         expect(ActionMailer::Base.deliveries.first.body).to include "Obrigada por juntar-se"
       end
     end
@@ -50,7 +50,7 @@ describe Spree::UserMailer do
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     describe 'message contents' do
-      let(:message) { described_class.reset_password_instructions(user, nil).deliver }
+      let(:message) { described_class.reset_password_instructions(user, nil).deliver_now }
 
       context 'subject includes' do
         it 'translated devise instructions' do
@@ -86,7 +86,7 @@ describe Spree::UserMailer do
     describe 'legacy support for User object' do
       it 'sends an email' do
         expect do
-          Spree::UserMailer.reset_password_instructions(user, nil).deliver
+          Spree::UserMailer.reset_password_instructions(user, nil).deliver_now
         end.to change(ActionMailer::Base.deliveries, :size).by(1)
       end
     end

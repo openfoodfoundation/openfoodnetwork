@@ -23,14 +23,14 @@ describe Spree::OrderMailer do
     it "confirm_email_for_customer accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
-        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver
+        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
       }.to_not raise_error
     end
 
     it "cancel_email accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
-        Spree::OrderMailer.cancel_email(order.id).deliver
+        Spree::OrderMailer.cancel_email(order.id).deliver_now
       }.to_not raise_error
     end
   end
@@ -101,7 +101,7 @@ describe Spree::OrderMailer do
 
     describe "for customers" do
       it "should send an email to the customer when given an order" do
-        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver
+        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.count).to eq(1)
         expect(ActionMailer::Base.deliveries.first.to).to eq([order.email])
       end
@@ -114,14 +114,14 @@ describe Spree::OrderMailer do
       end
 
       it "sets a reply-to of the enterprise email" do
-        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver
+        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.first.reply_to).to eq([distributor.contact.email])
       end
     end
 
     describe "for shops" do
       it "sends an email to the shop owner when given an order" do
-        Spree::OrderMailer.confirm_email_for_shop(order.id).deliver
+        Spree::OrderMailer.confirm_email_for_shop(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.count).to eq(1)
         expect(ActionMailer::Base.deliveries.first.to).to eq([distributor.contact.email])
       end
@@ -129,7 +129,7 @@ describe Spree::OrderMailer do
       it "sends an email even if a footer_email is given" do
         # Testing bug introduced by a9c37c162e1956028704fbdf74ce1c56c5b3ce7d
         ContentConfig.footer_email = "email@example.com"
-        Spree::OrderMailer.confirm_email_for_shop(order.id).deliver
+        Spree::OrderMailer.confirm_email_for_shop(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.count).to eq(1)
       end
     end

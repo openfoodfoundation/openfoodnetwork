@@ -8,7 +8,7 @@ describe WelcomeEnterpriseJob do
   it "sends a welcome email to the enterprise" do
     mail = double(:mail)
     expect(EnterpriseMailer).to receive(:welcome).with(enterprise).and_return(mail)
-    expect(mail).to receive(:deliver)
+    expect(mail).to receive(:deliver_now)
 
     WelcomeEnterpriseJob.perform_now(enterprise.id)
   end
