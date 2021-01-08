@@ -3,7 +3,7 @@
 module Spree
   class ShippingRate < ActiveRecord::Base
     belongs_to :shipment, class_name: 'Spree::Shipment'
-    belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
+    belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
 
     scope :frontend,
           -> {
