@@ -6,8 +6,8 @@ describe EmbeddedPageService do
   let(:enterprise_slug) { 'test-enterprise' }
   let(:params) { { controller: 'enterprises', action: 'shop', id: enterprise_slug, embedded_shopfront: true } }
   let(:session) { {} }
-  let(:request) { ActionController::TestRequest.new('HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'https://embedding-enterprise.com') }
-  let(:response) { ActionController::TestResponse.new(200, 'X-Frame-Options' => 'DENY', 'Content-Security-Policy' => "frame-ancestors 'none'") }
+  let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'https://embedding-enterprise.com'}, nil) }
+  let(:response) { ActionDispatch::TestResponse.new(200, 'X-Frame-Options' => 'DENY', 'Content-Security-Policy' => "frame-ancestors 'none'") }
   let(:service) { EmbeddedPageService.new(params, session, request, response) }
 
   before do
@@ -23,7 +23,7 @@ describe EmbeddedPageService do
 
       it "sets the response headers to enables embedding requests from the embedding site" do
         expect(response.headers).to_not include 'X-Frame-Options' => 'DENY'
-        expect(response.headers).to include 'Content-Security-Policy' => "frame-ancestors 'self' embedding-enterprise.com"
+        expect(response.headers).to eq 'Content-Security-Policy' => "frame-ancestors 'self' embedding-enterprise.com"
       end
 
       it "sets session variables" do
@@ -63,7 +63,7 @@ describe EmbeddedPageService do
     end
 
     context "when the request's referer is malformed" do
-      let(:request) { ActionController::TestRequest.new('HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello') }
+      let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello'}, nil) }
       before do
         service.embed!
       end
