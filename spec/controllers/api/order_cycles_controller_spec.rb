@@ -148,6 +148,21 @@ module Api
           expect(product_ids).to include product3.id
         end
       end
+
+      context "when the order cycle is closed" do
+        before do
+          allow(controller).to receive(:order_cycle) { order_cycle }
+          allow(order_cycle).to receive(:open?) { false }
+        end
+
+        # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/6491
+        it "renders no products without error" do
+          api_get :products, id: order_cycle.id, distributor: distributor.id
+
+          expect(json_response).to eq({})
+          expect(response).to have_http_status :not_found
+        end
+      end
     end
 
     describe "#taxons" do

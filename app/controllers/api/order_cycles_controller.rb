@@ -20,7 +20,7 @@ module Api
         search_params
       ).products_json
 
-      render plain: products, content_type: "application/json"
+      render plain: products
     rescue ProductsRenderer::NoProducts
       render_no_products
     end
@@ -33,19 +33,19 @@ module Api
 
       render plain: ActiveModel::ArraySerializer.new(
         taxons, each_serializer: Api::TaxonSerializer
-      ).to_json, content_type: "application/json"
+      ).to_json
     end
 
     def properties
       render plain: ActiveModel::ArraySerializer.new(
         product_properties | producer_properties, each_serializer: Api::PropertySerializer
-      ).to_json, content_type: "application/json"
+      ).to_json
     end
 
     private
 
     def render_no_products
-      render status: :not_found, json: ''
+      render status: :not_found, json: {}
     end
 
     def product_properties
