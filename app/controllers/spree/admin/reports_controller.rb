@@ -46,19 +46,19 @@ module Spree
       def customers
         @report_types = report_types[:customers]
         @report_type = params[:report_type]
-        @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params, render_content?
+        @report = OpenFoodNetwork::CustomersReport.new spree_current_user, raw_params, render_content?
         render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
       end
 
       def order_cycle_management
-        params[:q] ||= {}
+        raw_params[:q] ||= {}
 
         @report_types = report_types[:order_cycle_management]
         @report_type = params[:report_type]
 
         # -- Build Report with Order Grouper
         @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user,
-                                                                  params,
+                                                                  raw_params,
                                                                   render_content?
         @table = @report.table_items
 
@@ -67,13 +67,13 @@ module Spree
       end
 
       def packing
-        params[:q] ||= {}
+        raw_params[:q] ||= {}
 
         @report_types = report_types[:packing]
         @report_type = params[:report_type]
 
         # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::PackingReport.new spree_current_user, params, render_content?
+        @report = OpenFoodNetwork::PackingReport.new spree_current_user, raw_params, render_content?
         @table = order_grouper_table
 
         render_report(@report.header, @table, params[:csv], "packing_#{timestamp}.csv")
@@ -81,7 +81,7 @@ module Spree
 
       def orders_and_distributors
         @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user,
-                                                                 params,
+                                                                 raw_params,
                                                                  render_content?
         @search = @report.search
         csv_file_name = "orders_and_distributors_#{timestamp}.csv"
@@ -91,7 +91,7 @@ module Spree
       def sales_tax
         @distributors = my_distributors
         @report_type = params[:report_type]
-        @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params, render_content?
+        @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, raw_params, render_content?
         render_report(@report.header, @report.table, params[:csv], "sales_tax.csv")
       end
 
@@ -101,7 +101,7 @@ module Spree
         @report_type = params[:report_type]
 
         # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, params, render_content?
+        @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, raw_params, render_content?
         @table = order_grouper_table
         csv_file_name = "payments_#{timestamp}.csv"
 
@@ -109,7 +109,7 @@ module Spree
       end
 
       def orders_and_fulfillment
-        params[:q] ||= orders_and_fulfillment_default_filters
+        raw_params[:q] ||= orders_and_fulfillment_default_filters
 
         # -- Prepare Form Options
         permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
@@ -127,7 +127,7 @@ module Spree
 
         # -- Build Report with Order Grouper
         @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user,
-                                                                   params,
+                                                                   raw_params,
                                                                    render_content?
         @table = order_grouper_table
         csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
@@ -139,11 +139,11 @@ module Spree
         @report_types = report_types[:products_and_inventory]
         @report = if params[:report_type] != 'lettuce_share'
                     OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user,
-                                                                    params,
+                                                                    raw_params,
                                                                     render_content?
                   else
                     OpenFoodNetwork::LettuceShareReport.new spree_current_user,
-                                                            params,
+                                                            raw_params,
                                                             render_content?
                   end
 
@@ -154,19 +154,19 @@ module Spree
       end
 
       def users_and_enterprises
-        @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params, render_content?
+        @report = OpenFoodNetwork::UsersAndEnterprisesReport.new raw_params, render_content?
         render_report(@report.header, @report.table, params[:csv],
                       "users_and_enterprises_#{timestamp}.csv")
       end
 
       def xero_invoices
-        params[:q] ||= {}
+        raw_params[:q] ||= {}
 
         @distributors = my_distributors
         @order_cycles = my_order_cycles
 
         @report = OpenFoodNetwork::XeroInvoicesReport.new(spree_current_user,
-                                                          params,
+                                                          raw_params,
                                                           render_content?)
         render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
       end
@@ -198,7 +198,7 @@ module Spree
           :invoice_date,
           :due_date
         ]
-        @searching = search_keys.any? { |key| params.key? key }
+        @searching = search_keys.any? { |key| raw_params.key? key }
       end
 
       # We don't want to render data unless search params are supplied.
