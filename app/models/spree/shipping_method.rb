@@ -3,7 +3,6 @@
 module Spree
   class ShippingMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end].freeze
 
     acts_as_taggable
 
