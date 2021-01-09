@@ -225,7 +225,7 @@ module OpenFoodNetwork
                                                   scope: Enterprise.is_primary_producer)
 
       # Variants from Producers via permissions, and from the hub itself
-      available_variants = variants_from_suppliers(producer_ids.push(hub.id))
+      available_variants = variants_from_suppliers(producer_ids.to_a + [hub.id])
 
       # PLUS variants that are already in an outgoing exchange of this hub, so things don't break
       active_variants = active_outgoing_variants(hub)
