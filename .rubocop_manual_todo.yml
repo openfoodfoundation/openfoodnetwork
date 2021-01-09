@@ -102,6 +102,7 @@ Layout/LineLength:
   - lib/open_food_network/scope_variants_for_search.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/localized_number.rb
+  - lib/stripe/credit_card_clone_finder.rb
   - lib/tasks/data.rake
   - lib/tasks/enterprises.rake
   - spec/controllers/admin/bulk_line_items_controller_spec.rb
@@ -433,6 +434,7 @@ Metrics/AbcSize:
   - lib/open_food_network/order_cycle_form_applicator.rb
   - lib/open_food_network/order_cycle_management_report.rb
   - lib/open_food_network/order_cycle_permissions.rb
+  - lib/open_food_network/orders_and_fulfillments_report/supplier_totals_report.rb
   - lib/open_food_network/packing_report.rb
   - lib/open_food_network/payments_report.rb
   - lib/open_food_network/permissions.rb
@@ -695,6 +697,7 @@ Metrics/MethodLength:
   - lib/spree/core/s3_support.rb
   - lib/spree/localized_number.rb
   - lib/spree/responder.rb
+  - lib/stripe/credit_card_clone_finder.rb
   - lib/stripe/profile_storer.rb
   - lib/tasks/sample_data/group_factory.rb
   - lib/tasks/sample_data/order_factory.rb
@@ -728,6 +731,7 @@ Metrics/ClassLength:
   - app/models/spree/ability.rb
   - app/models/spree/address.rb
   - app/models/spree/credit_card.rb
+  - app/models/spree/gateway/stripe_sca.rb
   - app/models/spree/line_item.rb
   - app/models/spree/order.rb
   - app/models/spree/payment.rb
