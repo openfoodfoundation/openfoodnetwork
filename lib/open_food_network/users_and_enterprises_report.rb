@@ -122,7 +122,7 @@ module OpenFoodNetwork
     end
 
     def to_bool(value)
-      ActiveRecord::Type::Boolean.new.type_cast_from_database(value)
+      ActiveRecord::Type::Boolean.new.cast(value)
     end
 
     def to_local_datetime(date)
