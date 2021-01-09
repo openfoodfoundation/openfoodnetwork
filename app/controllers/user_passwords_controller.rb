@@ -6,7 +6,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   def create
     render_unconfirmed_response && return if user_unconfirmed?
 
-    self.resource = resource_class.send_reset_password_instructions(params[resource_name])
+    self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
 
     if resource.errors.empty?
       set_flash_message(:success, :send_instructions) if is_navigational_format?
