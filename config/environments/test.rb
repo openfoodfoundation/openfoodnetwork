@@ -50,7 +50,7 @@ Openfoodnetwork::Application.configure do
   # To block requests before running the database cleaner
   require 'open_food_network/rack_request_blocker'
   # Make sure the middleware is inserted first in middleware chain
-  config.middleware.insert_before('ActionDispatch::Static', 'RackRequestBlocker')
+  config.middleware.insert_before(ActionDispatch::Static, RackRequestBlocker)
 
   config.active_job.queue_adapter = :test
 end
