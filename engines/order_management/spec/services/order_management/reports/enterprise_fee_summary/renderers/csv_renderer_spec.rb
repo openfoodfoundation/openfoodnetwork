@@ -12,7 +12,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
 
   # Context which will be passed to the renderer. The response object is not automatically prepared,
   # so this has to be assigned explicitly.
-  let!(:response) { ActionController::TestResponse.new }
+  let!(:response) { ActionDispatch::TestResponse.new }
   let!(:controller) do
     ActionController::Base.new.tap do |controller_mock|
       controller_mock.instance_variable_set(:@_response, response)
