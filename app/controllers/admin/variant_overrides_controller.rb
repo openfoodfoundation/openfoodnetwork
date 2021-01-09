@@ -103,13 +103,13 @@ module Admin
     end
 
     def variant_overrides_params
-      params.require(:variant_overrides).map do |variant_override|
-        variant_override.permit(
+      params.permit(
+        variant_overrides: [
           :id, :variant_id, :hub_id,
           :price, :count_on_hand, :sku, :on_demand,
           :default_stock, :resettable, :tag_list
-        )
-      end
+        ]
+      ).to_h[:variant_overrides]
     end
   end
 end
