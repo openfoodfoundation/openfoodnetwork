@@ -400,7 +400,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    WelcomeEnterpriseJob.perform_later(id)
+    EnterpriseMailer.welcome(self).deliver_later
   end
 
   def strip_url(url)
