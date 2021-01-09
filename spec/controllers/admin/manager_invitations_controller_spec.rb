@@ -36,10 +36,8 @@ module Admin
         end
 
         it 'enqueues an invitation email' do
-          allow(ManagerInvitationJob)
-            .to receive(:new).with(enterprise.id, kind_of(Integer)) { manager_invitation }
-
-          expect(Delayed::Job).to receive(:enqueue).with(manager_invitation)
+          expect(ManagerInvitationJob)
+            .to receive(:perform_later).with(enterprise.id, kind_of(Integer))
 
           spree_post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
         end

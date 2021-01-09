@@ -24,7 +24,7 @@ describe Spree::OrderMailer do
 
     it "should use the from address specified in the preference" do
       Spree::Config[:mails_from] = "no-reply@foobar.com"
-      message.deliver
+      message.deliver_now
       @email = ActionMailer::Base.deliveries.first
       expect(@email.from).to eq ["no-reply@foobar.com"]
     end
@@ -33,7 +33,7 @@ describe Spree::OrderMailer do
       Spree::Config[:mails_from] = "preference@foobar.com"
       message.from = "override@foobar.com"
       message.to = "test@test.com"
-      message.deliver
+      message.deliver_now
       email = ActionMailer::Base.deliveries.first
       expect(email.from).to eq ["override@foobar.com"]
       expect(email.to).to eq ["test@test.com"]
@@ -41,7 +41,7 @@ describe Spree::OrderMailer do
 
     it "should add the bcc email when provided" do
       Spree::Config[:mail_bcc] = "bcc-foo@foobar.com"
-      message.deliver
+      message.deliver_now
       @email = ActionMailer::Base.deliveries.first
       expect(@email.bcc).to eq ["bcc-foo@foobar.com"]
     end
@@ -57,14 +57,14 @@ describe Spree::OrderMailer do
 
       it "should replace the receipient with the specified address" do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
-        message.deliver
+        message.deliver_now
         @email = ActionMailer::Base.deliveries.first
         expect(@email.to).to eq ["intercept@foobar.com"]
       end
 
       it "should modify the subject to include the original email" do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
-        message.deliver
+        message.deliver_now
         @email = ActionMailer::Base.deliveries.first
         expect(@email.subject).to include order.distributor.contact.email
       end
@@ -73,7 +73,7 @@ describe Spree::OrderMailer do
     context "when intercept_mode is not provided" do
       it "should not modify the recipient" do
         Spree::Config[:intercept_email] = ""
-        message.deliver
+        message.deliver_now
         @email = ActionMailer::Base.deliveries.first
         expect(@email.to).to eq [order.distributor.contact.email]
       end

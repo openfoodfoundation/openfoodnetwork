@@ -824,7 +824,7 @@ module Spree
     def after_cancel
       shipments.each(&:cancel!)
 
-      OrderMailer.cancel_email(id).deliver
+      OrderMailer.cancel_email(id).deliver_later
       self.payment_state = 'credit_owed' unless shipped?
     end
 

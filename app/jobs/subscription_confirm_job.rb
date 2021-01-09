@@ -1,7 +1,7 @@
 require 'order_management/subscriptions/summarizer'
 
 # Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
-class SubscriptionConfirmJob
+class SubscriptionConfirmJob < ActiveJob::Base
   def perform
     confirm_proxy_orders!
   end
@@ -90,13 +90,13 @@ class SubscriptionConfirmJob
   def send_confirmation_email(order)
     order.update!
     record_success(order)
-    SubscriptionMailer.confirmation_email(order).deliver
+    SubscriptionMailer.confirmation_email(order).deliver_now
   end
 
   def send_failed_payment_email(order, error_message = nil)
     order.update!
     record_and_log_error(:failed_payment, order, error_message)
-    SubscriptionMailer.failed_payment_email(order).deliver
+    SubscriptionMailer.failed_payment_email(order).deliver_now
   rescue StandardError => e
     Bugsnag.notify(e, order: order, error_message: error_message)
   end

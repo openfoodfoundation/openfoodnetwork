@@ -209,7 +209,7 @@ describe SubscriptionPlacementJob do
 
   describe "#send_placement_email" do
     let!(:order) { double(:order) }
-    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+    let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
 
     before do
       allow(SubscriptionMailer).to receive(:placement_email) { mail_mock }
@@ -222,7 +222,7 @@ describe SubscriptionPlacementJob do
         expect(job).to receive(:record_issue).with(:changes, order).once
         job.send(:send_placement_email, order, changes)
         expect(SubscriptionMailer).to have_received(:placement_email).with(order, changes)
-        expect(mail_mock).to have_received(:deliver)
+        expect(mail_mock).to have_received(:deliver_now)
       end
     end
 
@@ -233,7 +233,7 @@ describe SubscriptionPlacementJob do
         expect(job).to receive(:record_success).with(order).once
         job.send(:send_placement_email, order, changes)
         expect(SubscriptionMailer).to have_received(:placement_email)
-        expect(mail_mock).to have_received(:deliver)
+        expect(mail_mock).to have_received(:deliver_now)
       end
     end
   end
@@ -241,7 +241,7 @@ describe SubscriptionPlacementJob do
   describe "#send_empty_email" do
     let!(:order) { double(:order) }
     let(:changes) { double(:changes) }
-    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+    let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
 
     before do
       allow(SubscriptionMailer).to receive(:empty_email) { mail_mock }
@@ -251,7 +251,7 @@ describe SubscriptionPlacementJob do
       expect(job).to receive(:record_issue).with(:empty, order).once
       job.send(:send_empty_email, order, changes)
       expect(SubscriptionMailer).to have_received(:empty_email).with(order, changes)
-      expect(mail_mock).to have_received(:deliver)
+      expect(mail_mock).to have_received(:deliver_now)
     end
   end
 end

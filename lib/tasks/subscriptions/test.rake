@@ -25,7 +25,7 @@ namespace :ofn do
           placed_at: nil)
 
         # Run placement job to create orders
-        SubscriptionPlacementJob.new.perform
+        SubscriptionPlacementJob.perform_now
       end
 
       desc "Force confirmation job for a specific Order Cycle"
@@ -43,7 +43,7 @@ namespace :ofn do
         )
 
         # Run Confirm Job to process payments
-        SubscriptionConfirmJob.new.perform
+        SubscriptionConfirmJob.perform_now
       end
 
       def exit_in_production

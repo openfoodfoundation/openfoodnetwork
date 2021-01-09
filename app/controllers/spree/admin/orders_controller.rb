@@ -78,7 +78,7 @@ module Spree
       end
 
       def resend
-        Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
+        Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver_later
         flash[:success] = t('admin.orders.order_email_resent')
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
@@ -87,7 +87,7 @@ module Spree
       def invoice
         pdf = InvoiceRenderer.new.render_to_string(@order)
 
-        Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
+        Spree::OrderMailer.invoice_email(@order.id, pdf).deliver_later
         flash[:success] = t('admin.orders.invoice_email_sent')
 
         respond_with(@order) { |format|

@@ -446,7 +446,7 @@ describe Admin::SubscriptionsController, type: :controller do
               before do
                 params[:open_orders] = 'cancel'
                 allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
-                allow(mail_mock).to receive(:deliver)
+                allow(mail_mock).to receive(:deliver_later)
               end
 
               it 'renders the cancelled subscription as json, and cancels the open order' do
@@ -457,7 +457,7 @@ describe Admin::SubscriptionsController, type: :controller do
                 expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
                 expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
-                expect(mail_mock).to have_received(:deliver)
+                expect(mail_mock).to have_received(:deliver_later)
               end
             end
           end
@@ -545,7 +545,7 @@ describe Admin::SubscriptionsController, type: :controller do
               before do
                 params[:open_orders] = 'cancel'
                 allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
-                allow(mail_mock).to receive(:deliver)
+                allow(mail_mock).to receive(:deliver_later)
               end
 
               it 'renders the paused subscription as json, and cancels the open order' do
@@ -556,7 +556,7 @@ describe Admin::SubscriptionsController, type: :controller do
                 expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
                 expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
-                expect(mail_mock).to have_received(:deliver)
+                expect(mail_mock).to have_received(:deliver_later)
               end
             end
           end

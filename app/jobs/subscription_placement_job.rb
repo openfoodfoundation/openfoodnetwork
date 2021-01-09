@@ -1,6 +1,6 @@
 require 'order_management/subscriptions/summarizer'
 
-class SubscriptionPlacementJob
+class SubscriptionPlacementJob < ActiveJob::Base
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(placed_at: Time.zone.now)
@@ -87,11 +87,11 @@ class SubscriptionPlacementJob
   def send_placement_email(order, changes)
     record_issue(:changes, order) if changes.present?
     record_success(order) if changes.blank?
-    SubscriptionMailer.placement_email(order, changes).deliver
+    SubscriptionMailer.placement_email(order, changes).deliver_now
   end
 
   def send_empty_email(order, changes)
     record_issue(:empty, order)
-    SubscriptionMailer.empty_email(order, changes).deliver
+    SubscriptionMailer.empty_email(order, changes).deliver_now
   end
 end

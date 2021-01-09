@@ -170,17 +170,20 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         context "when the distributor's ABN has been set" do
-          before { distributor.update_attribute(:abn, "123") }
+          let(:mail_mock) { double(:mailer_mock, deliver_later: true) }
+
           before do
-            ActionMailer::Base.perform_deliveries = true
+            allow(Spree::OrderMailer).to receive(:invoice_email) { mail_mock }
+            distributor.update_attribute(:abn, "123")
             setup_email
           end
 
           it "should allow me to send order invoices" do
-            expect do
-              spree_get :invoice, params
-            end.to change{ Spree::OrderMailer.deliveries.count }.by(1)
+            spree_get :invoice, params
+
             expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(Spree::OrderMailer).to have_received(:invoice_email)
+            expect(mail_mock).to have_received(:deliver_later)
           end
         end
       end
