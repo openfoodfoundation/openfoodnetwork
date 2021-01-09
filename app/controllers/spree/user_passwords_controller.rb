@@ -9,6 +9,7 @@ module Spree
   class UserPasswordsController < Devise::PasswordsController
     helper 'spree/base'
 
+    include RawParams
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
