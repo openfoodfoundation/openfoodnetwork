@@ -17,8 +17,8 @@ module Sets
         attrs['count_on_hand'].blank? &&
         attrs['default_stock'].blank? &&
         attrs['resettable'].blank? &&
-        attrs['sku'].nil? &&
-        attrs['on_demand'].nil? &&
+        attrs['sku'].blank? &&
+        attrs['on_demand'].blank? &&
         tag_list.empty?
     end
 
