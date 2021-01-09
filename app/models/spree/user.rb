@@ -101,7 +101,7 @@ module Spree
     end
 
     def send_signup_confirmation
-      ConfirmSignupJob.perform_later(id)
+      Spree::UserMailer.signup_confirmation(self).deliver_later
     end
 
     def associate_customers

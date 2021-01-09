@@ -111,7 +111,9 @@ describe Spree::User do
 
       expect do
         create(:user, confirmed_at: nil).confirm
-      end.to enqueue_job ConfirmSignupJob
+      end.to enqueue_job ActionMailer::DeliveryJob
+
+      expect(enqueued_jobs.last.to_s).to match "signup_confirmation"
     end
   end
 
