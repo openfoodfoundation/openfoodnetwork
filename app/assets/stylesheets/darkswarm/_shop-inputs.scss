@@ -29,9 +29,12 @@ button.add-variant, button.variant-quantity {
   &:hover {
     background-color: $orange-600;
   }
+
   &[disabled] {
+    background-color: $grey-400;
+
     &:hover, &:focus {
-      background-color: $orange-500;
+      background-color: $grey-400;
     }
   }
   &:nth-of-type(1) {
@@ -84,14 +87,6 @@ button.bulk-buy.variant-quantity {
 
 button.bulk-buy-add.variant-quantity {
   width: 2.5rem;
-
-  &[disabled] {
-    background-color: $grey-400;
-
-    &:hover, &:focus {
-      background-color: $grey-400;
-    }
-  }
 }
 
 span.bulk-buy.variant-quantity {
