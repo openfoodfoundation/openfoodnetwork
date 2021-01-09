@@ -6,7 +6,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   def create
     render_unconfirmed_response && return if user_unconfirmed?
 
-    self.resource = resource_class.send_reset_password_instructions(params[resource_name])
+    self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
 
     if resource.errors.empty?
       set_flash_message(:success, :send_instructions) if is_navigational_format?
@@ -26,7 +26,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   private
 
   def set_admin_redirect
-    session["spree_user_return_to"] = params[:return_to] if params[:return_to]
+    session["spree_user_return_to"] = raw_params[:return_to] if raw_params[:return_to]
   end
 
   def render_unconfirmed_response
@@ -34,7 +34,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   end
 
   def user_unconfirmed?
-    user = Spree::User.find_by(email: params[:spree_user][:email])
+    user = Spree::User.find_by(email: raw_params[:spree_user][:email])
     user && !user.confirmed?
   end
 end
