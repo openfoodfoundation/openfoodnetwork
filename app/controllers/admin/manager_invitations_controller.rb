@@ -35,7 +35,7 @@ module Admin
       new_user.save!
 
       @enterprise.users << new_user
-      ManagerInvitationJob.perform_later(@enterprise.id, new_user.id)
+      EnterpriseMailer.manager_invitation(@enterprise, new_user).deliver_later
 
       new_user
     end
