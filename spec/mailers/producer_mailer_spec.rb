@@ -51,10 +51,6 @@ describe ProducerMailer, type: :mailer do
 
   let(:mail) { ProducerMailer.order_cycle_report(s1, order_cycle) }
 
-  it "should send an email when an order cycle is closed" do
-    expect(ActionMailer::Base.deliveries.count).to eq(1)
-  end
-
   it "sets a reply-to of the oc coordinator's email" do
     expect(mail.reply_to).to eq [order_cycle.coordinator.contact.email]
   end
