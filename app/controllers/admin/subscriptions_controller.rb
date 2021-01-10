@@ -57,14 +57,13 @@ module Admin
     end
 
     def unpause
-      params[:subscription][:paused_at] = nil
-      save_form_and_render
+      save_form_and_render(true, unpause: true)
     end
 
     private
 
-    def save_form_and_render(render_issues = true)
-      form = OrderManagement::Subscriptions::Form.new(@subscription, subscription_params)
+    def save_form_and_render(render_issues = true, options = {})
+      form = OrderManagement::Subscriptions::Form.new(@subscription, subscription_params, options)
       unless form.save
         render json: { errors: form.json_errors }, status: :unprocessable_entity
         return
@@ -156,7 +155,7 @@ module Admin
     end
 
     def subscription_params
-      PermittedAttributes::Subscription.new(params).call
+      @subscription_params ||= PermittedAttributes::Subscription.new(params).call
     end
   end
 end
