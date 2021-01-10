@@ -17,7 +17,7 @@ module Admin
     end
 
     def update
-      Spree::Config.set(params[:settings])
+      Spree::Config.set(raw_params[:settings])
       resource = t('admin.controllers.stripe_connect_settings.resource')
       flash[:success] = t(:successfully_updated, resource: resource)
       redirect_to_edit
