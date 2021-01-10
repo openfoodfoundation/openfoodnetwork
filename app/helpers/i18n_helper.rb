@@ -1,6 +1,6 @@
 module I18nHelper
   def set_locale
-    UserLocaleSetter.new(spree_current_user, params[:locale], cookies).set_locale
+    UserLocaleSetter.new(spree_current_user, raw_params[:locale], cookies).set_locale
   end
 
   def valid_locale(user)
