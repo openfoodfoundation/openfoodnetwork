@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include RawParams
+
   def feature?(feature, user = nil)
     OpenFoodNetwork::FeatureToggle.enabled?(feature, user)
   end
