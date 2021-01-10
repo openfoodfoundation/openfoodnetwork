@@ -7,6 +7,8 @@ module Api
     respond_to :json
     DEFAULT_PER_PAGE = 15
 
+    before_action :set_default_available_on, only: :create
+
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
     def show
@@ -16,8 +18,8 @@ module Api
 
     def create
       authorize! :create, Spree::Product
-      params[:product][:available_on] ||= Time.zone.now
       @product = Spree::Product.new(product_params)
+
       begin
         if @product.save
           render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
@@ -146,7 +148,12 @@ module Api
     end
 
     def product_params
-      params.require(:product).permit PermittedAttributes::Product.attributes
+      @product_params ||=
+        params.permit(product: PermittedAttributes::Product.attributes)[:product].to_h
+    end
+
+    def set_default_available_on
+      product_params[:available_on] ||= Time.zone.now
     end
   end
 end
