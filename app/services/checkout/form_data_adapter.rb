@@ -6,7 +6,7 @@ module Checkout
     attr_reader :params, :shipping_method_id
 
     def initialize(params, order, current_user)
-      @params = params.dup
+      @params = params.deep_dup.to_h.with_indifferent_access
       @order = order
       @current_user = current_user
 
@@ -16,9 +16,9 @@ module Checkout
 
       set_amount_in_payments_attributes
 
-      construct_saved_card_attributes if @params[:order][:existing_card_id]
+      construct_saved_card_attributes if @params.dig(:order, :existing_card_id)
 
-      @shipping_method_id = @params[:order].delete(:shipping_method_id)
+      @shipping_method_id = @params[:order]&.delete(:shipping_method_id)
     end
 
     private
@@ -30,7 +30,7 @@ module Checkout
       return unless @params[:payment_source].present? &&
                     payment_source_params = delete_payment_source_params!
 
-      @params[:order][:payments_attributes].first[:source_attributes] = payment_source_params
+      @params.dig(:order, :payments_attributes).first[:source_attributes] = payment_source_params
     end
 
     # Ensures cc_type is always passed to the model by inferring the type when
@@ -45,7 +45,7 @@ module Checkout
 
     def payment_source_attributes
       @payment_source_attributes ||=
-        params[:order][:payments_attributes]&.first&.dig(:source_attributes)
+        @params.dig(:order, :payments_attributes)&.first&.dig(:source_attributes)
     end
 
     def card_brand(number)
@@ -54,14 +54,14 @@ module Checkout
 
     def delete_payment_source_params!
       @params.delete(:payment_source)[
-        @params[:order][:payments_attributes].first[:payment_method_id].underscore
+        @params.dig(:order, :payments_attributes).first[:payment_method_id].underscore
       ]
     end
 
     def set_amount_in_payments_attributes
-      return unless @params[:order][:payments_attributes]
+      return unless @params.dig(:order, :payments_attributes)
 
-      @params[:order][:payments_attributes].first[:amount] = @order.total
+      @params.dig(:order, :payments_attributes).first[:amount] = @order.total
     end
 
     def construct_saved_card_attributes
@@ -70,7 +70,7 @@ module Checkout
 
       add_to_payment_attributes(existing_card_id)
 
-      @params[:order][:payments_attributes].first.delete :source_attributes
+      @params.dig(:order, :payments_attributes).first.delete :source_attributes
     end
 
     def add_to_payment_attributes(existing_card_id)
@@ -79,7 +79,7 @@ module Checkout
         raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
       end
 
-      @params[:order][:payments_attributes].first[:source] = credit_card
+      @params.dig(:order, :payments_attributes).first[:source] = credit_card
     end
   end
 end
