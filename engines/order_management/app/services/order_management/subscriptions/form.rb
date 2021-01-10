@@ -11,19 +11,21 @@ module OrderManagement
       delegate :json_errors, :valid?, to: :validator
       delegate :order_update_issues, to: :order_syncer
 
-      def initialize(subscription, subscription_params = {})
+      def initialize(subscription, subscription_params = {}, options = {})
         @subscription = subscription
         @subscription_params = subscription_params
+        @options = options
         @estimator = OrderManagement::Subscriptions::Estimator.new(subscription)
         @validator = OrderManagement::Subscriptions::Validator.new(subscription)
         @order_syncer = OrderSyncer.new(subscription)
       end
 
       def save
-        subscription.assign_attributes(subscription_params)
+        subscription.assign_attributes(subscription_params.to_h)
         return false unless valid?
 
         subscription.transaction do
+          subscription.paused_at = nil if @options[:unpause]
           estimator.estimate!
           proxy_order_syncer.sync!
           order_syncer.sync!
