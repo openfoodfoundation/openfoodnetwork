@@ -1,8 +1,4 @@
 angular.module('admin.orderCycles', ['ngTagsInput', 'admin.indexUtils', 'admin.enterprises'])
-
-  .config ($httpProvider) ->
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-
   .directive 'datetimepicker', ($timeout, $parse) ->
     require: "ngModel"
     link: (scope, element, attrs, ngModel) ->

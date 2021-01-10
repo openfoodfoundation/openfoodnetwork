@@ -104,6 +104,8 @@ GEM
       railties (>= 4.2, < 7)
       sprockets (>= 3.0, < 5)
       tilt
+    angular_rails_csrf (4.2.0)
+      railties (>= 3, < 7)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.5.5)
     arel (7.1.4)
@@ -556,6 +558,7 @@ DEPENDENCIES
   acts_as_list (= 0.9.19)
   andand
   angular-rails-templates (>= 0.3.0)
+  angular_rails_csrf
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.5.5)
   atomic

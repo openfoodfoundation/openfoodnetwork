@@ -119,6 +119,7 @@ gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
+gem 'angular_rails_csrf'
 gem 'foundation-icons-sass-rails'
 
 gem 'foundation-rails', '= 5.5.2.1'
