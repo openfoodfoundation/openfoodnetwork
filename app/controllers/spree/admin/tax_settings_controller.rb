@@ -2,7 +2,7 @@ module Spree
   module Admin
     class TaxSettingsController < Spree::Admin::BaseController
       def update
-        Spree::Config.set(params[:preferences])
+        Spree::Config.set(raw_params[:preferences])
 
         respond_to do |format|
           format.html {
