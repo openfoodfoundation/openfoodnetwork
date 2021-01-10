@@ -13,11 +13,11 @@ module Api
 
     def icon
       icons = {
-        hub: "map_005-hub.svg",
-        hub_profile: "map_006-hub-profile.svg",
-        producer_hub: "map_005-hub.svg",
-        producer_shop: "map_003-producer-shop.svg",
-        producer: "map_001-producer-only.svg",
+        hub: "/map_005-hub.svg",
+        hub_profile: "/map_006-hub-profile.svg",
+        producer_hub: "/map_005-hub.svg",
+        producer_shop: "/map_003-producer-shop.svg",
+        producer: "/map_001-producer-only.svg",
       }
       ImagePathGenerator.call(icons[enterprise.category])
     end
