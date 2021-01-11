@@ -116,7 +116,8 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       localStorageService.clearAll() # One day this will have to be moar GRANULAR
 
     has_one_line_item: =>
-        @line_items_finalised.length == 1
+      @line_items_finalised.length == 1
+
     removeFinalisedLineItem: (id) =>
       @line_items_finalised = @line_items_finalised.filter (item) ->
         item.id != id
