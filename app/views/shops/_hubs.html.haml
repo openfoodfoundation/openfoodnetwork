@@ -27,7 +27,7 @@
           = t :hubs_distance_filter, location: "{{ nameMatchesFiltered[0].name }}"
   .more-controls
     %span{ng: {show: "closed_shops_loading", cloak: true}}
-      = render partial: "components/loading"
+      = render partial: "components/spinner"
     %span{ng: {if: "!show_closed", cloak: true}}
       %a.button{href: "", ng: {click: "showClosedShops()"}}
         = t '.show_closed_shops'

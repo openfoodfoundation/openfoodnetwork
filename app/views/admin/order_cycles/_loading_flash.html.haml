@@ -1,5 +1,5 @@
 %div.sixteen.columns.alpha.omega#loading{ ng: { cloak: true, if: 'RequestMonitor.loading' } }
-  = render partial: "components/loading"
+  = render partial: "components/spinner"
   %h1{ ng: { hide: 'orderCycles.length > 0' } }
     =t('.loading_order_cycles')
   %h1{ ng: { show: 'orderCycles.length > 0' } }
