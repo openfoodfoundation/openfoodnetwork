@@ -14,7 +14,7 @@ Spree::PaypalController.class_eval do
 
     tax_adjustments = order.adjustments.tax
     # TODO: Remove in Spree 2.2
-    tax_adjustments = tax_adjustments.additional if tax_adjustments.respond_to?(:additional)
+    tax_adjustments = tax_adjustments.only_additional if tax_adjustments.respond_to?(:only_additional)
     shipping_adjustments = order.adjustments.shipping
 
     order.adjustments.eligible.each do |adjustment|

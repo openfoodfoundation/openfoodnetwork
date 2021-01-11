@@ -49,8 +49,8 @@ module Spree
         tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
         pp "tax count:"
         pp tax.count
-        included_tax_total = tax.included.reload.map(&:update!).compact.sum
-        additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
+        included_tax_total = tax.only_included.reload.map(&:update!).compact.sum
+        additional_tax_total = tax.only_additional.reload.map(&:update!).compact.sum
         pp included_tax_total.to_s
         pp additional_tax_total.to_s
       end

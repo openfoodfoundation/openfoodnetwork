@@ -207,7 +207,7 @@ module Spree
       # so line_item.adjustments returns an empty array
       return 0 if quantity.zero?
 
-      line_item_adjustments = all_adjustments.additional
+      line_item_adjustments = all_adjustments.only_additional
 
       (price + line_item_adjustments.to_a.sum(&:amount) / quantity).round(2)
     end
