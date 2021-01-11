@@ -3,8 +3,9 @@ Darkswarm.controller "EditBoughtOrderController", ($scope, $resource, $timeout, 
   $scope.removeEnabled = true
 
   $scope.deleteLineItem = (id) ->
-    if Cart.check_last_finalised_item()
-      $scope.removeEnabled = false
+    if Cart.has_one_line_item()
+        Messages.error(t 'orders_cannot_remove_the_final_item')
+        $scope.removeEnabled = false
       $timeout (->
         $scope.removeEnabled = true
       ), 10000
