@@ -115,12 +115,8 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       @line_items = []
       localStorageService.clearAll() # One day this will have to be moar GRANULAR
 
-    check_last_finalised_item: =>
-      if @line_items_finalised.length == 1
-        Messages.error(t 'orders_cannot_remove_the_final_item')
-
-      @line_items_finalised.length == 1
-
+    has_one_line_item: =>
+        @line_items_finalised.length == 1
     removeFinalisedLineItem: (id) =>
       @line_items_finalised = @line_items_finalised.filter (item) ->
         item.id != id
