@@ -31,6 +31,8 @@ module OpenFoodNetwork
     end
 
     def self.enable(feature_name, user_emails)
+      return unless user_emails.present?
+
       Thread.current[:features] ||= {}
       Thread.current[:features][feature_name] = Feature.new(user_emails)
     end
