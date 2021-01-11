@@ -93,7 +93,7 @@
 .orders-loading{'ng-show' => 'RequestMonitor.loading'}
   .row
     .small-12.columns.fullwidth.text-center
-      %img.spinner{ src: image_path("spinning-circles.svg") }
+      = render partial: "components/loading"
   .row
     .small-12.columns.fullwidth.text-center
       %span= t('.loading')
