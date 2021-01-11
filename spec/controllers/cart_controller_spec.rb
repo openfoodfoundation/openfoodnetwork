@@ -32,8 +32,7 @@ describe CartController, type: :controller do
 
     it "tells cart_service to overwrite" do
       allow(cart_service).to receive(:variants_h) { {} }
-      allow(cart_service).to receive(:valid?) { true }
-      expect(cart_service).to receive(:populate).with({}, true)
+      expect(cart_service).to receive(:populate).with({}, true) { true }
       xhr :post, :populate, use_route: :spree, format: :json
     end
 
