@@ -16,13 +16,13 @@ class ContentSanitizer
   def strip_content(content)
     content = strip_tags(content.to_s.strip)
 
-    filter_characters(content) if content.length
+    filter_characters(content) if content.present?
   end
 
   def sanitize_content(content)
     content = sanitize(content.to_s, tags: ALLOWED_TAGS, attributes: ALLOWED_ATTRIBUTES)
 
-    filter_characters(content) if content.length
+    filter_characters(content) if content.present?
   end
 
   private
