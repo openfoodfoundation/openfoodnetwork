@@ -2455,6 +2455,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
