@@ -45,7 +45,8 @@ describe OrderTaxAdjustmentsFetcher do
                               calculator: Calculator::FlatRate.new(preferred_amount: 48.0))
     end
     let(:additional_adjustment) do
-      create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0))
+      create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0),
+                          source: nil, label: "Arbitrary admin adjustment")
     end
 
     let(:order_cycle) do
@@ -67,26 +68,23 @@ describe OrderTaxAdjustmentsFetcher do
       )
     end
 
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(tax_rate15.amount)
-    end
-
     let(:shipping_method) do
-      create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 46.0))
+      create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 46.0),
+                               tax_category: tax_category15)
     end
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
     end
 
     before do
-      order.create_tax_charge!
+      shipment.selected_shipping_rate.update(tax_rate: tax_rate15)
       order.update_distribution_charge!
+      order.create_tax_charge!
     end
 
     subject { OrderTaxAdjustmentsFetcher.new(order).totals }
 
-    it "returns a hash with all 3 taxes" do
+    it "returns a hash with all 4 taxes" do
       expect(subject.size).to eq(4)
     end
 
