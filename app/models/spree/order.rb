@@ -94,9 +94,6 @@ module Spree
 
     make_permalink field: :number
 
-    before_save :update_shipping_fees!, if: :complete?
-    before_save :update_payment_fees!, if: :complete?
-
     class_attribute :update_hooks
     self.update_hooks = Set.new
 
@@ -642,44 +639,6 @@ module Spree
       return unless using_guest_checkout? && registered_email?
 
       errors.add(:base, I18n.t('devise.failure.already_registered'))
-    end
-
-    # Needs looking at
-    # After changing line items of a completed order
-    def update_shipping_fees!
-      shipments.each do |shipment|
-        next if shipment.shipped?
-
-        shipment.adjustments.each{ |adjustment| update_adjustment! adjustment }
-        save_or_rescue_shipment(shipment)
-      end
-    end
-
-    def save_or_rescue_shipment(shipment)
-      shipment.save # updates included tax
-    rescue ActiveRecord::RecordNotUnique => e
-      # This error was seen in production on `shipment.save` above.
-      # It caused lost payments and duplicate payments due to database rollbacks.
-      # While we don't understand the cause of this error yet, we rescue here
-      # because an outdated shipping fee is not as bad as a lost payment.
-      # And the shipping fee is already up-to-date when this error occurs.
-      # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
-      Bugsnag.notify(e) do |report|
-        report.add_tab(:order, attributes)
-        report.add_tab(:shipment, shipment.attributes)
-        report.add_tab(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
-      end
-    end
-
-    # Needs looking at
-    # After changing line items of a completed order
-    def update_payment_fees!
-      payments.each do |payment|
-        next if payment.completed?
-
-        update_adjustment! payment.adjustment if payment.adjustment
-        payment.save
-      end
     end
 
     # Needs looking at. This is insanely expensive and is called form lots of places! Totally recreates
