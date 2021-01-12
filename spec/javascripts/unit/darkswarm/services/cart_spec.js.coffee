@@ -227,10 +227,7 @@ describe 'Cart service', ->
       spyOn(RailsFlashLoader, 'loadFlash')
       li = {variant: {id: 1}, quantity: 3}
       Cart.line_items_finalised = [li]
-      Cart.check_last_finalised_item()
-      expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith(
-        {error: t 'orders_cannot_remove_the_final_item'}
-      )
+      expect(Cart.has_one_line_item()).toBe(true)
 
   it "pops the queue", ->
     Cart.update_enqueued = true
