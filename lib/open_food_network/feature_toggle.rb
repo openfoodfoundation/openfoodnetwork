@@ -1,3 +1,7 @@
+require 'open_food_network/feature'
+require 'open_food_network/null_feature'
+require 'open_food_network/ga_feature'
+
 module OpenFoodNetwork
   # This feature toggles implementation provides two mechanisms to conditionally enable features.
   #
@@ -67,35 +71,6 @@ module OpenFoodNetwork
 
     def true?(value)
       value.to_s.casecmp("true").zero?
-    end
-  end
-
-  class Feature
-    def initialize(users = [])
-      @users = users
-    end
-
-    def enabled?(user)
-      users.include?(user.email)
-    end
-
-    private
-
-    attr_reader :users
-  end
-
-  class NullFeature
-    def enabled?(_user)
-      false
-    end
-  end
-
-  class GAFeature
-    def initialize(_users)
-    end
-
-    def enabled?(_user)
-      true
     end
   end
 end
