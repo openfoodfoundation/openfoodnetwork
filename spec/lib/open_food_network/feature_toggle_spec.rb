@@ -40,11 +40,19 @@ module OpenFoodNetwork
         end
       end
 
+      context 'and the feature is enabled for "all"' do
+        before { FeatureToggle.enable(:foo, ["all"]) }
+
+        it 'returns true' do
+          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
+        end
+      end
+
       context 'and the feature is disabled for them' do
         before { FeatureToggle.enable(:foo, []) }
 
         it 'returns false' do
-          expect(FeatureToggle.enabled?(:foo, user)).to eq(false)
+          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
         end
       end
     end

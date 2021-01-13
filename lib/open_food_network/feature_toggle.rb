@@ -9,16 +9,17 @@ module OpenFoodNetwork
   #     = render "new_shiny_feature"
   #
   # Alternatively, you can choose which users have the feature toggled on. To do that you need to
-  # register the feature and its users from an initializer like:
+  # register the feature and its users using `.enable` like:
   #
-  #   require 'open_food_network/feature_toggle'
   #   OpenFoodNetwork::FeatureToggle.enable(:new_shiny_feature, ['ofn@example.com'])
   #
-  # Note, however, that it'd be better to read the user emails from an ENV var provisioned with
-  # ofn-install:
+  # This is handled in config/initializers/feature_toggles.rb.
   #
-  #   require 'open_food_network/feature_toggle'
-  #   OpenFoodNetwork::FeatureToggle.enable(:new_shiny_feature, ENV['PRODUCT_TEAM'])
+  # There's also the option to toggle something on for everyone using "all" instead of an email:
+  #
+  #   OpenFoodNetwork::FeatureToggle.enable(:new_shiny_feature, ['all'])
+  #
+  # This doesn't require a deployment but to change the ENV var and restart Unicorn and DJ.
   #
   # You can then check it from a view like:
   #
@@ -34,7 +35,9 @@ module OpenFoodNetwork
       return unless user_emails.present?
 
       Thread.current[:features] ||= {}
-      Thread.current[:features][feature_name] = Feature.new(user_emails)
+
+      klass = user_emails == ["all"] ? GAFeature : Feature
+      Thread.current[:features][feature_name] = klass.new(user_emails)
     end
 
     def initialize
@@ -84,6 +87,15 @@ module OpenFoodNetwork
   class NullFeature
     def enabled?(_user)
       false
+    end
+  end
+
+  class GAFeature
+    def initialize(_users)
+    end
+
+    def enabled?(_user)
+      true
     end
   end
 end
