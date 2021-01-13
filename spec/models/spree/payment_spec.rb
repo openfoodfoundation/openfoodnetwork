@@ -636,12 +636,20 @@ describe Spree::Payment do
     end
 
     context "#set_unique_identifier" do
-      # Regression test for #1998
+      # Regression test for Spree #1998
       it "sets a unique identifier on create" do
-        payment.run_callbacks(:save)
+        payment.run_callbacks(:create)
         expect(payment.identifier).not_to be_blank
         expect(payment.identifier.size).to eq(8)
         expect(payment.identifier).to be_a(String)
+      end
+
+      # Regression test for Spree #3733
+      it "does not regenerate the identifier on re-save" do
+        payment.save
+        old_identifier = payment.identifier
+        payment.save
+        expect(payment.identifier).to eq old_identifier
       end
 
       context "other payment exists" do
@@ -660,10 +668,10 @@ describe Spree::Payment do
         before { other_payment.save! }
 
         it "doesn't set duplicate identifier" do
-          payment.should_receive(:generate_identifier).and_return(other_payment.identifier)
-          payment.should_receive(:generate_identifier).and_call_original
+          allow(payment).to receive(:generate_identifier).and_return(other_payment.identifier)
+          allow(payment).to receive(:generate_identifier).and_call_original
 
-          payment.run_callbacks(:save)
+          payment.run_callbacks(:create)
 
           expect(payment.identifier).not_to be_blank
           expect(payment.identifier).not_to eq(other_payment.identifier)
