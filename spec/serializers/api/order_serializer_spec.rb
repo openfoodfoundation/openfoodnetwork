@@ -6,21 +6,28 @@ describe Api::OrderSerializer do
   let(:serializer) { Api::OrderSerializer.new order }
   let(:order) { create(:completed_order_with_totals) }
 
-  let!(:completed_payment) { create(:payment, order: order, state: 'completed', amount: order.total - 1) }
-  let!(:payment) { create(:payment, order: order, state: 'checkout', amount: 123.45) }
+  describe '#serializable_hash' do
+    let!(:completed_payment) do
+      create(:payment, order: order, state: 'completed', amount: order.total - 1)
+    end
+    let!(:payment) { create(:payment, order: order, state: 'checkout', amount: 123.45) }
 
-  it "serializes an order" do
-    expect(serializer.to_json).to match order.number.to_s
-  end
+    it "serializes an order" do
+      expect(serializer.serializable_hash[:number]).to eq(order.number)
+    end
 
-  it "convert the state attributes to translatable keys" do
-    expect(serializer.to_json).to match "complete"
-    expect(serializer.to_json).to match "balance_due"
-  end
+    it "convert the state attributes to translatable keys" do
+      hash = serializer.serializable_hash
 
-  it "only serializes completed payments" do
-    expect(serializer.to_json).to match completed_payment.amount.to_s
-    expect(serializer.to_json).to_not match payment.amount.to_s
+      expect(hash[:state]).to eq("complete")
+      expect(hash[:payment_state]).to eq("balance_due")
+    end
+
+    it "only serializes completed payments" do
+      hash = serializer.serializable_hash
+
+      expect(hash[:payments].first[:amount]).to eq(completed_payment.amount)
+    end
   end
 
   describe '#outstanding_balance' do
