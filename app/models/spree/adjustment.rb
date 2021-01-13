@@ -70,7 +70,7 @@ module Spree
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
-    scope :included, -> { where(included: true) }
+    scope :inclusive, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }

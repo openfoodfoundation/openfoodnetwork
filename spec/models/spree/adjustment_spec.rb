@@ -461,7 +461,7 @@ module Spree
       it_behaves_like "a model using the LocalizedNumber module", [:amount]
     end
 
-    describe "included and additional scopes" do
+    describe "inclusive and additional scopes" do
       let!(:zone) { create(:zone_with_member) }
       let(:order) { create(:order) }
       let(:included_in_price) { true }
@@ -477,7 +477,7 @@ module Spree
 
       context "when tax is included in price" do
         it "is returned by the #included scope" do
-          expect(Spree::Adjustment.included).to eq [adjustment]
+          expect(Spree::Adjustment.inclusive).to eq [adjustment]
         end
       end
 
