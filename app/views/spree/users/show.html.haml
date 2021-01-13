@@ -1,7 +1,8 @@
 - content_for :injection_data do
-  = inject_orders
-  = inject_shops
+  = inject_json_array("orders", @orders.all, Api::OrderSerializer)
+  = inject_json_array("shops", @shops.all, Api::ShopForOrdersSerializer)
   = inject_saved_credit_cards
+
   - if Stripe.publishable_key
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))

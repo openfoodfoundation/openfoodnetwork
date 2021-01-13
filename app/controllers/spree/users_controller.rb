@@ -15,6 +15,11 @@ module Spree
     # Ignores invoice orders, only order where state: 'complete'
     def show
       @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+
+      customers = spree_current_user.customers
+      @shops = Enterprise
+        .where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
+
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
