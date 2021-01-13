@@ -14,7 +14,6 @@ describe Api::OrderSerializer do
   end
 
   it "convert the state attributes to translatable keys" do
-    # byebug if serializer.to_json =~ /balance_due/
     expect(serializer.to_json).to match "complete"
     expect(serializer.to_json).to match "balance_due"
   end
@@ -42,10 +41,12 @@ describe Api::OrderSerializer do
       before do
         allow(OpenFoodNetwork::FeatureToggle)
           .to receive(:enabled?).with(:customer_balance, order.user) { false }
+
+        allow(order).to receive(:outstanding_balance).and_return(123.0)
       end
 
       it 'calls #outstanding_balance on the object' do
-        expect(serializer.serializable_hash[:outstanding_balance]).to eq(1.0)
+        expect(serializer.serializable_hash[:outstanding_balance]).to eq(123.0)
       end
     end
   end
