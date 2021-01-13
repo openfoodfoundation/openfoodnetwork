@@ -12,9 +12,13 @@ module Spree
     before_action :set_locale
     before_action :enable_embedded_shopfront
 
-    # Ignores invoice orders, only order where state: 'complete'
+    # Ignores invoice orders
     def show
-      @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+      @orders = @user.orders
+        .where.not(Spree::Order.in_incomplete_state.where_values_hash)
+        .select('spree_orders.*')
+        .select(OutstandingBalance.new.query)
+        .order('completed_at desc')
 
       customers = spree_current_user.customers
       @shops = Enterprise

@@ -39,12 +39,12 @@ class CustomersWithBalance
   end
 
   def complete_orders
-    states_group = prior_to_completion_states.map { |state| Arel::Nodes.build_quoted(state) }
-    Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states_group)
+    states = Spree::Order::PRIOR_TO_COMPLETION_STATES.map { |state| Arel::Nodes.build_quoted(state) }
+    Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states)
   end
 
   def non_fulfilled_states_group
-    states_group = non_fulfilled_states.map { |state| Arel::Nodes.build_quoted(state) }
+    states_group = Spree::Order::NON_FULFILLED_STATES.map { |state| Arel::Nodes.build_quoted(state) }
     Arel::Nodes::Grouping.new(states_group)
   end
 
