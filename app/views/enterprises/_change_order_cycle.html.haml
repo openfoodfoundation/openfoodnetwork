@@ -1,27 +1,28 @@
 %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
-  %closing
-    %div{"ng-if" => "OrderCycle.selected()"}
-      %div{"ng-if" => "closesInLessThan3Months()"}
-        = t :enterprises_next_closing
-        %strong {{ OrderCycle.orders_close_at() | date_in_words }}
-      %div{"ng-if" => "!closesInLessThan3Months()"}
-        = t :enterprises_currently_open
-    %div{"ng-if" => "!OrderCycle.selected()"}
-      = t :enterprises_choose
+  .select-and-closing-container
+    %closing
+      %div{"ng-if" => "OrderCycle.selected()"}
+        %div{"ng-if" => "closesInLessThan3Months()"}
+          = t :enterprises_next_closing
+          %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+        %div{"ng-if" => "!closesInLessThan3Months()"}
+          = t :enterprises_currently_open
+      %div{"ng-if" => "!OrderCycle.selected()"}
+        = t :enterprises_choose
 
-  .order-cycle-select
-    .select-label
-      %span= t :enterprises_ready_for
+    .order-cycle-select
+      .select-label
+        %span= t :enterprises_ready_for
 
-    - if oc_select_options.count == 1
-      %p
-        = oc_select_options.first[:time]
+      - if oc_select_options.count == 1
+        %p
+          = oc_select_options.first[:time]
 
-    - else
-      %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
-        "ofn-change-order-cycle" => true,
-        "disabled" => require_customer?,
-        "ng-options" => "oc.id as oc.time for oc in #{oc_select_options.to_json}"}
+      - else
+        %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
+          "ofn-change-order-cycle" => true,
+          "disabled" => require_customer?,
+          "ng-options" => "oc.id as oc.time for oc in #{oc_select_options.to_json}"}
 
-        - if oc_select_options.count > 1
-          %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select
+          - if oc_select_options.count > 1
+            %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select
