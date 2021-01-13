@@ -5,7 +5,7 @@ require 'spec_helper'
 module OrderManagement
   module Order
     describe Updater do
-      let(:order) { build(:order) }
+      let(:order) { create(:order) }
       let(:updater) { OrderManagement::Order::Updater.new(order) }
 
       before { allow(order).to receive(:backordered?) { false } }
