@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+
 describe Spree::Order do
   let(:order) { Spree::Order.new }
 
@@ -21,19 +22,20 @@ describe Spree::Order do
   end
 
   context "totaling adjustments" do
-    let(:adjustment1) { build(:adjustment, amount: 5) }
-    let(:adjustment2) { build(:adjustment, amount: 10) }
+    let!(:adjustment1) { create(:adjustment, amount: 5) }
+    let!(:adjustment2) { create(:adjustment, amount: 10) }
+    let(:adjustments) { Spree::Adjustment.where(id: [adjustment1, adjustment2]) }
 
     context "#ship_total" do
       it "should return the correct amount" do
-        allow(order).to receive_message_chain :adjustments, shipping: [adjustment1, adjustment2]
+        allow(order).to receive_message_chain :adjustments, shipping: adjustments
         expect(order.ship_total).to eq 15
       end
     end
 
     context "#tax_total" do
       it "should return the correct amount" do
-        allow(order).to receive_message_chain :adjustments, tax: [adjustment1, adjustment2]
+        allow(order).to receive_message_chain :adjustments, tax: adjustments
         expect(order.tax_total).to eq 15
       end
     end
