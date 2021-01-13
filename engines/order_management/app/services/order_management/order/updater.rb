@@ -55,9 +55,9 @@ module OrderManagement
       # - adjustment_total - total value of all adjustments
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
-        order.payment_total = payments.completed.map(&:amount).sum
+        order.payment_total = payments.completed.sum(:amount)
         order.item_total = line_items.map(&:amount).sum
-        order.adjustment_total = adjustments.eligible.map(&:amount).sum
+        order.adjustment_total = adjustments.eligible.sum(:amount)
         order.total = order.item_total + order.adjustment_total
       end
 

@@ -397,11 +397,11 @@ module Spree
     end
 
     def ship_total
-      adjustments.shipping.map(&:amount).sum
+      adjustments.shipping.sum(:amount)
     end
 
     def tax_total
-      adjustments.tax.map(&:amount).sum
+      adjustments.tax.sum(:amount)
     end
 
     # Creates new tax charges if there are any applicable rates. If prices already
