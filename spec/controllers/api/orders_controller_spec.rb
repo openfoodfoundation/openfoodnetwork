@@ -241,14 +241,11 @@ module Api
             'lastname' => order.ship_address.lastname
           )
           expect(json_response[:shipping_method][:name]).to eq order.shipping_method.name
+          expect(json_response[:shipping_method][:price]).to eq order.shipment_total.to_s
 
           expect(json_response[:adjustments].first).to include(
             'label' => "Transaction fee",
-            'amount' => order.adjustments.payment_fee.first.amount.to_s
-          )
-          expect(json_response[:adjustments].second).to include(
-            'label' => "Shipping",
-            'amount' => order.adjustments.shipping.first.amount.to_s
+            'amount' => order.all_adjustments.payment_fee.first.amount.to_s
           )
 
           expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
