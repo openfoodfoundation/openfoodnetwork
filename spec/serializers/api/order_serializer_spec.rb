@@ -23,4 +23,30 @@ describe Api::OrderSerializer do
     expect(serializer.to_json).to match completed_payment.amount.to_s
     expect(serializer.to_json).to_not match payment.amount.to_s
   end
+
+  describe '#outstanding_balance' do
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, order.user) { true }
+
+        allow(order).to receive(:balance_value).and_return(-1.23)
+      end
+
+      it "returns the object's balance_value from the users perspective" do
+        expect(serializer.serializable_hash[:outstanding_balance]).to eq(1.23)
+      end
+    end
+
+    context 'when the customer_balance is not enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, order.user) { false }
+      end
+
+      it 'calls #outstanding_balance on the object' do
+        expect(serializer.serializable_hash[:outstanding_balance]).to eq(1.0)
+      end
+    end
+  end
 end

@@ -7,6 +7,14 @@ module Api
 
     has_many :payments, serializer: Api::PaymentSerializer
 
+    def outstanding_balance
+      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, object.user)
+        -object.balance_value
+      else
+        object.outstanding_balance
+      end
+    end
+
     def payments
       object.payments.joins(:payment_method).completed
     end

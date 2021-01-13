@@ -9,16 +9,29 @@
 #
 # See CompleteOrdersWithBalance or CustomersWithBalance as examples.
 class OutstandingBalance
+  # The relation must be an ActiveRecord::Relation object with `spree_orders` in the SQL statement
+  # FROM for #statement to work.
+  def initialize(relation = nil)
+    @relation = relation
+  end
+
   def query
+    relation.select("#{statement} AS balance_value")
+  end
+
+  # Arel doesn't support CASE statements until v7.1.0 so we'll have to wait with SQL literals
+  # a little longer. See https://github.com/rails/arel/pull/400 for details.
+  def statement
     <<-SQL.strip_heredoc
       CASE WHEN state IN #{non_fulfilled_states_group.to_sql} THEN payment_total
-            WHEN state IS NOT NULL THEN payment_total - total
+           WHEN state IS NOT NULL THEN payment_total - total
       ELSE 0 END
-        AS balance_value
     SQL
   end
 
   private
+
+  attr_reader :relation
 
   def non_fulfilled_states_group
     states = Spree::Order::NON_FULFILLED_STATES.map { |state| Arel::Nodes.build_quoted(state) }

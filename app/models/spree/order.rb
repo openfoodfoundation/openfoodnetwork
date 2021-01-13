@@ -132,8 +132,8 @@ module Spree
 
     # All the states an order can be in before completing the checkout
     PRIOR_TO_COMPLETION_STATES = %w(cart address delivery payment).freeze
-    # All the states of a complete order but that shouldn't count towards the balance. Those that the
-    # customer won't enjoy.
+    # All the states of a complete order but that shouldn't count towards the balance. Those that
+    # the customer won't enjoy.
     NON_FULFILLED_STATES = %w(canceled returned).freeze
 
     scope :in_incomplete_state, -> { where(state: PRIOR_TO_COMPLETION_STATES) }

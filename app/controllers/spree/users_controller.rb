@@ -17,8 +17,9 @@ module Spree
       @orders = @user.orders
         .where.not(Spree::Order.in_incomplete_state.where_values_hash)
         .select('spree_orders.*')
-        .select(OutstandingBalance.new.query)
         .order('completed_at desc')
+
+      @orders = OutstandingBalance.new(@orders).query
 
       customers = spree_current_user.customers
       @shops = Enterprise
