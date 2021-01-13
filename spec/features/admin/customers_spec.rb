@@ -97,9 +97,36 @@ feature 'Customers' do
 
       describe "for a shop with multiple customers" do
         before do
-          mock_balance(customer1.email, managed_distributor1, 88)
-          mock_balance(customer2.email, managed_distributor1, -99)
-          mock_balance(customer4.email, managed_distributor1, 0)
+          allow(OpenFoodNetwork::FeatureToggle)
+            .to receive(:enabled?).with(:customer_balance, user) { true }
+
+          create(
+            :order,
+            total: 0,
+            payment_total: 88,
+            distributor: managed_distributor1,
+            user: nil,
+            state: 'complete',
+            customer: customer1
+          )
+          create(
+            :order,
+            total: 99,
+            payment_total: 0,
+            distributor: managed_distributor1,
+            user: nil,
+            state: 'complete',
+            customer: customer2
+          )
+          create(
+            :order,
+            total: 0,
+            payment_total: 0,
+            distributor: managed_distributor1,
+            user: nil,
+            state: 'complete',
+            customer: customer4
+          )
 
           customer4.update enterprise: managed_distributor1
         end
@@ -120,13 +147,6 @@ feature 'Customers' do
             expect(page).to_not have_content "BALANCE DUE"
             expect(page).to have_content "$0.00"
           end
-        end
-
-        def mock_balance(email, enterprise, balance)
-          user_balance_calculator = instance_double(OpenFoodNetwork::UserBalanceCalculator)
-          expect(OpenFoodNetwork::UserBalanceCalculator).to receive(:new).
-            with(email, enterprise).and_return(user_balance_calculator)
-          expect(user_balance_calculator).to receive(:balance).and_return(balance)
         end
       end
 

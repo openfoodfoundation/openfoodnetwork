@@ -201,14 +201,25 @@ describe Spree::Order do
     let(:payment) { build(:payment) }
     before { allow(order).to receive_messages pending_payments: [payment], total: 10 }
 
-    it "should process the payments" do
-      expect(payment).to receive(:process!)
-      expect(order.process_payments!).to be_truthy
-    end
-
     it "should return false if no pending_payments available" do
       allow(order).to receive_messages pending_payments: []
       expect(order.process_payments!).to be_falsy
+    end
+
+    context "when the processing is sucessful" do
+      it "should process the payments" do
+        expect(payment).to receive(:process!)
+        expect(order.process_payments!).to be_truthy
+      end
+
+      it "stores the payment total on the order" do
+        allow(payment).to receive(:process!)
+        allow(payment).to receive(:completed?).and_return(true)
+
+        order.process_payments!
+
+        expect(order.payment_total).to eq(payment.amount)
+      end
     end
 
     context "when a payment raises a GatewayError" do

@@ -31,17 +31,19 @@ module OpenFoodNetwork
     end
 
     def self.enable(feature_name, user_emails)
+      return unless user_emails.present?
+
       Thread.current[:features] ||= {}
       Thread.current[:features][feature_name] = Feature.new(user_emails)
     end
 
     def initialize
-      @features = Thread.current[:features]
+      @features = Thread.current[:features] || {}
     end
 
     def enabled?(feature_name, user)
       if user.present?
-        feature = features[feature_name]
+        feature = features.fetch(feature_name, NullFeature.new)
         feature.enabled?(user)
       else
         true?(env_variable_value(feature_name))
@@ -77,5 +79,11 @@ module OpenFoodNetwork
     private
 
     attr_reader :users
+  end
+
+  class NullFeature
+    def enabled?(_user)
+      false
+    end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'open_food_network/user_balance_calculator'
 
 module Admin
   describe CustomersController, type: :controller do
@@ -40,6 +41,124 @@ module Admin
             it "serializes the data" do
               expect(ActiveModel::ArraySerializer).to receive(:new)
               spree_get :index, params
+            end
+
+            context 'when the customer_balance feature is enabled' do
+              let(:customers_with_balance) { instance_double(CustomersWithBalance) }
+
+              before do
+                allow(OpenFoodNetwork::FeatureToggle)
+                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
+              end
+
+              it 'calls CustomersWithBalance' do
+                allow(CustomersWithBalance)
+                  .to receive(:new).with(enterprise) { customers_with_balance }
+
+                expect(customers_with_balance).to receive(:query) { Customer.none }
+
+                spree_get :index, params
+              end
+
+              it 'serializes using CustomerWithBalanceSerializer' do
+                expect(Api::Admin::CustomerWithBalanceSerializer).to receive(:new)
+
+                spree_get :index, params
+              end
+            end
+
+            context 'when the customer_balance feature is not enabled' do
+              let(:calculator) do
+                instance_double(OpenFoodNetwork::UserBalanceCalculator, balance: 0)
+              end
+
+              it 'calls Customer.of' do
+                expect(Customer).to receive(:of).twice.with(enterprise) { Customer.none }
+
+                spree_get :index, params
+              end
+
+              it 'serializes calling the UserBalanceCalculator' do
+                expect(OpenFoodNetwork::UserBalanceCalculator)
+                  .to receive(:new).with(customer.email, customer.enterprise) { calculator }
+
+                spree_get :index, params
+              end
+            end
+
+            context 'when the customer has no orders' do
+              it 'includes the customer balance in the response' do
+                spree_get :index, params
+                expect(json_response.first["balance"]).to eq("$0.00")
+              end
+            end
+
+            context 'when the customer has complete orders' do
+              let(:order) { create(:order, customer: customer, state: 'complete') }
+              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+
+              before do
+                allow(OpenFoodNetwork::FeatureToggle)
+                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
+              end
+
+              it 'includes the customer balance in the response' do
+                spree_get :index, params
+                expect(json_response.first["balance"]).to eq("$-10.00")
+              end
+            end
+
+            context 'when the customer has canceled orders' do
+              let(:order) { create(:order, customer: customer) }
+              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+              let!(:payment) { create(:payment, order: order, amount: order.total) }
+
+              before do
+                allow(OpenFoodNetwork::FeatureToggle)
+                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
+
+                allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
+                order.process_payments!
+
+                order.update_attribute(:state, 'canceled')
+              end
+
+              it 'includes the customer balance in the response' do
+                spree_get :index, params
+                expect(json_response.first["balance"]).to eq("$10.00")
+              end
+            end
+
+            context 'when the customer has cart orders' do
+              let(:order) { create(:order, customer: customer, state: 'cart') }
+              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+
+              it 'includes the customer balance in the response' do
+                spree_get :index, params
+                expect(json_response.first["balance"]).to eq("$0.00")
+              end
+            end
+
+            context 'when the customer has an order with a void payment' do
+              let(:order) { create(:order, customer: customer, state: 'complete') }
+              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+              let!(:payment) { create(:payment, order: order, amount: order.total) }
+
+              before do
+                allow(OpenFoodNetwork::FeatureToggle)
+                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
+
+                allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
+                order.process_payments!
+
+                payment.void_transaction!
+              end
+
+              it 'includes the customer balance in the response' do
+                expect(order.payment_total).to eq(0)
+                spree_get :index, params
+                expect(json_response.first["balance"]).to eq('$-10.00')
+              end
             end
           end
 
