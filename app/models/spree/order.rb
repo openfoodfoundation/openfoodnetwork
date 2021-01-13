@@ -766,13 +766,6 @@ module Spree
       address
     end
 
-    # Update attributes of a record in the database without callbacks, validations etc.
-    #   This was originally an extension to ActiveRecord in Spree but only used for Spree::Order
-    def update_attributes_without_callbacks(attributes)
-      assign_attributes(attributes)
-      Spree::Order.where(id: id).update_all(attributes)
-    end
-
     private
 
     def process_each_payment
