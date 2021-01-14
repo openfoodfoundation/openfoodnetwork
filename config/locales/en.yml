@@ -2717,6 +2717,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           processing: "processing"
           void: "void"
           invalid: "invalid"
+        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unchanged: "Quantity unchanged from previous amount."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
