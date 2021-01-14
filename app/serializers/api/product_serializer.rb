@@ -1,8 +1,6 @@
 require "open_food_network/scope_variant_to_hub"
 
 class Api::ProductSerializer < ActiveModel::Serializer
-  include ActionView::Helpers::SanitizeHelper
-
   attributes :id, :name, :permalink, :meta_keywords
   attributes :group_buy, :notes, :description, :description_html
   attributes :properties_with_values, :price
@@ -18,14 +16,12 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   # return an unformatted descripton
   def description
-    strip_tags object.description&.strip
+    sanitizer.strip_content(object.description)
   end
 
   # return a sanitized html description
   def description_html
-    d = sanitize(object.description, tags: ["p", "b", "strong", "em", "i", "a", "u"],
-                                     attributes: ["href", "target"])
-    d.to_s.html_safe
+    sanitizer.sanitize_content(object.description)&.html_safe
   end
 
   def properties_with_values
@@ -46,5 +42,11 @@ class Api::ProductSerializer < ActiveModel::Serializer
     else
       object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
     end
+  end
+
+  private
+
+  def sanitizer
+    @sanitizer ||= ContentSanitizer.new
   end
 end
