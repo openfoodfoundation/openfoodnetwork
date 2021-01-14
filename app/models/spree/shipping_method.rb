@@ -12,7 +12,7 @@ module Spree
     has_many :shipments
     has_many :shipping_method_categories
     has_many :shipping_categories, through: :shipping_method_categories
-    has_many :shipping_rates
+    has_many :shipping_rates, inverse_of: :shipping_method
     has_many :distributor_shipping_methods
     has_many :distributors, through: :distributor_shipping_methods,
                             class_name: 'Enterprise',

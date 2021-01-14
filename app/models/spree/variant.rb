@@ -18,10 +18,10 @@ module Spree
                         :tax_category_id, :shipping_category_id, :meta_description,
                         :meta_keywords, :tax_category, :shipping_category
 
-    has_many :inventory_units
-    has_many :line_items
+    has_many :inventory_units, inverse_of: :variant
+    has_many :line_items, inverse_of: :variant
 
-    has_many :stock_items, dependent: :destroy
+    has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
     has_many :stock_movements
 
