@@ -46,6 +46,9 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
+Bundler/DuplicatedGem:
+  Enabled: false
+
 ## TEMPORARY/CONTESTED SETTINGS
 #
 # These are still to be decided upon, but recommended for inclusion by

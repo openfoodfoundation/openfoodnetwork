@@ -4,14 +4,44 @@ source 'https://rubygems.org'
 ruby "2.4.4"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
+plugin 'bootboot', '~> 0.1.1' unless Bundler.settings[:frozen]
+Plugin.__send__(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
+
+if ENV['DEPENDENCIES_NEXT']
+  enable_dual_booting if Plugin.installed?('bootboot')
+
+  # This will only be loaded when running
+  # bundler command prefixed with `DEPENDENCIES_NEXT=1
+  gem 'rails', '> 5.0', '< 5.1'
+
+  gem 'activemerchant', '>= 1.78.0'
+  gem 'angular-rails-templates', '>= 0.3.0'
+  gem 'awesome_nested_set'
+  gem 'ransack', '2.3.0'
+  gem 'responders'
+  gem 'sass', '<= 4.7.1'
+  gem 'sass-rails', '< 6.0.0'
+else
+  gem 'rails', '~> 4.2'
+
+  gem 'activemerchant', '~> 1.78.0'
+  gem 'angular-rails-templates', '~> 0.3.0'
+  gem 'awesome_nested_set', '~> 3.3.1'
+  gem 'ransack', '~> 1.8.10'
+  gem 'responders', '~> 2.0'
+  gem 'sass'
+  gem 'sass-rails'
+
+  gem 'db2fog'
+  gem 'unicorn'
+end
+
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.0'
-gem 'rails', '~> 4.2'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-gem 'responders', '~> 2.0'
 
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
@@ -22,14 +52,12 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 gem 'acts_as_list', '0.9.19'
-gem 'awesome_nested_set', '~> 3.3.1'
 gem 'cancancan', '~> 1.7.0'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json'
 gem 'monetize', '~> 1.1'
 gem 'paranoia', '~> 2.4'
-gem 'ransack', '~> 1.8.10'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5'
 
@@ -40,10 +68,6 @@ gem 'stringex', '~> 2.8.5'
 gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-1-0-stable'
 
 gem 'stripe'
-
-# We need at least this version to have Digicert's root certificate
-# which is needed for Pin Payments (and possibly others).
-gem 'activemerchant', '~> 1.78.0'
 
 gem 'devise'
 gem 'devise-encryptable'
@@ -61,12 +85,8 @@ gem 'andand'
 gem 'angularjs-rails', '1.5.5'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
-gem 'db2fog'
 gem 'haml'
 gem 'redcarpet'
-gem 'sass'
-gem 'sass-rails'
-gem 'unicorn'
 
 gem 'actionpack-action_caching'
 # AMS 0.9.x and 0.10.x are very different from 0.8.4 and the upgrade is not straight forward
@@ -104,7 +124,6 @@ gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
-gem 'angular-rails-templates', '~> 0.3.0'
 gem 'foundation-icons-sass-rails'
 
 gem 'foundation-rails', '= 5.5.2.1'
