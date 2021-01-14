@@ -68,7 +68,6 @@ describe Spree::Order::Checkout do
     context "from address" do
       before do
         order.state = 'address'
-        allow(order).to receive(:has_available_payment)
         order.shipments << create(:shipment)
         order.email = "user@example.com"
         order.save!

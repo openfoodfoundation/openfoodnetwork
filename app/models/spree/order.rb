@@ -87,7 +87,6 @@ module Spree
     after_create :create_tax_charge!
 
     validate :has_available_shipment
-    validate :has_available_payment
     validates :email, presence: true,
                       format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
                       if: :require_email
@@ -814,11 +813,6 @@ module Spree
       return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
 
       errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
-    end
-
-    def has_available_payment
-      return unless delivery?
-      # errors.add(:base, :no_payment_methods_available) if available_payment_methods.empty?
     end
 
     def after_cancel

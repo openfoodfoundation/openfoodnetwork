@@ -51,7 +51,6 @@ describe Spree::Order do
 
     context "when current state is address" do
       before do
-        allow(order).to receive(:has_available_payment)
         allow(order).to receive(:ensure_available_shipping_rates)
         order.state = "address"
       end
