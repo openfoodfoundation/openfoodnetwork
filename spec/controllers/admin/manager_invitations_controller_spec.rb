@@ -28,16 +28,17 @@ module Admin
       end
 
       context "signing up a new user" do
-        let(:manager_invitation) { instance_double(ManagerInvitationJob) }
+        let(:mail_mock) { double(:mailer, deliver_later: true) }
 
         before do
-          setup_email
+          allow(EnterpriseMailer).to receive(:manager_invitation).
+            with(enterprise, kind_of(Spree::User)) { mail_mock }
+
           allow(controller).to receive_messages spree_current_user: admin
         end
 
         it 'enqueues an invitation email' do
-          expect(ManagerInvitationJob)
-            .to receive(:perform_later).with(enterprise.id, kind_of(Integer))
+          expect(mail_mock).to receive(:deliver_later)
 
           spree_post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
         end

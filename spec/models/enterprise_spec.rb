@@ -11,7 +11,9 @@ describe Enterprise do
       it "sends a welcome email" do
         expect do
           create(:enterprise, owner: user)
-        end.to enqueue_job WelcomeEnterpriseJob
+        end.to enqueue_job ActionMailer::DeliveryJob
+
+        expect(enqueued_jobs.last.to_s).to match "welcome"
       end
     end
   end
