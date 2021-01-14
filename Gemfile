@@ -61,12 +61,7 @@ gem 'paranoia', '~> 2.4'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5'
 
-# Our branch contains the following changes:
-# - Pass customer email and phone number to PayPal (merged to upstream master)
-# - Change type of password from string to password to hide it in the form
-# - Skip CA cert file and use the ones provided by the OS
-gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-1-0-stable'
-
+gem 'paypal-sdk-merchant', '1.106.1'
 gem 'stripe'
 
 gem 'devise'

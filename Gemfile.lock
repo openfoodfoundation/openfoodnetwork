@@ -5,14 +5,6 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
-  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 1a477e9f7763297944cc99b6f4dd3d962aa963e9
-  branch: 2-1-0-stable
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-
-GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
   revision: 467f6ea1c44529c7c91cac4c8211bbd863588c0b
   branch: ofn-rails-4
@@ -797,6 +789,7 @@ DEPENDENCIES
   paper_trail (~> 10.3.1)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
+  paypal-sdk-merchant (= 1.106.1)
   pg (~> 0.21.0)
   pry
   pry-byebug
@@ -822,7 +815,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
-  spree_paypal_express!
   spring
   spring-commands-rspec
   state_machines-activerecord

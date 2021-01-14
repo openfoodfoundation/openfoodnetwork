@@ -1,0 +1,28 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = link_to Spree.t(:payments), admin_order_payments_path(@order)
+  %i.icon-arrow-right
+  = payment_method_name(@payment)
+  %i.icon-arrow-right
+  = Spree.t('refund', scope: :paypal)
+
+= form_tag paypal_refund_admin_order_payment_path(@order, @payment) do
+  .label-block.left.five.columns.alpha
+    %div
+      %fieldset
+        %legend= Spree.t('refund', scope: :paypal)
+        .field
+          = label_tag 'refund_amount', Spree.t(:refund_amount, scope: 'paypal')
+          %small
+            %em= Spree.t(:original_amount, scope: 'paypal', amount: @payment.display_amount)
+          %br/
+          - symbol = ::Money.new(1, Spree::Config[:currency]).symbol
+          - if Spree::Config[:currency_symbol_position] == "before"
+            = symbol
+            = text_field_tag 'refund_amount', @payment.amount
+          - else
+            = text_field_tag 'refund_amount', @payment.amount
+            = symbol
+        = button Spree.t(:refund, scope: 'paypal'), 'icon-dollar'

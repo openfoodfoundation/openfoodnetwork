@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'spree/core/controller_helpers/auth'
+
 module Spree
   module Api
     module ControllerSetup
