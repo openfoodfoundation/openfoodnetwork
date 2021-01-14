@@ -2019,6 +2019,9 @@ fr:
   delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "TVA applicable"
+  description: "Description"
+  display: "Afficher"
+  tags: "Tags"
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
@@ -2380,6 +2383,7 @@ fr:
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'
+    authorising: "Autorisation en cours..."
     save_changes_first: Veuillez d'abord sauvegarder les modifications.
     all_changes_saved: Toutes les modifications ont été sauvegardées.
     unsaved_changes: Des modifications n'ont pas été sauvegardées
@@ -3069,6 +3073,7 @@ fr:
       out_of_stock: '%{item} est en rupture de stock.'
     actions:
       update: "Mettre à jour"
+      cancel: "Annuler"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3084,6 +3089,7 @@ fr:
         payment_state: "Statut du Paiement"
     errors:
       messages:
+        included_price_validation: "ne peut pas être sélectionné à moins d'avoir une zone par défaut"
         blank: "Champ obligatoire"
     layouts:
       admin:
@@ -3294,6 +3300,14 @@ fr:
           deactivation_warning: "Désactiver une méthode de paiement peut faire disparaitre cette méthode de votre liste. Si vous souhaitez uniquement la rendre invisible par l'acheteur, modifiez la méthode et utilisez l'affichage pour l'administrateur uniquement."
         providers:
           provider: "Fournisseur"
+          check: "Espèces / chèques / virements / autres "
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe (ancienne version)"
+          stripesca: "Stripe"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3529,6 +3543,24 @@ fr:
       ended: terminé
       paused: mis en pause
       canceled: annulé
+    paypal:
+      already_refunded: "Ce paiement a été remboursé."
+      no_payment_via_admin_backend: "Vous ne pouvez pas réaliser de paiements via Paypal depuis l'interface d'administration."
+      transaction: "Transaction Paypal"
+      payer_id: "Identifiant du payeur"
+      transaction_id: "Identifiant de la transaction"
+      token: "Jeton d'authentification (token)"
+      refund: "Remboursement"
+      refund_amount: "Montant"
+      original_amount: "Montant initial : %{amount}"
+      refund_successful: "Remboursement PayPal réussi"
+      refund_unsuccessful: "Echec du remboursement PayPal"
+      actions:
+        refund: "Remboursement"
+      flash:
+        cancel: "Vous ne voulez pas utiliser PayPal ? Pas de soucis."
+        connection_failed: "Impossible de se connecter à PayPal."
+        generic_error: "PayPal a échoué."
     users:
       form:
         account_settings: Paramètres du Compte
