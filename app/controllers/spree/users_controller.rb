@@ -61,12 +61,7 @@ module Spree
 
     def orders_collection
       if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
-        orders = @user.orders
-          .where.not(Spree::Order.in_incomplete_state.where_values_hash)
-          .select('spree_orders.*')
-          .order('completed_at desc')
-
-        OutstandingBalance.new(orders).query
+        CompleteOrdersWithBalance.new(@user).query
       else
         @user.orders.where(state: 'complete').order('completed_at desc')
       end
