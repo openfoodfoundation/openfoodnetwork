@@ -14,15 +14,19 @@ class ContentSanitizer
   }.freeze
 
   def strip_content(content)
+    return unless content.present?
+
     content = strip_tags(content.to_s.strip)
 
-    filter_characters(content) if content.present?
+    filter_characters(content)
   end
 
   def sanitize_content(content)
+    return unless content.present?
+
     content = sanitize(content.to_s, tags: ALLOWED_TAGS, attributes: ALLOWED_ATTRIBUTES)
 
-    filter_characters(content) if content.present?
+    filter_characters(content)
   end
 
   private

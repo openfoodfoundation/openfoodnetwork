@@ -21,7 +21,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   # return a sanitized html description
   def description_html
-    sanitizer.sanitize_content(object.description).html_safe
+    sanitizer.sanitize_content(object.description)&.html_safe
   end
 
   def properties_with_values
