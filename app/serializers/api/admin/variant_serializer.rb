@@ -5,10 +5,8 @@ module Api
     class VariantSerializer < ActiveModel::Serializer
       attributes :id, :name, :producer_name, :image, :sku, :import_date,
                  :options_text, :unit_value, :unit_description, :unit_to_display,
-                 :display_as, :display_name, :name_to_display,
+                 :display_as, :display_name, :name_to_display, :variant_overrides_count,
                  :price, :on_demand, :on_hand, :in_stock, :stock_location_id, :stock_location_name
-
-      has_many :variant_overrides
 
       def name
         if object.full_name.present?
@@ -54,6 +52,10 @@ module Api
         return if object.stock_items.empty?
 
         object.stock_items.first.stock_location.name
+      end
+
+      def variant_overrides_count
+        object.variant_overrides.count
       end
     end
   end

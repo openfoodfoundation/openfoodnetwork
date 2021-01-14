@@ -168,6 +168,28 @@ feature '
       expect(page).to have_field "variant_display_as", with: "bag"
       expect(page).to have_field "variant_display_as", with: "bin"
     end
+
+    context "with variant overrides" do
+      let!(:product) { create(:product) }
+      let(:variant) { product.variants.first }
+      let(:hub) { create(:distributor_enterprise) }
+      let!(:override) { create(:variant_override, variant: variant, hub: hub ) }
+      let(:variant_overrides_tip) {
+        I18n.t('spree.admin.products.index.products_variant.variant_has_n_overrides', n: 1)
+      }
+
+      it "displays an icon indicating a variant has overrides" do
+        visit spree.admin_products_path
+
+        find("a.view-variants").click
+
+        within "tr#v_#{variant.id}" do
+          expect(page).to have_selector(
+            "span.icon-warning-sign[data-powertip='#{variant_overrides_tip}']"
+          )
+        end
+      end
+    end
   end
 
   scenario "creating a new product" do
