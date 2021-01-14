@@ -8,8 +8,6 @@ module Spree
   module Core
     class MailInterceptor
       def self.delivering_email(message)
-        return unless MailSettings.override?
-
         if Config[:intercept_email].present?
           message.subject = "#{message.to} #{message.subject}"
           message.to = Config[:intercept_email]
