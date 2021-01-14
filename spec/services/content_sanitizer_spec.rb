@@ -21,6 +21,10 @@ describe ContentSanitizer do
     it "replaces double escaped ampersands" do
       expect(service.strip_content("pb &amp;amp; j")).to eq("pb & j")
     end
+
+    it "echos nil if given nil" do
+      expect(service.strip_content(nil)).to be(nil)
+    end
   end
 
   context "#sanitize_content" do
@@ -44,6 +48,10 @@ describe ContentSanitizer do
 
     it "replaces double escaped ampersands" do
       expect(service.sanitize_content("pb &amp;amp; j")).to eq("pb & j")
+    end
+
+    it "echos nil if given nil" do
+      expect(service.sanitize_content(nil)).to be(nil)
     end
   end
 end
