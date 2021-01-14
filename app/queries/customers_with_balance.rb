@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Fetches the customers of the specified enterprise including the aggregated balance across the
+# customer's orders. That is, we get the total balance for each customer with this enterprise.
 class CustomersWithBalance
   def initialize(enterprise)
     @enterprise = enterprise
