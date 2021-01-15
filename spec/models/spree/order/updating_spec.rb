@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  let(:order) { build(:order) }
+  let(:order) { create(:order) }
 
   context "#update!" do
     let(:line_items) { [build(:line_item, amount: 5)] }
