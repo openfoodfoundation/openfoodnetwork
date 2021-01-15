@@ -4,7 +4,8 @@ module OrderManagement
   module Order
     class Updater
       attr_reader :order
-      delegate :payments, :line_items, :adjustments, :shipments, :update_hooks, to: :order
+
+      delegate :payments, :line_items, :adjustments, :shipments, to: :order
 
       def initialize(order)
         @order = order
@@ -40,12 +41,6 @@ module OrderManagement
           payment_total: order.payment_total,
           total: order.total
         )
-
-        run_hooks
-      end
-
-      def run_hooks
-        update_hooks.each { |hook| order.__send__(hook) }
       end
 
       # Updates the following Order total values:

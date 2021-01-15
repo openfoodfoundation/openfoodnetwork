@@ -96,9 +96,6 @@ module Spree
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
-    class_attribute :update_hooks
-    self.update_hooks = Set.new
-
     # -- Scopes
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
@@ -155,12 +152,6 @@ module Spree
 
     def self.incomplete
       where(completed_at: nil)
-    end
-
-    # Use this method in other gems that wish to register their own custom logic
-    # that should be called after Order#update
-    def self.register_update_hook(hook)
-      update_hooks.add(hook)
     end
 
     # For compatiblity with Calculator::PriceSack
@@ -450,7 +441,6 @@ module Spree
       updater.update_shipment_state
       updater.before_save_hook
       save
-      updater.run_hooks
 
       deliver_order_confirmation_email
 
