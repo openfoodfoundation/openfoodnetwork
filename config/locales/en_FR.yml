@@ -2017,6 +2017,9 @@ en_FR:
   delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
+  description: "Description"
+  display: "Display"
+  tags: "Tags"
   calculator: "Calculator"
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
@@ -2376,6 +2379,7 @@ en_FR:
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
+    authorising: "Authorising..."
     save_changes_first: Save changes first.
     all_changes_saved: All changes saved
     unsaved_changes: You have unsaved changes
@@ -3040,6 +3044,7 @@ en_FR:
       out_of_stock: '%{item} is out of stock.'
     actions:
       update: "Update"
+      cancel: "Cancel"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3055,6 +3060,7 @@ en_FR:
         payment_state: "Payment State"
     errors:
       messages:
+        included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
     layouts:
       admin:
@@ -3265,6 +3271,14 @@ en_FR:
           deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
+          check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe (old version)"
+          stripesca: "Stripe"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3499,6 +3513,24 @@ en_FR:
       ended: ended
       paused: paused
       canceled: cancelled
+    paypal:
+      already_refunded: "This payment has been refunded and no further action can be taken on it."
+      no_payment_via_admin_backend: "You cannot charge PayPal accounts through the admin backend at this time."
+      transaction: "PayPal Transaction"
+      payer_id: "Payer ID"
+      transaction_id: "Transaction ID"
+      token: "Token"
+      refund: "Refund"
+      refund_amount: "Amount"
+      original_amount: "Original amount: %{amount}"
+      refund_successful: "PayPal refund successful"
+      refund_unsuccessful: "PayPal refund unsuccessful"
+      actions:
+        refund: "Refund"
+      flash:
+        cancel: "Don't want to use PayPal? No problems."
+        connection_failed: "Could not connect to PayPal."
+        generic_error: "PayPal failed. %{reasons}"
     users:
       form:
         account_settings: Account Settings
