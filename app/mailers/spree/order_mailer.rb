@@ -6,6 +6,7 @@ module Spree
     helper SpreeCurrencyHelper
     helper Spree::Admin::PaymentsHelper
     helper OrderHelper
+    helper MailerHelper
     include I18nHelper
 
     def cancel_email(order_or_order_id, resend = false)

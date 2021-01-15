@@ -1252,6 +1252,10 @@ en:
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
+        powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
         cart: "Cart"
