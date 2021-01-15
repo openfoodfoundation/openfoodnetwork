@@ -483,11 +483,11 @@ GEM
       activerecord (>= 4.0, < 6.2)
     parser (3.0.0.0)
       ast (~> 2.4.1)
-    paypal-sdk-core (0.2.10)
+    paypal-sdk-core (0.3.4)
       multi_json (~> 1.0)
       xml-simple
-    paypal-sdk-merchant (1.106.1)
-      paypal-sdk-core (~> 0.2.3)
+    paypal-sdk-merchant (1.117.2)
+      paypal-sdk-core (~> 0.3.0)
     pg (0.21.0)
     power_assert (1.2.0)
     pry (0.13.1)
@@ -713,7 +713,7 @@ GEM
     wicked_pdf (2.1.0)
       activesupport
     wkhtmltopdf-binary (0.12.5)
-    xml-simple (1.1.5)
+    xml-simple (1.1.8)
     xmlrpc (0.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -790,7 +790,7 @@ DEPENDENCIES
   paper_trail (~> 10.3.1)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
-  paypal-sdk-merchant (= 1.106.1)
+  paypal-sdk-merchant (= 1.117.2)
   pg (~> 0.21.0)
   pry
   pry-byebug

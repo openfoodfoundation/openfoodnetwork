@@ -61,7 +61,7 @@ gem 'paranoia', '~> 2.4'
 gem 'state_machines-activerecord'
 gem 'stringex', '~> 2.8.5'
 
-gem 'paypal-sdk-merchant', '1.106.1'
+gem 'paypal-sdk-merchant', '1.117.2'
 gem 'stripe'
 
 gem 'devise'
