@@ -162,6 +162,13 @@ module Spree
       result
     end
 
+    # Allow accessing soft-deleted originator objects
+    def originator
+      return if originator_type.blank?
+
+      originator_type.constantize.unscoped { super }
+    end
+
     private
 
     def update_adjustable
