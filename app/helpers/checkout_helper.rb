@@ -19,7 +19,7 @@ module CheckoutHelper
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     unless exclude.include? :admin_and_handling
       adjustments << Spree::Adjustment.new(
-        label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(:amount)
+        label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(&:amount)
       )
     end
 
