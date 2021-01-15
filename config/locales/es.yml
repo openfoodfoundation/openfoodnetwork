@@ -1571,6 +1571,7 @@ es:
   shopping_groups_part_of: "es parte de:"
   shopping_producers_of_hub: "productoras de %{hub}:"
   enterprises_next_closing: "Los pedidos se cerrarán"
+  enterprises_currently_open: "Los pedidos están abiertos"
   enterprises_ready_for: "Listo para"
   enterprises_choose: "Hay más de un ciclo abierto. Escoge en cuál quieres realizar el pedido:"
   maps_open: "Abierta"
@@ -2087,6 +2088,7 @@ es:
   spree_classification_primary_taxon_error: "La clasificación %{taxon} es la clasificación primaria de %{product} y no puede ser eliminada"
   spree_order_availability_error: "El Distribuidor o el Ciclo de Pedido no pueden suministrar los productos en su carrito"
   spree_order_populator_error: "Este Distribuidor o Ciclo de Pedido no puede suministrar todos los productos en tu carrito. Por favor, elige otro."
+  spree_order_cycle_error: "Elija un ciclo de pedido para este pedido."
   spree_order_populator_availability_error: "Este producto no está disponible por el distribuidor o Ciclo de Pedido elegido."
   spree_distributors_error: "Se debe seleccionar al menos un Grupo"
   spree_user_enterprise_limit_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
@@ -2379,6 +2381,7 @@ es:
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'
+    authorising: "Autorizando..."
     save_changes_first: Guarda los cambios primero.
     all_changes_saved: Todos los cambios guardados
     unsaved_changes: Tienes cambios sin guardar
@@ -2394,6 +2397,7 @@ es:
     resolve_errors: Resuelve los siguientes errores
     more_items: "+ %{count} Más"
     default_card_updated: Tarjeta predeterminada actualizada
+    default_card_voids_auth: Cambiar su tarjeta predeterminada eliminará las autorizaciones existentes de las tiendas para cargarla. Puede volver a autorizar las tiendas después de actualizar la tarjeta predeterminada. ¿Desea cambiar la tarjeta predeterminada?
     cart:
       add_to_cart_failed: >
           Ha habido un problema al añadir este producto en el carrito. Puede que haya
@@ -3060,6 +3064,7 @@ es:
         payment_state: "Estado del pago"
     errors:
       messages:
+        included_price_validation: "no se puede seleccionar a menos que haya establecido una zona fiscal predeterminada"
         blank: "no puede estar vacío"
     layouts:
       admin:
@@ -3270,6 +3275,14 @@ es:
           deactivation_warning: "La desactivación de un método de pago puede hacer que el método de pago desaparezca de su lista. Alternativamente, puede ocultar un método de pago desde la página de pago configurando la opción 'Mostrar' como 'Solo visible para el administrador'."
         providers:
           provider: "Proveedor"
+          check: "Efectivo / transferencia / etc. (pagos para los que no se requiere validación automática)"
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3505,7 +3518,23 @@ es:
       paused: pausado
       canceled: cancelado
     paypal:
+      already_refunded: "Este pago ha sido reembolsado y no se pueden realizar más acciones al respecto."
+      no_payment_via_admin_backend: "No puede cargar cuentas de PayPal a través del panel de administración en este momento."
+      transaction: "Transacción PayPal"
+      payer_id: "Id del pagador"
+      transaction_id: "Id de transacción"
+      token: "Token"
+      refund: "Reembolso"
       refund_amount: "Cantidad"
+      original_amount: "Importe original: %{amount}"
+      refund_successful: "Reembolso de PayPal exitoso"
+      refund_unsuccessful: "Reembolso de PayPal fallido"
+      actions:
+        refund: "Reembolso"
+      flash:
+        cancel: "¿No quieres usar PayPal? No hay problema."
+        connection_failed: "No se pudo conectar a PayPal."
+        generic_error: "PayPal falló. %{reasons}"
     users:
       form:
         account_settings: Configuración de la cuenta
@@ -3544,9 +3573,11 @@ es:
         delete?: ¿Borrar?
       cards:
         authorised_shops: Tiendas autorizadas
+        authorised_shops_agreement: Esta es la lista de tiendas que pueden cargar en su tarjeta de crédito predeterminada cualquier suscripción (es decir, pedidos repetidos) que pueda tener. Los datos de su tarjeta se mantendrán seguros y no se compartirán con los propietarios de las tiendas. Siempre se le notificará cuando se le cobre. Al marcar la casilla de una tienda, usted acepta autorizar a esa tienda a enviar instrucciones a la institución financiera que emitió su tarjeta para recibir pagos de acuerdo con los términos de cualquier suscripción que cree con esa tienda.
         saved_cards_popover: Esta es la lista de tarjetas que ha optado por guardar para su uso posterior. Su "valor predeterminado" se seleccionará automáticamente al momento de realizar un pedido, y puede ser cobrado por cualquier tienda que tenga permitido hacerlo (ver a la derecha).
       authorised_shops:
         shop_name: "Nombre de tienda"
+        allow_charges?: "¿Permitir cargos a la tarjeta predeterminada?"
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un numero.
     api:
