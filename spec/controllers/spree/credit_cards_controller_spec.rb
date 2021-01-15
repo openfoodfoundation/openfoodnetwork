@@ -35,8 +35,6 @@ describe Spree::CreditCardsController, type: :controller do
       it "saves the card locally" do
         spree_post :new_from_token, params
 
-        pp response
-
         expect{ spree_post :new_from_token, params }.to change(Spree::CreditCard, :count).by(1)
 
         card = Spree::CreditCard.last
