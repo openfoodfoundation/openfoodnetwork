@@ -1,6 +1,8 @@
 class EnterpriseFee < ActiveRecord::Base
   include Spree::Core::CalculatedAdjustments
 
+  acts_as_paranoid
+
   belongs_to :enterprise
   belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
 
