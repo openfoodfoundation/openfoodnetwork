@@ -2018,6 +2018,9 @@ es:
   delivery_method: Método de entrega
   fee_type: "Tipo de Comisión"
   tax_category: "Categoría del impuesto"
+  description: "Descripción"
+  display: "Mostrar"
+  tags: "Tags"
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
   calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
@@ -3041,6 +3044,7 @@ es:
       out_of_stock: '%{item} está agotado.'
     actions:
       update: "Actualizar"
+      cancel: "Cancelar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3500,6 +3504,8 @@ es:
       ended: terminado
       paused: pausado
       canceled: cancelado
+    paypal:
+      refund_amount: "Cantidad"
     users:
       form:
         account_settings: Configuración de la cuenta

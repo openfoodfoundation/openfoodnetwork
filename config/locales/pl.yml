@@ -1987,6 +1987,8 @@ pl:
   delivery_method: Sposób dostawy
   fee_type: "Typ opłaty"
   tax_category: "Kategoria podatku"
+  description: "Opis"
+  tags: "Tagi"
   calculator: "Kalkulator"
   calculator_values: "Wartości kalkulatora"
   calculator_settings_warning: "Jeśli zmieniasz typ kalkulatora, musisz najpierw zapisać ustawienia, zanim będziesz mógł edytować ustawienia kalkulatora"
@@ -3028,6 +3030,7 @@ pl:
     payment_method: "Metoda płatności"
     actions:
       update: "Aktualizuj"
+      cancel: "Anuluj"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Wystąpiły problemy z następującymi polami"
@@ -3475,6 +3478,8 @@ pl:
       ended: zakończone
       paused: wstrzymany
       canceled: anulowane
+    paypal:
+      refund_amount: "Kwota"
     users:
       form:
         account_settings: Ustawienia konta

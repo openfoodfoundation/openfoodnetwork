@@ -2017,6 +2017,9 @@ tr:
   delivery_method: Teslimat Yöntemi
   fee_type: "Ücret Türü"
   tax_category: "Vergi Kategorisi"
+  description: "Açıklama"
+  display: "GÖSTER"
+  tags: "ETİKETLER"
   calculator: "Hesaplama"
   calculator_values: "Hesaplama Değerleri"
   calculator_settings_warning: "Hesaplama türünü değiştiriyorsanız, ayarları düzenlemeden önce kaydetmeniz gerekir"
@@ -3041,6 +3044,7 @@ tr:
       out_of_stock: '%{item} stokta yok'
     actions:
       update: "Güncelle"
+      cancel: "İptal et"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3500,6 +3504,8 @@ tr:
       ended: bitti
       paused: durduruldu
       canceled: iptal edildi
+    paypal:
+      refund_amount: "Tutar"
     users:
       form:
         account_settings: Hesap Ayarları

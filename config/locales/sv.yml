@@ -1310,6 +1310,8 @@ sv:
   delivery_method: Leveransmetod
   fee_type: "Avgiftstyp"
   tax_category: "Taxområde"
+  description: "Beskrivning"
+  tags: "Taggar"
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorvärden"
   flat_percent_per_item: "Procent (per vara)"
@@ -1939,6 +1941,7 @@ sv:
     payment_method: "Betalningsmetod"
     actions:
       update: "Uppdatera"
+      cancel: "Avbryt"
     shared:
       payments_list:
         amount: "Belopp"
@@ -2150,6 +2153,8 @@ sv:
       resumed: återupptagen
       returned: returnerad
       skrill: skrill
+    paypal:
+      refund_amount: "Belopp"
     users:
       open_orders:
         order: Beställningar

@@ -1958,6 +1958,9 @@ pt:
   delivery_method: Método de Entrega
   fee_type: "Tipo de Taxa"
   tax_category: "Categoria de Imposto"
+  description: "Descrição"
+  display: "Mostrar"
+  tags: "Etiquetas"
   calculator: "Calculadora"
   calculator_values: "Valores da calculadora"
   flat_percent_per_item: "Percentual (por unidade)"
@@ -2857,6 +2860,7 @@ pt:
     payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
     actions:
       update: "Atualizar"
+      cancel: "Cancelar"
     shared:
       payments_list:
         amount: "Quantia"
@@ -3277,6 +3281,8 @@ pt:
       ended: terminou
       paused: em pausa
       canceled: cancelado
+    paypal:
+      refund_amount: "Quantia"
     users:
       form:
         account_settings: Definições de Conta

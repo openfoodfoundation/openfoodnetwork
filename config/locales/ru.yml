@@ -2020,6 +2020,9 @@ ru:
   delivery_method: Способ Доставки
   fee_type: "Тип Сбора"
   tax_category: "Налоговая Категория"
+  description: "Описание"
+  display: "Показать"
+  tags: "Метки"
   calculator: "Калькулятор"
   calculator_values: "Значения"
   calculator_settings_warning: "Если Вы меняете тип калькулятора, то должны сначала сохранить его, прежде чем редактировать настройки калькулятора."
@@ -3096,6 +3099,7 @@ ru:
       out_of_stock: '%{item} отсутствует в наличии.'
     actions:
       update: "Обновить"
+      cancel: "Выход"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3556,6 +3560,8 @@ ru:
       ended: окончен
       paused: приостановлен
       canceled: отменен
+    paypal:
+      refund_amount: "Количество"
     users:
       form:
         account_settings: Настройки Профиля

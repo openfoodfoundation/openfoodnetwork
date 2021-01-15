@@ -2016,6 +2016,9 @@ cy:
   delivery_method: Dull Cyflenwi
   fee_type: "Math o Ffi"
   tax_category: "Categori Treth"
+  description: "Disgrifiad"
+  display: "Arddangos"
+  tags: "Tagiau"
   calculator: "Cyfrifiannell"
   calculator_values: "Gwerthoedd cyfrifiannell"
   calculator_settings_warning: "Os ydych chi&#39;n newid y math cyfrifiannell, rhaid i chi gynilo gyntaf cyn y gallwch chi olygu gosodiadau&#39;r gyfrifiannell"
@@ -3085,6 +3088,7 @@ cy:
       out_of_stock: 'mae %{item} allan o stoc.'
     actions:
       update: "Diweddariad"
+      cancel: "Canslo"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3544,6 +3548,8 @@ cy:
       ended: daeth i ben
       paused: seibio
       canceled: wedi&#39;i ganslo
+    paypal:
+      refund_amount: "Swm"
     users:
       form:
         account_settings: Gosodiadau Cyfrif

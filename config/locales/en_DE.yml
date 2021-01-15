@@ -1920,6 +1920,9 @@ en_DE:
   delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
+  description: "Description"
+  display: "Display"
+  tags: "Tags"
   calculator: "Calculator"
   calculator_values: "Calculator values"
   flat_percent_per_item: "Flat Percent (per item)"
@@ -2805,6 +2808,7 @@ en_DE:
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     actions:
       update: "Update"
+      cancel: "Cancel"
     shared:
       payments_list:
         amount: "Amount"
@@ -3184,6 +3188,8 @@ en_DE:
       ended: ended
       paused: paused
       canceled: cancelled
+    paypal:
+      refund_amount: "Amount"
     users:
       form:
         account_settings: Account Settings

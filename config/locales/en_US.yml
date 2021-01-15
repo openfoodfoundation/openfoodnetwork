@@ -2017,6 +2017,9 @@ en_US:
   delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
+  description: "Description"
+  display: "Display"
+  tags: "Tags"
   calculator: "Calculator"
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
@@ -3040,6 +3043,7 @@ en_US:
       out_of_stock: '%{item} is out of stock.'
     actions:
       update: "Update"
+      cancel: "Cancel"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3499,6 +3503,8 @@ en_US:
       ended: ended
       paused: paused
       canceled: cancelled
+    paypal:
+      refund_amount: "Amount"
     users:
       form:
         account_settings: Account Settings

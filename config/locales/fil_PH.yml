@@ -1959,6 +1959,9 @@ fil_PH:
   delivery_method: paraan ng pagdeliver
   fee_type: "uri ng kabayaran"
   tax_category: "kategorya ng tax"
+  description: "paglalarawan"
+  display: "Ipakita"
+  tags: "tags"
   calculator: "calculator"
   calculator_values: "mga halaga sa calculator"
   calculator_settings_warning: "kung papalitan ang uri ng calculator, dapat ay mag-save muna bago maisa-ayos ang setting ng calculator"
@@ -2944,6 +2947,7 @@ fil_PH:
     payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
     actions:
       update: "i-update"
+      cancel: "kanselahin"
     shared:
       payments_list:
         amount: "Halaga"
@@ -3362,6 +3366,8 @@ fil_PH:
       ended: natapos na
       paused: nakahinto
       canceled: kanselado
+    paypal:
+      refund_amount: "Halaga"
     users:
       form:
         account_settings: Setting ng Account

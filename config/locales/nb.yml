@@ -2017,6 +2017,9 @@ nb:
   delivery_method: Leveringsmetode
   fee_type: "Avfgiftstype"
   tax_category: "Avgiftskategori"
+  description: "Beskrivelse"
+  display: "Visning"
+  tags: "Merkelapper"
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorverdier"
   calculator_settings_warning: "Hvis du endrer kalkulatortypen, må du lagre først før du kan redigere kalkulatorinnstillingene"
@@ -3037,6 +3040,7 @@ nb:
       out_of_stock: '%{item} er utsolgt.'
     actions:
       update: "Oppdater"
+      cancel: "Avbryt"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3496,6 +3500,8 @@ nb:
       ended: avsluttet
       paused: pauset
       canceled: avbrutt
+    paypal:
+      refund_amount: "Antall"
     users:
       form:
         account_settings: Kontoinnstillinger

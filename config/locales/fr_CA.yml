@@ -2018,6 +2018,9 @@ fr_CA:
   delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "Type de taxe "
+  description: "Description"
+  display: "Afficher"
+  tags: "Tags"
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
@@ -3050,6 +3053,7 @@ fr_CA:
       out_of_stock: '%{item} est en rupture de stock.'
     actions:
       update: "Mettre à jour"
+      cancel: "Annuler"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3510,6 +3514,8 @@ fr_CA:
       ended: terminé
       paused: mis en pause
       canceled: annulé
+    paypal:
+      refund_amount: "Montant"
     users:
       form:
         account_settings: Paramètres du Compte

@@ -2016,6 +2016,9 @@ ar:
   delivery_method: طريقة التوصيل
   fee_type: "نوع الرسوم"
   tax_category: "الفئة الضريبية"
+  description: "وصف"
+  display: "عرض"
+  tags: "الاوسمة"
   calculator: "آلة حاسبة"
   calculator_values: "القيم المحوسبة"
   calculator_settings_warning: "إذا كنت تقوم بتغيير نوع الحاسبة ، فيجب عليك الحفظ أولاً قبل أن تتمكن من تحرير إعدادات الحاسبة"
@@ -3128,6 +3131,7 @@ ar:
       out_of_stock: '%{item} غير متوفر.'
     actions:
       update: "تحديث"
+      cancel: "إلغاء"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3587,6 +3591,8 @@ ar:
       ended: انتهى
       paused: التعليق
       canceled: الالغاء
+    paypal:
+      refund_amount: "القيمة"
     users:
       form:
         account_settings: إعدادت الحساب

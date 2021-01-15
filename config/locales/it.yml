@@ -2018,6 +2018,9 @@ it:
   delivery_method: Metodo di consegna
   fee_type: "Tipo di contributo"
   tax_category: "Categoria di imposta"
+  description: "Descrizione"
+  display: "Visualizza"
+  tags: "Tag"
   calculator: "Calcolatore"
   calculator_values: "Valori del calcolatore"
   calculator_settings_warning: "Se stai modificando il tipo di calcolatore, devi prima salvare prima di editare i setting del calcolatore"
@@ -3044,6 +3047,7 @@ it:
       out_of_stock: '%{item} non è al momento disponibile.'
     actions:
       update: "Aggiorna"
+      cancel: "Annulla"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3503,6 +3507,8 @@ it:
       ended: finito
       paused: in pausa
       canceled: annullato
+    paypal:
+      refund_amount: "Quantità"
     users:
       form:
         account_settings: Impostazioni account

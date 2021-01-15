@@ -2018,6 +2018,9 @@ de_DE:
   delivery_method: Lieferart
   fee_type: "Art der Gebühr"
   tax_category: "Steuerkategorie"
+  description: "Beschreibung"
+  display: "Anzeige"
+  tags: "Stichwörter"
   calculator: "Rechner"
   calculator_values: "Rechnerwerte"
   calculator_settings_warning: "Wenn Sie den Gebühren-Typ ändern, müssen Sie zuerst speichern, bevor Sie die Gebühren-Einstellungen bearbeiten können"
@@ -3040,6 +3043,7 @@ de_DE:
       out_of_stock: '%{item} ist nicht vorrätig.'
     actions:
       update: "Aktualisieren"
+      cancel: "Abbrechen"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3499,6 +3503,8 @@ de_DE:
       ended: beendet
       paused: pausiert
       canceled: storniert
+    paypal:
+      refund_amount: "Betrag"
     users:
       form:
         account_settings: Konto Einstellungen

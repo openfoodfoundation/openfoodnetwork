@@ -1994,6 +1994,9 @@ nl_BE:
   delivery_method: Leveringswijze
   fee_type: "Sprookjesachtig type"
   tax_category: "Belastingcategorie"
+  description: "Beschrijving"
+  display: "Display"
+  tags: "Tags"
   calculator: "Rekenmachine"
   calculator_values: "Rekenmachine waarden"
   calculator_settings_warning: "Als u de rekenmachine type veranderd, moet u dan eerst opslaan vooraleer u de rekenmachine type kunt aanpassen."
@@ -2918,6 +2921,7 @@ nl_BE:
     payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
     actions:
       update: "Update"
+      cancel: "Annuleren"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Er waren fouten met de volgende velden"
@@ -3372,6 +3376,8 @@ nl_BE:
       ended: ten einde gebracht
       paused: 'in pause '
       canceled: geschrapt
+    paypal:
+      refund_amount: "Bedrag"
     users:
       form:
         account_settings: Rekeningsinstellingen

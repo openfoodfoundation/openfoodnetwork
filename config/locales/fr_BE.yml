@@ -1992,6 +1992,9 @@ fr_BE:
   delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "TVA applicable"
+  description: "Description"
+  display: "Ecran"
+  tags: "Tags"
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous changez le type de calculatrice, vous devez d'abord enregistrer avant de pouvoir modifier les paramètres de la calculatrice"
@@ -2923,6 +2926,7 @@ fr_BE:
     payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
     actions:
       update: "Mettre à jour"
+      cancel: "Annuler"
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Il y a u des erreur avec les champs suivant"
@@ -3377,6 +3381,8 @@ fr_BE:
       ended: terminé
       paused: mis en pause
       canceled: annulé
+    paypal:
+      refund_amount: "Quantité"
     users:
       form:
         account_settings: Paramètres du Compte

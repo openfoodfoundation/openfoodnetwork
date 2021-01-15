@@ -2020,6 +2020,9 @@ ca:
   delivery_method: Mètode de lliurament
   fee_type: "Tipus de comissió"
   tax_category: "Categoria d'impostos"
+  description: "Descripció"
+  display: "Mostra"
+  tags: "Etiquetes"
   calculator: "Calculadora"
   calculator_values: "Valors de la calculadora"
   calculator_settings_warning: "Si canvieu el tipus de calculadora, primer heu de desar abans de poder editar la configuració de la calculadora"
@@ -3043,6 +3046,7 @@ ca:
       out_of_stock: '%{item} està esgotat.'
     actions:
       update: "Actualitzar"
+      cancel: "Cancel·lar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3502,6 +3506,8 @@ ca:
       ended: acabat
       paused: en pausa
       canceled: cancel·lat
+    paypal:
+      refund_amount: "Quantitat"
     users:
       form:
         account_settings: Configuració del compte

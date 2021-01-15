@@ -2015,6 +2015,9 @@ pt_BR:
   delivery_method: Método de entrega
   fee_type: "Tipo de taxa"
   tax_category: "Categoria de taxa"
+  description: "Descrição"
+  display: "Exibição"
+  tags: "Tags"
   calculator: "Calculadora"
   calculator_values: "Valores da calculadora"
   calculator_settings_warning: "Se você estiver alterando o tipo de calculadora, salve primeiro antes de poder editar as configurações da calculadora."
@@ -3042,6 +3045,7 @@ pt_BR:
       out_of_stock: '%{item}fora de estoque. '
     actions:
       update: "Atualizar"
+      cancel: "Cancelar"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3501,6 +3505,8 @@ pt_BR:
       ended: finalizado
       paused: pausado
       canceled: cancelado
+    paypal:
+      refund_amount: "Montante"
     users:
       form:
         account_settings: Configurações da conta
