@@ -3595,6 +3595,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
+      flatpickr_date_format: "Y-m-d H:i"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:
