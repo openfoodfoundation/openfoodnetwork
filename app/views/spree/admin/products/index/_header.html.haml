@@ -5,8 +5,6 @@
   %div{ :class => "toolbar", 'data-hook' => "toolbar" }
     %ul{ :class => "actions header-action-links inline-menu" }
       %li#new_product_link
-        = button_link_to t(:new_product), new_object_url, { :remote => true, :icon => 'icon-plus', :id => 'admin_new_product' }
+        = button_link_to t(:new_product), new_object_url, { :icon => 'icon-plus', :id => 'admin_new_product' }
 
 = render partial: 'spree/admin/shared/product_sub_menu'
-
-%div#new_product(data-hook)
