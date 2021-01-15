@@ -24,7 +24,19 @@ $(document).ready(function(){
       stepMinute: 15
     }
   );
-  $('.datetimepicker').datetimepicker(window.JQUERY_UI_DATETIME_PICKER_DEFAULTS);
+  window.FLATPICKR_DATE_DEFAULT = {
+    dateFormat: "Y-m-d H:i",
+    locale: I18n.locale
+  }
+  window.FLATPICKR_DATETIME_DEFAULT = Object.assign(
+    {},
+    window.FLATPICKR_DATE_DEFAULT,
+    {
+      enableTime: true,
+      time_24hr: true,
+    }
+  );
+  flatpickr(".datetimepicker", window.FLATPICKR_DATETIME_DEFAULT);
   $('a.close').click(function(event){
     event.preventDefault();
     $(this).parent().slideUp(250);
