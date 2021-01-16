@@ -3,26 +3,12 @@ module Spree
     class TaxRatesController < ::Admin::ResourceController
       before_action :load_data
 
+      delegate :transition_rate!, :updated_rate, to: :updater
+
       def update
         return super unless amount_changed? && associated_adjustments?
 
-        # If a TaxRate is modified in production and the amount is changed, we need to clone
-        # and soft-delete it to preserve associated data on previous orders. For example; previous
-        # orders will have adjustments created with that rate. Those old orders will keep the
-        # rate they had when they were created, and new orders will have the new rate applied.
-
-        cloned_rate = clone_tax_rate(@tax_rate)
-        cloned_rate.assign_attributes(permitted_resource_params)
-
-        if cloned_rate.save
-          @tax_rate.destroy
-
-          redirect_to location_after_save,
-                      flash: { success: flash_message_for(cloned_rate, :successfully_updated) }
-        else
-          redirect_to spree.edit_admin_tax_rate_path(@tax_rate),
-                      flash: { error: cloned_rate.errors.full_messages.to_sentence }
-        end
+        transition_tax_rate
       end
 
       private
@@ -35,10 +21,18 @@ module Spree
         Spree::Adjustment.where(originator: @tax_rate).exists?
       end
 
-      def clone_tax_rate(tax_rate)
-        cloned_rate = tax_rate.deep_dup
-        cloned_rate.calculator = tax_rate.calculator.deep_dup
-        cloned_rate
+      def transition_tax_rate
+        if transition_rate!
+          redirect_to location_after_save,
+                      flash: { success: flash_message_for(updated_rate, :successfully_updated) }
+        else
+          redirect_to spree.edit_admin_tax_rate_path(@tax_rate),
+                      flash: { error: updated_rate.errors.full_messages.to_sentence }
+        end
+      end
+
+      def updater
+        @updater ||= TaxRateUpdater.new(@tax_rate, permitted_resource_params)
       end
 
       def load_data
