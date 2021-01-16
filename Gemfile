@@ -21,6 +21,7 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'responders'
   gem 'sass', '<= 4.7.1'
   gem 'sass-rails', '< 6.0.0'
+  gem 'libv8', '< 8'
 else
   gem 'rails', '~> 4.2'
 
