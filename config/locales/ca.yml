@@ -2382,6 +2382,7 @@ ca:
   js:
     saving: 'Desant...'
     changes_saved: 'S''han desat els canvis.'
+    authorising: "Autoritzant..."
     save_changes_first: Desa els canvis en primer lloc.
     all_changes_saved: S'han desat tots els canvis
     unsaved_changes: Teniu canvis sense desar
@@ -2397,6 +2398,7 @@ ca:
     resolve_errors: Si us plau, resol els errors següents
     more_items: "+ %{count} Més"
     default_card_updated: Targeta predeterminada actualitzada
+    default_card_voids_auth: Si canvieu la targeta predeterminada, s’eliminaran les autoritzacions existents de les botigues per cobrar-la. Podeu tornar a autoritzar les botigues després d'actualitzar la targeta predeterminada. Voleu canviar la targeta predeterminada?
     cart:
       add_to_cart_failed: >
           S'ha produït un problema en afegir aquest producte a la cistella. Potser
@@ -3062,6 +3064,7 @@ ca:
         payment_state: "Estat del pagament"
     errors:
       messages:
+        included_price_validation: "no es pot seleccionar tret que hàgiu establert una zona fiscal predeterminada"
         blank: "no es pot deixar en blanc"
     layouts:
       admin:
@@ -3272,6 +3275,14 @@ ca:
           deactivation_warning: "Desactivar un mètode de pagament pot fer que el mètode de pagament desapareixi de la vostra llista. De forma alternativa, podeu amagar un mètode de pagament a la pàgina de compra configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
         providers:
           provider: "Proveïdor"
+          check: "Efectiu / transferència / etc. (pagaments per als quals no és necessària la validació automàtica)"
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3507,7 +3518,23 @@ ca:
       paused: en pausa
       canceled: cancel·lat
     paypal:
+      already_refunded: "Aquest pagament s'ha reembossat i no es poden emprendre mesures addicionals."
+      no_payment_via_admin_backend: "En aquest moment no podeu carregar comptes de PayPal mitjançant el panell d’administració."
+      transaction: "Transacció PayPal"
+      payer_id: "Id de pagador"
+      transaction_id: "Id de transacció"
+      token: "Token"
+      refund: "Reembossament"
       refund_amount: "Quantitat"
+      original_amount: "Import original: %{amount}"
+      refund_successful: "reembossament de PayPal exitós"
+      refund_unsuccessful: "reembossament de PayPal fallat"
+      actions:
+        refund: "Reembossament"
+      flash:
+        cancel: "No voleu utilitzar PayPal? Cap problema."
+        connection_failed: "No s'ha pogut connectar a PayPal."
+        generic_error: "PayPal ha fallat. %{reasons}"
     users:
       form:
         account_settings: Configuració del compte
@@ -3546,6 +3573,7 @@ ca:
         delete?: Suprimeix?
       cards:
         authorised_shops: Botigues autoritzades
+        authorised_shops_agreement: Aquesta és la llista de botigues que tenen permís per carregar la vostra targeta de crèdit per defecte per les subscripcions (per exemple, comandes repetides) que tingueu. Les dades de la vostra targeta es mantindran segures i no es compartiran amb els propietaris de botigues. Sempre se us notificarà quan us cobrin. En marcar la casella d’una botiga, accepteu autoritzar la botiga perquè enviï instruccions a la institució financera que va emetre la vostra targeta per fer els pagaments d’acord amb els termes de qualsevol subscripció que creeu amb aquesta botiga.
         saved_cards_popover: Aquesta és la llista de targetes que heu optat per guardar per a un ús posterior. El vostre "valor predeterminat" es seleccionarà automàticament quan valideu una comanda i es pot carregar per qualsevol botiga a la que li hagueu permès fer-ho (vegeu a la dreta).
       authorised_shops:
         shop_name: "Nom de la botiga"
