@@ -182,7 +182,7 @@ RSpec.configure do |config|
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
   config.include ControllerRequestsHelper, type: :controller
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include OpenFoodNetwork::ApiHelper, type: :controller
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
