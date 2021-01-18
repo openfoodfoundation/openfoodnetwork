@@ -321,17 +321,6 @@ feature '
         expect(page).to have_content test_tracking_number
       end
 
-      scenario "editing shipping fees" do
-        click_link "Adjustments"
-        shipping_adjustment_tr_selector = "tr#spree_adjustment_#{order.adjustments.shipping.first.id}"
-        page.find("#{shipping_adjustment_tr_selector} td.actions a.icon-edit").click
-
-        fill_in "Amount", with: "5"
-        click_button "Continue"
-
-        expect(page.find("#{shipping_adjustment_tr_selector} td.amount")).to have_content "5.00"
-      end
-
       context "when an included variant has been deleted" do
         let!(:deleted_variant) do
           order.line_items.first.variant.tap(&:delete)
