@@ -3,7 +3,11 @@ angular.module('admin.orderCycles', ['ngTagsInput', 'admin.indexUtils', 'admin.e
     require: "ngModel"
     link: (scope, element, attrs, ngModel) ->
       $timeout ->
-        flatpickr(element, window.FLATPICKR_DATETIME_DEFAULT);
+        flatpickr(element,  Object.assign({},
+                            window.FLATPICKR_DATETIME_DEFAULT, {
+                            onOpen: (selectedDates, dateStr, instance) ->
+                              instance.setDate(ngModel.$modelValue)
+                            }));
 
   .directive 'ofnOnChange', ->
     (scope, element, attrs) ->
