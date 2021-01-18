@@ -9,6 +9,14 @@ describe CustomersWithBalance do
     let(:customer) { create(:customer) }
     let(:total) { 200.00 }
     let(:order_total) { 100.00 }
+    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+
+    it 'calls CustomersWithBalance#statement' do
+      allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+      expect(outstanding_balance).to receive(:statement)
+
+      customers_with_balance.query
+    end
 
     context 'when orders are in cart state' do
       before do
