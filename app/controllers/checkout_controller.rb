@@ -2,7 +2,7 @@
 
 require 'open_food_network/address_finder'
 
-class CheckoutController < Spree::StoreController
+class CheckoutController < ::BaseController
   layout 'darkswarm'
 
   include OrderStockCheck

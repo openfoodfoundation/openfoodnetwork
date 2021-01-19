@@ -1,17 +1,14 @@
-require 'spree/core/controller_helpers/auth'
-require 'spree/core/controller_helpers/common'
+# frozen_string_literal: true
+
 require 'spree/core/controller_helpers/order'
-require 'spree/core/controller_helpers/respond_with'
 require 'open_food_network/tag_rule_applicator'
 
 class BaseController < ApplicationController
-  include Spree::Core::ControllerHelpers::Auth
-  include Spree::Core::ControllerHelpers::Common
+  layout 'darkswarm'
+
   include Spree::Core::ControllerHelpers::Order
-  include Spree::Core::ControllerHelpers::RespondWith
 
   include I18nHelper
-  include EnterprisesHelper
   include OrderCyclesHelper
 
   helper 'spree/base'
