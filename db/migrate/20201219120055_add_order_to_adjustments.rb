@@ -1,13 +1,14 @@
 class AddOrderToAdjustments < ActiveRecord::Migration
-  def up
-    class Spree::Adjustment < ActiveRecord::Base
-      belongs_to :adjustable, polymorphic: true
-      belongs_to :order, class_name: "Spree::Order"
-    end
-    class Spree::LineItem < ActiveRecord::Base
-      belongs_to :order, class_name: "Spree::Order"
-    end
+  class Spree::Adjustment < ActiveRecord::Base
+    belongs_to :adjustable, polymorphic: true
+    belongs_to :order, class_name: "Spree::Order"
+  end
 
+  class Spree::LineItem < ActiveRecord::Base
+    belongs_to :order, class_name: "Spree::Order"
+  end
+
+  def up
     add_column :spree_adjustments, :order_id, :integer
 
     # Ensure migration can use the new column
