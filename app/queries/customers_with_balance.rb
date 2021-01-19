@@ -33,7 +33,8 @@ class CustomersWithBalance
   end
 
   def complete_orders
-    states = Spree::Order::PRIOR_TO_COMPLETION_STATES.map { |state| Arel::Nodes.build_quoted(state) }
+    states = Spree::Order::PRIOR_TO_COMPLETION_STATES
+      .map { |state| Arel::Nodes.build_quoted(state) }
     Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states)
   end
 end
