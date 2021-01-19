@@ -35,6 +35,10 @@ else
 
   gem 'db2fog'
   gem 'unicorn'
+
+  group :test do
+    gem 'test_after_commit' # needed to test Devise callbacks
+  end
 end
 
 gem 'i18n'
@@ -161,7 +165,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
-  gem 'test_after_commit' # needed to test Devise callbacks
   gem 'webmock'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'

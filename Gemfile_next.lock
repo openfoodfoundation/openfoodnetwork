@@ -502,8 +502,6 @@ GEM
     test-prof (0.7.5)
     test-unit (3.3.7)
       power_assert
-    test_after_commit (1.1.0)
-      activerecord (>= 3.2)
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -650,7 +648,6 @@ DEPENDENCIES
   stripe
   test-prof
   test-unit (~> 3.3)
-  test_after_commit
   timecop
   uglifier (>= 1.0.3)
   unicorn-rails
