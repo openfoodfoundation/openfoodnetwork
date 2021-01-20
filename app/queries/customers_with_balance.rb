@@ -28,13 +28,12 @@ class CustomersWithBalance
   def left_join_complete_orders
     <<-SQL.strip_heredoc
       LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id
-        AND #{complete_orders.to_sql}
+        AND #{finalized_states.to_sql}
     SQL
   end
 
-  def complete_orders
-    states = Spree::Order::PRIOR_TO_COMPLETION_STATES
-      .map { |state| Arel::Nodes.build_quoted(state) }
-    Arel::Nodes::NotIn.new(Spree::Order.arel_table[:state], states)
+  def finalized_states
+    states = Spree::Order::FINALIZED_STATES.map { |state| Arel::Nodes.build_quoted(state) }
+    Arel::Nodes::In.new(Spree::Order.arel_table[:state], states)
   end
 end

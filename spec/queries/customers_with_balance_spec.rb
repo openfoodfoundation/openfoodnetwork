@@ -69,9 +69,9 @@ describe CustomersWithBalance do
     context 'when no orders where paid' do
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
       end
 
       it 'returns the customer balance' do
@@ -85,9 +85,9 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
       end
 
       it 'returns the customer balance' do
@@ -102,7 +102,7 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         create(
           :order,
           customer: customer,
@@ -123,7 +123,7 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
         order.update_attribute(:state, 'resumed')
       end
@@ -139,7 +139,7 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
         order.update_attribute(:state, 'payment')
       end
@@ -155,7 +155,7 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
         order.update_attribute(:state, 'awaiting_return')
       end
@@ -172,7 +172,7 @@ describe CustomersWithBalance do
 
       before do
         order = create(:order, customer: customer, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'checkout')
+        order.update_attribute(:state, 'complete')
         order = create(:order, customer: customer, total: order_total, payment_total: payment_total)
         order.update_attribute(:state, 'returned')
       end

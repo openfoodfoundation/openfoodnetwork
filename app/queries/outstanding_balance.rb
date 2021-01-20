@@ -9,6 +9,10 @@
 #
 # See CompleteOrdersWithBalance or CustomersWithBalance as examples.
 class OutstandingBalance
+  # All the states of a finished order but that shouldn't count towards the balance (the customer
+  # didn't get the order for whatever reason). Note it does not include complete
+  FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
+
   # The relation must be an ActiveRecord::Relation object with `spree_orders` in the SQL statement
   # FROM for #statement to work.
   def initialize(relation = nil)
@@ -34,7 +38,7 @@ class OutstandingBalance
   attr_reader :relation
 
   def non_fulfilled_states_group
-    states = Spree::Order::NON_FULFILLED_STATES.map { |state| Arel::Nodes.build_quoted(state) }
+    states = FINALIZED_NON_SUCCESSFUL_STATES.map { |state| Arel::Nodes.build_quoted(state) }
     Arel::Nodes::Grouping.new(states)
   end
 end

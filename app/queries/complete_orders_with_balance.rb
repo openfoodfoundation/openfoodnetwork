@@ -7,14 +7,14 @@ class CompleteOrdersWithBalance
   end
 
   def query
-    OutstandingBalance.new(sorted_complete_orders).query
+    OutstandingBalance.new(sorted_finalized_orders).query
   end
 
   private
 
-  def sorted_complete_orders
+  def sorted_finalized_orders
     @user.orders
-      .where.not(Spree::Order.in_incomplete_state.where_values_hash)
+      .finalized
       .select('spree_orders.*')
       .order(completed_at: :desc)
   end
