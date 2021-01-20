@@ -59,7 +59,7 @@ de_DE:
         end_at: "Ende"
         distributor_ids: "Hubs"
         producer_ids: "Erzeuger"
-        order_cycle_ids: "Bestellrunden"
+        order_cycle_ids: "Bestellzyklen"
         enterprise_fee_ids: "Gebührennamen"
         shipping_method_ids: "Lieferart"
         payment_method_ids: "Zahlungsarten"
@@ -193,7 +193,7 @@ de_DE:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Willkommen bei"
-  site_meta_description: "Wir starten ganz grundsätzlich. Mit LandwirtInnen und GärtnerInnen, die stolz und ehrlich ihre Geschichte erzählen. Mit Lieferanten, die Menschen fair und vertrauenswürdig mit Produkten verbinden. Mit KonsumentInnen, die glauben, daß ihre wöchentlichen Einkaufsentscheidungen..."
+  site_meta_description: "Wir starten ganz grundsätzlich. Mit LandwirtInnen und GärtnerInnen, die stolz und ehrlich ihre Geschichte erzählen. Mit Lieferanten, die Menschen fair und vertrauenswürdig mit Produkten verbinden. Mit KonsumentInnen, die glauben, dass ihre wöchentlichen Einkaufsentscheidungen..."
   search_by_name: Suche nach Name oder Ort...
   producers_join: 'Wir laden Deutsche Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnet Steuern?
@@ -1557,13 +1557,13 @@ de_DE:
   producer_mail_delivery_instructions: "Lagerabholung / Lieferanweisungen:"
   producer_mail_signoff: "Danke und die besten Wünsche"
   shopping_oc_closed: Bestellungen sind geschlossen
-  shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Zyklus beginnt (oder kontaktieren Sie uns direkt, um zu sehen, ob wir verspätete Bestellungen annehmen können)"
-  shopping_oc_last_closed: "Der letzte Zyklus wurde vor %{distance_of_time} geschlossen"
+  shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Bestellzyklus öffnet (oder kontaktieren Sie uns direkt, um zu sehen, ob wir verspätete Bestellungen annehmen können)."
+  shopping_oc_last_closed: "Der letzte Bestellzyklus wurde vor %{distance_of_time} geschlossen."
   shopping_oc_next_open: "Der nächste Zyklus wird in %{distance_of_time} geöffnet"
   shopping_oc_select: "Wählen..."
   shopping_tabs_home: "Startseite"
   shopping_tabs_shop: "Laden"
-  shopping_tabs_about: "Über Uns"
+  shopping_tabs_about: "Über uns"
   shopping_tabs_contact: "Kontakt"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
@@ -1571,13 +1571,14 @@ de_DE:
   shopping_groups_part_of: "ist ein Teil von:"
   shopping_producers_of_hub: "Erzeuger bei%{hub}"
   enterprises_next_closing: "Nächster Bestellschluß"
+  enterprises_currently_open: "Bestellzyklus ist geöffnet"
   enterprises_ready_for: "Fertig am"
   enterprises_choose: "Wählen Sie, wann Sie Ihre Bestellung wollen:"
   maps_open: "Offen"
   maps_closed: "Geschlossen"
   hubs_buy: "Suche nach:"
-  hubs_shopping_here: "Hier einkaufen"
-  hubs_orders_closed: "Momentan keine Bestellungen"
+  hubs_shopping_here: "Sie kaufen hier ein"
+  hubs_orders_closed: "Bestellzyklus geschlossen"
   hubs_profile_only: "Profil nur"
   hubs_delivery_options: "Lieferoptionen"
   hubs_pickup: "Abholen"
@@ -1585,8 +1586,8 @@ de_DE:
   hubs_producers: "Unsere Produzenten"
   hubs_filter_by: "Filtern nach"
   hubs_filter_type: "Art"
-  hubs_filter_delivery: "Lieferung"
-  hubs_filter_property: "Eigentum"
+  hubs_filter_delivery: "Lieferoptionen"
+  hubs_filter_property: "Eigenschaften"
   hubs_matches: "Meintest Du?"
   hubs_intro: Regional einkaufen
   hubs_distance: Am nächsten
@@ -1597,7 +1598,7 @@ de_DE:
     many: Sie haben <a href='%{path}' target='_blank'>%{count} Bestellungen mit %{shop}, die</a> derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
     other: Sie haben <a href='%{path}' target='_blank'>%{count} Bestellungen mit %{shop}, die</a> derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
   orders_changeable_orders_alert_html: Diese Bestellung wurde bestätigt, Sie können jedoch bis <strong> %{oc_close} </ strong> Änderungen vornehmen.
-  products_clear: Leeren
+  products_clear: Zurücksetzen
   products_showing: "Angezeigt:"
   products_results_for: "Ergebnisse für"
   products_or: "oder"
@@ -1608,8 +1609,8 @@ de_DE:
   products_filter_by: "Filtern nach"
   products_filter_selected: "ausgewählt"
   products_filter_heading: "Filter"
-  products_filter_clear: "Leeren"
-  products_filter_done: "Erledigt"
+  products_filter_clear: "Zurücksetzen"
+  products_filter_done: "Anwenden"
   products_loading: "Lade Produkte..."
   products_updating_cart: "Einkaufswagen aktualisieren..."
   products_cart_empty: "Leerer Einkaufswagen"
@@ -1620,7 +1621,7 @@ de_DE:
   products_update_error_msg: "Speichern Fail"
   products_update_error_data: "Speichern wegen ungültiger Daten fehlgeschlagen:"
   products_changes_saved: "Änderungen gespeichert"
-  products_no_results_html: "Für %{query} wurden leider keine Ergebnisse gefunden"
+  products_no_results_html: "Leider wurden keine Ergebnisse gefunden für %{query}."
   products_clear_search: "Suche zurücksetzen"
   search_no_results_html: "Es wurden leider keine Ergebnisse für %{query} gefunden. Versuchen Sie eine andere Suche?"
   components_profiles_popover: "Profile haben keinen Laden im Open Food Network, verkaufen möglicherweise aber anderswo online oder offline."
@@ -1665,10 +1666,10 @@ de_DE:
   producers_contact: Kontakt
   producers_contact_phone: Anruf
   producers_contact_social: Folgen
-  producers_buy_at_html: "Suche nach %{enterprise} Produkten unter:"
+  producers_buy_at_html: "Hier erhalten Sie %{enterprise}-Produkte:"
   producers_filter: Filtern nach
   producers_filter_type: Art
-  producers_filter_property: Eigentum
+  producers_filter_property: Eigenschaften
   producers_title: Produzenten
   producers_headline: Finden Sie lokale Produzenten
   producers_signup_title: Melde dich als Produzent an
@@ -1703,8 +1704,8 @@ de_DE:
   sell_embed: "Wir können auch einen OFN-Laden in Ihre eigene Website einbetten oder eine maßgeschneiderte Webseite für Ihr Lokalität oder Region erstellen."
   sell_ask_services: "Fragen Sie uns nach OFN-Diensten."
   shops_title: Läden
-  shops_headline: Einkaufen, verwandelt.
-  shops_text: Nahrung wächst in Zyklen, Bauern ernten in Zyklen und wir bestellen Nahrung in Zyklen. Wenn Sie feststellen, dass ein Bestellzyklus geschlossen ist, schauen Sie bald wieder vorbei.
+  shops_headline: Einkaufen, neu gedacht.
+  shops_text: Nahrung wächst in Zyklen, Bauern ernten in Zyklen und wir bestellen Nahrung in Zyklen. Ist ein Bestellzyklus gerade geschlossen, schauen Sie bald wieder vorbei.
   shops_signup_title: Als Hub registrieren
   shops_signup_headline: Lebensmittel-Hubs, unbegrenzt.
   shops_signup_motivation: Was auch immer Ihr Modell ist, wir unterstützen Sie. Wie auch immer Sie sich ändern, wir sind bei Ihnen. Wir sind gemeinnützig, unabhängig und Open-Source. Wir sind die Software-Partner, von denen Sie schon immer geträumt haben.
@@ -1763,8 +1764,8 @@ de_DE:
   password: Passwort
   remember_me: Erinnere dich an mich
   are_you_sure: "Bist du sicher?"
-  orders_open: "Bestellungen öffnen"
-  closing: "Schließen"
+  orders_open: "Geöffnet"
+  closing: "Schließt"
   going_back_to_home_page: "Bring dich zurück auf die Homepage"
   creating: Erstellen
   updating: Aktualisierung
@@ -1871,7 +1872,7 @@ de_DE:
         no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Coop, eine Einkaufsgruppe, Einzelhändler, ein Hofladen, Großhändler oder vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
-        title: "Über Uns"
+        title: "Über uns"
         headline: "Schön!"
         message: "Lassen Sie uns nun die Details überarbeiten"
         success: "Erfolg! %{enterprise} wurde dem Open Food Network hinzugefügt"
@@ -1903,7 +1904,7 @@ de_DE:
         logo_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde"
       promo:
         select_promo_image: "Schritt 3. Wählen Sie Promo Image"
-        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260px"
+        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260 px"
         promo_image_label: "Wählen Sie ein Promobild"
         promo_image_drag: "Verschieben Sie Ihre Promo hier"
         review_promo_image: "Schritt 4. Überprüfen Sie Ihr Promo-Banner"
@@ -1944,7 +1945,7 @@ de_DE:
   shop_variant_quantity_min: "Mindest"
   shop_variant_quantity_max: "max"
   follow: "Folgen"
-  shop_for_products_html: "Suche nach <span class=\"turquoise\">%{enterprise}</span> Produkten unter:"
+  shop_for_products_html: "Hier erhalten Sie <span class=\"turquoise\">%{enterprise}</span>-Produkte:"
   change_shop: "Laden ändern auf:"
   shop_at: "Kaufe jetzt bei:"
   admin_fee: "Gebühr Administration"
@@ -1989,7 +1990,7 @@ de_DE:
   admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt"
   admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "z.B. 98 7654 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "z.B. Gartenstrasse 123"
+  admin_enterprise_groups_contact_address1_placeholder: "z.B. Gartenstraße 123"
   admin_enterprise_groups_contact_city: "Vorort"
   admin_enterprise_groups_contact_city_placeholder: "z.B. Nordwestheim"
   admin_enterprise_groups_contact_zipcode: "Postleitzahl"
@@ -2087,6 +2088,7 @@ de_DE:
   spree_classification_primary_taxon_error: "Taxon %{taxon} ist das primäre Taxon von %{product} und kann nicht gelöscht werden"
   spree_order_availability_error: "Distributor oder Bestellzyklus kann die Produkte in Ihrem Warenkorb nicht liefern"
   spree_order_populator_error: "Dieser Verteiler oder Bestellzyklus kann nicht alle Produkte in Ihrem Einkaufswagen liefern. Bitte wählen Sie ein anderes."
+  spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
   spree_order_populator_availability_error: "Dieses Produkt ist im ausgewählten Distributor oder Bestellzyklus nicht verfügbar."
   spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein"
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (Limit ist %{enterprise_limit})."
@@ -2102,8 +2104,8 @@ de_DE:
   manage_products: "Produkte verwalten"
   edit_profile_details: "Profildetails bearbeiten"
   edit_profile_details_etc: "Ändern Sie Ihre Profilbeschreibung, Bilder usw."
-  order_cycle: "Bestellungszyklus"
-  order_cycles: "Bestellrunden"
+  order_cycle: "Bestellzyklus"
+  order_cycles: "Bestellzyklen"
   enterprise_relationships: "Unternehmensberechtigungen"
   remove_tax: "Steuer entfernen"
   first_name_begins_with: "Der Vorname beginnt mit"
@@ -2128,7 +2130,7 @@ de_DE:
   hub_sidebar_at_least: "Mindestens ein Hub muss ausgewählt sein"
   hub_sidebar_blue: "Blau"
   hub_sidebar_red: "rot"
-  order_cycles_closed_for_hub: "Der von Ihnen ausgewählte Hub ist vorübergehend für Bestellungen geschlossen. Bitte versuchen Sie es später noch einmal."
+  order_cycles_closed_for_hub: "Der Bestellzyklus des von Ihnen ausgewählten Ladens ist derzeit geschlossen. Bitte versuchen Sie es später noch einmal."
   report_customers_distributor: "Verteiler"
   report_customers_supplier: "Anbieter"
   report_customers_cycle: "Bestellungszyklus"
@@ -2148,7 +2150,7 @@ de_DE:
   report_users: "Benutzer:"
   report_tax_rates: Steuersätze
   report_tax_types: Steuerarten
-  report_header_order_cycle: Bestellrunde
+  report_header_order_cycle: Bestellzyklus
   report_header_user: Benutzer
   report_header_email: Email
   report_header_status: Status
@@ -2379,6 +2381,7 @@ de_DE:
   js:
     saving: 'Speichern ...'
     changes_saved: 'Änderungen gespeichert'
+    authorising: "Autorisierung ..."
     save_changes_first: Änderungen zuerst speichern.
     all_changes_saved: Alle Änderungen gespeichert
     unsaved_changes: Du hast nicht gespeicherte Änderungen
@@ -2394,6 +2397,7 @@ de_DE:
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} Mehr"
     default_card_updated: Standardkarte aktualisiert
+    default_card_voids_auth: Durch das Ändern Ihrer Standardkarte werden die vorhandenen Berechtigungen für Abbuchungen des Shops entfernt. Sie können die Berechtigungen nach dem Aktualisieren der Standardkarte erneut erteilen. Möchten Sie die Standardkarte ändern?
     cart:
       add_to_cart_failed: >
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Problem aufgetreten.
@@ -2693,7 +2697,7 @@ de_DE:
       no_distributors: In diesem Bestellzyklus gibt es keine Distributoren. Dieser Bestellzyklus ist für Kunden erst sichtbar, wenn Sie einen hinzufügen. Möchten Sie diesen Bestellzyklus weiterhin speichern?
     enterprises:
       producer: "Erzeuger"
-      non_producer: "Widerverkäufer"
+      non_producer: "Wiederverkäufer"
     customers:
       select_shop: 'Bitte wählen Sie zuerst einen Laden aus'
       could_not_create: Es tut uns leid! Konnte nicht ... Erstellen
@@ -2706,7 +2710,7 @@ de_DE:
         order: "Bestellung"
     registration:
       welcome_to_ofn: "Willkommen im Open Food Network!"
-      signup_or_login: "Beginnen Sie mit der Anmeldung (oder melden Sie sich an)"
+      signup_or_login: "Beginnen Sie mit der Registrierung (oder melden Sie sich an)"
       have_an_account: "Hast du schon ein Konto?"
       action_login: "Jetzt einloggen."
     stripe_elements:
@@ -3059,6 +3063,7 @@ de_DE:
         payment_state: "Zahlungsstatus"
     errors:
       messages:
+        included_price_validation: "kann nur ausgewählt werden, wenn Sie eine Standardsteuerzone festgelegt haben"
         blank: "kann nicht leer sein"
     layouts:
       admin:
@@ -3079,7 +3084,7 @@ de_DE:
         configuration: "Aufbau"
         users: "Benutzer"
         roles: "Rollen"
-        order_cycles: "Bestellrunden"
+        order_cycles: "Bestellzyklen"
         enterprises: "Unternehmen"
         enterprise_relationships: "Berechtigungen"
         customers: "Kunden"
@@ -3091,11 +3096,11 @@ de_DE:
       properties:
         index:
           properties: "Eigenschaften"
-          new_property: "Neues Eigentum"
+          new_property: "Neue Eigenschaft"
           name: "Name"
           presentation: "Präsentation"
         new:
-          new_property: "Neues Eigentum"
+          new_property: "Neue Eigenschaft"
         edit:
           editing_property: "Eigenschaft bearbeiten"
           back_to_properties_list: "Zurück zur Eigenschaftenliste"
@@ -3184,7 +3189,7 @@ de_DE:
             many: "Sie haben %{count} aktive Produkte"
             other: "Sie haben %{count} aktive Produkte"
         order_cycles:
-          order_cycles: "Bestellrunden"
+          order_cycles: "Bestellzyklen"
           order_cycles_tip: "Bestellzyklen bestimmen, wann und wo Ihre Produkte für Kunden verfügbar sind."
           you_have_active:
             zero: "Sie haben keine aktiven Bestellzyklen."
@@ -3192,7 +3197,7 @@ de_DE:
             few: "Sie haben %{count} aktive Auftragszyklen."
             many: "Sie haben %{count} aktive Auftragszyklen."
             other: "Sie haben %{count} aktive Bestellzyklen."
-          manage_order_cycles: "BESTELLRUNDEN VERWALTEN"
+          manage_order_cycles: "BESTELLZYKLEN VERWALTEN"
       shipping_methods:
         index:
           shipping_methods: "Lieferart"
@@ -3269,6 +3274,14 @@ de_DE:
           deactivation_warning: "Durch Deaktivieren einer Zahlungsmethode kann die Zahlungsmethode aus Ihrer Liste verschwinden. Alternativ können Sie eine Zahlungsmethode auf der Checkout-Seite ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
         providers:
           provider: "Anbieter"
+          check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Pin Zahlungen"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3504,7 +3517,23 @@ de_DE:
       paused: pausiert
       canceled: storniert
     paypal:
+      already_refunded: "Diese Zahlung wurde zurückerstattet und es können keine weiteren Maßnahmen ergriffen werden."
+      no_payment_via_admin_backend: "Sie können derzeit keine PayPal-Konten über das Administrationsmenü belasten."
+      transaction: "PayPal-Transaktion"
+      payer_id: "Zahler-ID"
+      transaction_id: "Transaktions-ID"
+      token: "Token"
+      refund: "Rückerstattung"
       refund_amount: "Betrag"
+      original_amount: "Ursprünglicher Betrag: %{amount}"
+      refund_successful: "PayPal-Rückerstattung erfolgreich"
+      refund_unsuccessful: "PayPal-Rückerstattung nicht erfolgreich"
+      actions:
+        refund: "Rückerstattung"
+      flash:
+        cancel: "Sie möchten PayPal nicht nutzen? Kein Problem."
+        connection_failed: "Es konnte keine Verbindung zu PayPal hergestellt werden."
+        generic_error: "PayPal ist fehlgeschlagen. %{reasons}"
     users:
       form:
         account_settings: Konto Einstellungen
@@ -3543,9 +3572,11 @@ de_DE:
         delete?: Löschen?
       cards:
         authorised_shops: Bevollmächtigte Läden
+        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d.h. wiederholte Bestellungen) belastet werden darf. Ihre Kartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erklären Sie sich damit einverstanden, diesen Laden zu autorisieren, Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß den Bedingungen eines Abonnements entgegenzunehmen, das Sie mit diesem Laden erstellen.
         saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"
+        allow_charges?: "Abbuchungen für die Standardkarte zulassen?"
     localized_number:
       invalid_format: hat ein ungültiges Format. Bitte Ziffern eingeben.
     api:
