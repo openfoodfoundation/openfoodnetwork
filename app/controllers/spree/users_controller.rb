@@ -12,7 +12,6 @@ module Spree
     before_action :set_locale
     before_action :enable_embedded_shopfront
 
-    # Ignores invoice orders
     def show
       @orders = orders_collection
 
