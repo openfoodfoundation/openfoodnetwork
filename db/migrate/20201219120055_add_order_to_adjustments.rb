@@ -34,4 +34,8 @@ class AddOrderToAdjustments < ActiveRecord::Migration
       adjustment.update_column(:order_id, line_item.order_id)
     end
   end
+
+  def down
+    remove_column :spree_adjustments, :order_id
+  end
 end
