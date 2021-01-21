@@ -154,13 +154,13 @@ module Spree
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
         @payment.authorize!(spree.order_path(@payment.order, only_path: false))
-        if @payment.cvv_response_message.present?
-          PaymentMailer.authorize_payment(@payment).deliver
-          raise Spree::Core::GatewayError, I18n.t('action_required')
-        end
-        return if @payment.pending? && @payment.cvv_response_message.nil?
 
-        raise Spree::Core::GatewayError, I18n.t('authorization_failure')
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
+
+        return unless @payment.cvv_response_message.present?
+
+        PaymentMailer.authorize_payment(@payment).deliver
+        raise Spree::Core::GatewayError, I18n.t('action_required')
       end
     end
   end
