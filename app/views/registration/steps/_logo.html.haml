@@ -41,6 +41,6 @@
               .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
                 = t(".logo_placeholder")
               .loading{ ng: { hide: "!imageUploader.isUploading" } }
-                %img.spinner{ src: image_path("spinning-circles.svg") }
+                = render partial: "components/spinner"
                 %br/
                 = t("registration.steps.images.uploading")

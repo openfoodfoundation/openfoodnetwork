@@ -35,7 +35,7 @@
 
   .row{ 'ng-if' => 'shop_id && RequestMonitor.loading' }
     .sixteen.columns.alpha#loading
-      %img.spinner{ src: image_path("spinning-circles.svg") }
+      = render partial: "components/spinner"
       %h1
         =t :loading_customers
 
