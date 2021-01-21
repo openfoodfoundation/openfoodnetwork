@@ -7,8 +7,7 @@
  *= require normalize
  *= require responsive-tables
  *= require jquery.powertip
- *= require jquery.ui.datepicker
- *= require jquery-ui-timepicker-addon
+ *= require jquery.ui.dialog
  *= require shared/textAngular
  *= require shared/ng-tags-input.min
  *= require select2
@@ -31,6 +30,8 @@
 @import 'shared/icons';
 @import 'shared/forms';
 @import 'shared/layout';
+
+@import 'plugins/flatpickr-customization';
 
 @import 'plugins/powertip';
 @import 'plugins/jstree';

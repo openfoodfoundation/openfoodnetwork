@@ -10,7 +10,6 @@
 //= require jquery-migrate-min
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require jquery-ui-timepicker-addon
 //= require jquery.powertip
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
