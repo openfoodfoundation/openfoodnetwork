@@ -2,13 +2,15 @@
 
 require 'spec_helper'
 
-describe ModelSet do
+describe Sets::ModelSet do
   describe "updating" do
     it "creates new models" do
       attrs = { collection_attributes: { '1' => { name: 's1' },
                                          '2' => { name: 's2' } } }
 
-      ms = ModelSet.new(EnterpriseRelationshipPermission, EnterpriseRelationshipPermission.all, attrs)
+      ms = Sets::ModelSet.new(EnterpriseRelationshipPermission,
+                              EnterpriseRelationshipPermission.all,
+                              attrs)
 
       expect { ms.save }.to change(EnterpriseRelationshipPermission, :count).by(2)
 
@@ -22,7 +24,7 @@ describe ModelSet do
       attrs = { collection_attributes: { '1' => { id: e1.id, name: 'e1zz', description: 'foo' },
                                          '2' => { id: e2.id, name: 'e2yy', description: 'bar' } } }
 
-      ms = ModelSet.new(EnterpriseGroup, EnterpriseGroup.all, attrs)
+      ms = Sets::ModelSet.new(EnterpriseGroup, EnterpriseGroup.all, attrs)
 
       expect { ms.save }.to change(EnterpriseGroup, :count).by(0)
 
@@ -36,8 +38,8 @@ describe ModelSet do
       attributes = { collection_attributes: { '1' => { id: e1.id, name: 'deleteme' },
                                               '2' => { id: e2.id, name: 'e2' } } }
 
-      ms = ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
-                        proc { |attrs| attrs['name'] == 'deleteme' })
+      ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
+                              proc { |attrs| attrs['name'] == 'deleteme' })
 
       expect { ms.save }.to change(Enterprise, :count).by(-1)
 
@@ -48,8 +50,8 @@ describe ModelSet do
     it "ignores deletable new records" do
       attributes = { collection_attributes: { '1' => { name: 'deleteme' } } }
 
-      ms = ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
-                        proc { |attrs| attrs['name'] == 'deleteme' })
+      ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
+                              proc { |attrs| attrs['name'] == 'deleteme' })
 
       expect { ms.save }.to change(Enterprise, :count).by(0)
     end

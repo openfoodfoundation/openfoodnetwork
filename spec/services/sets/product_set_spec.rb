@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ProductSet do
+describe Sets::ProductSet do
   describe '#save' do
     context 'when passing :collection_attributes' do
       let(:product_set) do
@@ -88,7 +88,11 @@ describe Spree::ProductSet do
           end
 
           let(:distributor) { create(:distributor_enterprise) }
-          let!(:order_cycle) { create(:simple_order_cycle, variants: [product.variants.first], coordinator: distributor, distributors: [distributor]) }
+          let!(:order_cycle) {
+            create(:simple_order_cycle, variants: [product.variants.first],
+                                        coordinator: distributor,
+                                        distributors: [distributor])
+          }
 
           it 'updates the product and removes the product from order cycles' do
             product_set.save

@@ -15,7 +15,7 @@ feature 'Enterprises Index' do
 
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name
-        expect(page).to have_select "enterprise_set_collection_attributes_1_sells"
+        expect(page).to have_select "sets_enterprise_set_collection_attributes_1_sells"
         expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
         expect(page).to have_no_content "Payment Methods"
@@ -25,7 +25,7 @@ feature 'Enterprises Index' do
 
       within("tr.enterprise-#{d.id}") do
         expect(page).to have_content d.name
-        expect(page).to have_select "enterprise_set_collection_attributes_0_sells"
+        expect(page).to have_select "sets_enterprise_set_collection_attributes_0_sells"
         expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
         expect(page).to have_content "Payment Methods"
@@ -51,10 +51,10 @@ feature 'Enterprises Index' do
 
         it "updates the enterprises" do
           within("tr.enterprise-#{d.id}") do
-            expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
-            uncheck "enterprise_set_collection_attributes_0_visible"
-            select 'any', from: "enterprise_set_collection_attributes_0_sells"
-            select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
+            expect(page).to have_checked_field "sets_enterprise_set_collection_attributes_0_visible"
+            uncheck "sets_enterprise_set_collection_attributes_0_visible"
+            select 'any', from: "sets_enterprise_set_collection_attributes_0_sells"
+            select d_manager.email, from: 'sets_enterprise_set_collection_attributes_0_owner_id'
           end
           click_button "Update"
           expect(flash_message).to eq('Enterprises updated successfully')
@@ -83,12 +83,12 @@ feature 'Enterprises Index' do
         it "does not update the enterprises and displays errors" do
           d_row_index = enterprise_row_index(d.name)
           within("tr.enterprise-#{d.id}") do
-            select d_manager.email, from: "enterprise_set_collection_attributes_#{d_row_index}_owner_id"
+            select d_manager.email, from: "sets_enterprise_set_collection_attributes_#{d_row_index}_owner_id"
           end
 
           second_distributor_row_index = enterprise_row_index(second_distributor.name)
           within("tr.enterprise-#{second_distributor.id}") do
-            select d_manager.email, from: "enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
+            select d_manager.email, from: "sets_enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
           end
           click_button "Update"
           expect(flash_message).to eq('Update failed')

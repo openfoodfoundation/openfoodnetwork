@@ -163,7 +163,7 @@ module Spree
 
       def product_set_from_params(_params)
         collection_hash = Hash[products_params.each_with_index.map { |p, i| [i, p] }]
-        Spree::ProductSet.new(collection_attributes: collection_hash)
+        Sets::ProductSet.new(collection_attributes: collection_hash)
       end
 
       def products_params
