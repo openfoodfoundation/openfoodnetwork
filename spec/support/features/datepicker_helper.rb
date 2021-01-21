@@ -3,8 +3,8 @@
 module Features
   module DatepickerHelper
     def choose_today_from_datepicker
-      within(".ui-datepicker-calendar") do
-        find(".ui-datepicker-today").click
+      within(".flatpickr-calendar.open") do
+        find('.shortcut-buttons-flatpickr-button').click
       end
     end
 
