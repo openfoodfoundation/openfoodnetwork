@@ -282,20 +282,20 @@ describe SubscriptionConfirmJob do
 
     before do
       allow(order).to receive(:payments) { [payment] }
-      allow(Spree::PaymentMailer).to receive(:authorize_payment) { mail_mock }
+      allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
     end
 
     it "sends authorization email if a payment requires it" do
       allow(payment).to receive(:cvv_response_message) { "http://redirect_url" }
       job.send(:send_payment_authorization_emails, order)
-      expect(Spree::PaymentMailer).to have_received(:authorize_payment)
+      expect(PaymentMailer).to have_received(:authorize_payment)
       expect(mail_mock).to have_received(:deliver)
     end
 
     it "does not send authorization email if no payment requires it" do
       allow(payment).to receive(:cvv_response_message) { nil }
       job.send(:send_payment_authorization_emails, order)
-      expect(Spree::PaymentMailer).not_to have_received(:authorize_payment)
+      expect(PaymentMailer).not_to have_received(:authorize_payment)
       expect(mail_mock).not_to have_received(:deliver)
     end
   end
