@@ -15,7 +15,7 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'rails', '> 5.0', '< 5.1'
 
   gem 'activemerchant', '>= 1.78.0'
-  gem 'angular-rails-templates', '>= 0.3.0'
+  gem 'angular-rails-templates', '>= 0.3.0', '< 1.1.0'
   gem 'awesome_nested_set'
   gem 'rails-controller-testing'
   gem 'ransack', '2.3.0'
