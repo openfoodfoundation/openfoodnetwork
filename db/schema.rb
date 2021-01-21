@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201219120055) do
+ActiveRecord::Schema.define(version: 20210115143738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20201219120055) do
     t.datetime "updated_at",                                        null: false
     t.integer  "tax_category_id"
     t.boolean  "inherits_tax_category",             default: false, null: false
+    t.datetime "deleted_at"
   end
 
   add_index "enterprise_fees", ["enterprise_id"], name: "index_enterprise_fees_on_enterprise_id", using: :btree
