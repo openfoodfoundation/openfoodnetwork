@@ -21,15 +21,15 @@ module Features
     end
 
     def navigate_datepicker_to_previous_month
-      find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev').click
+      find('.flatpickr-calendar.open .flatpickr-months .flatpickr-prev-month').click
     end
 
     def navigate_datepicker_to_next_month
-      find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-next').click
+      find('.flatpickr-calendar.open .flatpickr-months .flatpickr-next-month').click
     end
 
     def datepicker_month_and_year
-      find("#ui-datepicker-div .ui-datepicker-title").text
+      find(".flatpickr-calendar.open .flatpickr-current-month").text
     end
   end
 end
