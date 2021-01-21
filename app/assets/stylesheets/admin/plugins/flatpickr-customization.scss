@@ -1,4 +1,8 @@
 .flatpickr-calendar {
+    /* Disable animation */
+    &.animate.open {
+        animation: none;
+    }
     border-radius: 0;
     &.arrowBottom:after {
         border-top-color: #eceef1;
