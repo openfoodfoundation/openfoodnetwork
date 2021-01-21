@@ -56,7 +56,7 @@ module Spree
 
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
-        if @payment.public_send("#{event}!")
+        if allowed_events.include?(event) && @payment.public_send("#{event}!")
           flash[:success] = t(:payment_updated)
         else
           flash[:error] = t(:cannot_perform_operation)
@@ -153,10 +153,18 @@ module Spree
       def authorize_stripe_sca_payment
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
-        @payment.authorize!
-        return if @payment.pending? && @payment.cvv_response_message.nil?
+        @payment.authorize!(spree.order_path(@payment.order, only_path: false))
 
-        raise Spree::Core::GatewayError, I18n.t('authorization_failure')
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
+
+        return unless @payment.cvv_response_message.present?
+
+        PaymentMailer.authorize_payment(@payment).deliver_later
+        raise Spree::Core::GatewayError, I18n.t('action_required')
+      end
+
+      def allowed_events
+        %w{capture void_transaction credit refund resend_authorization_email}
       end
     end
   end

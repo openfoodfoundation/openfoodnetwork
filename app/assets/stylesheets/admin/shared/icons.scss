@@ -16,6 +16,7 @@
 }
 
 .icon-email:before    { @extend .icon-envelope:before }
+.icon-resend_authorization_email:before    { @extend .icon-envelope:before }
 .icon-resume:before   { @extend .icon-refresh:before  }
 
 .icon-cancel:before,

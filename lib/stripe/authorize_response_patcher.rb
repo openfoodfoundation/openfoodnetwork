@@ -24,7 +24,8 @@ module Stripe
                     next_action.present? &&
                     next_action["type"] == "authorize_with_url"
 
-      next_action["authorize_with_url"]["url"]
+      url = next_action["authorize_with_url"]["url"]
+      return url if url.match(%r{https?:\/\/[\S]+}) && url.include?("stripe.com")
     end
 
     # This field is used because the Spree code recognizes and stores it

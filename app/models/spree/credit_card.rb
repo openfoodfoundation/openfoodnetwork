@@ -79,11 +79,17 @@ module Spree
     end
 
     def actions
-      %w{capture void credit}
+      %w{capture void credit resend_authorization_email}
+    end
+
+    def can_resend_authorization_email?(payment)
+      payment.pending? && payment.cvv_response_message.present?
     end
 
     # Indicates whether its possible to capture the payment
     def can_capture?(payment)
+      return false if payment.cvv_response_message.present?
+
       payment.pending? || payment.checkout?
     end
 

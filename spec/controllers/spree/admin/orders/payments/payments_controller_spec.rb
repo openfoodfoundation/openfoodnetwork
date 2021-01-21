@@ -91,6 +91,20 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
         end
 
+        context "where further action is required" do
+          before do
+            allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
+              payment.update cvv_response_message: "https://www.stripe.com/authorize"
+              payment.update state: "pending"
+            end
+          end
+          it "redirects to new payment page with flash error" do
+            spree_post :create, payment: params, order_id: order.number
+
+            redirects_to_new_payment_page_with_flash_error(I18n.t('action_required'))
+          end
+        end
+
         context "where both payment.process! and payment.authorize! work" do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
@@ -225,6 +239,42 @@ describe Spree::Admin::PaymentsController, type: :controller do
         spree_put :fire, params
 
         expect(flash[:success]).to eq(I18n.t(:payment_updated))
+      end
+    end
+
+    context 'on resend_authorization_email event' do
+      let(:params) { { e: 'resend_authorization_email', order_id: order.number, id: payment.id } }
+      let(:mail_mock) { double(:mailer_mock, deliver_later: true) }
+
+      before do
+        allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
+        allow(request).to receive(:referer) { 'http://foo.com' }
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        allow(payment).to receive(:cvv_response_message).and_return("https://www.stripe.com/authorize")
+      end
+
+      it "resends the authorization email" do
+        spree_put :fire, params
+
+        expect(flash[:success]).to eq(I18n.t(:payment_updated))
+        expect(PaymentMailer).to have_received(:authorize_payment)
+        expect(mail_mock).to have_received(:deliver_later)
+      end
+    end
+
+    context 'on an unrecognized event' do
+      let(:params) { { e: 'unrecognized_event', order_id: order.number, id: payment.id } }
+
+      before do
+        allow(request).to receive(:referer) { 'http://foo.com' }
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+      end
+
+      it 'does not process the event' do
+        spree_put :fire, params
+
+        expect(payment).to_not receive(:unrecognized_event)
+        expect(flash[:error]).to eq(I18n.t(:cannot_perform_operation))
       end
     end
   end
