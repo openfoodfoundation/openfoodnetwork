@@ -159,7 +159,7 @@ module Spree
 
         return unless @payment.cvv_response_message.present?
 
-        PaymentMailer.authorize_payment(@payment).deliver
+        PaymentMailer.authorize_payment(@payment).deliver_later
         raise Spree::Core::GatewayError, I18n.t('action_required')
       end
     end

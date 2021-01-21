@@ -124,7 +124,7 @@ module Spree
     def resend_authorization_email!
       return unless cvv_response_message.present?
 
-      PaymentMailer.authorize_payment(self).deliver
+      PaymentMailer.authorize_payment(self).deliver_later
     end
 
     def payment_source
