@@ -230,11 +230,9 @@ describe SubscriptionConfirmJob do
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
-            ActionMailer::Base.deliveries.clear
             expect{ job.send(:confirm_order!, order) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirmation_email).once
             expect(job).to have_received(:send_payment_authorization_emails).once
-            expect(ActionMailer::Base.deliveries.count).to be 1
           end
         end
       end
@@ -277,7 +275,7 @@ describe SubscriptionConfirmJob do
 
   describe "#send_payment_authorization_emails" do
     let(:order) { instance_double(Spree::Order) }
-    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+    let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
     let(:payment) { create(:payment, amount: 10) }
 
     before do
@@ -289,14 +287,14 @@ describe SubscriptionConfirmJob do
       allow(payment).to receive(:cvv_response_message) { "http://redirect_url" }
       job.send(:send_payment_authorization_emails, order)
       expect(PaymentMailer).to have_received(:authorize_payment)
-      expect(mail_mock).to have_received(:deliver)
+      expect(mail_mock).to have_received(:deliver_now)
     end
 
     it "does not send authorization email if no payment requires it" do
       allow(payment).to receive(:cvv_response_message) { nil }
       job.send(:send_payment_authorization_emails, order)
       expect(PaymentMailer).not_to have_received(:authorize_payment)
-      expect(mail_mock).not_to have_received(:deliver)
+      expect(mail_mock).not_to have_received(:deliver_now)
     end
   end
 end

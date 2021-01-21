@@ -97,7 +97,7 @@ class SubscriptionConfirmJob < ActiveJob::Base
   def send_payment_authorization_emails(order)
     order.payments.each do |payment|
       if payment.cvv_response_message.present?
-        PaymentMailer.authorize_payment(payment).deliver
+        PaymentMailer.authorize_payment(payment).deliver_now
       end
     end
   end
