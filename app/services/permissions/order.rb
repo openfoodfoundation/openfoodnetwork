@@ -65,7 +65,7 @@ module Permissions
     def managed_orders_where_values
       Spree::Order.
         where(distributor_id: @permissions.managed_enterprises.select("enterprises.id")).
-        where_values.
+        where_clause.__send__(:predicates).
         reduce(:and)
     end
 
@@ -73,7 +73,7 @@ module Permissions
     def coordinated_orders_where_values
       Spree::Order.
         where(order_cycle_id: @permissions.coordinated_order_cycles.select(:id)).
-        where_values.
+        where_clause.__send__(:predicates).
         reduce(:and)
     end
 
@@ -83,7 +83,7 @@ module Permissions
           distributor_id: granted_distributor_ids,
           spree_products: { supplier_id: enterprises_with_associated_orders }
         ).
-        where_values.
+        where_clause.__send__(:predicates).
         reduce(:and)
     end
 
