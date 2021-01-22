@@ -39,6 +39,8 @@ module Spree
     belongs_to :adjustable, polymorphic: true
     belongs_to :source, polymorphic: true
     belongs_to :originator, polymorphic: true
+    belongs_to :order, class_name: "Spree::Order"
+
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
                foreign_key: 'originator_id'
 
@@ -158,6 +160,13 @@ module Spree
       set_callback :destroy, :after, :update_adjustable
 
       result
+    end
+
+    # Allow accessing soft-deleted originator objects
+    def originator
+      return if originator_type.blank?
+
+      originator_type.constantize.unscoped { super }
     end
 
     private

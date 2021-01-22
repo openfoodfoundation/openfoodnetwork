@@ -7,83 +7,60 @@ module Spree
     describe MailSettings do
       let!(:subject) { MailSettings.new }
 
-      context "override option is true" do
-        before { Config.override_actionmailer_config = true }
+      context "enable delivery" do
+        before { Config.enable_mail_delivery = true }
 
-        context "init" do
-          it "calls override!" do
-            expect(MailSettings).to receive(:new).and_return(subject)
-            expect(subject).to receive(:override!)
-            MailSettings.init
-          end
-        end
-
-        context "enable delivery" do
-          before { Config.enable_mail_delivery = true }
-
-          context "overrides appplication defaults" do
-            context "authentication method is none" do
-              before do
-                Config.mail_host = "smtp.example.com"
-                Config.mail_domain = "example.com"
-                Config.mail_port = 123
-                Config.mail_auth_type = MailSettings::SECURE_CONNECTION_TYPES[0]
-                Config.smtp_username = "schof"
-                Config.smtp_password = "hellospree!"
-                Config.secure_connection_type = "TLS"
-                subject.override!
-              end
-
-              it { expect(ActionMailer::Base.smtp_settings[:address]).to eq "smtp.example.com" }
-              it { expect(ActionMailer::Base.smtp_settings[:domain]).to eq "example.com" }
-              it { expect(ActionMailer::Base.smtp_settings[:port]).to eq 123 }
-              it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq "None" }
-              it { expect(ActionMailer::Base.smtp_settings[:enable_starttls_auto]).to be_truthy }
-
-              it "doesnt touch user name config" do
-                expect(ActionMailer::Base.smtp_settings[:user_name]).to be_nil
-              end
-
-              it "doesnt touch password config" do
-                expect(ActionMailer::Base.smtp_settings[:password]).to be_nil
-              end
-            end
-          end
-
-          context "when mail_auth_type is other than none" do
+        context "overrides appplication defaults" do
+          context "authentication method is none" do
             before do
-              Config.mail_auth_type = "login"
+              Config.mail_host = "smtp.example.com"
+              Config.mail_domain = "example.com"
+              Config.mail_port = 123
+              Config.mail_auth_type = MailSettings::SECURE_CONNECTION_TYPES[0]
               Config.smtp_username = "schof"
               Config.smtp_password = "hellospree!"
+              Config.secure_connection_type = "TLS"
               subject.override!
             end
 
-            context "overrides user credentials" do
-              it { expect(ActionMailer::Base.smtp_settings[:user_name]).to eq "schof" }
-              it { expect(ActionMailer::Base.smtp_settings[:password]).to eq "hellospree!" }
+            it { expect(ActionMailer::Base.smtp_settings[:address]).to eq "smtp.example.com" }
+            it { expect(ActionMailer::Base.smtp_settings[:domain]).to eq "example.com" }
+            it { expect(ActionMailer::Base.smtp_settings[:port]).to eq 123 }
+            it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq "None" }
+            it { expect(ActionMailer::Base.smtp_settings[:enable_starttls_auto]).to be_truthy }
+
+            it "doesnt touch user name config" do
+              expect(ActionMailer::Base.smtp_settings[:user_name]).to be_nil
+            end
+
+            it "doesnt touch password config" do
+              expect(ActionMailer::Base.smtp_settings[:password]).to be_nil
             end
           end
         end
 
-        context "do not enable delivery" do
+        context "when mail_auth_type is other than none" do
           before do
-            Config.enable_mail_delivery = false
+            Config.mail_auth_type = "login"
+            Config.smtp_username = "schof"
+            Config.smtp_password = "hellospree!"
             subject.override!
           end
 
-          it { expect(ActionMailer::Base.perform_deliveries).to be_falsy }
+          context "overrides user credentials" do
+            it { expect(ActionMailer::Base.smtp_settings[:user_name]).to eq "schof" }
+            it { expect(ActionMailer::Base.smtp_settings[:password]).to eq "hellospree!" }
+          end
         end
       end
 
-      context "override option is false" do
-        before { Config.override_actionmailer_config = false }
-
-        context "init" do
-          it "doesnt calls override!" do
-            expect(subject).not_to receive(:override!)
-            MailSettings.init
-          end
+      context "do not enable delivery" do
+        before do
+          Config.enable_mail_delivery = false
+          subject.override!
         end
+
+        it { expect(ActionMailer::Base.perform_deliveries).to be_falsy }
       end
     end
   end

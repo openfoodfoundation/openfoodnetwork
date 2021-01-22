@@ -5,20 +5,18 @@ require 'spec_helper'
 module OrderManagement
   module Order
     describe Updater do
-      let(:order) { build(:order) }
+      let(:order) { create(:order) }
       let(:updater) { OrderManagement::Order::Updater.new(order) }
 
       before { allow(order).to receive(:backordered?) { false } }
 
       it "updates totals" do
-        payments = [double(amount: 5), double(amount: 5)]
-        allow(order).to receive_message_chain(:payments, :completed).and_return(payments)
+        allow(order).to receive_message_chain(:payments, :completed, :sum).and_return(10)
 
         line_items = [double(amount: 10), double(amount: 20)]
         allow(order).to receive_messages line_items: line_items
 
-        adjustments = [double(amount: 10), double(amount: -20)]
-        allow(order).to receive_message_chain(:adjustments, :eligible).and_return(adjustments)
+        allow(order).to receive_message_chain(:adjustments, :eligible, :sum).and_return(-10)
 
         updater.update_totals
         expect(order.payment_total).to eq 10

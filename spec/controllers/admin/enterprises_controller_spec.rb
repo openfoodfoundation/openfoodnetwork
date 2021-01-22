@@ -385,7 +385,7 @@ describe Admin::EnterprisesController, type: :controller do
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         profile_enterprise2.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: new_owner
-        bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload
@@ -397,10 +397,10 @@ describe Admin::EnterprisesController, type: :controller do
       end
 
       it "cuts down the list of enterprises displayed when error received on bulk update" do
-        allow_any_instance_of(EnterpriseSet).to receive(:save) { false }
+        allow_any_instance_of(Sets::EnterpriseSet).to receive(:save) { false }
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: new_owner
-        bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
         spree_put :bulk_update, bulk_enterprise_params
         expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
       end
@@ -409,7 +409,7 @@ describe Admin::EnterprisesController, type: :controller do
     context "as the owner of an enterprise" do
       it "allows 'sells' and 'owner' to be changed" do
         allow(controller).to receive_messages spree_current_user: original_owner
-        bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload
@@ -426,7 +426,7 @@ describe Admin::EnterprisesController, type: :controller do
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         profile_enterprise2.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: admin_user
-        bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload

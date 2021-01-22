@@ -40,7 +40,13 @@ $(document).ready(function() {
       var variant_id = save.data('variant-id');
 
       var quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
+      var maxQuantity = parseInt(save.parents('tr').find('input.line_item_quantity').attr("max"));
 
+      if (quantity > maxQuantity) {
+        quantity = maxQuantity;
+        save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
+        alert('<%= I18n.t("js.admin.orders.quantity_adjusted") %>');
+      }
       toggleItemEdit();
 
       adjustItems(shipment_number, variant_id, quantity);
@@ -77,7 +83,9 @@ adjustItems = function(shipment_number, variant_id, quantity){
     }
     url += '.json';
 
-    if(new_quantity!=0){
+    if (new_quantity == 0) {
+      alert('<%= I18n.t("js.admin.orders.quantity_unchanged") %>');
+    } else {
       $.ajax({
         type: "PUT",
         url: Spree.url(url),

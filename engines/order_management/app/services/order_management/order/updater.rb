@@ -4,7 +4,8 @@ module OrderManagement
   module Order
     class Updater
       attr_reader :order
-      delegate :payments, :line_items, :adjustments, :shipments, :update_hooks, to: :order
+
+      delegate :payments, :line_items, :adjustments, :shipments, to: :order
 
       def initialize(order)
         @order = order
@@ -32,7 +33,7 @@ module OrderManagement
         # update totals a second time in case updated adjustments have an effect on the total
         update_totals
 
-        order.update_attributes_without_callbacks(
+        order.update_columns(
           payment_state: order.payment_state,
           shipment_state: order.shipment_state,
           item_total: order.item_total,
@@ -40,12 +41,6 @@ module OrderManagement
           payment_total: order.payment_total,
           total: order.total
         )
-
-        run_hooks
-      end
-
-      def run_hooks
-        update_hooks.each { |hook| order.__send__(hook) }
       end
 
       # Updates the following Order total values:
@@ -55,9 +50,9 @@ module OrderManagement
       # - adjustment_total - total value of all adjustments
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
-        order.payment_total = payments.completed.map(&:amount).sum
+        order.payment_total = payments.completed.sum(:amount)
         order.item_total = line_items.map(&:amount).sum
-        order.adjustment_total = adjustments.eligible.map(&:amount).sum
+        order.adjustment_total = adjustments.eligible.sum(:amount)
         order.total = order.item_total + order.adjustment_total
       end
 

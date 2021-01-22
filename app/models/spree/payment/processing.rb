@@ -5,6 +5,7 @@ module Spree
     module Processing
       def process!
         return unless validate!
+        return if cvv_response_message.present?
 
         if payment_method.auto_capture?
           purchase!
@@ -15,6 +16,7 @@ module Spree
 
       def process_offline!
         return unless validate!
+        return if cvv_response_message.present?
 
         if payment_method.auto_capture?
           charge_offline!
@@ -23,9 +25,9 @@ module Spree
         end
       end
 
-      def authorize!
+      def authorize!(return_url = nil)
         started_processing!
-        gateway_action(source, :authorize, :pend)
+        gateway_action(source, :authorize, :pend, return_url: return_url)
       end
 
       def purchase!
@@ -44,19 +46,7 @@ module Spree
         started_processing!
         protect_from_connection_error do
           check_environment
-
-          response = if payment_method.payment_profiles_supported?
-                       # Gateways supporting payment profiles will need access to credit
-                       # card object because this stores the payment profile information
-                       # so supply the authorization itself as well as the credit card,
-                       # rather than just the authorization code
-                       payment_method.capture(self, source, gateway_options)
-                     else
-                       # Standard ActiveMerchant capture usage
-                       payment_method.capture(money.money.cents,
-                                              response_code,
-                                              gateway_options)
-                     end
+          response = payment_method.capture(money.money.cents, response_code, gateway_options)
 
           handle_response(response, :complete, :failure)
         end
@@ -222,7 +212,7 @@ module Spree
         refund_amount.to_f
       end
 
-      def gateway_action(source, action, success_state)
+      def gateway_action(source, action, success_state, options = {})
         protect_from_connection_error do
           check_environment
 
@@ -230,7 +220,7 @@ module Spree
             action,
             (amount * 100).round,
             source,
-            gateway_options
+            gateway_options.merge(options)
           )
           handle_response(response, success_state, :failure)
         end

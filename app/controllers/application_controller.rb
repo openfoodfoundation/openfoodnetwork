@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
-require "application_responder"
-require 'open_food_network/referer_parser'
 require_dependency 'spree/authentication_helpers'
+require "application_responder"
+require 'cancan'
+require 'spree/core/controller_helpers/auth'
+require 'spree/core/controller_helpers/respond_with'
+require 'spree/core/controller_helpers/ssl'
+require 'spree/core/controller_helpers/common'
+require 'open_food_network/referer_parser'
 
 class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
   protect_from_forgery
+
+  include Spree::Core::ControllerHelpers::Auth
+  include Spree::Core::ControllerHelpers::RespondWith
+  include Spree::Core::ControllerHelpers::SSL
+  include Spree::Core::ControllerHelpers::Common
 
   prepend_before_action :restrict_iframes
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
@@ -21,6 +31,8 @@ class ApplicationController < ActionController::Base
   def print_params
     raise ActiveModel::ForbiddenAttributesError, params.to_s
   end
+
+  respond_to :html
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{begin
@@ -150,3 +162,5 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end
+
+require 'spree/i18n/initializer'

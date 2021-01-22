@@ -2380,6 +2380,7 @@ it:
   js:
     saving: 'Salvataggio...'
     changes_saved: 'Modifiche salvate.'
+    authorising: "Autorizzazione..."
     save_changes_first: Salva prima le modifiche.
     all_changes_saved: Tutte le modifiche sono state salvate
     unsaved_changes: Hai modifiche non salvate
@@ -3063,6 +3064,7 @@ it:
         payment_state: "Stato Pagamento"
     errors:
       messages:
+        included_price_validation: "Non può essere selezionato se non hai impostato una Zona Fiscale Predefinita "
         blank: "non può essere lasciato vuoto"
     layouts:
       admin:
@@ -3273,6 +3275,14 @@ it:
           deactivation_warning: "Disattivare un metodo di pagamento può far sparire il metodo di pagamento dalla tua lista. Alternativamente, puoi nascondere il metodo di pagamento dalla pagina di checkout impostando l'opzione 'Visualizza' su 'Solo Back office'."
         providers:
           provider: "Provider"
+          check: "Contanti o altri metodi di pagamento per cui non è richiesta una validazione automatica"
+          migs: "MasterCard Internet Gateway Service (MIGS)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3508,7 +3518,23 @@ it:
       paused: in pausa
       canceled: annullato
     paypal:
+      already_refunded: "Questo pagamento è stato rimborsato e non è possibile intraprendere ulteriori azioni."
+      no_payment_via_admin_backend: "Al momento non è possibile addebitare gli account PayPal tramite il back-end dell'amministratore."
+      transaction: "Transazione PayPal"
+      payer_id: "ID pagatore"
+      transaction_id: "ID Transazione"
+      token: "Token"
+      refund: "Rimborsa"
       refund_amount: "Quantità"
+      original_amount: "Importo originale: %{amount}"
+      refund_successful: "Rimborso PayPal riuscito"
+      refund_unsuccessful: "Rimborso PayPal non riuscito"
+      actions:
+        refund: "Rimborsa"
+      flash:
+        cancel: "Non vuoi usare PayPal? Nessun problema."
+        connection_failed: "Non riesco a collegarmi a PayPal"
+        generic_error: "PayPal fallito. %{reasons}"
     users:
       form:
         account_settings: Impostazioni account

@@ -96,9 +96,6 @@ module Spree
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
-    class_attribute :update_hooks
-    self.update_hooks = Set.new
-
     # -- Scopes
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
@@ -155,12 +152,6 @@ module Spree
 
     def self.incomplete
       where(completed_at: nil)
-    end
-
-    # Use this method in other gems that wish to register their own custom logic
-    # that should be called after Order#update
-    def self.register_update_hook(hook)
-      update_hooks.add(hook)
     end
 
     # For compatiblity with Calculator::PriceSack
@@ -396,11 +387,11 @@ module Spree
     end
 
     def ship_total
-      adjustments.shipping.map(&:amount).sum
+      adjustments.shipping.sum(:amount)
     end
 
     def tax_total
-      adjustments.tax.map(&:amount).sum
+      adjustments.tax.sum(:amount)
     end
 
     # Creates new tax charges if there are any applicable rates. If prices already
@@ -450,7 +441,6 @@ module Spree
       updater.update_shipment_state
       updater.before_save_hook
       save
-      updater.run_hooks
 
       deliver_order_confirmation_email
 
@@ -763,13 +753,6 @@ module Spree
         address.phone = bill_address.phone
       end
       address
-    end
-
-    # Update attributes of a record in the database without callbacks, validations etc.
-    #   This was originally an extension to ActiveRecord in Spree but only used for Spree::Order
-    def update_attributes_without_callbacks(attributes)
-      assign_attributes(attributes)
-      Spree::Order.where(id: id).update_all(attributes)
     end
 
     private

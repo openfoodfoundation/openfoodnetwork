@@ -27,7 +27,7 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_fee_set = EnterpriseFeeSet.new(enterprise_fee_bulk_params)
+      @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
 
       if @enterprise_fee_set.save
         redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
@@ -40,7 +40,7 @@ module Admin
     private
 
     def load_enterprise_fee_set
-      @enterprise_fee_set = EnterpriseFeeSet.new collection: collection
+      @enterprise_fee_set = Sets::EnterpriseFeeSet.new collection: collection
     end
 
     def load_data
@@ -80,7 +80,7 @@ module Admin
     end
 
     def enterprise_fee_bulk_params
-      params.require(:enterprise_fee_set).permit(
+      params.require(:sets_enterprise_fee_set).permit(
         collection_attributes: [
           :id, :enterprise_id, :fee_type, :name, :tax_category_id,
           :inherits_tax_category, :calculator_type,

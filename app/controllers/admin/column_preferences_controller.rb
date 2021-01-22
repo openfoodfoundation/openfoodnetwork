@@ -29,7 +29,8 @@ module Admin
       collection_hash = Hash[permitted_params[:column_preferences].
         each_with_index.map { |cp, i| [i, cp] }]
       collection_hash.select!{ |_i, cp| cp[:action_name] == permitted_params[:action_name] }
-      @cp_set = ColumnPreferenceSet.new @column_preferences, collection_attributes: collection_hash
+      @cp_set = Sets::ColumnPreferenceSet.new(@column_preferences,
+                                              collection_attributes: collection_hash)
     end
 
     def collection

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class PaypalController < StoreController
+  class PaypalController < ::BaseController
     ssl_allowed
 
     include OrderStockCheck

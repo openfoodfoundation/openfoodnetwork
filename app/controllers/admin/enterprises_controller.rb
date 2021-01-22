@@ -81,7 +81,7 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(collection, bulk_params)
+      @enterprise_set = Sets::EnterpriseSet.new(collection, bulk_params)
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
@@ -129,7 +129,7 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new(collection) if spree_current_user.admin?
+      @enterprise_set = Sets::EnterpriseSet.new(collection) if spree_current_user.admin?
     end
 
     def load_countries
@@ -235,7 +235,7 @@ module Admin
 
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
-        params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+        params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
           unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
             enterprise_params.delete :sells
           end
@@ -269,7 +269,7 @@ module Admin
 
     def check_can_change_bulk_owner
       unless spree_current_user.admin?
-        params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+        params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
           enterprise_params.delete :owner_id
         end
       end
@@ -321,7 +321,7 @@ module Admin
     end
 
     def bulk_params
-      params.require(:enterprise_set).permit(
+      params.require(:sets_enterprise_set).permit(
         collection_attributes: PermittedAttributes::Enterprise.attributes
       )
     end

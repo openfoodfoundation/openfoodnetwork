@@ -223,7 +223,7 @@ module Admin
     end
 
     def order_cycle_set
-      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
+      @order_cycle_set ||= Sets::OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
     end
 
     def require_order_cycle_set_params

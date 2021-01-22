@@ -20,12 +20,12 @@ module Stripe
         let(:params) {
           { "status" => "requires_source_action",
             "next_source_action" => { "type" => "authorize_with_url",
-                                      "authorize_with_url" => { "url" => "test_url" } } }
+                                      "authorize_with_url" => { "url" => "https://www.stripe.com/authorize" } } }
         }
 
         it "patches response.cvv_result.message with the url in the response" do
           new_response = patcher.call!
-          expect(new_response.cvv_result['message']).to eq "test_url"
+          expect(new_response.cvv_result['message']).to eq "https://www.stripe.com/authorize"
         end
       end
     end

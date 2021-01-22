@@ -1,5 +1,5 @@
 module Spree
-  class UsersController < Spree::StoreController
+  class UsersController < ::BaseController
     layout 'darkswarm'
     ssl_required
     skip_before_action :set_current_order, only: :show

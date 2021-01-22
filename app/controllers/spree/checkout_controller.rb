@@ -7,7 +7,7 @@
 #   to CheckoutController directly in the routes
 #   with a slash like "to: '/checkout#edit'", but it does not work in this case.
 module Spree
-  class CheckoutController < Spree::StoreController
+  class CheckoutController < ::BaseController
     def edit
       flash.keep
       redirect_to main_app.checkout_path

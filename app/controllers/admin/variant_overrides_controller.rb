@@ -60,14 +60,17 @@ module Admin
         for_hubs(editable_enterprises.collect(&:id))
 
       options = [{ id: '0', name: 'All' }]
-      import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+      import_dates.collect(&:import_date).map { |i|
+        options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long))
+      }
 
       options
     end
 
     def load_collection
       collection_hash = Hash[variant_overrides_params.each_with_index.map { |vo, i| [i, vo] }]
-      @vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
+      @vo_set = Sets::VariantOverrideSet.new(@variant_overrides,
+                                             collection_attributes: collection_hash)
     end
 
     def collection
@@ -82,8 +85,8 @@ module Admin
       [:index, :bulk_update, :bulk_reset]
     end
 
-    # This has been pulled from ModelSet as it is useful for compiling a list of errors on any generic collection (not necessarily a ModelSet)
-    # Could be pulled down into a lower level controller if it is useful in other high level controllers
+    # This method is also present in ModelSet
+    # This is useful for compiling a list of errors on any generic collection
     def collection_errors
       errors = ActiveModel::Errors.new self
       full_messages = @collection.map { |element| element.errors.full_messages }.flatten

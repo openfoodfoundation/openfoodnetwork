@@ -21,7 +21,7 @@
                     = t :products_loading
                 .row.full
                   .small-12.columns.text-center
-                    %img.spinner{ src: image_path("spinning-circles.svg") }
+                    = render partial: "components/spinner"
 
           .hide-for-medium-down.large-1.columns
             -# Space between products and filters

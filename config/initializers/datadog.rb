@@ -6,6 +6,7 @@ if ENV['DATADOG_RAILS_APM']
 
     c.analytics_enabled = true
     c.runtime_metrics_enabled = true
-    c.request_queuing = true
+
+    c[:rack].request_queuing = true
   end
 end

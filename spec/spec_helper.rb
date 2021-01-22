@@ -182,7 +182,7 @@ RSpec.configure do |config|
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
   config.include ControllerRequestsHelper, type: :controller
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include OpenFoodNetwork::ApiHelper, type: :controller
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
@@ -205,16 +205,6 @@ RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
 
   config.include JsonSpec::Helpers
-
-  # Suppress Selenium deprecation warnings. Stops a flood of pointless warnings filling the
-  # test output. We can remove this in the future after upgrading Rails, Rack, and Capybara.
-  if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
-    Selenium::WebDriver.logger.level = :error
-  else
-    ActiveSupport::Deprecation.warn(
-      "Suppressing Selenium deprecation warnings is not needed any more."
-    )
-  end
 
   # Profiling
   #
