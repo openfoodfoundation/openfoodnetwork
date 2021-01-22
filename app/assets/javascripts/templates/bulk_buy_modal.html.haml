@@ -9,7 +9,7 @@
     {{ variant.line_item.total_price | localizeCurrency }}
 
 .row
-  .columns.small-6
+  .columns.small-12.medium-6
     .variant-bulk-buy-quantity-label
       {{ "js.shopfront.bulk_buy_modal.min_quantity" | t }}
     %div
@@ -24,7 +24,7 @@
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(1)", disabled: "!canAdd(1)"}}
         -# U+FF0B Fullwidth Plus Sign
         ＋
-  .columns.small-6
+  .columns.small-12.medium-6
     .variant-bulk-buy-quantity-label
       {{ "js.shopfront.bulk_buy_modal.max_quantity" | t }}
     %div
