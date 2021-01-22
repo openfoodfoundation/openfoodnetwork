@@ -42,7 +42,7 @@ describe Admin::ProxyOrdersController, type: :controller do
 
           context "when cancellation succeeds" do
             it 'renders the cancelled proxy_order as json' do
-              spree_get :cancel, params
+              get :cancel, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "canceled"
               expect(json_response['id']).to eq proxy_order.id
@@ -54,7 +54,7 @@ describe Admin::ProxyOrdersController, type: :controller do
             before { order_cycle.update(orders_close_at: 1.day.ago) }
 
             it "shows an error" do
-              spree_get :cancel, params
+              get :cancel, params
               json_response = JSON.parse(response.body)
               expect(json_response['errors']).to eq ['Could not cancel the order']
             end
@@ -111,7 +111,7 @@ describe Admin::ProxyOrdersController, type: :controller do
 
           context "when resuming succeeds" do
             it 'renders the resumed proxy_order as json' do
-              spree_get :resume, params
+              get :resume, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "resumed"
               expect(json_response['id']).to eq proxy_order.id
@@ -123,7 +123,7 @@ describe Admin::ProxyOrdersController, type: :controller do
             before { order_cycle.update(orders_close_at: 1.day.ago) }
 
             it "shows an error" do
-              spree_get :resume, params
+              get :resume, params
               json_response = JSON.parse(response.body)
               expect(json_response['errors']).to eq ['Could not resume the order']
             end
