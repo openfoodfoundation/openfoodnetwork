@@ -14,13 +14,13 @@ describe UserPasswordsController, type: :controller do
 
   describe "create" do
     it "returns errors" do
-      spree_post :create, spree_user: {}
+      post :create, spree_user: {}
       expect(response).to be_success
       expect(response).to render_template "spree/user_passwords/new"
     end
 
     it "redirects to login when data is valid" do
-      spree_post :create, spree_user: { email: user.email }
+      post :create, spree_user: { email: user.email }
       expect(response).to be_redirect
     end
   end
@@ -28,7 +28,7 @@ describe UserPasswordsController, type: :controller do
   describe "edit" do
     context "when given a redirect" do
       it "stores the redirect path in 'spree_user_return_to'" do
-        spree_post :edit, reset_password_token: "token", return_to: "/return_path"
+        post :edit, reset_password_token: "token", return_to: "/return_path"
         expect(session["spree_user_return_to"]).to eq "/return_path"
       end
     end
@@ -42,7 +42,7 @@ describe UserPasswordsController, type: :controller do
     flush_jobs # Send the reset password instructions
 
     user.reload
-    spree_get :edit, reset_password_token: user.reset_password_token
+    get :edit, reset_password_token: user.reset_password_token
 
     expect(response).to render_template "user_passwords/edit"
   end

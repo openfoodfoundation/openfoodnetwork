@@ -156,7 +156,7 @@ describe Api::ProductsController, type: :controller do
       end
 
       it 'denies access' do
-        spree_post :clone, product_id: product.id, format: :json
+        post :clone, product_id: product.id, format: :json
 
         assert_unauthorized!
       end
@@ -166,19 +166,19 @@ describe Api::ProductsController, type: :controller do
       let(:current_api_user) { supplier_enterprise_user(supplier) }
 
       it 'responds with a successful response' do
-        spree_post :clone, product_id: product.id, format: :json
+        post :clone, product_id: product.id, format: :json
 
         expect(response.status).to eq(201)
       end
 
       it 'clones the product' do
-        spree_post :clone, product_id: product.id, format: :json
+        post :clone, product_id: product.id, format: :json
 
         expect(json_response['name']).to eq("COPY OF #{product.name}")
       end
 
       it 'clones a product with image' do
-        spree_post :clone, product_id: product_with_image.id, format: :json
+        post :clone, product_id: product_with_image.id, format: :json
 
         expect(response.status).to eq(201)
         expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
@@ -192,19 +192,19 @@ describe Api::ProductsController, type: :controller do
       end
 
       it 'responds with a successful response' do
-        spree_post :clone, product_id: product.id, format: :json
+        post :clone, product_id: product.id, format: :json
 
         expect(response.status).to eq(201)
       end
 
       it 'clones the product' do
-        spree_post :clone, product_id: product.id, format: :json
+        post :clone, product_id: product.id, format: :json
 
         expect(json_response['name']).to eq("COPY OF #{product.name}")
       end
 
       it 'clones a product with image' do
-        spree_post :clone, product_id: product_with_image.id, format: :json
+        post :clone, product_id: product_with_image.id, format: :json
 
         expect(response.status).to eq(201)
         expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")

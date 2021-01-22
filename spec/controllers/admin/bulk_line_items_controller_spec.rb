@@ -20,7 +20,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       before { allow(controller).to receive_messages spree_current_user: create(:user) }
 
       it "should deny me access to the index action" do
-        spree_get :index, format: :json
+        get :index, format: :json
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -32,7 +32,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when no ransack params are passed in" do
         before do
-          spree_get :index, format: :json
+          get :index, format: :json
         end
 
         it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
@@ -56,7 +56,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for line items" do
         before do
-          spree_get :index, format: :json, q: { order_id_eq: order2.id }
+          get :index, format: :json, q: { order_id_eq: order2.id }
         end
 
         it "retrives a list of line items which match the criteria" do
@@ -66,7 +66,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for orders" do
         before do
-          spree_get :index, format: :json, q: { order: { completed_at_gt: 2.hours.ago } }
+          get :index, format: :json, q: { order: { completed_at_gt: 2.hours.ago } }
         end
 
         it "retrives a list of line items whose orders match the criteria" do
@@ -90,7 +90,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "producer enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: supplier.owner
-          spree_get :index, format: :json
+          get :index, format: :json
         end
 
         it "does not display line items for which my enterprise is a supplier" do
@@ -101,7 +101,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "coordinator enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: coordinator.owner
-          spree_get :index, format: :json
+          get :index, format: :json
         end
 
         it "retrieves a list of line_items" do
@@ -113,7 +113,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "hub enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: distributor1.owner
-          spree_get :index, format: :json
+          get :index, format: :json
         end
 
         it "retrieves a list of line_items" do
@@ -130,7 +130,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "with pagination args" do
         it "returns paginated results" do
-          spree_get :index, { page: 1, per_page: 2 }, format: :json
+          get :index, { page: 1, per_page: 2 }, format: :json
 
           expect(line_item_ids).to eq [line_item1.id, line_item2.id]
           expect(json_response['pagination']).to eq(
@@ -139,7 +139,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "returns paginated results for a second page" do
-          spree_get :index, { page: 2, per_page: 2 }, format: :json
+          get :index, { page: 2, per_page: 2 }, format: :json
 
           expect(line_item_ids).to eq [line_item3.id, line_item4.id]
           expect(json_response['pagination']).to eq(
@@ -168,7 +168,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "producer enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: supplier.owner
-          spree_put :update, params
+          put :update, params
         end
 
         it "does not allow access" do
@@ -188,7 +188,7 @@ describe Admin::BulkLineItemsController, type: :controller do
           before { params[:format] = :json }
 
           it "updates the line item" do
-            spree_put :update, params
+            put :update, params
             line_item1.reload
             expect(line_item1.quantity).to eq 3
             expect(line_item1.final_weight_volume).to eq 3000
@@ -196,12 +196,12 @@ describe Admin::BulkLineItemsController, type: :controller do
           end
 
           it "returns an empty JSON response" do
-            spree_put :update, params
+            put :update, params
             expect(response.body).to eq ""
           end
 
           it 'returns a 204 response' do
-            spree_put :update, params
+            put :update, params
             expect(response.status).to eq 204
           end
 
@@ -212,7 +212,7 @@ describe Admin::BulkLineItemsController, type: :controller do
             expect(line_item1.order).to receive(:reload).with(lock: true)
             expect(line_item1.order).to receive(:update_distribution_charge!)
 
-            spree_put :update, params
+            put :update, params
           end
 
           context 'when the line item params are not correct' do
@@ -220,12 +220,12 @@ describe Admin::BulkLineItemsController, type: :controller do
             let(:errors) { { 'price' => ['is not a number'] } }
 
             it 'returns a JSON with the errors' do
-              spree_put :update, params
+              put :update, params
               expect(JSON.parse(response.body)['errors']).to eq(errors)
             end
 
             it 'returns a 412 response' do
-              spree_put :update, params
+              put :update, params
               expect(response.status).to eq 412
             end
           end
@@ -269,17 +269,17 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       it 'destroys the line item' do
         expect {
-          spree_delete :destroy, params
+          delete :destroy, params
         }.to change { Spree::LineItem.where(id: line_item1).count }.from(1).to(0)
       end
 
       it 'returns an empty JSON response' do
-        spree_delete :destroy, params
+        delete :destroy, params
         expect(response.body).to eq ""
       end
 
       it 'returns a 204 response' do
-        spree_delete :destroy, params
+        delete :destroy, params
         expect(response.status).to eq 204
       end
     end

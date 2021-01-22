@@ -21,13 +21,13 @@ describe Admin::SchedulesController, type: :controller do
         let(:params) { { format: :json } }
 
         it "scopes @collection to schedules containing order_cycles coordinated by enterprises I manage" do
-          spree_get :index, params
+          get :index, params
           expect(assigns(:collection)).to eq [coordinated_schedule]
         end
 
         it "serializes the data" do
           expect(ActiveModel::ArraySerializer).to receive(:new)
-          spree_get :index, params
+          get :index, params
         end
 
         context "and there is a schedule of an OC coordinated by _another_ enterprise I manage and the first enterprise is given" do
@@ -37,7 +37,7 @@ describe Admin::SchedulesController, type: :controller do
           let(:params) { { format: :json, enterprise_id: managed_coordinator.id } }
 
           it "scopes @collection to schedules containing order_cycles coordinated by the first enterprise" do
-            spree_get :index, params
+            get :index, params
             expect(assigns(:collection)).to eq [coordinated_schedule]
           end
         end
@@ -45,7 +45,7 @@ describe Admin::SchedulesController, type: :controller do
 
       context "where I dont manage an order cycle coordinator" do
         it "returns an empty collection" do
-          spree_get :index, format: :json
+          get :index, format: :json
           expect(assigns(:collection)).to be_nil
         end
       end
@@ -73,7 +73,7 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to update basic information" do
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
           expect(JSON.parse(response.body)["id"]).to eq coordinated_schedule.id
           expect(JSON.parse(response.body)["name"]).to eq "my awesome schedule"
           expect(assigns(:schedule)).to eq coordinated_schedule
@@ -82,7 +82,7 @@ describe Admin::SchedulesController, type: :controller do
 
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
           order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: order_cycle_ids
+          put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: order_cycle_ids
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
           expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle, uncoordinated_order_cycle3
@@ -95,9 +95,9 @@ describe Admin::SchedulesController, type: :controller do
           allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
           expect(syncer_mock).to receive(:sync!).exactly(2).times
 
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
+          put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
+          put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
+          put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
         end
       end
 
@@ -107,7 +107,7 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "prevents me from updating the schedule" do
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
           expect(response).to redirect_to unauthorized_path
           expect(assigns(:schedule)).to eq nil
           expect(coordinated_schedule.name).to_not eq "my awesome schedule"
@@ -123,7 +123,7 @@ describe Admin::SchedulesController, type: :controller do
     let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
 
     def create_schedule(params)
-      spree_put :create, params
+      put :create, params
     end
 
     context "json" do
@@ -203,7 +203,7 @@ describe Admin::SchedulesController, type: :controller do
 
           context "when no dependent subscriptions are present" do
             it "allows me to destroy the schedule" do
-              expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
+              expect { delete :destroy, params }.to change(Schedule, :count).by(-1)
             end
           end
 
@@ -211,7 +211,7 @@ describe Admin::SchedulesController, type: :controller do
             let!(:subscription) { create(:subscription, schedule: coordinated_schedule) }
 
             it "returns an error message and prevents me from deleting the schedule" do
-              expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+              expect { delete :destroy, params }.to_not change(Schedule, :count)
               json_response = JSON.parse(response.body)
               expect(json_response["errors"]).to include I18n.t('admin.schedules.destroy.associated_subscriptions_error')
             end
@@ -222,7 +222,7 @@ describe Admin::SchedulesController, type: :controller do
           before { params.merge!(id: uncoordinated_schedule.id) }
 
           it "prevents me from destroying the schedule" do
-            expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+            expect { delete :destroy, params }.to_not change(Schedule, :count)
           end
         end
       end

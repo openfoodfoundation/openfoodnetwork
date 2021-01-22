@@ -20,7 +20,7 @@ describe Admin::TagRulesController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          spree_delete :destroy, params
+          delete :destroy, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -30,7 +30,7 @@ describe Admin::TagRulesController, type: :controller do
           allow(controller).to receive(:spree_current_user) { enterprise.owner }
         end
 
-        it { expect{ spree_delete :destroy, params }.to change{ TagRule.count }.by(-1) }
+        it { expect{ delete :destroy, params }.to change{ TagRule.count }.by(-1) }
       end
     end
   end

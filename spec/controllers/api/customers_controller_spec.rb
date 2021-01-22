@@ -19,7 +19,7 @@ module Api
       end
 
       it "lists customers associated with the current user" do
-        spree_get :index
+        get :index
         expect(response.status).to eq 200
         expect(json_response.length).to eq 1
         expect(json_response.first[:id]).to eq customer1.id
@@ -36,7 +36,7 @@ module Api
         end
 
         it "returns unauthorized" do
-          spree_post :update, params
+          post :update, params
           assert_unauthorized!
         end
       end
@@ -48,7 +48,7 @@ module Api
 
         context "when the update request is successful" do
           it "returns the id of the updated customer" do
-            spree_post :update, params
+            post :update, params
             expect(response.status).to eq 200
             expect(json_response[:id]).to eq customer.id
           end
@@ -58,7 +58,7 @@ module Api
           before { params[:customer][:email] = '' }
 
           it "returns a 422, with an error message" do
-            spree_post :update, params
+            post :update, params
             expect(response.status).to be 422
             expect(json_response[:error]).to be
           end

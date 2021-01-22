@@ -19,7 +19,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          spree_get :index, params
+          get :index, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -32,7 +32,7 @@ describe Admin::SubscriptionsController, type: :controller do
           let!(:subscription) { create(:subscription, shop: shop) }
 
           it 'renders the index page with appropriate data' do
-            spree_get :index, params
+            get :index, params
             expect(response).to render_template 'index'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shops)).to eq [shop] # Shops are loaded
@@ -41,7 +41,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context "where I don't manage a shop that is set up for subscriptions" do
           it 'renders the setup_explanation page' do
-            spree_get :index, params
+            get :index, params
             expect(response).to render_template 'setup_explanation'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shop)).to eq shop # First SO enabled shop is loaded
@@ -56,7 +56,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          spree_get :index, params
+          get :index, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -67,7 +67,7 @@ describe Admin::SubscriptionsController, type: :controller do
         let!(:subscription2) { create(:subscription, shop: shop2) }
 
         it 'renders the collection as json' do
-          spree_get :index, params
+          get :index, params
           json_response = JSON.parse(response.body)
           expect(json_response.count).to be 2
           expect(json_response.map{ |so| so['id'] }).to include subscription.id, subscription2.id
@@ -77,7 +77,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { params.merge!(q: { shop_id_eq: shop2.id }) }
 
           it "restricts the list of subscriptions" do
-            spree_get :index, params
+            get :index, params
             json_response = JSON.parse(response.body)
             expect(json_response.count).to be 1
             ids = json_response.map{ |so| so['id'] }
@@ -99,7 +99,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      spree_get :new, subscription: { shop_id: shop.id }
+      get :new, subscription: { shop_id: shop.id }
       expect(assigns(:subscription)).to be_a_new Subscription
       expect(assigns(:subscription).shop).to eq shop
     end
@@ -121,7 +121,7 @@ describe Admin::SubscriptionsController, type: :controller do
       end
 
       it 'redirects to unauthorized' do
-        spree_post :create, params
+        post :create, params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -133,7 +133,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'when I submit insufficient params' do
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ Subscription.count }
+          expect{ post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'begins_at'
         end
@@ -159,7 +159,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ Subscription.count }
+          expect{ post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'ends_at'
         end
@@ -187,7 +187,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context 'where the specified variants are not available from the shop' do
           it 'returns an error' do
-            expect{ spree_post :create, params }.to_not change{ Subscription.count }
+            expect{ post :create, params }.to_not change{ Subscription.count }
             json_response = JSON.parse(response.body)
             expect(json_response['errors']['subscription_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
           end
@@ -197,7 +197,7 @@ describe Admin::SubscriptionsController, type: :controller do
           let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant]) }
 
           it 'creates subscription line items for the subscription' do
-            expect{ spree_post :create, params }.to change{ Subscription.count }.by(1)
+            expect{ post :create, params }.to change{ Subscription.count }.by(1)
             subscription = Subscription.last
             expect(subscription.schedule).to eq schedule
             expect(subscription.customer).to eq customer
@@ -238,7 +238,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      spree_get :edit, id: subscription.id
+      get :edit, id: subscription.id
       expect(assigns(:subscription)).to eq subscription
     end
   end
@@ -273,7 +273,7 @@ describe Admin::SubscriptionsController, type: :controller do
       end
 
       it 'redirects to unauthorized' do
-        spree_post :update, params
+        post :update, params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -292,7 +292,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'does not alter customer_id or schedule_id' do
-          spree_post :update, params
+          post :update, params
           subscription.reload
           expect(subscription.customer).to eq customer
           expect(subscription.schedule).to eq schedule
@@ -313,7 +313,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'returns errors' do
-          expect{ spree_post :update, params }.to_not change{ Subscription.count }
+          expect{ post :update, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'payment_method', 'shipping_method'
           subscription.reload
@@ -334,7 +334,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'updates the subscription' do
-          spree_post :update, params
+          post :update, params
           subscription.reload
           expect(subscription.schedule).to eq schedule
           expect(subscription.customer).to eq customer
@@ -352,7 +352,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{ subscription.subscription_line_items.count }
+              expect{ post :update, params }.to_not change{ subscription.subscription_line_items.count }
               json_response = JSON.parse(response.body)
               expect(json_response['errors']['subscription_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
@@ -362,7 +362,7 @@ describe Admin::SubscriptionsController, type: :controller do
             before { outgoing_exchange.update(variants: [variant1, variant2]) }
 
             it 'creates subscription line items for the subscription' do
-              expect{ spree_post :update, params }.to change{ subscription.subscription_line_items.count }.by(1)
+              expect{ post :update, params }.to change{ subscription.subscription_line_items.count }.by(1)
               subscription.reload
               expect(subscription.subscription_line_items.count).to be 2
               subscription_line_item = subscription.subscription_line_items.last
@@ -391,7 +391,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          spree_put :cancel, params
+          put :cancel, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -402,7 +402,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
-            spree_put :cancel, params
+            put :cancel, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -419,7 +419,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
-                spree_put :cancel, params
+                put :cancel, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
                 expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
@@ -430,7 +430,7 @@ describe Admin::SubscriptionsController, type: :controller do
               before { params.merge!(open_orders: 'keep') }
 
               it 'renders the cancelled subscription as json, and does not cancel the open order' do
-                spree_put :cancel, params
+                put :cancel, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
                 expect(json_response['id']).to eq subscription.id
@@ -450,7 +450,7 @@ describe Admin::SubscriptionsController, type: :controller do
               end
 
               it 'renders the cancelled subscription as json, and cancels the open order' do
-                spree_put :cancel, params
+                put :cancel, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
                 expect(json_response['id']).to eq subscription.id
@@ -464,7 +464,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when no associated orders are still 'open'" do
             it 'renders the cancelled subscription as json' do
-              spree_put :cancel, params
+              put :cancel, params
               json_response = JSON.parse(response.body)
               expect(json_response['canceled_at']).to_not be nil
               expect(json_response['id']).to eq subscription.id
@@ -490,7 +490,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          spree_put :pause, params
+          put :pause, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -501,7 +501,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
-            spree_put :pause, params
+            put :pause, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -518,7 +518,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
-                spree_put :pause, params
+                put :pause, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
                 expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
@@ -529,7 +529,7 @@ describe Admin::SubscriptionsController, type: :controller do
               before { params.merge!(open_orders: 'keep') }
 
               it 'renders the paused subscription as json, and does not cancel the open order' do
-                spree_put :pause, params
+                put :pause, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
                 expect(json_response['id']).to eq subscription.id
@@ -549,7 +549,7 @@ describe Admin::SubscriptionsController, type: :controller do
               end
 
               it 'renders the paused subscription as json, and cancels the open order' do
-                spree_put :pause, params
+                put :pause, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
                 expect(json_response['id']).to eq subscription.id
@@ -563,7 +563,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when no associated orders are still 'open'" do
             it 'renders the paused subscription as json' do
-              spree_put :pause, params
+              put :pause, params
               json_response = JSON.parse(response.body)
               expect(json_response['paused_at']).to_not be nil
               expect(json_response['id']).to eq subscription.id
@@ -589,7 +589,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          spree_put :unpause, params
+          put :unpause, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -600,7 +600,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
-            spree_put :unpause, params
+            put :unpause, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -617,7 +617,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when no associated orders are 'canceled'" do
               it 'renders the unpaused subscription as json, leaves the order untouched' do
-                spree_put :unpause, params
+                put :unpause, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to be nil
                 expect(json_response['id']).to eq subscription.id
@@ -635,7 +635,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
               context "when no 'canceled_orders' directive has been provided" do
                 it "renders a message, informing the user that canceled order can be resumed" do
-                  spree_put :unpause, params
+                  put :unpause, params
                   expect(response.status).to be 409
                   json_response = JSON.parse(response.body)
                   expect(json_response['errors']['canceled_orders']).to eq I18n.t('admin.subscriptions.resume_canceled_orders_msg')
@@ -646,7 +646,7 @@ describe Admin::SubscriptionsController, type: :controller do
                 before { params.merge!(canceled_orders: 'notified') }
 
                 it 'renders the unpaused subscription as json, leaves the order untouched' do
-                  spree_put :unpause, params
+                  put :unpause, params
                   json_response = JSON.parse(response.body)
                   expect(json_response['paused_at']).to be nil
                   expect(json_response['id']).to eq subscription.id
@@ -660,7 +660,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when no associated orders are 'complete'" do
             it 'renders the unpaused subscription as json' do
-              spree_put :unpause, params
+              put :unpause, params
               json_response = JSON.parse(response.body)
               expect(json_response['paused_at']).to be nil
               expect(json_response['id']).to eq subscription.id
@@ -669,7 +669,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when there is an open OC and no associated orders exist yet for it (OC was opened when the subscription was paused)" do
               it "creates an associated order" do
-                spree_put :unpause, params
+                put :unpause, params
 
                 expect(subscription.reload.paused_at).to be nil
                 expect(subscription.proxy_orders.size).to be 1

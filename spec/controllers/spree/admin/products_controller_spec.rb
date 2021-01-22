@@ -13,7 +13,7 @@ describe Spree::Admin::ProductsController, type: :controller do
 
       before do
         controller_login_as_enterprise_user [s_managed]
-        spree_post :bulk_update,
+        post :bulk_update,
                    "products" => [{ "id" => product.id, "name" => "Pine nuts" }]
       end
 
@@ -43,7 +43,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       before { controller_login_as_enterprise_user([producer]) }
 
       it 'succeeds' do
-        spree_post :bulk_update,
+        post :bulk_update,
                    "products" => [
                      {
                        "id" => product.id,
@@ -56,7 +56,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       end
 
       it 'does not redirect to bulk_products' do
-        spree_post :bulk_update,
+        post :bulk_update,
                    "products" => [
                      {
                        "id" => product.id,
@@ -97,7 +97,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       before { controller_login_as_enterprise_user([producer]) }
 
       it 'does not fail' do
-        spree_post :bulk_update,
+        post :bulk_update,
                    "products" => [
                      {
                        "id" => another_product.id,
@@ -141,12 +141,12 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
 
     it "redirects to products when the user hits 'create'" do
-      spree_post :create, product: product_attrs, button: 'create'
+      post :create, product: product_attrs, button: 'create'
       expect(response).to redirect_to spree.admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do
-      spree_post :create, product: product_attrs, button: 'add_another'
+      post :create, product: product_attrs, button: 'add_another'
       expect(response).to redirect_to spree.new_admin_product_path
     end
 
@@ -164,7 +164,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         )
 
         expect do
-          spree_put :create, product: product_attrs_with_image
+          put :create, product: product_attrs_with_image
         end.not_to raise_error Paperclip::Errors::NotIdentifiedByImageMagickError
         expect(response.status).to eq 200
       end
@@ -185,7 +185,7 @@ describe Spree::Admin::ProductsController, type: :controller do
 
       it "should remove product from existing Order Cycles" do
         new_producer = create(:enterprise)
-        spree_put :update, id: product, product: { supplier_id: new_producer.id }
+        put :update, id: product, product: { supplier_id: new_producer.id }
 
         expect(product.reload.supplier.id).to eq new_producer.id
         expect(order_cycle.reload.distributed_variants).to_not include product.variants.first
@@ -200,7 +200,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         expect(Bugsnag).to receive(:notify)
 
         expect do
-          spree_put :update,
+          put :update,
                     id: product,
                     product: {
                       on_hand: 1
@@ -215,7 +215,7 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property does not already exist" do
           it "does not create a new property, or product property" do
-            spree_put :update,
+            put :update,
                       id: product,
                       product: {
                         product_properties_attributes: {
@@ -231,7 +231,7 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property exists" do
           it "adds a product property" do
-            spree_put :update,
+            put :update,
                       id: product,
                       product: {
                         product_properties_attributes: {

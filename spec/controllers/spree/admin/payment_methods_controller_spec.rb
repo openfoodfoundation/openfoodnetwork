@@ -17,7 +17,7 @@ module Spree
 
       it "does not clear password on update" do
         expect(payment_method.preferred_password).to eq "haxme"
-        spree_put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
+        put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
         expect(response).to redirect_to spree.edit_admin_payment_method_path(payment_method)
 
         payment_method.reload
@@ -27,14 +27,14 @@ module Spree
       context "tries to save invalid payment" do
         it "doesn't break, responds nicely" do
           expect {
-            spree_post :create, payment_method: { name: "", type: "Spree::Gateway::Bogus" }
+            post :create, payment_method: { name: "", type: "Spree::Gateway::Bogus" }
           }.not_to raise_error
         end
       end
 
       it "can create a payment method of a valid type" do
         expect {
-          spree_post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus", distributor_ids: [enterprise.id] }
+          post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus", distributor_ids: [enterprise.id] }
         }.to change(Spree::PaymentMethod, :count).by(1)
 
         expect(response).to be_redirect
@@ -43,7 +43,7 @@ module Spree
 
       it "can save Pin Payment payment method details" do
         expect {
-          spree_post :create, payment_method: {
+          post :create, payment_method: {
             name: "Test Method", type: "Spree::Gateway::Pin", distributor_ids: [enterprise.id],
             preferred_server: "test", preferred_api_key: "apikey123", preferred_test_mode: "1"
           }
@@ -57,7 +57,7 @@ module Spree
 
       it "can not create a payment method of an invalid type" do
         expect {
-          spree_post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType", distributor_ids: [enterprise.id] }
+          post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType", distributor_ids: [enterprise.id] }
         }.to change(Spree::PaymentMethod, :count).by(0)
 
         expect(response).to be_redirect
@@ -79,7 +79,7 @@ module Spree
 
           context "as a user that does not manage the existing stripe account holder" do
             it "prevents the stripe account holder from being updated" do
-              spree_put :update, params
+              put :update, params
               expect(payment_method.reload.preferred_enterprise_id).to eq enterprise2.id
             end
           end
@@ -88,7 +88,7 @@ module Spree
             before { enterprise2.update!(owner_id: user.id) }
 
             it "allows the stripe account holder to be updated" do
-              spree_put :update, params
+              put :update, params
               expect(payment_method.reload.preferred_enterprise_id).to eq enterprise1.id
             end
 
@@ -99,7 +99,7 @@ module Spree
                 before { params[:payment_method].delete(:preferred_enterprise_id) }
 
                 it "does not save the payment method" do
-                  spree_put :update, params
+                  put :update, params
                   expect(response).to render_template :edit
                   expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
                 end
@@ -109,7 +109,7 @@ module Spree
                 before { params[:payment_method][:preferred_enterprise_id] = 0 }
 
                 it "does not save the payment method" do
-                  spree_put :update, params
+                  put :update, params
                   expect(response).to render_template :edit
                   expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
                 end
@@ -144,7 +144,7 @@ module Spree
 
           context "without an altered provider type" do
             it "renders provider settings with same payment method" do
-              spree_get :show_provider_preferences,
+              get :show_provider_preferences,
                         pm_id: payment_method.id,
                         provider_type: "Spree::PaymentMethod::Check"
               expect(assigns(:payment_method)).to eq payment_method
@@ -154,7 +154,7 @@ module Spree
 
           context "with an altered provider type" do
             it "renders provider settings with a different payment method" do
-              spree_get :show_provider_preferences,
+              get :show_provider_preferences,
                         pm_id: payment_method.id,
                         provider_type: "Spree::Gateway::Bogus"
               expect(assigns(:payment_method)).not_to eq payment_method
@@ -169,7 +169,7 @@ module Spree
           end
 
           it "renders unauthorised" do
-            spree_get :show_provider_preferences,
+            get :show_provider_preferences,
                       pm_id: payment_method.id,
                       provider_type: "Spree::PaymentMethod::Check"
             expect(assigns(:payment_method)).to eq payment_method
@@ -180,7 +180,7 @@ module Spree
 
       context "on a new payment method" do
         it "renders provider settings with a new payment method of type" do
-          spree_get :show_provider_preferences,
+          get :show_provider_preferences,
                     pm_id: "",
                     provider_type: "Spree::Gateway::Bogus"
           expect(assigns(:payment_method)).to be_a_new Spree::Gateway::Bogus

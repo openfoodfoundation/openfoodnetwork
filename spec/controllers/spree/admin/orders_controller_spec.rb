@@ -12,7 +12,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     it "advances the order state" do
       expect {
-        spree_get :edit, id: order
+        get :edit, id: order
       }.to change { order.reload.state }.from("cart").to("payment")
     end
 
@@ -27,7 +27,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           amount: 0
         )
 
-        spree_get :edit, id: order
+        get :edit, id: order
 
         expect(response.body).to_not match adjustment.label
       end
@@ -50,7 +50,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "does not throw an error if no order object is given in params" do
         params = { id: order }
 
-        spree_put :update, params
+        put :update, params
 
         expect(response.status).to eq 302
       end
@@ -58,7 +58,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "updates distribution charges and redirects to order details page" do
         expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
 
-        spree_put :update, params
+        put :update, params
 
         expect(response).to redirect_to spree.edit_admin_order_path(order)
       end
@@ -70,7 +70,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       context "without line items" do
         it "redirects to order details page with flash error" do
-          spree_put :update, params
+          put :update, params
 
           expect(flash[:error]).to eq "Line items can't be blank"
           expect(response).to redirect_to spree.edit_admin_order_path(order)
@@ -88,7 +88,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           it "updates distribution charges and redirects to customer details page" do
             expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
 
-            spree_put :update, params
+            put :update, params
 
             expect(response).to redirect_to spree.admin_order_customer_path(order)
           end
@@ -98,7 +98,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           it "redirects to order details page with flash error" do
             params[:order][:distributor_id] = create(:distributor_enterprise).id
 
-            spree_put :update, params
+            put :update, params
 
             expect(flash[:error]).to eq "Distributor or order cycle cannot supply the products in your cart"
             expect(response).to redirect_to spree.edit_admin_order_path(order)
@@ -113,7 +113,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { create(:user) } }
 
       it "should deny me access to the index action" do
-        spree_get :index
+        get :index
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -140,7 +140,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "should prevent me from sending order invoices" do
-        spree_get :invoice, params
+        get :invoice, params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -150,7 +150,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         before { allow(controller).to receive(:spree_current_user) { user } }
 
         it "should prevent me from sending order invoices" do
-          spree_get :invoice, params
+          get :invoice, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -162,7 +162,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           before { distributor.update_attribute(:abn, "") }
           it "should allow me to send order invoices" do
             expect do
-              spree_get :invoice, params
+              get :invoice, params
             end.to_not change{ Spree::OrderMailer.deliveries.count }
             expect(response).to redirect_to spree.edit_admin_order_path(order)
             expect(flash[:error]).to eq "#{distributor.name} must have a valid ABN before invoices can be sent."
@@ -179,7 +179,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           end
 
           it "should allow me to send order invoices" do
-            spree_get :invoice, params
+            get :invoice, params
 
             expect(response).to redirect_to spree.edit_admin_order_path(order)
             expect(Spree::OrderMailer).to have_received(:invoice_email)
@@ -201,7 +201,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "should prevent me from sending order invoices" do
-        spree_get :print, params
+        get :print, params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -210,7 +210,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "which is not a manager of the distributor for an order" do
         before { allow(controller).to receive(:spree_current_user) { user } }
         it "should prevent me from sending order invoices" do
-          spree_get :print, params
+          get :print, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -218,7 +218,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "which is a manager of the distributor for an order" do
         before { allow(controller).to receive(:spree_current_user) { distributor.owner } }
         it "should allow me to send order invoices" do
-          spree_get :print, params
+          get :print, params
           expect(response).to render_template :invoice
         end
       end

@@ -11,7 +11,7 @@ describe Spree::Admin::BaseController, type: :controller do
   end
 
   it "redirects to Angular login" do
-    spree_get :index
+    get :index
     expect(response).to redirect_to root_path(anchor: "login?after_login=/spree/admin/base")
   end
 

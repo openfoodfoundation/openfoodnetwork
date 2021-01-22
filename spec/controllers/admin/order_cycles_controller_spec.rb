@@ -20,7 +20,7 @@ module Admin
 
         context "html" do
           it "doesn't load any data" do
-            spree_get :index, format: :html
+            get :index, format: :html
             expect(assigns(:collection)).to be_empty
           end
         end
@@ -28,7 +28,7 @@ module Admin
         context "json" do
           context "where ransack conditions are specified" do
             it "loads order cycles that closed within the past month, and orders without a close_at date" do
-              spree_get :index, format: :json
+              get :index, format: :json
               expect(assigns(:collection)).to_not include oc1, oc2
               expect(assigns(:collection)).to include oc3, oc4
             end
@@ -38,7 +38,7 @@ module Admin
             let(:q) { { orders_close_at_gt: 45.days.ago } }
 
             it "loads order cycles that closed after the specified date, and orders without a close_at date" do
-              spree_get :index, format: :json, q: q
+              get :index, format: :json, q: q
               expect(assigns(:collection)).to_not include oc1
               expect(assigns(:collection)).to include oc2, oc3, oc4
             end
@@ -47,7 +47,7 @@ module Admin
               before { q.merge!(id_not_in: [oc2.id, oc4.id]) }
 
               it "loads order cycles that meet all conditions" do
-                spree_get :index, format: :json, q: q
+                get :index, format: :json, q: q
                 expect(assigns(:collection)).to_not include oc1, oc2, oc4
                 expect(assigns(:collection)).to include oc3
               end
@@ -62,7 +62,7 @@ module Admin
         let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
 
         it "renders the new template" do
-          spree_get :new
+          get :new
           expect(response).to render_template :new
         end
       end
@@ -73,21 +73,21 @@ module Admin
         let!(:distributor3) { create(:distributor_enterprise) }
 
         it "renders the set_coordinator template" do
-          spree_get :new
+          get :new
           expect(response).to render_template :set_coordinator
         end
 
         describe "and a coordinator_id is submitted as part of the request" do
           describe "when the user manages the enterprise" do
             it "renders the new template" do
-              spree_get :new, coordinator_id: distributor1.id
+              get :new, coordinator_id: distributor1.id
               expect(response).to render_template :new
             end
           end
 
           describe "when the user does not manage the enterprise" do
             it "renders the set_coordinator template and sets a flash error" do
-              spree_get :new, coordinator_id: distributor3.id
+              get :new, coordinator_id: distributor3.id
               expect(response).to render_template :set_coordinator
               expect(flash[:error]).to eq "You don't have permission to create an order cycle coordinated by that enterprise"
             end
@@ -121,7 +121,7 @@ module Admin
           end
 
           it "returns success: true and a valid edit path" do
-            spree_post :create, params
+            post :create, params
             json_response = JSON.parse(response.body)
             expect(json_response['success']).to be true
             expect(json_response['edit_path']).to eq "/admin/order_cycles/1/incoming"
@@ -132,7 +132,7 @@ module Admin
           before { allow(form_mock).to receive(:save) { false } }
 
           it "returns an errors hash" do
-            spree_post :create, params
+            post :create, params
             json_response = JSON.parse(response.body)
             expect(json_response['errors']).to be
           end
@@ -160,14 +160,14 @@ module Admin
             before { params[:reloading] = '1' }
 
             it "sets flash message" do
-              spree_put :update, params
+              put :update, params
               expect(flash[:notice]).to eq('Your order cycle has been updated.')
             end
           end
 
           context "when the page is not reloading" do
             it "does not set flash message" do
-              spree_put :update, params
+              put :update, params
               expect(flash[:notice]).to be nil
             end
           end
@@ -177,7 +177,7 @@ module Admin
           before { allow(form_mock).to receive(:save) { false } }
 
           it "returns an error message" do
-            spree_put :update, params
+            put :update, params
 
             json_response = JSON.parse(response.body)
             expect(json_response['errors']).to be
@@ -191,7 +191,7 @@ module Admin
                  anything) { form_mock }
           allow(form_mock).to receive(:save) { true }
 
-          spree_put :update, params.
+          put :update, params.
             merge(order_cycle: { preferred_product_selection_from_coordinator_inventory_only: true })
         end
       end
@@ -219,7 +219,7 @@ module Admin
 
         it "allows me to update exchange information for exchanges, name and dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
-          spree_put :update, params
+          put :update, params
         end
       end
 
@@ -229,7 +229,7 @@ module Admin
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
-          spree_put :update, params
+          put :update, params
         end
       end
     end
@@ -251,7 +251,7 @@ module Admin
         before { create(:enterprise_role, user: distributor_owner, enterprise: coordinator) }
 
         it "updates order cycle properties" do
-          spree_put :bulk_update, params
+          put :bulk_update, params
           oc.reload
           expect(oc.name).to eq "Updated Order Cycle"
           expect(oc.orders_open_at.to_date).to eq Date.current - 21.days
@@ -260,7 +260,7 @@ module Admin
 
         it "does nothing when no data is supplied" do
           expect do
-            spree_put :bulk_update, format: :json
+            put :bulk_update, format: :json
           end.to change(oc, :orders_open_at).by(0)
           json_response = JSON.parse(response.body)
           expect(json_response['errors']).to eq I18n.t('admin.order_cycles.bulk_update.no_data')
@@ -272,7 +272,7 @@ module Admin
           end
 
           it "returns an error message" do
-            spree_put :bulk_update, params
+            put :bulk_update, params
             json_response = JSON.parse(response.body)
             expect(json_response['errors']).to be_present
           end
@@ -284,7 +284,7 @@ module Admin
         let!(:another_distributor) { create(:distributor_enterprise, users: [distributor_owner]) }
 
         it "doesn't update order cycle properties" do
-          spree_put :bulk_update, format: :json, order_cycle_set: { collection_attributes: { '0' => {
+          put :bulk_update, format: :json, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
             name: "Updated Order Cycle",
             orders_open_at: Date.current - 21.days,
@@ -314,12 +314,12 @@ module Admin
 
       it "enqueues a job" do
         expect do
-          spree_post :notify_producers, id: order_cycle.id
+          post :notify_producers, id: order_cycle.id
         end.to enqueue_job OrderCycleNotificationJob
       end
 
       it "redirects back to the order cycles path with a success message" do
-        spree_post :notify_producers, id: order_cycle.id
+        post :notify_producers, id: order_cycle.id
         expect(response).to redirect_to admin_order_cycles_path
         expect(flash[:notice]).to eq('Emails to be sent to producers have been queued for sending.')
       end
@@ -331,7 +331,7 @@ module Admin
 
       describe "when an order cycle is deleteable" do
         it "allows the order_cycle to be destroyed" do
-          spree_get :destroy, id: oc.id
+          get :destroy, id: oc.id
           expect(OrderCycle.find_by(id: oc.id)).to be nil
         end
       end
@@ -340,7 +340,7 @@ module Admin
         let!(:order) { create(:order, order_cycle: oc) }
 
         it "displays an error message when we attempt to delete it" do
-          spree_get :destroy, id: oc.id
+          get :destroy, id: oc.id
           expect(response).to redirect_to admin_order_cycles_path
           expect(flash[:error]).to eq I18n.t('admin.order_cycles.destroy_errors.orders_present')
         end
@@ -350,7 +350,7 @@ module Admin
         let!(:schedule) { create(:schedule, order_cycles: [oc]) }
 
         it "displays an error message when we attempt to delete it" do
-          spree_get :destroy, id: oc.id
+          get :destroy, id: oc.id
           expect(response).to redirect_to admin_order_cycles_path
           expect(flash[:error]).to eq I18n.t('admin.order_cycles.destroy_errors.schedule_present')
         end

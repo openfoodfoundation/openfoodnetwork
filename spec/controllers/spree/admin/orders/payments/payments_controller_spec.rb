@@ -23,7 +23,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       it "advances the order state" do
         expect {
-          spree_post :create, payment: params, order_id: order.number
+          post :create, payment: params, order_id: order.number
         }.to change { order.reload.state }.from("payment").to("complete")
       end
     end
@@ -37,7 +37,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       context "with Check payment (payment.process! does nothing)" do
         it "redirects to list of payments with success flash" do
-          spree_post :create, payment: params, order_id: order.number
+          post :create, payment: params, order_id: order.number
 
           redirects_to_list_of_payments_with_success_flash
           expect(order.reload.payments.last.state).to eq "checkout"
@@ -53,7 +53,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         it "redirects to new payment page with flash error" do
-          spree_post :create, payment: params, order_id: order.number
+          post :create, payment: params, order_id: order.number
 
           redirects_to_new_payment_page_with_flash_error("Payment Gateway Error")
           expect(order.reload.payments.last.state).to eq "checkout"
@@ -71,7 +71,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
 
           it "redirects to new payment page with flash error" do
-            spree_post :create, payment: params, order_id: order.number
+            post :create, payment: params, order_id: order.number
 
             redirects_to_new_payment_page_with_flash_error("Stripe Authorization Failure")
             expect(order.reload.payments.last.state).to eq "checkout"
@@ -84,7 +84,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
 
           it "redirects to new payment page with flash error" do
-            spree_post :create, payment: params, order_id: order.number
+            post :create, payment: params, order_id: order.number
 
             redirects_to_new_payment_page_with_flash_error("Authorization Failure")
             expect(order.reload.payments.last.state).to eq "checkout"
@@ -99,7 +99,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             end
           end
           it "redirects to new payment page with flash error" do
-            spree_post :create, payment: params, order_id: order.number
+            post :create, payment: params, order_id: order.number
 
             redirects_to_new_payment_page_with_flash_error(I18n.t('action_required'))
           end
@@ -122,7 +122,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
               year: "2100"
             }
 
-            spree_post :create, payment: params.merge({ source_attributes: source_attributes }),
+            post :create, payment: params.merge({ source_attributes: source_attributes }),
                                 order_id: order.number
 
             payment = order.reload.payments.last
@@ -130,7 +130,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
 
           it "redirects to list of payments with success flash" do
-            spree_post :create, payment: params, order_id: order.number
+            post :create, payment: params, order_id: order.number
 
             redirects_to_list_of_payments_with_success_flash
             expect(order.reload.payments.last.state).to eq "pending"
@@ -182,7 +182,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         allow(payment.payment_method)
           .to receive(:credit).and_raise(Spree::Core::GatewayError, 'error message')
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:error]).to eq('error message')
         expect(response).to redirect_to('http://foo.com')
@@ -191,7 +191,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it 'handles validation errors' do
         allow(payment).to receive(:credit!).and_raise(StandardError, 'validation error')
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:error]).to eq('validation error')
         expect(response).to redirect_to('http://foo.com')
@@ -200,7 +200,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it 'displays a success message and redirects to the referer' do
         allow(payment_method).to receive(:credit) { successful_response }
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:success]).to eq(I18n.t(:payment_updated))
       end
@@ -218,7 +218,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         allow(payment.payment_method)
           .to receive(:refund).and_raise(Spree::Core::GatewayError, 'error message')
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:error]).to eq('error message')
         expect(response).to redirect_to('http://foo.com')
@@ -227,7 +227,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it 'handles validation errors' do
         allow(payment).to receive(:refund!).and_raise(StandardError, 'validation error')
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:error]).to eq('validation error')
         expect(response).to redirect_to('http://foo.com')
@@ -236,7 +236,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it 'displays a success message and redirects to the referer' do
         allow(payment_method).to receive(:refund) { successful_response }
 
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:success]).to eq(I18n.t(:payment_updated))
       end
@@ -254,7 +254,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       it "resends the authorization email" do
-        spree_put :fire, params
+        put :fire, params
 
         expect(flash[:success]).to eq(I18n.t(:payment_updated))
         expect(PaymentMailer).to have_received(:authorize_payment)
@@ -271,7 +271,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       it 'does not process the event' do
-        spree_put :fire, params
+        put :fire, params
 
         expect(payment).to_not receive(:unrecognized_event)
         expect(flash[:error]).to eq(I18n.t(:cannot_perform_operation))

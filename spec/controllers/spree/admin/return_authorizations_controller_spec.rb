@@ -25,7 +25,7 @@ module Spree
 
       it "creates and updates a return authorization" do
         # Create return authorization
-        spree_post :create, order_id: order.number,
+        post :create, order_id: order.number,
                             return_authorization: { amount: "20.2", reason: "broken" }
 
         expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
@@ -34,7 +34,7 @@ module Spree
         expect(return_authorization.reason.to_s).to eq "broken"
 
         # Update return authorization
-        spree_put :update, id: return_authorization.id,
+        put :update, id: return_authorization.id,
                            return_authorization: { amount: "10.2", reason: "half broken" }
 
         expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)

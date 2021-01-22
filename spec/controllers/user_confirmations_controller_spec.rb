@@ -18,7 +18,7 @@ describe UserConfirmationsController, type: :controller do
   context "confirming a user" do
     context "that has already been confirmed" do
       before do
-        spree_get :show, confirmation_token: confirmed_token
+        get :show, confirmation_token: confirmed_token
       end
 
       it "redirects the user to login" do
@@ -28,31 +28,31 @@ describe UserConfirmationsController, type: :controller do
 
     context "that has not been confirmed" do
       it "confirms the user" do
-        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(unconfirmed_user.reload.confirmed_at).not_to eq(nil)
       end
 
       it "redirects the user to #/login by default" do
-        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to redirect_to login_path(validation: 'confirmed')
       end
 
       it "redirects to previous url, if present" do
         session[:confirmation_return_url] = producers_path + '#/login'
-        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to redirect_to producers_path + '#/login?validation=confirmed'
       end
 
       it "redirects to previous url on /register path" do
         session[:confirmation_return_url] = registration_path + '#/signup?after_login=%2Fregister'
-        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to redirect_to registration_path + '#/signup?after_login=%2Fregister&validation=confirmed'
       end
 
       it "redirects to set password page, if user needs to reset their password" do
         unconfirmed_user.reset_password_token = Devise.friendly_token
         unconfirmed_user.save!
-        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to be_redirect
         expect(response.body).to include spree.edit_spree_user_password_path
       end
@@ -63,7 +63,7 @@ describe UserConfirmationsController, type: :controller do
     before { setup_email }
 
     it "redirects the user to login" do
-      spree_post :create, spree_user: { email: unconfirmed_user.email }
+      post :create, spree_user: { email: unconfirmed_user.email }
       expect(response).to redirect_to login_path
       expect(flash[:success]).to eq I18n.t('devise.user_confirmations.spree_user.confirmation_sent')
     end
@@ -71,7 +71,7 @@ describe UserConfirmationsController, type: :controller do
     it "sends the confirmation email" do
       performing_deliveries do
         expect do
-          spree_post :create, spree_user: { email: unconfirmed_user.email }
+          post :create, spree_user: { email: unconfirmed_user.email }
         end.to enqueue_job ActionMailer::DeliveryJob
 
         expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"

@@ -15,7 +15,7 @@ describe Spree::Admin::UsersController do
 
     it 'should grant access to users with an admin role' do
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-      spree_post :index
+      post :index
       expect(response).to render_template :index
     end
 
@@ -24,20 +24,20 @@ describe Spree::Admin::UsersController do
       expect(test_user).to receive(:generate_spree_api_key!).and_return(true)
       puts user.id
       puts test_user.id
-      spree_put :generate_api_key, id: test_user.id
+      put :generate_api_key, id: test_user.id
       expect(response).to redirect_to(spree.edit_admin_user_path(test_user))
     end
 
     it "allows admins to clear a user's API key" do
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
       expect(test_user).to receive(:clear_spree_api_key!).and_return(true)
-      spree_put :clear_api_key, id: test_user.id
+      put :clear_api_key, id: test_user.id
       expect(response).to redirect_to(spree.edit_admin_user_path(test_user))
     end
 
     it 'should deny access to users without an admin role' do
       allow(user).to receive_messages has_spree_role?: false
-      spree_post :index
+      post :index
       expect(response).to redirect_to('/unauthorized')
     end
   end

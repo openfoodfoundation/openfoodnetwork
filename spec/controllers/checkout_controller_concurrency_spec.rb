@@ -69,8 +69,8 @@ describe CheckoutController, concurrency: true, type: :controller do
     #    "spree_orders" violates foreign key constraint
     #    "spree_orders_customer_id_fk"
     threads = [
-      Thread.new { spree_post :update, format: :json, order: order_params },
-      Thread.new { spree_post :update, format: :json, order: order_params },
+      Thread.new { post :update, format: :json, order: order_params },
+      Thread.new { post :update, format: :json, order: order_params },
     ]
     # Let the threads run again. They should not be in a race condition.
     breakpoint.unlock

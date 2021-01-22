@@ -71,7 +71,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     describe 'Orders & Fulfillment' do
       it "shows all orders in order cycles I coordinate" do
-        spree_post :orders_and_fulfillment, q: {}
+        post :orders_and_fulfillment, q: {}
 
         expect(resulting_orders).to     include orderA1, orderA2
         expect(resulting_orders).not_to include orderB1, orderB2
@@ -87,7 +87,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
       it "only shows orders that I have access to" do
-        spree_post :orders_and_distributors
+        post :orders_and_distributors
 
         expect(assigns(:search).result).to include(orderA1, orderB1)
         expect(assigns(:search).result).not_to include(orderA2)
@@ -99,7 +99,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
       it "only shows orders that I have access to" do
-        spree_post :payments
+        post :payments
 
         expect(resulting_orders_prelim).to     include(orderA1, orderB1)
         expect(resulting_orders_prelim).not_to include(orderA2)
@@ -112,7 +112,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
         it "only shows orders that I distribute" do
-          spree_post :orders_and_fulfillment, q: {}
+          post :orders_and_fulfillment, q: {}
 
           expect(resulting_orders).to     include orderA1, orderB1
           expect(resulting_orders).not_to include orderA2, orderB2
@@ -123,7 +123,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         let!(:present_objects) { [orderA1, orderB1] }
 
         it "only shows the selected order cycle" do
-          spree_post :orders_and_fulfillment, q: { order_cycle_id_in: [ocA.id.to_s] }
+          post :orders_and_fulfillment, q: { order_cycle_id_in: [ocA.id.to_s] }
 
           expect(resulting_orders).to     include(orderA1)
           expect(resulting_orders).not_to include(orderB1)
@@ -138,7 +138,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     describe 'index' do
       it "loads reports relevant to producers" do
-        spree_get :index
+        get :index
 
         report_types = assigns(:reports).keys
         expect(report_types).to include :orders_and_fulfillment, :products_and_inventory, :packing # and others
@@ -155,14 +155,14 @@ describe Spree::Admin::ReportsController, type: :controller do
         end
 
         it "only shows product line items that I am supplying" do
-          spree_post :orders_and_fulfillment, q: {}
+          post :orders_and_fulfillment, q: {}
 
           expect(resulting_products).to     include product1
           expect(resulting_products).not_to include product2, product3
         end
 
         it "only shows the selected order cycle" do
-          spree_post :orders_and_fulfillment, q: { order_cycle_id_eq: ocA.id }
+          post :orders_and_fulfillment, q: { order_cycle_id_eq: ocA.id }
 
           expect(resulting_orders_prelim).to     include(orderA1)
           expect(resulting_orders_prelim).not_to include(orderB1)
@@ -172,7 +172,7 @@ describe Spree::Admin::ReportsController, type: :controller do
           before { orderA1.line_items.first.product.destroy }
 
           it "only shows product line items that I am supplying" do
-            spree_post :orders_and_fulfillment, q: {}
+            post :orders_and_fulfillment, q: {}
 
             table_items = assigns(:report).table_items
             variant = Spree::Variant.unscoped.find(table_items.first.variant_id)
@@ -184,7 +184,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
       context "where I have not granted P-OC to the distributor" do
         it "does not show me line_items I supply" do
-          spree_post :orders_and_fulfillment
+          post :orders_and_fulfillment
 
           expect(resulting_products).not_to include product1, product2, product3
         end
@@ -201,12 +201,12 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [distributors, suppliers] }
 
       it "should build distributors for the current user" do
-        spree_get :products_and_inventory
+        get :products_and_inventory
         expect(assigns(:distributors)).to match_array distributors
       end
 
       it "builds suppliers for the current user" do
-        spree_get :products_and_inventory
+        get :products_and_inventory
         expect(assigns(:suppliers)).to match_array suppliers
       end
     end
@@ -215,13 +215,13 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:order_cycles) { [ocA, ocB] }
 
       it "builds order cycles for the current user" do
-        spree_get :products_and_inventory
+        get :products_and_inventory
         expect(assigns(:order_cycles)).to match_array order_cycles
       end
     end
 
     it "assigns report types" do
-      spree_get :products_and_inventory
+      get :products_and_inventory
       expect(assigns(:report_types)).to eq(subject.report_types[:products_and_inventory])
     end
 
@@ -231,7 +231,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         .and_return(report = double(:report))
       allow(report).to receive(:header).and_return []
       allow(report).to receive(:table).and_return []
-      spree_get :products_and_inventory, test: "foo"
+      get :products_and_inventory, test: "foo"
       expect(assigns(:report)).to eq(report)
     end
   end
@@ -252,12 +252,12 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [distributors, suppliers] }
 
       it "should build distributors for the current user" do
-        spree_get :customers
+        get :customers
         expect(assigns(:distributors)).to match_array distributors
       end
 
       it "builds suppliers for the current user" do
-        spree_get :customers
+        get :customers
         expect(assigns(:suppliers)).to match_array suppliers
       end
     end
@@ -266,13 +266,13 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:order_cycles) { [ocA, ocB] }
 
       it "builds order cycles for the current user" do
-        spree_get :customers
+        get :customers
         expect(assigns(:order_cycles)).to match_array order_cycles
       end
     end
 
     it "assigns report types" do
-      spree_get :customers
+      get :customers
       expect(assigns(:report_types)).to eq(subject.report_types[:customers])
     end
 
@@ -282,7 +282,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         .and_return(report = double(:report))
       allow(report).to receive(:header).and_return []
       allow(report).to receive(:table).and_return []
-      spree_get :customers, test: "foo"
+      get :customers, test: "foo"
       expect(assigns(:report)).to eq(report)
     end
   end
@@ -294,19 +294,19 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [coordinator1] }
 
       it "shows report search forms" do
-        spree_get :users_and_enterprises
+        get :users_and_enterprises
         expect(assigns(:report).table).to eq []
       end
 
       it "shows report data" do
-        spree_post :users_and_enterprises, q: {}
+        post :users_and_enterprises, q: {}
         expect(assigns(:report).table.empty?).to be false
       end
     end
 
     describe "sales_tax" do
       it "shows report search forms" do
-        spree_get :sales_tax
+        get :sales_tax
         expect(assigns(:report).table).to eq []
       end
     end

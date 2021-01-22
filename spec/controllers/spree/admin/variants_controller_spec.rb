@@ -17,12 +17,12 @@ module Spree
           end
 
           it "lists only non-deleted variants with params[:deleted] == off" do
-            spree_get :index, product_id: product.permalink, deleted: "off"
+            get :index, product_id: product.permalink, deleted: "off"
             expect(assigns(:variants)).to eq(product.variants)
           end
 
           it "lists only deleted variants with params[:deleted] == on" do
-            spree_get :index, product_id: product.permalink, deleted: "on"
+            get :index, product_id: product.permalink, deleted: "on"
             expect(assigns(:variants)).to eq([deleted_variant])
           end
         end
@@ -38,23 +38,23 @@ module Spree
         let!(:oc) { create(:simple_order_cycle, distributors: [d], variants: [v1]) }
 
         it "filters by distributor" do
-          spree_get :search, q: 'Prod', distributor_id: d.id.to_s
+          get :search, q: 'Prod', distributor_id: d.id.to_s
           expect(assigns(:variants)).to eq([v1])
         end
 
         it "applies variant overrides" do
-          spree_get :search, q: 'Prod', distributor_id: d.id.to_s
+          get :search, q: 'Prod', distributor_id: d.id.to_s
           expect(assigns(:variants)).to eq([v1])
           expect(assigns(:variants).first.on_hand).to eq(44)
         end
 
         it "filters by order cycle" do
-          spree_get :search, q: 'Prod', order_cycle_id: oc.id.to_s
+          get :search, q: 'Prod', order_cycle_id: oc.id.to_s
           expect(assigns(:variants)).to eq([v1])
         end
 
         it "does not filter when no distributor or order cycle is specified" do
-          spree_get :search, q: 'Prod'
+          get :search, q: 'Prod'
           expect(assigns(:variants)).to match_array [v1, v2]
         end
       end
@@ -69,17 +69,17 @@ module Spree
           end
 
           it 'deletes the variant' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
             expect(variant).to have_received(:destroy)
           end
 
           it 'shows a success flash message' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
             expect(flash[:success]).to be
           end
 
           it 'redirects to admin_product_variants_url' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
             expect(response).to redirect_to spree.admin_product_variants_url(variant.product.permalink)
           end
 
@@ -87,7 +87,7 @@ module Spree
             exchange = create(:exchange)
             variant.exchanges << exchange
 
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
             expect(variant.exchanges.reload).to be_empty
           end
         end

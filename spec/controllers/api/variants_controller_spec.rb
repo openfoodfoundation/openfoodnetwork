@@ -26,7 +26,7 @@ describe Api::VariantsController, type: :controller do
     end
 
     it "retrieves a list of variants with appropriate attributes" do
-      spree_get :index, format: :json
+      get :index, format: :json
 
       keys = json_response.first.keys.map(&:to_sym)
       expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
@@ -155,7 +155,7 @@ describe Api::VariantsController, type: :controller do
     it "doesn't delete the only variant of the product" do
       product = create(:product)
       variant = product.variants.first
-      spree_delete :destroy, id: variant.to_param
+      delete :destroy, id: variant.to_param
 
       expect(variant.reload).to_not be_deleted
       expect(assigns(:variant).errors[:product]).to include "must have at least one variant"

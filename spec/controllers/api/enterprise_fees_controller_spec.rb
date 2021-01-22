@@ -18,7 +18,7 @@ module Api
 
     describe "destroy" do
       it "removes the fee" do
-        expect { spree_delete :destroy, id: unreferenced_fee.id, format: :json }
+        expect { delete :destroy, id: unreferenced_fee.id, format: :json }
           .to change { EnterpriseFee.count }.by(-1)
       end
     end

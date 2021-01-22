@@ -20,7 +20,7 @@ describe Stripe::CallbacksController, type: :controller do
       end
 
       it "returns a 500 error" do
-        spree_get :index, params
+        get :index, params
         expect(response.status).to be 500
       end
     end
@@ -31,7 +31,7 @@ describe Stripe::CallbacksController, type: :controller do
       end
 
       it "redirects to unauthorized" do
-        spree_get :index, params
+        get :index, params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -44,7 +44,7 @@ describe Stripe::CallbacksController, type: :controller do
 
         it "renders a failure message" do
           allow(connector).to receive(:enterprise) { enterprise }
-          spree_get :index, params
+          get :index, params
           expect(flash[:notice]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_cancelled')
           expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
         end
@@ -55,7 +55,7 @@ describe Stripe::CallbacksController, type: :controller do
 
         it "renders a failure message" do
           allow(connector).to receive(:enterprise) { enterprise }
-          spree_get :index, params
+          get :index, params
           expect(flash[:error]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_fail')
           expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
         end
@@ -67,7 +67,7 @@ describe Stripe::CallbacksController, type: :controller do
 
       it "redirects to the enterprise edit path" do
         allow(connector).to receive(:enterprise) { enterprise }
-        spree_get :index, params
+        get :index, params
         expect(flash[:success]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_success')
         expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
       end

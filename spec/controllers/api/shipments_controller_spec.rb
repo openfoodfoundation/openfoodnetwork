@@ -53,7 +53,7 @@ describe Api::ShipmentsController, type: :controller do
         order.shipment.destroy
         order.reload
 
-        spree_post :create, params
+        post :create, params
 
         expect_valid_response
         expect(order.shipment.reload.inventory_units.size).to eq 2
@@ -63,7 +63,7 @@ describe Api::ShipmentsController, type: :controller do
       it 'updates and returns exiting shipment, if order already has a shipment' do
         original_shipment_id = order.shipment.id
 
-        spree_post :create, params
+        post :create, params
 
         expect(json_response["id"]). to eq(original_shipment_id)
         expect_valid_response
@@ -77,7 +77,7 @@ describe Api::ShipmentsController, type: :controller do
         shipment.shipping_method.distributors << hub
         variant_override = create(:variant_override, hub: hub, variant: variant)
 
-        spree_post :create, params
+        post :create, params
 
         expect_valid_response
         expect(order.shipment.reload.inventory_units.size).to eq 2
@@ -87,7 +87,7 @@ describe Api::ShipmentsController, type: :controller do
       it 'returns error code when adding to order contents fails' do
         make_order_contents_fail
 
-        spree_post :create, params
+        post :create, params
 
         expect_error_response
       end
@@ -164,7 +164,7 @@ describe Api::ShipmentsController, type: :controller do
 
       context '#add' do
         it 'adds a variant to the shipment' do
-          spree_put :add, params
+          put :add, params
 
           expect_valid_response
           expect(inventory_units_for(variant).size).to eq 2
@@ -173,7 +173,7 @@ describe Api::ShipmentsController, type: :controller do
         it 'returns error code when adding to order contents fails' do
           make_order_contents_fail
 
-          spree_put :add, params
+          put :add, params
 
           expect_error_response
         end
@@ -183,7 +183,7 @@ describe Api::ShipmentsController, type: :controller do
           order.update_attribute(:distributor, hub)
           variant_override = create(:variant_override, hub: hub, variant: variant)
 
-          spree_put :add, params
+          put :add, params
 
           expect_valid_response
           expect(inventory_units_for(variant).size).to eq 2
@@ -198,7 +198,7 @@ describe Api::ShipmentsController, type: :controller do
         end
 
         it 'removes a variant from the shipment' do
-          spree_put :remove, params
+          put :remove, params
 
           expect_valid_response
           expect(inventory_units_for(variant).size).to eq 0
@@ -207,7 +207,7 @@ describe Api::ShipmentsController, type: :controller do
         it 'returns error code when removing from order contents fails' do
           make_order_contents_fail
 
-          spree_put :remove, params
+          put :remove, params
 
           expect_error_response
         end

@@ -20,7 +20,7 @@ module Admin
         end
 
         it "returns an error" do
-          spree_post :create, email: existing_user.email, enterprise_id: enterprise.id
+          post :create, email: existing_user.email, enterprise_id: enterprise.id
 
           expect(response.status).to eq 422
           expect(json_response['errors']).to eq I18n.t('admin.enterprises.invite_manager.user_already_exists')
@@ -40,11 +40,11 @@ module Admin
         it 'enqueues an invitation email' do
           expect(mail_mock).to receive(:deliver_later)
 
-          spree_post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
+          post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
         end
 
         it "returns the user id" do
-          spree_post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
+          post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
 
           new_user = Spree::User.find_by(email: 'un.registered@email.com')
           expect(json_response['user']).to eq new_user.id
@@ -60,7 +60,7 @@ module Admin
         end
 
         it "returns success code" do
-          spree_post :create, email: 'an@email.com', enterprise_id: enterprise.id
+          post :create, email: 'an@email.com', enterprise_id: enterprise.id
 
           new_user = Spree::User.find_by(email: 'an@email.com')
 
@@ -76,7 +76,7 @@ module Admin
         end
 
         it "returns unauthorized response" do
-          spree_post :create, email: 'another@email.com', enterprise_id: enterprise.id
+          post :create, email: 'another@email.com', enterprise_id: enterprise.id
 
           new_user = Spree::User.find_by(email: 'another@email.com')
 

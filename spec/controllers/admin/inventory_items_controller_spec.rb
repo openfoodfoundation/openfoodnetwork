@@ -20,7 +20,7 @@ describe Admin::InventoryItemsController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          spree_post :create, params
+          post :create, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -32,7 +32,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
         context "but the producer has not granted VO permission" do
           it "redirects to unauthorized" do
-            spree_post :create, params
+            post :create, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -44,7 +44,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
           context "with acceptable data" do
             it "allows me to create the inventory item" do
-              expect{ spree_post :create, params }.to change{ InventoryItem.count }.by(1)
+              expect{ post :create, params }.to change{ InventoryItem.count }.by(1)
               inventory_item = InventoryItem.last
               expect(inventory_item.enterprise).to eq enterprise
               expect(inventory_item.variant).to eq variant
@@ -57,7 +57,7 @@ describe Admin::InventoryItemsController, type: :controller do
             let!(:bad_params) { { format: format, inventory_item: { enterprise_id: enterprise.id, variant_id: variant.id, visible: nil } } }
 
             it "returns an error message" do
-              expect{ spree_post :create, bad_params }.to change{ InventoryItem.count }.by(0)
+              expect{ post :create, bad_params }.to change{ InventoryItem.count }.by(0)
               expect(response.body).to eq Hash[:errors, ["Visible must be true or false"]].to_json
             end
           end
@@ -83,7 +83,7 @@ describe Admin::InventoryItemsController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          spree_put :update, params
+          put :update, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -95,7 +95,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
         context "but the producer has not granted VO permission" do
           it "redirects to unauthorized" do
-            spree_put :update, params
+            put :update, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -107,7 +107,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
           context "with acceptable data" do
             it "allows me to update the inventory item" do
-              spree_put :update, params
+              put :update, params
               inventory_item.reload
               expect(inventory_item.visible).to eq false
             end
@@ -118,7 +118,7 @@ describe Admin::InventoryItemsController, type: :controller do
             let!(:bad_params) { { format: format, id: inventory_item.id, inventory_item: { visible: nil } } }
 
             it "returns an error message" do
-              expect{ spree_put :update, bad_params }.to change{ InventoryItem.count }.by(0)
+              expect{ put :update, bad_params }.to change{ InventoryItem.count }.by(0)
               expect(response.body).to eq Hash[:errors, ["Visible must be true or false"]].to_json
             end
           end

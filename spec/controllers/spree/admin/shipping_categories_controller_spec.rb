@@ -12,7 +12,7 @@ module Spree
 
         it "creates a shipping shipping category" do
           expect {
-            spree_post :create, shipping_category: { name: "Frozen" }
+            post :create, shipping_category: { name: "Frozen" }
           }.to change(Spree::ShippingCategory.all, :count).by(1)
 
           expect(response).to redirect_to spree.admin_shipping_categories_url
@@ -20,7 +20,7 @@ module Spree
 
         it "updates an existing shipping category" do
           shipping_category = create(:shipping_category)
-          spree_put :update, id: shipping_category.id,
+          put :update, id: shipping_category.id,
                              shipping_category: { name: "Super Frozen" }
 
           expect(response).to redirect_to spree.admin_shipping_categories_url

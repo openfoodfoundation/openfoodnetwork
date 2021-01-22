@@ -25,7 +25,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
 
         context "but no shop_id is provided" do
           it "returns an error" do
-            spree_post :build, params
+            post :build, params
             expect(JSON.parse(response.body)['errors']).to eq ['Unauthorised']
           end
         end
@@ -34,7 +34,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
           before { params.merge!(shop_id: unmanaged_shop.id) }
 
           it "returns an error" do
-            spree_post :build, params
+            post :build, params
             expect(JSON.parse(response.body)['errors']).to eq ['Unauthorised']
           end
         end
@@ -46,7 +46,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
             let!(:outgoing_exchange) {}
 
             it "returns an error" do
-              spree_post :build, params
+              post :build, params
               json_response = JSON.parse(response.body)
               expect(json_response['errors']).to eq ["#{shop.name} is not permitted to sell the selected product"]
             end
@@ -59,7 +59,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
 
             context "but no schedule_id is provided" do
               it "returns a serialized subscription line item without a price estimate" do
-                spree_post :build, params
+                post :build, params
 
                 json_response = JSON.parse(response.body)
                 expect(json_response['price_estimate']).to eq '?'
@@ -72,7 +72,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
               before { params.merge!(schedule_id: unmanaged_schedule.id) }
 
               it "returns a serialized subscription line item without a price estimate" do
-                spree_post :build, params
+                post :build, params
 
                 json_response = JSON.parse(response.body)
                 expect(json_response['price_estimate']).to eq '?'
@@ -86,7 +86,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
 
               context "where no relevant variant override exists" do
                 it "returns a serialized subscription line item with a price estimate, based on the variant" do
-                  spree_post :build, params
+                  post :build, params
 
                   json_response = JSON.parse(response.body)
                   expect(json_response['price_estimate']).to eq 18.5
@@ -99,7 +99,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
                 let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant.id, price: 12.00) }
 
                 it "returns a serialized subscription line item with a price estimate, based on the override" do
-                  spree_post :build, params
+                  post :build, params
 
                   json_response = JSON.parse(response.body)
                   expect(json_response['price_estimate']).to eq 15.5

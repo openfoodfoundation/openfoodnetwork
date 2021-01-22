@@ -19,22 +19,6 @@ module ControllerRequestsHelper
     process_json_action(action, params, session, flash, "DELETE")
   end
 
-  def spree_get(action, params = {}, session = nil, flash = nil)
-    process_action_with_route(action, params, session, flash, "GET")
-  end
-
-  def spree_post(action, params = {}, session = nil, flash = nil)
-    process_action_with_route(action, params, session, flash, "POST")
-  end
-
-  def spree_put(action, params = {}, session = nil, flash = nil)
-    process_action_with_route(action, params, session, flash, "PUT")
-  end
-
-  def spree_delete(action, params = {}, session = nil, flash = nil)
-    process_action_with_route(action, params, session, flash, "DELETE")
-  end
-
   private
 
   def process_json_action(action, params = {}, session = nil, flash = nil, method = "get")

@@ -46,7 +46,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'void'
             order.reload
             expect(order.payment_total).to eq 0
@@ -65,7 +65,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to_not eq 0
@@ -105,7 +105,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to eq order.total + 5
             expect(order.outstanding_balance).to eq(-5)
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to eq order.total
@@ -124,7 +124,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to eq order.total + 5
             expect(order.outstanding_balance).to eq(-5)
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to eq order.total + 5
@@ -170,7 +170,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'void'
             order.reload
             expect(order.payment_total).to eq 0
@@ -190,7 +190,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to_not eq 0
@@ -212,7 +212,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance).to eq 0
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'void'
             order.reload
             expect(order.payment_total).to eq 0
@@ -253,7 +253,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to eq order.total + 5
             expect(order.outstanding_balance).to eq(-5)
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to eq order.total
@@ -272,7 +272,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             order.reload
             expect(order.payment_total).to eq order.total + 5
             expect(order.outstanding_balance).to eq(-5)
-            spree_put :fire, params
+            put :fire, params
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to eq order.total + 5

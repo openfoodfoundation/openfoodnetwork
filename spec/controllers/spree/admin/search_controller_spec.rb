@@ -13,7 +13,7 @@ describe Spree::Admin::SearchController, type: :controller do
     describe 'searching for known users' do
       describe "when search query is not an exact match" do
         before do
-          spree_get :known_users, q: "test"
+          get :known_users, q: "test"
         end
 
         it "returns a list of users that I share management of enteprises with" do
@@ -24,7 +24,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
       describe "when search query exactly matches the email of a user in the system" do
         before do
-          spree_get :known_users, q: "test3@email.com"
+          get :known_users, q: "test3@email.com"
         end
 
         it "returns that user, regardless of the relationship between the two users" do
@@ -40,7 +40,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
       describe 'when search owned enterprises' do
         before do
-          spree_get :customers, q: "test", distributor_id: enterprise.id
+          get :customers, q: "test", distributor_id: enterprise.id
           @results = JSON.parse(response.body)
         end
 
@@ -62,7 +62,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
       describe 'when search in unmanaged enterprise' do
         before do
-          spree_get :customers, q: "test", distributor_id: customer_3.enterprise_id
+          get :customers, q: "test", distributor_id: customer_3.enterprise_id
           @results = JSON.parse(response.body)
         end
 

@@ -23,7 +23,7 @@ describe Spree::Admin::OverviewController, type: :controller do
           end
 
           it "redirects to the welcome page for the enterprise" do
-            spree_get :index
+            get :index
             expect(response)
               .to redirect_to welcome_admin_enterprise_path(enterprise)
           end
@@ -31,7 +31,7 @@ describe Spree::Admin::OverviewController, type: :controller do
 
         context "and the enterprise does not have sells='unspecified'" do
           it "renders the single enterprise dashboard" do
-            spree_get :index
+            get :index
             expect(response).to render_template :single_enterprise_dashboard
           end
         end
@@ -41,7 +41,7 @@ describe Spree::Admin::OverviewController, type: :controller do
         before { @request.env['HTTP_REFERER'] = 'http://test.com/admin' }
 
         it "renders the single enterprise dashboard" do
-          spree_get :index
+          get :index
           expect(response).to render_template :single_enterprise_dashboard
         end
       end
@@ -64,14 +64,14 @@ describe Spree::Admin::OverviewController, type: :controller do
           end
 
           it "redirects to the enterprises index" do
-            spree_get :index
+            get :index
             expect(response).to redirect_to admin_enterprises_path
           end
         end
 
         context "and no owned enterprises have sells='unspecified'" do
           it "renders the multiple enterprise dashboard" do
-            spree_get :index
+            get :index
             expect(response).to render_template :multi_enterprise_dashboard
           end
         end
@@ -81,7 +81,7 @@ describe Spree::Admin::OverviewController, type: :controller do
         before { @request.env['HTTP_REFERER'] = 'http://test.com/admin' }
 
         it "renders the multiple enterprise dashboard" do
-          spree_get :index
+          get :index
           expect(response).to render_template :multi_enterprise_dashboard
         end
       end

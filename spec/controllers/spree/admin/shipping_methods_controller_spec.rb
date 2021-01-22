@@ -25,7 +25,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       params[:shipping_method][:calculator_attributes][:preferred_amount] = 123
       params[:shipping_method][:calculator_attributes][:preferred_currency] = "EUR"
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_amount).to eq 123
       expect(shipping_method.reload.calculator.preferred_currency).to eq "EUR"
@@ -35,7 +35,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       shipping_method.calculator = create(:weight_calculator, calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_per_unit] = 10
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_per_unit).to eq 10
     end
@@ -44,7 +44,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       shipping_method.calculator = create(:weight_calculator, calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_unit_from_list] = "kg"
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_unit_from_list).to eq "kg"
     end
@@ -55,7 +55,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
                                                                       calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_flat_percent] = 30
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_flat_percent).to eq 30
     end
@@ -66,7 +66,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       params[:shipping_method][:calculator_attributes][:preferred_additional_item] = 20
       params[:shipping_method][:calculator_attributes][:preferred_max_items] = 30
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_first_item).to eq 10
       expect(shipping_method.reload.calculator.preferred_additional_item).to eq 20
@@ -79,7 +79,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       params[:shipping_method][:calculator_attributes][:preferred_normal_amount] = 20
       params[:shipping_method][:calculator_attributes][:preferred_discount_amount] = 30
 
-      spree_post :update, params
+      post :update, params
 
       expect(shipping_method.reload.calculator.preferred_minimal_amount).to eq 10
       expect(shipping_method.reload.calculator.preferred_normal_amount).to eq 20
@@ -95,7 +95,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
         controller_login_as_admin
         expect(shipping_method.deleted_at).to be_nil
 
-        spree_delete :destroy, "id" => shipping_method.id
+        delete :destroy, "id" => shipping_method.id
 
         expect(shipping_method.reload.deleted_at).not_to be_nil
       end
@@ -108,7 +108,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
         controller_login_as_admin
         expect(order.shipping_method.deleted_at).to be_nil
 
-        spree_delete :destroy, "id" => order.shipping_method.id
+        delete :destroy, "id" => order.shipping_method.id
 
         expect(order.shipping_method.reload.deleted_at).to be_nil
       end

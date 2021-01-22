@@ -28,7 +28,7 @@ module Api
         let(:current_user) { enterprise_manager }
 
         it "removes logo" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
 
           expect(response).to be_success
           expect(json_response["id"]).to eq enterprise.id
@@ -40,7 +40,7 @@ module Api
           let(:enterprise) { create(:enterprise, owner: enterprise_owner, logo: nil) }
 
           it "responds with error" do
-            spree_delete :destroy, enterprise_id: enterprise
+            delete :destroy, enterprise_id: enterprise
 
             expect(response.status).to eq(409)
             expect(json_response["error"]).to eq I18n.t("api.enterprise_logo.destroy_attachment_does_not_exist")
@@ -52,7 +52,7 @@ module Api
         let(:current_user) { enterprise_owner }
 
         it "allows removal of logo" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
           expect(response).to be_success
         end
       end
@@ -61,7 +61,7 @@ module Api
         let(:current_user) { admin_user }
 
         it "allows removal of logo" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
           expect(response).to be_success
         end
       end
@@ -70,7 +70,7 @@ module Api
         let(:current_user) { other_enterprise_manager }
 
         it "does not allow removal of logo" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
           expect(response.status).to eq(401)
           enterprise.reload
           expect(enterprise.logo?).to be true
@@ -81,7 +81,7 @@ module Api
         let(:current_user) { other_enterprise_owner }
 
         it "does not allow removal of logo" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
           expect(response.status).to eq(401)
           enterprise.reload
           expect(enterprise.logo?).to be true

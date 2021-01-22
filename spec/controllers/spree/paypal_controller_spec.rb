@@ -6,7 +6,7 @@ module Spree
   describe PaypalController, type: :controller do
     context 'when cancelling' do
       it 'redirects back to checkout' do
-        expect(spree_get(:cancel)).to redirect_to checkout_path
+        expect(get(:cancel)).to redirect_to checkout_path
       end
     end
 
@@ -19,12 +19,12 @@ module Spree
       end
 
       it 'resets the order' do
-        spree_post :confirm, payment_method_id: payment_method.id
+        post :confirm, payment_method_id: payment_method.id
         expect(controller.current_order).not_to eq(previous_order)
       end
 
       it 'sets the access token of the session' do
-        spree_post :confirm, payment_method_id: payment_method.id
+        post :confirm, payment_method_id: payment_method.id
         expect(session[:access_token]).to eq(controller.current_order.token)
       end
 
@@ -34,7 +34,7 @@ module Spree
         end
 
         it "redirects to the cart with out of stock error" do
-          expect(spree_post(:confirm, payment_method_id: payment_method.id)).
+          expect(post(:confirm, payment_method_id: payment_method.id)).
             to redirect_to cart_path
 
           order = controller.current_order.reload

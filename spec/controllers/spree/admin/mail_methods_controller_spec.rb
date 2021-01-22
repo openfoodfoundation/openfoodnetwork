@@ -10,7 +10,7 @@ describe Spree::Admin::MailMethodsController do
   context "#update" do
     it "should reinitialize the mail settings" do
       expect(Spree::Core::MailSettings).to receive(:init)
-      spree_put :update, enable_mail_delivery: "1", mails_from: "ofn@example.com"
+      put :update, enable_mail_delivery: "1", mails_from: "ofn@example.com"
     end
   end
 
@@ -28,7 +28,7 @@ describe Spree::Admin::MailMethodsController do
     ActionMailer::Base.perform_deliveries = true
 
     expect {
-      spree_post :testmail
+      post :testmail
     }.to change { ActionMailer::Base.deliveries.size }.by(1)
   end
 end

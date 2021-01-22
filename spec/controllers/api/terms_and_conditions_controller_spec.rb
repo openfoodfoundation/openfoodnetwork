@@ -24,7 +24,7 @@ module Api
         let(:current_user) { enterprise_manager }
 
         it "removes terms and conditions file" do
-          spree_delete :destroy, enterprise_id: enterprise
+          delete :destroy, enterprise_id: enterprise
 
           expect(response).to be_success
           expect(json_response["id"]).to eq enterprise.id
@@ -40,7 +40,7 @@ module Api
           end
 
           it "responds with error" do
-            spree_delete :destroy, enterprise_id: enterprise
+            delete :destroy, enterprise_id: enterprise
 
             expect(response.status).to eq(409)
             expect(json_response["error"]).to eq I18n.t("api.enterprise_terms_and_conditions.destroy_attachment_does_not_exist")

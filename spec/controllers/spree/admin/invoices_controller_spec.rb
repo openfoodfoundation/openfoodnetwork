@@ -14,7 +14,7 @@ xdescribe Spree::Admin::InvoicesController, type: :controller do
   describe "#create" do
     it "enqueues a job to create a bulk invoice and returns the filename" do
       expect do
-        spree_post :create, order_ids: [order.id]
+        post :create, order_ids: [order.id]
       end.to enqueue_job Delayed::PerformableMethod
 
       expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
@@ -29,7 +29,7 @@ xdescribe Spree::Admin::InvoicesController, type: :controller do
         allow(File).to receive(:exist?)
         allow(File).to receive(:exist?).with("tmp/invoices/#{invoice_id}.pdf").and_return(true)
 
-        spree_get :poll, invoice_id: invoice_id
+        get :poll, invoice_id: invoice_id
 
         expect(response.body).to eq({ created: true }.to_json)
         expect(response.status).to eq 200
@@ -38,7 +38,7 @@ xdescribe Spree::Admin::InvoicesController, type: :controller do
 
     context "when the file is not available" do
       it "returns false" do
-        spree_get :poll, invoice_id: invoice_id
+        get :poll, invoice_id: invoice_id
 
         expect(response.body).to eq({ created: false }.to_json)
         expect(response.status).to eq 422
