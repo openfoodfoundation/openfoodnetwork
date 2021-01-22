@@ -23,7 +23,7 @@ describe ProducerMailer, type: :mailer do
   let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) { order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true, receival_instructions: 'Outside shed.' }
-  let!(:outgoing_exchange) { order_cycle.exchanges.create! sender: order_cycle.coordinator, receiver: order_cycle.coordinator, incoming: false, pickup_time: 'Tue, 23rd Dec' }
+  let!(:outgoing_exchange) { order_cycle.exchanges.create! sender: d1, receiver: d1, incoming: false, pickup_time: 'Tue, 23rd Dec' }
 
   let!(:order) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
@@ -56,8 +56,8 @@ describe ProducerMailer, type: :mailer do
     expect(mail.reply_to).to eq [order_cycle.coordinator.contact.email]
   end
 
-  it "includes the pickup time" do
-    expect(mail.body.encoded).to include 'Tue, 23rd Dec'
+  it "includes the pickup time for each distributor" do
+    expect(mail.body.encoded).to include "#{d1.name} (Tue, 23rd Dec)"
   end
 
   it "includes receival instructions" do
