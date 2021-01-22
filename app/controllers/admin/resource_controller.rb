@@ -289,11 +289,7 @@ module Admin
     end
 
     def url_helper
-      if spree_controller?
-        spree
-      else
-        main_app
-      end
+      main_app
     end
 
     def spree_controller?
