@@ -41,6 +41,8 @@ gem 'i18n-js', '~> 3.8.0'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
+gem 'puma'
+
 gem "activerecord-import"
 
 gem "catalog", path: "./engines/catalog"
