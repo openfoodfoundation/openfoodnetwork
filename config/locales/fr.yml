@@ -2321,6 +2321,8 @@ fr:
   payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
   payment_method_not_supported: "Cette méthode de paiement n'est pas maintenue. Veuillez en sélectionner une autre."
   payment_updated: "Paiement mis à jour"
+  cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
+  action_required: "Une action est requise"
   inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
   shop_preferences: "Préférences boutique"
@@ -2615,6 +2617,8 @@ fr:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
+        quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
+        quantity_unchanged: "La quantité n'a pas été modifiée."
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -3508,6 +3512,10 @@ fr:
         subject: "Instructions de mise à jour du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
+    payment_mailer:
+      authorize_payment:
+        subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
+        instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
