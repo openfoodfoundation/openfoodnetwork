@@ -94,7 +94,4 @@ Openfoodnetwork::Application.routes.draw do
 
   # Mount DFC API endpoints
   mount DfcProvider::Engine, at: '/'
-
-  # Mount Spree's routes
-  mount Spree::Core::Engine, :at => '/'
 end
