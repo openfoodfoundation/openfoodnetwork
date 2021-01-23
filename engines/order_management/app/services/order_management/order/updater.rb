@@ -5,7 +5,7 @@ module OrderManagement
     class Updater
       attr_reader :order
 
-      delegate :payments, :line_items, :adjustments, :shipments, to: :order
+      delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, to: :order
 
       def initialize(order)
         @order = order
@@ -58,6 +58,10 @@ module OrderManagement
 
       def update_adjustment_total
         order.adjustment_total = adjustments.eligible.sum(:amount)
+        order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
+        order.included_tax_total = order.line_item_adjustments.tax.sum(:included_tax) +
+                                   all_adjustments.enterprise_fee.sum(:included_tax) +
+                                   adjustments.shipping.sum(:included_tax)
       end
 
       def update_order_total
@@ -70,6 +74,8 @@ module OrderManagement
           shipment_state: order.shipment_state,
           item_total: order.item_total,
           adjustment_total: order.adjustment_total,
+          included_tax_total: order.included_tax_total,
+          additional_tax_total: order.additional_tax_total,
           payment_total: order.payment_total,
           total: order.total,
           updated_at: Time.zone.now
