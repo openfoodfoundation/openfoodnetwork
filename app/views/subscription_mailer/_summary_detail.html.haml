@@ -17,5 +17,5 @@
   %h4= t(".other.title", count: orders.count)
   %p= t(".other.explainer")
   - orders.each_with_index do |order, i|
-    %a{ href: spree.order_url(order) }>= order.number
+    %a{ href: spree_order_url(order) }>= order.number
     = ", " if i < orders.count - 1
