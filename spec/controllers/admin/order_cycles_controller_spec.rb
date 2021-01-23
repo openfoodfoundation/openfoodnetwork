@@ -187,7 +187,7 @@ module Admin
         it "can update preference product_selection_from_coordinator_inventory_only" do
           expect(OrderCycleForm).to receive(:new).
             with(order_cycle,
-                 { "preferred_product_selection_from_coordinator_inventory_only" => "true" },
+                 { "preferred_product_selection_from_coordinator_inventory_only" => true },
                  anything) { form_mock }
           allow(form_mock).to receive(:save) { true }
 
@@ -207,7 +207,7 @@ module Admin
       let!(:outgoing_exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub, incoming: false, variants: [v]) }
 
       let(:allowed) { { incoming_exchanges: [], outgoing_exchanges: [] } }
-      let(:restricted) { { name: 'some name', orders_open_at: 1.day.from_now, orders_close_at: 1.day.ago } }
+      let(:restricted) { { name: 'some name', orders_open_at: 1.day.from_now.to_s, orders_close_at: 1.day.ago.to_s } }
       let(:params) { { format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted) } }
       let(:form_mock) { instance_double(OrderCycleForm, save: true) }
 
@@ -267,8 +267,13 @@ module Admin
         end
 
         context "when a validation error occurs" do
-          before do
-            params[:order_cycle_set][:collection_attributes]['0'][:orders_open_at] = Date.current + 25.days
+          let(:params) do
+            { format: :json, order_cycle_set: { collection_attributes: { '0' => {
+              id: oc.id,
+              name: "Updated Order Cycle",
+              orders_open_at: Date.current + 25.days,
+              orders_close_at: Date.current + 21.days,
+            } } } }
           end
 
           it "returns an error message" do

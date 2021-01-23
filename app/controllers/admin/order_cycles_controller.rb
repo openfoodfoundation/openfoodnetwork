@@ -101,7 +101,7 @@ module Admin
 
     def collection
       return Enterprise.where("1=0") unless json_request?
-      return order_cycles_from_set if params[:order_cycle_set]
+      return order_cycles_from_set if raw_params[:order_cycle_set]
 
       ocs = order_cycles
       ocs.undated | ocs.soonest_closing | ocs.soonest_opening | ocs.closed
@@ -126,7 +126,7 @@ module Admin
     def order_cycles_as_distributor
       OrderCycle.
         preload(:schedules).
-        ransack(params[:q]).
+        ransack(raw_params[:q]).
         result.
         involving_managed_distributors_of(spree_current_user).
         order('updated_at DESC')
@@ -135,7 +135,7 @@ module Admin
     def order_cycles_as_producer
       OrderCycle.
         preload(:schedules).
-        ransack(params[:q]).
+        ransack(raw_params[:q]).
         result.
         involving_managed_producers_of(spree_current_user).
         order('updated_at DESC')
@@ -144,7 +144,7 @@ module Admin
     def order_cycles_as_both
       OrderCycle.
         preload(:schedules).
-        ransack(params[:q]).
+        ransack(raw_params[:q]).
         result.
         visible_by(spree_current_user)
     end
@@ -153,9 +153,9 @@ module Admin
       if json_request?
         # Split ransack params into all those that currently exist and new ones
         #   to limit returned ocs to recent or undated
-        orders_close_at_gt = params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
-        params[:q] = {
-          g: [params.delete(:q) || {}, { m: 'or',
+        orders_close_at_gt = raw_params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
+        raw_params[:q] = {
+          g: [raw_params.delete(:q) || {}, { m: 'or',
                                          orders_close_at_gt: orders_close_at_gt,
                                          orders_close_at_null: true }]
         }
@@ -199,29 +199,34 @@ module Admin
     end
 
     def remove_protected_attrs
-      return unless order_cycle_params[:order_cycle]
+      return if order_cycle_params.blank?
 
-      order_cycle_params[:order_cycle].delete :coordinator_id
+      order_cycle_params.delete :coordinator_id
 
       unless Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
-        order_cycle_params[:order_cycle].delete_if do |k, _v|
+        order_cycle_params.delete_if do |k, _v|
           [:name, :orders_open_at, :orders_close_at].include? k.to_sym
         end
       end
     end
 
     def remove_unauthorized_bulk_attrs
-      params[:order_cycle_set][:collection_attributes].each do |i, hash|
+      (order_cycle_params.dig(:order_cycle_set, :collection_attributes) || []).each do |i, hash|
         order_cycle = OrderCycle.find(hash[:id])
         unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
-          params[:order_cycle_set][:collection_attributes].delete i
+          order_cycle_params[:order_cycle_set][:collection_attributes].delete i
         end
       end
     end
 
     def order_cycles_from_set
       remove_unauthorized_bulk_attrs
-      OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |_k, v| v[:id] })
+      collection_attributes = order_cycle_params.dig(:order_cycle_set, :collection_attributes)
+      return if collection_attributes.blank?
+
+      OrderCycle.where(
+        id: collection_attributes.map{ |_k, v| v[:id] }
+      )
     end
 
     def order_cycle_set
@@ -229,7 +234,7 @@ module Admin
     end
 
     def require_order_cycle_set_params
-      return if params[:order_cycle_set]
+      return if order_cycle_params[:order_cycle_set]
 
       render json: { errors: t('admin.order_cycles.bulk_update.no_data') },
              status: :unprocessable_entity
@@ -240,7 +245,8 @@ module Admin
     end
 
     def order_cycle_params
-      @order_cycle_params ||= PermittedAttributes::OrderCycle.new(params).call.to_h.with_indifferent_access
+      @order_cycle_params ||= PermittedAttributes::OrderCycle.new(params).call.
+        to_h.with_indifferent_access
     end
 
     def order_cycle_bulk_params
