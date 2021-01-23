@@ -199,10 +199,12 @@ module Admin
     end
 
     def remove_protected_attrs
-      params[:order_cycle].delete :coordinator_id
+      return unless order_cycle_params[:order_cycle]
+
+      order_cycle_params[:order_cycle].delete :coordinator_id
 
       unless Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
-        params[:order_cycle].delete_if do |k, _v|
+        order_cycle_params[:order_cycle].delete_if do |k, _v|
           [:name, :orders_open_at, :orders_close_at].include? k.to_sym
         end
       end
@@ -238,7 +240,7 @@ module Admin
     end
 
     def order_cycle_params
-      PermittedAttributes::OrderCycle.new(params).call
+      @order_cycle_params ||= PermittedAttributes::OrderCycle.new(params).call.to_h.with_indifferent_access
     end
 
     def order_cycle_bulk_params
