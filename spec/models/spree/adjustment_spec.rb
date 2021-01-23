@@ -221,7 +221,7 @@ module Spree
         end
 
         it "does not crash when order data has been updated previously" do
-          order.price_adjustments.first.destroy
+          order.line_item_adjustments.first.destroy
           tax_rate.adjust(order)
         end
       end
