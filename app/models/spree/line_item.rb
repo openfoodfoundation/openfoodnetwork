@@ -6,6 +6,7 @@ require 'variant_units/variant_and_line_item_naming'
 module Spree
   class LineItem < ActiveRecord::Base
     include VariantUnits::VariantAndLineItemNaming
+    include LineItemStockChanges
     include LineItemBasedAdjustmentHandling
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
