@@ -19,7 +19,7 @@ module Spree
       end
 
       def create
-        @url_filters = ::ProductFilters.new.extract(params)
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
         set_viewable
 
         @object.attributes = permitted_resource_params
@@ -36,7 +36,7 @@ module Spree
       end
 
       def update
-        @url_filters = ::ProductFilters.new.extract(params)
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
         set_viewable
 
         if @object.update(permitted_resource_params)
