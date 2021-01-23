@@ -187,7 +187,7 @@ module Admin
         it "can update preference product_selection_from_coordinator_inventory_only" do
           expect(OrderCycleForm).to receive(:new).
             with(order_cycle,
-                 { "preferred_product_selection_from_coordinator_inventory_only" => true },
+                 { "preferred_product_selection_from_coordinator_inventory_only" => "true" },
                  anything) { form_mock }
           allow(form_mock).to receive(:save) { true }
 
