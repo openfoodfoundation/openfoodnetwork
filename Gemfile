@@ -4,38 +4,15 @@ source 'https://rubygems.org'
 ruby "2.4.4"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-plugin 'bootboot', '~> 0.1.1' unless Bundler.settings[:frozen]
-Plugin.__send__(:load_plugin, 'bootboot') if Plugin.installed?('bootboot')
+gem 'rails', '> 5.0', '< 5.1'
 
-if ENV['DEPENDENCIES_NEXT']
-  enable_dual_booting if Plugin.installed?('bootboot')
-
-  # This will only be loaded when running
-  # bundler command prefixed with `DEPENDENCIES_NEXT=1
-  gem 'rails', '> 5.0', '< 5.1'
-
-  gem 'activemerchant', '>= 1.78.0'
-  gem 'angular-rails-templates', '>= 0.3.0', '< 1.1.0'
-  gem 'awesome_nested_set'
-  gem 'rails-controller-testing'
-  gem 'ransack', '2.3.0'
-  gem 'responders'
-else
-  gem 'rails', '~> 4.2'
-
-  gem 'activemerchant', '~> 1.78.0'
-  gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'awesome_nested_set', '~> 3.3.1'
-  gem 'ransack', '~> 1.8.10'
-  gem 'responders', '~> 2.0'
-
-  gem 'db2fog'
-  gem 'unicorn'
-
-  group :test do
-    gem 'test_after_commit' # needed to test Devise callbacks
-  end
-end
+gem 'activemerchant', '>= 1.78.0'
+gem 'angular-rails-templates', '>= 0.3.0'
+gem 'awesome_nested_set'
+gem 'ransack', '2.3.0'
+gem 'responders'
+gem 'sass', '<= 4.7.1'
+gem 'sass-rails', '< 6.0.0'
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.0'
@@ -116,15 +93,12 @@ gem 'test-unit', '~> 3.4'
 gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
-gem 'libv8', '< 8'
 gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
 gem 'angular_rails_csrf'
 gem 'foundation-icons-sass-rails'
-gem 'sass', '<= 4.7.1'
-gem 'sass-rails', '< 6.0.0'
 
 gem 'foundation-rails', '= 5.5.2.1'
 
