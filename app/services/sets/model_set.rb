@@ -13,6 +13,7 @@ module Sets
 
       # Set here first, to ensure that we apply collection_attributes to the right collection
       @collection = attributes[:collection] if attributes[:collection]
+      @collection = @collection.to_a
 
       attributes.each do |name, value|
         public_send("#{name}=", value)
