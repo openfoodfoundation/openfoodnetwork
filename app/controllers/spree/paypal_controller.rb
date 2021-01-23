@@ -234,7 +234,7 @@ module Spree
     end
 
     def completion_route(order)
-      spree_order_path(order, token: order.token)
+      main_app.spree_order_path(order, token: order.token)
     end
 
     def address_required?
