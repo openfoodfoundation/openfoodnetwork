@@ -11,7 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20210203215049) do
 
   # These are extensions that must be enabled in order to support this database
@@ -575,6 +574,8 @@ ActiveRecord::Schema.define(version: 20210203215049) do
     t.string   "last_ip_address",      limit: 255
     t.integer  "customer_id"
     t.integer  "created_by_id"
+    t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0, null: false
   end
 
   add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx", using: :btree
