@@ -139,6 +139,9 @@ RSpec.configure do |config|
     ActionController::Base.perform_caching = caching
   end
 
+  # Fix encoding issue in Rails 5.0; allows passing empty arrays or hashes as params.
+  config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
+
   # Show javascript errors in test output with `js_debug: true`
   config.after(:each, :js_debug) do
     errors = page.driver.browser.manage.logs.get(:browser)
