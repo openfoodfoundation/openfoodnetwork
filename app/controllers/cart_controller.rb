@@ -56,7 +56,8 @@ class CartController < BaseController
 
   def populate_variant_attributes_from_variant(order)
     params[:variant_attributes].each do |variant_id, attributes|
-      order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
+      permitted = attributes.permit(:quantity, :max_quantity).to_h.with_indifferent_access
+      order.set_variant_attributes(Spree::Variant.find(variant_id), permitted)
     end
   end
 
