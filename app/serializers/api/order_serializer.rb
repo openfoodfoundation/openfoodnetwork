@@ -42,7 +42,7 @@ module Api
     end
 
     def path
-      Spree::Core::Engine.routes.url_helpers.order_path(object)
+      spree_order_path(object)
     end
 
     def cancel_path
