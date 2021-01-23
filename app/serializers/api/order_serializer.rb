@@ -48,7 +48,7 @@ module Api
     def cancel_path
       return nil unless object.changes_allowed?
 
-      Spree::Core::Engine.routes.url_helpers.cancel_order_path(object)
+      cancel_spree_order_path(object)
     end
 
     def changes_allowed
