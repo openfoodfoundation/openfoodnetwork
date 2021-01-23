@@ -23,25 +23,14 @@ module OrderManagement
 
         if order.completed?
           update_payment_state
-
-          # give each of the shipments a chance to update themselves
-          shipments.each { |shipment| shipment.update!(order) }
+          update_shipments
           update_shipment_state
         end
 
         update_all_adjustments
         # update totals a second time in case updated adjustments have an effect on the total
         update_totals
-
-        order.update_columns(
-          payment_state: order.payment_state,
-          shipment_state: order.shipment_state,
-          item_total: order.item_total,
-          adjustment_total: order.adjustment_total,
-          payment_total: order.payment_total,
-          total: order.total,
-          updated_at: Time.zone.now
-        )
+        persist_totals
       end
 
       # Updates the following Order total values:
@@ -52,9 +41,39 @@ module OrderManagement
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
         order.payment_total = payments.completed.sum(:amount)
+        update_item_total
+        update_adjustment_total
+        update_order_total
+      end
+
+      # Give each of the shipments a chance to update themselves
+      def update_shipments
+        shipments.each { |shipment| shipment.update!(order) }
+      end
+
+      def update_item_total
         order.item_total = line_items.map(&:amount).sum
+        update_order_total
+      end
+
+      def update_adjustment_total
         order.adjustment_total = adjustments.eligible.sum(:amount)
+      end
+
+      def update_order_total
         order.total = order.item_total + order.adjustment_total
+      end
+
+      def persist_totals
+        order.update_columns(
+          payment_state: order.payment_state,
+          shipment_state: order.shipment_state,
+          item_total: order.item_total,
+          adjustment_total: order.adjustment_total,
+          payment_total: order.payment_total,
+          total: order.total,
+          updated_at: Time.zone.now
+        )
       end
 
       # Updates the +shipment_state+ attribute according to the following logic:
