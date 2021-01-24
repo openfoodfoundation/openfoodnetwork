@@ -73,7 +73,7 @@ feature "Shops caching", js: true, caching: true do
         expect(page).to have_content taxon.name
         expect(page).to have_content property.presentation
 
-        product.update_attribute(:taxons, [taxon2])
+        product.taxons << taxon2
         product.update_attribute(:primary_taxon, taxon2)
         product.update_attribute(:properties, [property2])
 
