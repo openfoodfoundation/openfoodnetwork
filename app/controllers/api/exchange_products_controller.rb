@@ -18,7 +18,7 @@ module Api
     #   In this case parameters are: enterprise_id, order_cycle_id and incoming
     #     (order_cycle_id is not necessary for incoming exchanges)
     def index
-      if params[:exchange_id].present?
+      if exchange_params[:exchange_id].present?
         load_data_from_exchange
       else
         load_data_from_other_params
@@ -59,7 +59,7 @@ module Api
     end
 
     def load_data_from_exchange
-      exchange = Exchange.find_by(id: params[:exchange_id])
+      exchange = Exchange.find_by(id: exchange_params[:exchange_id])
 
       @order_cycle = exchange.order_cycle
       @incoming = exchange.incoming
@@ -67,14 +67,16 @@ module Api
     end
 
     def load_data_from_other_params
-      @enterprise = Enterprise.find_by(id: params[:enterprise_id])
+      @enterprise = Enterprise.find_by(id: exchange_params[:enterprise_id])
 
-      if params[:order_cycle_id]
-        @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id])
-      elsif !params[:incoming]
+      # This will be a string (eg "true") when it arrives via params, but we want a boolean
+      @incoming = ActiveModel::Type::Boolean.new.cast exchange_params[:incoming]
+
+      if exchange_params[:order_cycle_id]
+        @order_cycle = OrderCycle.find_by(id: exchange_params[:order_cycle_id])
+      elsif !@incoming
         raise "order_cycle_id is required to list products for new outgoing exchange"
       end
-      @incoming = params[:incoming]
     end
 
     def render_paginated_products(paginated_products)
@@ -88,6 +90,11 @@ module Api
         products: serialized_products,
         pagination: pagination_data(paginated_products)
       }
+    end
+
+    def exchange_params
+      params.permit(:enterprise_id, :exchange_id, :order_cycle_id, :incoming).
+        to_h.with_indifferent_access
     end
   end
 end
