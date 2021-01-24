@@ -54,7 +54,7 @@ module Spree
       end
 
       def search
-        scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
+        scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(variant_search_params)
         @variants = scoper.search
         render json: @variants, each_serializer: ::Api::Admin::VariantSerializer
       end
@@ -108,6 +108,12 @@ module Spree
 
       def permitted_resource_params
         variant_params
+      end
+
+      def variant_search_params
+        params.permit(
+          :q, :distributor_id, :order_cycle_id, :schedule_id, :eligible_for_subscriptions
+        ).to_h.with_indifferent_access
       end
     end
   end
