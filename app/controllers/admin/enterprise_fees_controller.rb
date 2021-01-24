@@ -10,7 +10,7 @@ module Admin
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
-      3.times { @collection << blank_enterprise_fee }
+      3.times { @collection.to_a << blank_enterprise_fee }
 
       respond_to do |format|
         format.html
