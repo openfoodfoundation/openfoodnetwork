@@ -247,31 +247,31 @@ module Admin
 
     def check_can_change_sells
       unless spree_current_user.admin? || spree_current_user == @enterprise.owner
-        params[:enterprise].delete :sells
+        enterprise_params.delete :sells
       end
     end
 
     def override_owner
-      params[:enterprise][:owner_id] = spree_current_user.id unless spree_current_user.admin?
+      enterprise_params[:owner_id] = spree_current_user.id unless spree_current_user.admin?
     end
 
     def override_sells
       unless spree_current_user.admin?
         has_hub = spree_current_user.owned_enterprises.is_hub.any?
         new_enterprise_is_producer = Enterprise.new(enterprise_params).is_primary_producer
-        params[:enterprise][:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
+        enterprise_params[:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
       end
     end
 
     def check_can_change_owner
       unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
-        params[:enterprise].delete :owner_id
+        enterprise_params.delete :owner_id
       end
     end
 
     def check_can_change_bulk_owner
       unless spree_current_user.admin?
-        params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+        bulk_params[:collection_attributes].each do |_i, enterprise_params|
           enterprise_params.delete :owner_id
         end
       end
@@ -279,15 +279,15 @@ module Admin
 
     def check_can_change_managers
       unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
-        params[:enterprise].delete :user_ids
+        enterprise_params.delete :user_ids
       end
     end
 
     def strip_new_properties
-      unless spree_current_user.admin? || params[:enterprise][:producer_properties_attributes].nil?
+      unless spree_current_user.admin? || params.dig(:enterprise, :producer_properties_attributes).nil?
         names = Spree::Property.pluck(:name)
-        params[:enterprise][:producer_properties_attributes].each do |key, property|
-          params[:enterprise][:producer_properties_attributes].delete key unless names.include? property[:property_name]
+        enterprise_params[:producer_properties_attributes].each do |key, property|
+          enterprise_params[:producer_properties_attributes].delete key unless names.include? property[:property_name]
         end
       end
     end
@@ -319,13 +319,14 @@ module Admin
     end
 
     def enterprise_params
-      PermittedAttributes::Enterprise.new(params).call
+      @enterprise_params ||= PermittedAttributes::Enterprise.new(params).call.
+        to_h.with_indifferent_access
     end
 
     def bulk_params
-      params.require(:sets_enterprise_set).permit(
+      @bulk_params ||= params.require(:sets_enterprise_set).permit(
         collection_attributes: PermittedAttributes::Enterprise.attributes
-      )
+      ).to_h.with_indifferent_access
     end
 
     # Used in Admin::ResourceController#create
