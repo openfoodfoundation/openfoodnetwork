@@ -61,7 +61,7 @@ de_DE:
         producer_ids: "Erzeuger"
         order_cycle_ids: "Bestellzyklen"
         enterprise_fee_ids: "Gebührennamen"
-        shipping_method_ids: "Lieferart"
+        shipping_method_ids: "Lieferoption"
         payment_method_ids: "Zahlungsarten"
     errors:
       messages:
@@ -180,7 +180,7 @@ de_DE:
         explainer: Diese Bestellungen konnten nicht bearbeitet werden, da für die angeforderten Artikel kein Bestand verfügbar war
       complete:
         title: Bereits verarbeitet (%{count} Bestellungen)
-        explainer: Diese Bestellungen wurden bereits als vollständig markiert und daher nicht verändert
+        explainer: Diese Bestellungen wurden bereits als vollständig markiert und daher nicht verändert.
       processing:
         title: Fehler aufgetreten (%{count} Bestellungen)
         explainer: Die automatische Bearbeitung dieser Bestellungen ist aufgrund eines Fehlers fehlgeschlagen. Der Fehler wurde soweit möglich aufgelistet.
@@ -292,7 +292,7 @@ de_DE:
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
-    update: "Aktualisieren"
+    update: "Speichern"
     delete: "Löschen"
     add: "Hinzufügen"
     cut: "Ausschneiden"
@@ -322,7 +322,7 @@ de_DE:
     quantity: Menge
     schedule: Zeitplan
     shipping: Versand
-    shipping_method: Lieferart
+    shipping_method: Lieferoption
     shop: Laden
     sku: Artikelnummer
     status_state: Status
@@ -343,20 +343,20 @@ de_DE:
     cancel: Abrechen
     back: Zurück
     show_more: Mehr zeigen
-    show_n_more: '%{num} mehr zeigen'
+    show_n_more: Zeige %{num} weitere
     choose: "Auswählen ..."
     please_select: Bitte auswählen ...
     column_save_as_default: Als Standard speichern
     columns: Spalten
     actions: Aktionen
-    viewing: "Zeigt: %{current_view_name}"
+    viewing: "%{current_view_name}"
     description: Beschreibung
     whats_this: Was ist das?
     tag_has_rules: "Vorhandene Regeln für dieses Stichwort: %{num}"
     has_one_rule: "hat eine Regel"
     has_n_rules: "hat %{num} Regel(n)"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
-    unsaved_changes: "Sie haben ungespeicherte Änderungen"
+    unsaved_changes: "Sie haben ungespeicherte Änderungen!"
     available_units: "Verfügbare Einheiten"
     shopfront_settings:
       embedded_shopfront_settings: "Eingebettete Ladeneinstellungen"
@@ -459,20 +459,20 @@ de_DE:
         display_as: Angezeigt als
         category: Produktkategorie
         tax_category: Steuerkategorie
-        inherits_properties?: Vererbt Eigenschaften
+        inherits_properties?: Übernimmt Eigenschaften des Ladens?
         available_on: Verfügbar am
         av_on: "Verfüg. am"
         import_date: Importiert
         upload_an_image: Bild hochladen
       seo:
         product_search_keywords: "Stichwörter für die Produktsuche"
-        product_search_tip: "Geben Sie Wörter ein, um Ihre Produkte in den Geschäften zu suchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
-        SEO_keywords: "SEO Schlüsselwörter"
-        seo_tip: "Geben Sie Wörter ein, um Ihre Produkte im Internet zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
+        product_search_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte in den Läden besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
+        SEO_keywords: "Stichwörter für die Suche im Internet"
+        seo_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte im Internet besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
       search: "Suche"
       properties:
         property_name: "Name der Eigenschaft"
-        inherited_property: "Vererbte Eigenschaft"
+        inherited_property: "Übernommene Eigenschaft des Ladens"
       variants:
         infinity: "Unendlichkeit"
         to_order_tip: "Artikel, die auf Bestellung hergestellt werden, haben keinen festgelegten Lagerbestand."
@@ -506,20 +506,20 @@ de_DE:
         unexpected_error: "Beim Produktimport ist beim Öffnen der Datei ein unerwarteter Fehler aufgetreten: %{error_message}"
         malformed_csv: "Beim Produktimport ist eine fehlerhafte CSV aufgetreten: %{error_message}"
       index:
-        notice: "Beachten"
+        notice: "HINWEIS"
         beta_notice: "Diese Funktion befindet sich noch in der Beta-Phase: Während der Verwendung können Fehler auftreten. Bitte zögern Sie nicht, den Support zu kontaktieren."
-        select_file: Wählen Sie eine Tabelle zum Hochladen
+        select_file: 'Wählen Sie eine Tabelle zum Hochladen:'
         spreadsheet: Kalkulationstabelle
-        choose_import_type: Wählen Sie die Importart
+        choose_import_type: 'Wählen Sie die Importart:'
         import_into: Importart
         product_list: Produktliste
         inventories: Kataloge
         import: Importieren
         upload: Hochladen
         csv_templates: CSV Vorlage
-        product_list_template: Laden Sie die Produktlistenvorlage herunter
-        inventory_template: Katalogvorlage herunterladen.
-        category_values: Verfügbare Kategoriewerte
+        product_list_template: Produktlistenvorlage herunterladen
+        inventory_template: Katalogvorlage herunterladen
+        category_values: Verfügbare Kategorien
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Versandkategorien
@@ -541,8 +541,8 @@ de_DE:
         not_found: Unternehmen konnte nicht in der Datenbank gefunden werden
         no_name: Kein Name
         blank_enterprise: Für einige Produkte ist kein Unternehmen definiert
-        reset_absent?: Fehlende Produkte zurücksetzen
-        reset_absent_tip: Den Bestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen
+        reset_absent?: Fehlende Produkte zurücksetzen?
+        reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alles überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -584,22 +584,22 @@ de_DE:
         loading_inventory: KATALOG WIRD GELADEN
       index:
         title: Katalog
-        description: Verwenden Sie diese Seite, um Bestände für Ihre Unternehmen zu verwalten. Alle hier eingestellten Produktdetails überschreiben diejenigen, die auf der Seite "Produkte" eingestellt sind
+        description: Verwenden Sie diese Seite, um die Produktbestände Ihrer Unternehmen zu verwalten. Alle hier eingestellten Produktdetails überschreiben diejenigen, die auf der Seite "Produkte" eingestellt sind.
         enable_reset?: Lagerbestand zurücksetzbar?
         default_stock: "Standardbestand"
-        inherit?: Übernehmen?
+        inherit?: Eigenschaften übernehmen?
         add: Hinzufügen
         hide: Verbergen
         import_date: Importiert
         select_a_shop: Laden wählen
         review_now: Prüfen
-        new_products_alert_message: Es sind %{new_product_count} neue Produkte verfügbar, die in den Katalog aufgenommen werden können
+        new_products_alert_message: Es sind %{new_product_count} neue Produkte verfügbar, die in den Katalog aufgenommen werden können.
         currently_empty: Ihr Katalog ist momentan leer.
         no_matching_products: Es wurden keine passenden Produkte im Katalog gefunden.
-        no_hidden_products: In diesem Katalog wurden keine Produkte ausgeblendet
-        no_matching_hidden_products: Keine ausgeblendeten Produkte entsprechen Ihren Suchkriterien
-        no_new_products: Es sind keine neuen Produkte verfügbar, die zu diesem Katalog hinzugefügt werden können
-        no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien
+        no_hidden_products: In diesem Katalog wurden keine Produkte ausgeblendet.
+        no_matching_hidden_products: Keine ausgeblendeten Produkte entsprechen Ihren Suchkriterien.
+        no_new_products: Es sind keine neuen Produkte verfügbar, die in den Katalog aufgenommen werden könnten.
+        no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien.
         inventory_powertip: Dies ist Ihr Produktkatalog. Um Produkte zu Ihrem Katalog hinzuzufügen, wählen Sie "Neue Produkte" aus dem Dropdown-Menü.
         hidden_powertip: Diese Produkte wurden in Ihrem Katalog ausgeblendet und können nicht zu Ihrem Laden hinzugefügt werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
         new_powertip: Diese Produkte können Ihrem Katalog hinzugefügt werden. Klicken Sie auf "Hinzufügen", um ein Produkt zu Ihrem Katalog hinzuzufügen, oder auf "Verbergen", um es aus der Ansicht auszublenden. Sie können Ihre Meinung später immer ändern!
@@ -706,7 +706,7 @@ de_DE:
           groups_tip: Wählen Sie beliebige Gruppen oder Regionen aus, bei denen Sie Mitglied sind. Dies hilft Kunden, Ihr Unternehmen zu finden.
           groups_placeholder: Beginnen Sie mit der Eingabe, um nach verfügbaren Gruppen zu suchen ...
           primary_producer: Erzeuger?
-          primary_producer_tip: Wählen Sie "Erzeuger", wenn Sie ein Erzeuger von Lebensmitteln sind.
+          primary_producer_tip: Wählen Sie "Erzeuger", wenn Sie eigene Produkte herstellen und diese über das Open Food Network verkaufen möchten.
           producer: Erzeuger
           any: Alle
           none: Keine
@@ -726,10 +726,10 @@ de_DE:
         shipping_methods:
           name: "Name"
           applies: "Aktiv?"
-          manage: "Lieferarten verwalten"
-          create_button: "Neue Lieferart erstellen"
+          manage: "Lieferoptionen verwalten"
+          create_button: "Neue Lieferoption erstellen"
           create_one_button: "Erstelle jetzt eine"
-          no_method_yet: "Sie haben noch keine Lieferarten angelegt."
+          no_method_yet: "Sie haben noch keine Lieferoptionen angelegt."
         shop_preferences:
           shopfront_requires_login: "Öffentlich sichtbarer Laden?"
           shopfront_requires_login_tip: "Wählen Sie aus, ob sich Kunden einloggen müssen, um den Laden zu sehen oder ob er für alle sichtbar ist."
@@ -820,8 +820,8 @@ de_DE:
         properties: Eigenschaften
         payment_methods: Zahlungsarten
         payment_methods_tip: Dieses Unternehmen hat keine Zahlungsarten
-        shipping_methods: Lieferarten
-        shipping_methods_tip: Dieses Unternehmen hat Lieferarten
+        shipping_methods: Lieferoptionen
+        shipping_methods_tip: Dieses Unternehmen hat Lieferoptionen
         enterprise_fees: Unternehmensgebühren
         enterprise_fees_tip: Dieses Unternehmen hat keine Gebühren
       admin_index:
@@ -902,7 +902,7 @@ de_DE:
         incoming: "Eingehend"
         supplier: "Lieferant"
         products: "Produkte"
-        receival_details: "Empfangsdetails"
+        receival_details: "Information an Lieferanten"
         fees: "Gebühren"
         save: "Speichern"
         save_and_next: "Speichern und weiter"
@@ -929,7 +929,7 @@ de_DE:
         pickup_time_tip: Wenn Bestellungen dieses Bestellzylus für den Kunden bereit sind
         pickup_instructions_placeholder: "Abholungsinformationen"
         pickup_instructions_tip: Diese Informationen werden Kunden nach Abschluss einer Bestellung angezeigt
-        pickup_time_placeholder: "Bereit für (d.h. Datum/Uhrzeit)"
+        pickup_time_placeholder: "Fertig am (d.h. Datum/Uhrzeit)"
         receival_instructions_placeholder: "Lieferinformation"
         add_fee: 'Gebühr hinzufügen'
         remove: 'Entfernen'
@@ -967,10 +967,10 @@ de_DE:
         schedules: Zeitpläne
         new_schedule: Neuer Zeitplan
       name_and_timing_form:
-        name: Name
-        orders_open: Bestellzyklus öffnet um
+        name: Name des Bestellzyklus
+        orders_open: Bestellzyklus öffnet
         coordinator: Koordinator
-        orders_close: Bestellungen schließen
+        orders_close: Bestellzyklus schließt
       row:
         suppliers: Lieferanten
         distributors: Verteiler
@@ -1009,10 +1009,10 @@ de_DE:
     enterprise_issues:
       create_new: Erstellen
       resend_email: E-Mail erneut senden
-      has_no_payment_methods: "%{enterprise}hat derzeit keine Zahlungsarten"
-      has_no_shipping_methods: "%{enterprise} hat derzeit keine Versandarten"
+      has_no_payment_methods: "%{enterprise}hat derzeit keine Zahlungsarten!"
+      has_no_shipping_methods: "%{enterprise} hat derzeit keine Versandarten!"
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
-      not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden"
+      not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden!"
     reports:
       hidden: Ausgeblendet
       unitsize: EINHEIT
@@ -1194,7 +1194,7 @@ de_DE:
         edit_cart: "Warenkorb bearbeiten"
         items_in_cart_singular: "%{num} Artikel in Ihrem Warenkorb"
         items_in_cart_plural: "%{num} Artikel in Ihrem Warenkorb"
-        close: "Abschließen"
+        close: "Schließen"
         cart_empty: "Ihr Warenkorb ist leer"
         take_me_shopping: "Bring mich einkaufen!"
       signed_in:
@@ -1314,7 +1314,7 @@ de_DE:
   on_demand: Auf Anfrage
   none: Keine
   not_allowed: Nicht erlaubt
-  no_shipping: keine Lieferarten
+  no_shipping: keine Lieferoptionen
   no_payment: keine Zahlungsarten
   no_shipping_or_payment: keine Versand- oder Zahlungsarten
   unconfirmed: unbestätigt
@@ -1572,7 +1572,7 @@ de_DE:
   shopping_producers_of_hub: "Erzeuger bei %{hub}:"
   enterprises_next_closing: "Nächster Bestellschluss"
   enterprises_currently_open: "Bestellzyklus ist geöffnet"
-  enterprises_ready_for: "Fertig am"
+  enterprises_ready_for: "Bereit am"
   enterprises_choose: "Wählen Sie, wann Sie Ihre Bestellung wollen:"
   maps_open: "Offen"
   maps_closed: "Geschlossen"
@@ -1580,13 +1580,13 @@ de_DE:
   hubs_shopping_here: "Sie kaufen hier ein"
   hubs_orders_closed: "Bestellzyklus geschlossen"
   hubs_profile_only: "nur Profil"
-  hubs_delivery_options: "Lieferarten"
+  hubs_delivery_options: "Lieferoptionen"
   hubs_pickup: "Abholen"
   hubs_delivery: "Lieferung"
   hubs_producers: "Unsere Produzenten"
   hubs_filter_by: "Filtern nach"
   hubs_filter_type: "Art"
-  hubs_filter_delivery: "Lieferarten"
+  hubs_filter_delivery: "Lieferoptionen"
   hubs_filter_property: "Eigenschaften"
   hubs_matches: "Meintest Du?"
   hubs_intro: Regional einkaufen
@@ -1866,7 +1866,7 @@ de_DE:
         headline: "Letzter Schritt zum Hinzufügen von %{enterprise}!"
         question: "Sind Sie ein Produzent?"
         yes_producer: "Ja, ich bin ein Produzent."
-        no_producer: "Nein, ich bin kein Produzent"
+        no_producer: "Nein, ich bin kein Produzent."
         producer_field_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
         yes_producer_help: "Die Produzenten stellen leckere Lebensmittel und/oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
         no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Coop, eine Einkaufsgruppe, Einzelhändler, ein Hofladen, Großhändler oder Vergleichbares sein."
@@ -1938,7 +1938,7 @@ de_DE:
   continue: "Fortsetzen"
   action_or: "ODER"
   enterprise_limit: Enterprise Limit
-  shipping_method_destroy_error: "Diese Lieferart kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
+  shipping_method_destroy_error: "Diese Lieferoption kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
   fees: "Gebühren"
   item_cost: "Gegenstandskosten"
   bulk: "Bulk"
@@ -2000,9 +2000,9 @@ de_DE:
   admin_enterprise_groups_web: "Webressourcen"
   admin_enterprise_groups_web_twitter: "z.B. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "z.B. www.truffles.com"
-  admin_order_cycles: "Admin-Bestellzyklen"
+  admin_order_cycles: "Bestellzyklen verwalten"
   open: "Öffnen"
-  close: "Abschließen"
+  close: "Schließen"
   create: "Neu"
   search: "Suche"
   supplier: "Lieferant"
@@ -2016,7 +2016,7 @@ de_DE:
   enterprise_fees: "Zuschläge"
   process_my_order: "Verarbeite meine Bestellung"
   delivery_instructions: Lieferanleitungen
-  delivery_method: Lieferart
+  delivery_method: Lieferoption
   fee_type: "Art der Gebühr"
   tax_category: "Steuerkategorie"
   description: "Beschreibung"
@@ -2062,7 +2062,7 @@ de_DE:
   spree_admin_overview_enterprises_footer: "VERWALTEN SIE MEINE UNTERNEHMEN"
   spree_admin_enterprises_hubs_name: "Name"
   spree_admin_enterprises_create_new: "neu erstellen"
-  spree_admin_enterprises_shipping_methods: "Lieferarten"
+  spree_admin_enterprises_shipping_methods: "Lieferoptionen"
   spree_admin_enterprises_fees: "Zuschläge"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen"
@@ -2170,7 +2170,7 @@ de_DE:
   report_header_paid: Bezahlt?
   report_header_delivery: Lieferung?
   report_header_shipping: Lieferung
-  report_header_shipping_method: Lieferart
+  report_header_shipping_method: Lieferoption
   report_header_shipping_instructions: Versand-Anweisungen
   report_header_ship_street: Liefer-Straße
   report_header_ship_street_2: Liefer-Straße 2
@@ -2315,12 +2315,14 @@ de_DE:
   business_details: "Geschäftsdetails"
   properties: "Eigenschaften"
   shipping: "Versand"
-  shipping_methods: "Lieferart"
+  shipping_methods: "Lieferoption"
   payment_methods: "Zahlungsarten"
   payment_method_fee: "Transaktionsgebühr"
   payment_processing_failed: "Die Zahlung konnte nicht verarbeitet werden. Bitte überprüfen Sie die eingegebenen Daten"
   payment_method_not_supported: "Diese Zahlungsart wird nicht unterstützt. Bitte wählen Sie eine andere."
   payment_updated: "Zahlung wurde aktualisiert"
+  cannot_perform_operation: "Die Zahlung konnte nicht aktualisiert werden."
+  action_required: "Handlung erforderlich"
   inventory_settings: "Katalogeinstellungen"
   tag_rules: "Stichwortregeln"
   shop_preferences: "Ladeneinstellungen"
@@ -2488,7 +2490,7 @@ de_DE:
           producer_shop_text2: >
               Ein Erzeugerladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie
               Produkte anderer verkaufen möchten, wählen Sie "Hub".
-          producer_hub: Produzent Hub
+          producer_hub: Erzeugerladen
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Erzeuger oder Läden
               im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
@@ -2532,7 +2534,7 @@ de_DE:
           status_title: "%{name} ist eingerichtet und bereit zu gehen!"
           severity: Schwere
           description: Beschreibung
-          resolve: Entschlossenheit
+          resolve: Lösung
         exchange_products:
           load_more_variants: "Weitere Varianten laden"
           load_all_variants: "Alle Varianten laden"
@@ -2552,7 +2554,7 @@ de_DE:
         select_rule_type: "Wählen Sie einen Regelart aus:"
         add_rule: "Regel hinzufügen"
       enterprise_fees:
-        inherit_from_product: "Vom Produkt erben"
+        inherit_from_product: "Vom Produkt übernehmen"
       orders:
         index:
           per_page: "%{results} pro Seite"
@@ -2594,6 +2596,8 @@ de_DE:
           processing: "Prozess läuft"
           void: "Angabe fehlt"
           invalid: "ungültig"
+        quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
+        quantity_unchanged: "Menge wurde nicht geändert."
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Erneut senden ..."
@@ -2655,25 +2659,25 @@ de_DE:
         'yes': "Auf Anfrage"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Verwenden Sie die Einstellungen des Produzentenbestands"
+        use_producer_settings: "Einstellungen des Produzentenbestands verwenden"
         'yes': "Ja"
         'no': "Nein"
       inventory_products: "Katalogprodukte"
-      hidden_products: "Ausgeblendete Produkte"
+      hidden_products: "Verborgene Produkte"
       new_products: "Neue Produkte"
-      reset_stock_levels: Zurücksetzen der Bestandswerte auf Standardwerte
+      reset_stock_levels: Lagerbestände auf Standardbestände zurücksetzen
       changes_to: Änderungen an
       one_override: ein Override
       overrides: überschreibt
       remain_unsaved: bleiben ungespeichert.
       no_changes_to_save: Keine Änderungen zum Speichern.
-      no_authorisation: "Ich konnte keine Berechtigung zum Speichern dieser Änderungen erhalten, sodass sie nicht gespeichert werden."
-      some_trouble: "Ich hatte Probleme beim Speichern: %{errors}"
+      no_authorisation: "Keine Berechtigung zum Speichern dieser Änderungen. Änderungen werden nicht gespeichert."
+      some_trouble: "Probleme beim Speichern: %{errors}"
       changing_on_hand_stock: Änderung der Lagerbestände ...
-      stock_reset: Aktien werden auf Standardwerte zurückgesetzt.
+      stock_reset: Lagerbestände werden auf Standardwerte zurückgesetzt.
     tag_rules:
       show_hide_variants: 'Produktvarianten im Laden anzeigen?'
-      show_hide_shipping: 'Lieferarten an der Kasse anzeigen?'
+      show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
       show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
       show_hide_order_cycles: 'Bestellzyklen in meinem Laden anzeigen?'
       visible: SICHTBAR
@@ -2991,8 +2995,8 @@ de_DE:
     taxonomies: "Taxonomien"
     new_taxonomy: "Neue Taxonomie"
     back_to_taxonomies_list: "Zurück zur Taxonomieliste"
-    shipping_methods: "Lieferart"
-    shipping_method: "Lieferart"
+    shipping_methods: "Lieferoption"
+    shipping_method: "Lieferoption"
     shipping_categories: "Versandkategorien"
     new_shipping_category: "Neue Versandkategorie"
     back_to_shipping_categories: "Zurück zu den Versandkategorien"
@@ -3093,7 +3097,7 @@ de_DE:
         groups: "Gruppen"
       product_properties:
         index:
-          inherits_properties_checkbox_hint: "Vererben Eigenschaften von %{supplier}? (außer oben aufgehoben)"
+          inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (außer oben überschrieben)?"
           add_product_properties: "Produkteigenschaften hinzufügen"
       properties:
         index:
@@ -3202,7 +3206,7 @@ de_DE:
           manage_order_cycles: "BESTELLZYKLEN VERWALTEN"
       shipping_methods:
         index:
-          shipping_methods: "Lieferart"
+          shipping_methods: "Lieferoption"
           new_shipping_method: "Neue Versandart"
           name: "Name"
           products_distributor: "Verteiler"
@@ -3310,7 +3314,7 @@ de_DE:
         unit_name_placeholder: 'z.B. Trauben'
         index:
           header:
-            title: Massenbearbeitung von Produkten
+            title: Produktliste verwalten
           indicators:
             title: LADE PRODUKTE
             no_products: "Bisher gibt es noch keine Produkte. Warum fügen Sie nicht einige hinzu?"
@@ -3321,7 +3325,7 @@ de_DE:
             display_as: Angezeigt als
             category: Kategorie
             tax_category: Steuerkategorie
-            inherits_properties?: Vererbt Eigenschaften
+            inherits_properties?: Übernimmt Eigenschaften des Ladens?
             available_on: Verfügbar am
             av_on: "Verfüg. am"
             import_date: "Importdatum"
@@ -3333,7 +3337,7 @@ de_DE:
           product_category: Produktkategorie
         group_buy_form:
           group_buy: "Gruppenkauf?"
-          bulk_unit_size: Größe der Masseneinheit
+          bulk_unit_size: Erforderliche Menge (in Gramm, Liter oder Stück)
         display_as:
           display_as: Darstellen als
       reports:
@@ -3370,15 +3374,15 @@ de_DE:
         index:
           sku: "Artikelnummer"
           price: "Preis"
-          options: "Optionen"
+          options: "Varianten"
           no_results: "Keine Ergebnisse"
           to_add_variants_you_must_first_define: "Um Varianten hinzuzufügen, müssen Sie zuerst definieren"
           option_types: "Optionstypen"
           option_values: "Optionswerte"
           and: "und"
           new_variant: "Neue Variante"
-          show_active: "Aktiv anzeigen"
-          show_deleted: "Show gelöscht"
+          show_active: "Zeige Aktive"
+          show_deleted: "Zeige Gelöschte"
         new:
           new_variant: "Neue Variante"
         form:
@@ -3386,7 +3390,7 @@ de_DE:
           sku: "Artikelnummer"
           price: "Preis"
           display_as: "Angezeigt als"
-          display_name: "Anzeigename"
+          display_name: "Variantenname"
           display_as_placeholder: 'z.B. 2 kg'
           display_name_placeholder: 'z.B. Tomaten'
         autocomplete:
@@ -3483,6 +3487,10 @@ de_DE:
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
         subject: "Bitte bestätigen Sie Ihre Anmeldung bei Open Food Network DE!"
+    payment_mailer:
+      authorize_payment:
+        subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network."
+        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert eine zusätzliche Authentifizierung. Bitte besuchen Sie die folgende URL, um Ihre Zahlung zu bestätigen:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Sehr geehrte Kundin, sehr geehrter Kunde,"
