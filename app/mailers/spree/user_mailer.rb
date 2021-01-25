@@ -6,8 +6,7 @@ module Spree
 
     # Overrides `Devise::Mailer.reset_password_instructions`
     def reset_password_instructions(user, token, _opts = {})
-      @edit_password_reset_url = spree.
-        edit_spree_user_password_url(reset_password_token: token)
+      @edit_password_reset_url = main_app.edit_spree_user_password_url(reset_password_token: token)
       subject = "#{Spree::Config[:site_name]} " \
         "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
 
