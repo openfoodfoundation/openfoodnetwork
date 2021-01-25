@@ -3,6 +3,8 @@
 # Provides the redirect path if a redirect to the payment gateway is needed
 module Checkout
   class PaypalRedirect
+    include Rails.application.routes.url_helpers
+
     def initialize(params)
       @params = params
     end
