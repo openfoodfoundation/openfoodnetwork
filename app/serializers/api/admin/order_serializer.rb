@@ -29,13 +29,13 @@ module Api
       def edit_path
         return '' unless object.id
 
-        spree_routes_helper.edit_admin_order_path(object)
+        edit_admin_order_path(object)
       end
 
       def payments_path
         return '' unless object.payment_state
 
-        spree_routes_helper.admin_order_payments_path(object)
+        admin_order_payments_path(object)
       end
 
       def ready_to_capture
@@ -65,12 +65,6 @@ module Api
 
       def completed_at
         object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: '%B %d, %Y')
-      end
-
-      private
-
-      def spree_routes_helper
-        Spree::Core::Engine.routes.url_helpers
       end
     end
   end
