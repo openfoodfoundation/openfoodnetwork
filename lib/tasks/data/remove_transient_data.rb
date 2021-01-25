@@ -15,5 +15,14 @@ class RemoveTransientData
     Spree::StateChange.where("created_at < ?", RETENTION_PERIOD).delete_all
     Spree::LogEntry.where("created_at < ?", RETENTION_PERIOD).delete_all
     Session.where("updated_at < ?", RETENTION_PERIOD).delete_all
+
+    # Clear old carts and associated records
+    old_carts = Spree::Order.where("state = 'cart' AND updated_at < ?", RETENTION_PERIOD)
+    old_cart_line_items = Spree::LineItem.where(order_id: old_carts)
+    old_cart_adjustments = Spree::Adjustment.where(order_id: old_carts)
+
+    old_cart_adjustments.delete_all
+    old_cart_line_items.delete_all
+    old_carts.delete_all
   end
 end
