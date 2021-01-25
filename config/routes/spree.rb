@@ -1,25 +1,25 @@
 Openfoodnetwork::Application.routes.draw do
+  devise_for :spree_user,
+             :class_name => 'Spree::User',
+             :controllers => { :sessions => 'spree/user_sessions',
+                               :registrations => 'user_registrations',
+                               :passwords => 'user_passwords',
+                               :confirmations => 'user_confirmations'},
+             :skip => [:unlocks, :omniauth_callbacks],
+             :path_names => { :sign_out => 'logout' },
+             :path_prefix => :user
+
+  devise_scope :spree_user do
+    post '/login' => 'user_sessions#create', :as => :create_new_session
+    get '/logout' => 'user_sessions#destroy', :as => :logout
+    get '/password/recover' => 'user_passwords#new', :as => :recover_password
+    post '/password/recover' => 'user_passwords#create', :as => :reset_password
+    get '/password/change' => 'user_passwords#edit', :as => :edit_password
+    put '/password/change' => 'user_passwords#update', :as => :update_password
+  end
+
   scope module: 'spree' do
-    devise_for :spree_user,
-               :class_name => 'Spree::User',
-               :controllers => { :sessions => 'spree/user_sessions',
-                                 :registrations => 'user_registrations',
-                                 :passwords => 'user_passwords',
-                                 :confirmations => 'user_confirmations'},
-               :skip => [:unlocks, :omniauth_callbacks],
-               :path_names => { :sign_out => 'logout' },
-               :path_prefix => :user
-
     resources :users, :only => [:edit, :update]
-
-    devise_scope :spree_user do
-      post '/login' => 'user_sessions#create', :as => :create_new_session
-      get '/logout' => 'user_sessions#destroy', :as => :logout
-      get '/password/recover' => 'user_passwords#new', :as => :recover_password
-      post '/password/recover' => 'user_passwords#create', :as => :reset_password
-      get '/password/change' => 'user_passwords#edit', :as => :edit_password
-      put '/password/change' => 'user_passwords#update', :as => :update_password
-    end
 
     resource :account, :controller => 'users'
 
