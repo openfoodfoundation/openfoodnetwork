@@ -2,8 +2,8 @@ input.datetimepicker {
   min-width: 12.9em;
 }
 
-.container input[readonly].flatpickr-input {
-  background-color: #ffffff;
+.container .flatpickr-input {
+  background-color: $white;
   cursor: pointer;
 }
 
