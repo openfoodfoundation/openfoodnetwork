@@ -9,7 +9,7 @@ describe Admin::TagRulesController, type: :controller do
 
       let(:enterprise) { create(:distributor_enterprise) }
       let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
-      let(:params) { { format: format, id: tag_rule.id } }
+      let(:params) { { format: format, id: tag_rule.id, enterprise_id: enterprise.id } }
 
       context "where I don't manage the tag rule enterprise" do
         let(:user) { create(:user) }
