@@ -42,13 +42,13 @@ module Api
     end
 
     def path
-      spree_order_path(object)
+      order_path(object)
     end
 
     def cancel_path
       return nil unless object.changes_allowed?
 
-      cancel_spree_order_path(object)
+      cancel_order_path(object)
     end
 
     def changes_allowed
