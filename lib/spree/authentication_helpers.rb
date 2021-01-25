@@ -14,6 +14,8 @@ module Spree
       main_app.login_path
     end
 
-    delegate :logout_path, to: :spree, prefix: true
+    def spree_logout_path
+      main_app.logout_path
+    end
   end
 end
