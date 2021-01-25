@@ -155,7 +155,7 @@ describe Api::VariantsController, type: :controller do
     it "doesn't delete the only variant of the product" do
       product = create(:product)
       variant = product.variants.first
-      delete :destroy, id: variant.to_param
+      api_delete :destroy, id: variant.to_param
 
       expect(variant.reload).to_not be_deleted
       expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
