@@ -1,5 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
-  namespace :spree do
+  scope module: 'spree' do
     resources :orders do
       get :clear, :on => :collection
       get :order_cycle_expired, :on => :collection
