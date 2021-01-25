@@ -3,12 +3,25 @@
 module Api
   class ShopsController < BaseController
     respond_to :json
-    skip_authorization_check only: [:show, :closed_shops]
+    skip_authorization_check only: [:show, :open_shops, :closed_shops]
 
     def show
       enterprise = Enterprise.find_by(id: params[:id])
 
       render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
+    end
+
+    def open_shops
+      @active_distributor_ids = []
+      @earliest_closing_times = []
+
+      serialized_open_shops = ActiveModel::ArraySerializer.new(
+        ShopsListService.new.open_shops,
+        each_serializer: Api::EnterpriseSerializer,
+        data: OpenFoodNetwork::EnterpriseInjectionData.new
+      )
+
+      render json: serialized_shops
     end
 
     def closed_shops
