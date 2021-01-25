@@ -18,7 +18,7 @@ describe EnterprisesController, type: :controller do
     end
 
     it "sets the shop as the distributor on the order when shopping for the distributor" do
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
 
       expect(controller.current_distributor).to eq(distributor)
       expect(controller.current_order.distributor).to eq(distributor)
@@ -29,7 +29,7 @@ describe EnterprisesController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "sets the shop as the distributor on the order when shopping for the distributor" do
-        spree_get :shop, id: distributor
+        get :shop, id: distributor
 
         expect(controller.current_distributor).to eq(distributor)
         expect(controller.current_order.distributor).to eq(distributor)
@@ -39,11 +39,11 @@ describe EnterprisesController, type: :controller do
 
     it "sorts order cycles by the distributor's preferred ordering attr" do
       distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_close_at')
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
       expect(assigns(:order_cycles)).to eq([order_cycle1, order_cycle2].sort_by(&:orders_close_at))
 
       distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_open_at')
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
       expect(assigns(:order_cycles)).to eq([order_cycle1, order_cycle2].sort_by(&:orders_open_at))
     end
 
@@ -64,23 +64,23 @@ describe EnterprisesController, type: :controller do
                preferred_exchange_tags: "wholesale",
                preferred_matched_order_cycles_visibility: 'hidden')
 
-        spree_get :shop, id: distributor
+        get :shop, id: distributor
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
 
         allow(controller).to receive(:spree_current_user) { user }
 
-        spree_get :shop, id: distributor
+        get :shop, id: distributor
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
 
         oc3_exchange.update_attribute(:tag_list, "wholesale")
 
-        spree_get :shop, id: distributor
+        get :shop, id: distributor
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2
         expect(assigns(:order_cycles)).not_to include order_cycle3
 
         customer.update_attribute(:tag_list, ["wholesale"])
 
-        spree_get :shop, id: distributor
+        get :shop, id: distributor
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
       end
     end
@@ -89,7 +89,7 @@ describe EnterprisesController, type: :controller do
       line_item = create(:line_item)
       controller.current_order.line_items << line_item
 
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
 
       expect(controller.current_order.distributor).to eq(distributor)
       expect(controller.current_order.order_cycle).to be_nil
@@ -97,7 +97,7 @@ describe EnterprisesController, type: :controller do
     end
 
     it "should not empty an order if returning to the same distributor" do
-      spree_get :shop, id: current_distributor
+      get :shop, id: current_distributor
 
       expect(controller.current_order.distributor).to eq current_distributor
       expect(controller.current_order.line_items.first.variant).to eq line_item.variant
@@ -117,7 +117,7 @@ describe EnterprisesController, type: :controller do
       end
 
       it "redirects to the cart" do
-        spree_get :shop, id: current_distributor
+        get :shop, id: current_distributor
 
         expect(response).to redirect_to cart_path
       end
@@ -129,7 +129,7 @@ describe EnterprisesController, type: :controller do
       order.save
       order_cycle1.update_attribute :orders_close_at, Time.zone.now
 
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
 
       expect(controller.current_order.distributor).to eq(distributor)
       expect(controller.current_order.order_cycle).to eq(order_cycle2)
@@ -139,7 +139,7 @@ describe EnterprisesController, type: :controller do
     it "sets order cycle if only one is available at the chosen distributor" do
       order_cycle2.destroy
 
-      spree_get :shop, id: distributor
+      get :shop, id: distributor
 
       expect(controller.current_order.distributor).to eq(distributor)
       expect(controller.current_order.order_cycle).to eq(order_cycle1)
@@ -155,7 +155,7 @@ describe EnterprisesController, type: :controller do
     end
 
     it "responds with status of 409 when the permalink matches an existing route" do
-      # spree_get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
+      # get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
       # expect(response.status).to be 409
       xhr :get, :check_permalink, permalink: 'map', format: :js
       expect(response.status).to be 409
@@ -166,7 +166,7 @@ describe EnterprisesController, type: :controller do
 
   context "checking access on nonexistent enterprise" do
     before do
-      spree_get :shop, id: "some_nonexistent_enterprise"
+      get :shop, id: "some_nonexistent_enterprise"
     end
 
     it "redirects to shops_path" do

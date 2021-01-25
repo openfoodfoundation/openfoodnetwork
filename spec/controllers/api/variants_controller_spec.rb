@@ -26,7 +26,7 @@ describe Api::VariantsController, type: :controller do
     end
 
     it "retrieves a list of variants with appropriate attributes" do
-      spree_get :index, format: :json
+      get :index, format: :json
 
       keys = json_response.first.keys.map(&:to_sym)
       expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
