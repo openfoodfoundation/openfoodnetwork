@@ -34,8 +34,8 @@ module Spree
         expect(return_authorization.reason.to_s).to eq "broken"
 
         # Update return authorization
-        put :update, id: return_authorization.id,
-                           return_authorization: { amount: "10.2", reason: "half broken" }
+        put :update, order_id: order.id, id: return_authorization.id,
+                     return_authorization: { amount: "10.2", reason: "half broken" }
 
         expect(response).to redirect_to admin_order_return_authorizations_url(order.number)
         return_authorization.reload
