@@ -6,7 +6,7 @@ module Spree
 
         respond_to do |format|
           format.html {
-            redirect_to spree.edit_admin_tax_settings_path
+            redirect_to main_app.edit_admin_tax_settings_path
           }
         end
       end

@@ -21,7 +21,7 @@ feature '
 
   context "as anonymous user" do
     it "is redirected to login page when attempting to access product listing" do
-      expect { visit spree.admin_products_path }.not_to raise_error
+      expect { visit main_app.admin_products_path }.not_to raise_error
     end
   end
 
@@ -48,7 +48,7 @@ feature '
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq main_app.admin_products_path
       expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
       product = Spree::Product.find_by(name: 'A new product !!!')
       expect(product.supplier).to eq(@supplier)
@@ -69,7 +69,7 @@ feature '
     end
 
     scenario "creating an on-demand product", js: true do
-      login_as_admin_and_visit spree.admin_products_path
+      login_as_admin_and_visit main_app.admin_products_path
 
       click_link 'New Product'
 
@@ -86,7 +86,7 @@ feature '
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq main_app.admin_products_path
       product = Spree::Product.find_by(name: 'Hot Cakes')
       expect(product.variants.count).to eq(1)
       variant = product.variants.first
@@ -94,7 +94,7 @@ feature '
     end
 
     scenario "creating product with empty unit value", js: true do
-      login_as_admin_and_visit spree.admin_products_path
+      login_as_admin_and_visit main_app.admin_products_path
 
       click_link 'New Product'
 
@@ -110,7 +110,7 @@ feature '
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.admin_products_path
+      expect(current_path).to eq main_app.admin_products_path
       expect(page).to have_content "Unit value can't be blank"
     end
   end
@@ -134,7 +134,7 @@ feature '
     context "products do not require a tax category" do
       scenario "creating a new product", js: true do
         with_products_require_tax_category(false) do
-          visit spree.admin_products_path
+          visit main_app.admin_products_path
           click_link 'New Product'
 
           fill_in 'product_name', with: 'A new product !!!'
@@ -164,7 +164,7 @@ feature '
     scenario "editing a product" do
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
-      visit spree.edit_admin_product_path product
+      visit main_app.edit_admin_product_path product
 
       select 'Permitted Supplier', from: 'product_supplier_id'
       select tax_category.name, from: 'product_tax_category_id'
@@ -178,43 +178,43 @@ feature '
     scenario "editing a product comming from the bulk product update page with filter" do
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
-      visit spree.edit_admin_product_path(product, filter)
+      visit main_app.edit_admin_product_path(product, filter)
 
       click_button 'Update'
       expect(flash_message).to eq('Product "a product" has been successfully updated!')
 
       # Check the url still includes the filters
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.edit_admin_product_path(product, filter)
 
       # Link back to the bulk product update page should include the filters
-      expected_admin_product_url = Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
+      expected_admin_product_url = Regexp.new(Regexp.escape("#{main_app.admin_products_path}#?#{filter.to_query}"))
       expect(page).to have_link(I18n.t('admin.products.back_to_products_list'), href: expected_admin_product_url)
       expect(page).to have_link(I18n.t(:cancel), href: expected_admin_product_url)
 
-      expected_product_url = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product.permalink, filter)))
+      expected_product_url = Regexp.new(Regexp.escape(main_app.edit_admin_product_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t('admin.products.tabs.product_details'), href: expected_product_url)
 
-      expected_product_image_url = Regexp.new(Regexp.escape(spree.admin_product_images_path(product.permalink, filter)))
+      expected_product_image_url = Regexp.new(Regexp.escape(main_app.admin_product_images_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t('admin.products.tabs.images'), href: expected_product_image_url)
 
-      expected_product_variant_url = Regexp.new(Regexp.escape(spree.admin_product_variants_path(product.permalink, filter)))
+      expected_product_variant_url = Regexp.new(Regexp.escape(main_app.admin_product_variants_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t('admin.products.tabs.variants'), href: expected_product_variant_url)
 
-      expected_product_properties_url = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(product.permalink, filter)))
+      expected_product_properties_url = Regexp.new(Regexp.escape(main_app.admin_product_product_properties_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t('admin.products.tabs.product_properties'), href: expected_product_properties_url)
 
-      expected_product_group_buy_option_url = Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(product.permalink, filter)))
+      expected_product_group_buy_option_url = Regexp.new(Regexp.escape(main_app.group_buy_options_admin_product_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t('admin.products.tabs.group_buy_options'), href: expected_product_group_buy_option_url)
 
-      expected_product_seo_url = Regexp.new(Regexp.escape(spree.seo_admin_product_path(product.permalink, filter)))
+      expected_product_seo_url = Regexp.new(Regexp.escape(main_app.seo_admin_product_path(product.permalink, filter)))
       expect(page).to have_link(I18n.t(:search), href: expected_product_seo_url)
     end
 
     scenario "editing product group buy options" do
       product = product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.edit_admin_product_path product
+      visit main_app.edit_admin_product_path product
       within('#sidebar') { click_link 'Group Buy Options' }
       choose('product_group_buy_1')
       fill_in 'Bulk unit size', with: '10'
@@ -230,28 +230,28 @@ feature '
     scenario "loading editing product group buy options with url filters" do
       product = product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.group_buy_options_admin_product_path(product, filter)
+      visit main_app.group_buy_options_admin_product_path(product, filter)
 
-      expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product, filter)))
+      expected_cancel_link = Regexp.new(Regexp.escape(main_app.edit_admin_product_path(product, filter)))
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
     scenario "editing product group buy options with url filter" do
       product = product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.group_buy_options_admin_product_path(product, filter)
+      visit main_app.group_buy_options_admin_product_path(product, filter)
       choose('product_group_buy_1')
       fill_in 'Bulk unit size', with: '10'
 
       click_button 'Update'
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.edit_admin_product_path(product, filter)
     end
 
     scenario "editing product Search" do
       product = create(:simple_product, supplier: @supplier2)
-      visit spree.edit_admin_product_path product
+      visit main_app.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
       fill_in 'Product Search Keywords', with: 'Product Search Keywords'
       fill_in 'Notes', with: 'Just testing Notes'
@@ -265,16 +265,16 @@ feature '
     scenario "loading editing product Search with url filters" do
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.seo_admin_product_path(product, filter)
+      visit main_app.seo_admin_product_path(product, filter)
 
-      expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product, filter)))
+      expected_cancel_link = Regexp.new(Regexp.escape(main_app.edit_admin_product_path(product, filter)))
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
     scenario "editing product Search with url filter" do
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.seo_admin_product_path(product, filter)
+      visit main_app.seo_admin_product_path(product, filter)
 
       fill_in 'Product Search Keywords', with: 'Product Search Keywords'
       fill_in 'Notes', with: 'Just testing Notes'
@@ -282,18 +282,18 @@ feature '
       click_button 'Update'
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.edit_admin_product_path(product, filter)
     end
 
     scenario "loading product properties page including url filters", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      visit spree.admin_product_product_properties_path(product, filter)
+      visit main_app.admin_product_product_properties_path(product, filter)
 
       uri = URI.parse(current_url)
       # we stay on the same url as the new image content is loaded via an ajax call
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_product_properties_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_product_properties_path(product, filter)
 
-      expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(product, filter)))
+      expected_cancel_link = Regexp.new(Regexp.escape(main_app.admin_product_product_properties_path(product, filter)))
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
@@ -303,7 +303,7 @@ feature '
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
-      visit spree.admin_product_product_properties_path(product)
+      visit main_app.admin_product_product_properties_path(product)
       expect(page).to have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
       expect(page).to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
@@ -325,7 +325,7 @@ feature '
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
-      visit spree.admin_product_product_properties_path(product, filter)
+      visit main_app.admin_product_product_properties_path(product, filter)
 
       # And I delete the property
       accept_alert do
@@ -333,7 +333,7 @@ feature '
       end
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_product_properties_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_product_properties_path(product, filter)
     end
 
     scenario "adding product properties including url filters", js: true do
@@ -342,7 +342,7 @@ feature '
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
-      visit spree.admin_product_product_properties_path(product, filter)
+      visit main_app.admin_product_product_properties_path(product, filter)
 
       # And I add a property
       select 'fooprop', from: 'product_product_properties_attributes_0_property_name'
@@ -351,13 +351,13 @@ feature '
       click_button 'Update'
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.edit_admin_product_path(product, filter)
     end
 
     scenario "loading new product image page", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.admin_product_images_path(product)
+      visit main_app.admin_product_images_path(product)
       expect(page).to have_selector ".no-objects-found"
 
       page.find('a#new_image_link').click
@@ -367,15 +367,15 @@ feature '
     scenario "loading new product image page including url filters", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
       page.find('a#new_image_link').click
 
       uri = URI.parse(current_url)
       # we stay on the same url as the new image content is loaded via an ajax call
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_images_path(product, filter)
 
-      expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product, filter)))
+      expected_cancel_link = Regexp.new(Regexp.escape(main_app.admin_product_images_path(product, filter)))
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
@@ -383,7 +383,7 @@ feature '
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
       page.find('a#new_image_link').click
 
@@ -391,15 +391,15 @@ feature '
       click_button "Update"
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_images_path(product, filter)
     end
 
     scenario "loading image page including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
-      expected_new_image_link = Regexp.new(Regexp.escape(spree.new_admin_product_image_path(product, filter)))
+      expected_new_image_link = Regexp.new(Regexp.escape(main_app.new_admin_product_image_path(product, filter)))
       expect(page).to have_link(I18n.t('spree.new_image'), href: expected_new_image_link)
     end
 
@@ -408,14 +408,14 @@ feature '
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       image_object = Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
       page.find("a.icon-edit").click
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_image_path(product, image_object, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.edit_admin_product_image_path(product, image_object, filter)
 
-      expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product, filter)))
+      expected_cancel_link = Regexp.new(Regexp.escape(main_app.admin_product_images_path(product, filter)))
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
       expect(page).to have_link("Back To Images List", href: expected_cancel_link)
     end
@@ -427,7 +427,7 @@ feature '
 
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
       page.find("a.icon-edit").click
 
@@ -435,7 +435,7 @@ feature '
       click_button "Update"
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_images_path(product, filter)
     end
 
     scenario "deleting product images", js: true do
@@ -443,7 +443,7 @@ feature '
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
-      visit spree.admin_product_images_path(product)
+      visit main_app.admin_product_images_path(product)
       expect(page).to have_selector "table.index td img"
       expect(product.reload.images.count).to eq 1
 
@@ -460,20 +460,20 @@ feature '
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
-      visit spree.admin_product_images_path(product, filter)
+      visit main_app.admin_product_images_path(product, filter)
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.admin_product_images_path(product, filter)
     end
 
     scenario "editing a product's variant unit scale", js: true do
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
-      visit spree.edit_admin_product_path product
+      visit main_app.edit_admin_product_path product
       select 'Weight (kg)', from: 'product_variant_unit_with_scale'
       click_button 'Update'
       expect(flash_message).to eq('Product "a product" has been successfully updated!')

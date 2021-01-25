@@ -37,7 +37,7 @@ feature '
           before { stub_successful_capture_request order: order }
 
           it "adds a payment with state complete" do
-            login_as_admin_and_visit spree.new_admin_order_payment_path order
+            login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
             fill_in_card_details_in_backoffice
@@ -54,7 +54,7 @@ feature '
           before { stub_failed_capture_request order: order, response: { message: error_message } }
 
           it "fails to add a payment due to card error" do
-            login_as_admin_and_visit spree.new_admin_order_payment_path order
+            login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
             fill_in "payment_amount", with: order.total.to_s
             fill_in_card_details_in_backoffice
@@ -74,7 +74,7 @@ feature '
         end
 
         it "fails to add a payment due to card error" do
-          login_as_admin_and_visit spree.new_admin_order_payment_path order
+          login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
           fill_in "payment_amount", with: order.total.to_s
           fill_in_card_details_in_backoffice
@@ -98,7 +98,7 @@ feature '
       end
 
       it "adds a payment with state complete" do
-        login_as_admin_and_visit spree.new_admin_order_payment_path order
+        login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
         fill_in "payment_amount", with: order.total.to_s
         fill_in_card_details_in_backoffice
@@ -117,7 +117,7 @@ feature '
     end
 
     it "renders the payment details" do
-      login_as_admin_and_visit spree.admin_order_payments_path order
+      login_as_admin_and_visit main_app.admin_order_payments_path order
 
       page.click_link("StripeSCA")
       expect(page).to have_content order.payments.last.source.last_digits
@@ -129,7 +129,7 @@ feature '
       end
 
       it "renders the payment details" do
-        login_as_admin_and_visit spree.admin_order_payments_path order
+        login_as_admin_and_visit main_app.admin_order_payments_path order
 
         page.click_link("StripeSCA")
         expect(page).to have_content order.payments.last.amount
@@ -150,7 +150,7 @@ feature '
       end
 
       it "allows to refund the payment" do
-        login_as_admin_and_visit spree.admin_order_payments_path order
+        login_as_admin_and_visit main_app.admin_order_payments_path order
 
         expect(page).to have_link "StripeSCA"
         expect(page).to have_content "COMPLETED"

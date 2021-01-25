@@ -8,7 +8,7 @@
   = t :email_confirmation_click_link
   %br
   %strong
-    = link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
+    = link_to t(:email_confirmation_link_label), main_app.user_confirmation_url(:confirmation_token => @user.confirmation_token)
 
 = render 'shared/mailers/signoff'
 

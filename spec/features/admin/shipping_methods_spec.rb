@@ -21,7 +21,7 @@ feature 'shipping methods' do
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Shop')
 
       # Shows appropriate fields when logged in as admin
-      visit spree.new_admin_shipping_method_path
+      visit main_app.new_admin_shipping_method_path
       expect(page).to have_field 'shipping_method_name'
       expect(page).to have_field 'shipping_method_description'
       expect(page).to have_select 'shipping_method_display_on'
@@ -48,7 +48,7 @@ feature 'shipping methods' do
     it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
 
     scenario "deleting a shipping method" do
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
+      visit_delete main_app.admin_shipping_method_path(@shipping_method)
 
       expect(flash_message).to eq "Successfully Removed"
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
@@ -61,7 +61,7 @@ feature 'shipping methods' do
       order.shipments << shipment
       order.save!
 
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
+      visit_delete main_app.admin_shipping_method_path(@shipping_method)
 
       expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{order.number}."
       expect(Spree::ShippingMethod.find(@shipping_method.id)).not_to be_nil
@@ -69,14 +69,14 @@ feature 'shipping methods' do
 
     scenario "checking a single distributor is checked by default" do
       first_distributor = Enterprise.first
-      visit spree.new_admin_shipping_method_path
+      visit main_app.new_admin_shipping_method_path
       expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}", checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
       distributor1 = create(:distributor_enterprise, name: 'Alice Farm Shop')
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Hub')
-      visit spree.new_admin_shipping_method_path
+      visit main_app.new_admin_shipping_method_path
       expect(page).to have_field "shipping_method_distributor_ids_#{distributor1.id}", checked: false
       expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}", checked: false
     end
@@ -141,7 +141,7 @@ feature 'shipping methods' do
       shipping_method2
       sm3
 
-      visit spree.admin_shipping_methods_path
+      visit main_app.admin_shipping_methods_path
 
       expect(page).to     have_content shipping_method1.name
       expect(page).to     have_content shipping_method2.name
@@ -152,7 +152,7 @@ feature 'shipping methods' do
       shipping_method1
       shipping_method2
 
-      visit spree.admin_shipping_methods_path
+      visit main_app.admin_shipping_methods_path
 
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end

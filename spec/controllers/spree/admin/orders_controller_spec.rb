@@ -60,7 +60,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         put :update, params
 
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+        expect(response).to redirect_to edit_admin_order_path(order)
       end
     end
 
@@ -73,7 +73,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           put :update, params
 
           expect(flash[:error]).to eq "Line items can't be blank"
-          expect(response).to redirect_to spree.edit_admin_order_path(order)
+          expect(response).to redirect_to edit_admin_order_path(order)
         end
       end
 
@@ -90,7 +90,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
             put :update, params
 
-            expect(response).to redirect_to spree.admin_order_customer_path(order)
+            expect(response).to redirect_to admin_order_customer_path(order)
           end
         end
 
@@ -101,7 +101,7 @@ describe Spree::Admin::OrdersController, type: :controller do
             put :update, params
 
             expect(flash[:error]).to eq "Distributor or order cycle cannot supply the products in your cart"
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
           end
         end
       end
@@ -164,7 +164,7 @@ describe Spree::Admin::OrdersController, type: :controller do
             expect do
               get :invoice, params
             end.to_not change{ Spree::OrderMailer.deliveries.count }
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
             expect(flash[:error]).to eq "#{distributor.name} must have a valid ABN before invoices can be sent."
           end
         end
@@ -181,7 +181,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           it "should allow me to send order invoices" do
             get :invoice, params
 
-            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(response).to redirect_to edit_admin_order_path(order)
             expect(Spree::OrderMailer).to have_received(:invoice_email)
             expect(mail_mock).to have_received(:deliver_later)
           end

@@ -72,7 +72,7 @@ feature "Check out with Paypal", js: true do
       # jump straight to being redirected back to OFN with a "confirmed" payment.
       stub_paypal_response(
         success: true,
-        redirect: spree.confirm_paypal_path(
+        redirect: confirm_paypal_path(
           payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
         )
       )

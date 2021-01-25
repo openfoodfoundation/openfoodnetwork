@@ -15,7 +15,7 @@ feature '
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path product
+      login_as_admin_and_visit main_app.admin_product_variants_path product
       click_link 'New Variant'
 
       fill_in 'unit_value_human', with: '1'
@@ -32,16 +32,16 @@ feature '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin_and_visit main_app.admin_product_variants_path(product, filter)
 
       click_link 'New Variant'
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.new_admin_product_variant_path(product, filter)
+      expect("#{uri.path}?#{uri.query}").to eq main_app.new_admin_product_variant_path(product, filter)
 
       # Cancel link should include product filter
       expected_cancel_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, filter))
+        Regexp.escape(main_app.admin_product_variants_path(product, filter))
       )
       expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
     end
@@ -54,17 +54,17 @@ feature '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin_and_visit main_app.admin_product_variants_path(product, filter)
 
-      visit spree.admin_product_variants_path(product, filter)
+      visit main_app.admin_product_variants_path(product, filter)
 
       expected_new_url = Regexp.new(
-        Regexp.escape(spree.new_admin_product_variant_path(product, filter))
+        Regexp.escape(main_app.new_admin_product_variant_path(product, filter))
       )
       expect(page).to have_link("New Variant", href: expected_new_url)
 
       expected_show_delete_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, { deleted: 'on' }.merge(filter)))
+        Regexp.escape(main_app.admin_product_variants_path(product, { deleted: 'on' }.merge(filter)))
       )
       expect(page).to have_link("Show Deleted", href: expected_show_delete_url)
 
@@ -72,12 +72,12 @@ feature '
       variant = product.variants.first
 
       expected_edit_url = Regexp.new(
-        Regexp.escape(spree.edit_admin_product_variant_path(product, variant, filter))
+        Regexp.escape(main_app.edit_admin_product_variant_path(product, variant, filter))
       )
       expect(page).to have_link(I18n.t(:edit), href: expected_edit_url)
 
       expected_delete_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variant_path(product, variant, filter))
+        Regexp.escape(main_app.admin_product_variant_path(product, variant, filter))
       )
       expect(page).to have_link(I18n.t(:delete), href: expected_delete_url)
     end
@@ -89,12 +89,12 @@ feature '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin_and_visit main_app.admin_product_variants_path(product, filter)
       page.find('table.index .icon-edit').click
 
       # Cancel link should include product filter
       expected_cancel_url = Regexp.new(
-        Regexp.escape(spree.admin_product_variants_path(product, filter))
+        Regexp.escape(main_app.admin_product_variants_path(product, filter))
       )
       expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
     end
@@ -109,7 +109,7 @@ feature '
       product.option_types << variant.option_values.first.option_type
 
       # When I view the variant
-      login_as_admin_and_visit spree.admin_product_variants_path product
+      login_as_admin_and_visit main_app.admin_product_variants_path product
       page.find('table.index .icon-edit').click
 
       # Then I should not see a traditional option value field for the unit-related option value
@@ -135,7 +135,7 @@ feature '
       variant = product.variants.first
       variant.update(unit_description: 'foo')
 
-      login_as_admin_and_visit spree.edit_admin_product_variant_path(product, variant)
+      login_as_admin_and_visit main_app.edit_admin_product_variant_path(product, variant)
 
       expect(page).to_not have_field "unit_value_human"
       expect(page).to have_field "variant_unit_description", with: "foo"
@@ -156,7 +156,7 @@ feature '
     end
 
     it "allows changing the on_hand value" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit main_app.edit_admin_product_variant_path(product, variant)
 
       expect(page).to have_field "variant_on_hand", with: variant.on_hand
       expect(page).to have_unchecked_field "variant_on_demand"
@@ -167,7 +167,7 @@ feature '
     end
 
     it "allows changing the on_demand value" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit main_app.edit_admin_product_variant_path(product, variant)
       check "variant_on_demand"
 
       # on_hand reflects the change in on_demand
@@ -178,7 +178,7 @@ feature '
     end
 
     it "memorizes on_hand value previously entered if enabling and disabling on_demand" do
-      visit spree.edit_admin_product_variant_path(product, variant)
+      visit main_app.edit_admin_product_variant_path(product, variant)
       fill_in "variant_on_hand", with: "123"
       check "variant_on_demand"
       uncheck "variant_on_demand"
@@ -192,7 +192,7 @@ feature '
     product = create(:simple_product)
     variant = create(:variant, product: product)
 
-    login_as_admin_and_visit spree.admin_product_variants_path product
+    login_as_admin_and_visit main_app.admin_product_variants_path product
 
     within "tr#spree_variant_#{variant.id}" do
       accept_alert do
@@ -209,7 +209,7 @@ feature '
     variant = product.variants.first
 
     # When I view the variant
-    login_as_admin_and_visit spree.admin_product_variants_path product
+    login_as_admin_and_visit main_app.admin_product_variants_path product
     page.find('table.index .icon-edit').click
 
     # It should allow the display name to be changed

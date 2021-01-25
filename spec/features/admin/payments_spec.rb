@@ -11,7 +11,7 @@ feature '
   let(:order) { create(:completed_order_with_fees) }
 
   scenario "visiting the payment form" do
-    login_as_admin_and_visit spree.new_admin_order_payment_path order
+    login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
     expect(page).to have_content "New Payment"
   end
@@ -27,7 +27,7 @@ feature '
     end
 
     scenario "visiting the payment form" do
-      login_as_admin_and_visit spree.new_admin_order_payment_path order
+      login_as_admin_and_visit main_app.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
     end

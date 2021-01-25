@@ -21,9 +21,9 @@ module Spree
 
         if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
-          redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
+          redirect_to main_app.admin_product_variants_url(params[:product_id], @url_filters)
         else
-          redirect_to spree.edit_admin_product_variant_url(params[:product_id],
+          redirect_to main_app.edit_admin_product_variant_url(params[:product_id],
                                                            @object,
                                                            @url_filters)
         end
@@ -42,9 +42,9 @@ module Spree
         @object.attributes = permitted_resource_params
         if @object.save
           flash[:success] = flash_message_for(@object, :successfully_created)
-          redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
+          redirect_to main_app.admin_product_variants_url(params[:product_id], @url_filters)
         else
-          redirect_to spree.new_admin_product_variant_url(params[:product_id], @url_filters)
+          redirect_to main_app.new_admin_product_variant_url(params[:product_id], @url_filters)
         end
 
         return unless @object.present? && @object.valid?
@@ -65,7 +65,7 @@ module Spree
         @variant = Spree::Variant.find(params[:id])
         flash[:success] = delete_variant
 
-        redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
+        redirect_to main_app.admin_product_variants_url(params[:product_id], @url_filters)
       end
 
       protected

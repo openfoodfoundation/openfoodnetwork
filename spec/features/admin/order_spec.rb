@@ -32,7 +32,7 @@ feature '
   end
 
   def new_order_with_distribution(distributor, order_cycle)
-    visit spree.new_admin_order_path
+    visit main_app.new_admin_order_path
     expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
@@ -43,7 +43,7 @@ feature '
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
-    login_as_admin_and_visit spree.admin_orders_path
+    login_as_admin_and_visit main_app.admin_orders_path
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
@@ -78,7 +78,7 @@ feature '
   end
 
   scenario "can add a product to an existing order" do
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit main_app.edit_admin_order_path(order)
 
     select2_select product.name, from: 'add_variant_id', search: true
 
@@ -100,7 +100,7 @@ feature '
     order.user = nil
     order.save
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit main_app.edit_admin_order_path(order)
 
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
@@ -114,7 +114,7 @@ feature '
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit main_app.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
@@ -124,7 +124,7 @@ feature '
     order.state = 'cart'
     order.completed_at = nil
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit main_app.edit_admin_order_path(order)
 
     quantity = order.line_items.first.quantity
     max_quantity = 0
@@ -147,7 +147,7 @@ feature '
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit main_app.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'
@@ -232,7 +232,7 @@ feature '
       background do
         distributor1.update_attribute(:abn, '12345678')
 
-        visit spree.edit_admin_order_path(order)
+        visit main_app.edit_admin_order_path(order)
       end
 
       scenario "verifying page contents" do
@@ -270,10 +270,10 @@ feature '
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
           expect(page).to have_link "Resend Confirmation",
-                                    href: spree.resend_admin_order_path(order)
-          expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-          expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+                                    href: main_app.resend_admin_order_path(order)
+          expect(page).to have_link "Send Invoice", href: main_app.invoice_admin_order_path(order)
+          expect(page).to have_link "Print Invoice", href: main_app.print_admin_order_path(order)
+          expect(page).to have_link "Cancel Order", href: main_app.fire_admin_order_path(order, e: 'cancel')
         end
       end
 
@@ -292,7 +292,7 @@ feature '
         end
 
         scenario "can edit shipping method" do
-          visit spree.edit_admin_order_path(order)
+          visit main_app.edit_admin_order_path(order)
 
           expect(page).to_not have_content different_shipping_method_for_distributor1.name
 

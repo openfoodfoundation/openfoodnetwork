@@ -34,7 +34,7 @@ feature '
 
     feature "viewing the edit page" do
       scenario "can print an order's ticket" do
-        visit spree.edit_admin_order_path(order)
+        visit main_app.edit_admin_order_path(order)
 
         find("#links-dropdown .ofn-drop-down").click
 

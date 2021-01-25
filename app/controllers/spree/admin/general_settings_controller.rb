@@ -18,7 +18,7 @@ module Spree
         end
         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
 
-        redirect_to spree.edit_admin_general_settings_path
+        redirect_to main_app.edit_admin_general_settings_path
       end
 
       private

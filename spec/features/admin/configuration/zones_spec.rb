@@ -12,7 +12,7 @@ describe "Zones" do
   end
 
   scenario "list existing zones" do
-    visit spree.edit_admin_general_settings_path
+    visit main_app.edit_admin_general_settings_path
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
 
@@ -28,7 +28,7 @@ describe "Zones" do
   end
 
   scenario "create a new zone" do
-    visit spree.admin_zones_path
+    visit main_app.admin_zones_path
     click_link "admin_new_zone_link"
     expect(page).to have_content("New Zone")
 
@@ -41,7 +41,7 @@ describe "Zones" do
 
   scenario "edit existing zone", js: true do
     zone = create(:zone_with_member)
-    visit spree.edit_admin_zone_path(zone.id)
+    visit main_app.edit_admin_zone_path(zone.id)
 
     expect(page).to have_checked_field "country_based"
 

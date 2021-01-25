@@ -7,7 +7,7 @@
 
 - content_for :page_actions do
   %li
-    = button_link_to t("spree.back_to_taxonomies_list"), spree.admin_taxonomies_path, icon: 'icon-arrow-left'
+    = button_link_to t("spree.back_to_taxonomies_list"), main_app.admin_taxonomies_path, icon: 'icon-arrow-left'
 
 #ajax_error.errorExplanation{style: "display:none;"}
 = form_for [:admin, @taxonomy] do |f|
@@ -18,7 +18,7 @@
       %br/
       :javascript
         Spree.routes.taxonomy_taxons_path = "#{main_app.api_taxonomy_taxons_path(@taxonomy)}";
-        Spree.routes.admin_taxonomy_taxons_path = "#{spree.admin_taxonomy_taxons_path(@taxonomy)}";
+        Spree.routes.admin_taxonomy_taxons_path = "#{main_app.admin_taxonomy_taxons_path(@taxonomy)}";
       #taxonomy_tree.tree
     #progress{style: "display:none;"}
       = image_tag 'select2-spinner.gif', title: 'Spinner', style: "vertical-align:bottom;"

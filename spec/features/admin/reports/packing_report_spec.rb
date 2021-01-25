@@ -23,7 +23,7 @@ feature "Packing Reports", js: true do
       it "shows line items" do
         li1.variant.delete
 
-        visit spree.admin_reports_path
+        visit main_app.admin_reports_path
 
         click_on I18n.t("admin.reports.packing.name")
         select oc.name, from: "q_order_cycle_id_in"

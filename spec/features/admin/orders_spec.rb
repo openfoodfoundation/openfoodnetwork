@@ -69,8 +69,8 @@ feature '
       end
 
       scenario "capture payment" do
-        login_as_admin_and_visit spree.admin_orders_path
-        expect(page).to have_current_path spree.admin_orders_path
+        login_as_admin_and_visit main_app.admin_orders_path
+        expect(page).to have_current_path main_app.admin_orders_path
 
         # click the 'capture' link for the order
         page.find("[data-powertip=Capture]").click
@@ -82,12 +82,12 @@ feature '
         expect(order.reload.payment_state).to eq "paid"
 
         # we should still be on the same page
-        expect(page).to have_current_path spree.admin_orders_path
+        expect(page).to have_current_path main_app.admin_orders_path
       end
 
       scenario "ship order from the orders index page" do
         order.payments.first.capture!
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin_and_visit main_app.admin_orders_path
 
         page.find("[data-powertip=Ship]").click
 
@@ -101,13 +101,13 @@ feature '
     scenario "can edit order" do
       incomplete_order = create(:order, distributor: distributor, order_cycle: order_cycle)
 
-      login_as_admin_and_visit spree.admin_orders_path
+      login_as_admin_and_visit main_app.admin_orders_path
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 
       find(".icon-edit").click
 
-      expect(page).to have_current_path spree.edit_admin_order_path(incomplete_order)
+      expect(page).to have_current_path main_app.edit_admin_order_path(incomplete_order)
     end
   end
 end

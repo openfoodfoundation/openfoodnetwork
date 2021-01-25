@@ -37,7 +37,7 @@ feature "
       } # This er should not confer ability to create VOs for hub2
 
       it "displays a list of hub choices (ie. only those managed by the user)" do
-        visit spree.admin_dashboard_path
+        visit main_app.admin_dashboard_path
         click_link 'Products'
         click_link 'Inventory'
 
@@ -402,7 +402,7 @@ feature "
       let(:product) { order_cycle.products.first }
 
       before do
-        login_as_admin_and_visit spree.new_admin_order_path
+        login_as_admin_and_visit main_app.new_admin_order_path
         select2_select distributor.name, from: 'order_distributor_id'
         select2_select order_cycle.name, from: 'order_order_cycle_id'
         click_button 'Next'

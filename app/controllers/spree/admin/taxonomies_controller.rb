@@ -11,9 +11,9 @@ module Spree
 
       def location_after_save
         if @taxonomy.created_at == @taxonomy.updated_at
-          spree.edit_admin_taxonomy_url(@taxonomy)
+          main_app.edit_admin_taxonomy_url(@taxonomy)
         else
-          spree.admin_taxonomies_url
+          main_app.admin_taxonomies_url
         end
       end
 

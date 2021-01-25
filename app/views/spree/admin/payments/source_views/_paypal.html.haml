@@ -17,7 +17,7 @@
         %dd= payment.source.transaction_id
     - if payment.source.state != 'refunded'
       = button_link_to Spree.t('actions.refund', scope: :paypal),
-        spree.paypal_refund_admin_order_payment_path(@order, payment),
+        main_app.paypal_refund_admin_order_payment_path(@order, payment),
         icon: 'icon-dollar'
     - else
       .alpha.six.columns

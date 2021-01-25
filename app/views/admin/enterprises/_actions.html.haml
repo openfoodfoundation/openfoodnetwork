@@ -14,14 +14,14 @@
 
 - if enterprise.is_distributor
   - if can?(:admin, Spree::PaymentMethod) && can?(:manage_payment_methods, enterprise)
-    = link_to_with_icon 'icon-chevron-right', t('.payment_methods'), spree.admin_payment_methods_path(enterprise_id: enterprise.id)
+    = link_to_with_icon 'icon-chevron-right', t('.payment_methods'), main_app.admin_payment_methods_path(enterprise_id: enterprise.id)
     (#{enterprise.payment_methods.count})
     - if enterprise.payment_methods.count == 0
       %span.icon-exclamation-sign{"ofn-with-tip" => t('.payment_methods_tip'), style: "font-size: 16px;color: #DA5354"}
     %br/
 
   - if can?(:admin, Spree::ShippingMethod) && can?(:manage_shipping_methods, enterprise)
-    = link_to_with_icon 'icon-plane', t('.shipping_methods'), spree.admin_shipping_methods_path(enterprise_id: enterprise.id)
+    = link_to_with_icon 'icon-plane', t('.shipping_methods'), main_app.admin_shipping_methods_path(enterprise_id: enterprise.id)
     (#{enterprise.shipping_methods.count})
     - if enterprise.shipping_methods.count == 0
       %span.icon-exclamation-sign{"ofn-with-tip" => t('.shipping_methods_tip'), style: "font-size: 16px;color: #DA5354"}

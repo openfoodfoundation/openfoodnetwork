@@ -53,11 +53,11 @@ module Spree
           redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
         else
           flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
-          redirect_to spree.checkout_state_path(:payment)
+          redirect_to main_app.checkout_state_path(:payment)
         end
       rescue SocketError
         flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
-        redirect_to spree.checkout_state_path(:payment)
+        redirect_to main_app.checkout_state_path(:payment)
       end
     end
 
@@ -118,10 +118,10 @@ module Spree
         SetExpressCheckoutRequestDetails: {
           InvoiceID: order.number,
           BuyerEmail: order.email,
-          ReturnURL: spree.confirm_paypal_url(
+          ReturnURL: main_app.confirm_paypal_url(
             payment_method_id: params[:payment_method_id], utm_nooverride: 1
           ),
-          CancelURL: spree.cancel_paypal_url,
+          CancelURL: main_app.cancel_paypal_url,
           SolutionType: payment_method.preferred_solution.presence || "Mark",
           LandingPage: payment_method.preferred_landing_page.presence || "Billing",
           cppheaderimage: payment_method.preferred_logourl.presence || "",
@@ -234,7 +234,7 @@ module Spree
     end
 
     def completion_route(order)
-      spree.order_path(order, token: order.token)
+      main_app.order_path(order, token: order.token)
     end
 
     def address_required?

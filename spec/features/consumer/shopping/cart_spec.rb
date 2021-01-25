@@ -275,7 +275,7 @@ feature "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_no_content item2.variant.name
 
-        expect(page).to have_link I18n.t(:orders_bought_edit_button), href: spree.account_path
+        expect(page).to have_link I18n.t(:orders_bought_edit_button), href: main_app.account_path
         find("td.toggle-bought").click
 
         expect(page).to have_content item1.variant.name

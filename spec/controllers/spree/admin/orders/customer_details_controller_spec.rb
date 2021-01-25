@@ -56,7 +56,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           order.reload
 
-          expect(response).to redirect_to spree.admin_order_customer_path(order)
+          expect(response).to redirect_to admin_order_customer_path(order)
         end
       end
 
@@ -66,7 +66,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           order.reload
 
-          expect(response).to redirect_to spree.admin_order_customer_path(order)
+          expect(response).to redirect_to admin_order_customer_path(order)
         end
       end
     end

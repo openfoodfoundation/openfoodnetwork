@@ -12,7 +12,7 @@ module Spree
 
       def index
         @payments = @order.payments
-        redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
+        redirect_to main_app.new_admin_order_payment_url(@order) if @payments.empty?
       end
 
       def new
@@ -25,7 +25,7 @@ module Spree
 
         begin
           unless @payment.save
-            redirect_to spree.admin_order_payments_path(@order)
+            redirect_to main_app.admin_order_payments_path(@order)
             return
           end
 
@@ -35,16 +35,16 @@ module Spree
             @payment.process!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
-            redirect_to spree.admin_order_payments_path(@order)
+            redirect_to main_app.admin_order_payments_path(@order)
           else
             OrderWorkflow.new(@order).complete!
 
             flash[:success] = Spree.t(:new_order_completed)
-            redirect_to spree.edit_admin_order_url(@order)
+            redirect_to main_app.edit_admin_order_url(@order)
           end
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
-          redirect_to spree.new_admin_order_payment_path(@order)
+          redirect_to main_app.new_admin_order_payment_path(@order)
         end
       end
 
@@ -137,7 +137,7 @@ module Spree
         return if @order.payment? || @order.complete?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
-        redirect_to spree.edit_admin_order_customer_url(@order)
+        redirect_to main_app.edit_admin_order_customer_url(@order)
       end
 
       def load_order
@@ -153,7 +153,7 @@ module Spree
       def authorize_stripe_sca_payment
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
-        @payment.authorize!(spree.order_path(@payment.order, only_path: false))
+        @payment.authorize!(main_app.order_path(@payment.order, only_path: false))
 
         raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
 

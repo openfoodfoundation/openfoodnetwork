@@ -17,7 +17,7 @@ feature "Managing users" do
         create(:user, email: "a@example.com")
         create(:user, email: "b@example.com")
 
-        visit spree.admin_dashboard_path
+        visit main_app.admin_dashboard_path
         click_link "Users"
       end
 
@@ -95,12 +95,12 @@ feature "Managing users" do
 
     describe "creating a user" do
       it "shows no confirmation message to start with" do
-        visit spree.new_admin_user_path
+        visit main_app.new_admin_user_path
         expect(page).to have_no_text "Email confirmation is pending"
       end
 
       it "confirms successful creation" do
-        visit spree.new_admin_user_path
+        visit main_app.new_admin_user_path
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"
         fill_in "Confirm Password", with: "user1Secret"
@@ -120,7 +120,7 @@ feature "Managing users" do
       end
 
       it "displays success" do
-        visit spree.edit_admin_user_path user
+        visit main_app.edit_admin_user_path user
 
         expect do
           # The `a` element doesn't have an href, so we can't use click_link.

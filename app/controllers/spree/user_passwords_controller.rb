@@ -28,7 +28,7 @@ module Spree
 
       if resource.errors.empty?
         set_flash_message(:notice, :send_instructions) if is_navigational_format?
-        respond_with resource, location: spree.login_path
+        respond_with resource, location: main_app.login_path
       else
         respond_with_navigational(resource) { render :new }
       end

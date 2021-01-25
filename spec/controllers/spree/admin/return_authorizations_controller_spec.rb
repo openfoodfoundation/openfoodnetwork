@@ -28,7 +28,7 @@ module Spree
         post :create, order_id: order.number,
                             return_authorization: { amount: "20.2", reason: "broken" }
 
-        expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
+        expect(response).to redirect_to admin_order_return_authorizations_url(order.number)
         return_authorization = order.return_authorizations.first
         expect(return_authorization.amount.to_s).to eq "20.2"
         expect(return_authorization.reason.to_s).to eq "broken"
@@ -37,7 +37,7 @@ module Spree
         put :update, id: return_authorization.id,
                            return_authorization: { amount: "10.2", reason: "half broken" }
 
-        expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
+        expect(response).to redirect_to admin_order_return_authorizations_url(order.number)
         return_authorization.reload
         expect(return_authorization.amount.to_s).to eq "10.2"
         expect(return_authorization.reason.to_s).to eq "half broken"

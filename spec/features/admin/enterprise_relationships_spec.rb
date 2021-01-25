@@ -20,7 +20,7 @@ feature '
       create(:enterprise_relationship, parent: e3, child: e4, permissions_list: [:add_to_order_cycle, :manage_products])
 
       # When I go to the relationships page
-      visit spree.admin_dashboard_path
+      visit main_app.admin_dashboard_path
       click_link 'Enterprises'
       click_link 'Permissions'
 

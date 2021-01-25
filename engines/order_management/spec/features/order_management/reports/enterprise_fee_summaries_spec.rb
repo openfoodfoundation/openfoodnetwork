@@ -21,7 +21,7 @@ feature "enterprise fee summaries", js: true do
       let(:current_user) { create(:admin_user) }
 
       it "shows link and allows access to the report" do
-        visit spree.admin_reports_path
+        visit main_app.admin_reports_path
         click_on I18n.t("admin.reports.enterprise_fee_summary.name")
         expect(page).to have_button(I18n.t("filters.generate_report", scope: i18n_scope))
       end
@@ -31,7 +31,7 @@ feature "enterprise fee summaries", js: true do
       let(:current_user) { distributor.owner }
 
       it "shows link and allows access to the report" do
-        visit spree.admin_reports_path
+        visit main_app.admin_reports_path
         click_on I18n.t("admin.reports.enterprise_fee_summary.name")
         expect(page).to have_button(I18n.t("filters.generate_report", scope: i18n_scope))
       end
@@ -41,7 +41,7 @@ feature "enterprise fee summaries", js: true do
       let(:current_user) { create(:user) }
 
       it "does not allow access to the report" do
-        visit spree.admin_reports_path
+        visit main_app.admin_reports_path
         expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
         visit main_app.new_order_management_reports_enterprise_fee_summary_path
         expect(page).to have_content(I18n.t("unauthorized"))

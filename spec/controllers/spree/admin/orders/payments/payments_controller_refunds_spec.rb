@@ -21,7 +21,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { id: payment.id, order_id: order.number, e: :void } }
 
       # Required for the respond override in the controller decorator to work
-      before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
+      before { @request.env['HTTP_REFERER'] = admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
@@ -80,7 +80,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { id: payment.id, order_id: order.number, e: :credit } }
 
       # Required for the respond override in the controller decorator to work
-      before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
+      before { @request.env['HTTP_REFERER'] = admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
@@ -141,7 +141,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { id: payment.id, order_id: order.number, e: :void } }
 
       # Required for the respond override in the controller decorator to work
-      before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
+      before { @request.env['HTTP_REFERER'] = admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
@@ -226,7 +226,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { id: payment.id, order_id: order.number, e: :credit } }
 
       # Required for the respond override in the controller decorator to work
-      before { @request.env['HTTP_REFERER'] = spree.admin_order_payments_url(payment) }
+      before { @request.env['HTTP_REFERER'] = admin_order_payments_url(payment) }
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }

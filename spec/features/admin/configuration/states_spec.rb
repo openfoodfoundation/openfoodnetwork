@@ -17,7 +17,7 @@ describe "States" do
   # TODO: For whatever reason, rendering of the states page takes a non-trivial amount of time
   # Therefore we navigate to it, and wait until what we see is visible
   def go_to_states_page
-    visit spree.admin_country_states_path(country)
+    visit main_app.admin_country_states_path(country)
     counter = 0
     until page.has_css?("#new_state_link")
       raise "Could not see new state link!" if counter >= 10
@@ -31,7 +31,7 @@ describe "States" do
     let!(:state) { Spree::State.create(name: 'Alabama', country: country) }
 
     it "should correctly display the states" do
-      visit spree.admin_country_states_path(country)
+      visit main_app.admin_country_states_path(country)
       expect(page).to have_content(state.name)
     end
   end

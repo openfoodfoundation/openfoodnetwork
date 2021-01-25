@@ -12,7 +12,7 @@ feature 'External services' do
     end
 
     it "lets me set an API key" do
-      visit spree.edit_admin_general_settings_path
+      visit main_app.edit_admin_general_settings_path
 
       fill_in 'bugherd_api_key', with: 'abc123'
       click_button 'Update'

@@ -68,12 +68,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       before do
-        request.env["PATH_INFO"] = main_app.order_path(order)
+        request.env["PATH_INFO"] = order_path(order)
       end
 
       it "redirects to unauthorized" do
         get :show, id: order.number
-        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{main_app.order_path(order)}"))
+        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{order_path(order)}"))
         expect(flash[:error]).to eq("Please log in to view your order.")
       end
     end
@@ -318,7 +318,7 @@ describe Spree::OrdersController, type: :controller do
       it "removes the items" do
         post :update, params
         expect(flash[:error]).to be nil
-        expect(response).to redirect_to main_app.order_path(order)
+        expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 1
       end
     end
@@ -329,7 +329,7 @@ describe Spree::OrdersController, type: :controller do
       it "does not remove items, flash suggests cancellation" do
         post :update, params
         expect(flash[:error]).to eq I18n.t(:orders_cannot_remove_the_final_item)
-        expect(response).to redirect_to main_app.order_path(order)
+        expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 2
       end
     end
@@ -426,7 +426,7 @@ describe Spree::OrdersController, type: :controller do
       context "when the order is not yet complete" do
         it "responds with forbidden" do
           put :cancel, params
-          expect(response.status).to redirect_to main_app.order_path(order)
+          expect(response.status).to redirect_to order_path(order)
           expect(flash[:error]).to eq I18n.t(:orders_could_not_cancel)
         end
       end
@@ -440,7 +440,7 @@ describe Spree::OrdersController, type: :controller do
 
         it "responds with success" do
           put :cancel, params
-          expect(response.status).to redirect_to main_app.order_path(order)
+          expect(response.status).to redirect_to order_path(order)
           expect(flash[:success]).to eq I18n.t(:orders_your_order_has_been_cancelled)
         end
       end

@@ -122,7 +122,7 @@ feature "Authentication", js: true do
               page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
               expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
 
-              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              visit main_app.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
               expect(user.reload.confirmed?).to be true
               expect(page).to have_text I18n.t('devise.confirmations.confirmed')
 

@@ -11,7 +11,7 @@ feature 'Multilingual', js: true do
   background do
     admin_user.spree_roles << admin_role
     login_as admin_user
-    visit spree.admin_dashboard_path
+    visit main_app.admin_dashboard_path
   end
 
   it 'has three locales available' do
@@ -26,7 +26,7 @@ feature 'Multilingual', js: true do
     expect(page).to have_content 'My Enterprises'
     expect(admin_user.locale).to be_nil
 
-    visit spree.admin_dashboard_path(locale: 'es')
+    visit main_app.admin_dashboard_path(locale: 'es')
     expect(get_i18n_locale).to eq 'es'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'Mis Organizaciones'
     expect(page).to have_content 'Mis Organizaciones'
@@ -40,7 +40,7 @@ feature 'Multilingual', js: true do
     # inside core/app/views/spree/admin/shared/_translations.html.erb
 
     # I18n-js fallsback to 'en'
-    visit spree.admin_dashboard_path(locale: 'it')
+    visit main_app.admin_dashboard_path(locale: 'it')
     expect(get_i18n_locale).to eq 'it'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(admin_user.locale).to be_nil

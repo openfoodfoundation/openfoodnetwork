@@ -139,12 +139,12 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       def redirects_to_list_of_payments_with_success_flash
-        expect_redirect_to spree.admin_order_payments_url(order)
+        expect_redirect_to admin_order_payments_url(order)
         expect(flash[:success]).to eq "Payment has been successfully created!"
       end
 
       def redirects_to_new_payment_page_with_flash_error(flash_error)
-        expect_redirect_to spree.new_admin_order_payment_url(order)
+        expect_redirect_to new_admin_order_payment_url(order)
         expect(flash[:error]).to eq flash_error
       end
 

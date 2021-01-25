@@ -744,7 +744,7 @@ feature '
   end
 
   def visit_bulk_order_management
-    visit spree.admin_bulk_order_management_path
+    visit main_app.admin_bulk_order_management_path
     expect(page).to have_no_text 'Loading orders'
   end
 

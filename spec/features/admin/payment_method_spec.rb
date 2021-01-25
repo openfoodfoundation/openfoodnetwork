@@ -15,7 +15,7 @@ feature '
 
   describe "creating a payment method", js: true do
     scenario "assigning a distributor to the payment method" do
-      login_as_admin_and_visit spree.edit_admin_general_settings_path
+      login_as_admin_and_visit main_app.edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -54,7 +54,7 @@ feature '
 
       it "communicates the status of the stripe connection to the user" do
         login_as user
-        visit spree.new_admin_payment_method_path
+        visit main_app.new_admin_payment_method_path
 
         select2_select "Stripe", from: "payment_method_type"
 
@@ -76,12 +76,12 @@ feature '
 
     scenario "checking a single distributor is checked by default" do
       2.times.each { Enterprise.last.destroy }
-      login_as_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit main_app.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
-      login_as_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit main_app.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}", checked: false
@@ -91,7 +91,7 @@ feature '
   scenario "updating a payment method", js: true do
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
-    login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
+    login_as_admin_and_visit main_app.edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'
     find(:css, "tags-input .tags input").set "member\n"
@@ -155,11 +155,11 @@ feature '
         click_link "Payment Methods"
       end
       click_link 'Create One Now'
-      expect(page).to have_current_path spree.new_admin_payment_method_path
+      expect(page).to have_current_path main_app.new_admin_payment_method_path
     end
 
     it "creates payment methods" do
-      visit spree.new_admin_payment_method_path
+      visit main_app.new_admin_payment_method_path
       fill_in 'payment_method_name', with: 'Cheque payment method'
       expect(page).to have_field 'payment_method_description'
       expect(page).to have_select 'payment_method_display_on'
@@ -181,7 +181,7 @@ feature '
       payment_method2
       payment_method3
 
-      visit spree.admin_payment_methods_path
+      visit main_app.admin_payment_methods_path
 
       expect(page).to     have_content payment_method1.name
       expect(page).to     have_content payment_method2.name
@@ -192,7 +192,7 @@ feature '
       payment_method1
       payment_method2
 
-      visit spree.admin_payment_methods_path
+      visit main_app.admin_payment_methods_path
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end
 

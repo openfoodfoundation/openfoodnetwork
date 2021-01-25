@@ -143,7 +143,7 @@ describe Spree::CreditCardsController, type: :controller do
         expect(controller).to_not receive(:destroy_at_stripe)
         delete :destroy, params
         expect(flash[:error]).to eq I18n.t(:card_could_not_be_removed)
-        expect(response).to redirect_to spree.account_path(anchor: 'cards')
+        expect(response).to redirect_to account_path(anchor: 'cards')
       end
     end
 
@@ -175,7 +175,7 @@ describe Spree::CreditCardsController, type: :controller do
           it "doesn't delete the card" do
             expect{ delete :destroy, params }.to_not change(Spree::CreditCard, :count)
             expect(flash[:error]).to eq I18n.t(:card_could_not_be_removed)
-            expect(response).to redirect_to spree.account_path(anchor: 'cards')
+            expect(response).to redirect_to account_path(anchor: 'cards')
           end
         end
 
@@ -188,7 +188,7 @@ describe Spree::CreditCardsController, type: :controller do
           it "deletes the card and redirects to account_path" do
             expect{ delete :destroy, params }.to change(Spree::CreditCard, :count).by(-1)
             expect(flash[:success]).to eq I18n.t(:card_has_been_removed, number: "x-#{card.last_digits}")
-            expect(response).to redirect_to spree.account_path(anchor: 'cards')
+            expect(response).to redirect_to account_path(anchor: 'cards')
           end
 
           context "the card is the default card and there are existing authorizations for the user" do
