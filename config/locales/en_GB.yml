@@ -2319,6 +2319,8 @@ en_GB:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  cannot_perform_operation: "Could not update the payment"
+  action_required: "Action required"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
@@ -2593,6 +2595,8 @@ en_GB:
           processing: "processing"
           void: "void"
           invalid: "invalid"
+        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unchanged: "Quantity unchanged from previous amount."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3484,6 +3488,10 @@ en_GB:
         subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
+    payment_mailer:
+      authorize_payment:
+        subject: "Please authorise your payment to %{distributor} on OFN"
+        instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorise your payment:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
