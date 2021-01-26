@@ -55,13 +55,13 @@ de_DE:
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Start"
+        start_at: "Von"
         end_at: "Ende"
         distributor_ids: "Hubs"
-        producer_ids: "Erzeuger"
+        producer_ids: "Produzenten"
         order_cycle_ids: "Bestellzyklen"
         enterprise_fee_ids: "Gebührennamen"
-        shipping_method_ids: "Lieferart"
+        shipping_method_ids: "Lieferoption"
         payment_method_ids: "Zahlungsarten"
     errors:
       messages:
@@ -73,7 +73,7 @@ de_DE:
               at_least_one_product: "^ Bitte fügen Sie mindestens ein Produkt hinzu"
               not_available: "^ %{name} ist im ausgewählten Zeitplan nicht verfügbar"
             ends_at:
-              after_begins_at: "Muss nach \"beginnt um\" sein "
+              after_begins_at: "muss nach \"Beginnt\" sein."
             customer:
               does_not_belong_to_shop: "gehört nicht zu %{shop}"
             schedule:
@@ -88,15 +88,15 @@ de_DE:
   devise:
     confirmations:
       send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
-      failed_to_send: "Beim Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten."
-      resend_confirmation_email: "Bestätigungsmail erneut senden."
+      failed_to_send: "Beim Senden der E-Mail-Bestätigung ist ein Fehler aufgetreten."
+      resend_confirmation_email: "E-Mail-Bestätigung erneut senden."
       confirmed: "Danke für die Bestätigung Ihrer E-Mail-Adresse! Sie können sich jetzt einloggen."
       not_confirmed: "Ihre E-Mail-Adresse konnte nicht bestätigt werden. Vielleicht haben Sie diesen Schritt bereits abgeschlossen?"
     user_confirmations:
       spree_user:
         send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
         confirmation_sent: "E-Mail-Bestätigung gesendet"
-        confirmation_not_sent: "Fehler beim Senden der Bestätigungs-E-Mail"
+        confirmation_not_sent: "Fehler beim Senden der E-Mail-Bestätigung"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
@@ -135,7 +135,7 @@ de_DE:
       subject: "%{enterprise} ist jetzt auf %{sitename}"
       email_welcome: "Willkommen"
       email_registered: "ist jetzt Teil von"
-      email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Erzeugerprofils oder Ladens finden Sie hier: %{link}"
+      email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Hubs finden Sie hier: %{link}"
       userguide: "Open Food Network Benutzerhandbuch"
       email_admin_html: "Sie können Ihr Konto verwalten, indem Sie sich direkt über den Link %{link} anmelden oder indem Sie sich auf der Startseite einloggen und im Menü \"Verwaltung\" auswählen."
       admin_panel: "Administrationsmenü"
@@ -148,11 +148,11 @@ de_DE:
       subject: "Bestellzyklusbericht für %{producer}"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Sehr geehrte Kundin, sehr geehrter Kunde,"
-      instructions: "Ihre Bestellung wurde versandt"
+      dear_customer: "Liebe Kundin, lieber Kunde,"
+      instructions: "deine Bestellung wurde versandt!"
       shipment_summary: "Übersicht"
       subject: "Versandbenachrichtigung"
-      thanks: "Danke für Ihren Einkauf."
+      thanks: "Danke für deinen Einkauf!"
       track_information: "Tracking-Informationen: %{tracking}"
       track_link: "Tracking-Link: %{url}"
   subscription_mailer:
@@ -180,7 +180,7 @@ de_DE:
         explainer: Diese Bestellungen konnten nicht bearbeitet werden, da für die angeforderten Artikel kein Bestand verfügbar war
       complete:
         title: Bereits verarbeitet (%{count} Bestellungen)
-        explainer: Diese Bestellungen wurden bereits als vollständig markiert und daher nicht verändert
+        explainer: Diese Bestellungen wurden bereits als vollständig markiert und daher nicht verändert.
       processing:
         title: Fehler aufgetreten (%{count} Bestellungen)
         explainer: Die automatische Bearbeitung dieser Bestellungen ist aufgrund eines Fehlers fehlgeschlagen. Der Fehler wurde soweit möglich aufgelistet.
@@ -194,7 +194,7 @@ de_DE:
   title: "Open Food Network"
   welcome_to: "Willkommen bei"
   site_meta_description: "Wir starten ganz grundsätzlich. Mit LandwirtInnen und GärtnerInnen, die stolz und ehrlich ihre Geschichte erzählen. Mit Lieferanten, die Menschen fair und vertrauenswürdig mit Produkten verbinden. Mit KonsumentInnen, die glauben, dass ihre wöchentlichen Einkaufsentscheidungen ..."
-  search_by_name: Suche nach Ort oder Name des Ladens/Erzeugers...
+  search_by_name: Suche nach Ort oder Name des Ladens/Produzents...
   producers_join: 'Wir laden Deutsche Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnet Steuern?
   print_invoice: "Rechnung drucken"
@@ -207,7 +207,7 @@ de_DE:
   ship_order: "Bestellung liefern"
   cancel_order: "Bestellung stornieren"
   confirm_send_invoice: "Eine Rechnung für diese Bestellung wird an den Kunden geschickt. Sind Sie sicher, dass sie fortfahren möchten?"
-  confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die Bestätigungs-E-Mail erneut senden wollen?"
+  confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
   must_have_valid_business_number: "%{enterprise_name} sollte eine gültige Steuer-ID-Nummer haben, bevor die Rechnung gesendet wird."
   invoice: "Rechnung"
   more: "Mehr"
@@ -215,9 +215,9 @@ de_DE:
   say_yes: "Ja"
   ongoing: Laufend
   bill_address: Rechnungsadresse
-  ship_address: Lieferanschrift
+  ship_address: Lieferadresse
   sort_order_cycles_on_shopfront_by: "Sortiere die Bestellzyklen des Ladens nach"
-  required_fields: Die erforderlichen Felder sind mit * markiert
+  required_fields: Pflichtangaben sind mit * markiert
   select_continue: Auswählen und fortfahren
   remove: Entfernen
   or: oder
@@ -230,7 +230,7 @@ de_DE:
   cancel: Abbrechen
   edit: Bearbeiten
   clone: Duplizieren
-  distributors: Verteiler
+  distributors: Verteilstellen
   bulk_order_management: Massenbearbeitung von Bestellungen
   enterprises: Unternehmen
   enterprise_groups: Gruppen
@@ -292,7 +292,7 @@ de_DE:
     resume: "Fortsetzen"
     save: "Speichern"
     edit: "Bearbeiten"
-    update: "Aktualisieren"
+    update: "Speichern"
     delete: "Löschen"
     add: "Hinzufügen"
     cut: "Ausschneiden"
@@ -300,12 +300,12 @@ de_DE:
     destroy: "Zerstören"
     rename: "Umbenennen"
   admin:
-    begins_at: Beginnt um
+    begins_at: Beginnt
     begins_on: Beginnt am
     customer: Kunde
     date: Datum
     email: E-Mail
-    ends_at: Endet um
+    ends_at: Endet
     ends_on: Endet am
     name: Name
     on_hand: Verfügbar
@@ -316,13 +316,13 @@ de_DE:
     payment_method: Zahlungsart
     phone: Telefonnummer
     price: Preis
-    producer: Erzeuger
+    producer: Produzent
     image: Bild
     product: Produkt
     quantity: Menge
     schedule: Zeitplan
     shipping: Versand
-    shipping_method: Lieferart
+    shipping_method: Lieferoption
     shop: Laden
     sku: Artikelnummer
     status_state: Status
@@ -343,20 +343,20 @@ de_DE:
     cancel: Abrechen
     back: Zurück
     show_more: Mehr zeigen
-    show_n_more: '%{num} mehr zeigen'
+    show_n_more: Zeige %{num} weitere
     choose: "Auswählen ..."
     please_select: Bitte auswählen ...
     column_save_as_default: Als Standard speichern
     columns: Spalten
     actions: Aktionen
-    viewing: "Zeigt: %{current_view_name}"
+    viewing: "%{current_view_name}"
     description: Beschreibung
     whats_this: Was ist das?
     tag_has_rules: "Vorhandene Regeln für dieses Stichwort: %{num}"
     has_one_rule: "hat eine Regel"
     has_n_rules: "hat %{num} Regel(n)"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
-    unsaved_changes: "Sie haben ungespeicherte Änderungen"
+    unsaved_changes: "Sie haben ungespeicherte Änderungen!"
     available_units: "Verfügbare Einheiten"
     shopfront_settings:
       embedded_shopfront_settings: "Eingebettete Ladeneinstellungen"
@@ -408,15 +408,15 @@ de_DE:
         update_address_error: "Es tut uns leid! Bitte füllen Sie alle erforderlichen Felder aus!"
         edit_bill_address: "Rechnungsadresse bearbeiten"
         edit_ship_address: "Lieferadresse bearbeiten"
-        required_fileds: "Die erforderlichen Felder sind mit einem Sternchen gekennzeichnet."
+        required_fileds: "Pflichtangaben sind mit * markiert"
         select_country: "Land wählen"
         select_state: "Bundesland wählen"
         edit: "Bearbeiten"
         update_address: "Adresse aktualisieren"
         confirm_delete: "Sicher zu löschen?"
         search_by_email: "Suche nach E-Mail/Code"
-        guest_label: "Gäste Kasse"
-        credit_owed: "Gutschrift geschuldet"
+        guest_label: "Gasteinkauf"
+        credit_owed: "Geschuldetes Guthaben"
         balance_due: "Restbetrag fällig"
       destroy:
         has_associated_orders: "Löschen fehlgeschlagen: Kunde hat Bestellungen mit diesem Laden"
@@ -425,9 +425,9 @@ de_DE:
         title: Inhalt
         header: Header
         home_page: Homepage
-        producer_signup_page: Hersteller-Anmeldeseite
+        producer_signup_page: Anmeldung für Produzenten
         hub_signup_page: Hubregistrierseite
-        group_signup_page: Gruppen-Anmeldeseite
+        group_signup_page: Anmeldung für Gruppen
         main_links: Hauptmenü-Links
         footer_and_external_links: Fußzeile und externe Links
         your_content: Ihr Inhalt
@@ -440,8 +440,8 @@ de_DE:
         fee_type: "Art der Gebühr"
         name: "Name"
         tax_category: "Steuerkategorie"
-        calculator: "Rechner"
-        calculator_values: "Werte des Rechners"
+        calculator: "Art der Berechnung"
+        calculator_values: "Werte zur Berechnung"
         search: "Suche"
         name_placeholder: "z.B. Verpackungsgebühr"
     enterprise_groups:
@@ -453,26 +453,26 @@ de_DE:
       enterprise_role:
         manages: verwaltet
     products:
-      unit_name_placeholder: 'z.B. Bündel'
+      unit_name_placeholder: 'z. B. Bündel'
       index:
         unit: Einheit
         display_as: Angezeigt als
         category: Produktkategorie
         tax_category: Steuerkategorie
-        inherits_properties?: Vererbt Eigenschaften
+        inherits_properties?: Übernimmt Eigenschaften des Ladens?
         available_on: Verfügbar am
         av_on: "Verfüg. am"
         import_date: Importiert
         upload_an_image: Bild hochladen
       seo:
         product_search_keywords: "Stichwörter für die Produktsuche"
-        product_search_tip: "Geben Sie Wörter ein, um Ihre Produkte in den Geschäften zu suchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
-        SEO_keywords: "SEO Schlüsselwörter"
-        seo_tip: "Geben Sie Wörter ein, um Ihre Produkte im Internet zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
+        product_search_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte in den Läden besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
+        SEO_keywords: "Stichwörter für die Suche im Internet"
+        seo_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte im Internet besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
       search: "Suche"
       properties:
         property_name: "Name der Eigenschaft"
-        inherited_property: "Vererbte Eigenschaft"
+        inherited_property: "Übernommene Eigenschaft des Ladens"
       variants:
         infinity: "Unendlichkeit"
         to_order_tip: "Artikel, die auf Bestellung hergestellt werden, haben keinen festgelegten Lagerbestand."
@@ -506,20 +506,20 @@ de_DE:
         unexpected_error: "Beim Produktimport ist beim Öffnen der Datei ein unerwarteter Fehler aufgetreten: %{error_message}"
         malformed_csv: "Beim Produktimport ist eine fehlerhafte CSV aufgetreten: %{error_message}"
       index:
-        notice: "Beachten"
+        notice: "HINWEIS"
         beta_notice: "Diese Funktion befindet sich noch in der Beta-Phase: Während der Verwendung können Fehler auftreten. Bitte zögern Sie nicht, den Support zu kontaktieren."
-        select_file: Wählen Sie eine Tabelle zum Hochladen
+        select_file: 'Wählen Sie eine Tabelle zum Hochladen:'
         spreadsheet: Kalkulationstabelle
-        choose_import_type: Wählen Sie die Importart
+        choose_import_type: 'Wählen Sie die Importart:'
         import_into: Importart
         product_list: Produktliste
         inventories: Kataloge
         import: Importieren
         upload: Hochladen
         csv_templates: CSV Vorlage
-        product_list_template: Laden Sie die Produktlistenvorlage herunter
-        inventory_template: Katalogvorlage herunterladen.
-        category_values: Verfügbare Kategoriewerte
+        product_list_template: Produktlistenvorlage herunterladen
+        inventory_template: Katalogvorlage herunterladen
+        category_values: Verfügbare Kategorien
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Versandkategorien
@@ -541,8 +541,8 @@ de_DE:
         not_found: Unternehmen konnte nicht in der Datenbank gefunden werden
         no_name: Kein Name
         blank_enterprise: Für einige Produkte ist kein Unternehmen definiert
-        reset_absent?: Fehlende Produkte zurücksetzen
-        reset_absent_tip: Den Bestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen
+        reset_absent?: Fehlende Produkte zurücksetzen?
+        reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alles überschreiben
         overwrite_empty: Überschreiben, wenn leer
         default_stock: Lagerbestand setzen
@@ -584,22 +584,22 @@ de_DE:
         loading_inventory: KATALOG WIRD GELADEN
       index:
         title: Katalog
-        description: Verwenden Sie diese Seite, um Bestände für Ihre Unternehmen zu verwalten. Alle hier eingestellten Produktdetails überschreiben diejenigen, die auf der Seite "Produkte" eingestellt sind
+        description: Verwenden Sie diese Seite, um die Produktbestände Ihrer Unternehmen zu verwalten. Alle hier eingestellten Produktdetails überschreiben diejenigen, die auf der Seite "Produkte" eingestellt sind.
         enable_reset?: Lagerbestand zurücksetzbar?
         default_stock: "Standardbestand"
-        inherit?: Übernehmen?
+        inherit?: Eigenschaften übernehmen?
         add: Hinzufügen
         hide: Verbergen
         import_date: Importiert
         select_a_shop: Laden wählen
         review_now: Prüfen
-        new_products_alert_message: Es sind %{new_product_count} neue Produkte verfügbar, die in den Katalog aufgenommen werden können
+        new_products_alert_message: Es sind %{new_product_count} neue Produkte verfügbar, die in den Katalog aufgenommen werden können.
         currently_empty: Ihr Katalog ist momentan leer.
         no_matching_products: Es wurden keine passenden Produkte im Katalog gefunden.
-        no_hidden_products: In diesem Katalog wurden keine Produkte ausgeblendet
-        no_matching_hidden_products: Keine ausgeblendeten Produkte entsprechen Ihren Suchkriterien
-        no_new_products: Es sind keine neuen Produkte verfügbar, die zu diesem Katalog hinzugefügt werden können
-        no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien
+        no_hidden_products: In diesem Katalog wurden keine Produkte ausgeblendet.
+        no_matching_hidden_products: Keine ausgeblendeten Produkte entsprechen Ihren Suchkriterien.
+        no_new_products: Es sind keine neuen Produkte verfügbar, die in den Katalog aufgenommen werden könnten.
+        no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien.
         inventory_powertip: Dies ist Ihr Produktkatalog. Um Produkte zu Ihrem Katalog hinzuzufügen, wählen Sie "Neue Produkte" aus dem Dropdown-Menü.
         hidden_powertip: Diese Produkte wurden in Ihrem Katalog ausgeblendet und können nicht zu Ihrem Laden hinzugefügt werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
         new_powertip: Diese Produkte können Ihrem Katalog hinzugefügt werden. Klicken Sie auf "Hinzufügen", um ein Produkt zu Ihrem Katalog hinzuzufügen, oder auf "Verbergen", um es aus der Ansicht auszublenden. Sie können Ihre Meinung später immer ändern!
@@ -637,21 +637,21 @@ de_DE:
       index:
         title: Unternehmen
         new_enterprise: Neues Unternehmen
-        producer?: "Erzeuger?"
+        producer?: "Produzent?"
         package: Paket
         status: Status
         manage: Verwalten
       form:
         about_us:
-          desc_short: Kurze Beschreibung
-          desc_short_placeholder: Schreiben Sie etwas in ein oder zwei Sätzen über Ihr Unternehmen
+          desc_short: Kurzbeschreibung
+          desc_short_placeholder: Schreiben Sie etwas in ein oder zwei Sätzen über Ihr Unternehmen.
           desc_long: Über uns
           desc_long_placeholder: Schreiben Sie etwas über sich. Diese Information wird in Ihrem öffentlichen Profil angezeigt.
         business_details:
           abn: USt-IdNr.
-          abn_placeholder: z.B. DE999999999
+          abn_placeholder: z. B. DE999999999
           acn: St.-Nr.
-          acn_placeholder: z.B. 93815/08152
+          acn_placeholder: z. B. 93815/08152
           display_invoice_logo: Logo in Rechnungen anzeigen
           invoice_text: Fügen Sie benutzerdefinierten Text am Ende der Rechnungen hinzu
           terms_and_conditions: "Geschäftsbedingungen"
@@ -659,14 +659,14 @@ de_DE:
           uploaded_on: "hochgeladen am"
         contact:
           name: Name
-          name_placeholder: z.B. Gustav Pflaume
+          name_placeholder: z. B. Gustav Pflaume
           email_address: Öffentliche E-Mail-Adresse
-          email_address_placeholder: z.B. anfragen@fresh-food.com
-          email_address_tip: "Diese E-Mail-Adresse wird in Ihrem öffentlichen Profil angezeigt"
+          email_address_placeholder: z. B. anfragen@fresh-food.com
+          email_address_tip: "Diese E-Mail-Adresse wird in Ihrem öffentlichen Profil angezeigt."
           phone: Telefon
-          phone_placeholder: z.B. 98 7654 3210
+          phone_placeholder: z. B. 98 7654 3210
           website: Webseite
-          website_placeholder: z.B. www.truffles.com
+          website_placeholder: z. B. www.truffles.com
         enterprise_fees:
           name: Name
           fee_type: Art der Gebühr
@@ -675,10 +675,10 @@ de_DE:
           create_button: Erstelle jetzt eine
         images:
           logo: Logo
-          promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt'
+          promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
           promo_image_note1: 'BITTE BEACHTEN SIE:'
-          promo_image_note2: Jedes hier hochgeladene Werbebild wird auf 1200 x 260 beschnitten.
-          promo_image_note3: Das Werbebild wird oben auf der Profilseite eines Unternehmens und in Pop-ups angezeigt.
+          promo_image_note2: Das hier hochgeladene Bild wird auf 1200 x 260 Pixel beschnitten.
+          promo_image_note3: Das Bild wird oben auf der Profilseite Ihres Unternehmens und in Pop-ups angezeigt.
           remove_logo: "Bild entfernen"
           remove_promo_image: "Bild entfernen"
         inventory_settings:
@@ -691,23 +691,23 @@ de_DE:
               nicht zur Verwaltung Ihrer Produkte verwenden, sollten Sie die folgende
               "empfohlene" Option auswählen:
           preferred_product_selection_from_inventory_only_yes: Neue Produkte können in meinem Laden angeboten werden (empfohlen)
-          preferred_product_selection_from_inventory_only_no: Neue Produkte müssen zu meinem Katalog hinzugefügt werden, bevor sie in meinem Laden erscheinen können
+          preferred_product_selection_from_inventory_only_no: Neue Produkte müssen zu meinem Katalog hinzugefügt werden, bevor sie in meinem Laden angeboten werden können
         payment_methods:
           name: Name
-          applies: Gilt?
+          applies: Aktiv?
           manage: Zahlungsarten verwalten
           no_method_yet: Sie haben noch keine Zahlungsarten
           create_button: Neue Zahlungsart
           create_one_button: Erstelle jetzt eine
         primary_details:
           name: Name
-          name_placeholder: z.B. Professor Plums biodynamische Trüffel
+          name_placeholder: z. B. Professor Plums biodynamische Trüffel
           groups: Gruppen
           groups_tip: Wählen Sie beliebige Gruppen oder Regionen aus, bei denen Sie Mitglied sind. Dies hilft Kunden, Ihr Unternehmen zu finden.
           groups_placeholder: Beginnen Sie mit der Eingabe, um nach verfügbaren Gruppen zu suchen ...
-          primary_producer: Erzeuger?
-          primary_producer_tip: Wählen Sie "Erzeuger", wenn Sie ein Erzeuger von Lebensmitteln sind.
-          producer: Erzeuger
+          primary_producer: Produzent?
+          primary_producer_tip: Wählen Sie "Produzent", wenn Sie eigene Produkte herstellen und diese über das Open Food Network verkaufen möchten.
+          producer: Produzent
           any: Alle
           none: Keine
           own: Eigene
@@ -726,55 +726,55 @@ de_DE:
         shipping_methods:
           name: "Name"
           applies: "Aktiv?"
-          manage: "Lieferarten verwalten"
-          create_button: "Neue Lieferart erstellen"
+          manage: "Lieferoptionen verwalten"
+          create_button: "Neue Lieferoption"
           create_one_button: "Erstelle jetzt eine"
-          no_method_yet: "Sie haben noch keine Lieferarten angelegt."
+          no_method_yet: "Sie haben noch keine Lieferoptionen angelegt."
         shop_preferences:
           shopfront_requires_login: "Öffentlich sichtbarer Laden?"
           shopfront_requires_login_tip: "Wählen Sie aus, ob sich Kunden einloggen müssen, um den Laden zu sehen oder ob er für alle sichtbar ist."
           shopfront_requires_login_false: "Öffentlich"
           shopfront_requires_login_true: "Nur für registrierte Nutzer sichtbar"
           recommend_require_login: "Wenn Bestellungen nachträglich geändert werden dürfen, empfehlen wir Einkauf nur für eingeloggte Nutzer."
-          allow_guest_orders: "Gast Einkauf"
-          allow_guest_orders_tip: "Gasteinkauf erlauben oder nur für eingeloggte Nutzer"
+          allow_guest_orders: "Gasteinkauf"
+          allow_guest_orders_tip: "Wählen Sie aus, ob nich eingeloggte Kunden als Gäste einkaufen dürfen oder ob nur eingeloggten Nutzern der Einkauf möglich ist."
           allow_guest_orders_false: "Einkauf nur für eingeloggte Nutzer"
           allow_guest_orders_true: "Gasteinkauf erlauben"
           allow_order_changes: "Bestellungen nachträglich ändern"
-          allow_order_changes_tip: "Kunden erlauben, ihre Bestellung zu ändern, solange der Bestellzyklus offen ist."
-          allow_order_changes_false: "Bestellungen können nicht geändert/storniert werden"
+          allow_order_changes_tip: "Wählen Sie aus, ob Kunden ihre Bestellung ändern können, solange der Bestellzyklus geöffnet ist."
+          allow_order_changes_false: "Bestellungen können nicht geändert oder storniert werden"
           allow_order_changes_true: "Kunden können Bestellungen ändern oder stornieren, während der Bestellzyklus geöffnet ist"
           enable_subscriptions: "Abonnements"
-          enable_subscriptions_tip: "Abo-Funktionalität aktivieren?"
+          enable_subscriptions_tip: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmäßige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
           customer_names_in_reports: "Kundennamen in Berichten"
-          customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen"
+          customer_names_tip: "Ermöglichen Sie Ihren Lieferanten, die Namen Ihrer Kunden in Berichten anzuzeigen."
           customer_names_false: "deaktiviert"
           customer_names_true: "aktiviert"
           shopfront_message: "'Willkommen'-Nachricht im Laden"
           shopfront_message_placeholder: >
               Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
               wie Sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
-              wird dieser in einem Home-Tab in Ihrem Laden angezeigt, wenn Kunden
+              wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
               ihn zum ersten Mal besuchen.
           shopfront_message_link_tooltip: "Link einfügen/bearbeiten"
           shopfront_message_link_prompt: "Bitte geben Sie die einzufügende URL ein:"
-          shopfront_closed_message: "'Laden geschlossen'-Nachricht"
+          shopfront_closed_message: "'Laden geschlossen'-Nachricht im Laden"
           shopfront_closed_message_placeholder: >
               Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr
               Laden geschlossen ist und/oder wann Kunden erwarten können, dass er
               wieder geöffnet wird. Dies wird in Ihrem Laden nur angezeigt, wenn Sie
-              keine aktiven Bestellzyklen haben (d.h. der Laden ist geschlossen).
-          shopfront_category_ordering: "Ordnung der Produktkategorien im Laden"
+              gerade keine aktiven Bestellzyklen haben.
+          shopfront_category_ordering: "Sortierung der Produktkategorien im Laden"
           shopfront_category_ordering_note: "(oben nach unten)"
           open_date: "Öffnungsdatum"
-          close_date: "Abschlussdatum"
+          close_date: "Schließdatum"
         social:
-          twitter_placeholder: "z.B. @the_prof"
-          instagram_placeholder: "z.B. the_prof"
-          facebook_placeholder: "z.B. www.facebook.com/PageNameHere"
-          linkedin_placeholder: "z.B. www.linkedin.com/in/IhrNameHier"
+          twitter_placeholder: "z. B. @the_prof"
+          instagram_placeholder: "z. B. the_prof"
+          facebook_placeholder: "z. B. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "z. B. www.linkedin.com/in/IhrNameHier"
         stripe_connect:
           connect_with_stripe: "Stripe integrieren"
           stripe_connect_intro: "Um Zahlungen mit Kreditkarte zu akzeptieren, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Verwenden Sie den Knopf rechts, um loszulegen."
@@ -791,28 +791,28 @@ de_DE:
           default_rules:
             by_default: Standardmäßig
             no_rules_yet: Es gelten noch keine Standardregeln.
-            add_new_button: '+ Fügen Sie eine neue Standardregel hinzu'
+            add_new_button: 'neue Standardregel +'
           no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden.
           no_rules_yet: Für dieses Stichwort gelten noch keine Regeln.
           for_customers_tagged: 'Für Kunden mit dem Stichwort:'
           add_new_rule: '+ Neue Regel hinzufügen'
           add_new_tag: '+ Neues Stichwort hinzufügen'
         users:
-          email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
+          email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
           resend: Erneut senden
           owner: 'Inhaber'
           contact: "Kontakt"
-          contact_tip: "Der Manager, der Enterprise-E-Mails für Bestellungen und Benachrichtigungen erhält. Muss eine bestätigte E-Mail-Adresse haben."
+          contact_tip: "Der Manager, der Unternehmens-E-Mails für Bestellungen und Benachrichtigungen erhält. Er muss eine bestätigte E-Mail-Adresse haben."
           owner_tip: Der Hauptnutzer, der für dieses Unternehmen verantwortlich ist.
           notifications: Benachrichtigungen
           notifications_tip: Benachrichtigungen über Bestellungen werden an diese E-Mail-Adresse gesendet.
-          notifications_placeholder: z.B. lisa@maier.de
+          notifications_placeholder: z. B. lisa@maier.de
           notifications_note: 'Hinweis: Eine neue E-Mail-Adresse muss möglicherweise vor der Verwendung bestätigt werden'
           managers: Manager
           managers_tip: Andere Benutzer mit der Berechtigung, dieses Unternehmen zu verwalten.
           invite_manager: "Manager einladen"
           invite_manager_tip: "Laden Sie einen nicht registrierten Benutzer ein, sich anzumelden und ein Manager dieses Unternehmens zu werden."
-          add_unregistered_user: "Fügen Sie einen nicht registrierten Benutzer hinzu"
+          add_unregistered_user: "Laden Sie einen nicht registrierten Benutzer ein"
           email_confirmed: "E-Mail bestätigt"
           email_not_confirmed: "E-Mail nicht bestätigt"
       actions:
@@ -820,35 +820,35 @@ de_DE:
         properties: Eigenschaften
         payment_methods: Zahlungsarten
         payment_methods_tip: Dieses Unternehmen hat keine Zahlungsarten
-        shipping_methods: Lieferarten
-        shipping_methods_tip: Dieses Unternehmen hat Lieferarten
+        shipping_methods: Lieferoptionen
+        shipping_methods_tip: Dieses Unternehmen hat Lieferoptionen
         enterprise_fees: Unternehmensgebühren
-        enterprise_fees_tip: Dieses Unternehmen hat keine Gebühren
+        enterprise_fees_tip: Dieses Unternehmen hat keine Gebühren.
       admin_index:
         name: Name
         role: Rolle
         sells: vertreibt
         visible: Sichtbar?
         owner: Inhaber
-        producer: Erzeuger
+        producer: Produzent
       change_type_form:
-        producer_profile: Erzeugerprofil
+        producer_profile: Profil
         connect_ofn: Stellen Sie sich und Ihre Produkte vor
         always_free: IMMER KOSTENLOS
-        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen Sie sich mit anderen Erzeugern und Läden. \nFügen Sie Ihre Produkte dem Profil hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Erzeugerladen\"."
-        producer_shop: Erzeugerladen
+        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. \nFügen Sie Ihre Produkte dem Profil hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Produzentenladen\"."
+        producer_shop: Produzentenladen
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
-        producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Erzeugerladen im Open Food Network.
-        producer_shop_description_text2: Ein Erzeugerladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
+        producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
+        producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
         producer_hub: Hub
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
-        producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Erzeuger oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
-        profile: Nur Profil
+        producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
+        profile: Profil
         get_listing: Erstellen Sie einen Eintrag
-        profile_description_text: Sie können im Open Food Network gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
+        profile_description_text: Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. Sie können im Open Food Network gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
         hub_shop: Hub
         hub_shop_text: Verkaufen Sie Produkte anderer
-        hub_shop_description_text: Verkaufen Sie Produkte anderer Erzeuger oder Läden im Open Food Network. Als Händler führen Sie die Produkte zusammen und sind mit Ihrem Laden ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
+        hub_shop_description_text: Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network. Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         choose_option: Bitte wählen Sie eine der oben aufgeführten Optionen.
         change_now: Jetzt ändern
       enterprise_user_index:
@@ -857,13 +857,13 @@ de_DE:
         search_placeholder: Suche nach Name
         manage: Verwalten
         manage_link: Einstellungen
-        producer?: "Erzeuger?"
+        producer?: "Produzent?"
         package: "Paket"
         status: "Status"
       new_form:
         owner: Inhaber
         owner_tip: Der Hauptnutzer, der für dieses Unternehmen verantwortlich ist.
-        i_am_producer: Ich bin ein Erzeuger
+        i_am_producer: Ich bin ein Produzent
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
@@ -877,7 +877,7 @@ de_DE:
         next_step: Nächster Schritt
         choose_starting_point: 'Wählen Sie Ihr Paket:'
         profile: 'Profil'
-        producer_profile: 'Erzeugerprofil'
+        producer_profile: 'Profil'
       invite_manager:
         user_already_exists: "Benutzer existiert bereits"
         error: "Etwas ist schief gelaufen"
@@ -902,7 +902,7 @@ de_DE:
         incoming: "Eingehend"
         supplier: "Lieferant"
         products: "Produkte"
-        receival_details: "Empfangsdetails"
+        receival_details: "Information an Lieferanten"
         fees: "Gebühren"
         save: "Speichern"
         save_and_next: "Speichern und weiter"
@@ -911,7 +911,7 @@ de_DE:
         back_to_list: "Zurück zur Liste"
       outgoing:
         outgoing: "Ausgehend"
-        distributor: "Verteiler"
+        distributor: "Verteilstelle"
         products: "Produkte"
         tags: "Stichwörter"
         delivery_details: "Lieferdetails"
@@ -926,20 +926,20 @@ de_DE:
         incoming: "2. Eingehende Produkte"
         outgoing: "3. Ausgehende Produkte"
       exchange_form:
-        pickup_time_tip: Wenn Bestellungen dieses Bestellzylus für den Kunden bereit sind
+        pickup_time_tip: Datum und Uhrzeit, ab wann Bestellungen dieses Bestellzylus für den Kunden bereit sind.
         pickup_instructions_placeholder: "Abholungsinformationen"
-        pickup_instructions_tip: Diese Informationen werden Kunden nach Abschluss einer Bestellung angezeigt
-        pickup_time_placeholder: "Bereit für (d.h. Datum/Uhrzeit)"
+        pickup_instructions_tip: Diese Informationen werden Kunden nach Abschluss einer Bestellung angezeigt.
+        pickup_time_placeholder: "Fertig am (d. h. Datum/Uhrzeit)"
         receival_instructions_placeholder: "Lieferinformation"
         add_fee: 'Gebühr hinzufügen'
         remove: 'Entfernen'
         selected: 'ausgewählt'
       add_exchange_form:
         add_supplier: 'Lieferant hinzufügen'
-        add_distributor: 'Verteiler hinzufügen'
+        add_distributor: 'Verteilstelle hinzufügen'
       advanced_settings:
         title: Erweiterte Einstellungen
-        choose_product_tip: Sie können den Wareneingang und -ausgang auf den Bestand von nur %{inventory} beschränken.
+        choose_product_tip: Sie können die eingehenden und ausgehenden Produkte auf den Katalog nur von %{inventory} beschränken.
         preferred_product_selection_from_coordinator_inventory_only_here: Nur der Katalog des Koordinators
         preferred_product_selection_from_coordinator_inventory_only_all: Alle verfügbaren Produkte
         save_reload: Speichern und neu laden
@@ -957,7 +957,7 @@ de_DE:
         receival_details: Lieferinformation
         fees: Gebühren
         outgoing: Ausgehend
-        distributor: Verteiler
+        distributor: Verteilstelle
         products: Produkte
         tags: Stichwörter
         add_a_tag: Stichwort hinzufügen
@@ -967,13 +967,13 @@ de_DE:
         schedules: Zeitpläne
         new_schedule: Neuer Zeitplan
       name_and_timing_form:
-        name: Name
-        orders_open: Bestellzyklus öffnet um
+        name: Name des Bestellzyklus
+        orders_open: Bestellzyklus öffnet
         coordinator: Koordinator
-        orders_close: Bestellungen schließen
+        orders_close: Bestellzyklus schließt
       row:
         suppliers: Lieferanten
-        distributors: Verteiler
+        distributors: Verteilstellen
         variants: Varianten
       simple_form:
         ready_for: Bereit am
@@ -993,7 +993,7 @@ de_DE:
         proceed: Fortfahren
     producer_properties:
       index:
-        title: Erzeugereigenschaften
+        title: Produzenteneigenschaften
     proxy_orders:
       cancel:
         could_not_cancel_the_order: Die Bestellung konnte nicht storniert werden
@@ -1005,22 +1005,22 @@ de_DE:
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten"
         has_no_shipping_methods: "%{enterprise} hat keine Versandarten"
-        has_no_enterprise_fees: "%{enterprise} hat keine Zuschläge"
+        has_no_enterprise_fees: "%{enterprise} hat keine Gebühren."
     enterprise_issues:
       create_new: Erstellen
       resend_email: E-Mail erneut senden
-      has_no_payment_methods: "%{enterprise}hat derzeit keine Zahlungsarten"
-      has_no_shipping_methods: "%{enterprise} hat derzeit keine Versandarten"
-      email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
-      not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden"
+      has_no_payment_methods: "%{enterprise}hat derzeit keine Zahlungsarten!"
+      has_no_shipping_methods: "%{enterprise} hat derzeit keine Versandarten!"
+      email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
+      not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden!"
     reports:
       hidden: Ausgeblendet
       unitsize: EINHEIT
       total: SUMME
       total_items: GESAMTANZAHL
-      supplier_totals: Lieferanten-Gesamtsummen
-      supplier_totals_by_distributor: Lieferanten-Gesamtsummen nach Verteiler
-      totals_by_supplier: Verteiler-Gesamtsummen nach Lieferanten
+      supplier_totals: Lieferantengesamtsummen
+      supplier_totals_by_distributor: Lieferantengesamtsummen nach Verteilstelle
+      totals_by_supplier: Verteilstellengesamtsummen nach Lieferanten
       customer_totals: Kundengesamtsummen
       all_products: Alle Produkte
       inventory: Aktueller Bestand
@@ -1034,8 +1034,8 @@ de_DE:
       pack_by_customer: Packliste nach Kunde
       pack_by_supplier: Packliste nach Lieferanten
       orders_and_distributors:
-        name: Bestellungen und Verteiler
-        description: Bestellungen mit Verteilerdetails
+        name: Bestellungen und Verteilstellen
+        description: Bestellungen mit Verteilstellendetails
       bulk_coop:
         name: Massen-Co-Op
         description: Berichte für Massen-Co-Op-Bestellungen
@@ -1062,7 +1062,7 @@ de_DE:
         name: Packberichte
       enterprise_fee_summary:
         name: "Unternehmensgebühr Zusammenfassung"
-        description: "Zusammenfassung der erhobenen Zuschläge"
+        description: "Zusammenfassung der erhobenen Gebühren"
     subscriptions:
       index:
         title: "Abonnements"
@@ -1084,14 +1084,14 @@ de_DE:
         enable_subscriptions: "Aktivieren Sie Abonnements für mindestens einen Ihrer Läden"
         enable_subscriptions_step_1_html: 1. Gehen Sie zur Seite %{enterprises_link}, suchen Sie Ihren Laden und klicken Sie auf "Verwalten"
         enable_subscriptions_step_2: 2. Aktivieren Sie unter "Ladeneinstellungen" die Option Abonnements
-        set_up_shipping_and_payment_methods_html: Erstellen Sie %{shipping_link}und %{payment_link}
+        set_up_shipping_and_payment_methods_html: Erstellen Sie %{shipping_link}optionen und %{payment_link}sarten
         set_up_shipping_and_payment_methods_note_html: Beachten Sie, dass nur Bar- und Stripe-Zahlungsarten für Abonnements verwendet werden dürfen
         ensure_at_least_one_customer_html: Stellen Sie sicher, dass mindestens ein %{customer_link} vorhanden ist
         create_at_least_one_schedule: Erstellen Sie mindestens einen Zeitplan
-        create_at_least_one_schedule_step_1_html: 1. Gehen Sie auf die Seite %{order_cycles_link}
-        create_at_least_one_schedule_step_2: 2. Erstellen Sie einen Bestellzyklus, falls Sie dies noch nicht getan haben
-        create_at_least_one_schedule_step_3: 3. Klicken Sie auf "+ Neuer Zeitplan" und füllen Sie das Formular aus
-        once_you_are_done_you_can_html: Sobald Sie fertig sind, können Sie %{reload_this_page_link}
+        create_at_least_one_schedule_step_1_html: 1. Gehen Sie auf die Seite %{order_cycles_link}.
+        create_at_least_one_schedule_step_2: 2. Erstellen Sie einen Bestellzyklus, falls Sie dies noch nicht getan haben.
+        create_at_least_one_schedule_step_3: 3. Klicken Sie auf "+ Neuer Zeitplan" und füllen Sie das Formular aus.
+        once_you_are_done_you_can_html: Sobald Sie fertig sind, können Sie %{reload_this_page_link}.
         reload_this_page: diese Seite neu laden
       form:
         create: "Abonnement erstellen"
@@ -1106,7 +1106,7 @@ de_DE:
             Wenn Sie die Preise oder Gebühren ändern, werden die Bestellungen aktualisiert, aber das Abonnement zeigt weiterhin die alten Werte an.
         not_in_open_and_upcoming_order_cycles_warning: "Für dieses Produkt gibt es keine offenen oder bevorstehenden Bestellzyklen."
       autocomplete:
-        name_or_sku: "NAME ODER SKU"
+        name_or_sku: "NAME ODER ARTIKELNUMMER"
         quantity: "Menge"
         add: "Hinzufügen"
       details:
@@ -1130,7 +1130,7 @@ de_DE:
         save: "SPEICHERN"
         saving: "SPEICHERN"
         saved: "GESPEICHERT"
-      product_already_in_order: Dieses Produkt wurde bereits zur Bestellung hinzugefügt. Bitte änderns Sie stattdessen die Menge.
+      product_already_in_order: Dieses Produkt wurde bereits zur Bestellung hinzugefügt. Bitte ändern Sie stattdessen die Menge.
       stock:
         insufficient_stock: "Unzureichender Bestand verfügbar"
         out_of_stock: "Nicht vorrättig"
@@ -1150,8 +1150,8 @@ de_DE:
       yes_i_am_sure: Ja, ich bin mir sicher
       order_update_issues_msg: Einige Bestellungen konnten nicht automatisch aktualisiert werden. Dies liegt wahrscheinlich daran, dass sie manuell bearbeitet wurden. Bitte überprüfen Sie die unten aufgeführten Punkte und nehmen Sie gegebenenfalls Anpassungen an einzelnen Bestellungen vor.
       no_results:
-        no_subscriptions: Noch keine Abonnements
-        why_dont_you_add_one: Vielleicht welche hinzufügen? :)
+        no_subscriptions: Bisher gibt es noch keine Abonnements.
+        why_dont_you_add_one: Warum fügen Sie nicht einige hinzu?
         no_matching_subscriptions: Keine passenden Abonnements gefunden
     schedules:
       destroy:
@@ -1194,7 +1194,7 @@ de_DE:
         edit_cart: "Warenkorb bearbeiten"
         items_in_cart_singular: "%{num} Artikel in Ihrem Warenkorb"
         items_in_cart_plural: "%{num} Artikel in Ihrem Warenkorb"
-        close: "Abschließen"
+        close: "Schließen"
         cart_empty: "Ihr Warenkorb ist leer"
         take_me_shopping: "Bring mich einkaufen!"
       signed_in:
@@ -1208,7 +1208,7 @@ de_DE:
       footer_secure: "Sicher und vertrauenswürdig."
       footer_secure_text: "Open Food Network verwendet überall SSL-Verschlüsselung (2048 Bit RSA), um Ihre Einkaufs- und Zahlungsinformationen geheim zu halten. Unsere Server speichern Ihre Kreditkartendetails nicht und Zahlungen werden von PCI-konformen Dienstleistern verarbeitet."
       footer_contact_headline: "In Verbindung bleiben"
-      footer_contact_email: "Schreiben Sie uns eine E-Mail"
+      footer_contact_email: "Schreiben Sie uns eine E-Mail!"
       footer_nav_headline: "Navigieren"
       footer_join_headline: "Mitmachen"
       footer_join_body: "Erstellen Sie einen Eintrag, einen Laden oder ein Gruppenverzeichnis im Open Food Network."
@@ -1257,7 +1257,7 @@ de_DE:
   abn: "USt-IdNr."
   acn: "St.-Nr."
   invoice_issued_on: "Rechnung ausgestellt am:"
-  order_number: "Rechnungsnummer:"
+  order_number: "Rechnungsnummer"
   date_of_transaction: "Datum der Transaktion:"
   ticket_column_qty: "Menge"
   ticket_column_item: "Artikel"
@@ -1267,7 +1267,7 @@ de_DE:
   menu_1_url: "/shops"
   menu_2_title: "Karte"
   menu_2_url: "/map"
-  menu_3_title: "Erzeuger"
+  menu_3_title: "Produzenten"
   menu_3_url: "/producers"
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
@@ -1296,16 +1296,16 @@ de_DE:
   name: Name
   first_name: Vorname
   last_name: Nachname
-  email: 'E-Mail:'
+  email: E-Mail
   phone: Telefonnummer
   next: Nächste
-  address: Straße + Hausnummer
-  address_placeholder: z.B. Gartenstraße 123
-  address2: Adresse (Fortsetzung)
+  address: Adresse
+  address_placeholder: z. B. Gartenstraße 123
+  address2: Adresszusatz (optional)
   city: Ort
-  city_placeholder: z.B. Nordwestheim
+  city_placeholder: z. B. Nordwestheim
   postcode: Postleitzahl
-  postcode_placeholder: z.B. 30701
+  postcode_placeholder: z. B. 30701
   suburb: Vorort
   state: Bundesland
   country: Land
@@ -1314,7 +1314,7 @@ de_DE:
   on_demand: Auf Anfrage
   none: Keine
   not_allowed: Nicht erlaubt
-  no_shipping: keine Lieferarten
+  no_shipping: keine Lieferoptionen
   no_payment: keine Zahlungsarten
   no_shipping_or_payment: keine Versand- oder Zahlungsarten
   unconfirmed: unbestätigt
@@ -1323,8 +1323,8 @@ de_DE:
   label_shop: "Laden"
   label_shops: "Läden"
   label_map: "Karte"
-  label_producer: "Erzeuger"
-  label_producers: "Erzeuger"
+  label_producer: "Produzent"
+  label_producers: "Produzenten"
   label_groups: "Gruppen"
   label_about: "Über"
   label_connect: "Verbinde"
@@ -1343,7 +1343,7 @@ de_DE:
   label_notices: "Bemerkungen"
   cart_items: "Artikel"
   cart_headline: "Ihr Warenkorb"
-  total: "Total"
+  total: "Summe"
   cart_updating: "Warenkorb wird aktualisiert ..."
   cart_empty: "Warenkorb leer"
   cart_edit: "Warenkorb bearbeiten"
@@ -1409,8 +1409,8 @@ de_DE:
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
   brandstory_headline: "Lebensmittel Direktvermarktung"
-  brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues aufzubauen ..."
-  brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen mit Produkten fair und ehrlich zu verbinden. Mit Käufern, die glauben, dass bessere wöchentliche Einkaufsentscheidungen die Welt ernsthaft verändern können."
+  brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, einen Neuanfang zu wagen ..."
+  brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
   brandstory_part3: "Also bauen wir einen Online-Marktplatz auf, der das Spielfeld ebnet. Es ist transparent und schafft echte Beziehungen. Es ist Open Source, also gehört es allen. Es skaliert zu Regionen und Nationen, so dass Leute Versionen auf der ganzen Welt starten."
   brandstory_part4: "Es funktioniert überall. Es verändert alles."
@@ -1418,15 +1418,15 @@ de_DE:
   brandstory_part6: "Wir alle lieben das Essen. Jetzt können wir unser Nahrungssystem auch lieben."
   learn_body: "Erkunden Sie Modelle, Geschichten und Ressourcen, um Sie bei der Entwicklung Ihres Fair-Food-Geschäfts oder Ihrer Organisation zu unterstützen. Finden Sie Schulungen, Veranstaltungen und andere Möglichkeiten, um von Gleichgesinnten zu lernen."
   learn_cta: "Lass dich inspirieren"
-  connect_body: "Durchsuchen Sie unsere vollständigen Verzeichnisse von Erzeugern, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Listen Sie Ihr Unternehmen oder Ihre Organisation auf dem OFN auf, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
+  connect_body: "Durchsuchen Sie unsere vollständigen Verzeichnisse von Produzenten, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Präsentieren Sie Ihr Unternehmen oder Ihre Organisation im Open Food Network, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
   connect_cta: "Erkunden"
   system_headline: "Einkaufen - so funktioniert es."
   system_step1: "1. Suche"
   system_step1_text: "Durchsuchen Sie unsere vielfältigen, unabhängigen Läden nach saisonal und  regional erzeugten Lebensmitteln. Suchen Sie nach Region und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
   system_step2: "2. Laden"
-  system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Erzeugern und Hubs. Erfahren Sie die Geschichten hinter Ihrem Essen und den Menschen, die es erzeugen."
+  system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Produzenten und Hubs. Erfahren Sie die Geschichten hinter Ihrem Essen und den Menschen, die es erzeugen."
   system_step3: "3. Abholung/Lieferung"
-  system_step3_text: "Erhalten Sie eine Lieferung oder besuchen Sie Ihren Hersteller oder Ihr Hub für eine persönlichere Verbindung mit Ihrem Essen. Lebensmitteleinkauf so vielfältig wie die Natur es beabsichtigt hat."
+  system_step3_text: "Erhalten Sie eine Lieferung nach Hause oder besuchen Sie den Produzenten oder Ihren Hub für eine persönlichere Verbindung mit Ihrem Essen. Gestalten Sie Ihren Lebensmitteleinkauf so vielfältig, wie die Natur es auch ist."
   cta_headline: "Einkaufen, das die Welt verbessert."
   cta_label: "Ich bin bereit"
   stats_headline: "Wir schaffen ein neues Ernährungssystem."
@@ -1445,7 +1445,7 @@ de_DE:
   checkout_billing: "Rechnungsinfo"
   checkout_default_bill_address: "Als Standardrechnungsadresse speichern"
   checkout_shipping: Versandinformation
-  checkout_default_ship_address: "Als Standardversandadresse speichern"
+  checkout_default_ship_address: "Als Standardlieferadresse speichern"
   checkout_method_free: kostenlos
   checkout_address_same: Lieferadresse wie Rechnungsadresse?
   checkout_ready_for: "Bereit am:"
@@ -1455,7 +1455,7 @@ de_DE:
   checkout_your_order: Ihre Bestellung
   checkout_cart_total: Warenkorb insgesamt
   checkout_shipping_price: Versand
-  checkout_total_price: Total
+  checkout_total_price: Summe
   checkout_back_to_cart: "Zurück zum Warenkorb"
   cost_currency: "Kosten Währung"
   order_paid: BEZAHLT
@@ -1470,7 +1470,7 @@ de_DE:
   order_pickup_time: abholbereit
   order_pickup_instructions: Abholinformationen
   order_produce: Produkte
-  order_total_price: Total
+  order_total_price: Summe
   order_includes_tax: (inkl. Steuern)
   order_payment_paypal_successful: Ihre Zahlung mit PayPal wurde erfolgreich abgewickelt.
   order_hub_info: Hub-Info
@@ -1484,24 +1484,24 @@ de_DE:
   products_at: "bei %{distributor}"
   products_elsewhere: "Produkte an anderer Stelle"
   email_confirmed: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
-  email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse."
+  email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren können, bestätigen Sie bitte Ihre E-Mail-Adresse."
   email_confirmation_greeting: "Hallo, %{contact}!"
   email_confirmation_profile_created: "Ein Profil für %{name} wurde erfolgreich erstellt! Um Ihr Profil zu aktivieren, müssen wir diese E-Mail-Adresse bestätigen."
-  email_confirmation_click_link: "Bitte klicken Sie auf den unten stehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
+  email_confirmation_click_link: "Bitte klicken Sie auf den untenstehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
   email_confirmation_link_label: "E-Mail-Adresse bestätigen"
   email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf Ihr Verwaltungskonto für dieses Unternehmen zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen von %{sitename} zu erfahren und Ihr Profil oder Ihren Laden zu verwenden."
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich bei %{sitename} angemeldet haben oder von einer Person eingeladen wurden, die Sie wahrscheinlich kennen. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
-  email_contact: "Schreiben Sie uns eine E-Mail:"
+  email_contact: "Schreib uns eine E-Mail:"
   email_signoff: "Danke"
   email_signature: "%{sitename} Team"
   email_confirm_customer_greeting: "Hallo %{name},"
-  email_confirm_customer_intro_html: "Vielen Dank für ihren Einkauf bei <strong> %{distributor} </strong>!"
+  email_confirm_customer_intro_html: "vielen Dank für deinen Einkauf bei <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "<strong>Bestellbestätigung # %{number}</strong>"
-  email_confirm_customer_details_html: "Hier sind Ihre <strong>Bestelldaten</strong> von <strong>%{distributor}</strong>:"
+  email_confirm_customer_details_html: "Hier sind deine <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Mit freundlichen Grüßen,"
   email_confirm_shop_greeting: "Hallo %{name},"
-  email_confirm_shop_order_html: "Gut gemacht! Sie haben eine neue Bestellung für <strong>%{distributor}</strong>!"
+  email_confirm_shop_order_html: "Gut gemacht! Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"
   email_confirm_shop_number_html: "<strong>Bestellbestätigung # %{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Menge"
@@ -1514,7 +1514,7 @@ de_DE:
   email_payment_not_paid: NICHT BEZAHLT
   email_payment_summary: Zahlungsübersicht
   email_payment_method: "Bezahlen per:"
-  email_so_placement_intro_html: "Sie haben eine neue Bestellung für <strong>%{distributor}</strong>"
+  email_so_placement_intro_html: "Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"
   email_so_placement_details_html: "Hier sind die Details Ihrer Bestellung für <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Leider waren nicht alle von Ihnen angeforderten Produkte verfügbar. Die von Ihnen angeforderten Originalmengen sind unten durchgestrichen."
   email_so_payment_success_intro_html: "Eine automatische Zahlung für Ihre Bestellung bei <strong>%{distributor}</strong> wurde verarbeitet."
@@ -1536,14 +1536,14 @@ de_DE:
   email_shipping_delivery_time: "Lieferung am:"
   email_shipping_delivery_address: "Lieferadresse:"
   email_shipping_collection_details: Sammlungsdetails
-  email_shipping_collection_time: "Bereit zur Abholung"
+  email_shipping_collection_time: "Bereit zur Abholung:"
   email_shipping_collection_instructions: "Sammlung Anweisungen:"
   email_special_instructions: "Ihre Notizen:"
   email_signup_greeting: Hallo!
   email_signup_welcome: "Willkommen bei %{sitename}!"
   email_signup_confirmed_email: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
   email_signup_shop_html: "Sie können sich jetzt unter %{link} anmelden."
-  email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Bauern, wunderbare Läden und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmer sind, freuen wir uns, Sie als Teil des Netzwerks zu begrüßen."
+  email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Landwirte, wunderbare Läden und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmer sind, freuen wir uns, Sie als Teil des Netzwerks zu begrüßen."
   email_signup_help_html: "Wir freuen und über Ihre Fragen und Rückmeldungen. Schreiben Sie uns gerne eine E-Mail an %{email}."
   invite_email:
     greeting: "Hallo!"
@@ -1569,24 +1569,24 @@ de_DE:
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
   shopping_groups_part_of: "ist ein Teil von:"
-  shopping_producers_of_hub: "Erzeuger bei %{hub}:"
+  shopping_producers_of_hub: "Produzenten bei %{hub}:"
   enterprises_next_closing: "Nächster Bestellschluss"
   enterprises_currently_open: "Bestellzyklus ist geöffnet"
-  enterprises_ready_for: "Fertig am"
+  enterprises_ready_for: "Bereit am"
   enterprises_choose: "Wählen Sie, wann Sie Ihre Bestellung wollen:"
   maps_open: "Offen"
   maps_closed: "Geschlossen"
   hubs_buy: "Angebot"
   hubs_shopping_here: "Sie kaufen hier ein"
   hubs_orders_closed: "Bestellzyklus geschlossen"
-  hubs_profile_only: "nur Profil"
-  hubs_delivery_options: "Lieferarten"
+  hubs_profile_only: "Profil"
+  hubs_delivery_options: "Lieferoptionen"
   hubs_pickup: "Abholen"
   hubs_delivery: "Lieferung"
   hubs_producers: "Unsere Produzenten"
   hubs_filter_by: "Filtern nach"
   hubs_filter_type: "Art"
-  hubs_filter_delivery: "Lieferarten"
+  hubs_filter_delivery: "Lieferoptionen"
   hubs_filter_property: "Eigenschaften"
   hubs_matches: "Meintest Du?"
   hubs_intro: Regional einkaufen
@@ -1630,7 +1630,7 @@ de_DE:
   components_filters_clearfilters: "Alle Filter löschen"
   groups_title: Gruppen
   groups_headline: Gruppen/Regionen
-  groups_text: "Jeder Produzent ist einzigartig. Jedes Unternehmen hat etwas anderes zu bieten. Unsere Gruppen sind Kollektive von Produzenten, Hubs und Verteilern, die etwas gemeinsam haben, wie z B Standort, Bauernmarkt oder Philosophie. Dies erleichtert Ihr Einkaufserlebnis."
+  groups_text: "Jeder Produzent ist einzigartig. Jedes Unternehmen hat etwas anderes zu bieten. Unsere Gruppen fassen Produzenten, Hubs und Verteilstellen zusammen, die etwas gemeinsam haben, wie z. B. ihren Standort, ihre Philosophie oder den gemeinsamen Bauernmarkt . So erleichtern Gruppen Ihr Einkaufserlebnis."
   groups_search: "Suchen Sie nach Name oder Stichwort"
   groups_no_groups: "Keine Gruppen gefunden"
   groups_about: "Über uns"
@@ -1650,7 +1650,7 @@ de_DE:
   groups_signup_motivation2: Deshalb sind wir jeden Tag aufgestanden. Wir sind eine globale Non-Profit-Organisation, die auf Open-Source-Code basiert. Wir spielen fair. Sie können uns immer vertrauen.
   groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
   groups_signup_motivation4: Wir treffen dich, wo du bist.
-  groups_signup_motivation5: Sie könnten eine Allianz von Hubs, Produzenten oder Vertailern sein, eine Industrieorganisation oder eine Lokalbehörde.
+  groups_signup_motivation5: Sie könnten ein Zusammenschluss von Hubs, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine Lokalbehörde.
   groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Network in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
   groups_signup_motivation7: Wir machen Nahrungsmittelbewegungen sinnvoller.
   groups_signup_motivation8: Sie müssen Ihre Netzwerke aktivieren und aktivieren, wir bieten eine Plattform für Konversation und Aktion. Sie brauchen echtes Engagement. Wir helfen, alle Akteure, alle Beteiligten, alle Sektoren zu erreichen.
@@ -1688,7 +1688,7 @@ de_DE:
   products_available: Verfügbar?
   products_producer: "Produzent"
   products_price: "Preis"
-  name_or_sku: "NAME ODER SKU"
+  name_or_sku: "NAME ODER ARTIKELNUMMER"
   register_title: Anmelden
   sell_title: "Registrieren"
   sell_headline: "Steigen Sie in das Open Food Netzwerk ein!"
@@ -1697,7 +1697,7 @@ de_DE:
   sell_hubs: "Hubs"
   sell_groups: "Gruppen"
   sell_producers_detail: "Richten Sie in wenigen Minuten für Ihr Unternehmen ein Profil im Open Food Network ein. Sie können Ihr Profil jederzeit auf einen Laden erweitern und Ihre Produkte direkt an Kunden verkaufen."
-  sell_hubs_detail: "Richten Sie im Open Food Network ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit auf einen Multi-Erzeugerladen erweitern."
+  sell_hubs_detail: "Richten Sie im Open Food Network ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit auf einen Multi-Produzentenladen erweitern."
   sell_groups_detail: "Richten Sie ein maßgeschneidertes Verzeichnis von Unternehmen (Produzenten und andere Lebensmittelunternehmen) für Ihre Region oder für Ihre Organisation ein."
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
   sell_listing_price: "Das Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Ladens im OFN ist derzeit kostenlos."
@@ -1725,7 +1725,7 @@ de_DE:
   orders_form_empty_cart: "Einkaufskorb leeren"
   orders_form_subtotal: Zwischensumme erzeugen
   orders_form_admin: Admin & Handhabung
-  orders_form_total: Total
+  orders_form_total: Summe
   orders_oc_expired_headline: Bestellungen wurden für diesen Bestellzyklus geschlossen
   orders_oc_expired_text: "Entschuldigung, Bestellungen für diesen Bestellzyklus wurden vor %{time} geschlossen! Bitte kontaktieren Sie Ihr Hub direkt, um zu sehen, ob sie verspätete Bestellungen annehmen können."
   orders_oc_expired_text_others_html: "Entschuldigung, der Bestellzyklus wurde vor %{time} geschlossen! Wenden Sie sich bitte direkt an den Laden, um zu sehen, ob er verspätete Bestellungen annehmen kann (<strong>%{link}</strong>)."
@@ -1734,7 +1734,7 @@ de_DE:
   orders_oc_expired_phone: "Telefon:"
   orders_show_title: Bestellbestätigung
   orders_show_time: Bestellung bereit am
-  orders_show_order_number: "Bestellung # %{number}"
+  orders_show_order_number: "Bestellung #%{number}"
   orders_show_cancelled: Storniert
   orders_show_confirmed: Bestätigt
   orders_your_order_has_been_cancelled: "Ihre Bestellung wurde storniert"
@@ -1749,7 +1749,7 @@ de_DE:
   orders_bought_already_confirmed: "* schon bestätigt"
   orders_confirm_cancel: Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?
   order_processed_successfully: "Ihre Bestellung wurde erfolgreich bearbeitet"
-  products_cart_distributor_choice: "Verteiler Ihrer Bestellung:"
+  products_cart_distributor_choice: "Verteilstelle Ihrer Bestellung:"
   products_cart_distributor_change: "Ihr Händler für diese Bestellung wird in %{name} geändert, wenn Sie dieses Produkt zu Ihrem Warenkorb hinzufügen."
   products_cart_distributor_is: "Ihr Händler für diese Bestellung ist %{name}."
   products_distributor_error: "Bitte schließen Sie Ihre Bestellung bei %{link} ab, bevor Sie bei einem anderen Händler einkaufen."
@@ -1759,7 +1759,7 @@ de_DE:
   products_oc_error: "Bitte schließen Sie Ihre Bestellung bei %{link} ab, bevor Sie in einem anderen Bestellzyklus einkaufen."
   products_oc_current: "Ihr aktueller Bestellzyklus"
   products_max_quantity: Max Menge
-  products_distributor: Verteiler
+  products_distributor: Verteilstelle
   products_distributor_info: Wenn Sie einen Händler für Ihre Bestellung auswählen, werden hier ihre Adresse und Abholzeiten angezeigt.
   password: Passwort
   remember_me: Erinnere dich an mich
@@ -1786,7 +1786,7 @@ de_DE:
   error_number: "muss nummer sein"
   error_email: "muss eine E-Mail-Adresse sein"
   error_not_found_in_database: "%{name} nicht in Datenbank gefunden"
-  error_not_primary_producer: "%{name} ist nicht als Erzeuger aktiviert"
+  error_not_primary_producer: "%{name} ist nicht als Produzent aktiviert"
   error_no_permission_for_enterprise: "\"%{name}\": Sie sind nicht berechtigt, Produkte für dieses Unternehmen zu verwalten"
   item_handling_fees: "Artikel Bearbeitungsgebühren (in den Gesamtsummen enthalten)"
   january: "Januar"
@@ -1817,7 +1817,7 @@ de_DE:
     steps:
       introduction:
         registration_greeting: "Hallo!"
-        registration_intro: "Sie können jetzt ein Profil als Produzent oder Verteilstelle erzeugen"
+        registration_intro: "Sie können jetzt ein Profil als Produzent oder Hub erstellen"
         registration_checklist: "Was brauche ich?"
         registration_time: "5-10 Minuten"
         registration_enterprise_address: "Unternehmensadresse"
@@ -1833,7 +1833,7 @@ de_DE:
       details:
         title: "Einzelheiten"
         headline: "Lass uns anfangen"
-        enterprise: "Woot! Zuerst müssen Sie ein wenig über Ihr Unternehmen wissen:"
+        enterprise: "Stop! Zuerst müssen wir ein wenig über Ihr Unternehmen wissen:"
         producer: "Woot! Zuerst müssen wir ein wenig über Ihre Farm wissen:"
         enterprise_name_field: "Unternehmensname:"
         producer_name_field: "Name des Betriebs:"
@@ -1860,16 +1860,16 @@ de_DE:
         contact_field_placeholder: "Kontaktname"
         contact_field_required: "Sie müssen einen primären Kontakt eingeben."
         phone_field: "Telefonnummer"
-        phone_field_placeholder: "z.B. (03) 1234 5678"
+        phone_field_placeholder: "z. B. (03) 1234 5678"
       type:
         title: "Art"
         headline: "Letzter Schritt zum Hinzufügen von %{enterprise}!"
         question: "Sind Sie ein Produzent?"
         yes_producer: "Ja, ich bin ein Produzent."
-        no_producer: "Nein, ich bin kein Produzent"
+        no_producer: "Nein, ich bin kein Produzent."
         producer_field_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
-        yes_producer_help: "Die Produzenten stellen leckere Lebensmittel und/oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
-        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Coop, eine Einkaufsgruppe, Einzelhändler, ein Hofladen, Großhändler oder Vergleichbares sein."
+        yes_producer_help: "Die Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
+        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Großhändler oder Vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
         title: "Über uns"
@@ -1877,15 +1877,15 @@ de_DE:
         message: "Lassen Sie uns nun die Details überarbeiten"
         success: "Erfolg! %{enterprise} wurde dem Open Food Network hinzugefügt"
         registration_exit_message: "Wenn Sie diesen Assistenten zu einem beliebigen Zeitpunkt beenden, können Sie mit der Erstellung Ihres Profils fortfahren, indem Sie zur Administratoroberfläche gehen."
-        enterprise_description: "Kurze Beschreibung"
+        enterprise_description: "Kurzbeschreibung"
         enterprise_description_placeholder: "Ein kurzer Satz, der Ihr Unternehmen beschreibt"
         enterprise_long_desc: "Ausführliche Beschreibung"
         enterprise_long_desc_placeholder: "Dies ist Ihre Gelegenheit, die Geschichte Ihres Unternehmens zu erzählen - was macht Sie anders und wunderbar? Wir empfehlen, die Beschreibung unter 600 Zeichen oder 150 Wörtern zu halten."
         enterprise_long_desc_length: "%{num} Zeichen/bis zu 600 empfohlen"
         enterprise_abn: "USt-IdNr."
-        enterprise_abn_placeholder: "z.B. DE999999999"
+        enterprise_abn_placeholder: "z. B. DE999999999"
         enterprise_acn: "St.-Nr."
-        enterprise_acn_placeholder: "z.B. 93815/08152"
+        enterprise_acn_placeholder: "z. B. 93815/08152"
         enterprise_tax_required: "Sie müssen eine Auswahl treffen."
       images:
         title: "Bilder"
@@ -1896,34 +1896,34 @@ de_DE:
         back: "Zurück"
       logo:
         select_logo: "Schritt 1. Wählen Sie Logo Image"
-        logo_tip: "Tipp: Am besten funktionieren quadratische Bilder, vorzugsweise mindestens 300 × 300 Pixel"
+        logo_tip: "Tipp: Am besten funktionieren quadratische Bilder, vorzugsweise mindestens 300 × 300 Pixel."
         logo_label: "Wählen Sie ein Logo aus"
         logo_drag: "Ziehen Sie Ihr Logo hierher"
         review_logo: "Schritt 2. Überprüfen Sie Ihr Logo"
         review_logo_tip: "Tipp: Für beste Ergebnisse sollte Ihr Logo den verfügbaren Platz ausfüllen"
         logo_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde"
       promo:
-        select_promo_image: "Schritt 3. Wählen Sie Promo Image"
-        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260 px"
-        promo_image_label: "Wählen Sie ein Promobild"
-        promo_image_drag: "Verschieben Sie Ihre Promo hier"
-        review_promo_image: "Schritt 4. Überprüfen Sie Ihr Promo-Banner"
-        review_promo_image_tip: "Tipp: Für ein optimales Ergebnis sollte Ihr Promo-Bild den verfügbaren Platz ausfüllen"
+        select_promo_image: "Schritt 3. Wählen Sie ein Werbebild"
+        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260 Pixel."
+        promo_image_label: "Wählen Sie ein Werbebild"
+        promo_image_drag: "Verschieben Sie Ihr Bild hier"
+        review_promo_image: "Schritt 4. Überprüfen Sie Ihr Werbebild"
+        review_promo_image_tip: "Tipp: Für ein optimales Ergebnis sollte Ihr Werbebild den verfügbaren Platz ausfüllen."
         promo_image_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde"
       social:
-        title: "Sozial"
+        title: "Soziale Medien"
         enterprise_final_step: "Letzter Schritt!"
         enterprise_social_text: "Wie kann man %{enterprise} online finden?"
         website: "Webseite"
-        website_placeholder: "z.B. openfoodnetwork.org.au"
+        website_placeholder: "z. B. openfoodnetwork.org.au"
         facebook: "Facebook"
-        facebook_placeholder: "z.B. www.facebook.com/PageNameHere"
+        facebook_placeholder: "z. B. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
-        linkedin_placeholder: "z.B. www.linkedin.com/IhrNameHier"
+        linkedin_placeholder: "z. B. www.linkedin.com/IhrNameHier"
         twitter: "Twitter"
-        twitter_placeholder: "z.B. @twitter Griff"
+        twitter_placeholder: "z. B. @twitter Griff"
         instagram: "Instagram"
-        instagram_placeholder: "z.B. @instagram_handle"
+        instagram_placeholder: "z. B. @instagram_handle"
       limit_reached:
         headline: "Ach nein!"
         message: "Sie haben das Limit erreicht!"
@@ -1938,7 +1938,7 @@ de_DE:
   continue: "Fortsetzen"
   action_or: "ODER"
   enterprise_limit: Enterprise Limit
-  shipping_method_destroy_error: "Diese Lieferart kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
+  shipping_method_destroy_error: "Diese Lieferoption kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
   fees: "Gebühren"
   item_cost: "Gegenstandskosten"
   bulk: "Bulk"
@@ -1948,10 +1948,10 @@ de_DE:
   shop_for_products_html: "Hier erhalten Sie <span class=\"turquoise\">%{enterprise}</span>-Produkte:"
   change_shop: "In diesen Laden wechseln:"
   shop_at: "Kaufe jetzt bei:"
-  admin_fee: "Gebühr Administration"
-  sales_fee: "Gebühr Verkauf"
-  packing_fee: "Gebühr Umverpackung"
-  transport_fee: "Gebühr Transport"
+  admin_fee: "Bearbeitungsgebühr"
+  sales_fee: "Verkaufsgebühr"
+  packing_fee: "Verpackungsgebühr"
+  transport_fee: "Versandgebühr"
   fundraising_fee: "Fundraising-Gebühr"
   price_graph: "Preisdiagramm"
   included_tax: "inkl. Steuer"
@@ -1968,7 +1968,7 @@ de_DE:
   ok: OK
   not_visible: nicht sichtbar
   you_have_no_orders_yet: "Du hast noch keine Bestellungen"
-  show_only_complete_orders: "Nur komplette Bestellungen anzeigen"
+  show_only_complete_orders: "Nur abgeschlossene Bestellungen anzeigen"
   successfully_created: '%{resource} wurde erfolgreich erstellt!'
   successfully_removed: '%{resource} wurde erfolgreich entfernt!'
   successfully_updated: '%{resource} wurde erfolgreich aktualisiert!'
@@ -1976,7 +1976,7 @@ de_DE:
   outstanding_balance: "Offener Betrag"
   admin_enterprise_relationships: "Unternehmensberechtigungen"
   admin_enterprise_relationships_everything: "Alles"
-  admin_enterprise_relationships_permits: "Genehmigungen"
+  admin_enterprise_relationships_permits: "erlaubt"
   admin_enterprise_relationships_seach_placeholder: "Suche"
   admin_enterprise_relationships_button_create: "Neu"
   admin_enterprise_relationships_to: "zu"
@@ -1987,22 +1987,22 @@ de_DE:
   admin_enterprise_groups_enterprise: "Unternehmen"
   admin_enterprise_groups_data_powertip: "Der primäre Benutzer, der für diese Gruppe verantwortlich ist."
   admin_enterprise_groups_data_powertip_logo: "Dies ist das Logo für die Gruppe"
-  admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt"
+  admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt."
   admin_enterprise_groups_contact: "Kontakt"
-  admin_enterprise_groups_contact_phone_placeholder: "z.B. 98 7654 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "z.B. Gartenstraße 123"
+  admin_enterprise_groups_contact_phone_placeholder: "z. B. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "z. B. Gartenstraße 123"
   admin_enterprise_groups_contact_city: "Vorort"
-  admin_enterprise_groups_contact_city_placeholder: "z.B. Nordwestheim"
+  admin_enterprise_groups_contact_city_placeholder: "z. B. Nordwestheim"
   admin_enterprise_groups_contact_zipcode: "Postleitzahl"
-  admin_enterprise_groups_contact_zipcode_placeholder: "z.B. 30701"
-  admin_enterprise_groups_contact_state_id: "Status"
+  admin_enterprise_groups_contact_zipcode_placeholder: "z. B. 30701"
+  admin_enterprise_groups_contact_state_id: "Bundesland"
   admin_enterprise_groups_contact_country_id: "Land"
   admin_enterprise_groups_web: "Webressourcen"
-  admin_enterprise_groups_web_twitter: "z.B. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "z.B. www.truffles.com"
-  admin_order_cycles: "Admin-Bestellzyklen"
+  admin_enterprise_groups_web_twitter: "z. B. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "z. B. www.truffles.com"
+  admin_order_cycles: "Bestellzyklen verwalten"
   open: "Öffnen"
-  close: "Abschließen"
+  close: "Schließen"
   create: "Neu"
   search: "Suche"
   supplier: "Lieferant"
@@ -2012,11 +2012,11 @@ de_DE:
   shipping_categories: "Versandkategorien"
   units: "Einheit"
   coordinator: "Koordinator"
-  distributor: "Verteiler"
-  enterprise_fees: "Zuschläge"
+  distributor: "Verteilstelle"
+  enterprise_fees: "Gebühren"
   process_my_order: "Verarbeite meine Bestellung"
   delivery_instructions: Lieferanleitungen
-  delivery_method: Lieferart
+  delivery_method: Lieferoption
   fee_type: "Art der Gebühr"
   tax_category: "Steuerkategorie"
   description: "Beschreibung"
@@ -2024,17 +2024,17 @@ de_DE:
   tags: "Stichwörter"
   calculator: "Rechner"
   calculator_values: "Rechnerwerte"
-  calculator_settings_warning: "Wenn Sie den Gebühren-Typ ändern, müssen Sie zuerst speichern, bevor Sie die Gebühren-Einstellungen bearbeiten können"
+  calculator_settings_warning: "Wenn Sie den Gebührentyp ändern, müssen Sie zuerst speichern, bevor Sie die Gebühreneinstellungen bearbeiten können."
   calculator_preferred_unit_error: "muss kg oder lb sein"
-  flat_percent_per_item: "Flache Prozent (pro Artikel)"
+  flat_percent_per_item: "Fester Prozentsatz (pro Artikel)"
   flat_rate_per_item: "Pauschale (pro Stück)"
-  flat_rate_per_order: "Pauschalpreis pro Bestellung)"
-  flexible_rate: "Flexible Rate"
-  price_sack: "Preis Sack"
+  flat_rate_per_order: "Pauschale (pro Bestellung)"
+  flexible_rate: "Flexible Gebühr"
+  price_sack: "Mengenrabatt"
   new_order_cycles: "Neue Bestellzyklen"
   new_order_cycle: "Neuer Bestellzyklus"
   select_a_coordinator_for_your_order_cycle: "Wählen Sie einen Koordinator für Ihren Bestellzyklus"
-  notify_producers: 'Hersteller benachrichtigen'
+  notify_producers: 'Produzenten benachrichtigen'
   edit_order_cycle: "Bestellzyklus bearbeiten"
   roles: "Rollen"
   update: "Aktualisieren"
@@ -2050,7 +2050,7 @@ de_DE:
   no_customers_found: "Keine Kunden gefunden"
   go: "Gehen"
   hub: "Hub"
-  producer: "Erzeuger"
+  producer: "Produzent"
   product: "Produkt"
   price: "Preis"
   on_hand: "Verfügbar"
@@ -2062,8 +2062,8 @@ de_DE:
   spree_admin_overview_enterprises_footer: "VERWALTEN SIE MEINE UNTERNEHMEN"
   spree_admin_enterprises_hubs_name: "Name"
   spree_admin_enterprises_create_new: "neu erstellen"
-  spree_admin_enterprises_shipping_methods: "Lieferarten"
-  spree_admin_enterprises_fees: "Zuschläge"
+  spree_admin_enterprises_shipping_methods: "Lieferoptionen"
+  spree_admin_enterprises_fees: "Gebühren"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen"
   spree_admin_enterprises_tabs_hubs: "HUBS"
@@ -2083,11 +2083,11 @@ de_DE:
   unit_name: "Einheitenname"
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
-  spree_admin_eg_pickup_from_school: "z.B. \"Abholung von der Grundschule\""
-  spree_admin_eg_collect_your_order: "z.B. 'Bitte sammeln Sie Ihre Bestellung von 123 Imaginary St, Northcote, 3070'"
+  spree_admin_eg_pickup_from_school: "z. B. \"Abholung von der Grundschule\""
+  spree_admin_eg_collect_your_order: "z. B. 'Bitte sammeln Sie Ihre Bestellung von 123 Imaginary St, Northcote, 3070'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} ist das primäre Taxon von %{product} und kann nicht gelöscht werden"
   spree_order_availability_error: "Distributor oder Bestellzyklus kann die Produkte in Ihrem Warenkorb nicht liefern"
-  spree_order_populator_error: "Dieser Verteiler oder Bestellzyklus kann nicht alle Produkte in Ihrem Einkaufswagen liefern. Bitte wählen Sie ein anderes."
+  spree_order_populator_error: "Diese Verteilstelle oder dieser Bestellzyklus kann nicht alle Produkte in Ihrem Einkaufswagen liefern. Bitte ändern Sie Ihre Auswahl."
   spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
   spree_order_populator_availability_error: "Dieses Produkt ist im ausgewählten Distributor oder Bestellzyklus nicht verfügbar."
   spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein"
@@ -2108,7 +2108,7 @@ de_DE:
   order_cycles: "Bestellzyklen"
   enterprise_relationships: "Unternehmensberechtigungen"
   remove_tax: "Steuer entfernen"
-  first_name_begins_with: "Der Vorname beginnt mit"
+  first_name_begins_with: "Vorname beginnt mit"
   last_name_begins_with: "Nachname beginnt mit"
   shipping_method: "Versandart"
   new_order: "Neue Bestellung"
@@ -2119,7 +2119,7 @@ de_DE:
   tax_settings: "Steuereinstellungen"
   products_require_tax_category: "Produkte benötigen eine Steuerkategorie"
   admin_shared_address_1: "Adresse"
-  admin_shared_address_2: "Adresse (Fortsetzung)"
+  admin_shared_address_2: "Adresszusatz (optional)"
   admin_share_city: "Ort"
   admin_share_zipcode: "Postleitzahl"
   admin_share_country: "Land"
@@ -2131,16 +2131,16 @@ de_DE:
   hub_sidebar_blue: "Blau"
   hub_sidebar_red: "rot"
   order_cycles_closed_for_hub: "Der Bestellzyklus des von Ihnen ausgewählten Ladens ist derzeit geschlossen. Bitte versuchen Sie es später noch einmal."
-  report_customers_distributor: "Verteiler"
+  report_customers_distributor: "Verteilstelle"
   report_customers_supplier: "Lieferant"
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Download als CSV"
-  report_producers: "Erzeuger:"
+  report_producers: "Produzenten:"
   report_type: "Berichtsart:"
   report_hubs: "Hubs:"
   report_payment: "Zahlungsarten:"
-  report_distributor: "Verteiler:"
+  report_distributor: "Verteilstelle:"
   report_payment_by: 'Zahlungen nach Art'
   report_itemised_payment: 'Aufgeschlüsselte Zahlung Summen'
   report_payment_totals: 'Zahlungssummen'
@@ -2170,20 +2170,20 @@ de_DE:
   report_header_paid: Bezahlt?
   report_header_delivery: Lieferung?
   report_header_shipping: Lieferung
-  report_header_shipping_method: Lieferart
+  report_header_shipping_method: Lieferoption
   report_header_shipping_instructions: Versand-Anweisungen
-  report_header_ship_street: Liefer-Straße
-  report_header_ship_street_2: Liefer-Straße 2
-  report_header_ship_city: Liefer-Stadt
-  report_header_ship_postcode: Liefer-Postleitzahl
-  report_header_ship_state: Liefer-Bundesland
-  report_header_billing_street: Rechnung-Straße
-  report_header_billing_street_2: Rechnung-Straße 2
-  report_header_billing_street_3: Rechnung-Straße 3
-  report_header_billing_street_4: Rechnung-Straße 4
-  report_header_billing_city: Rechnung-Stadt
-  report_header_billing_postcode: Rechnung-Postleitzahl
-  report_header_billing_state: Rechnung-Bundesland
+  report_header_ship_street: Lieferstraße
+  report_header_ship_street_2: Lieferadresszusatz
+  report_header_ship_city: Lieferstadt
+  report_header_ship_postcode: Lieferpostleitzahl
+  report_header_ship_state: Lieferbundesland
+  report_header_billing_street: Rechnungsstraße
+  report_header_billing_street_2: Rechnungstraße 2
+  report_header_billing_street_3: Rechnungsstraße 3
+  report_header_billing_street_4: Rechnungsstraße 4
+  report_header_billing_city: Rechnungsstadt
+  report_header_billing_postcode: Rechnungspostleitzahl
+  report_header_billing_state: Rechnungsbundesland
   report_header_incoming_transport: Eingehender Transport
   report_header_special_instructions: Besondere Anweisungen
   report_header_order_number: Bestellnummer
@@ -2213,8 +2213,8 @@ de_DE:
   report_header_max_quantity_excess: Max Menge Überschuss
   report_header_taxons: Taxonen
   report_header_supplier: Lieferant
-  report_header_producer: Erzeuger
-  report_header_producer_suburb: Erzeuger Vorort
+  report_header_producer: Produzent
+  report_header_producer_suburb: Produzent Vorort
   report_header_unit: Einheit
   report_header_group_buy_unit_quantity: Gruppenkauf Einheitsmenge
   report_header_cost: Kosten
@@ -2226,12 +2226,12 @@ de_DE:
   report_header_visible: öffentlich sichtbar
   report_header_price: Preis
   report_header_unit_size: Einheit
-  report_header_distributor: Verteiler
-  report_header_distributor_address: Verteileradresse
-  report_header_distributor_city: Verteilerstadt
-  report_header_distributor_postcode: Verteilerpostleitzahl
+  report_header_distributor: Verteilstelle
+  report_header_distributor_address: Verteilstellenadresse
+  report_header_distributor_city: Verteilstellenstadt
+  report_header_distributor_postcode: Verteilstellenpostleitzahl
   report_header_delivery_address: Lieferadresse
-  report_header_delivery_postcode: Liefer-Postleitzahl
+  report_header_delivery_postcode: Lieferpostleitzahl
   report_header_bulk_unit_size: Bulk-Einheit
   report_header_weight: Gewicht
   report_header_sum_total: Gesamtsumme
@@ -2272,7 +2272,7 @@ de_DE:
   report_header_total_excl_vat: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_vat: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_temp_controlled: Temperaturkontrolliert?
-  report_header_is_producer: Erzeuger?
+  report_header_is_producer: Produzent?
   report_header_not_confirmed: Nicht bestätigt
   report_header_gst_on_income: Umsatzsteuer auf Einkommen
   report_header_gst_free_income: Unbesteuertes Einkommen
@@ -2284,7 +2284,7 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
-  initial_invoice_number: "Anfangsrechnungsnummer:"
+  initial_invoice_number: "Ursprüngliche Rechnungsnummer"
   invoice_date: "Rechnungsdatum:"
   due_date: "Geburtstermin:"
   account_code: "Konto Code:"
@@ -2302,31 +2302,33 @@ de_DE:
   products_unsaved: "Änderungen an %{n} Produkten bleiben ungesichert."
   is_already_manager: "ist schon ein Manager!"
   no_change_to_save: " Keine Änderung zum Speichern"
-  user_invited: "%{email} wurde eingeladen, dieses Unternehmen zu verwalten"
+  user_invited: "%{email} wurde eingeladen, dieses Unternehmen zu verwalten."
   add_manager: "Fügen Sie einen vorhandenen Benutzer hinzu"
   users: "Benutzer"
   about: "Über"
   images: "Bilder"
   web: "Netz"
-  primary_details: "Primäre Details"
+  primary_details: "Unternehmen"
   adrdress: "Adresse"
   contact: "Kontakt"
-  social: "Sozial"
+  social: "Soziale Medien"
   business_details: "Geschäftsdetails"
   properties: "Eigenschaften"
   shipping: "Versand"
-  shipping_methods: "Lieferart"
+  shipping_methods: "Lieferoption"
   payment_methods: "Zahlungsarten"
   payment_method_fee: "Transaktionsgebühr"
   payment_processing_failed: "Die Zahlung konnte nicht verarbeitet werden. Bitte überprüfen Sie die eingegebenen Daten"
   payment_method_not_supported: "Diese Zahlungsart wird nicht unterstützt. Bitte wählen Sie eine andere."
   payment_updated: "Zahlung wurde aktualisiert"
-  inventory_settings: "Katalogeinstellungen"
+  cannot_perform_operation: "Die Zahlung konnte nicht aktualisiert werden."
+  action_required: "Handlung erforderlich"
+  inventory_settings: "Katalog"
   tag_rules: "Stichwortregeln"
-  shop_preferences: "Ladeneinstellungen"
+  shop_preferences: "Laden"
   enterprise_fee_whole_order: Ganze Bestellung
   enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
-  validation_msg_relationship_already_established: "^ Diese Beziehung ist bereits etabliert."
+  validation_msg_relationship_already_established: "^ Diese Beziehung besteht bereits."
   validation_msg_at_least_one_hub: "^ Mindestens ein Hub muss ausgewählt sein"
   validation_msg_tax_category_cant_be_blank: "^ Steuerkategorie darf nicht leer sein"
   validation_msg_is_associated_with_an_exising_customer: "ist mit einem bestehenden Kunden verbunden"
@@ -2354,7 +2356,7 @@ de_DE:
       Die Hubs %{distributor_names} sind in einem aktiven Bestellzyklus aufgeführt,
       haben jedoch keine gültigen Versand- und Zahlungsarten. Bis Sie diese einrichten,
       können Kunden nicht an diesen Hubs einkaufen.
-  enterprise_fees_update_notice: Ihre Zuschläge wurden aktualisiert.
+  enterprise_fees_update_notice: Ihre Gebühren wurden aktualisiert.
   enterprise_register_package_error: "Bitte wählen Sie ein Paket"
   enterprise_register_error: "Die Registrierung für %{enterprise} konnte nicht abgeschlossen werden"
   enterprise_register_success_notice: "Herzliche Glückwünsche! Registrierung für %{enterprise} ist abgeschlossen!"
@@ -2373,11 +2375,11 @@ de_DE:
   no_orders_found: "Keine Bestellungen gefunden"
   order_information: "Bestellinformationen"
   date_completed: "Datum abgeschlossen"
-  amount: "Menge"
+  amount: "Summe"
   state_names:
     ready: Bereit
     pending: steht aus
-    shipped: Wird versendet
+    shipped: Wird versandt
   js:
     saving: 'Wird gespeichert ...'
     changes_saved: 'Änderungen gespeichert'
@@ -2409,7 +2411,7 @@ de_DE:
         close: "Schließen"
         continue: "Fortsetzen"
         invite: "Einladen"
-        invite_title: "Laden Sie einen nicht registrierten Benutzer ein"
+        invite_title: "Geben Sie die E-Mail-Adresse eines nicht registrierten Benutzers ein, um dieses Unternehmen zu verwalten."
         tag_rule_help:
           title: Stichwortregeln
           overview: Überblick
@@ -2430,7 +2432,7 @@ de_DE:
               überschreiben und Elemente für bestimmte Kunden wieder anzeigen.
         terms_and_conditions_info:
           title: "Allgemeine Geschäftsbedingungen hochladen"
-          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen, dem Verkäufer und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihre Allgemeinen Geschäftsbedingungen akzeptieren, um die Kaufabwicklung abzuschließen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
+          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen (dem Verkäufer) und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihre Allgemeinen Geschäftsbedingungen akzeptieren, um die Kaufabwicklung abzuschließen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
           message_2: "Käufer müssen die Allgemeinen Geschäftsbedingungen nur einmal akzeptieren. Wenn Sie jedoch Ihre Allgemeinen Geschäftsbedingungen ändern, müssen Käufer diese erneut akzeptieren, bevor sie zur Kasse gehen können."
         terms_and_conditions_warning:
           title: "Allgemeine Geschäftsbedingungen hochladen"
@@ -2442,26 +2444,26 @@ de_DE:
         saving: SPAREN
         enterprise_package:
           hub_profile: Hubprofil
-          hub_profile_cost: "KOSTEN: IMMER KOSTENLOS"
+          hub_profile_cost: "IMMER KOSTENLOS"
           hub_profile_text1: >
-              Menschen können Sie im Open Food Network finden und kontaktieren. Ihr
-              Unternehmen wird auf der Karte angezeigt und kann in den Suchergebnissen
-              durchsucht werden.
+              Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit
+              anderen Produzenten und Läden. Sie können im Open Food Network gefunden
+              und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen
+              angezeigt.
           hub_profile_text2: >
               Ein Profil zu haben und Verbindungen innerhalb Ihres lokalen Lebensmittelsystems
-              über das Open Food Network herzustellen, wird immer kostenlos sein.
+              über das Open Food Network zu pflegen, wird immer kostenlos sein.
           hub_shop: Hub
           hub_shop_text1: >
-              Verkaufen Sie Produkte anderer Erzeuger oder Läden im Open Food Network.
-              Als Händler führen Sie die Produkte zusammen und sind mit Ihrem Laden
-              ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
+              Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network.
+              Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler
+              Bestandteil Ihres lokalen Lebensmittelsystems.
           hub_shop_text2: >
-              Hubs können viele Formen annehmen, egal ob es sich um eine Lebensmittelkooperative,
-              eine Einkaufsgruppe, ein Gemüsekistenprogramm oder ein lokales Lebensmittelgeschäft
-              handelt.
+              Hubs können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
+              eine Einkaufsgemeinschaft, ein Gemüsekistenabo oder ein lokales Lebensmittelgeschäft.
           hub_shop_text3: >
-              Wenn Sie auch Ihre eigenen Produkte verkaufen möchten, müssen Sie dieses
-              Unternehmen zu einem Produzenten machen.
+              Wenn Sie auch Ihre eigenen Produkte verkaufen möchten, wählen Sie zunächst
+              in der Spalte "Produzent?" das Paket "Produzent".
           choose_package: Bitte wählen Sie ein Paket
           choose_package_text1: >
               Ihr Unternehmen wird nicht vollständig aktiviert, bis ein Paket aus
@@ -2469,70 +2471,74 @@ de_DE:
           choose_package_text2: >
               Klicken Sie auf ein Paket, um weitere Informationen zu erhalten. Klicken
               Sie SPEICHERN, wenn Sie fertig sind!
-          profile_only: nur Profil
-          profile_only_cost: "KOSTEN: IMMER KOSTENLOS"
+          profile_only: Profil
+          profile_only_cost: "IMMER KOSTENLOS"
           profile_only_text1: >
-              Ein Profil macht Sie sichtbar und kontaktierbar für andere und ist eine
-              Möglichkeit, Ihre Geschichte zu erzählen.
+              Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen
+              Sie sich mit anderen Produzenten und Läden.
           profile_only_text2: >
-              Wenn Sie es vorziehen, sich auf die Lebensmittelerzeugung zu konzentrieren,
-              und den Verkauf anderen zu überlassen, benötigen Sie keinen Laden im
-              Open Food Network.
+              Wenn Sie sich lieber auf die Lebensmittelerzeugung konzentrieren und
+              den Verkauf anderen überlassen möchten, benötigen Sie keinen eigenen
+              Laden im Open Food Network.
           profile_only_text3: >
-              Fügen Sie Ihre Produkte zu Open Food Network hinzu, damit Hubs Ihre
-              Produkte in ihren Geschäften lagern können.
-          producer_shop: Erzeugerladen
+              Fügen Sie Ihre Produkte dem Profil hinzu, damit andere Läden sie zum
+              Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten,
+              wählen Sie "Produzentenladen".
+
+              Ein Profil zu haben und Verbindungen innerhalb Ihres lokalen Lebensmittelsystems
+              über das Open Food Network zu pflegen, wird immer kostenlos sein.
+          producer_shop: Produzentenladen
           producer_shop_text1: >
-              Verkaufen Sie Ihre Produkte direkt an Kunden über Ihren eigenen Laden
-              im Open Food Network.
+              Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren
+              eigenen Produzentenladen im Open Food Network.
           producer_shop_text2: >
-              Ein Erzeugerladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie
-              Produkte anderer verkaufen möchten, wählen Sie "Hub".
-          producer_hub: Produzent Hub
+              Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
+              Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
+          producer_hub: Hub
           producer_hub_text1: >
-              Verkaufen Sie eigene Produkte und Produkte anderer Erzeuger oder Läden
-              im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
+              Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
+              Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
               Ihres lokalen Lebensmittelsystems.
           producer_hub_text2: >
-              Erzeugerläden können viele Formen annehmen, sei es eine solidarische
-              Landwirtschaft, eine Gemüse-Abo oder eine Food Coop mit einem Dachgarten.
+              Hubs können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
+              eine Einkaufsgemeinschaft, ein Gemüsekistenabo oder ein lokales Lebensmittelgeschäft.
           producer_hub_text3: >
               Das Open Food Network zielt darauf ab, so viele Hub-Modelle wie möglich
               zu unterstützen. Daher möchten wir Ihnen unabhängig von Ihrer Situation
               die Tools zur Verfügung stellen, die Sie für Ihre Organisation oder
               Ihr lokales Lebensmittelgeschäft benötigen.
-          get_listing: Holen Sie sich einen Eintrag
-          always_free: IMMER FREI
+          get_listing: Stellen Sie sich und Ihre Produkte vor
+          always_free: IMMER KOSTENLOS
           sell_produce_others: Verkaufe Produkte von anderen
           sell_own_produce: Verkaufen Sie Ihre eigenen Produkte
           sell_both: Verkaufe Produkte von dir selbst und anderen
         enterprise_producer:
-          producer: Erzeuger
+          producer: Produzent
           producer_text1: >
-              Produzenten machen leckere Dinge zum essen oder zum trinken. Sie sind
-              ein Produzent, wenn Sie Nutzpflanzen anbauen, Nutztiere aufziehen, brauen,
-              backen, fermentieren, melken oder etwas verarbeiten.
+              Die Produzenten stellen leckere Lebensmittel oder Getränke her. Sie
+              sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren,
+              melken oder sonst wie Lebenmittel produzieren.
           producer_text2: >
-              Hersteller können auch andere Funktionen übernehmen, wie z. B. die Zusammenführung
-              von Nahrungsmitteln anderer Unternehmen und den Verkauf über ein Geschäft
-              im Open Food Network.
+              Produzenten können auch weitere Funktionen übernehmen, wie z. B. die
+              Zusammenführung von Nahrungsmitteln anderer Unternehmen und den Verkauf
+              über einen Laden im Open Food Network.
           non_producer: Händler
           non_producer_text1: >
-              Händler produzieren selbst keine Lebensmittel, d.h. sie können keine
+              Händler produzieren selbst keine Lebensmittel, d. h. sie können keine
               eigenen Produkte über das Open Food Network anbieten.
           non_producer_text2: >
               Stattdessen spezialisieren sich Händler darauf, Produzenten mit dem
               Endverbraucher zu verbinden, sei es durch Zusammenführung, Sortierung,
               Verpackung, Verkauf oder Lieferung von Lebensmitteln.
-          producer_desc: Produzenten von Lebensmitteln
-          producer_example: z.B. Züchter, Bäcker, Brauer, Hersteller
+          producer_desc: Sie stellen selbst Lebensmittel her
+          producer_example: z. B. Landwirte, Gärtner, Bäcker, Brauer und mehr
           non_producer_desc: Alle anderen Lebensmittelunternehmen
-          non_producer_example: z.B. Lebensmittelgeschäfte, Essenskooperationen, Kaufgruppen
+          non_producer_example: z. B. Lebensmittelgeschäfte, Lebensmittelkooperativen, Einkaufsgemeinschaften
         enterprise_status:
           status_title: "%{name} ist eingerichtet und bereit zu gehen!"
           severity: Schwere
           description: Beschreibung
-          resolve: Entschlossenheit
+          resolve: Lösung
         exchange_products:
           load_more_variants: "Weitere Varianten laden"
           load_all_variants: "Alle Varianten laden"
@@ -2552,7 +2558,7 @@ de_DE:
         select_rule_type: "Wählen Sie einen Regelart aus:"
         add_rule: "Regel hinzufügen"
       enterprise_fees:
-        inherit_from_product: "Vom Produkt erben"
+        inherit_from_product: "Vom Produkt übernehmen"
       orders:
         index:
           per_page: "%{results} pro Seite"
@@ -2581,19 +2587,21 @@ de_DE:
           partial: "teilweise"
           pending: "steht aus"
           ready: "fertig"
-          shipped: "versendet"
+          shipped: "versandt"
           canceled: "abgebrochen"
         payment_states:
           balance_due: "Betrag offen"
           completed: "fertig gestellt"
           checkout: "zur Kasse"
-          credit_owed: "Kredit geschuldet"
+          credit_owed: "Geschuldetes Guthaben"
           failed: "misslungen"
           paid: "bezahlt"
           pending: "steht aus"
           processing: "Prozess läuft"
           void: "Angabe fehlt"
           invalid: "ungültig"
+        quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
+        quantity_unchanged: "Menge wurde nicht geändert."
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Erneut senden ..."
@@ -2610,14 +2618,14 @@ de_DE:
           created_schedule: "Zeitplan erstellt"
           updated_schedule: "Zeitplan aktualisiert"
           deleted_schedule: "Zeitplan gelöscht"
-          name_required_error: "Bitte geben Sie einen Namen für diesen Zeitplan ein"
-          no_order_cycles_error: "Bitte wählen Sie mindestens einen Bestellzyklus aus (Drag & Drop)"
+          name_required_error: "Bitte geben Sie einen Namen für diesen Zeitplan ein."
+          no_order_cycles_error: "Bitte wählen Sie mindestens einen Bestellzyklus aus."
           available: "Verfügbar"
           selected: "Ausgewählt"
       customers:
         index:
           add_customer: "Kunden hinzufügen"
-          add_a_new_customer_for: "Neuer Kunde für %{shop_name} hinzufügen"
+          add_a_new_customer_for: "Neuen Kunden für %{shop_name} hinzufügen"
           customer_placeholder: "Kunde@beispiel.org"
           valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       subscriptions:
@@ -2629,8 +2637,8 @@ de_DE:
           images:
             removed_logo_successfully: "Das Logo wurde erfolgreich entfernt"
             immediate_logo_removal_warning: "Das Logo wird sofort nach der Bestätigung entfernt."
-            removed_promo_image_successfully: "Werbebild wurde erfolgreich entfernt"
-            immediate_promo_image_removal_warning: "Das Werbebild wird sofort nach der Bestätigung entfernt."
+            removed_promo_image_successfully: "Bild wurde erfolgreich entfernt."
+            immediate_promo_image_removal_warning: "Das Bild wird sofort nach der Bestätigung entfernt."
             immediate_terms_and_conditions_removal_warning: "Die AGB-Datei wird sofort nach Bestätigung entfernt."
             removed_terms_and_conditions_successfully: "AGB-Datei erfolgreich entfernt"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
@@ -2655,27 +2663,27 @@ de_DE:
         'yes': "Auf Anfrage"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Verwenden Sie die Einstellungen des Produzentenbestands"
+        use_producer_settings: "Einstellungen des Produzentenbestands verwenden"
         'yes': "Ja"
         'no': "Nein"
       inventory_products: "Katalogprodukte"
-      hidden_products: "Ausgeblendete Produkte"
+      hidden_products: "Verborgene Produkte"
       new_products: "Neue Produkte"
-      reset_stock_levels: Zurücksetzen der Bestandswerte auf Standardwerte
+      reset_stock_levels: Lagerbestände auf Standardbestände zurücksetzen
       changes_to: Änderungen an
       one_override: ein Override
       overrides: überschreibt
       remain_unsaved: bleiben ungespeichert.
       no_changes_to_save: Keine Änderungen zum Speichern.
-      no_authorisation: "Ich konnte keine Berechtigung zum Speichern dieser Änderungen erhalten, sodass sie nicht gespeichert werden."
-      some_trouble: "Ich hatte Probleme beim Speichern: %{errors}"
+      no_authorisation: "Keine Berechtigung zum Speichern dieser Änderungen. Änderungen werden nicht gespeichert."
+      some_trouble: "Probleme beim Speichern: %{errors}"
       changing_on_hand_stock: Änderung der Lagerbestände ...
-      stock_reset: Aktien werden auf Standardwerte zurückgesetzt.
+      stock_reset: Lagerbestände werden auf Standardwerte zurückgesetzt.
     tag_rules:
       show_hide_variants: 'Produktvarianten im Laden anzeigen?'
-      show_hide_shipping: 'Lieferarten an der Kasse anzeigen?'
+      show_hide_shipping: 'Lieferoptionen an der Kasse anzeigen?'
       show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
-      show_hide_order_cycles: 'Bestellzyklen in meinem Laden anzeigen?'
+      show_hide_order_cycles: 'Bestellzyklen im Laden anzeigen?'
       visible: SICHTBAR
       not_visible: NICHT SICHTBAR
     services:
@@ -2698,15 +2706,15 @@ de_DE:
       update_failure: "Fehler beim Aktualisieren des Bestellzyklus"
       no_distributors: In diesem Bestellzyklus gibt es keine Distributoren. Dieser Bestellzyklus ist für Kunden erst sichtbar, wenn Sie einen hinzufügen. Möchten Sie diesen Bestellzyklus weiterhin speichern?
     enterprises:
-      producer: "Erzeuger"
+      producer: "Produzent"
       non_producer: "Händler"
     customers:
-      select_shop: 'Bitte wählen Sie zuerst einen Laden aus'
+      select_shop: 'Bitte wählen Sie zuerst einen Laden aus.'
       could_not_create: 'Es tut uns leid! Konnte nicht erstellt werden:'
     subscriptions:
       closes: schließt
       closed: geschlossen
-      close_date_not_set: Abschlussdatum nicht eingestellt
+      close_date_not_set: Schließdatum nicht eingestellt
     spree:
       users:
         order: "Bestellung"
@@ -2805,14 +2813,14 @@ de_DE:
           none: "Keine"
           select_and_search: "Wählen Sie Filter aus und klicken Sie auf BERICHT ERSTELLEN, um auf Ihre Daten zuzugreifen."
       enterprise_fee_summary:
-        date_end_before_start_error: "muss nach dem start sein"
+        date_end_before_start_error: "muss nach dem Beginn sein"
         parameter_not_allowed_error: "Sie sind nicht berechtigt, einen oder mehrere ausgewählte Filter für diesen Bericht zu verwenden."
         fee_calculated_on_transfer_through_all: "Alle"
         fee_calculated_on_transfer_through_entire_orders: "Gesamte Bestellungen über %{distributor}"
         tax_category_various: "Verschiedene"
         fee_type:
           payment_method: "Zahlungsvorgang"
-          shipping_method: "Sendung"
+          shipping_method: "Versand"
         fee_placements:
           supplier: "Eingehend"
           distributor: "Ausgehend"
@@ -2847,12 +2855,12 @@ de_DE:
   customer_details: "Kundendetails"
   adjustments: "Anpassungen"
   payments: "Zahlungen"
-  return_authorizations: "Berechtigungen zurückgeben"
-  credit_owed: "Gutschrift geschuldet"
+  return_authorizations: "Retouren"
+  credit_owed: "Geschuldetes Guthaben"
   new_adjustment: "Neue Anpassung"
   payment: "Zahlung"
   payment_method: "Zahlungsart"
-  shipment: "Sendung"
+  shipment: "Versand"
   shipment_inc_vat: "Versand inklusive Mehrwertsteuer"
   shipping_tax_rate: "Versandsteuersatz"
   category: "Produktkategorie"
@@ -2866,21 +2874,21 @@ de_DE:
   date_range: "Datumsbereich"
   status: "Status"
   new: "Neu"
-  start: "Start"
+  start: "Von"
   end: "Ende"
-  stop: "Halt"
+  stop: "Bis"
   first: "Erste"
   previous: "Vorherige"
   last: "Letzte"
   spree:
     more: "Mehr"
-    your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu"
+    your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
-    name_or_sku: "Name oder SKU (geben Sie mindestens die ersten 4 Zeichen des Produktnamens ein)"
+    name_or_sku: "Produktname oder Artikelnummer (geben Sie mindestens die ersten 3 Zeichen des Produktnamens ein)"
     resend: Erneut senden
     back_to_orders_list: Zurück zur Bestellliste
-    return_authorizations: Rückgabeberechtigungen
-    cannot_create_returns: Retouren können nicht erstellt werden, da für diese Bestellung keine Versandeinheiten vorhanden sind.
+    return_authorizations: Retouren
+    cannot_create_returns: Retouren können nicht erstellt werden, da für diese Bestellung kein Versand bestätigt wurde.
     select_stock: "Bestand auswählen"
     location: "Ort"
     count_on_hand: "Zählen Sie zur Hand"
@@ -2904,11 +2912,11 @@ de_DE:
     choose_a_customer: "Wählen Sie einen Kunden aus"
     account: "Konto"
     billing_address: "Rechnungsadresse"
-    shipping_address: "Lieferanschrift"
+    shipping_address: "Lieferadresse"
     first_name: "Vorname"
     last_name: "Nachname"
-    street_address: "Adresse"
-    street_address_2: "Straße (Fortsetzung)"
+    street_address: "Straße + Hausnummer"
+    street_address_2: "Adresszusatz (optional)"
     city: "Ort"
     zip: "Postleitzahl"
     country: "Land"
@@ -2922,7 +2930,7 @@ de_DE:
     credit_card: "Kreditkarte"
     new_payment: "Neue Zahlung"
     capture: "Erfassung"
-    void: "Leere"
+    void: "Löschen"
     login: "Anmeldung"
     password: "Passwort"
     signature: "Unterschrift"
@@ -2967,7 +2975,7 @@ de_DE:
     new_tax_rate: "Neuer Steuersatz"
     tax_category: "Steuerkategorie"
     rate: "Bewertung"
-    tax_rate_amount_explanation: "Steuersätze sind ein Dezimalbetrag zur Vereinfachung der Berechnung (d.h. wenn der Steuersatz 5 % beträgt, geben Sie 0,05 ein)."
+    tax_rate_amount_explanation: "Steuersätze sind ein Dezimalbetrag zur Vereinfachung der Berechnung (d. h. wenn der Steuersatz 5 % beträgt, geben Sie 0,05 ein)."
     included_in_price: "Im Preis inbegriffen"
     show_rate_in_label: "Rate im Etikett anzeigen"
     back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
@@ -2991,8 +2999,8 @@ de_DE:
     taxonomies: "Taxonomien"
     new_taxonomy: "Neue Taxonomie"
     back_to_taxonomies_list: "Zurück zur Taxonomieliste"
-    shipping_methods: "Lieferart"
-    shipping_method: "Lieferart"
+    shipping_methods: "Lieferoption"
+    shipping_method: "Lieferoption"
     shipping_categories: "Versandkategorien"
     new_shipping_category: "Neue Versandkategorie"
     back_to_shipping_categories: "Zurück zu den Versandkategorien"
@@ -3009,16 +3017,16 @@ de_DE:
     no_results: "Keine Ergebnisse"
     create: "Neu"
     loading: "Wird geladen ..."
-    flat_percent: "Flacher Prozentsatz"
+    flat_percent: "Fester Prozentsatz (%)"
     per_kg: "Pro kg"
     amount: "Betrag"
     currency: "Währung"
-    first_item: "Erste Artikelkosten"
-    additional_item: "Zusätzliche Artikelkosten"
-    max_items: "Max. Artikel"
-    minimal_amount: "Minimale Menge"
-    normal_amount: "Normaler Betrag"
-    discount_amount: "Rabattbetrag"
+    first_item: "Gebühr für den ersten Artikel (€)"
+    additional_item: "Gebühr für jeden weiteren Artikel (€)"
+    max_items: "Gebührenfrei ab (Anzahl Artikel)"
+    minimal_amount: "Mengenrabatt ab (€)"
+    normal_amount: "Gebühr unterhalb (€)"
+    discount_amount: "Gebühr oberhalb (€)"
     no_images_found: "Keine Bilder gefunden"
     new_image: "Neues Bild"
     filename: "Dateiname"
@@ -3039,7 +3047,7 @@ de_DE:
     cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsarten definiert sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsarten."
     options: "Optionen"
-    has_no_shipped_units: "hat keine versendeten Einheiten"
+    has_no_shipped_units: "hat keine versandten Einheiten"
     successfully_created: '%{resource} wurde erfolgreich erstellt!'
     successfully_updated: '%{resource} wurde erfolgreich aktualisiert!'
     payment_method: "Zahlungsart"
@@ -3093,7 +3101,7 @@ de_DE:
         groups: "Gruppen"
       product_properties:
         index:
-          inherits_properties_checkbox_hint: "Vererben Eigenschaften von %{supplier}? (außer oben aufgehoben)"
+          inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (außer oben überschrieben)?"
           add_product_properties: "Produkteigenschaften hinzufügen"
       properties:
         index:
@@ -3112,16 +3120,16 @@ de_DE:
       return_authorizations:
         index:
           new_return_authorization: "Neue Rücksendegenehmigung"
-          return_authorizations: "Rückgabeberechtigungen"
+          return_authorizations: "Retouren"
           back_to_orders_list: "Zurück zur Bestellliste"
           rma_number: "RMA-Nummer"
           status: "Status"
           amount: "Betrag"
-          cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Versandeinheiten vorhanden sind."
+          cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung kein Versand bestätigt wurde."
           continue: "Fortsetzen"
         new:
           new_return_authorization: "Neue Rücksendegenehmigung"
-          back_to_return_authorizations_list: "Zurück zur Autorisierungsliste"
+          back_to_return_authorizations_list: "Zurück zur Rücksendeliste"
           continue: "Fortsetzen"
         edit:
           receive: "erhalten"
@@ -3142,9 +3150,9 @@ de_DE:
           canceled: "Abgesagt"
       orders:
         index:
-          listing_orders: "Bestellungen auflisten"
+          listing_orders: "Bestellungen verwalten"
           new_order: "Neue Bestellung"
-          capture: "Erfassung"
+          capture: "Verbuchen"
           ship: "Liefern"
           edit: "Bearbeiten"
           order_not_updated: "Die Bestellung konnte nicht aktualisiert werden"
@@ -3175,21 +3183,21 @@ de_DE:
         form:
           distribution_fields:
             title: "Verteilung"
-            distributor: "Verteiler:"
+            distributor: "Verteilstelle:"
             order_cycle: "Bestellzyklus:"
-          line_item_adjustments: "Anpassungen der Werbebuchung"
+          line_item_adjustments: "Anpassungen der Einzelposten"
           order_adjustments: "Bestellanpassungen"
           order_total: "Bestellung insgesamt"
       overview:
         enterprises_header:
-          ofn_with_tip: Unternehmen sind Erzeuger und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
+          ofn_with_tip: Unternehmen sind Produzenten und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
         products:
           active_products:
             zero: "Sie haben keine aktiven Produkte."
             one: "Sie haben ein aktives Produkt"
-            few: "Sie haben %{count} aktive Produkte"
-            many: "Sie haben %{count} aktive Produkte"
-            other: "Sie haben %{count} aktive Produkte"
+            few: "Sie haben %{count} aktive Produkte."
+            many: "Sie haben %{count} aktive Produkte."
+            other: "Sie haben %{count} aktive Produkte."
         order_cycles:
           order_cycles: "Bestellzyklen"
           order_cycles_tip: "Bestellzyklen bestimmen, wann und wo Ihre Produkte für Kunden verfügbar sind."
@@ -3202,35 +3210,35 @@ de_DE:
           manage_order_cycles: "BESTELLZYKLEN VERWALTEN"
       shipping_methods:
         index:
-          shipping_methods: "Lieferart"
+          shipping_methods: "Lieferoption"
           new_shipping_method: "Neue Versandart"
           name: "Name"
-          products_distributor: "Verteiler"
+          products_distributor: "Verteilstelle"
           zone: "Zone"
           calculator: "Rechner"
           display: "Anzeige"
           both: "Sowohl Checkout als auch Backoffice"
           back_end: "Nur Backoffice"
-          no_shipping_methods_found: "Keine Versandmethoden gefunden"
+          no_shipping_methods_found: "Keine Versandarten gefunden"
         new:
           new_shipping_method: "Neue Versandart"
-          back_to_shipping_methods_list: "Zurück zur Liste der Versandmethoden"
+          back_to_shipping_methods_list: "Zurück zur Liste der Versandarten"
         edit:
           editing_shipping_method: "Versandart bearbeiten"
           new: "Neu"
-          back_to_shipping_methods_list: "Zurück zur Liste der Versandmethoden"
+          back_to_shipping_methods_list: "Zurück zur Liste der Versandarten"
         form:
           categories: "Kategorien"
           zones: "Zonen"
           both: "Sowohl Checkout als auch Backoffice"
           back_end: "Nur Backoffice"
-          deactivation_warning: "Durch Deaktivieren einer Versandart kann die Versandart aus Ihrer Liste verschwinden. Alternativ können Sie eine Versandart auf der Checkout-Seite ausblenden, indem Sie die Option &quot;Anzeige&quot; auf &quot;Nur Backoffice&quot; setzen."
+          deactivation_warning: "Durch Deaktivieren einer Versandart wird die Versandart Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Versandart auf der Checkout-Seite ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
       payment_methods:
         index:
           payment_methods: "Zahlungsarten"
           new_payment_method: "Neue Zahlungsart"
           name: "Name"
-          products_distributor: "Verteiler"
+          products_distributor: "Verteilstelle"
           provider: "Anbieter"
           environment: "Umgebung"
           display: "Anzeige"
@@ -3307,10 +3315,10 @@ de_DE:
           product_description: "Produktbeschreibung"
           image: "Bild"
           or: "oder"
-        unit_name_placeholder: 'z.B. Trauben'
+        unit_name_placeholder: 'z. B. Trauben'
         index:
           header:
-            title: Massenbearbeitung von Produkten
+            title: Produktliste verwalten
           indicators:
             title: LADE PRODUKTE
             no_products: "Bisher gibt es noch keine Produkte. Warum fügen Sie nicht einige hinzu?"
@@ -3321,7 +3329,7 @@ de_DE:
             display_as: Angezeigt als
             category: Kategorie
             tax_category: Steuerkategorie
-            inherits_properties?: Vererbt Eigenschaften
+            inherits_properties?: Übernimmt Eigenschaften des Ladens?
             available_on: Verfügbar am
             av_on: "Verfüg. am"
             import_date: "Importdatum"
@@ -3333,7 +3341,7 @@ de_DE:
           product_category: Produktkategorie
         group_buy_form:
           group_buy: "Gruppenkauf?"
-          bulk_unit_size: Größe der Masseneinheit
+          bulk_unit_size: Erforderliche Menge (in Gramm, Liter oder Stück)
         display_as:
           display_as: Darstellen als
       reports:
@@ -3365,20 +3373,20 @@ de_DE:
           confirm_password: "Passwort bestätigen"
           password: "Passwort"
         email_confirmation:
-          confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{address} gesendet."
+          confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{address} gesendet."
       variants:
         index:
           sku: "Artikelnummer"
           price: "Preis"
-          options: "Optionen"
+          options: "Varianten"
           no_results: "Keine Ergebnisse"
           to_add_variants_you_must_first_define: "Um Varianten hinzuzufügen, müssen Sie zuerst definieren"
           option_types: "Optionstypen"
           option_values: "Optionswerte"
           and: "und"
           new_variant: "Neue Variante"
-          show_active: "Aktiv anzeigen"
-          show_deleted: "Show gelöscht"
+          show_active: "Zeige Aktive"
+          show_deleted: "Zeige Gelöschte"
         new:
           new_variant: "Neue Variante"
         form:
@@ -3386,12 +3394,12 @@ de_DE:
           sku: "Artikelnummer"
           price: "Preis"
           display_as: "Angezeigt als"
-          display_name: "Anzeigename"
-          display_as_placeholder: 'z.B. 2 kg'
-          display_name_placeholder: 'z.B. Tomaten'
+          display_name: "Variantenname"
+          display_as_placeholder: 'z. B. 2 kg'
+          display_name_placeholder: 'z. B. Tomaten'
         autocomplete:
           out_of_stock: "Nicht vorrättig"
-          producer_name: "Erzeuger"
+          producer_name: "Produzent"
           unit: "Einheit"
       shared:
         sortable_header:
@@ -3440,17 +3448,17 @@ de_DE:
     shipment_states:
       backorder: Lieferrückstand
       partial: teilweise
-      pending: auf Bestätigung wartend
+      pending: wartet auf Bestätigung
       ready: fertig
-      shipped: versendet
+      shipped: versandt
     payment_states:
       balance_due: Betrag offen
       completed: fertig gestellt
       checkout: zur Kasse
-      credit_owed: Kredit geschuldet
+      credit_owed: Geschuldetes Guthaben
       failed: misslungen
       paid: bezahlt
-      pending: auf Bestätigung wartend
+      pending: wartet auf Bestätigung
       processing: Prozess läuft
       void: Angabe fehlt
       invalid: ungültig
@@ -3483,13 +3491,17 @@ de_DE:
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
         subject: "Bitte bestätigen Sie Ihre Anmeldung bei Open Food Network DE!"
+    payment_mailer:
+      authorize_payment:
+        subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network."
+        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert eine zusätzliche Authentifizierung. Bitte besuchen Sie die folgende URL, um Ihre Zahlung zu bestätigen:"
     shipment_mailer:
       shipped_email:
-        dear_customer: "Sehr geehrte Kundin, sehr geehrter Kunde,"
+        dear_customer: "Liebe Kundin, lieber Kunde,"
         instructions: "Ihre Bestellung wurde versandt"
         shipment_summary: "Übersicht"
         subject: "Versandbenachrichtigung"
-        thanks: "Danke für Ihren Einkauf."
+        thanks: "Danke für deinen Einkauf!"
         track_information: "Tracking-Informationen: %{tracking}"
         track_link: "Tracking-Link: %{url}"
     test_mailer:
@@ -3499,18 +3511,18 @@ de_DE:
         subject: "Test-E-Mail"
     order_state:
       address: Adresse
-      adjustments: Verbesserungen
-      awaiting_return: Warten auf die Rückkehr
+      adjustments: Anpassungen
+      awaiting_return: wartet auf Rückkehr
       canceled: abgebrochen
-      cart: Einkaufswagen
-      complete: fertigstellen
+      cart: im Einkaufswagen
+      complete: abgeschlossen
       confirm: bestätigen
       delivery: Lieferung
       paused: pausiert
       payment: Bezahlung
       pending: steht aus
-      resumed: zusammengefasst
-      returned: zurück gegeben
+      resumed: wiederaufgenommen
+      returned: zurückgegeben
       skrill: Skrill
     subscription_state:
       active: aktiv
@@ -3574,7 +3586,7 @@ de_DE:
         delete?: Löschen?
       cards:
         authorised_shops: Bevollmächtigte Läden
-        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d.h. wiederholte Bestellungen) belastet werden darf. Ihre Kartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erklären Sie sich damit einverstanden, diesen Laden zu autorisieren, Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß den Bedingungen eines Abonnements entgegenzunehmen, das Sie mit diesem Laden erstellen.
+        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. wiederholte Bestellungen) belastet werden darf. Ihre Kartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erklären Sie sich damit einverstanden, diesen Laden zu autorisieren, Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß den Bedingungen eines Abonnements entgegenzunehmen, das Sie mit diesem Laden erstellen.
         saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"

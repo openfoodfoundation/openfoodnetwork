@@ -2318,6 +2318,8 @@ ar:
   payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
   payment_method_not_supported: "طريقة الدفع هذه غير مدعومة. يرجى اختيار واحد آخر."
   payment_updated: "تم تحديث الدفع"
+  cannot_perform_operation: "تعذر تحديث الدفع"
+  action_required: "الإجراء مطلوب"
   inventory_settings: "إعدادات المخزون"
   tag_rules: "قواعد الوسم"
   shop_preferences: "تفضيلات المتجر"
@@ -2579,6 +2581,8 @@ ar:
           processing: "قيد المعالجة"
           void: "فارغ"
           invalid: "غير صالحة"
+        quantity_adjusted: "مخزون غير كافٍ. تم تحديث البند إلى الكمية القصوى المتاحة."
+        quantity_unchanged: "الكمية لم تتغير عن المبلغ السابق."
       resend_user_email_confirmation:
         resend: "إعادة إرسال"
         sending: "إعادة إرسال..."
@@ -3565,6 +3569,10 @@ ar:
         subject: "تعليمات إعادة تعيين كلمة المرور"
       confirmation_instructions:
         subject: "يرجى تأكيد حسابك OFN"
+    payment_mailer:
+      authorize_payment:
+        subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
+        instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
     shipment_mailer:
       shipped_email:
         dear_customer: "عزيزي العميل،"
