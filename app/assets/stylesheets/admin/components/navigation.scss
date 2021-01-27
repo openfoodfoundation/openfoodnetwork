@@ -65,12 +65,17 @@ nav.menu {
 #admin-menu {
   background-color: $color-3;
 
+  ul {
+    display: flex;
+  }
+
   li {
     min-width: 90px;
+    flex-grow: 1;
 
     a {
       display: block;
-      padding: 25px 20px;
+      padding: 25px 5px;
       color: $color-1 !important;
       text-transform: uppercase;
       position: relative;
@@ -159,4 +164,12 @@ nav.menu {
       }
     }
   }
+}
+
+#header figure {
+  margin: 0.25em 0;
+}
+
+#login-nav {
+  line-height: 1.75em;
 }

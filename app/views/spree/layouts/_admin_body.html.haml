@@ -19,9 +19,9 @@
         = render :partial => 'spree/layouts/admin/login_nav'
 
   %nav#admin-menu{ data: { hook: '' }}
-    .container
+    .container.no-gutter
       .sixteen.columns.main-menu-wrapper
-        %ul.inline-menu.fullwidth-menu{"data-hook" => "admin_tabs"}
+        %ul.inline-menu{"data-hook" => "admin_tabs"}
           = render :partial => 'spree/admin/shared/tabs'
 
   - if content_for?(:sub_menu)

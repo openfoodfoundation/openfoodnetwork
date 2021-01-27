@@ -16,11 +16,11 @@
           %td= link_to t(:edit), edit_admin_payment_method_path(payment_method)
   %br
   .row
-    .six.columns.alpha
+    .eight.columns
       %a.button{ href: "#{admin_payment_methods_path}"}
         = t('.manage')
         %i.icon-arrow-right
-    .five.columns.omega.text-right
+    .eight.columns.text-right
       %a.button{ href: "#{new_admin_payment_method_path}"}
         = t('.create_button')
         %i.icon-plus
