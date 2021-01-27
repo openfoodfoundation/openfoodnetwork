@@ -1,4 +1,4 @@
-Darkswarm.directive "tabsetCtrl", (Tabsets, $location) ->
+Darkswarm.directive "tabsetCtrl", (Tabsets, $location, $rootScope) ->
   restrict: "C"
   scope:
     id: "@"
@@ -9,7 +9,13 @@ Darkswarm.directive "tabsetCtrl", (Tabsets, $location) ->
     if $scope.navigate
       path = $location.path()?.match(/^\/\w+$/)?[0]
       $scope.selected = path[1..] if path
-
+    
+    # Watch location change success event to operate back/forward buttons
+    $rootScope.$on "$locationChangeSuccess", ->
+      if $scope.navigate
+        path = $location.path()?.match(/^\/\w+$/)?[0]
+        Tabsets.toggle($scope.id, path[1..] if path)
+     
     this.toggle = (name) ->
       Tabsets.toggle($scope.id, name)
 
