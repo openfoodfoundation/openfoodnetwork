@@ -21,6 +21,7 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'responders'
   gem 'sass', '<= 4.7.1'
   gem 'sass-rails', '< 6.0.0'
+  gem 'libv8', '< 8'
 else
   gem 'rails', '~> 4.2'
 
@@ -34,6 +35,10 @@ else
 
   gem 'db2fog'
   gem 'unicorn'
+
+  group :test do
+    gem 'test_after_commit' # needed to test Devise callbacks
+  end
 end
 
 gem 'i18n'
@@ -160,7 +165,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
-  gem 'test_after_commit' # needed to test Devise callbacks
   gem 'webmock'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
