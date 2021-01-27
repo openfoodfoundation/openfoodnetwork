@@ -10,7 +10,7 @@ module Features
 
     def select_date_from_datepicker(date)
       navigate_datepicker_to_month date
-      find('.flatpickr-calendar.open .flatpickr-days .flatpickr-day', text: date.strftime("%e").to_s.strip, exact_text: true, match: :first).click
+      find('.flatpickr-calendar.open .flatpickr-days .flatpickr-day:not(.prevMonthDay)', text: date.strftime("%e").to_s.strip, exact_text: true, match: :first).click
     end
     
     def navigate_datepicker_to_month(date, reference_date = Time.zone.today)
