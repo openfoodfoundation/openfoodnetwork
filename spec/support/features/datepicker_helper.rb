@@ -8,9 +8,14 @@ module Features
       end
     end
 
+    def select_date_from_datepicker(date)
+      navigate_datepicker_to_month date
+      find('.flatpickr-calendar.open .flatpickr-days .flatpickr-day', text: date.strftime("%e").to_s.strip, exact_text: true, match: :first).click
+    end
+    
     def navigate_datepicker_to_month(date, reference_date = Time.zone.today)
-      month_and_year = date.strftime("%B %Y")
-
+      month_and_year = date.strftime("%-m %Y")
+      
       until datepicker_month_and_year == month_and_year.upcase
         if date < reference_date
           navigate_datepicker_to_previous_month
@@ -29,7 +34,9 @@ module Features
     end
 
     def datepicker_month_and_year
-      find(".flatpickr-calendar.open .flatpickr-current-month").text
+      month = find(".flatpickr-calendar.open .flatpickr-current-month select.flatpickr-monthDropdown-months").value.to_i + 1
+      year = find(".flatpickr-calendar.open .flatpickr-current-month .numInputWrapper .cur-year").value
+      return month.to_s + " " + year.to_s
     end
   end
 end

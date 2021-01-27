@@ -471,7 +471,7 @@ feature '
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
         find('#start_date_filter').click
-        select_date(Time.zone.today - 8.days)
+        select_date_from_datepicker Time.zone.today - 8.days
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
@@ -479,7 +479,7 @@ feature '
         expect(page).to have_no_selector "tr#li_#{li4.id}"
 
         find('#end_date_filter').click
-        select_date(Time.zone.today + 1.day)
+        select_date_from_datepicker Time.zone.today + 1.day
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
@@ -496,7 +496,8 @@ feature '
 
         it "shows a dialog and ignores changes when confirm dialog is accepted" do
           page.driver.accept_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
-            fill_in "start_date_filter", with: (Date.current - 9).strftime('%Y-%m-%d')
+            find('#start_date_filter').click
+            select_date_from_datepicker Time.zone.today - 9.days
           end
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -506,7 +507,8 @@ feature '
 
         it "shows a dialog and keeps changes when confirm dialog is rejected" do
           page.driver.dismiss_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
-            fill_in "start_date_filter", with: (Date.current - 9).strftime("%F %T")
+            find('#start_date_filter').click
+            select_date_from_datepicker Time.zone.today - 9.days
           end
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -746,14 +748,5 @@ feature '
   def visit_bulk_order_management
     visit spree.admin_bulk_order_management_path
     expect(page).to have_no_text 'Loading orders'
-  end
-
-  def select_date(date)
-    # Wait for datepicker to open and be associated to the datepicker trigger.
-    expect(page).to have_selector("#ui-datepicker-div")
-
-    navigate_datepicker_to_month date
-
-    find('#ui-datepicker-div .ui-datepicker-calendar .ui-state-default', text: date.strftime("%e").to_s.strip, exact_text: true).click
   end
 end
