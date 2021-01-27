@@ -25,9 +25,13 @@ feature '
     # When I go to the order cycles page
     login_as_admin_and_visit admin_order_cycles_path
 
-    # And I fill in a time using the datepicker
+    ## -- OC1
+    find("input#oc#{oc1.id}_name").set ""
+    fill_in("oc#{oc1.id}_name", :with => "Updated Order Cycle 1")
+    
+    ## -- OC2
+    fill_in("oc#{oc2.id}_name", :with => "Updated Order Cycle 2")
     within("tr.order-cycle-#{oc2.id} .orders_open_at") do
-      # When I trigger the datepicker
       find('input.datetimepicker', match: :first).click
     end
 
@@ -41,9 +45,9 @@ feature '
       expect(find("input#oc#{oc2.id}_orders_open_at").value).to eq "2000-12-01 12:12"
     end
 
-    # And I fill in a time using the datepicker
+    # -- OC3
+    fill_in("oc#{oc3.id}_name", :with => "Updated Order Cycle 3")
     within("tr.order-cycle-#{oc3.id} .orders_close_at") do
-      # When I trigger the datepicker
       find('input.datetimepicker', match: :first).click
     end
 
@@ -53,20 +57,15 @@ feature '
     end
 
     within("tr.order-cycle-#{oc3.id}") do
-      # Then that date/time should appear on the form
       expect(find("input#oc#{oc3.id}_orders_close_at").value).to eq "2041-12-01 12:12"
     end
-
-    # Manually fill out time
-    find("input#oc#{oc2.id}_name").set "Updated Order Cycle 2"
-    find("input#oc#{oc3.id}_name").set "Updated Order Cycle 3"
 
     click_button 'Save Changes'
 
     # Then my details should have been saved
     expect(page).to have_selector "#save-bar", text: "Order cycles have been updated."
     order_cycles = OrderCycle.order("id ASC")
-    expect(order_cycles.map(&:name)).to eq ["Order Cycle 1", "Updated Order Cycle 2", "Updated Order Cycle 3"]
+    expect(order_cycles.map(&:name)).to eq ["Updated Order Cycle 1", "Updated Order Cycle 2", "Updated Order Cycle 3"]
     expect(order_cycles.map { |oc| oc.orders_open_at.sec }).to eq [0, 0, 4]
     expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 0]
   end
