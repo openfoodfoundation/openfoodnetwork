@@ -139,10 +139,6 @@ module Spree
       redirect_to main_app.enterprise_path(@order.distributor.id)
     end
 
-    def order_cycle_expired
-      @order_cycle = OrderCycle.find session[:expired_order_cycle_id]
-    end
-
     def cancel
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order

@@ -109,7 +109,6 @@ describe BaseController, type: :controller do
 
     get :index
 
-    expect(session[:expired_order_cycle_id]).to eq oc.id
     expect(response).to redirect_to root_url
     expect(flash[:info]).to eq I18n.t('order_cycle_closed')
   end
