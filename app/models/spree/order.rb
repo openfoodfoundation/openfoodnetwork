@@ -130,6 +130,11 @@ module Spree
       where("state != ?", state)
     }
 
+    # All the states an order can be in after completing the checkout
+    FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
+
+    scope :finalized, -> { where(state: FINALIZED_STATES) }
+
     def self.by_number(number)
       where(number: number)
     end

@@ -40,6 +40,22 @@ describe Spree::UsersController, type: :controller do
       # Doesn't return uncompleted orders" do
       expect(orders).not_to include d1o3
     end
+
+    context 'when the customer_balance feature is enabled' do
+      let(:outstanding_balance) { double(:outstanding_balance) }
+
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, controller.spree_current_user) { true }
+      end
+
+      it 'calls OutstandingBalance' do
+        allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+        expect(outstanding_balance).to receive(:query) { Spree::Order.none }
+
+        spree_get :show
+      end
+    end
   end
 
   describe "registered_email" do

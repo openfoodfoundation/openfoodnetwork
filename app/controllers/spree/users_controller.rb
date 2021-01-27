@@ -12,9 +12,13 @@ module Spree
     before_action :set_locale
     before_action :enable_embedded_shopfront
 
-    # Ignores invoice orders, only order where state: 'complete'
     def show
-      @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+      @orders = orders_collection
+
+      customers = spree_current_user.customers
+      @shops = Enterprise
+        .where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
+
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
@@ -53,6 +57,14 @@ module Spree
     end
 
     private
+
+    def orders_collection
+      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
+        CompleteOrdersWithBalance.new(@user).query
+      else
+        @user.orders.where(state: 'complete').order('completed_at desc')
+      end
+    end
 
     def load_object
       @user ||= spree_current_user
