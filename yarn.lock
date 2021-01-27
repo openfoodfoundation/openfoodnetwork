@@ -1519,6 +1519,11 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
+shortcut-buttons-flatpickr@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/shortcut-buttons-flatpickr/-/shortcut-buttons-flatpickr-0.3.1.tgz#25ec705db8e7c80f0f81f5e160783102775ef529"
+  integrity sha512-zZRLJXF7WSeQJ0ZES+PdD1FI+yjBOufqOQ4AU5przR71Rhyekiw/6/JLA33zOqVkgR7QQ1NbVcuuSqNHHGneEg==
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"

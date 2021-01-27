@@ -1,7 +1,24 @@
 $(document).ready(function(){
   window.FLATPICKR_DATE_DEFAULT = {
     dateFormat: Spree.translations.flatpickr_date_format,
-    locale: I18n.locale
+    locale: I18n.locale,
+    plugins: [
+        ShortcutButtonsPlugin({
+          button: [{
+            label: "Today"
+          }],
+          label: "or",
+          onClick: (index, fp) => {
+            let date;
+            switch (index) {
+              case 0:
+                date = new Date();
+                break;
+            }
+            fp.setDate(date);
+          }
+        })
+      ]
   }
   window.FLATPICKR_DATETIME_DEFAULT = Object.assign(
     {},
@@ -9,6 +26,23 @@ $(document).ready(function(){
     {
       enableTime: true,
       time_24hr: true,
+      plugins: [
+        ShortcutButtonsPlugin({
+          button: [{
+            label: "Now"
+          }],
+          label: "or",
+          onClick: (index, fp) => {
+            let date;
+            switch (index) {
+              case 0:
+                date = new Date();
+                break;
+            }
+            fp.setDate(date);
+          }
+        })
+      ]
     }
   );
   flatpickr(".datetimepicker", window.FLATPICKR_DATETIME_DEFAULT);
