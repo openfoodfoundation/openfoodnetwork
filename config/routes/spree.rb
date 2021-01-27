@@ -1,7 +1,6 @@
 Openfoodnetwork::Application.routes.draw do
   scope module: 'spree' do
     resources :orders do
-      get :clear, :on => :collection
       put :cancel, on: :member
     end
   end

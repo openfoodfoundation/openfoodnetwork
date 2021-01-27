@@ -132,13 +132,6 @@ module Spree
       end
     end
 
-    def clear
-      @order = current_order(true)
-      @order.empty!
-      @order.set_order_cycle! nil
-      redirect_to main_app.enterprise_path(@order.distributor.id)
-    end
-
     def cancel
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order
