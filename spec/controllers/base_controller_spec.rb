@@ -101,7 +101,7 @@ describe BaseController, type: :controller do
   end
 
   it "redirects to home with message if order cycle is expired" do
-    expect(controller).to receive(:current_order_cycle).and_return(oc).twice
+    expect(controller).to receive(:current_order_cycle).and_return(oc)
     expect(controller).to receive(:current_order).and_return(order).twice
     expect(oc).to receive(:closed?).and_return(true)
     expect(order).to receive(:empty!)
