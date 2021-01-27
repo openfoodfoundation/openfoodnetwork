@@ -5,7 +5,8 @@ require 'tasks/data/remove_transient_data'
 
 describe RemoveTransientData do
   describe '#call' do
-    let(:retention_period) { RemoveTransientData::RETENTION_PERIOD }
+    let(:medium_retention) { RemoveTransientData::MEDIUM_RETENTION }
+    let(:short_retention) { RemoveTransientData::SHORT_RETENTION }
 
     before do
       allow(Spree::StateChange).to receive(:delete_all)
@@ -15,21 +16,21 @@ describe RemoveTransientData do
     end
 
     it 'deletes state changes older than rentention_period' do
-      Spree::StateChange.create(created_at: retention_period - 1.day)
+      Spree::StateChange.create(created_at: medium_retention - 1.day)
 
       RemoveTransientData.new.call
       expect(Spree::StateChange.all).to be_empty
     end
 
     it 'deletes log entries older than retention_period' do
-      Spree::LogEntry.create(created_at: retention_period - 1.day)
+      Spree::LogEntry.create(created_at: medium_retention - 1.day)
 
       expect { RemoveTransientData.new.call }
         .to change(Spree::LogEntry, :count).by(-1)
     end
 
     it 'deletes sessions older than retention_period' do
-      RemoveTransientData::Session.create(session_id: 1, updated_at: retention_period - 1.day)
+      RemoveTransientData::Session.create(session_id: 1, updated_at: short_retention - 1.day)
 
       RemoveTransientData.new.call
 
@@ -44,7 +45,7 @@ describe RemoveTransientData do
       let!(:line_item) { create(:line_item, order: cart, variant: variant) }
       let!(:adjustment) { create(:adjustment, order: cart) }
 
-      let!(:old_cart) { create(:order, state: 'cart', updated_at: retention_period - 1.day) }
+      let!(:old_cart) { create(:order, state: 'cart', updated_at: short_retention - 1.day) }
       let!(:old_line_item) { create(:line_item, order: old_cart, variant: variant) }
       let!(:old_adjustment) { create(:adjustment, order: old_cart) }
 
