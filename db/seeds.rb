@@ -4,7 +4,6 @@ require 'yaml'
 
 def set_mail_configuration
   MailConfiguration.entries= {
-    enable_mail_delivery: true,
     mail_host: ENV.fetch('MAIL_HOST'),
     mail_domain: ENV.fetch('MAIL_DOMAIN'),
     mail_port: ENV.fetch('MAIL_PORT'),

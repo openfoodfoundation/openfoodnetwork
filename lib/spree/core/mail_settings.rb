@@ -12,13 +12,9 @@ module Spree
       end
 
       def override!
-        if Config.enable_mail_delivery
-          ActionMailer::Base.default_url_options[:host] ||= Config.site_url
-          ActionMailer::Base.smtp_settings = mail_server_settings
-          ActionMailer::Base.perform_deliveries = true
-        else
-          ActionMailer::Base.perform_deliveries = false
-        end
+        ActionMailer::Base.default_url_options[:host] ||= Config.site_url
+        ActionMailer::Base.smtp_settings = mail_server_settings
+        ActionMailer::Base.perform_deliveries = true
       end
 
       private

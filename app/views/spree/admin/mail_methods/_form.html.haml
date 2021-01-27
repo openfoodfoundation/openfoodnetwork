@@ -3,9 +3,6 @@
     %fieldset.no-border-bottom
       %legend{align: "center"}= t("spree.general")
       .field
-        = preference_field_tag("enable_mail_delivery", Spree::Config[:enable_mail_delivery], type: :boolean)
-        = label_tag :enable_mail_delivery, t("spree.enable_mail_delivery")
-      .field
         = label_tag :mails_from, t("spree.send_mails_as")
         %br/
         = text_field_tag :mails_from, Spree::Config[:mails_from], maxlength: 256, class: 'fullwidth'
