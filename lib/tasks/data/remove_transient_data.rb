@@ -24,5 +24,16 @@ class RemoveTransientData
     old_cart_adjustments.delete_all
     old_cart_line_items.delete_all
     old_carts.delete_all
+
+    # Clear option values for deleted line items
+    ActiveRecord::Base.connection.execute <<-SQL
+      DELETE FROM spree_option_values_line_items
+      WHERE line_item_id IN (
+        SELECT line_item_id FROM spree_option_values_line_items
+        LEFT OUTER JOIN spree_line_items
+        ON spree_option_values_line_items.line_item_id = spree_line_items.id
+        WHERE spree_line_items.id IS NULL
+      );
+    SQL
   end
 end
