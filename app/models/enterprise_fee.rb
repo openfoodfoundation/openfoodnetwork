@@ -40,8 +40,8 @@ class EnterpriseFee < ActiveRecord::Base
     joins(:calculator).where('spree_calculators.type IN (?)', PER_ORDER_CALCULATORS)
   }
 
-  def self.clear_all_adjustments_on_order(order)
-    order.adjustments.where(originator_type: 'EnterpriseFee').destroy_all
+  def self.clear_all_adjustments(order)
+    order.adjustments.enterprise_fee.destroy_all
   end
 
   private

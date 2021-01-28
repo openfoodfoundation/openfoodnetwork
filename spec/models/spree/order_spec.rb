@@ -541,7 +541,7 @@ describe Spree::Order do
     end
 
     it "clears all enterprise fee adjustments on the order" do
-      expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(subject)
+      expect(EnterpriseFee).to receive(:clear_all_adjustments).with(subject)
       subject.recreate_all_fees!
     end
 
@@ -552,7 +552,7 @@ describe Spree::Order do
     end
 
     it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
 
       allow(subject).to receive(:order_cycle) { nil }
 
@@ -560,7 +560,7 @@ describe Spree::Order do
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
       line_item = create(:line_item, order: subject)
       allow(fee_handler).to receive(:provided_by_order_cycle?) { true }
 
@@ -575,7 +575,7 @@ describe Spree::Order do
     end
 
     it "ensures the correct per-order adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
 
       order_cycle = double(:order_cycle)
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).

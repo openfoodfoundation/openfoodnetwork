@@ -667,7 +667,7 @@ module Spree
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       with_lock do
-        EnterpriseFee.clear_all_adjustments_on_order self
+        EnterpriseFee.clear_all_adjustments self
 
         fee_handler = OrderFeesHandler.new(self)
         fee_handler.create_line_item_fees!

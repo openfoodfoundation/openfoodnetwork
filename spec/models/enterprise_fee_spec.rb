@@ -110,7 +110,7 @@ describe EnterpriseFee do
       order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2.order, line_item2, true)
 
       expect do
-        EnterpriseFee.clear_all_adjustments_on_order order
+        EnterpriseFee.clear_all_adjustments order
       end.to change(order.adjustments, :count).by(-4)
     end
 
@@ -121,7 +121,7 @@ describe EnterpriseFee do
       enterprise_fee_aplicator.create_order_adjustment(order)
 
       expect do
-        EnterpriseFee.clear_all_adjustments_on_order order
+        EnterpriseFee.clear_all_adjustments order
       end.to change(order.adjustments, :count).by(-1)
     end
 
@@ -135,7 +135,7 @@ describe EnterpriseFee do
                                  label: 'hello' })
 
       expect do
-        EnterpriseFee.clear_all_adjustments_on_order order
+        EnterpriseFee.clear_all_adjustments order
       end.to change(order.adjustments, :count).by(0)
     end
   end
