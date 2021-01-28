@@ -67,6 +67,8 @@ module Spree
     accepts_nested_attributes_for :shipments
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
+    delegate :update_totals, to: :updater
+    delegate :create_line_item_fees!, :create_order_fees!, to: :fee_handler
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
@@ -266,8 +268,6 @@ module Spree
     def update!
       updater.update
     end
-
-    delegate :update_totals, to: :updater
 
     def clone_billing_address
       if bill_address && ship_address.nil?
@@ -669,9 +669,8 @@ module Spree
       with_lock do
         EnterpriseFee.clear_all_adjustments self
 
-        fee_handler = OrderFeesHandler.new(self)
-        fee_handler.create_line_item_fees!
-        fee_handler.create_order_fees!
+        create_line_item_fees!
+        create_order_fees!
       end
     end
 
@@ -744,6 +743,10 @@ module Spree
     end
 
     private
+
+    def fee_handler
+      @fee_handler ||= OrderFeesHandler.new(self)
+    end
 
     def process_each_payment
       raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
