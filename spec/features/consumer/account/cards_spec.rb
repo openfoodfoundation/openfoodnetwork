@@ -39,7 +39,7 @@ feature "Credit Cards", js: true do
     it "passes the smoke test" do
       visit "/account"
 
-      click_link I18n.t('spree.users.show.tabs.cards')
+      find("a", :text => %r{#{I18n.t('spree.users.show.tabs.cards')}}i).click
 
       expect(page).to have_content I18n.t(:saved_cards)
 

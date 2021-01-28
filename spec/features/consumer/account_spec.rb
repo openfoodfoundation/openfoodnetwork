@@ -54,7 +54,7 @@ feature '
                                   href: "#{distributor_credit.permalink}/shop", count: 1)
 
         # Viewing transaction history
-        click_link I18n.t('spree.users.show.tabs.transactions')
+        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
 
         # It shows all hubs that have been ordered from with balance or credit
         expect(page).to have_content distributor1.name
