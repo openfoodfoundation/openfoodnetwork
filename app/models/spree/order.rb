@@ -831,8 +831,8 @@ module Spree
     end
 
     def provided_by_order_cycle?(line_item)
-      order_cycle_variants = order_cycle.andand.variants || []
-      order_cycle_variants.include? line_item.variant
+      @order_cycle_variant_ids ||= order_cycle&.variants&.map(&:id) || []
+      @order_cycle_variant_ids.include? line_item.variant_id
     end
 
     def require_customer?
