@@ -45,7 +45,7 @@ $(document).ready(function() {
       if (quantity > maxQuantity) {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
-        alert('<%= I18n.t("js.admin.orders.quantity_adjusted") %>');
+        alert(t("js.admin.orders.quantity_adjusted"));
       }
       toggleItemEdit();
 
@@ -84,7 +84,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
     url += '.json';
 
     if (new_quantity == 0) {
-      alert('<%= I18n.t("js.admin.orders.quantity_unchanged") %>');
+      alert(t("js.admin.orders.quantity_unchanged"));
     } else {
       $.ajax({
         type: "PUT",
