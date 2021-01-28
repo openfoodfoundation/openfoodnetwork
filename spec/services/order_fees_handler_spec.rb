@@ -38,4 +38,24 @@ describe OrderFeesHandler do
       service.create_order_fees!
     end
   end
+
+  context "checking if a line item can be provided by the order cycle" do
+    it "returns true when the variant is provided" do
+      allow(order_cycle).to receive(:variants) { [line_item.variant] }
+
+      expect(service.__send__(:provided_by_order_cycle?, line_item)).to be true
+    end
+
+    it "returns false otherwise" do
+      allow(order_cycle).to receive(:variants) { [] }
+
+      expect(service.__send__(:provided_by_order_cycle?, line_item)).to be false
+    end
+
+    it "returns false when there is no order cycle" do
+      allow(order).to receive(:order_cycle) { nil }
+
+      expect(service.__send__(:provided_by_order_cycle?, line_item)).to be false
+    end
+  end
 end

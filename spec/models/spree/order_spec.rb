@@ -588,34 +588,6 @@ describe Spree::Order do
     end
   end
 
-  describe "looking up whether a line item can be provided by an order cycle" do
-    it "returns true when the variant is provided" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      order_cycle = double(:order_cycle, variants: [v])
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be true
-    end
-
-    it "returns false otherwise" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      order_cycle = double(:order_cycle, variants: [])
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
-    end
-
-    it "returns false when there is no order cycle" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      allow(subject).to receive(:order_cycle) { nil }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
-    end
-  end
-
   describe "getting the admin and handling charge" do
     let(:o) { create(:order) }
     let(:li) { create(:line_item, order: o) }
