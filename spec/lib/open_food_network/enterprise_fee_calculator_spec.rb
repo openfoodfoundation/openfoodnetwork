@@ -141,7 +141,7 @@ module OpenFoodNetwork
         it "creates adjustments for a line item" do
           exchange.enterprise_fees << enterprise_fee_line_item
 
-          EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
+          EnterpriseFeeCalculator.new(distributor, order_cycle).create_line_item_adjustments_for line_item
 
           a = Spree::Adjustment.last
           expect(a.metadata.fee_name).to eq(enterprise_fee_line_item.name)
@@ -150,7 +150,7 @@ module OpenFoodNetwork
         it "creates adjustments for an order" do
           exchange.enterprise_fees << enterprise_fee_order
 
-          EnterpriseFeeCalculator.new.create_order_adjustments_for order
+          EnterpriseFeeCalculator.new(distributor, order_cycle).create_order_adjustments_for order
 
           a = Spree::Adjustment.last
           expect(a.metadata.fee_name).to eq(enterprise_fee_order.name)

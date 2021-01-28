@@ -669,17 +669,19 @@ module Spree
       with_lock do
         EnterpriseFee.clear_all_adjustments_on_order self
 
+        fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
+
         loaded_line_items =
-          line_items.includes(variant: :product, order: [:distributor, :order_cycle]).all
+          line_items.includes(variant: :product).all
 
         loaded_line_items.each do |line_item|
           if provided_by_order_cycle? line_item
-            OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
+            fee_calculator.create_line_item_adjustments_for line_item
           end
         end
 
         if order_cycle
-          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+          fee_calculator.create_order_adjustments_for self
         end
       end
     end
