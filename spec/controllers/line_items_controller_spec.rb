@@ -136,7 +136,7 @@ describe LineItemsController, type: :controller do
         order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
         order.reload.line_items.first.update(variant_id: variant.id)
         while !order.completed? do break unless order.next! end
-        order.update_distribution_charge!
+        order.recreate_all_fees!
         order
       end
       let(:params) { { format: :json, id: order.line_items.first } }

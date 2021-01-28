@@ -81,7 +81,7 @@ describe OrderTaxAdjustmentsFetcher do
 
     before do
       order.create_tax_charge!
-      order.update_distribution_charge!
+      order.recreate_all_fees!
     end
 
     subject { OrderTaxAdjustmentsFetcher.new(order).totals }

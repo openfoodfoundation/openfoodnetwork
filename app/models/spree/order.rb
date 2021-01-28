@@ -661,7 +661,7 @@ module Spree
       end
     end
 
-    def update_distribution_charge!
+    def recreate_all_fees!
       # `with_lock` acquires an exclusive row lock on order so no other
       # requests can update it until the transaction is commited.
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69

@@ -17,8 +17,8 @@ module Spree
       # Currently, adding or deleting line items does not trigger updating the
       # fees! This is a quick fix for that.
       # TODO: update fees when adding/removing line items
-      # instead of the update_distribution_charge method.
-      after_action :update_distribution_charge, only: :update
+      # instead of the recreate_all_fees method.
+      after_action :recreate_all_fees, only: :update
 
       before_action :require_distributor_abn, only: :invoice
 
@@ -103,8 +103,8 @@ module Spree
         render template: "spree/admin/orders/ticket", layout: false
       end
 
-      def update_distribution_charge
-        @order.update_distribution_charge!
+      def recreate_all_fees
+        @order.recreate_all_fees!
       end
 
       private

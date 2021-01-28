@@ -56,7 +56,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       it "updates distribution charges and redirects to order details page" do
-        expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+        expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
 
         spree_put :update, params
 
@@ -86,7 +86,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         context "and no errors" do
           it "updates distribution charges and redirects to customer details page" do
-            expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+            expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
 
             spree_put :update, params
 

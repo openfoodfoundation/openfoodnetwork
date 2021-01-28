@@ -77,7 +77,7 @@ module Spree
         discard_empty_line_items
         with_open_adjustments { update_totals_and_taxes }
 
-        @order.update_distribution_charge!
+        @order.recreate_all_fees!
 
         respond_with(@order) do |format|
           format.html do

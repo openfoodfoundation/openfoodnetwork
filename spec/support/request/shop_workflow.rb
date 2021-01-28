@@ -42,7 +42,7 @@ module ShopWorkflow
     cart_service.populate(variants: { product.variants.first.id => quantity })
 
     # Recalculate fee totals
-    order.update_distribution_charge!
+    order.recreate_all_fees!
   end
 
   # Add an item to the cart

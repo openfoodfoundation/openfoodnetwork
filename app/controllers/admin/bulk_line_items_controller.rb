@@ -33,7 +33,7 @@ module Admin
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
         if @line_item.update(line_item_params)
-          order.update_distribution_charge!
+          order.recreate_all_fees!
           render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed

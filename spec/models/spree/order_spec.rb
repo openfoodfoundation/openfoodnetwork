@@ -542,7 +542,7 @@ describe Spree::Order do
 
     it "clears all enterprise fee adjustments on the order" do
       expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(subject)
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
 
     it "creates line item and order fee adjustments via OrderFeesHandler" do
@@ -556,7 +556,7 @@ describe Spree::Order do
 
       allow(subject).to receive(:order_cycle) { nil }
 
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
@@ -571,7 +571,7 @@ describe Spree::Order do
       allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:create_order_adjustments_for)
       allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
 
     it "ensures the correct per-order adjustment(s) are created for order cycles" do
@@ -584,7 +584,7 @@ describe Spree::Order do
 
       allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
   end
 
@@ -820,7 +820,7 @@ describe Spree::Order do
       order.add_variant v1
       order.add_variant v2
 
-      order.update_distribution_charge!
+      order.recreate_all_fees!
     end
 
     it "removes the variant's line item" do

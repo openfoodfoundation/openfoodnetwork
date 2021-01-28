@@ -210,7 +210,7 @@ describe Admin::BulkLineItemsController, type: :controller do
               .to receive(:find).with(line_item1.id.to_s).and_return(line_item1)
 
             expect(line_item1.order).to receive(:reload).with(lock: true)
-            expect(line_item1.order).to receive(:update_distribution_charge!)
+            expect(line_item1.order).to receive(:recreate_all_fees!)
 
             spree_put :update, params
           end

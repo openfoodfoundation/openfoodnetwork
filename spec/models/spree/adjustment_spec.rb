@@ -307,7 +307,7 @@ module Spree
 
         context "when enterprise fees have a fixed tax_category" do
           before do
-            order.reload.update_distribution_charge!
+            order.reload.recreate_all_fees!
           end
 
           context "when enterprise fees are taxed per-order" do
@@ -326,7 +326,7 @@ module Spree
               before do
                 fee_tax_rate.update_attribute :included_in_price, false
                 order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
+                order.recreate_all_fees!
               end
 
               it "records the tax on TaxRate adjustment on the order" do
@@ -339,7 +339,7 @@ module Spree
               before do
                 enterprise_fee.tax_category = nil
                 enterprise_fee.save!
-                order.update_distribution_charge!
+                order.recreate_all_fees!
               end
 
               it "records no tax as charged" do
@@ -361,7 +361,7 @@ module Spree
               before do
                 fee_tax_rate.update_attribute :included_in_price, false
                 order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
+                order.recreate_all_fees!
               end
 
               it "records the tax on TaxRate adjustment on the order" do
@@ -382,7 +382,7 @@ module Spree
             variant.product.update_attribute(:tax_category_id, product_tax_category.id)
 
             order.create_tax_charge! # Updating line_item or order has the same effect
-            order.update_distribution_charge!
+            order.recreate_all_fees!
           end
 
           context "when enterprise fees are taxed per-order" do
@@ -402,7 +402,7 @@ module Spree
               before do
                 product_tax_rate.update_attribute :included_in_price, false
                 order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.reload.update_distribution_charge!
+                order.reload.recreate_all_fees!
               end
 
               it "records the no tax on TaxRate adjustment on the order" do
@@ -432,7 +432,7 @@ module Spree
               before do
                 product_tax_rate.update_attribute :included_in_price, false
                 order.reload.create_tax_charge! # Updating line_item or order has the same effect
-                order.update_distribution_charge!
+                order.recreate_all_fees!
               end
 
               it "records the tax on TaxRate adjustment on the order" do

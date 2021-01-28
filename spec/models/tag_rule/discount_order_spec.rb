@@ -56,7 +56,7 @@ describe TagRule::DiscountOrder, type: :model do
     let!(:order) { line_item.order }
 
     before do
-      order.update_distribution_charge!
+      order.recreate_all_fees!
       tag_rule.calculator.update_attribute(:preferred_flat_percent, -10.00)
       tag_rule.context = { subject: order }
     end
