@@ -1,4 +1,4 @@
-.small-5.medium-3.large-3.columns.text-right{"ng-if" => "::variant.product.group_buy"}
+.small-5.medium-3.large-3.columns.variant-quantity-column.text-right{"ng-if" => "::variant.product.group_buy"}
 
   %button.add-variant{type: "button", ng: {if: "!variant.line_item.quantity", click: "addBulk(1)", disabled: "!canAdd(1)"}}
     {{ "js.shopfront.variant.add_to_cart" | t }}
