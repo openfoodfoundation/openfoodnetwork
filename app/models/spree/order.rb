@@ -669,20 +669,9 @@ module Spree
       with_lock do
         EnterpriseFee.clear_all_adjustments_on_order self
 
-        fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle)
-
-        loaded_line_items =
-          line_items.includes(variant: :product).all
-
-        loaded_line_items.each do |line_item|
-          if provided_by_order_cycle? line_item
-            fee_calculator.create_line_item_adjustments_for line_item
-          end
-        end
-
-        if order_cycle
-          fee_calculator.create_order_adjustments_for self
-        end
+        fee_handler = OrderFeesHandler.new(self)
+        fee_handler.create_line_item_fees!
+        fee_handler.create_order_fees!
       end
     end
 
@@ -830,11 +819,6 @@ module Spree
 
     def skip_payment_for_subscription?
       subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-    end
-
-    def provided_by_order_cycle?(line_item)
-      @order_cycle_variant_ids ||= order_cycle&.variants&.map(&:id) || []
-      @order_cycle_variant_ids.include? line_item.variant_id
     end
 
     def require_customer?
