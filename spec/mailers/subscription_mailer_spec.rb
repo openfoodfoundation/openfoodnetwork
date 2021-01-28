@@ -47,7 +47,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     describe "linking to order page" do
-      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+      let(:order_link_href) { "href=\"#{order_url(order)}\"" }
       let(:order_link_style) { "style='[^']+'" }
 
       let(:shop) { create(:enterprise, allow_order_changes: true) }
@@ -113,7 +113,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     describe "linking to order page" do
-      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+      let(:order_link_href) { "href=\"#{order_url(order)}\"" }
 
       let(:email) { SubscriptionMailer.deliveries.last }
       let(:body) { email.body.encoded }
@@ -179,7 +179,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     describe "linking to order page" do
-      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+      let(:order_link_href) { "href=\"#{order_url(order)}\"" }
 
       let(:email) { SubscriptionMailer.deliveries.last }
       let(:body) { email.body.encoded }

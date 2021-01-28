@@ -82,7 +82,7 @@ describe CheckoutController, concurrency: true, type: :controller do
     # see the order page. This is basically verifying a "double click"
     # scenario.
     expect(response.status).to eq(200)
-    expect(response.body).to eq({ path: spree.order_path(order) }.to_json)
+    expect(response.body).to eq({ path: order_path(order) }.to_json)
     expect(order.payments.count).to eq 1
     expect(order.completed?).to be true
   end

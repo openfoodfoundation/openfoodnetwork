@@ -22,12 +22,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       it "loads page" do
-        spree_get :show, id: order.number, token: order.token
+        get :show, id: order.number, token: order.token
         expect(response).to be_success
       end
 
       it "stores order token in session as 'access_token'" do
-        spree_get :show, id: order.number, token: order.token
+        get :show, id: order.number, token: order.token
         expect(session[:access_token]).to eq(order.token)
       end
     end
@@ -41,7 +41,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "loads page" do
-        spree_get :show, id: order.number
+        get :show, id: order.number
         expect(response).to be_success
       end
     end
@@ -50,7 +50,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { order.user }
 
       it "loads page" do
-        spree_get :show, id: order.number
+        get :show, id: order.number
         expect(response).to be_success
       end
     end
@@ -59,7 +59,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { create(:user) }
 
       it "redirects to unauthorized" do
-        spree_get :show, id: order.number
+        get :show, id: order.number
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -68,12 +68,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       before do
-        request.env["PATH_INFO"] = spree.order_path(order)
+        request.env["PATH_INFO"] = order_path(order)
       end
 
       it "redirects to unauthorized" do
-        spree_get :show, id: order.number
-        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{spree.order_path(order)}"))
+        get :show, id: order.number
+        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{order_path(order)}"))
         expect(flash[:error]).to eq("Please log in to view your order.")
       end
     end
@@ -81,7 +81,7 @@ describe Spree::OrdersController, type: :controller do
 
   describe "viewing cart" do
     it "redirects home when no distributor is selected" do
-      spree_get :edit
+      get :edit
       expect(response).to redirect_to root_path
     end
 
@@ -95,13 +95,13 @@ describe Spree::OrdersController, type: :controller do
       allow(order_cycle).to receive(:variants_distributed_by).and_return []
 
       session[:access_token] = order.token
-      spree_get :edit
+      get :edit
       expect(response).to redirect_to shop_path
     end
 
     it "redirects to the shop when no order cycle is selected" do
       allow(controller).to receive(:current_distributor).and_return(distributor)
-      spree_get :edit
+      get :edit
       expect(response).to redirect_to shop_path
     end
 
@@ -115,7 +115,7 @@ describe Spree::OrdersController, type: :controller do
       expect(order).to receive(:empty!)
       expect(order).to receive(:set_distribution!).with(nil, nil)
 
-      spree_get :edit
+      get :edit
 
       expect(response).to redirect_to root_url
       expect(flash[:info]).to eq(I18n.t('order_cycles_closed_for_hub'))
@@ -144,7 +144,7 @@ describe Spree::OrdersController, type: :controller do
           # We fixed our view by hardcoding the link.
           spree_registration_path = '/signup'
           ofn_registration_path = '/register'
-          spree_get :edit
+          get :edit
           expect(response.body).to_not match spree_registration_path
           expect(response.body).to match ofn_registration_path
         end
@@ -156,7 +156,7 @@ describe Spree::OrdersController, type: :controller do
         end
 
         it "displays a flash message when we view the cart" do
-          spree_get :edit
+          get :edit
           expect(response.status).to eq 200
           expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
         end
@@ -168,7 +168,7 @@ describe Spree::OrdersController, type: :controller do
         end
 
         it "displays a flash message when we view the cart" do
-          spree_get :edit
+          get :edit
           expect(response.status).to eq 200
           expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
         end
@@ -181,7 +181,7 @@ describe Spree::OrdersController, type: :controller do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)
         li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
-        spree_get :update, order: { line_items_attributes: {
+        get :update, order: { line_items_attributes: {
           "0" => { quantity: "0", id: "9999" },
           "1" => { quantity: "99", id: li.id }
         } }
@@ -209,7 +209,7 @@ describe Spree::OrdersController, type: :controller do
       line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
       adjustment = create(:adjustment, adjustable: order)
 
-      spree_get :update, order: { line_items_attributes: {
+      get :update, order: { line_items_attributes: {
         "1" => { quantity: "99", id: line_item.id }
       } }
 
@@ -318,7 +318,7 @@ describe Spree::OrdersController, type: :controller do
       it "removes the items" do
         spree_post :update, params
         expect(flash[:error]).to be nil
-        expect(response).to redirect_to spree.order_path(order)
+        expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 1
       end
     end
@@ -329,7 +329,7 @@ describe Spree::OrdersController, type: :controller do
       it "does not remove items, flash suggests cancellation" do
         spree_post :update, params
         expect(flash[:error]).to eq I18n.t(:orders_cannot_remove_the_final_item)
-        expect(response).to redirect_to spree.order_path(order)
+        expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 2
       end
     end
@@ -426,7 +426,7 @@ describe Spree::OrdersController, type: :controller do
       context "when the order is not yet complete" do
         it "responds with forbidden" do
           spree_put :cancel, params
-          expect(response.status).to redirect_to spree.order_path(order)
+          expect(response.status).to redirect_to order_path(order)
           expect(flash[:error]).to eq I18n.t(:orders_could_not_cancel)
         end
       end
@@ -440,7 +440,7 @@ describe Spree::OrdersController, type: :controller do
 
         it "responds with success" do
           spree_put :cancel, params
-          expect(response.status).to redirect_to spree.order_path(order)
+          expect(response.status).to redirect_to order_path(order)
           expect(flash[:success]).to eq I18n.t(:orders_your_order_has_been_cancelled)
         end
       end

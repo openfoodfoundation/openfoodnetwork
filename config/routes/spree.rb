@@ -1,3 +1,11 @@
+Openfoodnetwork::Application.routes.draw do
+  scope module: 'spree' do
+    resources :orders do
+      put :cancel, on: :member
+    end
+  end
+end
+
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
@@ -157,12 +165,6 @@ Spree::Core::Engine.routes.draw do
     resources :shipping_methods
     resources :shipping_categories
     resources :payment_methods
-  end
-
-  resources :orders do
-    get :clear, :on => :collection
-    get :order_cycle_expired, :on => :collection
-    put :cancel, on: :member
   end
 
   resources :products

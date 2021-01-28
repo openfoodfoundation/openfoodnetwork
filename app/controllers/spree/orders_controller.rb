@@ -85,7 +85,7 @@ module Spree
               @order.next_transition.run_callbacks if @order.cart?
               redirect_to checkout_state_path(@order.checkout_steps.first)
             elsif @order.complete?
-              redirect_to spree.order_path(@order)
+              redirect_to order_path(@order)
             else
               redirect_to main_app.cart_path
             end
@@ -132,17 +132,6 @@ module Spree
       end
     end
 
-    def clear
-      @order = current_order(true)
-      @order.empty!
-      @order.set_order_cycle! nil
-      redirect_to main_app.enterprise_path(@order.distributor.id)
-    end
-
-    def order_cycle_expired
-      @order_cycle = OrderCycle.find session[:expired_order_cycle_id]
-    end
-
     def cancel
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order
@@ -152,7 +141,7 @@ module Spree
       else
         flash[:error] = I18n.t(:orders_could_not_cancel)
       end
-      redirect_to request.referer || spree.order_path(@order)
+      redirect_to request.referer || order_path(@order)
     end
 
     private
@@ -216,7 +205,7 @@ module Spree
 
       if items.empty?
         flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
-        redirect_to spree.order_path(order_to_update)
+        redirect_to order_path(order_to_update)
       end
     end
 

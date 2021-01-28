@@ -8,7 +8,7 @@
     - allow_changes = !!@order.distributor.allow_order_changes?
     = t("email_so_edit_#{allow_changes}_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
-      order_url: spree.order_url(@order))
+      order_url: order_url(@order))
     = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
   - else
     = t("email_so_contact_distributor_to_change_order_html",
