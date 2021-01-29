@@ -11,7 +11,7 @@ env "MAILTO", app_config["SCHEDULE_NOTIFICATIONS"] if app_config["SCHEDULE_NOTIF
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"
 job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exec script/enqueue :task :priority :output"
 
-every 1.month do
+every 1.month, at: '4:30am' do
   rake 'ofn:data:remove_transient_data'
 end
 
