@@ -130,6 +130,11 @@ module Spree
       where("state != ?", state)
     }
 
+    # All the states an order can be in after completing the checkout
+    FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
+
+    scope :finalized, -> { where(state: FINALIZED_STATES) }
+
     def self.by_number(number)
       where(number: number)
     end
@@ -723,15 +728,7 @@ module Spree
     end
 
     def total_tax
-      (adjustments.to_a + price_adjustments.to_a).sum(&:included_tax)
-    end
-
-    def price_adjustments
-      adjustments = []
-
-      line_items.each { |line_item| adjustments.concat line_item.adjustments }
-
-      adjustments
+      (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
     end
 
     def price_adjustment_totals

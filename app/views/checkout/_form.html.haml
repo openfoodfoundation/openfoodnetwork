@@ -4,6 +4,7 @@
   = inject_saved_credit_cards
 
 = form_for current_order,
+  url: order_path(current_order),
   html: {name: "checkout",
     id: "checkout_form",
     novalidate: true,

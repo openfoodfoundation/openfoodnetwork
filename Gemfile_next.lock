@@ -270,7 +270,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (8.4.255.0)
+    libv8 (7.3.492.27.1)
     loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -502,8 +502,6 @@ GEM
     test-prof (0.7.5)
     test-unit (3.3.7)
       power_assert
-    test_after_commit (1.1.0)
-      activerecord (>= 3.2)
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -608,6 +606,7 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   knapsack
   letter_opener (>= 1.4.1)
+  libv8 (< 8)
   mini_racer (= 0.2.15)
   monetize (~> 1.1)
   oauth2 (~> 1.4.4)
@@ -649,7 +648,6 @@ DEPENDENCIES
   stripe
   test-prof
   test-unit (~> 3.3)
-  test_after_commit
   timecop
   uglifier (>= 1.0.3)
   unicorn-rails

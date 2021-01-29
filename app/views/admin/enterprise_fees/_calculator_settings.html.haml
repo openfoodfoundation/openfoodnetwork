@@ -8,9 +8,9 @@
         .calculator-settings
           = f.fields_for :calculator do |calculator_form|
             - preference_fields(enterprise_fee.calculator, calculator_form).each do |field|
-              .field.alpha.one.columns
+              %span.field
                 = field[:label]
-              .field.omega.two.columns
+              %p.field
                 = field[:field]
 
 = calculator_form_string

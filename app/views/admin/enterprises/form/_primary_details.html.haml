@@ -1,19 +1,17 @@
 .row
-  .alpha.eleven.columns
-    .three.columns.alpha
-      = f.label :name, t('.name')
-      %span.required *
-    .eight.columns.omega
-      = f.text_field :name, { placeholder: t('.name_placeholder') }
+  .three.columns.alpha
+    = f.label :name, t('.name')
+    %span.required *
+  .eight.columns.omega
+    = f.text_field :name, { placeholder: t('.name_placeholder') }
 - if @groups.present?
   .row
-    .alpha.eleven.columns
-      .three.columns.alpha
-        = f.label :group_ids, t('.groups')
-        %div{'ofn-with-tip' => t('.groups_tip')}
-          %a= t('admin.whats_this')
-      .eight.columns.omega
-        = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
+    .three.columns.alpha
+      = f.label :group_ids, t('.groups')
+      %div{'ofn-with-tip' => t('.groups_tip')}
+        %a= t('admin.whats_this')
+    .eight.columns.omega
+      = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
 
 .row
   .three.columns.alpha
@@ -25,20 +23,19 @@
     = f.label :is_primary_producer, t('.producer')
 - if spree_current_user.admin?
   .row
-    .alpha.eleven.columns
-      .three.columns.alpha
-        = f.label :sells, t('.sells')
-        %div{'ofn-with-tip' => t('.sells_tip')}
-          %a= t('admin.whats_this')
-      .two.columns
-        = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, t('.none'), value: "none"
-      .two.columns
-        = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, t('.own'), value: "own"
-      .four.columns.omega
-        = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, t('.any'), value: "any"
+    .three.columns.alpha
+      = f.label :sells, t('.sells')
+      %div{'ofn-with-tip' => t('.sells_tip')}
+        %a= t('admin.whats_this')
+    .two.columns
+      = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
+      = f.label :sells, t('.none'), value: "none"
+    .two.columns
+      = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
+      = f.label :sells, t('.own'), value: "own"
+    .four.columns.omega
+      = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
+      = f.label :sells, t('.any'), value: "any"
 .row
   .three.columns.alpha
     %label= t('.visible_in_search')
@@ -56,7 +53,7 @@
       = f.label :permalink, t('.permalink')
       %div{'ofn-with-tip' => t('.permalink_tip', link: main_app.root_url)}
         %a= t('admin.whats_this')
-    .six.columns
+    .eight.columns
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
     .two.columns.omega
       %div{ng: {show: "checking", cloak: true}, style: "width: 30px; height: 30px;"}

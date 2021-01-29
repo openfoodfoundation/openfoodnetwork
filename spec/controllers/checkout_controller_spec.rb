@@ -110,7 +110,7 @@ describe CheckoutController, type: :controller do
         it "completes the order and redirects to the order confirmation page" do
           get :edit, { payment_intent: "pi_123" }
           expect(order.completed?).to be true
-          expect(response).to redirect_to spree.order_path(order)
+          expect(response).to redirect_to order_path(order)
         end
       end
     end
@@ -242,7 +242,7 @@ describe CheckoutController, type: :controller do
 
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(200)
-      expect(response.body).to eq({ path: spree.order_path(order) }.to_json)
+      expect(response.body).to eq({ path: order_path(order) }.to_json)
     end
 
     it "returns an error on unexpected failure" do

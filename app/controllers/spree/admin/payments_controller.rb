@@ -153,7 +153,7 @@ module Spree
       def authorize_stripe_sca_payment
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
-        @payment.authorize!(spree.order_path(@payment.order, only_path: false))
+        @payment.authorize!(main_app.order_path(@payment.order, only_path: false))
 
         raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
 

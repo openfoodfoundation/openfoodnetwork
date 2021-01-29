@@ -5,7 +5,8 @@
   = "admin.enterprises"
 
 - content_for :page_actions do
-  = render 'admin/shared/user_guide_link'
+  %li#user_guide_link
+    = render 'admin/shared/user_guide_link'
 
   %li#new_product_link
     - button_href = spree_current_user.can_own_more_enterprises? ? main_app.new_admin_enterprise_path : '#'

@@ -1,5 +1,5 @@
 .variants.row
-  .small-4.medium-4.large-6.columns.variant-name
+  .small-4.medium-4.large-5.columns.variant-name
     .inline{"ng-if" => "::variant.display_name"} {{ ::variant.display_name }}
     .variant-unit {{ ::variant.unit_to_display }}
   .small-3.medium-3.large-2.columns.variant-price
@@ -8,7 +8,7 @@
       "price-breakdown-placement" => "bottom",
       "price-breakdown-animation" => true}
     {{ variant.price_with_fees | localizeCurrency }}
-  .medium-2.large-1.columns.total-price
+  .medium-2.large-2.columns.total-price
     %span{"ng-class" => "{filled: variant.line_item.total_price}"}
       {{ variant.line_item.total_price | localizeCurrency }}
 

@@ -19,7 +19,7 @@ module Api
       end
 
       it "lists customers associated with the current user" do
-        spree_get :index
+        get :index
         expect(response.status).to eq 200
         expect(json_response.length).to eq 1
         expect(json_response.first[:id]).to eq customer1.id

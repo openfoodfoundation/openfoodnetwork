@@ -54,7 +54,7 @@ feature '
                                   href: "#{distributor_credit.permalink}/shop", count: 1)
 
         # Viewing transaction history
-        click_link I18n.t('spree.users.show.tabs.transactions')
+        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
 
         # It shows all hubs that have been ordered from with balance or credit
         expect(page).to have_content distributor1.name
@@ -85,12 +85,12 @@ feature '
           visit '/account'
           expect(page).to have_content I18n.t('spree.users.orders.open_orders')
 
-          expect(page).to have_link d1o1.number, href: spree.order_path(d1o1)
-          expect(page).to have_link d1o2.number, href: spree.order_path(d1o2)
+          expect(page).to have_link d1o1.number, href: order_path(d1o1)
+          expect(page).to have_link d1o2.number, href: order_path(d1o2)
           expect(page).to have_link(distributor1.name,
                                     href: "#{distributor1.permalink}/shop", count: 2)
-          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o1)
-          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o2)
+          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: cancel_order_path(d1o1)
+          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: cancel_order_path(d1o2)
         end
       end
     end

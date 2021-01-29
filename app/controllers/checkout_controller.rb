@@ -142,7 +142,7 @@ class CheckoutController < ::BaseController
   def handle_redirect_from_stripe
     if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
-      redirect_to(spree.order_path(@order)) && return
+      redirect_to(order_path(@order)) && return
     else
       checkout_failed
     end
@@ -202,10 +202,10 @@ class CheckoutController < ::BaseController
   def update_succeeded_response
     respond_to do |format|
       format.html do
-        respond_with(@order, location: spree.order_path(@order))
+        respond_with(@order, location: order_path(@order))
       end
       format.json do
-        render json: { path: spree.order_path(@order) }, status: :ok
+        render json: { path: order_path(@order) }, status: :ok
       end
     end
   end

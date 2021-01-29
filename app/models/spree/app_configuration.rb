@@ -92,7 +92,6 @@ module Spree
     preference :s3_host_alias, :string
 
     # Default mail headers settings
-    preference :enable_mail_delivery, :boolean, default: false
     preference :mails_from, :string, default: 'ofn@example.com'
     preference :mail_bcc, :string, default: 'ofn@example.com'
     preference :intercept_email, :string, default: nil

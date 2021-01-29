@@ -457,28 +457,28 @@ describe Admin::EnterprisesController, type: :controller do
     end
 
     context "when no order_cycle or coordinator is provided in params" do
-      before { spree_get :for_order_cycle, format: :json }
+      before { get :for_order_cycle, format: :json }
       it "initializes permissions with nil" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, nil)
       end
     end
 
     context "when an order_cycle_id is provided in params" do
-      before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1 }
+      before { get :for_order_cycle, format: :json, order_cycle_id: 1 }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end
     end
 
     context "when a coordinator is provided in params" do
-      before { spree_get :for_order_cycle, format: :json, coordinator_id: 1 }
+      before { get :for_order_cycle, format: :json, coordinator_id: 1 }
       it "initializes permissions with a new OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
       end
     end
 
     context "when both an order cycle and a coordinator are provided in params" do
-      before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
+      before { get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end
@@ -500,7 +500,7 @@ describe Admin::EnterprisesController, type: :controller do
 
     it "uses permissions to determine which enterprises are visible and should be rendered" do
       expect(controller).to receive(:render_as_json).with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
-      spree_get :visible, format: :json
+      get :visible, format: :json
     end
   end
 
@@ -518,14 +518,14 @@ describe Admin::EnterprisesController, type: :controller do
 
       context "html" do
         it "returns all enterprises" do
-          spree_get :index, format: :html
+          get :index, format: :html
           expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
         end
       end
 
       context "json" do
         it "returns all enterprises" do
-          spree_get :index, format: :json
+          get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
         end
       end
@@ -543,14 +543,14 @@ describe Admin::EnterprisesController, type: :controller do
 
       context "html" do
         it "returns an empty @collection" do
-          spree_get :index, format: :html
+          get :index, format: :html
           expect(assigns(:collection)).to eq []
         end
       end
 
       context "json" do
         it "scopes @collection to enterprises editable by the user" do
-          spree_get :index, format: :json
+          get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2
           expect(assigns(:collection)).to_not include enterprise3
         end

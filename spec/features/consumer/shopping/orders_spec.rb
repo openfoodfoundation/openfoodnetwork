@@ -44,16 +44,16 @@ feature "Order Management", js: true do
 
       it "allows the user to see the details" do
         # Cannot load the page without token
-        visit spree.order_path(order)
+        visit order_path(order)
         expect(page).to_not be_confirmed_order_page
 
         # Can load the page with token
-        visit spree.order_path(order, token: order.token)
+        visit order_path(order, token: order.token)
         expect(page).to be_confirmed_order_page
 
         # Can load the page even without the token, after loading the page with
         # token.
-        visit spree.order_path(order)
+        visit order_path(order)
         expect(page).to be_confirmed_order_page
       end
     end
@@ -66,7 +66,7 @@ feature "Order Management", js: true do
       end
 
       it "allows the user to see order details" do
-        visit spree.order_path(order)
+        visit order_path(order)
         expect(page).to be_confirmed_order_page
       end
     end
@@ -76,7 +76,7 @@ feature "Order Management", js: true do
 
       it "allows the user to see order details after login" do
         # Cannot load the page without signing in
-        visit spree.order_path(order)
+        visit order_path(order)
         expect(page).to_not be_confirmed_order_page
 
         # Can load the page after signing in
@@ -115,7 +115,7 @@ feature "Order Management", js: true do
     end
 
     it 'shows the name of the shipping method' do
-      visit spree.order_path(order)
+      visit order_path(order)
       expect(find('#order')).to have_content(shipping_method.name)
     end
 
@@ -125,7 +125,7 @@ feature "Order Management", js: true do
       end
 
       it "doesn't show form elements for editing the order" do
-        visit spree.order_path(order)
+        visit order_path(order)
         expect(find("tr.variant-#{item1.variant.id}")).to have_content item1.product.name
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
@@ -142,7 +142,7 @@ feature "Order Management", js: true do
       end
 
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do
-        visit spree.order_path(order)
+        visit order_path(order)
 
         expect(page).to have_button I18n.t(:order_saved), disabled: true
         expect(page).to have_no_button I18n.t(:save_changes)

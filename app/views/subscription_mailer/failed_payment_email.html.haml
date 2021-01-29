@@ -5,7 +5,7 @@
   - if @order.user.present?
     = t("email_so_edit_false_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
-      order_url: spree.order_url(@order))
+      order_url: order_url(@order))
   = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
 
 - if @order.errors.any?

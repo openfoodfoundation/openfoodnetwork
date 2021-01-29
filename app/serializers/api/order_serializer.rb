@@ -7,6 +7,14 @@ module Api
 
     has_many :payments, serializer: Api::PaymentSerializer
 
+    def outstanding_balance
+      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, object.user)
+        -object.balance_value
+      else
+        object.outstanding_balance
+      end
+    end
+
     def payments
       object.payments.joins(:payment_method).completed
     end
@@ -42,13 +50,13 @@ module Api
     end
 
     def path
-      Spree::Core::Engine.routes.url_helpers.order_path(object)
+      order_path(object)
     end
 
     def cancel_path
       return nil unless object.changes_allowed?
 
-      Spree::Core::Engine.routes.url_helpers.cancel_order_path(object)
+      cancel_order_path(object)
     end
 
     def changes_allowed

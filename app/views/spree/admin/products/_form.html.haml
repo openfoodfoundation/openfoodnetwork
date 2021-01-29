@@ -1,5 +1,5 @@
 %div{"data-hook" => "admin_product_form_fields"}
-  .left.eight.columns.alpha
+  .left.twelve.columns.alpha
     = f.field_container :name do
       = f.label :name, raw(t(:name) + content_tag(:span, ' *', :class => 'required'))
       = f.text_field :name, :class => 'fullwidth title'

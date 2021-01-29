@@ -157,26 +157,35 @@ feature 'shipping methods' do
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end
 
-    pending "shows me only shipping methods for the enterprise I select" do
+    it "shows me only shipping methods for the enterprise I select" do
       shipping_method1
       shipping_method2
 
       visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Settings' }
+
       within(".side_menu") do
         click_link "Shipping Methods"
       end
-      expect(page).to     have_content shipping_method1.name
-      expect(page).to     have_content shipping_method2.name
+
+      expect(page).to have_content shipping_method1.name
+      expect(page).to have_content shipping_method2.name
+
+      expect(page).to have_checked_field "enterprise_shipping_method_ids_#{shipping_method2.id}"
+      expect(page).to have_checked_field "enterprise_shipping_method_ids_#{shipping_method1.id}"
 
       click_link 'Enterprises'
       within("#e_#{distributor2.id}") { click_link 'Settings' }
+
       within(".side_menu") do
         click_link "Shipping Methods"
       end
 
-      expect(page).not_to have_content shipping_method1.name
+      expect(page).to     have_content shipping_method1.name
       expect(page).to     have_content shipping_method2.name
+
+      expect(page).to have_checked_field "enterprise_shipping_method_ids_#{shipping_method2.id}"
+      expect(page).to have_unchecked_field "enterprise_shipping_method_ids_#{shipping_method1.id}"
     end
   end
 end
