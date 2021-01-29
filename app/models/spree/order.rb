@@ -69,7 +69,7 @@ module Spree
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
     delegate :update_totals, to: :updater
     delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
-             :update_line_item_fees!, to: :fee_handler
+             :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
@@ -659,19 +659,6 @@ module Spree
 
         update_adjustment! payment.adjustment if payment.adjustment
         payment.save
-      end
-    end
-
-    def recreate_all_fees!
-      # `with_lock` acquires an exclusive row lock on order so no other
-      # requests can update it until the transaction is commited.
-      # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
-      # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
-      with_lock do
-        EnterpriseFee.clear_all_adjustments self
-
-        create_line_item_fees!
-        create_order_fees!
       end
     end
 
