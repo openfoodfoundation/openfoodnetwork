@@ -1,6 +1,8 @@
 $background-grey: #eceef1;
 $background-blue: #5498da;
 
+// scss-lint:disable SelectorFormat
+
 .flatpickr-calendar {
   border-radius: 0;
 
@@ -56,3 +58,5 @@ $background-blue: #5498da;
     border-color: $background-blue;
   }
 }
+
+// scss-lint:enable SelectorFormat
