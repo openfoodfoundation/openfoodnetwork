@@ -68,7 +68,8 @@ module Spree
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
     delegate :update_totals, to: :updater
-    delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!, to: :fee_handler
+    delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
+             :update_line_item_fees!, to: :fee_handler
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
