@@ -857,11 +857,8 @@ module Spree
     def update_adjustment!(adjustment)
       return if adjustment.finalized?
 
-      state = adjustment.state
-      adjustment.state = 'open'
-      adjustment.update!
+      adjustment.update!(force: true)
       update!
-      adjustment.state = state
     end
 
     # object_params sets the payment amount to the order total, but it does this
