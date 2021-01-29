@@ -23,6 +23,12 @@ class OrderFeesHandler
     calculator.create_order_adjustments_for order
   end
 
+  def update_order_fees!
+    order.adjustments.enterprise_fee.where(source_type: 'Spree::Order').each do |fee|
+      fee.update!(order, force: true)
+    end
+  end
+
   private
 
   def calculator

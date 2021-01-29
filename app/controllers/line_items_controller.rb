@@ -42,7 +42,8 @@ class LineItemsController < BaseController
       item.destroy
       order.update_shipping_fees!
       order.update_payment_fees!
-      order.recreate_all_fees!
+      order.update_order_fees!
+      order.update!
       order.create_tax_charge!
     end
   end
