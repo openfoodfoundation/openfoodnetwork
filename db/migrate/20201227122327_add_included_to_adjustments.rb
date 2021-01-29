@@ -1,4 +1,6 @@
 class AddIncludedToAdjustments < ActiveRecord::Migration
+  class Spree::TaxRate < ActiveRecord::Base; end
+
   class Spree::Adjustment < ActiveRecord::Base
     belongs_to :originator, polymorphic: true
   end
