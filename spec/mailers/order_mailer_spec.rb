@@ -77,6 +77,21 @@ describe Spree::OrderMailer do
     end
   end
 
+  describe "#cancel_email_for_shop" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, distributor: distributor, state: "canceled") }
+    let(:admin_order_link_href) { "href=\"#{spree.edit_admin_order_url(order)}\"" }
+    let(:mail) { Spree::OrderMailer.cancel_email_for_shop(order) }
+
+    it "sends an email to the distributor" do
+      expect(mail.to).to eq([distributor.contact.email])
+    end
+
+    it "includes a link to the cancelled order in admin" do
+      expect(mail.body).to match /#{admin_order_link_href}/
+    end
+  end
+
   describe "order confimation" do
     let(:bill_address) { create(:address) }
     let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }

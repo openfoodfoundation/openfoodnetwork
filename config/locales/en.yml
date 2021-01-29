@@ -3631,6 +3631,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         paid_order: "Your order was paid so %{distributor} has refunded the full amount"
         credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
+      cancel_email_for_shop:
+        greeting: "Dear %{name},"
+        subject: "Cancellation of Order"
+        intro: "A customer has cancelled their order #%{number}."
+        view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
       invoice_email:

@@ -1,0 +1,7 @@
+%p
+  = t('spree.order_mailer.cancel_email_for_shop.greeting', name: @order.distributor.name)
+
+%p
+  = t('spree.order_mailer.cancel_email_for_shop.intro', number: @order.number)
+
+= link_to t('spree.order_mailer.cancel_email_for_shop.view_cancelled_order'), spree.edit_admin_order_url(@order)
