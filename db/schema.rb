@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20210203215049) do
+ActiveRecord::Schema.define(version: 20210203214304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -497,14 +496,14 @@ ActiveRecord::Schema.define(version: 20210203215049) do
     t.integer  "order_id"
     t.integer  "variant_id"
     t.integer  "quantity",                                                 null: false
-    t.decimal  "price",                           precision: 8,  scale: 2, null: false
+    t.decimal  "price",                           precision: 10, scale: 2, null: false
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.integer  "max_quantity"
     t.string   "currency",            limit: 255
     t.decimal  "distribution_fee",                precision: 10, scale: 2
     t.decimal  "final_weight_volume",             precision: 10, scale: 2
-    t.decimal  "cost_price",                      precision: 8,  scale: 2
+    t.decimal  "cost_price",                      precision: 10, scale: 2
     t.integer  "tax_category_id"
   end
 
@@ -652,8 +651,8 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   add_index "spree_preferences", ["key"], name: "index_spree_preferences_on_key", unique: true, using: :btree
 
   create_table "spree_prices", force: :cascade do |t|
-    t.integer  "variant_id",                                     null: false
-    t.decimal  "amount",                 precision: 8, scale: 2
+    t.integer  "variant_id",                                      null: false
+    t.decimal  "amount",                 precision: 10, scale: 2
     t.string   "currency",   limit: 255
     t.datetime "deleted_at"
   end
@@ -814,12 +813,12 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   create_table "spree_shipments", force: :cascade do |t|
     t.string   "tracking",          limit: 255
     t.string   "number",            limit: 255
-    t.decimal  "cost",                          precision: 8, scale: 2
+    t.decimal  "cost",                          precision: 10, scale: 2
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "state",             limit: 255
     t.integer  "stock_location_id"
   end
@@ -863,10 +862,10 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   create_table "spree_shipping_rates", force: :cascade do |t|
     t.integer  "shipment_id"
     t.integer  "shipping_method_id"
-    t.boolean  "selected",                                   default: false
-    t.decimal  "cost",               precision: 8, scale: 2, default: 0.0
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.boolean  "selected",                                    default: false
+    t.decimal  "cost",               precision: 10, scale: 2, default: 0.0
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "spree_shipping_rates", ["shipment_id", "shipping_method_id"], name: "spree_shipping_rates_join_index", unique: true, using: :btree
@@ -1061,19 +1060,19 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   add_index "spree_users", ["persistence_token"], name: "index_users_on_persistence_token", using: :btree
 
   create_table "spree_variants", force: :cascade do |t|
-    t.string   "sku",              limit: 255,                         default: "",    null: false
-    t.decimal  "weight",                       precision: 8, scale: 2, default: 0.0,   null: false
-    t.decimal  "height",                       precision: 8, scale: 2
-    t.decimal  "width",                        precision: 8, scale: 2
-    t.decimal  "depth",                        precision: 8, scale: 2
+    t.string   "sku",              limit: 255,                          default: "",    null: false
+    t.decimal  "weight",                       precision: 8,  scale: 2, default: 0.0,   null: false
+    t.decimal  "height",                       precision: 8,  scale: 2
+    t.decimal  "width",                        precision: 8,  scale: 2
+    t.decimal  "depth",                        precision: 8,  scale: 2
     t.datetime "deleted_at"
-    t.boolean  "is_master",                                            default: false
+    t.boolean  "is_master",                                             default: false
     t.integer  "product_id"
-    t.decimal  "cost_price",                   precision: 8, scale: 2
+    t.decimal  "cost_price",                   precision: 10, scale: 2
     t.integer  "position"
     t.string   "cost_currency",    limit: 255
-    t.float    "unit_value",                                           default: 1.0,   null: false
-    t.string   "unit_description", limit: 255,                         default: ""
+    t.float    "unit_value",                                            default: 1.0,   null: false
+    t.string   "unit_description", limit: 255,                          default: ""
     t.string   "display_name",     limit: 255
     t.string   "display_as",       limit: 255
     t.datetime "import_date"
@@ -1110,33 +1109,33 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   add_index "stripe_accounts", ["enterprise_id"], name: "index_stripe_accounts_on_enterprise_id", unique: true, using: :btree
 
   create_table "subscription_line_items", force: :cascade do |t|
-    t.integer  "subscription_id",                         null: false
-    t.integer  "variant_id",                              null: false
-    t.integer  "quantity",                                null: false
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.decimal  "price_estimate",  precision: 8, scale: 2
+    t.integer  "subscription_id",                          null: false
+    t.integer  "variant_id",                               null: false
+    t.integer  "quantity",                                 null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.decimal  "price_estimate",  precision: 10, scale: 2
   end
 
   add_index "subscription_line_items", ["subscription_id"], name: "index_subscription_line_items_on_subscription_id", using: :btree
   add_index "subscription_line_items", ["variant_id"], name: "index_subscription_line_items_on_variant_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer  "shop_id",                                       null: false
-    t.integer  "customer_id",                                   null: false
-    t.integer  "schedule_id",                                   null: false
-    t.integer  "payment_method_id",                             null: false
-    t.integer  "shipping_method_id",                            null: false
+    t.integer  "shop_id",                                        null: false
+    t.integer  "customer_id",                                    null: false
+    t.integer  "schedule_id",                                    null: false
+    t.integer  "payment_method_id",                              null: false
+    t.integer  "shipping_method_id",                             null: false
     t.datetime "begins_at"
     t.datetime "ends_at"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "bill_address_id",                               null: false
-    t.integer  "ship_address_id",                               null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "bill_address_id",                                null: false
+    t.integer  "ship_address_id",                                null: false
     t.datetime "canceled_at"
     t.datetime "paused_at"
-    t.decimal  "shipping_fee_estimate", precision: 8, scale: 2
-    t.decimal  "payment_fee_estimate",  precision: 8, scale: 2
+    t.decimal  "shipping_fee_estimate", precision: 10, scale: 2
+    t.decimal  "payment_fee_estimate",  precision: 10, scale: 2
   end
 
   add_index "subscriptions", ["bill_address_id"], name: "index_subscriptions_on_bill_address_id", using: :btree
@@ -1185,9 +1184,9 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "variant_overrides", force: :cascade do |t|
-    t.integer  "variant_id",                                                null: false
-    t.integer  "hub_id",                                                    null: false
-    t.decimal  "price",                             precision: 8, scale: 2
+    t.integer  "variant_id",                                                 null: false
+    t.integer  "hub_id",                                                     null: false
+    t.decimal  "price",                             precision: 10, scale: 2
     t.integer  "count_on_hand"
     t.integer  "default_stock"
     t.boolean  "resettable"
