@@ -1,5 +1,7 @@
 require 'open_food_network/scope_variant_to_hub'
 
+# Previously Spree::OrderPopulator. Modified to work with max_quantity and variant overrides.
+
 class CartService
   attr_accessor :order, :currency
   attr_reader :variants_h
