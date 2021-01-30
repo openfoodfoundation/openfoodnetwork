@@ -253,18 +253,6 @@ describe Spree::OrdersController, type: :controller do
         expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
       end
-
-      it "keeps the adjustments' previous state" do
-        spree_post :update,
-                   order: { line_items_attributes: {
-                     "0" => { id: line_item1.id, quantity: 1 },
-                     "1" => { id: line_item2.id, quantity: 0 }
-                   } }
-
-        # The second adjustment (shipping adjustment) is open before the update
-        #   so, restoring its state leaves it open.
-        expect(order.adjustments.map(&:state)).to eq(['closed', 'open'])
-      end
     end
 
     context "with enterprise fees" do

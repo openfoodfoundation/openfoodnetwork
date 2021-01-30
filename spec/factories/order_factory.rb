@@ -94,6 +94,7 @@ FactoryBot.define do
         order.ship_address = evaluator.ship_address
         while !order.completed? do break unless a = order.next! end
         order.select_shipping_method(evaluator.shipping_method.id)
+        order.save
       end
     end
   end

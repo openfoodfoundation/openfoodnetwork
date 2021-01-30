@@ -45,6 +45,20 @@ module Spree
           expect(originator).to receive(:update_adjustment)
           adjustment.update!
         end
+
+        context "using the :force argument" do
+          it "should update adjustments without changing their state" do
+            expect(originator).to receive(:update_adjustment)
+            adjustment.update!(force: true)
+            expect(adjustment.state).to eq "open"
+          end
+
+          it "should update closed adjustments" do
+            adjustment.close
+            expect(originator).to receive(:update_adjustment)
+            adjustment.update!(force: true)
+          end
+        end
       end
 
       it "should do nothing when originator is nil" do
