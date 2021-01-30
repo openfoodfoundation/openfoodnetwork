@@ -604,7 +604,10 @@ module Spree
       return unless shipments.any?
 
       shipments.destroy_all
-      update_column(:state, "address")
+      update_columns(
+        state: "address",
+        updated_at: Time.zone.now
+      )
     end
 
     def refresh_shipment_rates

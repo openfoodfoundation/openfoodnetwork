@@ -46,7 +46,12 @@ module Spree
     end
 
     def self.finalize_units!(inventory_units)
-      inventory_units.map { |iu| iu.update_column(:pending, false) }
+      inventory_units.map do |iu|
+        iu.update_columns(
+          pending: false,
+          updated_at: Time.zone.now
+        )
+      end
     end
 
     def find_stock_item
