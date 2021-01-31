@@ -7,21 +7,9 @@ module Spree
     describe ReturnAuthorizationsController, type: :controller do
       include AuthenticationHelper
 
-      let(:order) do
-        create(:order, :with_line_item, :completed,
-               distributor: create(:distributor_enterprise) )
-      end
+      let(:order) { create(:shipped_order) }
 
-      before do
-        controller_login_as_admin
-
-        # Pay the order
-        order.payments.first.complete
-        order.updater.update_payment_state
-
-        # Ship the order
-        order.reload.shipment.ship!
-      end
+      before { controller_login_as_admin }
 
       it "creates and updates a return authorization" do
         # Create return authorization
