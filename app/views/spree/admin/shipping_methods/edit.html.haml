@@ -12,8 +12,7 @@
     %fieldset.no-border-top
       = render partial: 'form', locals: { f: f }
       .one.column &nbsp;
-      .alpha.four.columns
-        = render partial: 'spree/admin/shared/hubs_sidebar', locals: { f: f, klass: :shipping_method }
+      = render partial: 'spree/admin/shared/hubs_sidebar', locals: { f: f, klass: :shipping_method }
       .clear
       .row
         = render partial: 'spree/admin/shared/edit_resource_links'
