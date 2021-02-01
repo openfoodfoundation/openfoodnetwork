@@ -4,28 +4,28 @@
   .row
     = t '.deactivation_warning'
   .row
-    .alpha.three.columns
+    .alpha.four.columns
       = label_tag nil, t('.name')
-    .omega.eight.columns
+    .omega.twelve.columns
       = text_field :payment_method, :name, class: 'fullwidth'
   .row
-    .alpha.three.columns
+    .alpha.four.columns
       = label_tag nil, t('.description')
-    .omega.eight.columns
+    .omega.twelve.columns
       = text_area :payment_method, :description, {cols: 60, rows: 6, class: 'fullwidth'}
   - if spree_current_user.admin?
     .row
-      .alpha.three.columns
+      .alpha.four.columns
         = label_tag nil, t('.environment')
-      .omega.eight.columns
+      .omega.twelve.columns
         = collection_select(:payment_method, :environment, Rails.configuration.database_configuration.keys.sort, :to_s, :titleize, {}, {id: 'gtwy-env', class: 'select2 fullwidth'})
   .row
-    .alpha.three.columns
+    .alpha.four.columns
       = label_tag nil, t('.display')
-    .omega.eight.columns
+    .omega.twelve.columns
       = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t('.' + display.to_s), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
   .row
-    .alpha.three.columns
+    .alpha.four.columns
       = label_tag nil, t('.active')
     .two.columns
       = radio_button :payment_method, :active, true
@@ -37,14 +37,12 @@
       = label_tag nil, t('.active_no')
 
   .row
-    .alpha.three.columns
+    .alpha.four.columns
       = label(:payment_method, :tags, t('.tags'))
-    .omega.eight.columns
+    .omega.twelve.columns
       = hidden_field(:payment_method, :tag_list, "ng-value" => "paymentMethod.tag_list")
       %tags-with-translation#something{ object: "paymentMethod" }
 
   = render 'providers'
 
-  .row
-    .omega.eleven.columns
-      = render partial: 'spree/admin/shared/calculator_fields', locals: { f: f }
+  = render partial: 'spree/admin/shared/calculator_fields', locals: { f: f }
