@@ -136,6 +136,19 @@ feature 'Customers' do
             expect(page).to have_content "$0.00"
           end
         end
+
+        # this adds the additional payments to an order, and checks for customer balance 
+        it "updates customer balance with additional negative payments, on an order" do
+          
+          payment2
+
+          select2_select managed_distributor1.name, from: "shop_id"
+
+          within "tr#c_#{customer1.id}" do
+          expect(page).to have_content "CREDIT OWED"
+          expect(page).to have_content "$63.00"
+          end        
+        end
       end
 
       it "allows updating of attributes" do
