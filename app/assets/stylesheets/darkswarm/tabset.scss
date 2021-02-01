@@ -32,22 +32,24 @@
 
     border-bottom: 4px solid transparent;
 
-    &:hover, &:focus, &:active {
-      transition: all 0.4s ease-in-out;
-      border-bottom: 4px solid $clr-brick-bright;
-      cursor: pointer;
-
-      @include breakpoint(phablet) {
-        transition: none;
-        color: white;
-        background-color: $clr-brick-bright;
-      }
-
-      a {
-        color: $clr-brick-bright;
+    @media (hover: hover) {
+      &:hover {
+        transition: all 0.4s ease-in-out;
+        border-bottom: 4px solid $clr-brick-bright;
+        cursor: pointer;
 
         @include breakpoint(phablet) {
-          color: #ffffff;
+          transition: none;
+          color: white;
+          background-color: $clr-brick-bright;
+        }
+
+        a {
+          color: $clr-brick-bright;
+
+          @include breakpoint(phablet) {
+            color: #ffffff;
+          }
         }
       }
     }
