@@ -2322,6 +2322,8 @@ ca:
   payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
   payment_method_not_supported: "Aquest mètode de pagament no està suportat. Trieu-ne un altre."
   payment_updated: "Pagament actualitzat"
+  cannot_perform_operation: "No s'ha pogut actualitzar el pagament"
+  action_required: "Acció requerida"
   inventory_settings: "Configuració de l'inventari"
   tag_rules: "Regles d'etiqueta"
   shop_preferences: "Preferències de la botiga"
@@ -2593,6 +2595,8 @@ ca:
           processing: "processant"
           void: "pendent"
           invalid: "invàlid"
+        quantity_adjusted: "Estoc insuficient disponible. L'article s'ha actualitzat a la quantitat màxima disponible."
+        quantity_unchanged: "Quantitat sense canvis respecte a l’import anterior."
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -3482,6 +3486,10 @@ ca:
         subject: "Instruccions per restablir la contrasenya"
       confirmation_instructions:
         subject: "Si us plau confirma el teu compte d'OFN"
+    payment_mailer:
+      authorize_payment:
+        subject: "Autoritzeu el vostre pagament a %{distributor} a OFN"
+        instructions: "El vostre pagament de %{amount} a %{distributor} requereix una autenticació addicional. Visiteu l’URL següent per autoritzar el vostre pagament:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Benvolguda consumidora:"

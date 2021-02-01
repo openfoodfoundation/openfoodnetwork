@@ -2321,6 +2321,8 @@ es:
   payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
   payment_method_not_supported: "Ese método de pago no está soportado. Por favor elije otro."
   payment_updated: "Pago actualizado"
+  cannot_perform_operation: "No se pudo actualizar el pago"
+  action_required: "Acción requerida"
   inventory_settings: "Configuración del Inventario"
   tag_rules: "Reglas de las Etiquetas"
   shop_preferences: "Configuración de la tienda"
@@ -2593,6 +2595,8 @@ es:
           processing: "procesando"
           void: "pendiente"
           invalid: "inválido"
+        quantity_adjusted: "Stock insuficiente disponible. El artículo se ha actualizada a la cantidad máxima disponible."
+        quantity_unchanged: "Cantidad sin cambios respecto a la cantidad anterior."
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -3482,6 +3486,10 @@ es:
         subject: "Instrucciones para restablecer la contraseña"
       confirmation_instructions:
         subject: "Por favor, confirma tu cuenta de OFN"
+    payment_mailer:
+      authorize_payment:
+        subject: "Autorice su pago a %{distributor} en OFN"
+        instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"
