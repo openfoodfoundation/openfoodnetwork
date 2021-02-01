@@ -36,6 +36,13 @@ describe Admin::VariantOverridesController, type: :controller do
             spree_put :bulk_update, format: format, variant_overrides: variant_override_params
             expect(response).to redirect_to unauthorized_path
           end
+
+          it 'only authorizes the updated variant overrides' do
+            other_variant_override = create(:variant_override, hub: hub, variant: create(:variant))
+            expect(controller).not_to receive(:authorize!).with(:update, other_variant_override)
+
+            spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+          end
         end
 
         context "and the producer has granted VO permission" do
