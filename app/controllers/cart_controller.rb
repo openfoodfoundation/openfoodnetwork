@@ -11,7 +11,7 @@ class CartController < BaseController
     Spree::Adjustment.without_callbacks do
       cart_service = CartService.new(order)
 
-      cart_service.populate(params.slice(:products, :variants, :quantity), true)
+      cart_service.populate(params.slice(:variants, :quantity), true)
       if cart_service.valid?
         order.update_distribution_charge!
         order.cap_quantity_at_stock!
