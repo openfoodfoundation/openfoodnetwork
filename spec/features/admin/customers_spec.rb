@@ -13,6 +13,14 @@ feature 'Customers' do
     let(:managed_distributor2) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
 
+    let(:order1) { create(:order, total: 0, payment_total: 88, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer1) }
+    let(:order2) { create(:order, total: 99, payment_total: 0, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer2) }
+    let(:order3) { create(:order, total: 0,  payment_total: 0, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer4) }
+
+    let(:payment_method) { create(:stripe_sca_payment_method, distributors: [managed_distributor1]) }
+    let(:payment1) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: 88.00) }
+    let(:payment2) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: -25.00) }
+
     describe "using the customers index", js: true do
       let!(:customer1) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
@@ -100,33 +108,13 @@ feature 'Customers' do
           allow(OpenFoodNetwork::FeatureToggle)
             .to receive(:enabled?).with(:customer_balance, user) { true }
 
-          create(
-            :order,
-            total: 0,
-            payment_total: 88,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer1
-          )
-          create(
-            :order,
-            total: 99,
-            payment_total: 0,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer2
-          )
-          create(
-            :order,
-            total: 0,
-            payment_total: 0,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer4
-          )
+          # calling the variables necessary for this testcase here;
+          # 'paymen_method' and 'payment1' are necessary to add additional payments to an order, as in a test case below (see payment2)
+          payment_method
+          payment1
+          order1
+          order2
+          order3
 
           customer4.update enterprise: managed_distributor1
         end
