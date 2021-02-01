@@ -6,9 +6,9 @@
   %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", model: 'sells', value: "sells"} }
 
   .row
-    .options.sixteen.columns.alpha
+    .options.container
       - if @enterprise.is_primary_producer
-        .basic_producer.option.one-third.column.alpha
+        .basic_producer.option.six.columns.alpha
           %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
             .top
               %h3= t('.producer_profile')
@@ -17,7 +17,7 @@
           %p.description
             = t('.producer_description_text')
 
-        .producer_shop.option.one-third.column
+        .producer_shop.option.six.columns
           %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
             .top
               %h3= t('.producer_shop')
@@ -28,7 +28,7 @@
             %br
             = t('.producer_shop_description_text2')
 
-        .full_hub.option.one-third.column.omega
+        .full_hub.option.six.columns.omega
           %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
             .top
               %h3= t('.producer_hub')
