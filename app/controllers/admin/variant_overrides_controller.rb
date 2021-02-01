@@ -76,6 +76,7 @@ module Admin
     def collection
       @variant_overrides = VariantOverride.
         joins(variant: :product).
+        preload(variant: :product).
         for_hubs(params[:hub_id] || @hubs)
     end
 
