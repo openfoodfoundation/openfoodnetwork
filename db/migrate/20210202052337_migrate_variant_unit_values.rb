@@ -1,11 +1,13 @@
 class MigrateVariantUnitValues < ActiveRecord::Migration
   def up
-    Spree::Variant.all.select { |v|
-      v.unit_value.nil? && v.product&.variant_unit == "items"
-    }.each do |variant|
+    Spree::Variant.includes(:product).where(
+      spree_products: { variant_unit: "items" },
+      spree_variants: { unit_value: nil }
+    ).each do |variant|
       variant.unit_value = 1
       variant.save
     end
+    change_column_null :spree_variants, :unit_value, false, 1
   end
 
   def down
