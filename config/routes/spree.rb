@@ -3,6 +3,11 @@ Openfoodnetwork::Application.routes.draw do
     resources :orders do
       put :cancel, on: :member
     end
+
+    resource :account, :controller => 'users'
+
+    resources :credit_cards
+    put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
   end
 end
 
@@ -29,8 +34,6 @@ Spree::Core::Engine.routes.draw do
     put '/password/change' => 'user_passwords#update', :as => :update_password
   end
 
-  resource :account, :controller => 'users'
-
   match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
@@ -46,11 +49,8 @@ Spree::Core::Engine.routes.draw do
 
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
-  put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
 
   match '/admin', to: 'admin/overview#index', as: :admin_dashboard, via: :get
-
-  resources :credit_cards
 
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
