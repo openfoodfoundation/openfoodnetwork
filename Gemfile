@@ -126,7 +126,6 @@ gem 'foundation-icons-sass-rails'
 gem 'sass', '<= 4.7.1'
 gem 'sass-rails', '< 6.0.0'
 
-
 gem 'foundation-rails', '= 5.5.2.1'
 
 gem 'jquery-migrate-rails'
