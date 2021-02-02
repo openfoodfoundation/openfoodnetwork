@@ -137,17 +137,22 @@ feature 'Customers' do
           end
         end
 
-        # this adds the additional payments to an order, and checks for customer balance 
+        # this adds the additional payments to an order, and checks for customer balance
         it "updates customer balance with additional negative payments, on an order" do
-          
           payment2
 
+          # verifies the payment2 was correctly added to the order
+          visit spree.admin_order_payments_path order1
+          expect(page).to have_content "$-25.00"
+
+          visit admin_customers_path
           select2_select managed_distributor1.name, from: "shop_id"
 
+          # checks customer balance, after payment2 was added
           within "tr#c_#{customer1.id}" do
-          expect(page).to have_content "CREDIT OWED"
-          expect(page).to have_content "$63.00"
-          end        
+            expect(page).to have_content "CREDIT OWED"
+            expect(page).to have_content "$63.00"
+          end
         end
       end
 
