@@ -14,7 +14,7 @@
       .field
         = label_tag :mail_bcc, t("spree.send_copy_of_all_mails_to")
         %br/
-        = text_field_tag :mail_bcc, Spree::Config[:mail_bcc], disabled: true, class: 'fullwidth'
+        = text_field_tag :mail_bcc, Spree::Config[:mail_bcc], maxlength: 256, class: 'fullwidth'
         %br/
         %span.info
           = t("spree.smtp_send_copy_to_this_addresses")
