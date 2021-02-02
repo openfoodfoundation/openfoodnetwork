@@ -57,6 +57,26 @@ module OrderManagement
                 expect(order.errors[:base].first).to eq "Authorization Failure"
               end
             end
+
+            context "and payment authorize requires additional authorization" do
+              let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
+
+              before do
+                allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
+                allow(payment).to receive(:authorize!) {
+                  payment.state = "pending"
+                  payment.cvv_response_message = "https://stripe.com/redirect"
+                }
+              end
+
+              it "adds sends an email requesting authorization" do
+                payment_authorize.call!
+
+                expect(order.errors.size).to eq 0
+                expect(PaymentMailer).to have_received(:authorize_payment)
+                expect(mail_mock).to have_received(:deliver_now)
+              end
+            end
           end
         end
       end

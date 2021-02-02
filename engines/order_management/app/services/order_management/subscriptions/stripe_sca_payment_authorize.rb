@@ -15,6 +15,10 @@ module OrderManagement
 
         @order.errors.add(:base, I18n.t('authorization_failure')) unless @payment.pending?
 
+        if @payment.cvv_response_message.present?
+          PaymentMailer.authorize_payment(@payment).deliver_now
+        end
+
         @payment
       end
     end
