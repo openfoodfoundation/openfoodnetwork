@@ -1,19 +1,19 @@
 %fieldset#calculator_fields.no-border-bottom
   %legend{align: "center"}= t(:calculator)
   #preference-settings
-    .field
-      .alpha.three.columns
+    .row
+      .alpha.four.columns
         = f.label(:calculator_type, t(:calculator), for: 'calc_type')
-      .omega.eight.columns
+      .omega.twelve.columns
         = f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {id: 'calc_type', class: 'select2 fullwidth'})
     - if !@object.new_record?
-      .field
+      .row
         .calculator-settings
           = f.fields_for :calculator do |calculator_form|
             - preference_fields(@object.calculator, calculator_form).each do |field|
-              .field.alpha.three.columns
+              .alpha.four.columns
                 = field[:label]
-              .field.omega.eight.columns
+              .field.twelve.eight.columns
                 = field[:field]
         - if @object.calculator.respond_to?(:preferences)
           %span.calculator-settings-warning.info.warning= t(:calculator_settings_warning)

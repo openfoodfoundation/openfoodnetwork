@@ -5,13 +5,14 @@
   = render 'stripe_connect'
 - else
   - if @payment_method.preferences.present?
-    %fieldset.alpha.eleven.columns.no-border-bottom#gateway_fields
+    %fieldset.no-border-bottom#gateway_fields
       %legend{ align: "center"}
         = t(:provider_settings)
       .preference-settings
         = fields_for :payment_method, @payment_method do |payment_method_form|
           - preference_fields(@payment_method, payment_method_form).each do |field|
-            .field.alpha.three.columns
-              = field[:label]
-            .field.omega.eight.columns
-              = field[:field]
+            .row
+              .alpha.four.columns
+                = field[:label]
+              .omega.twelve.columns
+                = field[:field]
