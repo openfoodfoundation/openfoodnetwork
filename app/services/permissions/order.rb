@@ -89,9 +89,9 @@ module Permissions
 
     def apply_where_clause(query)
       if ENV['DEPENDENCIES_NEXT']
-        query = query.where_clause.__send__(:predicates)
+        query.where_clause.__send__(:predicates)
       else
-        query = query.where_values
+        query.where_values
       end
     end
 
