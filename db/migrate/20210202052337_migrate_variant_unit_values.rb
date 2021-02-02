@@ -3,7 +3,7 @@ class MigrateVariantUnitValues < ActiveRecord::Migration
     Spree::Variant.includes(:product).where(
       spree_products: { variant_unit: "items" },
       spree_variants: { unit_value: nil }
-    ).each do |variant|
+    ).find_each do |variant|
       variant.unit_value = 1
       variant.save
     end
