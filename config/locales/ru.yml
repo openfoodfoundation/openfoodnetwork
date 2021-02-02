@@ -2322,6 +2322,8 @@ ru:
   payment_processing_failed: "Платеж не может быть обработан, пожалуйста, проверьте введенные данные"
   payment_method_not_supported: "Этот способ оплаты не поддерживается. Пожалуйста, выберите другой."
   payment_updated: "Платеж Обновлен"
+  cannot_perform_operation: "Не удалось обновить платеж"
+  action_required: "Требуются действия"
   inventory_settings: "Настройка товарной номенклатуры"
   tag_rules: "Правила Меток"
   shop_preferences: "Параметры Магазина"
@@ -2382,6 +2384,7 @@ ru:
   js:
     saving: 'Сохранение...'
     changes_saved: 'Изменения сохранены.'
+    authorising: "Авторизация ..."
     save_changes_first: Сперва сохраните изменения.
     all_changes_saved: Все изменения сохранены
     unsaved_changes: Есть не сохраненные изменения
@@ -2594,6 +2597,8 @@ ru:
           processing: "в обработке"
           void: "аннулирован"
           invalid: "Недействительный"
+        quantity_adjusted: "Недостаточный запас. Позиция обновлена до максимально доступного количества."
+        quantity_unchanged: "Количество не изменилось по сравнению с предыдущим."
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."
@@ -3115,6 +3120,7 @@ ru:
         payment_state: "Состояние Платежа"
     errors:
       messages:
+        included_price_validation: "не может быть выбран, если вы не установили Налоговую Зону по Умолчанию"
         blank: "не может быть пустым"
     layouts:
       admin:
@@ -3325,6 +3331,14 @@ ru:
           deactivation_warning: "Деактивация способа платежа может привести к исчезновению способа платежа из списка. Как альтернатива, можно скрыть способ оплаты со страницы оформления заказа, установив для параметра 'Отображать' значение 'Интерфейс Администратора'."
         providers:
           provider: "Провайдер"
+          check: "Наличные/ EFT/т. д. (платежи, для которых автоматическая проверка не требуется)"
+          migs: "Служба Интернет-шлюза MasterCard (MIGS)"
+          pin: "Пин Платежи"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Подделка"
+          bogussimple: "Поддельный"
       payments:
         source_forms:
           stripe:
@@ -3525,6 +3539,10 @@ ru:
         subject: "Инструкции по сбросу пароля"
       confirmation_instructions:
         subject: "Пожалуйста, подтвердите Вашу ОСП учетную запись"
+    payment_mailer:
+      authorize_payment:
+        subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
+        instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"
@@ -3561,7 +3579,23 @@ ru:
       paused: приостановлен
       canceled: отменен
     paypal:
+      already_refunded: "Этот платеж был возвращен и дальнейшие действия по нему невозможны."
+      no_payment_via_admin_backend: "В настоящее время вы не можете взимать плату со счетов PayPal через интерфейс администратора."
+      transaction: "PayPal Транзакция"
+      payer_id: "Номер плательщика"
+      transaction_id: "Номер транзакции"
+      token: "Токен"
+      refund: "Возврат"
       refund_amount: "Количество"
+      original_amount: "Исходная сумма: %{amount}"
+      refund_successful: "Возврат PayPal выполнен"
+      refund_unsuccessful: "Возврат PayPal не прошел"
+      actions:
+        refund: "Возврат"
+      flash:
+        cancel: "Не хотите использовать PayPal? Без проблем."
+        connection_failed: "Не удалось подключиться к PayPal."
+        generic_error: "PayPal не удалось. %{reasons}"
     users:
       form:
         account_settings: Настройки Профиля
