@@ -29,9 +29,18 @@ module Sets
         if found_element.nil?
           @collection << @klass.new(attributes) unless @reject_if.andand.call(attributes)
         else
-          found_element.assign_attributes(attributes.except(:id))
+          process(found_element, attributes)
         end
       end
+    end
+
+    # The request params are assigned to the fetched record here, becoming dirty and ready to
+    # be persisted in DB as an UPDATE.
+    #
+    # This enables having different process strategies depending on the concrete model set class, if
+    # we choose to. This will be the default implementation.
+    def process(found_element, attributes)
+      found_element.assign_attributes(attributes.except(:id))
     end
 
     def errors

@@ -68,4 +68,13 @@ class VariantOverride < ActiveRecord::Base
     end
     self
   end
+
+  def deletable?
+    price.blank? &&
+      count_on_hand.blank? &&
+      default_stock.blank? &&
+      resettable.blank? &&
+      sku.nil? &&
+      on_demand.nil?
+  end
 end

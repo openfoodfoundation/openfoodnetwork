@@ -75,10 +75,10 @@ module Admin
 
     def collection
       @variant_overrides = VariantOverride.
-        includes(variant: :product).
-        for_hubs(params[:hub_id] || @hubs).
-        references(:variant).
-        select { |vo| vo.variant.present? }
+        includes(:taggings).
+        joins(variant: :product).
+        preload(variant: :product).
+        for_hubs(params[:hub_id] || @hubs)
     end
 
     def collection_actions
