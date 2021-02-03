@@ -10,6 +10,8 @@ require 'active_merchant/billing/gateways/stripe_decorator'
 module Spree
   class Gateway
     class StripeSCA < Gateway
+      include FullUrlHelper
+
       preference :enterprise_id, :integer
 
       validate :ensure_enterprise_selected
@@ -144,16 +146,6 @@ module Spree
         return if preferred_enterprise_id.andand.positive?
 
         errors.add(:stripe_account_owner, I18n.t(:error_required))
-      end
-
-      def full_checkout_path
-        URI.join(url_helpers.root_url, url_helpers.checkout_path).to_s
-      end
-
-      def url_helpers
-        # This is how we can get the helpers with a usable root_url outside the controllers
-        Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
-        Rails.application.routes.url_helpers
       end
     end
   end
