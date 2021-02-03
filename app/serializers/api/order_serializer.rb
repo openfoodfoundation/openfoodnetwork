@@ -16,7 +16,7 @@ module Api
     end
 
     def payments
-      object.payments.joins(:payment_method).completed
+      object.payments.joins(:payment_method).valid
     end
 
     def shop_id

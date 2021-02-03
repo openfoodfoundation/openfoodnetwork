@@ -3620,6 +3620,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       processing: processing
       void: void
       invalid: invalid
+      authorise: authorise
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
