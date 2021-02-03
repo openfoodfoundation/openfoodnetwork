@@ -210,23 +210,19 @@ module Admin
       end
     end
 
-    def remove_unauthorized_bulk_attrs
-      (order_cycle_params.dig(:order_cycle_set, :collection_attributes) || []).each do |i, hash|
+    def authorized_order_cycles
+      managed_ids = managed_enterprises.map(&:id)
+
+      (order_cycle_bulk_params[:collection_attributes] || []).keep_if do |_index, hash|
         order_cycle = OrderCycle.find(hash[:id])
-        unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
-          order_cycle_params[:order_cycle_set][:collection_attributes].delete i
-        end
+        managed_ids.include?(order_cycle.andand.coordinator_id)
       end
     end
 
     def order_cycles_from_set
-      remove_unauthorized_bulk_attrs
-      collection_attributes = order_cycle_params.dig(:order_cycle_set, :collection_attributes)
-      return if collection_attributes.blank?
+      return if authorized_order_cycles.blank?
 
-      OrderCycle.where(
-        id: collection_attributes.map{ |_k, v| v[:id] }
-      )
+      OrderCycle.where(id: authorized_order_cycles.map{ |_k, v| v[:id] })
     end
 
     def order_cycle_set
@@ -234,7 +230,7 @@ module Admin
     end
 
     def require_order_cycle_set_params
-      return if order_cycle_params[:order_cycle_set]
+      return if params[:order_cycle_set].present?
 
       render json: { errors: t('admin.order_cycles.bulk_update.no_data') },
              status: :unprocessable_entity
@@ -252,7 +248,7 @@ module Admin
     def order_cycle_bulk_params
       params.require(:order_cycle_set).permit(
         collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
-      )
+      ).to_h.with_indifferent_access
     end
   end
 end
