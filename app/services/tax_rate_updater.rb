@@ -20,7 +20,9 @@ class TaxRateUpdater
   end
 
   def transition_rate!
-    updated_rate.save && current_rate.destroy
+    ActiveRecord::Base.transaction do
+      updated_rate.save && current_rate.destroy
+    end
   end
 
   private
