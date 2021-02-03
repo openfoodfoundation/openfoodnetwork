@@ -78,6 +78,15 @@ module OrderManagement
                 expect(PaymentMailer).to have_received(:authorization_required)
                 expect(mail_mock).to have_received(:deliver_now).twice
               end
+
+              it "doesn't send emails if param is set to false" do
+                payment_authorize.call!(nil, false)
+
+                expect(order.errors.size).to eq 0
+                expect(PaymentMailer).to_not have_received(:authorize_payment)
+                expect(PaymentMailer).to_not have_received(:authorization_required)
+                expect(mail_mock).to_not have_received(:deliver_now)
+              end
             end
           end
         end
