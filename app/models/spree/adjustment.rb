@@ -89,7 +89,10 @@ module Spree
     # count towards the order's adjustment_total.
     def set_eligibility
       result = mandatory || amount != 0
-      update_column(:eligible, result)
+      update_columns(
+        eligible: result,
+        updated_at: Time.zone.now
+      )
     end
 
     # Update both the eligibility and amount of the adjustment. Adjustments

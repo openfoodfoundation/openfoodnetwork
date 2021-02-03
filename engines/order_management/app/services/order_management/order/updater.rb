@@ -39,7 +39,8 @@ module OrderManagement
           item_total: order.item_total,
           adjustment_total: order.adjustment_total,
           payment_total: order.payment_total,
-          total: order.total
+          total: order.total,
+          updated_at: Time.zone.now
         )
       end
 

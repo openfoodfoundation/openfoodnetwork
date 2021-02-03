@@ -191,7 +191,8 @@ describe Spree::Shipment do
     shared_examples_for "immutable once shipped" do
       it "should remain in shipped state once shipped" do
         shipment.state = 'shipped'
-        expect(shipment).to receive(:update_column).with(:state, 'shipped')
+        expect(shipment).to receive(:update_columns).
+          with(state: 'shipped', updated_at: kind_of(Time))
         shipment.update!(order)
       end
     end
@@ -201,7 +202,8 @@ describe Spree::Shipment do
         unit = create(:inventory_unit)
         allow(unit).to receive(:backordered?) { true }
         allow(shipment).to receive_messages(inventory_units: [unit])
-        expect(shipment).to receive(:update_column).with(:state, 'pending')
+        expect(shipment).to receive(:update_columns).
+          with(state: 'pending', updated_at: kind_of(Time))
         shipment.update!(order)
       end
     end
@@ -210,7 +212,8 @@ describe Spree::Shipment do
       it "should result in a 'pending' state" do
         allow(order).to receive(:canceled?) { true }
 
-        expect(shipment).to receive(:update_column).with(:state, 'canceled')
+        expect(shipment).to receive(:update_columns).
+          with(state: 'canceled', updated_at: kind_of(Time))
         shipment.update!(order)
       end
     end
@@ -219,7 +222,8 @@ describe Spree::Shipment do
       it "should result in a 'pending' state" do
         allow(order).to receive(:can_ship?) { false }
 
-        expect(shipment).to receive(:update_column).with(:state, 'pending')
+        expect(shipment).to receive(:update_columns).
+          with(state: 'pending', updated_at: kind_of(Time))
         shipment.update!(order)
       end
     end
@@ -231,7 +235,8 @@ describe Spree::Shipment do
         before { allow(order).to receive(:paid?) { true } }
 
         it "should result in a 'ready' state" do
-          expect(shipment).to receive(:update_column).with(:state, 'ready')
+          expect(shipment).to receive(:update_columns).
+            with(state: 'ready', updated_at: kind_of(Time))
           shipment.update!(order)
         end
 
@@ -244,7 +249,8 @@ describe Spree::Shipment do
 
           it "should result in a 'ready' state" do
             shipment.state = 'pending'
-            expect(shipment).to receive(:update_column).with(:state, 'ready')
+            expect(shipment).to receive(:update_columns).
+              with(state: 'ready', updated_at: kind_of(Time))
             shipment.update!(order)
           end
 
@@ -259,7 +265,8 @@ describe Spree::Shipment do
 
         it "should result in a 'pending' state" do
           shipment.state = 'ready'
-          expect(shipment).to receive(:update_column).with(:state, 'pending')
+          expect(shipment).to receive(:update_columns).
+            with(state: 'pending', updated_at: kind_of(Time))
           shipment.update!(order)
         end
 
@@ -274,7 +281,8 @@ describe Spree::Shipment do
         shipment.state = 'pending'
         expect(shipment).to receive :after_ship
         allow(shipment).to receive_messages determine_state: 'shipped'
-        expect(shipment).to receive(:update_column).with(:state, 'shipped')
+        expect(shipment).to receive(:update_columns).
+          with(state: 'shipped', updated_at: kind_of(Time))
         shipment.update!(order)
       end
     end

@@ -196,7 +196,10 @@ module Spree
       order.payments.with_state('checkout').where.not(id: id).each do |payment|
         # Using update_column skips validations and so it skips validate_source. As we are just
         # invalidating past payments here, we don't want to validate all of them at this stage.
-        payment.update_column(:state, 'invalid')
+        payment.update_columns(
+          state: 'invalid',
+          updated_at: Time.zone.now
+        )
         payment.ensure_correct_adjustment
       end
     end
