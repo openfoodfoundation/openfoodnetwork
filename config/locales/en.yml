@@ -3443,7 +3443,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
