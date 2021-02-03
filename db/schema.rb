@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210127174120) do
+ActiveRecord::Schema.define(version: 20210202052337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1071,7 +1071,7 @@ ActiveRecord::Schema.define(version: 20210127174120) do
     t.decimal  "cost_price",                   precision: 8, scale: 2
     t.integer  "position"
     t.string   "cost_currency",    limit: 255
-    t.float    "unit_value"
+    t.float    "unit_value",                                                           null: false
     t.string   "unit_description", limit: 255,                         default: ""
     t.string   "display_name",     limit: 255
     t.string   "display_as",       limit: 255
