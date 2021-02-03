@@ -11,7 +11,7 @@ module Api
 
       # params[:user_ids] breaks the enterprise creation
       # We remove them from params and save them after creating the enterprise
-      user_ids = params[:enterprise].delete(:user_ids)
+      user_ids = enterprise_params.delete(:user_ids)
       @enterprise = Enterprise.new(enterprise_params)
       if @enterprise.save
         @enterprise.user_ids = user_ids
@@ -48,30 +48,31 @@ module Api
     private
 
     def override_owner
-      params[:enterprise][:owner_id] = current_api_user.id
+      enterprise_params[:owner_id] = current_api_user.id
     end
 
     def check_type
-      params[:enterprise].delete :type unless current_api_user.admin?
+      enterprise_params.delete :type unless current_api_user.admin?
     end
 
     def override_sells
       has_hub = current_api_user.owned_enterprises.is_hub.any?
-      new_enterprise_is_producer = !!params[:enterprise][:is_primary_producer]
+      new_enterprise_is_producer = !!enterprise_params[:is_primary_producer]
 
-      params[:enterprise][:sells] = if has_hub && !new_enterprise_is_producer
-                                      'any'
-                                    else
-                                      'unspecified'
-                                    end
+      enterprise_params[:sells] = if has_hub && !new_enterprise_is_producer
+                                    'any'
+                                  else
+                                    'unspecified'
+                                  end
     end
 
     def override_visible
-      params[:enterprise][:visible] = false
+      enterprise_params[:visible] = false
     end
 
     def enterprise_params
-      PermittedAttributes::Enterprise.new(params).call
+      @enterprise_params ||= PermittedAttributes::Enterprise.new(params).call.
+        to_h.with_indifferent_access
     end
   end
 end
