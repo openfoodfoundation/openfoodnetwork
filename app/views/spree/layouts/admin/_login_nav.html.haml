@@ -5,7 +5,7 @@
       \: #{spree_current_user.email}
     %li{"data-hook" => "user-account-link"}
       %i.icon-user
-      = link_to t(:account), account_path
+      = link_to t(:account), main_app.account_path
     %li{"data-hook" => "user-logout-link"}
       %i.icon-signout
       = link_to t(:logout), logout_path
