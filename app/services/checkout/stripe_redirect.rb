@@ -15,7 +15,7 @@ module Checkout
       payment = OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(@order).call!
       raise if @order.errors.any?
 
-      field_with_url(payment) if url?(field_with_url(payment))
+      field_with_url(payment)
     end
 
     private
@@ -28,14 +28,8 @@ module Checkout
       payment_method.is_a?(Spree::Gateway::StripeSCA)
     end
 
-    def url?(string)
-      return false if string.blank?
-
-      string.starts_with?("http")
-    end
-
     # Stripe::AuthorizeResponsePatcher patches the Stripe authorization response
-    #   so that this field stores the redirect URL
+    #   so that this field stores the redirect URL. It also verifies that it is a Stripe URL.
     def field_with_url(payment)
       payment.cvv_response_message
     end
