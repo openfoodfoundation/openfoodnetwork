@@ -235,7 +235,7 @@ de_DE:
   enterprises: Unternehmen
   enterprise_groups: Gruppen
   reports: Berichte
-  listing_reports: Berichte
+  listing_reports: Berichte erstellen
   variant_overrides: Katalog
   import: Importieren
   spree_products: Spree Produkte
@@ -265,7 +265,7 @@ de_DE:
   notes: Anmerkungen
   error: Fehler
   processing_payment: "Bezahlung wird verarbeitet ..."
-  no_pending_payments: "Keine ausstehenden Zahlungen"
+  no_pending_payments: "Keine ausstehenden Zahlungen."
   invalid_payment_state: "Ungültiger Zahlungsstatus"
   filter_results: Suchen
   quantity: Menge
@@ -278,7 +278,7 @@ de_DE:
   expired: ist abgelaufen, fordern Sie bitte ein neues an
   back_to_payments_list: "Zurück zur Zahlungsliste"
   maestro_or_solo_cards: "Maestro/Solo-Karten"
-  backordered: "Nachbestellt"
+  backordered: "nachbestellt"
   on hand: "Verfügbar"
   ship: "Liefern"
   shipping_category: "Lieferkategorie"
@@ -344,7 +344,7 @@ de_DE:
     back: Zurück
     show_more: Mehr anzeigen
     show_n_more: Zeige %{num} weitere
-    choose: "Auswählen ..."
+    choose: "Bitte Auswählen ..."
     please_select: Bitte auswählen ...
     column_save_as_default: Als Standard speichern
     columns: Spalten
@@ -1190,7 +1190,7 @@ de_DE:
       cart:
         cart: "Wagen"
       cart_sidebar:
-        checkout: "Kasse"
+        checkout: "Zur Kasse"
         edit_cart: "Warenkorb bearbeiten"
         items_in_cart_singular: "%{num} Artikel in Ihrem Warenkorb"
         items_in_cart_plural: "%{num} Artikel in Ihrem Warenkorb"
@@ -1435,7 +1435,7 @@ de_DE:
   stats_shoppers: "Lebensmittelkäufer"
   stats_orders: "Lebensmittelbestellungen"
   checkout_title: Kasse
-  checkout_now: Kasse
+  checkout_now: Zur Kasse
   checkout_order_ready: Bestellung bereit am
   checkout_hide: Ausblenden
   checkout_expand: Erweitern
@@ -1498,7 +1498,7 @@ de_DE:
   email_confirm_customer_greeting: "Hallo %{name},"
   email_confirm_customer_intro_html: "vielen Dank für Ihren Einkauf bei <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
-  email_confirm_customer_details_html: "Hier sind Ihre <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
+  email_confirm_customer_details_html: "Nachfolgend finden Sie Ihre <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Mit freundlichen Grüßen,"
   email_confirm_shop_greeting: "Hallo %{name},"
   email_confirm_shop_order_html: "Gut gemacht! Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"
@@ -1515,7 +1515,7 @@ de_DE:
   email_payment_summary: Zahlungsübersicht
   email_payment_method: "Zahlungsart:"
   email_so_placement_intro_html: "Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"
-  email_so_placement_details_html: "Hier sind die Details Ihrer Bestellung für <strong>%{distributor}</strong>:"
+  email_so_placement_details_html: "Nachfolgend finden Sie die Details Ihrer Bestellung für <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Leider waren nicht alle von Ihnen bestellten Produkte verfügbar. Die von Ihnen gewünschten Originalmengen sind unten durchgestrichen."
   email_so_payment_success_intro_html: "Es wurde eine automatische Zahlung für Ihre Bestellung bei <strong>%{distributor}</strong> vorgenommen."
   email_so_placement_explainer_html: "Diese Bestellung wurde automatisch für Sie erstellt."
@@ -1525,13 +1525,13 @@ de_DE:
   email_so_contact_distributor_to_change_order_html: "Diese Bestellung wurde automatisch für Sie erstellt. Sie können Änderungen vornehmen, bis die Bestellungen am %{orders_close_at} geschlossen werden, indem Sie <strong>%{distributor}</strong> über %{email} kontaktieren."
   email_so_confirmation_intro_html: "Ihre Bestellung bei <strong>%{distributor}</strong> ist jetzt bestätigt"
   email_so_confirmation_explainer_html: "Diese Bestellung wurde automatisch für Sie aufgegeben und ist nun abgeschlossen."
-  email_so_confirmation_details_html: "Hier finden Sie alles, was Sie über Ihre Bestellung bei <strong>%{distributor}</strong> wissen müssen:"
+  email_so_confirmation_details_html: "Nachfolgend finden Sie alles, was Sie über Ihre Bestellung bei <strong>%{distributor}</strong> wissen müssen:"
   email_so_empty_intro_html: "Wir haben versucht, eine neue Bestellung bei <strong>%{distributor}</strong>aufzugeben, hatten aber einige Probleme ..."
   email_so_empty_explainer_html: "Leider war keines der von Ihnen bestellten Produkte verfügbar, daher wurde keine Bestellung aufgegeben. Die von Ihnen gewünschten Originalmengen sind unten durchgestrichen."
-  email_so_empty_details_html: "Hier sind die Details der nicht aufgegebenen Bestellung bei <strong>%{distributor}</strong>:"
+  email_so_empty_details_html: "Nachfolgend finden Sie die Details der nicht aufgegebenen Bestellung bei <strong>%{distributor}</strong>:"
   email_so_failed_payment_intro_html: "Wir haben versucht, eine Zahlung durchzuführen, hatten aber einige Probleme ..."
   email_so_failed_payment_explainer_html: "Die Zahlung für Ihr Abonnement bei <strong>%{distributor}</strong> ist aufgrund eines Problems mit Ihrer Kreditkarte fehlgeschlagen. <strong>%{distributor}</strong> wurde über diese fehlgeschlagene Zahlung benachrichtigt."
-  email_so_failed_payment_details_html: "Hier sind die Details des vom Zahlungsgateway bereitgestellten Fehlers:"
+  email_so_failed_payment_details_html: "Nachfolgend finden Sie die vom Zahlungsgateway bereitgestellten Details des  Fehlers:"
   email_shipping_delivery_details: Lieferdetails
   email_shipping_delivery_time: "Lieferung am:"
   email_shipping_delivery_address: "Lieferadresse:"
@@ -1553,7 +1553,7 @@ de_DE:
     mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen."
   producer_mail_greeting: "Liebe/r"
   producer_mail_text_before: "Es liegen jetzt alle Kundenbestellungen für die nächste Lieferung vor."
-  producer_mail_order_text: "Hier finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
+  producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
   producer_mail_signoff: "Mit freundlichen Grüßen,"
   shopping_oc_closed: Bestellzyklen sind derzeit geschlossen!
@@ -2091,7 +2091,7 @@ de_DE:
   spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
   spree_order_populator_availability_error: "Dieses Produkt ist bei der ausgewählten Verteilstelle oder im ausgewählten Bestellzyklus nicht verfügbar."
   spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein."
-  spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (Limit ist %{enterprise_limit})."
+  spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   spree_variant_product_error: muss mindestens eine Variante haben
   your_profil_live: "Ihr Profil live"
   see: "Sehen Sie"
@@ -2336,7 +2336,7 @@ de_DE:
   content_configuration_case_studies: "(TODO: Fallstudien)"
   content_configuration_detail: "(Todo: Detail)"
   enterprise_name_error: "wurde bereits vergeben. Wenn dies Ihr Unternehmen ist und Sie die Eigentumsrechte beanspruchen möchten oder wenn Sie mit diesem Unternehmen handeln möchten, wenden Sie sich bitte an den aktuellen Manager dieses Profils unter %{email}."
-  enterprise_owner_error: "^ %{email} darf keine weiteren Unternehmen besitzen (Limit ist %{enterprise_limit})."
+  enterprise_owner_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Diese Rolle ist bereits vorhanden."
   enterprise_terms_and_conditions_type_error: "Es sind nur pdf-Dateien zulässig."
   inventory_item_visibility_error: muss wahr oder falsch sein
@@ -2395,7 +2395,7 @@ de_DE:
     profile: Profil
     hub: Hub
     shop: Laden
-    choose: Auswählen
+    choose: Bitte Auswählen ...
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} mehr"
     default_card_updated: Die Standardkarte wurde aktualisiert.
@@ -2405,7 +2405,7 @@ de_DE:
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
           Möglicherweise ist es nicht mehr verfügbar oder der Laden schließt gerade.
     admin:
-      enterprise_limit_reached: "Sie haben das Limit der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
+      enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
       modals:
         got_it: "Verstanden"
         close: "Schließen"
@@ -2582,7 +2582,7 @@ de_DE:
           returned: "zurückgegeben"
           skrill: "Skrill"
         shipment_states:
-          backorder: "Nachlieferung"
+          backorder: "Lieferrückstand"
           partial: "Teillieferung"
           pending: "ausstehend"
           ready: "bereit"
@@ -2597,7 +2597,7 @@ de_DE:
           paid: "bezahlt"
           pending: "ausstehend"
           processing: "in Verarbeitung"
-          void: "Angabe fehlt"
+          void: "keine Angabe"
           invalid: "ungültig"
         quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
         quantity_unchanged: "Menge wurde nicht geändert."
@@ -2900,16 +2900,16 @@ de_DE:
     price: "Preis"
     total: "Gesamt"
     edit: "Bearbeiten"
-    split: "Teilt"
+    split: "Teilen"
     delete: "Löschen"
     cannot_set_shipping_method_without_address: "Lieferoption kann nicht festgelegt werden, bis Kundendaten angegeben werden."
-    no_tracking_present: "Keine Tracking-Details angegeben."
+    no_tracking_present: "Keine Details zur Sendungsverfolgung angegeben."
     tracking: "Sendungsverfolgung"
     tracking_number: "Sendungscode"
     order_total: "Bestellung insgesamt"
     customer_details: "Kundendetails"
     customer_search: "Kundensuche"
-    choose_a_customer: "Wählen Sie einen Kunden aus"
+    choose_a_customer: "Wählen Sie einen Kunden aus."
     account: "Konto"
     billing_address: "Rechnungsadresse"
     shipping_address: "Lieferadresse"
@@ -2920,64 +2920,65 @@ de_DE:
     city: "Ort"
     zip: "Postleitzahl"
     country: "Land"
-    state: "Status"
+    state: "Bundesland"
     phone: "Telefonnummer"
     update: "Speichern"
     use_billing_address: "Rechnungsadresse verwenden"
     adjustments: "Anpassungen"
     continue: "Weiter"
-    fill_in_customer_info: "Bitte geben Sie Ihre Kundeninformationen ein"
+    fill_in_customer_info: "Bitte geben Sie Ihre Kundeninformationen ein."
     credit_card: "Kreditkarte"
     new_payment: "Neue Zahlung"
     capture: "Erfassung"
-    void: "Löschen"
-    login: "Anmeldung"
+    void: "keine Angabe"
+    login: "Einloggen"
     password: "Passwort"
     signature: "Unterschrift"
     solution: "Lösung"
-    landing_page: "Landing Page"
+    landing_page: "Startseite"
     server: "Server"
     test_mode: "Testmodus"
-    logourl: "Logourl"
+    logourl: "URL des Logos"
     are_you_sure_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
-    confirm_delete: "Löschung bestätigen"
+    confirm_delete: "Löschen bestätigen"
     configurations: "Konfigurationen"
     general_settings: "Allgemeine Einstellungen"
-    site_name: "Site-Name"
-    site_url: "Seiten-URL"
-    default_seo_title: "Standard-Seo-Titel"
-    default_meta_description: "Standard-Meta-Beschreibung"
-    default_meta_keywords: "Standard-Metaschlüsselwörter"
+    site_name: "Name der Website"
+    site_url: "URL der Website"
+    default_seo_title: "Standard SEO-Titel"
+    default_meta_description: "Standard Meta-Beschreibung"
+    default_meta_keywords: "Standard Meta-Schlüsselwörter"
     security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_development_and_test: "Erlauben Sie SSL in Entwicklungs- und Testmodi"
+    allow_ssl_in_development_and_test: "Zulassen, dass SSL im Entwicklungs- und Testmodus verwendet wird"
     allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
     allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
-    currency_symbol_position: Setzen Sie "Währungssymbol vor oder nach dem Dollarbetrag?"
+    currency_symbol_position: Währungssymbol (€) vor oder nach dem Betrag?
     currency_thousands_separator: "Tausendertrennzeichen der Währung"
-    hide_cents: "Cent ausblenden"
+    hide_cents: "Cents ausblenden"
     display_currency: "Währung anzeigen"
-    choose_currency: "Währung wählen"
+    choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
     general: "Allgemeines"
-    enable_mail_delivery: "Aktivieren Sie die E-Mail-Zustellung"
-    send_mails_as: "Mails senden als"
+    enable_mail_delivery: "E-Mail-Versand aktivieren"
+    send_mails_as: "E-Mails senden als"
     smtp_send_all_emails_as_from_following_address: "Senden Sie alle E-Mails von der folgenden Adresse aus."
-    send_copy_of_all_mails_to: "Kopie aller Mails an senden"
-    smtp_send_copy_to_this_addresses: "Sendet eine Kopie aller ausgehenden Mails an diese Adresse. Bei mehreren Adressen trennen Sie diese durch Kommas."
+    send_copy_of_all_mails_to: "Kopie aller E-Mails senden an"
+    smtp_send_copy_to_this_addresses: "Sendet eine Kopie aller ausgehenden E-Mails an diese Adresse. Bei mehreren Adressen trennen Sie diese durch Kommas."
     intercept_email_address: "E-Mail-Adresse abfangen"
     intercept_email_instructions: "Überschreiben Sie den E-Mail-Empfänger und ersetzen Sie ihn mit dieser Adresse."
     tax_categories: "Steuerkategorien"
-    listing_tax_categories: "Steuerkategorien auflisten"
+    listing_tax_categories: "Steuerkategorien verwalten"
     back_to_tax_categories_list: "Zurück zur Liste der Steuerkategorien"
     tax rate: "Steuersätze"
     new_tax_rate: "Neuer Steuersatz"
     tax_category: "Steuerkategorie"
-    rate: "Bewertung"
+    tax_rates: "Steuersätze"
+    rate: "Steuersatz"
     tax_rate_amount_explanation: "Steuersätze sind ein Dezimalbetrag zur Vereinfachung der Berechnung (d. h. wenn der Steuersatz 5 % beträgt, geben Sie 0,05 ein)."
     included_in_price: "Im Preis inbegriffen"
-    show_rate_in_label: "Rate im Etikett anzeigen"
+    show_rate_in_label: "Steuersatz im Etikett anzeigen"
     back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
@@ -2985,16 +2986,16 @@ de_DE:
     default_tax: "Standardsteuer"
     default_tax_zone: "Standardsteuerzone"
     country_based: "Land basiert"
-    state_based: "State Based"
+    state_based: "Bundesland basiert"
     countries: "Länder"
-    listing_countries: "Länder auflisten"
+    listing_countries: "Länder verwalten"
     iso_name: "ISO-Name"
     states_required: "Staaten erforderlich"
     editing_country: "Land bearbeiten"
     back_to_countries_list: "Zurück zur Länderliste"
-    states: "Zustände"
+    states: "Bundesländer"
     abbreviation: "Abkürzung"
-    new_state: "Neuer Staat"
+    new_state: "Neues Bundesland"
     payment_methods: "Zahlungsarten"
     taxonomies: "Kategorien"
     new_taxonomy: "Neue Kategorie"
@@ -3014,7 +3015,7 @@ de_DE:
     environment: "Umgebung"
     active: "Aktiv"
     nore: "Mehr"
-    no_results: "Keine Ergebnisse"
+    no_results: "Keine Ergebnisse gefunden."
     create: "Neu"
     loading: "Wird geladen ..."
     flat_percent: "Fester Prozentsatz (%)"
@@ -3027,10 +3028,10 @@ de_DE:
     minimal_amount: "Mengenrabatt ab (€)"
     normal_amount: "Gebühr unterhalb (€)"
     discount_amount: "Gebühr oberhalb (€)"
-    no_images_found: "Keine Bilder gefunden"
+    no_images_found: "Keine Bilder gefunden."
     new_image: "Neues Bild"
     filename: "Dateiname"
-    alt_text: "alternativer Text"
+    alt_text: "Alternativtext"
     thumbnail: "Miniaturansicht"
     back_to_images_list: "Zurück zur Bilderliste"
     email: E-Mail-Adresse
@@ -3038,23 +3039,23 @@ de_DE:
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
     my_account: "Mein Konto"
     date: "Datum"
-    time: "Zeit"
+    time: "Uhrzeit"
     inventory_error_flash_for_insufficient_quantity: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
     inventory: Katalog
     zipcode: Postleitzahl
     weight: Gewicht (pro kg oder lb)
-    error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden"
+    error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden."
     cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsarten definiert sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsarten."
     options: "Optionen"
     has_no_shipped_units: "hat keine gelieferten Einheiten"
-    successfully_created: '%{resource} wurde erfolgreich erstellt!'
-    successfully_updated: '%{resource} wurde erfolgreich aktualisiert!'
+    successfully_created: '%{resource} wurde erfolgreich erstellt.'
+    successfully_updated: '%{resource} wurde erfolgreich gespeichert.'
     payment_method: "Zahlungsart"
-    payment_processing_failed: "Die Zahlung konnte nicht bearbeitet werden. Bitte überprüfen Sie die von Ihnen eingegebenen Daten"
+    payment_processing_failed: "Die Zahlung konnte nicht bearbeitet werden. Bitte überprüfen Sie die von Ihnen eingegebenen Daten."
     not_available: "N / A"
     order_populator:
-      out_of_stock: '%{item} ist nicht vorrätig.'
+      out_of_stock: '%{item} ist leider nicht mehr vorrätig.'
     actions:
       update: "Speichern"
       cancel: "Abbrechen"
@@ -3065,7 +3066,7 @@ de_DE:
           few: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
           many: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
           other: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
-        there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern"
+        there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern:"
       payments_list:
         date_time: "Datum/Uhrzeit"
         amount: "Betrag"
@@ -3091,7 +3092,7 @@ de_DE:
         properties: "Eigenschaften"
         variant_overrides: "Katalog"
         reports: "Berichte"
-        configuration: "Aufbau"
+        configuration: "Konfiguration"
         users: "Benutzer"
         roles: "Rollen"
         order_cycles: "Bestellzyklen"
@@ -3129,7 +3130,7 @@ de_DE:
           continue: "Weiter"
         new:
           new_return_authorization: "Neue Rückgabeberechtigung"
-          back_to_return_authorizations_list: "Zurück zur Rücksendeliste"
+          back_to_return_authorizations_list: "Zurück zur Retourenliste"
           continue: "Weiter"
         edit:
           receive: "erhalten"
@@ -3155,14 +3156,14 @@ de_DE:
           capture: "Verbuchen"
           ship: "Liefern"
           edit: "Bearbeiten"
-          order_not_updated: "Die Bestellung konnte nicht aktualisiert werden"
+          order_not_updated: "Die Bestellung konnte nicht aktualisiert werden."
           note: "Hinweis"
           first: "Erste"
           last: "Letzte"
           previous: "Vorherige"
-          next: "Weiter"
+          next: "Nächste"
           loading: "Wird geladen ..."
-          no_orders_found: "Keine Bestellungen gefunden"
+          no_orders_found: "Keine Bestellungen gefunden."
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
@@ -3175,7 +3176,7 @@ de_DE:
           email: "Kunden-E-Mail-Adresse"
         invoice:
           issued_on: "Erstelldatum"
-          tax_invoice: "Steuerrechnung"
+          tax_invoice: "RECHNUNG"
           code: "Code"
           from: "Von"
           to: "Rechnungsempfänger"
@@ -3218,8 +3219,8 @@ de_DE:
           calculator: "Berechnung"
           display: "Anzeige"
           both: "Sowohl an der Kasse als auch im Backoffice"
-          back_end: "Nur Backoffice"
-          no_shipping_methods_found: "Keine Lieferoptionen gefunden"
+          back_end: "Nur im Backoffice"
+          no_shipping_methods_found: "Keine Lieferoptionen gefunden."
         new:
           new_shipping_method: "Neue Lieferoption"
           back_to_shipping_methods_list: "Zurück zur Liste der Lieferoptionen"
@@ -3231,7 +3232,7 @@ de_DE:
           categories: "Kategorien"
           zones: "Zonen"
           both: "Sowohl an der Kasse als auch im Backoffice"
-          back_end: "Nur Backoffice"
+          back_end: "Nur im Backoffice"
           deactivation_warning: "Durch Deaktivieren einer Lieferoption wird die Lieferoption Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Lieferoption an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
       payment_methods:
         index:
@@ -3243,9 +3244,9 @@ de_DE:
           environment: "Umgebung"
           display: "Anzeige"
           active: "Aktiv"
-          both: "Beide"
+          both: "Beides"
           front_end: "Nur an der Kasse"
-          back_end: "Nur Backoffice"
+          back_end: "Nur im Backoffice"
           active_yes: "Ja"
           active_no: "Nein"
           no_payment_methods_found: "Keine Zahlungsarten gefunden"
@@ -3257,17 +3258,17 @@ de_DE:
           editing_payment_method: "Zahlungsart bearbeiten"
           back_to_payment_methods_list: "Zurück zur Liste der Zahlungsarten"
         stripe_connect:
-          enterprise_select_placeholder: Auswählen ...
+          enterprise_select_placeholder: Bitte Auswählen ...
           loading_account_information_msg: Kontoinformationen von Stripe werden geladen, bitte warten ...
-          stripe_disabled_msg: Streifenzahlungen wurden vom Systemadministrator deaktiviert.
+          stripe_disabled_msg: Zahlungen über den Dienstleister Stripe wurden vom Systemadministrator deaktiviert.
           request_failed_msg: Es tut uns leid. Beim Versuch, Kontodaten mit Stripe zu überprüfen, ist ein Fehler aufgetreten.
           account_missing_msg: Für dieses Unternehmen existiert kein Stripe-Konto.
-          connect_one: Verbinde eins
+          connect_one: Konto verbinden
           access_revoked_msg: Der Zugriff auf dieses Stripe-Konto wurde widerrufen. Bitte verbinden Sie Ihr Konto erneut.
           status: Status
           connected: Verbunden
           account_id: Konto-ID
-          business_name: Geschäftsname
+          business_name: Unternehmensname
           charges_enabled: Gebühren aktiviert
         form:
           name: "Name"
@@ -3279,7 +3280,7 @@ de_DE:
           active_no: "Nein"
           both: "Sowohl an der Kasse als auch im Backoffice"
           front_end: "Nur an der Kasse"
-          back_end: "Nur Backoffice"
+          back_end: "Nur im Backoffice"
           tags: "Stichwörter"
           deactivation_warning: "Durch Deaktivieren einer Zahlungsart wird die Zahlungsart Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Zahlungsart an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
         providers:
@@ -3295,10 +3296,10 @@ de_DE:
       payments:
         source_forms:
           stripe:
-            error_saving_payment: Fehler beim Speichern der Zahlung
+            error_saving_payment: Fehler beim Speichern der Zahlung.
             submitting_payment: Zahlung wird gesendet ...
           paypal:
-            no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden
+            no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
         image_upload_error: "Das Produktbild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG- oder JPG-Format hoch."
         new:
@@ -3315,18 +3316,18 @@ de_DE:
           product_description: "Produktbeschreibung"
           image: "Bild"
           or: "oder"
-        unit_name_placeholder: 'z. B. Trauben'
+        unit_name_placeholder: 'z. B. Bündel'
         index:
           header:
             title: Produkte verwalten
           indicators:
-            title: LADE PRODUKTE
+            title: PRODUKTE WERDEN GELADEN ...
             no_products: "Bisher gibt es noch keine Produkte. Warum fügen Sie nicht einige hinzu?"
-            no_results: "Entschuldigung, keine Ergebnisse stimmen überein"
+            no_results: "Keine Ergebnisse gefunden."
           products_head:
             name: Name
             unit: Einheit
-            display_as: Angezeigt als
+            display_as: Anzeigen als
             category: Kategorie
             tax_category: Steuerkategorie
             inherits_properties?: Übernimmt Eigenschaften des Ladens?
@@ -3334,7 +3335,7 @@ de_DE:
             av_on: "Verfüg. am"
             import_date: "Importdatum"
           products_variant:
-            variant_has_n_overrides: "Diese Variante hat %{n} Überschreibungen"
+            variant_has_n_overrides: "Diese Variante hat %{n} Überschreibung(en)."
             new_variant: "Neue Variante"
           product_name: Produktname
         primary_taxon_form:
@@ -3343,7 +3344,7 @@ de_DE:
           group_buy: "Gruppenkauf aktivieren?"
           bulk_unit_size: Erforderliche Gesamtbestellmenge (in Gramm, Liter oder Stück)
         display_as:
-          display_as: Darstellen als
+          display_as: Anzeigen als
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
@@ -3356,20 +3357,20 @@ de_DE:
           customer_names_tip: "Wenn Kundennamen für von Ihnen gelieferte Bestellungen ausgeblendet sind, können Sie sich an den Händler wenden und ihn bitten, seine Ladeneinstellungen anzupassen, damit seine Lieferanten Kundennamen anzeigen können."
       users:
         index:
-          listing_users: "Benutzer auflisten"
+          listing_users: "Benutzer verwalten"
           new_user: "Neuer Benutzer"
           user: "Benutzer"
-          enterprise_limit: "Enterprise Limit"
+          enterprise_limit: "Maximale Anzahl der Unternehmen"
           search: "Suche"
-          email: "E-Mail"
+          email: "E-Mail-Adresse"
         edit:
           editing_user: "Benutzer bearbeiten"
           back_to_users_list: "Zurück zur Benutzerliste"
           general_settings: "Allgemeine Einstellungen"
         form:
-          email: "E-Mail"
+          email: "E-Mail-Adresse"
           roles: "Rollen"
-          enterprise_limit: "Enterprise Limit"
+          enterprise_limit: "Maximale Anzahl der Unternehmen"
           confirm_password: "Passwort erneut eingeben"
           password: "Passwort"
         email_confirmation:
@@ -3379,21 +3380,21 @@ de_DE:
           sku: "Artikelnummer"
           price: "Preis"
           options: "Varianten"
-          no_results: "Keine Ergebnisse"
+          no_results: "Keine Ergebnisse gefunden."
           to_add_variants_you_must_first_define: "Um Varianten hinzuzufügen, müssen Sie zuerst definieren"
           option_types: "Optionstypen"
           option_values: "Optionswerte"
           and: "und"
           new_variant: "Neue Variante"
-          show_active: "Zeige Aktive"
-          show_deleted: "Zeige Gelöschte"
+          show_active: "Zeige aktive"
+          show_deleted: "Zeige gelöschte"
         new:
           new_variant: "Neue Variante"
         form:
           cost_price: "Selbstkostenpreis"
           sku: "Artikelnummer"
           price: "Preis"
-          display_as: "Angezeigt als"
+          display_as: "Anzeigen als"
           display_name: "Variantenname"
           display_as_placeholder: 'z. B. 2 kg'
           display_name_placeholder: 'z. B. Tomaten'
@@ -3408,86 +3409,90 @@ de_DE:
           state: "Status"
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
-          email: "E-Mail"
+          email: "E-Mail-Adresse"
           total: "Gesamt"
       general_settings:
         edit:
           legal_settings: "Rechtliche Einstellungen"
-          cookies_consent_banner_toggle: "Zeigen Sie das Zustimmungsbanner für Cookies an"
-          privacy_policy_url: "Datenschutz URL"
+          cookies_consent_banner_toggle: "Zustimmungsbanner für Cookies anzeigen"
+          privacy_policy_url: "URL der Datenschutzerklärung"
           enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
-          cookies_policy_matomo_section: "Zeigen Sie den Abschnitt Matomo auf der Richtlinienseite für Cookies an"
-          footer_tos_url: "AGB URL"
+          cookies_policy_matomo_section: "Matomo auf der Richtlinienseite für Cookies anzeigen"
+          footer_tos_url: "URL der Allgemeinen Geschäftsbedingungen"
     checkout:
       payment:
         stripe:
-          choose_one: Wähle ein
-          enter_new_card: Geben Sie Details für eine neue Karte ein
-          used_saved_card: "Verwende eine gespeicherte Karte:"
+          choose_one: Bitte Auswählen ...
+          enter_new_card: Geben Sie Details für eine neue Karte ein.
+          used_saved_card: "Eine gespeicherte Karte verwenden:"
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
-          remember_this_card: Erinnerst du dich an diese Karte?
+          remember_this_card: Diese Karte speichern?
         stripe_sca:
-          choose_one: Wähle Sie eine Option
-          enter_new_card: Geben Sie Details für eine neue Karte ein
-          used_saved_card: "Verwenden Sie eine gespeicherte Karte:"
+          choose_one: Bitte wählen Sie eine Option
+          enter_new_card: Geben Sie Details für eine neue Karte ein.
+          used_saved_card: "Eine gespeicherte Karte verwenden:"
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
           remember_this_card: Diese Karte speichern?
     date_picker:
       format: '%Y.%m.%d'
       js_format: 'dd.mm.yy'
     orders:
-      error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar. Bitte aktualisieren Sie die ausgewählten Mengen."
+      error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar. Bitte passen Sie die ausgewählten Mengen an."
       edit:
         login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."
       bought:
-        item: "Bereits in dieser Reihenfolge bestellt"
+        item: "Bereits in diesem Bestellzyklus bestellt."
       line_item:
-        insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
-        out_of_stock: "Ausverkauft"
+        insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verbleibend."
+        out_of_stock: "ausverkauft"
         unavailable_item: "momentan nicht verfügbar"
     shipment_states:
       backorder: Lieferrückstand
-      partial: teilweise
+      partial: Teillieferung
       pending: wartet auf Bestätigung
-      ready: fertig
+      ready: bereit
       shipped: versandt
     payment_states:
       balance_due: Offener Betrag
-      completed: fertig gestellt
-      checkout: zur Kasse
+      completed: abgeschlossen
+      checkout: an der Kasse
       credit_owed: Geschuldetes Guthaben
-      failed: misslungen
+      failed: fehlgeschlagen
       paid: bezahlt
       pending: wartet auf Bestätigung
-      processing: Prozess läuft
-      void: Angabe fehlt
+      processing: in Verarbeitung
+      void: keine Angabe
       invalid: ungültig
     order_mailer:
       cancel_email:
-        customer_greeting: "Lieber %{name},"
+        customer_greeting: "Liebe/r %{name},"
         instructions_html: "Ihre Bestellung bei <strong>%{distributor}</strong> wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
-        dont_cancel: "Wenn Sie Ihre Meinung geändert haben oder diese Bestellung nicht stornieren möchten, wenden Sie sich bitte an %{email}"
-        order_summary_canceled_html: "<strong>Bestellübersicht # %{number} [STORNIERT]</strong>"
-        details: "Hier sind die Details Ihrer Bestellung:"
-        unpaid_order: "Ihre Bestellung wurde nicht bezahlt, daher wurde keine Rückerstattung vorgenommen"
-        paid_order: "Ihre Bestellung wurde bezahlt, sodass %{distributor} den vollen Betrag zurückerstattet hat"
-        credit_order: "Ihre Bestellung wurde bezahlt, sodass Ihr Konto gutgeschrieben wurde"
+        dont_cancel: "Wenn Sie Ihre Meinung geändert haben oder diese Bestellung nicht stornieren möchten, wenden Sie sich bitte an %{email}."
+        order_summary_canceled_html: "<strong>Bestellübersicht #%{number} [STORNIERT]</strong>"
+        details: "Nachfolgend finden Sie die Details Ihrer Bestellung:"
+        unpaid_order: "Ihre Bestellung war noch nicht bezahlt, daher wurde keine Rückerstattung vorgenommen."
+        paid_order: "Ihre Bestellung war bereits bezahlt, sodass %{distributor} den vollen Betrag zurückerstattet hat."
+        credit_order: "Ihre Bestellung war bereits bezahlt, sodass der Betrag Ihrem Konto gutgeschrieben wurde."
         subject: "Stornierung der Bestellung"
+      cancel_email_for_shop:
+        greeting: "Liebe/r %{name},"
+        subject: "Stornierung der Bestellung"
+        intro: "Ein Kunde hat seine Bestellung #%{number} storniert."
+        view_cancelled_order: "Stornierte Bestellung anzeigen"
       confirm_email:
         subject: "Bestellbestätigung"
       invoice_email:
         hi: "Hallo %{name}"
-        invoice_attached_text: Im Anhang findest Du eine Rechnung für die letzte Bestellung vom
+        invoice_attached_text: Im Anhang finden Sie die Rechnung Ihrer letzten Bestellung vom
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-            Es wurde angefragt, das Passwort zurückzusetzen.
-            Sollte kein neues Passwort angefordert werden, bitte dieses E-Mail ignorieren.
+            Wir haben eine Anfrage zum Zurücksetzen Ihres Passworts erhalten.
+            Sollten Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese E-Mail.
         link_text: >
-            Sollte ein neues Passwort angefordert werden, bitte den folgenden Aktivierungslink
-            bestätigen.
+            Stammt die Anfrage von Ihnen, klicken Sie bitte auf den folgenden Aktivierungslink.
         issue_text: |
-            Falls die URL nicht funktioniert, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen
+            Falls dies nicht funktionieren sollte, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen.
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
         subject: "Bitte bestätigen Sie Ihre Anmeldung bei Open Food Network DE"
@@ -3498,35 +3503,35 @@ de_DE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
-        instructions: "Ihre Bestellung wurde versandt"
+        instructions: "Ihre Bestellung wurde versandt."
         shipment_summary: "Übersicht"
         subject: "Versandbenachrichtigung"
-        thanks: "Danke für deinen Einkauf!"
-        track_information: "Tracking-Informationen: %{tracking}"
-        track_link: "Tracking-Link: %{url}"
+        thanks: "Danke für Ihren Einkauf!"
+        track_information: "Sendungsinformationen: %{tracking}"
+        track_link: "Link zur Sendung: %{url}"
     test_mailer:
       test_email:
-        greeting: "Herzliche Glückwünsche!"
+        greeting: "Herzlichen Glückwünsch!"
         message: "Wenn Sie diese E-Mail erhalten haben, sind Ihre E-Mail-Einstellungen korrekt."
         subject: "Test-E-Mail"
     order_state:
       address: bei Adresseingabe
       adjustments: Anpassungen
       awaiting_return: wartet auf Rückkehr
-      canceled: abgebrochen
+      canceled: storniert
       cart: im Warenkorb
       complete: abgeschlossen
       confirm: bestätigen
       delivery: in Lieferung
       paused: pausiert
       payment: im Zahlvorgang
-      pending: steht aus
+      pending: ausstehend
       resumed: wiederaufgenommen
       returned: zurückgegeben
       skrill: Skrill
     subscription_state:
       active: aktiv
-      pending: steht aus
+      pending: ausstehend
       ended: beendet
       paused: pausiert
       canceled: storniert
@@ -3550,14 +3555,14 @@ de_DE:
         generic_error: "PayPal ist fehlgeschlagen. %{reasons}"
     users:
       form:
-        account_settings: Konto Einstellungen
+        account_settings: Kontoeinstellungen
       show:
         tabs:
           orders: Bestellungen
           cards: Kreditkarten
           transactions: Transaktionen
-          settings: Konto Einstellungen
-        unconfirmed_email: "Ausstehende E-Mail-Bestätigung für: %{unconfirmed_email}. Ihre E-Mail-Adresse wird aktualisiert, sobald die neue E-Mail bestätigt wurde."
+          settings: Kontoeinstellungen
+        unconfirmed_email: "Ausstehende E-Mail-Bestätigung für: %{unconfirmed_email}. Ihre E-Mail-Adresse wird aktualisiert, sobald sie bestätigt wurde."
       orders:
         open_orders: Offene Bestellungen
         past_orders: Vergangene Bestellungen
@@ -3566,11 +3571,11 @@ de_DE:
       open_orders:
         order: Bestellung
         shop: Laden
-        changes_allowed_until: Änderung möglich bis
-        items: Produkte
+        changes_allowed_until: Änderungen möglich bis
+        items: Artikel
         total: Gesamt
         edit: Bearbeiten
-        cancel: Abbrechen
+        cancel: Stornieren
         closed: Abgeschlossen
         until: Bis
       past_orders:
@@ -3585,8 +3590,8 @@ de_DE:
         default?: Standard?
         delete?: Löschen?
       cards:
-        authorised_shops: Bevollmächtigte Läden
-        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß der Bedingungen eines Abonnements entgegenzunehmen, das Sie mit diesem Laden erstellen.
+        authorised_shops: Autorisierte Läden
+        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß der Bedingungen eines Abonnements, das Sie mit diesem Laden erstellen, entgegenzunehmen.
         saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"
