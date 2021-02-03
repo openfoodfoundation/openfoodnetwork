@@ -105,22 +105,22 @@ module Admin
 
     # Wrap :subscription_line_items_attributes in :subscription root
     def wrap_nested_attrs
-      if params[:subscription_line_items].is_a? Array
-        attributes = params[:subscription_line_items].map do |sli|
+      if raw_params[:subscription_line_items].is_a? Array
+        attributes = raw_params[:subscription_line_items].map do |sli|
           sli.slice(*SubscriptionLineItem.attribute_names + ["_destroy"])
         end
-        params[:subscription][:subscription_line_items_attributes] = attributes
+        subscription_params[:subscription_line_items_attributes] = attributes
       end
       wrap_bill_address_attrs if params[:bill_address]
       wrap_ship_address_attrs if params[:ship_address]
     end
 
     def wrap_bill_address_attrs
-      params[:subscription][:bill_address_attributes] = params[:bill_address].slice(*Spree::Address.attribute_names)
+      subscription_params[:bill_address_attributes] = raw_params[:bill_address].slice(*Spree::Address.attribute_names)
     end
 
     def wrap_ship_address_attrs
-      params[:subscription][:ship_address_attributes] = params[:ship_address].slice(*Spree::Address.attribute_names)
+      subscription_params[:ship_address_attributes] = raw_params[:ship_address].slice(*Spree::Address.attribute_names)
     end
 
     def check_for_open_orders
@@ -140,8 +140,8 @@ module Admin
     end
 
     def strip_banned_attrs
-      params[:subscription].delete :schedule_id
-      params[:subscription].delete :customer_id
+      subscription_params.delete :schedule_id
+      subscription_params.delete :customer_id
     end
 
     # Overriding Spree method to load data from params here so that
@@ -155,7 +155,8 @@ module Admin
     end
 
     def subscription_params
-      @subscription_params ||= PermittedAttributes::Subscription.new(params).call
+      @subscription_params ||= PermittedAttributes::Subscription.new(params).call.
+        to_h.with_indifferent_access
     end
   end
 end
