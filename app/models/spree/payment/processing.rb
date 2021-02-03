@@ -15,6 +15,7 @@ module Spree
 
       def process_offline!
         return unless validate!
+        return if cvv_response_message.present?
 
         if payment_method.auto_capture?
           charge_offline!
