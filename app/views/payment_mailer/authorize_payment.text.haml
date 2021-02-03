@@ -1,3 +1,3 @@
-= t('.instructions', distributor: @payment.order.distributor.name, amount: @payment.display_amount)
+= t('spree.payment_mailer.authorize_payment.instructions', distributor: @payment.order.distributor.name, amount: @payment.display_amount)
 
-= main_app.authorize_payment_url(@payment)
+= link_to main_app.authorize_payment_url(@payment), main_app.authorize_payment_url(@payment)
