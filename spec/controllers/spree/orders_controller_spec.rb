@@ -242,15 +242,15 @@ describe Spree::OrdersController, type: :controller do
         allow(subject).to receive(:order_to_update) { order }
       end
 
-      it "updates the fees" do
+      it "updates the shipping and payment fees" do
         spree_post :update,
                    order: { line_items_attributes: {
                      "0" => { id: line_item1.id, quantity: 1 },
                      "1" => { id: line_item2.id, quantity: 0 }
                    } }
 
-        expect(order.line_items.count).to eq 1
-        expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
+        expect(order.reload.line_items.count).to eq 1
+        expect(order.adjustment_total).to eq(1 * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
       end
     end
