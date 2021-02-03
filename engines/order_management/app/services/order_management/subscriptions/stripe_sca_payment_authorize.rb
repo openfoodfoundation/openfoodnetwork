@@ -17,6 +17,7 @@ module OrderManagement
 
         if @payment.cvv_response_message.present?
           PaymentMailer.authorize_payment(@payment).deliver_now
+          PaymentMailer.authorization_required(@payment).deliver_now
         end
 
         @payment

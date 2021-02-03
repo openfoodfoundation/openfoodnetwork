@@ -3658,6 +3658,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       authorize_payment:
         subject: "Please authorize your payment to %{distributor} on OFN"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+      authorization_required:
+        subject: "A payment requires authorization from the customer"
+        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"

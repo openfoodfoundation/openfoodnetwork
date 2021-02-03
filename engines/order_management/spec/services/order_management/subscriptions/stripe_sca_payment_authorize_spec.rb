@@ -63,18 +63,20 @@ module OrderManagement
 
               before do
                 allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
+                allow(PaymentMailer).to receive(:authorization_required) { mail_mock }
                 allow(payment).to receive(:authorize!) {
                   payment.state = "pending"
                   payment.cvv_response_message = "https://stripe.com/redirect"
                 }
               end
 
-              it "adds sends an email requesting authorization" do
+              it "sends an email requesting authorization and an email notifying the shop owner" do
                 payment_authorize.call!
 
                 expect(order.errors.size).to eq 0
                 expect(PaymentMailer).to have_received(:authorize_payment)
-                expect(mail_mock).to have_received(:deliver_now)
+                expect(PaymentMailer).to have_received(:authorization_required)
+                expect(mail_mock).to have_received(:deliver_now).twice
               end
             end
           end
