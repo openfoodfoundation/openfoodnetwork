@@ -48,5 +48,31 @@ module OpenFoodNetwork
         end
       end
     end
+
+    context 'when passing in a block' do
+      let(:user) { build(:user) }
+
+      context 'and the block does not specify arguments' do
+        before do
+          FeatureToggle.enable(:foo) { 'return value' }
+        end
+
+        it "returns the block's return value" do
+          expect(FeatureToggle.enabled?(:foo, user)).to eq('return value')
+        end
+      end
+
+      context 'and the block specifies arguments' do
+        let(:users) { [user.email] }
+
+        before do
+          FeatureToggle.enable(:foo) { |user| users.include?(user.email) }
+        end
+
+        it "returns the block's return value" do
+          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
+        end
+      end
+    end
   end
 end

@@ -30,11 +30,14 @@ module OpenFoodNetwork
       new.enabled?(feature_name, user)
     end
 
-    def self.enable(feature_name, user_emails)
-      return unless user_emails.present?
-
+    def self.enable(feature_name, user_emails = nil, &block)
       Thread.current[:features] ||= {}
-      Thread.current[:features][feature_name] = Feature.new(user_emails)
+
+      if user_emails.nil?
+        Thread.current[:features][feature_name] = BlockFeature.new(block)
+      else
+        Thread.current[:features][feature_name] = Feature.new(user_emails)
+      end
     end
 
     def initialize
@@ -85,5 +88,19 @@ module OpenFoodNetwork
     def enabled?(_user)
       false
     end
+  end
+
+  class BlockFeature
+    def initialize(block)
+      @block = block
+    end
+
+    def enabled?(user)
+      block.call(user)
+    end
+
+    private
+
+    attr_reader :block
   end
 end
