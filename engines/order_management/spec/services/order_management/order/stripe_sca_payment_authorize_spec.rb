@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 module OrderManagement
-  module Subscriptions
+  module Order
     describe StripeScaPaymentAuthorize do
       let(:order) { create(:order) }
       let(:payment_authorize) {
-        OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(order)
+        OrderManagement::Order::StripeScaPaymentAuthorize.new(order)
       }
 
       describe "#call!" do

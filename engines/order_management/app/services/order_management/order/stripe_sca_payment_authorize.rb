@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OrderManagement
-  module Subscriptions
+  module Order
     class StripeScaPaymentAuthorize
       include FullUrlHelper
 

@@ -14,7 +14,7 @@ module Checkout
     def path
       return unless stripe_payment_method?
 
-      payment = OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(@order).call!(full_checkout_path)
+      payment = OrderManagement::Order::StripeScaPaymentAuthorize.new(@order).call!(full_checkout_path)
       raise if @order.errors.any?
 
       field_with_url(payment)
