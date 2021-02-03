@@ -3,6 +3,8 @@
 # Provides the redirect path if a redirect to the payment gateway is needed
 module Checkout
   class StripeRedirect
+    include FullUrlHelper
+
     def initialize(params, order)
       @params = params
       @order = order
@@ -12,7 +14,7 @@ module Checkout
     def path
       return unless stripe_payment_method?
 
-      payment = OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(@order).call!
+      payment = OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(@order).call!(full_checkout_path)
       raise if @order.errors.any?
 
       field_with_url(payment)
