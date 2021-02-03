@@ -32,26 +32,6 @@ module OpenFoodNetwork
     context 'when specifying users' do
       let(:user) { build(:user) }
 
-      context 'and the feature is enabled for them' do
-        before { FeatureToggle.enable(:foo, [user.email]) }
-
-        it 'returns true' do
-          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
-        end
-      end
-
-      context 'and the feature is disabled for them' do
-        before { FeatureToggle.enable(:foo, []) }
-
-        it 'returns false' do
-          expect(FeatureToggle.enabled?(:foo, user)).to eq(false)
-        end
-      end
-    end
-
-    context 'when passing in a block' do
-      let(:user) { build(:user) }
-
       context 'and the block does not specify arguments' do
         before do
           FeatureToggle.enable(:foo) { 'return value' }
