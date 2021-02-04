@@ -64,12 +64,14 @@ module Admin
     end
 
     def register
-      if enterprise_params[:sells] == 'unspecified'
+      register_params = params.permit(:sells)
+
+      if register_params[:sells] == 'unspecified'
         flash[:error] = I18n.t(:enterprise_register_package_error)
         return render :welcome, layout: "spree/layouts/bare_admin"
       end
 
-      attributes = { sells: enterprise_params[:sells], visible: true }
+      attributes = { sells: register_params[:sells], visible: true }
 
       if @enterprise.update(attributes)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
