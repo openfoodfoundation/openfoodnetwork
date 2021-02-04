@@ -1,4 +1,13 @@
-$(document).ready(function(){
+$(document).ready(function() {
+  var onClickButtons = function(index, fp) {
+    var date;
+    switch (index) {
+      case 0:
+        date = new Date();
+        break;
+    }
+    fp.setDate(date, true);
+  }
   window.FLATPICKR_DATE_DEFAULT = {
     dateFormat: Spree.translations.flatpickr_date_format,
     locale: I18n.locale,
@@ -8,15 +17,7 @@ $(document).ready(function(){
             label: "Today"
           }],
           label: "or",
-          onClick: (index, fp) => {
-            let date;
-            switch (index) {
-              case 0:
-                date = new Date();
-                break;
-            }
-            fp.setDate(date);
-          }
+          onClick: onClickButtons
         })
       ]
   }
@@ -32,15 +33,7 @@ $(document).ready(function(){
             label: "Now"
           }],
           label: "or",
-          onClick: (index, fp) => {
-            let date;
-            switch (index) {
-              case 0:
-                date = new Date();
-                break;
-            }
-            fp.setDate(date);
-          }
+          onClick: onClickButtons
         })
       ]
     }
