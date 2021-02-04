@@ -79,6 +79,14 @@ module Admin
         joins(variant: :product).
         preload(variant: :product).
         for_hubs(params[:hub_id] || @hubs)
+
+      return @variant_overrides unless params.key?(:variant_overrides)
+
+      @variant_overrides.where(id: modified_variant_overrides_ids)
+    end
+
+    def modified_variant_overrides_ids
+      variant_overrides_params.map { |vo| vo[:id] }
     end
 
     def collection_actions
