@@ -27,8 +27,9 @@ describe 'config/initializers/feature_toggles.rb' do
   end
 
   context 'when beta_testers is a list of emails' do
+    let(:other_user) { build(:user) }
+
     context 'and the user is in the list' do
-      let(:other_user) { build(:user) }
       before { ENV['BETA_TESTERS'] = "#{user.email}, #{other_user.email}" }
 
       it 'enables the feature' do
@@ -40,6 +41,17 @@ describe 'config/initializers/feature_toggles.rb' do
     end
 
     context 'and the user is not in the list' do
+      before { ENV['BETA_TESTERS'] = "#{other_user.email}" }
+
+      it 'disables the feature' do
+        execute_initializer
+
+        enabled = OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, user)
+        expect(enabled).to eq(false)
+      end
+    end
+
+    context 'and the list is empty' do
       before { ENV['BETA_TESTERS'] = '' }
 
       it 'disables the feature' do
