@@ -3,47 +3,47 @@
   .row
     .eight.columns.alpha
       .row
-        .six.columns.alpha
+        .five.columns.alpha
           %h3= t('.details')
-        .two.columns.omega.text-right
+        .eleven.columns.omega
           %input#edit-details{ type: "button", value: t(:edit), ng: { click: "setView('details')" } }
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.customer')
-        .five.columns.omega {{ subscription.customer().email }}
+        .eleven.columns.omega {{ subscription.customer().email }}
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.schedule')
-        .five.columns.omega {{ subscription.schedule().name }}
+        .eleven.columns.omega {{ subscription.schedule().name }}
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.payment_method')
-        .five.columns.omega {{ subscription.paymentMethod().name }}
+        .eleven.columns.omega {{ subscription.paymentMethod().name }}
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.shipping_method')
-        .five.columns.omega {{ subscription.shippingMethod().name }}
+        .eleven.columns.omega {{ subscription.shippingMethod().name }}
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.begins_at')
-        .five.columns.omega {{ subscription.begins_at }}
+        .eleven.columns.omega {{ subscription.begins_at }}
       .row.margin-bottom-30
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.ends_at')
-        .five.columns.omega {{ subscription.ends_at || ('ongoing' | t) }}
+        .eleven.columns.omega {{ subscription.ends_at || ('ongoing' | t) }}
       .row
-        .six.columns.alpha
+        .five.columns.alpha
           %h3= t('.address')
-        .two.columns.omega.text-right
+        .eleven.columns.omega
           %input#edit-address{ type: "button", value: t(:edit), ng: { click: "setView('address')" } }
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.bill_address')
-        .five.columns.omega {{ formatAddress(subscription.bill_address) }}
+        .eleven.columns.omega {{ formatAddress(subscription.bill_address) }}
       .row
-        .three.columns.alpha
+        .five.columns.alpha
           %strong= t('admin.ship_address')
-        .five.columns.omega {{ formatAddress(subscription.ship_address) }}
+        .eleven.columns.omega {{ formatAddress(subscription.ship_address) }}
 
     .one.column
       &nbsp;
@@ -52,7 +52,7 @@
       .row
         .five.columns.alpha
           %h3= t('.products')
-        .two.columns.omega.text-right
+        .eleven.columns.omega
           %input#edit-products{ type: "button", value: t(:edit), ng: { click: "setView('products')" } }
       .row
         .seven.columns.alpha.omega
