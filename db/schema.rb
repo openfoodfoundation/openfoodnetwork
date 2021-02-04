@@ -1061,7 +1061,7 @@ ActiveRecord::Schema.define(version: 20210202052337) do
 
   create_table "spree_variants", force: :cascade do |t|
     t.string   "sku",              limit: 255,                         default: "",    null: false
-    t.decimal  "weight",                       precision: 8, scale: 2,                 null: false
+    t.decimal  "weight",                       precision: 8, scale: 2, default: 0.0,   null: false
     t.decimal  "height",                       precision: 8, scale: 2
     t.decimal  "width",                        precision: 8, scale: 2
     t.decimal  "depth",                        precision: 8, scale: 2
@@ -1071,7 +1071,7 @@ ActiveRecord::Schema.define(version: 20210202052337) do
     t.decimal  "cost_price",                   precision: 8, scale: 2
     t.integer  "position"
     t.string   "cost_currency",    limit: 255
-    t.float    "unit_value",                                                           null: false
+    t.float    "unit_value",                                           default: 1.0,   null: false
     t.string   "unit_description", limit: 255,                         default: ""
     t.string   "display_name",     limit: 255
     t.string   "display_as",       limit: 255
