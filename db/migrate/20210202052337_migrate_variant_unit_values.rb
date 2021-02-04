@@ -8,6 +8,7 @@ class MigrateVariantUnitValues < ActiveRecord::Migration
       variant.save
     end
     change_column_null :spree_variants, :unit_value, false, 1
+    change_column_null :spree_variants, :weight, false, 0.0
   end
 
   def down
