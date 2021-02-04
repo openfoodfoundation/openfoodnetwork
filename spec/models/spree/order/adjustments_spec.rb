@@ -5,22 +5,6 @@ require 'spec_helper'
 describe Spree::Order do
   let(:order) { Spree::Order.new }
 
-  context "clear_adjustments" do
-    let(:adjustment) { double("Adjustment") }
-
-    it "destroys all order adjustments" do
-      allow(order).to receive_messages(adjustments: adjustment)
-      expect(adjustment).to receive(:destroy_all)
-      order.clear_adjustments!
-    end
-
-    it "destroy all line item adjustments" do
-      allow(order).to receive_messages(line_item_adjustments: adjustment)
-      expect(adjustment).to receive(:destroy_all)
-      order.clear_adjustments!
-    end
-  end
-
   context "totaling adjustments" do
     let!(:adjustment1) { create(:adjustment, amount: 5) }
     let!(:adjustment2) { create(:adjustment, amount: 10) }

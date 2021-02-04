@@ -49,6 +49,10 @@ describe RemoveTransientData do
       let!(:old_line_item) { create(:line_item, order: old_cart, variant: variant) }
       let!(:old_adjustment) { create(:adjustment, order: old_cart) }
 
+      before do
+        old_cart.update_columns(updated_at: short_retention - 1.day)
+      end
+
       it 'deletes cart orders and related objects older than retention_period' do
         RemoveTransientData.new.call
 

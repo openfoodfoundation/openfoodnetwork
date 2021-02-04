@@ -43,3 +43,14 @@
   &.success { background-color: rgba($color-success, 0.8) }
   &.error   { background-color: rgba($color-error,   0.8) }
 }
+
+.notice {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: $spree-light-blue;
+  border-radius: $border-radius;
+
+  a {
+    font-weight: bold;
+  }
+}

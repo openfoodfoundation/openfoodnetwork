@@ -21,7 +21,7 @@ describe Admin::VariantOverridesController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+          put :bulk_update, format: format, variant_overrides: variant_override_params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -33,8 +33,15 @@ describe Admin::VariantOverridesController, type: :controller do
 
         context "but the producer has not granted VO permission" do
           it "redirects to unauthorized" do
-            spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+            put :bulk_update, format: format, variant_overrides: variant_override_params
             expect(response).to redirect_to unauthorized_path
+          end
+
+          it 'only authorizes the updated variant overrides' do
+            other_variant_override = create(:variant_override, hub: hub, variant: create(:variant))
+            expect(controller).not_to receive(:authorize!).with(:update, other_variant_override)
+
+            put :bulk_update, format: format, variant_overrides: variant_override_params
           end
         end
 
@@ -44,7 +51,7 @@ describe Admin::VariantOverridesController, type: :controller do
           end
 
           it "loads data" do
-            spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+            put :bulk_update, format: format, variant_overrides: variant_override_params
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [variant.product.supplier]
             expect(assigns[:hub_permissions]).to eq Hash[hub.id, [variant.product.supplier.id]]
@@ -52,7 +59,8 @@ describe Admin::VariantOverridesController, type: :controller do
           end
 
           it "allows me to update the variant override" do
-            spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+            put :bulk_update, format: format, variant_overrides: variant_override_params
+
             variant_override.reload
             expect(variant_override.price).to eq 123.45
             expect(variant_override.count_on_hand).to eq 321
@@ -64,7 +72,7 @@ describe Admin::VariantOverridesController, type: :controller do
             let(:variant_override_params) { [{ id: variant_override.id, price: "", count_on_hand: "", default_stock: nil, resettable: nil, sku: nil, on_demand: nil }] }
 
             it "destroys the variant override" do
-              spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+              put :bulk_update, format: format, variant_overrides: variant_override_params
               expect(VariantOverride.find_by(id: variant_override.id)).to be_nil
             end
           end
@@ -76,7 +84,7 @@ describe Admin::VariantOverridesController, type: :controller do
             before { deleted_variant.update_attribute :deleted_at, Time.zone.now }
 
             it "allows to update other variant overrides" do
-              spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+              put :bulk_update, format: format, variant_overrides: variant_override_params
 
               expect(response).to_not redirect_to unauthorized_path
               variant_override.reload
@@ -110,7 +118,7 @@ describe Admin::VariantOverridesController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          spree_put :bulk_reset, params
+          put :bulk_reset, params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -122,7 +130,7 @@ describe Admin::VariantOverridesController, type: :controller do
 
         context "where the producer has not granted create_variant_overrides permission to the hub" do
           it "restricts access" do
-            spree_put :bulk_reset, params
+            put :bulk_reset, params
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -131,7 +139,7 @@ describe Admin::VariantOverridesController, type: :controller do
           let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:create_variant_overrides]) }
 
           it "loads data" do
-            spree_put :bulk_reset, params
+            put :bulk_reset, params
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [producer]
             expect(assigns[:hub_permissions]).to eq Hash[hub.id, [producer.id]]
@@ -141,7 +149,7 @@ describe Admin::VariantOverridesController, type: :controller do
           it "updates stock to default values where reset is enabled" do
             expect(variant_override1.reload.count_on_hand).to eq 5 # reset enabled
             expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
-            spree_put :bulk_reset, params
+            put :bulk_reset, params
             expect(variant_override1.reload.count_on_hand).to eq 7 # reset enabled
             expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
           end
@@ -156,7 +164,7 @@ describe Admin::VariantOverridesController, type: :controller do
 
             it "does not reset count_on_hand for variant_overrides not in params" do
               expect {
-                spree_put :bulk_reset, params
+                put :bulk_reset, params
               }.to_not change{ variant_override3.reload.count_on_hand }
             end
           end

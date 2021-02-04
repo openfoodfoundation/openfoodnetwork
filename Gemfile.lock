@@ -491,7 +491,7 @@ GEM
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
     pg (0.21.0)
-    power_assert (1.2.0)
+    power_assert (2.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -611,7 +611,7 @@ GEM
     rswag-ui (2.3.2)
       actionpack (>= 3.1, < 7.0)
       railties (>= 3.1, < 7.0)
-    rubocop (1.9.0)
+    rubocop (1.9.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -675,7 +675,7 @@ GEM
     stripe (5.29.0)
     temple (0.8.2)
     test-prof (0.11.3)
-    test-unit (3.3.9)
+    test-unit (3.4.0)
       power_assert
     test_after_commit (1.2.2)
       activerecord (>= 3.2, < 5.0)
@@ -825,7 +825,7 @@ DEPENDENCIES
   stringex (~> 2.8.5)
   stripe
   test-prof
-  test-unit (~> 3.3)
+  test-unit (~> 3.4)
   test_after_commit
   timecop
   uglifier (>= 1.0.3)

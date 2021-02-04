@@ -1,6 +1,8 @@
 %div
   .row
     %fieldset.no-border-bottom
+      %div.notice
+        = t('spree.mail_settings_notice_html')
       %legend{align: "center"}= t("spree.general")
       .field
         = label_tag :mails_from, t("spree.send_mails_as")
@@ -19,7 +21,7 @@
       .field
         = label_tag :intercept_email, t("spree.intercept_email_address")
         %br/
-        = text_field_tag :intercept_email, Spree::Config[:intercept_email], maxlength: 256, class: 'fullwidth'
+        = text_field_tag :intercept_email, Spree::Config[:intercept_email], disabled: true, class: 'fullwidth'
         %br/
         %span.info
           = t("spree.intercept_email_instructions")

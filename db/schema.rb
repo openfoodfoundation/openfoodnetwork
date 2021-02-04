@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210202052337) do
+
+ActiveRecord::Schema.define(version: 20210203215049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1252,9 +1253,9 @@ ActiveRecord::Schema.define(version: 20210202052337) do
   add_foreign_key "proxy_orders", "subscriptions", name: "proxy_orders_subscription_id_fk"
   add_foreign_key "spree_addresses", "spree_countries", column: "country_id", name: "spree_addresses_country_id_fk"
   add_foreign_key "spree_addresses", "spree_states", column: "state_id", name: "spree_addresses_state_id_fk"
-  add_foreign_key "spree_inventory_units", "spree_orders", column: "order_id", on_delete: :cascade
+  add_foreign_key "spree_inventory_units", "spree_orders", column: "order_id", name: "spree_inventory_units_order_id_fk", on_delete: :cascade
   add_foreign_key "spree_inventory_units", "spree_return_authorizations", column: "return_authorization_id", name: "spree_inventory_units_return_authorization_id_fk"
-  add_foreign_key "spree_inventory_units", "spree_shipments", column: "shipment_id", on_delete: :cascade
+  add_foreign_key "spree_inventory_units", "spree_shipments", column: "shipment_id", name: "spree_inventory_units_shipment_id_fk", on_delete: :cascade
   add_foreign_key "spree_inventory_units", "spree_variants", column: "variant_id", name: "spree_inventory_units_variant_id_fk"
   add_foreign_key "spree_line_items", "spree_orders", column: "order_id", name: "spree_line_items_order_id_fk"
   add_foreign_key "spree_line_items", "spree_variants", column: "variant_id", name: "spree_line_items_variant_id_fk"
@@ -1290,7 +1291,7 @@ ActiveRecord::Schema.define(version: 20210202052337) do
   add_foreign_key "spree_roles_users", "spree_roles", column: "role_id", name: "spree_roles_users_role_id_fk"
   add_foreign_key "spree_roles_users", "spree_users", column: "user_id", name: "spree_roles_users_user_id_fk"
   add_foreign_key "spree_shipments", "spree_addresses", column: "address_id", name: "spree_shipments_address_id_fk"
-  add_foreign_key "spree_shipments", "spree_orders", column: "order_id", on_delete: :cascade
+  add_foreign_key "spree_shipments", "spree_orders", column: "order_id", name: "spree_shipments_order_id_fk", on_delete: :cascade
   add_foreign_key "spree_state_changes", "spree_users", column: "user_id", name: "spree_state_changes_user_id_fk"
   add_foreign_key "spree_states", "spree_countries", column: "country_id", name: "spree_states_country_id_fk"
   add_foreign_key "spree_tax_rates", "spree_tax_categories", column: "tax_category_id", name: "spree_tax_rates_tax_category_id_fk"

@@ -534,11 +534,6 @@ module Spree
       shipments.destroy_all
     end
 
-    def clear_adjustments!
-      adjustments.destroy_all
-      line_item_adjustments.destroy_all
-    end
-
     def state_changed(name)
       state = "#{name}_state"
       return unless persisted?
@@ -604,7 +599,10 @@ module Spree
       return unless shipments.any?
 
       shipments.destroy_all
-      update_column(:state, "address")
+      update_columns(
+        state: "address",
+        updated_at: Time.zone.now
+      )
     end
 
     def refresh_shipment_rates
