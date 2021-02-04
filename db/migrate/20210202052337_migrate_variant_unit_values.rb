@@ -1,16 +1,10 @@
 class MigrateVariantUnitValues < ActiveRecord::Migration
   def up
-    Spree::Variant.includes(:product).where(
-      spree_products: { variant_unit: "items" },
-      spree_variants: { unit_value: [nil, Float::NAN] }
-    ).find_each do |variant|
+    Spree::Variant.where(unit_value: [nil, Float::NAN]).find_each do |variant|
       variant.unit_value = 1
       variant.save
     end
-    Spree::Variant.includes(:product).where(
-      spree_products: { variant_unit: "items" },
-      spree_variants: { weight: [nil, Float::NAN] }
-    ).find_each do |variant|
+    Spree::Variant.where(weight: [nil, Float::NAN]).find_each do |variant|
       variant.weight = 0
       variant.save
     end
