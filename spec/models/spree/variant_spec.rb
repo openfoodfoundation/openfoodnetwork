@@ -637,7 +637,7 @@ module Spree
       describe "setting the variant's weight from the unit value" do
         it "sets the variant's weight when unit is weight" do
           p = create(:simple_product, variant_unit: 'volume')
-          v = create(:variant, product: p, weight: nil)
+          v = create(:variant, product: p, weight: 0)
 
           p.update! variant_unit: 'weight', variant_unit_scale: 1
           v.update! unit_value: 10, unit_description: 'foo'
