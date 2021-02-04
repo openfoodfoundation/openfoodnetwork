@@ -103,7 +103,7 @@ module Spree
       end
 
       def load_data
-        @providers = if spree_current_user.admin? || Rails.env.test?
+        @providers = if Rails.env.dev? || Rails.env.test?
                        Gateway.providers.sort_by(&:name)
                      else
                        Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort_by(&:name)
