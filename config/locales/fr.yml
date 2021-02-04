@@ -2994,6 +2994,7 @@ fr:
     tax rate: "Par taux de taxe"
     new_tax_rate: "Nouveau taux de taxe"
     tax_category: "TVA applicable"
+    tax_rates: "Par taux de taxe"
     rate: "Taux"
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5,5% saisissez 0.055)"
     included_in_price: "Inclus dans le prix"
@@ -3493,6 +3494,11 @@ fr:
         paid_order: "Votre commande avait été réglée, ainsi %{distributor}a remboursé la totalité du montant"
         credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Annulation de Commande"
+      cancel_email_for_shop:
+        greeting: "Bonjour %{name},"
+        subject: "Annulation de Commande"
+        intro: "Un acheteur a annulé sa commande #%{number}."
+        view_cancelled_order: "Voir la commande annulée"
       confirm_email:
         subject: "Confirmation de commande"
       invoice_email:
