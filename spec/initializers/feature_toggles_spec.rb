@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe 'config/initializers/feature_toggles.rb' do
+  # Executes the initializer's code block by reading the Ruby file. Note that `Kernel#require` would
+  # prevent this from happening twice.
+  subject(:execute_initializer) do
+    load Rails.root.join('config/initializers/feature_toggles.rb')
+  end
+
   let(:user) { build(:user) }
 
   around do |example|
@@ -13,7 +19,7 @@ describe 'config/initializers/feature_toggles.rb' do
     before { ENV['BETA_TESTERS'] = 'all' }
 
     it 'returns true' do
-      require './config/initializers/feature_toggles' # execute the initializer's code block
+      execute_initializer
 
       enabled = OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, user)
       expect(enabled).to eq(true)
@@ -26,7 +32,7 @@ describe 'config/initializers/feature_toggles.rb' do
       before { ENV['BETA_TESTERS'] = "#{user.email}, #{other_user.email}" }
 
       it 'enables the feature' do
-        require './config/initializers/feature_toggles' # execute the initializer's code block
+        execute_initializer
 
         enabled = OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, user)
         expect(enabled).to eq(true)
@@ -37,7 +43,7 @@ describe 'config/initializers/feature_toggles.rb' do
       before { ENV['BETA_TESTERS'] = '' }
 
       it 'disables the feature' do
-        require './config/initializers/feature_toggles' # execute the initializer's code block
+        execute_initializer
 
         enabled = OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, user)
         expect(enabled).to eq(false)
