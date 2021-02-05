@@ -75,12 +75,12 @@ module Spree
       end
 
       def bulk_update
-        product_set = product_set_from_params(params)
+        product_set = product_set_from_params
 
         product_set.collection.each { |p| authorize! :update, p }
 
         if product_set.save
-          redirect_to main_app.bulk_products_api_products_path( bulk_index_query(params) )
+          redirect_to main_app.bulk_products_api_products_path(bulk_index_query)
         elsif product_set.errors.present?
           render json: { errors: product_set.errors }, status: :bad_request
         else
@@ -161,15 +161,14 @@ module Spree
 
       private
 
-      def product_set_from_params(_params)
-        collection_hash = Hash[products_params.each_with_index.map { |p, i| [i, p] }]
+      def product_set_from_params
+        collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i| [i, p] }]
         Sets::ProductSet.new(collection_attributes: collection_hash)
       end
 
-      def products_params
-        params.require(:products).map do |product|
-          product.permit(::PermittedAttributes::Product.attributes)
-        end
+      def products_bulk_params
+        params.permit(products: ::PermittedAttributes::Product.attributes).
+          to_h.with_indifferent_access
       end
 
       def permitted_resource_params
@@ -178,8 +177,8 @@ module Spree
         params.require(:product).permit(::PermittedAttributes::Product.attributes)
       end
 
-      def bulk_index_query(params)
-        (params[:filters] || {}).merge(page: params[:page], per_page: params[:per_page])
+      def bulk_index_query
+        (raw_params[:filters] || {}).merge(page: raw_params[:page], per_page: raw_params[:per_page])
       end
 
       def load_form_data
