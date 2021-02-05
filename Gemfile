@@ -28,6 +28,7 @@ gem 'web', path: './engines/web'
 
 gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
+gem 'backup', '5.0.0.beta.2'
 
 gem 'acts_as_list', '0.9.19'
 gem 'cancancan', '~> 1.7.0'
@@ -56,7 +57,7 @@ gem 'kaminari', '~> 1.2.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk', '1.67.0'
+gem 'aws-sdk', '~> 2'
 gem 'bugsnag'
 gem 'haml'
 gem 'redcarpet'
