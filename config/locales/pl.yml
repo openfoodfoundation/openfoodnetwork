@@ -2955,6 +2955,7 @@ pl:
     tax rate: "Wysokość podatków"
     new_tax_rate: "Nowa stawka podatku"
     tax_category: "Kategoria podatku"
+    tax_rates: "Stawki podatków"
     rate: "Oceniać"
     tax_rate_amount_explanation: "Stawki podatku są kwotami dziesiętnymi, aby ułatwić obliczenia (tj. Jeśli stawka podatku wynosi 5%, wprowadź 0,05)"
     included_in_price: "Wliczony w cenę"

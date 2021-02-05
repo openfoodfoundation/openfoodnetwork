@@ -2971,6 +2971,7 @@ en_GB:
     tax rate: "Tax Rates"
     new_tax_rate: "New Tax Rate"
     tax_category: "Tax Category"
+    tax_rates: "Tax Rates"
     rate: "Rate"
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
@@ -3282,7 +3283,6 @@ en_GB:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
           stripeconnect: "depreciated card payment method (no longer in use in UK)"
@@ -3469,6 +3469,9 @@ en_GB:
         unpaid_order: "Your order was unpaid so no refund has been made"
         paid_order: "Your order was paid so %{distributor} will refund the full amount. Please don't hesitate to get in touch to notify them that you cancelled your order.  Many business reconcile payments at the end of the month but will happily issue refunds sooner, if they are aware you are waiting."
         credit_order: "Your order was paid so your account has been credited"
+        subject: "Cancellation of Order"
+      cancel_email_for_shop:
+        greeting: "Dear %{name},"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

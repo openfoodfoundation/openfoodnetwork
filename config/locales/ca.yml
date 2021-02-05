@@ -2955,6 +2955,7 @@ ca:
     display_currency: "Moneda de visualització"
     choose_currency: "Escull la moneda"
     mail_method_settings: "Configuració del mètode de correu"
+    mail_settings_notice_html: "Algunes de les opcions de configuració següents no es poden editar i es mostren aquí només amb finalitats de depuració. Es poden fer canvis actualitzant els secrets de la instància i provisionant-los mitjançant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Contacteu amb l'equip global d'OFN per obtenir més informació."
     general: "General"
     enable_mail_delivery: "Habilita el lliurament de correu"
     send_mails_as: "Enviar missatges com"
@@ -3281,7 +3282,6 @@ ca:
         providers:
           provider: "Proveïdor"
           check: "Efectiu / transferència / etc. (pagaments per als quals no és necessària la validació automàtica)"
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"

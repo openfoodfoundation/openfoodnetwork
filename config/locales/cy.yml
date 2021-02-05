@@ -3005,6 +3005,7 @@ cy:
     tax rate: "Cyfraddau Treth"
     new_tax_rate: "Cyfradd Trethi Newydd"
     tax_category: "Categori Treth"
+    tax_rates: "Cyfraddau Treth"
     rate: "Cyfradd"
     tax_rate_amount_explanation: "Mae cyfraddau treth yn swm degol i gynorthwyo gyda chyfrifiadau, (hy os yw&#39;r gyfradd dreth yn 5% yna nodwch 0.05)"
     included_in_price: "Wedi&#39;i gynnwys yn y Pris"
@@ -3494,6 +3495,9 @@ cy:
         unpaid_order: "Ni thalwyd eich archeb felly ni wnaed ad-daliad"
         paid_order: "Talwyd eich archeb felly mae %{distributor} wedi ad-dalu&#39;r swm llawn"
         credit_order: "Talwyd eich archeb fel bod eich cyfrif wedi&#39;i gredydu"
+        subject: "Canslo Gorchymyn"
+      cancel_email_for_shop:
+        greeting: "Annwyl %{name},"
         subject: "Canslo Gorchymyn"
       confirm_email:
         subject: "Cadarnhad Gorchymyn"

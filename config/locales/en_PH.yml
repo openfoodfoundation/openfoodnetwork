@@ -2856,6 +2856,7 @@ en_PH:
     tax rate: "Tax Rates"
     new_tax_rate: "New Tax Rate"
     tax_category: "Tax Category"
+    tax_rates: "Tax Rates"
     rate: "Rate"
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
@@ -3305,6 +3306,8 @@ en_PH:
       invalid: invalid
     order_mailer:
       cancel_email:
+        subject: "Cancellation of Order"
+      cancel_email_for_shop:
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

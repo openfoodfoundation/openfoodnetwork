@@ -1926,6 +1926,7 @@ sv:
     password: "Lösenord"
     tax rate: "Skattesatser"
     tax_category: "Skattekategori"
+    tax_rates: "Skattesatser"
     tax_settings: "Skatteskalor"
     payment_methods: "Betalningssätt"
     shipping_methods: "Transportsätt"

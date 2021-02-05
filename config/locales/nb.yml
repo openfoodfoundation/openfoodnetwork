@@ -2957,6 +2957,7 @@ nb:
     tax rate: "Avgiftsrater"
     new_tax_rate: "Ny Avgiftssats"
     tax_category: "Avgiftskategori"
+    tax_rates: "Avgiftsrater"
     rate: "Sats"
     tax_rate_amount_explanation: "Avgiftssatser er et desimalbeløp til hjelp i beregninger, (dvs. dersom avgiftssatsen er 5%, angi 0,05)"
     included_in_price: "Inkludert i Pris"
@@ -3446,6 +3447,9 @@ nb:
         unpaid_order: "Bestillingen din var ubetalt, så ingen refusjon har blitt gjort"
         paid_order: "Bestillingen din ble betalt, så %{distributor} har refundert hele beløpet"
         credit_order: "Bestillingen din ble betalt så kontoen din er kreditert"
+        subject: "Kansellering av bestilling"
+      cancel_email_for_shop:
+        greeting: "Kjære %{name},"
         subject: "Kansellering av bestilling"
       confirm_email:
         subject: "Ordrebekreftelse"

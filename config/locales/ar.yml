@@ -3053,6 +3053,7 @@ ar:
     tax rate: "معدلات الضريبة"
     new_tax_rate: "معدل الضريبة الجديد"
     tax_category: "الفئة الضريبية"
+    tax_rates: "معدلات الضريبة"
     rate: "معدل"
     tax_rate_amount_explanation: "معدلات الضرائب هي مبلغ عشري للمساعدة في العمليات الحسابية ، (أي إذا كان معدل الضريبة 5٪ ، فأدخل 0.05)"
     included_in_price: "المدرجة في السعر"
@@ -3364,7 +3365,6 @@ ar:
         providers:
           provider: "مزود"
           check: "النقد / التحويل الإلكتروني / إلخ. (المدفوعات التي لا تتطلب المصادقة التلقائية)"
-          migs: "خدمة بوابة الإنترنت من ( MasterCard Internet Gateway Service MIGS)"
           paypalexpress: "باي بال اكسبريس"
           stripeconnect: "Stripe SCA"
           stripesca: "Stripe SCA"
@@ -3550,6 +3550,9 @@ ar:
         unpaid_order: "لم يتم سداد طلبك ، لذا لم يتم رد الأموال"
         paid_order: "تم دفع طلبك حتى أعاد %{distributor} المبلغ بالكامل"
         credit_order: "تم دفع طلبك حتى تم إضافة رصيد إلى حسابك"
+        subject: "إلغاء الطلب"
+      cancel_email_for_shop:
+        greeting: "عزيزي %{name} ،"
         subject: "إلغاء الطلب"
       confirm_email:
         subject: "تأكيد الطلب"

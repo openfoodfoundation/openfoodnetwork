@@ -2801,6 +2801,7 @@ pt:
     tax rate: "Taxas de Imposto"
     new_tax_rate: "Nova Taxa de Imposto"
     tax_category: "Categoria de Imposto"
+    tax_rates: "Taxas de Imposto"
     rate: "Taxa"
     tax_rate_amount_explanation: "Taxas de Imposto são uma quantidade decimal que suportam o cálculo (por exemplo, se a taxa de imposto for 5%, insira 0.05)"
     included_in_price: "Incluído no Preço"
@@ -3231,6 +3232,9 @@ pt:
         unpaid_order: "A encomenda não estava paga portanto nenhum reembolso foi feito"
         paid_order: "A encomenda estava paga portanto a organização %{distributor} fez o reembolso total"
         credit_order: "A encomenda estava paga portanto a sua conta foi creditada"
+        subject: "Cancelamento de Encomenda"
+      cancel_email_for_shop:
+        greeting: "Caro/a %{name},"
         subject: "Cancelamento de Encomenda"
       confirm_email:
         subject: "Confimação de Encomenda"

@@ -2864,6 +2864,7 @@ es_CR:
     tax rate: "Tarifas de impuesto"
     new_tax_rate: "Nueva tarifa de impuesto"
     tax_category: "Categoría de impuestos"
+    tax_rates: "Tarifas de impuesto"
     rate: "Impuesto"
     tax_rate_amount_explanation: "Las tarifas de impuestos son una cantidad decimal para ayudar en los cálculos (es decir, si la tasa de impuestos es del 5%, introduzca 0.05)"
     included_in_price: "Incluido en el precio"
@@ -3313,6 +3314,8 @@ es_CR:
       invalid: inválido
     order_mailer:
       cancel_email:
+        subject: "Cancelación del pedido"
+      cancel_email_for_shop:
         subject: "Cancelación del pedido"
       confirm_email:
         subject: "Confirmación del pedido"

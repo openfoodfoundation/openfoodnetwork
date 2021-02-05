@@ -149,10 +149,10 @@ de_DE:
   shipment_mailer:
     shipped_email:
       dear_customer: "Liebe Kundin, lieber Kunde,"
-      instructions: "deine Bestellung wurde versandt!"
+      instructions: "Ihre Bestellung wurde versandt!"
       shipment_summary: "Übersicht"
       subject: "Versandbenachrichtigung"
-      thanks: "Danke für deinen Einkauf!"
+      thanks: "Danke für Ihren Einkauf!"
       track_information: "Sendungsinformationen: %{tracking}"
       track_link: "Link zur Sendung: %{url}"
   subscription_mailer:
@@ -425,9 +425,9 @@ de_DE:
         title: Inhalt
         header: Kopfzeile
         home_page: Homepage
-        producer_signup_page: Anmeldung für Produzenten
+        producer_signup_page: Registrierung für Produzenten
         hub_signup_page: Registrierseite für Hubs
-        group_signup_page: Anmeldung für Gruppen
+        group_signup_page: Registrierung einer Gruppe
         main_links: Hauptmenü-Links
         footer_and_external_links: Fußzeile und externe Links
         your_content: Ihr Inhalt
@@ -844,7 +844,7 @@ de_DE:
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
         producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
-        get_listing: Erstellen Sie einen Eintrag
+        get_listing: Erstellen Sie ein Profil
         profile_description_text: Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. Sie können im Open Food Network gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
         hub_shop: Hub
         hub_shop_text: Verkaufen Sie Produkte anderer
@@ -1376,7 +1376,7 @@ de_DE:
       header: "Wie wir Cookies verwenden"
       desc_part_1: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
       desc_part_2: "Das Open Food Network respektiert Ihre Privatsphäre. Wir verwenden nur die Cookies, die notwendig sind, um Ihnen den Service des Online-Kaufs/-Verkaufs von Lebensmitteln zu bieten. Wir verkaufen keine Ihrer Daten. Wir könnten Ihnen in Zukunft vorschlagen, einige Ihrer Daten zu teilen, um neue gemeinschaftliche Dienste zu entwickeln, die für das Ökosystem nützlich sein könnten (wie Logistikdienstleistungen für regionale Nahrungsmittelsysteme), aber soweit sind wir noch nicht und wir werden es nicht ohne Ihre Zustimmung tun. :-)"
-      desc_part_3: "Wir verwenden Cookies hauptsächlich, um uns daran zu erinnern, wer Sie sind, wenn Sie sich bei dem Dienst anmelden oder sich die Artikel merken können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind \"Cookies akzeptieren\" nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind. Hier ist die Liste der von uns verwendeten Cookies!"
+      desc_part_3: "Wir verwenden Cookies hauptsächlich, um uns daran zu erinnern, wer Sie sind, wenn Sie sich bei dem Dienst anmelden, oder um uns die Artikel merken können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind. Wenn Sie die Website nutzen ohne \"Cookies akzeptieren\" zu klicken, nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind. Hier ist die Liste der von uns verwendeten Cookies!"
       essential_cookies: "Notwendige Cookies"
       essential_cookies_desc: "Die folgenden Cookies sind für den Betrieb unserer Website unbedingt erforderlich."
       essential_cookies_note: "Die meisten Cookies enthalten nur einen eindeutigen Bezeichner, aber keine anderen Daten. Ihre E-Mail-Adresse und Ihr Kennwort sind zum Beispiel niemals darin enthalten und werden nie veröffentlicht."
@@ -1418,7 +1418,7 @@ de_DE:
   brandstory_part6: "Wir alle lieben unser Essen. Jetzt können wir auch unser regionales Lebensmittelsystem lieben."
   learn_body: "Erkunden Sie Modelle, Geschichten und Ressourcen, um Sie bei der Entwicklung Ihres Fair-Food-Geschäfts oder Ihrer Organisation zu unterstützen. Finden Sie Schulungen, Veranstaltungen und andere Möglichkeiten, um von Gleichgesinnten zu lernen."
   learn_cta: "Lass SIe sich inspirieren"
-  connect_body: "Durchsuchen Sie unsere vollständigen Verzeichnisse von Produzenten, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Präsentieren Sie Ihr Unternehmen oder Ihre Organisation im Open Food Network, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
+  connect_body: "Durchsuchen Sie unsere Verzeichnisse von Produzenten, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Präsentieren Sie Ihr Unternehmen oder Ihre Organisation im Open Food Network, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
   connect_cta: "Erkunden"
   system_headline: "Einkaufen - so funktioniert es."
   system_step1: "1. Suche"
@@ -1643,13 +1643,13 @@ de_DE:
   groups_contact_website: Besuchen Sie unsere Homepage
   groups_contact_facebook: Folgen Sie uns auf Facebook
   groups_signup_title: Melden Sie eine Gruppe an
-  groups_signup_headline: Anmeldung einer Gruppe
+  groups_signup_headline: Registrierung einer Gruppe
   groups_signup_intro: "Wir sind eine großartige Plattform für kollaboratives Marketing - der einfachste Weg für die Mitglieder Ihrer Gruppe neue Märkte zu erreichen. Wir sind gemeinnützig, erschwinglich und transparent."
   groups_signup_email: Schreiben Sie uns eine E-Mail
   groups_signup_motivation1: Wir verändern Lebensmittelsysteme fair.
   groups_signup_motivation2: Deshalb sind wir jeden Tag aufgestanden. Wir sind eine globale Non-Profit-Organisation, die auf Open-Source-Code basiert. Wir spielen fair. Sie können uns immer vertrauen.
   groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
-  groups_signup_motivation4: Wir treffen dich, wo du bist.
+  groups_signup_motivation4: Wir treffen Sie, wo Sie sind.
   groups_signup_motivation5: Sie könnten ein Zusammenschluss von Hubs, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine Lokalbehörde.
   groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Network in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
   groups_signup_motivation7: Wir unterstützen Initiative dabei, den Trend zur Regionalität und Nachhaltigkeit zu stärken.
@@ -1729,7 +1729,7 @@ de_DE:
   orders_oc_expired_headline: Bestellannahme für diesen Bestellzyklus bereits geschlossen!
   orders_oc_expired_text: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann."
   orders_oc_expired_text_others_html: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann (<strong>%{link}</strong>)."
-  orders_oc_expired_text_link: "oder sehen Sie sich die anderen Bestellzyklen dieses Hubs an"
+  orders_oc_expired_text_link: "oder sehen Sie sich die anderen Bestellzyklen dieses Hubs an."
   orders_oc_expired_email: "E-Mail-Adresse:"
   orders_oc_expired_phone: "Telefonnummer:"
   orders_show_title: Bestellbestätigung
@@ -2569,7 +2569,7 @@ de_DE:
         order_state:
           address: "Adresse"
           adjustments: "Anpassungen"
-          awaiting_return: "Rücksendung erwartet"
+          awaiting_return: "wartet auf Rücksendung"
           canceled: "storniert"
           cart: "im Warenkorb"
           complete: "abgeschlossen"
@@ -3148,7 +3148,7 @@ de_DE:
         states:
           authorized: "Autorisiert"
           received: "Empfangen"
-          canceled: "Abgesagt"
+          canceled: "abgebrochen"
       orders:
         index:
           listing_orders: "Bestellungen verwalten"
@@ -3286,7 +3286,6 @@ de_DE:
         providers:
           provider: "Anbieter"
           check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Pin Zahlungen"
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
@@ -3399,7 +3398,7 @@ de_DE:
           display_as_placeholder: 'z. B. 2 kg'
           display_name_placeholder: 'z. B. Tomaten'
         autocomplete:
-          out_of_stock: "Nicht vorrättig"
+          out_of_stock: "nicht vorrätig"
           producer_name: "Produzent"
           unit: "Einheit"
       shared:
@@ -3495,7 +3494,7 @@ de_DE:
             Falls dies nicht funktionieren sollte, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen.
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
-        subject: "Bitte bestätigen Sie Ihre Anmeldung bei Open Food Network DE"
+        subject: "Bitte bestätigen Sie Ihre Registrierung bei Open Food Network DE"
     payment_mailer:
       authorize_payment:
         subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network DE"
@@ -3517,7 +3516,7 @@ de_DE:
     order_state:
       address: bei Adresseingabe
       adjustments: Anpassungen
-      awaiting_return: wartet auf Rückkehr
+      awaiting_return: wartet auf Rücksendung
       canceled: storniert
       cart: im Warenkorb
       complete: abgeschlossen
@@ -3592,7 +3591,7 @@ de_DE:
       cards:
         authorised_shops: Autorisierte Läden
         authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß der Bedingungen eines Abonnements, das Sie mit diesem Laden erstellen, entgegenzunehmen.
-        saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
+        saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Läden belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"
         allow_charges?: "Abbuchungen für die Standardkarte zulassen?"

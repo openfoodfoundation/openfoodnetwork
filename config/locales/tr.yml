@@ -2961,6 +2961,7 @@ tr:
     tax rate: "Vergi oranları"
     new_tax_rate: "Yeni Vergi Oranı"
     tax_category: "Vergi Kategorisi"
+    tax_rates: "Vergi oranları"
     rate: "oran"
     tax_rate_amount_explanation: "Vergi oranları ondalık bir tutar olmalı (yani vergi oranı % 5 ise 0.05 girin)"
     included_in_price: "Fiyata Dahil"
@@ -3450,6 +3451,9 @@ tr:
         unpaid_order: "Sipariş ödemeniz yapılmadığı için iade işlemi yapılmadı"
         paid_order: "Siparişinizin ödemesi yapılmıştı, bu sebeple %{distributor}iade işlemi gerçekleştirdi."
         credit_order: "Siparişinizin ödemesi yapılmıştı, bu sebeple hesabınızdan düşüldü."
+        subject: "Sipariş İptali"
+      cancel_email_for_shop:
+        greeting: "Sevgili %{name},"
         subject: "Sipariş İptali"
       confirm_email:
         subject: "Sipariş Onayı"

@@ -2869,6 +2869,7 @@ fil_PH:
     tax rate: "rate  ng mga tax"
     new_tax_rate: "bagong rate ng tax"
     tax_category: "kategorya ng tax"
+    tax_rates: "mga rate ng tax"
     rate: "antas"
     tax_rate_amount_explanation: "ang mga rate ng tax ay mga halagang may decimal na makakatulong sa pagkukuwenta, (hal. kung ang rate ng tax ay 5% ang ilalagay ay 0.05)"
     included_in_price: "nakasama sa presyo"
@@ -3318,6 +3319,8 @@ fil_PH:
       invalid: invalid
     order_mailer:
       cancel_email:
+        subject: "Pagkansela ng order"
+      cancel_email_for_shop:
         subject: "Pagkansela ng order"
       confirm_email:
         subject: "Kumpirmasyon ng order"

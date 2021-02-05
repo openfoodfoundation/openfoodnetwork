@@ -2843,6 +2843,7 @@ nl_BE:
     tax rate: "Percentage belasting"
     new_tax_rate: "Nieuwe BTW percentage"
     tax_category: "Belastingcategorie"
+    tax_rates: "Percentage belasting"
     rate: "Percentage"
     tax_rate_amount_explanation: "BTW percentages zijn decimaal om de berekening gemakkelijker te maken, (bv. als de percentage 5% is dan 0.05 invoeren)"
     included_in_price: "In de prijs inbegrepen "
@@ -3322,6 +3323,9 @@ nl_BE:
         unpaid_order: "Uw besteling was niet betaald dus geen terugbetaling werd gedaan"
         paid_order: "Uw besteling was al betaald dus %{distributor}heeft uw de volledige bedrag terugbetaald"
         credit_order: "Uw besteling was al betaald dus werd uw acount gecrediteerd"
+        subject: "Annulering van de bestelling"
+      cancel_email_for_shop:
+        greeting: "Beste %{name}"
         subject: "Annulering van de bestelling"
       confirm_email:
         subject: "Bestellingsinformatie"

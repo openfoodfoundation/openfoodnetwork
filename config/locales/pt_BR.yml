@@ -650,7 +650,7 @@ pt_BR:
         business_details:
           abn: CNPJ
           abn_placeholder: 'ex: 11 987 654 321'
-          acn: CNPJ
+          acn: NIRE
           acn_placeholder: 'ex: 987 654 321'
           display_invoice_logo: Exibir logo nas faturas
           invoice_text: 'Adicionar texto customizado no final das faturas '
@@ -1250,8 +1250,8 @@ pt_BR:
   tax_total: "Total de taxas (%{rate}):"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
-  abn: "CNPJ"
-  acn: "CNPJ:"
+  abn: "CNPJ:"
+  acn: "NIRE:"
   invoice_issued_on: "Fatura emitida em:"
   order_number: "Número da fatura:"
   date_of_transaction: "Dia da transação:"
@@ -1880,7 +1880,7 @@ pt_BR:
         enterprise_long_desc_length: "%{num} caracteres / recomendamos até 600"
         enterprise_abn: "CNPJ"
         enterprise_abn_placeholder: "ex: 11 999 888 777"
-        enterprise_acn: "CNPJ"
+        enterprise_acn: "NIRE"
         enterprise_acn_placeholder: "ex: 987 654 321"
         enterprise_tax_required: "Você precisa fazer uma seleção."
       images:
@@ -2317,6 +2317,8 @@ pt_BR:
   payment_processing_failed: "Não foi possível processar o pagamento. Verifique os detalhes inseridos"
   payment_method_not_supported: "Esse método de pagamento não é suportado. Por favor escolha outro."
   payment_updated: "Pagamento atualizado"
+  cannot_perform_operation: "Não foi possível atualizar o pagamento"
+  action_required: "Ação necessária"
   inventory_settings: "Configurações de inventário"
   tag_rules: "Regras de tag"
   shop_preferences: "Preferências da loja"
@@ -2377,6 +2379,7 @@ pt_BR:
   js:
     saving: 'Salvando...'
     changes_saved: 'Alterações salvas.'
+    authorising: "Autorizando"
     save_changes_first: Salve as alterações primeiro.
     all_changes_saved: Todas as alterações foram salvas
     unsaved_changes: Você possui alterações não salvas
@@ -2588,6 +2591,8 @@ pt_BR:
           processing: "processando"
           void: "vazio"
           invalid: "inváliod"
+        quantity_adjusted: "Estoque insuficiente. O item foi atualizado para a quantidade máxima disponível. "
+        quantity_unchanged: "Quantidade inalterada desde o valor anterior"
       resend_user_email_confirmation:
         resend: "Re-enviar"
         sending: "Reenviar..."
@@ -2962,6 +2967,7 @@ pt_BR:
     tax rate: "Alíquotas da taxas"
     new_tax_rate: "Nova alíquota de taxa"
     tax_category: "Categoria de taxa"
+    tax_rates: "Alíquotas da taxas"
     rate: "Taxa"
     tax_rate_amount_explanation: "As alíquotas são um valor decimal para ajudar nos cálculos (por exemplo, se a alíquota for de 5%, digite 0,05)"
     included_in_price: "Incluído no preço"
@@ -3061,6 +3067,7 @@ pt_BR:
         payment_state: "Estado de pagamento"
     errors:
       messages:
+        included_price_validation: "não pode ser selecionado a menos que você tenha configurado uma Zona Tributária Padrão"
         blank: "Não pode ser vazio"
     layouts:
       admin:
@@ -3271,6 +3278,9 @@ pt_BR:
           deactivation_warning: "Desativar o método de pagamento pode fazer com que ele desapareça da sua lista. Como alternativa, você pode escondê-lo da página de checkout, trocando "
         providers:
           provider: "Provedor"
+          check: "Dinheiro / Transferência Bancária / Maquininha / etc. (pagamentos para os quais é necessária a validação manual)."
+          bogus: "Para Teste"
+          bogussimple: "Para Teste Simples"
       payments:
         source_forms:
           stripe:
@@ -3452,6 +3462,9 @@ pt_BR:
         paid_order: "Seu pedido foi pago, então %{distributor}devolveu o valor total"
         credit_order: "Seu pedido foi pago, então você ganhou créditos na sua conta"
         subject: "Cancelamento do Pedido"
+      cancel_email_for_shop:
+        greeting: "Querid@ %{name},"
+        subject: "Cancelamento do Pedido"
       confirm_email:
         subject: "Confimação de Pedido"
       invoice_email:
@@ -3470,6 +3483,9 @@ pt_BR:
         subject: "Instruções para redefinição de senha"
       confirmation_instructions:
         subject: "Confirme sua conta na OFB"
+    payment_mailer:
+      authorize_payment:
+        subject: "Favor autorizar seu pagamento para %{distributor}na OFB"
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"
