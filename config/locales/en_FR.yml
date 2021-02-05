@@ -2951,6 +2951,7 @@ en_FR:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
+    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3277,7 +3278,6 @@ en_FR:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (old version)"
