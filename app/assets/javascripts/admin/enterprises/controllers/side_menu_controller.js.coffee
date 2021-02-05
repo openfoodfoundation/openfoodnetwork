@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "sideMenuCtrl", ($scope, $parse, enterprise, SideMenu, enterprisePermissions) ->
+  .controller "sideMenuCtrl", ($scope, $parse, enterprise, SideMenu, enterprisePermissions, $rootScope, $location) ->
     $scope.Enterprise = enterprise
     $scope.menu = SideMenu
     $scope.select = SideMenu.select
@@ -23,6 +23,9 @@ angular.module("admin.enterprises")
     ]
 
     SideMenu.init()
+
+    $rootScope.$on "$locationChangeSuccess", ->
+      SideMenu.locationDidChange($location.path()?.match(/^\/\w+$/)?[0])
 
     $scope.showItem = (item) ->
       if item.show?
