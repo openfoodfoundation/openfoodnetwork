@@ -194,6 +194,7 @@ FactoryBot.define do
 
       order.reload
       while !order.completed? do break unless order.next! end
+      order.reload
     end
   end
 end
