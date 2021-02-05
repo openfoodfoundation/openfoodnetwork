@@ -42,3 +42,19 @@ describe "SortOptions service", ->
         SortOptions.toggle("column.b")
         expect(SortOptions.predicate).toEqual "column.b"
         expect(SortOptions.reverse).toBe false
+
+    describe "getting the sorting expression", ->
+      describe "when not specifying the default sort direction", ->
+        it "sets the direction to 'asc' after the first toggle because the default direction is 'desc'", ->
+          SortOptions.toggle("column.a")
+          expect(SortOptions.getSortingExpr()).toEqual "column.a asc"
+
+      describe "when specifying the default sorting direction as 'desc'", ->
+        it "sets the direction to 'asc' after the first toggle", ->
+          SortOptions.toggle("column.a")
+          expect(SortOptions.getSortingExpr(defaultDirection: "desc")).toEqual "column.a asc"
+
+      describe "when specifying the default sorting direction as 'asc'", ->
+        it "sets the direction to 'desc' after the first toggle", ->
+          SortOptions.toggle("column.a")
+          expect(SortOptions.getSortingExpr(defaultDirection: "asc")).toEqual "column.a desc"
