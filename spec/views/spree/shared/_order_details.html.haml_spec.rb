@@ -17,7 +17,7 @@ describe "spree/shared/_order_details.html.haml" do
   end
 
   it "shows how the order is paid for" do
-    order.payments.first.payment_method.name = "Bartering"
+    order.payments.first.payment_method.update(name: "Bartering")
 
     render
 
@@ -25,7 +25,7 @@ describe "spree/shared/_order_details.html.haml" do
   end
 
   it "displays payment methods safely" do
-    order.payments.first.payment_method.name = "Bar<script>evil</script>ter&rarr;ing"
+    order.payments.first.payment_method.update(name: "Bar<script>evil</script>ter&rarr;ing")
 
     render
 
