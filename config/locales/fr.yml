@@ -2980,6 +2980,7 @@ fr:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
+    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"
@@ -3306,7 +3307,6 @@ fr:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres "
-          migs: "MasterCard Internet Gateway Service (MIGS)"
           pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (ancienne version)"
