@@ -34,9 +34,6 @@
     .field
       = f.label :price, t('.price')
       = f.text_field :price, value: number_to_currency(@variant.price, unit: ''), class: 'fullwidth'
-    .field
-      = f.label :cost_price, t('.cost_price')
-      = f.text_field :cost_price, value: number_to_currency(@variant.cost_price, unit: ''), class: 'fullwidth'
 
     %div{ 'set-on-demand' => '' }
       .field.checkbox
