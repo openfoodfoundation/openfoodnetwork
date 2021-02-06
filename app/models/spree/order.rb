@@ -224,7 +224,7 @@ module Spree
     end
 
     def backordered?
-      shipment&.backordered?
+      shipment&.backordered? || false
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
@@ -583,7 +583,7 @@ module Spree
 
     # Does this order have shipments that can be shipped?
     def ready_to_ship?
-      shipment&.can_ship?
+      shipment&.can_ship? || false
     end
 
     # Ship all pending orders
@@ -613,7 +613,7 @@ module Spree
       package = OrderManagement::Stock::Coordinator.new(self).package
       shipments << package.to_shipment
 
-      shipments
+      shipments #
     end
 
     # Clean shipments and make order back to address state
