@@ -13,7 +13,7 @@ module OrderManagement
 
       def prioritized_package
         adjust_package
-        return if package.empty?
+        return if package.blank?
 
         package
       end
