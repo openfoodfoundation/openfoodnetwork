@@ -3,7 +3,7 @@
 module OrderManagement
   module Stock
     class Prioritizer
-      attr_reader :packages, :order
+      attr_reader :package, :order
 
       def initialize(order, package, adjuster_class = OrderManagement::Stock::Adjuster)
         @order = order

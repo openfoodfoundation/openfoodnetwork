@@ -28,7 +28,7 @@ module OrderManagement
       private
 
       def prioritize_package(package)
-        prioritizer = OrderManagement::Stock::Prioritizer.new(order, packages)
+        prioritizer = OrderManagement::Stock::Prioritizer.new(order, package)
         prioritizer.prioritized_package
       end
 
