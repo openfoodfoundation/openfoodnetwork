@@ -13,6 +13,8 @@ module Calculator
       case computable
       when Spree::Order
         compute_order(computable)
+      when Spree::Shipment
+        compute_shipment(computable)
       when Spree::LineItem
         compute_line_item(computable)
       end
