@@ -460,5 +460,65 @@ module Spree
     context "extends LocalizedNumber" do
       it_behaves_like "a model using the LocalizedNumber module", [:amount]
     end
+
+    describe "inclusive and additional taxes" do
+      let!(:zone) { create(:zone_with_member) }
+      let!(:tax_category) { create(:tax_category, name: "Tax Test") }
+      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
+      let(:order) { create(:order, distributor: distributor) }
+      let(:included_in_price) { true }
+      let(:tax_rate) {
+        create(:tax_rate, included_in_price: included_in_price, zone: zone,
+                          calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1))
+      }
+      let(:product) { create(:product, tax_category: tax_category) }
+      let(:variant) { product.variants.first }
+
+      describe "tax adjustment creation" do
+        before do
+          tax_category.tax_rates << tax_rate
+          allow(order).to receive(:tax_zone) { zone }
+          order.line_items << create(:line_item, variant: variant, quantity: 5)
+        end
+
+        context "with included taxes" do
+          it "records the tax as included" do
+            expect(order.all_adjustments.tax.count).to eq 1
+            expect(order.all_adjustments.tax.first.included).to be true
+          end
+        end
+
+        context "with additional taxes" do
+          let(:included_in_price) { false }
+
+          it "records the tax as additional" do
+            expect(order.all_adjustments.tax.count).to eq 1
+            expect(order.all_adjustments.tax.first.included).to be false
+          end
+        end
+      end
+
+      describe "inclusive and additional scopes" do
+        let(:included) { true }
+        let(:adjustment) {
+          create(:adjustment, adjustable: order, source: order,
+                 originator: tax_rate, included: included)
+        }
+
+        context "when tax is included in price" do
+          it "is returned by the #included scope" do
+            expect(Spree::Adjustment.inclusive).to eq [adjustment]
+          end
+        end
+
+        context "when tax is additional to the price" do
+          let(:included) { false }
+
+          it "is returned by the #additional scope" do
+            expect(Spree::Adjustment.additional).to eq [adjustment]
+          end
+        end
+      end
+    end
   end
 end

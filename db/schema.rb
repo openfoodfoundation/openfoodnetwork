@@ -386,16 +386,17 @@ ActiveRecord::Schema.define(version: 20210203215049) do
     t.string   "label",           limit: 255
     t.string   "source_type",     limit: 255
     t.integer  "adjustable_id"
-    t.datetime "created_at",                                                          null: false
-    t.datetime "updated_at",                                                          null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.boolean  "mandatory"
     t.integer  "originator_id"
     t.string   "originator_type", limit: 255
     t.boolean  "eligible",                                             default: true
     t.string   "adjustable_type", limit: 255
-    t.decimal  "included_tax",                precision: 10, scale: 2, default: 0.0,  null: false
+    t.decimal  "included_tax",                precision: 10, scale: 2, default: 0.0,   null: false
     t.string   "state",           limit: 255
     t.integer  "order_id"
+    t.boolean  "included",                                             default: false
   end
 
   add_index "spree_adjustments", ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
