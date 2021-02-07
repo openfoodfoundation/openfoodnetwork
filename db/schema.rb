@@ -780,6 +780,7 @@ ActiveRecord::Schema.define(version: 20210320003951) do
     t.integer  "stock_location_id"
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: "0.0", null: false
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: "0.0", null: false
     t.index ["number"], name: "index_shipments_on_number", using: :btree
     t.index ["order_id"], name: "index_spree_shipments_on_order_id", unique: true, using: :btree
   end
