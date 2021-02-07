@@ -10,11 +10,15 @@ module Spree
     has_one :enterprise, dependent: :restrict_with_exception
     has_many :shipments
 
+    before_validation :geocode, if: :use_geocoder?
+
     validates :firstname, :lastname, :address1, :city, :country, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate
+
+    attr_accessor :use_geocoder
 
     after_save :touch_enterprise
 
@@ -106,6 +110,10 @@ module Spree
     end
 
     private
+
+    def use_geocoder?
+      @use_geocoder == true || @use_geocoder == 'true' || @use_geocoder == '1'
+    end
 
     def require_phone?
       true
