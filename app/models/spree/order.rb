@@ -38,6 +38,8 @@ module Spree
     belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
     alias_attribute :shipping_address, :ship_address
 
+    alias_attribute :ship_total, :shipment_total
+
     has_many :state_changes, as: :stateful
     has_many :line_items, -> { order('created_at ASC') }, dependent: :destroy
     has_many :payments, dependent: :destroy
@@ -67,7 +69,7 @@ module Spree
     accepts_nested_attributes_for :payments
     accepts_nested_attributes_for :shipments
 
-    delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
+    delegate :admin_and_handling_total, :payment_fee, to: :adjustments_fetcher
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
@@ -389,10 +391,6 @@ module Spree
 
     def find_line_item_by_variant(variant)
       line_items.detect { |line_item| line_item.variant_id == variant.id }
-    end
-
-    def ship_total
-      adjustments.shipping.sum(:amount)
     end
 
     def tax_total
