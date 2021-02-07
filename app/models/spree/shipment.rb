@@ -170,7 +170,7 @@ module Spree
       self.update_columns(
         cost: selected_shipping_rate.cost,
         adjustment_total: adjustments.additional.map(&:update!).compact.sum,
-        updated_at: Time.now,
+        updated_at: Time.zone.now
       )
     end
 
