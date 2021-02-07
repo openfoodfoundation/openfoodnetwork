@@ -61,8 +61,7 @@ module OrderManagement
         order.adjustment_total = adjustments.eligible.sum(:amount)
         order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
         order.included_tax_total = order.line_item_adjustments.tax.sum(:included_tax) +
-                                   all_adjustments.enterprise_fee.sum(:included_tax) +
-                                   adjustments.shipping.sum(:included_tax)
+                                   all_adjustments.enterprise_fee.sum(:included_tax)
       end
 
       def update_shipment_total
