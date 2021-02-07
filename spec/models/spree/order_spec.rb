@@ -137,6 +137,20 @@ describe Spree::Order do
     end
   end
 
+  context "creates shipments cost" do
+    let(:shipment) { double }
+
+    before { allow(order).to receive(:shipments) { [shipment] } }
+
+    it "update and persist totals" do
+      expect(shipment).to receive :update_amounts
+      expect(order.updater).to receive :update_shipment_total
+      expect(order.updater).to receive :persist_totals
+
+      order.set_shipments_cost
+    end
+  end
+
   context "#finalize!" do
     let(:order) { Spree::Order.create }
     it "should set completed_at" do
@@ -1317,10 +1331,8 @@ describe Spree::Order do
   end
 
   describe '#charge_shipping_and_payment_fees!' do
-    let(:order) do
-      shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
-      build(:order, shipments: [shipment] )
-    end
+    let(:shipment) { build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method)) }
+    let(:order) { create(:order, shipments: [shipment]) }
 
     context 'after transitioning to payment' do
       before do
@@ -1329,9 +1341,8 @@ describe Spree::Order do
         allow(order).to receive(:payment_required?) { true }
       end
 
-      it 'calls charge_shipping_and_payment_fees! and updates totals' do
+      it 'calls charge_shipping_and_payment_fees!' do
         expect(order).to receive(:charge_shipping_and_payment_fees!)
-        expect(order).to receive(:update_totals).at_least(:once)
 
         order.next
       end
