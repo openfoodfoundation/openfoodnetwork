@@ -816,12 +816,12 @@ ActiveRecord::Schema.define(version: 20210203215049) do
   create_table "spree_shipments", force: :cascade do |t|
     t.string   "tracking",          limit: 255
     t.string   "number",            limit: 255
-    t.decimal  "cost",                          precision: 8, scale: 2
+    t.decimal  "cost",                          precision: 8, scale: 2, default: 0.0, null: false
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
     t.string   "state",             limit: 255
     t.integer  "stock_location_id"
   end
@@ -855,6 +855,7 @@ ActiveRecord::Schema.define(version: 20210203215049) do
     t.boolean  "require_ship_address",             default: true
     t.text     "description"
     t.string   "tracking_url",         limit: 255
+    t.integer  "tax_category_id"
   end
 
   create_table "spree_shipping_methods_zones", id: false, force: :cascade do |t|
