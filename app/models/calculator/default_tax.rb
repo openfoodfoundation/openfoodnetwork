@@ -33,6 +33,7 @@ module Calculator
 
       [
         line_items_total(order),
+        shipments_total(order),
         per_item_fees_total(order, calculator),
         per_order_fees_total(order, calculator)
       ].sum do |total|
@@ -46,6 +47,12 @@ module Calculator
       end
 
       matched_line_items.sum(&:total)
+    end
+
+    def shipments_total(order)
+      order.shipments.select do |shipment|
+        shipment.tax_category == rate.tax_category
+      end.sum(&:cost)
     end
 
     # Finds relevant fees for each line_item,
