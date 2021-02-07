@@ -375,7 +375,7 @@ describe Spree::Shipment do
     end
   end
 
-  context "create adjustments" do
+  context "updates cost when selected shipping rate is present" do
     let(:shipment) { create(:shipment) }
 
     before { allow(shipment).to receive_message_chain :selected_shipping_rate, cost: 5 }
@@ -383,6 +383,28 @@ describe Spree::Shipment do
     it "updates shipment totals" do
       shipment.update_amounts
       expect(shipment.reload.cost).to eq 5
+    end
+
+    it "factors in additional adjustments to adjustment total" do
+      shipment.adjustments.create!({
+                                     label: "Additional",
+                                     amount: 5,
+                                     included: false,
+                                     state: "closed"
+                                   })
+      shipment.update_amounts
+      expect(shipment.reload.adjustment_total).to eq 5
+    end
+
+    it "does not factor in included adjustments to adjustment total" do
+      shipment.adjustments.create!({
+                                     label: "Included",
+                                     amount: 5,
+                                     included: true,
+                                     state: "closed"
+                                   })
+      shipment.update_amounts
+      expect(shipment.reload.adjustment_total).to eq 0
     end
   end
 
