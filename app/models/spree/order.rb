@@ -719,7 +719,9 @@ module Spree
     end
 
     def shipping_tax
-      adjustments(:reload).shipping.sum(:included_tax)
+      return 0 unless shipment
+
+      shipment.adjustments.tax.sum(:amount)
     end
 
     def enterprise_fee_tax
