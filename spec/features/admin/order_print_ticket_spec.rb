@@ -19,7 +19,6 @@ feature '
                                 product_price: 110, tax_rate_amount: 0.1,
                                 tax_rate_name: "Tax 1").tap do |record|
                                   Spree::TaxRate.adjust(record)
-                                  record.update_shipping_fees!
                                 end
     end
 

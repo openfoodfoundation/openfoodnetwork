@@ -94,7 +94,6 @@ module Spree
 
     make_permalink field: :number
 
-    before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
     # -- Scopes
@@ -622,16 +621,6 @@ module Spree
       return unless using_guest_checkout? && registered_email?
 
       errors.add(:base, I18n.t('devise.failure.already_registered'))
-    end
-
-    # After changing line items of a completed order
-    def update_shipping_fees!
-      shipments.each do |shipment|
-        next if shipment.shipped?
-
-        update_adjustment! shipment.adjustment if shipment.adjustment
-        save_or_rescue_shipment(shipment)
-      end
     end
 
     def save_or_rescue_shipment(shipment)
