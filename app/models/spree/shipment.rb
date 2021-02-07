@@ -15,7 +15,7 @@ module Spree
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
     before_create :generate_shipment_number
-    after_save :ensure_correct_adjustment, :update_order
+    after_save :ensure_correct_adjustment, :update_adjustments
 
     attr_accessor :special_instructions
     alias_attribute :amount, :cost
@@ -344,8 +344,14 @@ module Spree
       end
     end
 
-    def update_order
-      order.reload.update!
+    def update_adjustments
+      return unless cost_changed? && state != 'shipped'
+
+      recalculate_adjustments
+    end
+
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
     end
   end
 end
