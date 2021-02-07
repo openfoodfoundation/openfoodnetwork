@@ -807,6 +807,7 @@ ActiveRecord::Schema.define(version: 20210320003951) do
     t.boolean  "require_ship_address",             default: true
     t.text     "description"
     t.string   "tracking_url",         limit: 255
+    t.integer  "tax_category_id"
   end
 
   create_table "spree_shipping_methods_zones", id: false, force: :cascade do |t|
