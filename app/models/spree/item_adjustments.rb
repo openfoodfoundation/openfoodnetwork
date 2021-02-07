@@ -17,9 +17,16 @@ module Spree
     end
 
     def update_adjustments
-      adjustment_total = adjustments.map(&:update!).compact.sum
+      tax_adjustments =
+        (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
+
+      adjustment_total = adjustments.additional.map(&:update!).compact.sum
+      included_tax_total = tax_adjustments.inclusive.reload.map(&:update!).compact.sum
+      additional_tax_total = tax_adjustments.additional.reload.map(&:update!).compact.sum
 
       item.update_columns(
+        included_tax_total: included_tax_total,
+        additional_tax_total: additional_tax_total,
         adjustment_total: adjustment_total,
         updated_at: Time.zone.now
       )
