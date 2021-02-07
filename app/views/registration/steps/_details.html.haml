@@ -7,7 +7,6 @@
           %h2= t('.headline')
           %h5{ ng: { if: "::enterprise.type != 'own'" } }= t(".enterprise")
           %h5{ ng: { if: "::enterprise.type == 'own'" } }= t(".producer")
-
     %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('contact',details)" } }
 
       .row
@@ -57,8 +56,25 @@
                 %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { init: "setDefaultCountry(#{Spree::Config[:default_country_id]})", model: 'enterprise.country', options: 'c as c.name for c in countries' } }
                 %span.error{ ng: { show: "details.country.$error.required && submitted" } }
                   = t(".country_field_error")
-
+      %div{ ng: {if: "enableMapConfirm"}}
+        .center{ ng: {if: "latLong"}} 
+          %strong {{'registration.steps.details.drag_pin' | t}}
+        .small-12.medium-9.large-12.columns.end
+          .map-container--registration{id: "registration-map", ng: {if: "!!map"}}
+            %ui-gmap-google-map{ center: "map.center", zoom: "map.zoom"}
+              %ui-gmap-marker{idKey: 1, coords: "latLong", options: '{ draggable: true}'}
+            
+        .center
+          %input.button.primary{ type: "button", value: "{{'registration.steps.details.locate_address' | t}}", ng: { click: "locateAddress()" } }
+        .center{ ng: {if: "latLong"}} 
+          .field
+            %input{ type: 'checkbox', id: 'confirm_address', name: 'confirm_address', ng: { model: 'addressConfirmed', change: 'confirmAddressChange(confirmAddress)'} }
+            %label{ for: 'confirm_address' } {{'registration.steps.details.confirm_address' | t}}
+        .small-12.medium-9.large-12.columns.end{ ng: {if: "latLong"}} 
+          .field
+            %strong {{'registration.steps.details.drag_map_marker' | t}}
       .row.buttons
         .small-12.columns
           %hr
           %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }
+          

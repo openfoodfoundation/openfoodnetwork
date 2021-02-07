@@ -167,6 +167,26 @@
       height: 166px;
     }
   }
+
+  .map-container--registration {
+    width: 100%;
+    height: 244px;
+    margin-bottom: 1em;
+
+    map, .angular-google-map-container, google-map, .angular-google-map {
+      display: block;
+      height: 220px;
+      width: 100%;
+    }
+  }
+
+  .center {
+    justify-content: center;
+  }
+
+  .button.primary {
+    border-radius: 0;
+  }
 }
 
 #registration-type {
