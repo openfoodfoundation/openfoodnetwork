@@ -300,6 +300,12 @@ module Spree
       inventory_units.each(&:ship!)
       send_shipped_email
       touch :shipped_at
+      update_order_shipment_state
+    end
+
+    def update_order_shipment_state
+      new_state = OrderManagement::Order::Updater.new(order).update_shipment_state
+      order.update_column(:shipment_state, new_state)
     end
 
     def send_shipped_email
