@@ -13,6 +13,8 @@ module Calculator
       case computable
       when Spree::Order
         compute_order(computable)
+      when Spree::Shipment
+        compute_shipment(computable)
       when Spree::LineItem
         compute_line_item(computable)
       end
@@ -70,17 +72,19 @@ module Calculator
         .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
     end
 
-    def compute_line_item(line_item)
-      if line_item.tax_category == rate.tax_category
+    def compute_shipment_or_line_item(item)
+      if item.tax_category == rate.tax_category
         if rate.included_in_price
-          deduced_total_by_rate(line_item.total, rate)
+          deduced_total_by_rate(item.amount, rate)
         else
-          round_to_two_places(line_item.total * rate.amount)
+          round_to_two_places(item.amount * rate.amount)
         end
       else
         0
       end
     end
+    alias_method :compute_shipment, :compute_shipment_or_line_item
+    alias_method :compute_line_item, :compute_shipment_or_line_item
 
     def round_to_two_places(amount)
       BigDecimal(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
