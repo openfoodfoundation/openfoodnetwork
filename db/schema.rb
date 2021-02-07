@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210207151520) do
+ActiveRecord::Schema.define(version: 20210207161801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -576,6 +576,7 @@ ActiveRecord::Schema.define(version: 20210207151520) do
     t.integer  "created_by_id"
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "shipment_total",                   precision: 10, scale: 2, default: 0.0, null: false
   end
 
   add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx", using: :btree
