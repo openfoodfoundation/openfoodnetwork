@@ -718,7 +718,8 @@ module Spree
     end
 
     def total_tax
-      (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
+      all_adjustments.tax.sum(:amount) +
+        all_adjustments.enterprise_fee.sum(:included_tax)
     end
 
     def price_adjustment_totals

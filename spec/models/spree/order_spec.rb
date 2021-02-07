@@ -728,29 +728,20 @@ describe Spree::Order do
   end
 
   describe "getting the total tax" do
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
-    end
-
     let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
     end
+    let(:tax_rate) { create(:tax_rate, amount: 0.25, calculator: build(:calculator) ) }
+    let!(:shipment_tax) {
+      create(:adjustment, order: order, adjustable: shipment, amount: 10, originator: tax_rate )
+    }
     let(:enterprise_fee) { create(:enterprise_fee) }
-
-    before do
-      create(
-        :adjustment,
-        adjustable: order,
-        originator: enterprise_fee,
-        label: "EF",
-        amount: 123,
-        included_tax: 2
-      )
-      order.reload
-    end
+    let!(:fee_adjustment) {
+      create(:adjustment, order: order, adjustable: order, originator: enterprise_fee,
+             amount: 123, included_tax: 2)
+    }
 
     it "returns a sum of all tax on the order" do
       # 12 = 2 (of the enterprise fee adjustment) + 10 (of the shipment adjustment)
