@@ -174,12 +174,6 @@ describe Spree::Shipment do
     end
   end
 
-  it '#total_cost' do
-    allow(shipment).to receive_messages cost: 5.0
-    allow(shipment).to receive_messages item_cost: 50.0
-    expect(shipment.total_cost).to eql(55.0)
-  end
-
   context "#update!" do
     shared_examples_for "immutable once shipped" do
       it "should remain in shipped state once shipped" do

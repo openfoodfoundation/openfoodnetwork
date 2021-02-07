@@ -164,10 +164,6 @@ module Spree
       Spree::Money.new(item_cost, currency: currency)
     end
 
-    def total_cost
-      cost + item_cost
-    end
-
     def editable_by?(_user)
       !shipped?
     end
