@@ -79,6 +79,7 @@ module Spree
 
       def load_data
         @available_zones = Zone.order(:name)
+        @tax_categories = Spree::TaxCategory.order(:name)
         @calculators = ShippingMethod.calculators.sort_by(&:name)
       end
 

@@ -104,6 +104,10 @@ module Spree
       save!
     end
 
+    def tax_category
+      selected_shipping_rate.try(:shipping_method).try(:tax_category)
+    end
+
     def refresh_rates
       return shipping_rates if shipped?
 
