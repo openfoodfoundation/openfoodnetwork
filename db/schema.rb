@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210207131247) do
+ActiveRecord::Schema.define(version: 20210207151520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -826,6 +826,7 @@ ActiveRecord::Schema.define(version: 20210207131247) do
     t.integer  "stock_location_id"
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: 0.0, null: false
   end
 
   add_index "spree_shipments", ["number"], name: "index_shipments_on_number", using: :btree
