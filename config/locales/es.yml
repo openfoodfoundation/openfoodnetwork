@@ -117,6 +117,8 @@ es:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluido en el precio"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
