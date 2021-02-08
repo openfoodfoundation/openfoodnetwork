@@ -1,8 +1,6 @@
 class MigrateVariantUnitValues < ActiveRecord::Migration
   def up
-    Spree::Variant.where(product_id: nil).find_each do |variant|
-      variant.destroy
-    end
+    Spree::Variant.where(product_id: nil).destroy_all
     Spree::Variant.where(unit_value: [nil, Float::NAN]).find_each do |variant|
       variant.unit_value = 1
       variant.save
