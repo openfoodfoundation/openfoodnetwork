@@ -51,7 +51,7 @@ module Spree
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
 
-    has_many :shipments, dependent: :destroy do
+    has_many :shipments, inverse_of: :order, dependent: :destroy do
       def states
         pluck(:state).uniq
       end
