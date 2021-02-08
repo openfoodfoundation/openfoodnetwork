@@ -312,14 +312,6 @@ module Spree
       ShipmentMailer.shipped_email(id).deliver_later
     end
 
-    def update_adjustment_included_tax
-      if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
-        adjustment.set_included_tax! Config.shipping_tax_rate
-      else
-        adjustment.set_included_tax! 0
-      end
-    end
-
     def update_adjustments
       return unless cost_changed? && state != 'shipped'
 
