@@ -46,6 +46,9 @@ FactoryBot.define do
             shipment.inventory_units.create(variant_id: line_item.variant_id)
           }
         end
+        cost = shipment.shipping_method.calculator.compute(shipment.to_package)
+        shipment.selected_shipping_rate.update(cost: cost)
+        shipment.update(cost: cost)
       end
     end
   end
