@@ -26,6 +26,14 @@ module OpenFoodNetwork
           expect(subject.orders).to eq([o2])
         end
 
+        it 'orders them by id' do
+          result = instance_double(ActiveRecord::Relation)
+          allow_any_instance_of(Ransack::Search).to receive(:result).and_return(result)
+          expect(result).to receive(:order).with(:id) { Spree::Order.none }
+
+          subject.orders
+        end
+
         context "default date range" do
           it "fetches orders completed in the past month" do
             o1 = create(:order, completed_at: 1.month.ago - 1.day)

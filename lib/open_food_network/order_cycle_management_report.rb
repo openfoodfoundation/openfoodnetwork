@@ -48,7 +48,7 @@ module OpenFoodNetwork
     end
 
     def orders
-      filter search.result
+      filter(search.result.order(:id))
     end
 
     def table_items
