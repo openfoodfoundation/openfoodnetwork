@@ -232,63 +232,131 @@ module Spree
         let(:line_item)       { create(:line_item, order: order) }
 
         let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
-        let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+        let(:shipment)        {
+          create(:shipment_with, :shipping_method,
+                 shipping_method: shipping_method,
+                 order: order)
+        }
 
         describe "the shipping charge" do
-          it "is the adjustment amount" do
+          it "is recorded in the shipment cost and order shipment_total" do
             order.shipments = [shipment]
-            expect(order.adjustments.first.amount).to eq(50)
+            order.update_totals
+
+            expect(shipment.cost).to eq(50)
+            expect(order.shipment_total).to eq(50)
           end
         end
 
-        describe "when tax on shipping is disabled" do
+        context "with tax" do
+          let(:zone) { create(:zone_with_member) }
+          let(:inclusive_tax) { true }
+          let(:tax_rate) {
+            create(:tax_rate, included_in_price: inclusive_tax, zone: zone, amount: 0.25)
+          }
+          let(:tax_category) { create(:tax_category, name: "Shipping", tax_rates: [tax_rate] ) }
+          let(:shipping_method) { create(:shipping_method_with, :flat_rate, tax_category: tax_category) }
+
           before do
-            allow(Config).to receive(:shipment_inc_vat).and_return(false)
+            allow(order).to receive(:tax_zone) { zone }
           end
 
-          it "records 0% tax on shipment adjustments" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0)
-            order.shipments = [shipment]
+          context "when the shipment has an inclusive tax rate" do
+            before do
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update!
+            end
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            it "calculates the shipment tax from the tax rate" do
+              # Finding the tax included in an amount that's already inclusive of tax:
+              # total - ( total / (1 + rate) )
+              # 50    - ( 50    / (1 + 0.25) )
+              # = 10
+              expect(order.shipment_adjustments.first.amount).to eq(10)
+              expect(order.shipment_adjustments.first.included).to eq true
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(10)
+              expect(shipment.additional_tax_total).to eq(0)
+
+              expect(order.shipment_total).to eq(50)
+              expect(order.included_tax_total).to eq(10)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
 
-          it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has an added tax rate" do
+            let(:inclusive_tax) { false }
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            before do
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
+            end
+
+            # Pending: this is how it will work once we have granular tax adjustments on
+            # line items and shipments for instances that use additional tax.
+            xit "calculates the shipment tax from the tax rate" do
+              # Finding the added tax for an amount:
+              # total * rate
+              # 50    * 0.25
+              # = 12.5
+              expect(order.shipment_adjustments.first.amount).to eq(12.50)
+              expect(order.shipment_adjustments.first.included).to eq false
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(12.50)
+
+              expect(order.shipment_total).to eq(50)
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(12.50)
+            end
+
+            it "includes shipping tax in the order's taxes" do
+              expect(order.adjustments.tax.first.amount).to eq 12.50
+            end
           end
-        end
 
-        describe "when tax on shipping is enabled" do
-          before do
-            allow(Config).to receive(:shipment_inc_vat).and_return(true)
+          context "when the distributor does not charge sales tax" do
+            before do
+              order.distributor.update! charges_sales_tax: false
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
+            end
+
+            it "records 0% tax on shipments" do
+              expect(order.shipment_adjustments.count).to be_zero
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(0)
+
+              expect(order.shipment_total).to eq(50)
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
 
-          it "takes the shipment adjustment tax included from the system setting" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has no applicable tax rate" do
+            it "records 0% tax on shipments" do
+              allow(shipment).to receive(:tax_category) { nil }
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
 
-            # Finding the tax included in an amount that's already inclusive of tax:
-            # total - ( total / (1 + rate) )
-            # 50    - ( 50    / (1 + 0.25) )
-            # = 10
-            expect(order.adjustments.first.included_tax).to eq(10.00)
-          end
+              expect(order.shipment_adjustments.count).to be_zero
 
-          it "records 0% tax on shipments when shipping_tax_rate is not set" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0)
-            order.shipments = [shipment]
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(0)
 
-            expect(order.adjustments.first.included_tax).to eq(0)
-          end
-
-          it "records 0% tax on shipments when the distributor does not charge sales tax" do
-            order.distributor.update! charges_sales_tax: false
-            order.shipments = [shipment]
-
-            expect(order.adjustments.first.included_tax).to eq(0)
+              expect(order.shipment_total).to eq(50)
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
         end
       end
