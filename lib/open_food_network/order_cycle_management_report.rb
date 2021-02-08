@@ -47,8 +47,8 @@ module OpenFoodNetwork
 
     def search
       Spree::Order.
-        complete.
-        where("spree_orders.state != ?", :canceled).
+        finalized.
+        where.not(spree_orders: { state: :canceled }).
         distributed_by_user(@user).
         managed_by(@user).
         search(params[:q])

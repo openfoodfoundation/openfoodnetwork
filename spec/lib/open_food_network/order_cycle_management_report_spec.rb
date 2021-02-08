@@ -18,13 +18,25 @@ module OpenFoodNetwork
       describe "fetching orders" do
         it "fetches completed orders" do
           o1 = create(:order)
-          o2 = create(:order, completed_at: 1.day.ago)
+          o2 = create(:order, completed_at: 1.day.ago, state: 'complete')
           expect(subject.orders).to eq([o2])
         end
 
+        it 'fetches resumed orders' do
+          order = create(:order, state: 'resumed', completed_at: 1.day.ago)
+          expect(subject.orders).to eq([order])
+        end
+
+        it 'calls OutstandingBalance query object' do
+          outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
+          expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+
+          subject.orders
+        end
+
         it "does not show cancelled orders" do
-          o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
-          o2 = create(:order, completed_at: 1.day.ago)
+          o1 = create(:order, state: 'canceled', completed_at: 1.day.ago)
+          o2 = create(:order, state: 'complete', completed_at: 1.day.ago)
           expect(subject.orders).to eq([o2])
         end
 
@@ -38,8 +50,8 @@ module OpenFoodNetwork
 
         context "default date range" do
           it "fetches orders completed in the past month" do
-            o1 = create(:order, completed_at: 1.month.ago - 1.day)
-            o2 = create(:order, completed_at: 1.month.ago + 1.day)
+            o1 = create(:order, state: 'complete', completed_at: 1.month.ago - 1.day)
+            o2 = create(:order, state: 'complete', completed_at: 1.month.ago + 1.day)
             expect(subject.orders).to eq([o2])
           end
         end
@@ -62,8 +74,8 @@ module OpenFoodNetwork
           d2 = create(:distributor_enterprise)
           d2.enterprise_roles.create!(user: create(:user))
 
-          o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
-          o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
+          o1 = create(:order, distributor: d1, state: 'complete', completed_at: 1.day.ago)
+          o2 = create(:order, distributor: d2, state: 'complete', completed_at: 1.day.ago)
 
           expect(subject).to receive(:filter).with([o1]).and_return([o1])
           expect(subject.orders).to eq([o1])
