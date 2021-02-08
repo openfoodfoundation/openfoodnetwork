@@ -112,10 +112,13 @@ module Spree
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil)
-      return if immutable?
+      amount = self.amount
+      return amount if immutable?
 
       originator.update_adjustment(self, calculable || source) if originator.present?
       set_eligibility
+
+      amount
     end
 
     def currency
