@@ -46,11 +46,21 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.where("spree_orders.state != ?", :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
+      Spree::Order.
+        complete.
+        where("spree_orders.state != ?", :canceled).
+        distributed_by_user(@user).
+        managed_by(@user).
+        search(params[:q])
     end
 
     def orders
-      filter(search.result.order(:id))
+      search_result = search.result.order(:id)
+      orders_with_balance = OutstandingBalance.new(search_result).
+        query.
+        select('spree_orders.*')
+
+      filter(orders_with_balance)
     end
 
     def table_items
@@ -80,7 +90,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance]
+       order.balance_value]
     end
 
     def delivery_row(order)
@@ -95,7 +105,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance,
+       order.balance_value,
        has_temperature_controlled_items?(order),
        order.special_instructions]
     end

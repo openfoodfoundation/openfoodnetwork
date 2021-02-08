@@ -142,7 +142,15 @@ module OpenFoodNetwork
         context 'when the report type is payment_methods' do
           let(:params) { { report_type: 'payment_methods' } }
 
-          let!(:order) { create(:order, distributor: distributor, completed_at: 1.day.ago) }
+          let!(:order) do
+            create(
+              :order,
+              distributor: distributor,
+              completed_at: 1.day.ago,
+              state: 'complete',
+              total: 10.0
+            )
+          end
 
           it 'returns rows with payment information' do
             expect(subject.table_items).to eq([[
@@ -155,7 +163,7 @@ module OpenFoodNetwork
               nil,
               nil,
               nil,
-              -0.0
+              -10.0
             ]])
           end
         end
@@ -167,10 +175,18 @@ module OpenFoodNetwork
           let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
           let!(:order) do
-            create(:order, distributor: distributor, completed_at: 1.day.ago, shipments: [shipment])
+            create(
+              :order,
+              distributor: distributor,
+              completed_at: 1.day.ago,
+              shipments: [shipment]
+            )
           end
 
           before do
+            line_item = create(:line_item, order: order, price: 10.0, quantity: 1)
+
+            order.state = 'complete'
             order.ship_address = order.address_from_distributor
             order.save!
           end
@@ -180,14 +196,14 @@ module OpenFoodNetwork
               order.ship_address.firstname,
               order.ship_address.lastname,
               order.distributor.name,
-              '',
+              nil,
               "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
               order.ship_address.zipcode,
               order.ship_address.phone,
               shipping_method.name,
               nil,
               nil,
-              -0.0,
+              -10.0,
               false,
               order.special_instructions
             ]])
