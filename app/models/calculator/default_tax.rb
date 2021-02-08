@@ -91,6 +91,18 @@ module Calculator
       end
     end
 
+    def compute_shipment(shipment)
+      if shipment.tax_category == rate.tax_category
+        if rate.included_in_price
+          deduced_total_by_rate(shipment.cost, rate)
+        else
+          round_to_two_places(shipment.cost * rate.amount)
+        end
+      else
+        0
+      end
+    end
+
     def round_to_two_places(amount)
       BigDecimal(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
     end
