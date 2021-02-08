@@ -46,21 +46,34 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.
-        finalized.
-        where.not(spree_orders: { state: :canceled }).
-        distributed_by_user(@user).
-        managed_by(@user).
-        search(params[:q])
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        Spree::Order.
+          finalized.
+          where.not(spree_orders: { state: :canceled }).
+          distributed_by_user(@user).
+          managed_by(@user).
+          search(params[:q])
+      else
+        Spree::Order.
+          complete.
+          where("spree_orders.state != ?", :canceled).
+          distributed_by_user(@user).
+          managed_by(@user).
+          search(params[:q])
+      end
     end
 
     def orders
-      search_result = search.result.order(:id)
-      orders_with_balance = OutstandingBalance.new(search_result).
-        query.
-        select('spree_orders.*')
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        search_result = search.result.order(:id)
+        orders_with_balance = OutstandingBalance.new(search_result).
+          query.
+          select('spree_orders.*')
 
-      filter(orders_with_balance)
+        filter(orders_with_balance)
+      else
+        filter search.result
+      end
     end
 
     def table_items
@@ -79,6 +92,14 @@ module OpenFoodNetwork
 
     private
 
+    def balance(order)
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        order.balance_value
+      else
+        UserBalanceCalculator.new(order.email, order.distributor).balance
+      end
+    end
+
     def payment_method_row(order)
       ba = order.billing_address
       [ba.andand.firstname,
@@ -90,7 +111,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       order.balance_value]
+       balance(order)]
     end
 
     def delivery_row(order)
@@ -105,7 +126,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       order.balance_value,
+       balance(order),
        has_temperature_controlled_items?(order),
        order.special_instructions]
     end

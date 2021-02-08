@@ -27,25 +27,34 @@ module OpenFoodNetwork
           expect(subject.orders).to eq([order])
         end
 
-        it 'calls OutstandingBalance query object' do
-          outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
-          expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+        context 'when the customer_balance feature is enabled' do
+          let(:customers_with_balance) { instance_double(CustomersWithBalance) }
 
-          subject.orders
+          before do
+            allow(OpenFoodNetwork::FeatureToggle)
+              .to receive(:enabled?).with(:customer_balance, anything) { true }
+          end
+
+          it 'calls OutstandingBalance query object' do
+            outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
+            expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+
+            subject.orders
+          end
+
+          it 'orders them by id' do
+            result = instance_double(ActiveRecord::Relation)
+            allow_any_instance_of(Ransack::Search).to receive(:result).and_return(result)
+            expect(result).to receive(:order).with(:id) { Spree::Order.none }
+
+            subject.orders
+          end
         end
 
         it "does not show cancelled orders" do
           o1 = create(:order, state: 'canceled', completed_at: 1.day.ago)
           o2 = create(:order, state: 'complete', completed_at: 1.day.ago)
           expect(subject.orders).to eq([o2])
-        end
-
-        it 'orders them by id' do
-          result = instance_double(ActiveRecord::Relation)
-          allow_any_instance_of(Ransack::Search).to receive(:result).and_return(result)
-          expect(result).to receive(:order).with(:id) { Spree::Order.none }
-
-          subject.orders
         end
 
         context "default date range" do
