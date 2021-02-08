@@ -50,6 +50,8 @@ module Spree
     after_save :update_adjustable
     after_destroy :update_adjustable
 
+    after_create :update_adjustable_adjustment_total
+
     state_machine :state, initial: :open do
       event :close do
         transition from: :open, to: :closed
@@ -178,6 +180,13 @@ module Spree
 
     def update_adjustable
       adjustable.update! if adjustable.is_a? Order
+    end
+
+    def update_adjustable_adjustment_total
+      # Cause adjustable's total to be recalculated
+      return unless adjustable.is_a? Spree::Shipment
+
+      Spree::ItemAdjustments.new(adjustable).update
     end
   end
 end
