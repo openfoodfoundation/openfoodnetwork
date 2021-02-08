@@ -47,6 +47,8 @@ module Spree
     validates :label, presence: true
     validates :amount, numericality: true
 
+    after_create :update_adjustable_adjustment_total
+
     state_machine :state, initial: :open do
       event :close do
         transition from: :open, to: :closed
@@ -148,6 +150,12 @@ module Spree
       return if originator_type.blank?
 
       originator_type.constantize.unscoped { super }
+    end
+
+    private
+
+    def update_adjustable_adjustment_total
+      Spree::ItemAdjustments.new(adjustable).update if adjustable
     end
   end
 end

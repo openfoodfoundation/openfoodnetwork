@@ -12,7 +12,7 @@ module Spree
     end
 
     def update
-      update_adjustments if item.persisted?
+      update_adjustments if updatable_totals?
       item
     end
 
@@ -30,6 +30,10 @@ module Spree
     end
 
     private
+
+    def updatable_totals?
+      item.persisted? && item.is_a?(Spree::Shipment)
+    end
 
     def tax_adjustments
       (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
