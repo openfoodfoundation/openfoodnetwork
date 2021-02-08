@@ -20,20 +20,11 @@ class OrderTaxAdjustmentsFetcher
   attr_reader :order
 
   def all
-    Spree::Adjustment
-      .with_tax
-      .where(order_adjustments.or(line_item_adjustments))
-      .order('created_at ASC')
-  end
+    tax_adjustments = order.all_adjustments.tax
+    enterprise_fees_with_tax = order.all_adjustments.enterprise_fee.with_tax
+    admin_adjustments_with_tax = order.adjustments.admin.with_tax
 
-  def order_adjustments
-    table[:adjustable_id].eq(order.id)
-      .and(table[:adjustable_type].eq('Spree::Order'))
-  end
-
-  def line_item_adjustments
-    table[:adjustable_id].eq_any(order.line_item_ids)
-      .and(table[:adjustable_type].eq('Spree::LineItem'))
+    tax_adjustments | enterprise_fees_with_tax | admin_adjustments_with_tax
   end
 
   def table
@@ -45,11 +36,24 @@ class OrderTaxAdjustmentsFetcher
 
     Hash[tax_rates.collect do |tax_rate|
       tax_amount = if tax_rates.one?
-                     adjustment.included_tax
+                     adjustment_tax_amount(adjustment)
                    else
                      tax_rate.compute_tax(adjustment.amount)
                    end
       [tax_rate, tax_amount]
     end]
+  end
+
+  def adjustment_tax_amount(adjustment)
+    if enterprise_fee_or_admin?(adjustment)
+      adjustment.included_tax
+    else
+      adjustment.amount
+    end
+  end
+
+  def enterprise_fee_or_admin?(adjustment)
+    adjustment.originator_type == "EnterpriseFee" ||
+      (adjustment.source_type.nil? && adjustment.originator_type.nil?)
   end
 end
