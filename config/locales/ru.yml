@@ -118,6 +118,8 @@ ru:
   models:
     order_cycle:
       cloned_order_cycle_name: "КОПИЯ %{order_cycle}"
+    tax_rate:
+      included_in_price: "Включено в цену"
   validators:
     date_time_string_validator:
       not_string_error: "должно быть строкой"
@@ -3007,6 +3009,7 @@ ru:
     display_currency: "Показывать валюту"
     choose_currency: "Выбор валюты"
     mail_method_settings: "Почтовые Настройки"
+    mail_settings_notice_html: "Некоторые из следующих параметров нельзя редактировать, и они перечислены здесь только для целей отладки. Изменения можно внести, обновив секреты экземпляра и предоставив их с помощью <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . За подробностями обращайтесь к глобальной команде ОСП."
     general: "Основные"
     enable_mail_delivery: "Включить отправку почты"
     send_mails_as: "Отправлять Почту Как"
@@ -3523,6 +3526,8 @@ ru:
       cancel_email_for_shop:
         greeting: "Уважаемый %{name}!"
         subject: "Отмена заказа"
+        intro: "Покупатель отменил заказ № %{number}."
+        view_cancelled_order: "Посмотреть отмененный заказ"
       confirm_email:
         subject: "Подтверждение заказа"
       invoice_email:
