@@ -3,7 +3,9 @@ require 'open_food_network/user_balance_calculator'
 module OpenFoodNetwork
   class OrderCycleManagementReport
     DEFAULT_DATE_INTERVAL = { from: -1.month, to: 1.day }.freeze
+
     attr_reader :params
+
     def initialize(user, params = {}, render_table = false)
       @params = sanitize_params(params)
       @user = user

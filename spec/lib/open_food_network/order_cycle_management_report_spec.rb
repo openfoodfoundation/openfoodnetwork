@@ -6,12 +6,14 @@ require 'open_food_network/order_cycle_management_report'
 module OpenFoodNetwork
   describe OrderCycleManagementReport do
     context "as a site admin" do
+      subject { OrderCycleManagementReport.new(user, params, true) }
+      let(:params) { {} }
+
       let(:user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by!(name: "admin")
         user
       end
-      subject { OrderCycleManagementReport.new user, {}, true }
 
       describe "fetching orders" do
         it "fetches completed orders" do
@@ -128,6 +130,68 @@ module OpenFoodNetwork
                                                         shipping_method_name: sm1.name,
                                                         payment_method_name: pm1.name)
           expect(subject.filter(orders)).to eq([order1])
+        end
+      end
+
+      describe '#table_items' do
+        subject { OrderCycleManagementReport.new(user, params, true) }
+
+        let(:distributor) { create(:distributor_enterprise) }
+        before { distributor.enterprise_roles.create!(user: user) }
+
+        context 'when the report type is payment_methods' do
+          let(:params) { { report_type: 'payment_methods' } }
+
+          let!(:order) { create(:order, distributor: distributor, completed_at: 1.day.ago) }
+
+          it 'returns rows with payment information' do
+            expect(subject.table_items).to eq([[
+              order.billing_address.firstname,
+              order.billing_address.lastname,
+              order.distributor.name,
+              '',
+              order.email,
+              order.billing_address.phone,
+              nil,
+              nil,
+              nil,
+              -0.0
+            ]])
+          end
+        end
+
+        context 'when the report type is not payment_methods' do
+          let(:params) { {} }
+
+          let(:shipping_method) { create(:shipping_method) }
+          let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+
+          let!(:order) do
+            create(:order, distributor: distributor, completed_at: 1.day.ago, shipments: [shipment])
+          end
+
+          before do
+            order.ship_address = order.address_from_distributor
+            order.save!
+          end
+
+          it 'returns rows with delivery information' do
+            expect(subject.table_items).to eq([[
+              order.ship_address.firstname,
+              order.ship_address.lastname,
+              order.distributor.name,
+              '',
+              "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
+              order.ship_address.zipcode,
+              order.ship_address.phone,
+              shipping_method.name,
+              nil,
+              nil,
+              -0.0,
+              false,
+              order.special_instructions
+            ]])
+          end
         end
       end
     end
