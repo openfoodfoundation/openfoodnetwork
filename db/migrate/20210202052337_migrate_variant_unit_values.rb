@@ -1,14 +1,22 @@
 class MigrateVariantUnitValues < ActiveRecord::Migration
   def up
-    Spree::Variant.where(product_id: nil).destroy_all
-    Spree::Variant.where(unit_value: [nil, Float::NAN]).find_each do |variant|
-      variant.unit_value = 1
-      variant.save
-    end
-    Spree::Variant.where(weight: [nil, Float::NAN]).find_each do |variant|
-      variant.weight = 0
-      variant.save
-    end
+    ActiveRecord::Base.connection.execute(<<-SQL)
+      DELETE FROM "spree_variants" WHERE "product_id" IS NULL
+    SQL
+
+    ActiveRecord::Base.connection.execute(<<-SQL)
+      UPDATE "spree_variants"
+      SET "unit_value" = 1
+      WHERE "unit_value" = 'NaN' OR "unit_value" IS NULL
+    SQL
+
+
+    ActiveRecord::Base.connection.execute(<<-SQL)
+      UPDATE "spree_variants"
+      SET "weight" = 0
+      WHERE "weight" = 'NaN' OR "weight" IS NULL
+    SQL
+
     change_column_null :spree_variants, :unit_value, false, 1
     change_column_null :spree_variants, :weight, false, 0.0
     change_column_default :spree_variants, :unit_value, 1
