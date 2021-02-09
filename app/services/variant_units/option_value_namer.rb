@@ -78,7 +78,7 @@ module VariantUnits
       }
 
       scales = units[@variant.product.variant_unit]
-      product_scale = @variant.product.variant_unit_scale
+      product_scale = @variant.product.try(:variant_unit_scale) || 1.0
       product_scale_system = scales[product_scale.to_f]['system']
 
       largest_unit = find_largest_unit(scales, product_scale_system)
