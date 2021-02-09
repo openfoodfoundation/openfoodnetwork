@@ -117,6 +117,8 @@ it:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DI %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluso nel prezzo"
   validators:
     date_time_string_validator:
       not_string_error: "deve essere una stringa"
@@ -2955,6 +2957,7 @@ it:
     display_currency: "Visualizza valuta"
     choose_currency: "Scegli Valuta"
     mail_method_settings: "Impostazioni del metodo di posta"
+    mail_settings_notice_html: "Alcune delle seguenti impostazioni non possono essere modificate e sono elencate qui solo per scopi di debug. È possibile apportare modifiche aggiornando i segreti dell'istanza ed utilizzando <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Contatta il team globale di OFN per maggiori dettagli. "
     general: "Generale"
     enable_mail_delivery: "Abilita recapito posta"
     send_mails_as: "Invia mail come"
@@ -3471,6 +3474,8 @@ it:
       cancel_email_for_shop:
         greeting: "Caro %{name},"
         subject: "Cancellazione dell'ordine"
+        intro: "Un cliente ha cancellato la sua gentile richiesta #%{number}."
+        view_cancelled_order: "Visualizza richiesta eliminata"
       confirm_email:
         subject: "Conferma Ordine"
       invoice_email:
