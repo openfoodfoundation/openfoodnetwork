@@ -16,7 +16,6 @@ describe Enterprise do
         let(:producer_property) { enterprise.producer_properties.last }
 
         before do
-          pp enterprise.updated_at
           product.set_property 'Organic', 'NASAA 12345'
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
