@@ -28,6 +28,11 @@ module OpenFoodNetwork
                          state: "completed")
       }
 
+      before do
+        expect(o1.total).to eq 13
+        expect(o2.total).to eq 13
+      end
+
       it "finds the correct balance for this email and enterprise" do
         expect(UserBalanceCalculator.new(o1.email, hub1).balance).to eq(-9) # = 15 + 2 - 13 - 13
       end

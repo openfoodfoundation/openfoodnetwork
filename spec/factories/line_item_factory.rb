@@ -26,6 +26,7 @@ FactoryBot.define do
                                                             order: line_item.order)
       end
       line_item.target_shipment = shipment
+      shipment.update(cost: evaluator.shipping_fee)
     end
   end
 end
