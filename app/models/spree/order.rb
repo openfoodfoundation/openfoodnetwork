@@ -130,7 +130,7 @@ module Spree
     }
 
     scope :not_state, lambda { |state|
-      where("state != ?", state)
+      where.not(state: state)
     }
 
     # All the states an order can be in after completing the checkout

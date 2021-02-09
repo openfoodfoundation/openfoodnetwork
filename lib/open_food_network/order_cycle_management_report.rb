@@ -49,7 +49,7 @@ module OpenFoodNetwork
       if FeatureToggle.enabled?(:customer_balance, @user)
         Spree::Order.
           finalized.
-          where.not(spree_orders: { state: :canceled }).
+          not_state(:canceled).
           distributed_by_user(@user).
           managed_by(@user).
           search(params[:q])
