@@ -69,7 +69,7 @@ describe Admin::EnterprisesController, type: :controller do
         admin_user.enterprises << create(:distributor_enterprise)
 
         allow(controller).to receive_messages spree_current_user: admin_user
-        enterprise_params[:enterprise][:owner_id] = admin_user
+        enterprise_params[:enterprise][:owner_id] = admin_user.id
         enterprise_params[:enterprise][:sells] = 'none'
 
         spree_put :create, enterprise_params
@@ -91,7 +91,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "doesn't affect the hub status for super admins" do
         allow(controller).to receive_messages spree_current_user: admin_user
-        enterprise_params[:enterprise][:owner_id] = admin_user
+        enterprise_params[:enterprise][:owner_id] = admin_user.id
         enterprise_params[:enterprise][:sells] = 'any'
 
         spree_put :create, enterprise_params
@@ -198,7 +198,7 @@ describe Admin::EnterprisesController, type: :controller do
                       enterprise: {
                         tag_rules_attributes: {
                           '0' => {
-                            id: tag_rule,
+                            id: tag_rule.id,
                             type: "TagRule::DiscountOrder",
                             preferred_customer_tags: "some,new,tags",
                             calculator_type: "Calculator::FlatPercentItemTotal",
@@ -246,7 +246,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "allows owner to be changed" do
         allow(controller).to receive_messages spree_current_user: distributor_owner
-        update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
+        update_params = { id: distributor, enterprise: { owner_id: distributor_manager.id } }
         spree_post :update, update_params
 
         distributor.reload
@@ -275,7 +275,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "allows owner to be changed" do
         allow(controller).to receive_messages spree_current_user: admin_user
-        update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
+        update_params = { id: distributor, enterprise: { owner_id: distributor_manager.id } }
         spree_post :update, update_params
 
         distributor.reload

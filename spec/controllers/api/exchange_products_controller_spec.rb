@@ -26,7 +26,7 @@ module Api
         let(:products_relation) { Spree::Product.where("1=0") }
 
         it "handles it gracefully" do
-          get :index, exchange_id: exchange.id
+          api_get :index, exchange_id: exchange.id
           expect(json_response["products"].length).to eq 0
         end
       end
@@ -36,14 +36,14 @@ module Api
 
         describe "when an exchange id param is provided" do
           it "uses exchange order_cycle, incoming and enterprise to fetch products" do
-            get :index, exchange_id: exchange.id, order_cycle_id: 666, enterprise_id: 666, incoming: false
+            api_get :index, exchange_id: exchange.id, order_cycle_id: 666, enterprise_id: 666, incoming: false
             expect(json_response["products"].first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
           end
         end
 
         describe "when an exchange id param is not provided" do
           it "uses params order_cycle, incoming and enterprise to fetch products" do
-            spree_get :index, order_cycle_id: order_cycle.id, enterprise_id: exchange.sender_id, incoming: true
+            api_get :index, order_cycle_id: order_cycle.id, enterprise_id: exchange.sender_id, incoming: true
             expect(json_response["products"].first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
           end
         end
@@ -59,7 +59,7 @@ module Api
 
         describe "when a specific page is requested" do
           it "returns the requested page with paginated data" do
-            get :index, exchange_id: exchange.id, page: 1
+            api_get :index, exchange_id: exchange.id, page: 1
 
             expect(json_response["products"].size).to eq 1
             expect(json_response["pagination"]["results"]).to eq 2
@@ -69,7 +69,7 @@ module Api
 
         describe "when no specific page is requested" do
           it "returns all results without paginating" do
-            get :index, exchange_id: exchange.id
+            api_get :index, exchange_id: exchange.id
 
             expect(json_response["products"].size).to eq 2
             expect(json_response["pagination"]).to be nil
