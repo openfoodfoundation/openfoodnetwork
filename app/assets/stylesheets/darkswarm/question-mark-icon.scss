@@ -1,6 +1,19 @@
 .question-mark-icon {
   position: relative;
   top: 1px;
+
+  // Reset button element css attributes
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+  }
+
   &::before {
     content: "?";
     padding-left: 1px;
@@ -10,8 +23,8 @@
     border-radius: 50%;
     text-align: center;
     background-color: $grey-075;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     font-weight: bold;
     font-size: 1rem;
   }
