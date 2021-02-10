@@ -168,6 +168,15 @@ module Spree
       !shipped?
     end
 
+    def update_amounts
+      return unless selected_shipping_rate
+
+      self.update_columns(
+        cost: selected_shipping_rate.cost,
+        updated_at: Time.zone.now
+      )
+    end
+
     def manifest
       inventory_units.group_by(&:variant).map do |variant, units|
         states = {}
@@ -273,6 +282,7 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
+      update_amounts if adjustment
       update_adjustment_included_tax if adjustment
     end
 

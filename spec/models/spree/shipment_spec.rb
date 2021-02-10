@@ -415,7 +415,7 @@ describe Spree::Shipment do
       allow(shipment).
         to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
       adjustment = build(:adjustment)
-      allow(shipment).to receive_messages(adjustment: adjustment)
+      allow(shipment).to receive_messages(adjustment: adjustment, update_columns: true)
       allow(adjustment).to receive(:open?) { true }
       expect(shipment.adjustment).to receive(:originator=).with(shipping_method)
       expect(shipment.adjustment).to receive(:label=).with(shipping_method.adjustment_label)
@@ -429,7 +429,7 @@ describe Spree::Shipment do
       allow(shipment).
         to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
       adjustment = build(:adjustment)
-      allow(shipment).to receive_messages(adjustment: adjustment)
+      allow(shipment).to receive_messages(adjustment: adjustment, update_columns: true)
       allow(adjustment).to receive(:open?) { false }
       expect(shipment.adjustment).to receive(:originator=).with(shipping_method)
       expect(shipment.adjustment).to receive(:label=).with(shipping_method.adjustment_label)
@@ -444,6 +444,20 @@ describe Spree::Shipment do
     it "should update order" do
       expect(order).to receive(:update!)
       shipment.__send__(:update_order)
+    end
+  end
+
+  describe "#update_amounts" do
+    it "updates shipping cost when selected_shipping_rate is present" do
+      allow(shipment).to receive(:selected_shipping_rate) { double(:rate, cost: 10) }
+      expect(shipment).to receive(:update_columns).with(cost: 10, updated_at: kind_of(Time))
+
+      shipment.update_amounts
+    end
+
+    it "does nothing when selected_shipping_rate is not present" do
+      expect(shipment).to_not receive(:update_columns)
+      shipment.update_amounts
     end
   end
 
