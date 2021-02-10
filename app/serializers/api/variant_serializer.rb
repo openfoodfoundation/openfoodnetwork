@@ -3,7 +3,8 @@ class Api::VariantSerializer < ActiveModel::Serializer
              :options_text, :unit_value, :unit_description, :unit_to_display,
              :display_as, :display_name, :name_to_display,
              :price, :on_demand, :on_hand, :fees, :price_with_fees,
-             :tag_list, :thumb_url
+             :tag_list, :thumb_url,
+             :unit_price_price, :unit_price_unit
 
   delegate :price, to: :object
 
@@ -37,5 +38,13 @@ class Api::VariantSerializer < ActiveModel::Serializer
     else
       "/noimage/mini.png"
     end
+  end
+
+  def unit_price_price
+    (rand * 10).round(2)
+  end
+
+  def unit_price_unit
+    rand > 0.5 ? "item" : "kg"
   end
 end
