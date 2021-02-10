@@ -22,7 +22,7 @@ class OrderTaxAdjustmentsFetcher
   def all
     Spree::Adjustment
       .with_tax
-      .where(order_adjustments.or(line_item_adjustments))
+      .where(order_adjustments.or(line_item_adjustments).or(shipment_adjustments))
       .order('created_at ASC')
   end
 
@@ -34,6 +34,11 @@ class OrderTaxAdjustmentsFetcher
   def line_item_adjustments
     table[:adjustable_id].eq_any(order.line_item_ids)
       .and(table[:adjustable_type].eq('Spree::LineItem'))
+  end
+
+  def shipment_adjustments
+    table[:order_id].eq(order.id)
+      .and(table[:adjustable_type].eq('Spree::Shipment'))
   end
 
   def table
