@@ -25,7 +25,7 @@ module Spree
     before_action :check_at_least_one_line_item, only: :update
 
     def show
-      process_payment_intent!(params["payment_intent"])
+      ProcessPaymentIntent.new(params["payment_intent"], params[:id]).call!
       @order = Spree::Order.find_by!(number: params[:id])
     end
 
@@ -215,18 +215,6 @@ module Spree
         :distributor_id, :order_cycle_id,
         line_items_attributes: [:id, :quantity]
       )
-    end
-
-    def process_payment_intent!(payment_intent)
-      return unless payment_intent&.starts_with?("pi_")
-      return unless order = Spree::Order.find_by!(number: params[:id])
-
-      last_payment = OrderPaymentFinder.new(order).last_payment
-      return unless last_payment&.state == "pending" &&
-                    last_payment&.response_code == payment_intent
-
-      last_payment.update_attribute(:cvv_response_message, nil)
-      last_payment.complete!
     end
   end
 end
