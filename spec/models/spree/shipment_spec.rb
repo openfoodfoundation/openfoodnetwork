@@ -387,7 +387,7 @@ describe Spree::Shipment do
     it "should create adjustment when not present" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       expect(shipping_method).to receive(:create_adjustment).with(shipping_method.adjustment_label,
-                                                                  order, shipment, true, "open")
+                                                                  shipment, shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
 
@@ -395,7 +395,7 @@ describe Spree::Shipment do
     it "should use the shipping method's adjustment label" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       allow(shipping_method).to receive_messages(adjustment_label: "Foobar")
-      expect(shipping_method).to receive(:create_adjustment).with("Foobar", order,
+      expect(shipping_method).to receive(:create_adjustment).with("Foobar", shipment,
                                                                   shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
