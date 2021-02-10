@@ -5,8 +5,16 @@ module Api
     has_one :bill_address, serializer: Api::AddressSerializer
 
     has_many :line_items, serializer: Api::LineItemSerializer
-    has_many :adjustments, serializer: Api::AdjustmentSerializer
 
     has_many :payments, serializer: Api::PaymentSerializer
+
+    attributes :adjustments
+
+    def adjustments
+      adjustments = object.all_adjustments.where(
+        "adjustable_type IN ('Spree::Order','Spree::Shipment')"
+      ).order("label DESC")
+      ActiveModel::ArraySerializer.new(adjustments, each_serializer: Api::AdjustmentSerializer)
+    end
   end
 end
