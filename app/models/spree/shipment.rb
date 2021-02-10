@@ -18,6 +18,7 @@ module Spree
     after_save :ensure_correct_adjustment, :update_order
 
     attr_accessor :special_instructions
+    alias_attribute :amount, :cost
 
     accepts_nested_attributes_for :address
     accepts_nested_attributes_for :inventory_units
@@ -140,15 +141,6 @@ module Spree
     def currency
       order ? order.currency : Spree::Config[:currency]
     end
-
-    # The adjustment amount associated with this shipment (if any)
-    #   Returns only the first adjustment to match the shipment
-    #   There should never really be more than one.
-    def cost
-      adjustment ? adjustment.amount : 0
-    end
-
-    alias_method :amount, :cost
 
     def display_cost
       Spree::Money.new(cost, currency: currency)

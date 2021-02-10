@@ -25,17 +25,6 @@ describe Spree::Shipment do
     expect(shipment).to be_backordered
   end
 
-  context "#cost" do
-    it "should return the amount of any shipping charges that it originated" do
-      allow(shipment).to receive_message_chain :adjustment, amount: 10
-      expect(shipment.cost).to eq 10
-    end
-
-    it "should return 0 if there are no relevant shipping adjustments" do
-      expect(shipment.cost).to eq 0
-    end
-  end
-
   context "display_cost" do
     it "retuns a Spree::Money" do
       allow(shipment).to receive(:cost) { 21.22 }
