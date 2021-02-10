@@ -52,7 +52,7 @@ module OrderManagement
 
         def for_orders
           chain_to_scope do
-            where(adjustable_type: "Spree::Order")
+            where(adjustable_type: ["Spree::Order", "Spree::Shipment"])
           end
         end
 
@@ -81,8 +81,7 @@ module OrderManagement
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN spree_orders
                 ON (
-                  spree_adjustments.adjustable_type = 'Spree::Order'
-                    AND spree_orders.id = spree_adjustments.adjustable_id
+                  spree_orders.id = spree_adjustments.order_id
                     AND spree_orders.completed_at IS NOT NULL
                 )
             JOIN_STRING
