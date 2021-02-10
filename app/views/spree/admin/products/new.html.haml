@@ -57,7 +57,7 @@
             = f.label :on_hand, t(".on_hand")
             %span.required *
             %br/
-            = f.text_field :on_hand, class: 'fullwidth'
+            = f.number_field :on_hand, class: 'fullwidth', min: '0', required: true
             = f.error_message_on :on_hand
         .two.columns.omega
           = f.field_container :on_demand do
