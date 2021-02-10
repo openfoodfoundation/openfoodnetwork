@@ -289,7 +289,7 @@ module Api
           )
           expect(json_response[:adjustments].second).to include(
             'label' => "Shipping",
-            'amount' => order.adjustments.shipping.first.amount.to_s
+            'amount' => order.shipment_adjustments.first.amount.to_s
           )
 
           expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
