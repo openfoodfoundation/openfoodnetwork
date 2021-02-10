@@ -41,14 +41,14 @@ describe CheckoutHelper, type: :helper do
 
     before do
       # Sanity check initial adjustments state
-      expect(order.adjustments.shipping.count).to eq 1
+      expect(order.shipment_adjustments.count).to eq 1
       expect(order.adjustments.enterprise_fee.count).to eq 1
     end
 
     it "collects adjustments on the order" do
       adjustments = helper.checkout_adjustments_for(order)
 
-      shipping_adjustment = order.adjustments.shipping.first
+      shipping_adjustment = order.shipment_adjustments.first
       expect(adjustments).to include shipping_adjustment
 
       admin_fee_summary = adjustments.last
