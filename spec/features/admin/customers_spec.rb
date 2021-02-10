@@ -102,7 +102,6 @@ feature 'Customers' do
 
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [managed_distributor1]) }
         let!(:payment1) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: 88.00) }
-        let(:payment2) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: -25.00) }
 
         before do
           allow(OpenFoodNetwork::FeatureToggle)
@@ -111,39 +110,40 @@ feature 'Customers' do
           customer4.update enterprise: managed_distributor1
         end
 
-        it "displays customer balances" do
-          select2_select managed_distributor1.name, from: "shop_id"
+        context "with one payment only" do
+          it "displays customer balances" do
+            select2_select managed_distributor1.name, from: "shop_id"
 
-          within "tr#c_#{customer1.id}" do
-            expect(page).to have_content "CREDIT OWED"
-            expect(page).to have_content "$88.00"
-          end
-          within "tr#c_#{customer2.id}" do
-            expect(page).to have_content "BALANCE DUE"
-            expect(page).to have_content "$-99.00"
-          end
-          within "tr#c_#{customer4.id}" do
-            expect(page).to_not have_content "CREDIT OWED"
-            expect(page).to_not have_content "BALANCE DUE"
-            expect(page).to have_content "$0.00"
+            within "tr#c_#{customer1.id}" do
+              expect(page).to have_content "CREDIT OWED"
+              expect(page).to have_content "$88.00"
+            end
+            within "tr#c_#{customer2.id}" do
+              expect(page).to have_content "BALANCE DUE"
+              expect(page).to have_content "$-99.00"
+            end
+            within "tr#c_#{customer4.id}" do
+              expect(page).to_not have_content "CREDIT OWED"
+              expect(page).to_not have_content "BALANCE DUE"
+              expect(page).to have_content "$0.00"
+            end
           end
         end
 
-        # this adds the additional payments to an order, and checks for customer balance
-        it "updates customer balance with additional negative payments, on an order" do
-          # payment2 needs to be lazily defined to be called here, as way to add a payment to order1
-          payment2
+        context "with an additional negative payment (or refund)" do
+          let!(:payment2) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: -25.00) }
 
-          visit spree.admin_order_payments_path order1
-          expect(page).to have_content "$#{payment2.amount}"
+          it "it displays an updated customer balance" do
+            visit spree.admin_order_payments_path order1
+            expect(page).to have_content "$#{payment2.amount}"
 
-          visit admin_customers_path
-          select2_select managed_distributor1.name, from: "shop_id"
+            visit admin_customers_path
+            select2_select managed_distributor1.name, from: "shop_id"
 
-          # checks customer balance, after payment2 was added
-          within "tr#c_#{customer1.id}" do
-            expect(page).to have_content "CREDIT OWED"
-            expect(page).to have_content "$63.00"
+            within "tr#c_#{customer1.id}" do
+              expect(page).to have_content "CREDIT OWED"
+              expect(page).to have_content "$63.00"
+            end
           end
         end
       end
