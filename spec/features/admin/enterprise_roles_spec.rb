@@ -117,7 +117,7 @@ feature '
         end
       end
 
-      it "allows adding new managers" do
+      xit "allows adding new managers" do
         within 'table.managers' do
           select2_select user3.email, from: 'ignored', search: true
 
@@ -129,7 +129,7 @@ feature '
         end
       end
 
-      it "shows changes to enterprise contact or owner" do
+      xit "shows changes to enterprise contact or owner" do
         select2_select user2.email, from: 'receives_notifications_dropdown'
         within('#save-bar') { click_button 'Update' }
         navigate_to_enterprise_users
@@ -146,7 +146,7 @@ feature '
         end
       end
 
-      it "can invite unregistered users to be managers" do
+      xit "can invite unregistered users to be managers" do
         setup_email
         find('a.button.help-modal').click
         expect(page).to have_css '#invite-manager-modal'

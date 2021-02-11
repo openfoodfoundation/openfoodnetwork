@@ -174,7 +174,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
 
       before do
-        allow(request).to receive(:referer) { 'http://foo.com' }
+        request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 
@@ -210,7 +210,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { e: 'refund', order_id: order.number, id: payment.id } }
 
       before do
-        allow(request).to receive(:referer) { 'http://foo.com' }
+        request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 
@@ -248,7 +248,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       before do
         allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
-        allow(request).to receive(:referer) { 'http://foo.com' }
+        request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
         allow(payment).to receive(:cvv_response_message).and_return("https://www.stripe.com/authorize")
       end
@@ -266,7 +266,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       let(:params) { { e: 'unrecognized_event', order_id: order.number, id: payment.id } }
 
       before do
-        allow(request).to receive(:referer) { 'http://foo.com' }
+        request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
       end
 

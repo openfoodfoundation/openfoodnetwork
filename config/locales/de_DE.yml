@@ -117,6 +117,8 @@ de_DE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Kopie von %{order_cycle}"
+    tax_rate:
+      included_in_price: "im Preis inbegriffen"
   validators:
     date_time_string_validator:
       not_string_error: "muss eine Zeichenfolge sein"
@@ -192,7 +194,7 @@ de_DE:
         explainer: Die automatische Verarbeitung dieser Bestellungen ist aus einem unbekannten Grund fehlgeschlagen. Dies sollte nicht geschehen, bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
   title: "Open Food Network"
-  welcome_to: "Willkommen bei"
+  welcome_to: "Willkommen beim"
   site_meta_description: "Wir wagen den Neustart. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
   search_by_name: Suche nach Ort oder Name des Ladens/Produzents...
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
@@ -1263,7 +1265,7 @@ de_DE:
   ticket_column_item: "Artikel"
   ticket_column_unit_price: "Stückpreis"
   ticket_column_total_price: "Gesamtpreis"
-  menu_1_title: "Läden"
+  menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
   menu_2_title: "Karte"
   menu_2_url: "/map"
@@ -1271,12 +1273,12 @@ de_DE:
   menu_3_url: "/producers"
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
-  menu_5_title: "Über uns"
-  menu_5_url: "https://wp.openfoodnetwork.de/"
-  menu_6_title: "Support"
-  menu_6_url: "https://wp.openfoodnetwork.de/support/"
-  menu_7_title: "Mehr erfahren"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_5_title: "Verkaufen"
+  menu_5_url: "https://openfoodnetwork.de/sell"
+  menu_6_title: "Über uns"
+  menu_6_url: "https://wp.openfoodnetwork.de/"
+  menu_7_title: "Hilfe"
+  menu_7_url: "https://wp.openfoodnetwork.de/support/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile Logo (75x26)"
   logo_mobile_svg: "Mobile Logo (SVG)"
@@ -1407,7 +1409,7 @@ de_DE:
       cookies_policy_link_desc: "Wenn Sie mehr erfahren möchten, besuchen Sie unsere"
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
-  home_shop: Jetzt einkaufen
+  home_shop: Jetzt regional einkaufen
   brandstory_headline: "Lebensmittel Direktvermarktung"
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, einen Neuanfang zu wagen ..."
   brandstory_part1: "Wir wagen den Neuanfang. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
@@ -2960,6 +2962,7 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
+    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale OFN-Team, um weitere Informationen zu erhalten."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
