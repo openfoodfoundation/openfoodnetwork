@@ -126,10 +126,6 @@ ca:
     integer_array_validator:
       not_array_error: "ha de ser una matriu"
       invalid_element_error: "ha de contenir només nombres enters vàlids"
-  datetime_picker_ui:
-    current_text: Ara
-    close_text: Fet
-    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Sisplau, confirma l'adreça electrònica d'%{enterprise}"
@@ -3431,8 +3427,10 @@ ca:
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
     date_picker:
-      format: '%d-%m-%Y'
-      js_format: 'dd-mm-yy'
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Avui"
+      now: "Ara"
     orders:
       error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."
       edit:
