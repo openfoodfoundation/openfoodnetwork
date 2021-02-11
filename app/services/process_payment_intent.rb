@@ -10,23 +10,23 @@ class ProcessPaymentIntent
   def call!
     return unless valid?
 
-    @last_payment.update_attribute(:cvv_response_message, nil)
-    @last_payment.complete!
+    last_payment.update_attribute(:cvv_response_message, nil)
+    last_payment.complete!
   end
 
   private
 
-  attr_reader :order
+  attr_reader :order, :payment_intent, :last_payment
 
   def valid?
     order.present? && valid_intent_string? && matches_last_payment?
   end
 
   def valid_intent_string?
-    @payment_intent&.starts_with?("pi_")
+    payment_intent&.starts_with?("pi_")
   end
 
   def matches_last_payment?
-    @last_payment&.state == "pending" && @last_payment&.response_code == @payment_intent
+    last_payment&.state == "pending" && last_payment&.response_code == payment_intent
   end
 end
