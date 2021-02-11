@@ -277,7 +277,7 @@ describe Spree::OrdersController, type: :controller do
         allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
 
         # Sanity check the fees
-        expect(order.adjustments.length).to eq 2
+        expect(order.all_adjustments.length).to eq 2
         expect(item_num).to eq 2
         expect(order.adjustment_total).to eq expected_fees
         expect(order.shipment.adjustment.included_tax).to eq 1.2
