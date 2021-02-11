@@ -265,14 +265,14 @@ module Spree
             allow(Config).to receive(:shipping_tax_rate).and_return(0)
             order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            expect(order.shipment_adjustments.first.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
             allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
             order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            expect(order.shipment_adjustments.first.included_tax).to eq(0)
           end
         end
 
@@ -289,21 +289,21 @@ module Spree
             # total - ( total / (1 + rate) )
             # 50    - ( 50    / (1 + 0.25) )
             # = 10
-            expect(order.adjustments.first.included_tax).to eq(10.00)
+            expect(order.shipment_adjustments.first.included_tax).to eq(10.00)
           end
 
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
             allow(Config).to receive(:shipping_tax_rate).and_return(0)
             order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            expect(order.shipment_adjustments.first.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
             order.distributor.update! charges_sales_tax: false
             order.shipments = [shipment]
 
-            expect(order.adjustments.first.included_tax).to eq(0)
+            expect(order.shipment_adjustments.first.included_tax).to eq(0)
           end
         end
       end
