@@ -113,6 +113,28 @@ FactoryBot.define do
                                        product: product)
       order.reload
     end
+
+    trait :completed do
+      transient do
+        completed_at { Time.zone.now }
+        state { "complete" }
+        payment_method { create(:payment_method, distributors: [distributor]) }
+        ship_address { create(:address) }
+      end
+
+      after(:create) do |order, evaluator|
+        # Ensure order is valid and passes through necessary checkout steps
+        create(:payment, state: "checkout", order: order, amount: order.total,
+                         payment_method: evaluator.payment_method)
+        order.ship_address = evaluator.ship_address
+        while !order.completed? do break unless order.next! end
+
+        order.update_columns(
+          completed_at: evaluator.completed_at,
+          state: evaluator.state
+        )
+      end
+    end
   end
 
   factory :order_with_distributor, parent: :order do

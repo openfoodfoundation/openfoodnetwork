@@ -10,12 +10,12 @@ module OpenFoodNetwork
       let!(:hub1) { create(:distributor_enterprise) }
 
       let!(:o1) {
-        create(:order_with_totals_and_distribution,
+        create(:order_with_totals_and_distribution, :completed,
                user: user1, distributor: hub1,
                completed_at: 1.day.ago)
       } # total=13 (10 + 3 shipping fee)
       let!(:o2) {
-        create(:order_with_totals_and_distribution,
+        create(:order_with_totals_and_distribution, :completed,
                user: user1, distributor: hub1,
                completed_at: 1.day.ago)
       } # total=13 (10 + 3 shipping fee)
@@ -28,6 +28,13 @@ module OpenFoodNetwork
                          state: "completed")
       }
 
+      before do
+        # Sanity check the order
+        expect(o1.total).to eq 13
+        expect(o1.ready_to_ship?).to eq true
+        expect(o1.paid?).to eq true
+      end
+
       it "finds the correct balance for this email and enterprise" do
         expect(UserBalanceCalculator.new(o1.email, hub1).balance).to eq(-9) # = 15 + 2 - 13 - 13
       end
@@ -35,7 +42,7 @@ module OpenFoodNetwork
       context "with another hub" do
         let!(:hub2) { create(:distributor_enterprise) }
         let!(:o3) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user1, distributor: hub2,
                  completed_at: 1.day.ago)
         } # total=13 (10 + 3 shipping fee)
@@ -52,7 +59,7 @@ module OpenFoodNetwork
       context "with another user" do
         let!(:user2) { create(:user) }
         let!(:o4) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user2, distributor: hub1,
                  completed_at: 1.day.ago)
         } # total=13 (10 + 3 shipping fee)
@@ -68,7 +75,7 @@ module OpenFoodNetwork
 
       context "with canceled orders" do
         let!(:o4) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user1, distributor: hub1,
                  completed_at: 1.day.ago, state: "canceled")
         } # total=13 (10 + 3 shipping fee)
@@ -84,7 +91,7 @@ module OpenFoodNetwork
 
       context "with void payments" do
         let!(:o4) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user1, distributor: hub1,
                  completed_at: 1.day.ago)
         } # total=13 (10 + 3 shipping fee)
@@ -100,7 +107,7 @@ module OpenFoodNetwork
 
       context "with invalid payments" do
         let!(:o4) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user1, distributor: hub1,
                  completed_at: 1.day.ago)
         } # total=13 (10 + 3 shipping fee)
@@ -116,7 +123,7 @@ module OpenFoodNetwork
 
       context "with multiple payments on single order" do
         let!(:o4) {
-          create(:order_with_totals_and_distribution,
+          create(:order_with_totals_and_distribution, :completed,
                  user: user1, distributor: hub1,
                  completed_at: 1.day.ago)
         } # total=13 (10 + 3 shipping fee)
