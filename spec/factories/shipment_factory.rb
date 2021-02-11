@@ -46,6 +46,12 @@ FactoryBot.define do
             shipment.inventory_units.create(variant_id: line_item.variant_id)
           }
         end
+
+        # Ensure correct shipping cost is assigned to both shipping rate and shipment.
+        # This usually happens via Stock::Estimator when shipping rates are created.
+        computed_shipping_cost = shipment.shipping_method.calculator.compute(shipment.to_package)
+        shipment.selected_shipping_rate.update_columns(cost: computed_shipping_cost)
+        shipment.update_columns(cost: computed_shipping_cost)
       end
     end
   end
