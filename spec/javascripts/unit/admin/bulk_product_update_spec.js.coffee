@@ -368,7 +368,7 @@ describe "AdminProductEditCtrl", ->
       $scope.sortOptions.toggle('name')
       $scope.$apply()
 
-      expect($scope.q.sorting).toEqual 'name asc'
+      expect($scope.sorting).toEqual 'name desc'
       expect($scope.fetchProducts).toHaveBeenCalled()
 
   describe "updating the product on hand count", ->
