@@ -17,10 +17,10 @@ module Spree
 
         # Pay the order
         order.payments.first.complete
-        order.updater.update_payment_state
+        order.update!
 
         # Ship the order
-        order.reload.shipment.ship!
+        order.shipment.ship!
       end
 
       it "creates and updates a return authorization" do
