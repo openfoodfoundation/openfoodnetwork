@@ -70,8 +70,8 @@ module OrderManagement
                 }
               end
 
-              it "sends an email requesting authorization and an email notifying the shop owner" do
-                payment_authorize.call!
+              it "sends an email requesting authorization and an email notifying the shop owner when requested" do
+                payment_authorize.extend(OrderManagement::Order::SendAuthorizationEmails).call!
 
                 expect(order.errors.size).to eq 0
                 expect(PaymentMailer).to have_received(:authorize_payment)
@@ -79,8 +79,8 @@ module OrderManagement
                 expect(mail_mock).to have_received(:deliver_now).twice
               end
 
-              it "doesn't send emails if param is set to false" do
-                payment_authorize.call!(nil, false)
+              it "doesn't send emails by default" do
+                payment_authorize.call!
 
                 expect(order.errors.size).to eq 0
                 expect(PaymentMailer).to_not have_received(:authorize_payment)
