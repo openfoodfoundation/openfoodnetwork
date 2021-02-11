@@ -10,6 +10,10 @@ module Spree
 
     has_many :shipping_rates, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
+
+    has_one :selected_shipping_rate, -> { where(selected: true) },
+            class_name: 'Spree::ShippingRate', inverse_of: :shipment
+
     has_many :state_changes, as: :stateful
     has_many :inventory_units, dependent: :delete_all
     has_one :adjustment, as: :source, dependent: :destroy
@@ -87,10 +91,6 @@ module Spree
 
     def add_shipping_method(shipping_method, selected = false)
       shipping_rates.create(shipping_method: shipping_method, selected: selected)
-    end
-
-    def selected_shipping_rate
-      shipping_rates.find_by(selected: true)
     end
 
     def selected_shipping_rate_id
