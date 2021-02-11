@@ -96,56 +96,54 @@ feature 'Customers' do
       end
 
       describe "for a shop with multiple customers" do
+        let!(:order1) { create(:order, total: 0, payment_total: 88, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer1) }
+        let!(:order2) { create(:order, total: 99, payment_total: 0, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer2) }
+        let!(:order3) { create(:order, total: 0,  payment_total: 0, distributor: managed_distributor1, user: nil, state: 'complete', customer: customer4) }
+
+        let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [managed_distributor1]) }
+        let!(:payment1) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: 88.00) }
+
         before do
           allow(OpenFoodNetwork::FeatureToggle)
             .to receive(:enabled?).with(:customer_balance, user) { true }
 
-          create(
-            :order,
-            total: 0,
-            payment_total: 88,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer1
-          )
-          create(
-            :order,
-            total: 99,
-            payment_total: 0,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer2
-          )
-          create(
-            :order,
-            total: 0,
-            payment_total: 0,
-            distributor: managed_distributor1,
-            user: nil,
-            state: 'complete',
-            customer: customer4
-          )
-
           customer4.update enterprise: managed_distributor1
         end
 
-        it "displays customer balances" do
-          select2_select managed_distributor1.name, from: "shop_id"
+        context "with one payment only" do
+          it "displays customer balances" do
+            select2_select managed_distributor1.name, from: "shop_id"
 
-          within "tr#c_#{customer1.id}" do
-            expect(page).to have_content "CREDIT OWED"
-            expect(page).to have_content "$88.00"
+            within "tr#c_#{customer1.id}" do
+              expect(page).to have_content "CREDIT OWED"
+              expect(page).to have_content "$88.00"
+            end
+            within "tr#c_#{customer2.id}" do
+              expect(page).to have_content "BALANCE DUE"
+              expect(page).to have_content "$-99.00"
+            end
+            within "tr#c_#{customer4.id}" do
+              expect(page).to_not have_content "CREDIT OWED"
+              expect(page).to_not have_content "BALANCE DUE"
+              expect(page).to have_content "$0.00"
+            end
           end
-          within "tr#c_#{customer2.id}" do
-            expect(page).to have_content "BALANCE DUE"
-            expect(page).to have_content "$-99.00"
-          end
-          within "tr#c_#{customer4.id}" do
-            expect(page).to_not have_content "CREDIT OWED"
-            expect(page).to_not have_content "BALANCE DUE"
-            expect(page).to have_content "$0.00"
+        end
+
+        context "with an additional negative payment (or refund)" do
+          let!(:payment2) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: -25.00) }
+
+          it "displays an updated customer balance" do
+            visit spree.admin_order_payments_path order1
+            expect(page).to have_content "$#{payment2.amount}"
+
+            visit admin_customers_path
+            select2_select managed_distributor1.name, from: "shop_id"
+
+            within "tr#c_#{customer1.id}" do
+              expect(page).to have_content "CREDIT OWED"
+              expect(page).to have_content "$63.00"
+            end
           end
         end
       end
