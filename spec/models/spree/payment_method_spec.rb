@@ -59,7 +59,6 @@ module Spree
 
     it "generates a clean name for known Payment Method types" do
       expect(Spree::PaymentMethod::Check.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.check"))
-      expect(Spree::Gateway::Pin.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.pin"))
       expect(Spree::Gateway::PayPalExpress.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.paypalexpress"))
       expect(Spree::Gateway::StripeConnect.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.stripeconnect"))
       expect(Spree::Gateway::StripeSCA.clean_name).to eq(I18n.t("spree.admin.payment_methods.providers.stripesca"))
