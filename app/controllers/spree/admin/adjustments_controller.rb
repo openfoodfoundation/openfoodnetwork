@@ -15,7 +15,11 @@ module Spree
       end
 
       def collection
-        parent.adjustments.eligible
+        parent.adjustments.eligible | parent.shipment_adjustments.shipping
+      end
+
+      def find_resource
+        parent.all_adjustments.eligible.find(params[:id])
       end
 
       # Choose a default tax rate to show on the edit form. The adjustment stores its included
