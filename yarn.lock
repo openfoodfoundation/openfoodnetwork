@@ -624,6 +624,11 @@ finalhandler@1.1.2:
     statuses "~1.5.0"
     unpipe "~1.0.0"
 
+flatpickr@^4.6.9:
+  version "4.6.9"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.9.tgz#9a13383e8a6814bda5d232eae3fcdccb97dc1499"
+  integrity sha512-F0azNNi8foVWKSF+8X+ZJzz8r9sE1G4hl06RyceIaLvyltKvDl6vqk9Lm/6AUUCi5HWaIjiUbk7UpeE/fOXOpw==
+
 follow-redirects@^1.0.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
@@ -1513,6 +1518,11 @@ setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
+
+shortcut-buttons-flatpickr@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/shortcut-buttons-flatpickr/-/shortcut-buttons-flatpickr-0.3.1.tgz#25ec705db8e7c80f0f81f5e160783102775ef529"
+  integrity sha512-zZRLJXF7WSeQJ0ZES+PdD1FI+yjBOufqOQ4AU5przR71Rhyekiw/6/JLA33zOqVkgR7QQ1NbVcuuSqNHHGneEg==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

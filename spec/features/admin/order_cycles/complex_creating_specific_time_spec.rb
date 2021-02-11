@@ -10,8 +10,8 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z") }
-  let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z") }
+  let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0) }
+  let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0) }
 
   scenario "creating an order cycle with full interface", js: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
@@ -48,8 +48,27 @@ feature '
     expect(page).to have_button("Create", disabled: false)
 
     # If I fill in the basic fields
-    fill_in 'order_cycle_orders_open_at', with: order_cycle_opening_time
-    fill_in 'order_cycle_orders_close_at', with: order_cycle_closing_time
+    find('#order_cycle_orders_open_at').click
+    # select date
+    select_date_from_datepicker Time.at(order_cycle_opening_time)
+    # select time
+    within(".flatpickr-calendar.open .flatpickr-time") do
+      find('.flatpickr-hour').set('%02d' % order_cycle_opening_time.hour)
+      find('.flatpickr-minute').set('%02d' % order_cycle_opening_time.min)
+    end
+    # hide the datetimepicker
+    find("body").send_keys(:escape)
+
+    find('#order_cycle_orders_close_at').click
+    # select date
+    select_date_from_datepicker Time.at(order_cycle_closing_time)
+     # select time
+     within(".flatpickr-calendar.open .flatpickr-time") do
+      find('.flatpickr-hour').set('%02d' % order_cycle_closing_time.hour)
+      find('.flatpickr-minute').set('%02d' % order_cycle_closing_time.min)
+    end
+    # hide the datetimepicker
+    find("body").send_keys(:escape)
 
     # And I add a coordinator fee
     click_button 'Add coordinator fee'
@@ -109,8 +128,8 @@ feature '
     toggle_columns "Producers", "Shops"
 
     expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-    expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
-    expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
+    expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time.strftime("%F %T %z")
+    expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time.strftime("%F %T %z")
     expect(page).to have_content "My coordinator"
 
     expect(page).to have_selector 'td.producers', text: 'My supplier'

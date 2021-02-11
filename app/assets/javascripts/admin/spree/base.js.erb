@@ -98,40 +98,6 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
 }
 
 $(document).ready(function() {
-  if (typeof Spree !== 'undefined' &&
-    typeof Spree.translations !== 'undefined') {
-    handle_date_picker_fields = function(){
-      $('.datepicker').datepicker({
-        dateFormat: Spree.translations.date_picker,
-        dayNames: Spree.translations.abbr_day_names,
-        dayNamesMin: Spree.translations.abbr_day_names,
-        monthNames: Spree.translations.month_names,
-        prevText: Spree.translations.previous,
-        nextText: Spree.translations.next,
-        showOn: "focus"
-      });
-      
-       $.datepicker.regional[I18n.locale] = {
-          prevText: Spree.translations.previous,
-          nextText: Spree.translations.next,
-          monthNames: Spree.translations.month_names,
-          dayNames: Spree.translations.abbr_day_names,
-          dayNamesMin: Spree.translations.abbr_day_names,
-          dateFormat: Spree.translations.date_picker
-      };
-      $.datepicker.setDefaults( $.datepicker.regional[I18n.locale]);
-      // Correctly display range dates
-      $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
-        $(".date-range-filter .datepicker-to" ).datepicker( "option", "minDate", selectedDate );
-      });
-      $('.date-range-filter .datepicker-to').datepicker('option', 'onSelect', function(selectedDate) {
-        $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
-      });
-    }
-
-    handle_date_picker_fields();
-  }
-
   $(".observe_field").on('change', function() {
     target = $(this).attr("data-update");
     ajax_indicator = $(this).attr("data-ajax-indicator") || '#busy_indicator';
