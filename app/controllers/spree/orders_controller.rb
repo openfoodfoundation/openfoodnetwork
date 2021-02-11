@@ -25,8 +25,8 @@ module Spree
     before_action :check_at_least_one_line_item, only: :update
 
     def show
-      ProcessPaymentIntent.new(params["payment_intent"], params[:id]).call!
       @order = Spree::Order.find_by!(number: params[:id])
+      ProcessPaymentIntent.new(params["payment_intent"], @order).call!
     end
 
     def empty

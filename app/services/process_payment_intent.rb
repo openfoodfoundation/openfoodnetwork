@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class ProcessPaymentIntent
-  def initialize(payment_intent, order_number)
+  def initialize(payment_intent, order)
     @payment_intent = payment_intent
-    @order = Spree::Order.find_by!(number: order_number)
-    @last_payment = OrderPaymentFinder.new(@order).last_payment
+    @order = order
+    @last_payment = OrderPaymentFinder.new(order).last_payment
   end
 
   def call!
@@ -16,8 +16,10 @@ class ProcessPaymentIntent
 
   private
 
+  attr_reader :order
+
   def valid?
-    @order.present? && valid_intent_string? && matches_last_payment?
+    order.present? && valid_intent_string? && matches_last_payment?
   end
 
   def valid_intent_string?
