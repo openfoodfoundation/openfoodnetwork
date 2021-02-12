@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 module OrderManagement
-  module Subscriptions
+  module Order
     describe StripeScaPaymentAuthorize do
       let(:order) { create(:order) }
       let(:payment_authorize) {
-        OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(order)
+        OrderManagement::Order::StripeScaPaymentAuthorize.new(order)
       }
 
       describe "#call!" do
@@ -55,6 +55,37 @@ module OrderManagement
                 payment_authorize.call!
 
                 expect(order.errors[:base].first).to eq "Authorization Failure"
+              end
+            end
+
+            context "and payment authorize requires additional authorization" do
+              let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
+
+              before do
+                allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
+                allow(PaymentMailer).to receive(:authorization_required) { mail_mock }
+                allow(payment).to receive(:authorize!) {
+                  payment.state = "pending"
+                  payment.cvv_response_message = "https://stripe.com/redirect"
+                }
+              end
+
+              it "sends an email requesting authorization and an email notifying the shop owner when requested" do
+                payment_authorize.extend(OrderManagement::Order::SendAuthorizationEmails).call!
+
+                expect(order.errors.size).to eq 0
+                expect(PaymentMailer).to have_received(:authorize_payment)
+                expect(PaymentMailer).to have_received(:authorization_required)
+                expect(mail_mock).to have_received(:deliver_now).twice
+              end
+
+              it "doesn't send emails by default" do
+                payment_authorize.call!
+
+                expect(order.errors.size).to eq 0
+                expect(PaymentMailer).to_not have_received(:authorize_payment)
+                expect(PaymentMailer).to_not have_received(:authorization_required)
+                expect(mail_mock).to_not have_received(:deliver_now)
               end
             end
           end

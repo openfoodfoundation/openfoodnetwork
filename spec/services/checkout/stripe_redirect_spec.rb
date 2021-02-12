@@ -43,6 +43,7 @@ describe Checkout::StripeRedirect do
               stripe_payment.state = 'pending'
               true
             end
+            allow(stripe_payment.order).to receive(:distributor) { distributor }
             test_redirect_url = "http://stripe_auth_url/"
             allow(stripe_payment).to receive(:cvv_response_message).and_return(test_redirect_url)
 

@@ -130,6 +130,7 @@ describe SubscriptionConfirmJob do
     before do
       OrderWorkflow.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
+      allow(job).to receive(:send_payment_authorization_emails).and_call_original
       setup_email
       expect(job).to receive(:record_order)
     end
@@ -213,6 +214,7 @@ describe SubscriptionConfirmJob do
           it "sends a failed payment email" do
             expect(job).to receive(:send_failed_payment_email)
             expect(job).to_not receive(:send_confirmation_email)
+            expect(job).to_not receive(:send_payment_authorization_emails)
             job.send(:confirm_order!, order)
           end
         end
@@ -228,10 +230,8 @@ describe SubscriptionConfirmJob do
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
-            ActionMailer::Base.deliveries.clear
             expect{ job.send(:confirm_order!, order) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirmation_email).once
-            expect(ActionMailer::Base.deliveries.count).to be 1
           end
         end
       end

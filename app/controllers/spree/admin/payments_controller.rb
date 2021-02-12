@@ -157,7 +157,7 @@ module Spree
 
         raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
 
-        return unless @payment.cvv_response_message.present?
+        return unless @payment.authorization_action_required?
 
         PaymentMailer.authorize_payment(@payment).deliver_later
         raise Spree::Core::GatewayError, I18n.t('action_required')
