@@ -51,5 +51,5 @@
   .three.columns.alpha
     = "&nbsp;".html_safe
   .five.columns.omega
-    = af.check_box :use_geocoder
-    = af.label :use_geocoder, t('use_geocoder')
+    = check_box_tag "use_geocoder"
+    = label_tag "use_geocoder", t('use_geocoder')

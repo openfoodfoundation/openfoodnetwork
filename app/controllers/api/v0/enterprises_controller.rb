@@ -3,6 +3,8 @@
 module Api
   module V0
     class EnterprisesController < Api::V0::BaseController
+      include GeocodeEnterpriseAddress
+
       before_action :override_owner, only: [:create, :update]
       before_action :check_type, only: :update
       before_action :override_sells, only: [:create, :update]
@@ -17,6 +19,7 @@ module Api
         user_ids = enterprise_params.delete(:user_ids)
         @enterprise = Enterprise.new(enterprise_params)
         if @enterprise.save
+          geocode_address_if_use_geocoder
           @enterprise.user_ids = user_ids
           render json: @enterprise.id, status: :created
         else
@@ -29,6 +32,7 @@ module Api
         authorize! :update, @enterprise
 
         if @enterprise.update(enterprise_params)
+          geocode_address_if_use_geocoder
           render json: @enterprise.id, status: :ok
         else
           invalid_resource!(@enterprise)
