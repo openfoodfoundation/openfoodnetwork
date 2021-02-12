@@ -785,6 +785,7 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   knapsack
   letter_opener (>= 1.4.1)
+  libv8 (< 8)
   mini_racer (= 0.2.15)
   monetize (~> 1.10)
   oauth2 (~> 1.4.4)
@@ -813,8 +814,8 @@ DEPENDENCIES
   rswag
   rubocop
   rubocop-rails
-  sass
-  sass-rails
+  sass (<= 4.7.1)
+  sass-rails (< 6.0.0)
   select2-rails (~> 3.4.7)
   selenium-webdriver
   shoulda-matchers

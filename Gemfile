@@ -15,13 +15,11 @@ if ENV['DEPENDENCIES_NEXT']
   gem 'rails', '> 5.0', '< 5.1'
 
   gem 'activemerchant', '>= 1.78.0'
-  gem 'angular-rails-templates', '>= 0.3.0'
+  gem 'angular-rails-templates', '>= 0.3.0', '< 1.1.0'
   gem 'awesome_nested_set'
+  gem 'rails-controller-testing'
   gem 'ransack', '2.3.0'
   gem 'responders'
-  gem 'sass', '<= 4.7.1'
-  gem 'sass-rails', '< 6.0.0'
-  gem 'libv8', '< 8'
 else
   gem 'rails', '~> 4.2'
 
@@ -30,8 +28,6 @@ else
   gem 'awesome_nested_set', '~> 3.3.1'
   gem 'ransack', '~> 1.8.10'
   gem 'responders', '~> 2.0'
-  gem 'sass'
-  gem 'sass-rails'
 
   gem 'db2fog'
   gem 'unicorn'
@@ -120,12 +116,15 @@ gem 'test-unit', '~> 3.4'
 gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
+gem 'libv8', '< 8'
 gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
 gem 'angular_rails_csrf'
 gem 'foundation-icons-sass-rails'
+gem 'sass', '<= 4.7.1'
+gem 'sass-rails', '< 6.0.0'
 
 gem 'foundation-rails', '= 5.5.2.1'
 
