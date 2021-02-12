@@ -27,6 +27,7 @@ module Spree
     def show
       @order = Spree::Order.find_by!(number: params[:id])
       ProcessPaymentIntent.new(params["payment_intent"], @order).call!
+      @order.reload
     end
 
     def empty
