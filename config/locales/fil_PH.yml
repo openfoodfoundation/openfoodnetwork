@@ -120,8 +120,6 @@ fil_PH:
     integer_array_validator:
       not_array_error: "ay dapat na pagpipilian"
       invalid_element_error: "ay dapat naglalaman lamang ng valid na integers"
-  datetime_picker_ui:
-    time_text: oras
   enterprise_mailer:
     confirmation_instructions:
       subject: "Kumpirmahin ang email address para sa %{enterprise}"
@@ -3288,9 +3286,6 @@ fil_PH:
           used_saved_card: "gumamit ng naka-save na card:"
           or_enter_new_card: "o ipasok ang detalye para sa bagong card:"
           remember_this_card: Naaalala ba ang card na ito?
-    date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
     orders:
       edit:
         login_to_view_order: "Maglog-in para makita ang inyong order."

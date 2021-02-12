@@ -124,10 +124,6 @@ cy:
     integer_array_validator:
       not_array_error: "rhaid iddo fod yn arae"
       invalid_element_error: "rhaid iddo gynnwys cyfanrifau dilys yn unig"
-  datetime_picker_ui:
-    current_text: Nawr
-    close_text: Wedi&#39;i wneud
-    time_text: Amser
   enterprise_mailer:
     confirmation_instructions:
       subject: "Cadarnhewch y cyfeiriad e-bost ar gyfer %{enterprise}"
@@ -3456,8 +3452,7 @@ cy:
           or_enter_new_card: "Neu, nodwch fanylion cerdyn newydd:"
           remember_this_card: Ydych chi&#39;n cofio&#39;r cerdyn hwn?
     date_picker:
-      format: '% Y-% m-%d'
-      js_format: 'yy-mm-dd'
+      now: "Nawr"
     orders:
       error_flash_for_unavailable_items: "Nid yw eitem yn eich trol ar gael. Diweddarwch y meintiau a ddewiswyd."
       edit:

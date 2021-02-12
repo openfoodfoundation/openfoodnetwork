@@ -125,10 +125,6 @@ fr_CA:
     integer_array_validator:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
-  datetime_picker_ui:
-    current_text: Mtnt
-    close_text: Fait
-    time_text: Heure
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -3438,8 +3434,7 @@ fr_CA:
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      now: "Mtnt"
     orders:
       error_flash_for_unavailable_items: "Un élément de votre panier est épuisé. Veuillez mettre à jour les quantités sélectionnées."
       edit:

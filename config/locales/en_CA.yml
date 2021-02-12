@@ -124,10 +124,6 @@ en_CA:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
-  datetime_picker_ui:
-    current_text: Now
-    close_text: Done
-    time_text: Time
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -3424,8 +3420,7 @@ en_CA:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:

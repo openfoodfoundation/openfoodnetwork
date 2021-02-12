@@ -124,10 +124,6 @@ ar:
     integer_array_validator:
       not_array_error: "يجب أن يكون مصفوفة"
       invalid_element_error: "يجب أن يحتوي فقط على أعداد صحيحة فاعلة"
-  datetime_picker_ui:
-    current_text: الآن
-    close_text: تم
-    time_text: الوقت
   enterprise_mailer:
     confirmation_instructions:
       subject: "يرجى تأكيد عنوان البريد الإلكتروني ل %{enterprise}"
@@ -3511,8 +3507,7 @@ ar:
           or_enter_new_card: "أو أدخل تفاصيل البطاقة الجديدة:"
           remember_this_card: تذكر هذه البطاقة؟
     date_picker:
-      format: '٪ س-٪ م-%d'
-      js_format: 'yy-mm-dd'
+      now: "الآن"
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:

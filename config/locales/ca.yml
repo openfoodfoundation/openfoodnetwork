@@ -3427,8 +3427,8 @@ ca:
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
     date_picker:
-      flatpickr_date_format: "Y-m-d"
-      flatpickr_datetime_format: "Y-m-d H:i"
+      flatpickr_date_format: "d-m-Y"
+      flatpickr_datetime_format: "d-m-Y H:i"
       today: "Avui"
       now: "Ara"
     orders:

@@ -3479,8 +3479,8 @@ ru:
           or_enter_new_card: "Или введите данные для новой карты:"
           remember_this_card: Запомнить эту карту?
     date_picker:
-      flatpickr_date_format: "Г-м-д"
-      flatpickr_datetime_format: "Г-м-д Ч:м"
+      flatpickr_date_format: "д.м.Г"
+      flatpickr_datetime_format: "д.м.Г Ч:м"
       today: "Сегодня"
       now: "Сейчас"
     orders:
