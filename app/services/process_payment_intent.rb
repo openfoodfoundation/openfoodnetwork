@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+# When directing a customer to Stripe to authorize the payment, we specify a
+# redirect_url that Stripe should return them to. When checking out, it's
+# /checkout; for admin payments and subscription payemnts it's the order url.
+# This class confirms that the payment intent matches what's in our database,
+# marks the payment as complete, and removes the cvv_response_message field,
+# which we use to indicate that authorization is required. It also completes the
+# Order, if appropriate.
+
 class ProcessPaymentIntent
   def initialize(payment_intent, order)
     @payment_intent = payment_intent
