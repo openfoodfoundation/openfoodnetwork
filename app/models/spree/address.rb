@@ -10,23 +10,17 @@ module Spree
     has_one :enterprise, dependent: :restrict_with_exception
     has_many :shipments
 
-    before_validation :geocode, if: :use_geocoder?
-
     validates :firstname, :lastname, :address1, :city, :country, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate
 
-    attr_accessor :use_geocoder
-
     after_save :touch_enterprise
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
     delegate :name, to: :state, prefix: true, allow_nil: true
-
-    geocoded_by :geocode_address
 
     def self.default
       country = begin
@@ -93,10 +87,6 @@ module Spree
       }
     end
 
-    def geocode_address
-      render_address([address1, address2, zipcode, city, country.andand.name, state.andand.name])
-    end
-
     def full_address
       render_address([address1, address2, city, zipcode, state.andand.name])
     end
@@ -110,10 +100,6 @@ module Spree
     end
 
     private
-
-    def use_geocoder?
-      @use_geocoder == true || @use_geocoder == 'true' || @use_geocoder == '1'
-    end
 
     def require_phone?
       true

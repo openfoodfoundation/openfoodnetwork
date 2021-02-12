@@ -6,7 +6,6 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.latLong = null
   $scope.addressConfirmed
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
-  $scope.enableMapConfirm = GmapsGeo and GmapsGeo.OK
 
   # Filter countries without states since the form requires a state to be selected.
   # Consider changing the form to require a state only if a country requires them (Spree option).

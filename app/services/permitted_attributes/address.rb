@@ -7,7 +7,7 @@ module PermittedAttributes
         :firstname, :lastname, :address1, :address2,
         :city, :country_id, :state_id, :zipcode,
         :phone, :state_name, :alternative_phone, :company,
-        :latitude, :longitude, :use_geocoder
+        :latitude, :longitude
       ]
     end
   end

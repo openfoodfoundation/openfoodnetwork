@@ -410,10 +410,6 @@ class Enterprise < ActiveRecord::Base
     address.firstname = address.lastname = address.phone = 'unused' if address.present?
   end
 
-  def geocode_address
-    address.geocode if address.andand.changed?
-  end
-
   def ensure_owner_is_manager
     users << owner unless users.include?(owner)
   end

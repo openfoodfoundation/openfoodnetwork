@@ -49,6 +49,20 @@ describe Api::EnterprisesController, type: :controller do
         enterprise = Enterprise.last
         expect(enterprise.user_ids).to match_array([enterprise_owner.id, manager1.id, manager2.id])
       end
+
+      context "geocoding" do
+        it "geocodes the address when the :use_geocoder parameter is set" do
+          expect_any_instance_of(AddressGeocoder).to receive(:geocode)
+
+          api_post :create, { enterprise: new_enterprise_params, use_geocoder: "1" }
+        end
+
+        it "doesn't geocode the address when the :use_geocoder parameter is not set" do
+          expect_any_instance_of(AddressGeocoder).not_to receive(:geocode)
+
+          api_post :create, { enterprise: new_enterprise_params, use_geocoder: "0" }
+        end
+      end
     end
   end
 
