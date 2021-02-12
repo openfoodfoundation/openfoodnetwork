@@ -1,0 +1,18 @@
+.question-mark-icon {
+  position: relative;
+  top: 1px;
+  &::before {
+    content: "?";
+    padding-left: 1px;
+    display: inline-block;
+    color: $tiny-blue;
+    border: 1px solid $grey-250;
+    border-radius: 50%;
+    text-align: center;
+    background-color: $grey-075;
+    width: 18px;
+    height: 18px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
