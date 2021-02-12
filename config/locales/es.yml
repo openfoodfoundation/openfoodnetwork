@@ -126,10 +126,6 @@ es:
     integer_array_validator:
       not_array_error: "debe ser una matriz"
       invalid_element_error: "debe contener solo enteros válidos"
-  datetime_picker_ui:
-    current_text: Ahora
-    close_text: Hecho
-    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
@@ -3431,8 +3427,10 @@ es:
           or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
           remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy/mm/dd'
+      flatpickr_date_format: "d-m-Y"
+      flatpickr_datetime_format: "d-m-Y H:i"
+      today: "Hoy"
+      now: "Ahora"
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:

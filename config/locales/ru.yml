@@ -127,10 +127,6 @@ ru:
     integer_array_validator:
       not_array_error: "должен быть массивом"
       invalid_element_error: "должен содержать только правильные целые числа"
-  datetime_picker_ui:
-    current_text: Сейчас
-    close_text: Готово
-    time_text: Время
   enterprise_mailer:
     confirmation_instructions:
       subject: "Пожалуйста, подтвердите адрес электронной почты для %{enterprise}"
@@ -3483,8 +3479,10 @@ ru:
           or_enter_new_card: "Или введите данные для новой карты:"
           remember_this_card: Запомнить эту карту?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      flatpickr_date_format: "Г-м-д"
+      flatpickr_datetime_format: "Г-м-д Ч:м"
+      today: "Сегодня"
+      now: "Сейчас"
     orders:
       error_flash_for_unavailable_items: "Товар в Вашей корзине стал недоступен."
       edit:
