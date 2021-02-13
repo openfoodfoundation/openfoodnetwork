@@ -4,6 +4,30 @@ require 'spec_helper'
 
 module VariantUnits
   describe OptionValueNamer do
+    describe '#name' do
+      subject { described_class.new(variant) }
+
+      context 'when variant_unit_scale is nil' do
+        context 'when variant_unit is weight' do
+          let(:product) { build(:product, variant_unit: 'weight', variant_unit_scale: nil) }
+          let(:variant) { build(:variant, product: product) }
+
+          it 'defaults to variant_unit_scale 1.0' do
+            expect(subject.name).to eq('1 g')
+          end
+        end
+
+        context 'when variant_unit is volume' do
+          let(:product) { build(:product, variant_unit: 'volume', variant_unit_scale: nil) }
+          let(:variant) { build(:variant, product: product) }
+
+          it 'defaults to variant_unit_scale 1.0' do
+            expect(subject.name).to eq('1 L')
+          end
+        end
+      end
+    end
+    
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
       let(:subject) { OptionValueNamer.new }

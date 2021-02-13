@@ -78,8 +78,8 @@ module VariantUnits
       }
 
       scales = units[@variant.product.variant_unit]
-      product_scale = @variant.product.variant_unit_scale
-      product_scale_system = scales[product_scale.to_f]['system']
+      product_scale = @variant.product.try(:variant_unit_scale) || 1.0
+      product_scale_system = scales.fetch(product_scale.to_f, nil).try(:fetch, "system", "metric")
 
       largest_unit = find_largest_unit(scales, product_scale_system)
       [largest_unit[0], largest_unit[1]["name"]]
