@@ -35,7 +35,9 @@ module Spree
       end
 
       describe "updating an adjustment" do
-        let(:adjustment) { create(:adjustment, adjustable: order, amount: 1100, included_tax: 100) }
+        let(:adjustment) {
+          create(:adjustment, adjustable: order, order: order, amount: 1100, included_tax: 100)
+        }
 
         it "sets included tax to zero when no tax rate is specified" do
           spree_put :update, order_id: order.number, id: adjustment.id, adjustment: { label: 'Testing included tax', amount: '110' }, tax_rate_id: ''
