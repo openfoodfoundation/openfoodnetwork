@@ -54,10 +54,6 @@ module Spree
       where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''")
     }
 
-    def adjustment_label
-      I18n.t('shipping')
-    end
-
     # Here we allow checkout with shipping methods without zones (see issue #3928 for details)
     #   and also checkout with addresses outside of the zones of the selected shipping method
     # This method could be used, like in Spree, to validate shipping method zones on checkout.

@@ -386,17 +386,8 @@ describe Spree::Shipment do
 
     it "should create adjustment when not present" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
-      expect(shipping_method).to receive(:create_adjustment).with(shipping_method.adjustment_label,
+      expect(shipping_method).to receive(:create_adjustment).with(shipment.adjustment_label,
                                                                   shipment, shipment, true, "open")
-      shipment.__send__(:ensure_correct_adjustment)
-    end
-
-    # Regression test for #3138
-    it "should use the shipping method's adjustment label" do
-      allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
-      allow(shipping_method).to receive_messages(adjustment_label: "Foobar")
-      expect(shipping_method).to receive(:create_adjustment).with("Foobar", shipment,
-                                                                  shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
 
@@ -407,7 +398,7 @@ describe Spree::Shipment do
       allow(shipment).to receive_messages(adjustment: adjustment, update_columns: true)
       allow(adjustment).to receive(:open?) { true }
       expect(shipment.adjustment).to receive(:originator=).with(shipping_method)
-      expect(shipment.adjustment).to receive(:label=).with(shipping_method.adjustment_label)
+      expect(shipment.adjustment).to receive(:label=).with(shipment.adjustment_label)
       expect(shipment.adjustment).to receive(:amount=).with(10.00)
       allow(shipment.adjustment).to receive(:save!)
       expect(shipment.adjustment).to receive(:reload)
@@ -421,7 +412,7 @@ describe Spree::Shipment do
       allow(shipment).to receive_messages(adjustment: adjustment, update_columns: true)
       allow(adjustment).to receive(:open?) { false }
       expect(shipment.adjustment).to receive(:originator=).with(shipping_method)
-      expect(shipment.adjustment).to receive(:label=).with(shipping_method.adjustment_label)
+      expect(shipment.adjustment).to receive(:label=).with(shipment.adjustment_label)
       expect(shipment.adjustment).not_to receive(:amount=).with(10.00)
       allow(shipment.adjustment).to receive(:save!)
       expect(shipment.adjustment).to receive(:reload)

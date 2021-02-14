@@ -265,12 +265,12 @@ module Spree
     def ensure_correct_adjustment
       if adjustment
         adjustment.originator = shipping_method
-        adjustment.label = shipping_method.adjustment_label
+        adjustment.label = adjustment_label
         adjustment.amount = selected_shipping_rate.cost if adjustment.open?
         adjustment.save!
         adjustment.reload
       elsif selected_shipping_rate_id
-        shipping_method.create_adjustment(shipping_method.adjustment_label,
+        shipping_method.create_adjustment(adjustment_label,
                                           self,
                                           self,
                                           true,
@@ -280,6 +280,10 @@ module Spree
 
       update_amounts if adjustment
       update_adjustment_included_tax if adjustment
+    end
+
+    def adjustment_label
+      I18n.t('shipping')
     end
 
     private
