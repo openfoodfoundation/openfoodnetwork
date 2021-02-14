@@ -428,15 +428,10 @@ describe Spree::Shipment do
   end
 
   describe "#update_amounts" do
-    it "updates shipping cost when selected_shipping_rate is present" do
-      allow(shipment).to receive(:selected_shipping_rate) { double(:rate, cost: 10) }
+    it "persists the shipping cost from the shipping fee adjustment" do
+      allow(shipment).to receive(:adjustment) { double(:adjustment, amount: 10) }
       expect(shipment).to receive(:update_columns).with(cost: 10, updated_at: kind_of(Time))
 
-      shipment.update_amounts
-    end
-
-    it "does nothing when selected_shipping_rate is not present" do
-      expect(shipment).to_not receive(:update_columns)
       shipment.update_amounts
     end
   end

@@ -161,10 +161,8 @@ module Spree
     end
 
     def update_amounts
-      return unless selected_shipping_rate
-
-      self.update_columns(
-        cost: selected_shipping_rate.cost,
+      update_columns(
+        cost: adjustment&.amount || 0.0,
         updated_at: Time.zone.now
       )
     end
@@ -278,7 +276,7 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
-      update_amounts if adjustment
+      update_amounts if adjustment&.amount != cost
       update_adjustment_included_tax if adjustment
     end
 
