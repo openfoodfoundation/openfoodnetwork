@@ -234,37 +234,6 @@ describe Spree::Order do
     end
   end
 
-  context "#outstanding_balance" do
-    it "should return positive amount when payment_total is less than total" do
-      order.payment_total = 20.20
-      order.total = 30.30
-      expect(order.outstanding_balance).to eq 10.10
-    end
-    it "should return negative amount when payment_total is greater than total" do
-      order.total = 8.20
-      order.payment_total = 10.20
-      expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
-    end
-  end
-
-  context "#outstanding_balance?" do
-    it "should be true when total greater than payment_total" do
-      order.total = 10.10
-      order.payment_total = 9.50
-      expect(order.outstanding_balance?).to be_truthy
-    end
-    it "should be true when total less than payment_total" do
-      order.total = 8.25
-      order.payment_total = 10.44
-      expect(order.outstanding_balance?).to be_truthy
-    end
-    it "should be false when total equals payment_total" do
-      order.total = 10.10
-      order.payment_total = 10.10
-      expect(order.outstanding_balance?).to be_falsy
-    end
-  end
-
   context "#completed?" do
     it "should indicate if order is completed" do
       order.completed_at = nil
