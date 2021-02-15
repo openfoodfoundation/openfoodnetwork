@@ -92,9 +92,10 @@ FactoryBot.define do
                          payment_method: evaluator.payment_method)
         order.recreate_all_fees!
         order.ship_address = evaluator.ship_address
-        while !order.completed? do break unless a = order.next! end
+        while !order.delivery? do break unless a = order.next! end
         order.select_shipping_method(evaluator.shipping_method.id)
-        order.save
+
+        while !order.completed? do break unless a = order.next! end
       end
     end
   end
