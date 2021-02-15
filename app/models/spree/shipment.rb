@@ -162,7 +162,7 @@ module Spree
 
     def update_amounts
       update_columns(
-        cost: adjustment&.amount || 0.0,
+        cost: fee_adjustment&.amount || 0.0,
         updated_at: Time.zone.now
       )
     end
@@ -256,17 +256,17 @@ module Spree
       inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
     end
 
-    def adjustment
-      @adjustment ||= adjustments.shipping.first
+    def fee_adjustment
+      @fee_adjustment ||= adjustments.shipping.first
     end
 
     def ensure_correct_adjustment
-      if adjustment
-        adjustment.originator = shipping_method
-        adjustment.label = adjustment_label
-        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
-        adjustment.save!
-        adjustment.reload
+      if fee_adjustment
+        fee_adjustment.originator = shipping_method
+        fee_adjustment.label = adjustment_label
+        fee_adjustment.amount = selected_shipping_rate.cost if fee_adjustment.open?
+        fee_adjustment.save!
+        fee_adjustment.reload
       elsif selected_shipping_rate_id
         shipping_method.create_adjustment(adjustment_label,
                                           self,
@@ -276,8 +276,8 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
-      update_amounts if adjustment&.amount != cost
-      update_adjustment_included_tax if adjustment
+      update_amounts if fee_adjustment&.amount != cost
+      update_adjustment_included_tax if fee_adjustment
     end
 
     def adjustment_label
@@ -319,7 +319,7 @@ module Spree
 
     def after_ship
       inventory_units.each(&:ship!)
-      adjustment.finalize!
+      fee_adjustment.finalize!
       send_shipped_email
       touch :shipped_at
     end
@@ -330,9 +330,9 @@ module Spree
 
     def update_adjustment_included_tax
       if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
-        adjustment.set_included_tax! Config.shipping_tax_rate
+        fee_adjustment.set_included_tax! Config.shipping_tax_rate
       else
-        adjustment.set_included_tax! 0
+        fee_adjustment.set_included_tax! 0
       end
     end
 

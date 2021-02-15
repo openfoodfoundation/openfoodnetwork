@@ -106,7 +106,7 @@ describe LineItemsController, type: :controller do
         item_num = order.line_items.length
         initial_fees = item_num * (shipping_fee + payment_fee)
         expect(order.adjustment_total).to eq initial_fees
-        expect(order.shipments.last.adjustment.included_tax).to eq 1.2
+        expect(order.shipments.last.fee_adjustment.included_tax).to eq 1.2
 
         # Delete the item
         item = order.line_items.first
@@ -119,9 +119,9 @@ describe LineItemsController, type: :controller do
         order.reload
         order.shipment.reload
         expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
-        expect(order.shipments.last.adjustment.amount).to eq shipping_fee
+        expect(order.shipments.last.fee_adjustment.amount).to eq shipping_fee
         expect(order.payments.first.adjustment.amount).to eq payment_fee
-        expect(order.shipments.last.adjustment.included_tax).to eq 0.6
+        expect(order.shipments.last.fee_adjustment.included_tax).to eq 0.6
       end
     end
 
