@@ -27,13 +27,13 @@ module Api
       unlock = params[:shipment].delete(:unlock)
 
       if unlock == 'yes'
-        @shipment.adjustment.open
+        @shipment.fee_adjustment.open
       end
 
       @shipment.update(shipment_params[:shipment])
 
       if unlock == 'yes'
-        @shipment.adjustment.close
+        @shipment.fee_adjustment.close
       end
 
       render json: @shipment.reload, serializer: Api::ShipmentSerializer, status: :ok
