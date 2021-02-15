@@ -1,5 +1,9 @@
 Openfoodnetwork::Application.routes.draw do
   namespace :api do
+    namespace :beta do
+      resources :customers, only: [:index, :update]
+    end
+
     namespace :legacy do
       resources :products do
         collection do
