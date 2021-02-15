@@ -18,7 +18,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       Loading.message = t('creating') + " " + @enterprise.name
       $http(
         method: "POST"
-        url: "/api/enterprises"
+        url: "/api/legacy/enterprises"
         data:
           enterprise: @prepare()
         params:
@@ -42,7 +42,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       Loading.message = t('updating') + " " + @enterprise.name
       $http(
         method: "PUT"
-        url: "/api/enterprises/#{@enterprise.id}"
+        url: "/api/legacy/enterprises/#{@enterprise.id}"
         data:
           enterprise: @prepare()
         params:

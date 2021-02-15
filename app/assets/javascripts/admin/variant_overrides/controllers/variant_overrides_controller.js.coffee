@@ -42,7 +42,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     $scope.fetchProducts()
 
   $scope.fetchProducts = ->
-    url = "/api/products/overridable?page=::page::;per_page=100"
+    url = "/api/legacy/products/overridable?page=::page::;per_page=100"
     PagedFetcher.fetch url, $scope.addProducts
 
   $scope.addProducts = (data) ->

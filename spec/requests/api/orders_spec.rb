@@ -2,8 +2,8 @@
 
 require 'swagger_helper'
 
-describe 'api/orders', type: :request do
-  path '/api/orders' do
+describe 'api/legacy/orders', type: :request do
+  path '/api/legacy/orders' do
     get('list orders') do
       tags 'Orders'
       # type should be replaced with swagger 3.01 valid schema: {type: string} when rswag #317 is resolved:

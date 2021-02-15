@@ -1,5 +1,5 @@
 angular.module("Darkswarm").factory 'Customer', ($resource, $injector, Messages) ->
-  Customer = $resource('/api/customers/:id/:action.json', {}, {
+  Customer = $resource('/api/legacy/customers/:id/:action.json', {}, {
     'index':
       method: 'GET'
       isArray: true
