@@ -3,7 +3,12 @@
 require 'spec_helper'
 
 describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
+  subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, params, true }
+  let(:user) { create(:admin_user) }
+
   describe "fetching orders" do
+    let(:params) { {} }
+
     let(:d1) { create(:distributor_enterprise) }
     let(:oc1) { create(:simple_order_cycle) }
     let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
@@ -12,9 +17,6 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
     before { o1.line_items << li1 }
 
     context "as a site admin" do
-      let(:user) { create(:admin_user) }
-      subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true }
-
       it "fetches completed orders" do
         o2 = create(:order)
         o2.line_items << build(:line_item)
@@ -121,6 +123,24 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         it "does not show line items supplied by my producers" do
           expect(subject.table_items).to eq([])
         end
+      end
+    end
+  end
+
+  describe '#columns' do
+    context 'when report type is bulk_coop_customer_payments' do
+      let(:params) { { report_type: 'bulk_coop_customer_payments' } }
+
+      it 'returns' do
+        expect(subject.columns).to eq(
+          [
+            :order_billing_address_name,
+            :order_completed_at,
+            :customer_payments_total_cost,
+            :customer_payments_amount_owed,
+            :customer_payments_amount_paid,
+          ]
+        )
       end
     end
   end

@@ -14,6 +14,7 @@ module OrderManagement
         ].freeze
 
         attr_reader :params
+
         def initialize(user, params = {}, render_table = false)
           @params = params
           @user = user
