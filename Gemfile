@@ -20,6 +20,8 @@ gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
+gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-5"
+gem "fog-aws", ">= 0.6.0"
 
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
