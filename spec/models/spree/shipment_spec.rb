@@ -382,7 +382,10 @@ describe Spree::Shipment do
   end
 
   context "ensure_correct_adjustment" do
-    before { allow(shipment).to receive(:reload) }
+    before do
+      shipment.save
+      allow(shipment).to receive(:reload)
+    end
 
     it "should create adjustment when not present" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
