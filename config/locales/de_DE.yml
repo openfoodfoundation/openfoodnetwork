@@ -1251,7 +1251,7 @@ de_DE:
   tax_invoice: "Rechnungsnummer:"
   tax_total: "Steuersumme (%{rate}):"
   total_excl_tax: "Summe (zzgl. Steuern):"
-  total_incl_tax: "Summe (inkl. Steuern):"
+  total_incl_tax: "GESAMT:"
   abn: "USt-IdNr.:"
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnung ausgestellt am:"
@@ -3500,6 +3500,9 @@ de_DE:
       authorize_payment:
         subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network DE"
         instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert eine zusätzliche Authentifizierung. Bitte besuchen Sie die folgende URL, um Ihre Zahlung zu bestätigen:"
+      authorization_required:
+        subject: "Eine Zahlung muss durch den Kunden bestätigt werden"
+        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Bestätigung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
