@@ -159,15 +159,19 @@ module OrderManagement
         end
 
         def customer_payments_total_cost(line_items)
-          line_items.map(&:order).uniq.sum(&:total)
+          unique_orders(line_items).sum(&:total)
         end
 
         def customer_payments_amount_owed(line_items)
-          line_items.map(&:order).uniq.sum(&:outstanding_balance)
+          unique_orders(line_items).sum(&:outstanding_balance)
         end
 
         def customer_payments_amount_paid(line_items)
-          line_items.map(&:order).uniq.sum(&:payment_total)
+          unique_orders(line_items).sum(&:payment_total)
+        end
+
+        def unique_orders(line_items)
+          line_items.map(&:order).uniq
         end
 
         def empty_cell(_line_items)
