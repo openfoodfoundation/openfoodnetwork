@@ -136,6 +136,7 @@ module Spree
 
     # All the states an order can be in after completing the checkout
     FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
+    FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
     scope :finalized, -> { where(state: FINALIZED_STATES) }
 
@@ -394,7 +395,11 @@ module Spree
     end
 
     def outstanding_balance
-      total - payment_total
+      if state.in?(FINALIZED_NON_SUCCESSFUL_STATES)
+        -payment_total
+      else
+        total - payment_total
+      end
     end
 
     def outstanding_balance?

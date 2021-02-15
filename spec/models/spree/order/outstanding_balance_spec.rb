@@ -1,216 +1,132 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  let(:order) { build(:order) }
 
   context "#outstanding_balance" do
     context 'when orders are in cart state' do
-      before do
-        create(:order, total: order_total, payment_total: 0, state: 'cart')
-        create(:order, total: order_total, payment_total: 0, state: 'cart')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'cart') }
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(-order_total)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when orders are in address state' do
-      before do
-        create(:order, total: order_total, payment_total: 0, state: 'address')
-        create(:order, total: order_total, payment_total: 50, state: 'address')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'address') }
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(-order_total)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when orders are in delivery state' do
-      before do
-        create(:order, total: order_total, payment_total: 0, state: 'delivery')
-        create(:order, total: order_total, payment_total: 50, state: 'delivery')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'delivery') }
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(-order_total)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when orders are in payment state' do
-      before do
-        create(:order, total: order_total, payment_total: 0, state: 'payment')
-        create(:order, total: order_total, payment_total: 50, state: 'payment')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'payment') }
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(-order_total)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when no orders where paid' do
-      before do
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'complete') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(-order_total)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when an order was paid' do
-      let(:payment_total) { order_total }
-
-      before do
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'complete')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'complete') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total - 200.0)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when an order is canceled' do
-      let(:payment_total) { order_total }
-      let(:non_canceled_orders_total) { order_total }
-
-      before do
-        create(:order, total: order_total, payment_total: order_total, state: 'canceled')
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'canceled') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total)
+        expect(order.outstanding_balance).to eq(-10)
       end
     end
 
     context 'when an order is resumed' do
-      let(:payment_total) { order_total }
-
-      before do
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'resumed')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'resumed') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total - 200.0)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when an order is in payment' do
-      let(:payment_total) { order_total }
-
-      before do
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'payment')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'payment') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total - 200.0)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when an order is awaiting_return' do
-      let(:payment_total) { order_total }
-
-      before do
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'awaiting_return')
-      end
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'awaiting_return') }
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total - 200.0)
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
     context 'when an order is returned' do
-      let(:payment_total) { order_total }
-      let(:non_returned_orders_total) { order_total }
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'returned') }
 
-      before do
-        order = create(:order, total: order_total, payment_total: payment_total)
-        order.update_attribute(:state, 'returned')
-        order = create(:order, total: order_total, payment_total: 0)
-        order.update_attribute(:state, 'complete')
-      end
-
-      it 'returns the customer balance' do
-        order = outstanding_balance.query.first
-        expect(order.balance_value).to eq(payment_total)
+      it 'returns the balance' do
+        expect(order.outstanding_balance).to eq(-10)
       end
     end
 
-    context 'when there are no orders' do
-      it 'returns the order balance' do
-        orders = outstanding_balance.query
-        expect(orders).to be_empty
+    context 'when payment_total is less than total' do
+      let(:order) { build(:order, total: 100, payment_total: 10, state: 'complete') }
+
+      it "returns positive" do
+        expect(order.outstanding_balance).to eq(100 - 10)
       end
     end
 
-    it "should return positive amount when payment_total is less than total" do
-      order.payment_total = 20.20
-      order.total = 30.30
-      expect(order.outstanding_balance).to eq 10.10
-    end
+    context 'when payment_total is greater than total' do
+      let(:order) { create(:order, total: 8.20, payment_total: 10.20, state: 'complete') }
 
-    it "should return negative amount when payment_total is greater than total" do
-      order.total = 8.20
-      order.payment_total = 10.20
-      expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
+      it "returns negative amount" do
+        expect(order.outstanding_balance).to eq(-2.00)
+      end
     end
   end
 
-  context "#outstanding_balance?" do
+  context '#outstanding_balance?' do
     context 'when total is greater than payment_total' do
-      before do
-        order.total = 10.10
-        order.payment_total = 9.50
-      end
+      let(:order) { build(:order, total: 10.10, payment_total: 9.50) }
 
-      it "returns true" do
+      it 'returns true' do
         expect(order.outstanding_balance?).to eq(true)
       end
     end
 
-    context "when total is less than payment_total" do
-      before do
-        order.total = 8.25
-        order.payment_total = 10.44
-      end
+    context 'when total is less than payment_total' do
+      let(:order) { build(:order, total: 8.25, payment_total: 10.44) }
 
-      it "returns true" do
+      it 'returns true' do
         expect(order.outstanding_balance?).to eq(true)
       end
     end
 
     context "when total equals payment_total" do
-      before do
-        order.total = 10.10
-        order.payment_total = 10.10
-      end
+      let(:order) { build(:order, total: 10.10, payment_total: 10.10) }
 
       it 'returns false' do
         expect(order.outstanding_balance?).to eq(false)
