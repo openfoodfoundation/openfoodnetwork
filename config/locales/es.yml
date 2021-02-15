@@ -3496,6 +3496,9 @@ es:
       authorize_payment:
         subject: "Autorice su pago a %{distributor} en OFN"
         instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
+      authorization_required:
+        subject: "Un pago requiere autorización del cliente"
+        message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"

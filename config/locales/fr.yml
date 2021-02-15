@@ -3522,6 +3522,9 @@ fr:
       authorize_payment:
         subject: "Veuillez autoriser votre paiement à %{distributor} sur CoopCircuits."
         instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
+      authorization_required:
+        subject: "Un paiement nécessite une autorisation de l'acheteur"
+        message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"

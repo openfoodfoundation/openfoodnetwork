@@ -3496,6 +3496,9 @@ ca:
       authorize_payment:
         subject: "Autoritzeu el vostre pagament a %{distributor} a OFN"
         instructions: "El vostre pagament de %{amount} a %{distributor} requereix una autenticació addicional. Visiteu l’URL següent per autoritzar el vostre pagament:"
+      authorization_required:
+        subject: "Un pagament requereix l’autorització del client"
+        message: "El pagament de la comanda %{order_number} requereix una autorització addicional del client. El client ha rebut una notificació per correu electrònic i el pagament apareixerà pendent fins que no s’autoritzi."
     shipment_mailer:
       shipped_email:
         dear_customer: "Benvolguda consumidora:"
