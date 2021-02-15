@@ -42,7 +42,8 @@ feature '
 
   scenario "modifying taxed adjustments on an order" do
     # Given a taxed adjustment
-    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 10)
+    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
+                        amount: 110, included_tax: 10, order: order)
 
     # When I go to the adjustments page for the order
     login_as_admin_and_visit spree.admin_orders_path
@@ -65,7 +66,8 @@ feature '
 
   scenario "modifying an untaxed adjustment on an order" do
     # Given an untaxed adjustment
-    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 0)
+    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
+                        amount: 110, included_tax: 0, order: order)
 
     # When I go to the adjustments page for the order
     login_as_admin_and_visit spree.admin_orders_path
