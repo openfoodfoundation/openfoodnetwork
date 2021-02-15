@@ -5,7 +5,7 @@ module Api
 
       def index
         @customers = current_api_user.customers
-        render json: @customers, each_serializer: CustomerSerializer
+        render json: Fast::CustomerSerializer.new(@customers, is_collection: true)
       end
 
       def update
@@ -16,7 +16,7 @@ module Api
 
         if @customer.update(customer_params)
           add_recurring_payment_info(client_secret)
-          render json: @customer, serializer: CustomerSerializer, status: :ok
+          render json: Fast::CustomerSerializer.new(@customer), status: :ok
         else
           invalid_resource!(@customer)
         end
