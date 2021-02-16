@@ -224,10 +224,6 @@ module Spree
       price_in(currency).try(:amount)
     end
 
-    def name_and_sku
-      "#{name} - #{sku}"
-    end
-
     # Product may be created with deleted_at already set,
     # which would make AR's default finder return nil.
     # This is a stopgap for that little problem.
