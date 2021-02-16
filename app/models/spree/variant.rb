@@ -211,10 +211,6 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
-    def default_price?
-      !default_price.nil?
-    end
-
     def price_in(currency)
       prices.select{ |price| price.currency == currency }.first ||
         Spree::Price.new(variant_id: id, currency: currency)
