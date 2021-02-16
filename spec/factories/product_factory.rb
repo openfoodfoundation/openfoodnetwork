@@ -5,7 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
     description { generate(:random_description) }
     price { 19.99 }
-    cost_price { 17.00 }
     sku { 'ABC' }
     available_on { 1.year.ago }
     deleted_at { nil }

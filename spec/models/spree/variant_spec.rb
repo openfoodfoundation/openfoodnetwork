@@ -752,7 +752,7 @@ module Spree
     context "extends LocalizedNumber" do
       subject! { build_stubbed(:variant) }
 
-      it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
+      it_behaves_like "a model using the LocalizedNumber module", [:price, :weight]
     end
 
     context "in a circular order cycle setup" do
@@ -773,7 +773,7 @@ module Spree
       end
 
       it "saves without infinite loop" do
-        expect(variant1.update(cost_price: 1)).to be_truthy
+        expect(variant1.update(price: 1)).to be_truthy
       end
     end
   end

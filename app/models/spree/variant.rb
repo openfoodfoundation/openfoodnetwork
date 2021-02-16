@@ -47,13 +47,12 @@ module Spree
     has_many :variant_overrides
     has_many :inventory_items
 
-    localize_number :price, :cost_price, :weight
+    localize_number :price, :weight
 
     validate :check_price
     validates :price, numericality: { greater_than_or_equal_to: 0 },
                       presence: true,
                       if: proc { Spree::Config[:require_master_price] }
-    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product.andand.variant_unit)
@@ -171,10 +170,6 @@ module Spree
     # returns number of units currently on backorder for this variant.
     def on_backorder
       inventory_units.with_state('backordered').size
-    end
-
-    def gross_profit
-      cost_price.nil? ? 0 : (price - cost_price)
     end
 
     # use deleted? rather than checking the attribute directly. this

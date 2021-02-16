@@ -39,12 +39,10 @@ module Spree
     context '#copy_price' do
       it "copies over a variant's prices" do
         line_item.price = nil
-        line_item.cost_price = nil
         line_item.currency = nil
         line_item.copy_price
         variant = line_item.variant
         expect(line_item.price).to eq variant.price
-        expect(line_item.cost_price).to eq variant.cost_price
         expect(line_item.currency).to eq variant.currency
       end
     end
