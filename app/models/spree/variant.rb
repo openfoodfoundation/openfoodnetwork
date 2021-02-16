@@ -167,11 +167,6 @@ module Spree
       OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
     end
 
-    # returns number of units currently on backorder for this variant.
-    def on_backorder
-      inventory_units.with_state('backordered').size
-    end
-
     # use deleted? rather than checking the attribute directly. this
     # allows extensions to override deleted? if they want to provide
     # their own definition.
