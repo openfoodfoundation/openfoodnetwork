@@ -3429,6 +3429,9 @@ en_GB:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
       now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your basket has become unavailable. Please update the selected quantities."
@@ -3495,6 +3498,9 @@ en_GB:
       authorize_payment:
         subject: "Please authorise your payment to %{distributor} on OFN"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorise your payment:"
+      authorization_required:
+        subject: "A payment requires authorisation from the customer"
+        message: "A payment for order %{order_number} requires additional authorisation from the customer. The customer has been notified via email and the payment will appear as pending until it is authorised."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
