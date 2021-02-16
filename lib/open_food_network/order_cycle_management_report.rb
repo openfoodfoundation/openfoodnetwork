@@ -65,7 +65,7 @@ module OpenFoodNetwork
 
     def orders
       if FeatureToggle.enabled?(:customer_balance, @user)
-        search_result = search.result.order(:id)
+        search_result = search.result.order(:completed_at)
         orders_with_balance = OutstandingBalance.new(search_result).
           query.
           select('spree_orders.*')

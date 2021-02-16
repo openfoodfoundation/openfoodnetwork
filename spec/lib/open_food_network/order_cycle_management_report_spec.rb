@@ -43,11 +43,10 @@ module OpenFoodNetwork
           end
 
           it 'orders them by id' do
-            result = instance_double(ActiveRecord::Relation)
-            allow_any_instance_of(Ransack::Search).to receive(:result).and_return(result)
-            expect(result).to receive(:order).with(:id) { Spree::Order.none }
+            order1 = create(:order, completed_at: 1.day.ago, state: 'complete')
+            order2 = create(:order, completed_at: 2.days.ago, state: 'complete')
 
-            subject.orders
+            expect(subject.orders.pluck(:id)).to eq([order2.id, order1.id])
           end
         end
 
