@@ -117,6 +117,8 @@ en_CA:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF%{order_cycle}"
+    tax_rate:
+      included_in_price: "Included in price"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -3420,6 +3422,9 @@ en_CA:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
       now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
@@ -3486,6 +3491,9 @@ en_CA:
       authorize_payment:
         subject: "Please authorize your payment to %{distributor} on OFN"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication.  Please visit the following URL to authorize your payment:"
+      authorization_required:
+        subject: "A payment requires authorization from the customer"
+        message: "A payment for order%{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "
