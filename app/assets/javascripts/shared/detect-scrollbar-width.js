@@ -8,10 +8,10 @@ setTimeout(function () {
             .disable-scroll{
                 padding-right: ` + scrollbarWidth + `px; 
             }
-            .disable-scroll .nav-icons-menu {
-                margin-left: ` + scrollbarWidth + `px;
-            }
             .disable-scroll .alert-box{
+                padding-right: ` + scrollbarWidth + `px; 
+            }
+            .disable-scroll .cart-span{
                 padding-right: ` + scrollbarWidth + `px; 
             }
         </style>`
