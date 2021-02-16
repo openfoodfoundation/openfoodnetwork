@@ -9,3 +9,7 @@ OpenFoodNetwork::FeatureToggle.enable(:customer_balance) do |user|
     beta_testers.include?(user.email)
   end
 end
+
+OpenFoodNetwork::FeatureToggle.enable(:unit_price) do
+  ['development', 'staging'].include?(ENV['RAILS_ENV'])
+end
