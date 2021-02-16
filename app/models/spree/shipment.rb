@@ -281,7 +281,6 @@ module Spree
       end
 
       update_amounts if fee_adjustment&.amount != cost
-      update_adjustment_included_tax if fee_adjustment
     end
 
     def adjustment_label
@@ -334,14 +333,6 @@ module Spree
 
     def send_shipped_email
       ShipmentMailer.shipped_email(id).deliver_later
-    end
-
-    def update_adjustment_included_tax
-      if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
-        fee_adjustment.set_included_tax! Config.shipping_tax_rate
-      else
-        fee_adjustment.set_included_tax! 0
-      end
     end
 
     def update_adjustments
