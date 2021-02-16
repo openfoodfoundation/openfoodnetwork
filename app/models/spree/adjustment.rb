@@ -101,15 +101,17 @@ module Spree
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil, force: false)
-      return if immutable? && !force
-      return if originator.blank?
+      return amount if immutable? && !force
 
-      amount = originator.compute_amount(calculable || adjustable)
+      if originator.present?
+        amount = originator.compute_amount(calculable || adjustable)
+        update_columns(
+          amount: amount,
+          updated_at: Time.zone.now,
+        )
+      end
 
-      update_columns(
-        amount: amount,
-        updated_at: Time.zone.now,
-      )
+      amount
     end
 
     def currency
