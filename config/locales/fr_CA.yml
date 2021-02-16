@@ -118,6 +118,8 @@ fr_CA:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+    tax_rate:
+      included_in_price: "Inclus dans le prix"
   validators:
     date_time_string_validator:
       not_string_error: "doit être une série"
@@ -3434,6 +3436,9 @@ fr_CA:
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Aujourd'hui"
       now: "Mtnt"
     orders:
       error_flash_for_unavailable_items: "Un élément de votre panier est épuisé. Veuillez mettre à jour les quantités sélectionnées."
@@ -3501,6 +3506,9 @@ fr_CA:
       authorize_payment:
         subject: "Veuillez autoriser votre paiement à %{distributor} on OFN."
         instructions: "Votre paiement de %{amount} to %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement:"
+      authorization_required:
+        subject: "Un paiement nécessite une autorisation de l'acheteur"
+        message: "Un paiement pour la commande %{order_number} nécessite une autorisation supplémentaire de la part de l'acheteur. L'acheteur a reçu un email et le statut du paiement restera en attente jusqu'à ce que l'autorisation soit attribuée."
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
