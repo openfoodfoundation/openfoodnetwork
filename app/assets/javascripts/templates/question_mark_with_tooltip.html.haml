@@ -1,8 +1,6 @@
 .joyride-tip-guide.question-mark-tooltip{ng: {class: "{ in: tt_isOpen, fade: tt_animation }", show: "tt_isOpen"}}
   .background{ng: {click: "tt_isOpen = false"}}
   .joyride-content-wrapper
-    This is the unit price of this item. 
-    %br/
-    It allows you to compare the price of products across varying sizes and weights.
+    {{ "js.shopfront.unit_price_tooltip" | t }}
   %span.joyride-nub.bottom
   
