@@ -159,11 +159,15 @@ a.button.large {
   display: flex;
 }
 
-.disable-scroll {
-  overflow: hidden;
-  padding-right: 20px;
+
+.scrollbar-measure {
+	width: 100px;
+	height: 100px;
+	overflow: scroll;
+	position: absolute;
+	top: -9999px;
 }
 
-.disable-scroll .nav-icons-menu {
-  margin-left: 20px;
+.disable-scroll {
+  overflow: hidden;
 }
