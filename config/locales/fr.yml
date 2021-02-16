@@ -2674,6 +2674,7 @@ fr:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
