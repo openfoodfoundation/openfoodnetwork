@@ -9,7 +9,9 @@ require 'concerns/order_shipment'
 module Spree
   class Order < ActiveRecord::Base
     prepend OrderShipment
+
     include Checkout
+    include Balance
 
     checkout_flow do
       go_to_state :address
@@ -136,7 +138,6 @@ module Spree
 
     # All the states an order can be in after completing the checkout
     FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
-    FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
     scope :finalized, -> { where(state: FINALIZED_STATES) }
 
@@ -171,10 +172,6 @@ module Spree
 
     def currency
       self[:currency] || Spree::Config[:currency]
-    end
-
-    def display_outstanding_balance
-      Spree::Money.new(outstanding_balance, currency: currency)
     end
 
     def display_item_total
@@ -392,18 +389,6 @@ module Spree
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
       Spree::TaxRate.adjust(self)
-    end
-
-    def outstanding_balance
-      if state.in?(FINALIZED_NON_SUCCESSFUL_STATES)
-        -payment_total
-      else
-        total - payment_total
-      end
-    end
-
-    def outstanding_balance?
-      outstanding_balance != 0
     end
 
     def name
