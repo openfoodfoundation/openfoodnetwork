@@ -41,4 +41,4 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run tests
-        run: bundle exec rspec spec/queries
+        run: bundle exec rspec spec/queries spec/controllers spec/models
