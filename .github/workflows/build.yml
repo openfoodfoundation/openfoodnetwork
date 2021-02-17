@@ -25,10 +25,20 @@ jobs:
           POSTGRES_PASSWORD: f00d
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Run tests
-      run: bundle exec rspec spec/queries
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Set up application.yml
+        run: cp config/application.yml.example config/application.yml
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create RAILS_ENV=test
+          bundle exec rake db:schema:load RAILS_ENV=test
+
+      - name: Run tests
+        run: bundle exec rspec spec/queries
