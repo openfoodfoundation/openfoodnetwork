@@ -144,4 +144,38 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
       end
     end
   end
+
+  # Yes, I know testing a private method is bad practice but report's design, tighly coupling
+  # OpenFoodNetwork::OrderGrouper and OrderManagement::Reports::BulkCoop::BulkCoopReport, makes it
+  # very hard to make things testeable without ending up in a wormwhole. This is a trade-off.
+  describe '#customer_payments_amount_owed' do
+    let(:params) { {} }
+    let(:user) { build(:user) }
+    let!(:line_item) { create(:line_item) }
+    let(:order) { line_item.order }
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      it 'calls #new_outstanding_balance' do
+        expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
+        subject.send(:customer_payments_amount_owed, [line_item])
+      end
+    end
+
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      it 'calls #outstanding_balance' do
+        expect_any_instance_of(Spree::Order).to receive(:outstanding_balance)
+        subject.send(:customer_payments_amount_owed, [line_item])
+      end
+    end
+  end
 end

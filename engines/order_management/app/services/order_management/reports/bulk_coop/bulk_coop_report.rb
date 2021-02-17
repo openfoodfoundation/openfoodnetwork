@@ -163,7 +163,11 @@ module OrderManagement
         end
 
         def customer_payments_amount_owed(line_items)
-          unique_orders(line_items).sum(&:outstanding_balance)
+          if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @user)
+            unique_orders(line_items).sum(&:new_outstanding_balance)
+          else
+            unique_orders(line_items).sum(&:outstanding_balance)
+          end
         end
 
         def customer_payments_amount_paid(line_items)
