@@ -11,6 +11,20 @@ jobs:
 
     runs-on: ubuntu-18.04
 
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
