@@ -51,47 +51,44 @@
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
 
   %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()', cloak: true } }
-    %div.shared_resource{ :class => "four columns alpha" }
-      %span{ :class => 'three columns alpha' }
-        %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
+    .one.columns.alpha
+    .shared_resource.four.columns.alpha
+      %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
+      %span
         = t("admin.orders.bulk_management.shared")
-    %div{ :class => "eight columns" }
-      %h6{ :class => "eight columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsProduct.name + ": ALL" }}
-      %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.full_name }}
-    %div{ :class => "four columns omega" }
-      %h6{ :class => "four columns alpha", :style => 'text-align: right;' }
+    .eight.columns
+      %h6.text-center{ 'ng-show' => 'sharedResource' } {{ selectedUnitsProduct.name + ": ALL" }}
+      %h6.text-center{ 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.full_name }}
+    .three.columns
+      %h6.text-right
         %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' }= t('admin.clear')
     %hr
     .row
-      .one.column.alpha &nbsp;
-      .two.columns
-        %span.two.columns
+      .one.columns.alpha
+      .three.columns
+        .text-center
           = t("admin.orders.bulk_management.group_buy_unit_size")
-        %span.two.columns {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
-      .one.column &nbsp;
-      .two.columns
-        %span.two.columns
+        .text-center {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
+      .three.columns
+        .text-center
           = t("admin.orders.bulk_management.total_qtt_ordered")
-        %span.two.columns {{ formattedValueWithUnitName( sumUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
-      .one.column &nbsp;
-      .two.columns
-        %span.two.columns
+        .text-center {{ formattedValueWithUnitName( sumUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
+      .three.columns
+        .text-center
           = t("admin.orders.bulk_management.max_qtt_ordered")
-        %span.two.columns {{ formattedValueWithUnitName( sumMaxUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
-      .one.column &nbsp;
-      .two.columns
-        %span.two.columns
+        .text-center {{ formattedValueWithUnitName( sumMaxUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
+      .three.columns
+        .text-center
           = t("admin.orders.bulk_management.current_fulfilled_units")
-        %span.two.columns {{ fulfilled(sumUnitValues()) }}
-      .one.column &nbsp;
-      .two.columns
-        %span.two.columns
+        .text-center {{ fulfilled(sumUnitValues()) }}
+      .three.columns
+        .text-center
           = t("admin.orders.bulk_management.max_fulfilled_units")
-        %span.two.columns {{ fulfilled(sumMaxUnitValues()) }}
-      .one.column.omega &nbsp;
-    %div{ :class => "eight columns alpha", 'ng-hide' => 'allFinalWeightVolumesPresent()' }
-      %span{ :class => "eight columns alpha", style: 'color:red' }
-        = t("admin.orders.bulk_management.variants_without_unit_value")
+        .text-center {{ fulfilled(sumMaxUnitValues()) }}
+    .row
+      %div{'ng-hide' => 'allFinalWeightVolumesPresent()' }
+        %span{ style: 'color:red' }
+          = t("admin.orders.bulk_management.variants_without_unit_value")
 
   %hr.divider.sixteen.columns.alpha.omega
 
