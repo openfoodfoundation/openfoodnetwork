@@ -14,12 +14,23 @@ module Balance
   # Note however, this is meant to be used only in the context of a single order object. When
   # working with a collection of orders, such an index controller action, please consider using
   # `app/queries/oustanding_balance.rb` instead so we avoid potential N+1s.
-  def outstanding_balance
+  def new_outstanding_balance
     if state.in?(FINALIZED_NON_SUCCESSFUL_STATES)
       -payment_total
     else
       total - payment_total
     end
+  end
+
+  # This method is the one we're gradually replacing with `#new_outstanding_balance`. Having them
+  # separate enables us to choose which implementation we want depending on the context using
+  # a feature toggle. This avoids incosistent behavior across the app during that incremental
+  # refactoring.
+  #
+  # It is meant to be removed as soon as we get product approval that the new implementation has
+  # been working correctly in production.
+  def outstanding_balance
+    total - payment_total
   end
 
   def outstanding_balance?
