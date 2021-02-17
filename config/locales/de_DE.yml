@@ -1249,14 +1249,14 @@ de_DE:
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "Rechnungsnummer:"
-  tax_total: "Steuersumme (%{rate}):"
-  total_excl_tax: "Summe (zzgl. Steuern):"
-  total_incl_tax: "GESAMT:"
+  tax_total: "davon Steuern (%{rate}):"
+  total_excl_tax: "Netto (zzgl. Steuern):"
+  total_incl_tax: "GESAMT (inkl. Steuern):"
   abn: "USt-IdNr.:"
   acn: "St.-Nr.:"
-  invoice_issued_on: "Rechnung ausgestellt am:"
-  order_number: "Rechnungsnummer"
-  date_of_transaction: "Datum der Transaktion:"
+  invoice_issued_on: "Rechnungsdatum:"
+  order_number: "Rechnungsnummer:"
+  date_of_transaction: "Bestelldatum:"
   ticket_column_qty: "Menge"
   ticket_column_item: "Artikel"
   ticket_column_unit_price: "Stückpreis"
@@ -2025,7 +2025,7 @@ de_DE:
   calculator_settings_warning: "Wenn Sie den Gebührentyp ändern, müssen Sie zuerst speichern, bevor Sie die Gebühreneinstellungen bearbeiten können."
   calculator_preferred_unit_error: "muss kg oder lb sein"
   flat_percent_per_item: "Fester Prozentsatz (pro Artikel)"
-  flat_rate_per_item: "Pauschale (pro Stück)"
+  flat_rate_per_item: "Pauschale (pro Artikel)"
   flat_rate_per_order: "Pauschale (pro Bestellung)"
   flexible_rate: "Flexible Gebühr"
   price_sack: "Mengenrabatt"
@@ -2655,6 +2655,7 @@ de_DE:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
+      unit_price_tooltip: "Dies ist der Grundpreis des Produkts. Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -2754,7 +2755,7 @@ de_DE:
       other: "Laibe"
     single:
       one: "Einzeln"
-      other: "Einzel"
+      other: "Stück"
     tub:
       one: "Wanne"
       other: "Wannen"
@@ -2931,7 +2932,7 @@ de_DE:
     void: "keine Angabe"
     login: "Einloggen"
     password: "Passwort"
-    signature: "Unterschrift"
+    signature: "Signatur"
     solution: "Lösung"
     landing_page: "Startseite"
     server: "Server"
@@ -3499,7 +3500,7 @@ de_DE:
     payment_mailer:
       authorize_payment:
         subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network DE"
-        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert eine zusätzliche Authentifizierung. Bitte besuchen Sie die folgende URL, um Ihre Zahlung zu bestätigen:"
+        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Bestätigung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
       authorization_required:
         subject: "Eine Zahlung muss durch den Kunden bestätigt werden"
         message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Bestätigung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
