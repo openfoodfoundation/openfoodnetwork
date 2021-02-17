@@ -32,6 +32,10 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '5.12.0'
+
       - name: Set up application.yml
         run: cp config/application.yml.example config/application.yml
 
