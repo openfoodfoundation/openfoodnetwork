@@ -3,7 +3,9 @@ require 'open_food_network/user_balance_calculator'
 module OpenFoodNetwork
   class OrderCycleManagementReport
     DEFAULT_DATE_INTERVAL = { from: -1.month, to: 1.day }.freeze
+
     attr_reader :params
+
     def initialize(user, params = {}, render_table = false)
       @params = sanitize_params(params)
       @user = user
@@ -44,11 +46,34 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.where("spree_orders.state != ?", :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        Spree::Order.
+          finalized.
+          where.not(spree_orders: { state: :canceled }).
+          distributed_by_user(@user).
+          managed_by(@user).
+          search(params[:q])
+      else
+        Spree::Order.
+          complete.
+          where("spree_orders.state != ?", :canceled).
+          distributed_by_user(@user).
+          managed_by(@user).
+          search(params[:q])
+      end
     end
 
     def orders
-      filter search.result
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        search_result = search.result.order(:completed_at)
+        orders_with_balance = OutstandingBalance.new(search_result).
+          query.
+          select('spree_orders.*')
+
+        filter(orders_with_balance)
+      else
+        filter search.result
+      end
     end
 
     def table_items
@@ -67,6 +92,14 @@ module OpenFoodNetwork
 
     private
 
+    def balance(order)
+      if FeatureToggle.enabled?(:customer_balance, @user)
+        order.balance_value
+      else
+        UserBalanceCalculator.new(order.email, order.distributor).balance
+      end
+    end
+
     def payment_method_row(order)
       ba = order.billing_address
       [ba.andand.firstname,
@@ -78,7 +111,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance]
+       balance(order)]
     end
 
     def delivery_row(order)
@@ -93,7 +126,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance,
+       balance(order),
        has_temperature_controlled_items?(order),
        order.special_instructions]
     end

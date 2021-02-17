@@ -6,30 +6,60 @@ require 'open_food_network/order_cycle_management_report'
 module OpenFoodNetwork
   describe OrderCycleManagementReport do
     context "as a site admin" do
+      subject { OrderCycleManagementReport.new(user, params, true) }
+      let(:params) { {} }
+
       let(:user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by!(name: "admin")
         user
       end
-      subject { OrderCycleManagementReport.new user, {}, true }
 
       describe "fetching orders" do
         it "fetches completed orders" do
           o1 = create(:order)
-          o2 = create(:order, completed_at: 1.day.ago)
+          o2 = create(:order, completed_at: 1.day.ago, state: 'complete')
           expect(subject.orders).to eq([o2])
         end
 
+        it 'fetches resumed orders' do
+          order = create(:order, state: 'resumed', completed_at: 1.day.ago)
+          expect(subject.orders).to eq([order])
+        end
+
+        context 'when the customer_balance feature is enabled' do
+          let(:customers_with_balance) { instance_double(CustomersWithBalance) }
+
+          before do
+            allow(OpenFoodNetwork::FeatureToggle)
+              .to receive(:enabled?).with(:customer_balance, anything) { true }
+          end
+
+          it 'calls OutstandingBalance query object' do
+            outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
+            expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+
+            subject.orders
+          end
+
+          it 'orders them by id' do
+            order1 = create(:order, completed_at: 1.day.ago, state: 'complete')
+            order2 = create(:order, completed_at: 2.days.ago, state: 'complete')
+
+            expect(subject.orders.pluck(:id)).to eq([order2.id, order1.id])
+          end
+        end
+
         it "does not show cancelled orders" do
-          o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
-          o2 = create(:order, completed_at: 1.day.ago)
+          o1 = create(:order, state: 'canceled', completed_at: 1.day.ago)
+          o2 = create(:order, state: 'complete', completed_at: 1.day.ago)
           expect(subject.orders).to eq([o2])
         end
 
         context "default date range" do
           it "fetches orders completed in the past month" do
-            o1 = create(:order, completed_at: 1.month.ago - 1.day)
-            o2 = create(:order, completed_at: 1.month.ago + 1.day)
+            o1 = create(:order, state: 'complete', completed_at: 1.month.ago - 1.day)
+            o2 = create(:order, state: 'complete', completed_at: 1.month.ago + 1.day)
             expect(subject.orders).to eq([o2])
           end
         end
@@ -52,8 +82,8 @@ module OpenFoodNetwork
           d2 = create(:distributor_enterprise)
           d2.enterprise_roles.create!(user: create(:user))
 
-          o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
-          o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
+          o1 = create(:order, distributor: d1, state: 'complete', completed_at: 1.day.ago)
+          o2 = create(:order, distributor: d2, state: 'complete', completed_at: 1.day.ago)
 
           expect(subject).to receive(:filter).with([o1]).and_return([o1])
           expect(subject.orders).to eq([o1])
@@ -120,6 +150,84 @@ module OpenFoodNetwork
                                                         shipping_method_name: sm1.name,
                                                         payment_method_name: pm1.name)
           expect(subject.filter(orders)).to eq([order1])
+        end
+      end
+
+      describe '#table_items' do
+        subject { OrderCycleManagementReport.new(user, params, true) }
+
+        let(:distributor) { create(:distributor_enterprise) }
+        before { distributor.enterprise_roles.create!(user: user) }
+
+        context 'when the report type is payment_methods' do
+          let(:params) { { report_type: 'payment_methods' } }
+
+          let!(:order) do
+            create(
+              :order,
+              distributor: distributor,
+              completed_at: 1.day.ago,
+              state: 'complete',
+              total: 10.0
+            )
+          end
+
+          it 'returns rows with payment information' do
+            expect(subject.table_items).to eq([[
+              order.billing_address.firstname,
+              order.billing_address.lastname,
+              order.distributor.name,
+              '',
+              order.email,
+              order.billing_address.phone,
+              nil,
+              nil,
+              nil,
+              -10.0
+            ]])
+          end
+        end
+
+        context 'when the report type is not payment_methods' do
+          let(:params) { {} }
+
+          let(:shipping_method) { create(:shipping_method) }
+          let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+
+          let!(:order) do
+            create(
+              :order,
+              distributor: distributor,
+              completed_at: 1.day.ago,
+              shipments: [shipment]
+            )
+          end
+
+          before do
+            line_item = create(:line_item, order: order, price: 10.0, quantity: 1)
+
+            order.state = 'complete'
+            order.ship_address = order.address_from_distributor
+            order.save!
+          end
+
+          it 'returns rows with delivery information' do
+            expect(subject.table_items).to eq([[
+              order.ship_address.firstname,
+              order.ship_address.lastname,
+              order.distributor.name,
+              nil,
+              "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
+              order.ship_address.zipcode,
+              order.ship_address.phone,
+              shipping_method.name,
+              nil,
+              nil,
+              -10.0,
+              false,
+              order.special_instructions
+            ]])
+          end
         end
       end
     end
