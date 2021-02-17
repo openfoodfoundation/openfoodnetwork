@@ -28,4 +28,43 @@ describe Api::Admin::OrderSerializer do
       end
     end
   end
+
+  describe '#ready_to_capture' do
+    let(:order) { create(:order) }
+
+    before do
+      allow(order).to receive(:payment_required?) { true }
+    end
+
+    context "there is a payment pending authorization" do
+      let!(:pending_payment) {
+        create(
+          :payment,
+          order: order,
+          state: 'pending',
+          amount: 123.45,
+          cvv_response_message: "https://stripe.com/redirect"
+        )
+      }
+
+      it "returns false if there is a payment requiring authorization" do
+        expect(serializer.ready_to_capture).to be false
+      end
+    end
+
+    context "there is a pending payment but it does not require authorization" do
+      let!(:pending_payment) {
+        create(
+          :payment,
+          order: order,
+          state: 'pending',
+          amount: 123.45,
+        )
+      }
+
+      it "returns true if there is no payment requiring authorization" do
+        expect(serializer.ready_to_capture).to be true
+      end
+    end
+  end
 end

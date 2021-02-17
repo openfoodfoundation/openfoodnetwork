@@ -39,8 +39,8 @@ module Api
       end
 
       def ready_to_capture
-        pending_payment = object.pending_payments.first
-        object.payment_required? && pending_payment
+        pending_payment = object.pending_payments.reject(&:authorization_action_required?).first
+        object.payment_required? && pending_payment.present?
       end
 
       def ready_to_ship
