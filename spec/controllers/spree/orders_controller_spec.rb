@@ -79,6 +79,50 @@ describe Spree::OrdersController, type: :controller do
     end
   end
 
+  describe "confirming a payment intent" do
+    let(:customer) { create(:customer) }
+    let(:order) { create(:order, customer: customer, distributor: customer.enterprise) }
+    let!(:payment) { create(
+      :payment,
+      cvv_response_message: "https://stripe.com/redirect",
+      response_code: "pi_123",
+      order: order,
+      state: "pending")
+    }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { current_user }
+    end
+
+    context "after returning from Stripe to authorize a payment" do
+      let(:current_user) { order.user }
+
+      context "with a valid payment intent" do
+        let(:payment_intent) { "pi_123" }
+
+        it "completes the payment" do
+          get :show, id: order.number, payment_intent: payment_intent
+          expect(response).to be_success
+          payment.reload
+          expect(payment.cvv_response_message).to be nil
+          expect(payment.state).to eq("completed")
+        end
+      end
+
+      context "with an invalid payment intent" do
+        let(:payment_intent) { "invalid" }
+
+        it "does not complete the payment" do
+          get :show, id: order.number, payment_intent: payment_intent
+          expect(response).to be_success
+          payment.reload
+          expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
+          expect(payment.state).to eq("pending")
+        end
+      end
+    end
+  end
+
   describe "viewing cart" do
     it "redirects home when no distributor is selected" do
       get :edit
