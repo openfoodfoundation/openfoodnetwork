@@ -36,6 +36,9 @@ jobs:
         with:
           node-version: '5.12.0'
 
+      - name: Install JS dependencies
+        run: yarn install
+
       - name: Set up application.yml
         run: cp config/application.yml.example config/application.yml
 
