@@ -2651,6 +2651,7 @@ es:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
       price_breakdown: "Desglose de el precio"
+      unit_price_tooltip: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
     variants:
       on_demand:
         'yes': "Bajo demanda"
