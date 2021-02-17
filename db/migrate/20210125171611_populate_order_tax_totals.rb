@@ -1,4 +1,11 @@
 class PopulateOrderTaxTotals < ActiveRecord::Migration
+  class Spree::Adjustment < ActiveRecord::Base
+    scope :tax, -> { where(originator_type: 'Spree::TaxRate') }
+    scope :additional, -> { where(included: false) }
+    scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
+    scope :shipping, -> { where(originator_type: 'Spree::ShippingMethod') }
+  end
+
   def up
     Spree::Order.where(additional_tax_total: 0, included_tax_total: 0).
       find_each(batch_size: 500) do |order|
