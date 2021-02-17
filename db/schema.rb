@@ -1061,11 +1061,11 @@ ActiveRecord::Schema.define(version: 20210212223928) do
   add_index "spree_users", ["persistence_token"], name: "index_users_on_persistence_token", using: :btree
 
   create_table "spree_variants", force: :cascade do |t|
-    t.string   "sku",              limit: 255,                          default: "",    null: false
-    t.decimal  "weight",                       precision: 8,  scale: 2, default: 0.0,   null: false
-    t.decimal  "height",                       precision: 8,  scale: 2
-    t.decimal  "width",                        precision: 8,  scale: 2
-    t.decimal  "depth",                        precision: 8,  scale: 2
+    t.string   "sku",              limit: 255,                         default: "",    null: false
+    t.decimal  "weight",                       precision: 8, scale: 2, default: 0.0
+    t.decimal  "height",                       precision: 8, scale: 2
+    t.decimal  "width",                        precision: 8, scale: 2
+    t.decimal  "depth",                        precision: 8, scale: 2
     t.datetime "deleted_at"
     t.boolean  "is_master",                                             default: false
     t.integer  "product_id"
