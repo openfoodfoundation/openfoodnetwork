@@ -3,7 +3,7 @@ Darkswarm.directive "questionMarkWithTooltip", ($tooltip)->
   # Subsequently we patch the scope, template and restrictions
   tooltip = $tooltip 'questionMarkWithTooltip', 'questionMarkWithTooltip', 'click'
   tooltip.scope =
-    variant: "="
+    context: "="
   tooltip.templateUrl = "question_mark_with_tooltip_icon.html"
   tooltip.replace = true
   tooltip.restrict = 'E'
