@@ -37,7 +37,7 @@ jobs:
           node-version: '5.12.0'
 
       - name: Install JS dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Set up application.yml
         run: cp config/application.yml.example config/application.yml
