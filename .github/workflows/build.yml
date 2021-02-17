@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '5.12.0'
+          node-version: '14.15.5'
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
