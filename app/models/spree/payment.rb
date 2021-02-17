@@ -103,8 +103,6 @@ module Spree
       source.user_id = order.user_id if order
     end
 
-    # Pin payments lacks void and credit methods, but it does have refund
-    # Here we swap credit out for refund and remove void as a possible action
     def actions
       return [] unless payment_source&.respond_to?(:actions)
 
@@ -113,16 +111,11 @@ module Spree
           payment_source.__send__("can_#{action}?", self)
       end
 
-      if payment_method.is_a? Gateway::Pin
-        actions << 'refund' if actions.include? 'credit'
-        actions.reject! { |a| ['credit', 'void'].include? a }
-      end
-
       actions
     end
 
     def resend_authorization_email!
-      return unless cvv_response_message.present?
+      return unless authorization_action_required?
 
       PaymentMailer.authorize_payment(self).deliver_later
     end

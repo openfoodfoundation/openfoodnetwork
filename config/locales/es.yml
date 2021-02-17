@@ -117,6 +117,8 @@ es:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluido en el precio"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -124,10 +126,6 @@ es:
     integer_array_validator:
       not_array_error: "debe ser una matriz"
       invalid_element_error: "debe contener solo enteros válidos"
-  datetime_picker_ui:
-    current_text: Ahora
-    close_text: Hecho
-    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
@@ -2653,6 +2651,7 @@ es:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
       price_breakdown: "Desglose de el precio"
+      unit_price_tooltip: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
     variants:
       on_demand:
         'yes': "Bajo demanda"
@@ -3429,8 +3428,10 @@ es:
           or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
           remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy/mm/dd'
+      flatpickr_date_format: "d-m-Y"
+      flatpickr_datetime_format: "d-m-Y H:i"
+      today: "Hoy"
+      now: "Ahora"
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:
@@ -3496,6 +3497,9 @@ es:
       authorize_payment:
         subject: "Autorice su pago a %{distributor} en OFN"
         instructions: "Su pago de %{amount} a %{distributor} requiere autenticación adicional. Visite la siguiente URL para autorizar su pago:"
+      authorization_required:
+        subject: "Un pago requiere autorización del cliente"
+        message: "El pago del pedido %{order_number} requiere una autorización adicional del cliente. El cliente ha sido notificado vía email y el pago aparecerá como pendiente hasta que sea autorizado."
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"

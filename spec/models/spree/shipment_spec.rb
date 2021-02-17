@@ -50,13 +50,6 @@ describe Spree::Shipment do
     end
   end
 
-  context "display_total_cost" do
-    it "retuns a Spree::Money" do
-      allow(shipment).to receive(:total_cost) { 21.22 }
-      expect(shipment.display_total_cost).to eq Spree::Money.new(21.22)
-    end
-  end
-
   it "#item_cost" do
     shipment = Spree::Shipment.new(
       order: build_stubbed(:order_with_totals, line_items: [build_stubbed(:line_item)])
@@ -179,12 +172,6 @@ describe Spree::Shipment do
         end
       end
     end
-  end
-
-  it '#total_cost' do
-    allow(shipment).to receive_messages cost: 5.0
-    allow(shipment).to receive_messages item_cost: 50.0
-    expect(shipment.total_cost).to eql(55.0)
   end
 
   context "#update!" do

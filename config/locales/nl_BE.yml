@@ -121,9 +121,6 @@ nl_BE:
     integer_array_validator:
       not_array_error: "moet een array zijn"
       invalid_element_error: "mogen alleen geldige gehele getallen bevatten"
-  datetime_picker_ui:
-    close_text: Afgerond
-    time_text: Uur
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bevestig a.u.b. het e-mailadres voor %{enterprise}"
@@ -3283,9 +3280,6 @@ nl_BE:
           used_saved_card: "Gebruik een opgeslaan kaart : "
           or_enter_new_card: "Of, voer de gegevens in voor een nieuwe kaart : "
           remember_this_card: 'Deze kaart onthouden? '
-    date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Een item in u winkelkar is niet meer beschikbaar. Vernieuwd de geselecteerde hoeveelheid."
       edit:

@@ -24,6 +24,7 @@ fr_BE:
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
+        month: "Mois"
       order_cycle:
         orders_close_at: Date de fermeture
       variant_override:
@@ -121,9 +122,6 @@ fr_BE:
     integer_array_validator:
       not_array_error: "doit être un array"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
-  datetime_picker_ui:
-    close_text: Terminé
-    time_text: Heure
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -3288,9 +3286,6 @@ fr_BE:
           used_saved_card: "Utiliser une carte sauvegardée :"
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
-    date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Un produit dans votre panier n'est plus disponible. Veuillez changer le montant des quantité. "
       edit:

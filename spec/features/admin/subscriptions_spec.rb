@@ -195,9 +195,7 @@ feature 'Subscriptions' do
         expect(page).to have_content 'can\'t be blank', count: 1
         expect(page).to have_content 'Oops! Please fill in all of the required fields...'
         find_field('begins_at').click
-        within(".ui-datepicker-calendar") do
-          find('.ui-datepicker-today').click
-        end
+        choose_today_from_datepicker
 
         click_button('Next')
         expect(page).to have_content 'BILLING ADDRESS'

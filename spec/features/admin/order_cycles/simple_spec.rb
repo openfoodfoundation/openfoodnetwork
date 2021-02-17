@@ -12,53 +12,52 @@ feature '
 
   scenario "updating many order cycle opening/closing times at once", js: true do
     # Given three order cycles
-    oc1 = create(:simple_order_cycle)
-    oc2 = create(:simple_order_cycle)
+    oc1 = create(:simple_order_cycle,
+                  orders_open_at: Time.zone.local(2000, 12, 12, 12, 12, 0),
+                  orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 1))
+    oc2 = create(:simple_order_cycle,
+                  orders_open_at: Time.zone.local(2000, 12, 12, 12, 12, 2),
+                  orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 3))
     oc3 = create(:simple_order_cycle,
-                 orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12),
-                 orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12))
+                 orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 4),
+                 orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 5))
 
     # When I go to the order cycles page
     login_as_admin_and_visit admin_order_cycles_path
 
-    # And I fill in some new opening/closing times and save them
-    within("tr.order-cycle-#{oc1.id}") do
-      find("input#oc#{oc1.id}_name").set "Updated Order Cycle 1"
-      find("input#oc#{oc1.id}_orders_open_at").set "2040-12-01 12:00:00"
-      find("input#oc#{oc1.id}_orders_close_at").set "2040-12-01 12:00:01"
+    ## -- OC1
+    find("input#oc#{oc1.id}_name").set ""
+    fill_in("oc#{oc1.id}_name", :with => "Updated Order Cycle 1")
+    
+    ## -- OC2
+    fill_in("oc#{oc2.id}_name", :with => "Updated Order Cycle 2")
+    within("tr.order-cycle-#{oc2.id} .orders_open_at") do
+      find('input.datetimepicker', match: :first).click
     end
+
+    within(".flatpickr-calendar.open") do
+      # Then select first of month 
+     find('.dayContainer .flatpickr-day', text: "1").click
+   end
 
     within("tr.order-cycle-#{oc2.id}") do
-      find("input#oc#{oc2.id}_name").set "Updated Order Cycle 2"
-      find("input#oc#{oc2.id}_orders_open_at").set "2040-12-01 12:00:02"
-      find("input#oc#{oc2.id}_orders_close_at").set "2040-12-01 12:00:03"
-    end
-
-    # And I fill in a time using the datepicker
-    within("tr.order-cycle-#{oc3.id}") do
-      # When I trigger the datepicker
-      find('img.ui-datepicker-trigger', match: :first).click
-    end
-
-    within("#ui-datepicker-div") do
-      # Then it should display the correct date/time
-      expect(page).to have_selector 'span.ui-datepicker-month', text: 'DECEMBER'
-      expect(page).to have_selector 'span.ui-datepicker-year', text: '2040'
-      expect(page).to have_selector 'a.ui-state-active', text: '12'
-
-      # When I fill in a new date/time
-      click_link '1'
-      click_button 'Done'
-    end
-
-    within("tr.order-cycle-#{oc3.id}") do
       # Then that date/time should appear on the form
-      expect(find("input#oc#{oc3.id}_orders_open_at").value).to eq "2040-12-01 00:00"
+      expect(find("input#oc#{oc2.id}_orders_open_at").value).to eq "2000-12-01 12:12"
+    end
 
-      # Manually fill out time
-      find("input#oc#{oc3.id}_name").set "Updated Order Cycle 3"
-      find("input#oc#{oc3.id}_orders_open_at").set "2040-12-01 12:00:04"
-      find("input#oc#{oc3.id}_orders_close_at").set "2040-12-01 12:00:05"
+    # -- OC3
+    fill_in("oc#{oc3.id}_name", :with => "Updated Order Cycle 3")
+    within("tr.order-cycle-#{oc3.id} .orders_close_at") do
+      find('input.datetimepicker', match: :first).click
+    end
+
+    within(".flatpickr-calendar.open") do
+       # Then select first of month 
+      find('.dayContainer .flatpickr-day', text: "1").click
+    end
+
+    within("tr.order-cycle-#{oc3.id}") do
+      expect(find("input#oc#{oc3.id}_orders_close_at").value).to eq "2041-12-01 12:12"
     end
 
     click_button 'Save Changes'
@@ -67,8 +66,8 @@ feature '
     expect(page).to have_selector "#save-bar", text: "Order cycles have been updated."
     order_cycles = OrderCycle.order("id ASC")
     expect(order_cycles.map(&:name)).to eq ["Updated Order Cycle 1", "Updated Order Cycle 2", "Updated Order Cycle 3"]
-    expect(order_cycles.map { |oc| oc.orders_open_at.sec }).to eq [0, 2, 4]
-    expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 5]
+    expect(order_cycles.map { |oc| oc.orders_open_at.sec }).to eq [0, 0, 4]
+    expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 0]
   end
 
   scenario "cloning an order cycle" do

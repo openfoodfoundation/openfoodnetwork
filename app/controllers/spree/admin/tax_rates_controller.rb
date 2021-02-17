@@ -6,12 +6,22 @@ module Spree
       delegate :transition_rate!, :updated_rate, to: :updater
 
       def update
-        return super unless amount_changed? && associated_adjustments?
+        return super unless requires_transition?
 
         transition_tax_rate
       end
 
       private
+
+      def requires_transition?
+        (included_changed? || amount_changed?) && associated_adjustments?
+      end
+
+      def included_changed?
+        ActiveRecord::Type::Boolean.new.type_cast_from_user(
+          permitted_resource_params[:included_in_price]
+        ) != @tax_rate.included_in_price
+      end
 
       def amount_changed?
         BigDecimal(permitted_resource_params[:amount]) != @tax_rate.amount

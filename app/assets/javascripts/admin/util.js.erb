@@ -1,30 +1,45 @@
-$(document).ready(function(){
-  window.JQUERY_UI_DATE_PICKER_DEFAULTS = {
-    dateFormat: Spree.translations.date_picker,
-    dayNames: Spree.translations.abbr_day_names,
-    dayNamesMin: Spree.translations.abbr_day_names,
-    monthNames: Spree.translations.month_names,
-    prevText: Spree.translations.previous,
-    nextText: Spree.translations.next,
-    oneLine: true,
-    showOn: 'button',
-    buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
-    buttonImageOnly: true
+$(document).ready(function() {
+  var onClickButtons = function(index, fp) {
+    var date;
+    switch (index) {
+      case 0:
+        date = new Date();
+        break;
+    }
+    fp.setDate(date, true);
   }
-
-  window.JQUERY_UI_DATETIME_PICKER_DEFAULTS = Object.assign(
+  window.FLATPICKR_DATE_DEFAULT = {
+    dateFormat: Spree.translations.flatpickr_date_format,
+    locale: I18n.locale,
+    plugins: [
+        ShortcutButtonsPlugin({
+          button: [{
+            label: Spree.translations.today
+          }],
+          label: "or",
+          onClick: onClickButtons
+        })
+      ]
+  }
+  window.FLATPICKR_DATETIME_DEFAULT = Object.assign(
     {},
-    window.JQUERY_UI_DATE_PICKER_DEFAULTS,
+    window.FLATPICKR_DATE_DEFAULT,
     {
-      currentText: Spree.translations.datetime_ui_current_text,
-      closeText: Spree.translations.datetime_ui_close_text,
-      timeText: Spree.translations.datetime_ui_time_text,
-      timeFormat: 'HH:mm',
-      controlType: 'select',
-      stepMinute: 15
+      dateFormat: Spree.translations.flatpickr_datetime_format,
+      enableTime: true,
+      time_24hr: true,
+      plugins: [
+        ShortcutButtonsPlugin({
+          button: [{
+            label: Spree.translations.now
+          }],
+          label: "or",
+          onClick: onClickButtons
+        })
+      ]
     }
   );
-  $('.datetimepicker').datetimepicker(window.JQUERY_UI_DATETIME_PICKER_DEFAULTS);
+  flatpickr(".datetimepicker", window.FLATPICKR_DATETIME_DEFAULT);
   $('a.close').click(function(event){
     event.preventDefault();
     $(this).parent().slideUp(250);

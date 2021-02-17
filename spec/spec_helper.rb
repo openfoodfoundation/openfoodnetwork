@@ -101,6 +101,10 @@ RSpec.configure do |config|
 
   # Retry
   config.verbose_retry = true
+  # Try twice (retry once)
+  config.default_retry_count = 2
+  # Only retry when Selenium raises Net::ReadTimeout
+  config.exceptions_to_retry = [Net::ReadTimeout]
 
   # Force use of expect (over should)
   config.expect_with :rspec do |expectations|

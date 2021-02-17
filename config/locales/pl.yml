@@ -121,10 +121,6 @@ pl:
     integer_array_validator:
       not_array_error: "musi być tablicą"
       invalid_element_error: "musi zawierać tylko prawidłowe liczby całkowite"
-  datetime_picker_ui:
-    current_text: Teraz
-    close_text: Gotowe
-    time_text: Godzina
   enterprise_mailer:
     confirmation_instructions:
       subject: "Potwierdź adres e-mail dla %{enterprise}"
@@ -3389,8 +3385,7 @@ pl:
           or_enter_new_card: "Lub wprowadź szczegóły nowej karty:"
           remember_this_card: Pamiętasz tę kartę?
     date_picker:
-      format: '% Y-% m-%d'
-      js_format: 'rr-mm-dd'
+      now: "Teraz"
     orders:
       error_flash_for_unavailable_items: "Produkt w Twoim koszyku stał się niedostępny. Zaktualizuj wybrane ilości."
       edit:

@@ -34,10 +34,7 @@ module Checkout
     end
 
     # Ensures cc_type is always passed to the model by inferring the type when
-    # the frontend didn't provide it. This fixes Pin Payments specifically
-    # although it might be useful for future payment gateways.
-    #
-    # More details:  app/assets/javascripts/darkswarm/services/checkout.js.coffee#L70-L98
+    # the frontend didn't provide it.
     def fill_in_card_type
       return unless payment_source_attributes
 

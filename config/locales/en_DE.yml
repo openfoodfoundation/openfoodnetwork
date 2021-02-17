@@ -114,8 +114,6 @@ en_DE:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
-  datetime_picker_ui:
-    time_text: Time
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -3110,9 +3108,6 @@ en_DE:
           used_saved_card: "Use a saved card:"
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
-    date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
     orders:
       edit:
         login_to_view_order: "Please log in to view your order."

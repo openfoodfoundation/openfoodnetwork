@@ -124,10 +124,6 @@ tr:
     integer_array_validator:
       not_array_error: "Sıralı olmalı"
       invalid_element_error: "Yalnızca geçerli tam sayılar içermelidir"
-  datetime_picker_ui:
-    current_text: Şimdi
-    close_text: Tamam
-    time_text: Zaman
   enterprise_mailer:
     confirmation_instructions:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
@@ -3412,8 +3408,7 @@ tr:
           or_enter_new_card: "Veya yeni bir kart için bilgileri girin:"
           remember_this_card: Bu kart hatırlansın mı?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      now: "Şimdi"
     orders:
       error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:

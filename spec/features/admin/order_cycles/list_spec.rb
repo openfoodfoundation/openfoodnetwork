@@ -132,14 +132,12 @@ feature '
 
         within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'
-          find('img.ui-datepicker-trigger', match: :first).click
+          find('input.datetimepicker', match: :first).click
         end
 
-        within("#ui-datepicker-div") do
-          expect(page).to have_selector 'a.ui-state-active', text: '1'
-
-          click_link '30'
-          find('button.ui-datepicker-close', match: :first).click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.flatpickr-day.selected', text: '1'
+          find('.dayContainer .flatpickr-day', text: "30").click
         end
 
         within("tr.order-cycle-#{oc_pt.id}") do

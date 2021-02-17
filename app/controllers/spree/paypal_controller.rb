@@ -15,9 +15,7 @@ module Spree
       order = current_order || raise(ActiveRecord::RecordNotFound)
       items = order.line_items.map(&method(:line_item))
 
-      tax_adjustments = order.adjustments.tax
-      # TODO: Remove in Spree 2.2
-      tax_adjustments = tax_adjustments.additional if tax_adjustments.respond_to?(:additional)
+      tax_adjustments = order.adjustments.tax.additional
       shipping_adjustments = order.adjustments.shipping
 
       order.adjustments.eligible.each do |adjustment|
@@ -175,12 +173,8 @@ module Spree
 
     def payment_details(items)
       item_sum = items.sum { |i| i[:Quantity] * i[:Amount][:value] }
-      # Would use tax_total here, but it can include "included" taxes as well.
-      # For instance, tax_total would include the 10% GST in Australian stores.
-      # A quick sum will get us around that little problem.
-      # TODO: Remove additional check in 2.2
-      tax_adjustments = current_order.adjustments.tax
-      tax_adjustments = tax_adjustments.additional if tax_adjustments.respond_to?(:additional)
+
+      tax_adjustments = current_order.adjustments.tax.additional
       tax_adjustments_total = tax_adjustments.sum(:amount)
 
       if item_sum.zero?

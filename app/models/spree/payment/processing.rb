@@ -15,6 +15,7 @@ module Spree
 
       def process_offline!
         return unless validate!
+        return if authorization_action_required?
 
         if payment_method.auto_capture?
           charge_offline!
@@ -183,6 +184,10 @@ module Spree
                          shipping_address: order.ship_address.try(:active_merchant_hash) })
 
         options
+      end
+
+      def authorization_action_required?
+        cvv_response_message.present?
       end
 
       private

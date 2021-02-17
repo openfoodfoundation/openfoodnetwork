@@ -47,6 +47,7 @@ module Spree
              dependent: :destroy
 
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
 
     has_many :shipments, dependent: :destroy do
       def states

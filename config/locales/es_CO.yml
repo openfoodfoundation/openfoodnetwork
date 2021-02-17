@@ -121,8 +121,6 @@ es_CO:
     integer_array_validator:
       not_array_error: "debe ser una lista"
       invalid_element_error: "debe contener solo enteros válidos"
-  datetime_picker_ui:
-    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor, confirma la dirección de correo electrónico de %{enterprise}"
@@ -3356,9 +3354,6 @@ es_CO:
           used_saved_card: "Usa una tarjeta guardada:"
           or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
           remember_this_card: ¿Recordar esta tarjeta?
-    date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ya no está disponible. Actualiza las cantidades seleccionadas."
       edit:

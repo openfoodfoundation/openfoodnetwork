@@ -117,6 +117,8 @@ it:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DI %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluso nel prezzo"
   validators:
     date_time_string_validator:
       not_string_error: "deve essere una stringa"
@@ -124,10 +126,6 @@ it:
     integer_array_validator:
       not_array_error: "deve essere un array"
       invalid_element_error: "deve contenere solo numeri interi"
-  datetime_picker_ui:
-    current_text: Adesso
-    close_text: Fatto
-    time_text: Ora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Per favore conferma l'indirizzo email di %{enterprise}"
@@ -427,7 +425,7 @@ it:
         home_page: Prima pagina
         producer_signup_page: Pagina accesso produttore
         hub_signup_page: Pagina accesso hub
-        group_signup_page: Pagina accesso gruppo
+        group_signup_page: Pagina accesso Rete
         main_links: Link del menu principale
         footer_and_external_links: Footer e link esterni
         your_content: I tuoi contenuti
@@ -446,7 +444,7 @@ it:
         name_placeholder: "Tariffa imballaggio"
     enterprise_groups:
       index:
-        new_button: Nuovo gruppo di aziende
+        new_button: Nuova Rete di aziende
     enterprise_roles:
       form:
         manages: gestisci
@@ -1450,7 +1448,7 @@ it:
   checkout_ready_for: "Pronto per:"
   checkout_instructions: "Commenti o istruzioni particolari?"
   checkout_payment: Pagamento
-  checkout_send: Piazza l'ordine adesso
+  checkout_send: Conferma la tua gentile richiesta
   checkout_your_order: Il tuo ordine
   checkout_cart_total: Carrello totale
   checkout_shipping_price: Spedizione
@@ -1641,7 +1639,7 @@ it:
   groups_contact_email: Scrivici
   groups_contact_website: Visita la nostra pagina web
   groups_contact_facebook: Seguici su Facebook
-  groups_signup_title: Iscriviti come gruppo
+  groups_signup_title: Iscriviti come Rete
   groups_signup_headline: Iscrizione Reti
   groups_signup_intro: "iamo una sorprendente piattaforma per la commercializzazione collaborativa, il modo più semplice per far raggiungere ai tuoi membri e stakeholder nuovi mercati. Siamo no-profit, convenienti e semplici."
   groups_signup_email: Scrivici
@@ -1654,7 +1652,7 @@ it:
   groups_signup_motivation7: Facciamo che il cibo si muova in maniera più sensata.
   groups_signup_motivation8: hai bisogno di attivare e abilitare le tue reti, noi offriamo una piattaforma di conversazione e azione. Hai bisogno di un impegno reale. Aiuteremo a raggiungere tutti gli attori, tutte le parti interessate, tutti i settori.
   groups_signup_motivation9: Hai bisogno di trovare risorse. Porteremo tutta la nostra esperienza a supporto. Hai bisogno di cooperazione. Ti connetteremo al meglio con una rete globale di tuoi simili.
-  groups_signup_pricing: Account Gruppo
+  groups_signup_pricing: Account Rete
   groups_signup_studies: Casi Studio
   groups_signup_contact: Pronto a discutere?
   groups_signup_contact_text: "Mettiti in contatto per scoprire cosa ha da offrire OFN per te:"
@@ -1984,9 +1982,9 @@ it:
   admin_enterprise_groups_owner: "Proprietario"
   admin_enterprise_groups_on_front_page: "Sulla vetrina?"
   admin_enterprise_groups_enterprise: "Aziende"
-  admin_enterprise_groups_data_powertip: "L'utente principale responsabile per questo gruppo."
-  admin_enterprise_groups_data_powertip_logo: "Questo è il logo per il gruppo"
-  admin_enterprise_groups_data_powertip_promo_image: "Questa immagine è mostrata in cima al profilo del Gruppo"
+  admin_enterprise_groups_data_powertip: "L'utente principale responsabile per questa rete."
+  admin_enterprise_groups_data_powertip_logo: "Questo è il logo per la rete"
+  admin_enterprise_groups_data_powertip_promo_image: "Questa immagine è mostrata in cima al profilo della Rete"
   admin_enterprise_groups_contact: "Contatto"
   admin_enterprise_groups_contact_phone_placeholder: "p.es. 01 123 4567"
   admin_enterprise_groups_contact_address1_placeholder: "p.es. Viale Mazzini 1"
@@ -2955,6 +2953,7 @@ it:
     display_currency: "Visualizza valuta"
     choose_currency: "Scegli Valuta"
     mail_method_settings: "Impostazioni del metodo di posta"
+    mail_settings_notice_html: "Alcune delle seguenti impostazioni non possono essere modificate e sono elencate qui solo per scopi di debug. È possibile apportare modifiche aggiornando i segreti dell'istanza ed utilizzando <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Contatta il team globale di OFN per maggiori dettagli. "
     general: "Generale"
     enable_mail_delivery: "Abilita recapito posta"
     send_mails_as: "Invia mail come"
@@ -3428,8 +3427,7 @@ it:
           or_enter_new_card: "Oppure, inserire dettagli di una nuova carta"
           remember_this_card: Ricordare questa Carta?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy/mm/dd'
+      now: "Adesso"
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:
@@ -3471,6 +3469,8 @@ it:
       cancel_email_for_shop:
         greeting: "Caro %{name},"
         subject: "Cancellazione dell'ordine"
+        intro: "Un cliente ha eliminato la sua gentile richiesta #%{number}."
+        view_cancelled_order: "Visualizza richiesta eliminata"
       confirm_email:
         subject: "Conferma Ordine"
       invoice_email:

@@ -1,0 +1,59 @@
+.question-mark-icon {
+  position: relative;
+  top: 1px;
+
+  // Reset button element css attributes
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+  }
+
+  &::before {
+    content: "?";
+    padding-left: 1px;
+    display: inline-block;
+    color: $tiny-blue;
+    border: 1px solid $grey-250;
+    border-radius: 50%;
+    text-align: center;
+    background-color: $grey-075;
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+
+.joyride-tip-guide.question-mark-tooltip {
+  width: 16rem;
+  max-width: 65%;
+  // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
+  margin-left: -7.4rem;
+  margin-top: 0.1rem;
+  background-color: transparent;
+
+  .joyride-content-wrapper {
+    background-color: $dynamic-blue;
+    padding: $padding-small;
+    border-radius: $radius-small;
+    color: $white;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .joyride-nub.bottom {
+    // Need to rewrite all with !important as it's marked as !important in the original file
+    border-color: $dynamic-blue !important;
+    border-bottom-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    left: 7.4rem;
+    z-index: -1;
+  }
+}

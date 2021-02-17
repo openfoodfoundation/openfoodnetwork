@@ -16,10 +16,7 @@
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(-1)", disabled: "!canAdd(-1)"}}>
         -# U+FF0D Fullwidth Hyphen-Minus
         －
-      %input.bulk-buy.variant-quantity{
-        type: "number",
-        min: "0",
-        max: "{{ available() }}",
+      %input.bulk-buy.variant-quantity{type: "number", min: "0", max: "{{ available() }}",
         ng: {model: "variant.line_item.quantity", max: "Infinity"}}>
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(1)", disabled: "!canAdd(1)"}}
         -# U+FF0B Fullwidth Plus Sign
@@ -31,10 +28,7 @@
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(-1)", disabled: "!canAddMax(-1)"}}>
         -# U+FF0D Fullwidth Hyphen-Minus
         －
-      %input.bulk-buy.variant-quantity{
-        type: "number",
-        min: "0",
-        max: "{{ available() }}",
+      %input.bulk-buy.variant-quantity{type: "number", min: "0", max: "{{ available() }}",
         ng: {model: "variant.line_item.max_quantity", max: "Infinity"}}>
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(1)", disabled: "!canAddMax(1)"}}
         -# U+FF0B Fullwidth Plus Sign

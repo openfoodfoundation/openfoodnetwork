@@ -117,6 +117,8 @@ de_DE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Kopie von %{order_cycle}"
+    tax_rate:
+      included_in_price: "im Preis inbegriffen"
   validators:
     date_time_string_validator:
       not_string_error: "muss eine Zeichenfolge sein"
@@ -124,10 +126,6 @@ de_DE:
     integer_array_validator:
       not_array_error: "muss ein Array sein"
       invalid_element_error: "darf nur ganze Zahlen enthalten"
-  datetime_picker_ui:
-    current_text: Jetzt
-    close_text: Fertig
-    time_text: Uhrzeit
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network DE"
@@ -192,9 +190,9 @@ de_DE:
         explainer: Die automatische Verarbeitung dieser Bestellungen ist aus einem unbekannten Grund fehlgeschlagen. Dies sollte nicht geschehen, bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
   title: "Open Food Network"
-  welcome_to: "Willkommen bei"
+  welcome_to: "Willkommen beim"
   site_meta_description: "Wir wagen den Neustart. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
-  search_by_name: Suche nach Ort oder Name des Ladens/Produzents...
+  search_by_name: Suche nach Ort oder Name des Ladens/Produzents ...
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   print_invoice: "Rechnung drucken"
@@ -248,7 +246,7 @@ de_DE:
   admin_and_handling: Bearbeitung
   profile: Profil
   supplier_only: Nur Lieferant
-  has_shopfront: mit Laden
+  has_shopfront: mit Online-Shop
   weight: Gewicht
   volume: Volumen
   items: Artikel
@@ -260,7 +258,7 @@ de_DE:
   y: 'J'
   n: 'N'
   powered_by: Unterstützt von
-  blocked_cookies_alert: "Ihr Browser blockiert möglicherweise Cookies, die für die Verwendung dieses Ladens erforderlich sind. Klicken Sie unten, um Cookies zuzulassen und die Seite neu zu laden."
+  blocked_cookies_alert: "Ihr Browser blockiert möglicherweise Cookies, die für die Verwendung dieses Online-Shops erforderlich sind. Klicken Sie unten, um Cookies zuzulassen und die Seite neu zu laden."
   allow_cookies: "Cookies erlauben"
   notes: Anmerkungen
   error: Fehler
@@ -601,7 +599,7 @@ de_DE:
         no_new_products: Es sind keine neuen Produkte verfügbar, die in den Katalog aufgenommen werden könnten.
         no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien.
         inventory_powertip: Dies ist Ihr Produktkatalog. Um Produkte zu Ihrem Katalog hinzuzufügen, wählen Sie "Neue Produkte" aus dem Dropdown-Menü.
-        hidden_powertip: Diese Produkte werden in Ihrem Katalog verborgen und können nicht zu Ihrem Laden hinzugefügt werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
+        hidden_powertip: Diese Produkte werden in Ihrem Katalog verborgen und können nicht im Laden angeboten werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
         new_powertip: Diese Produkte können Ihrem Katalog hinzugefügt werden. Klicken Sie auf "Hinzufügen", um ein Produkt zu Ihrem Katalog hinzuzufügen, oder auf "Verbergen", um es im Katalog auszublenden. Sie können Ihre Meinung später immer ändern!
       controls:
         back_to_my_inventory: Zurück zum Katalog
@@ -835,7 +833,7 @@ de_DE:
         producer_profile: Profil
         connect_ofn: Stellen Sie sich und Ihre Produkte vor
         always_free: IMMER KOSTENLOS
-        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. \nFügen Sie Ihre Produkte dem Profil hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Produzentenladen\"."
+        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. \nFügen Sie dem Profil Ihre Produkte hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Produzentenladen\"."
         producer_shop: Produzentenladen
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
         producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
@@ -1211,7 +1209,7 @@ de_DE:
       footer_contact_email: "Schreiben Sie uns eine E-Mail!"
       footer_nav_headline: "Favoriten"
       footer_join_headline: "Mitmachen"
-      footer_join_body: "Erstellen Sie ein Profil, einen Laden oder eine Gruppe im Open Food Network."
+      footer_join_body: "Erstellen Sie ein Profil, einen Online-Shop oder eine Gruppe im Open Food Network."
       footer_join_cta: "Los geht's!"
       footer_legal_call: "Lesen Sie unsere"
       footer_legal_tos: "AGB"
@@ -1250,12 +1248,12 @@ de_DE:
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
-  tax_invoice: "RECHNUNG"
+  tax_invoice: "Rechnungsnummer:"
   tax_total: "Steuersumme (%{rate}):"
   total_excl_tax: "Summe (zzgl. Steuern):"
-  total_incl_tax: "Summe (inkl. Steuern):"
-  abn: "USt-IdNr."
-  acn: "St.-Nr."
+  total_incl_tax: "GESAMT:"
+  abn: "USt-IdNr.:"
+  acn: "St.-Nr.:"
   invoice_issued_on: "Rechnung ausgestellt am:"
   order_number: "Rechnungsnummer"
   date_of_transaction: "Datum der Transaktion:"
@@ -1263,7 +1261,7 @@ de_DE:
   ticket_column_item: "Artikel"
   ticket_column_unit_price: "Stückpreis"
   ticket_column_total_price: "Gesamtpreis"
-  menu_1_title: "Läden"
+  menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
   menu_2_title: "Karte"
   menu_2_url: "/map"
@@ -1271,12 +1269,12 @@ de_DE:
   menu_3_url: "/producers"
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
-  menu_5_title: "Über uns"
-  menu_5_url: "https://wp.openfoodnetwork.de/"
-  menu_6_title: "Support"
-  menu_6_url: "https://wp.openfoodnetwork.de/support/"
-  menu_7_title: "Mehr erfahren"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_5_title: "Verkaufen"
+  menu_5_url: "https://openfoodnetwork.de/sell"
+  menu_6_title: "Über uns"
+  menu_6_url: "https://wp.openfoodnetwork.de/"
+  menu_7_title: "Hilfe"
+  menu_7_url: "https://wp.openfoodnetwork.de/support/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile Logo (75x26)"
   logo_mobile_svg: "Mobile Logo (SVG)"
@@ -1407,7 +1405,7 @@ de_DE:
       cookies_policy_link_desc: "Wenn Sie mehr erfahren möchten, besuchen Sie unsere"
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
-  home_shop: Jetzt einkaufen
+  home_shop: Jetzt regional einkaufen
   brandstory_headline: "Lebensmittel Direktvermarktung"
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, einen Neuanfang zu wagen ..."
   brandstory_part1: "Wir wagen den Neuanfang. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
@@ -1489,7 +1487,7 @@ de_DE:
   email_confirmation_profile_created: "Das Profil für %{name} wurde erfolgreich erstellt! Zur Aktivierung des Profils, bitten wir Sie diese E-Mail-Adresse zu bestätigen."
   email_confirmation_click_link: "Bitte klicken Sie auf den untenstehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
   email_confirmation_link_label: "E-Mail-Adresse bestätigen"
-  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf Ihr Verwaltungskonto für dieses Unternehmen zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen von %{sitename} zu erfahren und Ihr Profil oder Ihren Laden zu verwenden."
+  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf die Einstellungen dieses Unternehmens zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen von %{sitename} zu erfahren und Ihr Profil oder Ihren Online-Shop zu verwenden."
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich bei %{sitename} angemeldet haben oder von einer Person eingeladen wurden, die Sie wahrscheinlich kennen. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreib uns eine E-Mail:"
@@ -1562,7 +1560,7 @@ de_DE:
   shopping_oc_next_open: "Der nächste Bestellzyklus wird in %{distance_of_time} geöffnet"
   shopping_oc_select: "Auswählen ..."
   shopping_tabs_home: "Startseite"
-  shopping_tabs_shop: "Laden"
+  shopping_tabs_shop: "Einkaufen"
   shopping_tabs_about: "Über uns"
   shopping_tabs_contact: "Kontakt"
   shopping_contact_address: "Adresse"
@@ -2002,7 +2000,7 @@ de_DE:
   admin_enterprise_groups_web_website_placeholder: "z. B. www.truffles.com"
   admin_order_cycles: "Bestellzyklen verwalten"
   open: "Öffnet"
-  close: "Schließt"
+  close: "Schließen"
   create: "Neu"
   search: "Suche"
   supplier: "Lieferant"
@@ -2960,6 +2958,7 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
+    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale OFN-Team, um weitere Informationen zu erhalten."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
@@ -3175,7 +3174,7 @@ de_DE:
           state: "Status"
           email: "Kunden-E-Mail-Adresse"
         invoice:
-          issued_on: "Erstelldatum"
+          issued_on: "Rechnungsdatum"
           tax_invoice: "RECHNUNG"
           code: "Code"
           from: "Von"
@@ -3433,8 +3432,10 @@ de_DE:
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
           remember_this_card: Diese Karte speichern?
     date_picker:
-      format: '%Y.%m.%d'
-      js_format: 'dd.mm.yy'
+      flatpickr_date_format: "d.m.Y"
+      flatpickr_datetime_format: "d.m.Y H:i"
+      today: "heute"
+      now: "Jetzt"
     orders:
       error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar. Bitte passen Sie die ausgewählten Mengen an."
       edit:
@@ -3499,6 +3500,9 @@ de_DE:
       authorize_payment:
         subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network DE"
         instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert eine zusätzliche Authentifizierung. Bitte besuchen Sie die folgende URL, um Ihre Zahlung zu bestätigen:"
+      authorization_required:
+        subject: "Eine Zahlung muss durch den Kunden bestätigt werden"
+        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Bestätigung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"

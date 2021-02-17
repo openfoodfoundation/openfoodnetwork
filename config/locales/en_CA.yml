@@ -117,6 +117,8 @@ en_CA:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF%{order_cycle}"
+    tax_rate:
+      included_in_price: "Included in price"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -124,10 +126,6 @@ en_CA:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
-  datetime_picker_ui:
-    current_text: Now
-    close_text: Done
-    time_text: Time
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -2950,6 +2948,7 @@ en_CA:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
+    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3423,8 +3422,10 @@ en_CA:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
+      now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:
@@ -3466,6 +3467,8 @@ en_CA:
       cancel_email_for_shop:
         greeting: "Dear %{name},"
         subject: "Cancellation of Order"
+        intro: "A customer has cancelled ther order #%{number}."
+        view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
       invoice_email:
@@ -3488,6 +3491,9 @@ en_CA:
       authorize_payment:
         subject: "Please authorize your payment to %{distributor} on OFN"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication.  Please visit the following URL to authorize your payment:"
+      authorization_required:
+        subject: "A payment requires authorization from the customer"
+        message: "A payment for order%{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "

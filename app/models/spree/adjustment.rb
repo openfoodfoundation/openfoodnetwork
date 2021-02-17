@@ -64,12 +64,14 @@ module Spree
       end
     end
 
-    scope :tax, -> { where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::Order') }
+    scope :tax, -> { where(originator_type: 'Spree::TaxRate') }
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+    scope :inclusive, -> { where(included: true) }
+    scope :additional, -> { where(included: false) }
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
     scope :admin,          -> { where(source_type: nil, originator_type: nil) }

@@ -11,10 +11,18 @@ docker network prune -f
 
 echo '--------------------------------------'
 echo 'Killing and removing all Docker images'
+
 for i in $(docker images -a -q)
 do
-  docker kill $i; wait;
-  docker rmi -f $i; wait;
+  echo "Evaluating $(docker image inspect --format='{{ .RepoTags }}' $i)"
+  if [[ $(docker image inspect --format='{{ .RepoTags }}' $i) =~ "openfoodnetwork" ]]
+  then
+    echo "Deleting $i"
+    docker kill $i; wait;
+    docker rmi -f $i; wait;
+  else
+    echo 'Ignoring container not related to OFN'
+  fi
 done;
 
 echo '------------'

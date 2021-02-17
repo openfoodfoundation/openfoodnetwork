@@ -84,7 +84,9 @@ class SubscriptionConfirmJob < ActiveJob::Base
   def authorize_payment!(order)
     return if order.subscription.payment_method.class != Spree::Gateway::StripeSCA
 
-    OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(order).call!
+    OrderManagement::Order::StripeScaPaymentAuthorize.new(order).
+      extend(OrderManagement::Order::SendAuthorizationEmails).
+      call!
   end
 
   def send_confirmation_email(order)

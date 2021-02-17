@@ -117,6 +117,8 @@ pt_BR:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DO %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluso no preço"
   validators:
     date_time_string_validator:
       not_string_error: "deve ser uma linha"
@@ -124,10 +126,6 @@ pt_BR:
     integer_array_validator:
       not_array_error: "deve ser uma matriz"
       invalid_element_error: "deve conter apenas números inteiros válidos"
-  datetime_picker_ui:
-    current_text: Agora
-    close_text: Feito
-    time_text: Data
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de e-mail para %{enterprise}"
@@ -2953,6 +2951,7 @@ pt_BR:
     display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
+    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
     general: "Geral"
     enable_mail_delivery: "Ativar entrega de correio"
     send_mails_as: "Enviar correio como"
@@ -3279,6 +3278,9 @@ pt_BR:
         providers:
           provider: "Provedor"
           check: "Dinheiro / Transferência Bancária / Maquininha / etc. (pagamentos para os quais é necessária a validação manual)."
+          pin: "Pagamentos via Pin"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
           bogus: "Para Teste"
           bogussimple: "Para Teste Simples"
       payments:
@@ -3422,8 +3424,10 @@ pt_BR:
           or_enter_new_card: "Ou, adicione os dados para um novo cartão:"
           remember_this_card: Lembrar deste cartão?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      flatpickr_date_format: "d-m-Y"
+      flatpickr_datetime_format: "d-m-Y H:i"
+      today: "Hoje"
+      now: "Agora"
     orders:
       error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível. Por favor atualize as quantidades selecionadas. "
       edit:
@@ -3465,6 +3469,8 @@ pt_BR:
       cancel_email_for_shop:
         greeting: "Querid@ %{name},"
         subject: "Cancelamento do Pedido"
+        intro: "Um comprador cancelou o pedido #%{number}."
+        view_cancelled_order: "Ver pedido cancelado"
       confirm_email:
         subject: "Confimação de Pedido"
       invoice_email:
@@ -3486,6 +3492,7 @@ pt_BR:
     payment_mailer:
       authorize_payment:
         subject: "Favor autorizar seu pagamento para %{distributor}na OFB"
+        instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"
@@ -3522,7 +3529,22 @@ pt_BR:
       paused: pausado
       canceled: cancelado
     paypal:
+      already_refunded: "Este pagamento foi estornado e não pode ser mais editado."
+      transaction: "Transação via PayPal"
+      payer_id: "ID do comprador"
+      transaction_id: "ID da transação"
+      token: "Token"
+      refund: "Estorno"
       refund_amount: "Montante"
+      original_amount: "Valor original: %{amount}"
+      refund_successful: "Estorno via PayPal bem-sucedido"
+      refund_unsuccessful: "Estorno via PayPal mal-sucedido"
+      actions:
+        refund: "Estorno"
+      flash:
+        cancel: "Não quer usar o PayPal? Sem problemas."
+        connection_failed: "Não foi possível conectar ao PayPal."
+        generic_error: "PayPal falhou. %{reasons}"
     users:
       form:
         account_settings: Configurações da conta

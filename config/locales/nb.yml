@@ -124,10 +124,6 @@ nb:
     integer_array_validator:
       not_array_error: "må være en tabell"
       invalid_element_error: "må kun inneholde gyldige heltall"
-  datetime_picker_ui:
-    current_text: Nå
-    close_text: Ferdig
-    time_text: Tid
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -3408,8 +3404,7 @@ nb:
           or_enter_new_card: "Eller skriv inn detaljer for et nytt kort:"
           remember_this_card: Husk dette kortet?
     date_picker:
-      format: '%Y-%m-%d'
-      js_format: 'yy-mm-dd'
+      now: "Nå"
     orders:
       error_flash_for_unavailable_items: "En vare i handlekurven din er blitt utilgjengelig. Oppdater valgte mengder."
       edit:

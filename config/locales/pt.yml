@@ -124,10 +124,6 @@ pt:
     integer_array_validator:
       not_array_error: "deve ser uma lista"
       invalid_element_error: "deve conter apenas números válidos"
-  datetime_picker_ui:
-    current_text: Agora
-    close_text: Fechar
-    time_text: Hora
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de email de %{enterprise}"
@@ -3193,8 +3189,7 @@ pt:
           or_enter_new_card: "Ou, introduza detalhes para um novo cartão:"
           remember_this_card: Lembra-se deste cartão?
     date_picker:
-      format: '%d-%m-%Y'
-      js_format: 'dd/mm/yy'
+      now: "Agora"
     orders:
       error_flash_for_unavailable_items: "Um item do seu carrinho ficou indisponível. Por favor actualize as quantidades."
       edit:
