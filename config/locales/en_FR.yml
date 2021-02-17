@@ -2645,6 +2645,7 @@ en_FR:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
+      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
