@@ -3,6 +3,11 @@
   #{" " + @producer.name},
 %p
   = t :producer_mail_text_before
+  %ul
+    - @distributors_pickup_times.each do |distributor_name, pickup_time|
+      %li
+        #{distributor_name} (#{pickup_time})
+
   - if @receival_instructions
     %p
       %b

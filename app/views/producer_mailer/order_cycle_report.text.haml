@@ -2,10 +2,12 @@
 \
 = t :producer_mail_text_before
 \
+- @distributors_pickup_times.each do |distributor_name, pickup_time|
+  \- #{distributor_name} (#{pickup_time})
+\
 - if @receival_instructions
   = t :producer_mail_delivery_instructions
   = @receival_instructions
-
 \
 Orders summary
 ================

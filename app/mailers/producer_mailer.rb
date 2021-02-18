@@ -36,6 +36,7 @@ class ProducerMailer < Spree::BaseMailer
     line_items = line_items_from(@order_cycle, @producer)
 
     @grouped_line_items = line_items.group_by(&:product_and_full_name)
+    @distributors_pickup_times = distributors_pickup_times_for(line_items)
     @receival_instructions = @order_cycle.receival_instructions_for(@producer)
     @total = total_from_line_items(line_items)
     @tax_total = tax_total_from_line_items(line_items)
@@ -48,6 +49,15 @@ class ProducerMailer < Spree::BaseMailer
 
   def orders?(order_cycle, producer)
     line_items_from(order_cycle, producer).any?
+  end
+
+  def distributors_pickup_times_for(line_items)
+    @order_cycle.distributors.
+      joins(:distributed_orders).
+      where("spree_orders.id IN (?)", line_items.map(&:order_id).uniq).
+      map do |distributor|
+      [distributor.name, @order_cycle.pickup_time_for(distributor)]
+    end
   end
 
   def line_items_from(order_cycle, producer)
