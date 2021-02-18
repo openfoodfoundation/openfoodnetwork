@@ -55,7 +55,6 @@
         .three.columns
           = f.field_container :on_hand do
             = f.label :on_hand, t(".on_hand")
-            %span.required *
             %br/
             = f.text_field :on_hand, class: 'fullwidth'
             = f.error_message_on :on_hand
