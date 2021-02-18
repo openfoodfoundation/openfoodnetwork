@@ -56,7 +56,9 @@
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
         = t("admin.orders.bulk_management.shared")
     %div{ :class => "eight columns" }
-      %h6{ :class => "eight columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsProduct.name + ": ALL" }}
+      %h6{ :class => "eight columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' }
+        {{ selectedUnitsProduct.name + ": " }}
+        = t('admin.orders.bulk_management.all')
       %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.full_name }}
     %div{ :class => "four columns omega" }
       %h6{ :class => "four columns alpha", :style => 'text-align: right;' }

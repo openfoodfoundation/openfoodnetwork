@@ -574,6 +574,7 @@ pt:
         max_fulfilled_units: "Máximo de Unidades Completas "
         order_error: "Alguns erros devem ser corrigidos antes de actualizar encomendas.\nOs campos com bordas vermelhas contêm erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem valor unitário"
+        all: "Todas"
       select_variant: "Selecionar uma variante"
     enterprise:
       select_outgoing_oc_products_from: Selecione produtos de saída do ciclo de encomendas

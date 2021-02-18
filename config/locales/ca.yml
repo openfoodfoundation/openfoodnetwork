@@ -620,6 +620,7 @@ ca:
         max_fulfilled_units: "Unitats màximes fetes"
         order_error: "S'han de resoldre alguns errors abans de poder actualitzar les comandes.\nQualsevol camp amb vora vermella conté errors."
         variants_without_unit_value: "Atenció: algunes variants no tenen cap unitat assignada."
+        all: "tot"
       select_variant: "Selecciona un paràmetre"
     enterprise:
       select_outgoing_oc_products_from: Selecciona els productes sortints del Cicle de Comandes

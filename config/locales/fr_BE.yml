@@ -614,6 +614,7 @@ fr_BE:
         max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
+        all: "Tout"
       select_variant: "Choisir une variante"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi

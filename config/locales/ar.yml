@@ -622,6 +622,7 @@ ar:
         max_fulfilled_units: "اعلى وحدات منجزة"
         order_error: "يجب حل بعض الأخطاء قبل أن تتمكن من تحديث الطلبات. أي حقول ذات حدود حمراء تحتوي على أخطاء."
         variants_without_unit_value: "تحذير: بعض الانواع لا تحتوي على قيمة وحدة"
+        all: "الكل"
       select_variant: "اختيار النوع"
     enterprise:
       select_outgoing_oc_products_from: حدد منتجات OC الصادرة من

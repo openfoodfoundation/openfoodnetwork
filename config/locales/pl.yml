@@ -615,6 +615,7 @@ pl:
         max_fulfilled_units: "Maksymalna liczba dostarczonych jednostek"
         order_error: "Przed aktualizacją zamówień należy naprawić niektóre błędy. Wszystkie pola z czerwonymi ramkami zawierają błędy."
         variants_without_unit_value: "OSTRZEŻENIE: Niektóre warianty nie mają określonej jednostki"
+        all: "Wszystko"
       select_variant: "Wybierz wariant"
     enterprise:
       select_outgoing_oc_products_from: Wybierz wychodzące produkty OC z

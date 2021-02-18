@@ -620,6 +620,7 @@ tr:
         max_fulfilled_units: "Maks. Gerçekleşen Birim"
         order_error: "Siparişleri güncelleyebilmeniz için bazı hataların çözülmesi gerekir. Kırmızı kenarlıklı alanlar hata içeriyor."
         variants_without_unit_value: "UYARI: Bazı varyantların birim değeri yok"
+        all: "Herşey"
       select_variant: "Bir varyant seçin"
     enterprise:
       select_outgoing_oc_products_from: Sipariş dönemi giden ürünleri şurdan seçin

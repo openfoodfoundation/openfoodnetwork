@@ -620,6 +620,7 @@ nb:
         max_fulfilled_units: "Max Oppfylte Enheter"
         order_error: "Noen feil må løses før du kan oppdatere bestillinger.\nAlle felt med røde kanter inneholder feil."
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
+        all: "Alle"
       select_variant: "Velg en variant"
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra

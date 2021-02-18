@@ -622,6 +622,7 @@ pt_BR:
         max_fulfilled_units: "Pedidos / Limite Mínimo (Max)"
         order_error: "Alguns erros devem ser corrigidos antes de atualizar os pedidos.\nOs campos com bordas vermelhas contém erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de medida"
+        all: "Todas"
       select_variant: "Selecione uma variante"
     enterprise:
       select_outgoing_oc_products_from: 'Selecione a saída do ciclo de pedidos  '

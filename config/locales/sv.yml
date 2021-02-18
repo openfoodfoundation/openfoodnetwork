@@ -287,6 +287,7 @@ sv:
         max_fulfilled_units: "Maximalt expedierade enheter"
         order_error: "En del misstag måste korrigeras innan du kan uppdatera en order. Alla rödmarkerade fält innehåller fel."
         variants_without_unit_value: "VARNING: På en del ställen saknas antalsuppgift"
+        all: "Allt"
     enterprise:
       select_outgoing_oc_products_from: Välj utgående produkter i beställningsrunda från
     enterprises:

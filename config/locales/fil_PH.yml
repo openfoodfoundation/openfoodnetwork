@@ -603,6 +603,7 @@ fil_PH:
         max_fulfilled_units: "sagad na natapos na yunit"
         order_error: "ang ibang mga error ay dapat munang ayusin bago makapag-update ng mga order.\nang mga patlang na may pulang border ay may mga error."
         variants_without_unit_value: "BABALA: Ang ibang variant ay walang halaga ang yunit"
+        all: "Lahat"        
       select_variant: "pumili ng variant"
     enterprise:
       select_outgoing_oc_products_from: pumili ng lumalabas na mga produktong OC mula
