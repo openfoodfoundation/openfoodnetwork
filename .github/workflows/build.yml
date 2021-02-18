@@ -52,3 +52,6 @@ jobs:
 
       - name: Run feature tests
         run: bundle exec rspec spec/features/consumer/account spec/features/admin/users_spec.rb
+
+      - name: Run JS tests
+        run: bundle exec rake karma:run
