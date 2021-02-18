@@ -49,3 +49,6 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec spec/queries spec/controllers
+
+      - name: Run feature tests
+        run: bundle exec rspec spec/features/consumer/account
