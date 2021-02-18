@@ -54,4 +54,4 @@ jobs:
         run: bundle exec rspec spec/features/consumer/account spec/features/admin/users_spec.rb
 
       - name: Run JS tests
-        run: bundle exec rake karma:run
+        run: RAILS_ENV=test bundle exec rake karma:run
