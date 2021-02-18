@@ -10,7 +10,7 @@
   .row
     .four.columns.alpha= label_tag nil, t(:report_order_cycle)
     .four.columns.omega= f.select(:order_cycle_id_eq,
-      options_for_select(report_order_cycle_options(@order_cycles), params[:q][:order_cycle_id_eq]),
+      options_for_select(report_order_cycle_options(@order_cycles), params.dig(:q, :order_cycle_id_eq)),
       {:include_blank => true}, {:class => "select2 fullwidth"})
 
   .row
