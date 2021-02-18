@@ -26,7 +26,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   private
 
   def set_admin_redirect
-    session["spree_user_return_to"] = raw_params[:return_to] if raw_params[:return_to]
+    session["spree_user_return_to"] = params[:return_to] if params[:return_to]
   end
 
   def render_unconfirmed_response
@@ -34,7 +34,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   end
 
   def user_unconfirmed?
-    user = Spree::User.find_by(email: raw_params.dig(:spree_user, :email))
+    user = Spree::User.find_by(email: params.dig(:spree_user, :email))
     user && !user.confirmed?
   end
 end
