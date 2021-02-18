@@ -3484,6 +3484,7 @@ fr:
       processing: en traitement
       void: faire un avoir
       invalid: invalide
+      authorise: autorise
     order_mailer:
       cancel_email:
         customer_greeting: "Bonjour %{name},"

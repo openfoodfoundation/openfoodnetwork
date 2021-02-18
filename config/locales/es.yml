@@ -3459,6 +3459,7 @@ es:
       processing: procesando
       void: pendiente
       invalid: inválido
+      authorise: autorizar
     order_mailer:
       cancel_email:
         customer_greeting: "Hola %{name}"

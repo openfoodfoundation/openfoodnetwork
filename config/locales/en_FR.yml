@@ -3455,6 +3455,7 @@ en_FR:
       processing: processing
       void: void
       invalid: invalid
+      authorise: authorise
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
