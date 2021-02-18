@@ -111,8 +111,8 @@ module Admin
         end
         subscription_params[:subscription_line_items_attributes] = attributes
       end
-      wrap_bill_address_attrs if raw_params[:bill_address]
-      wrap_ship_address_attrs if raw_params[:ship_address]
+      wrap_bill_address_attrs if params[:bill_address]
+      wrap_ship_address_attrs if params[:ship_address]
     end
 
     def wrap_bill_address_attrs

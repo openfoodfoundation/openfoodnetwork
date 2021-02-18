@@ -24,7 +24,7 @@ module Api
         load_data_from_other_params
       end
 
-      render_variant_count && return if raw_params[:action_name] == "variant_count"
+      render_variant_count && return if params[:action_name] == "variant_count"
 
       render_paginated_products paginated_products
     end

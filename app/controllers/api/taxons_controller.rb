@@ -23,8 +23,8 @@ module Api
     def create
       authorize! :create, Spree::Taxon
       @taxon = Spree::Taxon.new(taxon_params)
-      @taxon.taxonomy_id = raw_params[:taxonomy_id]
-      taxonomy = Spree::Taxonomy.find_by(id: raw_params[:taxonomy_id])
+      @taxon.taxonomy_id = params[:taxonomy_id]
+      taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
       if taxonomy.nil?
         @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
@@ -58,17 +58,17 @@ module Api
     private
 
     def taxonomy
-      return if raw_params[:taxonomy_id].blank?
+      return if params[:taxonomy_id].blank?
 
-      @taxonomy ||= Spree::Taxonomy.find(raw_params[:taxonomy_id])
+      @taxonomy ||= Spree::Taxonomy.find(params[:taxonomy_id])
     end
 
     def taxon
-      @taxon ||= taxonomy.taxons.find(raw_params[:id])
+      @taxon ||= taxonomy.taxons.find(params[:id])
     end
 
     def taxon_params
-      return if raw_params[:taxon].blank?
+      return if params[:taxon].blank?
 
       params.require(:taxon).permit([:name, :parent_id])
     end

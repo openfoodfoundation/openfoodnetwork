@@ -114,9 +114,9 @@ module Admin
     private
 
     def order_cycles
-      if raw_params[:as] == "distributor"
+      if params[:as] == "distributor"
         order_cycles_as_distributor
-      elsif raw_params[:as] == "producer"
+      elsif params[:as] == "producer"
         order_cycles_as_producer
       else
         order_cycles_as_both
@@ -176,7 +176,7 @@ module Admin
       when 1
         @order_cycle.coordinator = available_coordinators.first
       else
-        if raw_params[:coordinator_id]
+        if params[:coordinator_id]
           flash[:error] = I18n.t(:order_cycles_no_permission_to_create_error)
         end
         render :set_coordinator
@@ -230,7 +230,7 @@ module Admin
     end
 
     def require_order_cycle_set_params
-      return if raw_params[:order_cycle_set].present?
+      return if params[:order_cycle_set].present?
 
       render json: { errors: t('admin.order_cycles.bulk_update.no_data') },
              status: :unprocessable_entity
