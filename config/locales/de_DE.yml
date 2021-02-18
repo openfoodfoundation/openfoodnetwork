@@ -2655,7 +2655,7 @@ de_DE:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
-      unit_price_tooltip: "Dies ist der Grundpreis des Produkts. Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -3460,10 +3460,11 @@ de_DE:
       credit_owed: Geschuldetes Guthaben
       failed: fehlgeschlagen
       paid: bezahlt
-      pending: wartet auf Bestätigung
+      pending: ausstehend
       processing: in Verarbeitung
       void: keine Angabe
       invalid: ungültig
+      authorise: zu bestätigen
     order_mailer:
       cancel_email:
         customer_greeting: "Liebe/r %{name},"
