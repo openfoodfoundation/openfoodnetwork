@@ -3459,6 +3459,7 @@ ca:
       processing: processant
       void: pendent
       invalid: invàlid
+      authorise: autoritzar
     order_mailer:
       cancel_email:
         customer_greeting: "Benvolgut/da,%{name}"
