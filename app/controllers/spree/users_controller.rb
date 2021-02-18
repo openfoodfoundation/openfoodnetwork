@@ -13,6 +13,7 @@ module Spree
     before_action :enable_embedded_shopfront
 
     def show
+      @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
       @orders = orders_collection
 
       customers = spree_current_user.customers
