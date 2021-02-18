@@ -219,6 +219,12 @@ module Spree
       final_weight_volume / quantity
     end
 
+    def unit_price_price_and_unit
+      price = Spree::Money.new((rand * 10).round(2), currency: currency)
+      unit = ["item", "kg"].sample
+      price.to_html + " / " + unit
+    end
+
     def scoper
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
     end
