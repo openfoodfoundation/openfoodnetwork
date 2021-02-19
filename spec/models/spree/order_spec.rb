@@ -636,15 +636,18 @@ describe Spree::Order do
 
   describe "getting the shipping tax" do
     let(:order) { create(:order) }
-    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member)) }
+    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+    let!(:shipping_method) { create(:shipping_method_with, :flat_rate, tax_category: shipping_tax_category) }
 
     context "with a taxed shipment" do
-      before do
-        allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-        allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
-      end
-
       let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+
+      before do
+        allow(order).to receive(:tax_zone) { shipping_tax_rate.zone }
+        order.reload
+        order.create_tax_charge!
+      end
 
       it "returns the shipping tax" do
         expect(order.shipping_tax).to eq(10)
