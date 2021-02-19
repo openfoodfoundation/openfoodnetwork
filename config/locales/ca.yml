@@ -1551,6 +1551,7 @@ ca:
     set_a_password: "A continuació se us demanarà que configureu una contrasenya abans de poder administrar l'organització."
     mistakenly_sent: "No esteu segur de perquè heu rebut aquest correu electrònic? Poseu-vos en contacte amb %{owner_email} per obtenir més informació."
   producer_mail_greeting: "Benvolguda"
+  producer_mail_text_before: "A continuació, trobareu una actualització sobre el cicle de comandes a punt per:"
   producer_mail_order_text: "Aquí tens un resum de les comandes dels teus productes:"
   producer_mail_delivery_instructions: "Instruccions de recollida / lliurament d'estoc:"
   producer_mail_signoff: "Gràcies i els millors desitjos"
