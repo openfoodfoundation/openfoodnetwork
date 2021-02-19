@@ -265,7 +265,12 @@ describe Spree::OrdersController, type: :controller do
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member)) }
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+      let(:order) {
+        create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
+                                           payment_fee: payment_fee, shipping_tax_category: shipping_tax_category)
+      }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
       let(:shipping_fee) { 3 }
@@ -274,14 +279,16 @@ describe Spree::OrdersController, type: :controller do
       let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
 
       before do
-        allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-        allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
+        allow(order).to receive(:tax_zone) { shipping_tax_rate.zone }
+        order.reload
+        order.create_tax_charge!
 
         # Sanity check the fees
-        expect(order.all_adjustments.length).to eq 2
+        expect(order.all_adjustments.length).to eq 3
         expect(item_num).to eq 2
         expect(order.adjustment_total).to eq expected_fees
-        expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
+        expect(order.shipment.adjustments.tax.first.amount).to eq 1.2
+        expect(order.shipment.included_tax_total).to eq 1.2
 
         allow(subject).to receive(:spree_current_user) { order.user }
         allow(subject).to receive(:order_to_update) { order }
@@ -296,7 +303,8 @@ describe Spree::OrdersController, type: :controller do
 
         expect(order.reload.line_items.count).to eq 1
         expect(order.adjustment_total).to eq(1 * (shipping_fee + payment_fee))
-        expect(order.shipment.fee_adjustment.included_tax).to eq 0.6
+        expect(order.shipment.adjustments.tax.first.amount).to eq 0.6
+        expect(order.shipment.included_tax_total).to eq 0.6
       end
     end
 

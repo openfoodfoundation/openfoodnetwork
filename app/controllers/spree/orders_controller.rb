@@ -86,6 +86,7 @@ module Spree
         if @order.complete?
           @order.update_shipping_fees!
           @order.update_payment_fees!
+          @order.create_tax_charge!
         end
 
         respond_with(@order) do |format|
