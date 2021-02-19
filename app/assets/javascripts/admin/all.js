@@ -39,6 +39,7 @@
 //= require flatpickr/dist/l10n/sv
 //= require flatpickr/dist/l10n/tr
 //= require shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr.min
+//= require flatpickr/dist/plugins/labelPlugin/labelPlugin
 
 // spree
 //= require admin/spree/spree
