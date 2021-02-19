@@ -166,7 +166,9 @@ feature '
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create(:user, enterprises: [distributor1]) }
     let(:user2) { create(:user, enterprises: [distributor2]) }
-    let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.20, included_in_price: true, zone: zone) }
+    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+    let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1], tax_category: shipping_tax_category) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
@@ -180,12 +182,12 @@ feature '
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
     before do
-      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.2 }
-
+      order1.reload
       2.times { order1.next }
       order1.select_shipping_method shipping_method.id
       order1.reload.recreate_all_fees!
+      order1.create_tax_charge!
+      order1.update!
       order1.finalize!
 
       login_as_admin_and_visit spree.admin_reports_path
