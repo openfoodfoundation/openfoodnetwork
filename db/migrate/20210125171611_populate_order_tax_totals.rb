@@ -1,25 +1,50 @@
 class PopulateOrderTaxTotals < ActiveRecord::Migration
-  class Spree::Adjustment < ActiveRecord::Base
-    scope :tax, -> { where(originator_type: 'Spree::TaxRate') }
-    scope :additional, -> { where(included: false) }
-    scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
-    scope :shipping, -> { where(originator_type: 'Spree::ShippingMethod') }
+  def up
+    # Updates new order tax total fields (additional_tax_total and included_tax_total).
+    # Sums the relevant values from associated adjustments and updates the two columns.
+    update_orders
   end
 
-  def up
-    Spree::Order.where(additional_tax_total: 0, included_tax_total: 0).
-      find_each(batch_size: 500) do |order|
+  def update_orders
+    sql = <<-SQL
+      UPDATE spree_orders
+      SET additional_tax_total = totals.additional,
+          included_tax_total = totals.included
+      FROM (
+        SELECT spree_orders.id AS order_id,
+          COALESCE(additional_adjustments.sum, 0) AS additional,
+          COALESCE(included_adjustments.sum, 0) AS included
+        FROM spree_orders
+        LEFT JOIN (
+          SELECT order_id, SUM(amount) AS sum
+          FROM spree_adjustments
+          WHERE spree_adjustments.originator_type = 'Spree::TaxRate'
+          AND spree_adjustments.included IS FALSE
+          GROUP BY order_id
+        ) additional_adjustments ON spree_orders.id = additional_adjustments.order_id
+        LEFT JOIN (
+          SELECT order_id, SUM(included_tax) as sum
+          FROM spree_adjustments
+          WHERE spree_adjustments.included_tax IS NOT NULL
+          AND (
+            spree_adjustments.originator_type = 'Spree::ShippingMethod'
+            OR spree_adjustments.originator_type = 'EnterpriseFee'
+            OR (
+              spree_adjustments.originator_type = 'Spree::TaxRate'
+              AND spree_adjustments.adjustable_type = 'Spree::LineItem'
+            )
+            OR (
+              spree_adjustments.originator_type IS NULL
+              AND spree_adjustments.adjustable_type = 'Spree::Order'
+              AND spree_adjustments.included IS FALSE
+            )
+          )
+          GROUP BY order_id
+        ) included_adjustments ON spree_orders.id = included_adjustments.order_id
+      ) totals
+      WHERE totals.order_id = spree_orders.id
+    SQL
 
-      additional_tax_total = order.all_adjustments.tax.additional.sum(:amount)
-
-      included_tax_total = order.line_item_adjustments.tax.sum(:included_tax) +
-        order.all_adjustments.enterprise_fee.sum(:included_tax) +
-        order.adjustments.shipping.sum(:included_tax)
-
-      order.update_columns(
-        additional_tax_total: additional_tax_total,
-        included_tax_total: included_tax_total
-      )
-    end
+    ActiveRecord::Base.connection.execute(sql)
   end
 end
