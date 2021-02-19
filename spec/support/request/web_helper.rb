@@ -22,10 +22,12 @@ module WebHelper
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
 
-    element = page.all(selector).first
+    visible = opts.key?(:visible) ? opts[:visible] : true
+    
+    element = page.all(selector, visible: visible).first
     expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
-    have_selector selector
+    have_selector selector, visible: visible
   end
 
   def fill_in_fields(field_values)
