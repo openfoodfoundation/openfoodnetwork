@@ -1550,6 +1550,7 @@ es:
     set_a_password: "Luego se le pedirá que establezca una contraseña antes de poder administrar la organización."
     mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para más información."
   producer_mail_greeting: "Estimada"
+  producer_mail_text_before: "A continuación, encontrará una actualización sobre el ciclo de pedido listo para:"
   producer_mail_order_text: "Se muestra un resumen de los pedidos de tus productos:"
   producer_mail_delivery_instructions: "Instrucciones de recogida/entrega de stock:"
   producer_mail_signoff: "Gracias y hasta pronto"
