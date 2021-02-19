@@ -462,8 +462,14 @@ feature '
       expect(page).to have_button('Create', disabled: false)
 
       # If I fill in the basic fields
-      fill_in 'order_cycle_orders_open_at', with: '2040-10-17 06:00:00'
-      fill_in 'order_cycle_orders_close_at', with: '2040-10-24 17:00:00'
+      find('#order_cycle_orders_open_at').click
+      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
+      # hide the datetimepicker
+      find("body").send_keys(:escape)
+      find('#order_cycle_orders_close_at').click
+      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
+      # hide the datetimepicker
+      find("body").send_keys(:escape)
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
       # Then my products / variants should already be selected
