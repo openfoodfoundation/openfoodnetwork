@@ -32,6 +32,7 @@ module OrderManagement
           allow(order).to receive_message_chain(:all_adjustments, :tax, :additional, :sum).and_return(20)
           allow(order).to receive_message_chain(:all_adjustments, :enterprise_fee, :sum).and_return(10)
           allow(order).to receive_message_chain(:all_adjustments, :shipping, :sum).and_return(5)
+          allow(order).to receive_message_chain(:shipment_adjustments, :tax, :inclusive, :sum).and_return(5)
           allow(order).to receive_message_chain(:adjustments, :admin, :sum).and_return(2)
 
           updater.update_adjustment_total
