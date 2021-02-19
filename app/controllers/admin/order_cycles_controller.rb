@@ -101,7 +101,7 @@ module Admin
 
     def collection
       return Enterprise.where("1=0") unless json_request?
-      return order_cycles_from_set if raw_params[:order_cycle_set]
+      return order_cycles_from_set if params[:order_cycle_set].present?
 
       ocs = order_cycles
       ocs.undated | ocs.soonest_closing | ocs.soonest_opening | ocs.closed
