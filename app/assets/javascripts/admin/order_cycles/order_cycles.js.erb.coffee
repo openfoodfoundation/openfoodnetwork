@@ -7,6 +7,7 @@ angular.module('admin.orderCycles', ['ngTagsInput', 'admin.indexUtils', 'admin.e
                             window.FLATPICKR_DATETIME_DEFAULT, {
                             onOpen: (selectedDates, dateStr, instance) ->
                               instance.setDate(ngModel.$modelValue)
+                              instance.input.dispatchEvent(new Event('focus', { bubbles: true }));
                             }));
 
   .directive 'ofnOnChange', ->
