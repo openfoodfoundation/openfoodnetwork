@@ -103,22 +103,36 @@ describe LineItemsController, type: :controller do
     end
 
     context "on a completed order with shipping and payment fees" do
+      let(:zone) { create(:zone_with_member) }
+      let(:shipping_tax_rate) do
+        create(:tax_rate, included_in_price: true,
+                          calculator: Calculator::DefaultTax.new,
+                          amount: 0.25,
+                          zone: zone)
+      end
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:shipping_fee) { 3 }
       let(:payment_fee) { 5 }
       let(:distributor_with_taxes) { create(:distributor_enterprise_with_tax) }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor_with_taxes, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:order) {
+        create(:completed_order_with_fees, distributor: distributor_with_taxes,
+                                           shipping_fee: shipping_fee, payment_fee: payment_fee,
+                                           shipping_tax_category: shipping_tax_category)
+      }
 
       before do
-        Spree::Config.shipment_inc_vat = true
-        Spree::Config.shipping_tax_rate = 0.25
+        allow(order).to receive(:tax_zone) { zone }
+        order.reload
+        order.create_tax_charge!
       end
 
       it "updates the fees" do
         # Sanity check fees
         item_num = order.line_items.length
         initial_fees = item_num * (shipping_fee + payment_fee)
-        expect(order.adjustment_total).to eq initial_fees
-        expect(order.shipments.last.fee_adjustment.included_tax).to eq 1.2
+
+        expect(order.shipment.adjustments.tax.count).to eq 1
+        expect(order.shipment.included_tax_total).to eq 1.2
 
         # Delete the item
         item = order.line_items.first
@@ -130,9 +144,9 @@ describe LineItemsController, type: :controller do
         order.reload
         order.shipment.reload
         expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
-        expect(order.shipments.last.fee_adjustment.amount).to eq shipping_fee
+        expect(order.shipment.adjustment_total).to eq shipping_fee
         expect(order.payments.first.adjustment.amount).to eq payment_fee
-        expect(order.shipments.last.fee_adjustment.included_tax).to eq 0.6
+        expect(order.shipment.included_tax_total).to eq 0.6
       end
     end
 
