@@ -15,6 +15,14 @@ Create a new branch on your local machine to make your changes against (based on
 
     git checkout -b branch-name-here --no-track upstream/master
 
+You might need to update or install missing gems:
+
+    bundle install
+
+Also, there might be missing dependencies, after pulling a particular branch. To update dependencies, run:
+
+    yarn install
+
 If you want to run the whole test suite, we recommend using a free CI service to run your tests in parallel. Running the whole suite locally in series is likely to take > 40 minutes. [TravisCI][travis] and [SemaphoreCI][semaphore] both work great in our experience. Either way, make sure the tests pass on your new branch:
 
     bundle exec rspec spec
