@@ -1526,7 +1526,6 @@ fr_BE:
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
-  producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"

@@ -1549,7 +1549,6 @@ it:
     set_a_password: "Ti sarà richiesto di impostare una password prima di poter gestire la pagina dell'azienda."
     mistakenly_sent: "Non sai perché hai ricevuto questa mail? Per favore contatta %{owner_email} per maggiori informazioni."
   producer_mail_greeting: "Cara/o"
-  producer_mail_text_before: "Adesso abbiamo tutti gli ordini dei clienti per la prossima consegna."
   producer_mail_order_text: "Ecco il sommario degli ordini per i tuoi prodotti:"
   producer_mail_delivery_instructions: "Istruzioni per la consegna o il ritiro in magazzino:"
   producer_mail_signoff: "Grazie e sinceri saluti"

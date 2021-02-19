@@ -1527,7 +1527,6 @@ nl_BE:
     set_a_password: "Je zal dan gevraagd worden een wachtwoord in te stellen voordat je je ondernemingen kan inschrijven."
     mistakenly_sent: "Ben je niet zeker waarom je deze E-mail hebt ontvangen? Contacteer dan alsjeblieft %{owner_email} voor meer informatie."
   producer_mail_greeting: "Beste"
-  producer_mail_text_before: "We hebben nu alle consumentenbestellingen voor de volgende voedsellevering."
   producer_mail_order_text: "Hier heb je een samenvatting van bestellingen van al je producten:"
   producer_mail_delivery_instructions: "Voorraad ophaling/ levering instructies:"
   producer_mail_signoff: "Bedankt en beste wensen"

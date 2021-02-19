@@ -1546,7 +1546,6 @@ tr:
     set_a_password: "Daha sonra, işletmeyi yönetebilmeniz için önce bir parola ayarlamanız istenecek."
     mistakenly_sent: "Bu e-postayı neden aldığınızdan emin değil misiniz? Daha fazla bilgi için lütfen %{owner_email} ile iletişime geçin."
   producer_mail_greeting: "Sevgili"
-  producer_mail_text_before: "Bir sonraki gıda teslimatı için tüm müşteri siparişleri hazır."
   producer_mail_order_text: "İşte ürünleriniz gelen için siparişlerin bir özeti:"
   producer_mail_delivery_instructions: "Stok teslimat/gönderim talimatları:"
   producer_mail_signoff: "En iyi dileklerimle"

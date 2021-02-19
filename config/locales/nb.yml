@@ -1546,7 +1546,6 @@ nb:
     set_a_password: "Du blir da bedt om å angi et passord før du kan administrere bedriften."
     mistakenly_sent: "Ikke sikker på hvorfor du har mottatt denne e-posten? Kontakt %{owner_email} for mer informasjon."
   producer_mail_greeting: "Kjære"
-  producer_mail_text_before: "Alle dine kunderbestillinger er klar."
   producer_mail_order_text: "Her er en oppsummering av bestillingene:"
   producer_mail_delivery_instructions: "Henting / leveringsdetaljer :"
   producer_mail_signoff: "Med vennlig hilsen"

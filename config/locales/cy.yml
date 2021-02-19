@@ -1546,7 +1546,6 @@ cy:
     set_a_password: "Yna fe&#39;ch anogir i osod cyfrinair cyn y gallwch weinyddu&#39;r fenter."
     mistakenly_sent: "Ddim yn siŵr pam rydych chi wedi derbyn yr e-bost hwn? Cysylltwch â %{owner_email} i gael mwy o wybodaeth."
   producer_mail_greeting: "Annwyl"
-  producer_mail_text_before: "Bellach mae gennym yr holl archebion defnyddwyr ar gyfer y gostyngiad bwyd nesaf."
   producer_mail_order_text: "Dyma grynodeb o&#39;r archebion ar gyfer eich cynhyrchion:"
   producer_mail_delivery_instructions: "Cyfarwyddiadau codi / dosbarthu stoc:"
   producer_mail_signoff: "Diolch a dymuniadau gorau"

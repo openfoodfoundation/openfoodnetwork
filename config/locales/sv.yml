@@ -883,7 +883,6 @@ sv:
   email_signup_text: "Tack för att du anslutit dig till vårt nätverk. Om du är kund, vi vill introducera dig för många utmärkta odlare och ett stort urval av god mat. Om du är producent eller matföretag är vi glada att ha dig som en del av vårt nätverk.\n."
   email_signup_help_html: "Vi uppskattar alla frågor och synpunkter; du kan använda  <em>Send Feedback</em> knappen på sidan eller skicka e-post till %{email}"
   producer_mail_greeting: "Kära"
-  producer_mail_text_before: "Nu har vi alla kundorder för nästa matleverans."
   producer_mail_order_text: "Detta är en summering av order för dina produkter:"
   producer_mail_delivery_instructions: "Upphämtnings- / leveransinstruktioner:"
   producer_mail_signoff: "Med vänliga hälsningar"

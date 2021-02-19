@@ -1546,7 +1546,6 @@ pt_BR:
     set_a_password: "Você será solicitado a definir uma senha antes de poder administrar a empresa."
     mistakenly_sent: "Não sabe ao certo por que você recebeu este e-mail? Entre em contato com %{owner_email} para obter mais informações."
   producer_mail_greeting: "Querido"
-  producer_mail_text_before: "Agora temos todos os pedidos do cliente para a próxima entrega."
   producer_mail_order_text: "Aqui está um resumo de pedidos para seus produtos:"
   producer_mail_delivery_instructions: "Instruções para retirada/entrega do estoque:"
   producer_mail_signoff: "Obrigado e até breve"

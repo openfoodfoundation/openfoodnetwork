@@ -1502,7 +1502,6 @@ pt:
     set_a_password: "Depois ser-te-á pedido que definas uma palavra-passe antes de poderes administrar a organização."
     mistakenly_sent: "Não tens a certeza porque é que recebeste este email?  Por favor contacta %{owner_email}para mais informação. "
   producer_mail_greeting: "Caro/a"
-  producer_mail_text_before: "Agora temos todos as encomendas para a próxima entrega."
   producer_mail_order_text: "Aqui está um resumo das encomendas para os seus produtos:"
   producer_mail_delivery_instructions: "Instruções para levantamento/entrega dos produtos:"
   producer_mail_signoff: "Obrigado e até breve"

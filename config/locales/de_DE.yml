@@ -1406,8 +1406,8 @@ de_DE:
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt regional einkaufen
-  brandstory_headline: "Lebensmittel Direktvermarktung"
-  brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, einen Neuanfang zu wagen ..."
+  brandstory_headline: "Ihr Marktplatz für regionale Lebensmittel"
+  brandstory_intro: "Produkte von Produzenten vor Ort finden, online bestellen und abholen oder liefern lassen. Werden Sie Teil einer Bewegung, die mit jedem Einkauf ein Zeichen setzt für hochwertige regionale Produkte, faire Preise, Nachhaltigkeit und Transparenz. Unser Antrieb ist ..."
   brandstory_part1: "Wir wagen den Neuanfang. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
   brandstory_part3: "Also bauen wir einen Online-Marktplatz auf, der das Spielfeld ebnet. Es ist transparent und schafft echte Beziehungen. Es ist Open Source, also gehört es allen. Es skaliert zu Regionen und Nationen, so dass Leute Versionen auf der ganzen Welt starten."
@@ -1550,7 +1550,6 @@ de_DE:
     set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
     mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen."
   producer_mail_greeting: "Liebe/r"
-  producer_mail_text_before: "Es liegen jetzt alle Kundenbestellungen für die nächste Lieferung vor."
   producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
   producer_mail_signoff: "Mit freundlichen Grüßen,"

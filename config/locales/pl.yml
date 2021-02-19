@@ -1523,7 +1523,6 @@ pl:
     set_a_password: "Zostaniesz poproszony o ustawienie hasła, zanim będziesz mógł administrować podmiotem."
     mistakenly_sent: "Nie wiesz, dlaczego otrzymałeś ten e-mail? Aby uzyskać więcej informacji, skontaktuj się z %{owner_email}."
   producer_mail_greeting: "Drogi"
-  producer_mail_text_before: "Mamy teraz wszystkie zamówienia konsumentów na następny zrzut żywności."
   producer_mail_order_text: "Oto podsumowanie zamówień na Twoje produkty:"
   producer_mail_delivery_instructions: "Instrukcje odbioru / dostawy towaru:"
   producer_mail_signoff: "Dziękuję i pozdrawiam"

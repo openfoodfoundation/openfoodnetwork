@@ -1545,7 +1545,6 @@ ar:
     set_a_password: "سيُطلب منك بعد ذلك تعيين كلمة مرور قبل أن تتمكن من إدارة الشركة."
     mistakenly_sent: "لست متأكدا لماذا تلقيت هذا البريد الإلكتروني؟ يرجى الاتصال %{owner_email} لمزيد من المعلومات."
   producer_mail_greeting: "عزيزي"
-  producer_mail_text_before: "لدينا الآن جميع طلبات المستهلكين لانخفاض الغذاء المقبل."
   producer_mail_order_text: "فيما يلي ملخص لطلبات منتجاتك:"
   producer_mail_delivery_instructions: "استلام المخزون / تعليمات التسليم:"
   producer_mail_signoff: "شكرا وأطيب التمنيات"
