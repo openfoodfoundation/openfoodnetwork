@@ -102,13 +102,5 @@ module OpenFoodNetwork
     def tax_included_in(line_item)
       line_item.adjustments.sum(:included_tax)
     end
-
-    def shipment_inc_vat
-      Spree::Config.shipment_inc_vat
-    end
-
-    def shipping_tax_rate
-      Spree::Config.shipping_tax_rate
-    end
   end
 end
