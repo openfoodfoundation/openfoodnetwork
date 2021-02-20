@@ -1053,7 +1053,7 @@ describe Spree::Order do
       Spree::Config.shipping_tax_rate = 0.25
 
       # Sanity check the fees
-      expect(order.adjustments.length).to eq 1
+      expect(order.all_adjustments.length).to eq 2
       expect(order.shipment_adjustments.length).to eq 1
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
@@ -1070,7 +1070,7 @@ describe Spree::Order do
       end
 
       context "when finalized fee adjustments exist on the order" do
-        let(:payment_fee_adjustment) { order.adjustments.payment_fee.first }
+        let(:payment_fee_adjustment) { order.all_adjustments.payment_fee.first }
         let(:shipping_fee_adjustment) { order.shipment_adjustments.first }
 
         before do
