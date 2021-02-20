@@ -2,7 +2,7 @@
 
 module Api
   module Legacy
-    class TermsAndConditionsController < Api::EnterpriseAttachmentController
+    class TermsAndConditionsController < Api::Legacy::EnterpriseAttachmentController
       private
 
       def attachment_name

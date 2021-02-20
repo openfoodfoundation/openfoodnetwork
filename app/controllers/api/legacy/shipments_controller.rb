@@ -2,7 +2,7 @@ require 'open_food_network/scope_variant_to_hub'
 
 module Api
   module Legacy
-    class ShipmentsController < Basecontroller
+    class ShipmentsController < BaseController
       respond_to :json
 
       before_action :find_order
