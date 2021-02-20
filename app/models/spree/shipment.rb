@@ -165,10 +165,13 @@ module Spree
     end
 
     def update_amounts
+      return unless fee_adjustment&.amount != cost
+
       update_columns(
         cost: fee_adjustment&.amount || 0.0,
         updated_at: Time.zone.now
       )
+      recalculate_adjustments
     end
 
     def manifest
@@ -280,7 +283,7 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
-      update_amounts if fee_adjustment&.amount != cost
+      update_amounts
     end
 
     def adjustment_label
