@@ -19,7 +19,7 @@ describe Admin::OrdersHelper, type: :helper do
     end
 
     it "filters zero tax rate adjustments" do
-      create(:adjustment, adjustable: order, amount: 0, originator_type: "Spree::TaxRate")
+      create(:adjustment, adjustable: order, amount: 0, originator_type: "Spree::TaxRate", order: order)
 
       expect(helper.order_adjustments_for_display(order)).to eq []
     end

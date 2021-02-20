@@ -36,7 +36,7 @@ describe CheckoutHelper, type: :helper do
     let(:order) { create(:order_with_totals_and_distribution) }
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
     let!(:fee_adjustment) {
-      create(:adjustment, originator: enterprise_fee, adjustable: order, source: order)
+      create(:adjustment, originator: enterprise_fee, adjustable: order, source: order, order: order)
     }
 
     before do
@@ -50,6 +50,8 @@ describe CheckoutHelper, type: :helper do
 
       shipping_adjustment = order.shipment_adjustments.first
       expect(adjustments).to include shipping_adjustment
+
+      pp adjustments
 
       admin_fee_summary = adjustments.last
       expect(admin_fee_summary.label).to eq I18n.t(:orders_form_admin)
