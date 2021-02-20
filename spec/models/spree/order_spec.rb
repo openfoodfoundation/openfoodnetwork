@@ -1059,6 +1059,7 @@ describe Spree::Order do
       expect(order.shipment_adjustments.length).to eq 2
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
+      expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
       expect(order.shipment.included_tax_total).to eq 1.2
     end
 
@@ -1068,6 +1069,7 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0.6
         expect(order.shipment.included_tax_total).to eq 0.6
       end
 
@@ -1087,6 +1089,7 @@ describe Spree::Order do
           # Check if fees got updated
           order.reload
           expect(order.adjustment_total).to eq expected_fees
+          expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
           expect(order.shipment.included_tax_total).to eq 1.2
         end
       end
@@ -1100,6 +1103,7 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
+        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0
         expect(order.shipment.included_tax_total).to eq 0
       end
     end
