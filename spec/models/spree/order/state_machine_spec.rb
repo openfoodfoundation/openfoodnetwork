@@ -59,13 +59,6 @@ describe Spree::Order do
         order.next!
       end
     end
-
-    context "when current state is delivery" do
-      before do
-        order.state = "delivery"
-        allow(order).to receive_messages total: 10.0
-      end
-    end
   end
 
   context "#can_cancel?" do
