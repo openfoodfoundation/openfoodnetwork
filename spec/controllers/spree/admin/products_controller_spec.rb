@@ -66,7 +66,7 @@ describe Spree::Admin::ProductsController, type: :controller do
                    ]
 
         expect(response).to redirect_to(
-          '/api/products/bulk_products'
+          '/api/legacy/products/bulk_products'
         )
       end
     end
