@@ -57,7 +57,9 @@
       %span
         = t("admin.orders.bulk_management.shared")
     .eight.columns
-      %h6.text-center{ 'ng-show' => 'sharedResource' } {{ selectedUnitsProduct.name + ": ALL" }}
+      %h6.text-center{ 'ng-show' => 'sharedResource' } 
+        {{ selectedUnitsProduct.name + ": " }}
+        = t('admin.orders.bulk_management.all')
       %h6.text-center{ 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.full_name }}
     .three.columns
       %h6.text-right
