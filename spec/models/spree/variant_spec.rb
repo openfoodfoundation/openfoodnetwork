@@ -20,72 +20,6 @@ module Spree
       end
     end
 
-    context "product has other variants" do
-      describe "option value accessors" do
-        before {
-          @multi_variant = create(:variant, product: variant.product)
-          variant.product.reload
-        }
-
-        let(:multi_variant) { @multi_variant }
-
-        it "should set option value" do
-          expect(multi_variant.option_value('media_type')).to be_nil
-
-          multi_variant.set_option_value('media_type', 'DVD')
-          expect(multi_variant.option_value('media_type')).to eq 'DVD'
-
-          multi_variant.set_option_value('media_type', 'CD')
-          expect(multi_variant.option_value('media_type')).to eq 'CD'
-        end
-
-        it "should not duplicate associated option values when set multiple times" do
-          multi_variant.set_option_value('media_type', 'CD')
-
-          expect {
-            multi_variant.set_option_value('media_type', 'DVD')
-          }.to_not change(multi_variant.option_values, :count)
-
-          expect {
-            multi_variant.set_option_value('coolness_type', 'awesome')
-          }.to change(multi_variant.option_values, :count).by(1)
-        end
-      end
-
-      context "product has other variants" do
-        describe "option value accessors" do
-          before {
-            @multi_variant = create(:variant, product: variant.product)
-            variant.product.reload
-          }
-
-          let(:multi_variant) { @multi_variant }
-
-          it "should set option value" do
-            expect(multi_variant.option_value('media_type')).to be_nil
-
-            multi_variant.set_option_value('media_type', 'DVD')
-            expect(multi_variant.option_value('media_type')).to eq 'DVD'
-
-            multi_variant.set_option_value('media_type', 'CD')
-            expect(multi_variant.option_value('media_type')).to eq 'CD'
-          end
-
-          it "should not duplicate associated option values when set multiple times" do
-            multi_variant.set_option_value('media_type', 'CD')
-
-            expect {
-              multi_variant.set_option_value('media_type', 'DVD')
-            }.to_not change(multi_variant.option_values, :count)
-
-            expect {
-              multi_variant.set_option_value('coolness_type', 'awesome')
-            }.to change(multi_variant.option_values, :count).by(1)
-          end
-        end
-      end
-    end
-
     context "price parsing" do
       before(:each) do
         I18n.locale = I18n.default_locale
@@ -752,7 +686,7 @@ module Spree
     context "extends LocalizedNumber" do
       subject! { build_stubbed(:variant) }
 
-      it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
+      it_behaves_like "a model using the LocalizedNumber module", [:price, :weight]
     end
 
     context "in a circular order cycle setup" do
@@ -773,7 +707,7 @@ module Spree
       end
 
       it "saves without infinite loop" do
-        expect(variant1.update(cost_price: 1)).to be_truthy
+        expect(variant1.update(price: 1)).to be_truthy
       end
     end
   end

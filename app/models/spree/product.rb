@@ -67,10 +67,8 @@ module Spree
     has_many :stock_items, through: :variants
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
-                        :height, :width, :depth, :is_master, :default_price?, :cost_currency,
+                        :height, :width, :depth, :is_master, :cost_currency,
                         :price_in, :amount_in, :unit_value, :unit_description
-    delegate_belongs_to :master, :cost_price if Variant.table_exists? &&
-                                                Variant.column_names.include?('cost_price')
     delegate :images_attributes=, :display_as=, to: :master
 
     after_create :set_master_variant_defaults
