@@ -462,7 +462,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
             # There are two orders - our order and our new cart
             o = Spree::Order.complete.first
-            expect(o.adjustments.payment_fee.first.amount).to eq 5.67
+            expect(o.all_adjustments.payment_fee.first.amount).to eq 5.67
             expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
           end
         end
