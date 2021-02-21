@@ -34,7 +34,7 @@ class OrderAdjustmentsFetcher
   attr_reader :order
 
   def adjustments
-    order.adjustments
+    order.all_adjustments
   end
 
   def adjustments_eager_loaded?
