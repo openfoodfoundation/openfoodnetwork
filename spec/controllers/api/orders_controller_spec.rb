@@ -244,7 +244,7 @@ module Api
 
           expect(json_response[:adjustments].first).to include(
             'label' => "Transaction fee",
-            'amount' => order.adjustments.payment_fee.first.amount.to_s
+            'amount' => order.all_adjustments.payment_fee.first.amount.to_s
           )
           expect(json_response[:adjustments].second).to include(
             'label' => "Shipping",
