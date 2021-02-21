@@ -13,7 +13,7 @@ class OrderCheckoutRestart
     clear_shipments
     clear_payments
 
-    order.reload
+    order.reload.update!
   end
 
   private
