@@ -53,18 +53,18 @@ describe OrderCheckoutRestart do
 
           expect(order.state).to eq 'payment'
           expect(order.shipments.count).to eq 1
-          expect(order.adjustments.shipping.count).to eq 0
+          expect(order.all_adjustments.shipping.count).to eq 0
           expect(order.payments.count).to eq 2
-          expect(order.adjustments.payment_fee.count).to eq 2
+          expect(order.all_adjustments.payment_fee.count).to eq 2
         end
       end
 
       def expect_cart_state_and_reset_adjustments
         expect(order.state).to eq 'cart'
         expect(order.shipments.count).to eq 0
-        expect(order.adjustments.shipping.count).to eq 0
+        expect(order.all_adjustments.shipping.count).to eq 0
         expect(order.payments.count).to eq 1
-        expect(order.adjustments.payment_fee.count).to eq 1
+        expect(order.all_adjustments.payment_fee.count).to eq 1
       end
     end
   end
