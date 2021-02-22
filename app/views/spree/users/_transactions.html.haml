@@ -2,24 +2,24 @@
   - if @payments_requiring_action.present?
     .active_table
       %h3.requiring-authorization= t(".authorization_required")
-      %table
+      %table.full
         %tr
-          %th.order1= t :transaction
-          %th.order2= t :transaction_date
-          %th.order3.show-for-large-up= t :payment_state
-          %th.order5.text-right= t :value
+          %th= t :transaction
+          %th= t :transaction_date
+          %th.show-for-large-up= t :payment_state
+          %th.text-right= t :value
         %tbody
           - @payments_requiring_action.each do |payment|
             %tr
-              %td.order1
+              %td
                 = link_to payment.order.number, main_app.order_path(payment.order)
-              %td.order2
+              %td
                 = payment.updated_at.strftime("%Y-%m-%d")
-              %td.order3
+              %td
                 %a{ href: "#{payment.cvv_response_message}" }
                   %button.x-small
                     Authorize
-              %td.order5
+              %td.text-right
                 = payment.display_amount
 
   .active_table.orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}

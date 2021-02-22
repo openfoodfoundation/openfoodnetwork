@@ -99,7 +99,6 @@
   .transaction-group {}
 
   table {
-    width: 100%;
     border-radius: $radius-medium $radius-medium 0 0;
 
     tr:nth-of-type(even) {
@@ -142,4 +141,8 @@
   .order7 {
     width: 10%;
   }
+}
+
+table.full {
+  width: 100%;
 }
