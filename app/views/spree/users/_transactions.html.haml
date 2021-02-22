@@ -1,7 +1,7 @@
 %script{ type: "text/ng-template", id: "account/transactions.html" }
   - if @payments_requiring_action.present?
-    .active_table
-      %h3.requiring-authorization= t(".authorization_required")
+    .active_table.requiring-authorization
+      %h3= t(".authorization_required")
       %table.full
         %tr
           %th= t :transaction

@@ -146,3 +146,19 @@
 table.full {
   width: 100%;
 }
+
+// Note this relies on the <th> using `.show-for-large-up` as well.
+.requiring-authorization tr {
+  position: relative;
+
+  th:last-child {
+    position: absolute;
+    // The following calculation is the equivalent of:
+    //
+    // $table-cell-padding + 2 * browser's default border-spacing + 2 * table border
+    //
+    // Unfortunately we can't use Scss's interpolation
+    // https://sass-lang.com/documentation/interpolation. We're using a too old version perhaps?
+    right: calc(12px + 2*2px + 2*1px);
+  }
+}
