@@ -799,5 +799,13 @@ module Spree
         expect(variant.unit_value).to eq 1
       end
     end
+
+    context "trying to set an invalid unit_value" do
+      it "does not allow NaN" do
+        variant.update(unit_value: Float::NAN)
+
+        expect(variant.reload.unit_value).to eq(1.0)
+      end
+    end
   end
 end
