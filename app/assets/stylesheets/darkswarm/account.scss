@@ -143,8 +143,14 @@
   }
 }
 
-table.full {
-  width: 100%;
+table {
+  &.full {
+    width: 100%;
+  }
+
+  &.top-rounded {
+    border-radius: $radius-medium $radius-medium 0 0;
+  }
 }
 
 // Note this relies on the <th> using `.show-for-large-up` as well.
