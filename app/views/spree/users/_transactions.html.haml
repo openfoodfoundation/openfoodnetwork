@@ -2,7 +2,7 @@
   - if @payments_requiring_action.present?
     .active_table.requiring-authorization
       %h3= t(".authorization_required")
-      %table.full
+      %table.full.top-rounded
         %tr
           %th= t :transaction
           %th= t :transaction_date
