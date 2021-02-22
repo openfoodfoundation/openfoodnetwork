@@ -6,7 +6,7 @@ class PaypalItemsBuilder
   end
 
   def call
-    items = order.line_items.map(&method(:line_item))
+    items = order.line_items.map(&method(:line_item_data))
 
     tax_adjustments = order.adjustments.tax.additional
     shipping_adjustments = order.adjustments.shipping
@@ -14,14 +14,7 @@ class PaypalItemsBuilder
     order.adjustments.eligible.each do |adjustment|
       next if (tax_adjustments + shipping_adjustments).include?(adjustment)
 
-      items << {
-        Name: adjustment.label,
-        Quantity: 1,
-        Amount: {
-          currencyID: order.currency,
-          value: adjustment.amount
-        }
-      }
+      items << adjustment_data(adjustment)
     end
 
     # Because PayPal doesn't accept $0 items at all.
@@ -38,7 +31,7 @@ class PaypalItemsBuilder
 
   attr_reader :order
 
-  def line_item(item)
+  def line_item_data(item)
     {
       Name: item.product.name,
       Number: item.variant.sku,
@@ -48,6 +41,17 @@ class PaypalItemsBuilder
         value: item.price
       },
       ItemCategory: "Physical"
+    }
+  end
+
+  def adjustment_data(adjustment)
+    {
+      Name: adjustment.label,
+      Quantity: 1,
+      Amount: {
+        currencyID: order.currency,
+        value: adjustment.amount
+      }
     }
   end
 end
