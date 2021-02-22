@@ -150,9 +150,7 @@ module Spree
     def payment_details(order)
       items = itemized_contents(order)
       item_sum = items.sum { |i| i[:Quantity] * i[:Amount][:value] }
-
-      tax_adjustments = current_order.adjustments.tax.additional
-      tax_adjustments_total = tax_adjustments.sum(:amount)
+      tax_adjustments_total = current_order.all_adjustments.tax.additional.sum(:amount)
 
       if item_sum.zero?
         # Paypal does not support no items or a zero dollar ItemTotal
