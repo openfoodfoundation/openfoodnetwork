@@ -25,8 +25,8 @@ feature '
 
     # Then I should see the basic settings
     expect(page.find('#order_cycle_name').value).to eq(oc.name)
-    expect(page.find('#order_cycle_orders_open_at').value).to eq(oc.orders_open_at.to_s)
-    expect(page.find('#order_cycle_orders_close_at').value).to eq(oc.orders_close_at.to_s)
+    expect(page.find('#order_cycle_orders_open_at').value).to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
+    expect(page.find('#order_cycle_orders_close_at').value).to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
     expect(page).to have_content "COORDINATOR\n#{oc.coordinator.name}"
 
     click_button 'Next'

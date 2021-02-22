@@ -128,8 +128,8 @@ feature '
     toggle_columns "Producers", "Shops"
 
     expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-    expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time.strftime("%F %T %z")
-    expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time.strftime("%F %T %z")
+    expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.at(order_cycle_opening_time), visible: false
+    expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.at(order_cycle_closing_time), visible: false
     expect(page).to have_content "My coordinator"
 
     expect(page).to have_selector 'td.producers', text: 'My supplier'

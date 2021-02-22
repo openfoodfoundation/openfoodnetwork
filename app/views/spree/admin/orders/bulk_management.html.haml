@@ -21,12 +21,12 @@
       %label{ :for => 'start_date_filter' }
         = t("admin.start_date")
       %br
-      %input.fullwidth{ :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()', 'ng-model-options' => '{ debounce: 1000 }' }
+      %input.fullwidth.datepicker{ :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()', 'ng-model-options' => '{ debounce: 1000 }' }
     .date_filter{ :class => "two columns" }
       %label{ :for => 'end_date_filter' }
         = t("admin.end_date")
       %br
-      %input.fullwidth{ :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()', 'ng-model-options' => '{ debounce: 1000 }' }
+      %input.fullwidth.datepicker{ :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()', 'ng-model-options' => '{ debounce: 1000 }' }
     .one.column &nbsp;
     .filter_select{ :class => "three columns" }
       %label{ :for => 'supplier_filter' }

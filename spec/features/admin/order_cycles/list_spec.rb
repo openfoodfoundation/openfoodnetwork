@@ -53,8 +53,8 @@ feature '
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
       # Then I should see the basic fields
       expect(page).to have_input "oc#{oc1.id}[name]", value: oc1.name
-      expect(page).to have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at
-      expect(page).to have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at
+      expect(page).to have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at, visible: false
+      expect(page).to have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at, visible: false
       expect(page).to have_content oc1.coordinator.name
 
       # And I should see the suppliers and distributors

@@ -462,8 +462,14 @@ feature '
       expect(page).to have_button('Create', disabled: false)
 
       # If I fill in the basic fields
-      fill_in 'order_cycle_orders_open_at', with: '2040-10-17 06:00:00'
-      fill_in 'order_cycle_orders_close_at', with: '2040-10-24 17:00:00'
+      find('#order_cycle_orders_open_at').click
+      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
+      # hide the datetimepicker
+      find("body").send_keys(:escape)
+      find('#order_cycle_orders_close_at').click
+      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
+      # hide the datetimepicker
+      find("body").send_keys(:escape)
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
       # Then my products / variants should already be selected
@@ -490,8 +496,8 @@ feature '
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z")
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
 
       # And it should have some variants selected
       expect(oc.exchanges.incoming.first.variants.count).to eq(2)
@@ -523,8 +529,8 @@ feature '
 
       # Then I should see the basic settings
       expect(page).to have_field 'order_cycle_name', with: oc.name
-      expect(page).to have_field 'order_cycle_orders_open_at', with: oc.orders_open_at.to_s
-      expect(page).to have_field 'order_cycle_orders_close_at', with: oc.orders_close_at.to_s
+      expect(page).to have_field 'order_cycle_orders_open_at', with: oc.orders_open_at.strftime("%Y-%m-%d %H:%M")
+      expect(page).to have_field 'order_cycle_orders_close_at', with: oc.orders_close_at.strftime("%Y-%m-%d %H:%M")
       expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
       expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
@@ -581,8 +587,8 @@ feature '
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z")
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
 
       # And it should have a variant selected
       expect(oc.exchanges.incoming.first.variants).to eq([v2])
