@@ -75,11 +75,18 @@ module Spree
         redirect_to(main_app.root_path) && return
       end
 
+      # This action is called either from the cart page when the order is not yet complete, or from
+      # the edit order page (frontoffice) if the hub allows users to update completed orders.
+      # This line item updating logic should probably be handled through CartService#populate.
       if @order.update(order_params)
         discard_empty_line_items
-        with_open_adjustments { update_totals_and_taxes }
 
-        @order.update_distribution_charge!
+        @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
+
+        if @order.complete?
+          @order.update_shipping_fees!
+          @order.update_payment_fees!
+        end
 
         respond_with(@order) do |format|
           format.html do
@@ -147,30 +154,6 @@ module Spree
     end
 
     private
-
-    # Updates the various denormalized total attributes of the order and
-    # recalculates the shipment taxes
-    def update_totals_and_taxes
-      @order.updater.update_totals
-      @order.shipment&.ensure_correct_adjustment
-    end
-
-    # Sets the adjustments to open to perform the block's action and restores
-    # their state to whatever the they had. Note that it does not change any new
-    # adjustments that might get created in the yielded block.
-    def with_open_adjustments
-      previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
-        hash[adjustment.id] = adjustment.state
-      end
-      @order.adjustments.each { |adjustment| adjustment.fire_events(:open) }
-
-      yield
-
-      @order.adjustments.each do |adjustment|
-        previous_state = previous_states[adjustment.id]
-        adjustment.update_attribute(:state, previous_state) if previous_state
-      end
-    end
 
     def discard_empty_line_items
       @order.line_items = @order.line_items.select { |li| li.quantity > 0 }

@@ -12,14 +12,6 @@ module Spree
 
       # Ensure that the distributor is set for an order when
       before_action :ensure_distribution, only: :new
-
-      # After updating an order, the fees should be updated as well
-      # Currently, adding or deleting line items does not trigger updating the
-      # fees! This is a quick fix for that.
-      # TODO: update fees when adding/removing line items
-      # instead of the update_distribution_charge method.
-      after_action :update_distribution_charge, only: :update
-
       before_action :require_distributor_abn, only: :invoice
 
       respond_to :html, :json
@@ -43,6 +35,9 @@ module Spree
       end
 
       def update
+        @order.recreate_all_fees!
+        @order.update!
+
         unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
@@ -51,7 +46,6 @@ module Spree
                              flash: { error: @order.errors.full_messages.join(', ') })
         end
 
-        @order.update!
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
         else
@@ -101,10 +95,6 @@ module Spree
 
       def print_ticket
         render template: "spree/admin/orders/ticket", layout: false
-      end
-
-      def update_distribution_charge
-        @order.update_distribution_charge!
       end
 
       private

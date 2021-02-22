@@ -13,7 +13,7 @@ class CartController < BaseController
 
       cart_service.populate(params.slice(:variants, :quantity), true)
       if cart_service.valid?
-        order.update_distribution_charge!
+        order.recreate_all_fees!
         order.cap_quantity_at_stock!
         order.update!
 

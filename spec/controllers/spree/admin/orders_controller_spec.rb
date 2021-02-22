@@ -56,11 +56,47 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       it "updates distribution charges and redirects to order details page" do
-        expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+        expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
 
         spree_put :update, params
 
         expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+
+      context "recalculating enterprise fees" do
+        let(:user) { create(:admin_user) }
+        let(:variant1) { create(:variant) }
+        let(:variant2) { create(:variant) }
+        let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+        let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+        let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
+        let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+        let!(:order) do
+          order = create(:completed_order_with_totals, line_items_count: 2, distributor: distributor, order_cycle: order_cycle)
+          order.reload.line_items.first.update(variant_id: variant1.id)
+          order.line_items.last.update(variant_id: variant2.id)
+          while !order.completed? do break unless order.next! end
+          order.recreate_all_fees!
+          order.update!
+          order
+        end
+
+        before do
+          allow(controller).to receive(:spree_current_user) { user }
+          allow(controller).to receive(:order_to_update) { order }
+        end
+
+        it "recalculates fees if the orders contents have changed" do
+          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+          expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
+
+          order.contents.add(order.line_items.first.variant, 1)
+
+          spree_put :update, { id: order.number }
+
+          expect(order.reload.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
+          expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 3
+        end
       end
     end
 
@@ -86,7 +122,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         context "and no errors" do
           it "updates distribution charges and redirects to customer details page" do
-            expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+            expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
 
             spree_put :update, params
 

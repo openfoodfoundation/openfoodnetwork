@@ -68,6 +68,9 @@ module Spree
     accepts_nested_attributes_for :shipments
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
+    delegate :update_totals, to: :updater
+    delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
+             :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
@@ -267,8 +270,6 @@ module Spree
     def update!
       updater.update
     end
-
-    delegate :update_totals, to: :updater
 
     def clone_billing_address
       if bill_address && ship_address.nil?
@@ -660,29 +661,6 @@ module Spree
       end
     end
 
-    def update_distribution_charge!
-      # `with_lock` acquires an exclusive row lock on order so no other
-      # requests can update it until the transaction is commited.
-      # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
-      # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
-      with_lock do
-        EnterpriseFee.clear_all_adjustments_on_order self
-
-        loaded_line_items =
-          line_items.includes(variant: :product, order: [:distributor, :order_cycle]).all
-
-        loaded_line_items.each do |line_item|
-          if provided_by_order_cycle? line_item
-            OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
-          end
-        end
-
-        if order_cycle
-          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
-        end
-      end
-    end
-
     def set_order_cycle!(order_cycle)
       return if self.order_cycle == order_cycle
 
@@ -752,6 +730,10 @@ module Spree
     end
 
     private
+
+    def fee_handler
+      @fee_handler ||= OrderFeesHandler.new(self)
+    end
 
     def process_each_payment
       raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
@@ -829,11 +811,6 @@ module Spree
       subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
     end
 
-    def provided_by_order_cycle?(line_item)
-      order_cycle_variants = order_cycle.andand.variants || []
-      order_cycle_variants.include? line_item.variant
-    end
-
     def require_customer?
       return true unless new_record? || state == 'cart'
     end
@@ -867,11 +844,8 @@ module Spree
     def update_adjustment!(adjustment)
       return if adjustment.finalized?
 
-      state = adjustment.state
-      adjustment.state = 'open'
-      adjustment.update!
+      adjustment.update!(force: true)
       update!
-      adjustment.state = state
     end
 
     # object_params sets the payment amount to the order total, but it does this

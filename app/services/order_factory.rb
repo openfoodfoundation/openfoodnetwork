@@ -78,7 +78,7 @@ class OrderFactory
   end
 
   def create_payment
-    @order.update_distribution_charge!
+    @order.recreate_all_fees!
     @order.payments.create(payment_method_id: attrs[:payment_method_id], amount: @order.reload.total)
   end
 

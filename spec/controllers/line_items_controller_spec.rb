@@ -127,28 +127,31 @@ describe LineItemsController, type: :controller do
 
     context "on a completed order with enterprise fees" do
       let(:user) { create(:user) }
-      let(:variant) { create(:variant) }
+      let(:variant1) { create(:variant) }
+      let(:variant2) { create(:variant) }
       let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-      let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
-      let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let(:calculator) { Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22, preferred_discount_amount: 11) }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator: calculator) }
+      let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
       let!(:order) do
-        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
-        order.reload.line_items.first.update(variant_id: variant.id)
+        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 2)
+        order.reload.line_items.first.update(variant_id: variant1.id)
+        order.line_items.last.update(variant_id: variant2.id)
         while !order.completed? do break unless order.next! end
-        order.update_distribution_charge!
+        order.recreate_all_fees!
         order
       end
       let(:params) { { format: :json, id: order.line_items.first } }
 
       it "updates the fees" do
-        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
+        expect(order.reload.adjustment_total).to eq calculator.preferred_discount_amount
 
         allow(controller).to receive_messages spree_current_user: user
         delete :destroy, params
         expect(response.status).to eq 204
 
-        expect(order.reload.adjustment_total).to eq 0
+        expect(order.reload.adjustment_total).to eq calculator.preferred_normal_amount
       end
     end
   end

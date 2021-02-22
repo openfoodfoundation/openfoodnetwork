@@ -533,26 +533,36 @@ describe Spree::Order do
     end
   end
 
-  describe "updating the distribution charge" do
-    let(:order) { build(:order) }
+  describe "applying enterprise fees" do
+    let(:fee_handler) { ::OrderFeesHandler.new(subject) }
+
+    before do
+      allow(subject).to receive(:fee_handler) { fee_handler }
+    end
 
     it "clears all enterprise fee adjustments on the order" do
-      expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(subject)
-      subject.update_distribution_charge!
+      expect(EnterpriseFee).to receive(:clear_all_adjustments).with(subject)
+      subject.recreate_all_fees!
+    end
+
+    it "creates line item and order fee adjustments via OrderFeesHandler" do
+      expect(fee_handler).to receive(:create_line_item_fees!)
+      expect(fee_handler).to receive(:create_order_fees!)
+      subject.recreate_all_fees!
     end
 
     it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
 
       allow(subject).to receive(:order_cycle) { nil }
 
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
       line_item = create(:line_item, order: subject)
-      allow(subject).to receive(:provided_by_order_cycle?) { true }
+      allow(fee_handler).to receive(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
@@ -561,11 +571,11 @@ describe Spree::Order do
       allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:create_order_adjustments_for)
       allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.update_distribution_charge!
+      subject.recreate_all_fees!
     end
 
     it "ensures the correct per-order adjustment(s) are created for order cycles" do
-      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments)
 
       order_cycle = double(:order_cycle)
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
@@ -574,35 +584,7 @@ describe Spree::Order do
 
       allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.update_distribution_charge!
-    end
-  end
-
-  describe "looking up whether a line item can be provided by an order cycle" do
-    it "returns true when the variant is provided" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      order_cycle = double(:order_cycle, variants: [v])
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be true
-    end
-
-    it "returns false otherwise" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      order_cycle = double(:order_cycle, variants: [])
-      allow(subject).to receive(:order_cycle) { order_cycle }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
-    end
-
-    it "returns false when there is no order cycle" do
-      v = double(:variant)
-      line_item = double(:line_item, variant: v)
-      allow(subject).to receive(:order_cycle) { nil }
-
-      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
+      subject.recreate_all_fees!
     end
   end
 
@@ -810,7 +792,7 @@ describe Spree::Order do
       order.add_variant v1
       order.add_variant v2
 
-      order.update_distribution_charge!
+      order.recreate_all_fees!
     end
 
     it "removes the variant's line item" do

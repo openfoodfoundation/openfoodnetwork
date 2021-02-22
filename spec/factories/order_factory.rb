@@ -90,10 +90,11 @@ FactoryBot.define do
       after(:create) do |order, evaluator|
         create(:payment, state: "checkout", order: order, amount: order.total,
                          payment_method: evaluator.payment_method)
-        order.update_distribution_charge!
+        order.recreate_all_fees!
         order.ship_address = evaluator.ship_address
         while !order.completed? do break unless a = order.next! end
         order.select_shipping_method(evaluator.shipping_method.id)
+        order.save
       end
     end
   end

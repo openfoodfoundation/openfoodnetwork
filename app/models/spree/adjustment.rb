@@ -111,8 +111,8 @@ module Spree
     # more than on line items at once via accepted_nested_attributes the order
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
-    def update!(calculable = nil)
-      return if immutable?
+    def update!(calculable = nil, force: false)
+      return if immutable? && !force
 
       # Fix for Spree issue #3381
       # If we attempt to call 'source' before the reload, then source is currently

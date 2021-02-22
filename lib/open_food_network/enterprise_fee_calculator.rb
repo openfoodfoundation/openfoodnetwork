@@ -39,8 +39,6 @@ module OpenFoodNetwork
 
     def create_line_item_adjustments_for(line_item)
       variant = line_item.variant
-      @distributor = line_item.order.distributor
-      @order_cycle = line_item.order.order_cycle
 
       per_item_enterprise_fee_applicators_for(variant).each do |applicator|
         applicator.create_line_item_adjustment(line_item)
@@ -48,9 +46,6 @@ module OpenFoodNetwork
     end
 
     def create_order_adjustments_for(order)
-      @distributor = order.distributor
-      @order_cycle = order.order_cycle
-
       per_order_enterprise_fee_applicators_for(order).each do |applicator|
         applicator.create_order_adjustment(order)
       end

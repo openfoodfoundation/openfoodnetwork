@@ -286,43 +286,34 @@ describe Spree::OrdersController, type: :controller do
         allow(subject).to receive(:order_to_update) { order }
       end
 
-      it "updates the fees" do
+      it "updates the shipping and payment fees" do
         spree_post :update,
                    order: { line_items_attributes: {
                      "0" => { id: line_item1.id, quantity: 1 },
                      "1" => { id: line_item2.id, quantity: 0 }
                    } }
 
-        expect(order.line_items.count).to eq 1
-        expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
+        expect(order.reload.line_items.count).to eq 1
+        expect(order.adjustment_total).to eq(1 * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
-      end
-
-      it "keeps the adjustments' previous state" do
-        spree_post :update,
-                   order: { line_items_attributes: {
-                     "0" => { id: line_item1.id, quantity: 1 },
-                     "1" => { id: line_item2.id, quantity: 0 }
-                   } }
-
-        # The second adjustment (shipping adjustment) is open before the update
-        #   so, restoring its state leaves it open.
-        expect(order.adjustments.map(&:state)).to eq(['closed', 'open'])
       end
     end
 
     context "with enterprise fees" do
       let(:user) { create(:user) }
-      let(:variant) { create(:variant) }
+      let(:variant1) { create(:variant) }
+      let(:variant2) { create(:variant) }
       let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
-      let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
       let!(:order) do
-        order = create(:completed_order_with_totals, line_items_count: 1, user: user, distributor: distributor, order_cycle: order_cycle)
-        order.reload.line_items.first.update(variant_id: variant.id)
+        order = create(:completed_order_with_totals, line_items_count: 2, user: user, distributor: distributor, order_cycle: order_cycle)
+        order.reload.line_items.first.update(variant_id: variant1.id)
+        order.reload.line_items.last.update(variant_id: variant2.id)
         while !order.completed? do break unless order.next! end
-        order.update_distribution_charge!
+        order.recreate_all_fees!
+        order.update!
         order
       end
       let(:params) {
@@ -337,12 +328,34 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "updates the fees" do
-        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
+        expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+        expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
 
         allow(controller).to receive_messages spree_current_user: user
         spree_post :update, params
 
-        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
+        expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
+        expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 3
+      end
+
+      context "when a line item is removed" do
+        let(:params) {
+          { order: { line_items_attributes: {
+            "0" => { id: order.line_items.first.id, quantity: 0 },
+            "1" => { id: order.line_items.last.id, quantity: 1 }
+          } } }
+        }
+
+        it "updates the fees" do
+          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+          expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
+
+          allow(controller).to receive_messages spree_current_user: user
+          spree_post :update, params
+
+          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 1)
+          expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 1
+        end
       end
     end
   end
