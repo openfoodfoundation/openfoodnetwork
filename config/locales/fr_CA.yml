@@ -1550,6 +1550,7 @@ fr_CA:
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
     mistakenly_sent: "Vous ne savez pas pourquoi vous avez reçu cet email? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
+  producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
@@ -2657,6 +2658,7 @@ fr_CA:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
@@ -3290,7 +3292,7 @@ fr_CA:
           check: "Espèces / chèques / virements / autres "
           pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
+          stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe SCA"
           bogus: "Bogus"
           bogussimple: "Bogus Simple"
@@ -3466,6 +3468,7 @@ fr_CA:
       processing: en traitement
       void: faire un avoir
       invalid: invalide
+      authorise: autorise
     order_mailer:
       cancel_email:
         customer_greeting: "Bonjour %{name},"

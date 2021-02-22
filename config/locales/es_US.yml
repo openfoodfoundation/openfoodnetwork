@@ -1,4 +1,4 @@
-es:
+es_US:
   language_name: "Castellano"
   activerecord:
     attributes:
@@ -3385,7 +3385,6 @@ es:
         new:
           new_variant: "Nueva Variante"
         form:
-          cost_price: "Precio de costo"
           sku: "SKU"
           price: "Precio"
           display_as: "Mostrar como"
