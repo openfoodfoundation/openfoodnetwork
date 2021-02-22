@@ -6,8 +6,8 @@ class PaymentsRequiringAction
   end
 
   def query
-    Spree::Payment.joins(order: [:user]).where.not(cvv_response_message: nil).
-      where("spree_users.id = ?", user.id)
+    Spree::Payment.joins(order: [:user]).where("spree_users.id = ?", user.id).
+      authorization_action_required
   end
 
   private
