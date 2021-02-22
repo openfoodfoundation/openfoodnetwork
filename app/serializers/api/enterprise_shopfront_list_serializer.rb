@@ -19,7 +19,7 @@ module Api
         producer_shop: "map_003-producer-shop.svg",
         producer: "map_001-producer-only.svg",
       }
-      ImagePathGenerator.call(icons[enterprise.category])
+      "/map_icons/" + icons[enterprise.category]
     end
 
     def icon_font
