@@ -8,11 +8,10 @@ class PaypalItemsBuilder
   def call
     items = order.line_items.map(&method(:line_item_data))
 
-    tax_adjustments = order.all_adjustments.tax
-    shipping_adjustments = order.all_adjustments.shipping
+    shipping_and_tax_adjustments = order.all_adjustments.shipping + order.all_adjustments.tax
 
     order.all_adjustments.eligible.each do |adjustment|
-      next if (tax_adjustments + shipping_adjustments).include?(adjustment)
+      next if shipping_and_tax_adjustments.include?(adjustment)
 
       items << adjustment_data(adjustment)
     end
