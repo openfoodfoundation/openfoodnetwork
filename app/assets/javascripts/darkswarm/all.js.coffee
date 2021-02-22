@@ -19,6 +19,7 @@
 #= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
 #= require ../shared/angular-slideables.js
+#= require ../shared/detect-scrollbar-width.js
 #= require angularjs-file-upload
 #= require i18n/translations
 
