@@ -79,7 +79,7 @@ module OpenFoodNetwork
     end
 
     def adjustment_detail_rows(order, invoice_number, opts)
-      adjustments(order).map do |adjustment|
+      admin_adjustments(order).map do |adjustment|
         adjustment_detail_row(adjustment, invoice_number, opts)
       end
     end
@@ -167,7 +167,7 @@ module OpenFoodNetwork
        order.paid? ? I18n.t(:y) : I18n.t(:n)]
     end
 
-    def adjustments(order)
+    def admin_adjustments(order)
       order.adjustments.admin
     end
 
