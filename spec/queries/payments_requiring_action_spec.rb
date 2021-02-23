@@ -5,7 +5,7 @@ require 'spec_helper'
 describe PaymentsRequiringAction do
   let(:user) { create(:user) }
   let(:order) { create(:order, user: user) }
-  let(:payments_requiring_action) { described_class.new(user) }
+  subject(:payments_requiring_action) { described_class.new(user) }
 
   describe '#query' do
     context "payment has a cvv_response_message" do
