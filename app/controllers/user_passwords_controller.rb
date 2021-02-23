@@ -34,7 +34,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   end
 
   def user_unconfirmed?
-    user = Spree::User.find_by(email: params[:spree_user][:email])
+    user = Spree::User.find_by(email: params.dig(:spree_user, :email))
     user && !user.confirmed?
   end
 end

@@ -10,7 +10,7 @@ module Shop
 
     def call
       order_cycles = OrderCycle.with_distributor(@distributor).active
-        .order(@distributor.preferred_shopfront_order_cycle_order)
+        .order(@distributor.preferred_shopfront_order_cycle_order).to_a
 
       apply_tag_rules!(order_cycles)
     end

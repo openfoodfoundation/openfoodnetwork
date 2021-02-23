@@ -31,7 +31,7 @@ module Api
         invalid_resource!(@taxon) && return
       end
 
-      @taxon.parent_id = taxonomy.root.id unless params[:taxon][:parent_id]
+      @taxon.parent_id = taxonomy.root.id unless params.dig(:taxon, :parent_id)
 
       if @taxon.save
         render json: @taxon, serializer: Api::TaxonSerializer, status: :created
