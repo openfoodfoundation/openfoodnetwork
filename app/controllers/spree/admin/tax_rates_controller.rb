@@ -18,7 +18,7 @@ module Spree
       end
 
       def included_changed?
-        ActiveRecord::Type::Boolean.new.type_cast_from_user(
+        ActiveRecord::Type::Boolean.new.cast(
           permitted_resource_params[:included_in_price]
         ) != @tax_rate.included_in_price
       end
