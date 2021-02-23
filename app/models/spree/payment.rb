@@ -126,7 +126,9 @@ module Spree
     end
 
     def ensure_correct_adjustment
-      revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
+      if ['failed', 'invalid'].include?(state) || authorization_action_required?
+        revoke_adjustment_eligibility
+      end
       return if adjustment.try(:finalized?)
 
       if adjustment
@@ -141,6 +143,10 @@ module Spree
 
     def adjustment_label
       I18n.t('payment_method_fee')
+    end
+
+    def reinstate_adjustment_eligibility!
+      adjustment.update_attribute(:eligible, true)
     end
 
     private

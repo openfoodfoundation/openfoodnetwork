@@ -19,6 +19,7 @@ class ProcessPaymentIntent
     return unless valid?
 
     last_payment.update_attribute(:cvv_response_message, nil)
+    last_payment.reinstate_adjustment_eligibility!
     OrderWorkflow.new(@order).next
     last_payment.complete! if !last_payment.completed?
   end
