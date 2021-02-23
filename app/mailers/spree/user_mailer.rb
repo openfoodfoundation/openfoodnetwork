@@ -4,6 +4,8 @@ module Spree
   class UserMailer < BaseMailer
     include I18nHelper
 
+    helper MailerHelper
+
     # Overrides `Devise::Mailer.reset_password_instructions`
     def reset_password_instructions(user, token, _opts = {})
       @edit_password_reset_url = spree.
