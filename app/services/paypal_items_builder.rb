@@ -15,11 +15,9 @@ class PaypalItemsBuilder
     # Because PayPal doesn't accept $0 items at all.
     # See https://github.com/spree-contrib/better_spree_paypal_express/issues/10
     # "It can be a positive or negative value but not zero."
-    items.reject! do |item|
+    items.reject do |item|
       item[:Amount][:value].zero?
     end
-
-    items
   end
 
   private
