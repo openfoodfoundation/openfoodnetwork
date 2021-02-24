@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Balance do
-  context "#new_outstanding_balance" do
+  describe "#new_outstanding_balance" do
     context 'when orders are in cart state' do
       let(:order) { build(:order, total: 100, payment_total: 10, state: 'cart') }
 
@@ -107,7 +107,7 @@ describe Balance do
     end
   end
 
-  context '#outstanding_balance?' do
+  describe '#outstanding_balance?' do
     context 'when total is greater than payment_total' do
       let(:order) { build(:order, total: 10.10, payment_total: 9.50) }
 
@@ -133,7 +133,7 @@ describe Balance do
     end
   end
 
-  context "#outstanding_balance" do
+  describe "#outstanding_balance" do
     context 'when orders are in cart state' do
       let(:order) { build(:order, total: 100, payment_total: 10, state: 'cart') }
 
@@ -236,6 +236,18 @@ describe Balance do
       it "returns negative amount" do
         expect(order.outstanding_balance).to eq(-2.00)
       end
+    end
+  end
+
+  describe '#display_outstanding_balance' do
+    let(:order) { build(:order) }
+
+    before do
+      allow(order).to receive(:outstanding_balance) { 10 }
+    end
+
+    it 'returns the balance as money' do
+      expect(order.display_outstanding_balance).to eq(Spree::Money.new(10, currency: 'AUD'))
     end
   end
 end
