@@ -1,7 +1,7 @@
 %script{ type: "text/ng-template", id: "account/transactions.html" }
   - if @payments_requiring_action.present?
     .active_table.requiring-authorization
-      %h3= t(".authorization_required")
+      %h3= t(".authorisation_required")
       %table.full.top-rounded
         %tr
           %th= t :transaction
@@ -18,7 +18,7 @@
               %td
                 %a{ href: "#{payment.cvv_response_message}" }
                   %button.x-small
-                    Authorize
+                    = t(".authorise")
               %td.text-right
                 = payment.display_amount
 
