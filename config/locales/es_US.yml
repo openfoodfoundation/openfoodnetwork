@@ -628,6 +628,7 @@ es_US:
         max_fulfilled_units: "Max Unidades Completadas"
         order_error: "Algunos errores deberán ser resueltos antes de que puedas actualizar los pedidos.\nTodos los campos con borde rojo contienen errores."
         variants_without_unit_value: "CUIDADO: Algunas variedades no tienen un valor unitario "
+        all: "Todos"
       select_variant: "Seleccione una variante"
     enterprise:
       select_outgoing_oc_products_from: Selecciona los productos OC que salgan de
