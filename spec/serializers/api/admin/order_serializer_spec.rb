@@ -6,25 +6,21 @@ describe Api::Admin::OrderSerializer do
   let(:serializer) { described_class.new order }
 
   describe "#display_outstanding_balance" do
-    let(:order) { create(:order) }
+    let(:order) { build(:order) }
 
-    it "returns empty string" do
-      expect(serializer.display_outstanding_balance).to eql("")
-    end
+    context 'when the balance is zero' do
+      before { allow(order).to receive(:outstanding_balance) { 0 } }
 
-    context "with outstanding payments" do
-      let(:order) { create(:order_without_full_payment, unpaid_amount: 10) }
-
-      it "generates the outstanding balance" do
-        expect(serializer.display_outstanding_balance).to eql("$10.00")
+      it 'returns empty string' do
+        expect(serializer.display_outstanding_balance).to eq('')
       end
     end
 
-    context "with credit owed" do
-      let(:order) { create(:order_with_credit_payment, credit_amount: 20) }
+    context 'when the balance is not zero' do
+      before { allow(order).to receive(:outstanding_balance) { 10 } }
 
-      it "generates the outstanding balance" do
-        expect(serializer.display_outstanding_balance).to eql("$-20.00")
+      it 'returns the balance' do
+        expect(serializer.display_outstanding_balance).to eql('$10.00')
       end
     end
   end
