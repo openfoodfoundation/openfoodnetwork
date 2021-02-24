@@ -1572,6 +1572,7 @@ en_GB:
   enterprises_choose: "Choose when you want your order:"
   maps_open: "Open"
   maps_closed: "Closed"
+  map_title: "Map"
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
   hubs_orders_closed: "Orders closed"
