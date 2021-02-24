@@ -1574,6 +1574,7 @@ es_US:
   enterprises_choose: "Hay más de un ciclo abierto. Escoge en cuál quieres realizar el pedido:"
   maps_open: "Abierta"
   maps_closed: "Cerrado"
+  map_title: "Mapa"
   hubs_buy: "Comprar:"
   hubs_shopping_here: "Comprando aquí"
   hubs_orders_closed: "Pedidos cerrados"
