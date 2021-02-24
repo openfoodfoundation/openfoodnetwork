@@ -22,8 +22,7 @@ module OpenFoodNetwork
           line_items = line_items.includes(*line_item_includes).references(:line_items)
         end
 
-        editable_line_items = editable_line_items(line_items)
-        without_editable_line_items = line_items.reject { |li| editable_line_items.include? li }
+        without_editable_line_items = line_items - editable_line_items(line_items)
 
         without_editable_line_items.each do |line_item|
           OrderDataMasker.new(line_item.order).call
