@@ -32,6 +32,7 @@ describe ProcessPaymentIntent do
 
       before do
         allow(order).to receive(:deliver_order_confirmation_email)
+        payment.adjustment.update_attribute(:eligible, false)
       end
 
       it "completes the payment" do
@@ -39,6 +40,7 @@ describe ProcessPaymentIntent do
         payment.reload
         expect(payment.state).to eq("completed")
         expect(payment.cvv_response_message).to be nil
+        expect(payment.adjustment.eligible).to be true
       end
 
       it "completes the order" do
