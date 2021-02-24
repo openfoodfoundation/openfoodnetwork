@@ -1574,6 +1574,7 @@ fr:
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
   maps_closed: "Fermé"
+  map_title: "Carte"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
   hubs_orders_closed: "Boutique fermée"
@@ -3410,7 +3411,6 @@ fr:
         new:
           new_variant: "Nouvelle variante"
         form:
-          cost_price: "Prix coutant"
           sku: "Référence Produit"
           price: "Prix"
           display_as: "Unité affichée"
