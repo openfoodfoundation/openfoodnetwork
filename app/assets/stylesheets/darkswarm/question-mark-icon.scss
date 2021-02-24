@@ -56,4 +56,14 @@
     left: 7.4rem;
     z-index: -1;
   }
+
+  &.cart-sidebar {
+    // Small size (used in the cart sidebar)
+    width: 13rem;
+    margin-left: -10.4rem;
+
+    .joyride-nub.bottom {
+      left: 10.4rem;
+    }
+  }
 }
