@@ -8,11 +8,7 @@ class PaypalItemsBuilder
   def call
     items = order.line_items.map(&method(:line_item_data))
 
-    shipping_and_tax_adjustments = order.all_adjustments.shipping + order.all_adjustments.tax
-
-    order.all_adjustments.eligible.each do |adjustment|
-      next if shipping_and_tax_adjustments.include?(adjustment)
-
+    relevant_adjustments.each do |adjustment|
       items << adjustment_data(adjustment)
     end
 
@@ -29,6 +25,11 @@ class PaypalItemsBuilder
   private
 
   attr_reader :order
+
+  def relevant_adjustments
+    # Tax total and shipping costs are added separately, so they're not included here.
+    order.all_adjustments.eligible - order.all_adjustments.tax - order.all_adjustments.shipping
+  end
 
   def line_item_data(item)
     {
