@@ -38,9 +38,11 @@ module Api
         spree_routes_helper.admin_order_payments_path(object)
       end
 
+      # This methods requires to eager load the payment association (with its required WHERE
+      # constraints) so as not to cause and N+1.
       def ready_to_capture
-        pending_payment = object.pending_payments.first
-        object.payment_required? && pending_payment
+        pending_payments = object.pending_payments.reject(&:authorization_action_required?)
+        object.payment_required? && pending_payments.any?
       end
 
       def ready_to_ship
