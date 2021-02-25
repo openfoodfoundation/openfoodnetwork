@@ -4,19 +4,46 @@ require 'spec_helper'
 
 describe InvoiceRenderer do
   let(:service) { described_class.new }
-
-  it "creates a PDF invoice with two different templates" do
+  let(:order) do
     order = create(:completed_order_with_fees)
     order.bill_address = order.ship_address
     order.save!
+    order
+  end
 
-    result = service.render_to_string(order)
-    expect(result).to match /^%PDF/
+  context 'when invoice_style2 is configured' do
+    before { allow(Spree::Config).to receive(:invoice_style2?).and_return(true) }
 
-    allow(Spree::Config).to receive(:invoice_style2?).and_return true
+    it 'uses the invoice2 template' do
+      renderer = instance_double(ApplicationController)
+      expect(renderer)
+        .to receive(:render_to_string)
+        .with(include(template: 'spree/admin/orders/invoice2'))
 
-    alternative = service.render_to_string(order)
-    expect(alternative).to match /^%PDF/
-    expect(alternative).to_not eq result
+      described_class.new(renderer).render_to_string(order)
+    end
+
+    it 'creates a PDF invoice' do
+      result = service.render_to_string(order)
+      expect(result).to match /^%PDF/
+    end
+  end
+
+  context 'when invoice_style2 is not configured' do
+    before { allow(Spree::Config).to receive(:invoice_style2?).and_return(false) }
+
+    it 'uses the invoice template' do
+      renderer = instance_double(ApplicationController)
+      expect(renderer)
+        .to receive(:render_to_string)
+        .with(include(template: 'spree/admin/orders/invoice'))
+
+      described_class.new(renderer).render_to_string(order)
+    end
+
+    it 'creates a PDF invoice' do
+      result = service.render_to_string(order)
+      expect(result).to match /^%PDF/
+    end
   end
 end
