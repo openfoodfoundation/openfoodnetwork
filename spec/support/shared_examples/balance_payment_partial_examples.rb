@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 shared_examples 'outstanding balance rendering' do
-  context 'when the order has oustanding balance' do
+  context 'when the order has outstanding balance' do
     before { allow(order).to receive(:outstanding_balance?) { true } }
 
     it 'calls #display_outstanding_balance' do
@@ -26,7 +26,7 @@ shared_examples 'outstanding balance rendering' do
 end
 
 shared_examples 'outstanding balance view rendering' do
-  context 'when the order has oustanding balance' do
+  context 'when the order has outstanding balance' do
     let(:user) { order.user }
 
     before { allow(order).to receive(:outstanding_balance?) { true } }
@@ -56,7 +56,7 @@ shared_examples 'outstanding balance view rendering' do
 end
 
 shared_examples 'new outstanding balance rendering' do
-  context 'when the order has oustanding balance' do
+  context 'when the order has outstanding balance' do
     before { allow(order).to receive(:new_outstanding_balance?) { true } }
 
     it 'calls #display_new_outstanding_balance' do
@@ -81,7 +81,7 @@ shared_examples 'new outstanding balance rendering' do
 end
 
 shared_examples 'new outstanding balance view rendering' do
-  context 'when the order has oustanding balance' do
+  context 'when the order has outstanding balance' do
     let(:user) { order.user }
 
     before { allow(order).to receive(:new_outstanding_balance?) { true } }
