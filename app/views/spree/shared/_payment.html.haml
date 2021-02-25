@@ -1,14 +1,25 @@
 %p.callout
   %span{:style => "float:right;"}
-    - if @order.outstanding_balance?
-      = outstanding_balance_label(@order)
-      \:
-      %strong= @order.display_outstanding_balance
-    - else
-      - if @order.paid?
-        = t :email_payment_paid
+    - if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @order.user)
+      - if @order.new_outstanding_balance?
+        = outstanding_balance_label(@order)
+        \:
+        %strong= @order.display_new_outstanding_balance
       - else
-        = t :email_payment_not_paid
+        - if @order.paid?
+          = t :email_payment_paid
+        - else
+          = t :email_payment_not_paid
+    - else
+      - if @order.outstanding_balance?
+        = outstanding_balance_label(@order)
+        \:
+        %strong= @order.display_outstanding_balance
+      - else
+        - if @order.paid?
+          = t :email_payment_paid
+        - else
+          = t :email_payment_not_paid
   %strong
     = t :email_payment_summary
 - if @order.payments.any?
