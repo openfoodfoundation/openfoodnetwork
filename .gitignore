@@ -31,6 +31,7 @@ app/public
 public/system
 public/stylesheets
 public/images
+public/files
 public/spree
 public/assets
 config/abr.yml
