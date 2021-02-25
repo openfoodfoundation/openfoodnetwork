@@ -73,4 +73,26 @@ describe "spree/admin/orders/invoice.html.haml" do
     expect(rendered).to have_content "Shipping: Pickup"
     expect(rendered).to_not have_content adas_address_display
   end
+
+  context 'when the customer_balance feature is disabled' do
+    let(:user) { order.user }
+
+    before do
+      allow(OpenFoodNetwork::FeatureToggle)
+        .to receive(:enabled?).with(:customer_balance, user) { false }
+    end
+
+    it_behaves_like 'outstanding balance view rendering'
+  end
+
+  context 'when the customer_balance feature is enabled' do
+    let(:user) { order.user }
+
+    before do
+      allow(OpenFoodNetwork::FeatureToggle)
+        .to receive(:enabled?).with(:customer_balance, user) { true }
+    end
+
+    it_behaves_like 'new outstanding balance view rendering'
+  end
 end
