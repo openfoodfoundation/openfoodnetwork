@@ -33,6 +33,9 @@
               = preference_field_tag(:enterprises_require_tos, Spree::Config[:enterprises_require_tos], :type => Spree::Config.preference_type(:enterprises_require_tos))
               = label_tag(:enterprises_require_tos, t('.enterprises_require_tos')) + tag(:br)
             .field
+              = preference_field_tag(:shoppers_require_tos, Spree::Config[:shoppers_require_tos], :type => Spree::Config.preference_type(:shoppers_require_tos))
+              = label_tag(:shoppers_require_tos, t('.shoppers_require_tos')) + tag(:br)
+            .field
               = preference_field_tag(:cookies_consent_banner_toggle, Spree::Config[:cookies_consent_banner_toggle], :type => Spree::Config.preference_type(:cookies_consent_banner_toggle))
               = label_tag(:cookies_consent_banner_toggle, t('.cookies_consent_banner_toggle')) + tag(:br)
             .field

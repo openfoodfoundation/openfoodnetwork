@@ -3582,6 +3582,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
