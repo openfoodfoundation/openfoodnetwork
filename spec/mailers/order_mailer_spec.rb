@@ -6,11 +6,12 @@ describe Spree::OrderMailer do
   include OpenFoodNetwork::EmailHelper
 
   describe '#confirm_email_for_customer' do
+    subject(:email) { Spree::OrderMailer.confirm_email_for_customer(order) }
+
     let(:order) { build(:order_with_totals_and_distribution) }
     let(:user) { order.user }
 
     it 'renders the shared/_payment.html.haml partial' do
-      email = Spree::OrderMailer.confirm_email_for_customer(order) 
       expect(email.body).to include(I18n.t(:email_payment_summary))
     end
 
@@ -20,30 +21,7 @@ describe Spree::OrderMailer do
           .to receive(:enabled?).with(:customer_balance, user) { false }
       end
 
-      context 'when the order has oustanding balance' do
-        before { allow(order).to receive(:outstanding_balance?) { true } }
-
-        it 'calls #display_outstanding_balance' do
-          expect(order).to receive(:display_outstanding_balance) { '$123' }
-          email = Spree::OrderMailer.confirm_email_for_customer(order) 
-          expect(email.body).to include('$123')
-        end
-      end
-
-      context 'when the order has no outstanding balance' do
-        before { allow(order).to receive(:outstanding_balance?) { false } }
-
-        it 'does not call #display_outstanding_balance' do
-          expect(order).not_to receive(:display_outstanding_balance)
-          # calling #body triggers the Mail instance rendering
-          Spree::OrderMailer.confirm_email_for_customer(order).body
-        end
-
-        it 'displays the payment status' do
-          email = Spree::OrderMailer.confirm_email_for_customer(order) 
-          expect(email.body).to include(I18n.t(:email_payment_not_paid))
-        end
-      end
+      it_behaves_like 'outstanding balance rendering'
     end
 
     context 'when the customer_balance feature is enabled' do
@@ -52,39 +30,17 @@ describe Spree::OrderMailer do
           .to receive(:enabled?).with(:customer_balance, user) { true }
       end
 
-      context 'when the order has oustanding balance' do
-        before { allow(order).to receive(:new_outstanding_balance?) { true } }
-
-        it 'calls #display_new_outstanding_balance' do
-          expect(order).to receive(:display_new_outstanding_balance) { '$123' }
-          email = Spree::OrderMailer.confirm_email_for_customer(order)
-          expect(email.body).to include('$123')
-        end
-      end
-
-      context 'when the order has no outstanding balance' do
-        before { allow(order).to receive(:new_outstanding_balance?) { false } }
-
-        it 'does not call #display_outstanding_balance' do
-          expect(order).not_to receive(:display_new_outstanding_balance)
-          # calling #body triggers the Mail instance rendering
-          Spree::OrderMailer.confirm_email_for_customer(order).body
-        end
-
-        it 'displays the payment status' do
-          email = Spree::OrderMailer.confirm_email_for_customer(order)
-          expect(email.body).to include(I18n.t(:email_payment_not_paid))
-        end
-      end
+      it_behaves_like 'new outstanding balance rendering', ''
     end
   end
 
   describe '#confirm_email_for_shop' do
+    subject(:email) { Spree::OrderMailer.confirm_email_for_shop(order) }
+
     let(:order) { build(:order_with_totals_and_distribution) }
     let(:user) { order.user }
 
     it 'renders the shared/_payment.html.haml partial' do
-      email = Spree::OrderMailer.confirm_email_for_shop(order)
       expect(email.body).to include(I18n.t(:email_payment_summary))
     end
 
@@ -94,30 +50,7 @@ describe Spree::OrderMailer do
           .to receive(:enabled?).with(:customer_balance, user) { false }
       end
 
-      context 'when the order has oustanding balance' do
-        before { allow(order).to receive(:outstanding_balance?) { true } }
-
-        it 'calls #display_outstanding_balance' do
-          expect(order).to receive(:display_outstanding_balance) { '$123' }
-          email = Spree::OrderMailer.confirm_email_for_shop(order)
-          expect(email.body).to include('$123')
-        end
-      end
-
-      context 'when the order has no outstanding balance' do
-        before { allow(order).to receive(:outstanding_balance?) { false } }
-
-        it 'does not call #display_outstanding_balance' do
-          expect(order).not_to receive(:display_outstanding_balance)
-          # calling #body triggers the Mail instance rendering
-          Spree::OrderMailer.confirm_email_for_shop(order).body
-        end
-
-        it 'displays the payment status' do
-          email = Spree::OrderMailer.confirm_email_for_shop(order)
-          expect(email.body).to include(I18n.t(:email_payment_not_paid))
-        end
-      end
+      it_behaves_like 'outstanding balance rendering'
     end
 
     context 'when the customer_balance feature is enabled' do
@@ -126,30 +59,7 @@ describe Spree::OrderMailer do
           .to receive(:enabled?).with(:customer_balance, user) { true }
       end
 
-      context 'when the order has oustanding balance' do
-        before { allow(order).to receive(:new_outstanding_balance?) { true } }
-
-        it 'calls #display_new_outstanding_balance' do
-          expect(order).to receive(:display_new_outstanding_balance) { '$123' }
-          email = Spree::OrderMailer.confirm_email_for_shop(order)
-          expect(email.body).to include('$123')
-        end
-      end
-
-      context 'when the order has no outstanding balance' do
-        before { allow(order).to receive(:new_outstanding_balance?) { false } }
-
-        it 'does not call #display_outstanding_balance' do
-          expect(order).not_to receive(:display_new_outstanding_balance)
-          # calling #body triggers the Mail instance rendering
-          Spree::OrderMailer.confirm_email_for_shop(order).body
-        end
-
-        it 'displays the payment status' do
-          email = Spree::OrderMailer.confirm_email_for_shop(order)
-          expect(email.body).to include(I18n.t(:email_payment_not_paid))
-        end
-      end
+      it_behaves_like 'new outstanding balance rendering'
     end
   end
 
