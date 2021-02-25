@@ -628,6 +628,7 @@ ca:
         max_fulfilled_units: "Unitats màximes fetes"
         order_error: "S'han de resoldre alguns errors abans de poder actualitzar les comandes.\nQualsevol camp amb vora vermella conté errors."
         variants_without_unit_value: "Atenció: algunes variants no tenen cap unitat assignada."
+        all: "Tots"
       select_variant: "Selecciona un paràmetre"
     enterprise:
       select_outgoing_oc_products_from: Selecciona els productes sortints del Cicle de Comandes
@@ -1551,7 +1552,7 @@ ca:
     set_a_password: "A continuació se us demanarà que configureu una contrasenya abans de poder administrar l'organització."
     mistakenly_sent: "No esteu segur de perquè heu rebut aquest correu electrònic? Poseu-vos en contacte amb %{owner_email} per obtenir més informació."
   producer_mail_greeting: "Benvolguda"
-  producer_mail_text_before: "A continuació, trobareu una actualització sobre el cicle de comandes a punt per:"
+  producer_mail_text_before: "A continuació, trobareu una actualització sobre el cicle de comanda a punt per:"
   producer_mail_order_text: "Aquí tens un resum de les comandes dels teus productes:"
   producer_mail_delivery_instructions: "Instruccions de recollida / lliurament d'estoc:"
   producer_mail_signoff: "Gràcies i els millors desitjos"
@@ -1575,6 +1576,7 @@ ca:
   enterprises_choose: "Escull quan vols la teva comanda:"
   maps_open: "Obert"
   maps_closed: "Tancat"
+  map_title: "Mapa"
   hubs_buy: "Compreu per:"
   hubs_shopping_here: "Compra aquí"
   hubs_orders_closed: "Comandes tancades"
@@ -3283,7 +3285,7 @@ ca:
           check: "Efectiu / transferència / etc. (pagaments per als quals no és necessària la validació automàtica)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
+          stripeconnect: "Stripe (obsolet)"
           stripesca: "Stripe SCA"
           bogus: "Bogus"
           bogussimple: "BogusSimple"
@@ -3385,7 +3387,6 @@ ca:
         new:
           new_variant: "Nova variant"
         form:
-          cost_price: "Preu de cost"
           sku: "Número de referència (SKU)"
           price: "Preu"
           display_as: "Mostra com"

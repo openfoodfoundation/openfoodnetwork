@@ -628,6 +628,7 @@ en_US:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+        all: "All"
       select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
@@ -1572,6 +1573,7 @@ en_US:
   enterprises_choose: "Choose when you want your order:"
   maps_open: "Open"
   maps_closed: "Closed"
+  map_title: "Map"
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
   hubs_orders_closed: "Orders closed"
@@ -3279,7 +3281,7 @@ en_US:
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
           pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe"
+          stripeconnect: "retired, please use Stripe SCA"
           stripesca: "Stripe SCA"
           bogus: "Bogus"
           bogussimple: "BogusSimple"
@@ -3381,7 +3383,6 @@ en_US:
         new:
           new_variant: "New Variant"
         form:
-          cost_price: "Cost Price"
           sku: "SKU"
           price: "Price"
           display_as: "Display As"
@@ -3424,8 +3425,8 @@ en_US:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
-      flatpickr_date_format: "Y-m-d"
-      flatpickr_datetime_format: "Y-m-d H:i"
+      flatpickr_date_format: "d-m-Y"
+      flatpickr_datetime_format: "d-m-Y H:i"
       today: "Today"
       now: "Now"
     orders:
