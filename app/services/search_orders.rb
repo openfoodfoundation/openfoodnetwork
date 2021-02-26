@@ -13,7 +13,9 @@ class SearchOrders
   attr_reader :params, :current_user
 
   def fetch_orders
-    @search = search_query.ransack(params[:q])
+    @search = search_query.
+      includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
+      ransack(params[:q])
 
     return paginated_results if using_pagination?
 

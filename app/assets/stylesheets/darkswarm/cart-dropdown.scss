@@ -52,6 +52,12 @@
         font-size: 1.5em;
       }
     }
+
+    .unit-price {
+      justify-content: flex-end;
+      align-items: baseline;
+    }
+
   }
 
   .go-shopping {
@@ -82,7 +88,8 @@
           padding: 0.5em 0 0.5em 1em;
         }
 
-        span {
+        span,
+        .total-price {
           color: $grey-800;
           font-size: 16px;
           line-height: 1.4em;

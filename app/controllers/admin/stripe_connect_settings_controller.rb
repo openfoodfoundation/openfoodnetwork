@@ -17,7 +17,7 @@ module Admin
     end
 
     def update
-      Spree::Config.set(params[:settings])
+      Spree::Config.set(settings_params.to_h)
       resource = t('admin.controllers.stripe_connect_settings.resource')
       flash[:success] = t(:successfully_updated, resource: resource)
       redirect_to_edit
@@ -36,6 +36,12 @@ module Admin
     def obfuscated_secret_key
       key = Stripe.api_key
       key.first(8) + "****" + key.last(4)
+    end
+
+    def settings_params
+      params.require(:settings).permit(
+        :stripe_connect_enabled,
+      )
     end
   end
 end

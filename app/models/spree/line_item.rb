@@ -6,6 +6,7 @@ require 'variant_units/variant_and_line_item_naming'
 module Spree
   class LineItem < ActiveRecord::Base
     include VariantUnits::VariantAndLineItemNaming
+    include LineItemStockChanges
     include LineItemBasedAdjustmentHandling
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
@@ -216,6 +217,12 @@ module Spree
       return variant.unit_value if quantity == 0 || !final_weight_volume
 
       final_weight_volume / quantity
+    end
+
+    def unit_price_price_and_unit
+      price = Spree::Money.new((rand * 10).round(2), currency: currency)
+      unit = ["item", "kg"].sample
+      price.to_html + " / " + unit
     end
 
     def scoper

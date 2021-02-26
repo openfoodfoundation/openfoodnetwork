@@ -44,6 +44,12 @@
     }
   }
 
+  .unit-price {
+    color: $grey-500;
+    font-size: $text-xs;
+  }
+
+
   input {
     &.ng-invalid-stock,
     &.ng-invalid-number {

@@ -25,7 +25,7 @@ else
 
   gem 'activemerchant', '~> 1.78.0'
   gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'awesome_nested_set', '~> 3.3.1'
+  gem 'awesome_nested_set', '~> 3.4.0'
   gem 'ransack', '~> 1.8.10'
   gem 'responders', '~> 2.0'
 

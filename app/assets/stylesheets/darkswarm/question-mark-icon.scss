@@ -38,6 +38,15 @@
   margin-top: 0.1rem;
   background-color: transparent;
 
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
   .joyride-content-wrapper {
     background-color: $dynamic-blue;
     padding: $padding-small;
@@ -55,5 +64,15 @@
     border-right-color: transparent !important;
     left: 7.4rem;
     z-index: -1;
+  }
+
+  &.cart-sidebar {
+    // Small size (used in the cart sidebar)
+    width: 13rem;
+    margin-left: -10.4rem;
+
+    .joyride-nub.bottom {
+      left: 10.4rem;
+    }
   }
 }

@@ -41,11 +41,11 @@ module Spree
       Spree::Variant.unscoped { super }
     end
 
-    private
-
     def count_on_hand=(value)
       self[:count_on_hand] = value
     end
+
+    private
 
     def process_backorders
       backordered_inventory_units.each do |unit|

@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :restrict_iframes
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
 
+  include RawParams
   include EnterprisesHelper
   include Spree::AuthenticationHelpers
 

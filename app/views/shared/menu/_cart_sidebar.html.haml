@@ -22,7 +22,17 @@
           %td.text-right
             %span.quantity {{ line_item.quantity }}
           %td
-            %span.total-price.right {{ line_item.total_price | localizeCurrency }}
+            .total-price.text-right {{ line_item.total_price | localizeCurrency }}
+            - if feature? :unit_price, spree_current_user
+              .flex.unit-price
+                %div{:style => "margin-right: 5px"}
+                  %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+                  "question-mark-with-tooltip-append-to-body" => "true",
+                  "question-mark-with-tooltip-placement" => "top",
+                  "question-mark-with-tooltip-animation" => true,
+                  context: "'cart-sidebar'"}
+                .options-text
+                  {{ line_item.variant.unit_price_price | localizeCurrency }} / {{ line_item.variant.unit_price_unit }}
 
       .cart-empty{"ng-show" => "Cart.line_items.length == 0"}
         %p

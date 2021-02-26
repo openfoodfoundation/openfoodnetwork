@@ -63,8 +63,8 @@ module Spree
     }
 
     before_validation :set_cost_currency
-    before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
     before_validation :ensure_unit_value
+    before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
 
     after_save :save_default_price
     after_save :update_units
@@ -249,7 +249,8 @@ module Spree
     end
 
     def ensure_unit_value
-      return unless product&.variant_unit == "items" && unit_value.nil?
+      Bugsnag.notify("Trying to set unit_value to NaN") if unit_value&.nan?
+      return unless (product&.variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
     end

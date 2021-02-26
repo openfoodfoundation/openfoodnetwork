@@ -12,3 +12,19 @@ url_adapters = [
 Paperclip.io_adapters.registered_handlers.delete_if do |_proc, adapter_class|
   url_adapters.include? adapter_class.to_s
 end
+
+if Paperclip::VERSION.to_f < 3.5
+  if Rails::VERSION::MAJOR > 4
+    # Patches an error for missing method #silence_stream with Rails 5.0
+    # Can be removed after Paperclip is upgraded to 3.5+
+    module Paperclip
+      class GeometryDetector
+        def silence_stream(_stream, &block)
+          yield
+        end
+      end
+    end
+  end
+else
+  Rails.logger.warn "The Paperclip::GeometryDetector patch can now be removed."
+end
