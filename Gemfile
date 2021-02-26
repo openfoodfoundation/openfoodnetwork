@@ -38,7 +38,7 @@ else
 end
 
 gem 'i18n'
-gem 'i18n-js', '~> 3.8.0'
+gem 'i18n-js', '~> 3.8.1'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 

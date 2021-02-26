@@ -399,7 +399,7 @@ GEM
       domain_name (~> 0.5)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    i18n-js (3.8.0)
+    i18n-js (3.8.1)
       i18n (>= 0.6.6)
     immigrant (0.3.6)
       activerecord (>= 3.0)
@@ -774,7 +774,7 @@ DEPENDENCIES
   haml
   highline (= 2.0.3)
   i18n
-  i18n-js (~> 3.8.0)
+  i18n-js (~> 3.8.1)
   immigrant
   jquery-migrate-rails
   jquery-rails (= 4.4.0)
