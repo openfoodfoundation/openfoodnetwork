@@ -92,7 +92,7 @@
         %hr.hr-light
         %br
 
-    .row
+    .row.legal
       .small-12.medium-3.medium-offset-2.columns.text-left
         %a{href: main_app.root_path}
           %img{src: ContentConfig.footer_logo.url, width: "220"}
@@ -107,10 +107,9 @@
         %p.text-small
           = t '.footer_legal_text_html', {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' )}
         %p.text-small
-          %div
-            - if Spree::Config.privacy_policy_url.present?
-              = t '.footer_data_text_with_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe }
-            - else
-              = t '.footer_data_text_without_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe }
+          - if Spree::Config.privacy_policy_url.present?
+            = t '.footer_data_text_with_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe }
+          - else
+            = t '.footer_data_text_without_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe }
       .medium-2.columns.text-center
         / Placeholder
