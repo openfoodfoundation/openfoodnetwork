@@ -4,8 +4,8 @@
 
 footer {
   .row {
-    p a {  /* was p a  */
-      font-size: 1rem; /* was 0.875rem */
+    p a {
+      font-size: 1rem;
     }
 
     a, a * {
@@ -89,7 +89,7 @@ footer {
 
     @include panepadding;
 
-    .row a img { /* was div.row */
+    .row a img {
       margin-bottom: 20px;
     }
 
@@ -108,8 +108,8 @@ footer {
       }
 
       .social-icons {
-        margin-bottom: 0.9rem; /*was 0.25rem; */
-        padding-top: 0.1rem; /* was margin-top: 0.75rem; */
+        margin-bottom: 0.9rem;
+        padding-top: 0.1rem;
 
         a {
           i {
