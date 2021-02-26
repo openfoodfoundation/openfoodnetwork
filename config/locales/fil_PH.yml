@@ -602,6 +602,7 @@ fil_PH:
         max_fulfilled_units: "sagad na natapos na yunit"
         order_error: "ang ibang mga error ay dapat munang ayusin bago makapag-update ng mga order.\nang mga patlang na may pulang border ay may mga error."
         variants_without_unit_value: "BABALA: Ang ibang variant ay walang halaga ang yunit"
+        all: "Lahat"
       select_variant: "pumili ng variant"
     enterprise:
       select_outgoing_oc_products_from: pumili ng lumalabas na mga produktong OC mula
@@ -1524,6 +1525,7 @@ fil_PH:
   enterprises_choose: "pumili kung kailan nais umorder:"
   maps_open: "bukas"
   maps_closed: "sarado"
+  map_title: "Mapa"
   hubs_buy: "Mamili para sa/kay:"
   hubs_shopping_here: "namimili rito"
   hubs_orders_closed: "sarado na ang mga order"
@@ -3245,7 +3247,6 @@ fil_PH:
         new:
           new_variant: "bagong variant"
         form:
-          cost_price: "halaga ng gastos"
           sku: "SKU"
           price: "presyo"
           display_as: "Ipakita Bilang"

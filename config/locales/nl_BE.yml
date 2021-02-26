@@ -613,6 +613,7 @@ nl_BE:
         max_fulfilled_units: "Maximum aantal vervulde eenheden"
         order_error: "Sommige fouten moeten opgelost worden voordat je je bestelling kan updaten.\nDe velden met rode randen bevatten fouten."
         variants_without_unit_value: "Waarschuwing: Sommige varianten hebben geen eenheidswaarde."
+        all: "Universum"
       select_variant: "Selecteer een variant"
     enterprise:
       select_outgoing_oc_products_from: Selecteer uitgaande OC producten uit
@@ -1549,6 +1550,7 @@ nl_BE:
   enterprises_choose: "Kies wanneer je je bestelling wenst te ontvangen:"
   maps_open: "Open"
   maps_closed: "Gesloten"
+  map_title: "Kaart"
   hubs_buy: "Op zoek naar:"
   hubs_shopping_here: "Winkel hier"
   hubs_orders_closed: "Bestellingen gesloten"
@@ -3237,7 +3239,6 @@ nl_BE:
         new:
           new_variant: "Nieuw variant"
         form:
-          cost_price: "Kostprijs"
           sku: "SKU"
           price: "Prijs"
           display_as: "Weergeven als"

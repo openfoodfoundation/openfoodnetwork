@@ -117,6 +117,8 @@ ar:
   models:
     order_cycle:
       cloned_order_cycle_name: "نسخة من %{order_cycle}"
+    tax_rate:
+      included_in_price: "مشمول في السعر"
   validators:
     date_time_string_validator:
       not_string_error: "يجب أن تكون احرف"
@@ -626,6 +628,7 @@ ar:
         max_fulfilled_units: "اعلى وحدات منجزة"
         order_error: "يجب حل بعض الأخطاء قبل أن تتمكن من تحديث الطلبات. أي حقول ذات حدود حمراء تحتوي على أخطاء."
         variants_without_unit_value: "تحذير: بعض الانواع لا تحتوي على قيمة وحدة"
+        all: "الكل"
       select_variant: "اختيار النوع"
     enterprise:
       select_outgoing_oc_products_from: حدد منتجات OC الصادرة من
@@ -1545,6 +1548,7 @@ ar:
     set_a_password: "سيُطلب منك بعد ذلك تعيين كلمة مرور قبل أن تتمكن من إدارة الشركة."
     mistakenly_sent: "لست متأكدا لماذا تلقيت هذا البريد الإلكتروني؟ يرجى الاتصال %{owner_email} لمزيد من المعلومات."
   producer_mail_greeting: "عزيزي"
+  producer_mail_text_before: "يرجى الاطلاع أدناه على تحديث حول دورة الطلب الجاهزة لـ:"
   producer_mail_order_text: "فيما يلي ملخص لطلبات منتجاتك:"
   producer_mail_delivery_instructions: "استلام المخزون / تعليمات التسليم:"
   producer_mail_signoff: "شكرا وأطيب التمنيات"
@@ -1568,6 +1572,7 @@ ar:
   enterprises_choose: "اختر عندما تريد طلبك:"
   maps_open: "افتح"
   maps_closed: "مغلق"
+  map_title: "خريطة"
   hubs_buy: "متجر لل:"
   hubs_shopping_here: "التسوق هنا"
   hubs_orders_closed: "طلبات مغلقة"
@@ -2634,6 +2639,7 @@ ar:
         min_quantity: "اقل كمية "
         max_quantity: "اعلى كمية"
       price_breakdown: "تفاصيل السعر"
+      unit_price_tooltip: "هذا هو سعر الوحدة لهذا المنتج. يتيح لك مقارنة أسعار المنتجات بغض النظر عن أحجام العبوات والأوزان."
     variants:
       on_demand:
         'yes': "حسب الطلب"
@@ -3360,6 +3366,7 @@ ar:
         providers:
           provider: "مزود"
           check: "النقد / التحويل الإلكتروني / إلخ. (المدفوعات التي لا تتطلب المصادقة التلقائية)"
+          pin: "المدفوعات دبوس"
           paypalexpress: "باي بال اكسبريس"
           stripeconnect: "Stripe SCA"
           stripesca: "Stripe SCA"
@@ -3463,7 +3470,6 @@ ar:
         new:
           new_variant: "نوع جديد"
         form:
-          cost_price: "سعر الكلفة"
           sku: "SKU"
           price: "السعر"
           display_as: "عرض ب"
@@ -3548,6 +3554,8 @@ ar:
       cancel_email_for_shop:
         greeting: "عزيزي %{name} ،"
         subject: "إلغاء الطلب"
+        intro: "ألغى العميل طلبه رقم # %{number}."
+        view_cancelled_order: "عرض الطلب الملغى"
       confirm_email:
         subject: "تأكيد الطلب"
       invoice_email:
@@ -3570,6 +3578,9 @@ ar:
       authorize_payment:
         subject: "يرجى تفويض الدفع الخاص بك إلى %{distributor} على OFN"
         instructions: "يتطلب الدفع الخاص بك من %{amount} إلى %{distributor} مصادقة إضافية. الرجاء زيارة URL التالي لتفويض الدفع الخاص بك:"
+      authorization_required:
+        subject: "يتطلب الدفع إذنًا من العميل"
+        message: "يتطلب الدفع للطلب %{order_number} تفويضًا إضافيًا من العميل. تم إخطار العميل عبر البريد الإلكتروني وسيظهر الدفع على أنه معلق حتى يتم التصريح به."
     shipment_mailer:
       shipped_email:
         dear_customer: "عزيزي العميل،"

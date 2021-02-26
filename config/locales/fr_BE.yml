@@ -613,6 +613,7 @@ fr_BE:
         max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
+        all: "Tous"
       select_variant: "Choisir une variante"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
@@ -1548,6 +1549,7 @@ fr_BE:
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
   maps_closed: "Fermé"
+  map_title: "Carte"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
   hubs_orders_closed: "Boutique fermée"
@@ -3243,7 +3245,6 @@ fr_BE:
         new:
           new_variant: "Nouvelle variante"
         form:
-          cost_price: "Prix de revient"
           sku: "Référence produit"
           price: "Prix"
           display_as: "Unité affichéé"

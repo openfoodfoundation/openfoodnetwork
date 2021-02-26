@@ -626,6 +626,7 @@ nb:
         max_fulfilled_units: "Max Oppfylte Enheter"
         order_error: "Noen feil må løses før du kan oppdatere bestillinger.\nAlle felt med røde kanter inneholder feil."
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
+        all: "Alle"
       select_variant: "Velg en variant"
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra
@@ -1569,6 +1570,7 @@ nb:
   enterprises_choose: "Velg når du ønsker din bestilling:"
   maps_open: "Åpne"
   maps_closed: "Stengt"
+  map_title: "Kart"
   hubs_buy: "Handle:"
   hubs_shopping_here: "Handler her"
   hubs_orders_closed: "Stengt for bestilling"
@@ -3360,7 +3362,6 @@ nb:
         new:
           new_variant: "Ny Variant"
         form:
-          cost_price: "Innkjøpspris"
           sku: "SKU"
           price: "Pris"
           display_as: "Vis som"

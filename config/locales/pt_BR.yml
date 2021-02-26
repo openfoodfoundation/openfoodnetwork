@@ -628,6 +628,7 @@ pt_BR:
         max_fulfilled_units: "Pedidos / Limite Mínimo (Max)"
         order_error: "Alguns erros devem ser corrigidos antes de atualizar os pedidos.\nOs campos com bordas vermelhas contém erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de medida"
+        all: "Todos"
       select_variant: "Selecione uma variante"
     enterprise:
       select_outgoing_oc_products_from: 'Selecione a saída do ciclo de pedidos  '
@@ -1569,6 +1570,7 @@ pt_BR:
   enterprises_choose: "Escolha para quando você quer seu pedido:"
   maps_open: "Aberto"
   maps_closed: "Fechado"
+  map_title: "Mapa"
   hubs_buy: "Compre por:"
   hubs_shopping_here: "Comprando aqui"
   hubs_orders_closed: "Fechado para pedidos"
@@ -3382,7 +3384,6 @@ pt_BR:
         new:
           new_variant: "Nova Variante"
         form:
-          cost_price: "Preço de Custo"
           sku: "SKU"
           price: "Preço"
           display_as: "Mostrar Como"

@@ -288,6 +288,7 @@ sv:
         max_fulfilled_units: "Maximalt expedierade enheter"
         order_error: "En del misstag måste korrigeras innan du kan uppdatera en order. Alla rödmarkerade fält innehåller fel."
         variants_without_unit_value: "VARNING: På en del ställen saknas antalsuppgift"
+        all: "Alla"
     enterprise:
       select_outgoing_oc_products_from: Välj utgående produkter i beställningsrunda från
     enterprises:
@@ -904,6 +905,7 @@ sv:
   enterprises_choose: "Välj när du vill ha din beställning:"
   maps_open: "Öppen"
   maps_closed: "Stängd"
+  map_title: "Karta"
   hubs_buy: "Handla:"
   hubs_shopping_here: "Att handla här"
   hubs_orders_closed: "Beställningar avslutade"

@@ -626,6 +626,7 @@ tr:
         max_fulfilled_units: "Maks. Gerçekleşen Birim"
         order_error: "Siparişleri güncelleyebilmeniz için bazı hataların çözülmesi gerekir. Kırmızı kenarlıklı alanlar hata içeriyor."
         variants_without_unit_value: "UYARI: Bazı varyantların birim değeri yok"
+        all: "Hepsi"
       select_variant: "Bir varyant seçin"
     enterprise:
       select_outgoing_oc_products_from: Sipariş dönemi giden ürünleri şurdan seçin
@@ -1569,6 +1570,7 @@ tr:
   enterprises_choose: "Siparişinizi ne zaman istediğinizi seçin:"
   maps_open: "Açık"
   maps_closed: "Kapalı"
+  map_title: "HARİTA"
   hubs_buy: "Neler Bulabilirsiniz:"
   hubs_shopping_here: "Alışveriş noktası"
   hubs_orders_closed: "Siparişler kapalı"
@@ -3364,7 +3366,6 @@ tr:
         new:
           new_variant: "Yeni Varyant"
         form:
-          cost_price: "Maliyet Fiyatı"
           sku: "Stok Kodu"
           price: "Fiyat"
           display_as: "Gösterme Şekli"

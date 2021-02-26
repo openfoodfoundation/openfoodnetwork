@@ -629,6 +629,7 @@ ru:
         max_fulfilled_units: "Максимально выполненных единиц"
         order_error: "Некоторые ошибки должны быть устранены, прежде чем вы сможете обновить заказы.\nЛюбые поля с красной рамкой содержат ошибки."
         variants_without_unit_value: "ВНИМАНИЕ: Некоторые варианты не имеют значения единицы"
+        all: "Все"
       select_variant: "Выбрать вариант"
     enterprise:
       select_outgoing_oc_products_from: Выберите исходящие товары OC из
@@ -1574,6 +1575,7 @@ ru:
   enterprises_choose: "Выберите, когда вы хотите свой заказ:"
   maps_open: "Открыт"
   maps_closed: "Закрыт"
+  map_title: "Карта"
   hubs_buy: "Ассортимент:"
   hubs_shopping_here: "Покупать тут"
   hubs_orders_closed: "Заказы закрыты"
@@ -3435,7 +3437,6 @@ ru:
         new:
           new_variant: "Новый Вариант"
         form:
-          cost_price: "Себестоимость"
           sku: "SKU"
           price: "Цена"
           display_as: "Показать как"

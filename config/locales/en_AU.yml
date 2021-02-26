@@ -626,6 +626,7 @@ en_AU:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+        all: "All"
       select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
@@ -1578,6 +1579,7 @@ en_AU:
   enterprises_choose: "Choose when you want your order:"
   maps_open: "Open"
   maps_closed: "Closed"
+  map_title: "Map"
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
   hubs_orders_closed: "Orders closed"
@@ -3370,7 +3372,6 @@ en_AU:
         new:
           new_variant: "New Variant"
         form:
-          cost_price: "Cost Price"
           sku: "SKU"
           price: "Price"
           display_as: "Display As"

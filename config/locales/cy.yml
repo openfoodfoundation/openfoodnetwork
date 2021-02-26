@@ -626,6 +626,7 @@ cy:
         max_fulfilled_units: "Unedau Cyflawn Uchaf"
         order_error: "Rhaid datrys rhai gwallau cyn y gallwch chi ddiweddaru archebion. Mae unrhyw gaeau â ffiniau coch yn cynnwys gwallau."
         variants_without_unit_value: "RHYBUDD: Nid oes gwerth uned i rai amrywiadau"
+        all: "I gyd"
       select_variant: "Dewiswch amrywiad"
     enterprise:
       select_outgoing_oc_products_from: Dewiswch gynhyrchion OC sy&#39;n mynd allan o
@@ -1568,6 +1569,7 @@ cy:
   enterprises_choose: "Dewiswch pryd rydych chi am gael eich archeb:"
   maps_open: "Ar agor"
   maps_closed: "Ar gau"
+  map_title: "Map"
   hubs_buy: "Siopa am:"
   hubs_shopping_here: "Siopa yma"
   hubs_orders_closed: "Gorchmynion ar gau"
@@ -3408,7 +3410,6 @@ cy:
         new:
           new_variant: "Amrywiad Newydd"
         form:
-          cost_price: "Pris Cost"
           sku: "SKU"
           price: "Pris"
           display_as: "Arddangos Fel"

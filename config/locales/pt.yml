@@ -626,6 +626,7 @@ pt:
         max_fulfilled_units: "Máximo de Unidades Completas "
         order_error: "Alguns erros devem ser corrigidos antes de actualizar encomendas.\nOs campos com bordas vermelhas contêm erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem valor unitário"
+        all: "Tudo"
       select_variant: "Selecionar uma variante"
     enterprise:
       select_outgoing_oc_products_from: Selecione produtos de saída do ciclo de encomendas
@@ -1523,6 +1524,7 @@ pt:
   enterprises_choose: "Escolha para quando quer a sua encomenda:"
   maps_open: "Aberto"
   maps_closed: "Fechado"
+  map_title: "Mapa"
   hubs_buy: "Comprar:"
   hubs_shopping_here: "Comprar aqui"
   hubs_orders_closed: "Fechado para encomendas"
@@ -3145,7 +3147,6 @@ pt:
         new:
           new_variant: "Nova variante"
         form:
-          cost_price: "Preço de Custo"
           sku: "SKU"
           price: "Preço"
           display_as: "Mostrar como"

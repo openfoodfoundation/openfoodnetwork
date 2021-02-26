@@ -628,6 +628,7 @@ de_DE:
         max_fulfilled_units: "Max erfüllte Einheiten"
         order_error: "Bevor Sie Bestellungen aktualisieren können, müssen Fehler behoben werden.\nFelder mit roten Rahmen enthalten Fehler."
         variants_without_unit_value: "WARNUNG: Manche Varianten haben keine Einheit"
+        all: "Alle"
       select_variant: "Wählen Sie eine Variante"
     enterprise:
       select_outgoing_oc_products_from: Wählen Sie die im Bestellzyklus ausgehenden Produkte von
