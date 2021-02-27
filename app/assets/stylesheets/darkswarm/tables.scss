@@ -1,9 +1,11 @@
+$table-cell-padding: 12px;
+
 table {
   thead tr, tbody tr {
     th, td {
       box-sizing: border-box;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding-left: $table-cell-padding;
+      padding-right: $table-cell-padding;
       overflow: hidden;
     }
   }

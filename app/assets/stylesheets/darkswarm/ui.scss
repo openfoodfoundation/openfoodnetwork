@@ -61,6 +61,13 @@
   @include border-radius(0.5em);
 
   outline: none;
+
+  &.x-small {
+    padding: 0.5rem 0.75rem;
+    font-size: $text-xs;
+    font-weight: 600;
+    margin: 0;
+  }
 }
 
 .button.primary, button.primary {

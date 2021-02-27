@@ -3732,6 +3732,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+        authorisation_required: Authorisation Required
+        authorise: Authorize
       open_orders:
         order: Order
         shop: Shop

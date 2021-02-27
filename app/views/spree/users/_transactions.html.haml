@@ -1,4 +1,27 @@
 %script{ type: "text/ng-template", id: "account/transactions.html" }
+  - if @payments_requiring_action.present?
+    .active_table.requiring-authorization
+      %h3= t(".authorisation_required")
+      %table.full.top-rounded
+        %tr
+          %th= t :transaction
+          %th= t :transaction_date
+          %th.show-for-large-up= t :payment_state
+          %th.text-right= t :value
+        %tbody
+          - @payments_requiring_action.each do |payment|
+            %tr
+              %td
+                = link_to payment.order.number, main_app.order_path(payment.order)
+              %td
+                = payment.updated_at.strftime("%Y-%m-%d")
+              %td
+                %a{ href: "#{payment.cvv_response_message}" }
+                  %button.x-small
+                    = t(".authorise")
+              %td.text-right
+                = payment.display_amount
+
   .active_table.orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
     %h3.my-orders= t(".transaction_history")
     %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.shops.length > 0", "ng-repeat" => "shop in Orders.shops",

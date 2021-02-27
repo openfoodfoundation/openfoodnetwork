@@ -99,7 +99,6 @@
   .transaction-group {}
 
   table {
-    width: 100%;
     border-radius: $radius-medium $radius-medium 0 0;
 
     tr:nth-of-type(even) {
@@ -141,5 +140,31 @@
 
   .order7 {
     width: 10%;
+  }
+}
+
+table {
+  &.full {
+    width: 100%;
+  }
+
+  &.top-rounded {
+    border-radius: $radius-medium $radius-medium 0 0;
+  }
+}
+
+// Note this relies on the <th> using `.show-for-large-up` as well.
+.requiring-authorization tr {
+  position: relative;
+
+  th:last-child {
+    position: absolute;
+    // The following calculation is the equivalent of:
+    //
+    // $table-cell-padding + 2 * browser's default border-spacing + 2 * table border
+    //
+    // Unfortunately we can't use Scss's interpolation
+    // https://sass-lang.com/documentation/interpolation. We're using a too old version perhaps?
+    right: calc(12px + 2*2px + 2*1px);
   }
 }
