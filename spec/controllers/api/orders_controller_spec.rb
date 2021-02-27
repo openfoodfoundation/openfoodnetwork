@@ -157,47 +157,6 @@ module Api
           expect(json_response['pagination']).to eq pagination_data
         end
       end
-
-      context "when there is a pending payment requiring authorization" do
-        let!(:pending_payment) do
-          create(
-            :payment,
-            order: order1,
-            state: 'pending',
-            amount: 123.45,
-            cvv_response_message: "https://stripe.com/redirect"
-          )
-        end
-
-        before do
-          allow(controller).to receive(:spree_current_user) { distributor.owner }
-        end
-
-        it "returns false" do
-          get :index
-          expect(json_response['orders'].first['ready_to_capture']).to eq(false)
-        end
-      end
-
-      context "when there is a pending payment but it does not require authorization" do
-        let!(:pending_payment) do
-          create(
-            :payment,
-            order: order1,
-            state: 'pending',
-            amount: 123.45,
-          )
-        end
-
-        before do
-          allow(controller).to receive(:spree_current_user) { distributor.owner }
-        end
-
-        it "returns true" do
-          get :index
-          expect(json_response['orders'].first['ready_to_capture']).to eq(true)
-        end
-      end
     end
 
     describe "#show" do
