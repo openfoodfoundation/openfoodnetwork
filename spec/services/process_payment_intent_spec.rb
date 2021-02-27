@@ -47,5 +47,19 @@ describe ProcessPaymentIntent do
         expect(order).to have_received(:deliver_order_confirmation_email)
       end
     end
+
+    context "payment is in a failed state" do
+      let(:invalid_intent) { "invalid" }
+      let(:service) { ProcessPaymentIntent.new(invalid_intent, order) }
+
+      before do
+        payment.update_attribute(:state, "failed")
+      end
+
+      it "does not complete the payment" do
+        service.call!
+        expect(payment.reload.state).to eq("failed")
+      end
+    end
   end
 end

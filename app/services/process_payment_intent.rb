@@ -20,7 +20,7 @@ class ProcessPaymentIntent
 
     last_payment.update_attribute(:cvv_response_message, nil)
     OrderWorkflow.new(@order).next
-    last_payment.complete! if !last_payment.completed?
+    last_payment.complete! if last_payment.can_complete?
   end
 
   private
