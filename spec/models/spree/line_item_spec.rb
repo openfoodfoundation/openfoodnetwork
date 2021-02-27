@@ -413,29 +413,25 @@ module Spree
       end
     end
 
-    describe "calculating price with adjustments" do
-      it "does not return fractional cents" do
-        li = LineItem.new
+    describe "#price_with_adjustments and #amount_with_adjustments" do
+      let(:adjustments) { double }
+      let(:line_item) { build(:line_item) }
 
-        allow(li).to receive(:price) { 55.55 }
-        allow(li).to receive_message_chain(:order, :all_adjustments, :loaded?)
-        allow(li).to receive_message_chain(:order, :all_adjustments, :select)
-        allow(li).to receive_message_chain(:order, :all_adjustments, :where, :to_a, :sum) { 11.11 }
-        allow(li).to receive(:quantity) { 2 }
-        expect(li.price_with_adjustments).to eq(61.11)
+      before do
+        allow_any_instance_of(OrderAdjustmentsFetcher).to receive(:line_item_fees) { adjustments }
+        allow(adjustments).to receive_message_chain(:to_a, :sum) { 11.11 }
       end
-    end
 
-    describe "calculating amount with adjustments" do
+      it "does not return fractional cents" do
+        allow(line_item).to receive(:price) { 55.55 }
+        allow(line_item).to receive(:quantity) { 2 }
+        expect(line_item.price_with_adjustments).to eq(61.11)
+      end
+
       it "returns a value consistent with price_with_adjustments" do
-        li = LineItem.new
-
-        allow(li).to receive(:price) { 55.55 }
-        allow(li).to receive_message_chain(:order, :all_adjustments, :loaded?)
-        allow(li).to receive_message_chain(:order, :all_adjustments, :select)
-        allow(li).to receive_message_chain(:order, :all_adjustments, :where, :to_a, :sum) { 11.11 }
-        allow(li).to receive(:quantity) { 2 }
-        expect(li.amount_with_adjustments).to eq(122.22)
+        allow(line_item).to receive(:price) { 55.55 }
+        allow(line_item).to receive(:quantity) { 2 }
+        expect(line_item.amount_with_adjustments).to eq(122.22)
       end
     end
 
