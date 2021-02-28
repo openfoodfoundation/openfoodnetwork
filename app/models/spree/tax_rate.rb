@@ -84,7 +84,7 @@ module Spree
       order.line_items.reload
       # TaxRate adjustments (order.adjustments.tax)
       #   and line item adjustments (tax included on line items) consist of 100% tax
-      (order.adjustments.tax + order.line_item_adjustments.reload).each do |adjustment|
+      order.adjustments.tax.additional.each do |adjustment|
         adjustment.set_absolute_included_tax! adjustment.amount
       end
     end
