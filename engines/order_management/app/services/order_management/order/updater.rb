@@ -42,6 +42,7 @@ module OrderManagement
       def update_totals
         order.payment_total = payments.completed.sum(:amount)
         update_item_total
+        update_shipment_total
         update_adjustment_total
         update_order_total
       end
@@ -51,6 +52,11 @@ module OrderManagement
         shipments.each { |shipment| shipment.update!(order) }
       end
 
+      def update_shipment_total
+        order.shipment_total = shipments.sum(:cost)
+        update_order_total
+      end
+
       def update_item_total
         order.item_total = line_items.sum('price * quantity')
         update_order_total
@@ -58,7 +64,7 @@ module OrderManagement
 
       def update_adjustment_total
         order.adjustment_total = adjustments.eligible.sum(:amount) +
-                                 all_adjustments.shipping.sum(:amount)
+                                 order.shipment_total
         order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
         order.included_tax_total = order.line_item_adjustments.tax.sum(:included_tax) +
                                    all_adjustments.enterprise_fee.sum(:included_tax) +
@@ -79,6 +85,7 @@ module OrderManagement
           included_tax_total: order.included_tax_total,
           additional_tax_total: order.additional_tax_total,
           payment_total: order.payment_total,
+          shipment_total: order.shipment_total,
           total: order.total,
           updated_at: Time.zone.now
         )

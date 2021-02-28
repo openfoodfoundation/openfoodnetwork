@@ -27,6 +27,12 @@ module OrderManagement
           expect(order.item_total).to eq(20)
         end
 
+        it "updates shipment total" do
+          allow(order).to receive_message_chain(:shipments, :sum) { 10 }
+          updater.update_shipment_total
+          expect(order.shipment_total).to eq 10
+        end
+
         it "updates adjustment totals" do
           allow(order).to receive_message_chain(:adjustments, :eligible, :sum).and_return(-10)
           allow(order).to receive_message_chain(:all_adjustments, :tax, :additional, :sum).and_return(20)
