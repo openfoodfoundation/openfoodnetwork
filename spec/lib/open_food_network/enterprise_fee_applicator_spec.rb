@@ -16,7 +16,7 @@ module OpenFoodNetwork
 
       adjustment = Spree::Adjustment.last
       expect(adjustment.label).to eq('label')
-      expect(adjustment.adjustable).to eq(line_item.order)
+      expect(adjustment.adjustable).to eq(line_item)
       expect(adjustment.source).to eq(line_item)
       expect(adjustment.originator).to eq(enterprise_fee)
       expect(adjustment).to be_mandatory
