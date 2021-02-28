@@ -44,8 +44,9 @@ describe OrderTaxAdjustmentsFetcher do
                               tax_category: tax_category20,
                               calculator: Calculator::FlatRate.new(preferred_amount: 48.0))
     end
-    let(:additional_adjustment) do
-      create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0))
+    let(:admin_adjustment) do
+      create(:adjustment, order: order, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0),
+                          source: nil, label: "Admin Adjustment")
     end
 
     let(:order_cycle) do
@@ -62,8 +63,7 @@ describe OrderTaxAdjustmentsFetcher do
         line_items: [line_item1, line_item2],
         bill_address: create(:address),
         order_cycle: order_cycle,
-        distributor: coordinator,
-        adjustments: [additional_adjustment]
+        distributor: coordinator
       )
     end
 
@@ -80,6 +80,8 @@ describe OrderTaxAdjustmentsFetcher do
     end
 
     before do
+      order.reload
+      order.adjustments << admin_adjustment
       order.create_tax_charge!
       order.recreate_all_fees!
     end
@@ -102,7 +104,7 @@ describe OrderTaxAdjustmentsFetcher do
       expect(subject[tax_rate20]).to eq(8.0)
     end
 
-    it "contains tax on order adjustment" do
+    it "contains tax on admin adjustment" do
       expect(subject[tax_rate25]).to eq(10.0)
     end
   end
