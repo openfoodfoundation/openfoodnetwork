@@ -67,7 +67,7 @@ class SubscriptionPlacementJob < ActiveJob::Base
   end
 
   def handle_empty_order(order, changes)
-    order.reload.adjustments.destroy_all
+    order.reload.all_adjustments.destroy_all
     order.update!
     send_empty_email(order, changes)
   end
