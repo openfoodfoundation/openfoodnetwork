@@ -280,6 +280,7 @@ describe Spree::OrdersController, type: :controller do
         expect(order.all_adjustments.length).to eq 2
         expect(item_num).to eq 2
         expect(order.adjustment_total).to eq expected_fees
+        expect(order.shipment_total).to eq 2 * shipping_fee
         expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
 
         allow(subject).to receive(:spree_current_user) { order.user }
@@ -295,6 +296,7 @@ describe Spree::OrdersController, type: :controller do
 
         expect(order.reload.line_items.count).to eq 1
         expect(order.adjustment_total).to eq(1 * (shipping_fee + payment_fee))
+        expect(order.shipment_total).to eq(shipping_fee)
         expect(order.shipment.fee_adjustment.included_tax).to eq 0.6
       end
     end

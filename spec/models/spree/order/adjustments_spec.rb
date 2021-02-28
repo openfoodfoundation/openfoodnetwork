@@ -3,17 +3,21 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  let(:order) { Spree::Order.new }
+  let(:order) { create(:order) }
 
   context "totaling adjustments" do
     let!(:adjustment1) { create(:adjustment, amount: 5) }
     let!(:adjustment2) { create(:adjustment, amount: 10) }
     let(:adjustments) { Spree::Adjustment.where(id: [adjustment1, adjustment2]) }
 
-    context "#ship_total" do
+    context "#shipment_total" do
+      before do
+        allow(order).to receive_message_chain(:shipments, :sum) { 20 }
+        order.updater.update_shipment_total
+      end
+
       it "should return the correct amount" do
-        allow(order).to receive_message_chain :adjustments, shipping: adjustments
-        expect(order.ship_total).to eq 15
+        expect(order.shipment_total).to eq 20
       end
     end
 
