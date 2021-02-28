@@ -118,7 +118,7 @@ module OpenFoodNetwork
     end
 
     def shipping_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_delivery_shipping_cost), total_shipping(order), invoice_number, tax_on_shipping_s(order), opts)]
+      [summary_row(order, I18n.t(:report_header_delivery_shipping_cost), order.ship_total, invoice_number, tax_on_shipping_s(order), opts)]
     end
 
     def payment_summary_rows(order, invoice_number, opts)
@@ -193,10 +193,6 @@ module OpenFoodNetwork
 
     def total_taxable_fees(order)
       order.all_adjustments.enterprise_fee.with_tax.sum(:amount)
-    end
-
-    def total_shipping(order)
-      order.all_adjustments.shipping.sum(:amount)
     end
 
     def total_transaction(order)
