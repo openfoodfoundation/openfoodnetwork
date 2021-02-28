@@ -25,10 +25,6 @@ class OrderAdjustmentsFetcher
     sum_adjustments "payment_fee"
   end
 
-  def ship_total
-    sum_adjustments "shipping"
-  end
-
   def line_item_adjustments(line_item)
     if adjustments_eager_loaded?
       adjustments.select{ |adjustment| adjustment.source_id == line_item.id }
