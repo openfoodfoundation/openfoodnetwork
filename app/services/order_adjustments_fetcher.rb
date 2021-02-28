@@ -29,14 +29,6 @@ class OrderAdjustmentsFetcher
     sum_adjustments "shipping"
   end
 
-  def line_item_adjustments(line_item)
-    if adjustments_eager_loaded?
-      adjustments.select{ |adjustment| adjustment.source_id == line_item.id }
-    else
-      adjustments.where(source_id: line_item.id)
-    end
-  end
-
   private
 
   attr_reader :order
