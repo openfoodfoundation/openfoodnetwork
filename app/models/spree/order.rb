@@ -188,10 +188,6 @@ module Spree
       Spree::Money.new(tax_total, currency: currency)
     end
 
-    def display_ship_total
-      Spree::Money.new(ship_total, currency: currency)
-    end
-
     def display_total
       Spree::Money.new(total, currency: currency)
     end
