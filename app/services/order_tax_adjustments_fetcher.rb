@@ -21,7 +21,6 @@ class OrderTaxAdjustmentsFetcher
 
   def all
     Spree::Adjustment
-      .with_tax
       .where(order_adjustments.or(line_item_adjustments).or(shipment_adjustments))
       .order('created_at ASC')
   end
@@ -50,11 +49,27 @@ class OrderTaxAdjustmentsFetcher
 
     Hash[tax_rates.collect do |tax_rate|
       tax_amount = if tax_rates.one?
-                     adjustment.included_tax
+                     adjustment_tax_amount(adjustment)
                    else
                      tax_rate.compute_tax(adjustment.amount)
                    end
       [tax_rate, tax_amount]
     end]
+  end
+
+  def adjustment_tax_amount(adjustment)
+    if no_tax_adjustments?(adjustment)
+      adjustment.included_tax
+    else
+      adjustment.amount
+    end
+  end
+
+  def no_tax_adjustments?(adjustment)
+    # Enterprise Fees, Admin Adjustments, and Shipping Fees currently do not have tax adjustments.
+    # The tax amount is stored in the included_tax attribute.
+    adjustment.originator_type == "EnterpriseFee" ||
+      adjustment.originator_type == "Spree::ShippingMethod" ||
+      (adjustment.source_type.nil? && adjustment.originator_type.nil?)
   end
 end
