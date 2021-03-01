@@ -12,8 +12,8 @@ module Api
 
     def adjustments
       adjustments = object.all_adjustments.where(
-        "adjustable_type IN ('Spree::Order','Spree::Shipment')"
-      ).order("label DESC")
+        adjustable_type: ["Spree::Order", "Spree::Shipment"]
+      ).order(label: :desc)
       ActiveModel::ArraySerializer.new(adjustments, each_serializer: Api::AdjustmentSerializer)
     end
   end
