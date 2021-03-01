@@ -1186,6 +1186,10 @@ ca:
       hide_closed_shops: "Amaga les botigues tancades"
       show_on_map: "Mostra-ho tot al mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
+        powered_html: "La vostra experiència de compra està impulsada per %{open_food_network}."
     menu:
       cart:
         cart: "Cistella"
@@ -2999,6 +3003,9 @@ ca:
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
     shipping_methods: "Mètodes d'enviament"
     shipping_method: "Mètode d'enviament"
+    shipment: "Enviament"
+    payment: "Pagament"
+    status: "Estat"
     shipping_categories: "Tipus d'enviament"
     new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
