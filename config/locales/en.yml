@@ -3157,7 +3157,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
-
+    shipment: "Shipment"
+    payment: "Payment"
+    status: "Status"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
