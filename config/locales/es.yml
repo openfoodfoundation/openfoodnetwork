@@ -1185,6 +1185,10 @@ es:
       hide_closed_shops: "Ocultar tiendas cerradas"
       show_on_map: "Ver todos en el mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
+        powered_html: "Su experiencia de compra está impulsada por %{open_food_network}."
     menu:
       cart:
         cart: "Carrito"
@@ -2999,6 +3003,9 @@ es:
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
     shipping_methods: "Métodos de envío"
     shipping_method: "Método de envío"
+    shipment: "Envío"
+    payment: "Pago"
+    status: "Estado"
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
