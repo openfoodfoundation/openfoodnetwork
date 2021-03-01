@@ -3572,6 +3572,8 @@ en_GB:
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+        authorisation_required: Authorisation Required
+        authorise: Authorise
       open_orders:
         order: Order
         shop: Shop
