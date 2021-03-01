@@ -132,6 +132,19 @@ describe Spree::OrderMailer do
         Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
         expect(ActionMailer::Base.deliveries.first.reply_to).to eq([distributor.contact.email])
       end
+
+      it "includes a link to the configured instance email address" do
+        mail = Spree::OrderMailer.confirm_email_for_customer(order.id)
+
+        expect(mail.body.encoded).to include "mailto:hello@openfoodnetwork.org"
+      end
+
+      it "includes a link to the OFN global website if no email address is available" do
+        expect(ContentConfig).to receive(:footer_email).and_return("")
+        mail = Spree::OrderMailer.confirm_email_for_customer(order.id)
+
+        expect(mail.body.encoded).to include "https://www.openfoodnetwork.org"
+      end
     end
 
     describe "for shops" do

@@ -47,6 +47,19 @@ describe Spree::UserMailer do
     end
   end
 
+  describe "#confirmation_instructions" do
+    it "sends an email" do
+      token = "random"
+      email = Spree::UserMailer.confirmation_instructions(user, token)
+
+      expect {
+        email.deliver_now
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
+    end
+  end
+
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     describe 'message contents' do

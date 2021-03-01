@@ -1,5 +1,6 @@
 class SubscriptionMailer < Spree::BaseMailer
   helper CheckoutHelper
+  helper MailerHelper
   helper ShopMailHelper
   helper OrderHelper
   helper Spree::Admin::PaymentsHelper
