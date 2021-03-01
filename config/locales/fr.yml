@@ -1185,6 +1185,10 @@ fr:
       hide_closed_shops: "Masquer les boutiques fermées"
       show_on_map: "Tout afficher sur la carte"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "CoopCircuits"
+        powered_html: "Cette commande a été rendue possible par %{open_food_network}."
     menu:
       cart:
         cart: "Panier"
@@ -3024,6 +3028,9 @@ fr:
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
+    shipment: "Livraison"
+    payment: "Paiement"
+    status: "Statut"
     shipping_categories: "Conditions de transport"
     new_shipping_category: "Nouvelle condition de transport"
     back_to_shipping_categories: "Retour aux conditions de transport"
@@ -3596,6 +3603,8 @@ fr:
         past_orders: Commandes Passées
       transactions:
         transaction_history: Historique des Transactions
+        authorisation_required: Autorisation nécessaire
+        authorise: Autorise
       open_orders:
         order: Commander
         shop: Faire mes courses

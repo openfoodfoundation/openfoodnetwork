@@ -1186,6 +1186,10 @@ ru:
       hide_closed_shops: "Скрыть закрытые магазины"
       show_on_map: "Показать всех на карте"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Открытая Сеть Продуктов"
+        powered_html: "Ваш опыт покупок обеспечивается %{open_food_network}."
     menu:
       cart:
         cart: "Корзина"
@@ -1552,6 +1556,7 @@ ru:
     set_a_password: "Затем Вам будет предложено установить пароль, прежде чем вы сможете управлять предприятием."
     mistakenly_sent: "Не уверены, почему Вы получили это письмо? Пожалуйста, свяжитесь с %{owner_email} для получения дополнительной информации."
   producer_mail_greeting: "Многоуважаемый"
+  producer_mail_text_before: "Пожалуйста, ниже обновленная информация о цикле заказа, готовый для:"
   producer_mail_order_text: "Вот сводка заказов на ваши товары:"
   producer_mail_delivery_instructions: "Инструкция по вывозу/доставке:"
   producer_mail_signoff: "Спасибо и с наилучшими пожеланиями"
@@ -2654,6 +2659,7 @@ ru:
         min_quantity: "Мин. количество"
         max_quantity: "Макс количество"
       price_breakdown: "Разбивка цен"
+      unit_price_tooltip: "Это цена за единицу этого продукта. Это позволяет сравнивать цены на товары независимо от размера и веса упаковки."
     variants:
       on_demand:
         'yes': "По Запросу"
@@ -3049,6 +3055,9 @@ ru:
     back_to_taxonomies_list: "Назад к Списку Таксономий"
     shipping_methods: "Способы Доставки"
     shipping_method: "Способ Доставки"
+    shipment: "Доставка"
+    payment: "Платеж"
+    status: "Статус"
     shipping_categories: "Категории Доставки"
     new_shipping_category: "Новая Категория Доставки"
     back_to_shipping_categories: "Назад в Категории Доставки"
@@ -3510,6 +3519,7 @@ ru:
       processing: в обработке
       void: аннулирован
       invalid: Недействительный
+      authorise: разрешить
     order_mailer:
       cancel_email:
         customer_greeting: "Уважаемый %{name}!"
@@ -3549,6 +3559,9 @@ ru:
       authorize_payment:
         subject: "Авторизуйте платеж на адрес %{distributor} в ОСП"
         instructions: "Ваш платеж %{amount} на %{distributor} требует дополнительной аутентификации. Перейдите по следующему URL-адресу, чтобы авторизовать платеж:"
+      authorization_required:
+        subject: "Платеж требует согласия клиента"
+        message: "Для оплаты заказа %{order_number} требуется дополнительное согласие со стороны покупателя. Клиент был уведомлен по электронной почте и платеж будет отображаться как ожидающий, пока он не будет подтвержден."
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"
@@ -3617,6 +3630,8 @@ ru:
         past_orders: Прошлые Заказы
       transactions:
         transaction_history: История Операций
+        authorisation_required: Требуется Согласие
+        authorise: Разрешить
       open_orders:
         order: Заказ
         shop: Магазин

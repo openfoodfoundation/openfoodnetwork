@@ -3570,6 +3570,8 @@ ca:
         past_orders: Comandes anteriors
       transactions:
         transaction_history: Historial de transaccions
+        authorisation_required: Cal autorització
+        authorise: Autoritzar
       open_orders:
         order: Comanda
         shop: Botiga
