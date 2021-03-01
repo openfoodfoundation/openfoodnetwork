@@ -25,54 +25,6 @@ describe Spree::Order do
     end
   end
 
-  context "line item adjustment totals" do
-    before { @order = Spree::Order.create! }
-
-    context "when there are no line item adjustments" do
-      before { allow(@order).to receive_message_chain(:line_item_adjustments, eligible: []) }
-
-      it "should return an empty hash" do
-        expect(@order.line_item_adjustment_totals).to eq({})
-      end
-    end
-
-    context "when there are two adjustments with different labels" do
-      let(:adj1) { build(:adjustment, amount: 10, label: "Foo") }
-      let(:adj2) { build(:adjustment, amount: 20, label: "Bar") }
-
-      before do
-        allow(@order).to receive_message_chain(:line_item_adjustments, eligible: [adj1, adj2])
-      end
-
-      it "should return exactly two totals" do
-        expect(@order.line_item_adjustment_totals.size).to eq 2
-      end
-
-      it "should return the correct totals" do
-        expect(@order.line_item_adjustment_totals["Foo"]).to eq Spree::Money.new(10)
-        expect(@order.line_item_adjustment_totals["Bar"]).to eq Spree::Money.new(20)
-      end
-    end
-
-    context "when there are two adjustments with one label and a single adjustment with another" do
-      let(:adj1) { build(:adjustment, amount: 10, label: "Foo") }
-      let(:adj2) { build(:adjustment, amount: 20, label: "Bar") }
-      let(:adj3) { build(:adjustment, amount: 40, label: "Bar") }
-
-      before do
-        allow(@order).to receive_message_chain(:line_item_adjustments, eligible: [adj1, adj2, adj3])
-      end
-
-      it "should return exactly two totals" do
-        expect(@order.line_item_adjustment_totals.size).to eq 2
-      end
-      it "should return the correct totals" do
-        expect(@order.line_item_adjustment_totals["Foo"]).to eq Spree::Money.new(10)
-        expect(@order.line_item_adjustment_totals["Bar"]).to eq Spree::Money.new(60)
-      end
-    end
-  end
-
   context "line item adjustments" do
     before do
       @order = Spree::Order.create!

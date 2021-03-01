@@ -253,16 +253,6 @@ module Spree
       Spree::Config[:tax_using_ship_address] ? ship_address : bill_address
     end
 
-    # Array of totals grouped by Adjustment#label. Useful for displaying line item
-    # adjustments on an invoice. For example, you can display tax breakout for
-    # cases where tax is included in price.
-    def line_item_adjustment_totals
-      Hash[line_item_adjustments.eligible.group_by(&:label).map do |label, adjustments|
-        total = adjustments.sum(&:amount)
-        [label, Spree::Money.new(total, currency: currency)]
-      end]
-    end
-
     def updater
       @updater ||= OrderManagement::Order::Updater.new(self)
     end
@@ -706,13 +696,6 @@ module Spree
 
     def total_tax
       (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
-    end
-
-    def price_adjustment_totals
-      Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
-        [tax_rate.name,
-         Spree::Money.new(tax_amount, currency: currency)]
-      end]
     end
 
     def has_taxes_included
