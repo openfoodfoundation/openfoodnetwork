@@ -3596,6 +3596,8 @@ fr:
         past_orders: Commandes Passées
       transactions:
         transaction_history: Historique des Transactions
+        authorisation_required: Autorisation nécessaire
+        authorise: Autorise
       open_orders:
         order: Commander
         shop: Faire mes courses
