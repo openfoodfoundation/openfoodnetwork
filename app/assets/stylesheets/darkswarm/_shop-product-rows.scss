@@ -67,8 +67,10 @@
 
         .variant-unit-price {
           color: $grey-700;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           margin-top: 15px;
+          position: relative;
+          left: -1px;
         }
 
         // Total price
