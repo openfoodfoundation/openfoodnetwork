@@ -3570,6 +3570,8 @@ es:
         past_orders: Pedidos anteriores
       transactions:
         transaction_history: Historial de transacciones
+        authorisation_required: Autorización requerida
+        authorise: Autorizar
       open_orders:
         order: Pedido
         shop: Tienda
