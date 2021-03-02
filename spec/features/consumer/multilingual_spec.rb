@@ -26,22 +26,19 @@ feature 'Multilingual', js: true do
       visit root_path
       expect(get_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
-      expect(cookie_named('locale')).to be_nil
-      expect(page).to have_content 'Interested in getting on the Open Food Network?'
+      expect(cookies).to be_empty
       expect(page).to have_content 'SHOPS'
 
       visit root_path(locale: 'es')
       expect(get_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
-      expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
 
       # it is not in the list of available of available_locales
       visit root_path(locale: 'it')
       expect(get_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
-      expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
     end
 
     context 'with a product in the cart' do
