@@ -18,15 +18,16 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
 
     context "as a site admin" do
       it "fetches completed orders" do
-        o2 = create(:order)
+        o2 = create(:order, state: 'cart')
         o2.line_items << build(:line_item)
         expect(subject.table_items).to eq([li1])
       end
 
-      it "does not show cancelled orders" do
-        o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
-        o2.line_items << build(:line_item_with_shipment)
-        expect(subject.table_items).to eq([li1])
+      it "shows cancelled orders" do
+        o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) 
+        line_item = build(:line_item_with_shipment)
+        o2.line_items << line_item
+        expect(subject.table_items).to include(line_item)
       end
     end
 
