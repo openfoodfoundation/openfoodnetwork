@@ -189,15 +189,6 @@ describe Enterprise do
     end
   end
 
-  describe "delegations" do
-    # subject { FactoryBot.create(:distributor_enterprise, :address => FactoryBot.create(:address)) }
-
-    it { is_expected.to delegate(:latitude).to(:address) }
-    it { is_expected.to delegate(:longitude).to(:address) }
-    it { is_expected.to delegate(:city).to(:address) }
-    it { is_expected.to delegate(:state_name).to(:address) }
-  end
-
   describe "callbacks" do
     it "restores permalink to original value when it is changed and invalid" do
       e1 = create(:enterprise, permalink: "taken")
