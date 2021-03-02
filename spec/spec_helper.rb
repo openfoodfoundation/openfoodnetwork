@@ -103,6 +103,9 @@ RSpec.configure do |config|
   # Only retry when Selenium raises Net::ReadTimeout
   config.exceptions_to_retry = [Net::ReadTimeout]
 
+  # Force colored output, whether or not the output is a TTY
+  config.color_mode = :on
+
   # Force use of expect (over should)
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
