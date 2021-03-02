@@ -1,4 +1,4 @@
-Darkswarm.controller "EditBoughtOrderController", ($scope, $resource, $timeout, Cart) ->
+Darkswarm.controller "EditBoughtOrderController", ($scope, $resource, $timeout, Cart, Messages) ->
   $scope.showBought = false
   $scope.removeEnabled = true
 
