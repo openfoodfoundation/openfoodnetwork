@@ -3,9 +3,7 @@
 module DownloadsHelper
   TIMEOUT = 10
 
-  def self.path
-    Rails.root.join("tmp", "downloads")
-  end
+  DOWNLOAD_PATH = Capybara.save_path.freeze
 
   def downloaded_filename
     wait_for_download
@@ -26,7 +24,7 @@ module DownloadsHelper
   private
 
   def downloaded_filenames
-    Dir[DownloadsHelper.path.join("*")]
+    Dir[DOWNLOAD_PATH.join("*")]
   end
 
   def wait_for_download
