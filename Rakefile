@@ -7,5 +7,3 @@
 require_relative 'config/application'
 
 Openfoodnetwork::Application.load_tasks
-
-Knapsack.load_tasks if defined?(Knapsack)

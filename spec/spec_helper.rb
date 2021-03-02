@@ -10,14 +10,6 @@ require 'rubygems'
 # Require pry when we're not inside Travis-CI
 require 'pry' unless ENV['CI']
 
-# This spec_helper.rb is being used by the custom engines in engines/. The engines are not set up to
-# use Knapsack, and this provides the option to disable it when running the tests in CI services.
-unless ENV['DISABLE_KNAPSACK']
-  require 'knapsack'
-  Knapsack.tracker.config(enable_time_offset_warning: false) unless ENV['CI']
-  Knapsack::Adapters::RSpecAdapter.bind
-end
-
 ENV["RAILS_ENV"] ||= 'test'
 require_relative "../config/environment"
 require 'rspec/rails'

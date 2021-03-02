@@ -264,8 +264,6 @@ GEM
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
     kgio (2.11.3)
-    knapsack (1.20.0)
-      rake
     launchy (2.4.3)
       addressable (~> 2.3)
     letter_opener (1.7.0)
@@ -608,7 +606,6 @@ DEPENDENCIES
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
   kaminari (~> 1.2.1)
-  knapsack
   letter_opener (>= 1.4.1)
   libv8 (< 8)
   mini_racer (= 0.2.15)

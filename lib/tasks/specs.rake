@@ -10,7 +10,7 @@ namespace :ofn do
       end
 
       def execute_rspec_for_engine(engine_path)
-        system "DISABLE_KNAPSACK=true bundle exec rspec #{engine_path.expand_path}/spec"
+        system "bundle exec rspec #{engine_path.expand_path}/spec"
       end
 
       engine_paths = detect_engine_paths
