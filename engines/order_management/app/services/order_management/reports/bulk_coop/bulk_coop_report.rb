@@ -149,13 +149,15 @@ module OrderManagement
         end
 
         def order_permissions
-          return @order_permissions unless @order_permissions.nil?
-
-          @order_permissions = ::Permissions::Order.new(@user, @params[:q])
+          @order_permissions ||= ::Permissions::Order.new(@user, @params[:q])
         end
 
         def report_line_items
-          @report_line_items ||= OpenFoodNetwork::Reports::LineItems.new(order_permissions, @params)
+          @report_line_items ||= OpenFoodNetwork::Reports::LineItems.new(
+            order_permissions,
+            @params,
+            CompleteVisibleOrders.new(order_permissions).query
+          )
         end
 
         def customer_payments_total_cost(line_items)
