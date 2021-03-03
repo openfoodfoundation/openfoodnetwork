@@ -1,4 +1,8 @@
 class MigrateShipmentFeesToShipments < ActiveRecord::Migration
+  class Spree::Adjustment < ActiveRecord::Base
+    belongs_to :originator, polymorphic: true
+  end
+
   def up
     # Shipping fee adjustments currently have the order as the `adjustable` and the shipment as
     # the `source`. Both `source` and `adjustable` will now be the shipment. The `originator` is
