@@ -6,7 +6,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
   subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, params, true }
   let(:user) { create(:admin_user) }
 
-  describe "fetching orders" do
+  describe '#table_items' do
     let(:params) { {} }
 
     let(:d1) { create(:distributor_enterprise) }
@@ -17,17 +17,38 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
     before { o1.line_items << li1 }
 
     context "as a site admin" do
-      it "fetches completed orders" do
-        o2 = create(:order, state: 'cart')
-        o2.line_items << build(:line_item)
-        expect(subject.table_items).to eq([li1])
+      context 'when searching' do
+        let(:params) { { q: { completed_at_gt: '', completed_at_lt: '', distributor_id_in: [] } } }
+
+        it "fetches completed orders" do
+          o2 = create(:order, state: 'cart')
+          o2.line_items << build(:line_item)
+          expect(subject.table_items).to eq([li1])
+        end
+
+        it 'shows canceled orders' do
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          line_item = build(:line_item_with_shipment)
+          o2.line_items << line_item
+          expect(subject.table_items).to include(line_item)
+        end
       end
 
-      it "shows cancelled orders" do
-        o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) 
-        line_item = build(:line_item_with_shipment)
-        o2.line_items << line_item
-        expect(subject.table_items).to include(line_item)
+      context 'when not searching' do
+        let(:params) { {} }
+
+        it "fetches completed orders" do
+          o2 = create(:order, state: 'cart')
+          o2.line_items << build(:line_item)
+          expect(subject.table_items).to eq([li1])
+        end
+
+        it 'shows canceled orders' do
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          line_item = build(:line_item_with_shipment)
+          o2.line_items << line_item
+          expect(subject.table_items).to include(line_item)
+        end
       end
     end
 

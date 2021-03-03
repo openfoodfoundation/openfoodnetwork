@@ -22,6 +22,7 @@ module OrderManagement
 
           @supplier_report = BulkCoopSupplierReport.new
           @allocation_report = BulkCoopAllocationReport.new
+          @filter_canceled = false
         end
 
         def header
@@ -138,6 +139,8 @@ module OrderManagement
 
         private
 
+        attr_reader :filter_canceled
+
         def line_item_includes
           [
             {
@@ -149,7 +152,7 @@ module OrderManagement
         end
 
         def order_permissions
-          @order_permissions ||= ::Permissions::Order.new(@user, @params[:q])
+          @order_permissions ||= ::Permissions::Order.new(@user, filter_canceled)
         end
 
         def report_line_items
