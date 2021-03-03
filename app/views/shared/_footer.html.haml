@@ -15,7 +15,7 @@
         %p.secure-icon
           %i.ofn-i_017-locked
       .small-12.medium-6.columns.text-center
-        %p.text-big.secure-text
+        %p.secure-text#secure
           = t '.footer_secure'
         %p.secure-text
           = t '.footer_secure_text'
@@ -31,7 +31,7 @@
         // This is the instance-managed set of links:
         %h4
           = t '.footer_contact_headline'
-        - if ContentConfig.footer_facebook_url.present? || ContentConfig.footer_twitter_url.present? || ContentConfig.footer_instagram_url.present? || ContentConfig.footer_linkedin_url.present? || ContentConfig.footer_googleplus_url.present? || ContentConfig.footer_pinterest_url.present?
+        - if show_social_icons?
           %p.social-icons
             - if ContentConfig.footer_facebook_url.present?
               %a{href: ContentConfig.footer_facebook_url}
