@@ -144,6 +144,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
+  gem 'bullet'
   gem 'capybara'
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '5.2.0', require: false

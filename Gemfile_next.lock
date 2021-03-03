@@ -123,6 +123,9 @@ GEM
     bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
+    bullet (6.1.4)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.0.1)
     cancancan (1.7.1)
     capybara (3.15.0)
@@ -524,6 +527,7 @@ GEM
     unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
+    uniform_notifier (1.14.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     webdrivers (4.2.0)
@@ -568,6 +572,7 @@ DEPENDENCIES
   awesome_print
   aws-sdk (= 1.67.0)
   bugsnag
+  bullet
   byebug
   cancancan (~> 1.7.0)
   capybara
