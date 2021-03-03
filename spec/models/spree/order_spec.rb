@@ -1358,25 +1358,46 @@ describe Spree::Order do
     end
   end
 
-  describe "editing a complete order, with two line items" do
+  describe 'editing a complete order, with two line items' do
     let!(:payment_method) { create(:payment_method) }
     let!(:shipping_method) { create(:shipping_method) }
     let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
     let(:item_num) { order.line_items.length }
+    let(:item1_price) { order.line_items.first.price }
+    let(:item2_price) { order.line_items.second.price }
+    let(:customer_balance) { order.total - order.payment_total }
 
-    context "updates the customer balance correctly" do
-      it "when an item is removed" do
+    context 'when an item is removed' do
+      before do
         order.line_items.first.destroy
         order.update!
+      end
+
+      it 'updates the payment state of the order' do
         expect(item_num).to eq 1
         expect(order.payment_state).to eq('credit_owed')
       end
 
-      it "when the quantity of an item is increased" do
-        expect(item_num).to eq 2
-        order.line_items.second.update_attribute(:quantity, 2)
+      it "updates the customer balance correctly" do
+        # 1 x first item was removed
+        expect(customer_balance).to eq item1_price * -1
+      end
+    end
+
+    context 'when the quantity of an item is increased' do
+      before do
+        order.line_items.second.update_attribute(:quantity, 3)
         order.update!
+      end
+
+      it 'updates the payment state of the order' do
+        expect(item_num).to eq 2
         expect(order.payment_state).to eq('balance_due')
+      end
+
+      it "updates the customer balance correctly" do
+        # 2 x second item was added
+        expect(customer_balance).to eq item2_price * 2
       end
     end
   end
