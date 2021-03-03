@@ -10,10 +10,6 @@ describe Spree::Address do
     it { is_expected.to have_one(:enterprise) }
   end
 
-  describe "delegation" do
-    it { is_expected.to delegate(:name).to(:state).with_prefix }
-  end
-
   describe "destroy" do
     it "can be deleted" do
       expect { address.destroy }.to_not raise_error
