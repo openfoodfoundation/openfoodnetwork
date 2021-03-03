@@ -5,6 +5,7 @@ module OpenFoodNetwork
       def initialize(order_permissions, params, orders_relation = nil)
         @order_permissions = order_permissions
         @params = params
+        complete_not_canceled_visible_orders = CompleteVisibleOrders.new(order_permissions).query.not_state(:canceled)
         @orders_relation = orders_relation || complete_not_canceled_visible_orders
       end
 
@@ -13,7 +14,7 @@ module OpenFoodNetwork
       end
 
       def list(line_item_includes = nil)
-        line_items = @order_permissions.visible_line_items.in_orders(orders.result)
+        line_items = order_permissions.visible_line_items.in_orders(orders.result)
 
         if @params[:supplier_id_in].present?
           line_items = line_items.supplied_by_any(@params[:supplier_id_in])
@@ -34,11 +35,7 @@ module OpenFoodNetwork
 
       private
 
-      attr_reader :orders_relation
-
-      def complete_not_canceled_visible_orders
-        @order_permissions.visible_orders.complete.not_state(:canceled)
-      end
+      attr_reader :orders_relation, :order_permissions
 
       def search_orders
         orders_relation.search(@params[:q])
@@ -46,7 +43,7 @@ module OpenFoodNetwork
 
       # From the line_items given, returns the ones that are editable by the user
       def editable_line_items(line_items)
-        editable_line_items_ids = @order_permissions.editable_line_items.select(:id)
+        editable_line_items_ids = order_permissions.editable_line_items.select(:id)
 
         # Although merge could take a relation, here we convert line_items to array
         #   because, if we pass a relation, merge will overwrite the conditions on the same field
