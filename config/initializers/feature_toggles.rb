@@ -10,6 +10,12 @@ OpenFoodNetwork::FeatureToggle.enable(:customer_balance) do |user|
   end
 end
 
-OpenFoodNetwork::FeatureToggle.enable(:unit_price) do
-  ['development', 'staging'].include?(ENV['RAILS_ENV'])
+
+unit_price_beta_testers = ENV['BETA_TESTERS_FOR_UNIT_PRICE']&.split(/[\s,]+/) || []
+OpenFoodNetwork::FeatureToggle.enable(:unit_price) do |user|
+  if ['development', 'staging'].include?(ENV['RAILS_ENV'])
+    true
+  else
+    unit_price_beta_testers.include?(user.email)
+  end
 end
