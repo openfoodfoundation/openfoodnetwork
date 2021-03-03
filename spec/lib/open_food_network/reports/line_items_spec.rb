@@ -8,8 +8,9 @@ describe OpenFoodNetwork::Reports::LineItems do
   # under test and the various objects it depends on. Other more common moking strategies where very
   # hard.
   class FakeOrderPermissions
-    def initialize(line_item)
+    def initialize(line_item, orders_relation)
       @relation = Spree::LineItem.where(id: line_item.id)
+      @orders_relation = orders_relation
     end
 
     def visible_line_items
@@ -21,30 +22,29 @@ describe OpenFoodNetwork::Reports::LineItems do
       Spree::LineItem.where(id: line_item.id)
     end
 
+    def visible_orders
+      orders_relation
+    end
+
     private
 
-    attr_reader :relation
-  end
-
-  class FakeRansackResult
-    attr_reader :result
-
-    def initialize(result)
-      @result = result
-    end
+    attr_reader :relation, :orders_relation
   end
 
   describe '#list' do
-    let!(:order) { create(:order, distributor: create(:enterprise)) }
+    let!(:order) do
+      create(
+        :order,
+        distributor: create(:enterprise),
+        completed_at: 1.day.ago,
+        shipments: [build(:shipment)]
+      )
+    end
     let!(:line_item) { create(:line_item, order: order) }
 
-    let(:order_permissions) { FakeOrderPermissions.new(line_item) }
+    let(:orders_relation) { Spree::Order.where(id: order.id) }
+    let(:order_permissions) { FakeOrderPermissions.new(line_item, orders_relation) }
     let(:params) { {} }
-
-    before do
-      orders_relation = Spree::Order.where(id: order.id)
-      allow(reports_line_items).to receive(:search_orders) { FakeRansackResult.new(orders_relation) }
-    end
 
     it 'returns masked data' do
       line_items = reports_line_items.list
