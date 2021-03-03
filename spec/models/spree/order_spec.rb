@@ -728,6 +728,7 @@ describe Spree::Order do
     before do
       create(
         :adjustment,
+        order: order,
         adjustable: order,
         originator: enterprise_fee,
         label: "EF",
