@@ -12,7 +12,7 @@ module VariantUnits
       allow(variant).to receive(:product) { product }
     end
 
-    describe "#unit_price_unit" do
+    describe "#unit" do
       context "metric" do
         before do
           allow(product).to receive(:variant_unit_scale) { 1.0 }
@@ -20,12 +20,12 @@ module VariantUnits
 
         it "returns kg for weight" do
           allow(product).to receive(:variant_unit) { "weight" }
-          expect(subject.unit_price_unit).to eq("kg")
+          expect(subject.unit).to eq("kg")
         end
 
         it "returns L for volume" do
           allow(product).to receive(:variant_unit) { "volume" }
-          expect(subject.unit_price_unit).to eq("L")
+          expect(subject.unit).to eq("L")
         end
       end
 
@@ -33,7 +33,7 @@ module VariantUnits
         it "returns lbs" do
           allow(product).to receive(:variant_unit_scale) { 453.6 }
           allow(product).to receive(:variant_unit) { "weight" }
-          expect(subject.unit_price_unit).to eq("lb")
+          expect(subject.unit).to eq("lb")
         end
       end
 
@@ -42,39 +42,39 @@ module VariantUnits
           allow(product).to receive(:variant_unit_name) { nil }
           allow(product).to receive(:variant_unit_scale) { nil }
           allow(product).to receive(:variant_unit) { "items" }
-          expect(subject.unit_price_unit).to eq("item")
+          expect(subject.unit).to eq("item")
         end
 
         it "returns the unit if a unit is specified" do
           allow(product).to receive(:variant_unit_name) { "bunch" }
           allow(product).to receive(:variant_unit_scale) { nil }
           allow(product).to receive(:variant_unit) { "items" }
-          expect(subject.unit_price_unit).to eq("bunch")
+          expect(subject.unit).to eq("bunch")
         end
       end
     end
 
-    describe "#unit_price_denominator" do
+    describe "#denominator" do
       context "metric" do
         it "returns 0.5 for a 500g variant" do
           allow(product).to receive(:variant_unit_scale) { 1.0 }
           allow(product).to receive(:variant_unit) { "weight" }
           variant.unit_value = 500
-          expect(subject.unit_price_denominator).to eq(0.5)
+          expect(subject.denominator).to eq(0.5)
         end
 
         it "returns 2 for a 2kg variant" do
           allow(product).to receive(:variant_unit_scale) { 1000 }
           allow(product).to receive(:variant_unit) { "weight" }
           variant.unit_value = 2000
-          expect(subject.unit_price_denominator).to eq(2)
+          expect(subject.denominator).to eq(2)
         end
 
         it "returns 0.5 for a 500mL variant" do
           allow(product).to receive(:variant_unit_scale) { 0.001 }
           allow(product).to receive(:variant_unit) { "volume" }
           variant.unit_value = 0.5
-          expect(subject.unit_price_denominator).to eq(0.5)
+          expect(subject.denominator).to eq(0.5)
         end
       end
 
@@ -83,7 +83,7 @@ module VariantUnits
           allow(product).to receive(:variant_unit_scale) { 453.6 }
           allow(product).to receive(:variant_unit) { "weight" }
           variant.unit_value = 2*453.6
-          expect(subject.unit_price_denominator).to eq(2)
+          expect(subject.denominator).to eq(2)
         end
       end
 
@@ -92,14 +92,14 @@ module VariantUnits
           allow(product).to receive(:variant_unit_scale) { nil }
           allow(product).to receive(:variant_unit) { "items" }
           variant.unit_value = 1
-          expect(subject.unit_price_denominator).to eq(1)
+          expect(subject.denominator).to eq(1)
         end
 
         it "returns 2 for multi-item units" do
           allow(product).to receive(:variant_unit_scale) { nil }
           allow(product).to receive(:variant_unit) { "items" }
           variant.unit_value = 2
-          expect(subject.unit_price_denominator).to eq(2)
+          expect(subject.denominator).to eq(2)
         end
       end
     end

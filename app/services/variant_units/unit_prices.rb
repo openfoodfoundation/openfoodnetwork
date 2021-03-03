@@ -7,10 +7,11 @@ module VariantUnits
       @product = variant.product
     end
 
-    def unit_price_denominator
+    def denominator
+      # catches any case where unit is not kg, lb, or L.
       return @variant.unit_value if @product&.variant_unit == "items"
 
-      case unit_price_unit
+      case unit
       when "lb"
         @variant.unit_value / 453.6
       when "kg"
@@ -20,7 +21,7 @@ module VariantUnits
       end
     end
 
-    def unit_price_unit
+    def unit
       return "lb" if VariantUnits::WeightsAndMeasures.new(@variant).
         system_of_measurement == "imperial"
 
