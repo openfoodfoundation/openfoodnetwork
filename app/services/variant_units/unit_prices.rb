@@ -31,7 +31,7 @@ module VariantUnits
       when "volume"
         "L"
       else
-        @product.variant_unit_name.presence || "item"
+        @product.variant_unit_name.presence || I18n.t("item")
       end
     end
   end
