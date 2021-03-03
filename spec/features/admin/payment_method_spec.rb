@@ -196,7 +196,7 @@ feature '
       expect(page).to have_selector 'td', text: 'Two', count: 1
     end
 
-    pending "shows me only payment methods for the enterprise I select" do
+    it "shows me only payment methods for the enterprise I select" do
       payment_method1
       payment_method2
 
@@ -215,8 +215,11 @@ feature '
         click_link "Payment Methods"
       end
 
-      expect(page).not_to have_content payment_method1.name
+      expect(page).to     have_content payment_method1.name
       expect(page).to     have_content payment_method2.name
+
+      expect(page).to have_checked_field "enterprise_payment_method_ids_#{payment_method2.id}"
+      expect(page).to have_unchecked_field "enterprise_payment_method_ids_#{payment_method1.id}"
     end
   end
 end
