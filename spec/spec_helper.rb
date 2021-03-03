@@ -96,9 +96,6 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # Filters
-  config.filter_run_excluding skip: true, future: true, to_figure_out: true
-
   # Retry
   config.verbose_retry = true
   # Try twice (retry once)
