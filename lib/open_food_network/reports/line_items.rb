@@ -2,9 +2,10 @@ module OpenFoodNetwork
   module Reports
     # shared code to search and list line items
     class LineItems
-      def initialize(order_permissions, params)
+      def initialize(order_permissions, params, orders_relation = nil)
         @order_permissions = order_permissions
         @params = params
+        @orders_relation = orders_relation || complete_not_canceled_visible_orders
       end
 
       def orders
@@ -33,8 +34,14 @@ module OpenFoodNetwork
 
       private
 
+      attr_reader :orders_relation
+
+      def complete_not_canceled_visible_orders
+        @order_permissions.visible_orders.complete.not_state(:canceled)
+      end
+
       def search_orders
-        @order_permissions.visible_orders.complete.not_state(:canceled).search(@params[:q])
+        orders_relation.search(@params[:q])
       end
 
       # From the line_items given, returns the ones that are editable by the user
