@@ -1357,4 +1357,27 @@ describe Spree::Order do
       end
     end
   end
+
+  describe "editing a complete order, with two line items" do
+    let!(:payment_method) { create(:payment_method) }
+    let!(:shipping_method) { create(:shipping_method) }
+    let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
+    let(:item_num) { order.line_items.length }
+
+    context "updates the customer balance correctly" do
+      it "when an item is removed" do
+        order.line_items.first.destroy
+        order.update!
+        expect(item_num).to eq 1
+        expect(order.payment_state).to eq('credit_owed')
+      end
+
+      it "when the quantity of an item is increased" do
+        expect(item_num).to eq 2
+        order.line_items.second.update_attribute(:quantity, 2)
+        order.update!
+        expect(order.payment_state).to eq('balance_due')
+      end
+    end
+  end
 end
