@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby "2.4.4"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.2'
 
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
@@ -68,7 +68,7 @@ gem 'actionpack-action_caching'
 #   AMS is deprecated, we will introduce an alternative at some point
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', '~> 5.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
