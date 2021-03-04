@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe "spree/admin/shared/_order_links.html.haml" do
   helper Spree::BaseHelper # required to make pretty_time work
+  helper Spree::Admin::OrdersHelper
 
   before do
     order = create(:order)
