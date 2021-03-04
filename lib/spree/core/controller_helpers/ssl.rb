@@ -7,7 +7,7 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          before_filter :force_non_ssl_redirect, if: proc { Spree::Config[:redirect_https_to_http] }
+          before_action :force_non_ssl_redirect, if: proc { Spree::Config[:redirect_https_to_http] }
 
           def self.ssl_allowed(*actions)
             class_attribute :ssl_allowed_actions
