@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby "2.5.8"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.2'
 
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
