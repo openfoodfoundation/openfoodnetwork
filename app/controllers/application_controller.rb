@@ -13,6 +13,18 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
+  helper 'spree/base'
+  helper 'spree/orders'
+  helper 'shared'
+  helper 'enterprises'
+  helper 'order_cycles'
+  helper 'order'
+  helper 'shop'
+  helper 'injection'
+  helper 'markdown'
+  helper 'footer_links'
+  helper 'discourse'
+
   protect_from_forgery
 
   include Spree::Core::ControllerHelpers::Auth
