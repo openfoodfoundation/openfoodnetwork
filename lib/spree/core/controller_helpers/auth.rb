@@ -7,7 +7,7 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          before_filter :ensure_api_key
+          before_action :ensure_api_key
 
           rescue_from CanCan::AccessDenied do
             unauthorized
