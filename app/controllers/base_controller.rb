@@ -13,8 +13,6 @@ class BaseController < ApplicationController
   include I18nHelper
   include OrderCyclesHelper
 
-  helper 'spree/base'
-
   before_action :set_locale
   before_action :check_order_cycle_expiry
 

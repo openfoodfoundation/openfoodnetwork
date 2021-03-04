@@ -200,5 +200,7 @@ module Openfoodnetwork
     config.active_support.escape_html_entities_in_json = true
 
     config.active_job.queue_adapter = :delayed_job
+
+    config.action_controller.include_all_helpers = false
   end
 end

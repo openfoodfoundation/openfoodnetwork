@@ -3,7 +3,12 @@ module Spree
     class BaseController < ApplicationController
       ssl_required
 
+      helper 'shared'
       helper 'spree/admin/navigation'
+      helper 'spree/admin/orders'
+      helper 'admin/injection'
+      helper 'admin/orders'
+
       layout '/spree/layouts/admin'
 
       include I18nHelper
