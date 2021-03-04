@@ -12,7 +12,7 @@ module Spree
 
           layout :get_layout
 
-          before_filter :set_user_language
+          before_action :set_user_language
 
           protected
 

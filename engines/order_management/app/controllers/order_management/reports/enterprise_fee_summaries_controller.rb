@@ -3,8 +3,8 @@
 module OrderManagement
   module Reports
     class EnterpriseFeeSummariesController < Spree::Admin::BaseController
-      before_filter :load_report_parameters
-      before_filter :load_permissions
+      before_action :load_report_parameters
+      before_action :load_permissions
 
       def new; end
 
