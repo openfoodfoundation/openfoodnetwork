@@ -338,6 +338,10 @@ feature "As a consumer I want to check out my cart", js: true do
         order = Spree::Order.complete.first
         expect(order.special_instructions).to eq "SpEcIaL NoTeS"
 
+        # Shipment and payments states should be set
+        expect(order.payment_state).to eq "balance_due"
+        expect(order.shipment_state).to eq "pending"
+
         # And the Spree tax summary should not be displayed
         expect(page).not_to have_content product.tax_category.name
 
