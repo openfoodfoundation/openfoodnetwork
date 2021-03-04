@@ -28,5 +28,5 @@
         = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
       %td.bought-item-delete.text-center
-        %a{ng: {click: "deleteLineItem(#{line_item.id})"}}
+        %a{ng: {click: "removeEnabled && deleteLineItem(#{line_item.id})"}}
           %i.ofn-i_026-trash
