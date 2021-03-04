@@ -10,7 +10,7 @@ module Spree
           base.class_eval do
             helper_method :current_order
             helper_method :current_currency
-            before_filter :set_current_order
+            before_action :set_current_order
           end
         end
 
