@@ -14,6 +14,14 @@ class BaseController < ApplicationController
   include OrderCyclesHelper
 
   helper 'spree/base'
+  helper 'markdown'
+  helper 'footer_links'
+  helper 'discourse'
+  helper 'shared'
+  helper 'shop'
+  helper 'enterprises'
+  helper 'injection'
+  helper 'order_cycles'
 
   before_action :set_locale
   before_action :check_order_cycle_expiry
