@@ -135,6 +135,8 @@ gem 'select2-rails', '~> 3.4.7'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
+gem 'good_migrations'
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'unicorn-worker-killer'
