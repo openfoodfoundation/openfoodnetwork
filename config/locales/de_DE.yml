@@ -1191,7 +1191,7 @@ de_DE:
         powered_html: "Dieser Einkauf wurde ermöglicht durch das %{open_food_network}."
     menu:
       cart:
-        cart: "Wagen"
+        cart: "Warenkorb"
       cart_sidebar:
         checkout: "Zur Kasse"
         edit_cart: "Warenkorb bearbeiten"
@@ -1203,7 +1203,7 @@ de_DE:
       signed_in:
         profile: "Profil"
       mobile_menu:
-        cart: "Wagen"
+        cart: "Warenkorb"
     register_call:
       selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier registrieren!"
@@ -1725,7 +1725,7 @@ de_DE:
   orders_edit_headline: Ihr Warenkorb
   orders_edit_time: Bestellung bereit am
   orders_edit_continue: Weiter einkaufen
-  orders_edit_checkout: Kasse
+  orders_edit_checkout: Zur Kasse
   orders_form_empty_cart: "Warenkorb leeren"
   orders_form_subtotal: Zwischensumme
   orders_form_admin: Bearbeitung
@@ -2041,7 +2041,7 @@ de_DE:
   notify_producers: 'Produzenten benachrichtigen'
   edit_order_cycle: "Bestellzyklus bearbeiten"
   roles: "Rollen"
-  update: "Speichern"
+  update: "Aktualisieren"
   delete: Löschen
   add_producer_property: "Produzenteneigenschaft hinzufügen"
   in_progress: "In Bearbeitung"
@@ -2378,6 +2378,7 @@ de_DE:
   back_to_orders_list: "Zurück zur Bestellliste"
   no_orders_found: "Es wurden keine Bestellungen gefunden."
   order_information: "Bestellinformationen"
+  new_payment: "Neue Zahlung"
   date_completed: "Bestelldatum"
   amount: "Summe"
   state_names:
@@ -2890,10 +2891,11 @@ de_DE:
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
     name_or_sku: "Produktname oder Artikelnummer (geben Sie mindestens die ersten 3 Zeichen des Produktnamens ein)"
-    resend: Erneut senden
-    back_to_orders_list: Zurück zur Bestellliste
-    return_authorizations: Retouren
-    cannot_create_returns: Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde.
+    resend: "Erneut senden"
+    back_to_orders_list: "Zurück zur Bestellliste"
+    back_to_payments_list: "Zurück zur Zahlungsliste"
+    return_authorizations: "Retouren"
+    cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde."
     select_stock: "Bestand auswählen"
     location: "Ort"
     count_on_hand: "Verfügbar"
