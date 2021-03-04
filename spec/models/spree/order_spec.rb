@@ -1202,20 +1202,11 @@ describe Spree::Order do
         expect { order.next! }.to change { order.state }.from("delivery").to("payment")
       end
 
-      it "advances to complete state despite error" do
+      # Regression test for https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
+      it "advances to complete state without error" do
         advance_to_delivery_state(order)
-        # advance to payment state
         order.next!
-
         create(:payment, order: order)
-        # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
-        observed_error = ActiveRecord::RecordNotUnique.new(
-          "PG::UniqueViolation",
-          StandardError.new
-        )
-        expect(order.shipment).to receive(:save).and_call_original
-        expect(order.shipment).to receive(:save).and_call_original
-        expect(order.shipment).to receive(:save).and_raise(observed_error)
 
         expect { order.next! }.to change { order.state }.from("payment").to("complete")
       end
