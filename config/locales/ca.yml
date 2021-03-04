@@ -3456,6 +3456,7 @@ ca:
       pending: pendents
       ready: llest
       shipped: enviat
+      canceled: cancel·lat
     payment_states:
       balance_due: a pagar
       completed: completat

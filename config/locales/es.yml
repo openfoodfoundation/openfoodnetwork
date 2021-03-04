@@ -3456,6 +3456,7 @@ es:
       pending: pendiente
       ready: Listo
       shipped: enviado
+      canceled: cancelado
     payment_states:
       balance_due: saldo debido
       completed: completado
