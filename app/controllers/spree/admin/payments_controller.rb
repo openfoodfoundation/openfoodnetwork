@@ -130,11 +130,11 @@ module Spree
       # At this point admin should have passed through Customer Details step
       # where order.next is called which leaves the order in payment step
       #
-      # Orders in complete step also allows to access this controller
+      # Orders in complete or canceled step also allows to access this controller
       #
       # Otherwise redirect user to that step
       def can_transition_to_payment
-        return if @order.payment? || @order.complete?
+        return if @order.payment? || @order.complete? || @order.canceled?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
         redirect_to spree.edit_admin_order_customer_url(@order)

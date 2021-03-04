@@ -278,4 +278,25 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
     end
   end
+
+  describe '#index' do
+    context "order is canceled but has a completed payment" do
+      let(:payment_method) do
+        create(
+          :stripe_sca_payment_method,
+          distributor_ids: [create(:distributor_enterprise).id],
+          preferred_enterprise_id: create(:enterprise).id
+        )
+      end
+      let!(:order) { create(:order, state: 'canceled') }
+      let!(:payment) do
+        create(:payment, order: order, payment_method: payment_method, amount: order.total)
+      end
+
+      it "renders the payments tab" do
+        spree_get :index, order_id: order.number
+        expect(response.status).to eq 200
+      end
+    end
+  end
 end
