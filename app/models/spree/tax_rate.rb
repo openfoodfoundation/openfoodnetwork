@@ -30,8 +30,8 @@ module Spree
       return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
 
-      all.select do |rate|
-        rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || rate.zone.default_tax
+      all.includes(zone: { zone_members: :zoneable }).load.select do |rate|
+        rate.potentially_applicable?(order.tax_zone)
       end
     end
 
@@ -54,6 +54,15 @@ module Spree
       rate = category.tax_rates.detect { |tax_rate| tax_rate.zone.include? address }.try(:amount)
 
       rate || 0
+    end
+
+    def potentially_applicable?(order_tax_zone)
+      # If the rate's zone matches the order's tax zone, then it's applicable.
+      zone == order_tax_zone ||
+      # If the rate's zone *contains* the order's tax zone, then it's applicable.
+      zone.contains?(order_tax_zone) ||
+      # The rate's zone is the default zone, then it's always applicable.
+      (included_in_price? && zone.default_tax)
     end
 
     # Creates necessary tax adjustments for the order.
