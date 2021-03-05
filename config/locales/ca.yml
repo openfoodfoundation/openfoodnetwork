@@ -2379,6 +2379,7 @@ ca:
   back_to_orders_list: "Torna a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
+  new_payment: "Nou pagament"
   date_completed: "Data finalitzada"
   amount: "Import"
   state_names:
@@ -2885,10 +2886,11 @@ ca:
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"
-    resend: Reenviar
-    back_to_orders_list: Tornar a la llista de comandes
-    return_authorizations: Autoritzacions de devolució
-    cannot_create_returns: No es poden crear devolucions ja que aquesta comanda no té cap unitat enviada.
+    resend: "Reenviar"
+    back_to_orders_list: "Tornar a la llista de comandes"
+    back_to_payments_list: "Torna a la llista de pagaments"
+    return_authorizations: "Autoritzacions de devolució"
+    cannot_create_returns: "No es poden crear devolucions ja que aquesta comanda no té cap unitat enviada."
     select_stock: "Seleccioneu existències"
     location: "Ubicació"
     count_on_hand: "Compte disponible"
