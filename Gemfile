@@ -79,7 +79,7 @@ gem 'kaminari', '~> 1.2.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk', '1.67.0'
+gem 'aws-sdk', '3.0.2'
 gem 'bugsnag'
 gem 'haml'
 gem 'redcarpet'
