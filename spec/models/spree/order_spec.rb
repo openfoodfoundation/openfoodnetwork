@@ -176,9 +176,6 @@ describe Spree::Order do
     end
 
     it "should freeze all adjustments" do
-      # Stub this method as it's called due to a callback
-      # and it's irrelevant to this test
-      allow(order).to receive :has_available_shipment
       allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = double
       allow(order).to receive_messages adjustments: adjustments

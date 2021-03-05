@@ -90,7 +90,6 @@ module Spree
     before_create :link_by_email
     after_create :create_tax_charge!
 
-    validate :has_available_shipment
     validates :email, presence: true,
                       format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
                       if: :require_email
@@ -741,12 +740,6 @@ module Spree
       return if line_items.present?
 
       errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) && (return false)
-    end
-
-    def has_available_shipment
-      return unless address?
-      return unless ship_address&.valid?
-      # errors.add(:base, :no_shipping_methods_available) if available_shipping_methods.empty?
     end
 
     def ensure_available_shipping_rates

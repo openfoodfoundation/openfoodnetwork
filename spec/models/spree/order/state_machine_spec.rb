@@ -18,7 +18,6 @@ describe Spree::Order do
         order.run_callbacks(:create)
         allow(order).to receive_messages payment_required?: true
         allow(order).to receive_messages process_payments!: true
-        allow(order).to receive :has_available_shipment
       end
 
       context "when payment processing succeeds" do
@@ -114,7 +113,6 @@ describe Spree::Order do
     it "should send a cancel email" do
       # Stub methods that cause side-effects in this test
       allow(shipment).to receive(:cancel!)
-      allow(order).to receive :has_available_shipment
       allow(order).to receive :restock_items!
       mail_message = double "Mail::Message"
       order_id = nil
@@ -133,8 +131,6 @@ describe Spree::Order do
         allow(shipment).to receive(:update_order)
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
         allow(mail_message).to receive :deliver_later
-
-        allow(order).to receive :has_available_shipment
       end
     end
 
@@ -143,7 +139,6 @@ describe Spree::Order do
         # Stubs methods that cause unwanted side effects in this test
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
         allow(mail_message).to receive :deliver_later
-        allow(order).to receive :has_available_shipment
         allow(order).to receive :restock_items!
         allow(shipment).to receive(:cancel!)
       end
@@ -174,9 +169,6 @@ describe Spree::Order do
       allow(order).to receive_messages email: "user@spreecommerce.com"
       allow(order).to receive_messages state: "canceled"
       allow(order).to receive_messages allow_resume?: true
-
-      # Stubs method that cause unwanted side effects in this test
-      allow(order).to receive :has_available_shipment
     end
   end
 end
