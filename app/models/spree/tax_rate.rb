@@ -16,8 +16,10 @@ module Spree
   class TaxRate < ApplicationRecord
     acts_as_paranoid
     include Spree::Core::CalculatedAdjustments
+
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
+    has_many :adjustments, as: :originator
 
     validates :amount, presence: true, numericality: true
     validates :tax_category, presence: true
@@ -35,11 +37,27 @@ module Spree
       end
     end
 
-    def self.adjust(order)
-      order.all_adjustments.tax.destroy_all
+    def self.adjust(order, items)
+      applicable_rates = match(order)
+      applicable_tax_categories = applicable_rates.map(&:tax_category)
 
-      match(order).each do |rate|
-        rate.adjust(order)
+      relevant_items, non_relevant_items = items.partition do |item|
+        applicable_tax_categories.include?(item.tax_category)
+      end
+
+      relevant_items.each do |item|
+        item.adjustments.tax.delete_all
+        relevant_rates = applicable_rates.select { |rate| rate.tax_category == item.tax_category }
+        relevant_rates.each do |rate|
+          rate.adjust(order, item)
+        end
+      end
+
+      non_relevant_items.each do |item|
+        if item.adjustments.tax.present?
+          item.adjustments.tax.delete_all
+          Spree::ItemAdjustments.new(item).update
+        end
       end
     end
 
@@ -65,31 +83,38 @@ module Spree
       (included_in_price? && zone.default_tax)
     end
 
-    # Creates necessary tax adjustments for the order.
-    def adjust(order)
-      label = create_label
-      if included_in_price
-        if default_zone_or_zone_match? order
-          order.line_items.each { |line_item| create_adjustment(label, line_item, false, "open") }
-          order.shipments.each { |shipment| create_adjustment(label, shipment, false, "open") }
-        else
-          amount = -1 * calculator.compute(order)
-          label = Spree.t(:refund) + label
+    # Creates necessary tax adjustments for the item.
+    def adjust(order, item)
+      amount = compute_amount(item)
+      return if amount.zero?
 
-          order.adjustments.create(
-            amount: amount,
-            originator: self,
-            order: order,
-            state: "closed",
-            label: label
-          )
-        end
-      else
-        create_adjustment(label, order, false, "open")
+      included = included_in_price && default_zone_or_zone_match?(order)
+
+      if amount.negative?
+        label = "#{Spree.t(:refund)} #{create_label}"
       end
 
-      order.adjustments.reload
-      order.line_items.reload
+      self.adjustments.create!(
+        adjustable: item,
+        amount: amount,
+        order: order,
+        label: label || create_label,
+        included: included
+      )
+    end
+
+    # This method is used by Adjustment#update to recalculate the cost.
+    def compute_amount(item)
+      if included_in_price
+        if default_zone_or_zone_match?(item.order)
+          calculator.compute(item)
+        else
+          # In this case, it's a refund.
+          calculator.compute(item) * - 1
+        end
+      else
+        calculator.compute(item)
+      end
     end
 
     def default_zone_or_zone_match?(order)
@@ -119,7 +144,7 @@ module Spree
 
     def create_label
       label = ""
-      label << (name.presence || tax_category.name) + " "
+      label << "#{(name.presence || tax_category.name)} "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
       label
