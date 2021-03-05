@@ -635,6 +635,9 @@ sv:
       hide_closed_shops: "Dölj stängda butiker"
       show_on_map: "Visa allt på kartan"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart_sidebar:
         checkout: "Utcheckning"
@@ -1906,7 +1909,7 @@ sv:
   account: "Konto"
   logout: "Logga ut"
   spree:
-    resend: Återsänd
+    resend: "Återsänd"
     quantity: "Antal"
     on_demand: "På begäran"
     on_hand: "På lager"
@@ -1932,6 +1935,8 @@ sv:
     payment_methods: "Betalningssätt"
     shipping_methods: "Transportsätt"
     shipping_method: "Fraktmetod"
+    payment: "Betalning "
+    status: "Status"
     name: "Namn"
     description: "Beskrivning"
     type: "Typ"

@@ -1185,6 +1185,9 @@ es_US:
       hide_closed_shops: "Ocultar tiendas cerradas"
       show_on_map: "Ver todos en el mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart:
         cart: "Carrito"
@@ -2374,6 +2377,7 @@ es_US:
   back_to_orders_list: "Volver a la lista de pedidos"
   no_orders_found: "No se encontraron pedidos"
   order_information: "información del pedido"
+  new_payment: "Nuevo pago"
   date_completed: "Fecha de finalización"
   amount: "Cantidad"
   state_names:
@@ -2881,10 +2885,10 @@ es_US:
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
-    resend: Reenviar
-    back_to_orders_list: Volver a la lista de pedidos
-    return_authorizations: Autorizaciones de devolución
-    cannot_create_returns: No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas.
+    resend: "Reenviar"
+    back_to_orders_list: "Volver a la lista de pedidos"
+    return_authorizations: "Autorizaciones de devolución"
+    cannot_create_returns: "No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas."
     select_stock: "Seleccionar stock"
     location: "Ubicación"
     count_on_hand: "Cuenta de disponibilidad"
@@ -2999,6 +3003,9 @@ es_US:
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
     shipping_methods: "Métodos de envío"
     shipping_method: "Método de envío"
+    shipment: "Envío"
+    payment: "Pago"
+    status: "Estado"
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"

@@ -1185,6 +1185,9 @@ fr_CA:
       hide_closed_shops: "Masquer les boutiques fermées"
       show_on_map: "Tout afficher sur la carte"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network "
     menu:
       cart:
         cart: "Panier"
@@ -2376,6 +2379,7 @@ fr_CA:
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée"
   order_information: "Info commande"
+  new_payment: "Nouveau paiement"
   date_completed: "Date d'opération"
   amount: "Montant"
   state_names:
@@ -2890,10 +2894,10 @@ fr_CA:
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
-    resend: Renvoyer
-    back_to_orders_list: Retour à la liste des commandes
-    return_authorizations: Autorisations de retours
-    cannot_create_returns: Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande.
+    resend: "Renvoyer"
+    back_to_orders_list: "Retour à la liste des commandes"
+    return_authorizations: "Autorisations de retours"
+    cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"
     location: "Localisation"
     count_on_hand: "Quantité en stock"
@@ -3008,6 +3012,9 @@ fr_CA:
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
+    shipment: "Livraison"
+    payment: "Paiement"
+    status: "Statut"
     shipping_categories: "Condition de transport"
     new_shipping_category: "Créer nouvelle méthode de livraison"
     back_to_shipping_categories: "Retour aux catégories d'expédition"

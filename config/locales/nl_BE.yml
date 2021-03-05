@@ -24,6 +24,8 @@ nl_BE:
       spree/credit_card:
         base: "Kredietkaart"
         number: "Nummer"
+        month: "Maand"
+        year: "Jaar"
       order_cycle:
         orders_close_at: Sluitingsdatum
       variant_override:
@@ -1162,6 +1164,9 @@ nl_BE:
       hide_closed_shops: "Verberg gesloten winkels"
       show_on_map: "Toon alles op de kaart"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart:
         cart: "kar"
@@ -2342,6 +2347,7 @@ nl_BE:
   back_to_orders_list: "Terug naar de bestellijst"
   no_orders_found: "Geen bestelling gevonden"
   order_information: "Info bestelling"
+  new_payment: "Nieuwe betaling"
   date_completed: "Datum uitvoering"
   amount: "Bedrag"
   state_names:
@@ -2756,10 +2762,10 @@ nl_BE:
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "
     add_product: "Voeg een product toe"
     name_or_sku: "Beschrijving of artikelnummer ( tenminste 4 letters van de productnaam invoeren )"
-    resend: Zend opnieuw
-    back_to_orders_list: Terug naar de bestellingslijst
-    return_authorizations: terugkeer autorisatie
-    cannot_create_returns: Kan geen terugkeer aanmaken omdat deze orde geen verzonden units heeft
+    resend: "Zend opnieuw"
+    back_to_orders_list: "Terug naar de bestellingslijst"
+    return_authorizations: "terugkeer autorisatie"
+    cannot_create_returns: "Kan geen terugkeer aanmaken omdat deze orde geen verzonden units heeft"
     select_stock: "Selecteer voorraad"
     location: "Locatie"
     count_on_hand: "Count On Hand"
@@ -2869,6 +2875,9 @@ nl_BE:
     back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
     shipping_methods: "Methode Verzending"
     shipping_method: "Het verschepen Methode"
+    shipment: "Verzending"
+    payment: "Betaling"
+    status: "Status"
     shipping_categories: "Verzendingscategorieën"
     new_shipping_category: "Nieuwe verzendingscategorie"
     back_to_shipping_categories: "Terug naar verzendingscategoriëen"

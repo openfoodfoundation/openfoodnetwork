@@ -1183,6 +1183,9 @@ en_IE:
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart:
         cart: "Basket"
@@ -2371,6 +2374,7 @@ en_IE:
   back_to_orders_list: "Back to order list"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
+  new_payment: "New Payment"
   date_completed: "Date Completed"
   amount: "Amount"
   state_names:
@@ -2882,10 +2886,10 @@ en_IE:
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
-    resend: Resend
-    back_to_orders_list: Back To Orders List
-    return_authorizations: Return Authorisations
-    cannot_create_returns: Cannot create returns as this order has no shipped units.
+    resend: "Resend"
+    back_to_orders_list: "Back To Orders List"
+    return_authorizations: "Return Authorisations"
+    cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count In Stock"
@@ -3000,6 +3004,9 @@ en_IE:
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
+    shipment: "Shipment"
+    payment: "Payment"
+    status: "Status"
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"

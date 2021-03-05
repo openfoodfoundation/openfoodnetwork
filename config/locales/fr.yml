@@ -2380,6 +2380,7 @@ fr:
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
+  new_payment: "Nouveau paiement"
   date_completed: "Date d'opération"
   amount: "Montant"
   state_names:
@@ -2910,10 +2911,10 @@ fr:
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
-    resend: Renvoyer
-    back_to_orders_list: Retour à la liste des commandes
-    return_authorizations: Autorisations de retours
-    cannot_create_returns: Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande.
+    resend: "Renvoyer"
+    back_to_orders_list: "Retour à la liste des commandes"
+    return_authorizations: "Autorisations de retours"
+    cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"
     location: "Localisation"
     count_on_hand: "Quantité en stock"

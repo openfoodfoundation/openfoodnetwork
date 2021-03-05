@@ -1181,6 +1181,9 @@ nb:
       hide_closed_shops: "Skjul stengte butikker"
       show_on_map: "Vis alle på kartet"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart:
         cart: "Handlekurv"
@@ -2367,6 +2370,7 @@ nb:
   back_to_orders_list: "Tilbake til bestillingslisten"
   no_orders_found: "Ingen bestillinger funnet"
   order_information: "Bestillingsinformasjon"
+  new_payment: "Ny betaling"
   date_completed: "Dato Fullført"
   amount: "Beløp"
   state_names:
@@ -2865,10 +2869,10 @@ nb:
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
-    resend: Send på nytt
-    back_to_orders_list: Tilbake til Bestillingsliste
-    return_authorizations: Returautorisasjoner
-    cannot_create_returns: Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer.
+    resend: "Send på nytt"
+    back_to_orders_list: "Tilbake til Bestillingsliste"
+    return_authorizations: "Returautorisasjoner"
+    cannot_create_returns: "Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer."
     select_stock: "Velg lager"
     location: "Plassering"
     count_on_hand: "Antall På Lager"
@@ -2982,6 +2986,9 @@ nb:
     back_to_taxonomies_list: "Tilbake til Taksonomiliste"
     shipping_methods: "Leveringsmetoder"
     shipping_method: "Leveringsmetode"
+    shipment: "Leveranse"
+    payment: "Betaling"
+    status: "Status"
     shipping_categories: "Fraktkategorier"
     new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"

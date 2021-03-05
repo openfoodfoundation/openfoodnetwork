@@ -1182,6 +1182,9 @@ ar:
       hide_closed_shops: "إخفاء المتاجر المغلقة"
       show_on_map: "عرض الكل على الخريطة"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "شبكة الغذاء المفتوح"
     menu:
       cart:
         cart: "سلة"
@@ -2369,6 +2372,7 @@ ar:
   back_to_orders_list: "العودة إلى قائمة الطلب"
   no_orders_found: "لم يتم العثور على أية طلبات"
   order_information: "معلومات الطلب"
+  new_payment: "دفعة جديد"
   date_completed: "تاريخ الانتهاء"
   amount: "القيمة"
   state_names:
@@ -2965,10 +2969,10 @@ ar:
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
     name_or_sku: "الاسم أو SKU (أدخل أول 4 أحرف على الأقل من اسم المنتج)"
-    resend: إعادة إرسال
-    back_to_orders_list: العودة إلى قائمة الطلبات
-    return_authorizations: عودة التراخيص
-    cannot_create_returns: لا يمكن إنشاء عوائد لأن هذا الطلب لا يحتوي على وحدات مشحونة.
+    resend: "إعادة إرسال"
+    back_to_orders_list: "العودة إلى قائمة الطلبات"
+    return_authorizations: "عودة التراخيص"
+    cannot_create_returns: "لا يمكن إنشاء عوائد لأن هذا الطلب لا يحتوي على وحدات مشحونة."
     select_stock: "حدد المخزون"
     location: "الموقع"
     count_on_hand: "الاعتماد على المتوفر"
@@ -3082,6 +3086,9 @@ ar:
     back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
     shipping_methods: "طرق الشحن"
     shipping_method: "طريقة الشحن"
+    shipment: "الشحنة"
+    payment: "دفعة"
+    status: "الحالة"
     shipping_categories: "فئات الشحن"
     new_shipping_category: "فئة الشحن الجديدة"
     back_to_shipping_categories: "العودة إلى فئات الشحن"
@@ -3649,6 +3656,7 @@ ar:
         past_orders: الطلبات القديمة
       transactions:
         transaction_history: سجل المعاملات
+        authorisation_required: التفويض مطلوب
       open_orders:
         order: طلب
         shop: متجر

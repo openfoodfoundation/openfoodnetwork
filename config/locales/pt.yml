@@ -1154,6 +1154,9 @@ pt:
       hide_closed_shops: "Ocultar lojas fechadas"
       show_on_map: "Mostrar todas as lojas no mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart_sidebar:
         checkout: "Finalizar compra"
@@ -2299,6 +2302,7 @@ pt:
   back_to_orders_list: "Voltar à lista de encomendas"
   no_orders_found: "Nenhuma encomenda encontrada"
   order_information: "Informação da Encomenda"
+  new_payment: "Novo Pagamento"
   date_completed: "Data de Conclusão"
   amount: "Quantia"
   state_names:
@@ -2722,8 +2726,8 @@ pt:
     your_order_is_empty_add_product: "A sua encomenda está vazia, por favor procure e adicione um produto em cima"
     add_product: "Adicionar Produto"
     name_or_sku: "Nome ou Código (insira pelo menos 4 caracteres)"
-    resend: Reenviar
-    back_to_orders_list: Voltar à Lista de Encomendas
+    resend: "Reenviar"
+    back_to_orders_list: "Voltar à Lista de Encomendas"
     select_stock: "Selecione Quantidade"
     location: "Localização"
     count_on_hand: "Disponível"
@@ -2826,6 +2830,9 @@ pt:
     back_to_taxonomies_list: "Voltar à Lista de Taxonomias"
     shipping_methods: "Métodos de Envio"
     shipping_method: "Método de Envio"
+    shipment: "Envio"
+    payment: "Pagamento"
+    status: "Estado"
     shipping_categories: "Categorias de Envio"
     new_shipping_category: "Nova Categoria de Envio"
     back_to_shipping_categories: "Voltar à Lista de Categorias de Envio"

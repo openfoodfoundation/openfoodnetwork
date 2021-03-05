@@ -1146,6 +1146,9 @@ fil_PH:
       hide_closed_shops: "itago ang mga saradong shop"
       show_on_map: "Ipakita lahat sa mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
     menu:
       cart:
         cart: "Cart"
@@ -2307,6 +2310,7 @@ fil_PH:
   back_to_orders_list: "bumalik sa listahan ng order"
   no_orders_found: "walang mahanap na mga order"
   order_information: "impormasyon tungkol sa order"
+  new_payment: "Bagong Pagbabayad"
   date_completed: "petsa kung kailan na kumpleto"
   amount: "halaga"
   state_names:
@@ -2789,10 +2793,10 @@ fil_PH:
     your_order_is_empty_add_product: "ang iyong order ay walang laman, humanap at magdagdag ng produkto sa itaas."
     add_product: "magdagdag ng produkto"
     name_or_sku: "Pangalan o SKU (ipasok ang 4 na letra sa pangalan ng produkto)"
-    resend: ipadala muli
-    back_to_orders_list: bumalik sa listahan ng mga order
-    return_authorizations: mga awtorisasyon sa pagbabalik
-    cannot_create_returns: hindi makagawa ng pagbalik sa kadahilanang ang order na ito ay walang shipped na yunit.
+    resend: "ipadala muli"
+    back_to_orders_list: "bumalik sa listahan ng mga order"
+    return_authorizations: "mga awtorisasyon sa pagbabalik"
+    cannot_create_returns: "hindi makagawa ng pagbalik sa kadahilanang ang order na ito ay walang shipped na yunit."
     select_stock: "Pumili ng stock"
     location: "Lokasyon"
     count_on_hand: "bilangin ang on hand"
@@ -2896,6 +2900,9 @@ fil_PH:
     back_to_taxonomies_list: "bumalik sa listahan ng mga taxonomy"
     shipping_methods: "mga paraan ng pagpapadala"
     shipping_method: "paraan ng pagpapadala"
+    shipment: "kargamento"
+    payment: "bayad"
+    status: "status"
     shipping_categories: "mga kategorya ng pagpapadala"
     new_shipping_category: "bagong kategorya ng pagpapadala"
     back_to_shipping_categories: "bumalik sa mga kategorya ng pagpapadala"

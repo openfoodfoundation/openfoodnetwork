@@ -1181,6 +1181,9 @@ tr:
       hide_closed_shops: "Kapalı dükkanları gizle"
       show_on_map: "Tümünü haritada göster"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Açık Gıda Ağı"
     menu:
       cart:
         cart: "Sepet"
@@ -2367,6 +2370,7 @@ tr:
   back_to_orders_list: "Sipariş listesine geri dön"
   no_orders_found: "SİPARİŞ BULUNAMADI"
   order_information: "Sipariş Bilgisi"
+  new_payment: "Yeni Ödeme"
   date_completed: "Tamamlanma Tarihi"
   amount: "Tutar"
   state_names:
@@ -2869,10 +2873,10 @@ tr:
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
     name_or_sku: "Ad veya STOK KODU (ürün adının en az ilk 4 karakterini girin)"
-    resend: Yeniden gönder
-    back_to_orders_list: Sipariş Listesine Geri Dön
-    return_authorizations: İade Yetkileri
-    cannot_create_returns: Bu siparişin sevk edilmiş birimi olmadığı için iade oluşturulamıyor.
+    resend: "Yeniden gönder"
+    back_to_orders_list: "Sipariş Listesine Geri Dön"
+    return_authorizations: "İade Yetkileri"
+    cannot_create_returns: "Bu siparişin sevk edilmiş birimi olmadığı için iade oluşturulamıyor."
     select_stock: "Stok seçin"
     location: "yer"
     count_on_hand: "Eldeki Miktar"
@@ -2986,6 +2990,9 @@ tr:
     back_to_taxonomies_list: "Kategori Listesine Geri Dön"
     shipping_methods: "TESLİMAT YÖNTEMLERİ"
     shipping_method: "TESLİMAT YÖNTEMİ"
+    shipment: "Teslimat"
+    payment: "Ödeme"
+    status: "Durum"
     shipping_categories: "Nakliye Kategorileri"
     new_shipping_category: "Yeni Nakliye Kategorisi"
     back_to_shipping_categories: "Teslimat Kategorilerine Geri Dön"

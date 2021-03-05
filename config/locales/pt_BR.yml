@@ -1181,6 +1181,9 @@ pt_BR:
       hide_closed_shops: "Esconder lojas fechadas"
       show_on_map: "Mostrar tudo no mapa"
   shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Brasil"
     menu:
       cart:
         cart: "Carrinho"
@@ -2878,10 +2881,10 @@ pt_BR:
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
     name_or_sku: "Nome ou SKU (digite pelo menos os 4 primeiros caracteres do nome do produto)"
-    resend: Re-enviar
-    back_to_orders_list: Voltar à lista de pedidos
-    return_authorizations: Autorizações de Devolução
-    cannot_create_returns: Não é possível criar devoluções, pois esse pedido não possui unidades enviadas.
+    resend: "Re-enviar"
+    back_to_orders_list: "Voltar à lista de pedidos"
+    return_authorizations: "Autorizações de Devolução"
+    cannot_create_returns: "Não é possível criar devoluções, pois esse pedido não possui unidades enviadas."
     select_stock: "Selecionar estoque"
     location: "Localização"
     count_on_hand: "Contagem na mão"
@@ -2996,6 +2999,9 @@ pt_BR:
     back_to_taxonomies_list: "Voltar à lista de taxonomias"
     shipping_methods: "Métodos de envio"
     shipping_method: "Método de envio"
+    shipment: "Envio"
+    payment: "Pagamento"
+    status: "Status"
     shipping_categories: "Categorias de Remessa"
     new_shipping_category: "Nova categoria de frete"
     back_to_shipping_categories: "Voltar para categorias de remessa"
