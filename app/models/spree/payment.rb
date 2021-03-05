@@ -154,8 +154,10 @@ module Spree
       return unless adjustment.try(:reload)
       return if adjustment.finalized?
 
-      adjustment.update_attribute(:eligible, false)
-      adjustment.finalize!
+      adjustment.update(
+        eligible: false,
+        state: "finalized"
+      )
     end
 
     def validate_source
