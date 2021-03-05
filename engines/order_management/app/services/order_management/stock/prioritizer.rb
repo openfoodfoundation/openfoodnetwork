@@ -3,42 +3,37 @@
 module OrderManagement
   module Stock
     class Prioritizer
-      attr_reader :packages, :order
+      attr_reader :package, :order
 
-      def initialize(order, packages, adjuster_class = OrderManagement::Stock::Adjuster)
+      def initialize(order, package, adjuster_class = OrderManagement::Stock::Adjuster)
         @order = order
-        @packages = packages
+        @package = package
         @adjuster_class = adjuster_class
       end
 
-      def prioritized_packages
-        adjust_packages
-        prune_packages
-        packages
+      def prioritized_package
+        adjust_package
+        return if package.blank?
+
+        package
       end
 
       private
 
-      def adjust_packages
+      def adjust_package
         order.line_items.each do |line_item|
           adjuster = @adjuster_class.new(line_item.variant, line_item.quantity, :on_hand)
 
-          visit_packages(adjuster)
+          visit_package(adjuster)
 
           adjuster.status = :backordered
-          visit_packages(adjuster)
+          visit_package(adjuster)
         end
       end
 
-      def visit_packages(adjuster)
-        packages.each do |package|
-          item = package.find_item adjuster.variant, adjuster.status
-          adjuster.adjust(item) if item
-        end
-      end
-
-      def prune_packages
-        packages.reject!(&:empty?)
+      def visit_package(adjuster)
+        item = package.find_item(adjuster.variant, adjuster.status)
+        adjuster.adjust(item) if item
       end
     end
   end

@@ -14,12 +14,12 @@ module OrderManagement
 
       subject { Coordinator.new(order) }
 
-      context "packages" do
+      context "package" do
         it "builds, prioritizes and estimates" do
-          expect(subject).to receive(:build_packages).ordered
-          expect(subject).to receive(:prioritize_packages).ordered
-          expect(subject).to receive(:estimate_packages).ordered
-          subject.packages
+          expect(subject).to receive(:build_package).ordered
+          expect(subject).to receive(:prioritize_package).ordered
+          expect(subject).to receive(:estimate_package).ordered
+          subject.package
         end
       end
     end

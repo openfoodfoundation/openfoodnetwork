@@ -4,11 +4,9 @@ require 'spree/order/checkout'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
-require 'concerns/order_shipment'
 
 module Spree
   class Order < ActiveRecord::Base
-    prepend OrderShipment
     include Checkout
 
     checkout_flow do
@@ -226,7 +224,7 @@ module Spree
     end
 
     def backordered?
-      shipments.any?(&:backordered?)
+      shipment&.backordered? || false
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
@@ -426,10 +424,8 @@ module Spree
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state
-      shipments.each do |shipment|
-        shipment.update!(self)
-        shipment.finalize!
-      end
+      shipment&.update!(self)
+      shipment&.finalize!
 
       updater.update_shipment_state
       updater.before_save_hook
@@ -535,20 +531,52 @@ module Spree
       )
     end
 
+    # The Spree 2 db model we use supports multiple shipments per order,
+    #   in OFN we have only one shipment per order.
+    # A shipment is associated to a shipping_method through a selected shipping_rate.
+    def shipment
+      return if shipments.blank?
+
+      shipments.first
+    end
+
+    # The shipping method of the shipment in the order
+    def shipping_method
+      return if shipment.blank?
+
+      shipment.shipping_method
+    end
+
+    # Finds the shipment's shipping_rate for the given shipping_method_id and selects that shipping_rate.
+    # If the selection is successful, it persists it in the database by saving the shipment.
+    # If it fails, it does not clear the current shipping_method selection.
+    #
+    # @return [ShippingMethod] the selected shipping method, or nil if the given shipping_method_id is
+    #   empty or if it cannot find the given shipping_method_id in the order
+    def select_shipping_method(shipping_method_id)
+      return if shipping_method_id.blank? || shipment.blank?
+
+      shipment = shipments.first
+
+      shipping_rate = shipment.shipping_rates.find_by(shipping_method_id: shipping_method_id)
+      return unless shipping_rate
+
+      shipment.selected_shipping_rate_id = shipping_rate.id
+      shipment.shipping_method
+    end
+
     def shipped?
       %w(partial shipped).include?(shipment_state)
     end
 
     # Does this order have shipments that can be shipped?
     def ready_to_ship?
-      shipments.any?(&:can_ship?)
+      shipment&.can_ship? || false
     end
 
     # Ship all pending orders
     def ship
-      shipments.each do |s|
-        s.ship if s.can_ship?
-      end
+      shipment.ship if ready_to_ship?
     end
 
     def line_item_variants
@@ -570,12 +598,10 @@ module Spree
       adjustments.shipping.delete_all
       shipments.destroy_all
 
-      packages = OrderManagement::Stock::Coordinator.new(self).packages
-      packages.each do |package|
-        shipments << package.to_shipment
-      end
+      package = OrderManagement::Stock::Coordinator.new(self).package
+      shipments << package.to_shipment
 
-      shipments
+      shipments #
     end
 
     # Clean shipments and make order back to address state
@@ -584,7 +610,7 @@ module Spree
     # to delivery again so that proper updated shipments are created.
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
-      return unless shipments.any?
+      return if shipment.blank?
 
       shipments.destroy_all
       update_columns(
@@ -594,7 +620,7 @@ module Spree
     end
 
     def refresh_shipment_rates
-      shipments.map(&:refresh_rates)
+      shipment.refresh_rates
     end
 
     # Check that line_items in the current order are available from a newly selected distribution
@@ -613,12 +639,10 @@ module Spree
 
     # After changing line items of a completed order
     def update_shipping_fees!
-      shipments.each do |shipment|
-        next if shipment.shipped?
+      return if shipment.blank? || shipment.shipped?
 
-        update_adjustment! shipment.adjustment if shipment.adjustment
-        save_or_rescue_shipment(shipment)
-      end
+      update_adjustment!(shipment.adjustment) if shipment.adjustment
+      save_or_rescue_shipment(shipment)
     end
 
     def save_or_rescue_shipment(shipment)
@@ -750,20 +774,20 @@ module Spree
     end
 
     def ensure_available_shipping_rates
-      return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
+      return unless shipment.blank? || shipment.shipping_rates.blank?
 
       errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
     end
 
     def after_cancel
-      shipments.each(&:cancel!)
+      shipment&.cancel!
 
       OrderMailer.cancel_email(id).deliver_later
       self.payment_state = 'credit_owed' unless shipped?
     end
 
     def after_resume
-      shipments.each(&:resume!)
+      shipment&.resume!
     end
 
     def use_billing?
