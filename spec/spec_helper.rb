@@ -51,11 +51,11 @@ Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[headless disable-gpu no-sandbox window-size=1280,768]
   )
-  options.add_preference(:download, default_directory: Capybara.save_path)
+  options.add_preference(:download, default_directory: Rails.root.join("tmp", "downloads").to_s)
 
   Capybara::Selenium::Driver
     .new(app, browser: :chrome, options: options)
-    .tap { |driver| driver.browser.download_path = Capybara.save_path }
+    .tap { |driver| driver.browser.download_path = Rails.root.join("tmp", "downloads").to_s }
 end
 
 Capybara.default_max_wait_time = 30
