@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles').factory('ExchangeProduct', ($resource) ->
-  ExchangeProductResource = $resource('/api/exchanges/:exchange_id/products.json', {}, {
+  ExchangeProductResource = $resource('/api/v0/exchanges/:exchange_id/products.json', {}, {
     'index': { method: 'GET' }
     'variant_count': { method: 'GET', params: { action_name: "variant_count" }}
   })

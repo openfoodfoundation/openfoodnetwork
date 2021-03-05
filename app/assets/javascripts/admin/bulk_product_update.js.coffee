@@ -147,7 +147,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     if confirm("Are you sure?")
       $http(
         method: "DELETE"
-        url: "/api/products/" + product.id
+        url: "/api/v0/products/" + product.id
       ).success (data) ->
         $scope.products.splice $scope.products.indexOf(product), 1
         DirtyProducts.deleteProduct product.id
@@ -162,7 +162,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         if confirm(t("are_you_sure"))
           $http(
             method: "DELETE"
-            url: "/api/products/" + product.permalink_live + "/variants/" + variant.id
+            url: "/api/v0/products/" + product.permalink_live + "/variants/" + variant.id
           ).success (data) ->
             $scope.removeVariant(product, variant)
     else

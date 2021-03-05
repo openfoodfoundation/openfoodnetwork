@@ -24,7 +24,7 @@ Darkswarm.controller "ProducerNodeCtrl", ($scope, HashNavigation, $anchorScroll,
     $scope.shopfront_loading = true
     $scope.toggle_tab(event)
 
-    $http.get("/api/shops/" + $scope.producer.id)
+    $http.get("/api/v0/shops/" + $scope.producer.id)
       .success (data) ->
         $scope.shopfront_loading = false
         $scope.producer = data

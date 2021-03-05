@@ -719,7 +719,7 @@ Style/FrozenStringLiteralComment:
     - 'engines/order_management/app/services/reports/renderers/base.rb'
     - 'engines/order_management/app/services/reports/report_data/base.rb'
     - 'engines/web/app/controllers/web/angular_templates_controller.rb'
-    - 'engines/web/app/controllers/web/api/cookies_consent_controller.rb'
+    - 'engines/web/app/controllers/web/api/v0/cookies_consent_controller.rb'
     - 'engines/web/app/controllers/web/application_controller.rb'
     - 'engines/web/app/helpers/web/cookies_policy_helper.rb'
     - 'engines/web/lib/web/cookies_consent.rb'

@@ -8,7 +8,7 @@ angular.module("ofn.admin").factory "ProductImageService", (FileUploader, SpreeA
       autoUpload: true
 
     configure: (product) =>
-      @imageUploader.url = "/api/product_images/#{product.id}"
+      @imageUploader.url = "/api/v0/product_images/#{product.id}"
       @imagePreview = product.image_url
       @imageUploader.onSuccessItem = (image, response) =>
         product.thumb_url = response.thumb_url
