@@ -1,0 +1,18 @@
+.joyride-tip-guide {
+  background: $color-3;
+  color: $white;
+  font-family: inherit;
+  font-weight: $font-weight-normal;
+  position: absolute;
+  z-index: 101;
+  padding: 5px 15px;
+
+  .joyride-nub.bottom {
+    border: 10px solid;
+    display: block;
+    height: 0;
+    position: absolute;
+    width: 0;
+  }
+}
+
