@@ -1246,6 +1246,9 @@ en:
     terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
+    platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}."
+      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:

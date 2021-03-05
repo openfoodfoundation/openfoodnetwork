@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module TermsAndConditionsHelper
+  def platform_terms_required?
+    Spree::Config.shoppers_require_tos
+  end
+
   def terms_and_conditions_activated?
     current_order.distributor.terms_and_conditions.file?
   end

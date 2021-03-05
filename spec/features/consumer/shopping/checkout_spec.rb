@@ -126,6 +126,10 @@ feature "As a consumer I want to check out my cart", js: true do
       it "doesn't show link to terms and conditions" do
         expect(page).to have_no_link("Terms and Conditions")
       end
+
+      it "doesn't show link to platform terms of service" do
+        expect(page).to have_no_link("Terms of Service")
+      end
     end
 
     context "when distributor has T&Cs" do
@@ -168,6 +172,21 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_button("Place order now", disabled: true)
           end
         end
+      end
+    end
+
+    context "when the platform's terms of service have to be accepted" do
+      let(:tos_url) { "https://example.org/tos" }
+
+      before do
+        allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
+        allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+      end
+
+      it "shows a link to the terms" do
+        visit checkout_path
+        expect(page).to have_link("Terms of Service", href: tos_url)
+        expect(find_link("Terms of Service")[:target]).to eq "_blank"
       end
     end
 
