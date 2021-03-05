@@ -3,7 +3,7 @@
     %a{ href: "#" }
       = t :orders_fees
 
-- checkout_line_item_adjustments(@order).each do |adjustment|
+- checkout_line_item_fees(@order).each do |adjustment|
   %tr.cart_adjustment
     %td{colspan: "3"}= adjustment.label
     %td.text-right= adjustment.display_amount.to_html
