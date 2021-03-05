@@ -63,6 +63,10 @@ module Spree
                 transition to: :awaiting_return
               end
 
+              event :restart_checkout do
+                transition to: :cart, unless: :completed?
+              end
+
               if states[:payment]
                 before_transition to: :complete do |order|
                   order.process_payments! if order.payment_required?
@@ -78,6 +82,7 @@ module Spree
               after_transition to: :delivery, do: :create_tax_charge!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
+              after_transition to: :payment, do: :charge_shipping_and_payment_fees!
             end
           end
 
