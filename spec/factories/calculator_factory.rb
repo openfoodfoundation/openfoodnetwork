@@ -25,4 +25,6 @@ FactoryBot.define do
       c.save!
     }
   end
+
+  factory :default_tax_calculator, class: Calculator::DefaultTax
 end

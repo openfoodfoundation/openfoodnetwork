@@ -679,15 +679,18 @@ describe Spree::Order do
 
   describe "getting the shipping tax" do
     let(:order) { create(:order) }
-    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member)) }
+    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+    let!(:shipping_method) { create(:shipping_method_with, :flat_rate, tax_category: shipping_tax_category) }
 
     context "with a taxed shipment" do
-      before do
-        allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-        allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
-      end
-
       let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+
+      before do
+        allow(order).to receive(:tax_zone) { shipping_tax_rate.zone }
+        order.reload
+        order.create_tax_charge!
+      end
 
       it "returns the shipping tax" do
         expect(order.shipping_tax).to eq(10)
@@ -720,11 +723,7 @@ describe Spree::Order do
   end
 
   describe "getting the total tax" do
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
-    end
-
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25) }
     let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
     let!(:shipment) do
@@ -733,15 +732,10 @@ describe Spree::Order do
     let(:enterprise_fee) { create(:enterprise_fee) }
 
     before do
-      create(
-        :adjustment,
-        order: order,
-        adjustable: order,
-        originator: enterprise_fee,
-        label: "EF",
-        amount: 123,
-        included_tax: 2
-      )
+      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123,
+                          included_tax: 2, order: order)
+      create(:adjustment, adjustable: shipment, source: shipment, originator: shipping_tax_rate,
+                          amount: 10, order: order, state: "closed")
       order.reload
     end
 
@@ -1085,22 +1079,30 @@ describe Spree::Order do
 
   describe "a completed order with shipping and transaction fees" do
     let(:distributor) { create(:distributor_enterprise_with_tax) }
-    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:zone) { create(:zone_with_member) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: zone) }
+    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+    let(:order) {
+      create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
+                                         payment_fee: payment_fee,
+                                         shipping_tax_category: shipping_tax_category)
+    }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
     let(:item_num) { order.line_items.length }
     let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
 
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = 0.25
+      order.reload
+      order.create_tax_charge!
 
       # Sanity check the fees
-      expect(order.all_adjustments.length).to eq 2
-      expect(order.shipment_adjustments.length).to eq 1
+      expect(order.adjustments.length).to eq 1
+      expect(order.shipment_adjustments.length).to eq 2
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
-      expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
+      expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
+      expect(order.shipment.included_tax_total).to eq 1.2
     end
 
     context "removing line_items" do
@@ -1109,7 +1111,8 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
-        expect(order.shipment.fee_adjustment.included_tax).to eq 0.6
+        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0.6
+        expect(order.shipment.included_tax_total).to eq 0.6
       end
 
       context "when finalized fee adjustments exist on the order" do
@@ -1128,7 +1131,8 @@ describe Spree::Order do
           # Check if fees got updated
           order.reload
           expect(order.adjustment_total).to eq expected_fees
-          expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
+          expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
+          expect(order.shipment.included_tax_total).to eq 1.2
         end
       end
     end
@@ -1141,7 +1145,8 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
-        expect(order.shipment.fee_adjustment.included_tax).to eq 0
+        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0
+        expect(order.shipment.included_tax_total).to eq 0
       end
     end
 
