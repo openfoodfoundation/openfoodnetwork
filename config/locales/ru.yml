@@ -2379,6 +2379,7 @@ ru:
   back_to_orders_list: "Назад к списку заказов"
   no_orders_found: "Заказов Не Найдено"
   order_information: "Информация по Заказу"
+  new_payment: "Новый Платёж"
   date_completed: "Дата Завершения"
   amount: "К оплате"
   state_names:
@@ -2937,10 +2938,11 @@ ru:
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"
     add_product: "Добавить Товар"
     name_or_sku: "Название или SKU (введите как минимум первые 4 символа названия товара)"
-    resend: Отправить Снова
-    back_to_orders_list: Назад В Список Заказов
-    return_authorizations: Разрешения на возврат
-    cannot_create_returns: Невозможно создать возврат, так как в этом заказе нет отправленных единиц.
+    resend: "Отправить Снова"
+    back_to_orders_list: "Назад В Список Заказов"
+    back_to_payments_list: "Вернуться К Списку Платежей"
+    return_authorizations: "Разрешения на возврат"
+    cannot_create_returns: "Невозможно создать возврат, так как в этом заказе нет отправленных единиц."
     select_stock: "Выбрать склад"
     location: "Местоположение"
     count_on_hand: "В наличии"
@@ -3508,6 +3510,7 @@ ru:
       pending: в ожидании
       ready: готов
       shipped: отправлен
+      canceled: отменен
     payment_states:
       balance_due: задолжность
       completed: завершён
