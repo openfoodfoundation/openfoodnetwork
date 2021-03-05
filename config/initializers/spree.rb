@@ -22,10 +22,6 @@ Spree.config do |config|
   config.address_requires_state = true
   config.admin_interface_logo = '/default_images/ofn-logo.png'
 
-  # -- spree_paypal_express
-  # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
-  config.auto_capture = true
-
   # S3 settings
   config.s3_bucket = ENV['S3_BUCKET'] if ENV['S3_BUCKET']
   config.s3_access_key = ENV['S3_ACCESS_KEY'] if ENV['S3_ACCESS_KEY']

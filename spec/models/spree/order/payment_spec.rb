@@ -9,9 +9,6 @@ module Spree
     let(:bogus) { create(:bogus_payment_method, distributors: [create(:enterprise)]) }
 
     before do
-      # So that Payment#purchase! is called during processing
-      Spree::Config[:auto_capture] = true
-
       allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
       allow(order).to receive_messages total: 100
     end

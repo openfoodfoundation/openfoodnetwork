@@ -81,17 +81,9 @@ describe Spree::Payment do
       end
 
       context "#process!" do
-        it "should purchase if with auto_capture" do
+        it "should call purchase!" do
           payment = build_stubbed(:payment, payment_method: gateway)
-          expect(payment.payment_method).to receive(:auto_capture?).and_return(true)
           expect(payment).to receive(:purchase!)
-          payment.process!
-        end
-
-        it "should authorize without auto_capture" do
-          payment = build_stubbed(:payment, payment_method: gateway)
-          expect(payment.payment_method).to receive(:auto_capture?).and_return(false)
-          expect(payment).to receive(:authorize!)
           payment.process!
         end
 

@@ -6,22 +6,14 @@ module Spree
       def process!
         return unless validate!
 
-        if payment_method.auto_capture?
-          purchase!
-        else
-          authorize!
-        end
+        purchase!
       end
 
       def process_offline!
         return unless validate!
         return if authorization_action_required?
 
-        if payment_method.auto_capture?
-          charge_offline!
-        else
-          authorize!
-        end
+        charge_offline!
       end
 
       def authorize!(return_url = nil)

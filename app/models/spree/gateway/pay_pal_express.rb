@@ -31,10 +31,6 @@ module Spree
         provider_class.new
       end
 
-      def auto_capture?
-        true
-      end
-
       def method_type
         'paypal'
       end
