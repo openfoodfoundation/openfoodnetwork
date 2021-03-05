@@ -29,11 +29,15 @@ class OrderAdjustmentsFetcher
     sum_adjustments "shipping"
   end
 
-  def line_item_adjustments(line_item)
+  def line_item_fees(line_item)
     if adjustments_eager_loaded?
-      adjustments.select{ |adjustment| adjustment.source_id == line_item.id }
+      adjustments.select do |adjustment|
+        adjustment.source_type == 'Spree::LineItem' &&
+          adjustment.source_id == line_item.id &&
+          adjustment.originator_type == 'EnterpriseFee'
+      end
     else
-      adjustments.where(source_id: line_item.id)
+      adjustments.enterprise_fee.where(source_type: 'Spree::LineItem', source_id: line_item.id)
     end
   end
 
@@ -42,7 +46,7 @@ class OrderAdjustmentsFetcher
   attr_reader :order
 
   def adjustments
-    order.adjustments
+    order.all_adjustments
   end
 
   def adjustments_eager_loaded?
