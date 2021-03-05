@@ -90,17 +90,13 @@ module Spree
 
       included = included_in_price && default_zone_or_zone_match?(order)
 
-      if amount.negative?
-        label = "#{Spree.t(:refund)} #{create_label}"
-      end
-
       self.adjustments.create!(
         {
           adjustable: item,
           source: item,
           amount: amount,
           order: order,
-          label: label || create_label,
+          label: create_label(amount),
           included: included
         }
       )
@@ -145,8 +141,9 @@ module Spree
 
     private
 
-    def create_label
+    def create_label(amount)
       label = ""
+      label << "#{Spree.t(:refund)} " if amount.negative?
       label << "#{(name.presence || tax_category.name)} "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
