@@ -36,8 +36,7 @@ module Spree
               order: order_object_for(adjustable),
               label: label,
               mandatory: mandatory,
-              state: state,
-              included: tax_included?(self, adjustable)
+              state: state
             }
 
             if adjustable.respond_to?(:adjustments)
@@ -64,15 +63,6 @@ module Spree
           private_class_method :spree_calculators
 
           private
-
-          # Used for setting the #included boolean on tax adjustments. This will be removed in a
-          # later step, as the responsibility for creating all adjustments related to tax will be
-          # moved into the Spree::TaxRate class.
-          def tax_included?(originator, target)
-            originator.is_a?(Spree::TaxRate) &&
-              originator.included_in_price &&
-              originator.default_zone_or_zone_match?(order_object_for(target))
-          end
 
           def order_object_for(target)
             # Temporary method for adjustments transition.
