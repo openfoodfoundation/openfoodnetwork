@@ -118,7 +118,6 @@ module Spree
 
     # Tax Preferences
     preference :products_require_tax_category, :boolean, default: false
-    preference :shipping_tax_rate, :decimal, default: 0
 
     # Monitoring
     preference :last_job_queue_heartbeat_at, :string, default: nil

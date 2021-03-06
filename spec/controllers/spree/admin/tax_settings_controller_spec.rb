@@ -9,7 +9,6 @@ describe Spree::Admin::TaxSettingsController, type: :controller do
         preferences: {
           products_require_tax_category: "1",
           shipment_inc_vat: "0",
-          shipping_tax_rate: "0.1",
         }
       }
     }
@@ -25,13 +24,11 @@ describe Spree::Admin::TaxSettingsController, type: :controller do
         [
           Spree::Config[:products_require_tax_category],
           Spree::Config[:shipment_inc_vat],
-          Spree::Config[:shipping_tax_rate],
         ]
       }.to(
         [
           true,
           false,
-          0.1,
         ]
       )
     end

@@ -16,8 +16,7 @@ module Spree
       def preferences_params
         params.require(:preferences).permit(
           :products_require_tax_category,
-          :shipment_inc_vat,
-          :shipping_tax_rate,
+          :shipment_inc_vat
         )
       end
     end
