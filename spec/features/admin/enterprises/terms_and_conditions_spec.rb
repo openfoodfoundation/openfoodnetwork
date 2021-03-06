@@ -44,7 +44,8 @@ feature "Uploading Terms and Conditions PDF" do
         # Add PDF
         attach_file "enterprise[terms_and_conditions]", white_pdf_file_name
 
-        Timecop.freeze(run_time = Time.zone.local(2002, 4, 13, 0, 0, 0)) do
+        time = Time.zone.local(2002, 4, 13, 0, 0, 0)
+        Timecop.freeze(run_time = time) do
           click_button "Update"
           expect(distributor.reload.terms_and_conditions_updated_at).to eq run_time
         end
@@ -53,7 +54,7 @@ feature "Uploading Terms and Conditions PDF" do
 
         go_to_business_details
         expect(page).to have_selector "a[href*='logo-white.pdf'][target=\"_blank\"]"
-        expect(page).to have_content "2002-04-13 00:00:00 +1000"
+        expect(page).to have_content time.strftime("%F %T %Z")
 
         # Replace PDF
         attach_file "enterprise[terms_and_conditions]", black_pdf_file_name
