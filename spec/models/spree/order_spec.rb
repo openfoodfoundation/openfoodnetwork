@@ -736,7 +736,7 @@ describe Spree::Order do
                           included_tax: 2, order: order)
       create(:adjustment, adjustable: shipment, source: shipment, originator: shipping_tax_rate,
                           amount: 10, order: order, state: "closed")
-      order.reload
+      order.update!
     end
 
     it "returns a sum of all tax on the order" do
@@ -1097,7 +1097,7 @@ describe Spree::Order do
       order.create_tax_charge!
 
       # Sanity check the fees
-      expect(order.adjustments.length).to eq 1
+      expect(order.all_adjustments.length).to eq 3
       expect(order.shipment_adjustments.length).to eq 2
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
