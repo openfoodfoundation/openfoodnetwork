@@ -381,7 +381,7 @@ module Spree
     end
 
     def ship_total
-      adjustments.shipping.sum(:amount)
+      all_adjustments.shipping.sum(:amount)
     end
 
     def tax_total

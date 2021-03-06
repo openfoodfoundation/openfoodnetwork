@@ -12,7 +12,7 @@ describe Spree::Order do
 
     context "#ship_total" do
       it "should return the correct amount" do
-        allow(order).to receive_message_chain :adjustments, shipping: adjustments
+        allow(order).to receive_message_chain :all_adjustments, shipping: adjustments
         expect(order.ship_total).to eq 15
       end
     end
