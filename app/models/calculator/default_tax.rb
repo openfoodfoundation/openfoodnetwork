@@ -79,14 +79,10 @@ module Calculator
     end
 
     def compute_shipment_or_line_item(item)
-      if item.tax_category == rate.tax_category
-        if rate.included_in_price
-          deduced_total_by_rate(item.amount, rate)
-        else
-          round_to_two_places(item.amount * rate.amount)
-        end
+      if rate.included_in_price
+        deduced_total_by_rate(item.amount, rate)
       else
-        0
+        round_to_two_places(item.amount * rate.amount)
       end
     end
     alias_method :compute_shipment, :compute_shipment_or_line_item
