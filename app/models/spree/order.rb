@@ -220,11 +220,6 @@ module Spree
       total.to_f > 0.0 && !skip_payment_for_subscription?
     end
 
-    # Indicates the number of items in the order
-    def item_count
-      line_items.inject(0) { |sum, li| sum + li.quantity }
-    end
-
     def backordered?
       shipments.any?(&:backordered?)
     end
