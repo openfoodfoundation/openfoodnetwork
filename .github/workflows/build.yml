@@ -129,7 +129,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run admin feature tests
-        run: bundle exec rspec spec/features/admin/*_spec.rb
+        run: bundle exec rspec --profile -- spec/features/admin/*_spec.rb
 
   test-admin-features-folders:
     runs-on: ubuntu-18.04
@@ -170,7 +170,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run admin feature tests
-        run: bundle exec rspec --pattern "spec/features/admin/*/*_spec.rb"
+        run: bundle exec rspec --profile --pattern "spec/features/admin/*/*_spec.rb"
 
   test-consumer-features:
     runs-on: ubuntu-18.04
@@ -211,7 +211,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run consumer feature tests
-        run: bundle exec rspec spec/features/consumer
+        run: bundle exec rspec --profile -- spec/features/consumer
 
   test-controllers:
     runs-on: ubuntu-18.04
