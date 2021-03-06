@@ -177,22 +177,38 @@ module Spree
         let!(:zone)        { create(:zone_with_member) }
         let!(:order)       { create(:order, bill_address: create(:address)) }
         let!(:line_item)   { create(:line_item, order: order) }
-        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1)) }
+        let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
+        let(:tax_rate)     { create(:tax_rate, included_in_price: true, amount: 0.10) }
         let(:adjustment)   { line_item.adjustments.reload.first }
 
         before do
           order.reload
-          tax_rate.adjust(order)
+          tax_rate.adjust(order, line_item)
         end
 
-        it "has tax included" do
-          expect(adjustment.amount).to be_positive
-          expect(adjustment.included).to be true
+        context "when the tax rate is inclusive" do
+          it "has 10% inclusive tax correctly recorded" do
+            amount = line_item.amount - (line_item.amount / (1 + tax_rate.amount))
+            rounded_amount = tax_rate.calculator.__send__(:round_to_two_places, amount)
+            expect(adjustment.amount).to eq rounded_amount
+            expect(adjustment.amount).to eq 0.91
+            expect(adjustment.included).to be true
+          end
+
+          it "does not crash when order data has been updated previously" do
+            order.line_item_adjustments.first.destroy
+            tax_rate.adjust(order, line_item)
+          end
         end
 
-        it "does not crash when order data has been updated previously" do
-          order.line_item_adjustments.first.destroy
-          tax_rate.adjust(order)
+        context "when the tax rate is additional" do
+          let(:tax_rate) { create(:tax_rate, included_in_price: false, amount: 0.10) }
+
+          it "has 10% added tax correctly recorded" do
+            expect(adjustment.amount).to eq line_item.amount * tax_rate.amount
+            expect(adjustment.amount).to eq 1.0
+            expect(adjustment.included).to be false
+          end
         end
       end
 
@@ -248,30 +264,7 @@ module Spree
           context "when the shipment has an added tax rate" do
             let(:inclusive_tax) { false }
 
-            # Current behaviour. Will be replaced by the pending test below
-            it "records the tax on the order's adjustments" do
-              order.shipments = [shipment]
-              order.create_tax_charge!
-              order.update_totals
-
-              expect(order.shipment_adjustments.tax.count).to be_zero
-
-              # Finding the added tax for an amount:
-              # total * rate
-              # 50    * 0.25
-              # = 12.5
-              expect(order.adjustments.tax.first.amount).to eq(12.50)
-              expect(order.adjustments.tax.first.included).to eq false
-
-              expect(shipment.reload.cost).to eq(50)
-              expect(shipment.included_tax_total).to eq(0)
-              expect(shipment.additional_tax_total).to eq(0)
-
-              expect(order.included_tax_total).to eq(0)
-              expect(order.additional_tax_total).to eq(12.50)
-            end
-
-            xit "records the tax on the shipment's adjustments" do
+            it "records the tax on the shipment's adjustments" do
               order.shipments = [shipment]
               order.create_tax_charge!
               order.update_totals
