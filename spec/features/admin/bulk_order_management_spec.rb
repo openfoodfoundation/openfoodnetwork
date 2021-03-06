@@ -455,10 +455,11 @@ feature '
       end
 
       it "displays date fields for filtering orders, with default values set" do
-        one_week_ago = Time.zone.today - 8.days
-
-        expect(page).to have_field "start_date_filter", with: one_week_ago.strftime("%F")
-        expect(page).to have_field "end_date_filter", with: 1.day.ago.strftime("%F")
+        # use Date.current since Date.today is without timezone
+        today = Time.zone.today
+        one_week_ago = today.prev_day(7).strftime("%F")
+        expect(page).to have_field "start_date_filter", with: one_week_ago
+        expect(page).to have_field "end_date_filter", with: today.strftime("%F")
       end
 
       it "only loads line items whose orders meet the date restriction criteria" do
