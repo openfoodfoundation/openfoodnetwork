@@ -387,16 +387,11 @@ feature '
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.1 }
-    end
-
     describe "with adjustments" do
       let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
       let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-      let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
+      let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
       let!(:adj_fee1) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
       let!(:adj_fee2) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
       let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
@@ -404,8 +399,8 @@ feature '
 
       before do
         order1.update_attribute :email, 'customer@email.com'
+        order1.shipment.update_columns(included_tax_total: 10.06)
         Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
-
         login_as_admin_and_visit spree.admin_reports_path
 
         click_link 'Xero Invoices'
