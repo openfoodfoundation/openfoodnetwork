@@ -39,7 +39,7 @@ describe "Zones" do
     expect(page).to have_content("successfully created!")
   end
 
-  scenario "edit existing zone", js: true do
+  scenario "edit existing zone" do
     zone = create(:zone_with_member)
     visit spree.edit_admin_zone_path(zone.id)
 
