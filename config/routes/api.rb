@@ -79,6 +79,6 @@ Openfoodnetwork::Application.routes.draw do
       end
     end
 
-    match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v0).+/ }
+    match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v[0-9]).+/ }
   end
 end
