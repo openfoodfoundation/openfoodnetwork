@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210228223114) do
+ActiveRecord::Schema.define(version: 20210307175741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -496,15 +496,18 @@ ActiveRecord::Schema.define(version: 20210228223114) do
   create_table "spree_line_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                                 null: false
-    t.decimal  "price",                           precision: 10, scale: 2, null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.integer  "quantity",                                                                null: false
+    t.decimal  "price",                            precision: 10, scale: 2,               null: false
+    t.datetime "created_at",                                                              null: false
+    t.datetime "updated_at",                                                              null: false
     t.integer  "max_quantity"
-    t.string   "currency",            limit: 255
-    t.decimal  "distribution_fee",                precision: 10, scale: 2
-    t.decimal  "final_weight_volume",             precision: 10, scale: 2
+    t.string   "currency",             limit: 255
+    t.decimal  "distribution_fee",                 precision: 10, scale: 2
+    t.decimal  "final_weight_volume",              precision: 10, scale: 2
     t.integer  "tax_category_id"
+    t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "included_tax_total",               precision: 10, scale: 2, default: 0.0, null: false
   end
 
   add_index "spree_line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
