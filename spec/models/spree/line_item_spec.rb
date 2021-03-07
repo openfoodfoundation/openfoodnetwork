@@ -7,13 +7,24 @@ module Spree
     let(:order) { create :order_with_line_items, line_items_count: 1 }
     let(:line_item) { order.line_items.first }
 
-    context '#save' do
-      it 'should update inventory, totals, and tax' do
-        # Regression check for Spree #1481
-        expect(line_item.order).to receive(:create_tax_charge!)
-        expect(line_item.order).to receive(:update!)
-        line_item.quantity = 2
-        line_item.save
+    context "#save" do
+      context "line item changes" do
+        before do
+          line_item.quantity = line_item.quantity + 1
+        end
+
+        it "triggers adjustment total recalculation" do
+          expect(line_item).to receive(:update_tax_charge) # Regression test for Spree #4671
+          expect(line_item).to receive(:recalculate_adjustments)
+          line_item.save
+        end
+      end
+
+      context "line item does not change" do
+        it "does not trigger adjustment total recalculation" do
+          expect(line_item).to_not receive(:recalculate_adjustments)
+          line_item.save
+        end
       end
     end
 
