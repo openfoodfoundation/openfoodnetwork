@@ -137,6 +137,13 @@ module Spree
       state != "open"
     end
 
+    def tax_category
+      return unless originator_type == 'EnterpriseFee'
+      return adjustable.tax_category if originator.inherits_tax_category && adjustable_type != 'Spree::Order'
+
+      originator.tax_category
+    end
+
     def set_included_tax!(rate)
       tax = amount - (amount / (1 + rate))
       set_absolute_included_tax! tax
