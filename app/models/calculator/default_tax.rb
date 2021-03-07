@@ -17,6 +17,8 @@ module Calculator
         compute_shipment(computable)
       when Spree::LineItem
         compute_line_item(computable)
+      when Spree::Adjustment
+        compute_adjustment(computable)
       end
     end
 
@@ -88,6 +90,14 @@ module Calculator
     end
     alias_method :compute_shipment, :compute_shipment_or_line_item
     alias_method :compute_line_item, :compute_shipment_or_line_item
+
+    def compute_adjustment(fee)
+      if rate.included_in_price
+        deduced_total_by_rate(fee.amount, rate)
+      else
+        round_to_two_places(fee.amount * rate.amount)
+      end
+    end
 
     def round_to_two_places(amount)
       BigDecimal(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
