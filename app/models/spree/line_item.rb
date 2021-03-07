@@ -35,10 +35,11 @@ module Spree
     before_save :update_inventory
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
-    after_save :update_order
     after_save :update_units
+    after_save :update_adjustments
+    after_create :update_tax_charge
+
     before_destroy :update_inventory_before_destroy
-    after_destroy :update_order
 
     delegate :product, :unit_description, :display_name, to: :variant
 
@@ -238,12 +239,19 @@ module Spree
       Spree::OrderInventory.new(order).verify(self, target_shipment)
     end
 
-    def update_order
-      return unless changed? || destroyed?
+    def update_adjustments
+      return unless quantity_changed?
 
-      # update the order totals, etc.
-      order.create_tax_charge!
-      order.update!
+      update_tax_charge
+      recalculate_adjustments
+    end
+
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
+    end
+
+    def update_tax_charge
+      Spree::TaxRate.adjust(order, [self])
     end
 
     def update_inventory_before_destroy
