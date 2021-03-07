@@ -21,10 +21,9 @@ class OrderTaxAdjustmentsFetcher
 
   def all
     tax_adjustments = order.all_adjustments.tax
-    enterprise_fees_with_tax = order.all_adjustments.enterprise_fee.with_tax
     admin_adjustments_with_tax = order.all_adjustments.admin.with_tax
 
-    tax_adjustments.or(enterprise_fees_with_tax).or(admin_adjustments_with_tax)
+    tax_adjustments.or(admin_adjustments_with_tax)
   end
 
   def tax_rates_hash(adjustment)
@@ -49,9 +48,8 @@ class OrderTaxAdjustmentsFetcher
   end
 
   def no_tax_adjustments?(adjustment)
-    # Enterprise Fees and Admin Adjustments currently do not have tax adjustments.
+    # Admin Adjustments currently do not have tax adjustments.
     # The tax amount is stored in the included_tax attribute.
-    adjustment.originator_type == "EnterpriseFee" ||
-      adjustment.originator_type.nil?
+    adjustment.originator_type.nil?
   end
 end
