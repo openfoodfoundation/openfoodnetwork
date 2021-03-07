@@ -95,6 +95,7 @@ module Spree
       credit.save
 
       order.return if inventory_units.all?(&:returned?)
+      order.update!
     end
 
     def allow_receive?
