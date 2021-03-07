@@ -55,7 +55,7 @@ describe Spree::Order do
       end
 
       it "adjusts tax rates when transitioning to payment" do
-        expect(Spree::TaxRate).to receive(:adjust)
+        expect(Spree::TaxRate).to receive(:adjust).at_least(:once)
         order.next!
       end
     end

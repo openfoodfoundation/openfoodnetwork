@@ -35,10 +35,12 @@ module Spree
     # So we don't need the option `dependent: :destroy` as long as
     # AdjustmentMetadata has no destroy logic itself.
     has_one :metadata, class_name: 'AdjustmentMetadata'
+    has_many :adjustments, as: :adjustable, dependent: :destroy
 
     belongs_to :adjustable, polymorphic: true
     belongs_to :originator, -> { with_deleted }, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
                foreign_key: 'originator_id'
