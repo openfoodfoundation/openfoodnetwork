@@ -63,18 +63,6 @@ module Spree
       end
     end
 
-    context "#save" do
-      it "should call order#update!" do
-        adjustment = Spree::Adjustment.new(
-          adjustable: order,
-          amount: 10,
-          label: "Foo"
-        )
-        expect(order).to receive(:update!)
-        adjustment.save
-      end
-    end
-
     context "adjustment state" do
       let(:adjustment) { create(:adjustment, state: 'open') }
 

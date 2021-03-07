@@ -47,9 +47,6 @@ module Spree
     validates :label, presence: true
     validates :amount, numericality: true
 
-    after_save :update_adjustable
-    after_destroy :update_adjustable
-
     state_machine :state, initial: :open do
       event :close do
         transition from: :open, to: :closed
@@ -144,29 +141,11 @@ module Spree
       included_tax.positive?
     end
 
-    def self.without_callbacks
-      skip_callback :save, :after, :update_adjustable
-      skip_callback :destroy, :after, :update_adjustable
-
-      result = yield
-    ensure
-      set_callback :save, :after, :update_adjustable
-      set_callback :destroy, :after, :update_adjustable
-
-      result
-    end
-
     # Allow accessing soft-deleted originator objects
     def originator
       return if originator_type.blank?
 
       originator_type.constantize.unscoped { super }
-    end
-
-    private
-
-    def update_adjustable
-      adjustable.update! if adjustable.is_a? Order
     end
   end
 end
