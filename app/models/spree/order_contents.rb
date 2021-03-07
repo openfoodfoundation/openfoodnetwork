@@ -46,7 +46,7 @@ module Spree
       end
 
       line_item.save
-      order.reload
+      update_totals
       line_item
     end
 
@@ -61,8 +61,13 @@ module Spree
         line_item.save!
       end
 
-      order.reload
+      update_totals
       line_item
+    end
+
+    def update_totals
+      order.update!
+      order.reload
     end
   end
 end
