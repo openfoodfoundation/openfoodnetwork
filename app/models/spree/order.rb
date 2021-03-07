@@ -393,6 +393,7 @@ module Spree
     def create_tax_charge!
       Spree::TaxRate.adjust(self, line_items)
       Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      Spree::TaxRate.adjust(self, all_adjustments.enterprise_fee)
     end
 
     def outstanding_balance
