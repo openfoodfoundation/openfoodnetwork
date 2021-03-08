@@ -39,10 +39,6 @@ module Balance
     !outstanding_balance.zero?
   end
 
-  def new_outstanding_balance?
-    !new_outstanding_balance.zero?
-  end
-
   # This method is the one we're gradually replacing with `#display_new_outstanding_balance`. See
   # #outstanding_balance for details.
   def display_outstanding_balance

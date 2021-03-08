@@ -57,7 +57,7 @@ end
 
 shared_examples 'new outstanding balance rendering' do
   context 'when the order has outstanding balance' do
-    before { allow(order).to receive(:new_outstanding_balance?) { true } }
+    before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
     it 'calls #display_new_outstanding_balance' do
       expect(order).to receive(:display_new_outstanding_balance) { '$123' }
@@ -66,7 +66,7 @@ shared_examples 'new outstanding balance rendering' do
   end
 
   context 'when the order has no outstanding balance' do
-    before { allow(order).to receive(:new_outstanding_balance?) { false } }
+    before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
     it 'does not call #display_outstanding_balance' do
       expect(order).not_to receive(:display_new_outstanding_balance)
@@ -84,7 +84,7 @@ shared_examples 'new outstanding balance view rendering' do
   context 'when the order has outstanding balance' do
     let(:user) { order.user }
 
-    before { allow(order).to receive(:new_outstanding_balance?) { true } }
+    before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
     it 'calls #display_new_outstanding_balance' do
       expect(order).to receive(:display_new_outstanding_balance) { '$123' }
@@ -96,7 +96,7 @@ shared_examples 'new outstanding balance view rendering' do
   context 'when the order has no outstanding balance' do
     let(:user) { order.user }
 
-    before { allow(order).to receive(:new_outstanding_balance?) { false } }
+    before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
     it 'does not call #display_outstanding_balance' do
       expect(order).not_to receive(:display_new_outstanding_balance)
