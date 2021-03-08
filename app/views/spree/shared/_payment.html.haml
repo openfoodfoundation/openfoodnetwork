@@ -1,26 +1,15 @@
 %p.callout
   %span{:style => "float:right;"}
     - balance = OrderBalance.new(@order)
-    - if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @order.user)
-      - if !balance.zero?
-        = balance.state
-        \:
-        %strong= balance.amount
-      - else
-        - if @order.paid?
-          = t :email_payment_paid
-        - else
-          = t :email_payment_not_paid
+    - if !balance.zero?
+      = balance.state
+      \:
+      %strong= balance.amount
     - else
-      - if !balance.zero?
-        = balance.state
-        \:
-        %strong= balance.amount
+      - if @order.paid?
+        = t :email_payment_paid
       - else
-        - if @order.paid?
-          = t :email_payment_paid
-        - else
-          = t :email_payment_not_paid
+        = t :email_payment_not_paid
   %strong
     = t :email_payment_summary
 - if @order.payments.any?
