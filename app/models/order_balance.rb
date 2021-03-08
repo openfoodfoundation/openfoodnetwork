@@ -13,6 +13,10 @@ class OrderBalance
     Spree::Money.new(outstanding_balance, currency: order.currency)
   end
 
+  def zero?
+    outstanding_balance.zero?
+  end
+
   private
 
   attr_reader :order

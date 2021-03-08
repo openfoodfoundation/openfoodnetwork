@@ -2,7 +2,7 @@
   %span{:style => "float:right;"}
     - balance = OrderBalance.new(@order)
     - if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @order.user)
-      - if !@order.new_outstanding_balance.zero?
+      - if !balance.zero?
         = balance.state
         \:
         %strong= balance.amount
@@ -12,7 +12,7 @@
         - else
           = t :email_payment_not_paid
     - else
-      - if !@order.outstanding_balance.zero?
+      - if !balance.zero?
         = balance.state
         \:
         %strong= balance.amount
