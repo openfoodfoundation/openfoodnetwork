@@ -14,7 +14,7 @@
       - if !@order.outstanding_balance.zero?
         = @order.outstanding_balance.negative? ? t(:credit_owed) : t(:balance_due)
         \:
-        %strong= @order.display_outstanding_balance
+        %strong= Spree::Money.new(@order.outstanding_balance, currency: @order.currency)
       - else
         - if @order.paid?
           = t :email_payment_paid
