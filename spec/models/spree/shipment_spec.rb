@@ -442,7 +442,7 @@ describe Spree::Shipment do
 
   context "update_order" do
     it "should update order" do
-      expect(order).to receive(:update!)
+      expect(order).to receive_message_chain(:reload, :update!)
       shipment.__send__(:update_order)
     end
   end
