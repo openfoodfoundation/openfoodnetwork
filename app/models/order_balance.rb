@@ -18,6 +18,10 @@ class OrderBalance
   attr_reader :order
 
   def outstanding_balance
-    order.outstanding_balance
+    if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, order.user)
+      order.new_outstanding_balance
+    else
+      order.outstanding_balance
+    end
   end
 end
