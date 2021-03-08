@@ -62,7 +62,7 @@ module VariantUnits
     end
 
     def scale_for_unit_value
-      VariantUnits::WeightsAndMeasures.new(@variant).scale_for_unit_value
+      WeightsAndMeasures.new(@variant).scale_for_unit_value
     end
 
     def pluralize(unit_name, count)
