@@ -12,11 +12,6 @@ shared_examples 'outstanding balance rendering' do
   context 'when the order has no outstanding balance' do
     before { allow(order).to receive(:outstanding_balance) { 0 } }
 
-    it 'renders the amount as money' do
-      # calling #body triggers the Mail instance rendering
-      email.body
-    end
-
     it 'displays the payment status' do
       expect(email.body).to include(I18n.t(:email_payment_not_paid))
     end
@@ -62,11 +57,6 @@ shared_examples 'new outstanding balance rendering' do
 
   context 'when the order has no outstanding balance' do
     before { allow(order).to receive(:new_outstanding_balance) { 0 } }
-
-    it 'renders the amount as money' do
-      # calling #body triggers the Mail instance rendering
-      email.body
-    end
 
     it 'displays the payment status' do
       expect(email.body).to include(I18n.t(:email_payment_not_paid))
