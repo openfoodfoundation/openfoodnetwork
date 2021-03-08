@@ -2884,6 +2884,7 @@ en_FR:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
+    back_to_payments_list: "Back To Payments List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -3453,6 +3454,7 @@ en_FR:
       pending: pending
       ready: ready
       shipped: shipped
+      canceled: canceled
     payment_states:
       balance_due: balance due
       completed: completed
