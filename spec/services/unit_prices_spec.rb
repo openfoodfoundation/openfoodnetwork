@@ -41,7 +41,7 @@ describe UnitPrices do
         allow(product).to receive(:variant_unit_name) { nil }
         allow(product).to receive(:variant_unit_scale) { nil }
         allow(product).to receive(:variant_unit) { "items" }
-        expect(subject.unit).to eq("item")
+        expect(subject.unit).to eq("Item")
       end
 
       it "returns the unit if a unit is specified" do
