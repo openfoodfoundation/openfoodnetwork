@@ -2913,6 +2913,7 @@ fr:
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
+    back_to_payments_list: "Retour à la liste des paiements"
     return_authorizations: "Autorisations de retours"
     cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"
@@ -3482,6 +3483,7 @@ fr:
       pending: en attente
       ready: prêt
       shipped: envoyé
+      canceled: annulé
     payment_states:
       balance_due: solde dû
       completed: effectué
