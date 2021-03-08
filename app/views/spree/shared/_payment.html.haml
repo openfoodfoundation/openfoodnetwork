@@ -2,7 +2,7 @@
   %span{:style => "float:right;"}
     - if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @order.user)
       - if @order.new_outstanding_balance?
-        = outstanding_balance_label(@order)
+        = @order.new_outstanding_balance.negative? ? t(:credit_owed) : t(:balance_due)
         \:
         %strong= @order.display_new_outstanding_balance
       - else
