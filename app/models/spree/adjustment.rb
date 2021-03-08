@@ -87,16 +87,6 @@ module Spree
 
     localize_number :amount
 
-    # Update the boolean _eligible_ attribute which determines which adjustments
-    # count towards the order's adjustment_total.
-    def set_eligibility
-      result = mandatory || amount != 0
-      update_columns(
-        eligible: result,
-        updated_at: Time.zone.now
-      )
-    end
-
     # Update both the eligibility and amount of the adjustment. Adjustments
     # delegate updating of amount to their Originator when present, but only if
     # +locked+ is false. Adjustments that are +locked+ will never change their amount.
@@ -119,7 +109,6 @@ module Spree
       # the order object. After calling a reload, the source is the Shipment.
       reload
       originator.update_adjustment(self, calculable || source) if originator.present?
-      set_eligibility
     end
 
     def currency
