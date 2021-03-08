@@ -33,7 +33,7 @@ module Spree
 
         invoke_callbacks(:update, :before)
 
-        if @payment_method['type'].to_s != payment_method_class
+        if @payment_method.type.to_s != payment_method_class
           @payment_method.update_columns(
             type: payment_method_class,
             updated_at: Time.zone.now
@@ -97,7 +97,7 @@ module Spree
       private
 
       def payment_method_class
-        base_params.delete(:type)
+        @payment_method_class ||= base_params.delete(:type)
       end
 
       def force_environment

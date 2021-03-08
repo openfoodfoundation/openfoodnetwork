@@ -81,6 +81,23 @@ module Spree
           expect(payment_method.calculator.preferred_amount).to eq 456
           expect(payment_method.calculator.preferred_currency).to eq "GBP"
         end
+
+        context "when the given payment method type does not match" do
+          let(:params) {
+            {
+              id: payment_method.id,
+              payment_method: {
+                type: "Spree::Gateway::Bogus"
+              }
+            }
+          }
+
+          it "updates the payment method type" do
+            spree_post :update, params
+
+            expect(PaymentMethod.find(payment_method.id).type).to eq "Spree::Gateway::Bogus"
+          end
+        end
       end
 
       context "on a StripeConnect payment method" do
