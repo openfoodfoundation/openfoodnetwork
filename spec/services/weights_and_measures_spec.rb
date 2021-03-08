@@ -5,7 +5,7 @@ require 'spec_helper'
 describe WeightsAndMeasures do
   subject { WeightsAndMeasures.new(variant) }
   let(:variant) { Spree::Variant.new }
-  let(:product) { double }
+  let(:product) { instance_double(Spree::Product) }
 
   before do
     allow(variant).to receive(:product) { product }
