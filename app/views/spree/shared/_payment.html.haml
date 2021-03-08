@@ -2,7 +2,7 @@
   %span{:style => "float:right;"}
     - balance = OrderBalance.new(@order)
     - if !balance.zero?
-      = balance.state
+      = balance.label
       \:
       %strong= balance.amount
     - else

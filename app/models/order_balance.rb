@@ -5,7 +5,7 @@ class OrderBalance
     @order = order
   end
 
-  def state
+  def label
     outstanding_balance.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
   end
 
