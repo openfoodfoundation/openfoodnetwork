@@ -27,9 +27,9 @@ module Spree
       @money.format(@options)
     end
 
-    def to_html(options = { html: true })
+    def to_html(options = { html_wrap: true })
       output = @money.format(@options.merge(options))
-      if options[:html]
+      if options[:html_wrap]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
         output = output.sub(" ", "&nbsp;").html_safe
