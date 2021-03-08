@@ -55,8 +55,7 @@ shared_examples 'new outstanding balance rendering' do
   context 'when the order has outstanding balance' do
     before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
-    it 'calls #display_new_outstanding_balance' do
-      expect(order).to receive(:display_new_outstanding_balance) { '$123' }
+    it 'renders the amount as money' do
       expect(email.body).to include('$123')
     end
   end
@@ -81,8 +80,7 @@ shared_examples 'new outstanding balance view rendering' do
 
     before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
-    it 'calls #display_new_outstanding_balance' do
-      expect(order).to receive(:display_new_outstanding_balance) { '$123' }
+    it 'renders the amount as money' do
       render
       expect(rendered).to include('$123')
     end
