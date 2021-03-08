@@ -183,10 +183,6 @@ module Spree
       Spree::Money.new(adjustment_total, currency: currency)
     end
 
-    def display_tax_total
-      Spree::Money.new(tax_total, currency: currency)
-    end
-
     def display_total
       Spree::Money.new(total, currency: currency)
     end
@@ -375,10 +371,6 @@ module Spree
 
     def ship_total
       adjustments.shipping.sum(:amount)
-    end
-
-    def tax_total
-      adjustments.tax.sum(:amount)
     end
 
     # Creates new tax charges if there are any applicable rates. If prices already
