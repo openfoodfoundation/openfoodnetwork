@@ -84,21 +84,6 @@ describe Spree::Money do
     end
   end
 
-  context "JPY" do
-    before do
-      configure_spree_preferences do |config|
-        config.currency = "JPY"
-        config.currency_symbol_position = :before
-        config.display_currency = false
-      end
-    end
-
-    it "formats correctly" do
-      money = Spree::Money.new(1000, html: false)
-      expect(money.to_s).to eq("¥1,000")
-    end
-  end
-
   context "EUR" do
     before do
       configure_spree_preferences do |config|
