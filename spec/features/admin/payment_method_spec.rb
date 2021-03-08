@@ -222,4 +222,97 @@ feature '
       expect(page).to have_unchecked_field "enterprise_payment_method_ids_#{payment_method1.id}"
     end
   end
+
+  describe "Setting transaction fees", js: true do
+    let(:calculator) { build(:calculator) }
+    let!(:payment_method) { create(:payment_method, calculator: calculator) }
+    before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
+
+    context "using Flat Percent calculator" do
+      before { select2_select "Flat Percent", from: 'calc_type' }
+
+      it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
+        expect(page).to have_field 'Flat Percent', with: '0' # default value
+        fill_in "Flat Percent", with: '2.5'
+        click_button 'Update'
+        expect(page).to have_content("Payment Method has been successfully updated!")
+        expect(page).to have_field "Flat Percent", with: '2.5'
+      end
+    end
+
+    context "using Flat Rate (per order) calculator" do
+      # flat rate per order is the default calculator; no need select it and update page
+
+      it "inserts values which persist" do
+        expect(page).to have_field "Currency", with: ENV["CURRENCY"]
+        # default value
+        expect(page).to have_field "Amount", with: '0' # default value
+        fill_in "Amount", with: 2.2
+        click_button 'Update'
+        expect(page).to have_content("Payment Method has been successfully updated!")
+        expect(page).to have_field "Amount", with: 2.2
+      end
+    end
+
+    context "using Flexible Rate calculator" do
+      before { select2_select "Flexible Rate", from: 'calc_type' }
+
+      it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
+        expect(page).to have_field "Currency", with: ENV["CURRENCY"]
+        # default value
+        expect(page).to have_field "First Item Cost", with: '0.0' # default value
+        expect(page).to have_field "Additional Item Cost", with: '0.0' # default value
+        expect(page).to have_field "Max Items", with: '0' # default value
+        fill_in "First Item Cost", with: 2
+        fill_in "Additional Item Cost", with: 1.1
+        fill_in "Max Items", with: 10
+        click_button 'Update'
+        expect(page).to have_content("Payment Method has been successfully updated!")
+        expect(page).to have_field "First Item Cost", with: '2.0'
+        expect(page).to have_field "Additional Item Cost", with: '1.1'
+        expect(page).to have_field "Max Items", with: '10'
+      end
+    end
+
+    context "using Flat Rate (per item) calculator" do
+      before { select2_select "Flat Rate (per item)", from: 'calc_type' }
+
+      it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
+        expect(page).to have_field "Currency", with: ENV["CURRENCY"] # default value
+        expect(page).to have_field "Amount", with: '0' # default value
+        fill_in "Amount", with: 2.2
+        click_button 'Update'
+        expect(page).to have_content("Payment Method has been successfully updated!")
+        expect(page).to have_field "Amount", with: 2.2
+      end
+    end
+
+    context "using Price Sack calculator" do
+      before { select2_select "Price Sack", from: 'calc_type' }
+
+      it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
+        expect(page).to have_field "Currency", with: ENV["CURRENCY"] # default value
+        expect(page).to have_field "Minimal Amount", with: '0' # default value
+        expect(page).to have_field "Normal Amount", with: '0' # default value
+        expect(page).to have_field "Discount Amount", with: '0' # default value
+        fill_in "Minimal Amount", with: 10.2
+        fill_in "Normal Amount", with: 2.1
+        fill_in "Discount Amount", with: 1.1
+        click_button 'Update'
+        expect(page).to have_content("Payment Method has been successfully updated!")
+        expect(page).to have_field "Minimal Amount", with: '10.2'
+        expect(page).to have_field "Normal Amount", with: '2.1'
+        expect(page).to have_field "Discount Amount", with: '1.1'
+      end
+    end
+  end
+
 end
