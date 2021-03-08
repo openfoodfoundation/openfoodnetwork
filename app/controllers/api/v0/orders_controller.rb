@@ -27,7 +27,8 @@ module Api
         if order.ship
           render json: order.reload, serializer: Api::Admin::OrderSerializer, status: :ok
         else
-          render json: { error: I18n.t('api.orders.failed_to_update') }, status: :unprocessable_entity
+          render json: { error: I18n.t('api.orders.failed_to_update') },
+                 status: :unprocessable_entity
         end
       end
 
