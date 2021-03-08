@@ -82,6 +82,11 @@ describe Spree::Money do
       money = Spree::Money.new(10, html: false)
       expect(money.to_s).to eq("10.00 $")
     end
+
+    it 'raises with invalid position' do
+      expect { Spree::Money.new(10, symbol_position: 'invalid') }
+        .to raise_error('Invalid symbol position')
+    end
   end
 
   context "EUR" do
