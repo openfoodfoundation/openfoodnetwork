@@ -11,8 +11,8 @@
         - else
           = t :email_payment_not_paid
     - else
-      - if @order.outstanding_balance?
-        = outstanding_balance_label(@order)
+      - if !@order.outstanding_balance.zero?
+        = @order.outstanding_balance.negative? ? t(:credit_owed) : t(:balance_due)
         \:
         %strong= @order.display_outstanding_balance
       - else
