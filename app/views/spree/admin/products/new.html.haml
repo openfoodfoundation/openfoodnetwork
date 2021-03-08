@@ -4,7 +4,7 @@
 
 = form_for [:admin, @product], :html => { :multipart => true } do |f|
   .twelve.columns.alpha
-    %fieldset.no-border-bottom{ id: "new_product" }
+    %fieldset.no-border-bottom{ id: "new_product", 'ng-controller' => 'unitsCtrl' }
       %legend{align: "center"}= t(".new_product")
       .sixteen.columns.alpha
         .eight.columns.alpha
@@ -20,7 +20,7 @@
             %br/
             = f.text_field :name, :class => 'fullwidth title'
             = f.error_message_on :name
-      .sixteen.columns.alpha{ 'ng-controller' => 'unitsCtrl' }
+      .sixteen.columns.alpha
         .eight.columns.alpha
           = f.field_container :units do
             = f.label :variant_unit_with_scale, t(".units")
@@ -50,7 +50,7 @@
             = f.label :price, t(".price")
             %span.required *
             %br/
-            = f.text_field :price, class: 'fullwidth'
+            = f.text_field :price, { "class" => "fullwidth", "ng-model" => "product.price" }
             = f.error_message_on :price
         - if feature? :unit_price, spree_current_user
           .four.columns{ ng: { app: 'ofn.admin'}}
@@ -62,9 +62,10 @@
                   "question-mark-with-tooltip-animation" => true, 
                   key: "'js.shopfront.unit_price_tooltip.admin'"}
               %br/
-              = f.text_field :price, class: '', disabled: true, value: "value"
-              %span{style: "color: #757575"}
-                unit
+              = f.text_field :price, {"class" =>  '', "disabled" =>  true, "ng-model" => "product.unit_price_value"}
+              %span
+                &nbsp;/&nbsp;
+                %span{style: "color: #757575", "ng-bind" => "product.unit_price_unit" }
               %div{style: "color: black"}
                 = t(".unit_price_legend")
       .sixteen.columns.alpha
