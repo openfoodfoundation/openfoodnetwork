@@ -40,7 +40,7 @@ angular.module("admin.products")
       unit_value = $scope.product.master.unit_value
       variant_unit_name = $scope.product.variant_unit_name
       $scope.unit_price = null
-      if price && unit_type && unit_value
+      if price && !isNaN(price) && unit_type && unit_value
         value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
         unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
         $scope.unit_price = value + " / " + unit
