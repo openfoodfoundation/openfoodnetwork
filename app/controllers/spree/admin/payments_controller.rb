@@ -18,6 +18,7 @@ module Spree
 
       def new
         @payment = @order.payments.build
+        @balance = OrderBalance.new(@order)
       end
 
       def create

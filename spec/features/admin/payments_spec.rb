@@ -10,10 +10,16 @@ feature '
 
   let(:order) { create(:completed_order_with_fees) }
 
-  scenario "visiting the payment form" do
+  it "renders the new payment page" do
     login_as_admin_and_visit spree.new_admin_order_payment_path order
 
     expect(page).to have_content "New Payment"
+  end
+
+  it 'displays the order balance as the default payment amount' do
+    login_as_admin_and_visit spree.new_admin_order_payment_path order
+
+    expect(page).to have_field(:payment_amount, with: order.outstanding_balance)
   end
 
   context "with sensitive payment fee" do
@@ -26,7 +32,7 @@ feature '
       payment_method.save!
     end
 
-    scenario "visiting the payment form" do
+    it "renders the new payment page" do
       login_as_admin_and_visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
