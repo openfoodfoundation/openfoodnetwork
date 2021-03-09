@@ -238,16 +238,4 @@ describe Balance do
       end
     end
   end
-
-  describe '#display_outstanding_balance' do
-    let(:order) { build(:order) }
-
-    before do
-      allow(order).to receive(:outstanding_balance) { 10 }
-    end
-
-    it 'returns the balance as money' do
-      expect(order.display_outstanding_balance).to eq(Spree::Money.new(10, currency: 'AUD'))
-    end
-  end
 end

@@ -39,12 +39,6 @@ module Balance
     !outstanding_balance.zero?
   end
 
-  # This method is the one we're gradually replacing with `#display_new_outstanding_balance`. See
-  # #outstanding_balance for details.
-  def display_outstanding_balance
-    Spree::Money.new(outstanding_balance, currency: currency)
-  end
-
   def display_new_outstanding_balance
     Spree::Money.new(new_outstanding_balance, currency: currency)
   end
