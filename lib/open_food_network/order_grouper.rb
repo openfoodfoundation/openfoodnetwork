@@ -18,8 +18,7 @@ module OpenFoodNetwork
 
     def group_and_sort(rule, remaining_rules, items)
       branch = {}
-      groups = items.group_by { |item| rule[:group_by].call(item) }
-
+      groups = items.group_by { |item| rule[:group_by].call(item) }.select { |key, _value| !key.nil? }
       sorted_groups = groups.sort_by { |key, _value| rule[:sort_by].call(key) }
 
       sorted_groups.each do |property, items_by_property|
