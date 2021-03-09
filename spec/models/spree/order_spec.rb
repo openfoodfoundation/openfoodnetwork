@@ -647,18 +647,27 @@ describe Spree::Order do
 
   describe "getting the total tax" do
     let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25) }
+    let(:fee_tax_rate) { create(:tax_rate, amount: 0.10) }
     let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
     end
     let(:enterprise_fee) { create(:enterprise_fee) }
-
-    before do
-      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123,
-                          included_tax: 2, order: order)
+    let!(:fee) {
+      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 20,
+                          order: order)
+    }
+    let!(:fee_tax) {
+      create(:adjustment, adjustable: fee, originator: fee_tax_rate,
+                          amount: 2, order: order, state: "closed")
+    }
+    let!(:shipping_tax) {
       create(:adjustment, adjustable: shipment, originator: shipping_tax_rate,
                           amount: 10, order: order, state: "closed")
+    }
+
+    before do
       order.update_order!
     end
 
