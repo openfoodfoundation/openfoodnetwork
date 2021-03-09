@@ -57,7 +57,8 @@
 
         - if @order.total_tax > 0
           %tr
-            %td.text-right{colspan:"3"} (includes tax)
+            %td.text-right{colspan:"3"}
+              = t :order_includes_tax
             %td.text-right
               %span.order-total.tax-total= display_checkout_tax_total(@order)
             %td
