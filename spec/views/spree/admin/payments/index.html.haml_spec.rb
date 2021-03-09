@@ -4,10 +4,12 @@ require "spec_helper"
 
 describe "spree/admin/payments/index.html.haml" do
   let(:order) { build(:order) }
+  let(:balance) { OrderBalance.new(order) }
   let(:payment) { build(:payment, id: 1, created_at: Time.now) }
 
   before do
     assign(:order, order)
+    assign(:balance, balance)
     assign(:payments, [payment])
   end
 

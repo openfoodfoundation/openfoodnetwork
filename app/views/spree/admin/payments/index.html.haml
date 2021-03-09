@@ -12,11 +12,11 @@
   %i.icon-arrow-right
   = t(:payments)
 
-- if @order.outstanding_balance?
+- if !@balance.zero?
   %h5.outstanding-balance
-    = outstanding_balance_label(@order)
+    = @balance.label
     \:
-    %strong= @order.display_outstanding_balance
+    %strong= @balance.amount
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }
