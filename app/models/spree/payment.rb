@@ -20,7 +20,7 @@ module Spree
              class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source, dependent: :destroy
 
-    has_many :adjustments, as: :adjustable, dependent: :destroy
+    has_one :adjustment, as: :adjustable, dependent: :destroy
 
     validate :validate_source
     before_create :set_unique_identifier
@@ -124,10 +124,6 @@ module Spree
     def payment_source
       res = source.is_a?(Payment) ? source.source : source
       res || payment_method
-    end
-
-    def adjustment
-      @adjustment ||= adjustments.first
     end
 
     def ensure_correct_adjustment
