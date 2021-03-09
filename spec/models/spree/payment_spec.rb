@@ -726,21 +726,30 @@ describe Spree::Payment do
 
       describe "calculating refund amount" do
         let(:payment) { build_stubbed(:payment) }
+        let(:user) { build(:user) }
 
         it "returns the parameter amount when given" do
           expect(payment.send(:calculate_refund_amount, 123)).to be === 123.0
         end
 
-        it "refunds up to the value of the payment when the outstanding balance is larger" do
-          allow(payment).to receive(:credit_allowed) { 123 }
-          allow(payment).to receive(:order) { double(:order, outstanding_balance: 1000) }
-          expect(payment.send(:calculate_refund_amount)).to eq(123)
+        context 'when the outstanding balance is larger' do
+          let(:order) { instance_double(Spree::Order, outstanding_balance: 1000, user: user) }
+
+          it "refunds up to the value of the payment" do
+            allow(payment).to receive(:credit_allowed) { 123 }
+            allow(payment).to receive(:order) { order }
+            expect(payment.send(:calculate_refund_amount)).to eq(123)
+          end
         end
 
-        it "refunds up to the outstanding balance of the order when the payment is larger" do
-          allow(payment).to receive(:credit_allowed) { 1000 }
-          allow(payment).to receive(:order) { double(:order, outstanding_balance: 123) }
-          expect(payment.send(:calculate_refund_amount)).to eq(123)
+        context 'when the payment is larger' do
+          let(:order) { instance_double(Spree::Order, outstanding_balance: 123, user: user) }
+
+          it "refunds up to the outstanding balance of the order" do
+            allow(payment).to receive(:credit_allowed) { 1000 }
+            allow(payment).to receive(:order) { order }
+            expect(payment.send(:calculate_refund_amount)).to eq(123)
+          end
         end
       end
 
