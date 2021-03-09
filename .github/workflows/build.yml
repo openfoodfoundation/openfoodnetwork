@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
 
+env:
+  DISABLE_KNAPSACK: true
+
 jobs:
   test-models:
     runs-on: ubuntu-18.04
