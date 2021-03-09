@@ -7,20 +7,71 @@ describe Api::Admin::OrderSerializer do
 
   describe "#display_outstanding_balance" do
     let(:order) { build(:order) }
+    let(:user) { order.user }
 
-    context 'when the balance is zero' do
-      before { allow(order).to receive(:outstanding_balance) { 0 } }
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
 
-      it 'returns empty string' do
-        expect(serializer.display_outstanding_balance).to eq('')
+      context 'when the balance is zero' do
+        before { allow(order).to receive(:outstanding_balance) { 0 } }
+
+        it 'calls #outstanding_balance' do
+          serializer.display_outstanding_balance
+          expect(order).to have_received(:outstanding_balance)
+        end
+
+        it 'returns empty string' do
+          expect(serializer.display_outstanding_balance).to eq('')
+        end
+      end
+
+      context 'when the balance is not zero' do
+        before { allow(order).to receive(:outstanding_balance) { 10 } }
+
+        it 'calls #outstanding_balance' do
+          serializer.display_outstanding_balance
+          expect(order).to have_received(:outstanding_balance).twice
+        end
+
+        it 'returns the balance' do
+          expect(serializer.display_outstanding_balance).to eql('$10.00')
+        end
       end
     end
 
-    context 'when the balance is not zero' do
-      before { allow(order).to receive(:outstanding_balance) { 10 } }
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
 
-      it 'returns the balance' do
-        expect(serializer.display_outstanding_balance).to eql('$10.00')
+      context 'when the balance is zero' do
+        before { allow(order).to receive(:new_outstanding_balance) { 0 } }
+
+        it 'calls #outstanding_balance' do
+          serializer.display_outstanding_balance
+          expect(order).to have_received(:new_outstanding_balance)
+        end
+
+        it 'returns empty string' do
+          expect(serializer.display_outstanding_balance).to eq('')
+        end
+      end
+
+      context 'when the balance is not zero' do
+        before { allow(order).to receive(:new_outstanding_balance) { 10 } }
+
+        it 'calls #outstanding_balance' do
+          serializer.display_outstanding_balance
+          expect(order).to have_received(:new_outstanding_balance).twice
+        end
+
+        it 'returns the balance' do
+          expect(serializer.display_outstanding_balance).to eql('$10.00')
+        end
       end
     end
   end

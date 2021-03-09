@@ -21,10 +21,10 @@ module Api
       end
 
       def display_outstanding_balance
-        if object.outstanding_balance.zero?
+        if outstanding_balance.zero?
           ''
         else
-          Spree::Money.new(object.outstanding_balance, currency: object.currency).to_s
+          Spree::Money.new(outstanding_balance, currency: object.currency).to_s
         end
       end
 
@@ -75,6 +75,14 @@ module Api
 
       def spree_routes_helper
         Spree::Core::Engine.routes.url_helpers
+      end
+
+      def outstanding_balance
+        if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, object.user)
+          object.new_outstanding_balance
+        else
+          object.outstanding_balance
+        end
       end
     end
   end
