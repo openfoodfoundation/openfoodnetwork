@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
+      include FullUrlHelper
+
       before_action :load_order, except: [:show]
       before_action :load_payment, only: [:fire, :show]
       before_action :load_data
@@ -153,7 +155,7 @@ module Spree
       def authorize_stripe_sca_payment
         return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
 
-        @payment.authorize!(main_app.order_path(@payment.order, only_path: false))
+        @payment.authorize!(full_order_path(@payment.order))
 
         raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
 
