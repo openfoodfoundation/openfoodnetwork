@@ -62,10 +62,7 @@
                   "question-mark-with-tooltip-animation" => true, 
                   key: "'js.shopfront.unit_price_tooltip.admin'"}
               %br/
-              = f.text_field :price, {"class" =>  '', "disabled" =>  true, "ng-model" => "product.unit_price_value"}
-              %span{ style: "color: #757575", "ng-show": "product.unit_price_unit !== null" }
-                &nbsp;/&nbsp;
-                %span{ "ng-bind" => "product.unit_price_unit" }
+              = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
               %div{style: "color: black"}
                 = t(".unit_price_legend")
       .sixteen.columns.alpha

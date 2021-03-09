@@ -39,11 +39,11 @@ angular.module("admin.products")
       unit_type = $scope.product.variant_unit
       unit_value = $scope.product.master.unit_value
       variant_unit_name = $scope.product.variant_unit_name
-      $scope.product.unit_price_value = null
-      $scope.product.unit_price_unit = null
+      $scope.unit_price = null
       if price && unit_type && unit_value
-        $scope.product.unit_price_value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
-        $scope.product.unit_price_unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
+        value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
+        unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
+        $scope.unit_price = value + " / " + unit
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0
