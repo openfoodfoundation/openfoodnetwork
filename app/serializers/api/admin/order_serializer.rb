@@ -21,9 +21,11 @@ module Api
       end
 
       def display_outstanding_balance
-        return "" if object.outstanding_balance.zero?
-
-        object.display_outstanding_balance.to_s
+        if object.outstanding_balance.zero?
+          ''
+        else
+          Spree::Money.new(object.outstanding_balance, currency: object.currency).to_s
+        end
       end
 
       def edit_path
