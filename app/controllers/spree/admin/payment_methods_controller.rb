@@ -12,13 +12,11 @@ module Spree
       def create
         force_environment
 
-        @payment_method = params[:payment_method].
-          delete(:type).
-          constantize.
-          new(PermittedAttributes::PaymentMethod.new(params[:payment_method]).call)
+        @payment_method = payment_method_class.constantize.new(base_params)
         @object = @payment_method
 
         invoke_callbacks(:create, :before)
+
         if @payment_method.save
           invoke_callbacks(:create, :after)
           flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
@@ -34,16 +32,16 @@ module Spree
         force_environment
 
         invoke_callbacks(:update, :before)
-        payment_method_type = params[:payment_method].delete(:type)
-        if @payment_method['type'].to_s != payment_method_type
+
+        if @payment_method.type.to_s != payment_method_class
           @payment_method.update_columns(
-            type: payment_method_type,
+            type: payment_method_class,
             updated_at: Time.zone.now
           )
           @payment_method = PaymentMethod.find(params[:id])
         end
 
-        if @payment_method.update(params_for_update)
+        if @payment_method.update(update_params)
           invoke_callbacks(:update, :after)
           flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
@@ -98,8 +96,12 @@ module Spree
 
       private
 
+      def payment_method_class
+        @payment_method_class ||= base_params.delete(:type)
+      end
+
       def force_environment
-        params[:payment_method][:environment] = Rails.env unless spree_current_user.admin?
+        base_params[:environment] = Rails.env unless spree_current_user.admin?
       end
 
       def load_data
@@ -143,7 +145,7 @@ module Spree
         @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
         return if spree_current_user.enterprises.include? @stripe_account_holder
 
-        params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
+        update_params[:preferred_enterprise_id] = @stripe_account_holder.id
       end
 
       def stripe_payment_method?
@@ -155,19 +157,26 @@ module Spree
         provider.name.ends_with?("StripeConnect", "StripeSCA")
       end
 
+      def base_params
+        @base_params ||= PermittedAttributes::PaymentMethod.new(params[:payment_method]).
+          call.to_h.with_indifferent_access
+      end
+
       # Merge payment method params with gateway params like :gateway_stripe_connect
       # Also, remove password if present and blank
-      def params_for_update
-        gateway_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
-        params_for_update = params[:payment_method].merge(gateway_params)
+      def update_params
+        @update_params ||= begin
+          gateway_params = raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
+          params_for_update = base_params.merge(gateway_params)
 
-        params_for_update.each do |key, _value|
-          if key.include?("password") && params_for_update[key].blank?
-            params_for_update.delete(key)
+          params_for_update.each do |key, value|
+            if key.include?("password") && value.blank?
+              params_for_update.delete(key)
+            end
           end
-        end
 
-        PermittedAttributes::PaymentMethod.new(params_for_update).call
+          params_for_update
+        end
       end
     end
   end
