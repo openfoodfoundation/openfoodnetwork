@@ -234,7 +234,6 @@ feature '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
-        expect(page).to have_field 'Flat Percent', with: '0' # default value
         fill_in "Flat Percent", with: '2.5'
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
@@ -246,9 +245,6 @@ feature '
       # flat rate per order is the default calculator; no need select it and update page
 
       it "inserts values which persist" do
-        expect(page).to have_field "Currency", with: ENV["CURRENCY"]
-        # default value
-        expect(page).to have_field "Amount", with: '0' # default value
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
@@ -262,11 +258,6 @@ feature '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
-        expect(page).to have_field "Currency", with: ENV["CURRENCY"]
-        # default value
-        expect(page).to have_field "First Item Cost", with: '0.0' # default value
-        expect(page).to have_field "Additional Item Cost", with: '0.0' # default value
-        expect(page).to have_field "Max Items", with: '0' # default value
         fill_in "First Item Cost", with: 2
         fill_in "Additional Item Cost", with: 1.1
         fill_in "Max Items", with: 10
@@ -284,8 +275,6 @@ feature '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
-        expect(page).to have_field "Currency", with: ENV["CURRENCY"] # default value
-        expect(page).to have_field "Amount", with: '0' # default value
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
@@ -299,10 +288,6 @@ feature '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
-        expect(page).to have_field "Currency", with: ENV["CURRENCY"] # default value
-        expect(page).to have_field "Minimal Amount", with: '0' # default value
-        expect(page).to have_field "Normal Amount", with: '0' # default value
-        expect(page).to have_field "Discount Amount", with: '0' # default value
         fill_in "Minimal Amount", with: 10.2
         fill_in "Normal Amount", with: 2.1
         fill_in "Discount Amount", with: 1.1
