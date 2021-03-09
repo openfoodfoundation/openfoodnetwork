@@ -36,11 +36,6 @@ module Spree
           adjustment.update!
         end
 
-        it "should set the eligibility" do
-          expect(adjustment).to receive(:set_eligibility)
-          adjustment.update!
-        end
-
         it "should ask the originator to update_adjustment" do
           expect(originator).to receive(:update_adjustment)
           adjustment.update!
@@ -65,33 +60,6 @@ module Spree
         allow(adjustment).to receive_messages originator: nil
         expect(adjustment).not_to receive(:amount=)
         adjustment.update!
-      end
-    end
-
-    context "#eligible? after #set_eligibility" do
-      context "when amount is 0" do
-        before { adjustment.amount = 0 }
-        it "should be eligible if mandatory?" do
-          adjustment.mandatory = true
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
-        end
-
-        it "should not be eligible unless mandatory?" do
-          adjustment.mandatory = false
-          adjustment.set_eligibility
-          expect(adjustment).to_not be_eligible
-        end
-      end
-
-      context "when amount is greater than 0" do
-        before { adjustment.amount = 25.00 }
-
-        it "should be eligible if mandatory?" do
-          adjustment.mandatory = true
-          adjustment.set_eligibility
-          expect(adjustment).to be_eligible
-        end
       end
     end
 
