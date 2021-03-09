@@ -32,8 +32,4 @@ module Balance
   def outstanding_balance
     total - payment_total
   end
-
-  def display_new_outstanding_balance
-    Spree::Money.new(new_outstanding_balance, currency: currency)
-  end
 end
