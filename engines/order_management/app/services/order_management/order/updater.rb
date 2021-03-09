@@ -157,7 +157,7 @@ module OrderManagement
       def infer_payment_state_from_balance
         # This part added so that we don't need to override
         # order.outstanding_balance
-        balance = order.outstanding_balance
+        balance = OrderBalance.new(order).to_f
         balance = -1 * order.payment_total if canceled_and_paid_for?
 
         infer_state(balance)
