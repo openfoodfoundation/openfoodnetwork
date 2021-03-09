@@ -107,32 +107,6 @@ describe Balance do
     end
   end
 
-  describe '#outstanding_balance?' do
-    context 'when total is greater than payment_total' do
-      let(:order) { build(:order, total: 10.10, payment_total: 9.50) }
-
-      it 'returns true' do
-        expect(order.outstanding_balance?).to eq(true)
-      end
-    end
-
-    context 'when total is less than payment_total' do
-      let(:order) { build(:order, total: 8.25, payment_total: 10.44) }
-
-      it 'returns true' do
-        expect(order.outstanding_balance?).to eq(true)
-      end
-    end
-
-    context "when total equals payment_total" do
-      let(:order) { build(:order, total: 10.10, payment_total: 10.10) }
-
-      it 'returns false' do
-        expect(order.outstanding_balance?).to eq(false)
-      end
-    end
-  end
-
   describe "#outstanding_balance" do
     context 'when orders are in cart state' do
       let(:order) { build(:order, total: 100, payment_total: 10, state: 'cart') }

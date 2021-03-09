@@ -33,12 +33,6 @@ module Balance
     total - payment_total
   end
 
-  # This method is the one we're gradually replacing with `#new_outstanding_balance?`. See
-  # #outstanding_balance for details.
-  def outstanding_balance?
-    !outstanding_balance.zero?
-  end
-
   def display_new_outstanding_balance
     Spree::Money.new(new_outstanding_balance, currency: currency)
   end
