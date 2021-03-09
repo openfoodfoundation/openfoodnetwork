@@ -16,6 +16,7 @@ class OrderSyncer
       update_associations_for(order)
       line_item_syncer.sync!(order)
       order.save
+      order.update!
     end
   end
 
