@@ -13,6 +13,10 @@ class OrderBalance
     Spree::Money.new(outstanding_balance, currency: order.currency)
   end
 
+  def to_f
+    outstanding_balance
+  end
+
   delegate :zero?, to: :outstanding_balance
 
   private

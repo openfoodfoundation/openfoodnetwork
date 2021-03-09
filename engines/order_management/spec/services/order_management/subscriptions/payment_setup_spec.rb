@@ -6,6 +6,7 @@ module OrderManagement
   module Subscriptions
     describe PaymentSetup do
       let(:order) { create(:order) }
+      let(:user) { order.user }
       let(:payment_setup) { OrderManagement::Subscriptions::PaymentSetup.new(order) }
 
       describe "#call!" do
@@ -17,13 +18,35 @@ module OrderManagement
 
           before do
             allow(order).to receive(:pending_payments).once { [] }
-            allow(order).to receive(:outstanding_balance) { 5 }
             allow(order).to receive(:subscription) { subscription }
           end
 
-          it "creates a new payment on the order" do
-            expect{ payment_setup.call! }.to change(Spree::Payment, :count).by(1)
-            expect(order.payments.first.amount).to eq 5
+          context 'when the customer_balance feature is disabled' do
+            before do
+              allow(OpenFoodNetwork::FeatureToggle)
+                .to receive(:enabled?).with(:customer_balance, user) { false }
+
+              allow(order).to receive(:outstanding_balance) { 5 }
+            end
+
+            it "creates a new payment on the order" do
+              expect{ payment_setup.call! }.to change(Spree::Payment, :count).by(1)
+              expect(order.payments.first.amount).to eq 5
+            end
+          end
+
+          context 'when the customer_balance feature is enabled' do
+            before do
+              allow(OpenFoodNetwork::FeatureToggle)
+                .to receive(:enabled?).with(:customer_balance, user) { true }
+
+              allow(order).to receive(:new_outstanding_balance) { 5 }
+            end
+
+            it "creates a new payment on the order" do
+              expect{ payment_setup.call! }.to change(Spree::Payment, :count).by(1)
+              expect(order.payments.first.amount).to eq 5
+            end
           end
         end
 
