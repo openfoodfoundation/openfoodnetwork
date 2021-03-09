@@ -29,12 +29,6 @@ module Spree
     end
 
     context '#destroy' do
-      # Regression test for Spree #1481
-      it "applies tax adjustments" do
-        expect(line_item.order).to receive(:create_tax_charge!)
-        line_item.destroy
-      end
-
       it "fetches deleted products" do
         line_item.product.destroy
         expect(line_item.reload.product).to be_a Spree::Product
@@ -43,6 +37,11 @@ module Spree
       it "fetches deleted variants" do
         line_item.variant.destroy
         expect(line_item.reload.variant).to be_a Spree::Variant
+      end
+
+      it "returns inventory when a line item is destroyed" do
+        expect_any_instance_of(Spree::OrderInventory).to receive(:verify).with(line_item, nil)
+        line_item.destroy
       end
     end
 
