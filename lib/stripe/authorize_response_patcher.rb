@@ -19,12 +19,15 @@ module Stripe
     private
 
     def url_for_authorization(response)
-      next_action = response.params["next_source_action"]
-      return unless response.params["status"] == "requires_source_action" &&
-                    next_action.present? &&
-                    next_action["type"] == "authorize_with_url"
+      return unless %w(requires_source_action requires_action).include?(response.params["status"])
 
-      url = next_action["authorize_with_url"]["url"]
+      next_action = response.params["next_source_action"] || response.params["next_action"]
+      return unless next_action.present?
+
+      next_action_type = next_action["type"]
+      return unless %w(authorize_with_url redirect_to_url).include?(next_action_type)
+
+      url = next_action[next_action_type]["url"]
       return url if url.match(%r{https?:\/\/[\S]+}) && url.include?("stripe.com")
     end
 
