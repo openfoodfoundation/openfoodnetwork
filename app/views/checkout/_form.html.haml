@@ -18,6 +18,6 @@
   = render "checkout/terms_and_conditions"
   = render "checkout/platform_terms_of_service" if platform_terms_required?
   %p
-    %button.button.primary{ type: :submit, ng: { disabled: "terms_and_conditions_activated && !terms_and_conditions_accepted" } }
+    %button.button.primary{ type: :submit, ng: { disabled: "(terms_and_conditions_activated && !terms_and_conditions_accepted) || platform_tos_accepted == false" } }
       = t :checkout_send
     / {{ checkout.$valid }}
