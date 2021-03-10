@@ -6,28 +6,28 @@ class OrderBalance
   end
 
   def label
-    outstanding_balance.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
+    to_f.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
   end
 
   def amount
-    Spree::Money.new(outstanding_balance, currency: order.currency)
+    Spree::Money.new(to_f, currency: order.currency)
   end
 
   def to_f
-    outstanding_balance
+    if customer_balance_enabled?
+      order.new_outstanding_balance
+    else
+      order.outstanding_balance
+    end
   end
 
-  delegate :zero?, to: :outstanding_balance
+  delegate :zero?, to: :to_f
 
   private
 
   attr_reader :order
 
-  def outstanding_balance
-    if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, order.user)
-      order.new_outstanding_balance
-    else
-      order.outstanding_balance
-    end
+  def customer_balance_enabled?
+    OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, order.user)
   end
 end
