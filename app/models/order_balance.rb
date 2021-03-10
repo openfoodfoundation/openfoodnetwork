@@ -21,7 +21,7 @@ class OrderBalance
     end
   end
 
-  delegate :zero?, to: :to_f
+  delegate :zero?, :abs, to: :to_f
 
   private
 

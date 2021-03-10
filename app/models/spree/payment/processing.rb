@@ -208,8 +208,8 @@ module Spree
 
       def calculate_refund_amount(refund_amount = nil)
         balance = OrderBalance.new(order)
-        refund_amount ||= if credit_allowed >= balance.to_f.abs
-                            balance.to_f.abs
+        refund_amount ||= if credit_allowed >= balance.abs
+                            balance.abs
                           else
                             credit_allowed.abs
                           end
