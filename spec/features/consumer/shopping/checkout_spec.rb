@@ -218,13 +218,11 @@ feature "As a consumer I want to check out my cart", js: true do
         expect(page).to have_link("Terms of Service", href: tos_url)
         expect(page).to have_button("Place order now", disabled: true)
 
+        # Both Ts&Cs and TOS appear in the one label for the one checkbox.
         check "Terms and Conditions"
-        expect(page).to have_button("Place order now", disabled: true)
-
-        check "Terms of Service"
         expect(page).to have_button("Place order now", disabled: false)
 
-        uncheck "Terms and Conditions"
+        uncheck "Terms of Service"
         expect(page).to have_button("Place order now", disabled: true)
       end
     end
