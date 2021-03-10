@@ -119,15 +119,16 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
 
-      it "doesn't tell about previous orders" do
+      it "shows only applicable content" do
+        # Unifying several specs here to speed up test run.
+
+        # it doesn't tell about previous orders
         expect(page).to have_no_content("You have an order for this order cycle already.")
-      end
 
-      it "doesn't show link to terms and conditions" do
+        # doesn't show link to terms and conditions
         expect(page).to have_no_link("Terms and Conditions")
-      end
 
-      it "doesn't show link to platform terms of service" do
+        # doesn't show link to platform terms of service
         expect(page).to have_no_link("Terms of Service")
       end
     end
