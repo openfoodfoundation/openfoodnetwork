@@ -21,12 +21,6 @@ module Spree
       go_to_state :complete
     end
 
-    state_machine.after_transition to: :payment, do: :charge_shipping_and_payment_fees!
-
-    state_machine.event :restart_checkout do
-      transition to: :cart, unless: :completed?
-    end
-
     token_resource
 
     belongs_to :user, class_name: Spree.user_class.to_s
