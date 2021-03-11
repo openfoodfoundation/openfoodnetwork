@@ -40,7 +40,7 @@
               = label_tag 'selected_shipping_rate_id', Spree.t(:shipping_method)
               = select_tag :selected_shipping_rate_id, options_for_select(shipment.shipping_rates.backend.map { |sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id), { :class => 'select2 fullwidth', :data => { 'shipment-number' => shipment.number } }
 
-            - if shipment.adjustment && shipment.adjustment.closed?
+            - if shipment.fee_adjustment&.closed?
               %div.field.omega.four.columns
                 %label
                   = Spree.t(:associated_adjustment_closed)
@@ -58,18 +58,18 @@
               = link_to '', '', :class => 'cancel-method icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
       %tr.show-method.total
         %td{ :colspan => "4" }
-          - if shipment.adjustment.present?
+          - if shipment.fee_adjustment.present?
             %strong
-              = "#{shipment.adjustment.label}: #{shipment.shipping_method.name}"
+              = "#{shipment.fee_adjustment.label}: #{shipment.shipping_method.name}"
           - else
             = Spree.t(:cannot_set_shipping_method_without_address)
 
         %td.total{ :align => "center" }
-          - if shipment.adjustment.present?
+          - if shipment.fee_adjustment.present?
             %span
-              = shipment.adjustment.display_amount
+              = shipment.fee_adjustment.display_amount
 
-        - if shipment.adjustment.present? && !shipment.shipped?
+        - if shipment.fee_adjustment.present? && !shipment.shipped?
           %td.actions
             - if can? :update, shipment
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')

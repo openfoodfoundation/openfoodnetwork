@@ -64,7 +64,7 @@ describe Spree::OrderMailer do
   end
 
   context "displays line item price" do
-    let(:order) { create(:order_with_totals_and_distribution) }
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
 
     specify do
       confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order)

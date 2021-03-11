@@ -86,7 +86,7 @@ describe OrderTaxAdjustmentsFetcher do
 
     subject { OrderTaxAdjustmentsFetcher.new(order).totals }
 
-    it "returns a hash with all 3 taxes" do
+    it "returns a hash with all 4 taxes" do
       expect(subject.size).to eq(4)
     end
 

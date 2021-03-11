@@ -41,6 +41,7 @@ module Spree
              dependent: :destroy
 
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
 
     has_many :shipments, dependent: :destroy do
@@ -364,7 +365,7 @@ module Spree
     end
 
     def ship_total
-      adjustments.shipping.sum(:amount)
+      all_adjustments.shipping.sum(:amount)
     end
 
     # Creates new tax charges if there are any applicable rates. If prices already
@@ -402,7 +403,7 @@ module Spree
     def finalize!
       touch :completed_at
 
-      adjustments.update_all state: 'closed'
+      all_adjustments.update_all state: 'closed'
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state
@@ -596,7 +597,7 @@ module Spree
       shipments.each do |shipment|
         next if shipment.shipped?
 
-        update_adjustment! shipment.adjustment if shipment.adjustment
+        update_adjustment! shipment.fee_adjustment if shipment.fee_adjustment
         save_or_rescue_shipment(shipment)
       end
     end
@@ -663,7 +664,7 @@ module Spree
     end
 
     def shipping_tax
-      adjustments(:reload).shipping.sum(:included_tax)
+      shipment_adjustments(:reload).shipping.sum(:included_tax)
     end
 
     def enterprise_fee_tax
@@ -671,7 +672,7 @@ module Spree
     end
 
     def total_tax
-      (adjustments.to_a + line_item_adjustments.to_a).sum(&:included_tax)
+      all_adjustments.sum(:included_tax)
     end
 
     def has_taxes_included

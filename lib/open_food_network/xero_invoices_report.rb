@@ -79,7 +79,7 @@ module OpenFoodNetwork
     end
 
     def adjustment_detail_rows(order, invoice_number, opts)
-      adjustments(order).map do |adjustment|
+      admin_adjustments(order).map do |adjustment|
         adjustment_detail_row(adjustment, invoice_number, opts)
       end
     end
@@ -167,7 +167,7 @@ module OpenFoodNetwork
        order.paid? ? I18n.t(:y) : I18n.t(:n)]
     end
 
-    def adjustments(order)
+    def admin_adjustments(order)
       order.adjustments.admin
     end
 
@@ -188,23 +188,23 @@ module OpenFoodNetwork
     end
 
     def total_untaxable_fees(order)
-      order.adjustments.enterprise_fee.without_tax.sum(:amount)
+      order.all_adjustments.enterprise_fee.without_tax.sum(:amount)
     end
 
     def total_taxable_fees(order)
-      order.adjustments.enterprise_fee.with_tax.sum(:amount)
+      order.all_adjustments.enterprise_fee.with_tax.sum(:amount)
     end
 
     def total_shipping(order)
-      order.adjustments.shipping.sum(:amount)
+      order.all_adjustments.shipping.sum(:amount)
     end
 
     def total_transaction(order)
-      order.adjustments.payment_fee.sum(:amount)
+      order.all_adjustments.payment_fee.sum(:amount)
     end
 
     def tax_on_shipping_s(order)
-      tax_on_shipping = order.adjustments.shipping.sum(:included_tax) > 0
+      tax_on_shipping = order.all_adjustments.shipping.sum(:included_tax) > 0
       tax_on_shipping ? I18n.t(:report_header_gst_on_income) : I18n.t(:report_header_gst_free_income)
     end
 

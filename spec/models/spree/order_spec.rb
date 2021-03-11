@@ -178,7 +178,7 @@ describe Spree::Order do
     it "should freeze all adjustments" do
       allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = double
-      allow(order).to receive_messages adjustments: adjustments
+      allow(order).to receive_messages all_adjustments: adjustments
       expect(adjustments).to receive(:update_all).with(state: 'closed')
       order.finalize!
     end
@@ -715,6 +715,7 @@ describe Spree::Order do
     before do
       create(
         :adjustment,
+        order: order,
         adjustable: order,
         originator: enterprise_fee,
         label: "EF",
@@ -1075,10 +1076,11 @@ describe Spree::Order do
       Spree::Config.shipping_tax_rate = 0.25
 
       # Sanity check the fees
-      expect(order.adjustments.length).to eq 2
+      expect(order.adjustments.length).to eq 1
+      expect(order.shipment_adjustments.length).to eq 1
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
-      expect(order.shipment.adjustment.included_tax).to eq 1.2
+      expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
     end
 
     context "removing line_items" do
@@ -1087,12 +1089,12 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
-        expect(order.shipment.adjustment.included_tax).to eq 0.6
+        expect(order.shipment.fee_adjustment.included_tax).to eq 0.6
       end
 
       context "when finalized fee adjustments exist on the order" do
         let(:payment_fee_adjustment) { order.adjustments.payment_fee.first }
-        let(:shipping_fee_adjustment) { order.adjustments.shipping.first }
+        let(:shipping_fee_adjustment) { order.shipment_adjustments.first }
 
         before do
           payment_fee_adjustment.finalize!
@@ -1106,7 +1108,7 @@ describe Spree::Order do
           # Check if fees got updated
           order.reload
           expect(order.adjustment_total).to eq expected_fees
-          expect(order.shipment.adjustment.included_tax).to eq 1.2
+          expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
         end
       end
     end
@@ -1119,7 +1121,7 @@ describe Spree::Order do
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
-        expect(order.shipment.adjustment.included_tax).to eq 0
+        expect(order.shipment.fee_adjustment.included_tax).to eq 0
       end
     end
 

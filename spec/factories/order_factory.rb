@@ -92,9 +92,10 @@ FactoryBot.define do
                          payment_method: evaluator.payment_method)
         order.recreate_all_fees!
         order.ship_address = evaluator.ship_address
-        while !order.completed? do break unless a = order.next! end
+        while !order.delivery? do break unless a = order.next! end
         order.select_shipping_method(evaluator.shipping_method.id)
-        order.save
+
+        while !order.completed? do break unless a = order.next! end
       end
     end
   end
@@ -112,6 +113,28 @@ FactoryBot.define do
                                        order: order,
                                        product: product)
       order.reload
+    end
+
+    trait :completed do
+      transient do
+        completed_at { Time.zone.now }
+        state { "complete" }
+        payment_method { create(:payment_method, distributors: [distributor]) }
+        ship_address { create(:address) }
+      end
+
+      after(:create) do |order, evaluator|
+        # Ensure order is valid and passes through necessary checkout steps
+        create(:payment, state: "checkout", order: order, amount: order.total,
+                         payment_method: evaluator.payment_method)
+        order.ship_address = evaluator.ship_address
+        while !order.completed? do break unless order.next! end
+
+        order.update_columns(
+          completed_at: evaluator.completed_at,
+          state: evaluator.state
+        )
+      end
     end
   end
 

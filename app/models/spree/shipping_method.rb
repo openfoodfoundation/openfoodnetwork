@@ -10,7 +10,7 @@ module Spree
 
     default_scope -> { where(deleted_at: nil) }
 
-    has_many :shipments
+    has_many :shipments, through: :shipping_rates
     has_many :shipping_method_categories
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates, inverse_of: :shipping_method
@@ -53,10 +53,6 @@ module Spree
     scope :display_on_checkout, -> {
       where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''")
     }
-
-    def adjustment_label
-      I18n.t('shipping')
-    end
 
     # Here we allow checkout with shipping methods without zones (see issue #3928 for details)
     #   and also checkout with addresses outside of the zones of the selected shipping method
