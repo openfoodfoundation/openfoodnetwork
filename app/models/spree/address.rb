@@ -152,7 +152,9 @@ module Spree
     end
 
     def touch_enterprise
-      enterprise.andand.touch
+      return unless enterprise&.persisted?
+
+      enterprise.touch
     end
 
     def render_address(parts)
