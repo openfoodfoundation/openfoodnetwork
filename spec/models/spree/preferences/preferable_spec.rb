@@ -222,7 +222,7 @@ describe Spree::Preferences::Preferable do
 
   describe "persisted preferables" do
     before(:all) do
-      class CreatePrefTest < ActiveRecord::Migration
+      class CreatePrefTest < ActiveRecord::Migration[4.2]
         def self.up
           create_table :pref_tests do |t|
             t.string :col
