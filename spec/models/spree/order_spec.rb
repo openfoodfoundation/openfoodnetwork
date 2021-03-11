@@ -525,6 +525,7 @@ describe Spree::Order do
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }
+      allow(subject).to receive(:update!)
     end
 
     it "clears all enterprise fee adjustments on the order" do
