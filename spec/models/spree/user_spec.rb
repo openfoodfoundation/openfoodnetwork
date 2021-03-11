@@ -40,11 +40,11 @@ describe Spree::User do
       let!(:e2) { create(:enterprise, owner: u1) }
 
       it "provides access to owned enterprises" do
-        expect(u1.owned_enterprises(:reload)).to include e1, e2
+        expect(u1.owned_enterprises.reload).to include e1, e2
       end
 
       it "enforces the limit on the number of enterprise owned" do
-        expect(u2.owned_enterprises(:reload)).to eq []
+        expect(u2.owned_enterprises.reload).to eq []
         u2.owned_enterprises << e1
         expect { u2.save! }.to_not raise_error
         expect do
@@ -62,8 +62,8 @@ describe Spree::User do
       let!(:g3) { create(:enterprise_group, owner: u2) }
 
       it "provides access to owned groups" do
-        expect(u1.owned_groups(:reload)).to match_array([g1, g2])
-        expect(u2.owned_groups(:reload)).to match_array([g3])
+        expect(u1.owned_groups.reload).to match_array([g1, g2])
+        expect(u2.owned_groups.reload).to match_array([g3])
       end
     end
 

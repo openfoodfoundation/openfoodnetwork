@@ -244,7 +244,7 @@ module Spree
     end
 
     def destruction
-      exchange_variants(:reload).destroy_all
+      exchange_variants.reload.destroy_all
       yield
     end
 

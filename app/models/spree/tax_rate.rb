@@ -80,8 +80,8 @@ module Spree
         create_adjustment(label, order, order)
       end
 
-      order.adjustments(:reload)
-      order.line_items(:reload)
+      order.adjustments.reload
+      order.line_items.reload
       # TaxRate adjustments (order.adjustments.tax)
       #   and line item adjustments (tax included on line items) consist of 100% tax
       (order.adjustments.tax + order.line_item_adjustments.reload).each do |adjustment|

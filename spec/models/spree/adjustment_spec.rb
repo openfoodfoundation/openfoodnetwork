@@ -178,7 +178,7 @@ module Spree
         let!(:order)       { create(:order, bill_address: create(:address)) }
         let!(:line_item)   { create(:line_item, order: order) }
         let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1)) }
-        let(:adjustment)   { line_item.adjustments(:reload).first }
+        let(:adjustment)   { line_item.adjustments.reload.first }
 
         before do
           order.reload
@@ -274,7 +274,7 @@ module Spree
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
         let(:line_item)   { create(:line_item, variant: variant) }
         let(:order)       { create(:order, line_items: [line_item], order_cycle: order_cycle, distributor: coordinator) }
-        let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
+        let(:adjustment)  { order.adjustments.reload.enterprise_fee.first }
 
         context "when enterprise fees have a fixed tax_category" do
           before do
