@@ -353,8 +353,8 @@ module Spree
           end
 
           it "copies the properties on master variant to the first standard variant" do
-            expect(product.variants(:reload).length).to eq 1
-            standard_variant = product.variants(:reload).first
+            expect(product.variants.reload.length).to eq 1
+            standard_variant = product.variants.reload.first
             expect(standard_variant.price).to eq product.master.price
           end
 

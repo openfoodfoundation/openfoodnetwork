@@ -280,7 +280,7 @@ module Spree
     # Spree::OrderContents#add is the more modern version in Spree history
     #   but this add_variant has been customized for OFN FrontOffice.
     def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
-      line_items(:reload)
+      line_items.reload
       current_item = find_line_item_by_variant(variant)
 
       # Notify bugsnag if we get line items with a quantity of zero
@@ -638,7 +638,7 @@ module Spree
     end
 
     def remove_variant(variant)
-      line_items(:reload)
+      line_items.reload
       current_item = find_line_item_by_variant(variant)
       current_item.andand.destroy
     end
@@ -664,11 +664,11 @@ module Spree
     end
 
     def shipping_tax
-      shipment_adjustments(:reload).shipping.sum(:included_tax)
+      shipment_adjustments.reload.shipping.sum(:included_tax)
     end
 
     def enterprise_fee_tax
-      adjustments(:reload).enterprise_fee.sum(:included_tax)
+      adjustments.reload.enterprise_fee.sum(:included_tax)
     end
 
     def total_tax

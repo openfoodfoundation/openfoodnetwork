@@ -24,7 +24,7 @@ describe LineItemsController, type: :controller do
       get :bought, format: :json
       expect(response.status).to eq 200
       json_response = JSON.parse(response.body)
-      expect(json_response.length).to eq completed_order.line_items(:reload).count
+      expect(json_response.length).to eq completed_order.line_items.reload.count
       expect(json_response[0]['id']).to eq completed_order.line_items.first.id
     end
   end
