@@ -8,7 +8,6 @@ angular.module("ofn.admin", [
   "admin.dropdown",
   "admin.products",
   "admin.taxons",
-  "infinite-scroll",
-  "OFNShared"
+  "infinite-scroll"
 ]).config ($httpProvider) ->
   $httpProvider.defaults.headers.common["Accept"] = "application/json, text/javascript, */*"
