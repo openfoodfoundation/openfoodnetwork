@@ -87,49 +87,6 @@ module Openfoodnetwork
       end
     end
 
-    # Register Spree calculators
-    initializer 'spree.register.calculators' do |app|
-      app.config.spree.calculators.shipping_methods = [
-        Calculator::FlatPercentItemTotal,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack,
-        Calculator::Weight
-      ]
-
-      app.config.spree.calculators.add_class('enterprise_fees')
-      config.spree.calculators.enterprise_fees = [
-        Calculator::FlatPercentPerItem,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack,
-        Calculator::Weight
-      ]
-
-      app.config.spree.calculators.add_class('payment_methods')
-      config.spree.calculators.payment_methods = [
-        Calculator::FlatPercentItemTotal,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack
-      ]
-
-      app.config.spree.calculators.add_class('tax_rates')
-      config.spree.calculators.tax_rates = [
-        Calculator::DefaultTax
-      ]
-    end
-
-    # Register Spree payment methods
-    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Spree::Gateway::StripeConnect
-      app.config.spree.payment_methods << Spree::Gateway::StripeSCA
-      app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
-    end
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
