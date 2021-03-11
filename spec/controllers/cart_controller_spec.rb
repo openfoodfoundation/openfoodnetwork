@@ -110,11 +110,11 @@ describe CartController, type: :controller do
       order = subject.current_order(true)
       allow(order).to receive(:distributor) { distributor }
       allow(order).to receive(:order_cycle) { order_cycle }
-      expect(order).to receive(:set_variant_attributes).with(variant, max_quantity: '3')
+      expect(order).to receive(:set_variant_attributes).with(variant, max_quantity: "3")
       allow(controller).to receive(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: 3 } }
+        spree_post :populate, variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: "3" } }
       end.to change(Spree::LineItem, :count).by(1)
     end
   end

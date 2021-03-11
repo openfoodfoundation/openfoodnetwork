@@ -10,6 +10,8 @@ module Admin
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
+
+      @collection = @collection.to_a
       3.times { @collection << blank_enterprise_fee }
 
       respond_to do |format|

@@ -6,7 +6,7 @@ module Spree
       respond_to :json
 
       def known_users
-        @users = if exact_match = Spree.user_class.find_by(email: params[:q])
+        @users = if exact_match = Spree.user_class.find_by(email: search_params[:q])
                    [exact_match]
                  else
                    spree_current_user.known_users.ransack(ransack_hash).result.limit(10)
@@ -17,11 +17,11 @@ module Spree
 
       def customers
         @customers = []
-        if spree_current_user.enterprises.pluck(:id).include? params[:distributor_id].to_i
+        if spree_current_user.enterprises.pluck(:id).include? search_params[:distributor_id].to_i
           @customers = Customer.
-            ransack(m: 'or', email_start: params[:q], name_start: params[:q]).
+            ransack(m: 'or', email_start: search_params[:q], name_start: search_params[:q]).
             result.
-            where(enterprise_id: params[:distributor_id])
+            where(enterprise_id: search_params[:distributor_id].to_i)
         end
         render json: @customers, each_serializer: ::Api::Admin::CustomerSerializer
       end
@@ -31,12 +31,16 @@ module Spree
       def ransack_hash
         {
           m: 'or',
-          email_start: params[:q],
-          ship_address_firstname_start: params[:q],
-          ship_address_lastname_start: params[:q],
-          bill_address_firstname_start: params[:q],
-          bill_address_lastname_start: params[:q]
+          email_start: search_params[:q],
+          ship_address_firstname_start: search_params[:q],
+          ship_address_lastname_start: search_params[:q],
+          bill_address_firstname_start: search_params[:q],
+          bill_address_lastname_start: search_params[:q]
         }
+      end
+
+      def search_params
+        params.permit(:q, :distributor_id).to_h.with_indifferent_access
       end
     end
   end

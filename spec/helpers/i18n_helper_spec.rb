@@ -4,6 +4,11 @@ require 'spec_helper'
 
 describe I18nHelper, type: :helper do
   let(:user) { create(:user) }
+  let(:cookies) { {} }
+
+  before do
+    allow(helper).to receive(:cookies) { cookies }
+  end
 
   # In the real world, the helper is called in every request and sets
   # I18n.locale to the chosen locale or the default. For testing purposes we
@@ -134,7 +139,7 @@ describe I18nHelper, type: :helper do
     it "remembers the chosen locale on another computer" do
       allow(helper).to receive(:params) { { locale: "es" } }
       helper.set_locale
-      expect(cookies[:locale]).to eq "es"
+      expect(cookies.fetch(:locale)).to eq "es"
 
       # switch computer / browser or loose cookies
       cookies.delete :locale

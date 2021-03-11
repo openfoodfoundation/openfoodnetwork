@@ -164,11 +164,9 @@ module OpenFoodNetwork
 
           let!(:order) do
             create(
-              :order,
+              :completed_order_with_totals,
               distributor: distributor,
-              completed_at: 1.day.ago,
-              state: 'complete',
-              total: 10.0
+              completed_at: 1.day.ago
             )
           end
 
@@ -180,35 +178,22 @@ module OpenFoodNetwork
               '',
               order.email,
               order.billing_address.phone,
+              order.shipment.shipping_method.name,
               nil,
               nil,
-              nil,
-              -10.0
+              -order.total
             ]])
           end
         end
 
         context 'when the report type is not payment_methods' do
           let(:params) { {} }
-
-          let(:shipping_method) { create(:shipping_method) }
-          let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-
           let!(:order) do
             create(
-              :order,
+              :completed_order_with_totals,
               distributor: distributor,
-              completed_at: 1.day.ago,
-              shipments: [shipment]
+              completed_at: 1.day.ago
             )
-          end
-
-          before do
-            line_item = create(:line_item, order: order, price: 10.0, quantity: 1)
-
-            order.state = 'complete'
-            order.ship_address = order.address_from_distributor
-            order.save!
           end
 
           it 'returns rows with delivery information' do
@@ -216,14 +201,14 @@ module OpenFoodNetwork
               order.ship_address.firstname,
               order.ship_address.lastname,
               order.distributor.name,
-              nil,
+              "",
               "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
               order.ship_address.zipcode,
               order.ship_address.phone,
-              shipping_method.name,
+              order.shipment.shipping_method.name,
               nil,
               nil,
-              -10.0,
+              -order.total,
               false,
               order.special_instructions
             ]])
