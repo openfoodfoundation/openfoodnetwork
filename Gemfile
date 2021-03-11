@@ -32,7 +32,7 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 gem 'acts_as_list', '0.9.19'
-gem 'cancancan', '~> 1.7.0'
+gem 'cancancan', '~> 1.15.0'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json'
