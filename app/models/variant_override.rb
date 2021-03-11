@@ -1,3 +1,5 @@
+require 'spree/localized_number'
+
 class VariantOverride < ActiveRecord::Base
   extend Spree::LocalizedNumber
   include StockSettingsOverrideValidation
