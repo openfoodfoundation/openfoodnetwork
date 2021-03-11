@@ -114,13 +114,12 @@ module Admin
 
     protected
 
-    def build_resource_with_address
-      enterprise = build_resource_without_address
+    def build_resource
+      enterprise = super
       enterprise.address ||= Spree::Address.new
       enterprise.address.country ||= Spree::Country.find_by(id: Spree::Config[:default_country_id])
       enterprise
     end
-    alias_method_chain :build_resource, :address
 
     # Overriding method on Spree's resource controller,
     # so that resources are found using permalink

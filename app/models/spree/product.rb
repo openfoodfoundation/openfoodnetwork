@@ -74,6 +74,7 @@ module Spree
     after_create :set_master_variant_defaults
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
     after_save :save_master
+    around_destroy :destroy_with_delete_from_order_cycles
 
     delegate :images, to: :master, prefix: true
     alias_method :images, :master_images
@@ -374,10 +375,9 @@ module Spree
           where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
           select(:id)).destroy_all
 
-        destroy_without_delete_from_order_cycles
+        yield
       end
     end
-    alias_method_chain :destroy, :delete_from_order_cycles
 
     private
 
