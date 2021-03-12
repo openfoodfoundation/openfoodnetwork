@@ -10,6 +10,8 @@ class CheckoutController < ::BaseController
   include OrderCyclesHelper
   include EnterprisesHelper
 
+  helper 'terms_and_conditions'
+  
   ssl_required
 
   # We need pessimistic locking to avoid race conditions.
