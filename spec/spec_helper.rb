@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-unless ENV['CI']
+if ENV["COVERAGE"]
   require 'simplecov'
   SimpleCov.start 'rails'
 end
