@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 20210312095840) do
     t.integer  "order_id"
     t.boolean  "included",                                             default: false
     t.index ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
+    t.index ["order_id"], name: "index_spree_adjustments_on_order_id", using: :btree
   end
 
   create_table "spree_assets", force: :cascade do |t|
