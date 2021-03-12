@@ -23,7 +23,7 @@ module Admin
     def destroy
       @enterprise_relationship = EnterpriseRelationship.find params[:id]
       @enterprise_relationship.destroy
-      render nothing: true
+      render body: nil
     end
 
     private

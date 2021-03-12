@@ -20,7 +20,7 @@ module Admin
     def destroy
       @enterprise_role = EnterpriseRole.find params[:id]
       @enterprise_role.destroy
-      render nothing: true
+      render body: nil
     end
 
     private

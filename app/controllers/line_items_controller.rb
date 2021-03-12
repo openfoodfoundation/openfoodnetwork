@@ -29,11 +29,11 @@ class LineItemsController < BaseController
 
   def unauthorized
     status = spree_current_user ? 403 : 401
-    render(nothing: true, status: status) && return
+    render(body: nil, status: status) && return
   end
 
   def not_found
-    render(nothing: true, status: :not_found) && return
+    render(body: nil, status: :not_found) && return
   end
 
   def destroy_with_lock(item)
