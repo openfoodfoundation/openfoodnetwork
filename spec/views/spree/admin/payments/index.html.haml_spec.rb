@@ -15,7 +15,7 @@ describe "spree/admin/payments/index.html.haml" do
 
   context 'when the order has outstanding balance' do
     before do
-      allow(order).to receive(:outstanding_balance) { 100.00 }
+      allow(order).to receive(:old_outstanding_balance) { 100.00 }
     end
 
     it 'renders the order balance' do
@@ -35,7 +35,7 @@ describe "spree/admin/payments/index.html.haml" do
 
   context 'when the order has no outstanding balance' do
     before do
-      allow(order).to receive(:outstanding_balance) { 0 }
+      allow(order).to receive(:old_outstanding_balance) { 0 }
     end
 
     it 'does not render the order balance' do

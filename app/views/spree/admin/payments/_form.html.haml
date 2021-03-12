@@ -5,7 +5,7 @@
   .alpha.three.columns
     .field
       = f.label :amount, t(:amount)
-      = f.text_field :amount, value: balance.to_f, class: 'fullwidth', "watch-value-as" => 'form_data.amount'
+      = f.text_field :amount, value: @order.outstanding_balance, class: 'fullwidth', "watch-value-as" => 'form_data.amount'
   .omega.nine.columns
     .field
       %label= t(:payment_method)

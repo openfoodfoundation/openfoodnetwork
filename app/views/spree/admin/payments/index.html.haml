@@ -2,7 +2,7 @@
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }
 
 - content_for :page_actions do
-  - if !@balance.zero?
+  - if !@order.outstanding_balance.zero?
     %li#new_payment_section
       = button_link_to t(:new_payment), new_admin_order_payment_url(@order), icon: 'icon-plus'
   = render partial: 'spree/admin/shared/order_links'
@@ -12,11 +12,11 @@
   %i.icon-arrow-right
   = t(:payments)
 
-- if !@balance.zero?
+- if !@order.outstanding_balance.zero?
   %h5.outstanding-balance
-    = @balance.label
+    = @order.outstanding_balance.label
     \:
-    %strong= @balance.amount
+    %strong= @order.outstanding_balance.amount
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }

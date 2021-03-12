@@ -7,6 +7,22 @@ require 'active_support/concern'
 module Balance
   FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
+  # Branches by the OrderBalance abstraction
+  def outstanding_balance
+    OrderBalance.new(self)
+  end
+
+  # This method is the one we're gradually replacing with `#new_outstanding_balance`. Having them
+  # separate enables us to choose which implementation we want depending on the context using
+  # a feature toggle. This avoids incosistent behavior across the app during that incremental
+  # refactoring.
+  #
+  # It is meant to be removed as soon as we get product approval that the new implementation has
+  # been working correctly in production.
+  def old_outstanding_balance
+    total - payment_total
+  end
+
   # Returns the order balance by considering the total as money owed to the order distributor aka.
   # the shop, and as a positive balance of said enterprise. If the customer pays it all, they
   # distributor and customer are even.
@@ -22,14 +38,4 @@ module Balance
     end
   end
 
-  # This method is the one we're gradually replacing with `#new_outstanding_balance`. Having them
-  # separate enables us to choose which implementation we want depending on the context using
-  # a feature toggle. This avoids incosistent behavior across the app during that incremental
-  # refactoring.
-  #
-  # It is meant to be removed as soon as we get product approval that the new implementation has
-  # been working correctly in production.
-  def outstanding_balance
-    total - payment_total
-  end
 end

@@ -390,7 +390,7 @@ describe Spree::Payment do
           end
 
           it "resulting payment should have correct values" do
-            allow(payment.order).to receive(:outstanding_balance) { 100 }
+            allow(payment.order).to receive(:old_outstanding_balance) { 100 }
             allow(payment).to receive(:credit_allowed) { 10 }
 
             offsetting_payment = payment.credit!
@@ -733,7 +733,8 @@ describe Spree::Payment do
         end
 
         context 'when the outstanding balance is larger' do
-          let(:order) { instance_double(Spree::Order, outstanding_balance: 1000, user: user) }
+          let(:order) { build(:order, user: user) }
+          before { allow(order).to receive(:old_outstanding_balance) { 1000 } }
 
           it "refunds up to the value of the payment" do
             allow(payment).to receive(:credit_allowed) { 123 }
@@ -743,7 +744,9 @@ describe Spree::Payment do
         end
 
         context 'when the payment is larger' do
-          let(:order) { instance_double(Spree::Order, outstanding_balance: 123, user: user) }
+          let(:order) { build(:order, user: user) }
+
+          before { allow(order).to receive(:old_outstanding_balance) { 123 } }
 
           it "refunds up to the outstanding balance of the order" do
             allow(payment).to receive(:credit_allowed) { 1000 }

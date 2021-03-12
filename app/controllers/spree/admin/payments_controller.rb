@@ -12,13 +12,11 @@ module Spree
 
       def index
         @payments = @order.payments
-        @balance = OrderBalance.new(@order)
         redirect_to spree.new_admin_order_payment_url(@order) if @payments.empty?
       end
 
       def new
         @payment = @order.payments.build
-        @balance = OrderBalance.new(@order)
       end
 
       def create

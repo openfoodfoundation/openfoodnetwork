@@ -26,7 +26,7 @@ module OrderManagement
               allow(OpenFoodNetwork::FeatureToggle)
                 .to receive(:enabled?).with(:customer_balance, user) { false }
 
-              allow(order).to receive(:outstanding_balance) { 5 }
+              allow(order).to receive(:old_outstanding_balance) { 5 }
             end
 
             it "creates a new payment on the order" do
@@ -54,14 +54,15 @@ module OrderManagement
           before { allow(order).to receive(:pending_payments).once { [payment] } }
 
           context "when the payment total doesn't match the outstanding balance on the order" do
-            before { allow(order).to receive(:outstanding_balance) { 5 } }
+            before { allow(order).to receive(:old_outstanding_balance) { 5 } }
+
             it "updates the payment total to reflect the outstanding balance" do
               expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
             end
           end
 
           context "when the payment total matches the outstanding balance on the order" do
-            before { allow(order).to receive(:outstanding_balance) { 10 } }
+            before { allow(order).to receive(:old_outstanding_balance) { 10 } }
 
             it "does nothing" do
               expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
@@ -74,7 +75,7 @@ module OrderManagement
           let!(:payment2) { create(:payment, order: order) }
 
           before do
-            allow(order).to receive(:outstanding_balance) { 7 }
+            allow(order).to receive(:old_outstanding_balance) { 7 }
             allow(order).to receive(:pending_payments).once { [payment1, payment2] }
           end
 

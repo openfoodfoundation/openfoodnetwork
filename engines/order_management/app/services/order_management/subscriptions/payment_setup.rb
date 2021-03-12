@@ -11,8 +11,7 @@ module OrderManagement
         payment = create_payment
         return if @order.errors.any?
 
-        balance = OrderBalance.new(@order)
-        payment.update(amount: balance.to_f)
+        payment.update(amount: @order.outstanding_balance.to_f)
         payment
       end
 
