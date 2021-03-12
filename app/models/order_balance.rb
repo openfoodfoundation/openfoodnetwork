@@ -21,6 +21,10 @@ class OrderBalance
     end
   end
 
+  def to_html
+    "#{label}:<strong>#{amount}</strong>".html_safe
+  end
+
   delegate :zero?, :abs, :to_s, to: :to_f
 
   private

@@ -1,9 +1,7 @@
 %p.callout
   %span{:style => "float:right;"}
     - if !@order.outstanding_balance.zero?
-      = @order.outstanding_balance.label
-      \:
-      %strong= @order.outstanding_balance.amount
+      = @order.outstanding_balance.to_html
     - else
       - if @order.paid?
         = t :email_payment_paid

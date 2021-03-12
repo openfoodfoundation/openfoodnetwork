@@ -14,9 +14,7 @@
 
 - if !@order.outstanding_balance.zero?
   %h5.outstanding-balance
-    = @order.outstanding_balance.label
-    \:
-    %strong= @order.outstanding_balance.amount
+    = @order.outstanding_balance.to_html
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }
