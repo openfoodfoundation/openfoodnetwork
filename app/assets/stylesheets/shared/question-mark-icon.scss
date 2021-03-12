@@ -1,3 +1,5 @@
+@import "variables/variables";
+
 .unit-price {
   display: flex;
   align-items: center;
@@ -25,6 +27,10 @@
   &.open {
     background-image: none;
     background-color: $teal-500;
+
+    &:focus {
+      outline: 0;
+    }
 
     &::before {
       @include icon-font;
