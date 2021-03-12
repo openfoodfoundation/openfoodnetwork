@@ -7,7 +7,7 @@ describe BaseController, type: :controller do
   let(:order) { instance_double(Spree::Order) }
   controller(BaseController) do
     def index
-      render text: ""
+      render plain: ""
     end
   end
 

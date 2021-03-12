@@ -32,7 +32,7 @@ module Api
     private
 
     def render_variant_count
-      render text: {
+      render plain: {
         count: variants.count
       }.to_json
     end
