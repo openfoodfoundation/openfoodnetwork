@@ -6,9 +6,6 @@ class CheckoutController < ::BaseController
   layout 'darkswarm'
 
   include OrderStockCheck
-  include CheckoutHelper
-  include OrderCyclesHelper
-  include EnterprisesHelper
 
   helper 'terms_and_conditions'
   helper 'checkout'
