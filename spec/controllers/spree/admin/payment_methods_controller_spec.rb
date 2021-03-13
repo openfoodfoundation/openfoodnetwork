@@ -52,6 +52,54 @@ module Spree
     end
 
     describe "#update" do
+      context "updating a payment method" do
+        let!(:payment_method) { create(:payment_method, :flat_rate) }
+        let(:params) {
+          {
+            id: payment_method.id,
+            payment_method: {
+              name: "Updated",
+              description: "Updated",
+              type: "Spree::PaymentMethod::Check",
+              calculator_attributes: {
+                id: payment_method.calculator.id,
+                preferred_amount: 456,
+                preferred_currency: "GBP"
+              }
+            }
+          }
+        }
+
+        before { controller_login_as_admin }
+
+        it "updates the payment method" do
+          spree_post :update, params
+          payment_method.reload
+
+          expect(payment_method.name).to eq "Updated"
+          expect(payment_method.description).to eq "Updated"
+          expect(payment_method.calculator.preferred_amount).to eq 456
+          expect(payment_method.calculator.preferred_currency).to eq "GBP"
+        end
+
+        context "when the given payment method type does not match" do
+          let(:params) {
+            {
+              id: payment_method.id,
+              payment_method: {
+                type: "Spree::Gateway::Bogus"
+              }
+            }
+          }
+
+          it "updates the payment method type" do
+            spree_post :update, params
+
+            expect(PaymentMethod.find(payment_method.id).type).to eq "Spree::Gateway::Bogus"
+          end
+        end
+      end
+
       context "on a StripeConnect payment method" do
         let!(:user) { create(:user, enterprise_limit: 2) }
         let!(:enterprise1) { create(:distributor_enterprise, owner: user) }
@@ -61,7 +109,15 @@ module Spree
         before { allow(controller).to receive(:spree_current_user) { user } }
 
         context "when an attempt is made to change the stripe account holder (preferred_enterprise_id)" do
-          let(:params) { { id: payment_method.id, payment_method: { type: "Spree::Gateway::StripeConnect", preferred_enterprise_id: enterprise1.id } } }
+          let(:params) {
+            {
+              id: payment_method.id,
+              payment_method: {
+                type: "Spree::Gateway::StripeConnect",
+                preferred_enterprise_id: enterprise1.id
+              }
+            }
+          }
 
           context "as a user that does not manage the existing stripe account holder" do
             it "prevents the stripe account holder from being updated" do
