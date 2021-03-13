@@ -185,7 +185,6 @@ RSpec.configure do |config|
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
-  config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
   config.include ControllerRequestsHelper, type: :controller
