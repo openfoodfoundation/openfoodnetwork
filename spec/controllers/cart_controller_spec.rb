@@ -82,7 +82,7 @@ describe CartController, type: :controller do
     end
 
     it "returns the variant override stock levels of the variant in the order" do
-      spree_post :populate, params: { variants: { variant_in_the_order.id => 1 } }
+      spree_post :populate, variants: { variant_in_the_order.id => 1 }
 
       data = JSON.parse(response.body)
       expect(data['stock_levels'][variant_in_the_order.id.to_s]["on_hand"]).to eq 20
@@ -93,7 +93,7 @@ describe CartController, type: :controller do
       # If the variant was not added to the order, VariantsStockLevels alternative calculation would fail
       # See #3222 for more details
       # This indicates that the VariantsStockLevels alternative calculation is never reached
-      spree_post :populate, params: { variants: { variant_not_in_the_order.id => 1 } }
+      spree_post :populate, variants: { variant_not_in_the_order.id => 1 }
 
       data = JSON.parse(response.body)
       expect(data['stock_levels'][variant_not_in_the_order.id.to_s]["on_hand"]).to eq 7
@@ -114,7 +114,7 @@ describe CartController, type: :controller do
       allow(controller).to receive(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, params: { variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: "3" } } }
+        spree_post :populate, variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: "3" } }
       end.to change(Spree::LineItem, :count).by(1)
     end
   end

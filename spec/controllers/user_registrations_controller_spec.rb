@@ -25,7 +25,7 @@ describe UserRegistrationsController, type: :controller do
     end
 
     it "returns validation errors" do
-      xhr :post, :create, spree_user: {}, use_route: :spree
+      post :create, xhr: true, params: { spree_user: {}, use_route: :spree }
       expect(response.status).to eq(401)
       json = JSON.parse(response.body)
       expect(json).to eq("email" => ["can't be blank"], "password" => ["can't be blank"])
@@ -35,7 +35,7 @@ describe UserRegistrationsController, type: :controller do
       allow(Spree::UserMailer).to receive(:confirmation_instructions).and_raise("Some error")
       expect(OpenFoodNetwork::ErrorLogger).to receive(:notify)
 
-      xhr :post, :create, spree_user: user_params, use_route: :spree
+      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
 
       expect(response.status).to eq(401)
       json = JSON.parse(response.body)
@@ -43,7 +43,7 @@ describe UserRegistrationsController, type: :controller do
     end
 
     it "returns 200 when registration succeeds" do
-      xhr :post, :create, spree_user: user_params, use_route: :spree
+      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
       expect(json).to eq("email" => "test@test.com")
@@ -55,7 +55,7 @@ describe UserRegistrationsController, type: :controller do
       original_locale_cookie = cookies[:locale]
 
       cookies[:locale] = "pt"
-      xhr :post, :create, spree_user: user_params, use_route: :spree
+      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
       expect(assigns[:user].locale).to eq("pt")
 
       I18n.locale = original_i18n_locale
