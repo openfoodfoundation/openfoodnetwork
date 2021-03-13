@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require 'checkout_helper'
+
 describe "spree/shared/_order_details.html.haml" do
   include AuthenticationHelper
   helper Spree::BaseHelper

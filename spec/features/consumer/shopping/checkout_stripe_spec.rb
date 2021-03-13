@@ -5,7 +5,7 @@ require 'spec_helper'
 feature "Check out with Stripe", js: true do
   include AuthenticationHelper
   include ShopWorkflow
-  include CheckoutHelper
+  include CheckoutRequestsHelper
   include StripeHelper
   include StripeStubs
 
