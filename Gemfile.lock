@@ -88,7 +88,7 @@ GEM
       activemodel (= 5.0.7.2)
       activesupport (= 5.0.7.2)
       arel (~> 7.0)
-    activerecord-import (1.0.7)
+    activerecord-import (1.0.8)
       activerecord (>= 3.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
@@ -495,12 +495,16 @@ GEM
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
     sass (3.4.25)
-    sass-rails (5.0.7)
-      railties (>= 4.0.0, < 6)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
+    sass-rails (6.0.0)
+      sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     select2-rails (3.4.9)
       sass-rails
       thor (~> 0.14)
@@ -680,7 +684,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   sass (<= 4.7.1)
-  sass-rails (< 6.0.0)
+  sass-rails (< 7.0.0)
   select2-rails (~> 3.4.7)
   selenium-webdriver
   shoulda-matchers
