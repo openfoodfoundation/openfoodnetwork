@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-unless ENV['CI']
-  require 'simplecov'
-  SimpleCov.start 'rails'
-end
+require 'simplecov' if ENV["COVERAGE"]
 
 require 'rubygems'
 
@@ -24,7 +21,6 @@ require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
 require 'rspec/retry'
-require 'coverage_helper'
 require 'paper_trail/frameworks/rspec'
 
 require 'webdrivers'
