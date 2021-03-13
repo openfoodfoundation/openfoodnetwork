@@ -17,7 +17,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:valid?) { true }
       allow(cart_service).to receive(:variants_h) { {} }
-      xhr :post, :populate, use_route: :spree, format: :json
+      post :populate, xhr: true, params: { use_route: :spree, format: :json }
       expect(response.status).to eq(200)
     end
 
@@ -26,7 +26,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:valid?) { false }
       allow(cart_service).to receive(:errors) { errors }
       allow(errors).to receive(:full_messages).and_return(["Error: foo"])
-      xhr :post, :populate, use_route: :spree, format: :json
+      post :populate, xhr: true, params: { use_route: :spree, format: :json }
       expect(response.status).to eq(412)
     end
 
@@ -34,7 +34,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:variants_h) { {} }
       allow(cart_service).to receive(:valid?) { true }
       expect(cart_service).to receive(:populate).with({}, true)
-      xhr :post, :populate, use_route: :spree, format: :json
+      post :populate, xhr: true, params: { use_route: :spree, format: :json }
     end
 
     it "returns stock levels as JSON on success" do
@@ -44,7 +44,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:valid?) { true }
       allow(cart_service).to receive(:variants_h) { {} }
 
-      xhr :post, :populate, use_route: :spree, format: :json
+      post :populate, xhr: true, params: { use_route: :spree, format: :json }
 
       data = JSON.parse(response.body)
       expect(data['stock_levels']).to eq('my_stock_levels')
@@ -82,7 +82,7 @@ describe CartController, type: :controller do
     end
 
     it "returns the variant override stock levels of the variant in the order" do
-      spree_post :populate, variants: { variant_in_the_order.id => 1 }
+      spree_post :populate, params: { variants: { variant_in_the_order.id => 1 } }
 
       data = JSON.parse(response.body)
       expect(data['stock_levels'][variant_in_the_order.id.to_s]["on_hand"]).to eq 20
@@ -93,7 +93,7 @@ describe CartController, type: :controller do
       # If the variant was not added to the order, VariantsStockLevels alternative calculation would fail
       # See #3222 for more details
       # This indicates that the VariantsStockLevels alternative calculation is never reached
-      spree_post :populate, variants: { variant_not_in_the_order.id => 1 }
+      spree_post :populate, params: { variants: { variant_not_in_the_order.id => 1 } }
 
       data = JSON.parse(response.body)
       expect(data['stock_levels'][variant_not_in_the_order.id.to_s]["on_hand"]).to eq 7
@@ -114,7 +114,7 @@ describe CartController, type: :controller do
       allow(controller).to receive(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: "3" } }
+        spree_post :populate, params: { variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: "3" } } }
       end.to change(Spree::LineItem, :count).by(1)
     end
   end
