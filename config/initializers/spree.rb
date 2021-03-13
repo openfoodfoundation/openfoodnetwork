@@ -6,76 +6,7 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-ActiveRecord::Base.include Spree::Preferences::Preferable
-
-Rails.application.config.spree = Spree::Core::Environment.new
-Spree::Config = Rails.application.config.spree.preferences # legacy access
-
 require 'spree/core'
-
-Rails.application.config do |app|
-  app.config.spree.payment_methods = [
-    Spree::Gateway::Bogus,
-    Spree::Gateway::BogusSimple,
-    Spree::PaymentMethod::Check,
-    Spree::Gateway::StripeConnect,
-    Spree::Gateway::StripeSCA,
-    Spree::Gateway::PayPalExpress
-  ]
-
-  Spree::Core::MailSettings.init
-  Mail.register_interceptor(Spree::Core::MailInterceptor)
-
-  # filter sensitive information during logging
-  app.config.filter_parameters += [
-    :password,
-    :password_confirmation,
-    :number,
-    :verification_value
-  ]
-
-  Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
-  Spree::Config['currency'] = ENV['CURRENCY']
-  if Spree::Country.table_exists?
-    country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
-    Spree::Config['default_country_id'] = country.id if country.present?
-  else
-    Spree::Config['default_country_id'] = 12  # Australia
-  end
-
-  app.config.spree.calculators.shipping_methods = [
-    Calculator::FlatPercentItemTotal,
-    Calculator::FlatRate,
-    Calculator::FlexiRate,
-    Calculator::PerItem,
-    Calculator::PriceSack,
-    Calculator::Weight
-  ]
-
-  app.config.spree.calculators.add_class('enterprise_fees')
-  config.spree.calculators.enterprise_fees = [
-    Calculator::FlatPercentPerItem,
-    Calculator::FlatRate,
-    Calculator::FlexiRate,
-    Calculator::PerItem,
-    Calculator::PriceSack,
-    Calculator::Weight
-  ]
-
-  app.config.spree.calculators.add_class('payment_methods')
-  config.spree.calculators.payment_methods = [
-    Calculator::FlatPercentItemTotal,
-    Calculator::FlatRate,
-    Calculator::FlexiRate,
-    Calculator::PerItem,
-    Calculator::PriceSack
-  ]
-
-  app.config.spree.calculators.add_class('tax_rates')
-  config.spree.calculators.tax_rates = [
-    Calculator::DefaultTax
-  ]
-end
 
 # Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
 # should have inherited it from its parent PaymentMethod.
