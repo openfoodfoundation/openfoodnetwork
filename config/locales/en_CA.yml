@@ -1253,7 +1253,7 @@ en_CA:
   invoice_tax_total: "Sales Tax Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
-  total_excl_tax: "Total (Excl. tax):"
+  total_excl_tax: "Total (incl. shipping tax if applicable)"
   total_incl_tax: "Total (Incl. tax):"
   abn: "Business Number:"
   acn: "Business Number:"
@@ -3181,7 +3181,7 @@ en_CA:
           code: "Code"
           from: "From"
           to: "Bill to"
-          shipping: "Shipping"
+          shipping: "Delivery/Pick-up"
         form:
           distribution_fields:
             title: "Distribution"
