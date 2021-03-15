@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210216203057) do
+ActiveRecord::Schema.define(version: 20210312095840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,6 +399,7 @@ ActiveRecord::Schema.define(version: 20210216203057) do
   end
 
   add_index "spree_adjustments", ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
+  add_index "spree_adjustments", ["order_id"], name: "index_spree_adjustments_on_order_id", using: :btree
 
   create_table "spree_assets", force: :cascade do |t|
     t.integer  "viewable_id"
