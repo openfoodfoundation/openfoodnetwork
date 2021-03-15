@@ -21,6 +21,9 @@ module Spree
           expect(a.label).to eq('Testing included tax')
           expect(a.amount).to eq(110)
           expect(a.included_tax).to eq(0)
+          expect(a.order_id).to eq(order.id)
+
+          expect(order.reload.total).to eq 110
         end
 
         it "calculates included tax when a tax rate is provided" do
@@ -31,6 +34,9 @@ module Spree
           expect(a.label).to eq('Testing included tax')
           expect(a.amount).to eq(110)
           expect(a.included_tax).to eq(10)
+          expect(a.order_id).to eq(order.id)
+
+          expect(order.reload.total).to eq 110
         end
       end
 
@@ -47,6 +53,9 @@ module Spree
           expect(a.label).to eq('Testing included tax')
           expect(a.amount).to eq(110)
           expect(a.included_tax).to eq(0)
+          expect(a.order_id).to eq(order.id)
+
+          expect(order.reload.total).to eq 110
         end
 
         it "calculates included tax when a tax rate is provided" do
@@ -57,6 +66,9 @@ module Spree
           expect(a.label).to eq('Testing included tax')
           expect(a.amount).to eq(110)
           expect(a.included_tax).to eq(10)
+          expect(a.order_id).to eq(order.id)
+
+          expect(order.reload.total).to eq 110
         end
       end
     end
