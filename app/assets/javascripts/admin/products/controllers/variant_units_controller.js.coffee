@@ -1,4 +1,4 @@
-angular.module("admin.products").controller "variantUnitsCtrl", ($scope, VariantUnitManager, $timeout, UnitPrices, localizeCurrencyFilter) ->
+angular.module("admin.products").controller "variantUnitsCtrl", ($scope, VariantUnitManager, $timeout, UnitPrices) ->
 
   $scope.unitName = (scale, type) ->
     VariantUnitManager.getUnitName(scale, type)
@@ -17,11 +17,7 @@ angular.module("admin.products").controller "variantUnitsCtrl", ($scope, Variant
       else 
         unit_value = 1
       variant_unit_name = angular.element("#product_variant_unit_name").val()
-      $scope.unit_price = null
-      if price && !isNaN(price) && unit_type && unit_value
-        value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
-        unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
-        $scope.unit_price = value + " / " + unit
+      $scope.unit_price = UnitPrices.displayableUnitPrice(price, scale, unit_type, unit_value, variant_unit_name)
 
   $scope.scale = angular.element('#product_variant_unit_scale').val()
 

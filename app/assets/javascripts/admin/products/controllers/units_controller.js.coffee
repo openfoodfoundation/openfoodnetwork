@@ -1,5 +1,5 @@
 angular.module("admin.products")
-  .controller "unitsCtrl", ($scope, VariantUnitManager, OptionValueNamer, UnitPrices, localizeCurrencyFilter) ->
+  .controller "unitsCtrl", ($scope, VariantUnitManager, OptionValueNamer, UnitPrices) ->
     $scope.product = { master: {} }
     $scope.product.master.product = $scope.product
     $scope.placeholder_text = ""
@@ -39,11 +39,7 @@ angular.module("admin.products")
       unit_type = $scope.product.variant_unit
       unit_value = $scope.product.master.unit_value
       variant_unit_name = $scope.product.variant_unit_name
-      $scope.unit_price = null
-      if price && !isNaN(price) && unit_type && unit_value
-        value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
-        unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
-        $scope.unit_price = value + " / " + unit
+      $scope.unit_price = UnitPrices.displayableUnitPrice(price, scale, unit_type, unit_value, variant_unit_name)
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0

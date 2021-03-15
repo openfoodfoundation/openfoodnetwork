@@ -1,10 +1,16 @@
 describe "UnitPrices service", ->
   UnitPrices = null
+  currencyconfig =
+    symbol: "$"
+    symbol_position: "before"
+    currency: "D"
+    hide_cents: "false"
   
   beforeEach ->
     module "admin.products"
     module ($provide)->
       $provide.value "availableUnits", "g,kg,T,mL,L,kL,oz,lb"
+      $provide.value "currencyConfig", currencyconfig
       null
     inject (_UnitPrices_) ->
       UnitPrices = _UnitPrices_
