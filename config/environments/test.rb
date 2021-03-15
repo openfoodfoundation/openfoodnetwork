@@ -31,7 +31,7 @@ Openfoodnetwork::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  config.time_zone = "UTC"
+  config.time_zone = ENV.fetch("TIMEZONE", "UTC")
 
   # Tests assume English text on the site.
   config.i18n.default_locale = "en"
