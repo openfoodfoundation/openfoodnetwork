@@ -5,6 +5,7 @@ module Spree
       destroy.after :reload_order
 
       prepend_before_action :set_included_tax, only: [:create, :update]
+      before_action :set_order_id, only: [:create, :update]
       before_action :set_default_tax_rate, only: :edit
       before_action :enable_updates, only: :update
 
@@ -20,6 +21,10 @@ module Spree
 
       def find_resource
         parent.all_adjustments.eligible.find(params[:id])
+      end
+
+      def set_order_id
+        @adjustment.order_id = parent.id
       end
 
       # Choose a default tax rate to show on the edit form. The adjustment stores its included
