@@ -16,7 +16,7 @@ describe OrderBalance do
 
       context 'when the balance is postive' do
         before do
-          allow(order).to receive(:outstanding_balance) { 10 }
+          allow(order).to receive(:old_outstanding_balance) { 10 }
         end
 
         it "returns 'balance due'" do
@@ -26,7 +26,7 @@ describe OrderBalance do
 
       context 'when the balance is negative' do
         before do
-          allow(order).to receive(:outstanding_balance) { -10 }
+          allow(order).to receive(:old_outstanding_balance) { -10 }
         end
 
         it "returns 'credit owed'" do
@@ -36,7 +36,7 @@ describe OrderBalance do
 
       context 'when the balance is zero' do
         before do
-          allow(order).to receive(:outstanding_balance) { 0 }
+          allow(order).to receive(:old_outstanding_balance) { 0 }
         end
 
         it "returns 'balance due'" do
@@ -86,7 +86,7 @@ describe OrderBalance do
   describe '#amount' do
     context 'when the customer_balance feature is disabled' do
       before do
-        allow(order).to receive(:outstanding_balance) { 10 }
+        allow(order).to receive(:old_outstanding_balance) { 10 }
       end
 
       before do
@@ -124,7 +124,7 @@ describe OrderBalance do
 
       context 'when the balance is zero' do
         before do
-          allow(order).to receive(:outstanding_balance) { 0 }
+          allow(order).to receive(:old_outstanding_balance) { 0 }
         end
 
         it 'returns true' do
@@ -134,7 +134,7 @@ describe OrderBalance do
 
       context 'when the balance is positive' do
         before do
-          allow(order).to receive(:outstanding_balance) { 10 }
+          allow(order).to receive(:old_outstanding_balance) { 10 }
         end
 
         it 'returns false' do
@@ -144,7 +144,7 @@ describe OrderBalance do
 
       context 'when the balance is negative' do
         before do
-          allow(order).to receive(:outstanding_balance) { -10 }
+          allow(order).to receive(:old_outstanding_balance) { -10 }
         end
 
         it 'returns false' do
@@ -199,7 +199,7 @@ describe OrderBalance do
       end
 
       it 'calls #outstanding_balance' do
-        expect(order).to receive(:outstanding_balance)
+        expect(order).to receive(:old_outstanding_balance)
         order_balance.to_f
       end
     end
@@ -213,6 +213,114 @@ describe OrderBalance do
       it 'calls #new_outstanding_balance' do
         expect(order).to receive(:new_outstanding_balance)
         order_balance.to_f
+      end
+    end
+  end
+
+  describe '#abs' do
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      context 'when the balance is zero' do
+        before do
+          allow(order).to receive(:old_outstanding_balance) { 0 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(0)
+        end
+      end
+
+      context 'when the balance is positive' do
+        before do
+          allow(order).to receive(:old_outstanding_balance) { 10 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(10)
+        end
+      end
+
+      context 'when the balance is negative' do
+        before do
+          allow(order).to receive(:old_outstanding_balance) { -10 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(10)
+        end
+      end
+    end
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      context 'when the balance is zero' do
+        before do
+          allow(order).to receive(:new_outstanding_balance) { 0 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(0)
+        end
+      end
+
+      context 'when the balance is positive' do
+        before do
+          allow(order).to receive(:new_outstanding_balance) { 10 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(10)
+        end
+      end
+
+      context 'when the balance is negative' do
+        before do
+          allow(order).to receive(:new_outstanding_balance) { -10 }
+        end
+
+        it 'returns its absolute value' do
+          expect(order_balance.abs).to eq(10)
+        end
+      end
+    end
+  end
+
+  describe '#to_s' do
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      before do
+        allow(order).to receive(:old_outstanding_balance) { 10 }
+      end
+
+      it 'returns the balance as a string' do
+        expect(order_balance.to_s).to eq('10')
+      end
+    end
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      before do
+        allow(order).to receive(:new_outstanding_balance) { 10 }
+      end
+
+      it 'returns the balance as a string' do
+        expect(order_balance.to_s).to eq('10')
       end
     end
   end

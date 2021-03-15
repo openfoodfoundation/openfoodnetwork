@@ -100,7 +100,7 @@ module OpenFoodNetwork
          proc { |orders| orders.first.distributor.name },
          proc { |orders| orders.to_a.sum(&:item_total) },
          proc { |orders| orders.sum(&:ship_total) },
-         proc { |orders| orders.sum(&:outstanding_balance) },
+         proc { |orders| orders.sum { |order| order.outstanding_balance.to_f } },
          proc { |orders| orders.map(&:total).sum }]
       when "payment_totals"
         [proc { |orders| orders.first.payment_state },
@@ -124,7 +124,7 @@ module OpenFoodNetwork
              }.sum(&:amount)
            }
          },
-         proc { |orders| orders.sum(&:outstanding_balance) }]
+         proc { |orders| orders.sum { |order| order.outstanding_balance.to_f } }]
       else
         [proc { |payments| payments.first.order.payment_state },
          proc { |payments| payments.first.order.distributor.name },
