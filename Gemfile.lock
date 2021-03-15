@@ -319,9 +319,9 @@ GEM
     mini_racer (0.3.1)
       libv8 (~> 8.4.255)
     minitest (5.14.4)
-    monetize (1.10.0)
+    monetize (1.11.0)
       money (~> 6.12)
-    money (6.14.0)
+    money (6.14.1)
       i18n (>= 0.6.4, <= 2)
     msgpack (1.4.2)
     multi_json (1.15.0)
@@ -651,7 +651,7 @@ DEPENDENCIES
   knapsack
   letter_opener (>= 1.4.1)
   mini_racer (= 0.3.1)
-  monetize (~> 1.10)
+  monetize (~> 1.11)
   oauth2 (~> 1.4.4)
   ofn-qz!
   order_management!
