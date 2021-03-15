@@ -43,6 +43,25 @@ feature "As a consumer, I want to check unit price information for a product", j
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
       expect(page).to have_no_content I18n.t('js.shopfront.unit_price_tooltip')
     end
+  end
 
+  describe "into the cart sidebar" do
+    before do
+      visit shop_path
+      click_button "Add"
+      toggle_cart
+    end
+    
+    it "shows/hide the unit price information with the question mark icon in the sidebar" do
+      expect(page).to have_selector ".cart-content .question-mark-icon"
+      find(".cart-content .question-mark-icon").click
+      expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
+      within '.joyride-tip-guide.question-mark-tooltip' do 
+        expect(page).to have_content I18n.t('js.shopfront.unit_price_tooltip')
+      end
+      page.find("body").click
+      expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
+      expect(page).to have_no_content I18n.t('js.shopfront.unit_price_tooltip')
+    end
   end
 end
