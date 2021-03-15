@@ -1188,6 +1188,7 @@ fr_CA:
     mailers:
       powered_by:
         open_food_network: "Open Food Network "
+        powered_html: "Cette commande a été rendue possible par %{open_food_network}."
     menu:
       cart:
         cart: "Panier"
@@ -2896,6 +2897,7 @@ fr_CA:
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
+    back_to_payments_list: "Retour à la liste des paiements"
     return_authorizations: "Autorisations de retours"
     cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"
@@ -3465,6 +3467,7 @@ fr_CA:
       pending: en attente
       ready: prêt
       shipped: envoyé
+      canceled: Annulé
     payment_states:
       balance_due: solde dû
       completed: effectué
@@ -3587,6 +3590,8 @@ fr_CA:
         past_orders: Commandes Passées
       transactions:
         transaction_history: Historique des Transactions
+        authorisation_required: Autorisation nécessaire
+        authorise: Autorise
       open_orders:
         order: Commander
         shop: Faire mes courses
