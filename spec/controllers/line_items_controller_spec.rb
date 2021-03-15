@@ -91,9 +91,8 @@ describe LineItemsController, type: :controller do
 
                 it 'updates the payment state' do
                   expect(order.payment_state).to eq 'paid'
-                  delete :destroy, params
-                  expect(response.status).to eq 204
-                  order.update!
+                  delete :destroy, params           
+                  order.reload
                   expect(order.payment_state).to eq 'credit_owed'
                 end
               end
