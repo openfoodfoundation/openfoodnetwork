@@ -285,6 +285,18 @@ module Api
           expect(order.reload.pending_payments.empty?).to be true
           expect_order
         end
+
+        context "when payment is not required" do
+          before do
+            allow_any_instance_of(Spree::Order).to receive(:payment_required?) { false }
+          end
+
+          it "returns an error" do
+            put :capture, params: { id: order.number }
+
+            expect(json_response['error']).to eq I18n.t(:payment_processing_failed)
+          end
+        end
       end
 
       describe "#ship" do

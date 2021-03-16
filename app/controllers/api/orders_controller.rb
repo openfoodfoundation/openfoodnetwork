@@ -47,7 +47,7 @@ module Api
     private
 
     def payment_capture_failed
-      render json: { error: t(:payment_processing_failed) }, status: :unprocessable_entity
+      render json: { error: I18n.t(:payment_processing_failed) }, status: :unprocessable_entity
     end
 
     def serialized_orders(orders)
