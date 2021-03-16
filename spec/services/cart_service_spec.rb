@@ -55,7 +55,7 @@ describe CartService do
         order.add_variant variant, 1, 2
 
         cart_service.populate({ variants: {} }, true)
-        order.line_items(:reload)
+        order.line_items.reload
         li = order.find_line_item_by_variant(variant)
         expect(li).not_to be
       end

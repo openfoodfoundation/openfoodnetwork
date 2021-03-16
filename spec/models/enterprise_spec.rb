@@ -103,7 +103,7 @@ describe Enterprise do
 
       it "validates ownership limit" do
         expect(u1.enterprise_limit).to be 5
-        expect(u1.owned_enterprises(:reload)).to eq [e]
+        expect(u1.owned_enterprises.reload).to eq [e]
         4.times { create(:enterprise, owner: u1) }
         e2 = create(:enterprise, owner: u2)
         expect {
