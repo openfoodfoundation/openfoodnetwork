@@ -786,13 +786,13 @@ describe Spree::Order do
 
     it "removes the variant's line item" do
       order.remove_variant v1
-      expect(order.line_items(:reload).map(&:variant)).to eq([v2])
+      expect(order.line_items.reload.map(&:variant)).to eq([v2])
     end
 
     it "does nothing when there is no matching line item" do
       expect do
         order.remove_variant v3
-      end.to change(order.line_items(:reload), :count).by(0)
+      end.to change(order.line_items.reload, :count).by(0)
     end
 
     context "when the item has an associated adjustment" do
@@ -809,7 +809,7 @@ describe Spree::Order do
 
       it "removes the variant's line item" do
         order.remove_variant v1
-        expect(order.line_items(:reload).map(&:variant)).to eq([v2])
+        expect(order.line_items.reload.map(&:variant)).to eq([v2])
       end
 
       it "removes the variant's adjustment" do

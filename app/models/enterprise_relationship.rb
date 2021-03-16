@@ -81,7 +81,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   end
 
   def has_permission?(name)
-    permissions(:reload).map(&:name).map(&:to_sym).include? name.to_sym
+    permissions.reload.map(&:name).map(&:to_sym).include? name.to_sym
   end
 
   private
