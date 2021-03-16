@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "General Settings" do
   include AuthenticationHelper
 
-  before(:each) do
+  before do
     login_as_admin_and_visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "General Settings"
@@ -24,16 +24,25 @@ describe "General Settings" do
       fill_in "site_name", with: "OFN Demo Site99"
       click_button "Update"
 
-      assert_successful_update_message(:general_settings)
-
+      within("[class='flash success']") do
+        expect(page).to have_content(Spree.t(:successfully_updated, resource: Spree.t(:general_settings)))
+      end
       expect(find("#site_name").value).to eq("OFN Demo Site99")
     end
+  end
 
-    def assert_successful_update_message(resource)
-      flash = Spree.t(:successfully_updated, resource: Spree.t(resource))
-      within("[class='flash success']") do
-        expect(page).to have_content(flash)
+  context 'editing currency symbol position' do
+    it 'updates its position' do
+      expect(page).to have_content('Currency Settings')
+
+      within('.currency') do
+        find("[for='currency_symbol_position_after']").click
       end
+
+      click_button 'Update'
+
+      expect(page).to have_content(Spree.t(:successfully_updated, resource: Spree.t(:general_settings)))
+      expect(page).to have_checked_field('10.00 $')
     end
   end
 end

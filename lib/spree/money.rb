@@ -10,15 +10,12 @@ module Spree
 
     def initialize(amount, options = {})
       @money = ::Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
-      @options = {}
-      @options[:with_currency] = Spree::Config[:display_currency]
-      @options[:symbol_position] = Spree::Config[:currency_symbol_position].to_sym
-      @options[:no_cents] = Spree::Config[:hide_cents]
-      @options[:decimal_mark] = Spree::Config[:currency_decimal_mark]
-      @options[:thousands_separator] = Spree::Config[:currency_thousands_separator]
-      @options.merge!(options)
-      # Must be a symbol because the Money gem doesn't do the conversion
-      @options[:symbol_position] = @options[:symbol_position].to_sym
+
+      if options.key?(:symbol_position)
+        options[:format] = position_to_format(options.delete(:symbol_position))
+      end
+
+      @options = defaults.merge(options)
     end
 
     # Return the currency symbol (on its own) for the current default currency
@@ -30,14 +27,8 @@ module Spree
       @money.format(@options)
     end
 
-    def to_html(options = { html: true })
-      output = @money.format(@options.merge(options))
-      if options[:html]
-        # 1) prevent blank, breaking spaces
-        # 2) prevent escaping of HTML character entities
-        output = output.sub(" ", "&nbsp;").html_safe
-      end
-      output
+    def to_html(options = { html_wrap: true })
+      @money.format(@options.merge(options)).html_safe
     end
 
     def format(options = {})
@@ -46,6 +37,31 @@ module Spree
 
     def ==(other)
       @money == other.money
+    end
+
+    private
+
+    def defaults
+      {
+        with_currency: Spree::Config[:display_currency],
+        no_cents: Spree::Config[:hide_cents],
+        decimal_mark: Spree::Config[:currency_decimal_mark],
+        thousands_separator: Spree::Config[:currency_thousands_separator],
+        format: position_to_format(Spree::Config[:currency_symbol_position])
+      }
+    end
+
+    def position_to_format(position)
+      return if position.nil?
+
+      case position.to_sym
+      when :before
+        '%u%n'
+      when :after
+        '%n %u'
+      else
+        raise 'Invalid symbol position'
+      end
     end
   end
 end
