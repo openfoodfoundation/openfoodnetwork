@@ -171,7 +171,7 @@ module OrderManagement
           if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @user)
             unique_orders(line_items).sum(&:new_outstanding_balance)
           else
-            unique_orders(line_items).sum(&:outstanding_balance)
+            unique_orders(line_items).sum(&:old_outstanding_balance)
           end
         end
 
