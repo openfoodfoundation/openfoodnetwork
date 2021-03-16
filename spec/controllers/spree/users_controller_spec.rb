@@ -44,7 +44,7 @@ describe Spree::UsersController, type: :controller do
     end
 
     context 'when the customer_balance feature is enabled' do
-      let(:outstanding_balance) { double(:outstanding_balance) }
+      let(:outstanding_balance) { instance_double(OutstandingBalance) }
 
       before do
         allow(OpenFoodNetwork::FeatureToggle)
