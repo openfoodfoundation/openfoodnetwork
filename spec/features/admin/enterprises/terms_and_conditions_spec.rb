@@ -54,7 +54,7 @@ feature "Uploading Terms and Conditions PDF" do
 
         go_to_business_details
         expect(page).to have_selector "a[href*='logo-white.pdf'][target=\"_blank\"]"
-        expect(page).to have_content time.strftime("%F %T %Z")
+        expect(page).to have_content time.strftime("%F %T %z")
 
         # Replace PDF
         attach_file "enterprise[terms_and_conditions]", black_pdf_file_name
