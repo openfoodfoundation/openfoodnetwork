@@ -109,7 +109,7 @@ module Spree
     end
 
     def can_own_more_enterprises?
-      owned_enterprises(:reload).size < enterprise_limit
+      owned_enterprises.reload.size < enterprise_limit
     end
 
     def default_card
