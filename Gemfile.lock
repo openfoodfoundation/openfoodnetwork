@@ -123,7 +123,7 @@ GEM
     atomic (1.1.101)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
-    awesome_print (1.8.0)
+    awesome_print (1.9.2)
     aws-sdk (1.67.0)
       aws-sdk-v1 (= 1.67.0)
     aws-sdk-v1 (1.67.0)
