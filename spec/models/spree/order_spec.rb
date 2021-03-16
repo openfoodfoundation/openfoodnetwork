@@ -692,7 +692,7 @@ describe Spree::Order do
         amount: 123,
         included_tax: 2
       )
-      order.reload
+      order.update!
     end
 
     it "returns a sum of all tax on the order" do
