@@ -133,6 +133,11 @@ feature 'Customers' do
         context "with an additional negative payment (or refund)" do
           let!(:payment2) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: -25.00) }
 
+          before do
+            order1.user = user
+            order1.save!
+          end
+
           it "displays an updated customer balance" do
             visit spree.admin_order_payments_path order1
             expect(page).to have_content "$#{payment2.amount}"
