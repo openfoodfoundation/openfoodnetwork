@@ -178,7 +178,6 @@ RSpec.configure do |config|
       spree_config.checkout_zone = checkout_zone
       spree_config.currency = currency
       spree_config.shipping_instructions = true
-      spree_config.auto_capture = true
     end
   end
 
