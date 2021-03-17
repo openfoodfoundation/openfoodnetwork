@@ -1186,6 +1186,7 @@ en_IE:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
         cart: "Basket"
@@ -1552,6 +1553,7 @@ en_IE:
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
   producer_mail_greeting: "Dear"
+  producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
@@ -2888,6 +2890,7 @@ en_IE:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
+    back_to_payments_list: "Back To Payments List"
     return_authorizations: "Return Authorisations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -3457,6 +3460,7 @@ en_IE:
       pending: pending
       ready: ready
       shipped: shipped
+      canceled: canceled
     payment_states:
       balance_due: balance due
       completed: completed
@@ -3578,6 +3582,8 @@ en_IE:
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+        authorisation_required: Authorisation Required
+        authorise: Authorize
       open_orders:
         order: Order
         shop: Shop
