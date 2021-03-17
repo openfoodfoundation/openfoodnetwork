@@ -1,4 +1,21 @@
 class MigrateShippingTaxes < ActiveRecord::Migration
+  class Spree::Preference < ActiveRecord::Base; end
+  class Spree::TaxCategory < ActiveRecord::Base; end
+  class Spree::ShippingMethod < ActiveRecord::Base; end
+  class Spree::Zone < ActiveRecord::Base; end
+  class Spree::TaxRate < ActiveRecord::Base
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
+    has_one :calculator, class_name: "Spree::Calculator", as: :calculable, dependent: :destroy
+    accepts_nested_attributes_for :calculator
+  end
+  class Spree::Adjustment < ActiveRecord::Base
+    belongs_to :adjustable, polymorphic: true
+    belongs_to :originator, polymorphic: true
+    belongs_to :source, polymorphic: true
+    belongs_to :order, class_name: "Spree::Order"
+  end
+
   def up
     return unless instance_uses_shipping_tax?
 
