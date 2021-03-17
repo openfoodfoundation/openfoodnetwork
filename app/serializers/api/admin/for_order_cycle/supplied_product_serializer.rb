@@ -19,19 +19,21 @@ module Api
         end
 
         def variants
-          variants = if order_cycle.present? &&
-                        order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-                       object.variants.visible_for(order_cycle.coordinator)
-                     else
-                       object.variants
-                     end
-          variants.map { |variant| { id: variant.id, label: variant.full_name } }
+          load_variants.map { |variant| { id: variant.id, label: variant.full_name } }
         end
 
         private
 
         def order_cycle
           options[:order_cycle]
+        end
+
+        def load_variants
+          if order_cycle.present? && order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+            object.variants.visible_for(order_cycle.coordinator)
+          else
+            object.variants
+          end
         end
       end
     end

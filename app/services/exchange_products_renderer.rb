@@ -9,11 +9,12 @@ class ExchangeProductsRenderer
   end
 
   def exchange_products(incoming, enterprise)
-    if incoming
-      products_for_incoming_exchange(enterprise)
-    else
-      products_for_outgoing_exchange
-    end
+    relation = if incoming
+                 products_for_incoming_exchange(enterprise)
+               else
+                 products_for_outgoing_exchange
+               end
+    relation.includes(:variants)
   end
 
   def exchange_variants(incoming, enterprise)
@@ -47,7 +48,6 @@ class ExchangeProductsRenderer
 
   def products_for_outgoing_exchange
     supplied_products(enterprises_for_outgoing_exchange.select(:id)).
-      includes(:variants).
       where("spree_variants.id": incoming_exchanges_variants)
   end
 
