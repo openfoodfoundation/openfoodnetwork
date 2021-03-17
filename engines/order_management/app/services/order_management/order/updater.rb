@@ -157,8 +157,7 @@ module OrderManagement
       def infer_payment_state_from_balance
         # This part added so that we don't need to override
         # order.outstanding_balance
-        balance = order.outstanding_balance
-        balance = -1 * order.payment_total if canceled_and_paid_for?
+        balance = order.new_outstanding_balance
 
         infer_state(balance)
       end
@@ -184,18 +183,8 @@ module OrderManagement
         order.state_changed('payment')
       end
 
-      # Taken from order.outstanding_balance in Spree 2.4
-      # See: https://github.com/spree/spree/commit/7b264acff7824f5b3dc6651c106631d8f30b147a
-      def canceled_and_paid_for?
-        order.canceled? && paid?
-      end
-
       def canceled_and_not_paid_for?
         order.state == 'canceled' && order.payment_total.zero?
-      end
-
-      def paid?
-        payments.present? && !payments.completed.empty?
       end
 
       def failed_payments?
