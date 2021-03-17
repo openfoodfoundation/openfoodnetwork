@@ -14,6 +14,7 @@ module OrderManagement
         ].freeze
 
         attr_reader :params
+
         def initialize(user, params = {}, render_table = false)
           @params = params
           @user = user
@@ -21,6 +22,7 @@ module OrderManagement
 
           @supplier_report = BulkCoopSupplierReport.new
           @allocation_report = BulkCoopAllocationReport.new
+          @filter_canceled = false
         end
 
         def header
@@ -137,6 +139,8 @@ module OrderManagement
 
         private
 
+        attr_reader :filter_canceled
+
         def line_item_includes
           [
             {
@@ -148,25 +152,35 @@ module OrderManagement
         end
 
         def order_permissions
-          return @order_permissions unless @order_permissions.nil?
-
-          @order_permissions = ::Permissions::Order.new(@user, @params[:q])
+          @order_permissions ||= ::Permissions::Order.new(@user, filter_canceled)
         end
 
         def report_line_items
-          @report_line_items ||= OpenFoodNetwork::Reports::LineItems.new(order_permissions, @params)
+          @report_line_items ||= OpenFoodNetwork::Reports::LineItems.new(
+            order_permissions,
+            @params,
+            CompleteVisibleOrders.new(order_permissions).query
+          )
         end
 
         def customer_payments_total_cost(line_items)
-          line_items.map(&:order).uniq.sum(&:total)
+          unique_orders(line_items).sum(&:total)
         end
 
         def customer_payments_amount_owed(line_items)
-          line_items.map(&:order).uniq.sum(&:outstanding_balance)
+          if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, @user)
+            unique_orders(line_items).sum(&:new_outstanding_balance)
+          else
+            unique_orders(line_items).sum(&:outstanding_balance)
+          end
         end
 
         def customer_payments_amount_paid(line_items)
-          line_items.map(&:order).uniq.sum(&:payment_total)
+          unique_orders(line_items).sum(&:payment_total)
+        end
+
+        def unique_orders(line_items)
+          line_items.map(&:order).uniq
         end
 
         def empty_cell(_line_items)

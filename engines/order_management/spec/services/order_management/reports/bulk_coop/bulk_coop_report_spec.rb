@@ -3,7 +3,12 @@
 require 'spec_helper'
 
 describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
-  describe "fetching orders" do
+  subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, params, true }
+  let(:user) { create(:admin_user) }
+
+  describe '#table_items' do
+    let(:params) { {} }
+
     let(:d1) { create(:distributor_enterprise) }
     let(:oc1) { create(:simple_order_cycle) }
     let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
@@ -12,19 +17,38 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
     before { o1.line_items << li1 }
 
     context "as a site admin" do
-      let(:user) { create(:admin_user) }
-      subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true }
+      context 'when searching' do
+        let(:params) { { q: { completed_at_gt: '', completed_at_lt: '', distributor_id_in: [] } } }
 
-      it "fetches completed orders" do
-        o2 = create(:order)
-        o2.line_items << build(:line_item)
-        expect(subject.table_items).to eq([li1])
+        it "fetches completed orders" do
+          o2 = create(:order, state: 'cart')
+          o2.line_items << build(:line_item)
+          expect(subject.table_items).to eq([li1])
+        end
+
+        it 'shows canceled orders' do
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          line_item = build(:line_item_with_shipment)
+          o2.line_items << line_item
+          expect(subject.table_items).to include(line_item)
+        end
       end
 
-      it "does not show cancelled orders" do
-        o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
-        o2.line_items << build(:line_item_with_shipment)
-        expect(subject.table_items).to eq([li1])
+      context 'when not searching' do
+        let(:params) { {} }
+
+        it "fetches completed orders" do
+          o2 = create(:order, state: 'cart')
+          o2.line_items << build(:line_item)
+          expect(subject.table_items).to eq([li1])
+        end
+
+        it 'shows canceled orders' do
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          line_item = build(:line_item_with_shipment)
+          o2.line_items << line_item
+          expect(subject.table_items).to include(line_item)
+        end
       end
     end
 
@@ -121,6 +145,58 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         it "does not show line items supplied by my producers" do
           expect(subject.table_items).to eq([])
         end
+      end
+    end
+  end
+
+  describe '#columns' do
+    context 'when report type is bulk_coop_customer_payments' do
+      let(:params) { { report_type: 'bulk_coop_customer_payments' } }
+
+      it 'returns' do
+        expect(subject.columns).to eq(
+          [
+            :order_billing_address_name,
+            :order_completed_at,
+            :customer_payments_total_cost,
+            :customer_payments_amount_owed,
+            :customer_payments_amount_paid,
+          ]
+        )
+      end
+    end
+  end
+
+  # Yes, I know testing a private method is bad practice but report's design, tighly coupling
+  # OpenFoodNetwork::OrderGrouper and OrderManagement::Reports::BulkCoop::BulkCoopReport, makes it
+  # very hard to make things testeable without ending up in a wormwhole. This is a trade-off.
+  describe '#customer_payments_amount_owed' do
+    let(:params) { {} }
+    let(:user) { build(:user) }
+    let!(:line_item) { create(:line_item) }
+    let(:order) { line_item.order }
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      it 'calls #new_outstanding_balance' do
+        expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
+        subject.send(:customer_payments_amount_owed, [line_item])
+      end
+    end
+
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      it 'calls #outstanding_balance' do
+        expect_any_instance_of(Spree::Order).to receive(:outstanding_balance)
+        subject.send(:customer_payments_amount_owed, [line_item])
       end
     end
   end
