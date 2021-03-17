@@ -90,7 +90,7 @@ feature "Using embedded shopfront functionality", js: true do
       end
     end
 
-    it "redirects to embedded hub on logout when embedded" do
+    xit "redirects to embedded hub on logout when embedded" do
       on_embedded_page do
         wait_for_cart
         find('#login-link a').click
