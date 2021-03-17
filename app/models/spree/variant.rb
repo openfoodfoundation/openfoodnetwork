@@ -101,11 +101,7 @@ module Spree
 
     scope :visible_for, lambda { |enterprise|
       joins(:inventory_items).
-        where(
-          'inventory_items.enterprise_id = (?) AND inventory_items.visible = (?)',
-          enterprise,
-          true
-        )
+        where(inventory_items: { enterprise_id: enterprise.id, visible: true })
     }
 
     scope :not_hidden_for, lambda { |enterprise|

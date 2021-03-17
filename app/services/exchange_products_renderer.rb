@@ -14,7 +14,14 @@ class ExchangeProductsRenderer
                else
                  products_for_outgoing_exchange
                end
-    relation.includes(:variants)
+
+    relation = relation.includes(:variants)
+
+    if @order_cycle.present? && @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+      relation = relation.visible_for(@order_cycle.coordinator)
+    end
+
+    relation
   end
 
   def exchange_variants(incoming, enterprise)
