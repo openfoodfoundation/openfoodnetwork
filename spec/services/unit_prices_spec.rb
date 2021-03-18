@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe UnitPrices do
-  subject { UnitPrices.new(variant) }
+describe UnitPrice do
+  subject { UnitPrice.new(variant) }
   let(:variant) { Spree::Variant.new }
   let(:product) { instance_double(Spree::Product) }
 
