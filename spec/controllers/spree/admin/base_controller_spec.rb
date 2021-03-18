@@ -6,7 +6,7 @@ describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
       before_action :unauthorized
-      render text: ""
+      render plain: ""
     end
   end
 

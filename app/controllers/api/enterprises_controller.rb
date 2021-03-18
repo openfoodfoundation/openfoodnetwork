@@ -37,9 +37,9 @@ module Api
       authorize! :update, @enterprise
 
       if params[:logo] && @enterprise.update( logo: params[:logo] )
-        render text: @enterprise.logo.url(:medium), status: :ok
+        render plain: @enterprise.logo.url(:medium), status: :ok
       elsif params[:promo] && @enterprise.update( promo_image: params[:promo] )
-        render text: @enterprise.promo_image.url(:medium), status: :ok
+        render plain: @enterprise.promo_image.url(:medium), status: :ok
       else
         invalid_resource!(@enterprise)
       end

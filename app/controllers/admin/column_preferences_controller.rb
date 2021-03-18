@@ -12,7 +12,7 @@ module Admin
       elsif @cp_set.errors.present?
         render json: { errors: @cp_set.errors }, status: :bad_request
       else
-        render nothing: true, status: :internal_server_error
+        render body: nil, status: :internal_server_error
       end
     end
 

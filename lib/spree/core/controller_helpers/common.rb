@@ -46,7 +46,7 @@ module Spree
                        formats: [:html],
                        layout: nil
               }
-              type.all { render status: :not_found, nothing: true }
+              type.all { render status: :not_found, body: nil }
             end
           end
 

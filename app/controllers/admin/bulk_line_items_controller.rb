@@ -36,7 +36,7 @@ module Admin
           order.update_line_item_fees! @line_item
           order.update_order_fees!
           order.update!
-          render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
+          render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed
         end
@@ -50,7 +50,7 @@ module Admin
       authorize! :update, order
 
       @line_item.destroy
-      render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
+      render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
     end
 
     private

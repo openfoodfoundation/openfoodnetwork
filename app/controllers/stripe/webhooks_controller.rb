@@ -10,7 +10,7 @@ module Stripe
       handler = WebhookHandler.new(@event)
       result = handler.handle
 
-      render nothing: true, status: status_mappings[result] || 200
+      render body: nil, status: status_mappings[result] || 200
     end
 
     private
@@ -20,9 +20,9 @@ module Stripe
       signature = request.headers["HTTP_STRIPE_SIGNATURE"]
       @event = Webhook.construct_event(payload, signature, Stripe.endpoint_secret)
     rescue JSON::ParserError
-      render nothing: true, status: :bad_request
+      render body: nil, status: :bad_request
     rescue Stripe::SignatureVerificationError
-      render nothing: true, status: :unauthorized
+      render body: nil, status: :unauthorized
     end
 
     # Stripe interprets a 4xx or 3xx response as a failure to receive the webhook,

@@ -3,7 +3,7 @@ module Admin
     respond_to :json
 
     respond_override destroy: { json: {
-      success: lambda { render nothing: true, status: :no_content }
+      success: lambda { render body: nil, status: :no_content }
     } }
 
     def map_by_tag

@@ -8,7 +8,7 @@ describe Api::BaseController do
     skip_authorization_check only: :index
 
     def index
-      render text: { "products" => [] }.to_json
+      render plain: { "products" => [] }.to_json
     end
 
     def spree_current_user; end
