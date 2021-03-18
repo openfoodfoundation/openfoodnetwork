@@ -202,8 +202,8 @@ module OrderManagement
             it "is credit_owed" do
               order.payment_total = 30
               order.total = 30
-              allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
-              allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
+              allow(order).to receive_message_chain(:payments, :valid, :empty?) { false }
+              allow(order).to receive_message_chain(:payments, :completed, :empty?) { false }
 
               expect {
                 updater.update_payment_state
@@ -215,8 +215,8 @@ module OrderManagement
             it "is void" do
               order.payment_total = 0
               order.total = 30
-              allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
-              allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
+              allow(order).to receive_message_chain(:payments, :valid, :empty?) { false }
+              allow(order).to receive_message_chain(:payments, :completed, :empty?) { false }
 
               expect {
                 updater.update_payment_state
