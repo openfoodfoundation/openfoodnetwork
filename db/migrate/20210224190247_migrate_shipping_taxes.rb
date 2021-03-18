@@ -25,11 +25,11 @@ class MigrateShippingTaxes < ActiveRecord::Migration
   end
 
   def instance_uses_shipping_tax?
-    Spree::Preference.find_by(key: '/spree/app_configuration/shipment_inc_vat').value
+    Spree::Preference.find_by(key: '/spree/app_configuration/shipment_inc_vat')&.value || false
   end
 
   def instance_shipping_tax_rate
-    Spree::Preference.find_by(key: '/spree/app_configuration/shipping_tax_rate').value
+    Spree::Preference.find_by(key: '/spree/app_configuration/shipping_tax_rate')&.value || 0.0
   end
   
   def shipping_tax_category
