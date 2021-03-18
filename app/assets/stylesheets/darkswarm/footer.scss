@@ -4,8 +4,8 @@
 
 footer {
   .row {
-    p a {
-      font-size: 0.875rem;
+    p {
+      font-size: 1rem;
     }
 
     a, a * {
@@ -107,9 +107,14 @@ footer {
         color: rgba($disabled-med, 0.35);
       }
 
+      p.text-big {
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+
       .social-icons {
-        margin-bottom: 0.25rem;
-        margin-top: 0.75rem;
+        margin-bottom: 0.9rem;
+        padding-top: 0.1rem;
 
         a {
           i {
@@ -127,6 +132,10 @@ footer {
           }
         }
       }
+    }
+
+    .legal p {
+      font-size: 0.875rem;
     }
   }
 }
