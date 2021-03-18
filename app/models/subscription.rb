@@ -8,8 +8,8 @@ class Subscription < ActiveRecord::Base
   belongs_to :schedule
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
-  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
-  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
+  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: "Spree::Address"
+  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: "Spree::Address"
   has_many :subscription_line_items, inverse_of: :subscription
   has_many :order_cycles, through: :schedule
   has_many :proxy_orders

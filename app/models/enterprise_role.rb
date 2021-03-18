@@ -1,5 +1,5 @@
 class EnterpriseRole < ActiveRecord::Base
-  belongs_to :user, class_name: Spree.user_class
+  belongs_to :user, class_name: Spree.user_class.to_s
   belongs_to :enterprise
 
   validates :user_id, :enterprise_id, presence: true
