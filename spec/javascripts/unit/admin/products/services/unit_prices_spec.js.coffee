@@ -4,7 +4,7 @@ describe "UnitPrices service", ->
   beforeEach ->
     module "admin.products"
     module ($provide)->
-      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL,oz,lb"
       null
     inject (_UnitPrices_) ->
       UnitPrices = _UnitPrices_
@@ -114,3 +114,21 @@ describe "UnitPrices service", ->
       unit_value = 1
       expect(UnitPrices.price(price, scale, unit_type, unit_value)).toEqual 10
       expect(UnitPrices.unit(scale, unit_type)).toEqual "item"
+
+
+  describe "get correct unit price duo unit/value for weight in imperial system", ->
+    unit_type = "weight"
+
+    it "with price: 1 and scale/unit_value: 28.35 (OZ)", ->
+      price = 1
+      scale = 28.35
+      unit_value = 28.35
+      expect(UnitPrices.price(price, scale, unit_type, unit_value)).toEqual 16
+      expect(UnitPrices.unit(scale, unit_type)).toEqual "lb"
+
+    it "with price: 1 and scale/unit_value: 453.6 (LB)", ->
+      price = 1
+      scale = 453.6
+      unit_value = 453.6
+      expect(UnitPrices.price(price, scale, unit_type, unit_value)).toEqual 1
+      expect(UnitPrices.unit(scale, unit_type)).toEqual "lb"
