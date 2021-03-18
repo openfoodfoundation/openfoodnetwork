@@ -2,15 +2,15 @@ class Customer < ActiveRecord::Base
   acts_as_taggable
 
   belongs_to :enterprise
-  belongs_to :user, class_name: Spree.user_class
-  has_many :orders, class_name: Spree::Order
+  belongs_to :user, class_name: Spree.user_class.to_s
+  has_many :orders, class_name: "Spree::Order"
   before_destroy :check_for_orders
 
-  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
+  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: "Spree::Address"
   alias_attribute :billing_address, :bill_address
   accepts_nested_attributes_for :bill_address
 
-  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
+  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: "Spree::Address"
   alias_attribute :shipping_address, :ship_address
   accepts_nested_attributes_for :ship_address
 

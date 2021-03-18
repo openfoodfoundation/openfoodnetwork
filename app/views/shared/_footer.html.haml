@@ -31,25 +31,26 @@
         // This is the instance-managed set of links:
         %h4
           = t '.footer_contact_headline'
-        %p.social-icons
-          - if ContentConfig.footer_facebook_url.present?
-            %a{href: ContentConfig.footer_facebook_url}
-              %i.ofn-i_044-facebook
-          - if ContentConfig.footer_twitter_url.present?
-            %a{href: ContentConfig.footer_twitter_url}
-              %i.ofn-i_041-twitter
-          - if ContentConfig.footer_instagram_url.present?
-            %a{href: ContentConfig.footer_instagram_url}
-              %i.ofn-i_043-instagram
-          - if ContentConfig.footer_linkedin_url.present?
-            %a{href: ContentConfig.footer_linkedin_url}
-              %i.ofn-i_042-linkedin
-          - if ContentConfig.footer_googleplus_url.present?
-            %a{href: ContentConfig.footer_googleplus_url}
-              %i.ofn-i_046-g
-          - if ContentConfig.footer_pinterest_url.present?
-            %a{href: ContentConfig.footer_pinterest_url}
-              %i.ofn-i_045-pintrest
+        - if show_social_icons?
+          %p.social-icons
+            - if ContentConfig.footer_facebook_url.present?
+              %a{href: ContentConfig.footer_facebook_url}
+                %i.ofn-i_044-facebook
+            - if ContentConfig.footer_twitter_url.present?
+              %a{href: ContentConfig.footer_twitter_url}
+                %i.ofn-i_041-twitter
+            - if ContentConfig.footer_instagram_url.present?
+              %a{href: ContentConfig.footer_instagram_url}
+                %i.ofn-i_043-instagram
+            - if ContentConfig.footer_linkedin_url.present?
+              %a{href: ContentConfig.footer_linkedin_url}
+                %i.ofn-i_042-linkedin
+            - if ContentConfig.footer_googleplus_url.present?
+              %a{href: ContentConfig.footer_googleplus_url}
+                %i.ofn-i_046-g
+            - if ContentConfig.footer_pinterest_url.present?
+              %a{href: ContentConfig.footer_pinterest_url}
+                %i.ofn-i_045-pintrest
         - if ContentConfig.footer_email.present?
           %p
             %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
@@ -92,7 +93,7 @@
         %hr.hr-light
         %br
 
-    .row
+    .row.legal
       .small-12.medium-3.medium-offset-2.columns.text-left
         %a{href: main_app.root_path}
           %img{src: ContentConfig.footer_logo.url, width: "220"}
@@ -107,10 +108,9 @@
         %p.text-small
           = t '.footer_legal_text_html', {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' )}
         %p.text-small
-          %div
-            - if Spree::Config.privacy_policy_url.present?
-              = t '.footer_data_text_with_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe }
-            - else
-              = t '.footer_data_text_without_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe }
+          - if Spree::Config.privacy_policy_url.present?
+            = t '.footer_data_text_with_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe }
+          - else
+            = t '.footer_data_text_without_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe }
       .medium-2.columns.text-center
         / Placeholder

@@ -297,6 +297,17 @@ describe Spree::Admin::PaymentsController, type: :controller do
         spree_get :index, order_id: order.number
         expect(response.status).to eq 200
       end
+
+      context "order is then resumed" do
+        before do
+          order.resume
+        end
+
+        it "still renders the payments tab" do
+          spree_get :index, order_id: order.number
+          expect(response.status).to eq 200
+        end
+      end
     end
   end
 end

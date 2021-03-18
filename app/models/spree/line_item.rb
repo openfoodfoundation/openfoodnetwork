@@ -174,11 +174,11 @@ module Spree
     end
 
     def has_tax?
-      adjustments.included_tax.any?
+      adjustments.tax.any?
     end
 
     def included_tax
-      adjustments.included_tax.sum(:included_tax)
+      adjustments.tax.inclusive.sum(:amount)
     end
 
     def tax_rates

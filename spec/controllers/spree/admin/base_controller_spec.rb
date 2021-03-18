@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
-      before_filter :unauthorized
+      before_action :unauthorized
       render plain: ""
     end
   end

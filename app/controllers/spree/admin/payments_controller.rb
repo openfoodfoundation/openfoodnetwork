@@ -136,7 +136,7 @@ module Spree
       #
       # Otherwise redirect user to that step
       def can_transition_to_payment
-        return if @order.payment? || @order.complete? || @order.canceled?
+        return if @order.payment? || @order.complete? || @order.canceled? || @order.resumed?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
         redirect_to spree.edit_admin_order_customer_url(@order)

@@ -8,6 +8,9 @@
 # cases.
 #
 # See CompleteOrdersWithBalance or CustomersWithBalance as examples.
+#
+# Note this query object and `app/models/concerns/balance.rb` should implement the same behavior
+# until we find a better way. If you change one, please, change the other too.
 class OutstandingBalance
   # All the states of a finished order but that shouldn't count towards the balance (the customer
   # didn't get the order for whatever reason). Note it does not include complete

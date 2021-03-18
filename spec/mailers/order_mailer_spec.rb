@@ -5,27 +5,77 @@ require 'spec_helper'
 describe Spree::OrderMailer do
   include OpenFoodNetwork::EmailHelper
 
-  context "basic behaviour" do
+  describe '#confirm_email_for_customer' do
+    subject(:email) { described_class.confirm_email_for_customer(order) }
+
     let(:order) { build(:order_with_totals_and_distribution) }
 
-    context ":from not set explicitly" do
-      it "falls back to spree config" do
-        message = Spree::OrderMailer.confirm_email_for_customer(order)
-        expect(message.from).to eq [Spree::Config[:mails_from]]
+    it 'renders the shared/_payment.html.haml partial' do
+      expect(email.body).to include(I18n.t(:email_payment_summary))
+    end
+
+    context 'when the order has outstanding balance' do
+      before { allow(order).to receive(:outstanding_balance) { 123 } }
+
+      it 'renders the amount as money' do
+        expect(email.body).to include('$123')
       end
     end
 
-    it "doesn't aggressively escape double quotes in confirmation body" do
-      confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order)
-      expect(confirmation_email.body).to_not include("&quot;")
+    context 'when the order has no outstanding balance' do
+      before { allow(order).to receive(:outstanding_balance) { 0 } }
+
+      it 'displays the payment status' do
+        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+      end
     end
 
-    it "confirm_email_for_customer accepts an order id as an alternative to an Order object" do
+    context "when :from is not set explicitly" do
+      it "falls back to spree config" do
+        expect(email.from).to eq [Spree::Config[:mails_from]]
+      end
+    end
+
+    it "doesn't aggressively escape double quotes body" do
+      expect(email.body).to_not include("&quot;")
+    end
+
+    it "accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
-        Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
+        described_class.confirm_email_for_customer(order.id).deliver_now
       }.to_not raise_error
     end
+  end
+
+  describe '#confirm_email_for_shop' do
+    subject(:email) { described_class.confirm_email_for_shop(order) }
+
+    let(:order) { build(:order_with_totals_and_distribution) }
+
+    it 'renders the shared/_payment.html.haml partial' do
+      expect(email.body).to include(I18n.t(:email_payment_summary))
+    end
+
+    context 'when the order has outstanding balance' do
+      before { allow(order).to receive(:outstanding_balance) { 123 } }
+
+      it 'renders the amount as money' do
+        expect(email.body).to include('$123')
+      end
+    end
+
+    context 'when the order has no outstanding balance' do
+      before { allow(order).to receive(:outstanding_balance) { 0 } }
+
+      it 'displays the payment status' do
+        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+      end
+    end
+  end
+
+  context "basic behaviour" do
+    let(:order) { build(:order_with_totals_and_distribution) }
 
     it "cancel_email accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)

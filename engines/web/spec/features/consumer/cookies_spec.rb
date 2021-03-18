@@ -155,7 +155,7 @@ feature "Cookies", js: true do
   end
 
   def click_footer_cookies_policy_link_and_wait
-    find("div > a", text: "cookies policy").click
+    find(".legal a", text: "cookies policy").click
     sleep 2
   end
 

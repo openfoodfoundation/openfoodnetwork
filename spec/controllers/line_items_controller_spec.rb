@@ -84,6 +84,18 @@ describe LineItemsController, type: :controller do
                 expect(response.status).to eq 204
                 expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
               end
+
+              context "after a payment is captured" do
+                let(:payment) { create(:check_payment, amount: order.total, order: order, state: 'completed') }
+                before { payment.capture! }
+
+                it 'updates the payment state' do
+                  expect(order.payment_state).to eq 'paid'
+                  delete :destroy, params           
+                  order.reload
+                  expect(order.payment_state).to eq 'credit_owed'
+                end
+              end
             end
           end
         end

@@ -36,8 +36,6 @@ module Spree
     preference :allow_ssl_in_development_and_test, :boolean, default: false
     preference :allow_ssl_in_production, :boolean, default: true
     preference :allow_ssl_in_staging, :boolean, default: true
-    # Automatically capture the credit card (as opposed to just authorize and capture later)
-    preference :auto_capture, :boolean, default: false
     # Replace with the name of a zone if you would like to limit the countries
     preference :checkout_zone, :string, default: nil
     preference :currency, :string, default: "USD"
