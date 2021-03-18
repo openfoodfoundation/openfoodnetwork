@@ -185,9 +185,9 @@ module Spree
           tax_rate.adjust(order)
         end
 
-        it "has 100% tax included" do
+        it "has tax included" do
           expect(adjustment.amount).to be > 0
-          expect(adjustment.included_tax).to eq(adjustment.amount)
+          expect(adjustment.included).to be true
         end
 
         it "does not crash when order data has been updated previously" do
@@ -365,7 +365,7 @@ module Spree
                 # so tax on the enterprise_fee adjustment will be 0
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
                 expect(adjustment.included_tax).to eq(0.0)
-                expect(line_item.adjustments.first.included_tax).to eq(1.67)
+                expect(line_item.adjustments.tax.first.amount).to eq(1.67)
               end
             end
 
@@ -395,7 +395,7 @@ module Spree
                 # gives tax on fee of 0.2/1.2 x $50 = $8.33
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
                 expect(adjustment.included_tax).to eq(8.33)
-                expect(line_item.adjustments.first.included_tax).to eq(1.67)
+                expect(line_item.adjustments.tax.first.amount).to eq(1.67)
               end
             end
 
