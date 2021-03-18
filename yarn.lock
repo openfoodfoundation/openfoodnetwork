@@ -970,10 +970,10 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
-jasmine-core@~2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.4.1.tgz#6f83ab3a0f16951722ce07d206c773d57cc838be"
-  integrity sha1-b4OrOg8WlRcizgfSBsdz1XzIOL4=
+jasmine-core@~3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-3.7.0.tgz#33da871fef5595e9aa43d0f50e009b5fe35f7ef2"
+  integrity sha512-jmeRIgxS/abz8afk9NKJ1yP7n93aZdRaHDWtTHJBlYu6fhbzvErjiO3mMlSSrJefVk1a+26JlABrHS2iBH8Azw==
 
 json3@3.3.2:
   version "3.3.2"
