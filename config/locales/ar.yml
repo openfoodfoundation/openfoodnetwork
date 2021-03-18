@@ -1185,6 +1185,7 @@ ar:
     mailers:
       powered_by:
         open_food_network: "شبكة الغذاء المفتوح"
+        powered_html: "تجربة التسوق الخاصة بك مدعومة من %{open_food_network}."
     menu:
       cart:
         cart: "سلة"
@@ -1271,7 +1272,7 @@ ar:
   menu_4_title: "مجموعات"
   menu_4_url: "/groups"
   menu_5_title: "حول"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://about.flaha.org/"
   menu_6_title: "الاتصال"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "تعلم"
@@ -1824,7 +1825,7 @@ ar:
         registration_contact_details: "تفاصيل الاتصال الأساسية"
         registration_logo: "صورة الشعار الخاص بك"
         registration_promo_image: "صورة المشهد لملف التعريف الخاص بك"
-        registration_about_us: "نص &quot;نحن&quot;"
+        registration_about_us: "نص \"نحن\""
         registration_outcome_headline: "على ماذا أحصل؟"
         registration_outcome1_html: "يساعد ملفك الشخصي الأشخاص في <strong>العثور</strong> عليك <strong>والاتصال</strong> بك على شبكة الغذاء المفتوح"
         registration_outcome2: "استخدم هذه المساحة لرواية قصة مؤسستك ، للمساعدة في توصيل الاتصالات بحضورك الاجتماعي وعبر الإنترنت."
@@ -2971,6 +2972,7 @@ ar:
     name_or_sku: "الاسم أو SKU (أدخل أول 4 أحرف على الأقل من اسم المنتج)"
     resend: "إعادة إرسال"
     back_to_orders_list: "العودة إلى قائمة الطلبات"
+    back_to_payments_list: "العودة إلى قائمة المدفوعات"
     return_authorizations: "عودة التراخيص"
     cannot_create_returns: "لا يمكن إنشاء عوائد لأن هذا الطلب لا يحتوي على وحدات مشحونة."
     select_stock: "حدد المخزون"
@@ -3044,6 +3046,7 @@ ar:
     display_currency: "عرض العملة"
     choose_currency: "اختر العملة"
     mail_method_settings: "إعدادات طريقة البريد"
+    mail_settings_notice_html: "لا يمكن تحرير بعض الإعدادات التالية وهي مدرجة هنا فقط لأغراض التصحيح. يمكن إجراء التغييرات عن طريق تحديث أسرار المثيل وتوفيرها باستخدام <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . تواصل مع فريق OFN العالمي لمزيد من التفاصيل."
     general: "عام"
     enable_mail_delivery: "تمكين تسليم البريد"
     send_mails_as: "إرسال رسائل ب"
@@ -3519,6 +3522,9 @@ ar:
           or_enter_new_card: "أو أدخل تفاصيل البطاقة الجديدة:"
           remember_this_card: تذكر هذه البطاقة؟
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
       now: "الآن"
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
@@ -3536,6 +3542,7 @@ ar:
       pending: قيد الانتظار
       ready: جاهز
       shipped: تم شحنها
+      canceled: ألغيت
     payment_states:
       balance_due: الرصيد المستحق
       completed: 'تم '
@@ -3547,6 +3554,7 @@ ar:
       processing: قيد المعالجة
       void: فارغ
       invalid: غير صالحة
+      authorise: authorise
     order_mailer:
       cancel_email:
         customer_greeting: "عزيزي %{name} ،"
@@ -3657,6 +3665,7 @@ ar:
       transactions:
         transaction_history: سجل المعاملات
         authorisation_required: التفويض مطلوب
+        authorise: Authorize
       open_orders:
         order: طلب
         shop: متجر
