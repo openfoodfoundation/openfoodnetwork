@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe OutstandingBalance do
-  let(:outstanding_balance) { described_class.new(relation) }
+  subject(:outstanding_balance) { described_class.new(relation) }
 
   describe '#statement' do
     let(:relation) { Spree::Order.none }
