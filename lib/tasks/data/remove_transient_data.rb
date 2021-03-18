@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class RemoveTransientData
-  MEDIUM_RETENTION = 6.months.ago.to_date
-  SHORT_RETENTION = 3.months.ago.to_date
+  RETENTION_PERIOD = 3.months.ago.to_date
 
   # This model lets us operate on the sessions DB table using ActiveRecord's
   # methods within the scope of this service. This relies on the AR's
@@ -13,9 +12,9 @@ class RemoveTransientData
   def call
     Rails.logger.info("#{self.class.name}: processing")
 
-    Spree::StateChange.where("created_at < ?", MEDIUM_RETENTION).delete_all
-    Spree::LogEntry.where("created_at < ?", MEDIUM_RETENTION).delete_all
-    Session.where("updated_at < ?", SHORT_RETENTION).delete_all
+    Spree::StateChange.where("created_at < ?", RETENTION_PERIOD).delete_all
+    Spree::LogEntry.where("created_at < ?", RETENTION_PERIOD).delete_all
+    Session.where("updated_at < ?", RETENTION_PERIOD).delete_all
 
     clear_old_cart_data!
   end
@@ -24,7 +23,7 @@ class RemoveTransientData
 
   def clear_old_cart_data!
     old_carts = Spree::Order.
-      where("spree_orders.state = 'cart' AND spree_orders.updated_at < ?", SHORT_RETENTION).
+      where("spree_orders.state = 'cart' AND spree_orders.updated_at < ?", RETENTION_PERIOD).
       merge(orders_without_payments)
 
     old_cart_line_items = Spree::LineItem.where(order_id: old_carts)
