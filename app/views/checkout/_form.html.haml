@@ -15,8 +15,8 @@
   = render "checkout/shipping", f: f
   = render "checkout/payment", f: f
   = render "checkout/already_ordered", f: f if show_bought_items?
-  = render "checkout/terms_and_conditions", f: f
+  = render_terms_and_conditions
   %p
-    %button.button.primary{ type: :submit, ng: { disabled: "terms_and_conditions_activated && !terms_and_conditions_accepted" } }
+    %button.button.primary{ type: :submit, ng: { disabled: "terms_and_conditions_accepted == false || platform_tos_accepted == false" } }
       = t :checkout_send
     / {{ checkout.$valid }}

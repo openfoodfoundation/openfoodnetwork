@@ -1,0 +1,4 @@
+%p
+  %input{ type: "checkbox", id: "platform_tos_accepted", ng: { model: "platform_tos_accepted", init: "platform_tos_accepted = false" } }
+  %label.small{for: "platform_tos_accepted"}
+    = t(".message_html", tos_link: link_to(t(".terms_of_service"), Spree::Config.footer_tos_url, target: "_blank"))

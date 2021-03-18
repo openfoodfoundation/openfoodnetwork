@@ -119,12 +119,12 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
 
-      it "doesn't tell about previous orders" do
+      it "shows only applicable content" do
         expect(page).to have_no_content("You have an order for this order cycle already.")
-      end
 
-      it "doesn't show link to terms and conditions" do
         expect(page).to have_no_link("Terms and Conditions")
+
+        expect(page).to have_no_link("Terms of Service")
       end
     end
 
@@ -168,6 +168,57 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_button("Place order now", disabled: true)
           end
         end
+      end
+    end
+
+    context "when the platform's terms of service have to be accepted" do
+      let(:tos_url) { "https://example.org/tos" }
+
+      before do
+        allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
+        allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+      end
+
+      it "shows the terms which need to be accepted" do
+        visit checkout_path
+        expect(page).to have_link("Terms of Service", href: tos_url)
+        expect(find_link("Terms of Service")[:target]).to eq "_blank"
+        expect(page).to have_button("Place order now", disabled: true)
+
+        check "Terms of Service"
+        expect(page).to have_button("Place order now", disabled: false)
+
+        uncheck "Terms of Service"
+        expect(page).to have_button("Place order now", disabled: true)
+      end
+    end
+
+    context "when the seller's terms and the platform's terms have to be accepted" do
+      let(:fake_terms_and_conditions_path) { Rails.root.join("app/assets/images/logo-white.png") }
+      let(:terms_and_conditions_file) { Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf") }
+      let(:tos_url) { "https://example.org/tos" }
+
+      before do
+        order.distributor.terms_and_conditions = terms_and_conditions_file
+        order.distributor.save!
+
+        allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
+        allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+      end
+
+      it "shows links to both terms and all need accepting" do
+        visit checkout_path
+
+        expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
+        expect(page).to have_link("Terms of Service", href: tos_url)
+        expect(page).to have_button("Place order now", disabled: true)
+
+        # Both Ts&Cs and TOS appear in the one label for the one checkbox.
+        check "Terms and Conditions"
+        expect(page).to have_button("Place order now", disabled: false)
+
+        uncheck "Terms of Service"
+        expect(page).to have_button("Place order now", disabled: true)
       end
     end
 

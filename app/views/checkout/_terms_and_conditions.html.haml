@@ -1,4 +1,3 @@
-- if terms_and_conditions_activated?
-  %p
-    %input{ type: 'checkbox', id: 'accept_terms', ng: { model: "terms_and_conditions_accepted", init: "terms_and_conditions_activated=#{terms_and_conditions_activated?}; terms_and_conditions_accepted=#{terms_and_conditions_already_accepted?}" } }
-      %label.small{for: "accept_terms"}= t('.message_html', terms_and_conditions_link: link_to( t( '.link_text' ), current_order.distributor.terms_and_conditions.url, target: '_blank'))
+%p
+  %input{ type: 'checkbox', id: 'accept_terms', ng: { model: "terms_and_conditions_accepted", init: "terms_and_conditions_accepted=#{terms_and_conditions_already_accepted?}" } }
+    %label.small{for: "accept_terms"}= t('.message_html', terms_and_conditions_link: link_to( t( '.link_text' ), current_order.distributor.terms_and_conditions.url, target: '_blank'))

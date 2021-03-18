@@ -1,6 +1,20 @@
 # frozen_string_literal: true
 
 module TermsAndConditionsHelper
+  def render_terms_and_conditions
+    if platform_terms_required? && terms_and_conditions_activated?
+      render("checkout/all_terms_and_conditions")
+    elsif platform_terms_required?
+      render "checkout/platform_terms_of_service"
+    elsif terms_and_conditions_activated?
+      render "checkout/terms_and_conditions"
+    end
+  end
+
+  def platform_terms_required?
+    Spree::Config.shoppers_require_tos
+  end
+
   def terms_and_conditions_activated?
     current_order.distributor.terms_and_conditions.file?
   end
