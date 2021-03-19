@@ -37,7 +37,6 @@ module Spree
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
     belongs_to :adjustable, polymorphic: true
-    belongs_to :source, polymorphic: true
     belongs_to :originator, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
 
