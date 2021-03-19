@@ -104,7 +104,7 @@ describe Admin::EnterprisesController, type: :controller do
     context "geocoding" do
       before do
         allow(controller).to receive_messages spree_current_user: admin_user
-        enterprise_params[:enterprise][:owner_id] = admin_user
+        enterprise_params[:enterprise][:owner_id] = admin_user.id
       end
 
       it "geocodes the address when the :use_geocoder parameter is set" do
