@@ -126,11 +126,6 @@ module Spree
       state != "open"
     end
 
-    def set_included_tax!(rate)
-      tax = amount - (amount / (1 + rate))
-      set_absolute_included_tax! tax
-    end
-
     def set_absolute_included_tax!(tax)
       # This rubocop issue can now fixed by renaming Adjustment#update! to something else,
       #   then AR's update! can be used instead of update_attributes!

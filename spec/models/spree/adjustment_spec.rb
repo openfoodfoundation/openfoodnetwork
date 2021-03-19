@@ -483,15 +483,6 @@ module Spree
           end
         end
       end
-
-      describe "setting the included tax by tax rate" do
-        let(:adjustment) { Adjustment.new label: 'foo', amount: 50 }
-
-        it "sets it, rounding to two decimal places" do
-          adjustment.set_included_tax! 0.25
-          expect(adjustment.included_tax).to eq(10.00)
-        end
-      end
     end
 
     context "extends LocalizedNumber" do
