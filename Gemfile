@@ -15,7 +15,7 @@ gem 'sass', '<= 4.7.1'
 gem 'sass-rails', '< 6.0.0'
 
 gem 'i18n'
-gem 'i18n-js', '~> 3.8.1'
+gem 'i18n-js', '~> 3.8.2'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
