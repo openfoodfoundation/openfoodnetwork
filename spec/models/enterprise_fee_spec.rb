@@ -104,10 +104,10 @@ describe EnterpriseFee do
       line_item1 = create(:line_item, order: order, variant: order_cycle.variants.first)
       line_item2 = create(:line_item, order: order, variant: order_cycle.variants.second)
 
-      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, line_item1, true)
-      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, line_item2, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1.order, line_item1, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2.order, line_item2, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2, true)
 
       expect do
         EnterpriseFee.clear_all_adjustments order

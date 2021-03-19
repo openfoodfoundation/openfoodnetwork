@@ -539,7 +539,7 @@ describe Spree::Order do
     it "returns the sum of eligible enterprise fee adjustments" do
       ef = create(:enterprise_fee, calculator: Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, true)
 
       expect(o.admin_and_handling_total).to eq(123.45)
     end
@@ -547,7 +547,7 @@ describe Spree::Order do
     it "does not include ineligible adjustments" do
       ef = create(:enterprise_fee, calculator: Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, true)
 
       a.update_column :eligible, false
 
@@ -557,7 +557,7 @@ describe Spree::Order do
     it "does not include adjustments that do not originate from enterprise fees" do
       sm = create(:shipping_method, calculator: Calculator::FlatRate.new )
       sm.calculator.set_preference :amount, 123.45
-      sm.create_adjustment("adjustment", o, o, true)
+      sm.create_adjustment("adjustment", o, true)
 
       expect(o.admin_and_handling_total).to eq(0)
     end
@@ -565,7 +565,7 @@ describe Spree::Order do
     it "does not include adjustments whose source is a line item" do
       ef = create(:enterprise_fee, calculator: Calculator::PerItem.new )
       ef.calculator.set_preference :amount, 123.45
-      ef.create_adjustment("adjustment", li.order, li, true)
+      ef.create_adjustment("adjustment", li, true)
 
       expect(o.admin_and_handling_total).to eq(0)
     end

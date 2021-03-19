@@ -26,25 +26,24 @@ module Spree
           #   (which is any class that has_many :adjustments) and sets amount based on the
           #   calculator as applied to the given calculable (Order, LineItems[], Shipment, etc.)
           # By default the adjustment will not be considered mandatory
-          def create_adjustment(label, target, calculable, mandatory = false, state = "closed")
-            amount = compute_amount(calculable)
+          def create_adjustment(label, adjustable, mandatory = false, state = "closed")
+            amount = compute_amount(adjustable)
             return if amount.zero? && !mandatory
 
             adjustment_attributes = {
               amount: amount,
-              source: calculable,
               originator: self,
-              order: order_object_for(target),
+              order: order_object_for(adjustable),
               label: label,
               mandatory: mandatory,
               state: state,
-              included: tax_included?(self, target)
+              included: tax_included?(self, adjustable)
             }
 
-            if target.respond_to?(:adjustments)
-              target.adjustments.create(adjustment_attributes)
+            if adjustable.respond_to?(:adjustments)
+              adjustable.adjustments.create(adjustment_attributes)
             else
-              target.create_adjustment(adjustment_attributes)
+              adjustable.create_adjustment(adjustment_attributes)
             end
           end
 
