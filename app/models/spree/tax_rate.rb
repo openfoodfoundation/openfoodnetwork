@@ -69,7 +69,6 @@ module Spree
 
           order.adjustments.create(
             amount: amount,
-            source: order,
             originator: self,
             order: order,
             state: "closed",

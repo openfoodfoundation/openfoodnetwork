@@ -79,7 +79,6 @@ describe MigrateShippingTaxes do
 
       expect(shipping_tax_adjustment.amount).to eq 0.23
       expect(shipping_tax_adjustment.originator).to eq shipping_tax_rate
-      expect(shipping_tax_adjustment.source).to eq shipment
       expect(shipping_tax_adjustment.adjustable).to eq shipment
       expect(shipping_tax_adjustment.order_id).to eq order.id
       expect(shipping_tax_adjustment.included).to eq true

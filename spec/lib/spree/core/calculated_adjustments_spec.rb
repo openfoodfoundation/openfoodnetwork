@@ -37,7 +37,7 @@ describe Spree::Core::CalculatedAdjustments do
       adjustment = tax_rate.create_adjustment("foo", target, order)
       expect(adjustment).not_to be_nil
       expect(adjustment.amount).to eq 10
-      expect(adjustment.source).to eq order
+      expect(adjustment.adjustable).to eq order
       expect(adjustment.originator).to eq tax_rate
     end
 
