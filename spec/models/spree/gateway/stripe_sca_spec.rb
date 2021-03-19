@@ -39,6 +39,16 @@ describe Spree::Gateway::StripeSCA, type: :model do
 
       expect(response.success?).to eq true
     end
+
+    it "provides an error message to help developer debug" do
+      stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
+        to_return(status: 200, body: capture_successful)
+
+      response = subject.purchase(order.total, credit_card, gateway_options)
+
+      expect(response.success?).to eq false
+      expect(response.message).to eq "Invalid payment state: succeeded"
+    end
   end
 
   def payment_intent(amount, status)

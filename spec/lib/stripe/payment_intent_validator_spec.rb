@@ -40,7 +40,7 @@ module Stripe
         it "raises Stripe error with an invalid_payment_state message" do
           expect {
             validator.call(payment_intent_id, stripe_account_id)
-          }.to raise_error Stripe::StripeError, "Invalid payment state"
+          }.to raise_error Stripe::StripeError, "Invalid payment state: failed"
         end
       end
 
