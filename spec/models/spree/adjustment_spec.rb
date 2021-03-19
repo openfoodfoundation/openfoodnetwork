@@ -9,7 +9,7 @@ module Spree
 
     describe "scopes" do
       let!(:arbitrary_adjustment) { create(:adjustment, source: nil, label: "Arbitrary") }
-      let!(:return_authorization_adjustment) { create(:adjustment, source: create(:return_authorization)) }
+      let!(:return_authorization_adjustment) { create(:adjustment, originator: create(:return_authorization)) }
 
       it "returns return_authorization adjustments" do
         expect(Spree::Adjustment.return_authorization.to_a).to eq [return_authorization_adjustment]

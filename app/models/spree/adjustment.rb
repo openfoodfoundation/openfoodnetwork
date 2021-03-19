@@ -66,7 +66,7 @@ module Spree
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
-    scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+    scope :return_authorization, -> { where(originator_type: "Spree::ReturnAuthorization") }
     scope :inclusive, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
 
