@@ -77,7 +77,7 @@ describe TagRule::DiscountOrder, type: :model do
     context "when shipping charges apply" do
       let!(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new( preferred_amount: 25.00 ) ) }
       before do
-        shipping_method.create_adjustment("Shipping", order, order, true)
+        shipping_method.create_adjustment("Shipping", order, true)
       end
 
       let(:adjustment) { order.reload.adjustments.where(originator_id: tag_rule, originator_type: "TagRule").first }

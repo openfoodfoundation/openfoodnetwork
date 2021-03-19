@@ -61,8 +61,8 @@ module Spree
       label = create_label
       if included_in_price
         if default_zone_or_zone_match? order
-          order.line_items.each { |line_item| create_adjustment(label, line_item, line_item, false, "open") }
-          order.shipments.each { |shipment| create_adjustment(label, shipment, shipment, false, "open") }
+          order.line_items.each { |line_item| create_adjustment(label, line_item, false, "open") }
+          order.shipments.each { |shipment| create_adjustment(label, shipment, false, "open") }
         else
           amount = -1 * calculator.compute(order)
           label = Spree.t(:refund) + label
@@ -76,7 +76,7 @@ module Spree
           )
         end
       else
-        create_adjustment(label, order, order, false, "open")
+        create_adjustment(label, order, false, "open")
       end
 
       order.adjustments.reload

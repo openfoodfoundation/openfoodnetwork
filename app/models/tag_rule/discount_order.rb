@@ -5,7 +5,7 @@ class TagRule::DiscountOrder < TagRule
 
   # Warning: this should only EVER be called via TagRule#apply
   def apply!
-    create_adjustment(I18n.t("discount"), subject, subject)
+    create_adjustment(I18n.t("discount"), subject)
   end
 
   def subject_class_matches?
