@@ -33,7 +33,7 @@ describe TagRule::DiscountOrder, type: :model do
 
   pending "determining whether a the rule has already been applied to an order" do
     let!(:order) { create(:order) }
-    let!(:adjustment) { order.adjustments.create({ amount: 12.34, source: order, originator: tag_rule, label: 'discount' }) }
+    let!(:adjustment) { order.adjustments.create({ amount: 12.34, originator: tag_rule, label: 'discount' }) }
 
     before do
       tag_rule.context = { subject: order }

@@ -691,7 +691,7 @@ describe Spree::Order do
     before do
       create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123,
                           included_tax: 2, order: order)
-      create(:adjustment, adjustable: shipment, source: shipment, originator: shipping_tax_rate,
+      create(:adjustment, adjustable: shipment, originator: shipping_tax_rate,
                           amount: 10, order: order, state: "closed")
       order.update!
     end

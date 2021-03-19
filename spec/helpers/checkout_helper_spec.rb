@@ -36,7 +36,7 @@ describe CheckoutHelper, type: :helper do
     let(:order) { create(:order_with_totals_and_distribution) }
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
     let!(:fee_adjustment) {
-      create(:adjustment, originator: enterprise_fee, adjustable: order, source: order,
+      create(:adjustment, originator: enterprise_fee, adjustable: order,
                           order: order)
     }
 
@@ -61,7 +61,7 @@ describe CheckoutHelper, type: :helper do
     context "with return authorization adjustments" do
       let!(:return_adjustment) {
         create(:adjustment, originator_type: 'Spree::ReturnAuthorization', adjustable: order,
-                            source: nil, order: order)
+                            order: order)
       }
 
       it "includes return adjustments" do
