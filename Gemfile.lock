@@ -221,8 +221,11 @@ GEM
     factory_bot_rails (5.2.0)
       factory_bot (~> 5.2.0)
       railties (>= 4.2.0)
-    faraday (1.0.1)
+    faraday (1.3.0)
+      faraday-net_http (~> 1.0)
       multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday-net_http (1.0.1)
     ffaker (2.16.0)
     ffi (1.15.0)
     figaro (1.2.0)
@@ -334,7 +337,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
-    oauth2 (1.4.4)
+    oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
@@ -654,7 +657,7 @@ DEPENDENCIES
   letter_opener (>= 1.4.1)
   mini_racer (= 0.3.1)
   monetize (~> 1.11)
-  oauth2 (~> 1.4.4)
+  oauth2 (~> 1.4.7)
   ofn-qz!
   order_management!
   paper_trail (~> 10.3.1)

@@ -48,7 +48,7 @@ gem 'devise'
 gem 'devise-encryptable'
 gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
-gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'
