@@ -1176,6 +1176,11 @@ en_CA:
     terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
+    platform_terms_of_service:
+      terms_of_service: "Terms of Service"
+    all_terms_and_conditions:
+      terms_and_conditions: "Terms and Conditions"
+      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1250,7 +1255,7 @@ en_CA:
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
-  invoice_tax_total: "Sales Tax Total:"
+  invoice_tax_total: "Sales Tax (on product):"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (incl. shipping tax if applicable)"

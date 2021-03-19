@@ -1174,6 +1174,11 @@ pt_BR:
     terms_and_conditions:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"
+    platform_terms_of_service:
+      terms_of_service: "Termos de serviço"
+    all_terms_and_conditions:
+      terms_and_conditions: "Termos e Condições"
+      terms_of_service: "Termos de serviço"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
     hubs:

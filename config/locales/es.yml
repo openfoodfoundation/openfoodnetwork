@@ -1178,6 +1178,11 @@ es:
     terms_and_conditions:
       message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
       link_text: "Términos y Condiciones"
+    platform_terms_of_service:
+      terms_of_service: "Términos de servicio"
+    all_terms_and_conditions:
+      terms_and_conditions: "Términos y Condiciones"
+      terms_of_service: "Términos de servicio"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:

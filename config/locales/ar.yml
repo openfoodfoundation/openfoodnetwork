@@ -1175,6 +1175,11 @@ ar:
     terms_and_conditions:
       message_html: "أوافق على %{terms_and_conditions_link} للبائع."
       link_text: "الأحكام والشروط"
+    platform_terms_of_service:
+      terms_of_service: "شروط الخدمة"
+    all_terms_and_conditions:
+      terms_and_conditions: "الأحكام والشروط"
+      terms_of_service: "شروط الخدمة"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
   shops:
     hubs:

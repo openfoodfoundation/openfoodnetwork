@@ -1174,6 +1174,11 @@ tr:
     terms_and_conditions:
       message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
       link_text: "Şartlar ve Koşullar"
+    platform_terms_of_service:
+      terms_of_service: "Üyelik Sözleşmesi"
+    all_terms_and_conditions:
+      terms_and_conditions: "Şartlar ve Koşullar"
+      terms_of_service: "Üyelik Sözleşmesi"
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
     hubs:
