@@ -46,7 +46,7 @@ describe OrderTaxAdjustmentsFetcher do
     end
     let(:admin_adjustment) do
       create(:adjustment, order: order, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0),
-                          source: nil, label: "Admin Adjustment")
+                          label: "Admin Adjustment")
     end
 
     let(:order_cycle) do
