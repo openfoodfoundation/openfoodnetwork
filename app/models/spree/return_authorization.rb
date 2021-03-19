@@ -89,10 +89,13 @@ module Spree
         Spree::StockMovement.create!(stock_item_id: iu.find_stock_item.id, quantity: 1)
       end
 
-      credit = Adjustment.new(amount: amount.abs * -1, label: Spree.t(:rma_credit))
-      credit.source = self
-      credit.adjustable = order
-      credit.save
+      Adjustment.create(
+        amount: amount.abs * -1,
+        label: I18n.t('spree.rma_credit'),
+        order: order,
+        adjustable: order,
+        originator: self
+      )
 
       order.return if inventory_units.all?(&:returned?)
       order.update!
