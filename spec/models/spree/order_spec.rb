@@ -786,7 +786,6 @@ describe Spree::Order do
         line_item = order.line_items.where(variant_id: v1.id).first
         adjustment_scope = Spree::Adjustment.where(adjustable_type: "Spree::LineItem",
                                                    adjustable_id: line_item.id)
-
         expect(adjustment_scope.count).to eq(1)
         adjustment = adjustment_scope.first
         order.remove_variant v1

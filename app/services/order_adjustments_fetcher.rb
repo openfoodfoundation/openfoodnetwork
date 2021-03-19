@@ -63,11 +63,11 @@ class OrderAdjustmentsFetcher
       adjustments.select do |adjustment|
         match_by_scope(adjustment, eligible_scope) &&
           adjustment.originator_type == 'EnterpriseFee' &&
-          adjustment.source_type != 'Spree::LineItem'
+          adjustment.adjustable_type != 'Spree::LineItem'
       end
     else
       adjustments.eligible.
-        where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem')
+        where("originator_type = ? AND adjustable_type != ?", 'EnterpriseFee', 'Spree::LineItem')
     end
   end
 

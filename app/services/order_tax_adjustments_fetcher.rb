@@ -52,6 +52,6 @@ class OrderTaxAdjustmentsFetcher
     # Enterprise Fees and Admin Adjustments currently do not have tax adjustments.
     # The tax amount is stored in the included_tax attribute.
     adjustment.originator_type == "EnterpriseFee" ||
-      (adjustment.source_type.nil? && adjustment.originator_type.nil?)
+      adjustment.originator_type.nil?
   end
 end
