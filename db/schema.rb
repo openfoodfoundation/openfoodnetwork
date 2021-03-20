@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210315163900) do
+ActiveRecord::Schema.define(version: 20210320003951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -372,8 +372,9 @@ ActiveRecord::Schema.define(version: 20210315163900) do
     t.string   "state",           limit: 255
     t.integer  "order_id"
     t.boolean  "included",                                             default: false
-    t.index ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
+    t.index ["adjustable_type", "adjustable_id"], name: "index_spree_adjustments_on_adjustable_type_and_adjustable_id", using: :btree
     t.index ["order_id"], name: "index_spree_adjustments_on_order_id", using: :btree
+    t.index ["originator_type", "originator_id"], name: "index_spree_adjustments_on_originator_type_and_originator_id", using: :btree
   end
 
   create_table "spree_assets", force: :cascade do |t|
@@ -468,14 +469,14 @@ ActiveRecord::Schema.define(version: 20210315163900) do
   create_table "spree_line_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                                                  null: false
-    t.decimal  "price",                            precision: 10, scale: 2,                 null: false
-    t.datetime "created_at",                                                                null: false
-    t.datetime "updated_at",                                                                null: false
+    t.integer  "quantity",                                                 null: false
+    t.decimal  "price",                           precision: 10, scale: 2, null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.integer  "max_quantity"
-    t.string   "currency",             limit: 255
-    t.decimal  "distribution_fee",                 precision: 10, scale: 2
-    t.decimal  "final_weight_volume",              precision: 10, scale: 2
+    t.string   "currency",            limit: 255
+    t.decimal  "distribution_fee",                precision: 10, scale: 2
+    t.decimal  "final_weight_volume",             precision: 10, scale: 2
     t.integer  "tax_category_id"
     t.index ["order_id"], name: "index_line_items_on_order_id", using: :btree
     t.index ["variant_id"], name: "index_line_items_on_variant_id", using: :btree
