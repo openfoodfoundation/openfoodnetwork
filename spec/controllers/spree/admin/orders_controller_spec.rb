@@ -19,10 +19,11 @@ describe Spree::Admin::OrdersController, type: :controller do
     describe "view" do
       render_views
 
-      it "shows only eligible adjustments" do
+      it "does not show ineligible payment adjustments" do
         adjustment = create(
           :adjustment,
           adjustable: order,
+          originator_type: "Spree::PaymentMethod",
           label: "invalid adjustment",
           eligible: false,
           order: order,
