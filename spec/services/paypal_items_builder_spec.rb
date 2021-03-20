@@ -25,7 +25,8 @@ describe PaypalItemsBuilder do
     }
     let!(:ineligible_adjustment) {
       create(:adjustment, label: "Ineligible Adjustment", order: order, adjustable: order,
-                          amount: 34, eligible: false, state: "closed")
+                          amount: 34, eligible: false, state: "closed",
+                          originator_type: "Spree::PaymentMethod")
     }
     let!(:zone) { create(:zone_with_member) }
     let!(:included_tax_rate) {
