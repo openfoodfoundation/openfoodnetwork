@@ -5,7 +5,6 @@ module Spree
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
       before_action :load_hubs, only: [:new, :edit, :update]
-      create.before :load_hubs
 
       respond_to :html
 
@@ -15,7 +14,7 @@ module Spree
         @payment_method = payment_method_class.constantize.new(base_params)
         @object = @payment_method
 
-        invoke_callbacks(:create, :before)
+        load_hubs
 
         if @payment_method.save
           invoke_callbacks(:create, :after)
