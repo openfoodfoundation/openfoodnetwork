@@ -1178,8 +1178,13 @@ de_DE:
     terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
       link_text: "Allgemeinen Geschäftsbedingungen"
+    platform_terms_of_service:
+      message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
+      terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
     all_terms_and_conditions:
+      message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
       terms_and_conditions: "Allgemeinen Geschäftsbedingungen"
+      terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
   shops:
     hubs:
@@ -1278,7 +1283,7 @@ de_DE:
   menu_4_url: "/groups"
   menu_5_title: "Verkaufen"
   menu_5_url: "https://openfoodnetwork.de/sell"
-  menu_6_title: "Über uns"
+  menu_6_title: "Über OFN"
   menu_6_url: "https://wp.openfoodnetwork.de/"
   menu_7_title: "Hilfe"
   menu_7_url: "https://wp.openfoodnetwork.de/support/"
@@ -1567,7 +1572,7 @@ de_DE:
   shopping_oc_next_open: "Der nächste Bestellzyklus wird in %{distance_of_time} geöffnet"
   shopping_oc_select: "Auswählen ..."
   shopping_tabs_home: "Startseite"
-  shopping_tabs_shop: "Einkaufen"
+  shopping_tabs_shop: "Produkte"
   shopping_tabs_about: "Über uns"
   shopping_tabs_contact: "Kontakt"
   shopping_contact_address: "Adresse"
@@ -3428,6 +3433,7 @@ de_DE:
           cookies_consent_banner_toggle: "Zustimmungsbanner für Cookies anzeigen"
           privacy_policy_url: "URL der Datenschutzerklärung"
           enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
+          shoppers_require_tos: "Kunden müssen den Allgemeinen Geschäftsbedingungen (AGB) zustimmen"
           cookies_policy_matomo_section: "Matomo auf der Richtlinienseite für Cookies anzeigen"
           footer_tos_url: "URL der Allgemeinen Geschäftsbedingungen"
     checkout:

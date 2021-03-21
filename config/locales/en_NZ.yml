@@ -117,6 +117,8 @@ en_NZ:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+    tax_rate:
+      included_in_price: "Included in price"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -1175,8 +1177,10 @@ en_NZ:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}."
       terms_of_service: "Terms of Service"
     all_terms_and_conditions:
+      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
       terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
@@ -1189,6 +1193,7 @@ en_NZ:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
         cart: "Cart"
@@ -1555,6 +1560,7 @@ en_NZ:
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
   producer_mail_greeting: "Dear"
+  producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
@@ -2324,6 +2330,8 @@ en_NZ:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  cannot_perform_operation: "Could not update the payment"
+  action_required: "Action required"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
@@ -2385,6 +2393,7 @@ en_NZ:
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
+    authorising: "Authorising..."
     save_changes_first: Save changes first.
     all_changes_saved: All changes saved
     unsaved_changes: You have unsaved changes
@@ -2592,6 +2601,8 @@ en_NZ:
           processing: "processing"
           void: "void"
           invalid: "invalid"
+        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unchanged: "Quantity unchanged from previous amount."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2648,6 +2659,7 @@ en_NZ:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
+      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
@@ -2879,6 +2891,7 @@ en_NZ:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
+    back_to_payments_list: "Back To Payments List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -2952,6 +2965,7 @@ en_NZ:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
+    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3069,6 +3083,7 @@ en_NZ:
         payment_state: "Payment State"
     errors:
       messages:
+        included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
     layouts:
       admin:
@@ -3279,6 +3294,13 @@ en_NZ:
           deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
+          check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3402,6 +3424,7 @@ en_NZ:
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
@@ -3419,6 +3442,9 @@ en_NZ:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
       now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
@@ -3436,6 +3462,7 @@ en_NZ:
       pending: pending
       ready: ready
       shipped: shipped
+      canceled: canceled
     payment_states:
       balance_due: balance due
       completed: completed
@@ -3447,6 +3474,7 @@ en_NZ:
       processing: processing
       void: void
       invalid: invalid
+      authorise: authorise
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
@@ -3461,6 +3489,8 @@ en_NZ:
       cancel_email_for_shop:
         greeting: "Dear %{name},"
         subject: "Cancellation of Order"
+        intro: "A customer has cancelled their order #%{number}."
+        view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
       invoice_email:
@@ -3479,6 +3509,13 @@ en_NZ:
         subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
+    payment_mailer:
+      authorize_payment:
+        subject: "Please authorize your payment to %{distributor} on OFN"
+        instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+      authorization_required:
+        subject: "A payment requires authorization from the customer"
+        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
@@ -3515,7 +3552,23 @@ en_NZ:
       paused: paused
       canceled: cancelled
     paypal:
+      already_refunded: "This payment has been refunded and no further action can be taken on it."
+      no_payment_via_admin_backend: "You cannot charge PayPal accounts through the admin backend at this time."
+      transaction: "PayPal Transaction"
+      payer_id: "Payer ID"
+      transaction_id: "Transaction ID"
+      token: "Token"
+      refund: "Refund"
       refund_amount: "Amount"
+      original_amount: "Original amount: %{amount}"
+      refund_successful: "PayPal refund successful"
+      refund_unsuccessful: "PayPal refund unsuccessful"
+      actions:
+        refund: "Refund"
+      flash:
+        cancel: "Don't want to use PayPal? No problems."
+        connection_failed: "Could not connect to PayPal."
+        generic_error: "PayPal failed. %{reasons}"
     users:
       form:
         account_settings: Account Settings
@@ -3531,6 +3584,8 @@ en_NZ:
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+        authorisation_required: Authorisation Required
+        authorise: Authorize
       open_orders:
         order: Order
         shop: Shop
