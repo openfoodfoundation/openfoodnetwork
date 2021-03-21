@@ -661,7 +661,6 @@ Style/FrozenStringLiteralComment:
     - 'app/serializers/api/uncached_enterprise_serializer.rb'
     - 'app/serializers/api/user_serializer.rb'
     - 'app/serializers/api/variant_serializer.rb'
-    - 'app/services/action_callbacks.rb'
     - 'app/services/bulk_invoice_service.rb'
     - 'app/services/cart_service.rb'
     - 'app/services/create_order_cycle.rb'
