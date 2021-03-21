@@ -4,9 +4,9 @@ module Spree
   module Admin
     class VariantsController < ::Admin::ResourceController
       helper 'spree/products'
-
       belongs_to 'spree/product', find_by: :permalink
-      new_action.before :new_before
+
+      before_action :assign_default_attributes, only: :new
 
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
@@ -84,7 +84,7 @@ module Spree
         @object.save
       end
 
-      def new_before
+      def assign_default_attributes
         @object.attributes = @object.product.master.
           attributes.except('id', 'created_at', 'deleted_at', 'sku', 'is_master')
         # Shallow Clone of the default price to populate the price field.
