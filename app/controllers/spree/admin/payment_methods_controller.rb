@@ -17,11 +17,9 @@ module Spree
         load_hubs
 
         if @payment_method.save
-          invoke_callbacks(:create, :after)
           flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
-          invoke_callbacks(:create, :fails)
           respond_with(@payment_method)
         end
       end
@@ -29,8 +27,6 @@ module Spree
       def update
         restrict_stripe_account_change
         force_environment
-
-        invoke_callbacks(:update, :before)
 
         if @payment_method.type.to_s != payment_method_class
           @payment_method.update_columns(
@@ -41,11 +37,9 @@ module Spree
         end
 
         if @payment_method.update(update_params)
-          invoke_callbacks(:update, :after)
           flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
-          invoke_callbacks(:update, :fails)
           respond_with(@payment_method)
         end
       end
