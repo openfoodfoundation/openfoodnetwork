@@ -131,7 +131,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run admin feature tests
-        run: bundle exec rspec --profile -- spec/features/admin/[a-o]*_spec.rb
+        run: bundle exec rspec --profile -- spec/features/admin/[a-o0-9]*_spec.rb
 
   test-admin-features-2:
     runs-on: ubuntu-18.04
