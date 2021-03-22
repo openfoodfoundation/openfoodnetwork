@@ -1177,8 +1177,10 @@ en_GB:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}."
       terms_of_service: "Terms of Service"
     all_terms_and_conditions:
+      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
       terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
@@ -3428,6 +3430,7 @@ en_GB:
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
