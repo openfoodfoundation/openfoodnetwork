@@ -12,8 +12,8 @@ describe OutstandingBalance do
       normalized_sql_statement = normalize(outstanding_balance.statement)
 
       expect(normalized_sql_statement).to eq(normalize(<<-SQL))
-        CASE WHEN state IN ('canceled', 'returned') THEN payment_total
-             WHEN state IS NOT NULL THEN payment_total - total
+        CASE WHEN "spree_orders"."state" IN ('canceled', 'returned') THEN "spree_orders"."payment_total"
+             WHEN "spree_orders"."state" IS NOT NULL THEN "spree_orders"."payment_total" - "spree_orders"."total"
         ELSE 0 END
       SQL
     end
