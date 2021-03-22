@@ -1179,8 +1179,10 @@ es:
       message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
       link_text: "Términos y Condiciones"
     platform_terms_of_service:
+      message_html: "Acepto los %{tos_link} de la plataforma."
       terms_of_service: "Términos de servicio"
     all_terms_and_conditions:
+      message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
       terms_and_conditions: "Términos y Condiciones"
       terms_of_service: "Términos de servicio"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
@@ -3426,6 +3428,7 @@ es:
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
           privacy_policy_url: "Vínculo con la Política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
+          shoppers_require_tos: "Los compradores deben aceptar los términos de servicio"
           cookies_policy_matomo_section: "Mostrar la sección de Matomo en la página de política de cookies"
           footer_tos_url: "URL de términos y servicios"
     checkout:
