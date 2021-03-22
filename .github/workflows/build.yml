@@ -253,9 +253,6 @@ jobs:
           bundle exec rake db:create RAILS_ENV=test
           bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run JS tests
-        run: RAILS_ENV=test bundle exec rake karma:run
-
       - name: Run all other tests
         run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/{helpers, initializers, jobs, mailers, queries, requests, services, validators, views}/{,/*/**}/*_spec.rb"
 
