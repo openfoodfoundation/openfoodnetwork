@@ -291,6 +291,30 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
   end
 
+
+  context 'Order Cycle Management' do
+    let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, kind_of(Spree::User)) { true }
+
+        controller_login_as_enterprise_user [coordinator1]
+      end
+
+      it 'renders the delivery report' do
+        spree_post :order_cycle_management, {
+          q: { completed_at_lt: 1.day.ago },
+          shipping_method_in: [ "123" ], # We just need to search for shipping methods
+          report_type: "delivery",
+        }
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
   context "Admin" do
     before { controller_login_as_admin }
 
