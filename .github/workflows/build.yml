@@ -49,7 +49,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run controller tests
-        run: bundle exec rspec spec/controllers spec/serializers
+        run: bundle exec rspec --profile -- spec/controllers spec/serializers
 
   test-models:
     runs-on: ubuntu-18.04
@@ -90,7 +90,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run tests
-        run: bundle exec rspec spec/models
+        run: bundle exec rspec --profile -- spec/models
 
   test-admin-features-1:
     runs-on: ubuntu-18.04
