@@ -22,9 +22,9 @@ class OrderTaxAdjustmentsFetcher
   def all
     tax_adjustments = order.all_adjustments.tax
     enterprise_fees_with_tax = order.all_adjustments.enterprise_fee.with_tax
-    admin_adjustments_with_tax = order.adjustments.admin.with_tax
+    admin_adjustments_with_tax = order.all_adjustments.admin.with_tax
 
-    tax_adjustments | enterprise_fees_with_tax | admin_adjustments_with_tax
+    tax_adjustments.or(enterprise_fees_with_tax).or(admin_adjustments_with_tax)
   end
 
   def table
