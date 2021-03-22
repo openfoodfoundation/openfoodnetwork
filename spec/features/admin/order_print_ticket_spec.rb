@@ -6,7 +6,7 @@ feature '
     As an administrator
     I want to print a ticket for an order
 ', js: true do
-  include CheckoutRequestsHelper
+  include CheckoutHelper
   include AuthenticationHelper
   include ActionView::Helpers::NumberHelper
 
