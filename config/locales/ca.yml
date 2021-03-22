@@ -1180,8 +1180,10 @@ ca:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor."
       link_text: "Termes i condicions"
     platform_terms_of_service:
+      message_html: "Accepto els %{tos_link} de la plataforma."
       terms_of_service: "Termes del servei"
     all_terms_and_conditions:
+      message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
       terms_and_conditions: "Termes i condicions"
       terms_of_service: "Termes del servei"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
@@ -3426,6 +3428,7 @@ ca:
           cookies_consent_banner_toggle: "Mostra banner de consentiment de cookies"
           privacy_policy_url: "URL de la política de privacitat "
           enterprises_require_tos: "Les organitzacions han d'acceptar les condicions del servei"
+          shoppers_require_tos: "Els compradors han d’acceptar les condicions del servei"
           cookies_policy_matomo_section: "Mostra la secció de Matomo a la pàgina de política de cookies"
           footer_tos_url: "URL de les condicions d'ús"
     checkout:
