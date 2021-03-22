@@ -257,7 +257,7 @@ jobs:
         run: RAILS_ENV=test bundle exec rake karma:run
 
       - name: Run all other tests
-        run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/{helpers, initializers, jobs, mailers, queries, requests, services, validators, views}/{,/*/**}/*_spec.rb"
+        run: bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib"]
 
   test-the-rest:
     runs-on: ubuntu-18.04
@@ -297,5 +297,5 @@ jobs:
           bundle exec rake db:create RAILS_ENV=test
           bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run admin feature folders, serializers, jobs, lib
-        run: bundle exec rspec --profile --pattern "spec/features/admin/*/*_spec.rb,spec/lib/{,/*/**}/*_spec.rb"
+      - name: Run admin feature folders, engines, lib
+        run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/features/admin/*/*_spec.rb,spec/lib/{,/*/**}/*_spec.rb"
