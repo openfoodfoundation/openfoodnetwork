@@ -21,7 +21,7 @@ module Api
     end
 
     def delete_link
-      Spree::Core::Engine.routes.url_helpers.credit_card_path(object.id)
+      credit_card_path(object.id)
     end
   end
 end
