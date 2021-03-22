@@ -27,10 +27,6 @@ class OrderTaxAdjustmentsFetcher
     tax_adjustments.or(enterprise_fees_with_tax).or(admin_adjustments_with_tax)
   end
 
-  def table
-    @table ||= Spree::Adjustment.arel_table
-  end
-
   def tax_rates_hash(adjustment)
     tax_rates = TaxRateFinder.tax_rates_of(adjustment)
 
