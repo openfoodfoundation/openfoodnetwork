@@ -23,6 +23,10 @@ class OrderBalance
     end
   end
 
+  def +(other)
+    to_f + other.to_f
+  end
+
   private
 
   attr_reader :order
