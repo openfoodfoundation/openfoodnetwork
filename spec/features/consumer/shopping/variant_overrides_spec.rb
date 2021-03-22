@@ -6,7 +6,7 @@ feature "shopping with variant overrides defined", js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
-  include CheckoutHelper
+  include CheckoutRequestsHelper
   include UIComponentHelper
 
   let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
