@@ -18,39 +18,38 @@ module Spree
 
     context "#update!" do
       context "when originator present" do
-        let(:originator) { double("originator", update_adjustment: nil) }
+        let(:originator) { double("originator", compute_amount: 10.0) }
         before do
-          allow(originator).to receive_messages update_amount: true
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
 
         it "should do nothing when closed" do
           adjustment.close
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
         it "should do nothing when finalized" do
           adjustment.finalize
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
-        it "should ask the originator to update_adjustment" do
-          expect(originator).to receive(:update_adjustment)
+        it "should ask the originator to recalculate the amount" do
+          expect(originator).to receive(:compute_amount)
           adjustment.update!
         end
 
         context "using the :force argument" do
           it "should update adjustments without changing their state" do
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
             expect(adjustment.state).to eq "open"
           end
 
           it "should update closed adjustments" do
             adjustment.close
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
           end
         end
@@ -58,7 +57,7 @@ module Spree
 
       it "should do nothing when originator is nil" do
         allow(adjustment).to receive_messages originator: nil
-        expect(adjustment).not_to receive(:amount=)
+        expect(adjustment).not_to receive(:update_columns)
         adjustment.update!
       end
     end

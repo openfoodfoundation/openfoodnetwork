@@ -66,13 +66,4 @@ describe Spree::Core::CalculatedAdjustments do
       end
     end
   end
-
-  context "#update_adjustment" do
-    it "should update the adjustment using its calculator (and the specified source)" do
-      adjustment = double(:adjustment).as_null_object
-      calculable = double :calculable
-      expect(adjustment).to receive(:update_column).with(:amount, 10)
-      tax_rate.update_adjustment(adjustment, calculable)
-    end
-  end
 end
