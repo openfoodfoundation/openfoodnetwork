@@ -52,11 +52,11 @@ module Spree
             dependent: :destroy
 
     has_many :variants, -> {
-      where(is_master: false).order("#{::Spree::Variant.quoted_table_name}.position ASC")
+      where(is_master: false).order("spree_variants.position ASC")
     }, class_name: 'Spree::Variant'
 
     has_many :variants_including_master,
-             -> { order("#{::Spree::Variant.quoted_table_name}.position ASC") },
+             -> { order("spree_variants.position ASC") },
              class_name: 'Spree::Variant',
              dependent: :destroy
 
@@ -90,7 +90,7 @@ module Spree
 
     validates :supplier, presence: true
     validates :primary_taxon, presence: true
-    validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"
+    validates :tax_category_id, presence: true, if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
     validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }

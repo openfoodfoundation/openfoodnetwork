@@ -109,12 +109,13 @@ module Spree
     }
 
     scope :not_hidden_for, lambda { |enterprise|
-      return where("1=0") if enterprise.blank?
+      enterprise_id = enterprise&.id.to_i
+      return none if enterprise_id < 1
 
       joins("
         LEFT OUTER JOIN (SELECT *
                            FROM inventory_items
-                           WHERE enterprise_id = #{sanitize enterprise.andand.id})
+                           WHERE enterprise_id = #{enterprise_id})
           AS o_inventory_items
           ON o_inventory_items.variant_id = spree_variants.id")
         .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
