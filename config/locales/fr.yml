@@ -1179,8 +1179,10 @@ fr:
       message_html: "J'accepte les %{terms_and_conditions_link}."
       link_text: "CGU & CGV"
     platform_terms_of_service:
+      message_html: "J'accepte les %{tos_link}."
       terms_of_service: "Conditions Générales d'Utilisation"
     all_terms_and_conditions:
+      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
       terms_and_conditions: "CGU & CGV"
       terms_of_service: "Conditions Générales d'Utilisation"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
@@ -3451,6 +3453,7 @@ fr:
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
           privacy_policy_url: "URL de la politique de confidentialité"
           enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
+          shoppers_require_tos: "Les acheteurs doivent accepter les CGU."
           cookies_policy_matomo_section: "Afficher la section Matomo sur la politique de cookies"
           footer_tos_url: "Conditions d'utilisation URL"
     checkout:
