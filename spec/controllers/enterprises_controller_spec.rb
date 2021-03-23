@@ -150,16 +150,16 @@ describe EnterprisesController, type: :controller do
     # let(:enterprise) { create(:enterprise, permalink: 'enterprise_permalink') }
 
     it "responds with status of 200 when the route does not exist" do
-      get :check_permalink, xhr: true, params: { permalink: 'some_nonexistent_route', format: :js }
+      get :check_permalink, xhr: true, params: { permalink: 'some_nonexistent_route' }, as: :js
       expect(response.status).to be 200
     end
 
     it "responds with status of 409 when the permalink matches an existing route" do
       # get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
       # expect(response.status).to be 409
-      get :check_permalink, xhr: true, params: { permalink: 'map', format: :js }
+      get :check_permalink, xhr: true, params: { permalink: 'map' }, as: :js
       expect(response.status).to be 409
-      get :check_permalink, xhr: true, params: { permalink: '', format: :js }
+      get :check_permalink, xhr: true, params: { permalink: '' }, as: :js
       expect(response.status).to be 409
     end
   end

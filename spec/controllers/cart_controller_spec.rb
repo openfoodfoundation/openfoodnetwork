@@ -17,7 +17,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:valid?) { true }
       allow(cart_service).to receive(:variants_h) { {} }
-      post :populate, xhr: true, params: { use_route: :spree, format: :json }
+      post :populate, xhr: true, params: { use_route: :spree }, as: :json
       expect(response.status).to eq(200)
     end
 
@@ -26,7 +26,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:valid?) { false }
       allow(cart_service).to receive(:errors) { errors }
       allow(errors).to receive(:full_messages).and_return(["Error: foo"])
-      post :populate, xhr: true, params: { use_route: :spree, format: :json }
+      post :populate, xhr: true, params: { use_route: :spree }, as: :json
       expect(response.status).to eq(412)
     end
 
@@ -34,7 +34,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:variants_h) { {} }
       allow(cart_service).to receive(:valid?) { true }
       expect(cart_service).to receive(:populate).with({}, true)
-      post :populate, xhr: true, params: { use_route: :spree, format: :json }
+      post :populate, xhr: true, params: { use_route: :spree }, as: :json
     end
 
     it "returns stock levels as JSON on success" do
@@ -44,7 +44,7 @@ describe CartController, type: :controller do
       allow(cart_service).to receive(:valid?) { true }
       allow(cart_service).to receive(:variants_h) { {} }
 
-      post :populate, xhr: true, params: { use_route: :spree, format: :json }
+      post :populate, xhr: true, params: { use_route: :spree }, as: :json
 
       data = JSON.parse(response.body)
       expect(data['stock_levels']).to eq('my_stock_levels')
