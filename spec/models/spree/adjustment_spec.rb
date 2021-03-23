@@ -274,7 +274,7 @@ module Spree
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
         let(:line_item)   { create(:line_item, variant: variant) }
         let(:order)       { create(:order, line_items: [line_item], order_cycle: order_cycle, distributor: coordinator) }
-        let(:adjustment)  { order.adjustments.reload.enterprise_fee.first }
+        let(:adjustment)  { order.all_adjustments.reload.enterprise_fee.first }
 
         context "when enterprise fees have a fixed tax_category" do
           before do

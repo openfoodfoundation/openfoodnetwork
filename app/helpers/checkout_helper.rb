@@ -4,10 +4,9 @@ module CheckoutHelper
   end
 
   def checkout_adjustments_for(order, opts = {})
-    adjustments = order.adjustments.eligible
     exclude = opts[:exclude] || {}
 
-    adjustments = adjustments.to_a + order.shipment_adjustments.to_a
+    adjustments = order.all_adjustments.eligible.to_a
 
     # Remove empty tax adjustments and (optionally) shipping fees
     adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
@@ -26,17 +25,16 @@ module CheckoutHelper
     adjustments
   end
 
-  def display_checkout_admin_and_handling_adjustments_total_for(order)
-    adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
-    Spree::Money.new adjustments.sum(:amount), currency: order.currency
+  def display_line_item_fees_total_for(order)
+    Spree::Money.new order.adjustments.enterprise_fee.sum(:amount), currency: order.currency
   end
 
-  def checkout_line_item_adjustments(order)
-    order.adjustments.eligible.where(source_type: "Spree::LineItem")
+  def checkout_line_item_fees(order)
+    order.line_item_adjustments.enterprise_fee
   end
 
   def checkout_subtotal(order)
-    order.item_total + checkout_line_item_adjustments(order).sum(:amount)
+    order.item_total + checkout_line_item_fees(order).sum(:amount)
   end
 
   def display_checkout_subtotal(order)

@@ -490,6 +490,7 @@ describe Spree::Order do
   end
 
   describe "applying enterprise fees" do
+    subject { create(:order) }
     let(:fee_handler) { ::OrderFeesHandler.new(subject) }
 
     before do
@@ -661,8 +662,14 @@ describe Spree::Order do
     let!(:order) { create(:order) }
     let(:enterprise_fee1) { create(:enterprise_fee) }
     let(:enterprise_fee2) { create(:enterprise_fee) }
-    let!(:adjustment1) { create(:adjustment, adjustable: order, originator: enterprise_fee1, label: "EF 1", amount: 123, included_tax: 10.00) }
-    let!(:adjustment2) { create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2", amount: 123, included_tax: 2.00) }
+    let!(:adjustment1) {
+      create(:adjustment, adjustable: order, originator: enterprise_fee1, label: "EF 1",
+             amount: 123, included_tax: 10.00, order: order)
+    }
+    let!(:adjustment2) {
+      create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2",
+             amount: 123, included_tax: 2.00, order: order)
+    }
 
     it "returns a sum of the tax included in all enterprise fees" do
       expect(order.reload.enterprise_fee_tax).to eq(12)
