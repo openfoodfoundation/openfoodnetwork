@@ -1179,6 +1179,11 @@ ca:
     terms_and_conditions:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor."
       link_text: "Termes i condicions"
+    platform_terms_of_service:
+      terms_of_service: "Termes del servei"
+    all_terms_and_conditions:
+      terms_and_conditions: "Termes i condicions"
+      terms_of_service: "Termes del servei"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:

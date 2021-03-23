@@ -1184,6 +1184,8 @@ en_AU:
     terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
+    all_terms_and_conditions:
+      terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:

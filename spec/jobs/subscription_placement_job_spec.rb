@@ -115,6 +115,18 @@ describe SubscriptionPlacementJob do
           expect(changes[line_item2.id]).to be 3
           expect(changes[line_item3.id]).to be 3
         end
+
+        context "and the order has been placed" do
+          before do
+            allow(order).to receive(:ensure_available_shipping_rates) { true }
+            allow(order).to receive(:process_each_payment) { true }
+            job.send(:place_order, order.reload)
+          end
+
+          it "removes the unavailable items from the shipment" do
+            expect(order.shipment.manifest.size).to eq 1
+          end
+        end
       end
     end
   end

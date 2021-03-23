@@ -1177,6 +1177,11 @@ it:
     terms_and_conditions:
       message_html: "Accetto i %{terms_and_conditions_link} del venditore."
       link_text: "Termini e Condizioni"
+    platform_terms_of_service:
+      terms_of_service: "Termini di Servizio"
+    all_terms_and_conditions:
+      terms_and_conditions: "Termini e Condizioni"
+      terms_of_service: "Termini di Servizio"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
     hubs:

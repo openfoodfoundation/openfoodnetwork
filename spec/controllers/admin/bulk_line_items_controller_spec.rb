@@ -237,7 +237,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "hub enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: distributor1.owner
-          xhr :put, :update, params
+          put :update, params: params, xhr: true
         end
 
         it "updates the line item" do

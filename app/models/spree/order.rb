@@ -466,14 +466,6 @@ module Spree
       false
     end
 
-    def billing_firstname
-      bill_address.try(:firstname)
-    end
-
-    def billing_lastname
-      bill_address.try(:lastname)
-    end
-
     def products
       line_items.map(&:product)
     end

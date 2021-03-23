@@ -1174,6 +1174,11 @@ en_NZ:
     terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
+    platform_terms_of_service:
+      terms_of_service: "Terms of Service"
+    all_terms_and_conditions:
+      terms_and_conditions: "Terms and Conditions"
+      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:

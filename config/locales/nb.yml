@@ -1174,6 +1174,11 @@ nb:
     terms_and_conditions:
       message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
       link_text: "Vilkår og Betingelser"
+    platform_terms_of_service:
+      terms_of_service: "Vilkår for bruk"
+    all_terms_and_conditions:
+      terms_and_conditions: "Vilkår og Betingelser"
+      terms_of_service: "Vilkår for bruk"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
     hubs:

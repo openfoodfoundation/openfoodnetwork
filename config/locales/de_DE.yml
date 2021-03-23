@@ -1178,6 +1178,8 @@ de_DE:
     terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
       link_text: "Allgemeinen Geschäftsbedingungen"
+    all_terms_and_conditions:
+      terms_and_conditions: "Allgemeinen Geschäftsbedingungen"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
   shops:
     hubs:
@@ -2867,8 +2869,8 @@ de_DE:
   payment: "Zahlung"
   payment_method: "Zahlungsart"
   shipment: "Lieferung"
-  shipment_inc_vat: "Lieferung inkl. Mehrwertsteuer"
-  shipping_tax_rate: "Liefersteuersatz"
+  shipment_inc_vat: "Liefergebühr inkl. Mehrwertsteuer"
+  shipping_tax_rate: "Steuersatz der Liefergebühr"
   category: "Produktkategorie"
   delivery: "Lieferung"
   temperature_controlled: "Temperaturüberwacht"
@@ -2984,9 +2986,9 @@ de_DE:
     tax_category: "Steuerkategorie"
     tax_rates: "Steuersätze"
     rate: "Steuersatz"
-    tax_rate_amount_explanation: "Steuersätze sind ein Dezimalbetrag zur Vereinfachung der Berechnung (d. h. wenn der Steuersatz 5 % beträgt, geben Sie 0,05 ein)."
+    tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
     included_in_price: "Im Preis inbegriffen"
-    show_rate_in_label: "Steuersatz im Etikett anzeigen"
+    show_rate_in_label: "Steuersatz im Namen anzeigen"
     back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
@@ -2998,7 +3000,7 @@ de_DE:
     countries: "Länder"
     listing_countries: "Länder verwalten"
     iso_name: "ISO-Name"
-    states_required: "Staaten erforderlich"
+    states_required: "Staaten/Bundesländer/Regionen erforderlich"
     editing_country: "Land bearbeiten"
     back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"

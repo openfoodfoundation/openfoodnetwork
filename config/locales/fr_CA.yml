@@ -1178,6 +1178,11 @@ fr_CA:
     terms_and_conditions:
       message_html: "J'accepte les %{terms_and_conditions_link}"
       link_text: "CGU & CGV"
+    platform_terms_of_service:
+      terms_of_service: "Conditions Générales d'Utilisation"
+    all_terms_and_conditions:
+      terms_and_conditions: "CGU & CGV"
+      terms_of_service: "Conditions Générales d'Utilisation"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
   shops:
     hubs:
