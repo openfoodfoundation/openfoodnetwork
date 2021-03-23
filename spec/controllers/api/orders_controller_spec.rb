@@ -133,7 +133,7 @@ module Api
         end
 
         it 'can show only completed orders' do
-          get :index, format: :json, q: { completed_at_not_null: true, s: 'created_at desc' }
+          get :index, params: { format: :json, q: { completed_at_not_null: true, s: 'created_at desc' } }
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
         end
@@ -145,7 +145,7 @@ module Api
         end
 
         it 'returns pagination data when query params contain :per_page]' do
-          get :index, per_page: 15, page: 1
+          get :index, params: { per_page: 15, page: 1 }
 
           pagination_data = {
             'results' => 2,
