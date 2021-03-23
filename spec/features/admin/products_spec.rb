@@ -470,16 +470,96 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
     end
 
-    scenario "editing a product's variant unit scale", js: true do
-      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+    context "editing a product's variant unit scale", js: true do
+      let!(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
 
-      visit spree.edit_admin_product_path product
-      select 'Weight (kg)', from: 'product_variant_unit_with_scale'
-      click_button 'Update'
-      expect(flash_message).to eq('Product "a product" has been successfully updated!')
-      product.reload
-      expect(product.variant_unit).to eq('weight')
-      expect(product.variant_unit_scale).to eq(1000)
+      # assertions commented out refer to bug:
+      # https://github.com/openfoodfoundation/openfoodnetwork/issues/7180
+
+      before do
+        Spree::Config.available_units = "g,lb,oz,kg,T,mL,L,kL"
+        visit spree.edit_admin_product_path product
+      end
+
+      it 'as weight (g)' do
+        select 'Weight (g)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('weight')
+        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (g)')
+        expect(product.variant_unit_scale).to eq(1)
+      end
+
+      it 'as weight (kg)' do
+        select 'Weight (kg)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('weight')
+        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (kg)')
+        expect(product.variant_unit_scale).to eq(1000)
+      end
+
+      it 'as weight (T)' do
+        select 'Weight (T)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('weight')
+        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (T)')
+        expect(product.variant_unit_scale).to eq(1_000_000)
+      end
+
+      it 'as weight (oz)' do
+        select 'Weight (oz)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('weight')
+        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Weight (oz)')
+        expect(product.variant_unit_scale).to eq(28.35)
+      end
+
+      it 'as weight (lb)' do
+        select 'Weight (lb)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('weight')
+        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Weight (lb)')
+        expect(product.variant_unit_scale).to eq(453.6)
+      end
+
+      it 'as volume (mL)' do
+        select 'Volume (mL)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('volume')
+        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Volume (mL)')
+        expect(product.variant_unit_scale).to eq(0.001)
+      end
+
+      it 'as volume (L)' do
+        select 'Volume (L)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('volume')
+        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Volume (L)')
+        expect(product.variant_unit_scale).to eq(1)
+      end
+
+      it 'as volume (kL)' do
+        select 'Volume (kL)', from: 'product_variant_unit_with_scale'
+        click_button 'Update'
+        expect(flash_message).to eq('Product "a product" has been successfully updated!')
+        product.reload
+        expect(product.variant_unit).to eq('volume')
+        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Volume (kL)')
+        expect(product.variant_unit_scale).to eq(1000)
+      end
     end
   end
 end
