@@ -42,15 +42,15 @@ module Spree
              as: :adjustable,
              dependent: :destroy
 
-    has_many :line_item_adjustments, through: :line_items, source: :adjustments
-    has_many :shipment_adjustments, through: :shipments, source: :adjustments
-    has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
-
     has_many :shipments, dependent: :destroy do
       def states
         pluck(:state).uniq
       end
     end
+
+    has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :shipment_adjustments, through: :shipments, source: :adjustments
+    has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
