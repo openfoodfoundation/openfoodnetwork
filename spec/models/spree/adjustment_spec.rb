@@ -490,5 +490,21 @@ module Spree
         end
       end
     end
+
+    context "return authorization adjustments" do
+      let!(:return_authorization) { create(:return_authorization, amount: 123) }
+      let(:order) { return_authorization.order }
+      let!(:return_adjustment) {
+        create(:adjustment, originator: return_authorization, order: order,
+                            adjustable: order, amount: 456)
+      }
+
+      describe "updating the adjustment" do
+        it "sets a negative value equal to the return authorization amount" do
+          return_adjustment.update!
+          expect(return_adjustment.reload.amount).to eq(-1 * return_authorization.amount)
+        end
+      end
+    end
   end
 end
