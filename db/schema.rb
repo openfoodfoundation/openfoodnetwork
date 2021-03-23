@@ -388,9 +388,11 @@ ActiveRecord::Schema.define(version: 2021_04_14_171109) do
     t.string "state", limit: 255
     t.integer "order_id"
     t.boolean "included", default: false
+    t.integer  "tax_category_id"
     t.index ["adjustable_type", "adjustable_id"], name: "index_spree_adjustments_on_adjustable_type_and_adjustable_id"
     t.index ["order_id"], name: "index_spree_adjustments_on_order_id"
     t.index ["originator_type", "originator_id"], name: "index_spree_adjustments_on_originator_type_and_originator_id"
+    t.index ["tax_category_id"], name: "index_spree_adjustments_on_tax_category_id"
   end
 
   create_table "spree_assets", force: :cascade do |t|
