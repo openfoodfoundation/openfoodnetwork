@@ -16,7 +16,7 @@ namespace :ofn do
       end
 
       def execute_rspec_for_spec_folders(folders)
-        folders = folders.join(",") if folders.is_a?(Array)
+        folders = folders.join(",")
         execute_rspec_for_pattern("spec/{#{folders}}/{,/*/**}/*_spec.rb")
       end
 
