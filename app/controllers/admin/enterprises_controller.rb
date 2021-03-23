@@ -24,8 +24,7 @@ module Admin
     before_action :load_properties, only: [:edit, :update]
     before_action :setup_property, only: [:edit]
 
-    update.after  :geocode_address_if_use_geocoder
-    create.after  :geocode_address_if_use_geocoder
+    after_action  :geocode_address_if_use_geocoder, only: [:create, :update]
 
     helper 'spree/products'
     include OrderCyclesHelper
