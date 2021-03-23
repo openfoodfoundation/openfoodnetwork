@@ -35,7 +35,7 @@ module Spree
         return unless Spree::Config.enable_localized_number?
 
         @invalid_localized_number.andand.each do |error_attribute|
-          errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
+          errors.add(error_attribute, I18n.t('spree.localized_number.invalid_format'))
         end
       end
     end
