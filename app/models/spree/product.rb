@@ -367,7 +367,7 @@ module Spree
       Spree::OptionType.where('name LIKE ?', 'unit_%%')
     end
 
-    def destroy_with_delete_from_order_cycles
+    def destroy
       transaction do
         touch_distributors
 
@@ -375,10 +375,9 @@ module Spree
           where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
           select(:id)).destroy_all
 
-        destroy_without_delete_from_order_cycles
+        super
       end
     end
-    alias_method_chain :destroy, :delete_from_order_cycles
 
     private
 
