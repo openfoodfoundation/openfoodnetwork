@@ -70,7 +70,7 @@ module OpenFoodNetwork
     def relevant_rates
       return @relevant_rates unless @relevant_rates.nil?
 
-      @relevant_rates = Spree::TaxRate.uniq
+      @relevant_rates = Spree::TaxRate.distinct
     end
 
     def totals_of(line_items)

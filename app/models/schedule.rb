@@ -3,7 +3,7 @@ class Schedule < ActiveRecord::Base
 
   has_many :order_cycle_schedules, dependent: :destroy
   has_many :order_cycles, through: :order_cycle_schedules
-  has_many :coordinators, -> { uniq }, through: :order_cycles
+  has_many :coordinators, -> { distinct }, through: :order_cycles
 
   scope :with_coordinator, lambda { |enterprise| joins(:order_cycles).where('coordinator_id = ?', enterprise.id).select('DISTINCT schedules.*') }
 
