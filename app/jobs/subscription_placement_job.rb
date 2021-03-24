@@ -13,8 +13,8 @@ class SubscriptionPlacementJob < ActiveJob::Base
 
   private
 
-  delegate :record_order, :record_success, :record_issue, to: :summarizer
-  delegate :record_and_log_error, :send_placement_summary_emails, to: :summarizer
+  delegate :record_success, :record_issue, :record_subscription_issue, to: :summarizer
+  delegate :record_order, :record_and_log_error, :send_placement_summary_emails, to: :summarizer
 
   def summarizer
     @summarizer ||= OrderManagement::Subscriptions::Summarizer.new
@@ -30,6 +30,8 @@ class SubscriptionPlacementJob < ActiveJob::Base
   def place_order_for(proxy_order)
     JobLogger.logger.info("Placing Order for Proxy Order #{proxy_order.id}")
     initialise_order(proxy_order)
+    return record_subscription_issue(proxy_order.subscription) if proxy_order.order.nil?
+
     place_order(proxy_order.order)
   end
 
