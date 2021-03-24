@@ -173,7 +173,7 @@ module Spree
     scope :in_distributors, lambda { |distributors|
       with_order_cycles_outer.
         where('(o_exchanges.incoming = ? AND o_exchanges.receiver_id IN (?))', false, distributors).
-        uniq
+        distinct
     }
 
     # Products supplied by a given enterprise or distributed via that enterprise through an OC
