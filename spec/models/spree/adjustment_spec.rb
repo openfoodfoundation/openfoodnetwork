@@ -18,7 +18,8 @@ module Spree
 
     context "#update!" do
       context "when originator present" do
-        let(:originator) { double("originator", compute_amount: 10.0) }
+        let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
+
         before do
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
