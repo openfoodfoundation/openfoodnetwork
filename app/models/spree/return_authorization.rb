@@ -66,7 +66,7 @@ module Spree
 
     # Used when Adjustment#update! wants to update the related adjustment
     def compute_amount(*_args)
-      amount.abs * -1
+      -amount.abs
     end
 
     private
@@ -95,7 +95,7 @@ module Spree
       end
 
       Adjustment.create(
-        amount: amount.abs * -1,
+        amount: -amount.abs,
         label: I18n.t('spree.rma_credit'),
         order: order,
         adjustable: order,
