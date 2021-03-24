@@ -20,7 +20,7 @@ module Spree
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
 
     validates :amount, presence: true, numericality: true
-    validates :tax_category_id, presence: true
+    validates :tax_category, presence: true
     validates_with DefaultTaxZoneValidator
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
