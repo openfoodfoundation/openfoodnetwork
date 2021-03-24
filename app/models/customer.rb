@@ -19,7 +19,7 @@ class Customer < ActiveRecord::Base
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
-  validates :enterprise_id, presence: true
+  validates :enterprise, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
 
