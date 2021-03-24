@@ -65,7 +65,7 @@ module Spree
     end
 
     # Used when Adjustment#update! wants to update the related adjustment
-    def compute_amount(*args)
+    def compute_amount(*_args)
       amount.abs * -1
     end
 
