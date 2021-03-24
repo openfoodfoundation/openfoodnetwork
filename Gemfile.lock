@@ -688,6 +688,7 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   knapsack
   letter_opener (>= 1.4.1)
+  mimemagic (> 0.3.5)
   mini_racer (= 0.4.0)
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
