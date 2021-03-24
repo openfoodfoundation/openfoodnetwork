@@ -108,7 +108,7 @@ describe CheckoutController, type: :controller do
         end
 
         it "completes the order and redirects to the order confirmation page" do
-          get :edit, { payment_intent: "pi_123" }
+          get :edit, params: { payment_intent: "pi_123" }
           expect(order.completed?).to be true
           expect(response).to redirect_to order_path(order)
         end
@@ -189,12 +189,12 @@ describe CheckoutController, type: :controller do
 
       it 'expires the current order' do
         allow(controller).to receive(:expire_current_order)
-        put :update, order: {}
+        put :update, params: { order: {} }
         expect(controller).to have_received(:expire_current_order)
       end
 
       it 'sets the access_token of the session' do
-        put :update, order: {}
+        put :update, params: { order: {} }
         expect(session[:access_token]).to eq(controller.current_order.token)
       end
     end

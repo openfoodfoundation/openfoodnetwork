@@ -133,7 +133,7 @@ module Api
         end
 
         it 'can show only completed orders' do
-          get :index, params: { format: :json, q: { completed_at_not_null: true, s: 'created_at desc' } }
+          get :index, params: { q: { completed_at_not_null: true, s: 'created_at desc' } }, as: :json
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
         end
@@ -166,12 +166,12 @@ module Api
         before { allow(controller).to receive(:spree_current_user) { admin_user } }
 
         it "when no order number is given" do
-          get :show, id: ""
+          get :show, params: { id: "" }
           expect(response).to have_http_status(:not_found)
         end
 
         it "when order number given is not in the systen" do
-          get :show, id: "X1321313232"
+          get :show, params: { id: "X1321313232" }
           expect(response).to have_http_status(:not_found)
         end
       end
@@ -179,31 +179,31 @@ module Api
       context "access" do
         it "returns unauthorized, as a regular user" do
           allow(controller).to receive(:spree_current_user) { regular_user }
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           assert_unauthorized!
         end
 
         it "returns the order, as an admin user" do
           allow(controller).to receive(:spree_current_user) { admin_user }
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           expect_order
         end
 
         it "returns the order, as the order distributor owner" do
           allow(controller).to receive(:spree_current_user) { order.distributor.owner }
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           expect_order
         end
 
         it "returns unauthorized, as the order product's supplier owner" do
           allow(controller).to receive(:spree_current_user) { order.line_items.first.variant.product.supplier.owner }
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           assert_unauthorized!
         end
 
         it "returns the order, as the Order Cycle coorinator owner" do
           allow(controller).to receive(:spree_current_user) { order.order_cycle.coordinator.owner }
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           expect_order
         end
       end
@@ -215,19 +215,19 @@ module Api
 
         it "can view an order not in a standard state" do
           order.update(completed_at: nil, state: 'shipped')
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           expect_order
         end
 
         it "can view an order with weight calculator (this validates case where options[current_order] is nil on the shipping method serializer)" do
           order.shipping_method.update_attribute(:calculator, create(:weight_calculator, calculable: order))
           allow(controller).to receive(:current_order).and_return order
-          get :show, id: order.number
+          get :show, params: { id: order.number }
           expect_order
         end
 
         it "returns an order with all required fields" do
-          get :show, id: order.number
+          get :show, params: { id: order.number }
 
           expect_order
           expect(json_response.symbolize_keys.keys).to include(*order_detailed_attributes)
@@ -280,7 +280,7 @@ module Api
 
       describe "#capture" do
         it "captures payments and returns an updated order object" do
-          put :capture, id: order.number
+          put :capture, params: { id: order.number }
 
           expect(order.reload.pending_payments.empty?).to be true
           expect_order
@@ -305,7 +305,7 @@ module Api
         end
 
         it "marks orders as shipped and returns an updated order object" do
-          put :ship, id: order.number
+          put :ship, params: { id: order.number }
 
           expect(order.reload.shipments.any?(&:shipped?)).to be true
           expect_order

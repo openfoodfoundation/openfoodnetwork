@@ -48,7 +48,7 @@ describe LineItemsController, type: :controller do
 
         context "where the item's order is not associated with the user" do
           it "denies deletion" do
-            delete :destroy, params
+            delete :destroy, params: params
             expect(response.status).to eq 403
           end
         end
@@ -61,7 +61,7 @@ describe LineItemsController, type: :controller do
 
           context "without an order cycle or distributor" do
             it "denies deletion" do
-              delete :destroy, params
+              delete :destroy, params: params
               expect(response.status).to eq 403
             end
           end
@@ -71,7 +71,7 @@ describe LineItemsController, type: :controller do
 
             context "where changes are not allowed" do
               it "denies deletion" do
-                delete :destroy, params
+                delete :destroy, params: params
                 expect(response.status).to eq 403
               end
             end
@@ -80,7 +80,7 @@ describe LineItemsController, type: :controller do
               before { distributor.update_attributes!(allow_order_changes: true) }
 
               it "deletes the line item" do
-                delete :destroy, params
+                delete :destroy, params: params
                 expect(response.status).to eq 204
                 expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
               end
@@ -91,7 +91,7 @@ describe LineItemsController, type: :controller do
 
                 it 'updates the payment state' do
                   expect(order.payment_state).to eq 'paid'
-                  delete :destroy, params           
+                  delete :destroy, params: params
                   order.reload
                   expect(order.payment_state).to eq 'credit_owed'
                 end
@@ -123,8 +123,7 @@ describe LineItemsController, type: :controller do
         # Delete the item
         item = order.line_items.first
         allow(controller).to receive_messages spree_current_user: order.user
-        request = { format: :json, id: item }
-        delete :destroy, request
+        delete :destroy, format: :json, params: { id: item }
         expect(response.status).to eq 204
 
         # Check the fees again
@@ -160,7 +159,7 @@ describe LineItemsController, type: :controller do
         expect(order.reload.adjustment_total).to eq calculator.preferred_discount_amount
 
         allow(controller).to receive_messages spree_current_user: user
-        delete :destroy, params
+        delete :destroy, params: params
         expect(response.status).to eq 204
 
         expect(order.reload.adjustment_total).to eq calculator.preferred_normal_amount
