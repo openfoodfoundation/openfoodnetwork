@@ -500,7 +500,7 @@ module Spree
                             adjustable: order, amount: 456)
       }
 
-      describe "updating the adjustment" do
+      describe "#update!" do
         it "sets a negative value equal to the return authorization amount" do
           expect { return_adjustment.update! }.
             to change { return_adjustment.reload.amount }.to(-123)
