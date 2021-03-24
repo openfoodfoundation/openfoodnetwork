@@ -94,6 +94,17 @@ module OrderManagement
             end
           end
         end
+
+        describe "#record_subscription_issue" do
+          let(:subscription) { double(:subscription, shop_id: 1) }
+
+          before { allow(summarizer).to receive(:summary_for_shop_id).with(subscription.shop_id) { summary } }
+
+          it "records a subscription issue" do
+            expect(summary).to receive(:record_subscription_issue).with(subscription).once
+            summarizer.record_subscription_issue(subscription)
+          end
+        end
       end
 
       describe "#send_placement_summary_emails" do

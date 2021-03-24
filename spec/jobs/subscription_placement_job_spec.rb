@@ -217,6 +217,18 @@ describe SubscriptionPlacementJob do
         end
       end
     end
+
+    context "when the proxy order fails to generate an order" do
+      before do
+        allow(proxy_order).to receive(:initialise_order!) { nil }
+      end
+
+      it "records an error " do
+        expect(job).to receive(:record_subscription_issue)
+        expect(job).to_not receive(:place_order)
+        job.send(:place_proxy_order, proxy_order)
+      end
+    end
   end
 
   describe "#send_placement_email" do
