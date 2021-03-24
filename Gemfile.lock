@@ -327,12 +327,8 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.1104)
-<<<<<<< HEAD
     mini_mime (1.0.3)
-    mini_portile2 (2.5.0)
-=======
-    mimemagic (0.3.5)
-    mini_mime (1.0.2)
+    mini_portile2 (2.5.0)    mini_mime (1.0.2)
     mini_portile2 (2.4.0)
 >>>>>>> fa2cdf337... Update Rails to 5.2
     mini_racer (0.3.1)
@@ -348,16 +344,10 @@ GEM
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-<<<<<<< HEAD
     nio4r (2.5.2)
     nokogiri (1.11.2)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-=======
-    nio4r (2.5.7)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
->>>>>>> fa2cdf337... Update Rails to 5.2
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -681,6 +671,7 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   knapsack
   letter_opener (>= 1.4.1)
+  mimemagic (> 0.3.5)
   mini_racer (= 0.3.1)
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
