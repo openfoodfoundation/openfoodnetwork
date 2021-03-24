@@ -233,7 +233,7 @@ feature '
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the producer should have the property
-      expect(s.producer_properties(true).count).to eq(1)
+      expect(s.producer_properties.reload.count).to eq(1)
       expect(s.producer_properties.first.property.presentation).to eq("Certified Organic")
       expect(s.producer_properties.first.value).to eq("NASAA 12345")
     end
@@ -255,7 +255,7 @@ feature '
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the property should be updated
-      expect(s.producer_properties(true).count).to eq(1)
+      expect(s.producer_properties.reload.count).to eq(1)
       expect(s.producer_properties.first.property.presentation).to eq("Biodynamic")
       expect(s.producer_properties.first.value).to eq("Shininess")
     end
@@ -276,7 +276,7 @@ feature '
       # Then the property should have been removed
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
       expect(page).not_to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
-      expect(s.producer_properties(true)).to be_empty
+      expect(s.producer_properties.reload).to be_empty
     end
   end
 
@@ -418,7 +418,7 @@ feature '
       page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
-      expect(supplier1.producer_properties(true).count).to eq(1)
+      expect(supplier1.producer_properties.reload.count).to eq(1)
 
       # -- Destroy
       pp = supplier1.producer_properties.first
@@ -436,7 +436,7 @@ feature '
       click_button 'Update'
 
       expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
-      expect(supplier1.producer_properties(true)).to be_empty
+      expect(supplier1.producer_properties.reload).to be_empty
     end
   end
 end

@@ -85,7 +85,7 @@ feature '
     find('button.add_variant').click
 
     expect(page).to have_selector 'td', text: product.name
-    expect(order.line_items(true).map(&:product)).to include product
+    expect(order.line_items.reload.map(&:product)).to include product
   end
 
   scenario "displays error when incorrect distribution for products is chosen" do

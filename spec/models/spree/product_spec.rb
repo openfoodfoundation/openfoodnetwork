@@ -783,7 +783,7 @@ module Spree
           expect(v.option_values.map(&:name).include?("1g")).to eq(true)
           expect {
             p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values(true), :count).by(0)
+          }.to change(p.master.option_values.reload, :count).by(0)
           v.reload
           expect(v.option_values.map(&:name).include?("1L")).to eq(true)
           expect(v.option_values.map(&:name).include?("1g")).to eq(false)
@@ -798,7 +798,7 @@ module Spree
           expect(p.master.option_values.map(&:name).include?("1g")).to eq(true)
           expect {
             p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values(true), :count).by(0)
+          }.to change(p.master.option_values.reload, :count).by(0)
           p.reload
           expect(p.master.option_values.map(&:name).include?("1L")).to eq(true)
           expect(p.master.option_values.map(&:name).include?("1g")).to eq(false)
@@ -835,8 +835,8 @@ module Spree
           p.option_type_ids = p.option_type_ids.reject { |id| id == ot.id }
 
           # Then the associated option values should have been removed from the variants
-          expect(v1.option_values(true)).not_to include ov1
-          expect(v2.option_values(true)).not_to include ov2
+          expect(v1.option_values.reload).not_to include ov1
+          expect(v2.option_values.reload).not_to include ov2
 
           # And the option values themselves should still exist
           expect(Spree::OptionValue.where(id: [ov1.id, ov2.id]).count).to eq(2)
@@ -864,13 +864,13 @@ module Spree
       it "removes the master variant from all order cycles" do
         e.variants << p.master
         p.destroy
-        expect(e.variants(true)).to be_empty
+        expect(e.variants.reload).to be_empty
       end
 
       it "removes all other variants from order cycles" do
         e.variants << v
         p.destroy
-        expect(e.variants(true)).to be_empty
+        expect(e.variants.reload).to be_empty
       end
     end
   end
