@@ -2661,6 +2661,7 @@ en_FR:
       price_breakdown: "Price breakdown"
       unit_price_tooltip:
         shopfront: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
+        admin: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ as it is includes taxes & fees."
     variants:
       on_demand:
         'yes': "On demand"
@@ -3321,6 +3322,7 @@ en_FR:
           unit_name: "Unit name"
           price: "Price"
           unit_price: "Unit Price"
+          unit_price_legend: "Calculated based on the item price"
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"
