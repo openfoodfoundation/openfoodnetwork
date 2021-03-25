@@ -5,7 +5,7 @@
 # rubocop locally, the default configuration file `.rubocop.yml` loads
 # our "todo lists" to ignore all current violations.
 AllCops:
-  TargetRailsVersion: 4.0
+  TargetRailsVersion: 5.0
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'
