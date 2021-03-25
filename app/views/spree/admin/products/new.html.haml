@@ -4,7 +4,7 @@
 
 = form_for [:admin, @product], :html => { :multipart => true } do |f|
   .twelve.columns.alpha
-    %fieldset.no-border-bottom{ id: "new_product" }
+    %fieldset.no-border-bottom{ id: "new_product", 'ng-controller' => 'unitsCtrl' }
       %legend{align: "center"}= t(".new_product")
       .sixteen.columns.alpha
         .eight.columns.alpha
@@ -20,7 +20,7 @@
             %br/
             = f.text_field :name, :class => 'fullwidth title'
             = f.error_message_on :name
-      .sixteen.columns.alpha{ 'ng-controller' => 'unitsCtrl' }
+      .sixteen.columns.alpha
         .eight.columns.alpha
           = f.field_container :units do
             = f.label :variant_unit_with_scale, t(".units")
@@ -45,33 +45,46 @@
       .sixteen.columns.alpha
         .eight.columns.alpha
           = render 'spree/admin/products/primary_taxon_form', f: f
-        .three.columns
+        .four.columns
           = f.field_container :price do
             = f.label :price, t(".price")
             %span.required *
             %br/
-            = f.text_field :price, class: 'fullwidth'
+            = f.text_field :price, { "class" => "fullwidth", "ng-model" => "product.price" }
             = f.error_message_on :price
+        - if feature? :unit_price, spree_current_user
+          .four.columns{ ng: { app: 'ofn.admin'}}
+            = f.field_container :unit_price do
+              = f.label :unit_price, t(".unit_price")
+              %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+                  "question-mark-with-tooltip-append-to-body" => "true",
+                  "question-mark-with-tooltip-placement" => "top",
+                  "question-mark-with-tooltip-animation" => true, 
+                  key: "'js.shopfront.unit_price_tooltip.admin'"}
+              %br/
+              = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
+              %div{style: "color: black"}
+                = t(".unit_price_legend")
+      .sixteen.columns.alpha
         .three.columns
+          - if Spree::TaxCategory.any?
+            = render 'spree/admin/products/tax_category_form', f: f
+          - else
+            &nbsp;
+        .five.columns.omega
+          = render 'spree/admin/products/shipping_category_form', f: f
+        .five.columns
           = f.field_container :on_hand do
             = f.label :on_hand, t(".on_hand")
             %br/
             = f.text_field :on_hand, class: 'fullwidth'
             = f.error_message_on :on_hand
-        .two.columns.omega
+        .three.columns.omega
           = f.field_container :on_demand do
             = f.label :on_demand, t(".on_demand")
             %br/
             = f.check_box :on_demand
             = f.error_message_on :on_demand
-      .sixteen.columns.alpha
-        .four.columns
-          - if Spree::TaxCategory.any?
-            = render 'spree/admin/products/tax_category_form', f: f
-          - else
-            &nbsp;
-        .four.columns.omega
-          = render 'spree/admin/products/shipping_category_form', f: f
 
       .sixteen.columns.alpha
         = f.field_container :description do

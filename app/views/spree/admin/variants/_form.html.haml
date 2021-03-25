@@ -1,4 +1,4 @@
-.label-block.left.six.columns.alpha{'ng-app' => 'admin.products'}
+.label-block.left.six.columns.alpha{'ng-app' => 'admin.products', 'ng-controller' => 'variantUnitsCtrl'}
   .field
     = f.label :display_name, t('.display_name')
     = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
@@ -8,7 +8,7 @@
 
   - if product_has_variant_unit_option_type?(@product)
     - if @product.variant_unit != 'items'
-      .field{'ng-controller' => 'variantUnitsCtrl'}
+      .field
         = f.label :unit_value, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
         = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
         = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
@@ -33,8 +33,22 @@
       = f.text_field :sku, class: 'fullwidth'
     .field
       = f.label :price, t('.price')
-      = f.text_field :price, value: number_to_currency(@variant.price, unit: ''), class: 'fullwidth'
-
+      = f.text_field :price, class: 'fullwidth', "ng-model" => "variant.price", "ng-init" => "variant.price = '#{number_to_currency(@variant.price, unit: '')}'"
+    - if feature? :unit_price, spree_current_user  
+      .field
+        = hidden_field_tag 'product_variant_unit', @product.variant_unit
+        = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name
+        = f.field_container :unit_price do
+          = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
+          %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+            "question-mark-with-tooltip-append-to-body" => "true",
+            "question-mark-with-tooltip-placement" => "top",
+            "question-mark-with-tooltip-animation" => true, 
+            key: "'js.shopfront.unit_price_tooltip.admin'"}
+          %br/
+          = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
+          %div{style: "color: black"}
+            = t("spree.admin.products.new.unit_price_legend")
     %div{ 'set-on-demand' => '' }
       .field.checkbox
         %label
