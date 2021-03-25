@@ -86,12 +86,12 @@ module Spree
     validates :name, presence: true
     validates :permalink, presence: true
     validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :shipping_category_id, presence: true
+    validates :shipping_category, presence: true
 
     validates :supplier, presence: true
     validates :primary_taxon, presence: true
-    validates :tax_category_id, presence: true,
-                                if: proc { Spree::Config[:products_require_tax_category] }
+    validates :tax_category, presence: true,
+                             if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
     validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
