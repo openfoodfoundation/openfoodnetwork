@@ -65,7 +65,7 @@ describe Api::V0::ShipmentsController, type: :controller do
 
         spree_post :create, params
 
-        expect(json_response["id"]). to eq(original_shipment_id)
+        expect(json_response["id"]).to eq(original_shipment_id)
         expect_valid_response
         expect(order.shipment.reload.inventory_units.size).to eq 2
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
