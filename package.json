@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "jasmine-core": "~2.4.1",
-    "karma": "~0.13.22",
+    "karma": "~6.3.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8"
