@@ -220,9 +220,9 @@ module Spree
     end
 
     def unit_price_price_and_unit
-      price = Spree::Money.new((rand * 10).round(2), currency: currency)
-      unit = ["item", "kg"].sample
-      price.to_html + " / " + unit
+      unit_price = UnitPrice.new(variant)
+      Spree::Money.new(price_with_adjustments / unit_price.denominator).to_html +
+        " / " + unit_price.unit
     end
 
     def scoper
