@@ -183,7 +183,7 @@ Metrics/AbcSize:
 
 Metrics/BlockLength:
   Max: 25
-  ExcludedMethods: [
+  IgnoredMethods: [
     "class_eval",
     "collection",
     "context",
