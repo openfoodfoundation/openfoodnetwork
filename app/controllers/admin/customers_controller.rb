@@ -74,7 +74,12 @@ module Admin
     def collection
       if json_request? && params[:enterprise_id].present?
         customers_relation.
-          includes(:bill_address, :ship_address, user: :credit_cards)
+          includes(
+            :enterprise,
+            { bill_address: [:state, :country] },
+            { ship_address: [:state, :country] },
+            user: :credit_cards
+          )
       else
         Customer.where('1=0')
       end
