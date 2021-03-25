@@ -42,12 +42,15 @@ describe CheckoutController, concurrency: true, type: :controller do
     allow(controller).to receive(:spree_current_user).and_return(order.user)
     allow(controller).to receive(:current_distributor).and_return(order.distributor)
     allow(controller).to receive(:current_order_cycle).and_return(order.order_cycle)
+
+    # Avoid setting headers as Rails 5 is not thread-safe here:
+    allow(controller).to receive(:restrict_iframes)
   end
 
   # This spec does not seem to be running in two threads in Rails 5. There are errors for the
   # same response headers being set twice, possibly indicating that there is only one response
   # as opposed to two separate requests in two threads?
-  xit "handles two concurrent orders successfully" do
+  it "handles two concurrent orders successfully" do
     # New threads start running straight away. The breakpoint is after loading
     # the order and before advancing the order's state and making payments.
     breakpoint.lock
