@@ -36,7 +36,7 @@ module Spree
             amount = compute_amount(calculable)
             return if amount.zero? && !mandatory
 
-            target.adjustments.create(
+            adjustment_attributes = {
               amount: amount,
               source: old_calculable,
               originator: self,
@@ -45,7 +45,13 @@ module Spree
               mandatory: mandatory,
               state: state,
               included: tax_included?(self, target)
-            )
+            }
+
+            if target.respond_to?(:adjustments)
+              target.adjustments.create(adjustment_attributes)
+            else
+              target.create_adjustment(adjustment_attributes)
+            end
           end
 
           # Updates the amount of the adjustment using our Calculator and

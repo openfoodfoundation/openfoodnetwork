@@ -20,7 +20,7 @@ module Spree
              class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source, dependent: :destroy
 
-    has_one :adjustment, as: :source, dependent: :destroy
+    has_one :adjustment, as: :adjustable, dependent: :destroy
 
     validate :validate_source
     before_create :set_unique_identifier
@@ -135,8 +135,8 @@ module Spree
         adjustment.label = adjustment_label
         adjustment.save
       else
-        payment_method.create_adjustment(adjustment_label, order, self, true)
-        association(:adjustment).reload
+        payment_method.create_adjustment(adjustment_label, self, self, true)
+        adjustment.reload
       end
     end
 
