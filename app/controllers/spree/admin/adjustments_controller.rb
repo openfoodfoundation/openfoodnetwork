@@ -17,7 +17,7 @@ module Spree
       end
 
       def collection
-        parent.adjustments.eligible | parent.shipment_adjustments.shipping
+        parent.all_adjustments.eligible
       end
 
       def find_resource

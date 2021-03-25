@@ -8,6 +8,24 @@ module Spree
 
     before { controller_login_as_admin }
 
+    describe "index" do
+      let!(:order) { create(:order) }
+      let!(:adjustment1) {
+        create(:adjustment, originator_type: "Spree::ShippingMethod", order: order)
+      }
+      let!(:adjustment2) {
+        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: false, order: order)
+      }
+      let!(:adjustment3) { create(:adjustment, originator_type: "EnterpriseFee", order: order) }
+
+      it "loads all eligible adjustments" do
+        spree_get :index, order_id: order.number
+
+        expect(assigns(:collection)).to include adjustment1, adjustment3
+        expect(assigns(:collection)).to_not include adjustment2
+      end
+    end
+
     describe "setting included tax" do
       let(:order) { create(:order) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
