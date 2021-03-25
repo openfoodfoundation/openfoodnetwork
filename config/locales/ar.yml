@@ -1176,8 +1176,10 @@ ar:
       message_html: "أوافق على %{terms_and_conditions_link} للبائع."
       link_text: "الأحكام والشروط"
     platform_terms_of_service:
+      message_html: "أوافق على المنصة %{tos_link}."
       terms_of_service: "شروط الخدمة"
     all_terms_and_conditions:
+      message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
       terms_and_conditions: "الأحكام والشروط"
       terms_of_service: "شروط الخدمة"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
@@ -2649,7 +2651,9 @@ ar:
         min_quantity: "اقل كمية "
         max_quantity: "اعلى كمية"
       price_breakdown: "تفاصيل السعر"
-      unit_price_tooltip: "هذا هو سعر الوحدة لهذا المنتج. يتيح لك مقارنة أسعار المنتجات بغض النظر عن أحجام العبوات والأوزان."
+      unit_price_tooltip:
+        shopfront: "هذا هو سعر الوحدة لهذا المنتج. يتيح لك مقارنة أسعار المنتجات بغض النظر عن أحجام العبوات والأوزان."
+        admin: "يزيد سعر الوحدة من الشفافية من خلال السماح لعملائك بمقارنة الأسعار بسهولة بين المنتجات المختلفة وأحجام العبوات. لاحظ أن سعر الوحدة النهائي المعروض في واجهة المحل قد يختلف لأنه يشمل الضرائب والرسوم."
     variants:
       on_demand:
         'yes': "حسب الطلب"
@@ -3405,6 +3409,8 @@ ar:
           value: "القيمة"
           unit_name: "إسم الوحدة"
           price: "السعر"
+          unit_price: "سعر الوحدة"
+          unit_price_legend: "محسوبة على أساس سعر السلعة"
           on_hand: "متوفر"
           on_demand: "حسب الطلب"
           product_description: "وصف المنتج"
@@ -3510,6 +3516,7 @@ ar:
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
           privacy_policy_url: "رابط سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
+          shoppers_require_tos: "يجب على المتسوقين قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
           footer_tos_url: "رابط شروط الخدمة "
     checkout:
