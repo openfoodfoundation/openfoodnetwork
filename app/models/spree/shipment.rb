@@ -284,6 +284,10 @@ module Spree
       I18n.t('shipping')
     end
 
+    def can_modify?
+      !shipped? && !order.canceled?
+    end
+
     private
 
     def manifest_unstock(item)

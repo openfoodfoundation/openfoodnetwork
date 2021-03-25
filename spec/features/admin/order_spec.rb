@@ -343,6 +343,16 @@ feature '
           end
         end
       end
+
+      context "and the order has been canceled" do
+        it "does not allow modifying line items" do
+          order.cancel!
+          visit spree.edit_admin_order_path(order)
+          within("tr.stock-item", text: order.products.first.name) do
+            expect(page).to_not have_selector("a.edit-item")
+          end
+        end
+      end
     end
 
     scenario "creating an order with distributor and order cycle" do

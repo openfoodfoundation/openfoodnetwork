@@ -4,8 +4,11 @@
   %fieldset.no-border-bottom
     %legend{:align => "center"}= Spree.t(:add_product)
 
-    .field.twelve.columns.alpha{"data-hook" => "add_product_name"}
-      = label_tag :add_variant_id, Spree.t(:name_or_sku)
-      = hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth"
-      
+    - if @order.canceled?
+      = Spree.t(:cannot_add_item_to_canceled_order)
+    - else
+      .field.twelve.columns.alpha{"data-hook" => "add_product_name"}
+        = label_tag :add_variant_id, Spree.t(:name_or_sku)
+        = hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth"
+
   #stock_details
