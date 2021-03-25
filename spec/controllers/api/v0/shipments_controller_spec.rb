@@ -128,16 +128,17 @@ describe Api::V0::ShipmentsController, type: :controller do
       end
 
       it 'adds a variant to a shipment' do
-        api_put :add, params.merge(variant_id: new_variant.to_param)
-        expect(response.status).to eq(200)
-        expect(inventory_units_for(new_variant).size).to eq 2
+        expect {
+          api_put :add, params.merge(variant_id: new_variant.to_param)
+          expect(response.status).to eq(200)
+        }.to change { inventory_units_for(new_variant).size }.by(2)
       end
 
       it 'removes a variant from a shipment' do
-        api_put :remove, params.merge(variant_id: existing_variant.to_param)
-
-        expect(response.status).to eq(200)
-        expect(inventory_units_for(existing_variant).size).to eq(1)
+        expect {
+          api_put :remove, params.merge(variant_id: existing_variant.to_param)
+          expect(response.status).to eq(200)
+        }.to change { inventory_units_for(existing_variant).size }.by(-2)
       end
     end
 
