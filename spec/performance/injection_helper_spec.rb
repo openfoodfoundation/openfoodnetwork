@@ -22,7 +22,7 @@ describe InjectionHelper, type: :helper, performance: true do
       ActiveRecord::Base.connection.query_cache.clear
       Rails.cache.delete_matched('api\/cached_enterprise_serializer\/enterprises')
       result = Benchmark.measure { helper.inject_enterprises }
-      results << result.total if i > 0
+      results << result.total if i.positive?
       puts result
     end
 

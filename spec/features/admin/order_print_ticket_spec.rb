@@ -75,7 +75,7 @@ feature '
 
       def adjustments_in_print_data
         checkout_adjustments_for(order, exclude: [:line_item]).
-          reject { |a| a.amount == 0 }.
+          reject { |a| a.amount.zero? }.
           map do |adjustment|
             [raw(adjustment.label),
              display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
