@@ -6,6 +6,7 @@
 # our "todo lists" to ignore all current violations.
 AllCops:
   NewCops: disable
+  SuggestExtensions: false
   TargetRailsVersion: 5.0
   Exclude:
     - 'bin/**/*'
