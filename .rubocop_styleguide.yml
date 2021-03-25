@@ -219,3 +219,6 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Max: 7
+
+Naming/PredicateName:
+  Enabled: false
