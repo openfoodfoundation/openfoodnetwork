@@ -1175,8 +1175,10 @@ pt_BR:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"
     platform_terms_of_service:
+      message_html: "Eu concordo com os %{tos_link}da plataforma"
       terms_of_service: "Termos de serviço"
     all_terms_and_conditions:
+      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
       terms_and_conditions: "Termos e Condições"
       terms_of_service: "Termos de serviço"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
@@ -1189,6 +1191,7 @@ pt_BR:
     mailers:
       powered_by:
         open_food_network: "Open Food Brasil"
+        powered_html: "Esta compra é possibilitada pela %{open_food_network}."
     menu:
       cart:
         cart: "Carrinho"
@@ -1555,6 +1558,7 @@ pt_BR:
     set_a_password: "Você será solicitado a definir uma senha antes de poder administrar a empresa."
     mistakenly_sent: "Não sabe ao certo por que você recebeu este e-mail? Entre em contato com %{owner_email} para obter mais informações."
   producer_mail_greeting: "Querido"
+  producer_mail_text_before: "Veja abaixo uma atualização para o ciclo de pedidos com entregas em:"
   producer_mail_order_text: "Aqui está um resumo de pedidos para seus produtos:"
   producer_mail_delivery_instructions: "Instruções para retirada/entrega do estoque:"
   producer_mail_signoff: "Obrigado e até breve"
@@ -2377,6 +2381,7 @@ pt_BR:
   back_to_orders_list: "Voltar à lista de pedidos"
   no_orders_found: "Nenhum pedido encontrado"
   order_information: "Informações sobre pedidos"
+  new_payment: "Novo Pagamento"
   date_completed: "Data de conclusão"
   amount: "Montante"
   state_names:
@@ -2888,6 +2893,7 @@ pt_BR:
     name_or_sku: "Nome ou SKU (digite pelo menos os 4 primeiros caracteres do nome do produto)"
     resend: "Re-enviar"
     back_to_orders_list: "Voltar à lista de pedidos"
+    back_to_payments_list: "Voltar pra Lista de Pagamentos"
     return_authorizations: "Autorizações de Devolução"
     cannot_create_returns: "Não é possível criar devoluções, pois esse pedido não possui unidades enviadas."
     select_stock: "Selecionar estoque"
@@ -3420,6 +3426,7 @@ pt_BR:
           cookies_consent_banner_toggle: "Mostrar banner sobre permissão para cookies"
           privacy_policy_url: " Política de Privacidade URL"
           enterprises_require_tos: "As iniciativas devem aceitar os Termos de Serviço"
+          shoppers_require_tos: "Compradores precisam aceitar Termos de Serviço"
           cookies_policy_matomo_section: "Exibir a seção Matomo nos cookies da página de política"
           footer_tos_url: "URL Termos de Serviço"
     checkout:
@@ -3457,6 +3464,7 @@ pt_BR:
       pending: pendente
       ready: pronto
       shipped: enviado
+      canceled: cancelado
     payment_states:
       balance_due: saldo devedor
       completed: completado
@@ -3578,6 +3586,8 @@ pt_BR:
         past_orders: Pedidos passados
       transactions:
         transaction_history: Histórico de transações
+        authorisation_required: Requer Autorização
+        authorise: Autorizar
       open_orders:
         order: Pedido
         shop: Loja
