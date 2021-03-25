@@ -154,6 +154,30 @@ describe Api::V0::ShipmentsController, type: :controller do
           }.to change { existing_variant.reload.on_hand }.by(2)
         end
       end
+
+      context "for canceled orders" do
+        before do
+          expect(order.cancel).to eq true
+        end
+
+        it "doesn't adjusts stock when adding a variant" do
+          pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/7166"
+
+          expect {
+            api_put :add, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(422)
+          }.to_not change { existing_variant.reload.on_hand }
+        end
+
+        it "doesn't adjusts stock when removing a variant" do
+          pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/7166"
+
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(422)
+          }.to_not change { existing_variant.reload.on_hand }
+        end
+      end
     end
 
     context "can transition a shipment from ready to ship" do
