@@ -74,7 +74,8 @@
         %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
           {{'js.admin.orders.shipment_states.' + order.shipment_state | t}}
       %td
-        = mail_to "{{order.email}}"
+        %a{ ng: { href: "mailto:{{order.email}}" } }
+          {{order.email}}
         %br
         {{order.full_name}}
       %td.align-center
