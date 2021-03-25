@@ -112,26 +112,32 @@ describe Api::V0::ShipmentsController, type: :controller do
 
     context 'for completed shipments' do
       let(:order) { create :completed_order_with_totals }
+      let(:line_item) { order.line_items.first }
+      let(:existing_variant) { line_item.variant }
+      let(:new_variant) { create(:variant) }
+      let(:params) {
+        {
+          quantity: 2,
+          order_id: order.to_param,
+          id: order.shipments.first.to_param
+        }
+      }
+
+      before do
+        line_item.update!(quantity: 3)
+      end
 
       it 'adds a variant to a shipment' do
-        api_put :add, variant_id: variant.to_param,
-                      quantity: 2,
-                      order_id: order.to_param,
-                      id: order.shipments.first.to_param
-
+        api_put :add, params.merge(variant_id: new_variant.to_param)
         expect(response.status).to eq(200)
-        expect(inventory_units_for(variant).size).to eq 2
+        expect(inventory_units_for(new_variant).size).to eq 2
       end
 
       it 'removes a variant from a shipment' do
-        order.contents.add(variant, 2)
-        api_put :remove, variant_id: variant.to_param,
-                         quantity: 1,
-                         order_id: order.to_param,
-                         id: order.shipments.first.to_param
+        api_put :remove, params.merge(variant_id: existing_variant.to_param)
 
         expect(response.status).to eq(200)
-        expect(inventory_units_for(variant).size).to eq(1)
+        expect(inventory_units_for(existing_variant).size).to eq(1)
       end
     end
 
