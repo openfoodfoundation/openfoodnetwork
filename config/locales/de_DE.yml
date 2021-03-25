@@ -2417,6 +2417,7 @@ de_DE:
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
           Möglicherweise ist es nicht mehr verfügbar oder der Laden schließt gerade.
     admin:
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
       modals:
         got_it: "Verstanden"
@@ -2669,8 +2670,7 @@ de_DE:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
-      unit_price_tooltip:
-        shopfront: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht."
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -3101,6 +3101,7 @@ de_DE:
           header:
             store: openfoodnetwork.de
     admin:
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       tab:
         dashboard: "Übersicht"
         orders: "Bestellungen"
@@ -3330,6 +3331,7 @@ de_DE:
           unit_name: "Einheitenname"
           price: "Preis"
           unit_price: "Stückpreis"
+          unit_price_legend: "Berechnet aus Preis und Menge."
           on_hand: "Verfügbar"
           on_demand: "Unbegrenzt"
           product_description: "Produktbeschreibung"
@@ -3647,3 +3649,42 @@ de_DE:
         spree/payment:
           one: Zahlung
           other: Zahlungen
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: etwa 1 Stunde
+        other: etwa %{count} Stunden
+      about_x_months:
+        one: etwa 1 Monat
+        other: etwa %{count} Monaten
+      about_x_years:
+        one: etwa 1 Jahr
+        other: etwa %{count} Jahren
+      almost_x_years:
+        one: fast 1 Jahr
+        other: fast %{count} Jahren
+      half_a_minute: 30 Sekunden
+      less_than_x_seconds:
+        one: weniger als 1 Sekunde
+        other: weniger als %{count} Sekunden
+      less_than_x_minutes:
+        one: weniger als einer Minute
+        other: weniger als %{count} Minuten
+      over_x_years:
+        one: über 1 Jahr
+        other: über %{count} Jahren
+      x_seconds:
+        one: "1 Sekunde"
+        other: "%{count} Sekunden"
+      x_minutes:
+        one: "1 Minute"
+        other: "%{count} Minuten"
+      x_days:
+        one: "1 Tag"
+        other: "%{count} Tagen"
+      x_months:
+        one: "1 Monat"
+        other: "%{count} Monaten"
+      x_years:
+        one: "1 Jahr"
+        other: "%{count} Jahren"
