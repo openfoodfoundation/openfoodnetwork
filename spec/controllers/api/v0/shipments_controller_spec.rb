@@ -135,11 +135,23 @@ describe Api::V0::ShipmentsController, type: :controller do
           }.to change { inventory_units_for(new_variant).size }.by(2)
         end
 
+        it 'adjusts stock when adding a variant' do
+          expect {
+            api_put :add, params.merge(variant_id: new_variant.to_param)
+          }.to change { new_variant.reload.on_hand }.by(-2)
+        end
+
         it 'removes a variant from a shipment' do
           expect {
             api_put :remove, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(200)
           }.to change { inventory_units_for(existing_variant).size }.by(-2)
+        end
+
+        it 'adjusts stock when removing a variant' do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+          }.to change { existing_variant.reload.on_hand }.by(2)
         end
       end
     end
