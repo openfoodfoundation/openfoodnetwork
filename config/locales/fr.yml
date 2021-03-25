@@ -2690,6 +2690,7 @@ fr:
       price_breakdown: "Détail du prix"
       unit_price_tooltip:
         shopfront: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
+        admin: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
     variants:
       on_demand:
         'yes': "A volonté"
@@ -3350,6 +3351,7 @@ fr:
           unit_name: "Unité"
           price: "Prix"
           unit_price: "Prix unitaire"
+          unit_price_legend: "Calcul basé sur le prix à l'unité"
           on_hand: "En stock"
           on_demand: "A volonté"
           product_description: "Description du Produit"
