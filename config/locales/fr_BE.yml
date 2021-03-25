@@ -3173,6 +3173,7 @@ fr_BE:
           value: "Nb unités"
           unit_name: "Nom de l'unité"
           price: "Prix"
+          unit_price: "Prix unitaire"
           on_hand: "En stock"
           on_demand: "A volonté"
           product_description: "Description du Produit"

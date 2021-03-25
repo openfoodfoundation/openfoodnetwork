@@ -3176,6 +3176,7 @@ fil_PH:
           value: "halaga"
           unit_name: "pangalan ng yunit"
           price: "presyo"
+          unit_price: "Presyo kada Yunit"
           on_hand: "on hand"
           on_demand: "on demand"
           product_description: "paglalarawan ng produkto"

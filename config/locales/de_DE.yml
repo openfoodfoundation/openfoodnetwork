@@ -1283,7 +1283,7 @@ de_DE:
   menu_4_url: "/groups"
   menu_5_title: "Verkaufen"
   menu_5_url: "https://openfoodnetwork.de/sell"
-  menu_6_title: "Über uns"
+  menu_6_title: "Über OFN"
   menu_6_url: "https://wp.openfoodnetwork.de/"
   menu_7_title: "Hilfe"
   menu_7_url: "https://wp.openfoodnetwork.de/support/"
@@ -1572,7 +1572,7 @@ de_DE:
   shopping_oc_next_open: "Der nächste Bestellzyklus wird in %{distance_of_time} geöffnet"
   shopping_oc_select: "Auswählen ..."
   shopping_tabs_home: "Startseite"
-  shopping_tabs_shop: "Einkaufen"
+  shopping_tabs_shop: "Produkte"
   shopping_tabs_about: "Über uns"
   shopping_tabs_contact: "Kontakt"
   shopping_contact_address: "Adresse"
@@ -2669,7 +2669,8 @@ de_DE:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
-      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
+      unit_price_tooltip:
+        shopfront: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -3328,6 +3329,7 @@ de_DE:
           value: "Menge"
           unit_name: "Einheitenname"
           price: "Preis"
+          unit_price: "Stückpreis"
           on_hand: "Verfügbar"
           on_demand: "Unbegrenzt"
           product_description: "Produktbeschreibung"

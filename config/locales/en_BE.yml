@@ -2992,6 +2992,7 @@ en_BE:
           value: "Value"
           unit_name: "Unit name"
           price: "Price"
+          unit_price: "Unit Price"
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"

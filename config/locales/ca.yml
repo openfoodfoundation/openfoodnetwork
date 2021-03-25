@@ -2665,7 +2665,8 @@ ca:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
       price_breakdown: "Desglossament del preu"
-      unit_price_tooltip: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
+      unit_price_tooltip:
+        shopfront: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
     variants:
       on_demand:
         'yes': "Sota demanda"
@@ -3323,6 +3324,7 @@ ca:
           value: "Valor"
           unit_name: "Nom de la unitat"
           price: "Preu"
+          unit_price: "Preu unitari"
           on_hand: "Disponibles"
           on_demand: "Sota demanda"
           product_description: "Descripció del producte"

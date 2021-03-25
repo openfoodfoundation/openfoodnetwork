@@ -3078,6 +3078,7 @@ pt:
           value: "Valor"
           unit_name: "Nome da Unidade"
           price: "Preço"
+          unit_price: "Preço Unitário"
           on_hand: "Disponível"
           on_demand: "Sob Encomenda"
           product_description: "Descrição do Produto"

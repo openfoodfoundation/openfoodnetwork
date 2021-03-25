@@ -3298,6 +3298,7 @@ tr:
           value: "değer"
           unit_name: "BİRİM ADI"
           price: "Fiyat"
+          unit_price: "Birim fiyat"
           on_hand: "Mevcut"
           on_demand: "Talep üzerine"
           product_description: "Ürün Açıklaması"

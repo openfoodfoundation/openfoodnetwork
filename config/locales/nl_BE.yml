@@ -3168,6 +3168,7 @@ nl_BE:
           value: "Waarde"
           unit_name: "Unit naam"
           price: "Prijs"
+          unit_price: "Stukprijs"
           on_hand: "Bij de Hand"
           on_demand: "Op Aanvraag"
           product_description: "Beschrijving product"

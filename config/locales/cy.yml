@@ -3339,6 +3339,7 @@ cy:
           value: "Gwerth"
           unit_name: "Enw&#39;r uned"
           price: "Pris"
+          unit_price: "Pris Uned"
           on_hand: "Wrth Law"
           on_demand: "Ar alw"
           product_description: "Disgrifiad o&#39;r Cynnyrch"

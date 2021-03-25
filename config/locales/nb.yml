@@ -3294,6 +3294,7 @@ nb:
           value: "Verdi"
           unit_name: "Enhetsnavn"
           price: "Pris"
+          unit_price: "Enhetspris"
           on_hand: "Tilgjengelig"
           on_demand: "Ved forespørsel"
           product_description: "Produktbeskrivelse"

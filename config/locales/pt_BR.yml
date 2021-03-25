@@ -2661,7 +2661,8 @@ pt_BR:
         min_quantity: "quantidade min. "
         max_quantity: "Quantidade máxima"
       price_breakdown: "Detalhamento do preço"
-      unit_price_tooltip: "Este é o preço unitário para este produto. Ele te permite comparar o preço dos produtos independentemente do tamanho da embalagem e seu peso. "
+      unit_price_tooltip:
+        shopfront: "Este é o preço unitário para este produto. Ele te permite comparar o preço dos produtos independentemente do tamanho da embalagem e seu peso. "
     variants:
       on_demand:
         'yes': "Sob encomenda"
@@ -3321,6 +3322,7 @@ pt_BR:
           value: "Quantidade"
           unit_name: "Nome da Unidade"
           price: "Preço"
+          unit_price: "Preço Unitário"
           on_hand: "Disponível"
           on_demand: "Sob Encomenda"
           product_description: "Descrição do Produto"

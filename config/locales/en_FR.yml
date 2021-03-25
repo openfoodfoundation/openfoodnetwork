@@ -2659,7 +2659,8 @@ en_FR:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
-      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
+      unit_price_tooltip:
+        shopfront: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
@@ -3319,6 +3320,7 @@ en_FR:
           value: "Value"
           unit_name: "Unit name"
           price: "Price"
+          unit_price: "Unit Price"
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"

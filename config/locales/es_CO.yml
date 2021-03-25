@@ -186,7 +186,7 @@ es_CO:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Bienvenido a"
-  site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
+  site_meta_description: "Nosotros empezamos desde abajo. Con cultivadores y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o municipio...
   producers_join: Los productores colombianos ahora son bienvenidos a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
@@ -1249,11 +1249,11 @@ es_CO:
   menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Acerca de"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://cutt.ly/Sporos-openfoodcolombia"
   menu_6_title: "Conectar"
   menu_6_url: " "
   menu_7_title: "Aprender"
-  menu_7_url: " "
+  menu_7_url: " https://www.facebook.com/groups/ofncolombia"
   logo: "Logo (640x130)"
   logo_mobile: "Logo para móvil (75x26)"
   logo_mobile_svg: "Logo para móvil (SVG)"
@@ -3240,6 +3240,7 @@ es_CO:
           value: "Valor"
           unit_name: "Nombre de la unidad"
           price: "Precio"
+          unit_price: "Precio por unidad"
           on_hand: "Disponibles"
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"

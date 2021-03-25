@@ -2050,6 +2050,7 @@ sv:
           units: "Enhetsstorlek"
           value: "Värde"
           price: "Pris"
+          unit_price: "Styckpris"
           on_hand: "På lager"
           on_demand: "På begäran"
           or: "eller"

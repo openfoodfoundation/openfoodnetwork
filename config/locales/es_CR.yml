@@ -3171,6 +3171,7 @@ es_CR:
           value: "Valor"
           unit_name: "Nombre de la unidad"
           price: "Precio"
+          unit_price: "Precio por unidad"
           on_hand: "Disponibles"
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
