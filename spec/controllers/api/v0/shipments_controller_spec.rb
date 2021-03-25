@@ -110,7 +110,7 @@ describe Api::V0::ShipmentsController, type: :controller do
       expect(response.status).to eq(422)
     end
 
-    context 'for completed shipments' do
+    describe "#add and #remove" do
       let(:order) { create :completed_order_with_totals }
       let(:line_item) { order.line_items.first }
       let(:existing_variant) { line_item.variant }
@@ -127,18 +127,20 @@ describe Api::V0::ShipmentsController, type: :controller do
         line_item.update!(quantity: 3)
       end
 
-      it 'adds a variant to a shipment' do
-        expect {
-          api_put :add, params.merge(variant_id: new_variant.to_param)
-          expect(response.status).to eq(200)
-        }.to change { inventory_units_for(new_variant).size }.by(2)
-      end
+      context 'for completed shipments' do
+        it 'adds a variant to a shipment' do
+          expect {
+            api_put :add, params.merge(variant_id: new_variant.to_param)
+            expect(response.status).to eq(200)
+          }.to change { inventory_units_for(new_variant).size }.by(2)
+        end
 
-      it 'removes a variant from a shipment' do
-        expect {
-          api_put :remove, params.merge(variant_id: existing_variant.to_param)
-          expect(response.status).to eq(200)
-        }.to change { inventory_units_for(existing_variant).size }.by(-2)
+        it 'removes a variant from a shipment' do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(200)
+          }.to change { inventory_units_for(existing_variant).size }.by(-2)
+        end
       end
     end
 
