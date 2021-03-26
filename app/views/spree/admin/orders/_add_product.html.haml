@@ -5,7 +5,7 @@
     %legend{:align => "center"}= Spree.t(:add_product)
 
     - if @order.canceled?
-      = Spree.t(:cannot_add_item_to_canceled_order)
+      = t(".cannot_add_item_to_canceled_order")
     - else
       .field.twelve.columns.alpha{"data-hook" => "add_product_name"}
         = label_tag :add_variant_id, Spree.t(:name_or_sku)
