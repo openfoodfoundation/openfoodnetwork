@@ -44,7 +44,7 @@ describe Api::BaseController do
     end
 
     it "using an invalid token param" do
-      get :index, token: "fake_key"
+      get :index, params: { token: "fake_key" }
       expect(json_response).to eq( "error" => "Invalid API key (fake_key) specified." )
     end
   end
