@@ -5,7 +5,7 @@ module Spree
     acts_as_paranoid
 
     belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items
-    belongs_to :variant, class_name: 'Spree::Variant'
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
     has_many :stock_movements
 
     validates :stock_location, :variant, presence: true
@@ -35,10 +35,6 @@ module Spree
     # Tells whether it's available to be included in a shipment
     def available?
       in_stock? || backorderable?
-    end
-
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     def count_on_hand=(value)
