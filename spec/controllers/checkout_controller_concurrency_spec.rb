@@ -52,6 +52,12 @@ describe CheckoutController, concurrency: true, type: :controller do
     # the order and before advancing the order's state and making payments.
     breakpoint.lock
 
+    checkout_workflow_original = controller.method(:checkout_workflow)
+    expect(controller).to receive(:checkout_workflow) do |shipping_method_id|
+      breakpoint.synchronize {}
+      checkout_workflow_original.call(shipping_method_id)
+    end
+
     # Starting two checkout threads. The controller code will determine if
     # these two threads are synchronised correctly or run into a race condition.
     #
