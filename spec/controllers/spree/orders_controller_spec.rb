@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe Spree::OrdersController, type: :controller do
   include OpenFoodNetwork::EmailHelper
+  include CheckoutHelper
 
   let(:distributor) { double(:distributor) }
   let(:order) { create(:order) }
@@ -22,12 +23,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       it "loads page" do
-        get :show, id: order.number, token: order.token
+        get :show, params: { id: order.number, token: order.token }
         expect(response).to be_success
       end
 
       it "stores order token in session as 'access_token'" do
-        get :show, id: order.number, token: order.token
+        get :show, params: { id: order.number, token: order.token }
         expect(session[:access_token]).to eq(order.token)
       end
     end
@@ -41,7 +42,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "loads page" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to be_success
       end
     end
@@ -50,7 +51,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { order.user }
 
       it "loads page" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to be_success
       end
     end
@@ -59,7 +60,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { create(:user) }
 
       it "redirects to unauthorized" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -72,7 +73,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "redirects to unauthorized" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to redirect_to(root_path(anchor: "login?after_login=#{order_path(order)}"))
         expect(flash[:error]).to eq("Please log in to view your order.")
       end
@@ -101,7 +102,7 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent) { "pi_123" }
 
         it "completes the payment" do
-          get :show, id: order.number, payment_intent: payment_intent
+          get :show, params: { id: order.number, payment_intent: payment_intent }
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to be nil
@@ -113,7 +114,7 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent) { "invalid" }
 
         it "does not complete the payment" do
-          get :show, id: order.number, payment_intent: payment_intent
+          get :show, params: { id: order.number, payment_intent: payment_intent }
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
@@ -225,10 +226,10 @@ describe Spree::OrdersController, type: :controller do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)
         li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
-        get :update, order: { line_items_attributes: {
+        get :update, params: { order: { line_items_attributes: {
           "0" => { quantity: "0", id: "9999" },
           "1" => { quantity: "99", id: li.id }
-        } }
+        } } }
         expect(response.status).to eq(302)
         expect(li.reload.quantity).to eq(99)
       end
@@ -253,9 +254,9 @@ describe Spree::OrdersController, type: :controller do
       line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
       adjustment = create(:adjustment, adjustable: order)
 
-      get :update, order: { line_items_attributes: {
+      get :update, params: { order: { line_items_attributes: {
         "1" => { quantity: "99", id: line_item.id }
-      } }
+      } } }
 
       expect(adjustment.state).to eq('open')
     end
