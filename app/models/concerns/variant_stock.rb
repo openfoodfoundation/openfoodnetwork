@@ -114,7 +114,7 @@ module VariantStock
     # This is the original Spree::StockLocation#move,
     #   except that we raise an error if the stock item is missing,
     #   because, unlike Spree, we should always have exactly one stock item per variant.
-    stock_item.stock_movements.create!(quantity: quantity, originator: originator)
+    stock_item.stock_movements.create!(quantity: quantity, originator: originator) if self.deleted_at.nil?
   end
 
   private
@@ -130,8 +130,9 @@ module VariantStock
   end
 
   def raise_error_if_no_stock_item_available
-    message = 'You need to save the variant to create a stock item before you can set stock levels.'
-    raise message if stock_items.empty?
+    # puts self.id
+    message = "You need to save the variant to create a stock item before you can set stock levels."
+    raise message if self.deleted_at.nil? and stock_items.empty?
   end
 
   # Overwrites stock_item.count_on_hand

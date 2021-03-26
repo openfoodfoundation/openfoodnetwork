@@ -64,7 +64,7 @@ module Spree
       order('spree_variants.position, spree_variants.id, currency')
     }, through: :variants
 
-    has_many :stock_items, through: :variants
+    has_many :stock_items, through: :variants, dependent: :destroy
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
                         :height, :width, :depth, :is_master, :cost_currency,
@@ -86,12 +86,12 @@ module Spree
     validates :name, presence: true
     validates :permalink, presence: true
     validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :shipping_category, presence: true
+    validates :shipping_category_id, presence: true
 
     validates :supplier, presence: true
     validates :primary_taxon, presence: true
-    validates :tax_category, presence: true,
-                             if: proc { Spree::Config[:products_require_tax_category] }
+    validates :tax_category_id, presence: true,
+                                if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
     validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
@@ -367,7 +367,7 @@ module Spree
       Spree::OptionType.where('name LIKE ?', 'unit_%%')
     end
 
-    def destroy
+    def destroy_with_delete_from_order_cycles
       transaction do
         touch_distributors
 
@@ -375,9 +375,10 @@ module Spree
           where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
           select(:id)).destroy_all
 
-        super
+        destroy_without_delete_from_order_cycles
       end
     end
+    alias_method_chain :destroy, :delete_from_order_cycles
 
     private
 
