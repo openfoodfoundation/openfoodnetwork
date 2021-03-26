@@ -65,7 +65,7 @@ module Spree
 
     # Find line items that are from order sorted by variant name and unit value
     scope :sorted_by_name_and_unit_value, -> {
-      joins(variant: :product).
+      joins(variant: :product).unscope(:joins).
         reorder("
           lower(spree_products.name) asc,
             lower(spree_variants.display_name) asc,
