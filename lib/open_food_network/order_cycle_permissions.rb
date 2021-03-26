@@ -1,3 +1,5 @@
+require 'open_food_network/permissions'
+
 module OpenFoodNetwork
   # Class which is used for determining the permissions around a single order cycle and user
   # both of which are set at initialization
