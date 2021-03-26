@@ -4,7 +4,7 @@ module Spree
   class Price < ActiveRecord::Base
     acts_as_paranoid without_default_scope: true
 
-    belongs_to :variant, class_name: 'Spree::Variant'
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
 
     validate :check_price
     validates :amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -24,11 +24,6 @@ module Spree
 
     def price=(price)
       self[:amount] = parse_price(price)
-    end
-
-    # Allow prices to access associated soft-deleted variants.
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     private
