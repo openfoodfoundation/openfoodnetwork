@@ -19,7 +19,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          get :index, params
+          get :index, params: params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -32,7 +32,7 @@ describe Admin::SubscriptionsController, type: :controller do
           let!(:subscription) { create(:subscription, shop: shop) }
 
           it 'renders the index page with appropriate data' do
-            get :index, params
+            get :index, params: params
             expect(response).to render_template 'index'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shops)).to eq [shop] # Shops are loaded
@@ -41,7 +41,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context "where I don't manage a shop that is set up for subscriptions" do
           it 'renders the setup_explanation page' do
-            get :index, params
+            get :index, params: params
             expect(response).to render_template 'setup_explanation'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shop)).to eq shop # First SO enabled shop is loaded
@@ -56,7 +56,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          get :index, params
+          get :index, params: params
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -67,7 +67,7 @@ describe Admin::SubscriptionsController, type: :controller do
         let!(:subscription2) { create(:subscription, shop: shop2) }
 
         it 'renders the collection as json' do
-          get :index, params
+          get :index, params: params
           json_response = JSON.parse(response.body)
           expect(json_response.count).to be 2
           expect(json_response.map{ |so| so['id'] }).to include subscription.id, subscription2.id
@@ -77,7 +77,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { params.merge!(q: { shop_id_eq: shop2.id }) }
 
           it "restricts the list of subscriptions" do
-            get :index, params
+            get :index, params: params
             json_response = JSON.parse(response.body)
             expect(json_response.count).to be 1
             ids = json_response.map{ |so| so['id'] }
@@ -99,7 +99,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      get :new, subscription: { shop_id: shop.id }
+      get :new, params: { subscription: { shop_id: shop.id } }
       expect(assigns(:subscription)).to be_a_new Subscription
       expect(assigns(:subscription).shop).to eq shop
     end
@@ -238,7 +238,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      get :edit, id: subscription.id
+      get :edit, params: { id: subscription.id }
       expect(assigns(:subscription)).to eq subscription
     end
   end
