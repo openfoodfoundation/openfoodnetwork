@@ -47,9 +47,6 @@ describe CheckoutController, concurrency: true, type: :controller do
     allow(controller).to receive(:restrict_iframes)
   end
 
-  # This spec does not seem to be running in two threads in Rails 5. There are errors for the
-  # same response headers being set twice, possibly indicating that there is only one response
-  # as opposed to two separate requests in two threads?
   it "handles two concurrent orders successfully" do
     # New threads start running straight away. The breakpoint is after loading
     # the order and before advancing the order's state and making payments.
