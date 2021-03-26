@@ -10,7 +10,7 @@ module Spree
     include LineItemBasedAdjustmentHandling
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
-    belongs_to :variant, class_name: "Spree::Variant"
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_one :product, through: :variant
@@ -152,18 +152,6 @@ module Spree
 
     def assign_stock_changes_to=(shipment)
       @preferred_shipment = shipment
-    end
-
-    # Remove product default_scope `deleted_at: nil`
-    def product
-      variant.product
-    end
-
-    # This ensures that LineItems always have access to soft-deleted variants.
-    # In some situations, unscoped super will be nil. In these cases,
-    #   we fetch the variant using variant_id. See issue #4946 for more details.
-    def variant
-      Spree::Variant.unscoped { super } || Spree::Variant.unscoped.find(variant_id)
     end
 
     def cap_quantity_at_stock!
