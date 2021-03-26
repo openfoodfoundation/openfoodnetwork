@@ -21,13 +21,13 @@ describe Admin::SchedulesController, type: :controller do
         let(:params) { { format: :json } }
 
         it "scopes @collection to schedules containing order_cycles coordinated by enterprises I manage" do
-          get :index, params
+          get :index, params: params
           expect(assigns(:collection)).to eq [coordinated_schedule]
         end
 
         it "serializes the data" do
           expect(ActiveModel::ArraySerializer).to receive(:new)
-          get :index, params
+          get :index, params: params
         end
 
         context "and there is a schedule of an OC coordinated by _another_ enterprise I manage and the first enterprise is given" do
@@ -37,7 +37,7 @@ describe Admin::SchedulesController, type: :controller do
           let(:params) { { format: :json, enterprise_id: managed_coordinator.id } }
 
           it "scopes @collection to schedules containing order_cycles coordinated by the first enterprise" do
-            get :index, params
+            get :index, params: params
             expect(assigns(:collection)).to eq [coordinated_schedule]
           end
         end
@@ -45,7 +45,7 @@ describe Admin::SchedulesController, type: :controller do
 
       context "where I dont manage an order cycle coordinator" do
         it "returns an empty collection" do
-          get :index, format: :json
+          get :index, as: :json
           expect(assigns(:collection)).to be_nil
         end
       end
