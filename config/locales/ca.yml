@@ -2418,6 +2418,7 @@ ca:
           S'ha produït un problema en afegir aquest producte a la cistella. Potser
           ha deixat d'estar disponible o la botiga a tancat.
     admin:
+      unit_price_tooltip: "El preu unitari augmenta la transparència, ja que permet als vostres clients comparar fàcilment preus entre diferents productes i mides d’envàs. Tingueu en compte que el preu unitari final que es mostra a l’aparador pot variar ja que inclou impostos i taxes."
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
         got_it: "Ho tinc"
@@ -2665,8 +2666,7 @@ ca:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
       price_breakdown: "Desglossament del preu"
-      unit_price_tooltip:
-        shopfront: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
+      unit_price_tooltip: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
     variants:
       on_demand:
         'yes': "Sota demanda"
@@ -3096,6 +3096,7 @@ ca:
           header:
             store: Botiga
     admin:
+      unit_price_tooltip: "El preu unitari augmenta la transparència, ja que permet als vostres clients comparar fàcilment preus entre diferents productes i mides d’envàs. Tingueu en compte que el preu unitari final que es mostra a l’aparador pot variar ja que inclou impostos i taxes."
       tab:
         dashboard: "Panell"
         orders: "Comandes"
@@ -3325,6 +3326,7 @@ ca:
           unit_name: "Nom de la unitat"
           price: "Preu"
           unit_price: "Preu unitari"
+          unit_price_legend: "Calculat en funció del preu de l'article"
           on_hand: "Disponibles"
           on_demand: "Sota demanda"
           product_description: "Descripció del producte"
@@ -3643,3 +3645,42 @@ ca:
         spree/payment:
           one: Pagament
           other: Pagaments
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadament 1 hora
+        other: aprox. %{count} hores
+      about_x_months:
+        one: aproximadament 1 mes
+        other: aprox. %{count} mesos
+      about_x_years:
+        one: aproximadament 1 any
+        other: aprox. %{count} anys
+      almost_x_years:
+        one: gairebé 1 any
+        other: gairebé %{count} anys
+      half_a_minute: mig minut
+      less_than_x_seconds:
+        one: menys d&#39;1 segon
+        other: menys de %{count} segons
+      less_than_x_minutes:
+        one: menys d’un minut
+        other: menys de %{count} minuts
+      over_x_years:
+        one: més d’un any
+        other: més de %{count} anys
+      x_seconds:
+        one: "1 segon"
+        other: "%{count} segons"
+      x_minutes:
+        one: "1 minut"
+        other: "%{count} minuts"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dies"
+      x_months:
+        one: "1 mes"
+        other: "%{count} mesos"
+      x_years:
+        one: "1 any"
+        other: "%{count} anys"
