@@ -190,8 +190,17 @@ module Spree
         end
       end
 
-      it "finds line items sorted by name and unit_value" do
-        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
+      describe "#sorted_by_name_and_unit_value" do
+        it "finds line items sorted by name and unit_value" do
+          expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
+        end
+
+        it "includes soft-deleted products/variants" do
+          li3.variant.product.destroy
+
+          expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
+          expect(o.line_items.sorted_by_name_and_unit_value.to_sql).to_not match "deleted_at"
+        end
       end
 
       it "finds line items from a given order cycle" do
