@@ -17,7 +17,7 @@ module Admin
         end
 
         it "returns an empty @collection" do
-          get :index, format: :html
+          get :index, as: :html
           expect(assigns(:collection)).to eq []
         end
       end
@@ -34,13 +34,13 @@ module Admin
             let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
             it "scopes @collection to customers of that enterprise" do
-              get :index, params
+              get :index, params: params
               expect(assigns(:collection)).to eq [customer]
             end
 
             it "serializes the data" do
               expect(ActiveModel::ArraySerializer).to receive(:new)
-              get :index, params
+              get :index, params: params
             end
 
             context 'when the customer_balance feature is enabled' do
@@ -57,13 +57,13 @@ module Admin
 
                 expect(customers_with_balance).to receive(:query) { Customer.none }
 
-                get :index, params
+                get :index, params: params
               end
 
               it 'serializes using CustomerWithBalanceSerializer' do
                 expect(Api::Admin::CustomerWithBalanceSerializer).to receive(:new)
 
-                get :index, params
+                get :index, params: params
               end
             end
 
@@ -75,20 +75,20 @@ module Admin
               it 'calls Customer.of' do
                 expect(Customer).to receive(:of).twice.with(enterprise) { Customer.none }
 
-                get :index, params
+                get :index, params: params
               end
 
               it 'serializes calling the UserBalanceCalculator' do
                 expect(OpenFoodNetwork::UserBalanceCalculator)
                   .to receive(:new).with(customer.email, customer.enterprise) { calculator }
 
-                get :index, params
+                get :index, params: params
               end
             end
 
             context 'when the customer has no orders' do
               it 'includes the customer balance in the response' do
-                get :index, params
+                get :index, params: params
                 expect(json_response.first["balance"]).to eq("$0.00")
               end
             end
@@ -103,7 +103,7 @@ module Admin
               end
 
               it 'includes the customer balance in the response' do
-                get :index, params
+                get :index, params: params
                 expect(json_response.first["balance"]).to eq("$-10.00")
               end
             end
@@ -124,7 +124,7 @@ module Admin
               end
 
               it 'includes the customer balance in the response' do
-                get :index, params
+                get :index, params: params
                 expect(json_response.first["balance"]).to eq("$10.00")
               end
             end
@@ -134,7 +134,7 @@ module Admin
               let!(:line_item) { create(:line_item, order: order, price: 10.0) }
 
               it 'includes the customer balance in the response' do
-                get :index, params
+                get :index, params: params
                 expect(json_response.first["balance"]).to eq("$0.00")
               end
             end
@@ -156,7 +156,7 @@ module Admin
 
               it 'includes the customer balance in the response' do
                 expect(order.payment_total).to eq(0)
-                get :index, params
+                get :index, params: params
                 expect(json_response.first["balance"]).to eq('$-10.00')
               end
             end
@@ -164,7 +164,7 @@ module Admin
 
           context "and enterprise_id is not given in params" do
             it "returns an empty collection" do
-              get :index, format: :json
+              get :index, as: :json
               expect(assigns(:collection)).to eq []
             end
           end
@@ -176,7 +176,7 @@ module Admin
           end
 
           it "returns an empty collection" do
-            get :index, format: :json
+            get :index, as: :json
             expect(assigns(:collection)).to eq []
           end
         end
@@ -276,7 +276,7 @@ module Admin
           end
 
           it "renders the customer as json" do
-            get :show, format: :json, id: customer.id
+            get :show, as: :json, params: { id: customer.id }
             expect(JSON.parse(response.body)["id"]).to eq customer.id
           end
         end
@@ -287,7 +287,7 @@ module Admin
           end
 
           it "prevents me from updating the customer" do
-            get :show, format: :json, id: customer.id
+            get :show, as: :json, params: { id: customer.id }
             expect(response).to redirect_to unauthorized_path
           end
         end
