@@ -7,7 +7,7 @@ module PermittedAttributes
     end
 
     def call
-      return @params[:subscription] if @params[:subscription].blank?
+      return {} if @params[:subscription].blank?
 
       @params.require(:subscription).permit(basic_permitted_attributes + other_permitted_attributes)
     end
