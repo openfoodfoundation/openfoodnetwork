@@ -10,6 +10,7 @@ module Spree
       helper 'admin/orders'
       helper 'admin/enterprises'
       helper 'enterprise_fees'
+      helper 'angular_form'
 
       layout '/spree/layouts/admin'
 
