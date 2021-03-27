@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   helper 'markdown'
   helper 'footer_links'
   helper 'discourse'
+  helper 'checkout'
 
   protect_from_forgery
 
