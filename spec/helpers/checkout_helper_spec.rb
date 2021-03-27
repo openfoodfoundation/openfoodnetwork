@@ -57,5 +57,18 @@ describe CheckoutHelper, type: :helper do
       expect(admin_fee_summary.label).to eq I18n.t(:orders_form_admin)
       expect(admin_fee_summary.amount).to eq 123
     end
+
+    context "with return authorization adjustments" do
+      let!(:return_adjustment) {
+        create(:adjustment, originator_type: 'Spree::ReturnAuthorization', adjustable: order,
+                            source: nil, order: order)
+      }
+
+      it "includes return adjustments" do
+        adjustments = helper.checkout_adjustments_for(order)
+
+        expect(adjustments).to include return_adjustment
+      end
+    end
   end
 end
