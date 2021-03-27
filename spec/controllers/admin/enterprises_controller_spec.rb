@@ -464,21 +464,21 @@ describe Admin::EnterprisesController, type: :controller do
     end
 
     context "when an order_cycle_id is provided in params" do
-      before { get :for_order_cycle, format: :json, order_cycle_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end
     end
 
     context "when a coordinator is provided in params" do
-      before { get :for_order_cycle, format: :json, coordinator_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { coordinator_id: 1 } }
       it "initializes permissions with a new OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
       end
     end
 
     context "when both an order cycle and a coordinator are provided in params" do
-      before { get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1, coordinator_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end

@@ -23,7 +23,7 @@ describe Api::ShopsController, type: :controller do
 
     describe "#show" do
       it "returns shopfront data for an enterprise" do
-        get :show, id: producer.id
+        get :show, params: { id: producer.id }
 
         expect(json_response['name']).to eq 'Shopfront Test Producer'
         expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
@@ -33,7 +33,7 @@ describe Api::ShopsController, type: :controller do
 
     describe "#closed_shops" do
       it "returns data for all closed shops" do
-        get :closed_shops, {}
+        get :closed_shops, params: {}
 
         expect(json_response).not_to match hub.name
 
