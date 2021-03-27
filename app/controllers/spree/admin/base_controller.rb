@@ -8,6 +8,7 @@ module Spree
       helper 'spree/admin/orders'
       helper 'admin/injection'
       helper 'admin/orders'
+      helper 'admin/enterprises'
 
       layout '/spree/layouts/admin'
 
