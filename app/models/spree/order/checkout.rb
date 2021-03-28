@@ -130,22 +130,6 @@ module Spree
             steps << "complete" unless steps.include?("complete")
             steps
           end
-
-          def checkout_step?(step)
-            step.present? ? checkout_steps.include?(step) : false
-          end
-
-          def checkout_step_index(step)
-            checkout_steps.index(step)
-          end
-
-          def can_go_to_state?(state)
-            return false unless self.state.present? &&
-                                checkout_step?(state) &&
-                                checkout_step?(self.state)
-
-            checkout_step_index(state) > checkout_step_index(self.state)
-          end
         end
       end
     end
