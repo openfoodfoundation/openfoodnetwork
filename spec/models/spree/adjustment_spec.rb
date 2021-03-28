@@ -186,7 +186,7 @@ module Spree
         end
 
         it "has tax included" do
-          expect(adjustment.amount).to be > 0
+          expect(adjustment.amount).to be_positive
           expect(adjustment.included).to be true
         end
 
