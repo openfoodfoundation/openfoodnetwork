@@ -56,13 +56,15 @@ class MigrateShippingTaxes < ActiveRecord::Migration
   end
   
   def migrate_tax_amounts_to_adjustments
+    shipping_tax_rates = Spree::TaxRate.where(tax_category: shipping_tax_category).to_a
+
     # Migrate all shipping tax amounts from shipment field to tax adjustments
     Spree::Adjustment.shipping.where("included_tax <> 0").includes(:source, :order).find_each do |shipping_fee|
       shipment = shipping_fee.source
       order = shipping_fee.order
       next if order.nil?
 
-      tax_rate = Spree::TaxRate.find_by(tax_category: shipping_tax_category, zone: order.tax_zone)
+      tax_rate = shipping_tax_rates.detect{ |rate| rate.zone == order.tax_zone }
 
       # Move all tax totals to adjustments
       Spree::Adjustment.create!(
