@@ -3165,6 +3165,8 @@ ca:
           received: "Rebut"
           canceled: "Cancel·lat"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No es pot afegir l'article a la comanda cancel·lada"
         index:
           listing_orders: "Llistat comandes"
           new_order: "Nova comanda"
