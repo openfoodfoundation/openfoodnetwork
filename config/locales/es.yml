@@ -3165,6 +3165,8 @@ es:
           received: "recibido"
           canceled: "cancelado"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
