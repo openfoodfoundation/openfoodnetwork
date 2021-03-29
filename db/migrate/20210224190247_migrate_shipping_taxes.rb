@@ -1,8 +1,68 @@
 class MigrateShippingTaxes < ActiveRecord::Migration
   class Spree::Preference < ActiveRecord::Base; end
-  class Spree::TaxCategory < ActiveRecord::Base; end
+  class Spree::TaxCategory < ActiveRecord::Base
+    has_many :tax_rates, class_name: "Spree::TaxRate", inverse_of: :tax_category
+  end
+  class Spree::Order < ActiveRecord::Base
+    has_many :adjustments, as: :adjustable
+    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
+    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
+
+    def tax_zone
+      Spree::Zone.match(tax_address) || Spree::Zone.default_tax
+    end
+
+    def tax_address
+      Spree::Config[:tax_using_ship_address] ? ship_address : bill_address
+    end
+  end
+  class Spree::Address < ActiveRecord::Base; end
+  class Spree::Shipment < ActiveRecord::Base
+    has_many :adjustments, as: :adjustable
+  end
   class Spree::ShippingMethod < ActiveRecord::Base; end
-  class Spree::Zone < ActiveRecord::Base; end
+  class Spree::Zone < ActiveRecord::Base
+    has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
+    has_many :tax_rates, class_name: "Spree::TaxRate", inverse_of: :zone
+
+    def self.match(address)
+      return unless (matches = includes(:zone_members).
+        order('zone_members_count', 'created_at').
+        select { |zone| zone.include? address })
+
+      ['state', 'country'].each do |zone_kind|
+        if (match = matches.detect { |zone| zone_kind == zone.kind })
+          return match
+        end
+      end
+      matches.first
+    end
+
+    def kind
+      return unless zone_members.any? && zone_members.none? { |member| member.try(:zoneable_type).nil? }
+
+      zone_members.last.zoneable_type.demodulize.underscore
+    end
+
+    def include?(address)
+      return false unless address
+
+      zone_members.any? do |zone_member|
+        case zone_member.zoneable_type
+        when 'Spree::Country'
+          zone_member.zoneable_id == address.country_id
+        when 'Spree::State'
+          zone_member.zoneable_id == address.state_id
+        else
+          false
+        end
+      end
+    end
+  end
+  class Spree::ZoneMember < ActiveRecord::Base
+    belongs_to :zone, class_name: 'Spree::Zone', inverse_of: :zone_members
+    belongs_to :zoneable, polymorphic: true
+  end
   class Spree::TaxRate < ActiveRecord::Base
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
@@ -14,6 +74,8 @@ class MigrateShippingTaxes < ActiveRecord::Migration
     belongs_to :originator, polymorphic: true
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
+
+    scope :shipping, -> { where(originator_type: 'Spree::ShippingMethod') }
   end
 
   def up
