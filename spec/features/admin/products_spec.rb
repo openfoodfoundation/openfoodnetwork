@@ -471,94 +471,37 @@ feature '
     end
 
     context "editing a product's variant unit scale", js: true do
-      let!(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
+      let(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
 
-      # assertions commented out refer to bug:
+      # TODO below -> assertions commented out refer to bug:
       # https://github.com/openfoodfoundation/openfoodnetwork/issues/7180
 
       before do
-        Spree::Config.available_units = "g,lb,oz,kg,T,mL,L,kL"
+        allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
         visit spree.edit_admin_product_path product
       end
 
-      it 'as weight (g)' do
-        select 'Weight (g)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('weight')
-        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (g)')
-        expect(product.variant_unit_scale).to eq(1)
+      shared_examples 'selecting a unit from dropdown' do |dropdown_option, var_unit:, var_unit_scale:|
+        it 'checks if the dropdown selection is persistent' do
+          select dropdown_option, from: 'product_variant_unit_with_scale'
+          click_button 'Update'
+          expect(flash_message).to eq('Product "a product" has been successfully updated!')
+          product.reload
+          expect(product.variant_unit).to eq(var_unit)
+          # TODO -> expect(page).to have_select('product_variant_unit_with_scale', :selected => dropdown_option)
+          expect(product.variant_unit_scale).to eq(var_unit_scale)
+        end
       end
 
-      it 'as weight (kg)' do
-        select 'Weight (kg)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('weight')
-        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (kg)')
-        expect(product.variant_unit_scale).to eq(1000)
-      end
-
-      it 'as weight (T)' do
-        select 'Weight (T)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('weight')
-        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Weight (T)')
-        expect(product.variant_unit_scale).to eq(1_000_000)
-      end
-
-      it 'as weight (oz)' do
-        select 'Weight (oz)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('weight')
-        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Weight (oz)')
-        expect(product.variant_unit_scale).to eq(28.35)
-      end
-
-      it 'as weight (lb)' do
-        select 'Weight (lb)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('weight')
-        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Weight (lb)')
-        expect(product.variant_unit_scale).to eq(453.6)
-      end
-
-      it 'as volume (mL)' do
-        select 'Volume (mL)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('volume')
-        expect(page).to have_select('product_variant_unit_with_scale', selected: 'Volume (mL)')
-        expect(product.variant_unit_scale).to eq(0.001)
-      end
-
-      it 'as volume (L)' do
-        select 'Volume (L)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('volume')
-        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Volume (L)')
-        expect(product.variant_unit_scale).to eq(1)
-      end
-
-      it 'as volume (kL)' do
-        select 'Volume (kL)', from: 'product_variant_unit_with_scale'
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-        product.reload
-        expect(product.variant_unit).to eq('volume')
-        # expect(page).to have_select('product_variant_unit_with_scale', :selected => 'Volume (kL)')
-        expect(product.variant_unit_scale).to eq(1000)
+      describe 'a shared example' do
+        it_behaves_like 'selecting a unit from dropdown', 'Weight (g)', var_unit: 'weight', var_unit_scale: 1
+        it_behaves_like 'selecting a unit from dropdown', 'Weight (kg)', var_unit: 'weight', var_unit_scale: 1000
+        it_behaves_like 'selecting a unit from dropdown', 'Weight (T)', var_unit: 'weight', var_unit_scale: 1_000_000
+        it_behaves_like 'selecting a unit from dropdown', 'Weight (oz)', var_unit: 'weight', var_unit_scale: 28.35
+        it_behaves_like 'selecting a unit from dropdown', 'Weight (lb)', var_unit: 'weight', var_unit_scale: 453.6
+        it_behaves_like 'selecting a unit from dropdown', 'Volume (mL)', var_unit: 'volume', var_unit_scale: 0.001
+        it_behaves_like 'selecting a unit from dropdown', 'Volume (L)', var_unit: 'volume', var_unit_scale: 1
+        it_behaves_like 'selecting a unit from dropdown', 'Volume (kL)', var_unit: 'volume', var_unit_scale: 1000
       end
     end
   end
