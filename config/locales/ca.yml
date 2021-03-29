@@ -264,7 +264,7 @@ ca:
   error: Error
   processing_payment: "S'està processant el pagament..."
   no_pending_payments: "No hi ha pagaments pendents"
-  invalid_payment_state: "Estat de pagament no vàlid"
+  invalid_payment_state: "Estat de pagament invàlid: %{state}"
   filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
