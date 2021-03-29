@@ -87,4 +87,17 @@ feature '
     expect(page).to have_selector 'td.amount', text: '110'
     expect(page).to have_selector 'td.included-tax', text: '10'
   end
+
+  scenario "viewing adjustments on a canceled order" do
+    # Given a taxed adjustment
+    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
+                        amount: 110, included_tax: 10, order: order)
+    order.cancel!
+
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
+
+    click_link 'Adjustments'
+
+    expect(page).to_not have_selector('tr a.icon-edit')
+  end
 end
