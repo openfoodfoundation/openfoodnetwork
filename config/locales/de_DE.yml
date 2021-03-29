@@ -1574,7 +1574,9 @@ de_DE:
   shopping_tabs_home: "Startseite"
   shopping_tabs_shop: "Produkte"
   shopping_tabs_about: "Über uns"
+  shopping_tabs_producers: "Produzenten"
   shopping_tabs_contact: "Kontakt"
+  shopping_tabs_groups: "Gruppen"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
@@ -3170,6 +3172,8 @@ de_DE:
           received: "Empfangen"
           canceled: "abgebrochen"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"
         index:
           listing_orders: "Bestellungen verwalten"
           new_order: "Neue Bestellung"
