@@ -7,9 +7,11 @@ Darkswarm.directive "bodyScroll", ($rootScope, BodyScroll) ->
         document.body.style.top = "-#{window.scrollY}px"
         document.body.style.position = 'fixed'
         document.body.style.overflowY = 'scroll'
+        document.body.style.width = '100%'
       else
         scrollY = parseInt(document.body.style.top)
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.overflowY = ''
+        document.body.style.width = ''
         window.scrollTo(0, scrollY * -1) if scrollY
