@@ -92,13 +92,17 @@ module OrderManagement
         end
 
         context "when there are also subscription issues" do
-          let(:subscription_issues) { [101, 212] }
+          let(:subscription) { double(:subscription, id: 101) }
+          let(:order) { double(:order, id: 1) }
+
+          before do
+            summary.record_order(order)
+            summary.record_success(order)
+            summary.record_subscription_issue(subscription)
+          end
 
           it "includes subscription issues in the count" do
-            summary.instance_variable_set(:@order_ids, order_ids)
-            summary.instance_variable_set(:@success_ids, success_ids)
-            summary.instance_variable_set(:@subscription_issues, subscription_issues)
-            expect(summary.issue_count).to eq 4 # 7, 9, 101, 212
+            expect(summary.issue_count).to eq 1
           end
         end
       end

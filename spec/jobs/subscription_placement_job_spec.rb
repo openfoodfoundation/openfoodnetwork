@@ -220,13 +220,13 @@ describe SubscriptionPlacementJob do
 
     context "when the proxy order fails to generate an order" do
       before do
-        allow(proxy_order).to receive(:initialise_order!) { nil }
+        allow(proxy_order).to receive(:order) { nil }
       end
 
       it "records an error " do
         expect(job).to receive(:record_subscription_issue)
         expect(job).to_not receive(:place_order)
-        job.send(:place_proxy_order, proxy_order)
+        job.send(:place_order_for, proxy_order)
       end
     end
   end
