@@ -13,7 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    belongs_to :product, touch: true, class_name: 'Spree::Product'
+    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
+
     delegate_belongs_to :product, :name, :description, :permalink, :available_on,
                         :tax_category_id, :shipping_category_id, :meta_description,
                         :meta_keywords, :tax_category, :shipping_category
@@ -186,13 +187,6 @@ module Spree
 
     def amount_in(currency)
       price_in(currency).try(:amount)
-    end
-
-    # Product may be created with deleted_at already set,
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
-    def product
-      Spree::Product.unscoped { super }
     end
 
     # can_supply? is implemented in VariantStock
