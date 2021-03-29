@@ -64,7 +64,7 @@ module Spree
       order('spree_variants.position, spree_variants.id, currency')
     }, through: :variants
 
-    has_many :stock_items, through: :variants, dependent: :destroy
+    has_many :stock_items, through: :variants
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
                         :height, :width, :depth, :is_master, :cost_currency,
