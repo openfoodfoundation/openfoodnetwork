@@ -22,7 +22,10 @@ namespace :ofn do
 
       desc "Run Rspec tests excluding folders"
       task :excluding_folders, [:folders] do |_task, args|
-        execute_rspec_for_spec_folders(spec_folders - (args[:folders].split(",") + args.extras))
+        success = execute_rspec_for_spec_folders(
+          spec_folders - (args[:folders].split(",") + args.extras)
+        )
+        abort "Failure when running tests" unless success
       end
     end
 
