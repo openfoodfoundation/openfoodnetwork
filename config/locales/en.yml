@@ -3043,7 +3043,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     back_to_payments_list: "Back To Payments List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
-    cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count On Hand"
@@ -3327,6 +3326,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           received: "Received"
           canceled: "Canceled"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
