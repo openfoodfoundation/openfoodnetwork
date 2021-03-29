@@ -28,7 +28,7 @@ describe MigrateShippingTaxes do
       tax_rates = Spree::TaxRate.all
 
       expect(tax_rates.count).to eq 2
-      expect(tax_rates.map(&:zone_id).uniq).to eq [zone1.id, zone2.id]
+      expect(tax_rates.map(&:zone_id).uniq.sort).to eq [zone1.id, zone2.id]
       expect(tax_rates.map(&:amount).uniq).to eq [0.25]
     end
   end
