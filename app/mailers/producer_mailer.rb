@@ -63,7 +63,7 @@ class ProducerMailer < Spree::BaseMailer
       includes(:option_values, variant: [:product, { option_values: :option_type }]).
       from_order_cycle(order_cycle).
       sorted_by_name_and_unit_value.
-      merge(Spree::Product.in_supplier(producer)).
+      merge(Spree::Product.with_deleted.in_supplier(producer)).
       merge(Spree::Order.by_state('complete'))
   end
 
