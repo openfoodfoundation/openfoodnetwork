@@ -8,7 +8,7 @@
       %tr
         %th.producer=t('admin.producer')
         %th.product=t('admin.product')
-        %th.variant=t('(admin.variant')
+        %th.variant=t('admin.variant')
         %th.add=t('admin.variant_overrides.index.add')
     %tbody{ ng: { repeat: 'product in filteredProducts | limitTo:productLimit' } }
       %tr{ id: "v_{{variant.id}}", ng: { repeat: 'variant in product.variants | inventoryVariants:hub_id:views' } }
