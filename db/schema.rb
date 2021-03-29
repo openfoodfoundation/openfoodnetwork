@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210320003951) do
+ActiveRecord::Schema.define(version: 20210329123820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -811,6 +811,7 @@ ActiveRecord::Schema.define(version: 20210320003951) do
     t.text     "description"
     t.string   "tracking_url",         limit: 255
     t.integer  "tax_category_id"
+    t.index ["tax_category_id"], name: "index_spree_shipping_methods_on_tax_category_id", using: :btree
   end
 
   create_table "spree_shipping_methods_zones", id: false, force: :cascade do |t|
