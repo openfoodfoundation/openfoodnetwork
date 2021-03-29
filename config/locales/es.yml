@@ -264,7 +264,7 @@ es:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
-  invalid_payment_state: "Estado de pago no válido"
+  invalid_payment_state: "Estado de pago inválido: %{state}"
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
