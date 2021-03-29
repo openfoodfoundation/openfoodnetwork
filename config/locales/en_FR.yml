@@ -3161,6 +3161,8 @@ en_FR:
           received: "Received"
           canceled: "Canceled"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
