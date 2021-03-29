@@ -1,6 +1,5 @@
-[![Build Status](https://semaphoreci.com/api/v1/openfoodfoundation/openfoodnetwork-2/branches/master/badge.svg)](https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2)
-[![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 [![Build](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml/badge.svg)](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml)
+[![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
 
