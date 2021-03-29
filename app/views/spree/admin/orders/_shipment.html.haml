@@ -33,7 +33,7 @@
     %tbody{ "data-shipment-number" => "#{shipment.number}", "data-order-number" => "#{order.number}" }
       = render 'spree/admin/orders/shipment_manifest', order: order, shipment: shipment
 
-      - unless shipment.shipped?
+      - if shipment.can_modify?
         %tr.edit-method.hidden.total
           %td{ :colspan => "5" }
             %div.field.alpha.five.columns
@@ -69,7 +69,7 @@
             %span
               = shipment.fee_adjustment.display_amount
 
-        - if shipment.fee_adjustment.present? && !shipment.shipped?
+        - if shipment.fee_adjustment.present? && shipment.can_modify?
           %td.actions
             - if can? :update, shipment
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
@@ -81,7 +81,7 @@
           = text_field_tag :tracking, shipment.tracking
 
         %td.actions
-          - if can? :update, shipment
+          - if can?(:update, shipment) && !shipment.canceled?
             = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
             = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
 
@@ -95,5 +95,5 @@
             = Spree.t(:no_tracking_present)
 
         %td.actions
-          - if can? :update, shipment
+          - if can?(:update, shipment) && shipment.can_modify?
             = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
