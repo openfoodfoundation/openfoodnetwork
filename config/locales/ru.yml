@@ -1180,8 +1180,10 @@ ru:
       message_html: "Согласен на %{terms_and_conditions_link} продавца."
       link_text: "Условия и Положения"
     platform_terms_of_service:
+      message_html: "Я согласен c условиями платформы %{tos_link}."
       terms_of_service: "Условия Сервиса"
     all_terms_and_conditions:
+      message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
       terms_and_conditions: "Условия и Положения"
       terms_of_service: "Условия Сервиса"
     failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
@@ -2416,6 +2418,7 @@ ru:
           При добавлении этого товара в корзину возникла проблема. Возможно, он стал
           недоступен или магазин закрывается.
     admin:
+      unit_price_tooltip: "Цена за единицу увеличивает прозрачность, позволяя вашим клиентам легко сравнивать цены на разные продукты и размеры упаковки. Обратите внимание, что окончательная цена за единицу, отображаемая на витрине, может отличаться, поскольку она включает налоги и сборы."
       enterprise_limit_reached: "Вы достигли стандартного лимита количества предприятий на один аккаунт. Напишите на %{contact_email}, если Вам нужно увеличить его."
       modals:
         got_it: "Понятно"
@@ -2665,8 +2668,7 @@ ru:
         min_quantity: "Мин. количество"
         max_quantity: "Макс количество"
       price_breakdown: "Разбивка цен"
-      unit_price_tooltip:
-        shopfront: "Это цена за единицу этого продукта. Это позволяет сравнивать цены на товары независимо от размера и веса упаковки."
+      unit_price_tooltip: "Это цена за единицу этого продукта. Это позволяет сравнивать цены на товары независимо от размера и веса упаковки."
     variants:
       on_demand:
         'yes': "По Запросу"
@@ -3146,6 +3148,7 @@ ru:
           header:
             store: Магазин
     admin:
+      unit_price_tooltip: "Цена за единицу увеличивает прозрачность, позволяя вашим клиентам легко сравнивать цены на разные продукты и размеры упаковки. Обратите внимание, что окончательная цена за единицу, отображаемая на витрине, может отличаться, поскольку она включает налоги и сборы."
       tab:
         dashboard: "Панель"
         orders: "Заказы"
@@ -3375,6 +3378,7 @@ ru:
           unit_name: "Название единицы"
           price: "Цена"
           unit_price: "Цена за единицу"
+          unit_price_legend: "Рассчитывается исходя из стоимости товара"
           on_hand: "В наличии"
           on_demand: "По Запросу"
           product_description: "Описание Товара"
@@ -3480,6 +3484,7 @@ ru:
           cookies_consent_banner_toggle: "Показывать баннер на согласие использования файлов cookie"
           privacy_policy_url: "URL политики конфиденциальности"
           enterprises_require_tos: "Предприятия должны принять Условия сервиса"
+          shoppers_require_tos: "Покупатели должны принять Условия Сервиса."
           cookies_policy_matomo_section: "Показать раздел Matomo на странице политики использования файлов cookie"
           footer_tos_url: "URL Условий сервиса"
     checkout:
@@ -3695,3 +3700,66 @@ ru:
           few: Платежи
           many: Платежи
           other: Платежи
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: около 1 часа
+        few: около %{count} часов
+        many: около %{count} часов
+        other: около %{count} часов
+      about_x_months:
+        one: около 1 месяца
+        few: около %{count} месяцев
+        many: около %{count} месяцев
+        other: около %{count} месяцев
+      about_x_years:
+        one: около 1 года
+        few: около %{count} лет
+        many: около %{count} лет
+        other: около %{count} лет
+      almost_x_years:
+        one: почти 1 год
+        few: почти %{count} лет
+        many: почти %{count} лет
+        other: почти %{count} лет
+      half_a_minute: полминуты
+      less_than_x_seconds:
+        one: менее 1 секунды
+        few: менее %{count} секунд
+        many: менее %{count} секунд
+        other: менее %{count} секунд
+      less_than_x_minutes:
+        one: меньше минуты
+        few: менее %{count} минут
+        many: менее %{count} минут
+        other: менее %{count} минут
+      over_x_years:
+        one: более 1 года
+        few: более %{count} лет
+        many: более %{count} лет
+        other: более %{count} лет
+      x_seconds:
+        one: "1 секунда"
+        few: "%{count} секунд"
+        many: "%{count} секунд"
+        other: "%{count} секунд"
+      x_minutes:
+        one: "1 минута"
+        few: "%{count} минут"
+        many: "%{count} минут"
+        other: "%{count} минут"
+      x_days:
+        one: "1 день"
+        few: "%{count} дней"
+        many: "%{count} дней"
+        other: "%{count} дней"
+      x_months:
+        one: "1 месяц"
+        few: "%{count} месяцев"
+        many: "%{count} месяцев"
+        other: "%{count} месяцев"
+      x_years:
+        one: "1 год"
+        few: "%{count} лет"
+        many: "%{count} лет"
+        other: "%{count} лет"

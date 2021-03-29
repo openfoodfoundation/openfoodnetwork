@@ -264,7 +264,7 @@ fr:
   error: Erreur
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente."
-  invalid_payment_state: "Statut de paiement invalide"
+  invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
@@ -2419,6 +2419,7 @@ fr:
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
           qu'il n'est plus en stock ou que la boutique sur laquelle vous étiez a fermé.
     admin:
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: "J'ai compris"
@@ -2688,8 +2689,7 @@ fr:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
-      unit_price_tooltip:
-        shopfront: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
@@ -3121,6 +3121,7 @@ fr:
           header:
             store: Vue acheteur
     admin:
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       tab:
         dashboard: "Tableau de bord"
         orders: "Commandes"
@@ -3350,6 +3351,7 @@ fr:
           unit_name: "Unité"
           price: "Prix"
           unit_price: "Prix unitaire"
+          unit_price_legend: "Calcul basé sur le prix à l'unité"
           on_hand: "En stock"
           on_demand: "A volonté"
           product_description: "Description du Produit"
@@ -3669,3 +3671,42 @@ fr:
         spree/payment:
           one: Paiement
           other: Paiements
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: environ 1 heure
+        other: environ %{count}heures
+      about_x_months:
+        one: environ 1 mois
+        other: environ %{count} mois
+      about_x_years:
+        one: environ 1 année
+        other: environ %{count} années
+      almost_x_years:
+        one: presque 1 année
+        other: presque %{count} années
+      half_a_minute: moins d'une minute
+      less_than_x_seconds:
+        one: moins d' 1 seconde
+        other: moins de %{count} secondes
+      less_than_x_minutes:
+        one: moins d'une minute
+        other: moins de %{count} minutes
+      over_x_years:
+        one: plus d' 1 an
+        other: plus de %{count} années
+      x_seconds:
+        one: "1 seconde"
+        other: "%{count} secondes"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      x_days:
+        one: "1 jour"
+        other: "%{count} jours"
+      x_months:
+        one: "1 mois"
+        other: "%{count} mois"
+      x_years:
+        one: "1 an"
+        other: "%{count} ans"

@@ -264,7 +264,7 @@ de_DE:
   error: Fehler
   processing_payment: "Bezahlung wird verarbeitet ..."
   no_pending_payments: "Keine ausstehenden Zahlungen."
-  invalid_payment_state: "Ungültiger Zahlungsstatus"
+  invalid_payment_state: "Ungültiger Zahlungsstatus: %{state}"
   filter_results: Suchen
   quantity: Menge
   pick_up: Abholen
@@ -1242,7 +1242,7 @@ de_DE:
         require_login_2_html: "Möchten Sie hier einkaufen? Bitte %{contact} %{enterprise} und fragen Sie nach dem Beitritt."
         require_customer_html: "Wenn Sie hier einkaufen möchten, fragen Sie bitte %{contact} %{enterprise} nach dem Beitritt."
       select_oc:
-        select_oc_html: "Bitte wählen Sie, <span class='highlighted'>wann Sie Ihre Bestellung wünschen</span>, um zu sehen, welche Produkte verfügbar sind."
+        select_oc_html: "Bitte wählen Sie zunächst oben aus, <span class='highlighted'>wann Sie Ihre Bestellung erhalten möchten</span>, um die verfügbaren Produkte anzuzeigen."
     products:
       summary:
         bulk: "Gruppenkauf"
@@ -1414,7 +1414,7 @@ de_DE:
       cookies_usage: "Diese Website verwendet Cookies, um Ihr Kauferlebnis reibungslos und sicher zu gestalten und um darüber hinaus zu verstehen, wie Sie die Website verwenden, um die von uns angebotenen Funktionen zu verbessern."
       cookies_definition: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
       cookies_desc: "Wir verwenden nur die Cookies, die notwendig sind, um Ihnen den Service des Online-Kaufs/-Verkaufs von Lebensmitteln zu bieten. Wir verkaufen keine Ihrer Daten. Wir verwenden Cookies hauptsächlich, um uns daran zu erinnern, wer Sie sind, wenn Sie sich bei unserem Dienst einloggen, oder um uns die Artikel merken zu können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind. Wenn Sie die Weite nutzen, ohne auf \"Cookies akzeptieren\" zu klicken, nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind."
-      cookies_policy_link_desc: "Wenn Sie mehr erfahren möchten, besuchen Sie unsere"
+      cookies_policy_link_desc: "Wenn Sie mehr erfahren möchten, lesen Sie unsere"
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt regional einkaufen
@@ -1481,7 +1481,7 @@ de_DE:
   order_pickup_instructions: Informationen zur Abholung
   order_produce: Produkte
   order_total_price: Summe
-  order_includes_tax: (inkl. Steuern)
+  order_includes_tax: (enthaltene Steuern)
   order_payment_paypal_successful: Ihre Zahlung mit PayPal wurde erfolgreich abgewickelt.
   order_hub_info: Informationen über den Laden
   order_back_to_store: Zurück zum Laden
@@ -1599,8 +1599,8 @@ de_DE:
   hubs_filter_type: "Kategorie"
   hubs_filter_delivery: "Lieferoptionen"
   hubs_filter_property: "Eigenschaften"
-  hubs_matches: "Meinten Sie?"
-  hubs_intro: Regional einkaufen
+  hubs_matches: "Ergebnisse für"
+  hubs_intro: Wo möchten Sie regional einkaufen?
   hubs_distance: In der Nähe von
   hubs_distance_filter: "Läden in der Nähe von %{location} suchen"
   shop_changeable_orders_alert_html:
@@ -1715,8 +1715,8 @@ de_DE:
   sell_embed: "Wir bieten noch weitere Dienste rund um Ihr Unternehmen an."
   sell_ask_services: "Fragen Sie uns nach OFN-Dienstleistungen."
   shops_title: Regional Einkaufen
-  shops_headline: Einkaufen, neu gedacht.
-  shops_text: Pflanzen wachsen in Zyklen, Landwirte ernten in Zyklen und wir bestellen Lebensmittel in Zyklen. Ist ein Bestellzyklus gerade geschlossen, schauen Sie bald wieder vorbei.
+  shops_headline: Wählen Sie einen Laden aus der Liste.
+  shops_text: Pflanzen wachsen in Zyklen, Landwirte ernten in Zyklen und bei uns bestellen Sie Lebensmittel in Zyklen. Ist ein Bestellzyklus gerade geschlossen, wählen Sie einen anderen Laden oder schauen Sie später wieder vorbei.
   shops_signup_title: Laden registrieren
   shops_signup_headline: Lebensmittel-Hubs, unbegrenzt.
   shops_signup_motivation: Was auch immer Ihr Modell ist, wir unterstützen Sie. Wie auch immer Sie sich ändern, wir sind bei Ihnen. Wir sind gemeinnützig, unabhängig und Open-Source. Wir sind die Software-Partner, von denen Sie schon immer geträumt haben.
@@ -2417,6 +2417,7 @@ de_DE:
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
           Möglicherweise ist es nicht mehr verfügbar oder der Laden schließt gerade.
     admin:
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
       modals:
         got_it: "Verstanden"
@@ -2669,8 +2670,7 @@ de_DE:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
-      unit_price_tooltip:
-        shopfront: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Verpackungsgröße und -gewicht."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht."
     variants:
       on_demand:
         'yes': "Auf Anfrage"
@@ -3101,6 +3101,7 @@ de_DE:
           header:
             store: openfoodnetwork.de
     admin:
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       tab:
         dashboard: "Übersicht"
         orders: "Bestellungen"
@@ -3329,7 +3330,8 @@ de_DE:
           value: "Menge"
           unit_name: "Einheitenname"
           price: "Preis"
-          unit_price: "Stückpreis"
+          unit_price: "Grundpreis"
+          unit_price_legend: "Berechnet aus Preis und Menge."
           on_hand: "Verfügbar"
           on_demand: "Unbegrenzt"
           product_description: "Produktbeschreibung"
@@ -3647,3 +3649,42 @@ de_DE:
         spree/payment:
           one: Zahlung
           other: Zahlungen
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: etwa 1 Stunde
+        other: etwa %{count} Stunden
+      about_x_months:
+        one: etwa 1 Monat
+        other: etwa %{count} Monaten
+      about_x_years:
+        one: etwa 1 Jahr
+        other: etwa %{count} Jahren
+      almost_x_years:
+        one: fast 1 Jahr
+        other: fast %{count} Jahren
+      half_a_minute: 30 Sekunden
+      less_than_x_seconds:
+        one: weniger als 1 Sekunde
+        other: weniger als %{count} Sekunden
+      less_than_x_minutes:
+        one: weniger als einer Minute
+        other: weniger als %{count} Minuten
+      over_x_years:
+        one: über 1 Jahr
+        other: über %{count} Jahren
+      x_seconds:
+        one: "1 Sekunde"
+        other: "%{count} Sekunden"
+      x_minutes:
+        one: "1 Minute"
+        other: "%{count} Minuten"
+      x_days:
+        one: "1 Tag"
+        other: "%{count} Tagen"
+      x_months:
+        one: "1 Monat"
+        other: "%{count} Monaten"
+      x_years:
+        one: "1 Jahr"
+        other: "%{count} Jahren"
