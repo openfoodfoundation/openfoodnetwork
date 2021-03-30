@@ -3,7 +3,7 @@ Darkswarm.directive "bodyScroll", ($rootScope, BodyScroll) ->
   scope: true
   link: (scope, elem, attrs) ->
     $rootScope.$on "toggleBodyScroll", ->
-      if BodyScroll.disabled
+      if BodyScroll.disabled && document.body.scrollHeight > document.body.clientHeight
         document.body.style.top = "-#{window.scrollY}px"
         document.body.style.position = 'fixed'
         document.body.style.overflowY = 'scroll'
