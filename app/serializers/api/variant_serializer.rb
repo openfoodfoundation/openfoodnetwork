@@ -41,7 +41,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def unit_price_price
-    price_with_fees / unit_price.denominator
+    price_with_fees / (unit_price.denominator || 1)
   end
 
   def unit_price_unit
