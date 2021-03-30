@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class OrderBalance
+  delegate :zero?, :abs, :to_s, to: :to_f
+
   def initialize(order)
     @order = order
   end
@@ -17,11 +19,13 @@ class OrderBalance
     if customer_balance_enabled?
       order.new_outstanding_balance
     else
-      order.outstanding_balance
+      order.old_outstanding_balance
     end
   end
 
-  delegate :zero?, to: :to_f
+  def +(other)
+    to_f + other.to_f
+  end
 
   private
 

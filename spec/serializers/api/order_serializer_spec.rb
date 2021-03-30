@@ -44,12 +44,12 @@ describe Api::OrderSerializer do
       end
     end
 
-    context 'when the customer_balance is not enabled' do
+    context 'when the customer_balance is disabled' do
       before do
         allow(OpenFoodNetwork::FeatureToggle)
           .to receive(:enabled?).with(:customer_balance, order.user) { false }
 
-        allow(order).to receive(:outstanding_balance).and_return(123.0)
+        allow(order).to receive(:old_outstanding_balance).and_return(123.0)
       end
 
       it 'calls #outstanding_balance on the object' do

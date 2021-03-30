@@ -195,7 +195,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
       end
 
       it 'calls #outstanding_balance' do
-        expect_any_instance_of(Spree::Order).to receive(:outstanding_balance)
+        expect_any_instance_of(Spree::Order).to receive(:old_outstanding_balance)
         subject.send(:customer_payments_amount_owed, [line_item])
       end
     end

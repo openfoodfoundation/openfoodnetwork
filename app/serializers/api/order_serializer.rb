@@ -11,7 +11,7 @@ module Api
       if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, object.user)
         -object.balance_value
       else
-        object.outstanding_balance
+        object.old_outstanding_balance
       end
     end
 
