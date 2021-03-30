@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveMerchant::Billing::StripeGateway::StripePaymentIntentsGateway.class_eval do
+ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
   def create_intent(money, payment_method, options = {})
     post = {}
     add_amount(post, money, options, true)
