@@ -34,7 +34,7 @@ module Spree
     accepts_nested_attributes_for :images
 
     has_one :default_price,
-            -> { where currency: Spree::Config[:currency] },
+            -> { with_deleted.where(currency: Spree::Config[:currency]) },
             class_name: 'Spree::Price',
             dependent: :destroy
     has_many :prices,
@@ -150,11 +150,6 @@ module Spree
                                             currency || Spree::Config[:currency]).
                                           where('spree_prices.amount IS NOT NULL').
                                           select("spree_variants.id"))
-    end
-
-    # Allow variant to access associated soft-deleted prices.
-    def default_price
-      Spree::Price.unscoped { super }
     end
 
     def price_with_fees(distributor, order_cycle)
