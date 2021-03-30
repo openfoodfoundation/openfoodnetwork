@@ -3689,6 +3689,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         form:
           sku: "SKU"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
