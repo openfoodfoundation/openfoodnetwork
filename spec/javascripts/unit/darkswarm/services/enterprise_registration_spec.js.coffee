@@ -32,7 +32,7 @@ describe "EnterpriseRegistrationService", ->
     describe "success", ->
       beforeEach ->
         spyOn(RegistrationServiceMock, "select")
-        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 200, 6
+        $httpBackend.expectPOST("/api/v0/enterprises?token=keykeykeykey").respond 200, 6
         EnterpriseRegistrationService.create()
         $httpBackend.flush()
 
@@ -46,7 +46,7 @@ describe "EnterpriseRegistrationService", ->
       beforeEach ->
         spyOn(RegistrationServiceMock, "select")
         spyOn(window, "alert")
-        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 400, 6
+        $httpBackend.expectPOST("/api/v0/enterprises?token=keykeykeykey").respond 400, 6
         EnterpriseRegistrationService.create()
         $httpBackend.flush()
 
@@ -60,7 +60,7 @@ describe "EnterpriseRegistrationService", ->
       beforeEach ->
         spyOn(RegistrationServiceMock, "select")
         spyOn(window, "alert")
-        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 400, {"error": "Invalid resource. Please fix errors and try again.", "errors": {"name": ["has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."], "permalink": [] }}
+        $httpBackend.expectPOST("/api/v0/enterprises?token=keykeykeykey").respond 400, {"error": "Invalid resource. Please fix errors and try again.", "errors": {"name": ["has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."], "permalink": [] }}
         EnterpriseRegistrationService.create()
         $httpBackend.flush()
 
@@ -78,7 +78,7 @@ describe "EnterpriseRegistrationService", ->
 
     describe "success", ->
       beforeEach ->
-        $httpBackend.expectPUT("/api/enterprises/78?token=keykeykeykey").respond 200, 6
+        $httpBackend.expectPUT("/api/v0/enterprises/78?token=keykeykeykey").respond 200, 6
         EnterpriseRegistrationService.update('step')
         $httpBackend.flush()
 
@@ -88,7 +88,7 @@ describe "EnterpriseRegistrationService", ->
     describe "failure", ->
       beforeEach ->
         spyOn(window, "alert")
-        $httpBackend.expectPUT("/api/enterprises/78?token=keykeykeykey").respond 400, 6
+        $httpBackend.expectPUT("/api/v0/enterprises/78?token=keykeykeykey").respond 400, 6
         EnterpriseRegistrationService.update('step')
         $httpBackend.flush()
 

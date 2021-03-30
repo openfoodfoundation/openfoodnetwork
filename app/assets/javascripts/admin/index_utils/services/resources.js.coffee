@@ -1,5 +1,5 @@
 angular.module("admin.indexUtils").factory "resources", ($resource) ->
-  LineItem = $resource '/api/orders/:order_number/line_items/:line_item_id.json',
+  LineItem = $resource '/api/v0/orders/:order_number/line_items/:line_item_id.json',
     { order_number: '@order_number', line_item_id: '@line_item_id'},
     'update': { method: 'PUT' }
   Customer = $resource '/admin/customers/:customer_id.json',

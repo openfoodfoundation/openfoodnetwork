@@ -13,9 +13,9 @@ describe "BulkProducts service", ->
       BulkProducts.products = [
         id: 13
       ]
-      $httpBackend.expectPOST("/api/products/13/clone").respond 201,
+      $httpBackend.expectPOST("/api/v0/products/13/clone").respond 201,
         id: 17
-      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
+      $httpBackend.expectGET("/api/v0/products/17?template=bulk_show").respond 200, [
         id: 17
       ]
       BulkProducts.cloneProduct BulkProducts.products[0]
@@ -30,8 +30,8 @@ describe "BulkProducts service", ->
       spyOn(BulkProducts, "insertProductAfter")
       spyOn(BulkProducts, "unpackProduct")
       BulkProducts.products = [originalProduct]
-      $httpBackend.expectPOST("/api/products/16/clone").respond 201, clonedProduct
-      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, clonedProduct
+      $httpBackend.expectPOST("/api/v0/products/16/clone").respond 201, clonedProduct
+      $httpBackend.expectGET("/api/v0/products/17?template=bulk_show").respond 200, clonedProduct
       BulkProducts.cloneProduct BulkProducts.products[0]
       $httpBackend.flush()
       expect(BulkProducts.unpackProduct).toHaveBeenCalledWith clonedProduct

@@ -7,8 +7,8 @@
   }
   Spree.routes = <%== {
     :variants_search       => spree.admin_search_variants_path(:format => 'json'),
-    :taxons_search         => main_app.api_taxons_path(:format => 'json'),
-    :orders_api            => main_app.api_orders_path,
-    :states_search         => main_app.api_states_path(:format => 'json')
+    :taxons_search         => main_app.api_v0_taxons_path(:format => 'json'),
+    :orders_api            => main_app.api_v0_orders_path,
+    :states_search         => main_app.api_v0_states_path(:format => 'json')
   }.to_json %>;
 </script>

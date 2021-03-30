@@ -13,7 +13,7 @@ describe 'Products service', ->
   properties = null
   taxons = null
   GmapsGeo = {}
-  endpoint = "/api/order_cycles/1/products.json?distributor=1"
+  endpoint = "/api/v0/order_cycles/1/products.json?distributor=1"
 
   beforeEach ->
     product =

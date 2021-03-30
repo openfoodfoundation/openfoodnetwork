@@ -5,7 +5,7 @@ Darkswarm.factory "EnterpriseModal", ($modal, $rootScope, $http)->
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
       scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
 
-      $http.get("/api/shops/" + enterprise.id).success (data) ->
+      $http.get("/api/v0/shops/" + enterprise.id).success (data) ->
         scope.enterprise = data
         $modal.open(templateUrl: "enterprise_modal.html", scope: scope)
       .error (data) ->
