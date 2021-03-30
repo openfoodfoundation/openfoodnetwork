@@ -51,21 +51,25 @@ describe SubscriptionPlacementJob do
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
       let!(:subscription) { create(:subscription, with_items: true) }
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: build(:order)) }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
-        allow(job).to receive(:place_order)
-      end
-
-      it "marks placeable proxy_orders as processed by setting placed_at" do
-        expect{ job.perform }.to change{ proxy_order.reload.placed_at }
-        expect(proxy_order.placed_at).to be_within(5.seconds).of Time.zone.now
       end
 
       it "processes placeable proxy_orders" do
+        summarizer = instance_double(OrderManagement::Subscriptions::Summarizer)
+        service = PlaceOrder.new(
+          proxy_order,
+          summarizer,
+          JobLogger.logger,
+          lambda { job.send(:cap_quantity_and_store_changes, order) }
+        )
+
+        allow(PlaceOrder).to receive(:new) { service }
+        allow(service).to receive(:call)
         job.perform
-        expect(job).to have_received(:place_order).with(proxy_order.reload.order)
+        expect(service).to have_received(:call)
       end
     end
   end
@@ -125,18 +129,6 @@ describe SubscriptionPlacementJob do
           expect(changes[line_item2.id]).to be 3
           expect(changes[line_item3.id]).to be 3
         end
-
-        context "and the order has been placed" do
-          before do
-            allow(order).to receive(:ensure_available_shipping_rates) { true }
-            allow(order).to receive(:process_each_payment) { true }
-            job.send(:place_order, order.reload)
-          end
-
-          it "removes the unavailable items from the shipment" do
-            expect(order.shipment.manifest.size).to eq 1
-          end
-        end
       end
     end
   end
@@ -157,17 +149,25 @@ describe SubscriptionPlacementJob do
 
     before do
       expect_any_instance_of(Spree::Payment).to_not receive(:process!)
-      allow(job).to receive(:send_placement_email)
-      allow(job).to receive(:send_empty_email)
+      allow_any_instance_of(PlaceOrder).to receive(:send_placement_email)
+      allow_any_instance_of(PlaceOrder).to receive(:send_empty_email)
     end
 
     context "when the order is already complete" do
       before { break unless order.next! while !order.completed? }
 
       it "records an issue and ignores it" do
+        summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
+        service = PlaceOrder.new(
+          proxy_order,
+          summarizer,
+          JobLogger.logger,
+          lambda { job.send(:cap_quantity_and_store_changes, order) }
+        )
+
         ActionMailer::Base.deliveries.clear
-        expect(job).to receive(:record_issue).with(:complete, order).once
-        expect{ job.send(:place_order, order) }.to_not change{ order.reload.state }
+        expect(summarizer).to receive(:record_issue).with(:complete, order).once
+        expect{ service.call }.to_not change{ order.reload.state }
         expect(order.payments.first.state).to eq "checkout"
         expect(ActionMailer::Base.deliveries.count).to be 0
       end
@@ -180,9 +180,10 @@ describe SubscriptionPlacementJob do
         end
 
         it "uses the same shipping method after advancing the order" do
-          job.send(:place_order, order)
-          expect(order.state).to eq "complete"
+          allow(proxy_order).to receive(:order) { order }
+          job.send(:place_order_for, proxy_order)
           order.reload
+          expect(order.state).to eq "complete"
           expect(order.shipping_method).to eq(shipping_method)
         end
       end
@@ -193,40 +194,65 @@ describe SubscriptionPlacementJob do
         end
 
         it "does not place the order, clears all adjustments, and sends an empty_order email" do
-          expect{ job.send(:place_order, order) }.to_not change{
-                                                           order.reload.completed_at
-                                                         }.from(nil)
+          summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_issue: true)
+          service = PlaceOrder.new(
+            proxy_order,
+            summarizer,
+            JobLogger.logger,
+            lambda { job.send(:cap_quantity_and_store_changes, order) }
+          )
+
+          allow(service).to receive(:send_placement_email)
+          allow(service).to receive(:send_empty_email)
+
+          expect{ service.call }.to_not change{ order.reload.completed_at }.from(nil)
           expect(order.all_adjustments).to be_empty
           expect(order.total).to eq 0
           expect(order.adjustment_total).to eq 0
-          expect(job).to_not have_received(:send_placement_email)
-          expect(job).to have_received(:send_empty_email)
+          expect(service).to_not have_received(:send_placement_email)
+          expect(service).to have_received(:send_empty_email)
         end
       end
 
       context "when at least one stock item is available after capping stock" do
+        let(:summarizer) do
+          instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_success: true)
+        end
+        let(:service) do
+          PlaceOrder.new(
+            proxy_order,
+            summarizer,
+            JobLogger.logger,
+            lambda { job.send(:cap_quantity_and_store_changes, order) }
+          )
+        end
+
+        before do
+          allow(service).to receive(:send_placement_email)
+        end
+
         it "processes the order to completion, but does not process the payment" do
           # If this spec starts complaining about no shipping methods being available
           # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-          expect{ job.send(:place_order, order) }.to change{ order.reload.completed_at }.from(nil)
+          expect{ service.call }.to change{ order.reload.completed_at }.from(nil)
           expect(order.completed_at).to be_within(5.seconds).of Time.zone.now
           expect(order.payments.first.state).to eq "checkout"
         end
 
         it "does not enqueue confirmation emails" do
-          expect{ job.send(:place_order, order) }
+          expect{ service.call }
             .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
 
-          expect(job).to have_received(:send_placement_email).with(order, anything).once
+          expect(service).to have_received(:send_placement_email).once
         end
 
         context "when progression of the order fails" do
-          before { allow(order).to receive(:next) { false } }
+          before { allow(service).to receive(:move_to_completion).and_raise(StandardError) }
 
           it "records an error and does not attempt to send an email" do
-            expect(job).to_not receive(:send_placement_email)
-            expect(job).to receive(:record_and_log_error).once
-            job.send(:place_order, order)
+            expect(service).to_not receive(:send_placement_email)
+            expect(summarizer).to receive(:record_and_log_error).once
+            service.call
           end
         end
       end
@@ -238,58 +264,10 @@ describe SubscriptionPlacementJob do
       end
 
       it "records an error " do
-        expect(job).to receive(:record_subscription_issue)
+        expect_any_instance_of(OrderManagement::Subscriptions::Summarizer).to receive(:record_subscription_issue)
         expect(job).to_not receive(:place_order)
         job.send(:place_order_for, proxy_order)
       end
-    end
-  end
-
-  describe "#send_placement_email" do
-    let!(:order) { double(:order) }
-    let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
-
-    before do
-      allow(SubscriptionMailer).to receive(:placement_email) { mail_mock }
-    end
-
-    context "when changes are present" do
-      let(:changes) { double(:changes) }
-
-      it "logs an issue and sends the email" do
-        expect(job).to receive(:record_issue).with(:changes, order).once
-        job.send(:send_placement_email, order, changes)
-        expect(SubscriptionMailer).to have_received(:placement_email).with(order, changes)
-        expect(mail_mock).to have_received(:deliver_now)
-      end
-    end
-
-    context "when no changes are present" do
-      let(:changes) { {} }
-
-      it "logs a success and sends the email" do
-        expect(job).to receive(:record_success).with(order).once
-        job.send(:send_placement_email, order, changes)
-        expect(SubscriptionMailer).to have_received(:placement_email)
-        expect(mail_mock).to have_received(:deliver_now)
-      end
-    end
-  end
-
-  describe "#send_empty_email" do
-    let!(:order) { double(:order) }
-    let(:changes) { double(:changes) }
-    let(:mail_mock) { double(:mailer_mock, deliver_now: true) }
-
-    before do
-      allow(SubscriptionMailer).to receive(:empty_email) { mail_mock }
-    end
-
-    it "logs an issue and sends the email" do
-      expect(job).to receive(:record_issue).with(:empty, order).once
-      job.send(:send_empty_email, order, changes)
-      expect(SubscriptionMailer).to have_received(:empty_email).with(order, changes)
-      expect(mail_mock).to have_received(:deliver_now)
     end
   end
 end
