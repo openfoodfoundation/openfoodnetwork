@@ -264,7 +264,7 @@ en_CA:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state"
+  invalid_payment_state: "Invalid payment state %{state}"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1177,8 +1177,10 @@ en_CA:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}"
       terms_of_service: "Terms of Service"
     all_terms_and_conditions:
+      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
       terms_and_conditions: "Terms and Conditions"
       terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
@@ -1570,7 +1572,9 @@ en_CA:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Markets"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -2413,6 +2417,7 @@ en_CA:
           There was a problem adding this product to the cart. Perhaps it has become
           unavailable or the shop is closing
     admin:
+      unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ. For example, shopfront prices might include enterprise fees (mark-ups)  if you are using them."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: "Got it"
@@ -2656,8 +2661,7 @@ en_CA:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
-      unit_price_tooltip:
-        shopfront: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
+      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
@@ -3089,6 +3093,7 @@ en_CA:
           header:
             store: Store
     admin:
+      unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ. For example, shopfront prices might include enterprise fees (mark-ups)  if you are using them."
       tab:
         dashboard: "Dashboard"
         orders: "Orders"
@@ -3157,6 +3162,8 @@ en_CA:
           received: "Received"
           canceled: "Canceled"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "You cannot add an item to a cancelled order."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3318,6 +3325,7 @@ en_CA:
           unit_name: "Unit Name"
           price: "Price"
           unit_price: "Unit Price"
+          unit_price_legend: "Calculated based on the item price."
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"
@@ -3423,6 +3431,7 @@ en_CA:
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
@@ -3635,3 +3644,42 @@ en_CA:
         spree/payment:
           one: Payment
           other: Payments
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      over_x_years:
+        one: over 1 year
+        other: over %{count} years
+      x_seconds:
+        one: "1 second"
+        other: "%{count} seconds"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      x_days:
+        one: "1 day"
+        other: "%{count} days"
+      x_months:
+        one: "1 month"
+        other: "%{count} months"
+      x_years:
+        one: "1 year"
+        other: "%{count} years"

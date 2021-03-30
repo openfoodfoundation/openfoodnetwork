@@ -1572,7 +1572,9 @@ en_FR:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Groups"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -3161,6 +3163,8 @@ en_FR:
           received: "Received"
           canceled: "Canceled"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"

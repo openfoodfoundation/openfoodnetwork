@@ -3190,6 +3190,8 @@ fr:
           received: "Reçu"
           canceled: "Annulé"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"

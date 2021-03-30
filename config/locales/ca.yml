@@ -1575,7 +1575,9 @@ ca:
   shopping_tabs_home: "Inici"
   shopping_tabs_shop: "Botiga"
   shopping_tabs_about: "Sobre"
+  shopping_tabs_producers: "Productors"
   shopping_tabs_contact: "Contacte"
+  shopping_tabs_groups: "Xarxes/Grups"
   shopping_contact_address: "Adreça"
   shopping_contact_web: "Contacte"
   shopping_contact_social: "Segueix"
@@ -3165,6 +3167,8 @@ ca:
           received: "Rebut"
           canceled: "Cancel·lat"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No es pot afegir l'article a la comanda cancel·lada"
         index:
           listing_orders: "Llistat comandes"
           new_order: "Nova comanda"

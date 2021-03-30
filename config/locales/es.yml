@@ -1574,7 +1574,9 @@ es:
   shopping_tabs_home: "Inicio"
   shopping_tabs_shop: "Tienda"
   shopping_tabs_about: "Acerca de"
+  shopping_tabs_producers: "Productoras"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Redes"
   shopping_contact_address: "Dirección"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -3165,6 +3167,8 @@ es:
           received: "recibido"
           canceled: "cancelado"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
