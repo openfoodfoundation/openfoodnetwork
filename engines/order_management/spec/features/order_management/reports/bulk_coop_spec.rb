@@ -6,9 +6,9 @@ feature "bulk coop" do
   include AuthenticationHelper
   include WebHelper
 
-  scenario "generating Bulk Coop Supplier Report" do
+  scenario "generating Bulk Co-op Supplier Report" do
     login_as_admin_and_visit new_order_management_reports_bulk_coop_path
-    select "Bulk Coop Supplier Report", from: "report_report_type"
+    select "Bulk Co-op Supplier Report", from: "report_report_type"
     click_button 'Generate Report'
 
     expect(page).to have_table_row [
@@ -28,7 +28,7 @@ feature "bulk coop" do
 
   scenario "generating Bulk Co-op Allocation report" do
     login_as_admin_and_visit new_order_management_reports_bulk_coop_path
-    select "Bulk Coop Allocation", from: "report_report_type"
+    select "Bulk Co-op Allocation", from: "report_report_type"
     click_button 'Generate Report'
 
     expect(page).to have_table_row [
@@ -48,7 +48,7 @@ feature "bulk coop" do
 
   scenario "generating Bulk Co-op Packing Sheets report" do
     login_as_admin_and_visit new_order_management_reports_bulk_coop_path
-    select "Bulk Coop Packing Sheets", from: "report_report_type"
+    select "Bulk Co-op Packing Sheets", from: "report_report_type"
     click_button 'Generate Report'
 
     expect(page).to have_table_row [
@@ -61,7 +61,7 @@ feature "bulk coop" do
 
   scenario "generating Bulk Co-op Customer Payments report" do
     login_as_admin_and_visit new_order_management_reports_bulk_coop_path
-    select "Bulk Coop Customer Payments", from: "report_report_type"
+    select "Bulk Co-op Customer Payments", from: "report_report_type"
     click_button 'Generate Report'
 
     expect(page).to have_table_row [
