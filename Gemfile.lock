@@ -114,7 +114,7 @@ GEM
       railties (>= 4.2, < 7)
       sprockets (>= 3.0, < 5)
       tilt
-    angular_rails_csrf (4.2.0)
+    angular_rails_csrf (4.5.0)
       railties (>= 3, < 7)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.5.5)
