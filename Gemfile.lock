@@ -226,7 +226,7 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday-net_http (1.0.1)
-    ffaker (2.16.0)
+    ffaker (2.18.0)
     ffi (1.15.0)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
