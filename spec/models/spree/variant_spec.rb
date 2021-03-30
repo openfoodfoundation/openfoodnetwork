@@ -742,4 +742,21 @@ module Spree
       end
     end
   end
+
+
+  describe "#default_price" do
+    let(:variant) { create(:variant) }
+    let(:default_price) { variant.default_price }
+
+    context "when the default price is soft-deleted" do
+      it "can access the default price" do
+        price_id = default_price.id
+
+        default_price.destroy
+
+        expect(variant.reload.default_price).to be_a Spree::Price
+        expect(variant.default_price.id).to eq price_id
+      end
+    end
+  end
 end
