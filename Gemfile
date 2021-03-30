@@ -31,7 +31,7 @@ gem 'web', path: './engines/web'
 gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
-gem 'acts_as_list', '0.9.19'
+gem 'acts_as_list', '1.0.3'
 gem 'cancancan', '~> 1.15.0'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
