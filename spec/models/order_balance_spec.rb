@@ -392,4 +392,42 @@ describe OrderBalance do
       end
     end
   end
+
+  context "with comparison operators" do
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      before do
+        allow(order).to receive(:old_outstanding_balance) { 10 }
+      end
+
+      it 'correctly returns true or false' do
+        expect(order_balance > 5).to eq true
+        expect(order_balance > 20).to eq false
+        expect(order_balance < 15).to eq true
+        expect(order_balance < 5).to eq false
+      end
+    end
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      before do
+        allow(order).to receive(:new_outstanding_balance) { 10 }
+      end
+
+      it 'correctly returns true or false' do
+        expect(order_balance > 5).to eq true
+        expect(order_balance > 20).to eq false
+        expect(order_balance < 15).to eq true
+        expect(order_balance < 5).to eq false
+      end
+    end
+  end
 end
