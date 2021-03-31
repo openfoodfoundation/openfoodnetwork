@@ -325,6 +325,40 @@ describe OrderBalance do
     end
   end
 
+  describe '#to_f and #to_d' do
+    context 'when the customer_balance feature is disabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { false }
+      end
+
+      before do
+        allow(order).to receive(:old_outstanding_balance) { 10 }
+      end
+
+      it 'returns the balance as a float or decimal' do
+        expect(order_balance.to_f).to eq(10.0)
+        expect(order_balance.to_d).to eq(10.0)
+      end
+    end
+
+    context 'when the customer_balance feature is enabled' do
+      before do
+        allow(OpenFoodNetwork::FeatureToggle)
+          .to receive(:enabled?).with(:customer_balance, user) { true }
+      end
+
+      before do
+        allow(order).to receive(:new_outstanding_balance) { 10 }
+      end
+
+      it 'returns the balance as a float or decimal' do
+        expect(order_balance.to_f).to eq(10.0)
+        expect(order_balance.to_d).to eq(10.0)
+      end
+    end
+  end
+
   describe '#+' do
     let(:other_order_balance) { described_class.new(order) }
 
