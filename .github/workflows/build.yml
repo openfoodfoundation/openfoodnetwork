@@ -8,6 +8,7 @@ on:
 env:
   DISABLE_KNAPSACK: true
   TIMEZONE: UTC
+  COVERAGE: true
 
 jobs:
   test-controllers-and-serializers:

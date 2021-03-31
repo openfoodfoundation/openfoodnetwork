@@ -16,3 +16,6 @@ SimpleCov.start 'rails' do
   add_filter '/log'
   add_filter '/db'
 end
+
+require 'codecov'
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
