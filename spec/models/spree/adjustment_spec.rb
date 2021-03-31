@@ -9,7 +9,7 @@ module Spree
 
     describe "scopes" do
       let!(:arbitrary_adjustment) { create(:adjustment, source: nil, label: "Arbitrary") }
-      let!(:return_authorization_adjustment) { create(:adjustment, source: create(:return_authorization)) }
+      let!(:return_authorization_adjustment) { create(:adjustment, originator: create(:return_authorization)) }
 
       it "returns return_authorization adjustments" do
         expect(Spree::Adjustment.return_authorization.to_a).to eq [return_authorization_adjustment]
@@ -18,39 +18,39 @@ module Spree
 
     context "#update!" do
       context "when originator present" do
-        let(:originator) { double("originator", update_adjustment: nil) }
+        let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
+
         before do
-          allow(originator).to receive_messages update_amount: true
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
 
         it "should do nothing when closed" do
           adjustment.close
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
         it "should do nothing when finalized" do
           adjustment.finalize
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
-        it "should ask the originator to update_adjustment" do
-          expect(originator).to receive(:update_adjustment)
+        it "should ask the originator to recalculate the amount" do
+          expect(originator).to receive(:compute_amount)
           adjustment.update!
         end
 
         context "using the :force argument" do
           it "should update adjustments without changing their state" do
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
             expect(adjustment.state).to eq "open"
           end
 
           it "should update closed adjustments" do
             adjustment.close
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
           end
         end
@@ -58,7 +58,7 @@ module Spree
 
       it "should do nothing when originator is nil" do
         allow(adjustment).to receive_messages originator: nil
-        expect(adjustment).not_to receive(:amount=)
+        expect(adjustment).not_to receive(:update_columns)
         adjustment.update!
       end
     end
@@ -488,6 +488,22 @@ module Spree
           it "is returned by the #additional scope" do
             expect(Spree::Adjustment.additional).to eq [adjustment]
           end
+        end
+      end
+    end
+
+    context "return authorization adjustments" do
+      let!(:return_authorization) { create(:return_authorization, amount: 123) }
+      let(:order) { return_authorization.order }
+      let!(:return_adjustment) {
+        create(:adjustment, originator: return_authorization, order: order,
+                            adjustable: order, amount: 456)
+      }
+
+      describe "#update!" do
+        it "sets a negative value equal to the return authorization amount" do
+          expect { return_adjustment.update! }.
+            to change { return_adjustment.reload.amount }.to(-123)
         end
       end
     end

@@ -54,21 +54,8 @@ module Spree
             end
           end
 
-          # Updates the amount of the adjustment using our Calculator and
-          #   calling the +compute+ method with the +calculable+
-          #   referenced passed to the method.
-          def update_adjustment(adjustment, calculable)
-            # Adjustment calculations done on Spree::Shipment objects MUST
-            # be done on their to_package'd variants instead
-            # It's only the package that contains the correct information.
-            # See https://github.com/spree/spree_active_shipping/pull/96 et. al
-            calculable = calculable.to_package if calculable.is_a?(Spree::Shipment)
-            adjustment.update_column(:amount, compute_amount(calculable))
-          end
-
           # Calculate the amount to be used when creating an adjustment
           # NOTE: May be overriden by classes where this module is included into.
-          # Such as Spree::Promotion::Action::CreateAdjustment.
           def compute_amount(calculable)
             calculator.compute(calculable)
           end

@@ -66,7 +66,7 @@ module Spree
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
-    scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+    scope :return_authorization, -> { where(originator_type: "Spree::ReturnAuthorization") }
     scope :inclusive, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
 
@@ -100,12 +100,14 @@ module Spree
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil, force: false)
       return if immutable? && !force
+      return if originator.blank?
 
-      # Fix for Spree issue #3381
-      # If we attempt to call 'source' before the reload, then source is currently
-      # the order object. After calling a reload, the source is the Shipment.
-      reload
-      originator.update_adjustment(self, calculable || source) if originator.present?
+      amount = originator.compute_amount(calculable || adjustable)
+
+      update_columns(
+        amount: amount,
+        updated_at: Time.zone.now,
+      )
     end
 
     def currency
