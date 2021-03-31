@@ -90,5 +90,33 @@ module Spree
         end
       end
     end
+
+    describe "with a cancelled order" do
+      let(:order) { create(:completed_order_with_totals) }
+      let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
+      let(:adjustment) {
+        create(:adjustment, adjustable: order, order: order, amount: 1100, included_tax: 100)
+      }
+
+      before do
+        expect(order.cancel).to eq true
+      end
+
+      it "doesn't create adjustments" do
+        expect {
+          spree_post :create, order_id: order.number, adjustment: { label: "Testing", amount: "110" }, tax_rate_id: ""
+        }.to_not change { [Adjustment.count, order.reload.total] }
+
+        expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+      end
+
+      it "doesn't change adjustments" do
+        expect {
+          spree_put :update, order_id: order.number, id: adjustment.id, adjustment: { label: "Testing", amount: "110" }, tax_rate_id: ""
+        }.to_not change { [adjustment.reload.amount, order.reload.total] }
+
+        expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+      end
+    end
   end
 end
