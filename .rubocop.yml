@@ -10,8 +10,8 @@ inherit_from:
   # The automatically generated todo list to ignore all current violations.
   - .rubocop_todo.yml
 
-  # Our Open Food Network style guide. It's used by Code Climate. If you want to see all violations,
-  # then use only that configuration (like Code Climate):
+  # Our Open Food Network style guide. If you want to see all violations,
+  # then use only that configuration:
   #
   #     bundle exec rubocop -c .rubocop_styleguide.yml
   #

@@ -4,7 +4,7 @@ plugins:
     enabled: true
     channel: "rubocop-1-12"
     config:
-      file: ".rubocop_styleguide.yml"
+      file: ".rubocop.yml"
   scss-lint:
     enabled: true
     checks:
