@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 class OrderBalance
-  delegate :zero?, :abs, :to_s, to: :to_f
+  delegate :zero?, :abs, :to_s, to: :amount
 
   def initialize(order)
     @order = order
   end
 
   def label
-    to_f.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
+    amount.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
+  end
+
+  def display_amount
+    Spree::Money.new(amount, currency: order.currency)
   end
 
   def amount
-    Spree::Money.new(to_f, currency: order.currency)
-  end
-
-  def to_f
     if customer_balance_enabled?
       order.new_outstanding_balance
     else
@@ -24,7 +24,7 @@ class OrderBalance
   end
 
   def +(other)
-    to_f + other.to_f
+    amount + other.to_f
   end
 
   private

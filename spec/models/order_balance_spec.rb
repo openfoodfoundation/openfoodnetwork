@@ -14,7 +14,7 @@ describe OrderBalance do
           .to receive(:enabled?).with(:customer_balance, user) { false }
       end
 
-      context 'when the balance is postive' do
+      context 'when the balance is positive' do
         before do
           allow(order).to receive(:old_outstanding_balance) { 10 }
         end
@@ -51,7 +51,7 @@ describe OrderBalance do
           .to receive(:enabled?).with(:customer_balance, user) { true }
       end
 
-      context 'when the balance is postive' do
+      context 'when the balance is positive' do
         before do
           allow(order).to receive(:new_outstanding_balance) { 10 }
         end
@@ -83,7 +83,7 @@ describe OrderBalance do
     end
   end
 
-  describe '#amount' do
+  describe '#display_amount' do
     context 'when the customer_balance feature is disabled' do
       before do
         allow(order).to receive(:old_outstanding_balance) { 10 }
@@ -95,7 +95,7 @@ describe OrderBalance do
       end
 
       it 'returns the balance wraped in a Money object' do
-        expect(order_balance.amount).to eq(Spree::Money.new(10, currency: ENV['currency']))
+        expect(order_balance.display_amount).to eq(Spree::Money.new(10, currency: ENV['currency']))
       end
     end
 
@@ -110,7 +110,7 @@ describe OrderBalance do
       end
 
       it 'returns the balance wraped in a Money object' do
-        expect(order_balance.amount).to eq(Spree::Money.new(20, currency: ENV['currency']))
+        expect(order_balance.display_amount).to eq(Spree::Money.new(20, currency: ENV['currency']))
       end
     end
   end
@@ -191,7 +191,7 @@ describe OrderBalance do
     end
   end
 
-  describe '#to_f' do
+  describe '#amount' do
     context 'when the customer_balance feature is disabled' do
       before do
         allow(OpenFoodNetwork::FeatureToggle)
@@ -200,7 +200,7 @@ describe OrderBalance do
 
       it 'calls #outstanding_balance' do
         expect(order).to receive(:old_outstanding_balance)
-        order_balance.to_f
+        order_balance.amount
       end
     end
 
@@ -212,7 +212,7 @@ describe OrderBalance do
 
       it 'calls #new_outstanding_balance' do
         expect(order).to receive(:new_outstanding_balance)
-        order_balance.to_f
+        order_balance.amount
       end
     end
   end
