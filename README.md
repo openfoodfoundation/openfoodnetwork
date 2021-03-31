@@ -1,4 +1,5 @@
 [![Build](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml/badge.svg)](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/openfoodfoundation/openfoodnetwork/branch/master/graph/badge.svg?token=FBSOod4qiu)](https://codecov.io/gh/openfoodfoundation/openfoodnetwork)
 [![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
