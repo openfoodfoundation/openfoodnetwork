@@ -161,8 +161,6 @@ describe Api::V0::ShipmentsController, type: :controller do
         end
 
         it "doesn't adjusts stock when adding a variant" do
-          pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/7166"
-
           expect {
             api_put :add, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
@@ -170,8 +168,6 @@ describe Api::V0::ShipmentsController, type: :controller do
         end
 
         it "doesn't adjusts stock when removing a variant" do
-          pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/7166"
-
           expect {
             api_put :remove, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
