@@ -17,7 +17,7 @@ describe InvoiceRenderer do
     it 'uses the invoice2 template' do
       renderer = instance_double(ApplicationController)
       expect(renderer)
-        .to receive(:render_to_string)
+        .to receive(:render_to_string_with_wicked_pdf)
         .with(include(template: 'spree/admin/orders/invoice2'))
 
       described_class.new(renderer).render_to_string(order)
