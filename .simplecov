@@ -1,8 +1,6 @@
 #!/bin/env ruby
 
 SimpleCov.start 'rails' do
-  minimum_coverage 54
-
   add_filter '/bin/'
   add_filter '/config/'
   add_filter '/jobs/application_job.rb'
