@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
+  CREATE_INTENT_ATTRIBUTES =
+        %i[description statement_descriptor receipt_email save_payment_method].freeze
+
   def create_intent(money, payment_method, options = {})
     post = {}
     add_amount(post, money, options, true)
