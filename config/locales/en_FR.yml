@@ -85,6 +85,11 @@ en_FR:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  card_details: "Card details"
+  card_type: "Card type"
+  cardholder_name: "Cardholder name"
+  community_forum_url: "Community forum URL"
+  customer_instructions: "Customer instructions"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -114,11 +119,39 @@ en_FR:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+  home_page_alert_html: "Home page alert HTML"
+  hub_signup_case_studies_html: "Hub signup case studies HTML"
+  hub_signup_detail_html: "Hub signup detail HTML"
+  hub_signup_pricing_table_html: "Hub signup pricing table HTML"
+  group_signup_case_studies_html: "Group signup case studies HTML"
+  group_signup_detail_html: "Group signup detail HTML"
+  group_signup_pricing_table_html: "Group signup pricing table HTML"
+  item_description: "Item description"
+  menu_1_icon_name: "Menu 1 icon name"
+  menu_2_icon_name: "Menu 2 icon name"
+  menu_3_icon_name: "Menu 3 icon name"
+  menu_4_icon_name: "Menu 4 icon name"
+  menu_5_icon_name: "Menu 5 icon name"
+  menu_6_icon_name: "Menu 6 icon name"
+  menu_7_icon_name: "Menu 7 icon name"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
     tax_rate:
       included_in_price: "Included in price"
+  open_street_map_enabled: "Open Street Map enabled"
+  open_street_map_default_latitude: "Open Street Map default latitude"
+  open_street_map_default_longitude: "Open Street Map default longitude"
+  open_street_map_provider_name: "Open Street Map provider name"
+  open_street_map_provider_options: "Open Street Map provider options"
+  producer_signup_case_studies_html: "Producer signup case studies HTML"
+  producer_signup_detail_html: "Producer signup detail HTML"
+  producer_signup_pricing_table_html: "Producer signup pricing table HTML"
+  producers_social: "Producers social"
+  resume_order: "Resume order"
+  sku: "SKU"
+  subtotal: "Subtotal"
+  tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -144,6 +177,7 @@ en_FR:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  provider_settings: "Provider settings"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -300,6 +334,8 @@ en_FR:
   admin:
     begins_at: Begins At
     begins_on: Begins On
+    bill_address: "Bill address"
+    ship_address: "Ship address"
     customer: Customer
     date: Date
     email: Email
@@ -1064,6 +1100,7 @@ en_FR:
       index:
         title: "Subscriptions"
         new: "New Subscription"
+      issue: "Issue"
       new:
         title: "New Subscription"
       edit:
@@ -1145,6 +1182,7 @@ en_FR:
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
+      number: "Number"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_subscriptions: No subscriptions yet...
@@ -2811,6 +2849,15 @@ en_FR:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Bulk Co-op Allocation"
+          bulk_coop_customer_payments: "Bulk Co-op Customer Payments"
+          bulk_coop_packing_sheets: "Bulk Co-op Packing Sheets"
+          bulk_coop_supplier_report: "Bulk Co-op Supplier Report"
+          date_range: "Date range"
+          generate_report: "Generate Report"
+          report_format_csv: "Report format CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -2856,6 +2903,8 @@ en_FR:
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
+      report:
+        none: "None"
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
@@ -2888,7 +2937,55 @@ en_FR:
   previous: "Previous"
   last: "Last"
   spree:
+    add_country: "Add country"
+    add_state: "Add state"
+    adjustment: "Adjustment"
+    all: "All"
+    associated_adjustment_closed: "Associated adjustment closed"
+    authorization_failure: "Authorization failure"
+    back_to_adjustments_list: "Back to adjustments"
+    back_to_users_list: "Back to users"
+    back_to_zones_list: "Back to zones"
+    bugherd_api_key: "Bugherd API key"
+    card_code: "Card code"
+    card_number: "Card number"
+    category: "Category"
+    created_successfully: "Created Successfully"
+    credit: "Credit"
+    editing_tax_category: "Editing tax category"
+    editing_tax_rate: "Editing tax rate"
+    editing_zone: "Editing zone"
+    expiration: "Expiration"
+    invalid_payment_provider: "Invalid payment provider"
+    items_cannot_be_shipped: "Items cannot be shipped"
+    gateway_config_unavailable: "Gateway config unavailable"
+    gateway_error: "Payment failed"
     more: "More"
+    new_adjustment: "New adjustment"
+    new_order_completed: "New order completed"
+    new_tax_category: "New Tax Category"
+    new_taxon: "New taxon"
+    new_user: "New user"
+    no_pending_payments: "No pending payments"
+    none: "None"
+    not_found: "Not found"
+    notice_messages:
+      variant_deleted: "Variant deleted"
+    or: "Or"
+    order_processed_successfully: "Order processed successfully"
+    payment_method_not_supported: "Payment method not supported"
+    resend_authorization_email: "Resend authorization email"
+    rma_credit: "RMA credit"
+    server_error: "Server error"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Start date"
+    successfully_removed: "Successfully Removed"
+    taxonomy_edit: "Taxonomy edit"
+    taxonomy_tree_error: "Taxonomy tree error"
+    taxonomy_tree_instruction: "Taxonomy tree instruction"
+    tree: "Tree"
+    updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
@@ -2916,6 +3013,7 @@ en_FR:
     tracking_number: "Tracking Number"
     order_total: "Order Total"
     customer_details: "Customer Details"
+    customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
     choose_a_customer: "Choose a customer"
     account: "Account"
@@ -3066,6 +3164,8 @@ en_FR:
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "There are no items for this order."
     order_populator:
       out_of_stock: '%{item} is out of stock.'
     actions:
@@ -3093,8 +3193,17 @@ en_FR:
         login_nav:
           header:
             store: Store
+    validation:
+      must_be_int: "must be an integer"
     admin:
+      mail_methods:
+        send_testmail: "Send test email"
+        testmail:
+          delivery_success: "Test email sent."
+          error: "An error occurred trying to send the test email."
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ as it is includes taxes & fees."
+      subscriptions:
+        number: "Number"
       tab:
         dashboard: "Dashboard"
         orders: "Orders"
@@ -3207,6 +3316,10 @@ en_FR:
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "has no enterprise fees"
+          has_no_payment_methods: "has no payment methods"
+          has_no_shipping_methods: "has no shipping methods"
         products:
           active_products:
             zero: "You don't have any active products."
