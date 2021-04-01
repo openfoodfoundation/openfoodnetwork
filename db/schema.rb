@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210407170804) do
+ActiveRecord::Schema.define(version: 20210326094519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,6 +248,22 @@ ActiveRecord::Schema.define(version: 20210407170804) do
     t.index ["order_cycle_id"], name: "index_exchanges_on_order_cycle_id", using: :btree
     t.index ["receiver_id"], name: "index_exchanges_on_receiver_id", using: :btree
     t.index ["sender_id"], name: "index_exchanges_on_sender_id", using: :btree
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string   "key",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true, using: :btree
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string   "feature_key", null: false
+    t.string   "key",         null: false
+    t.string   "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true, using: :btree
   end
 
   create_table "inventory_items", force: :cascade do |t|
@@ -769,15 +785,15 @@ ActiveRecord::Schema.define(version: 20210407170804) do
   end
 
   create_table "spree_shipments", force: :cascade do |t|
-    t.string   "tracking",             limit: 255
-    t.string   "number",               limit: 255
-    t.decimal  "cost",                             precision: 10, scale: 2, default: "0.0", null: false
+    t.string   "tracking",          limit: 255
+    t.string   "number",            limit: 255
+    t.decimal  "cost",                          precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                                                null: false
-    t.datetime "updated_at",                                                                null: false
-    t.string   "state",                limit: 255
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
+    t.string   "state",             limit: 255
     t.integer  "stock_location_id"
     t.decimal  "included_tax_total",               precision: 10, scale: 2, default: "0.0", null: false
     t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: "0.0", null: false

@@ -234,6 +234,9 @@ GEM
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
     flipper (0.20.4)
+    flipper-active_record (0.20.4)
+      activerecord (>= 5.0, < 7)
+      flipper (~> 0.20.4)
     flipper-ui (0.20.4)
       erubi (>= 1.0.0, < 2.0.0)
       flipper (~> 0.20.4)
@@ -649,6 +652,7 @@ DEPENDENCIES
   ffaker
   figaro
   flipper
+  flipper-active_record
   flipper-ui
   fog-aws (>= 0.6.0)
   foundation-icons-sass-rails
