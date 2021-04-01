@@ -9,7 +9,7 @@
   - if product_has_variant_unit_option_type?(@product)
     - if @product.variant_unit != 'items'
       .field
-        = f.label :unit_value, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
+        = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
         = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
         = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
         = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
