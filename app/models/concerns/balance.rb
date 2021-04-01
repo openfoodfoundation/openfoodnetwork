@@ -42,6 +42,6 @@ module Balance
   end
 
   def display_outstanding_balance
-    outstanding_balance.amount
+    outstanding_balance.display_amount
   end
 end
