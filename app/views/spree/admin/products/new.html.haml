@@ -55,13 +55,13 @@
         - if feature? :unit_price, spree_current_user
           .four.columns{ ng: { app: 'ofn.admin'}}
             = f.field_container :unit_price do
-              = f.label :unit_price, t(".unit_price")
-              %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+              %div{style: "display: flex"}
+                = f.label :unit_price, t(".unit_price")
+                %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
                   "question-mark-with-tooltip-append-to-body" => "true",
                   "question-mark-with-tooltip-placement" => "top",
                   "question-mark-with-tooltip-animation" => true, 
                   key: "'js.admin.unit_price_tooltip'"}
-              %br/
               = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
               %div{style: "color: black"}
                 = t(".unit_price_legend")

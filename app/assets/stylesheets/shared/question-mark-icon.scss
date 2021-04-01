@@ -36,6 +36,9 @@
       @include icon-font;
       content: "";
       color: $white;
+      vertical-align: super;
+      position: relative;
+      top: 2px;
     }
   }
 }
@@ -45,6 +48,7 @@
   width: 15px;
   min-width: 15px;
   height: 15px;
+  margin-left: 2px;
 }
 
 .joyride-tip-guide.question-mark-tooltip {
