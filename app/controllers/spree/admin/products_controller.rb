@@ -38,7 +38,6 @@ module Spree
           end
         end
       rescue Paperclip::Errors::NotIdentifiedByImageMagickError
-        invoke_callbacks(:create, :fails)
         @object.errors.add(:base, t('spree.admin.products.image_upload_error'))
         respond_with(@object)
       end
