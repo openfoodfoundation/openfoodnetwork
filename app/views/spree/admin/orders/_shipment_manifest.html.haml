@@ -14,7 +14,9 @@
           = "#{count} x #{t(state.humanize.downcase, scope: [:spree, :shipment_states], default: [:missing, "none"])}"
       - unless shipment.shipped?
         %td.item-qty-edit.hidden
-          = number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5, :max => item.variant.on_hand + item.quantity
+          - html_options = { :min => 0, :class => "line_item_quantity", :size => 5 }
+          - html_options.merge!({ :max => item.variant.on_hand + item.quantity }) unless item.variant.on_demand
+          = number_field_tag :quantity, item.quantity, html_options
       %td.item-total.align-center
         = line_item_shipment_price(line_item, item.quantity)
 

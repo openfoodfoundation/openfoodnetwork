@@ -146,6 +146,27 @@ feature '
     expect(order.reload.line_items.first.quantity).to eq(max_quantity)
   end
 
+  scenario "there are infinite items available (variant is on demand)" do
+    # Move the order back to the cart state
+    order.state = 'cart'
+    order.completed_at = nil
+    order.line_items.first.variant.update_attribute(:on_demand, true)
+
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
+
+    within("tr.stock-item", text: order.products.first.name) do
+      find("a.edit-item").click
+      expect(page).to have_input(:quantity)
+      fill_in(:quantity, with: 1000)
+      find("a.save-item").click
+    end
+
+    within("tr.stock-item", text: order.products.first.name) do
+      expect(page).to have_text("1000 x")
+    end
+    expect(order.reload.line_items.first.quantity).to eq(1000)
+  end
+
   scenario "can't change distributor or order cycle once order has been finalized" do
     login_as_admin_and_visit spree.edit_admin_order_path(order)
 
