@@ -199,7 +199,7 @@ feature '
           expect(page).to have_field "price", with: "100.00"
         end
         click_button "Save Changes"
-        expect(page).to have_no_selector "#save-bar"
+        expect(page).to have_content "All changes saved"
         li1.reload
         expect(li1.final_weight_volume).to eq 2000
         expect(li1.price).to eq 20.00
