@@ -1,8 +1,6 @@
 #!/bin/env ruby
 
 SimpleCov.start 'rails' do
-  minimum_coverage 54
-
   add_filter '/bin/'
   add_filter '/config/'
   add_filter '/jobs/application_job.rb'
@@ -16,3 +14,6 @@ SimpleCov.start 'rails' do
   add_filter '/log'
   add_filter '/db'
 end
+
+require 'codecov'
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
