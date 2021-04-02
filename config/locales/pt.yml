@@ -85,6 +85,7 @@ pt:
               no_default_card: "^Nenhum cartão por defeito para este/a consumidor/a"
             shipping_method:
               not_available_to_shop: "não está disponível para %{shop}"
+  customer_instructions: "Instruções para o consumidor"
   devise:
     confirmations:
       send_instructions: "Daqui a uns minutos irá receber um email com instruções sobre como confirmar a sua conta."
@@ -117,6 +118,8 @@ pt:
   models:
     order_cycle:
       cloned_order_cycle_name: "CÓPIA DE%{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Taxa de imposto"
   validators:
     date_time_string_validator:
       not_string_error: "deve ser texto"
@@ -262,7 +265,6 @@ pt:
   error: Erro
   processing_payment: "Pagamento em processamento..."
   no_pending_payments: "Sem pagamentos pendentes"
-  invalid_payment_state: "Estado do pagamento inválido"
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
@@ -1122,6 +1124,7 @@ pt:
       yes_cancel_them: Cancelá-las
       no_keep_them: Mantê-las
       yes_i_am_sure: Sim, tenho a certeza
+      number: "Número"
       order_update_issues_msg: Não foi possível actualizar automaticamente algumas das encomendas, provavelmente porque foram editadas manualmente. Por favor reveja os problemas listados abaixo e faça os ajustes necessários às encomendas individuais.
       no_results:
         no_subscriptions: Ainda não existem subscrições....
@@ -1518,7 +1521,9 @@ pt:
   shopping_tabs_home: "Início"
   shopping_tabs_shop: "Loja"
   shopping_tabs_about: "Sobre"
+  shopping_tabs_producers: "Produtores"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Grupos"
   shopping_contact_address: "Morada"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -2649,6 +2654,9 @@ pt:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estivere pronto/a!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Gerar Relatório"
       enterprise_fee_summaries:
         filters:
           date_range: "Intervalo de Datas"
@@ -2694,6 +2702,8 @@ pt:
               tax_category_name: "Categoria de Imposto"
               total_amount: "Soma Total"
         invalid_filter_parameters: "Os filtros que selecionou para este relatório são inválidos."
+      report:
+        none: "Nenhum"
   order: "Encomenda"
   distribution: "Distribuição"
   order_details: "Detalhes da Encomenda"
@@ -2724,7 +2734,13 @@ pt:
   previous: "Anterior"
   last: "Último"
   spree:
+    all: "Tudo"
+    category: "Categoria"
+    credit: "Crédito"
     more: "Mais"
+    no_pending_payments: "Sem pagamentos pendentes"
+    none: "Nenhum"
+    updating: "Atualizando"
     your_order_is_empty_add_product: "A sua encomenda está vazia, por favor procure e adicione um produto em cima"
     add_product: "Adicionar Produto"
     name_or_sku: "Nome ou Código (insira pelo menos 4 caracteres)"
@@ -2865,6 +2881,7 @@ pt:
     successfully_updated: '%{resource} foi actualizado/a com sucesso!'
     payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
+    sku: "SKU"
     actions:
       update: "Atualizar"
       cancel: "Cancelar"
@@ -2882,6 +2899,8 @@ pt:
           header:
             store: Loja
     admin:
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Painel de controlo"
         orders: "Encomendas"

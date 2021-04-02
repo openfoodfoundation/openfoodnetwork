@@ -85,6 +85,11 @@ es:
               no_default_card: "^ Ninguna tarjeta predeterminada disponible para esta consumidora"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  card_details: "Detalles de tarjeta"
+  card_type: "Tipo de tarjeta"
+  cardholder_name: "Nombre del titular de la tarjeta"
+  community_forum_url: "URL del foro de la comunidad"
+  customer_instructions: "Instrucciones del Consumidor"
   devise:
     confirmations:
       send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
@@ -114,11 +119,22 @@ es:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  item_description: "Descripción del artículo"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Incluido en el precio"
+  open_street_map_enabled: "Open Street Map habilitado"
+  open_street_map_default_latitude: "Latitud predeterminada de Open Street Map"
+  open_street_map_default_longitude: "Longitud predeterminada de Open Street Map"
+  open_street_map_provider_name: "Nombre del proveedor de Open Street Map"
+  open_street_map_provider_options: "Opciones de proveedor de Open Street Map"
+  producers_social: "Razón social de la productora"
+  resume_order: "Reanudar pedido"
+  sku: "SKU"
+  subtotal: "Subtotal"
+  tax_rate: "% Impuestos"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -144,6 +160,7 @@ es:
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
+  provider_settings: "Configuración del proveedor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimada consumidora,"
@@ -300,6 +317,8 @@ es:
   admin:
     begins_at: Empieza en
     begins_on: Comienza en
+    bill_address: "Dirección de factura"
+    ship_address: "Dirección de envío"
     customer: Consumidora
     date: Fecha
     email: Email
@@ -1066,6 +1085,7 @@ es:
       index:
         title: "Suscripciones"
         new: "Nueva suscripción"
+      issue: "Incidéncia"
       new:
         title: "Nueva suscripción"
       edit:
@@ -1147,6 +1167,7 @@ es:
       yes_cancel_them: Cancelarlos
       no_keep_them: Guárdalos
       yes_i_am_sure: Sí estoy seguro
+      number: "Número"
       order_update_issues_msg: Algunas órdenes no se pudieron actualizar automáticamente, esto es más probable porque se han editado manualmente. Revise los problemas que se detallan a continuación y realice los ajustes a los pedidos individuales si es necesario.
       no_results:
         no_subscriptions: Aún no hay suscripciones ...
@@ -2815,6 +2836,15 @@ es:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Compra grupal - Assignación"
+          bulk_coop_customer_payments: "Compra grupal - Pagos de las consumidoras"
+          bulk_coop_packing_sheets: "Compra grupal - Hojas de embalaje"
+          bulk_coop_supplier_report: "Compra grupal - Totales por proveedor"
+          date_range: "Rango de fechas"
+          generate_report: "Generar informe"
+          report_format_csv: "Descargar como CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Rango de fechas"
@@ -2860,6 +2890,8 @@ es:
               tax_category_name: "Categoría de impuestos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Los filtros que seleccionó para este informe no son válidos."
+      report:
+        none: "Ninguno"
   order: "Pedido"
   distribution: "Distribución"
   order_details: "Detalles del pedido"
@@ -2892,7 +2924,55 @@ es:
   previous: "Anterior"
   last: "Último"
   spree:
+    add_country: "Agregar pais"
+    add_state: "Agregar estado"
+    adjustment: "Ajuste"
+    all: "Todos"
+    associated_adjustment_closed: "Ajuste asociado cerrado"
+    authorization_failure: "Fallo de autorización"
+    back_to_adjustments_list: "Volver a ajustes"
+    back_to_users_list: "Volver a los usuarios"
+    back_to_zones_list: "Volver a zonas"
+    bugherd_api_key: "Clave de API Bugherd"
+    card_code: "Código de la tarjeta"
+    card_number: "Número de tarjeta"
+    category: "Categoría"
+    created_successfully: "Creado con éxito"
+    credit: "Crédito"
+    editing_tax_category: "Editando categoría fiscal"
+    editing_tax_rate: "Editando la tasa de impuestos"
+    editing_zone: "Editando zona"
+    expiration: "Vencimiento"
+    invalid_payment_provider: "Proveedor de pago inválido"
+    items_cannot_be_shipped: "Los artículos no se pueden enviar"
+    gateway_config_unavailable: "Configuración de la pasarela no disponible"
+    gateway_error: "Pago fallido"
     more: "Más"
+    new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
+    new_tax_category: "Nueva categoría de impuestos"
+    new_taxon: "Nuevo taxón"
+    new_user: "Nuevo usuario"
+    no_pending_payments: "No tiene pagos pendientes"
+    none: "Ninguno"
+    not_found: "No encontrado"
+    notice_messages:
+      variant_deleted: "Variante eliminada"
+    or: "O"
+    order_processed_successfully: "Pedido procesado correctamente"
+    payment_method_not_supported: "Método de pago no admitido"
+    resend_authorization_email: "Reenviar correo electrónico de autorización"
+    rma_credit: "Crédito RMA"
+    server_error: "Error del Servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Fecha de inicio"
+    successfully_removed: "Eliminado con éxito"
+    taxonomy_edit: "editar taxonomía"
+    taxonomy_tree_error: "Error del árbol de taxonomía"
+    taxonomy_tree_instruction: "Instrucción del árbol de taxonomía"
+    tree: "Árbol"
+    updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
@@ -2920,6 +3000,7 @@ es:
     tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
     customer_details: "Detalles de la consumidora"
+    customer_details_updated: "Datos de la consumidora actualizados"
     customer_search: "Búsqueda de consumidores"
     choose_a_customer: "Elige una consumidora "
     account: "Cuenta"
@@ -3070,6 +3151,8 @@ es:
     payment_method: "Método de pago"
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     not_available: "No disponible"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "No hay artículos para este pedido."
     order_populator:
       out_of_stock: '%{item} está agotado.'
     actions:
@@ -3097,8 +3180,17 @@ es:
         login_nav:
           header:
             store: Tienda
+    validation:
+      must_be_int: "debe ser un entero"
     admin:
+      mail_methods:
+        send_testmail: "Enviar correo electrónico de prueba"
+        testmail:
+          delivery_success: "Se envió el correo electrónico de prueba."
+          error: "Se produjo un error al intentar enviar el correo electrónico de prueba."
       unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir a sus clientes comparar fácilmente los precios entre diferentes productos y tamaños de envase. Tenga en cuenta que el precio unitario final que se muestra en el escaparate puede diferir, ya que incluye impuestos y tarifas."
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panel de inicio"
         orders: "Pedidos"
@@ -3211,6 +3303,10 @@ es:
       overview:
         enterprises_header:
           ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "no tiene comisiones de organización"
+          has_no_payment_methods: "no tiene métodos de pago"
+          has_no_shipping_methods: "no tiene métodos de envío"
         products:
           active_products:
             zero: "No tienes ningún producto activo"

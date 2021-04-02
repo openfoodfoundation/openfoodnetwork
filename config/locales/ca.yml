@@ -85,6 +85,11 @@ ca:
               no_default_card: "^ No hi ha cap targeta predeterminada disponible per a aquesta consumidora"
             shipping_method:
               not_available_to_shop: "no està disponible per %{shop}"
+  card_details: "Dades de la targeta"
+  card_type: "Tipus de targeta"
+  cardholder_name: "Nom del titular de la targeta"
+  community_forum_url: "URL del fòrum de la comunitat"
+  customer_instructions: "Instruccions de la consumidora"
   devise:
     confirmations:
       send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
@@ -114,11 +119,22 @@ ca:
         updated_not_active: "La vostra contrasenya s'ha restablert, però el vostre correu electrònic encara no s'ha confirmat."
         updated: "La vostra contrasenya s'ha canviat correctament. Ja teniu la sessió iniciada."
         send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
+  item_description: "Descripció de l'article"
   models:
     order_cycle:
       cloned_order_cycle_name: "CÒPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Inclòs en el preu"
+  open_street_map_enabled: "S'ha activat Open Street Map"
+  open_street_map_default_latitude: "latitud predeterminada d'Open Street Map"
+  open_street_map_default_longitude: "longitud predeterminada d'Open Street Map"
+  open_street_map_provider_name: "nom del proveïdor d'Open Street Map"
+  open_street_map_provider_options: "opcions del proveïdor d'Open Street Map"
+  producers_social: "Raó social de la productora"
+  resume_order: "Reprèn la comanda"
+  sku: "Número de referència (SKU)"
+  subtotal: "Subtotal"
+  tax_rate: "Taxa d'impost"
   validators:
     date_time_string_validator:
       not_string_error: "ha de ser una seqüència"
@@ -144,6 +160,7 @@ ca:
   producer_mailer:
     order_cycle:
       subject: "Informe del cicle de comanda per %{producer}"
+  provider_settings: "Configuració del proveïdor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Benvolguda consumidora:"
@@ -300,6 +317,8 @@ ca:
   admin:
     begins_at: Comença a
     begins_on: Comença
+    bill_address: "Adreça de factura"
+    ship_address: "Adreça d'enviament"
     customer: Consumidora
     date: Data
     email: E-mail
@@ -1067,6 +1086,7 @@ ca:
       index:
         title: "Subscripcions"
         new: "Nova subscripció"
+      issue: "Incidència"
       new:
         title: "Nova subscripció"
       edit:
@@ -1148,6 +1168,7 @@ ca:
       yes_cancel_them: Cancel·lar-les
       no_keep_them: Conservar-les
       yes_i_am_sure: Sí, n'estic segur
+      number: "Número"
       order_update_issues_msg: Algunes comandes no s'han pogut actualitzar automàticament, probablement perquè s'han editat manualment. Reviseu els problemes que es detallen a continuació i realitzeu els ajustaments a comandes individuals si és necessari.
       no_results:
         no_subscriptions: Encara no hi ha cap subscripció...
@@ -2815,6 +2836,15 @@ ca:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Compra grupal - Assignació"
+          bulk_coop_customer_payments: "Compra grupal - Pagaments de les consumidores"
+          bulk_coop_packing_sheets: "Compra grupal - Fulls de preparació de cistelles"
+          bulk_coop_supplier_report: "Compra grupal - Totals per proveïdor"
+          date_range: "Interval de dates"
+          generate_report: "Generar informe"
+          report_format_csv: "Descarrega com a CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Interval de dates"
@@ -2860,6 +2890,8 @@ ca:
               tax_category_name: "Categoria d'impostos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Els filtres que heu seleccionat per a aquest informe no són vàlids."
+      report:
+        none: "Cap"
   order: "Comanda"
   distribution: "Distribució"
   order_details: "Detalls de la comanda"
@@ -2892,7 +2924,55 @@ ca:
   previous: "Anterior"
   last: "Últim"
   spree:
+    add_country: "Afegeix país"
+    add_state: "Afegeix estat"
+    adjustment: "Ajustament"
+    all: "Tots"
+    associated_adjustment_closed: "S'ha tancat l'ajustament associat"
+    authorization_failure: "Error d'autorització"
+    back_to_adjustments_list: "Torna als ajustaments"
+    back_to_users_list: "Tornar als usuaris"
+    back_to_zones_list: "Tornar a zones"
+    bugherd_api_key: "Clau d'API Bugherd"
+    card_code: "Codi de la targeta"
+    card_number: "Número de targeta"
+    category: "Categoria"
+    created_successfully: "Creat correctament"
+    credit: "Crèdit"
+    editing_tax_category: "Editant la categoria fiscal"
+    editing_tax_rate: "Editant el tipus impositiu"
+    editing_zone: "Editant zona"
+    expiration: "Caducitat"
+    invalid_payment_provider: "Proveïdor de pagaments invàlid"
+    items_cannot_be_shipped: "Els articles no es poden enviar"
+    gateway_config_unavailable: "La configuració de la passarel·la no està disponible"
+    gateway_error: "El pagament ha fallat"
     more: "Més"
+    new_adjustment: "Nou ajustament"
+    new_order_completed: "S'ha completat la nova comanda"
+    new_tax_category: "Nova categoria fiscal"
+    new_taxon: "Nou tàxon"
+    new_user: "Nou usuari"
+    no_pending_payments: "No hi ha pagaments pendents"
+    none: "Cap"
+    not_found: "No trobat"
+    notice_messages:
+      variant_deleted: "Variant eliminada"
+    or: "O bé"
+    order_processed_successfully: "La comanda s'ha processat correctament"
+    payment_method_not_supported: "No s'admet la forma de pagament"
+    resend_authorization_email: "Torneu a enviar el correu electrònic d’autorització"
+    rma_credit: "credit RMA"
+    server_error: "Error del servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Data d'inici"
+    successfully_removed: "S'ha suprimit correctament"
+    taxonomy_edit: "Edició de taxonomia"
+    taxonomy_tree_error: "Error d'arbre de taxonomia"
+    taxonomy_tree_instruction: "Instrucció d'arbre de taxonomia"
+    tree: "Arbre"
+    updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"
@@ -2920,6 +3000,7 @@ ca:
     tracking_number: "Número de seguiment"
     order_total: "Total comanda"
     customer_details: "Detalls de la consumidora"
+    customer_details_updated: "S'han actualitzat les dades de la consumidora"
     customer_search: "Cerca la consumidora"
     choose_a_customer: "Tria una consumidora"
     account: "Compte"
@@ -3070,6 +3151,8 @@ ca:
     payment_method: "Mètode de pagament"
     payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
     not_available: "No disponible"
+    sku: "Número de referència (SKU)"
+    there_are_no_items_for_this_order: "No hi ha articles per a aquesta comanda."
     order_populator:
       out_of_stock: '%{item} està esgotat.'
     actions:
@@ -3097,8 +3180,17 @@ ca:
         login_nav:
           header:
             store: Botiga
+    validation:
+      must_be_int: "ha de ser un nombre enter"
     admin:
+      mail_methods:
+        send_testmail: "Enviar correu electrònic de prova"
+        testmail:
+          delivery_success: "S'ha enviat el correu electrònic de prova."
+          error: "S'ha produït un error en intentar enviar el correu electrònic de prova."
       unit_price_tooltip: "El preu unitari augmenta la transparència, ja que permet als vostres clients comparar fàcilment preus entre diferents productes i mides d’envàs. Tingueu en compte que el preu unitari final que es mostra a l’aparador pot variar ja que inclou impostos i taxes."
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panell"
         orders: "Comandes"
@@ -3211,6 +3303,10 @@ ca:
       overview:
         enterprises_header:
           ofn_with_tip: Les organitzacions són productores i/o grups de consum i són la unitat bàsica d'organització dins d'Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "no té comissions d'organització"
+          has_no_payment_methods: "no té mètodes de pagament"
+          has_no_shipping_methods: "no té mètodes d'enviament"
         products:
           active_products:
             zero: "No tens cap producte actiu."

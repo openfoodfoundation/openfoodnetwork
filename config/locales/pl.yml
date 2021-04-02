@@ -114,6 +114,7 @@ pl:
   models:
     order_cycle:
       cloned_order_cycle_name: "Kopia %{order_cycle}"
+  sku: "SKU"
   validators:
     date_time_string_validator:
       not_string_error: "musi być ciągiem znaków"
@@ -259,7 +260,6 @@ pl:
   error: Błąd
   processing_payment: "Przetwarzanie płatności ..."
   no_pending_payments: "Brak oczekujących płatności"
-  invalid_payment_state: "Nieprawidłowy stan płatności"
   filter_results: Filtruj wyniki
   quantity: Ilość
   pick_up: Odbiór
@@ -1126,6 +1126,7 @@ pl:
       yes_cancel_them: Anuluj je
       no_keep_them: Zachować je
       yes_i_am_sure: Tak, jestem pewny
+      number: "Numer zamówienia"
       order_update_issues_msg: Niektórych zamówień nie udało się zaktualizować automatycznie, najprawdopodobniej dlatego, że zostały edytowane ręcznie. Zapoznaj się z poniższymi problemami i w razie potrzeby wprowadź ewentualne poprawki do poszczególnych zamówień.
       no_results:
         no_subscriptions: Brak subskrypcji ...
@@ -1538,7 +1539,9 @@ pl:
   shopping_tabs_home: "Dom"
   shopping_tabs_shop: "Sklep"
   shopping_tabs_about: "O nas"
+  shopping_tabs_producers: "Producenci"
   shopping_tabs_contact: "Kontakt"
+  shopping_tabs_groups: "Grupy"
   shopping_contact_address: "Adres"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Obserwuj"
@@ -2834,6 +2837,8 @@ pl:
               tax_category_name: "Kategoria podatku"
               total_amount: "$$ SUMA"
         invalid_filter_parameters: "Filtry wybrane dla tego raportu są nieprawidłowe."
+      report:
+        none: "Nic"
   order: "Zamówienie"
   distribution: "Dystrybucja"
   order_details: "Szczegóły zamówienia"
@@ -2866,7 +2871,11 @@ pl:
   previous: "Poprzedni"
   last: "Ostatni"
   spree:
+    all: "Wszystko"
+    category: "Kategoria"
     more: "Więcej"
+    no_pending_payments: "Brak oczekujących płatności"
+    none: "Nic"
     your_order_is_empty_add_product: "Twoje zamówienie jest puste, wyszukaj i dodaj produkt powyżej"
     add_product: "Dodaj produkt"
     name_or_sku: "Nazwa lub SKU (wprowadź co najmniej 4 pierwsze znaki nazwy produktu)"
@@ -3031,6 +3040,7 @@ pl:
     please_define_payment_methods: "Najpierw określ niektóre metody płatności."
     options: "Opcje"
     payment_method: "Metoda płatności"
+    sku: "SKU"
     actions:
       update: "Aktualizuj"
       cancel: "Anuluj"
@@ -3051,6 +3061,8 @@ pl:
           header:
             store: Sklep
     admin:
+      subscriptions:
+        number: "Numer zamówienia"
       tab:
         dashboard: "Kokpit"
         orders: "Zamówienia"

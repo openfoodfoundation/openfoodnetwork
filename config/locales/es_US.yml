@@ -85,6 +85,7 @@ es_US:
               no_default_card: "^ Ninguna tarjeta predeterminada disponible para esta consumidora"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  customer_instructions: "Instrucciones del Consumidor"
   devise:
     confirmations:
       send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
@@ -119,6 +120,8 @@ es_US:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Incluido en el precio"
+  sku: "SKU"
+  tax_rate: "% Impuestos"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -264,7 +267,6 @@ es_US:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
-  invalid_payment_state: "Estado de pago no válido"
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
@@ -1147,6 +1149,7 @@ es_US:
       yes_cancel_them: Cancelarlos
       no_keep_them: Guárdalos
       yes_i_am_sure: Sí estoy seguro
+      number: "Número"
       order_update_issues_msg: Algunas órdenes no se pudieron actualizar automáticamente, esto es más probable porque se han editado manualmente. Revise los problemas que se detallan a continuación y realice los ajustes a los pedidos individuales si es necesario.
       no_results:
         no_subscriptions: Aún no hay suscripciones ...
@@ -1568,7 +1571,9 @@ es_US:
   shopping_tabs_home: "Inicio"
   shopping_tabs_shop: "Tienda"
   shopping_tabs_about: "Acerca de"
+  shopping_tabs_producers: "Productoras"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Redes"
   shopping_contact_address: "Dirección"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -2659,8 +2664,7 @@ es_US:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
       price_breakdown: "Desglose de el precio"
-      unit_price_tooltip:
-        shopfront: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
+      unit_price_tooltip: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
     variants:
       on_demand:
         'yes': "Bajo demanda"
@@ -2807,6 +2811,9 @@ es_US:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generar informe"
       enterprise_fee_summaries:
         filters:
           date_range: "Rango de fechas"
@@ -2852,6 +2859,8 @@ es_US:
               tax_category_name: "Categoría de impuestos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Los filtros que seleccionó para este informe no son válidos."
+      report:
+        none: "Ninguno"
   order: "Pedido"
   distribution: "Distribución"
   order_details: "Detalles del pedido"
@@ -2884,7 +2893,13 @@ es_US:
   previous: "Anterior"
   last: "Último"
   spree:
+    all: "Todos"
+    category: "Categoría"
+    credit: "Crédito"
     more: "Más"
+    no_pending_payments: "No tiene pagos pendientes"
+    none: "Ninguno"
+    updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
@@ -3061,6 +3076,7 @@ es_US:
     payment_method: "Método de pago"
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     not_available: "No disponible"
+    sku: "SKU"
     order_populator:
       out_of_stock: '%{item} está agotado.'
     actions:
@@ -3089,6 +3105,8 @@ es_US:
           header:
             store: Tienda
     admin:
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panel de inicio"
         orders: "Pedidos"

@@ -85,6 +85,7 @@ nb:
               no_default_card: "^Ingen standardkort tilgjengelig for denne kunden"
             shipping_method:
               not_available_to_shop: "er ikke tilgjengelig for %{shop}"
+  customer_instructions: "Kundeinstruksjoner"
   devise:
     confirmations:
       send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
@@ -117,6 +118,8 @@ nb:
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPI AV %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Avgiftsrate"
   validators:
     date_time_string_validator:
       not_string_error: "må være en streng"
@@ -262,7 +265,6 @@ nb:
   error: Feil
   processing_payment: "Behandler betaling ..."
   no_pending_payments: "Ingen ventende betalinger"
-  invalid_payment_state: "Ugyldig betalingstilstand"
   filter_results: Filtrer Resultater
   quantity: Mengde
   pick_up: Hent
@@ -1143,6 +1145,7 @@ nb:
       yes_cancel_them: Avbryt dem
       no_keep_them: Behold dem
       yes_i_am_sure: Ja jeg er sikker
+      number: "Antall"
       order_update_issues_msg: Noen bestillinger kan ikke oppdateres automatisk, dette er mest sannsynlig fordi de har blitt redigert manuelt. Vennligst gå gjennom problemene som er oppført nedenfor, og gjør eventuelle tilpasninger til individuelle bestillinger om nødvendig.
       no_results:
         no_subscriptions: Ingen abonnement ennå...
@@ -1566,7 +1569,9 @@ nb:
   shopping_tabs_home: "Hjem"
   shopping_tabs_shop: "Butikk"
   shopping_tabs_about: "Om"
+  shopping_tabs_producers: "Produsenter"
   shopping_tabs_contact: "Kontakt"
+  shopping_tabs_groups: "Grupper"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Følg"
@@ -2793,6 +2798,9 @@ nb:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generer rapport"
       enterprise_fee_summaries:
         filters:
           date_range: "Datointervall"
@@ -2838,6 +2846,8 @@ nb:
               tax_category_name: "Avgiftskategori"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "Filtrene du valgte for denne rapporten er ugyldige."
+      report:
+        none: "Ingen"
   order: "Bestilling"
   distribution: "Distribusjon"
   order_details: "Ordredetaljer"
@@ -2870,7 +2880,13 @@ nb:
   previous: "Tidligere"
   last: "Siste"
   spree:
+    all: "Alle"
+    category: "Kategori"
+    credit: "Kreditt"
     more: "Mer"
+    no_pending_payments: "Ingen ventende betalinger"
+    none: "Ingen"
+    updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
@@ -3046,6 +3062,7 @@ nb:
     payment_method: "Betalingsmetode"
     payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
     not_available: "Ikke relevant"
+    sku: "SKU"
     order_populator:
       out_of_stock: '%{item} er utsolgt.'
     actions:
@@ -3073,6 +3090,8 @@ nb:
           header:
             store: Butikk
     admin:
+      subscriptions:
+        number: "Antall"
       tab:
         dashboard: "Dashboard"
         orders: "Bestillinger"

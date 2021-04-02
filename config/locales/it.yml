@@ -9,11 +9,11 @@ it:
         shipment_state: Stato Spedizione
         completed_at: Completato Al
         number: Numero
-        state: Stato
+        state: Provincia
         email: E-Mail Cliente
       spree/payment:
         amount: Quantità
-        state: Stato
+        state: Provincia
         source: Fonte
       spree/product:
         primary_taxon: "Categoria Prodotto"
@@ -359,7 +359,7 @@ it:
     shipping_method: Metodo di consegna
     shop: Negozio
     sku: articolo gestito a magazzino
-    status_state: Stato
+    status_state: Provincia
     tags: Tag
     variant: Variante
     weight: Peso
@@ -1002,7 +1002,7 @@ it:
         new_schedule: Nuovo programma
       name_and_timing_form:
         name: Nome
-        orders_open: Richieste aperte a
+        orders_open: Richieste aperte dal
         coordinator: Referente
         orders_close: Gentili richieste chiuse
       row:
@@ -1354,7 +1354,7 @@ it:
   postcode: CAP
   postcode_placeholder: es. 10040
   suburb: Comune
-  state: Stato
+  state: Provincia
   country: Paese
   unauthorized: Non autorizzato
   terms_of_service: "Termini di servizio"
@@ -2045,7 +2045,7 @@ it:
   admin_enterprise_groups_contact_city_placeholder: "p.es. Sesto"
   admin_enterprise_groups_contact_zipcode: "CAP"
   admin_enterprise_groups_contact_zipcode_placeholder: "p.es. 20100"
-  admin_enterprise_groups_contact_state_id: "Stato"
+  admin_enterprise_groups_contact_state_id: "Provincia"
   admin_enterprise_groups_contact_country_id: "Stato"
   admin_enterprise_groups_web: "Risorse web"
   admin_enterprise_groups_web_twitter: "p.es. @az_agr"
@@ -2173,7 +2173,7 @@ it:
   admin_share_city: "Comune"
   admin_share_zipcode: "CAP"
   admin_share_country: "Stato"
-  admin_share_state: "Stato"
+  admin_share_state: "Provincia"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Nussuna disponibilità"
   hub_sidebar_manage: "Gestisci"
@@ -3030,7 +3030,7 @@ it:
     city: "Comune"
     zip: "CAP"
     country: "Stato"
-    state: "Stato"
+    state: "Provincia"
     phone: "Telefono"
     update: "Aggiorna"
     use_billing_address: "Utilizzare l'indirizzo di fatturazione"
@@ -3300,7 +3300,7 @@ it:
           shipment_state: "Stato della spedizione"
           completed_at: "Completo al"
           number: "Numero"
-          state: "Stato"
+          state: "Provincia"
           email: "E-mail Cliente"
         invoice:
           issued_on: "Emesso il"
@@ -3538,7 +3538,7 @@ it:
         sortable_header:
           name: "Nome"
           number: "Numero"
-          state: "Stato"
+          state: "Provincia"
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"
           email: "Email"

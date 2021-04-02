@@ -85,6 +85,7 @@ en_AU:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  customer_instructions: "Customer instructions"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -117,6 +118,8 @@ en_AU:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -262,7 +265,6 @@ en_AU:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1153,6 +1155,7 @@ en_AU:
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
+      number: "Number"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_subscriptions: No subscriptions yet...
@@ -1573,7 +1576,9 @@ en_AU:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Groups"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -2800,6 +2805,9 @@ en_AU:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generate Report"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -2845,6 +2853,8 @@ en_AU:
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
+      report:
+        none: "None"
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
@@ -2877,7 +2887,13 @@ en_AU:
   previous: "Previous"
   last: "Last"
   spree:
+    all: "All"
+    category: "Category"
+    credit: "Credit"
     more: "More"
+    no_pending_payments: "No pending payments"
+    none: "None"
+    updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
@@ -3053,6 +3069,7 @@ en_AU:
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"
+    sku: "SKU"
     order_populator:
       out_of_stock: '%{item} is out of stock.'
     actions:
@@ -3080,6 +3097,8 @@ en_AU:
           header:
             store: Store
     admin:
+      subscriptions:
+        number: "Number"
       tab:
         dashboard: "Dashboard"
         orders: "Orders"

@@ -85,6 +85,7 @@ tr:
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
               not_available_to_shop: "%{shop} için müsait değil"
+  customer_instructions: "Müşteri talimatları"
   devise:
     confirmations:
       send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
@@ -117,6 +118,8 @@ tr:
   models:
     order_cycle:
       cloned_order_cycle_name: "%{order_cycle} KOPYALA"
+  sku: "Stok Kodu"
+  tax_rate: "Vergi oranı"
   validators:
     date_time_string_validator:
       not_string_error: "Dizili olmalı"
@@ -262,7 +265,6 @@ tr:
   error: Hata
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
   no_pending_payments: "Bekleyen ödeme yok"
-  invalid_payment_state: "Geçersiz ödeme durumu"
   filter_results: SONUÇLARI FİLTRELE
   quantity: Miktar
   pick_up: Teslim Alma
@@ -1143,6 +1145,7 @@ tr:
       yes_cancel_them: Bunları iptal et
       no_keep_them: Bunları sakla
       yes_i_am_sure: Evet eminim
+      number: "Numara"
       order_update_issues_msg: Bazı siparişler otomatik olarak güncellenemedi, bunun nedeni büyük olasılıkla manuel olarak düzenlenmiş olmasıdır. Lütfen aşağıda listelenen sorunları gözden geçirin ve gerekirse siparişler özelinde ayarlamalarını yapın.
       no_results:
         no_subscriptions: Henüz üyelik yok ...
@@ -1566,7 +1569,9 @@ tr:
   shopping_tabs_home: "Ana sayfa"
   shopping_tabs_shop: "ALIŞVERİŞ YAP"
   shopping_tabs_about: "Hakkında"
+  shopping_tabs_producers: "ÜRETİCİLER"
   shopping_tabs_contact: "İLETİŞİM"
+  shopping_tabs_groups: "AĞLAR"
   shopping_contact_address: "Adres"
   shopping_contact_web: "İLETİŞİM"
   shopping_contact_social: "TAKİP ET"
@@ -2797,6 +2802,9 @@ tr:
       start_free_profile: "Ücretsiz bir profille başlayın ve hazır olduğunuzda devam edin!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Rapor Oluştur"
       enterprise_fee_summaries:
         filters:
           date_range: "Tarih Aralığı"
@@ -2842,6 +2850,8 @@ tr:
               tax_category_name: "Vergi Kategorisi"
               total_amount: "₺₺ TOPLAM"
         invalid_filter_parameters: "Bu rapor için seçtiğiniz filtreler geçersiz."
+      report:
+        none: "SATIŞ YAPMIYOR"
   order: "Sipariş"
   distribution: "dağıtım"
   order_details: "sipariş detayları"
@@ -2874,7 +2884,13 @@ tr:
   previous: "Önceki"
   last: "Son"
   spree:
+    all: "Hepsi"
+    category: "Kategori"
+    credit: "Bakiye"
     more: "Daha Fazla"
+    no_pending_payments: "Bekleyen ödeme yok"
+    none: "SATIŞ YAPMIYOR"
+    updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
     name_or_sku: "Ad veya STOK KODU (ürün adının en az ilk 4 karakterini girin)"
@@ -3050,6 +3066,7 @@ tr:
     payment_method: "ÖDEME YÖNTEMİ"
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
     not_available: "Yok"
+    sku: "Stok Kodu"
     order_populator:
       out_of_stock: '%{item} stokta yok'
     actions:
@@ -3077,6 +3094,8 @@ tr:
           header:
             store: Ana Site
     admin:
+      subscriptions:
+        number: "Numara"
       tab:
         dashboard: "KONTROL PANELİ"
         orders: "SİPARİŞLER"

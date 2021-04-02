@@ -85,6 +85,11 @@ de_DE:
               no_default_card: "^ Für diesen Kunden ist keine Standardkreditkarte verfügbar."
             shipping_method:
               not_available_to_shop: "ist nicht verfügbar für %{shop}"
+  card_details: "Kreditkartendaten"
+  card_type: "Kreditkartentyp"
+  cardholder_name: "Kreditkarteninhaber"
+  community_forum_url: "URL des Community-Forums"
+  customer_instructions: "Informationen für Kunden"
   devise:
     confirmations:
       send_instructions: "Sie erhalten in Kürze eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
@@ -119,6 +124,8 @@ de_DE:
       cloned_order_cycle_name: "Kopie von %{order_cycle}"
     tax_rate:
       included_in_price: "im Preis inbegriffen"
+  sku: "Artikelnummer"
+  tax_rate: "Steuersatz"
   validators:
     date_time_string_validator:
       not_string_error: "muss eine Zeichenfolge sein"
@@ -1147,6 +1154,7 @@ de_DE:
       yes_cancel_them: Stornieren
       no_keep_them: Erhalten
       yes_i_am_sure: Ja, ich bin mir sicher.
+      number: "Bestellnummer"
       order_update_issues_msg: Einige Bestellungen konnten nicht automatisch aktualisiert werden. Dies liegt wahrscheinlich daran, dass sie manuell bearbeitet wurden. Bitte überprüfen Sie die unten aufgeführten Punkte und nehmen Sie gegebenenfalls Anpassungen an einzelnen Bestellungen vor.
       no_results:
         no_subscriptions: Bisher gibt es noch keine Abonnements.
@@ -2820,6 +2828,9 @@ de_DE:
       start_free_profile: "Beginnen Sie mit einem kostenlosen Profil und erweitern Sie es, wann Sie möchten!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Suche"
       enterprise_fee_summaries:
         filters:
           date_range: "Datumsbereich"
@@ -2865,6 +2876,8 @@ de_DE:
               tax_category_name: "Steuerkategorie"
               total_amount: "SUMME"
         invalid_filter_parameters: "Die für diesen Bericht ausgewählten Filter sind ungültig."
+      report:
+        none: "Keine"
   order: "Bestellung"
   distribution: "Verteilung"
   order_details: "Bestelldetails"
@@ -2897,7 +2910,14 @@ de_DE:
   previous: "Vorherige"
   last: "Letzte"
   spree:
+    all: "Alle"
+    card_code: "Kartenprüfnummer (3-stellig)"
+    category: "Produktkategorie"
+    credit: "Guthaben"
     more: "Mehr"
+    no_pending_payments: "Keine ausstehenden Zahlungen."
+    none: "Keine"
+    updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
     name_or_sku: "Produktname oder Artikelnummer (geben Sie mindestens die ersten 3 Zeichen des Produktnamens ein)"
@@ -3075,6 +3095,7 @@ de_DE:
     payment_method: "Zahlungsart"
     payment_processing_failed: "Die Zahlung konnte nicht bearbeitet werden. Bitte überprüfen Sie die von Ihnen eingegebenen Daten."
     not_available: "N / A"
+    sku: "Artikelnummer"
     order_populator:
       out_of_stock: '%{item} ist leider nicht mehr vorrätig.'
     actions:
@@ -3104,6 +3125,8 @@ de_DE:
             store: openfoodnetwork.de
     admin:
       unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
+      subscriptions:
+        number: "Bestellnummer"
       tab:
         dashboard: "Übersicht"
         orders: "Bestellungen"

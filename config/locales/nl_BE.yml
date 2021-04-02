@@ -84,6 +84,7 @@ nl_BE:
               no_default_card: "^Er is geen standaardkaart beschikbaar voor deze klant"
             shipping_method:
               not_available_to_shop: "is niet beschikbaar voor %{shop}"
+  customer_instructions: "Klantenaanwijzingen"
   devise:
     confirmations:
       send_instructions: "U ontvangt een e-mail met instructies over hoe u uw account binnen enkele minuten kunt bevestigen."
@@ -116,6 +117,8 @@ nl_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPIE VAN %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "BTW-tarief"
   validators:
     date_time_string_validator:
       not_string_error: "moet een snaar zijn"
@@ -261,7 +264,6 @@ nl_BE:
   error: Fout
   processing_payment: "Verwerking van de betaling....."
   no_pending_payments: "Geen betaling in afhandeling"
-  invalid_payment_state: "Onjuiste betaling status"
   filter_results: Filter resultaten
   quantity: Kwantiteit
   pick_up: Afhalen
@@ -1131,6 +1133,7 @@ nl_BE:
       yes_cancel_them: 'Annuleer ze '
       no_keep_them: Behoud ze
       yes_i_am_sure: Ja, ik ben zeker
+      number: "Nummer"
       order_update_issues_msg: Sommige bestellingen konden niet automatisch geüpdatet worden, dit is de meest waarschijnlijke omdat ze handmatig werden aangepast. Kijk alsjeblieft eens naar de hieronder opgelijste aspecten en maak aanpassingen aan specifieke bestellingen indien nodig.
       no_results:
         no_subscriptions: Er zijn nog geen abonnementen...
@@ -1544,7 +1547,9 @@ nl_BE:
   shopping_tabs_home: "Start"
   shopping_tabs_shop: "winkel"
   shopping_tabs_about: "Over"
+  shopping_tabs_producers: "Producenten"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Groepen"
   shopping_contact_address: "Adres"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Volg"
@@ -2681,6 +2686,9 @@ nl_BE:
       start_free_profile: "Eerst uw bedrijfsprofiel maken en wijzig de formule als U klaar bent !"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Ontwikkel verslag"
       enterprise_fee_summaries:
         filters:
           date_range: "Datumbereik"
@@ -2726,6 +2734,8 @@ nl_BE:
               tax_category_name: "Belastingcategorie"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "De filters voor dit verslag zijn ongeldig."
+      report:
+        none: "Geen enkele"
   order: "Bestelling"
   distribution: "Distributie"
   order_details: "Bestellingsgegevens"
@@ -2758,7 +2768,13 @@ nl_BE:
   previous: "Voorgaande"
   last: "Laatst"
   spree:
+    all: "Universum"
+    category: "Categorie"
+    credit: "Krediet"
     more: "Meer"
+    no_pending_payments: "Geen betaling in afhandeling"
+    none: "Geen enkele"
+    updating: "Updatend"
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "
     add_product: "Voeg een product toe"
     name_or_sku: "Beschrijving of artikelnummer ( tenminste 4 letters van de productnaam invoeren )"
@@ -2927,6 +2943,7 @@ nl_BE:
     successfully_updated: '%{resource}is succesvol bijgewerkt!'
     payment_method: "Betaalmethode"
     payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
+    sku: "SKU"
     actions:
       update: "Update"
       cancel: "Annuleren"
@@ -2947,6 +2964,8 @@ nl_BE:
           header:
             store: Zicht koper
     admin:
+      subscriptions:
+        number: "Nummer"
       tab:
         dashboard: "Dashboard"
         orders: "Bestellingen"

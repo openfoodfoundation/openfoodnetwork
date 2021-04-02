@@ -81,6 +81,7 @@ fil_PH:
               no_default_card: "^Walang default card na maaaring gamitin para sa customer na ito"
             shipping_method:
               not_available_to_shop: "ay hindi magagamit para%{shop}"
+  customer_instructions: "panuto ng Customer"
   devise:
     confirmations:
       send_instructions: "Kayo ay makakatanggap ng email na may panuto kung paano kumpirmahin ang inyong account sa loob ng ilang minuto."
@@ -113,6 +114,8 @@ fil_PH:
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPYA NG%{order_cycle}"
+  sku: "SKU"
+  tax_rate: "rate ng tax"
   validators:
     date_time_string_validator:
       not_string_error: "ay dapat String"
@@ -256,7 +259,6 @@ fil_PH:
   error: Error
   processing_payment: "Pinoproseso ang bayad..."
   no_pending_payments: "walang nakabinbin na mga bayad"
-  invalid_payment_state: "hindi valid na status ng pagbabayad"
   filter_results: I-filter ang mga resulta
   quantity: Dami
   pick_up: Pick up
@@ -1113,6 +1115,7 @@ fil_PH:
       yes_cancel_them: kanselahin
       no_keep_them: ituloy
       yes_i_am_sure: oo, sigurado ako
+      number: "Bilang"
       order_update_issues_msg: "ang ibang mga order ay hindi awtomatikong ma-update, sapagkat ito ay manwal na inayos. Tignan ang mga isyu na nakalista sa baba at gawin ang nararapat na pag-aayos sa bawat indibiduwal na \norder kung kinakailangan."
       no_results:
         no_subscriptions: wala pang mga subscription....
@@ -1517,7 +1520,9 @@ fil_PH:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "tungkol sa"
+  shopping_tabs_producers: "Mga Producer"
   shopping_tabs_contact: "Makipag-ugnayan"
+  shopping_tabs_groups: "Mga Bayarin"
   shopping_contact_address: "tirahan"
   shopping_contact_web: "Makipag-ugnayan"
   shopping_contact_social: "sumunod"
@@ -2714,6 +2719,9 @@ fil_PH:
       start_free_profile: "Magsimula sa libreng profile at palawakin kapag handa ka na!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Bumuo ng ulat"
       enterprise_fee_summaries:
         filters:
           date_range: "saklaw na petsa"
@@ -2759,6 +2767,8 @@ fil_PH:
               tax_category_name: "kategorya ng tax"
               total_amount: "$$ KABUUAN"
         invalid_filter_parameters: "ang mga filter na pinili para sa ulat na ito ay hindi valid."
+      report:
+        none: "wala"
   order: "order"
   distribution: "pamamahagi"
   order_details: "mga detalye ng order"
@@ -2789,7 +2799,13 @@ fil_PH:
   previous: "nauna"
   last: "huli"
   spree:
+    all: "Lahat"
+    category: "kategorya"
+    credit: "utang"
     more: "Karagdagang Impormasyon"
+    no_pending_payments: "walang nakabinbin na mga bayad"
+    none: "wala"
+    updating: "ina-update"
     your_order_is_empty_add_product: "ang iyong order ay walang laman, humanap at magdagdag ng produkto sa itaas."
     add_product: "magdagdag ng produkto"
     name_or_sku: "Pangalan o SKU (ipasok ang 4 na letra sa pangalan ng produkto)"
@@ -2952,6 +2968,7 @@ fil_PH:
     successfully_updated: '%{resource}ay matagumpay na na-update'
     payment_method: "Paraan ng pagbayad"
     payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
+    sku: "SKU"
     actions:
       update: "i-update"
       cancel: "kanselahin"
@@ -2969,6 +2986,8 @@ fil_PH:
           header:
             store: tindahan
     admin:
+      subscriptions:
+        number: "Bilang"
       tab:
         dashboard: "Dashboard"
         orders: "mga order"
