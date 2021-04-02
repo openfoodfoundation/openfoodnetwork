@@ -19,6 +19,7 @@ describe Spree::Admin::OrdersHelper, type: :helper do
       allow(order).to receive(:complete?) { false }
       allow(order).to receive(:ready_to_ship?) { false }
       allow(order).to receive(:can_cancel?) { false }
+      allow(order).to receive(:resumed?) { false }
       Spree::Config[:enable_invoices?] = false
       Spree::Config[:enable_receipt_printing?] = false
     end
@@ -71,11 +72,7 @@ describe Spree::Admin::OrdersHelper, type: :helper do
       end
 
       context "with invoices enabled" do
-        before do
-          Spree::Config[:enable_invoices?] = true
-          allow(order).to receive(:distributor) { distributor }
-          allow(distributor).to receive(:can_invoice?) { true }
-        end
+        before { enable_invoices }
 
         it "adds send and print invoice links" do
           links = helper.order_links(order)
@@ -100,5 +97,35 @@ describe Spree::Admin::OrdersHelper, type: :helper do
         end
       end
     end
+
+    context "resumed order" do
+      before { allow(order).to receive(:resumed?) { true } }
+
+      it "includes a resend confirmation link" do
+        links = helper.order_links(order).map { |link| link[:name] }
+
+        expect(links).to match_array(["Edit Order", "Resend Confirmation"])
+      end
+
+      context "with invoices enabled" do
+        before { enable_invoices }
+
+        it "includes send invoice and print invoice links" do
+          links = helper.order_links(order).map { |link| link[:name] }
+
+          expect(links).to match_array(
+            ["Edit Order", "Print Invoice", "Resend Confirmation", "Send Invoice"]
+          )
+        end
+      end
+    end
+  end
+
+  private
+
+  def enable_invoices
+    Spree::Config[:enable_invoices?] = true
+    allow(order).to receive(:distributor) { distributor }
+    allow(distributor).to receive(:can_invoice?) { true }
   end
 end
