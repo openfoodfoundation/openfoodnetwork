@@ -99,5 +99,6 @@ feature '
     click_link 'Adjustments'
 
     expect(page).to_not have_selector('tr a.icon-edit')
+    expect(page).to_not have_selector('a.icon-plus'), text: I18n.t(:new_adjustment)
   end
 end
