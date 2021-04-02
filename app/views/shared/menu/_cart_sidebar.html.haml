@@ -33,7 +33,7 @@
                   key: "'js.shopfront.unit_price_tooltip'",
                   context: "'cart-sidebar'"}
                 .options-text
-                  {{ line_item.variant.unit_price_price | localizeCurrency }} / {{ line_item.variant.unit_price_unit }}
+                  {{ line_item.variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ line_item.variant.unit_price_unit }}
 
       .cart-empty{"ng-show" => "Cart.line_items.length == 0"}
         %p
