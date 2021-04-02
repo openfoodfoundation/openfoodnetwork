@@ -46,7 +46,8 @@
               "question-mark-with-tooltip-placement" => "top",
               "question-mark-with-tooltip-animation" => true, 
               key: "'js.admin.unit_price_tooltip'"}
-          = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
+          %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]",
+            "class" => 'fullwidth', "disabled" => true, "ng-model" => "unit_price"}
           %div{style: "color: black"}
             = t("spree.admin.products.new.unit_price_legend")
     %div{ 'set-on-demand' => '' }
