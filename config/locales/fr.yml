@@ -3551,6 +3551,7 @@ fr:
         form:
           sku: "Référence Produit"
           price: "Prix"
+          unit_price: "Prix unitaire"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
