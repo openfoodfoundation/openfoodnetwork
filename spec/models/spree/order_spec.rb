@@ -392,20 +392,6 @@ describe Spree::Order do
     end
   end
 
-  context "ensure shipments will be updated" do
-    before { Spree::Shipment.create!(order: order) }
-
-    it "destroys current shipments" do
-      order.ensure_updated_shipments
-      expect(order.shipments).to be_empty
-    end
-
-    it "puts order back in address state" do
-      order.ensure_updated_shipments
-      expect(order.state).to eql "address"
-    end
-  end
-
   describe ".tax_address" do
     before { Spree::Config[:tax_using_ship_address] = tax_using_ship_address }
     subject { order.tax_address }

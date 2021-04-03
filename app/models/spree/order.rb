@@ -541,21 +541,6 @@ module Spree
       shipments
     end
 
-    # Clean shipments and make order back to address state
-    #
-    # At some point the might need to force the order to transition from address
-    # to delivery again so that proper updated shipments are created.
-    # e.g. customer goes back from payment step and changes order items
-    def ensure_updated_shipments
-      return unless shipments.any?
-
-      shipments.destroy_all
-      update_columns(
-        state: "address",
-        updated_at: Time.zone.now
-      )
-    end
-
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
