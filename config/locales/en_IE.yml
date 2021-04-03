@@ -3528,6 +3528,7 @@ en_IE:
         form:
           sku: "Product Code"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
