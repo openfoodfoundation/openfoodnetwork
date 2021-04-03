@@ -82,7 +82,7 @@ module Spree
               after_transition to: :delivery, do: :create_tax_charge!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
-              after_transition to: :payment, do: :charge_shipping_and_payment_fees!
+              after_transition to: :payment, do: :set_payment_amount!
             end
           end
 
