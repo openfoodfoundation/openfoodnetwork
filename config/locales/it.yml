@@ -3526,6 +3526,7 @@ it:
         form:
           sku: "SKU"
           price: "Prezzo"
+          unit_price: "Prezzo unitario"
           display_as: "Visualizza come"
           display_name: "Nome da visualizzare"
           display_as_placeholder: 'es. 2 kg'
