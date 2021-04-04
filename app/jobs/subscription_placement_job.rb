@@ -31,7 +31,7 @@ class SubscriptionPlacementJob < ActiveJob::Base
     initialise_order(proxy_order)
     return unless proxy_order.order.present?
 
-    proxy_order.update_column(:placed_at, Time.now)
+    proxy_order.update_column(:placed_at, Time.zone.now)
     place_order(proxy_order.order)
   end
 
