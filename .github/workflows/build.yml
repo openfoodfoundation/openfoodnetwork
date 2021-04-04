@@ -272,6 +272,8 @@ jobs:
       - name: Run JS tests
         run: RAILS_ENV=test bundle exec rake karma:run
 
+      # Migration tests need to be run in a separate task.
+      # See: https://github.com/openfoodfoundation/openfoodnetwork/pull/6924#issuecomment-813056525
       - name: Run migration tests
         run: bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"
 
