@@ -44,6 +44,17 @@ module Spree
           expect(order.payments.count).to eq 0
         end
       end
+
+      context "when order completion fails" do
+        before do
+          allow(previous_order).to receive(:complete?).and_return(false)
+        end
+
+        it "redirects to checkout state path" do
+          expect(spree_post(:confirm, payment_method_id: payment_method.id)).
+            to redirect_to checkout_state_path(:cart)
+        end
+      end
     end
 
     describe '#expire_current_order' do
