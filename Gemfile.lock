@@ -588,7 +588,7 @@ GEM
       chronic (>= 0.6.3)
     wicked_pdf (2.1.0)
       activesupport
-    wkhtmltopdf-binary (0.12.5)
+    wkhtmltopdf-binary (0.12.6.5)
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -713,7 +713,7 @@ DEPENDENCIES
   webmock
   whenever
   wicked_pdf
-  wkhtmltopdf-binary (= 0.12.5)
+  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.5.8p224
