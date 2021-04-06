@@ -40,8 +40,12 @@ module OpenFoodNetwork
     end
 
     def enabled?(feature_name, user)
-      feature = features.fetch(feature_name, DefaultFeature.new(feature_name))
-      feature.enabled?(user)
+      if Flipper[feature_name].exist?
+        Flipper.enabled?(feature_name, user)
+      else
+        feature = features.fetch(feature_name, DefaultFeature.new(feature_name))
+        feature.enabled?(user)
+      end
     end
 
     private

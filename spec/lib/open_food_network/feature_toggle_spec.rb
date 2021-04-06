@@ -24,6 +24,17 @@ module OpenFoodNetwork
         expect(FeatureToggle.enabled?(:foo)).to be false
       end
 
+      it "uses Flipper configuration" do
+        Flipper.enable(:foo)
+        expect(FeatureToggle.enabled?(:foo)).to be true
+      end
+
+      it "uses Flipper over static config" do
+        Flipper.enable(:foo, false)
+        stub_foo("true")
+        expect(FeatureToggle.enabled?(:foo)).to be false
+      end
+
       def stub_foo(value)
         allow(ENV).to receive(:fetch).with("OFN_FEATURE_FOO", nil).and_return(value)
       end
