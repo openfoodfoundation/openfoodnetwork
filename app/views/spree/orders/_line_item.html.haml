@@ -18,7 +18,7 @@
 
   %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
     = line_item.single_display_amount_with_adjustments.to_html
-    - if feature? :unit_price, spree_current_user
+    - if feature? :unit_price, spree_current_user && line_item.unit_price_price_and_unit
       %br
       %span.unit-price
         = line_item.unit_price_price_and_unit

@@ -208,6 +208,8 @@ module Spree
 
     def unit_price_price_and_unit
       unit_price = UnitPrice.new(variant)
+      return nil if unit_price.denominator.zero?
+
       Spree::Money.new(price_with_adjustments / unit_price.denominator).to_html +
         " / " + unit_price.unit
     end
