@@ -3415,6 +3415,7 @@ ru:
           back_to_shipping_methods_list: "Назад К Списку Способов Доставки"
         form:
           categories: "Категории"
+          tax_category: "Налоговая Категория"
           zones: "Зоны"
           both: "Оба"
           back_end: "Интерфейс Администратора"
