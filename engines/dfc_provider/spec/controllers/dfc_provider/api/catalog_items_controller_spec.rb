@@ -125,7 +125,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             end
 
             it 'renders the required content' do
-              expect(response.body).to include('dfc:CatalogItem')
+              expect(response.body).to include('dfc-b:CatalogItem')
               expect(response.body).to include("offers/#{variant.id}")
             end
           end

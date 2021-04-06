@@ -29,7 +29,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           end
 
           it 'renders the required content' do
-            expect(response.body).to include('dfc:Person')
+            expect(response.body).to include('dfc-b:Person')
           end
         end
 

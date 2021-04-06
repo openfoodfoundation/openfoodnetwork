@@ -8,13 +8,13 @@ module DfcProvider
 
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :vat_number, key: 'dfc:VATnumber'
-    has_many :defines, key: 'dfc:defines'
+    attribute :vat_number, key: 'dfc-b:VATnumber'
+    has_many :defines, key: 'dfc-b:defines'
     has_many :supplies,
-             key: 'dfc:supplies',
+             key: 'dfc-b:supplies',
              serializer: DfcProvider::SuppliedProductSerializer
     has_many :manages,
-             key: 'dfc:manages',
+             key: 'dfc-b:manages',
              serializer: DfcProvider::CatalogItemSerializer
 
     def id
@@ -25,7 +25,7 @@ module DfcProvider
     end
 
     def type
-      'dfc:Entreprise'
+      'dfc-b:Entreprise'
     end
 
     def vat_number; end

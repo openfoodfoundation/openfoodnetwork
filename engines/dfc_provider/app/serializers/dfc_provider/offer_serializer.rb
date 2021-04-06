@@ -17,7 +17,7 @@ module DfcProvider
     end
 
     def type
-      'dfc:Offer'
+      'dfc-b:Offer'
     end
 
     def offers_to

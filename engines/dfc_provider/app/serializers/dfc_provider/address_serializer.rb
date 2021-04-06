@@ -7,13 +7,13 @@ module DfcProvider
     include RouteHelper
 
     attribute :type, key: '@type'
-    attribute :city, key: 'dfc:city'
-    attribute :country, key: 'dfc:country'
-    attribute :postcode, key: 'dfc:postcode'
-    attribute :street, key: 'dfc:street'
+    attribute :city, key: 'dfc-b:city'
+    attribute :country, key: 'dfc-b:country'
+    attribute :postcode, key: 'dfc-b:postcode'
+    attribute :street, key: 'dfc-b:street'
 
     def type
-      'dfc:Address'
+      'dfc-b:Address'
     end
 
     def city; end

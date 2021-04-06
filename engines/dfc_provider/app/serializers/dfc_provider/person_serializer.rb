@@ -9,20 +9,28 @@ module DfcProvider
     attribute :context, key: '@context'
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :family_name, key: 'dfc:familyName'
-    attribute :first_name, key: 'dfc:firstName'
+    attribute :family_name, key: 'dfc-b:familyName'
+    attribute :first_name, key: 'df-bc:firstName'
     has_one :address,
-            key: 'dfc:hasAddress',
+            key: 'dfc-b:hasAddress',
             serializer: DfcProvider::AddressSerializer
     has_many :affiliates,
-             key: 'dfc:affiliates',
+             key: 'dfc-b:affiliates',
              serializer: DfcProvider::EnterpriseSerializer
 
     # Context should be provided inside the controller,
     # but AMS doesn't not supported `meta` and `meta_key` with `root` to nil...
     def context
       {
-        'dfc' => 'http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#',
+        'dfc-b' => 'http://static.datafoodconsortium.org/ontologies/dfc_FullModel.owl#',
+        'dfc-p' => 'http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#',
+        'dfc-u' => 'http://static.datafoodconsortium.org/data/units.rdf#',
+        'dfc-pt' => 'http://static.datafoodconsortium.org/data/types.rdf#',
+        'dfc-p:hasUnit' => { '@type' => '@id' },
+        'dfc-p:hasType' => { '@type' => '@id' },
+        'dfc-b:references' => { '@type' => '@id' },
+        'dfc-b:offeredThroug' => { '@type' => '@id' },
+        'dfc-b:offeredTo' => { '@type' => '@id' },
         '@base' => "#{root_url}api/dfc_provider"
       }
     end
@@ -35,7 +43,7 @@ module DfcProvider
     end
 
     def type
-      'dfc:Person'
+      'dfc-b:Person'
     end
 
     def family_name; end

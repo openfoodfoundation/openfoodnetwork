@@ -8,12 +8,12 @@ module DfcProvider
 
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :references, key: 'dfc:references'
-    attribute :sku, key: 'dfc:sku'
-    attribute :stock_limitation, key: 'dfc:stockLimitation'
+    attribute :references, key: 'dfc-b:references'
+    attribute :sku, key: 'dfc-b:sku'
+    attribute :stock_limitation, key: 'dfc-b:stockLimitation'
     has_many :offered_through,
              serializer: DfcProvider::OfferSerializer,
-             key: 'dfc:offeredThrough'
+             key: 'dfc-b:offeredThrough'
 
     def id
       dfc_provider_routes.api_dfc_provider_enterprise_catalog_item_url(
@@ -24,7 +24,7 @@ module DfcProvider
     end
 
     def type
-      'dfc:CatalogItem'
+      'dfc-b:CatalogItem'
     end
 
     def references
