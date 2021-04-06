@@ -8,7 +8,7 @@
       "price-breakdown-placement" => "bottom",
       "price-breakdown-animation" => true}
     {{ variant.price_with_fees | localizeCurrency }}
-    .unit-price.variant-unit-price
+    .unit-price.variant-unit-price{"ng-show" => "variant.unit_price_price"}
       %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
       "question-mark-with-tooltip-append-to-body" => "true",
       "question-mark-with-tooltip-placement" => "top",
