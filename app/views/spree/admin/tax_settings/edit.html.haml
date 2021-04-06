@@ -10,10 +10,5 @@
     = check_box_tag 'preferences[products_require_tax_category]', '1',  Spree::Config[:products_require_tax_category]
     = label_tag nil, t(:products_require_tax_category)
 
-  .field.align-center{"data-hook" => "shipment_vat"}
-    = hidden_field_tag 'preferences[shipment_inc_vat]', '0'
-    = check_box_tag 'preferences[shipment_inc_vat]', '1',  Spree::Config[:shipment_inc_vat]
-    = label_tag nil, t(:shipment_inc_vat)
-
   .form-buttons{"data-hook" => "buttons"}
     = button t(:update), 'icon-refresh'
