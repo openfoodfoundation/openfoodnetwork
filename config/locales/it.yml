@@ -3363,6 +3363,7 @@ it:
           back_to_shipping_methods_list: "Torna alla lista dei metodi di spedizione"
         form:
           categories: "categorie"
+          tax_category: "Categoria d'imposta"
           zones: "Zone"
           both: "Entrambi Checkout e Back Office"
           back_end: "Solo Back office"
