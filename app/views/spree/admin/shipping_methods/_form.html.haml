@@ -43,8 +43,14 @@
       = f.hidden_field :tag_list, "ng-value" => "shippingMethod.tag_list"
       %tags-with-translation#something{ object: "shippingMethod", 'find-tags' => 'findTags(query)' }
 
-  
+
   = render partial: 'spree/admin/shared/calculator_fields', locals: { f: f }
+
+  %fieldset.tax_categories.no-border-bottom
+    %legend{align: "center"}= t('.tax_category')
+    = f.field_container :tax_categories do
+      = f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {}, :class => "select2 fullwidth"
+      = error_message_on :shipping_method, :tax_category_id
 
   %fieldset.categories.no-border-bottom
     %legend{align: "center"}= t('.categories')
@@ -56,7 +62,7 @@
           %br/
       = error_message_on :shipping_method, :shipping_category_id
 
-  
+
   %fieldset.no-border-bottom
     %legend{align: "center"}= t('.zones')
     = f.field_container :zones do

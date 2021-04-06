@@ -15,7 +15,7 @@ module Spree
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
     before_create :generate_shipment_number
-    after_save :ensure_correct_adjustment, :update_order
+    after_save :ensure_correct_adjustment, :update_adjustments
 
     attr_accessor :special_instructions
     alias_attribute :amount, :cost
@@ -104,6 +104,10 @@ module Spree
       save!
     end
 
+    def tax_category
+      selected_shipping_rate.try(:shipping_method).try(:tax_category)
+    end
+
     def refresh_rates
       return shipping_rates if shipped?
 
@@ -161,10 +165,13 @@ module Spree
     end
 
     def update_amounts
+      return unless fee_adjustment&.amount != cost
+
       update_columns(
         cost: fee_adjustment&.amount || 0.0,
         updated_at: Time.zone.now
       )
+      recalculate_adjustments
     end
 
     def manifest
@@ -276,8 +283,7 @@ module Spree
         reload # ensure adjustment is present on later saves
       end
 
-      update_amounts if fee_adjustment&.amount != cost
-      update_adjustment_included_tax if fee_adjustment
+      update_amounts
     end
 
     def adjustment_label
@@ -332,16 +338,14 @@ module Spree
       ShipmentMailer.shipped_email(id).deliver_later
     end
 
-    def update_adjustment_included_tax
-      if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
-        fee_adjustment.set_included_tax! Config.shipping_tax_rate
-      else
-        fee_adjustment.set_included_tax! 0
-      end
+    def update_adjustments
+      return unless cost_changed? && state != 'shipped'
+
+      recalculate_adjustments
     end
 
-    def update_order
-      order.reload.update!
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
     end
   end
 end

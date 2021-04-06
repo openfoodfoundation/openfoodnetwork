@@ -3526,6 +3526,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           back_to_shipping_methods_list: "Back To Shipping Methods List"
         form:
           categories: "Categories"
+          tax_category: "Tax Category"
           zones: "Zones"
           both: "Both Checkout and Back office"
           back_end: "Back office only"

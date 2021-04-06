@@ -23,6 +23,8 @@ module Spree
                                     class_name: 'Spree::Zone',
                                     foreign_key: 'shipping_method_id'
 
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category

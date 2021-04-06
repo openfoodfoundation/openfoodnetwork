@@ -25,6 +25,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           adjustable: order,
           label: "invalid adjustment",
           eligible: false,
+          order: order,
           amount: 0
         )
 

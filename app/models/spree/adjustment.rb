@@ -47,6 +47,8 @@ module Spree
     validates :label, presence: true
     validates :amount, numericality: true
 
+    after_create :update_adjustable_adjustment_total
+
     state_machine :state, initial: :open do
       event :close do
         transition from: :open, to: :closed
@@ -99,15 +101,17 @@ module Spree
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil, force: false)
-      return if immutable? && !force
-      return if originator.blank?
+      return amount if immutable? && !force
 
-      amount = originator.compute_amount(calculable || adjustable)
+      if originator.present?
+        amount = originator.compute_amount(calculable || adjustable)
+        update_columns(
+          amount: amount,
+          updated_at: Time.zone.now,
+        )
+      end
 
-      update_columns(
-        amount: amount,
-        updated_at: Time.zone.now,
-      )
+      amount
     end
 
     def currency
@@ -120,11 +124,6 @@ module Spree
 
     def immutable?
       state != "open"
-    end
-
-    def set_included_tax!(rate)
-      tax = amount - (amount / (1 + rate))
-      set_absolute_included_tax! tax
     end
 
     def set_absolute_included_tax!(tax)
@@ -148,6 +147,12 @@ module Spree
       return if originator_type.blank?
 
       originator_type.constantize.unscoped { super }
+    end
+
+    private
+
+    def update_adjustable_adjustment_total
+      Spree::ItemAdjustments.new(adjustable).update if adjustable
     end
   end
 end

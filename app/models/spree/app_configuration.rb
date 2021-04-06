@@ -58,7 +58,6 @@ module Spree
     preference :products_per_page, :integer, default: 12
     preference :redirect_https_to_http, :boolean, default: false
     preference :require_master_price, :boolean, default: true
-    preference :shipment_inc_vat, :boolean, default: false
     # Request instructions/info for shipping
     preference :shipping_instructions, :boolean, default: false
     # Displays variant full price or difference with product price.
@@ -118,7 +117,6 @@ module Spree
 
     # Tax Preferences
     preference :products_require_tax_category, :boolean, default: false
-    preference :shipping_tax_rate, :decimal, default: 0
 
     # Monitoring
     preference :last_job_queue_heartbeat_at, :string, default: nil

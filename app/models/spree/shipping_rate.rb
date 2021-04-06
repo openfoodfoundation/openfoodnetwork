@@ -24,13 +24,7 @@ module Spree
     delegate :name, to: :shipping_method
 
     def display_price
-      price = if Spree::Config[:shipment_inc_vat]
-                (1 + Spree::TaxRate.default) * cost
-              else
-                cost
-              end
-
-      Spree::Money.new(price, { currency: currency })
+      Spree::Money.new(cost, { currency: currency })
     end
 
     alias_method :display_cost, :display_price
