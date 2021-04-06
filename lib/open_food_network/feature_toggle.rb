@@ -40,29 +40,13 @@ module OpenFoodNetwork
     end
 
     def enabled?(feature_name, user)
-      if user.present?
-        feature = features.fetch(feature_name, NullFeature.new)
-        feature.enabled?(user)
-      else
-        true?(env_variable_value(feature_name))
-      end
+      feature = features.fetch(feature_name, DefaultFeature.new(feature_name))
+      feature.enabled?(user)
     end
 
     private
 
     attr_reader :features
-
-    def env_variable_value(feature_name)
-      ENV.fetch(env_variable_name(feature_name), nil)
-    end
-
-    def env_variable_name(feature_name)
-      "OFN_FEATURE_#{feature_name.to_s.upcase}"
-    end
-
-    def true?(value)
-      value.to_s.casecmp("true").zero?
-    end
   end
 
   class Feature
@@ -79,9 +63,29 @@ module OpenFoodNetwork
     attr_reader :block
   end
 
-  class NullFeature
+  class DefaultFeature
+    attr_reader :feature_name
+
+    def initialize(feature_name)
+      @feature_name = feature_name
+    end
+
     def enabled?(_user)
-      false
+      true?(env_variable_value(feature_name))
+    end
+
+    private
+
+    def env_variable_value(feature_name)
+      ENV.fetch(env_variable_name(feature_name), nil)
+    end
+
+    def env_variable_name(feature_name)
+      "OFN_FEATURE_#{feature_name.to_s.upcase}"
+    end
+
+    def true?(value)
+      value.to_s.casecmp("true").zero?
     end
   end
 end

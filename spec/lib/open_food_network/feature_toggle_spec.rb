@@ -46,11 +46,13 @@ module OpenFoodNetwork
         let(:users) { [user.email] }
 
         before do
-          FeatureToggle.enable(:foo) { |user| users.include?(user.email) }
+          FeatureToggle.enable(:foo) { |user| users.include?(user&.email) }
         end
 
         it "returns the block's return value" do
           expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
+          expect(FeatureToggle.enabled?(:foo, OpenStruct.new(email: "different"))).to eq(false)
+          expect(FeatureToggle.enabled?(:foo, nil)).to eq(false)
         end
       end
     end
