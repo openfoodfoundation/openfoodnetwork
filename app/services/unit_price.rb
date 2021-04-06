@@ -7,6 +7,8 @@ class UnitPrice
   end
 
   def denominator
+    return 1 if @variant.unit_value.zero?
+
     # catches any case where unit is not kg, lb, or L.
     return @variant.unit_value if @product&.variant_unit == "items"
 
@@ -21,6 +23,7 @@ class UnitPrice
   end
 
   def unit
+    return I18n.t("item") if @variant.unit_value.zero?
     return "lb" if WeightsAndMeasures.new(@variant).system == "imperial"
 
     case @product&.variant_unit

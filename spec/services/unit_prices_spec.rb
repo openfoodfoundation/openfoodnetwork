@@ -51,6 +51,14 @@ describe UnitPrice do
         expect(subject.unit).to eq("bunch")
       end
     end
+
+    context "unit value of 0" do
+      before { allow(variant).to receive(:unit_value) { 0 } }
+
+      it "returns 'item'" do
+        expect(subject.unit).to eq(I18n.t("item"))
+      end
+    end
   end
 
   describe "#denominator" do
@@ -99,6 +107,14 @@ describe UnitPrice do
         allow(product).to receive(:variant_unit) { "items" }
         variant.unit_value = 2
         expect(subject.denominator).to eq(2)
+      end
+    end
+
+    context "unit value of 0" do
+      before { allow(variant).to receive(:unit_value) { 0 } }
+
+      it "returns 1" do
+        expect(subject.denominator).to eq(1)
       end
     end
   end
