@@ -25,21 +25,10 @@ module OpenFoodNetwork
   #   - if feature? :new_shiny_feature, spree_current_user
   #     = render "new_shiny_feature"
   #
-  class FeatureToggle
+  module FeatureToggle
     def self.enabled?(feature_name, user = nil)
-      new.enabled?(feature_name, user)
-    end
+      features = Thread.current[:features] || {}
 
-    def self.enable(feature_name, &block)
-      Thread.current[:features] ||= {}
-      Thread.current[:features][feature_name] = Feature.new(block)
-    end
-
-    def initialize
-      @features = Thread.current[:features] || {}
-    end
-
-    def enabled?(feature_name, user)
       if Flipper[feature_name].exist?
         Flipper.enabled?(feature_name, user)
       else
@@ -48,9 +37,10 @@ module OpenFoodNetwork
       end
     end
 
-    private
-
-    attr_reader :features
+    def self.enable(feature_name, &block)
+      Thread.current[:features] ||= {}
+      Thread.current[:features][feature_name] = Feature.new(block)
+    end
   end
 
   class Feature
