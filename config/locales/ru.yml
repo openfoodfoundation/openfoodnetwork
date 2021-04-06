@@ -1767,39 +1767,40 @@ ru:
   shops_signup_help: Мы готовы помочь.
   shops_signup_help_text: Вам необходима лучшая отдача. Вам нужны новые покупатели и логистические партнеры. Вы должны рассказать свою историю через оптовые и розничные продажи, а также за столом.
   shops_signup_detail: Подробности.
-  orders: Заказы
-  orders_fees: Сборы...
-  orders_edit_title: Корзина
-  orders_edit_headline: Ваша корзина
-  orders_edit_time: Заказ доступен с
-  orders_edit_continue: Продолжить покупки
-  orders_edit_checkout: Оформить
+  orders: "Заказы"
+  orders_fees: "Сборы..."
+  orders_edit_title: "Корзина"
+  orders_edit_headline: "Ваша корзина"
+  orders_edit_time: "Заказ доступен с"
+  orders_edit_continue: "Продолжить покупки"
+  orders_edit_checkout: "Оформить"
   orders_form_empty_cart: "Очистить корзину"
-  orders_form_subtotal: Итого
-  orders_form_admin: Администрирование и Управление
-  orders_form_total: Всего
-  orders_oc_expired_headline: Оформление Заказов для этого Цикла Заказа закрыто
+  orders_form_update_cart: "Обновить"
+  orders_form_subtotal: "Итого"
+  orders_form_admin: "Администрирование и Управление"
+  orders_form_total: "Всего"
+  orders_oc_expired_headline: "Оформление Заказов для этого Цикла Заказа закрыто"
   orders_oc_expired_text: "Извините, оформление заказов для этого цикла заказов закрыты %{time} назад! Пожалуйста, свяжитесь с вашим центром напрямую, чтобы узнать, могут ли они принимать поздние заказы."
   orders_oc_expired_text_others_html: "Извините, оформление заказов для этого цикла заказов закрыты %{time} назад! Пожалуйста, свяжитесь с вашим центром напрямую, чтобы узнать, могут ли они принимать поздние заказы <strong>%{link}</strong>."
   orders_oc_expired_text_link: "или посмотрите другие циклы заказа, доступные в этом Центре"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Телефон:"
-  orders_show_title: Подтверждение заказа
-  orders_show_time: Заказ готов с
+  orders_show_title: "Подтверждение заказа"
+  orders_show_time: "Заказ готов с"
   orders_show_order_number: "Заказ #%{number}"
-  orders_show_cancelled: Отменён
-  orders_show_confirmed: Подтверждён
+  orders_show_cancelled: "Отменён"
+  orders_show_confirmed: "Подтверждён"
   orders_your_order_has_been_cancelled: "Ваш заказ был отменен"
   orders_could_not_cancel: "Извините, заказ не может быть отменен"
   orders_cannot_remove_the_final_item: "Не удается удалить последний элемент из заказа, вместо этого отмените заказ."
   orders_bought_items_notice:
-    one: Дополнительная позиция уже подтверждена для этого цикла заказа
+    one: "Дополнительная позиция уже подтверждена для этого цикла заказа"
     few: "%{count} дополнительных позиций уже подтверждено для этого цикла заказа"
     many: "%{count} дополнительных позиций уже подтверждено для этого цикла заказа"
     other: "%{count} дополнительных позиций уже подтверждено для этого цикла заказа"
-  orders_bought_edit_button: Редактировать подтвержденные позиции
+  orders_bought_edit_button: "Редактировать подтвержденные позиции"
   orders_bought_already_confirmed: "* уже подтверждено"
-  orders_confirm_cancel: Вы уверены, что хотите отменить этот заказ?
+  orders_confirm_cancel: "Вы уверены, что хотите отменить этот заказ?"
   order_processed_successfully: "Ваш заказ был успешно обработан"
   products_cart_distributor_choice: "Дистрибьютор для Вашего заказа:"
   products_cart_distributor_change: "Ваш дистрибьютор для этого заказа изменится на %{name}, если Вы добавите этот продукт в Вашу корзину."
@@ -3578,6 +3579,7 @@ ru:
         form:
           sku: "SKU"
           price: "Цена"
+          unit_price: "Цена за единицу"
           display_as: "Показать как"
           display_name: "Показать имя"
           display_as_placeholder: 'напр. 2 кг'
