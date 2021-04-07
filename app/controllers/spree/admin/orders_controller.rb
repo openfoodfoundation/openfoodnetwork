@@ -37,6 +37,11 @@ module Spree
       def update
         @order.recreate_all_fees!
 
+        unless @order.cart?
+          @order.create_tax_charge!
+          @order.update_order!
+        end
+
         unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty? && !params[:suppress_error_msg]
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))

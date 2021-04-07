@@ -58,12 +58,19 @@ describe Spree::Admin::OrdersController, type: :controller do
         expect(response.status).to eq 302
       end
 
-      it "updates distribution charges and redirects to order details page" do
-        expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
+      context "recalculating fees and taxes" do
+        before do
+          allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order }
+        end
 
-        spree_put :update, params
+        it "updates fees and taxes and redirects to order details page" do
+          expect(order).to receive(:recreate_all_fees!)
+          expect(order).to receive(:create_tax_charge!)
 
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+          spree_put :update, params
+
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
       end
 
       context "recalculating enterprise fees" do
