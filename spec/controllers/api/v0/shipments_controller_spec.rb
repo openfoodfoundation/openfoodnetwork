@@ -160,14 +160,14 @@ describe Api::V0::ShipmentsController, type: :controller do
           expect(order.cancel).to eq true
         end
 
-        it "doesn't adjusts stock when adding a variant" do
+        it "doesn't adjust stock when adding a variant" do
           expect {
             api_put :add, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
           }.to_not change { existing_variant.reload.on_hand }
         end
 
-        it "doesn't adjusts stock when removing a variant" do
+        it "doesn't adjust stock when removing a variant" do
           expect {
             api_put :remove, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
