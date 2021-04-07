@@ -433,7 +433,7 @@ module Spree
     end
 
     def update_units
-      return unless variant_unit_changed?
+      return unless saved_change_to_variant_unit?
 
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
@@ -449,7 +449,7 @@ module Spree
     end
 
     def remove_previous_primary_taxon_from_taxons
-      return unless primary_taxon_id_changed? && primary_taxon_id_was
+      return unless saved_change_to_primary_taxon_id? && primary_taxon_id_was
 
       taxons.destroy(primary_taxon_id_was)
     end
@@ -465,7 +465,7 @@ module Spree
 
     # Spree creates a permalink already but our implementation fixes an edge case.
     def sanitize_permalink
-      return unless permalink.blank? || permalink_changed?
+      return unless permalink.blank? || saved_change_to_permalink?
 
       requested = permalink.presence || permalink_was.presence || name.presence || 'product'
       self.permalink = create_unique_permalink(requested.parameterize)
