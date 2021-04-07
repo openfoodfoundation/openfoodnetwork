@@ -289,12 +289,6 @@ module Spree
       }.inject(:or)
     end
 
-    def empty_option_values?
-      options.empty? || options.any? do |opt|
-        opt.option_type.option_values.empty?
-      end
-    end
-
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
 
