@@ -189,4 +189,11 @@ describe Spree::User do
       expect { user.destroy }.to raise_exception(Spree::User::DestroyWithOrdersError)
     end
   end
+
+  describe "#flipper_id" do
+    it "provides a unique id" do
+      user = Spree::User.new(id: 42)
+      expect(user.flipper_id).to eq "Spree::User;42"
+    end
+  end
 end
