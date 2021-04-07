@@ -98,6 +98,40 @@ describe Spree::Admin::OrdersController, type: :controller do
           expect(order.reload.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
           expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 3
         end
+
+        context "if the associated enterprise fee record is soft-deleted" do
+          it "removes adjustments for deleted enterprise fees" do
+            fee_amount = enterprise_fee.calculator.preferred_amount
+
+            expect(order.total).to eq order.item_total + (fee_amount * 2)
+            expect(order.adjustment_total).to eq fee_amount * 2
+
+            enterprise_fee.destroy
+
+            spree_put :update, { id: order.number }
+
+            expect(order.reload.total).to eq order.item_total
+            expect(order.adjustment_total).to eq 0
+          end
+        end
+
+        context "if the associated enterprise fee record is hard-deleted" do
+          # Note: Enterprise fees are soft-deleted now, but we still have hard-deleted
+          # enterprise fees referenced as the originator of some adjustments (in production).
+          it "removes adjustments for deleted enterprise fees" do
+            fee_amount = enterprise_fee.calculator.preferred_amount
+
+            expect(order.total).to eq order.item_total + (fee_amount * 2)
+            expect(order.adjustment_total).to eq fee_amount * 2
+
+            enterprise_fee.really_destroy!
+
+            spree_put :update, { id: order.number }
+
+            expect(order.reload.total).to eq order.item_total
+            expect(order.adjustment_total).to eq 0
+          end
+        end
       end
     end
 
