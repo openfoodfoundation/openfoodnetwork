@@ -2,6 +2,8 @@
 
 module Spree
   class ReturnAuthorization < ActiveRecord::Base
+    acts_as_paranoid
+
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
 
     has_many :inventory_units, inverse_of: :return_authorization
