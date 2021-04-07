@@ -366,6 +366,8 @@ en:
     rename: "Rename"
 
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
     begins_at: Begins At
     begins_on: Begins On
