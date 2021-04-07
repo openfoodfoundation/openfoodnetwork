@@ -46,7 +46,7 @@ describe "checking out an order that initially fails", type: :request do
     end
 
     it "clears shipments and payments before rendering the checkout" do
-      put update_checkout_path, params
+      put update_checkout_path, params: params
 
       # Checking out a BogusGateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
@@ -62,7 +62,7 @@ describe "checking out an order that initially fails", type: :request do
 
       # Use a check payment method, which should work
       params[:order][:payments_attributes][0][:payment_method_id] = check_payment_method.id
-      put update_checkout_path, params
+      put update_checkout_path, params: params
 
       expect(response.status).to be 200
       order.reload
