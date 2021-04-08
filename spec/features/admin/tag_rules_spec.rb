@@ -66,17 +66,7 @@ feature 'Tag Rules', js: true do
         expect(page).to have_content "not visible"
       end
 
-      # New DiscountOrder Rule
-      # click_button '+ Add A New Rule'
-      # select2_select 'Apply a discount to orders', from: 'rule_type_selector'
-      # click_button "Add Rule"
-      # fill_in "enterprise_tag_rules_attributes_1_calculator_attributes_preferred_flat_percent", with: 22
-
       click_button 'Update'
-
-      # tag_rule = TagRule::DiscountOrder.last
-      # expect(tag_rule.preferred_customer_tags).to eq "volunteer"
-      # expect(tag_rule.calculator.preferred_flat_percent).to eq -22
 
       tag_rule = TagRule::FilterShippingMethods.last
       expect(tag_rule.preferred_customer_tags).to eq "volunteer"
@@ -111,7 +101,6 @@ feature 'Tag Rules', js: true do
     let!(:fpm_tag_rule) { create(:filter_payment_methods_tag_rule, enterprise: enterprise, preferred_matched_payment_methods_visibility: "hidden", preferred_customer_tags: "trusted", preferred_payment_method_tags: "trusted" ) }
     let!(:foc_tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise, preferred_matched_order_cycles_visibility: "visible", preferred_customer_tags: "wholesale", preferred_exchange_tags: "wholesale" ) }
     let!(:fsm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, preferred_matched_shipping_methods_visibility: "hidden", preferred_customer_tags: "local", preferred_shipping_method_tags: "local" ) }
-    # let!(:do_tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
 
     before do
       visit_tag_rules
@@ -171,12 +160,6 @@ feature 'Tag Rules', js: true do
       # Moving the Shipping Methods to top priority
       find(".customer_tag#tg_4 .header", ).drag_to find(".customer_tag#tg_1 .header")
 
-      # # DiscountOrder rule
-      # within "#tr_2" do
-      #   expect(page).to have_field "enterprise_tag_rules_attributes_2_calculator_attributes_preferred_flat_percent", with: '0'
-      #   fill_in "enterprise_tag_rules_attributes_2_calculator_attributes_preferred_flat_percent", with: 45
-      # end
-
       click_button 'Update'
 
       # DEFAULT FilterShippingMethods rule
@@ -207,10 +190,6 @@ feature 'Tag Rules', js: true do
       expect(foc_tag_rule.preferred_customer_tags).to eq "volunteer"
       expect(foc_tag_rule.preferred_exchange_tags).to eq "volunteers-only3"
       expect(foc_tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
-
-      # DiscountOrder rule
-      # expect(do_tag_rule.preferred_customer_tags).to eq "member,volunteer"
-      # expect(do_tag_rule.calculator.preferred_flat_percent).to eq -45
     end
   end
 

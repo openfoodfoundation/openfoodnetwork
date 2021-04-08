@@ -25,11 +25,11 @@ describe "TagRulesCtrl", ->
 
   describe "adding a new tag group", ->
     beforeEach ->
-      scope.addNewRuleTo(scope.tagGroups[0], "DiscountOrder")
+      scope.addNewRuleTo(scope.tagGroups[0], "FilterOrderCycles")
 
     it "adds a new rule of the specified type to the rules array for the tagGroup", ->
       expect(scope.tagGroups[0].rules.length).toEqual 3
-      expect(scope.tagGroups[0].rules[2].type).toEqual "TagRule::DiscountOrder"
+      expect(scope.tagGroups[0].rules[2].type).toEqual "TagRule::FilterOrderCycles"
 
     it "updates tagGroup start indices", ->
       expect(scope.tagGroups[0].startIndex).toEqual 1
