@@ -209,7 +209,7 @@ module Spree
     def unit_price_price_and_unit
       unit_price = UnitPrice.new(variant)
       Spree::Money.new(price_with_adjustments / unit_price.denominator).to_html +
-        " / " + unit_price.unit
+        "&nbsp;/&nbsp;".html_safe + unit_price.unit
     end
 
     def scoper
