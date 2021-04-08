@@ -106,13 +106,15 @@ class CartService
   end
 
   def read_variants_hash(data)
-    (data[:variants] || []).map do |variant_id, quantity|
-      if quantity.is_a?(Hash)
-        { variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity] }
+    variants_array = []
+    (data[:variants] || []).each do |variant_id, quantity|
+      if quantity.is_a?(ActionController::Parameters)
+        variants_array.push({ variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity] })
       else
-        { variant_id: variant_id, quantity: quantity }
+        variants_array.push({ variant_id: variant_id, quantity: quantity })
       end
     end
+    variants_array
   end
 
   def cart_remove(variant_id)
