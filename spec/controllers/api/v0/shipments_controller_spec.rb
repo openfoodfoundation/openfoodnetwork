@@ -65,7 +65,7 @@ describe Api::V0::ShipmentsController, type: :controller do
 
         spree_post :create, params
 
-        expect(json_response["id"]). to eq(original_shipment_id)
+        expect(json_response["id"]).to eq(original_shipment_id)
         expect_valid_response
         expect(order.shipment.reload.inventory_units.size).to eq 2
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
@@ -110,28 +110,69 @@ describe Api::V0::ShipmentsController, type: :controller do
       expect(response.status).to eq(422)
     end
 
-    context 'for completed shipments' do
+    describe "#add and #remove" do
       let(:order) { create :completed_order_with_totals }
+      let(:line_item) { order.line_items.first }
+      let(:existing_variant) { line_item.variant }
+      let(:new_variant) { create(:variant) }
+      let(:params) {
+        {
+          quantity: 2,
+          order_id: order.to_param,
+          id: order.shipments.first.to_param
+        }
+      }
 
-      it 'adds a variant to a shipment' do
-        api_put :add, variant_id: variant.to_param,
-                      quantity: 2,
-                      order_id: order.to_param,
-                      id: order.shipments.first.to_param
-
-        expect(response.status).to eq(200)
-        expect(inventory_units_for(variant).size).to eq 2
+      before do
+        line_item.update!(quantity: 3)
       end
 
-      it 'removes a variant from a shipment' do
-        order.contents.add(variant, 2)
-        api_put :remove, variant_id: variant.to_param,
-                         quantity: 1,
-                         order_id: order.to_param,
-                         id: order.shipments.first.to_param
+      context 'for completed shipments' do
+        it 'adds a variant to a shipment' do
+          expect {
+            api_put :add, params.merge(variant_id: new_variant.to_param)
+            expect(response.status).to eq(200)
+          }.to change { inventory_units_for(new_variant).size }.by(2)
+        end
 
-        expect(response.status).to eq(200)
-        expect(inventory_units_for(variant).size).to eq(1)
+        it 'adjusts stock when adding a variant' do
+          expect {
+            api_put :add, params.merge(variant_id: new_variant.to_param)
+          }.to change { new_variant.reload.on_hand }.by(-2)
+        end
+
+        it 'removes a variant from a shipment' do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(200)
+          }.to change { inventory_units_for(existing_variant).size }.by(-2)
+        end
+
+        it 'adjusts stock when removing a variant' do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+          }.to change { existing_variant.reload.on_hand }.by(2)
+        end
+      end
+
+      context "for canceled orders" do
+        before do
+          expect(order.cancel).to eq true
+        end
+
+        it "doesn't adjust stock when adding a variant" do
+          expect {
+            api_put :add, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(422)
+          }.to_not change { existing_variant.reload.on_hand }
+        end
+
+        it "doesn't adjust stock when removing a variant" do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param)
+            expect(response.status).to eq(422)
+          }.to_not change { existing_variant.reload.on_hand }
+        end
       end
     end
 
