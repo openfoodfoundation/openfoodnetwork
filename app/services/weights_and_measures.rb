@@ -14,7 +14,7 @@ class WeightsAndMeasures
   end
 
   def system
-    scales = scales_for_variant_unit
+    return "custom" unless scales = scales_for_variant_unit
     return "custom" unless product_scale = @variant.product.variant_unit_scale
 
     scales[product_scale.to_f]['system']

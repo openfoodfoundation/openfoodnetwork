@@ -37,9 +37,15 @@ describe WeightsAndMeasures do
     end
 
     context "items" do
-      it "when scale is for items" do
+      it "when variant unit is items" do
         allow(product).to receive(:variant_unit) { "items" }
         allow(product).to receive(:variant_unit_scale) { nil }
+        expect(subject.system).to eq("custom")
+      end
+
+      it "when variant unit is items, even if the scale is present" do
+        allow(product).to receive(:variant_unit) { "items" }
+        allow(product).to receive(:variant_unit_scale) { 1.0 }
         expect(subject.system).to eq("custom")
       end
     end
