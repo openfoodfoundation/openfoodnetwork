@@ -5,7 +5,7 @@
 module DfcProvider
   module RouteHelper
     def host
-      Rails.application.routes.default_url_options[:host]
+      Rails.application.config.action_mailer.default_url_options[:host]
     end
 
     def dfc_provider_routes
