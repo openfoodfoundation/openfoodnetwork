@@ -240,6 +240,7 @@ describe Api::V0::ShipmentsController, type: :controller do
           before do
             allow(Spree::Order).to receive(:find_by!) { fee_order }
             allow(controller).to receive(:find_and_update_shipment) { }
+            allow(controller).to receive(:refuse_changing_cancelled_orders) { }
             allow(fee_order).to receive(:contents) { contents }
             allow(contents).to receive(:add) { }
             allow(fee_order).to receive(:recreate_all_fees!)
