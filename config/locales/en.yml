@@ -3097,7 +3097,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     back_to_adjustments_list: "Back to adjustments"
     back_to_users_list: "Back to users"
     back_to_zones_list: "Back to zones"
-    bugherd_api_key: "Bugherd API key"
     card_code: "Card code"
     card_number: "Card number"
     category: "Category"

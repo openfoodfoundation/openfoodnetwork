@@ -122,7 +122,6 @@ module Spree
     preference :last_job_queue_heartbeat_at, :string, default: nil
 
     # External services
-    preference :bugherd_api_key, :string, default: nil
     preference :matomo_url, :string, default: nil
     preference :matomo_site_id, :string, default: nil
     preference :matomo_tag_manager_url, :string, default: nil
