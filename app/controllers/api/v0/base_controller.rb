@@ -27,8 +27,6 @@ module Api
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-      helper Spree::Api::ApiHelpers
-
       ssl_allowed
 
       # Include these because we inherit from ActionController::Metal

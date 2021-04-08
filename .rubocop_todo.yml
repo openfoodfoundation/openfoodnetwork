@@ -1012,7 +1012,6 @@ Style/FrozenStringLiteralComment:
     - 'app/helpers/spree/admin/payments_helper.rb'
     - 'app/helpers/spree/admin/taxons_helper.rb'
     - 'app/helpers/spree/admin/zones_helper.rb'
-    - 'app/helpers/spree/api/api_helpers.rb'
     - 'app/helpers/spree/orders_helper.rb'
     - 'app/helpers/spree/reports_helper.rb'
     - 'app/helpers/spree_currency_helper.rb'
