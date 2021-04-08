@@ -230,6 +230,27 @@ describe Api::V0::ShipmentsController, type: :controller do
           expect(inventory_units_for(variant).size).to eq 2
           expect(order.reload.line_items.last.price).to eq(variant_override.price)
         end
+
+        context "when line items have fees" do
+          let(:fee_order) {
+            instance_double(Spree::Order, number: "123", distributor: variant.product.supplier)
+          }
+          let(:contents) { instance_double(Spree::OrderContents) }
+
+          before do
+            allow(Spree::Order).to receive(:find_by!) { fee_order }
+            allow(controller).to receive(:find_and_update_shipment) { }
+            allow(fee_order).to receive(:contents) { contents }
+            allow(contents).to receive(:add) { }
+            allow(fee_order).to receive(:recreate_all_fees!)
+          end
+
+          it "recalculates fees for the line item" do
+            params[:order_id] = fee_order.number
+            spree_put :add, params
+            expect(fee_order).to have_received(:recreate_all_fees!)
+          end
+        end
       end
 
       context '#remove' do

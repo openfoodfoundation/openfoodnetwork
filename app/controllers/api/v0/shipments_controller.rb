@@ -69,6 +69,7 @@ module Api
         quantity = params[:quantity].to_i
 
         @order.contents.add(variant, quantity, nil, @shipment)
+        @order.recreate_all_fees!
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
@@ -78,6 +79,7 @@ module Api
         quantity = params[:quantity].to_i
 
         @order.contents.remove(variant, quantity, @shipment)
+        @order.recreate_all_fees!
         @shipment.reload if @shipment.persisted?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
