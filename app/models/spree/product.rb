@@ -465,7 +465,7 @@ module Spree
 
     # Spree creates a permalink already but our implementation fixes an edge case.
     def sanitize_permalink
-      return unless permalink.blank? || saved_change_to_permalink?
+      return unless permalink.blank? || saved_change_to_permalink? || permalink_changed?
 
       requested = permalink.presence || permalink_was.presence || name.presence || 'product'
       self.permalink = create_unique_permalink(requested.parameterize)
