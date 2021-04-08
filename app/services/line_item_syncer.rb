@@ -63,7 +63,7 @@ class LineItemSyncer
   end
 
   def update_quantity(line_item, sli)
-    if line_item.quantity == sli.quantity_was
+    if line_item.quantity == sli.quantity_before_last_save
       return line_item.update(quantity: sli.quantity,
                               skip_stock_check: skip_stock_check?(line_item.order))
     end

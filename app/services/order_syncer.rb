@@ -27,14 +27,14 @@ class OrderSyncer
   delegate :shop_id, :customer, :customer_id, to: :subscription
   delegate :shipping_method, :shipping_method_id,
            :payment_method, :payment_method_id, to: :subscription
-  delegate :shipping_method_id_changed?, :shipping_method_id_was, to: :subscription
-  delegate :payment_method_id_changed?, :payment_method_id_was, to: :subscription
+  delegate :saved_change_to_shipping_method_id?, :shipping_method_id_before_last_save, to: :subscription
+  delegate :saved_change_to_payment_method_id?, :payment_method_id_before_last_save, to: :subscription
 
   def update_associations_for(order)
     update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
-    update_shipment_for(order) if shipping_method_id_changed?
+    update_shipment_for(order) if saved_change_to_shipping_method_id?
     update_ship_address_for(order)
-    update_payment_for(order) if payment_method_id_changed?
+    update_payment_for(order) if saved_change_to_payment_method_id?
   end
 
   def orders_in_order_cycles_not_closed
@@ -54,7 +54,7 @@ class OrderSyncer
 
   def update_payment_for(order)
     payment = order.payments.
-      with_state('checkout').where(payment_method_id: payment_method_id_was).last
+      with_state('checkout').where(payment_method_id: payment_method_id_before_last_save).last
     if payment
       payment.andand.void_transaction!
       order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
@@ -68,7 +68,7 @@ class OrderSyncer
   def update_shipment_for(order)
     return if pending_shipment_with?(order, shipping_method_id) # No need to do anything.
 
-    if pending_shipment_with?(order, shipping_method_id_was)
+    if pending_shipment_with?(order, shipping_method_id_before_last_save)
       order.select_shipping_method(shipping_method_id)
     else
       order_update_issues.add(order, I18n.t('admin.shipping_method'))
@@ -94,7 +94,7 @@ class OrderSyncer
 
   def addresses_match?(order_address, subscription_address)
     relevant_address_attrs.all? do |attr|
-      order_address[attr] == subscription_address.public_send("#{attr}_was") ||
+      order_address[attr] == subscription_address.public_send("#{attr}_before_last_save") ||
         order_address[attr] == subscription_address[attr]
     end
   end

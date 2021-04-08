@@ -32,8 +32,8 @@ module Spree
     validates_with Stock::AvailabilityValidator
 
     before_save :update_inventory
-    before_save :calculate_final_weight_volume, if: :quantity_changed?,
-                                                unless: :final_weight_volume_changed?
+    before_save :calculate_final_weight_volume, if: :saved_change_to_quantity?,
+                                                unless: :saved_change_to_final_weight_volume?
     after_save :update_order
     after_save :update_units
     before_destroy :update_inventory_before_destroy
@@ -247,8 +247,8 @@ module Spree
     end
 
     def calculate_final_weight_volume
-      if final_weight_volume.present? && quantity_was > 0
-        self.final_weight_volume = final_weight_volume * quantity / quantity_was
+      if final_weight_volume.present? && quantity_before_last_save > 0
+        self.final_weight_volume = final_weight_volume * quantity / quantity_before_last_save
       elsif variant.andand.unit_value.present?
         self.final_weight_volume = variant.andand.unit_value * quantity
       end

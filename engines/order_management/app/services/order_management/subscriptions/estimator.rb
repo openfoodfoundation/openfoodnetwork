@@ -27,7 +27,7 @@ module OrderManagement
       def assign_price_estimates
         subscription_line_items.each do |item|
           item.price_estimate =
-            price_estimate_for(item.variant, item.price_estimate_was)
+            price_estimate_for(item.variant, item.price_estimate_before_last_save)
         end
       end
 

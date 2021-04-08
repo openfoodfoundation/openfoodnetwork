@@ -339,7 +339,7 @@ module Spree
     end
 
     def update_adjustments
-      return unless cost_changed? && state != 'shipped'
+      return unless saved_change_to_cost? && state != 'shipped'
 
       recalculate_adjustments
     end

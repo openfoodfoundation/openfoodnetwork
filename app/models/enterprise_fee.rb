@@ -50,9 +50,9 @@ class EnterpriseFee < ActiveRecord::Base
     # Setting an explicit tax_category removes any inheritance behaviour
     # In the absence of any current changes to tax_category, setting
     # inherits_tax_category to true will clear the tax_category
-    if tax_category_id_changed?
+    if saved_change_to_tax_category_id?
       self.inherits_tax_category = false if tax_category.present?
-    elsif inherits_tax_category_changed?
+    elsif saved_change_to_inherits_tax_category?
       self.tax_category_id = nil if inherits_tax_category?
     end
     true

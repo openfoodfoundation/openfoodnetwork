@@ -95,7 +95,7 @@ module Spree
     # This is a Devise Confirmable callback that runs on email confirmation
     # It sends a welcome email after the user email is confirmed
     def after_confirmation
-      return unless confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      return unless confirmed? && unconfirmed_email.nil? && !saved_change_to_unconfirmed_email?
 
       send_signup_confirmation
     end

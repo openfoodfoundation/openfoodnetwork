@@ -78,7 +78,7 @@ module Spree
 
     validates :customer, presence: true, if: :require_customer?
     validate :products_available_from_new_distribution, if: lambda {
-      distributor_id_changed? || order_cycle_id_changed?
+      saved_change_to_distributor_id? || saved_change_to_order_cycle_id?
     }
     validate :disallow_guest_order
 
@@ -489,7 +489,7 @@ module Spree
       state = "#{name}_state"
       return unless persisted?
 
-      old_state = __send__("#{state}_was")
+      old_state = __send__("#{state}_before_last_save")
       state_changes.create(
         previous_state: old_state,
         next_state: __send__(state),

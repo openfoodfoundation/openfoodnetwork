@@ -81,8 +81,8 @@ class EnterpriseGroup < ActiveRecord::Base
   private
 
   def sanitize_permalink
-    if permalink.blank? || permalink_changed?
-      requested = permalink.presence || permalink_was.presence || name.presence || 'group'
+    if permalink.blank? || permalink_changed? || saved_change_to_permalink?
+      requested = permalink.presence || permalink_before_last_save.presence || name.presence || 'group'
       self.permalink = create_unique_permalink(requested.parameterize)
     end
   end

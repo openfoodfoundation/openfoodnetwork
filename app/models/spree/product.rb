@@ -232,7 +232,7 @@ module Spree
     end
 
     def to_param
-      permalink.present? ? permalink : (permalink_was || name.to_s.to_url)
+      permalink.present? ? permalink : (permalink_before_last_save || name.to_s.to_url)
     end
 
     # the master variant is not a member of the variants array
@@ -451,7 +451,7 @@ module Spree
     def remove_previous_primary_taxon_from_taxons
       return unless saved_change_to_primary_taxon_id? && primary_taxon_id_before_last_save
 
-      taxons.destroy(primary_taxon_id_was)
+      taxons.destroy(primary_taxon_id_before_last_save)
     end
 
     def ensure_standard_variant
@@ -467,7 +467,7 @@ module Spree
     def sanitize_permalink
       return unless permalink.blank? || saved_change_to_permalink? || permalink_changed?
 
-      requested = permalink.presence || permalink_was.presence || name.presence || 'product'
+      requested = permalink.presence || permalink_before_last_save.presence || name.presence || 'product'
       self.permalink = create_unique_permalink(requested.parameterize)
     end
   end

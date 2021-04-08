@@ -96,12 +96,12 @@ class Enterprise < ActiveRecord::Base
   validates :owner, presence: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
-  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validate :enforce_ownership_limit, if: lambda { saved_change_to_owner_id? && !owner_id.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
-  after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+  after_validation :ensure_owner_is_manager, if: lambda { saved_change_to_owner_id? && !owner_id.nil? }
 
   after_touch :touch_distributors
   after_create :set_default_contact
@@ -466,7 +466,7 @@ class Enterprise < ActiveRecord::Base
 
   def restore_permalink
     # If the permalink has errors, reset it to it's original value, so we can update the form
-    self.permalink = permalink_was if permalink_changed? && errors[:permalink].present?
+    self.permalink = permalink_before_last_save if saved_change_to_permalink? && errors[:permalink].present?
   end
 
   def initialize_permalink
