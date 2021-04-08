@@ -1273,7 +1273,7 @@ describe Spree::Order do
     end
   end
 
-  describe '#charge_shipping_and_payment_fees!' do
+  describe '#set_payment_amount!' do
     let(:order) do
       shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
       build(:order, shipments: [shipment] )
@@ -1286,8 +1286,8 @@ describe Spree::Order do
         allow(order).to receive(:payment_required?) { true }
       end
 
-      it 'calls charge_shipping_and_payment_fees! and updates totals' do
-        expect(order).to receive(:charge_shipping_and_payment_fees!)
+      it 'calls #set_payment_amount! and updates totals' do
+        expect(order).to receive(:set_payment_amount!)
         expect(order).to receive(:update_totals).at_least(:once)
 
         order.next

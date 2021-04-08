@@ -788,7 +788,7 @@ module Spree
     # before the shipping method is set. This results in the customer not being
     # charged for their order's shipping. To fix this, we refresh the payment
     # amount here.
-    def charge_shipping_and_payment_fees!
+    def set_payment_amount!
       update_totals
       return unless pending_payments.any?
 
