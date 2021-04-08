@@ -185,13 +185,13 @@ describe Admin::EnterprisesController, type: :controller do
 
       describe "tag rules" do
         let(:enterprise) { create(:distributor_enterprise) }
-        let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
+        let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise) }
 
         before do
           controller_login_as_enterprise_user [enterprise]
         end
 
-        context "discount order rules" do
+        context "with filter_order_cycles rule" do
           it "updates the existing rule with new attributes" do
             spree_put :update,
                       id: enterprise,
@@ -199,16 +199,13 @@ describe Admin::EnterprisesController, type: :controller do
                         tag_rules_attributes: {
                           '0' => {
                             id: tag_rule.id,
-                            type: "TagRule::DiscountOrder",
-                            preferred_customer_tags: "some,new,tags",
-                            calculator_type: "Calculator::FlatPercentItemTotal",
-                            calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
+                            type: "TagRule::FilterOrderCycles",
+                            preferred_exchange_tags: "some,new,tags"
                           }
                         }
                       }
             tag_rule.reload
-            expect(tag_rule.preferred_customer_tags).to eq "some,new,tags"
-            expect(tag_rule.calculator.preferred_flat_percent).to eq 15
+            expect(tag_rule.preferred_exchange_tags).to eq "some,new,tags"
           end
 
           it "creates new rules with new attributes" do
@@ -218,17 +215,14 @@ describe Admin::EnterprisesController, type: :controller do
                         tag_rules_attributes: {
                           '0' => {
                             id: "",
-                            type: "TagRule::DiscountOrder",
-                            preferred_customer_tags: "tags,are,awesome",
-                            calculator_type: "Calculator::FlatPercentItemTotal",
-                            calculator_attributes: { id: "", preferred_flat_percent: "24" }
+                            type: "TagRule::FilterOrderCycles",
+                            preferred_exchange_tags: "tags,are,awesome"
                           }
                         }
                       }
             expect(tag_rule.reload).to be
-            new_tag_rule = TagRule::DiscountOrder.last
-            expect(new_tag_rule.preferred_customer_tags).to eq "tags,are,awesome"
-            expect(new_tag_rule.calculator.preferred_flat_percent).to eq 24
+            new_tag_rule = TagRule::FilterOrderCycles.last
+            expect(new_tag_rule.preferred_exchange_tags).to eq "tags,are,awesome"
           end
         end
       end

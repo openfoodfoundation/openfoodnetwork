@@ -16,11 +16,4 @@ FactoryBot.define do
   factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
     enterprise factory: :distributor_enterprise
   end
-
-  factory :tag_rule, class: TagRule::DiscountOrder do
-    enterprise { FactoryBot.create :distributor_enterprise }
-    before(:create) do |tr|
-      tr.calculator = Calculator::FlatPercentItemTotal.new(calculable: tr)
-    end
-  end
 end
