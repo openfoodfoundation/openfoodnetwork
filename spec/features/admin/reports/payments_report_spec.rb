@@ -56,7 +56,7 @@ describe "Payments Reports" do
         order.ship_total.to_f + other_order.ship_total.to_f,
         order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
         order.total.to_f + other_order.total.to_f
-      ].join(" "))
+      ].compact.join(" "))
     end
   end
 
