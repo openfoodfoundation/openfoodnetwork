@@ -119,7 +119,21 @@ es:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  home_page_alert_html: "HTML de alerta de página de inicio"
+  hub_signup_case_studies_html: "HTML casos de estudio de registro de hub"
+  hub_signup_detail_html: "HTML detalle de registro de hub"
+  hub_signup_pricing_table_html: "HTML tabla de precios de registro de hub"
+  group_signup_case_studies_html: "HTML casos de estudio de registro de grupo"
+  group_signup_detail_html: "HTML detalle de registro de grupo"
+  group_signup_pricing_table_html: "HTML tabla de precios de registro de grupo"
   item_description: "Descripción del artículo"
+  menu_1_icon_name: "Nombre del icono del menú 1"
+  menu_2_icon_name: "Nombre del icono del menú 2"
+  menu_3_icon_name: "Nombre del icono del menú 3"
+  menu_4_icon_name: "Nombre del icono del menú 4"
+  menu_5_icon_name: "Nombre del icono del menú 5"
+  menu_6_icon_name: "Nombre del icono del menú 6"
+  menu_7_icon_name: "Nombre del icono del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
@@ -130,6 +144,9 @@ es:
   open_street_map_default_longitude: "Longitud predeterminada de Open Street Map"
   open_street_map_provider_name: "Nombre del proveedor de Open Street Map"
   open_street_map_provider_options: "Opciones de proveedor de Open Street Map"
+  producer_signup_case_studies_html: "HTML casos de estudio de registro de productoras"
+  producer_signup_detail_html: "HTML detalle de registro de productora"
+  producer_signup_pricing_table_html: "HTML de tabla de precios de registro de productora"
   producers_social: "Razón social de la productora"
   resume_order: "Reanudar pedido"
   sku: "SKU"
@@ -315,6 +332,8 @@ es:
     destroy: "Eliminar"
     rename: "Renombrar"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
     begins_on: Comienza en
     bill_address: "Dirección de factura"
@@ -1749,39 +1768,40 @@ es:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: Pedidos
-  orders_fees: Comisiones...
-  orders_edit_title: Carrito de compras
-  orders_edit_headline: Su carrito de compras
-  orders_edit_time: Pedido listo para
-  orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Validar
+  orders: "Pedidos"
+  orders_fees: "Comisiones..."
+  orders_edit_title: "Carrito de compras"
+  orders_edit_headline: "Su carrito de compras"
+  orders_edit_time: "Pedido listo para"
+  orders_edit_continue: "Continuar comprando"
+  orders_edit_checkout: "Validar"
   orders_form_empty_cart: "Vaciar carrito"
-  orders_form_subtotal: Subtotal de productos
-  orders_form_admin: Administrar y Gestionar
-  orders_form_total: Total
-  orders_oc_expired_headline: Los pedidos están cerrados para este ciclo
+  orders_form_update_cart: "Actualizar"
+  orders_form_subtotal: "Subtotal de productos"
+  orders_form_admin: "Administrar y Gestionar"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos."
   orders_oc_expired_text_others_html: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos <strong>%{link}</strong>."
   orders_oc_expired_text_link: "o visitar otros ciclos de pedidos disponibles en este grupo de consumo"
   orders_oc_expired_email: "Correo electrónico:"
   orders_oc_expired_phone: "Teléfono:"
-  orders_show_title: Confirmación del pedido
-  orders_show_time: Pedido listo en
+  orders_show_title: "Confirmación del pedido"
+  orders_show_time: "Pedido listo en"
   orders_show_order_number: "Pedido #%{number}"
-  orders_show_cancelled: Cancelado
-  orders_show_confirmed: Confirmado
+  orders_show_cancelled: "Cancelado"
+  orders_show_confirmed: "Confirmado"
   orders_your_order_has_been_cancelled: "Su pedido ha sido cancelado"
   orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
   orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
   orders_bought_items_notice:
-    one: Ya se ha confirmado un artículo adicional para este ciclo de pedido
+    one: "Ya se ha confirmado un artículo adicional para este ciclo de pedido"
     few: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     many: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     other: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
-  orders_bought_edit_button: Editar artículos confirmados
+  orders_bought_edit_button: "Editar artículos confirmados"
   orders_bought_already_confirmed: "* ya confirmados"
-  orders_confirm_cancel: Seguro que desea cancelar este pedido?
+  orders_confirm_cancel: "Seguro que desea cancelar este pedido?"
   order_processed_successfully: "Su pedido ha sido procesado con éxito."
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
@@ -3345,6 +3365,7 @@ es:
           back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         form:
           categories: "Categorías"
+          tax_category: "Categoría de impuestos"
           zones: "Zonas"
           both: "Tanto en Hacer pedido como en Administración"
           back_end: "Solo en Administración"
@@ -3509,6 +3530,7 @@ es:
         form:
           sku: "SKU"
           price: "Precio"
+          unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
           display_as_placeholder: 'p. ej. 2 Kg'

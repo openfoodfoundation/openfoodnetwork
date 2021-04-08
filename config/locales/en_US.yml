@@ -3522,6 +3522,7 @@ en_US:
         form:
           sku: "SKU"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'For example, 2 kg'

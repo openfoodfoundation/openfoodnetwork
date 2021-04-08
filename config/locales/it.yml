@@ -1237,7 +1237,7 @@ it:
       cart:
         cart: "Carrello"
       cart_sidebar:
-        checkout: "Paga"
+        checkout: "Conferma"
         edit_cart: "Modifica il carrello"
         items_in_cart_singular: "%{num} articolo nel tuo carrello"
         items_in_cart_plural: "%{num} articoli nel tuo carrello"
@@ -1481,7 +1481,7 @@ it:
   stats_shops: "negozi"
   stats_shoppers: "clienti"
   stats_orders: "ordini"
-  checkout_title: Paga
+  checkout_title: Conferma
   checkout_now: Paga ora
   checkout_order_ready: Ordine pronto per
   checkout_hide: Nascondi
@@ -1765,39 +1765,40 @@ it:
   shops_signup_help: Siamo pronti ad aiutare.
   shops_signup_help_text: Ti serve un ritorno migliore. Ti servono nuovi compratori e partner logistici. Ti serve che la tua storia sia raccontata attraverso l'ingrosso, il dettaglio e la tavola della cucina.
   shops_signup_detail: Ecco il dettaglio.
-  orders: Gentili richieste
-  orders_fees: Commissioni...
-  orders_edit_title: Carrello
-  orders_edit_headline: Il tuo carrello
-  orders_edit_time: Ordine pronto per
-  orders_edit_continue: Continua a comprare
-  orders_edit_checkout: Paga
+  orders: "Gentili richieste"
+  orders_fees: "Commissioni..."
+  orders_edit_title: "Carrello"
+  orders_edit_headline: "Il tuo carrello"
+  orders_edit_time: "Ordine pronto per"
+  orders_edit_continue: "Continua a comprare"
+  orders_edit_checkout: "Conferma"
   orders_form_empty_cart: "Carrello vuoto"
-  orders_form_subtotal: Calcola il subtotale
-  orders_form_admin: Admin
-  orders_form_total: Totale
-  orders_oc_expired_headline: Gli ordini sono chiusi per questo ciclo di ordini
+  orders_form_update_cart: "Aggiorna"
+  orders_form_subtotal: "Calcola il subtotale"
+  orders_form_admin: "Admin"
+  orders_form_total: "Totale"
+  orders_oc_expired_headline: "Gli ordini sono chiusi per questo ciclo di ordini"
   orders_oc_expired_text: "Spiacenti, gli ordini per questo ciclo son chiusi %{time} da! Per favore contatta direttamente il tuo hub per sapere se accettano ordini tardivi."
   orders_oc_expired_text_others_html: "Spiacenti, gli ordini per questo ciclo sono chiusi %{time} fa! Per favore contatta direttamente il tuo hub per sapere se accetta ordini tardivi <strong>%{link}</strong>."
   orders_oc_expired_text_link: "o vedi gli altri cicli d'ordine disponibili per questo hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefono:"
-  orders_show_title: Conferma Ordine
-  orders_show_time: Ordine pronto
+  orders_show_title: "Conferma Ordine"
+  orders_show_time: "Ordine pronto"
   orders_show_order_number: "Gentile richiesta #%{number}"
-  orders_show_cancelled: Annullato
-  orders_show_confirmed: Confermato
+  orders_show_cancelled: "Annullato"
+  orders_show_confirmed: "Confermato"
   orders_your_order_has_been_cancelled: "La tua gentile richiesta è stata annullata"
   orders_could_not_cancel: "Ci dispiace, la gentile richiesta non ha potuto essere annullata"
   orders_cannot_remove_the_final_item: "Non si può rimuovere l'articolo definitivo da una gentile richiesta, per favore annulla piuttosto la gentile richiesta."
   orders_bought_items_notice:
-    one: E' già stato confermato un articolo aggiuntivo per questo ciclo di richieste
+    one: "E' già stato confermato un articolo aggiuntivo per questo ciclo di richieste"
     few: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     many: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
     other: "%{count} articoli aggiuntivi già confermati in questo ciclo di richieste"
-  orders_bought_edit_button: Modifica gli articoli confermati
+  orders_bought_edit_button: "Modifica gli articoli confermati"
   orders_bought_already_confirmed: "* già confermato"
-  orders_confirm_cancel: Sei sicura/o di voler annullare questa gentile richiesta?
+  orders_confirm_cancel: "Sei sicura/o di voler annullare questa gentile richiesta?"
   order_processed_successfully: "Il tuo ordine è stato elaborato correttamente"
   products_cart_distributor_choice: "Distributore per il tuo ordine:"
   products_cart_distributor_change: "Il tuo distributore per questo ordine sarà sostituito da %{name} se aggiungi questo prodotto al tuo carrello."
@@ -2638,7 +2639,7 @@ it:
         payment_states:
           balance_due: "saldo"
           completed: "completato"
-          checkout: "paga"
+          checkout: "conferma"
           credit_owed: "credito dovuto"
           failed: "fallito"
           paid: "pagato"
@@ -3362,6 +3363,7 @@ it:
           back_to_shipping_methods_list: "Torna alla lista dei metodi di spedizione"
         form:
           categories: "categorie"
+          tax_category: "Categoria d'imposta"
           zones: "Zone"
           both: "Entrambi Checkout e Back Office"
           back_end: "Solo Back office"
@@ -3526,6 +3528,7 @@ it:
         form:
           sku: "SKU"
           price: "Prezzo"
+          unit_price: "Prezzo unitario"
           display_as: "Visualizza come"
           display_name: "Nome da visualizzare"
           display_as_placeholder: 'es. 2 kg'
@@ -3591,7 +3594,7 @@ it:
     payment_states:
       balance_due: saldo
       completed: completato
-      checkout: paga
+      checkout: conferma
       credit_owed: credito dovuto
       failed: fallito
       paid: pagato
