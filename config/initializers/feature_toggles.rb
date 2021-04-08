@@ -11,5 +11,5 @@ OpenFoodNetwork::FeatureToggle.enable(:customer_balance) do |user|
 end
 
 OpenFoodNetwork::FeatureToggle.enable(:unit_price) do
-  ['development', 'staging'].include?(ENV['RAILS_ENV'])
+  Rails.env.development?
 end
