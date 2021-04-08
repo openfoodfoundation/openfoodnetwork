@@ -117,6 +117,13 @@ button.bulk-buy-add.variant-quantity {
   }
 }
 
+// Hide number arrows on Chrome, Safari, Edge, Opera
+.variant-quantity::-webkit-outer-spin-button,
+.variant-quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .variant-bulk-buy-price-summary {
   color: $disabled-med;
   margin-bottom: 1em;
