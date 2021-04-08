@@ -119,7 +119,21 @@ ca:
         updated_not_active: "La vostra contrasenya s'ha restablert, però el vostre correu electrònic encara no s'ha confirmat."
         updated: "La vostra contrasenya s'ha canviat correctament. Ja teniu la sessió iniciada."
         send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
+  home_page_alert_html: "HTML banner d'alerta de la pàgina d'inici"
+  hub_signup_case_studies_html: "HTML casos d'estudi de hub"
+  hub_signup_detail_html: "HTML detall del registre de hub"
+  hub_signup_pricing_table_html: "HTML taula de preus de registre de hub"
+  group_signup_case_studies_html: "HTML casos d'estudi d’inscripció de grup"
+  group_signup_detail_html: "HTML informació detallada de registre de grup"
+  group_signup_pricing_table_html: "HTML taula de preus d'inscripció de grup"
   item_description: "Descripció de l'article"
+  menu_1_icon_name: "Nom de la icona del menú 1"
+  menu_2_icon_name: "Nom de la icona del menú 2"
+  menu_3_icon_name: "Nom de la icona del menú 3"
+  menu_4_icon_name: "Nom de la icona del menú 4"
+  menu_5_icon_name: "Nom de la icona del menú 5"
+  menu_6_icon_name: "Nom de la icona del menú 6"
+  menu_7_icon_name: "Nom de la icona del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "CÒPIA DE %{order_cycle}"
@@ -130,6 +144,9 @@ ca:
   open_street_map_default_longitude: "longitud predeterminada d'Open Street Map"
   open_street_map_provider_name: "nom del proveïdor d'Open Street Map"
   open_street_map_provider_options: "opcions del proveïdor d'Open Street Map"
+  producer_signup_case_studies_html: "HTML estudis de casos de productora"
+  producer_signup_detail_html: "HTML detall del registre de la productora"
+  producer_signup_pricing_table_html: "HTML taula de preus d'inscripció de la productora"
   producers_social: "Raó social de la productora"
   resume_order: "Reprèn la comanda"
   sku: "Número de referència (SKU)"
@@ -315,6 +332,8 @@ ca:
     destroy: "Eliminar"
     rename: "Reanomenar"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
     begins_on: Comença
     bill_address: "Adreça de factura"
@@ -1750,39 +1769,40 @@ ca:
   shops_signup_help: Estem preparadess per ajudar.
   shops_signup_help_text: Necessites un millor retorn. Necessites noves compradores i sòcies logístiques. Necessites la teva història explicada a través de majoristes, minoristes i de la taula de la cuina.
   shops_signup_detail: Aquest és el detall.
-  orders: Comandes
-  orders_fees: Comissions...
-  orders_edit_title: Cistella de la compra
-  orders_edit_headline: El teu cistell de la compra
-  orders_edit_time: Comanda llesta per
-  orders_edit_continue: Continuar comprant
-  orders_edit_checkout: Realitza la compra
+  orders: "Comandes"
+  orders_fees: "Comissions..."
+  orders_edit_title: "Cistella de la compra"
+  orders_edit_headline: "El teu cistell de la compra"
+  orders_edit_time: "Comanda llesta per"
+  orders_edit_continue: "Continuar comprant"
+  orders_edit_checkout: "Realitza la compra"
   orders_form_empty_cart: "Cistella buida"
-  orders_form_subtotal: Subtotal
-  orders_form_admin: Administració i manipulació
-  orders_form_total: Total
-  orders_oc_expired_headline: S'han tancat les comandes per a aquest cicle de comanda
+  orders_form_update_cart: "Actualitzar"
+  orders_form_subtotal: "Subtotal"
+  orders_form_admin: "Administració i manipulació"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "S'han tancat les comandes per a aquest cicle de comanda"
   orders_oc_expired_text: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps."
   orders_oc_expired_text_others_html: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps<strong> %{link} </strong>."
   orders_oc_expired_text_link: "o consulta els altres cicles de comanda disponibles en aquest grup"
   orders_oc_expired_email: "Correu electrònic:"
   orders_oc_expired_phone: "Telèfon:"
-  orders_show_title: Confirmació de la comanda
-  orders_show_time: Comanda preparada
+  orders_show_title: "Confirmació de la comanda"
+  orders_show_time: "Comanda preparada"
   orders_show_order_number: "Comanda # %{number}"
-  orders_show_cancelled: Cancel·lada
-  orders_show_confirmed: Confirmada
+  orders_show_cancelled: "Cancel·lada"
+  orders_show_confirmed: "Confirmada"
   orders_your_order_has_been_cancelled: "S'ha cancel·lat la teva comanda"
   orders_could_not_cancel: "Disculpa, no s'ha pogut cancel·lar la teva comanda "
   orders_cannot_remove_the_final_item: "No es pot eliminar l'article final d'una comanda, si us plau, en comptes d'això cancel·leu la comanda."
   orders_bought_items_notice:
-    one: Ja s'ha confirmat un article addicional per a aquest cicle de comanda
+    one: "Ja s'ha confirmat un article addicional per a aquest cicle de comanda"
     few: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     many: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     other: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
-  orders_bought_edit_button: Edita articles confirmats
+  orders_bought_edit_button: "Edita articles confirmats"
   orders_bought_already_confirmed: "* ja confirmat"
-  orders_confirm_cancel: Estàs segur que vols cancel·lar aquesta comanda?
+  orders_confirm_cancel: "Estàs segur que vols cancel·lar aquesta comanda?"
   order_processed_successfully: "La teva comanda s'ha processat amb èxit"
   products_cart_distributor_choice: "Distribuïdora de la teva comanda:"
   products_cart_distributor_change: "La teva distribuïdora d'aquesta comanda canviarà a %{name} si afegeixes aquest producte a la teva cistella."
@@ -3345,6 +3365,7 @@ ca:
           back_to_shipping_methods_list: "Tornar al llistat de mètodes d'enviament"
         form:
           categories: "Categories"
+          tax_category: "Categoria d'impostos"
           zones: "Zones"
           both: "Comandes com administració"
           back_end: "Només pàgina administració (back office) "
@@ -3509,6 +3530,7 @@ ca:
         form:
           sku: "Número de referència (SKU)"
           price: "Preu"
+          unit_price: "Preu unitari"
           display_as: "Mostra com"
           display_name: "Nom de visualització"
           display_as_placeholder: 'per exemple. 2 kg'
