@@ -449,7 +449,7 @@ module Spree
     end
 
     def remove_previous_primary_taxon_from_taxons
-      return unless saved_change_to_primary_taxon_id? && primary_taxon_id_was
+      return unless saved_change_to_primary_taxon_id? && primary_taxon_id_before_last_save
 
       taxons.destroy(primary_taxon_id_was)
     end
