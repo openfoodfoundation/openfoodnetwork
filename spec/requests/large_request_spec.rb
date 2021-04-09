@@ -7,7 +7,7 @@ require 'spec_helper'
 
 RSpec.describe 'A very large request', type: :request do
   it 'should not overflow cookies' do
-    get '/admin', foo: 'x' * ActionDispatch::Cookies::MAX_COOKIE_SIZE
+    get '/admin', params: { foo: 'x' * ActionDispatch::Cookies::MAX_COOKIE_SIZE }
     expect(response.status).to eq(302) # HTTP status 302 - Found
     ## Use the newer syntax if rspec gets upgraded
     # expect(response).to have_http_status(:redirect)
