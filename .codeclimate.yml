@@ -2,9 +2,9 @@ version: "2"
 plugins:
   rubocop:
     enabled: true
-    channel: "rubocop-0-76"
+    channel: "rubocop-1-12"
     config:
-      file: ".rubocop_styleguide.yml"
+      file: ".rubocop.yml"
   scss-lint:
     enabled: true
     checks:
