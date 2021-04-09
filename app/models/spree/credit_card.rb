@@ -147,7 +147,7 @@ module Spree
     end
 
     def default_card_needs_updating?
-      saved_change_to_is_default? || gateway_customer_profile_id_changed?
+      saved_change_to_is_default? || saved_change_to_gateway_customer_profile_id?
     end
 
     def ensure_single_default_card
