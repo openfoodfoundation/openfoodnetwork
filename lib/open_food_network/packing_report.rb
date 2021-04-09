@@ -53,7 +53,7 @@ module OpenFoodNetwork
           { group_by: proc { |line_item| line_item.order.distributor },
             sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.order },
-            sort_by: proc { |order| order.bill_address.lastname },
+            sort_by: proc { |order| order.bill_address.lastname.downcase },
             summary_columns: [proc { |_line_items| "" },
                               proc { |_line_items| "" },
                               proc { |_line_items| "" },
@@ -89,7 +89,7 @@ module OpenFoodNetwork
          { group_by: proc { |line_item| line_item.full_name },
            sort_by: proc { |full_name| full_name } },
          { group_by: proc { |line_item| line_item.order },
-           sort_by: proc { |order| order.bill_address.lastname } }]
+           sort_by: proc { |order| order.bill_address.lastname.downcase } }]
       end
     end
 
