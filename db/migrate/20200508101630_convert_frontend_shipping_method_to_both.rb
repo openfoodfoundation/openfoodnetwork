@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ConvertFrontendShippingMethodToBoth < ActiveRecord::Migration
+class ConvertFrontendShippingMethodToBoth < ActiveRecord::Migration[4.2]
   def up
     # The display_on value front_end is not working
     #   (it's not being used in the back office to ignore shipping methods marked as front_end)
