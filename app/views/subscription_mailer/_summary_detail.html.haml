@@ -19,3 +19,11 @@
   - orders.each_with_index do |order, i|
     %a{ href: order_url(order) }>= order.number
     = ", " if i < orders.count - 1
+
+- if summary.subscription_issues.any?
+  - subscription_issues = summary.subscription_issues
+  %h4= t(".other.title", count: subscription_issues.count)
+  %p= t(".other.explainer")
+  - subscription_issues.each_with_index do |subscription_id, i|
+    %a{ href: edit_admin_subscription_url(subscription_id) }>= subscription_id
+    = ", " if i < subscription_issues.count - 1

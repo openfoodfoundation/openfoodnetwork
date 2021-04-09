@@ -3,13 +3,14 @@
 module OrderManagement
   module Subscriptions
     class Summary
-      attr_reader :shop_id, :issues
+      attr_reader :shop_id, :issues, :subscription_issues
 
       def initialize(shop_id)
         @shop_id = shop_id
         @order_ids = []
         @success_ids = []
         @issues = {}
+        @subscription_issues = []
       end
 
       def record_order(order)
@@ -25,6 +26,10 @@ module OrderManagement
         issues[type][order.id] = message
       end
 
+      def record_subscription_issue(subscription)
+        @subscription_issues << subscription.id
+      end
+
       def order_count
         @order_ids.count
       end
@@ -34,7 +39,7 @@ module OrderManagement
       end
 
       def issue_count
-        (@order_ids - @success_ids).count
+        (@order_ids - @success_ids).count + @subscription_issues.count
       end
 
       def orders_affected_by(type)

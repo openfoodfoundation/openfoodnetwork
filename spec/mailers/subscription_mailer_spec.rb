@@ -229,7 +229,10 @@ describe SubscriptionMailer, type: :mailer do
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
 
-    before { allow(summary).to receive(:unrecorded_ids) { [] } }
+    before do
+      allow(summary).to receive(:unrecorded_ids) { [] }
+      allow(summary).to receive(:subscription_issues) { [] }
+    end
 
     context "when no issues were encountered while processing subscriptions" do
       before do
@@ -339,7 +342,10 @@ describe SubscriptionMailer, type: :mailer do
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
 
-    before { allow(summary).to receive(:unrecorded_ids) { [] } }
+    before do
+      allow(summary).to receive(:unrecorded_ids) { [] }
+      allow(summary).to receive(:subscription_issues) { [] }
+    end
 
     context "when no issues were encountered while processing subscriptions" do
       before do
