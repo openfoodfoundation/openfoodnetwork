@@ -46,6 +46,6 @@ class Customer < ActiveRecord::Base
     return true unless orders.any?
 
     errors[:base] << I18n.t('admin.customers.destroy.has_associated_orders')
-    false
+    throw :abort
   end
 end
