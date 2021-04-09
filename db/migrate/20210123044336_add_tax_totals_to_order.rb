@@ -1,4 +1,4 @@
-class AddTaxTotalsToOrder < ActiveRecord::Migration
+class AddTaxTotalsToOrder < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_orders, :included_tax_total, :decimal,
                precision: 10, scale: 2, null: false, default: 0.0

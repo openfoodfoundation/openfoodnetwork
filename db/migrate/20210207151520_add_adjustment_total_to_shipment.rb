@@ -1,4 +1,4 @@
-class AddAdjustmentTotalToShipment < ActiveRecord::Migration
+class AddAdjustmentTotalToShipment < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_shipments, :adjustment_total, :decimal,
                precision: 10, scale: 2, null: false, default: 0.0

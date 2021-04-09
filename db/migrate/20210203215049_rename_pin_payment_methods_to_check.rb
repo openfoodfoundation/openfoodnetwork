@@ -1,4 +1,4 @@
-class RenamePinPaymentMethodsToCheck < ActiveRecord::Migration
+class RenamePinPaymentMethodsToCheck < ActiveRecord::Migration[4.2]
   def change
     Spree::PaymentMethod
       .where(type: "Spree::Gateway::Pin")

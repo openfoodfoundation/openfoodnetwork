@@ -1,6 +1,6 @@
 # For some unkonwn reason, after removing Spree as a dependency, some spree calculators appeared on live DBs
 # Here we repeat the migration
-class RepeatMoveCalculatorsPreferencesOutsideSpreeNamespace < ActiveRecord::Migration
+class RepeatMoveCalculatorsPreferencesOutsideSpreeNamespace < ActiveRecord::Migration[4.2]
   def up
     replace_preferences_key("/spree/calculator", "/calculator")
   end

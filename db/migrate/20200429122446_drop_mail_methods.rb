@@ -1,4 +1,4 @@
-class DropMailMethods < ActiveRecord::Migration
+class DropMailMethods < ActiveRecord::Migration[4.2]
   def up
     drop_table :spree_mail_methods
 
