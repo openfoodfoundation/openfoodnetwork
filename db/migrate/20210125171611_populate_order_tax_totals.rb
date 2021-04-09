@@ -1,4 +1,4 @@
-class PopulateOrderTaxTotals < ActiveRecord::Migration
+class PopulateOrderTaxTotals < ActiveRecord::Migration[4.2]
   def up
     # Updates new order tax total fields (additional_tax_total and included_tax_total).
     # Sums the relevant values from associated adjustments and updates the two columns.

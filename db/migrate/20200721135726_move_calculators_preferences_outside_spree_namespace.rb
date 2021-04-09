@@ -1,6 +1,6 @@
 # As we moved the calculators outside the Spree namespace in migration MoveAllCalculatorsOutsideTheSpreeNamespace
 #   We need to move their preferences too (currency, value, etc), otherwise they are not used
-class MoveCalculatorsPreferencesOutsideSpreeNamespace < ActiveRecord::Migration
+class MoveCalculatorsPreferencesOutsideSpreeNamespace < ActiveRecord::Migration[4.2]
   def up
     replace_preferences_key("/spree/calculator", "/calculator")
   end

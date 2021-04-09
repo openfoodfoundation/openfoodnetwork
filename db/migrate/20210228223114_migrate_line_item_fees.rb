@@ -1,4 +1,4 @@
-class MigrateLineItemFees < ActiveRecord::Migration
+class MigrateLineItemFees < ActiveRecord::Migration[4.2]
   class Spree::Adjustment < ActiveRecord::Base
     belongs_to :originator, polymorphic: true
     belongs_to :source, polymorphic: true

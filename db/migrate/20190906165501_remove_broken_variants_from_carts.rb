@@ -1,4 +1,4 @@
-class RemoveBrokenVariantsFromCarts < ActiveRecord::Migration
+class RemoveBrokenVariantsFromCarts < ActiveRecord::Migration[4.2]
   def up
     # Removes line_items from open carts where the variant has a hard-deleted price
 

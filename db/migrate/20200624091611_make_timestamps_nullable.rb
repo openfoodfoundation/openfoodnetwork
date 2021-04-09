@@ -1,4 +1,4 @@
-class MakeTimestampsNullable < ActiveRecord::Migration
+class MakeTimestampsNullable < ActiveRecord::Migration[4.2]
   def up
     change_column_null :customers, :created_at, true
     change_column_null :customers, :updated_at, true

@@ -1,6 +1,6 @@
 # For some unkonwn reason, after removing Spree as a dependency, some spree calculators appeared on live DBs
 # Here we repeat the migration
-class RepeatMoveAllCalculatorsOutsideTheSpreeNamespace < ActiveRecord::Migration
+class RepeatMoveAllCalculatorsOutsideTheSpreeNamespace < ActiveRecord::Migration[4.2]
   def up
     convert_calculator("DefaultTax")
     convert_calculator("FlatPercentItemTotal")

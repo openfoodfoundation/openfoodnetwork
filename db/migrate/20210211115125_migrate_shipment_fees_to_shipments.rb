@@ -1,4 +1,4 @@
-class MigrateShipmentFeesToShipments < ActiveRecord::Migration
+class MigrateShipmentFeesToShipments < ActiveRecord::Migration[4.2]
   class Spree::Adjustment < ActiveRecord::Base
     belongs_to :originator, polymorphic: true
   end
