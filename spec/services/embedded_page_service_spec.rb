@@ -6,7 +6,7 @@ describe EmbeddedPageService do
   let(:enterprise_slug) { 'test-enterprise' }
   let(:params) { { controller: 'enterprises', action: 'shop', id: enterprise_slug, embedded_shopfront: true } }
   let(:session) { {} }
-  let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'https://embedding-enterprise.com'}, nil) }
+  let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'https://embedding-enterprise.com'}, nil, nil) }
   let(:response) { ActionDispatch::TestResponse.new(200, 'X-Frame-Options' => 'DENY', 'Content-Security-Policy' => "frame-ancestors 'none'") }
   let(:service) { EmbeddedPageService.new(params, session, request, response) }
 
@@ -63,7 +63,7 @@ describe EmbeddedPageService do
     end
 
     context "when the request's referer is malformed" do
-      let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello'}, nil) }
+      let(:request) { ActionController::TestRequest.new({'HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello'}, nil, nil) }
       before do
         service.embed!
       end
