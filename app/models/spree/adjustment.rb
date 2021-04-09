@@ -38,7 +38,7 @@ module Spree
 
     belongs_to :adjustable, polymorphic: true
     belongs_to :source, polymorphic: true
-    belongs_to :originator, polymorphic: true
+    belongs_to :originator, -> { with_deleted }, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
 
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
@@ -137,13 +137,6 @@ module Spree
 
     def has_tax?
       included_tax.positive?
-    end
-
-    # Allow accessing soft-deleted originator objects
-    def originator
-      return if originator_type.blank?
-
-      originator_type.constantize.unscoped { super }
     end
 
     private
