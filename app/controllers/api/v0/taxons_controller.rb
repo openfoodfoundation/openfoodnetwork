@@ -28,7 +28,7 @@ module Api
         taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
         if taxonomy.nil?
-          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
+          @taxon.errors.add(:taxonomy_id, I18n.t(:invalid_taxonomy_id, scope: 'spree.api'))
           invalid_resource!(@taxon) && return
         end
 
