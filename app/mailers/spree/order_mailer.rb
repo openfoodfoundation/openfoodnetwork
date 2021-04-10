@@ -4,7 +4,7 @@ module Spree
   class OrderMailer < BaseMailer
     helper 'checkout'
     helper SpreeCurrencyHelper
-    helper Spree::Admin::PaymentsHelper
+    helper Spree::PaymentMethodsHelper
     helper OrderHelper
     helper MailerHelper
     include I18nHelper
