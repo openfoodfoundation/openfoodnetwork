@@ -46,7 +46,7 @@ describe CheckoutController, type: :controller do
     before do
       allow(controller).to receive(:current_order).and_return(order)
       allow(order).to receive(:distributor).and_return(distributor)
-      order.order_cycle = order_cycle
+      order.update(order_cycle: order_cycle)
 
       allow(OrderCycleDistributedVariants).to receive(:new).and_return(order_cycle_distributed_variants)
     end
