@@ -1,5 +1,5 @@
 %div{"data-hook" => "admin_orders_index_search"}
-  = form_tag :admin_orders, {name: "orders_form", "ng-submit" => "fetchResults()"} do
+  = form_tag spree.admin_orders_url, {name: "orders_form", "ng-submit" => "fetchResults()"} do
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
