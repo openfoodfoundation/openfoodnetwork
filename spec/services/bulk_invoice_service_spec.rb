@@ -1,9 +1,11 @@
 # frozen_string_literal: false
 
 require 'spec_helper'
+require 'spree/admin/payments_helper'
 
 describe BulkInvoiceService do
   include ActiveJob::TestHelper
+  include Spree::Admin::PaymentsHelper
 
   let(:service) { BulkInvoiceService.new }
 
