@@ -4,6 +4,8 @@ require "spec_helper"
 
 describe "spree/admin/payment_methods/index.html.haml" do
   include AuthenticationHelper
+  helper Spree::Admin::NavigationHelper
+  helper Spree::Admin::BaseHelper
 
   before do
     controller.singleton_class.class_eval do

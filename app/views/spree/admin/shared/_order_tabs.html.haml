@@ -46,21 +46,21 @@
     %ul
       - order_details_classes = "active" if current == "Order Details"
       %li{ class: order_details_classes }
-        = link_to_with_icon 'icon-edit', t(:order_details), edit_admin_order_url(@order)
+        = link_to_with_icon 'icon-edit', t(:order_details), spree.edit_admin_order_url(@order)
 
       - customer_details_classes = "active" if current == "Customer Details"
       %li{ class: customer_details_classes }
-        = link_to_with_icon 'icon-user', t(:customer_details), admin_order_customer_url(@order)
+        = link_to_with_icon 'icon-user', t(:customer_details), spree.admin_order_customer_url(@order)
 
       - adjustments_classes = "active" if current == "Adjustments"
       %li{ class: adjustments_classes }
-        = link_to_with_icon 'icon-cogs', t(:adjustments), admin_order_adjustments_url(@order)
+        = link_to_with_icon 'icon-cogs', t(:adjustments), spree.admin_order_adjustments_url(@order)
 
       - payments_classes = "active" if current == "Payments"
       %li{ class: payments_classes }
-        = link_to_with_icon 'icon-credit-card', t(:payments), admin_order_payments_url(@order)
+        = link_to_with_icon 'icon-credit-card', t(:payments), spree.admin_order_payments_url(@order)
 
       - if @order.completed?
         - authorizations_classes = "active" if current == "Return Authorizations"
         %li{ class: authorizations_classes }
-          = link_to_with_icon 'icon-share-alt', t(:return_authorizations), admin_order_return_authorizations_url(@order)
+          = link_to_with_icon 'icon-share-alt', t(:return_authorizations), spree.admin_order_return_authorizations_url(@order)
