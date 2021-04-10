@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'spree/admin/payments_helper'
 
 describe InvoiceRenderer do
+  include Spree::Admin::PaymentsHelper
+
   let(:service) { described_class.new }
   let(:order) do
     order = create(:completed_order_with_fees)
