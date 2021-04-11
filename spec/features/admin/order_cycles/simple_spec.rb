@@ -288,6 +288,42 @@ feature '
         occ = OrderCycle.last
         expect(occ.name).to eq("COPY OF #{oc.name}")
       end
+
+      scenario "changing advanced settings from incoming products and outgoing products tab" do
+        distributor_managed.update_attribute(:enable_subscriptions, true)
+        visit admin_order_cycles_path
+        click_link 'New Order Cycle'
+        select2_select 'Managed distributor', from: 'coordinator_id'
+        click_button "Continue >"
+
+        fill_in 'order_cycle_name', with: 'My order cycle 2'
+        fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
+        fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
+        click_button 'Create'
+
+        expect(page).to have_button 'Advanced Settings'
+        click_button 'Advanced Settings'
+        page.find('#order_cycle_preferred_product_selection_from_coordinator_inventory_only_true').click
+        click_button 'Save and Reload Page'
+
+        expect(page).to have_select 'new_supplier_id'
+        expect(page).not_to have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
+
+        expect(find(:select, 'new_supplier_id')).to have_selector(:option, 'Managed supplier', disabled: true)
+        expect(page).to have_button 'Next'
+        click_button 'Next'
+
+        expect(page).to have_button 'Advanced Settings'
+        click_button 'Advanced Settings'
+        page.find('#order_cycle_preferred_product_selection_from_coordinator_inventory_only_false').click
+        click_button 'Save and Reload Page'
+        click_button 'Advanced Settings'
+        page.find('#order_cycle_preferred_product_selection_from_coordinator_inventory_only_true').click
+        click_button 'Save and Reload Page'
+
+        expect(page).to have_button 'Back To List'
+        click_button 'Back To List'
+      end
     end
 
     context "that is a manager of a participating producer" do

@@ -62,7 +62,7 @@ module Admin
       if @order_cycle_form.save
         respond_to do |format|
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
-          format.html { redirect_to request.referrer }
+          format.html { redirect_to request.referer }
           format.json { render json: { success: true } }
         end
       else
