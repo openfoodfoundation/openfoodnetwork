@@ -332,6 +332,8 @@ de_DE:
     destroy: "Löschen"
     rename: "Umbenennen"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
     begins_on: Beginnt am
     bill_address: "Rechnungsadresse"
@@ -1614,7 +1616,7 @@ de_DE:
   shopping_tabs_about: "Über uns"
   shopping_tabs_producers: "Unsere Produzenten"
   shopping_tabs_contact: "Kontakt"
-  shopping_tabs_groups: "Gruppen"
+  shopping_tabs_groups: "Unsere Gruppen"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
@@ -1766,39 +1768,40 @@ de_DE:
   shops_signup_help: Wir sind bereit zu helfen.
   shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Großhandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
-  orders: Bestellungen
-  orders_fees: Gebühren ...
-  orders_edit_title: Warenkorb
-  orders_edit_headline: Ihr Warenkorb
-  orders_edit_time: Bestellung bereit am
-  orders_edit_continue: Weiter einkaufen
-  orders_edit_checkout: Zur Kasse
+  orders: "Bestellungen"
+  orders_fees: "Gebühren ..."
+  orders_edit_title: "Warenkorb"
+  orders_edit_headline: "Ihr Warenkorb"
+  orders_edit_time: "Bestellung bereit am"
+  orders_edit_continue: "Weiter einkaufen"
+  orders_edit_checkout: "Zur Kasse"
   orders_form_empty_cart: "Warenkorb leeren"
-  orders_form_subtotal: Zwischensumme
-  orders_form_admin: Bearbeitung
-  orders_form_total: Summe
-  orders_oc_expired_headline: Bestellannahme für diesen Bestellzyklus bereits geschlossen!
+  orders_form_update_cart: "Aktualisieren"
+  orders_form_subtotal: "Zwischensumme"
+  orders_form_admin: "Bearbeitung"
+  orders_form_total: "Summe"
+  orders_oc_expired_headline: "Bestellannahme für diesen Bestellzyklus bereits geschlossen!"
   orders_oc_expired_text: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann."
   orders_oc_expired_text_others_html: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann (<strong>%{link}</strong>)."
-  orders_oc_expired_text_link: "oder sehen Sie sich die anderen Bestellzyklen dieses Hubs an."
+  orders_oc_expired_text_link: "oder sehen Sie sich die anderen Bestellzyklen dieses Ladens an."
   orders_oc_expired_email: "E-Mail-Adresse:"
   orders_oc_expired_phone: "Telefonnummer:"
-  orders_show_title: Bestellbestätigung
-  orders_show_time: Bestellung bereit am
+  orders_show_title: "Bestellbestätigung"
+  orders_show_time: "Bestellung bereit am"
   orders_show_order_number: "Bestellung #%{number}"
-  orders_show_cancelled: Storniert
-  orders_show_confirmed: Bestätigt
+  orders_show_cancelled: "Storniert"
+  orders_show_confirmed: "Bestätigt"
   orders_your_order_has_been_cancelled: "Ihre Bestellung wurde storniert."
   orders_could_not_cancel: "Die Bestellung konnte nicht storniert werden."
   orders_cannot_remove_the_final_item: "Der letzte verbleibende Artikel einer Bestellung kann nicht entfernt werden. Bitte stornieren Sie stattdessen die Bestellung."
   orders_bought_items_notice:
-    one: Ein zusätzlicher Artikel ist bereits für diesen Bestellzyklus bestätigt.
+    one: "Ein zusätzlicher Artikel ist bereits für diesen Bestellzyklus bestätigt."
     few: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
     many: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
     other: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
-  orders_bought_edit_button: Bestätigte Artikel bearbeiten
+  orders_bought_edit_button: "Bestätigte Artikel bearbeiten"
   orders_bought_already_confirmed: "* schon bestätigt"
-  orders_confirm_cancel: Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?
+  orders_confirm_cancel: "Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?"
   order_processed_successfully: "Ihre Bestellung wurde erfolgreich verarbeitet."
   products_cart_distributor_choice: "Verteilstelle Ihrer Bestellung:"
   products_cart_distributor_change: "Die Verteilstelle für diese Bestellung wird in %{name} geändert, wenn Sie dieses Produkt zu Ihrem Warenkorb hinzufügen."
@@ -1839,7 +1842,7 @@ de_DE:
   error_not_found_in_database: "%{name} wurde nicht in der Datenbank gefunden"
   error_not_primary_producer: "%{name} ist nicht als Produzent aktiviert"
   error_no_permission_for_enterprise: "%{name}: Sie sind nicht berechtigt, Produkte dieses Unternehmens zu verwalten"
-  item_handling_fees: "Bearbeitungsgebühren des Artikels (in den Artikelsummen enthalten)"
+  item_handling_fees: "Bearbeitungsgebühren des Artikels (im Artikelpreis enthalten)"
   january: "Januar"
   february: "Februar"
   march: "März"
@@ -2385,7 +2388,7 @@ de_DE:
   validation_msg_is_associated_with_an_exising_customer: "ist mit einem bestehenden Kunden verbunden"
   content_configuration_pricing_table: "(TODO: Preistabelle)"
   content_configuration_case_studies: "(TODO: Beispiele)"
-  content_configuration_detail: "(Todo: Detail)"
+  content_configuration_detail: "(TODO: Detail)"
   enterprise_name_error: "wurde bereits vergeben. Wenn dies Ihr Unternehmen ist und Sie die Eigentumsrechte beanspruchen möchten oder wenn Sie mit diesem Unternehmen handeln möchten, wenden Sie sich bitte an den aktuellen Manager dieses Profils unter %{email}."
   enterprise_owner_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Diese Rolle ist bereits vorhanden."
@@ -2955,7 +2958,6 @@ de_DE:
     back_to_adjustments_list: "Zurück zu Anpassungen"
     back_to_users_list: "Zurück zur Benutzerliste"
     back_to_zones_list: "Zurück zur Zonenliste"
-    bugherd_api_key: "Bugherd API-Schlüssel"
     card_code: "Kartenprüfnummer (3-stellig)"
     card_number: "Kreditkartennummer"
     category: "Produktkategorie"
@@ -3367,6 +3369,7 @@ de_DE:
           back_to_shipping_methods_list: "Zurück zur Liste der Lieferoptionen"
         form:
           categories: "Kategorien"
+          tax_category: "Steuerkategorie"
           zones: "Zonen"
           both: "Sowohl an der Kasse als auch im Backoffice"
           back_end: "Nur im Backoffice"
@@ -3519,7 +3522,6 @@ de_DE:
           price: "Preis"
           options: "Varianten"
           no_results: "Keine Ergebnisse gefunden."
-          to_add_variants_you_must_first_define: "Um Varianten hinzuzufügen, müssen Sie zuerst definieren"
           option_types: "Optionstypen"
           option_values: "Optionswerte"
           and: "und"
