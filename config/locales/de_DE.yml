@@ -925,7 +925,6 @@ de_DE:
         cancel: "Abbrechen"
         back_to_list: "Zurück zur Liste"
       edit:
-        advanced_settings: "Erweiterte Einstellungen"
         save: "Speichern"
         save_and_next: "Speichern und weiter"
         next: "Weiter"
@@ -978,6 +977,8 @@ de_DE:
         preferred_product_selection_from_coordinator_inventory_only_here: Nur vom Katalog des Koordinators
         preferred_product_selection_from_coordinator_inventory_only_all: Alle verfügbaren Produkte
         save_reload: Speichern und neu laden
+      advanced_settings_toggle:
+        advanced_settings: "Erweiterte Einstellungen"
       coordinator_fees:
         add: Koordinatorgebühr hinzufügen
       filters:

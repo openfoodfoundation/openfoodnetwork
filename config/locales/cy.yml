@@ -887,7 +887,6 @@ cy:
         cancel: "Canslo"
         back_to_list: "Yn ôl i&#39;r Rhestr"
       edit:
-        advanced_settings: "Lleoliadau uwch"
         save: "Arbedwch"
         save_and_next: "Arbed a Nesaf"
         next: "Nesaf"
@@ -940,6 +939,8 @@ cy:
         preferred_product_selection_from_coordinator_inventory_only_here: Rhestr y Cydlynydd yn Unig
         preferred_product_selection_from_coordinator_inventory_only_all: Yr holl Gynhyrchion sydd ar Gael
         save_reload: Cadw a Ail-lwytho Tudalen
+      advanced_settings_toggle:
+        advanced_settings: "Lleoliadau uwch"
       coordinator_fees:
         add: Ychwanegu ffi cydlynydd
       filters:

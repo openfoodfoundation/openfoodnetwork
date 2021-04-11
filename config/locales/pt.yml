@@ -879,7 +879,6 @@ pt:
         cancel: "Cancelar"
         back_to_list: "Voltar à Lista"
       edit:
-        advanced_settings: "Configurações Avançadas"
         save: "Guardar"
         save_and_next: "Guardar e Continuar"
         next: "Seguinte"
@@ -925,6 +924,8 @@ pt:
         preferred_product_selection_from_coordinator_inventory_only_here: Apenas inventário do coordenador
         preferred_product_selection_from_coordinator_inventory_only_all: Todos os Produtos Disponíveis
         save_reload: Guardar e recarregar página
+      advanced_settings_toggle:
+        advanced_settings: "Configurações Avançadas"
       coordinator_fees:
         add: Adicionar taxa de coordenador
       filters:

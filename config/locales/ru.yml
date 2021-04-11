@@ -925,7 +925,6 @@ ru:
         cancel: "Отмена"
         back_to_list: "Назад К Списку"
       edit:
-        advanced_settings: "Расширенные Настройки"
         save: "Сохранить"
         save_and_next: "Сохранить И Далее"
         next: "Далее"
@@ -978,6 +977,8 @@ ru:
         preferred_product_selection_from_coordinator_inventory_only_here: Только Товарная Номенклатура Координатора
         preferred_product_selection_from_coordinator_inventory_only_all: Все Доступные Товары
         save_reload: Сохранить и Обновить Страницу
+      advanced_settings_toggle:
+        advanced_settings: "Расширенные Настройки"
       coordinator_fees:
         add: Добавить сбор координатора
       filters:

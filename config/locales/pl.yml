@@ -869,7 +869,6 @@ pl:
         cancel: "Anuluj"
         back_to_list: "Powrót do listy"
       edit:
-        advanced_settings: "Zaawansowane ustawienia"
         save: "Zapisz"
         save_and_next: "Zapisz i Dalej"
         next: "Kolejny"
@@ -922,6 +921,8 @@ pl:
         preferred_product_selection_from_coordinator_inventory_only_here: Tylko ekwipunek koordynatora
         preferred_product_selection_from_coordinator_inventory_only_all: Wszystkie dostępne produkty
         save_reload: Zapisz i załaduj ponownie stronę
+      advanced_settings_toggle:
+        advanced_settings: "Zaawansowane ustawienia"
       coordinator_fees:
         add: Dodaj opłatę koordynacyjną
       filters:

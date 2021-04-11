@@ -873,7 +873,6 @@ fr_BE:
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
       edit:
-        advanced_settings: "Paramétrages avancés"
         save: "Sauvergarder"
         save_and_next: "Sauver et suivant"
         next: "Suivant"
@@ -926,6 +925,8 @@ fr_BE:
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
+      advanced_settings_toggle:
+        advanced_settings: "Paramétrages avancés"
       coordinator_fees:
         add: Ajouter commission coordinateur
       filters:

@@ -887,7 +887,6 @@ nb:
         cancel: "Avbryt"
         back_to_list: "Tilbake til Listen"
       edit:
-        advanced_settings: "Avanserte Innstillinger"
         save: "Lagre"
         save_and_next: "Lagre og Neste"
         next: "Neste"
@@ -940,6 +939,8 @@ nb:
         preferred_product_selection_from_coordinator_inventory_only_here: Kun Koordinators varelager
         preferred_product_selection_from_coordinator_inventory_only_all: Alle tilgjengelige produkter
         save_reload: Lagre og last siden på nytt
+      advanced_settings_toggle:
+        advanced_settings: "Avanserte Innstillinger"
       coordinator_fees:
         add: Legg til koordinatoravgift
       filters:

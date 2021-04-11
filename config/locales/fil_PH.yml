@@ -858,7 +858,6 @@ fil_PH:
         cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
       edit:
-        advanced_settings: "Advanced settings"
         save: "i-save"
         save_and_next: "i-save at sunod"
         next: "sunod"
@@ -910,6 +909,8 @@ fil_PH:
         preferred_product_selection_from_coordinator_inventory_only_here: imbentaryo lamang ng coordinator
         preferred_product_selection_from_coordinator_inventory_only_all: lahat ng produktong mayroon
         save_reload: i-save at i-reload ang pahina
+      advanced_settings_toggle:
+        advanced_settings: "Advanced settings"
       coordinator_fees:
         add: magdagdag ng fee sa coordinator
       filters:

@@ -832,7 +832,6 @@ en_BE:
         create: "Create"
         cancel: "Cancel"
       edit:
-        advanced_settings: "Advanced Settings"
         save: "Save"
         next: "Next"
         cancel: "Cancel"
@@ -872,6 +871,8 @@ en_BE:
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
+      advanced_settings_toggle:
+        advanced_settings: "Advanced Settings"
       coordinator_fees:
         add: Add coordinator fee
       filters:

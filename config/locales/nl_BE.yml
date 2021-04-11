@@ -875,7 +875,6 @@ nl_BE:
         cancel: "Annuleren"
         back_to_list: "Terug naar lijst"
       edit:
-        advanced_settings: "Geavanceerde Instellingen"
         save: "Save"
         save_and_next: "Opslaan en volgende"
         next: "Volgende"
@@ -928,6 +927,8 @@ nl_BE:
         preferred_product_selection_from_coordinator_inventory_only_here: 'Enkel Coördinator Inventaris '
         preferred_product_selection_from_coordinator_inventory_only_all: Alle Beschikbare Producten
         save_reload: Bewaar en Herlaad Webpagina
+      advanced_settings_toggle:
+        advanced_settings: "Geavanceerde Instellingen"
       coordinator_fees:
         add: Voeg Coördinatievergoeding toe
       filters:

@@ -495,7 +495,6 @@ sv:
         create: "Skapa"
         cancel: "Avbryt"
       edit:
-        advanced_settings: "Avancerade inställningar"
         next: "Näst"
         cancel: "Avbryt"
         choose_products_from: "Välj produkter från:"
@@ -523,6 +522,8 @@ sv:
         preferred_product_selection_from_coordinator_inventory_only_here: Enbart koordinatorns inventarielista
         preferred_product_selection_from_coordinator_inventory_only_all: Alla tillgängliga produkter
         save_reload: Spara och ladda om sidan
+      advanced_settings_toggle:
+        advanced_settings: "Avancerade inställningar"
       coordinator_fees:
         add: Lägg till koordinatoravgift
       form:

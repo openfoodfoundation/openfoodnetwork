@@ -871,7 +871,6 @@ es_CO:
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       edit:
-        advanced_settings: "Configuración avanzada"
         save: "Guardar"
         save_and_next: "Guardar y continuar"
         next: "Siguiente"
@@ -924,6 +923,8 @@ es_CO:
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el inventario del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Todos los productos disponibles
         save_reload: Guardar y recargar la página
+      advanced_settings_toggle:
+        advanced_settings: "Configuración avanzada"
       coordinator_fees:
         add: Añadir comisión para el coordinador
       filters:

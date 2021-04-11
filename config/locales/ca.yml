@@ -928,7 +928,6 @@ ca:
         cancel: "Cancel·lar"
         back_to_list: "Tornar a la llista"
       edit:
-        advanced_settings: "Configuració avançada"
         save: "Desa"
         save_and_next: "Desa i següent"
         next: "Següent"
@@ -981,6 +980,8 @@ ca:
         preferred_product_selection_from_coordinator_inventory_only_here: Només inventari del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Tots els productes disponibles
         save_reload: Desa i recarrega la pàgina
+      advanced_settings_toggle:
+        advanced_settings: "Configuració avançada"
       coordinator_fees:
         add: Afegeix una comissió del coordinador
       filters:
