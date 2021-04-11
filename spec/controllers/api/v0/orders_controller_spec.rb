@@ -274,7 +274,7 @@ module Api
 
       before do
         order.finalize!
-        create(:check_payment, order: order, amount: order.total)
+        order.payments << create(:check_payment, order: order, amount: order.total)
         allow(controller).to receive(:spree_current_user) { order.distributor.owner }
       end
 
