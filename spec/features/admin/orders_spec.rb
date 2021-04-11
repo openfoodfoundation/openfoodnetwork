@@ -65,7 +65,7 @@ feature '
     context "with a capturable order" do
       before do
         order.finalize! # ensure order has a payment to capture
-        create :check_payment, order: order, amount: order.total
+        order.payments << create(:check_payment, order: order, amount: order.total)
       end
 
       scenario "capture payment" do
