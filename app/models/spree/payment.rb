@@ -201,7 +201,6 @@ module Spree
     end
 
     def update_order
-      order.payments.reload
       order.update!
     end
 
