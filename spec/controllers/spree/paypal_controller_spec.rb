@@ -4,13 +4,13 @@ require 'spec_helper'
 
 module Spree
   describe PaypalController, type: :controller do
-    context 'when cancelling' do
+    context '#cancel' do
       it 'redirects back to checkout' do
         expect(spree_get(:cancel)).to redirect_to checkout_path
       end
     end
 
-    context 'when confirming' do
+    context '#confirm' do
       let(:previous_order) { controller.current_order(true) }
       let(:payment_method) { create(:payment_method) }
 
