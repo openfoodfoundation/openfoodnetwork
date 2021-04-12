@@ -114,6 +114,82 @@ feature '
       expect(page).to have_content "Unit value can't be blank"
     end
   end
+  
+  describe "soft-deleting" do
+    let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
+
+    context 'a simple product', js: true do
+      let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
+
+      before do
+        login_as_admin_and_visit spree.admin_products_path
+
+        within "tr#p_#{product2.id}" do
+          accept_alert { page.find("[data-powertip=Remove]").click }
+        end
+      end
+
+      it 'removes it from the product list' do
+        expect(page).not_to have_selector "tr#p_#{product2.id}"
+        expect(page).to have_selector "tr#p_#{product1.id}"
+      end
+    end
+
+    context 'a shipped product', js: true do
+      let!(:order) { create(:shipped_order, line_items_count: 1) }
+      let!(:line_item) { order.reload.line_items.first }
+
+      before do
+        login_as_admin_and_visit spree.admin_products_path
+
+        within "tr#p_#{order.variants.first.product_id}" do
+          accept_alert { page.find("[data-powertip=Remove]").click }
+        end
+      end
+
+      it 'removes it from the product list' do
+        expect(page).to have_selector "tr#p_#{product1.id}"
+        expect(page).not_to have_selector "tr#p_#{order.variants.first.product_id}"
+        expect(Spree::Product.count).to eq 1
+        expect(order.line_items.count).to eq 1
+      end
+
+      it 'keeps the line item on the order (admin)' do
+        visit spree.admin_orders_path
+        find(".icon-edit").click
+        expect(page).to have_content(line_item.product.name.to_s)
+      end
+    end
+  end
+
+  describe 'cloning' do
+    let!(:product1) { create(:simple_product, name: 'a weight product', supplier: @supplier, variant_unit: "weight") }
+    let!(:variant1) { create(:variant, product_id: product1.id, display_name: 'kg oranges') }
+
+    context 'products', js: true do
+      before { login_as_admin_and_visit spree.admin_products_path }
+
+      it 'creates a copy of the product' do
+        within "tr#p_#{product1.id}" do
+          page.find("[data-powertip=Clone]").click
+        end
+        expect(page).to have_selector "tr#p_#{variant1.product_id}"
+
+        within "tr#p_#{product1.id + 1}" do
+          expect(page).to have_input "product_name", with: 'COPY OF a weight product'
+        end
+
+        # bug #660
+        # only the first variant is duplicated
+        expect(Spree::Product.second.variants.count).to eq 1
+        # TODO expect(Spree::Product.second.variants.count).to eq Spree::Product.first.variants.count
+
+        # the stock of the cloned product is always zero
+        expect(Spree::Product.second.on_hand).to eq 0
+        # TODO expect(Spree::Product.second.on_hand).to eq Spree::Product.first.on_hand
+      end
+    end
+  end
 
   context "as an enterprise user" do
     let!(:tax_category) { create(:tax_category) }
