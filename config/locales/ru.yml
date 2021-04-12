@@ -333,6 +333,8 @@ ru:
     destroy: "Уничтожить"
     rename: "Переименовать"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
     begins_on: Начинается На
     bill_address: "Адрес счета"
