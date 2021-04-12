@@ -61,6 +61,19 @@ RSpec.configure do |config|
     Webpacker.compile
   end
 
+  config.after(:each, type: :feature, js: true) do
+    errors = page.driver.browser.manage.logs.get(:browser)
+
+    aggregate_failures "javascript errors" do
+      errors.each do |error|
+        error_message = error.message.gsub("\\n", "\n")
+        expect(error.level).to_not eq("SEVERE"), error_message
+        next unless error.level == "WARNING"
+        STDERR.puts "JS: WARN: #{error_message}"
+      end
+    end
+  end
+
   # Fix encoding issue in Rails 5.0; allows passing empty arrays or hashes as params.
   config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
 

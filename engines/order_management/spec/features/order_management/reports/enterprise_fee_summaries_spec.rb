@@ -5,6 +5,7 @@ require "spec_helper"
 feature "enterprise fee summaries", js: true do
   include AuthenticationHelper
   include WebHelper
+  include Features::BrowserHelper
 
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:other_distributor) { create(:distributor_enterprise) }
@@ -43,8 +44,11 @@ feature "enterprise fee summaries", js: true do
       it "does not allow access to the report" do
         visit spree.admin_reports_path
         expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
+        expect_browser_console_errors
+
         visit main_app.new_order_management_reports_enterprise_fee_summary_path
         expect(page).to have_content(I18n.t("unauthorized"))
+        expect_browser_console_errors
       end
     end
   end

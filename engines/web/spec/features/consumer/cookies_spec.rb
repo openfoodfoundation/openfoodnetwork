@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 feature "Cookies", js: true do
+  include Features::BrowserHelper
+
   describe "banner" do
     # keeps banner toggle config unchanged
     around do |example|
@@ -108,6 +110,7 @@ feature "Cookies", js: true do
           visit_cookies_policy_page
           expect(page).to have_content matomo_opt_out_iframe
           expect(page).to have_selector("iframe")
+          expect_browser_console_errors(2) # because the above URL isn't accessible
         end
       end
 
