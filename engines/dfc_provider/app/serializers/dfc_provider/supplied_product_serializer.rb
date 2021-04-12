@@ -8,7 +8,7 @@ module DfcProvider
 
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :unit, key: 'dfc-p:hasUnit'
+    attribute :has_unit, key: 'dfc-p:hasUnit'
     attribute :has_type, key: 'dfc-p:hasType'
     attribute :quantity, key: 'dfc-b:quantity'
     attribute :description, key: 'dfc-b:description'
@@ -31,18 +31,17 @@ module DfcProvider
       'dfc-b:SuppliedProduct'
     end
 
-    def unit
-      {
-        '@id' => "/unit/#{unit_name}",
-        'rdfs:label' => unit_name
-      }
+    def has_unit
+      'dfc-u:u'
     end
 
     def quantity
       object.on_hand
     end
 
-    def has_type; end
+    def has_type
+      'dfc-pt:vegetable'
+    end
 
     def description
       object.name
@@ -62,12 +61,6 @@ module DfcProvider
 
     def physical_characteristics
       []
-    end
-
-    private
-
-    def unit_name
-      object.unit_description.presence || 'piece'
     end
   end
 end
