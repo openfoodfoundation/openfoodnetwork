@@ -1667,28 +1667,29 @@ pt:
   shops_signup_help: Estamos prontos para ajudar.
   shops_signup_help_text: Você está a precisar de melhor retorno, de novos clientes e parceiros de logística. Está a precisar que a sua história seja contada em grupos de consumo, em retalho e à mesa de jantar.
   shops_signup_detail: Aqui está o detalhe.
-  orders: Encomendas
-  orders_fees: Taxas...
-  orders_edit_title: Carrinho de Compras
-  orders_edit_headline: O seu carrinho de compras
-  orders_edit_time: Encomenda pronta para
-  orders_edit_continue: Continuar a comprar
-  orders_edit_checkout: Finalizar compra
+  orders: "Encomendas"
+  orders_fees: "Taxas..."
+  orders_edit_title: "Carrinho de Compras"
+  orders_edit_headline: "O seu carrinho de compras"
+  orders_edit_time: "Encomenda pronta para"
+  orders_edit_continue: "Continuar a comprar"
+  orders_edit_checkout: "Finalizar compra"
   orders_form_empty_cart: "Carrinho vazio"
-  orders_form_subtotal: Subtotal dos produtos
-  orders_form_admin: Administração & Logística
-  orders_form_total: Total
-  orders_oc_expired_headline: Este ciclo de encomendas está fechado
+  orders_form_update_cart: "Atualizar"
+  orders_form_subtotal: "Subtotal dos produtos"
+  orders_form_admin: "Administração & Logística"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Este ciclo de encomendas está fechado"
   orders_oc_expired_text: "Desculpe, este ciclo de encomendas fechou há %{time} atrás. Por favor entre em contacto directamente com a sua central para saber se podem aceitar encomendas tardias."
   orders_oc_expired_text_others_html: "Desculpe, este ciclo de encomendas fechou há %{time} atrás.  Por favor entre em contacto directamente com a sua central para saber se podem aceitar encomendas tardias <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou veja os outros ciclos de encomendas que estão disponíveis nesta central"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefone:"
-  orders_show_title: Confimação de Encomenda
-  orders_show_time: Encomenda pronta em
+  orders_show_title: "Confimação de Encomenda"
+  orders_show_time: "Encomenda pronta em"
   orders_show_order_number: "Encomenda #%{number}"
-  orders_show_cancelled: Cancelada
-  orders_show_confirmed: Confirmada
+  orders_show_cancelled: "Cancelada"
+  orders_show_confirmed: "Confirmada"
   orders_your_order_has_been_cancelled: "A sua encomenda foi cancelada"
   orders_could_not_cancel: "Pedimos desculpa, a sua encomenda não pode ser cancelada"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de uma encomenda, em vez disso, por favor cancele a encomenda."
@@ -1696,9 +1697,9 @@ pt:
     few: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
     many: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
     other: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
-  orders_bought_edit_button: Editar itens confirmados
+  orders_bought_edit_button: "Editar itens confirmados"
   orders_bought_already_confirmed: "* já confirmado"
-  orders_confirm_cancel: Tem a certeza que quer cancelar esta encomenda?
+  orders_confirm_cancel: "Tem a certeza que quer cancelar esta encomenda?"
   order_processed_successfully: "A sua encomenda foi processada com sucesso"
   products_cart_distributor_choice: "Distribuidor para a sua encomenda:"
   products_cart_distributor_change: "O distribuidor para esta encomenda será alterado para %{name} se adicionar este produto ao carrinho."
@@ -3028,6 +3029,7 @@ pt:
           back_to_shipping_methods_list: "Voltar à Lista de Categorias de Envio"
         form:
           categories: "Categorias"
+          tax_category: "Categoria de Imposto"
           zones: "Zonas"
           both: "Ambos Checkout e Administração"
           back_end: "Só Administração"
@@ -3166,7 +3168,6 @@ pt:
           price: "Preço"
           options: "Opções"
           no_results: "Nenhum resultado"
-          to_add_variants_you_must_first_define: "Para adicionar variants, primeiro tem de"
           option_types: "Tipos de Opções"
           option_values: "Opções de Valor"
           and: "e"
@@ -3178,6 +3179,7 @@ pt:
         form:
           sku: "SKU"
           price: "Preço"
+          unit_price: "Preço Unitário"
           display_as: "Mostrar como"
           display_name: "Nome a apresentar"
           display_as_placeholder: 'por ex. 2 kg'

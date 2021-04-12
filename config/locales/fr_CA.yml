@@ -1732,39 +1732,40 @@ fr_CA:
   shops_signup_help: Nous sommes là pour vous aider.
   shops_signup_help_text: Vous avez besoin de pouvoir travailler de manière efficace. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit, que l'acheteur final sache qui se trouve derrière les produits.
   shops_signup_detail: Comment ça marche.
-  orders: Commandes
-  orders_fees: Frais...
-  orders_edit_title: Panier
-  orders_edit_headline: Votre panier
-  orders_edit_time: Commande prête pour
-  orders_edit_continue: Retour à la boutique
-  orders_edit_checkout: Finalisation commande
+  orders: "Commandes"
+  orders_fees: "Frais..."
+  orders_edit_title: "Panier"
+  orders_edit_headline: "Votre panier"
+  orders_edit_time: "Commande prête pour"
+  orders_edit_continue: "Retour à la boutique"
+  orders_edit_checkout: "Finalisation commande"
   orders_form_empty_cart: "Vider le panier"
-  orders_form_subtotal: Sous-total
-  orders_form_admin: Admin & gestion
-  orders_form_total: Total
-  orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
+  orders_form_update_cart: "Mettre à jour"
+  orders_form_subtotal: "Sous-total"
+  orders_form_admin: "Admin & gestion"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives."
   orders_oc_expired_text_others_html: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou voir si d'autres cycles de vente sont ouverts pour ce hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Téléphone:"
-  orders_show_title: Confirmation de commande
-  orders_show_time: Commande prête pour
+  orders_show_title: "Confirmation de commande"
+  orders_show_time: "Commande prête pour"
   orders_show_order_number: "Commande #%{number}"
-  orders_show_cancelled: Annulée
-  orders_show_confirmed: Confirmée
+  orders_show_cancelled: "Annulée"
+  orders_show_confirmed: "Confirmée"
   orders_your_order_has_been_cancelled: "VotrVotre commande a été annuléee commande a été annulée"
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: Un produit additionnel est déjà confirmé pour ce cycle de vente.
+    one: "Un produit additionnel est déjà confirmé pour ce cycle de vente."
     few: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
     many: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont déjà été confirmés pour ce cycle de vente."
-  orders_bought_edit_button: Modifier les produits confirmés
+  orders_bought_edit_button: "Modifier les produits confirmés"
   orders_bought_already_confirmed: "* déjà confirmé"
-  orders_confirm_cancel: Voulez-vous vraiment annuler cette commande ?
+  orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande a été traitée avec succès"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
@@ -3276,6 +3277,7 @@ fr_CA:
           back_to_shipping_methods_list: "Retour à la liste des méthodes de livraison"
         form:
           categories: "Conditions de transport"
+          tax_category: "Type de taxe"
           zones: "Zones"
           both: "Visible par l'acheteur sur la boutique"
           back_end: "Visible pour l'administration uniquement"
@@ -3428,7 +3430,6 @@ fr_CA:
           price: "Prix"
           options: "Options"
           no_results: "Pas de résultats"
-          to_add_variants_you_must_first_define: "Pour ajouter une variante, vous devez d'abord définir"
           option_types: "Types d'options"
           option_values: "Valeurs"
           and: "et"
@@ -3440,6 +3441,7 @@ fr_CA:
         form:
           sku: "Référence Produit"
           price: "Prix"
+          unit_price: "Prix unitaire"
           display_as: "Afficher comme"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'

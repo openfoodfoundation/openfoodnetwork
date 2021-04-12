@@ -1665,28 +1665,29 @@ fil_PH:
   shops_signup_help: handa kaming tumulong.
   shops_signup_help_text: kailangan mo ng mas malaking kita. kailangan mo ng bagong mga mamimili at mga katulong sa operasyon. kailangang malaman ng lahat ang tungkol sa iyong produkto.
   shops_signup_detail: 'ito ang mga detalye:'
-  orders: mga order
-  orders_fees: Mga bayarin...
-  orders_edit_title: Cart para sa pamimili
-  orders_edit_headline: ang iyong cart sa pamimili
-  orders_edit_time: ang order ay handa na para sa
-  orders_edit_continue: magpatuloy sa pamimili
-  orders_edit_checkout: checkout
+  orders: "mga order"
+  orders_fees: "Mga bayarin..."
+  orders_edit_title: "Cart para sa pamimili"
+  orders_edit_headline: "ang iyong cart sa pamimili"
+  orders_edit_time: "ang order ay handa na para sa"
+  orders_edit_continue: "magpatuloy sa pamimili"
+  orders_edit_checkout: "checkout"
   orders_form_empty_cart: "alisin ang laman ng cart"
-  orders_form_subtotal: bahagyang kabuuan ng mga produkto
-  orders_form_admin: Admin & Handling
-  orders_form_total: kabuuan
-  orders_oc_expired_headline: ang mga order ay nagsara na para sa order cycle na ito.
+  orders_form_update_cart: "i-update"
+  orders_form_subtotal: "bahagyang kabuuan ng mga produkto"
+  orders_form_admin: "Admin & Handling"
+  orders_form_total: "kabuuan"
+  orders_oc_expired_headline: "ang mga order ay nagsara na para sa order cycle na ito."
   orders_oc_expired_text: "Paumanhin ngunit ang mga order para sa order cycle na ito ay sarado na mula noong%{time}! Direktang makipag-ugnayan sa inyong Hub upang malaman kung maaari pa silang tumanggap ng mga order."
   orders_oc_expired_text_others_html: "paumanhin ngunit ang mga order para sa order cycle na ito ay sarado na mula noong %{time}! direktang makipag ugnayan sa inyong Hub upang malaman kung maaari pa silang tumanggap ng mga order<strong>%{link}</strong>."
   orders_oc_expired_text_link: "o tignan ang iba pang order cycle mula sa hub na ito."
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telepono:"
-  orders_show_title: Kumpirmasyon ng order
-  orders_show_time: 'ang order ay handa na sa:'
+  orders_show_title: "Kumpirmasyon ng order"
+  orders_show_time: "ang order ay handa na sa:"
   orders_show_order_number: "Order #%{number}"
-  orders_show_cancelled: kanselado
-  orders_show_confirmed: Kumpirmado
+  orders_show_cancelled: "kanselado"
+  orders_show_confirmed: "Kumpirmado"
   orders_your_order_has_been_cancelled: "ang inyong order ay nakansela"
   orders_could_not_cancel: "paumanhin, hindi makansela ang inyong order"
   orders_cannot_remove_the_final_item: "hindi matanggal ang huling item mula sa isang order, maaaring kanselahin na lamang ang order."
@@ -1694,9 +1695,9 @@ fil_PH:
     few: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
     many: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
     other: "%{count}karagdagang mga item ang nakumpirma para sa order cycle na ito"
-  orders_bought_edit_button: ayusin ang kumpirmadong mga item
+  orders_bought_edit_button: "ayusin ang kumpirmadong mga item"
   orders_bought_already_confirmed: "* kumpirmado na"
-  orders_confirm_cancel: sigurado ka bang nais mo na kanselahin ang order na ito?
+  orders_confirm_cancel: "sigurado ka bang nais mo na kanselahin ang order na ito?"
   order_processed_successfully: "ang inyong order ay matagumpay na naproseso"
   products_cart_distributor_choice: "Distributor ng inyong order:"
   products_cart_distributor_change: "ang distributor para sa order na ito ay mapapalitan ng%{name} kung idadagdag ang produktong ito sa inyong cart."
@@ -3134,6 +3135,7 @@ fil_PH:
           back_to_shipping_methods_list: "bumalik sa listahan ng mga paraan ng pagpapadala"
         form:
           categories: "mga kategorya"
+          tax_category: "kategorya ng tax"
           zones: "mga sona"
       payment_methods:
         index:
@@ -3264,7 +3266,6 @@ fil_PH:
           price: "presyo"
           options: "pagpipilian"
           no_results: "Walang resulta"
-          to_add_variants_you_must_first_define: "para makapagdagdag ng mga variant, tukuyin muna ang"
           option_types: "mga uri ng pagpipilian"
           option_values: "Mga halaga ng pagpipilian"
           and: "at"
@@ -3276,6 +3277,7 @@ fil_PH:
         form:
           sku: "SKU"
           price: "presyo"
+          unit_price: "Presyo kada Yunit"
           display_as: "Ipakita Bilang"
           display_name: "Pangalan na nakikita"
         autocomplete:

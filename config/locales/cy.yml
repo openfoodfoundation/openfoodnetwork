@@ -1719,39 +1719,40 @@ cy:
   shops_signup_help: Rydyn ni&#39;n barod i helpu.
   shops_signup_help_text: Mae angen gwell dychweliad arnoch chi. Mae angen prynwyr a phartneriaid logisteg newydd arnoch chi. Mae angen i&#39;ch stori gael ei hadrodd ar draws cyfanwerth, manwerthu a bwrdd y gegin.
   shops_signup_detail: Dyma&#39;r manylion.
-  orders: Gorchmynion
-  orders_fees: Ffioedd ...
-  orders_edit_title: Cart Siopa
-  orders_edit_headline: Eich trol siopa
-  orders_edit_time: Archeb yn barod ar gyfer
-  orders_edit_continue: Parhewch i siopa
-  orders_edit_checkout: Til
+  orders: "Gorchmynion"
+  orders_fees: "Ffioedd ..."
+  orders_edit_title: "Cart Siopa"
+  orders_edit_headline: "Eich trol siopa"
+  orders_edit_time: "Archeb yn barod ar gyfer"
+  orders_edit_continue: "Parhewch i siopa"
+  orders_edit_checkout: "Til"
   orders_form_empty_cart: "Cart gwag"
-  orders_form_subtotal: Cynhyrchu subtotal
-  orders_form_admin: Gweinyddiaeth a Thrin
-  orders_form_total: Cyfanswm
-  orders_oc_expired_headline: Mae archebion wedi cau ar gyfer y cylch archebu hwn
+  orders_form_update_cart: "Diweddariad"
+  orders_form_subtotal: "Cynhyrchu subtotal"
+  orders_form_admin: "Gweinyddiaeth a Thrin"
+  orders_form_total: "Cyfanswm"
+  orders_oc_expired_headline: "Mae archebion wedi cau ar gyfer y cylch archebu hwn"
   orders_oc_expired_text: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a allan nhw dderbyn archebion hwyr."
   orders_oc_expired_text_others_html: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a <strong>allan</strong> nhw dderbyn archebion hwyr <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "neu gwelwch y cylchoedd archebu eraill sydd ar gael yn y canolbwynt hwn"
   orders_oc_expired_email: "E-bost:"
   orders_oc_expired_phone: "Ffôn:"
-  orders_show_title: Cadarnhad Gorchymyn
-  orders_show_time: Archeb yn barod ymlaen
+  orders_show_title: "Cadarnhad Gorchymyn"
+  orders_show_time: "Archeb yn barod ymlaen"
   orders_show_order_number: "Gorchymyn # %{number}"
-  orders_show_cancelled: Wedi&#39;i ganslo
-  orders_show_confirmed: Cadarnhawyd
+  orders_show_cancelled: "Wedi&#39;i ganslo"
+  orders_show_confirmed: "Cadarnhawyd"
   orders_your_order_has_been_cancelled: "Mae eich archeb wedi&#39;i ganslo"
   orders_could_not_cancel: "Mae&#39;n ddrwg gennym, ni ellid canslo&#39;r gorchymyn"
   orders_cannot_remove_the_final_item: "Ni all dynnu’r eitem olaf o orchymyn, canslwch yr archeb yn lle."
   orders_bought_items_notice:
-    one: Mae eitem ychwanegol eisoes wedi&#39;i chadarnhau ar gyfer y cylch archebu hwn
+    one: "Mae eitem ychwanegol eisoes wedi&#39;i chadarnhau ar gyfer y cylch archebu hwn"
     few: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     many: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     other: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
-  orders_bought_edit_button: Golygu eitemau wedi&#39;u cadarnhau
+  orders_bought_edit_button: "Golygu eitemau wedi&#39;u cadarnhau"
   orders_bought_already_confirmed: "* wedi&#39;i gadarnhau eisoes"
-  orders_confirm_cancel: Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r gorchymyn hwn?
+  orders_confirm_cancel: "Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r gorchymyn hwn?"
   order_processed_successfully: "Mae eich archeb wedi&#39;i phrosesu&#39;n llwyddiannus"
   products_cart_distributor_choice: "Dosbarthwr ar gyfer eich archeb:"
   products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer y gorchymyn hwn yn cael ei newid i %{name} os ychwanegwch y cynnyrch hwn at eich trol."
@@ -3285,6 +3286,7 @@ cy:
           back_to_shipping_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Llongau"
         form:
           categories: "Categorïau"
+          tax_category: "Categori Treth"
           zones: "Parthau"
           both: "Checkout a Swyddfa Gefn"
           back_end: "Swyddfa gefn yn unig"
@@ -3429,7 +3431,6 @@ cy:
           price: "Pris"
           options: "Opsiynau"
           no_results: "Dim canlyniadau"
-          to_add_variants_you_must_first_define: "I ychwanegu amrywiadau, rhaid i chi ddiffinio yn gyntaf"
           option_types: "Mathau Opsiwn"
           option_values: "Gwerthoedd Opsiwn"
           and: "a"
@@ -3441,6 +3442,7 @@ cy:
         form:
           sku: "SKU"
           price: "Pris"
+          unit_price: "Pris Uned"
           display_as: "Arddangos Fel"
           display_name: "Enw Arddangos"
           display_as_placeholder: 'ee. 2 kg'

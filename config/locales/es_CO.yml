@@ -1695,28 +1695,29 @@ es_CO:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: Pedidos
-  orders_fees: Comisiones...
-  orders_edit_title: Carrito de compras
-  orders_edit_headline: Su carrito de compras
-  orders_edit_time: Pedido listo para
-  orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Validar
+  orders: "Pedidos"
+  orders_fees: "Comisiones..."
+  orders_edit_title: "Carrito de compras"
+  orders_edit_headline: "Su carrito de compras"
+  orders_edit_time: "Pedido listo para"
+  orders_edit_continue: "Continuar comprando"
+  orders_edit_checkout: "Validar"
   orders_form_empty_cart: "Vaciar carrito"
-  orders_form_subtotal: Subtotal de productos
-  orders_form_admin: Administrar y Gestionar
-  orders_form_total: Total
-  orders_oc_expired_headline: Los pedidos están cerrados para este ciclo
+  orders_form_update_cart: "Actualizar"
+  orders_form_subtotal: "Subtotal de productos"
+  orders_form_admin: "Administrar y Gestionar"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu nodo directamente para ver si pueden aceptar pedidos tardíos."
   orders_oc_expired_text_others_html: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu nodo directamente para ver si pueden aceptar pedidos tardíos <strong>%{link}</strong>."
   orders_oc_expired_text_link: "o vea los otros ciclos de pedidos disponibles en este nodo"
   orders_oc_expired_email: "Correo electrónico:"
   orders_oc_expired_phone: "Teléfono:"
-  orders_show_title: Confirmación del pedido
-  orders_show_time: Pedido listo en
+  orders_show_title: "Confirmación del pedido"
+  orders_show_time: "Pedido listo en"
   orders_show_order_number: "Pedido #%{number}"
-  orders_show_cancelled: Cancelado
-  orders_show_confirmed: Confirmado
+  orders_show_cancelled: "Cancelado"
+  orders_show_confirmed: "Confirmado"
   orders_your_order_has_been_cancelled: "Su pedido ha sido cancelado"
   orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
   orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
@@ -1724,9 +1725,9 @@ es_CO:
     few: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     many: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     other: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
-  orders_bought_edit_button: Editar artículos confirmados
+  orders_bought_edit_button: "Editar artículos confirmados"
   orders_bought_already_confirmed: "* ya confirmados"
-  orders_confirm_cancel: Seguro que desea cancelar este pedido?
+  orders_confirm_cancel: "Seguro que desea cancelar este pedido?"
   order_processed_successfully: "Su pedido ha sido procesado con éxito."
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
@@ -3186,6 +3187,7 @@ es_CO:
           back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         form:
           categories: "Categorías"
+          tax_category: "Categoría de impuestos"
           zones: "Zonas"
           both: "Tanto Checkout como Back office"
           back_end: "Back office solamente"
@@ -3330,7 +3332,6 @@ es_CO:
           price: "Precio"
           options: "Opciones"
           no_results: "No hay resultados"
-          to_add_variants_you_must_first_define: "Para agregar variantes, usted debe primero definir"
           option_types: "Tipos de opciones"
           option_values: "Valores de opción"
           and: "y"
@@ -3342,6 +3343,7 @@ es_CO:
         form:
           sku: "SKU"
           price: "Precio"
+          unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
           display_as_placeholder: 'p.ej. 2 kilogramos'

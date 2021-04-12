@@ -1687,28 +1687,29 @@ pl:
   shops_signup_help: Jesteśmy gotowi do pomocy.
   shops_signup_help_text: Potrzebujesz lepszego zwrotu. Potrzebujesz nowych kupujących i partnerów logistycznych. Potrzebujesz swojej historii opowiedzianej w sprzedaży hurtowej, detalicznej i na stole kuchennym.
   shops_signup_detail: Oto szczegóły.
-  orders: Zamówienia
-  orders_fees: Opłaty ...
-  orders_edit_title: Koszyk
-  orders_edit_headline: Twój Koszyk
-  orders_edit_time: Termin odbioru
-  orders_edit_continue: Kontynuuj zakupy
-  orders_edit_checkout: Zamów
+  orders: "Zamówienia"
+  orders_fees: "Opłaty ..."
+  orders_edit_title: "Koszyk"
+  orders_edit_headline: "Twój Koszyk"
+  orders_edit_time: "Termin odbioru"
+  orders_edit_continue: "Kontynuuj zakupy"
+  orders_edit_checkout: "Zamów"
   orders_form_empty_cart: "Pusty koszyk"
-  orders_form_subtotal: Podaj sumę częściową
-  orders_form_admin: Administracja i obsługa
-  orders_form_total: Razem
-  orders_oc_expired_headline: Ten cykl zamówień został zamknięty
+  orders_form_update_cart: "Aktualizuj"
+  orders_form_subtotal: "Podaj sumę częściową"
+  orders_form_admin: "Administracja i obsługa"
+  orders_form_total: "Razem"
+  orders_oc_expired_headline: "Ten cykl zamówień został zamknięty"
   orders_oc_expired_text: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z hubem, aby sprawdzić, czy może przyjmować spóźnione zamówienia."
   orders_oc_expired_text_others_html: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z hubem, aby sprawdzić, czy może przyjąć spóźnione zamówienia <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "lub zobacz inne cykle zamówień dostępne w tym hubie"
   orders_oc_expired_email: "E-mail:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Potwierdzenie zamówienia
-  orders_show_time: Zamówienie gotowe w dniu
+  orders_show_title: "Potwierdzenie zamówienia"
+  orders_show_time: "Zamówienie gotowe w dniu"
   orders_show_order_number: "Zamówienie nr %{number}"
-  orders_show_cancelled: Anulowane
-  orders_show_confirmed: Potwierdzone
+  orders_show_cancelled: "Anulowane"
+  orders_show_confirmed: "Potwierdzone"
   orders_your_order_has_been_cancelled: "Twoje zamówienie zostało anulowane"
   orders_could_not_cancel: "Przepraszamy, nie można anulować zamówienia"
   orders_cannot_remove_the_final_item: "Nie można usunąć ostatniej pozycji z zamówienia. Zamiast tego anuluj zamówienie."
@@ -1716,9 +1717,9 @@ pl:
     few: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
     many: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
     other: "%{count} dodatkowe pozycje już potwierdzone dla tego cyklu zamówień"
-  orders_bought_edit_button: Edytuj potwierdzone pozycje
+  orders_bought_edit_button: "Edytuj potwierdzone pozycje"
   orders_bought_already_confirmed: "* już potwierdzony"
-  orders_confirm_cancel: Czy na pewno chcesz anulować to zamówienie?
+  orders_confirm_cancel: "Czy na pewno chcesz anulować to zamówienie?"
   order_processed_successfully: "Twoje zamówienie zostało pomyślnie przetworzone"
   products_cart_distributor_choice: "Dystrybutor na Twoje zamówienie:"
   products_cart_distributor_change: "Twój dystrybutor dla tego zamówienia zostanie zmieniony na %{name}, jeśli dodasz ten produkt do koszyka."
@@ -3207,6 +3208,7 @@ pl:
           back_to_shipping_methods_list: "Powrót do listy metod dostaw"
         form:
           categories: "Kategorie"
+          tax_category: "Kategoria podatku"
           zones: "Strefy"
           both: "Zarówno Checkout, jak i Back office"
           back_end: "Tylko na zapleczu"
@@ -3350,7 +3352,6 @@ pl:
           price: "Cena"
           options: "Opcje"
           no_results: "Brak wyników"
-          to_add_variants_you_must_first_define: "Aby dodać warianty, musisz najpierw zdefiniować"
           option_types: "Typy opcji"
           option_values: "Wartości opcji"
           and: "i"

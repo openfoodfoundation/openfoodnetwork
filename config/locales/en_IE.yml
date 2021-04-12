@@ -2953,7 +2953,6 @@ en_IE:
     back_to_adjustments_list: "Back to adjustments"
     back_to_users_list: "Back to users"
     back_to_zones_list: "Back to zones"
-    bugherd_api_key: "Bugherd API key"
     card_code: "Card code"
     card_number: "Card number"
     category: "Category"
@@ -3365,6 +3364,7 @@ en_IE:
           back_to_shipping_methods_list: "Back To Shipping Methods List"
         form:
           categories: "Categories"
+          tax_category: "Tax Category"
           zones: "Zones"
           both: "Both Checkout and Back office"
           back_end: "Back office only"
@@ -3517,7 +3517,6 @@ en_IE:
           price: "Price"
           options: "Options"
           no_results: "No results"
-          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
           option_values: "Option Values"
           and: "and"

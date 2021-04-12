@@ -1723,39 +1723,40 @@ nb:
   shops_signup_help: Vi er klar til å hjelpe.
   shops_signup_help_text: Du trenger bedre resultater. Du trenger nye kunder og logistikkpartnere. Du trenger å få din historie fortalt hos grossister, i dagligvaren og rundt kjøkkenbordet.
   shops_signup_detail: Detaljene.
-  orders: Bestillinger
-  orders_fees: Gebyrer...
-  orders_edit_title: Handlekurv
-  orders_edit_headline: Din handlekurv
-  orders_edit_time: Bestilling klar for
-  orders_edit_continue: Fortsett å handle
-  orders_edit_checkout: Kassen
+  orders: "Bestillinger"
+  orders_fees: "Gebyrer..."
+  orders_edit_title: "Handlekurv"
+  orders_edit_headline: "Din handlekurv"
+  orders_edit_time: "Bestilling klar for"
+  orders_edit_continue: "Fortsett å handle"
+  orders_edit_checkout: "Kassen"
   orders_form_empty_cart: "Tøm handlekurv"
-  orders_form_subtotal: Delsum varer
-  orders_form_admin: Admin & Håndtering
-  orders_form_total: Total
-  orders_oc_expired_headline: Bestillinger stengt for denne runden
+  orders_form_update_cart: "Oppdater"
+  orders_form_subtotal: "Delsum varer"
+  orders_form_admin: "Admin & Håndtering"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Bestillinger stengt for denne runden"
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
   orders_oc_expired_text_others_html: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger <strong>%{link}</strong>."
   orders_oc_expired_text_link: "eller se på de andre bestillinsrundene tilgjengelig fra denne huben"
   orders_oc_expired_email: "Epost:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Ordrebekreftelse
-  orders_show_time: Bestilling klar for
+  orders_show_title: "Ordrebekreftelse"
+  orders_show_time: "Bestilling klar for"
   orders_show_order_number: "Bestilling # %{number}"
-  orders_show_cancelled: Avbrutt
-  orders_show_confirmed: Bekreftet
+  orders_show_cancelled: "Avbrutt"
+  orders_show_confirmed: "Bekreftet"
   orders_your_order_has_been_cancelled: "Din bestilling er avbrutt"
   orders_could_not_cancel: "Beklager, bestillingen kunne ikke avbrytes"
   orders_cannot_remove_the_final_item: "Kan ikke fjerne den siste varen fra en bestilling, vennligst avbryt bestillingen i stedet."
   orders_bought_items_notice:
-    one: En ekstra vare er allerede bekreftet for denne bestillingsrunden
+    one: "En ekstra vare er allerede bekreftet for denne bestillingsrunden"
     few: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     many: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     other: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
-  orders_bought_edit_button: Rediger bekreftede varer
+  orders_bought_edit_button: "Rediger bekreftede varer"
   orders_bought_already_confirmed: "* allerede bekreftet"
-  orders_confirm_cancel: Er du sikker på at du vil avbryte denne bestillingen?
+  orders_confirm_cancel: "Er du sikker på at du vil avbryte denne bestillingen?"
   order_processed_successfully: "Behandlingen av din bestilling var vellykket"
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
@@ -3240,6 +3241,7 @@ nb:
           back_to_shipping_methods_list: "Tilbake til liste over leveringsmetoder"
         form:
           categories: "Kategorier"
+          tax_category: "Avgiftskategori"
           zones: "Soner"
           both: "Både Utsjekk og Backoffice"
           back_end: "Kun backoffice"
@@ -3384,7 +3386,6 @@ nb:
           price: "Pris"
           options: "Valg"
           no_results: "Ingen resultater"
-          to_add_variants_you_must_first_define: "For å legge til varianter, må du først definere"
           option_types: "Valgtyper"
           option_values: "Valgverdier"
           and: "og"
@@ -3396,6 +3397,7 @@ nb:
         form:
           sku: "SKU"
           price: "Pris"
+          unit_price: "Enhetspris"
           display_as: "Vis som"
           display_name: "Visningsnavn"
           display_as_placeholder: 'f.eks. 2 kg'

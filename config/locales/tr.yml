@@ -1723,39 +1723,40 @@ tr:
   shops_signup_help: Yardım etmeye hazırız.
   shops_signup_help_text: Daha yüksek bir iş potansiyeliniz var. Yeni alıcılarla ve ortak hareket edebileceğiniz diğer üretici ve gruplarla iletişime geçin. Birlikte daha güçlüyüz. Hikayeniz, bir ailenin sofrasında anlatılmayı bekliyor.
   shops_signup_detail: İşte detay.
-  orders: Siparişler
-  orders_fees: Ücretler ...
-  orders_edit_title: Alışveriş Sepeti
-  orders_edit_headline: Alışveriş sepetiniz
-  orders_edit_time: Sipariş Teslimat
-  orders_edit_continue: Alışverişe devam
-  orders_edit_checkout: Ödeme Yap
+  orders: "Siparişler"
+  orders_fees: "Ücretler ..."
+  orders_edit_title: "Alışveriş Sepeti"
+  orders_edit_headline: "Alışveriş sepetiniz"
+  orders_edit_time: "Sipariş Teslimat"
+  orders_edit_continue: "Alışverişe devam"
+  orders_edit_checkout: "Ödeme Yap"
   orders_form_empty_cart: "Sepeti Boşalt"
-  orders_form_subtotal: Ürün Ara Toplamı
-  orders_form_admin: Yönetim & Operasyon
-  orders_form_total: Toplam
-  orders_oc_expired_headline: Bu sipariş dönemi için siparişler kapatıldı
+  orders_form_update_cart: "Güncelle"
+  orders_form_subtotal: "Ürün Ara Toplamı"
+  orders_form_admin: "Yönetim & Operasyon"
+  orders_form_total: "Toplam"
+  orders_oc_expired_headline: "Bu sipariş dönemi için siparişler kapatıldı"
   orders_oc_expired_text: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin."
   orders_oc_expired_text_others_html: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin<strong>%{link}</strong> ."
   orders_oc_expired_text_link: "veya bu pazarın diğer sipariş dönemlerine bakın"
   orders_oc_expired_email: "E-posta:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Sipariş Onayı
-  orders_show_time: Sipariş hazır
+  orders_show_title: "Sipariş Onayı"
+  orders_show_time: "Sipariş hazır"
   orders_show_order_number: "Sipariş # %{number}"
-  orders_show_cancelled: İptal edildi
-  orders_show_confirmed: Onaylandı
+  orders_show_cancelled: "İptal edildi"
+  orders_show_confirmed: "Onaylandı"
   orders_your_order_has_been_cancelled: "Siparişiniz iptal edildi"
   orders_could_not_cancel: "Maalesef sipariş iptal edilemedi"
   orders_cannot_remove_the_final_item: "Son ürün siparişten kaldırılamaz, lütfen bunun yerine siparişi iptal edin."
   orders_bought_items_notice:
-    one: Bu sipariş döngüsü için ek bir ürün zaten onaylandı.
+    one: "Bu sipariş döngüsü için ek bir ürün zaten onaylandı."
     few: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     many: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     other: "%{count} ürün bu sipariş dönemi için onaylandı bile"
-  orders_bought_edit_button: Onaylanan ürünleri düzenle
+  orders_bought_edit_button: "Onaylanan ürünleri düzenle"
   orders_bought_already_confirmed: "* zaten onaylandı"
-  orders_confirm_cancel: Bu siparişi iptal etmek istediğinize emin misiniz?
+  orders_confirm_cancel: "Bu siparişi iptal etmek istediğinize emin misiniz?"
   order_processed_successfully: "Siparişiniz başarıyla işlendi"
   products_cart_distributor_choice: "Siparişinizin dağıtımcısı:"
   products_cart_distributor_change: "Bu ürünü sepetinize eklerseniz, bu sipariş için dağıtımcınız %{name} olarak değiştirilecektir."
@@ -3244,6 +3245,7 @@ tr:
           back_to_shipping_methods_list: "Teslimat Yöntemlerine Gerİ Dön"
         form:
           categories: "Kategoriler"
+          tax_category: "Vergi Kategorisi"
           zones: "bölgeler"
           both: "Ödeme Sayfası ve Panel"
           back_end: "Sadece panel"
@@ -3388,7 +3390,6 @@ tr:
           price: "Fiyat"
           options: "Seçenekler"
           no_results: "Sonuç yok"
-          to_add_variants_you_must_first_define: "Varyant eklemeden önce tanımlamanız gerekir"
           option_types: "Seçenek Türleri"
           option_values: "Seçenek Değerleri"
           and: "ve"
@@ -3400,6 +3401,7 @@ tr:
         form:
           sku: "Stok Kodu"
           price: "Fiyat"
+          unit_price: "Birim fiyat"
           display_as: "Gösterme Şekli"
           display_name: "Ekran adı"
           display_as_placeholder: 'Örn. 2 kg'

@@ -1731,39 +1731,40 @@ ar:
   shops_signup_help: نحن على استعداد للمساعدة.
   shops_signup_help_text: أنت بحاجة إلى عائد أفضل. تحتاج لمشترين جدد وشركاء لوجستيين. تحتاج إلى سرد قصتك عبر الجملة والتجزئة وطاولة المطبخ.
   shops_signup_detail: هنا التفاصيل.
-  orders: الطلبات
-  orders_fees: رسوم ...
-  orders_edit_title: سلة التسوق
-  orders_edit_headline: سلة التسوق الخاصة بك
-  orders_edit_time: الطلب جاهز لل
-  orders_edit_continue: مواصلة التسوق
-  orders_edit_checkout: تابع للخروج
+  orders: "الطلبات"
+  orders_fees: "رسوم ..."
+  orders_edit_title: "سلة التسوق"
+  orders_edit_headline: "سلة التسوق الخاصة بك"
+  orders_edit_time: "الطلب جاهز لل"
+  orders_edit_continue: "مواصلة التسوق"
+  orders_edit_checkout: "تابع للخروج"
   orders_form_empty_cart: "السلة فارغة"
-  orders_form_subtotal: إنتاج المجموع الفرعي
-  orders_form_admin: الادارة و المعالجة
-  orders_form_total: مجموع
-  orders_oc_expired_headline: تم إغلاق الطلبات لدورة الطلب هذه
+  orders_form_update_cart: "تحديث"
+  orders_form_subtotal: "إنتاج المجموع الفرعي"
+  orders_form_admin: "الادارة و المعالجة"
+  orders_form_total: "مجموع"
+  orders_oc_expired_headline: "تم إغلاق الطلبات لدورة الطلب هذه"
   orders_oc_expired_text: "عفوًا ، تم إغلاق أوامر دورة الطلب هذه منذ %{time}! يرجى الاتصال بالمركز مباشرة لمعرفة ما إذا كان يمكنهم قبول الطلبات المتأخرة أم لا."
   orders_oc_expired_text_others_html: "عفوًا ، تم إغلاق أوامر دورة الطلب هذه منذ %{time}! يرجى الاتصال <strong>بالمركز</strong> مباشرة لمعرفة ما إذا كان يمكنهم قبول الطلبات المتأخرة <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "أو راجع دورات الترتيب الأخرى المتاحة في هذا المركز"
   orders_oc_expired_email: "البريد الإلكتروني:"
   orders_oc_expired_phone: "هاتف:"
-  orders_show_title: تأكيد الطلب
-  orders_show_time: الطلب جاهز
+  orders_show_title: "تأكيد الطلب"
+  orders_show_time: "الطلب جاهز"
   orders_show_order_number: "الطلب # %{number}"
-  orders_show_cancelled: ألغيت
-  orders_show_confirmed: تم تأكيد
+  orders_show_cancelled: "ألغيت"
+  orders_show_confirmed: "تم تأكيد"
   orders_your_order_has_been_cancelled: "تم إلغاء طلبك"
   orders_could_not_cancel: "عذرًا ، تعذر إلغاء الطلب"
   orders_cannot_remove_the_final_item: "لا يمكن إزالة العنصر الأخير من الطلب ، يرجى إلغاء الطلب بدلاً من ذلك."
   orders_bought_items_notice:
-    one: تم بالفعل تأكيد عنصر إضافي لدورة الطلب هذه
+    one: "تم بالفعل تأكيد عنصر إضافي لدورة الطلب هذه"
     few: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     many: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     other: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
-  orders_bought_edit_button: تحرير العناصر المؤكدة
+  orders_bought_edit_button: "تحرير العناصر المؤكدة"
   orders_bought_already_confirmed: "* أكد بالفعل"
-  orders_confirm_cancel: هل أنت متأكد أنك تريد إلغاء هذا الطلب؟
+  orders_confirm_cancel: "هل أنت متأكد أنك تريد إلغاء هذا الطلب؟"
   order_processed_successfully: "تمت معالجة طلبك بنجاح"
   products_cart_distributor_choice: "الموزع لطلبك:"
   products_cart_distributor_change: "سيتم تغيير موزعك لهذا الطلب إلى %{name} إذا أضفت هذا المنتج إلى سلة التسوق الخاصة بك."
@@ -3364,6 +3365,7 @@ ar:
           back_to_shipping_methods_list: "العودة إلى قائمة طرق الشحن"
         form:
           categories: "التصنيفات"
+          tax_category: "الفئة الضريبية"
           zones: "مناطق"
           both: "كل من تسجيل الخروج والمكتب الخلفي"
           back_end: "المكتب الخلفي فقط"
@@ -3516,7 +3518,6 @@ ar:
           price: "السعر"
           options: "خيارات"
           no_results: "لا يوجد نتائج"
-          to_add_variants_you_must_first_define: "لإضافة المتغيرات ، يجب عليك أولاً تعريفها"
           option_types: "أنواع الخيارات"
           option_values: "قيم الخيارات"
           and: "و"
@@ -3528,6 +3529,7 @@ ar:
         form:
           sku: "SKU"
           price: "السعر"
+          unit_price: "سعر الوحدة"
           display_as: "عرض ب"
           display_name: "اسم العرض"
           display_as_placeholder: 'على سبيل المثال 2 كجم'

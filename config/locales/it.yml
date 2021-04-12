@@ -2951,7 +2951,6 @@ it:
     back_to_adjustments_list: "Indietro ad Aggiustamenti"
     back_to_users_list: "Indietro a Utenti"
     back_to_zones_list: "Indietro a Zone"
-    bugherd_api_key: "Bugherd API key"
     card_code: "Codice carta"
     card_number: "Numero carta"
     category: "Categoria"
@@ -3516,7 +3515,6 @@ it:
           price: "Prezzo"
           options: "Opzioni"
           no_results: "Nessun risultato"
-          to_add_variants_you_must_first_define: "Per aggiungere varianti, devi prima definire"
           option_types: "Tipi di opzioni"
           option_values: "Valori opzione"
           and: "e"
@@ -3570,8 +3568,8 @@ it:
           or_enter_new_card: "Oppure, inserire dettagli di una nuova carta"
           remember_this_card: Ricordare questa Carta?
     date_picker:
-      flatpickr_date_format: "G-m-a"
-      flatpickr_datetime_format: "G-m-a H:m"
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
       today: "Oggi"
       now: "Adesso"
     orders:

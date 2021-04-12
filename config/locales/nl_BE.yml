@@ -1699,28 +1699,29 @@ nl_BE:
   shops_signup_help: We zijn klaar om te helpen.
   shops_signup_help_text: Je hebt een betere winst nodig. Je hebt nood aan kopers en logistieke partners. Je moet een verhaal verkocht krijgen aan groothandelaren, retail en aan de keukentafel.
   shops_signup_detail: Hier is het plaatje gedetailleerder.
-  orders: Bestellingen
-  orders_fees: Kosten...
-  orders_edit_title: Winkelwagentje
-  orders_edit_headline: Je winkelwagentje
-  orders_edit_time: Bestellingen klaar tegen
-  orders_edit_continue: Ga verder met winkelen
-  orders_edit_checkout: Kassa
+  orders: "Bestellingen"
+  orders_fees: "Kosten..."
+  orders_edit_title: "Winkelwagentje"
+  orders_edit_headline: "Je winkelwagentje"
+  orders_edit_time: "Bestellingen klaar tegen"
+  orders_edit_continue: "Ga verder met winkelen"
+  orders_edit_checkout: "Kassa"
   orders_form_empty_cart: "Maak je winkelwagentje leeg"
-  orders_form_subtotal: subtotaal Producten
-  orders_form_admin: Beheer & Behandeling
-  orders_form_total: Totaal
-  orders_oc_expired_headline: Bestellingen zijn gesloten voor deze bestellingscyclus
+  orders_form_update_cart: "Update"
+  orders_form_subtotal: "subtotaal Producten"
+  orders_form_admin: "Beheer & Behandeling"
+  orders_form_total: "Totaal"
+  orders_oc_expired_headline: "Bestellingen zijn gesloten voor deze bestellingscyclus"
   orders_oc_expired_text: "Sorry, bestellingen voor deze bestellingscyclus zijn %{time} geleden gesloten! Contacteer alsjeblief rechtstreeks een hub om te zien indien ze of ze laattijdige bestellingen kunnen accepteren."
   orders_oc_expired_text_others_html: "Sorry, bestellingen voor deze cyclus zijn %{time} geleden gesloten! Contacteer alsjeblief een hub rechtstreeks om te kijken of ze laattijdige bestellingen kunnen accepteren <strong>%{link}</strong>."
   orders_oc_expired_text_link: "of kijk eens naar de andere bestellingscycli beschikbaar in deze hub"
   orders_oc_expired_email: "E-Mail:"
   orders_oc_expired_phone: "Telefoon:"
-  orders_show_title: Bestellingsinformatie
-  orders_show_time: Bestelling klaar op
+  orders_show_title: "Bestellingsinformatie"
+  orders_show_time: "Bestelling klaar op"
   orders_show_order_number: "Bestelling #%{number}"
-  orders_show_cancelled: Geannuleerd
-  orders_show_confirmed: Bevestigd
+  orders_show_cancelled: "Geannuleerd"
+  orders_show_confirmed: "Bevestigd"
   orders_your_order_has_been_cancelled: "Je bestelling werd geannuleerd"
   orders_could_not_cancel: "Sorry, de bestelling kon niet worden geannuleerd"
   orders_cannot_remove_the_final_item: "Het is niet mogelijk om het laatste artikel van de bestelling te verwijderen, verwijder in plaats daarvan alsjeblieft de bestelling."
@@ -1728,9 +1729,9 @@ nl_BE:
     few: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
     many: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
     other: "%{count}bijkomende artikels zijn reeds bevestigd voor deze bestellingscyclus"
-  orders_bought_edit_button: Pas de bevestigde artikels aan
+  orders_bought_edit_button: "Pas de bevestigde artikels aan"
   orders_bought_already_confirmed: "* reeds bevestigd"
-  orders_confirm_cancel: Ben je zeker dat je deze bestelling wil annuleren?
+  orders_confirm_cancel: "Ben je zeker dat je deze bestelling wil annuleren?"
   order_processed_successfully: "Je bestelling is met succes geplaatst"
   products_cart_distributor_choice: "Verdeler voor jouw bestelling:"
   products_cart_distributor_change: "Je verdeler voor deze bestelling zal vervangen worden door %{name} indien je dit product toevoegt aan je winkelwagentje."
@@ -3114,6 +3115,7 @@ nl_BE:
           back_to_shipping_methods_list: "Terug naar Verzendmethodenlijst"
         form:
           categories: "Categorieën"
+          tax_category: "Belastingcategorie"
           zones: "Zones "
           both: "Bijden uitchecken en Back office"
           back_end: "Aleen Back Office"
@@ -3258,7 +3260,6 @@ nl_BE:
           price: "Prijs"
           options: "Opties"
           no_results: "Geen resultaten "
-          to_add_variants_you_must_first_define: "Om varianten toetevoegen moet u eerst bepalen"
           option_types: "Optietypen"
           option_values: "Waarden opties"
           and: "En"
@@ -3270,6 +3271,7 @@ nl_BE:
         form:
           sku: "SKU"
           price: "Prijs"
+          unit_price: "Stukprijs"
           display_as: "Weergeven als"
           display_name: "Weergave naam"
           display_as_placeholder: 'bv. 2.kg'

@@ -1041,27 +1041,28 @@ sv:
   shops_signup_help: Vi är redo att hjälpa.
   shops_signup_help_text: Du behöver bättre vinst. Du behöver nya kunder och logistikpartner. Din historia behöver bli känd bland grossister, detaljhandlare och vid köksbordet.
   shops_signup_detail: Här är haken.
-  orders_fees: Avgifter...
-  orders_edit_title: Varukorg
-  orders_edit_headline: Din varukorg
-  orders_edit_time: Beställning redo för
-  orders_edit_continue: Fortsätt handla
-  orders_edit_checkout: Utcheckning
+  orders_fees: "Avgifter..."
+  orders_edit_title: "Varukorg"
+  orders_edit_headline: "Din varukorg"
+  orders_edit_time: "Beställning redo för"
+  orders_edit_continue: "Fortsätt handla"
+  orders_edit_checkout: "Utcheckning"
   orders_form_empty_cart: "Tom varukorg"
-  orders_form_subtotal: Framställ delsumma
-  orders_form_admin: Administration och hantering
-  orders_form_total: 'Summa '
-  orders_oc_expired_headline: Denna orderomgång är stängd för nya order
+  orders_form_update_cart: "Uppdatera"
+  orders_form_subtotal: "Framställ delsumma"
+  orders_form_admin: "Administration och hantering"
+  orders_form_total: "Summa "
+  orders_oc_expired_headline: "Denna orderomgång är stängd för nya order"
   orders_oc_expired_text: "Tyvärr, order för denna orderomgång stängde  för %{time} sedan! Var vänlig kontakta ditt matcenter för att se om de kan ta emot en sen order. "
   orders_oc_expired_text_others_html: "Tyvärr, order för denna orderomgång stängde  för %{time} sedan! Var vänlig kontakta ditt matcenter för att se om de kan ta emot en sen order <strong>%{link}</strong>."
   orders_oc_expired_text_link: "eller se de andra beställningstiderna för detta matställe"
   orders_oc_expired_email: "E-post:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Orderbekräftelse
-  orders_show_time: Order redo den
+  orders_show_title: "Orderbekräftelse"
+  orders_show_time: "Order redo den"
   orders_show_order_number: "Beställning # %{number}"
-  orders_show_cancelled: Avbokad
-  orders_show_confirmed: Bekräftad
+  orders_show_cancelled: "Avbokad"
+  orders_show_confirmed: "Bekräftad"
   orders_your_order_has_been_cancelled: "Din beställning har avbrutits"
   orders_could_not_cancel: "Tyvärr kan denna beställning inte avbrytas"
   orders_cannot_remove_the_final_item: "Det går inte att ta bort det sista varan från en beställning, var god och avbryt beställningen istället."
@@ -1069,9 +1070,9 @@ sv:
     few: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
     many: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
     other: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
-  orders_bought_edit_button: Redigera bekräftade varor
+  orders_bought_edit_button: "Redigera bekräftade varor"
   orders_bought_already_confirmed: "* redan bekräftad"
-  orders_confirm_cancel: Är du säker på att du vill avbryta denna beställning?
+  orders_confirm_cancel: "Är du säker på att du vill avbryta denna beställning?"
   products_cart_distributor_choice: "Distributör för din order:"
   products_cart_distributor_change: "Din distributör för denna order kommer att ändras till %{name} om du lägger denna produkt i din kundkorg."
   products_cart_distributor_is: "Din distributör för denna order är %{name}."
@@ -2044,6 +2045,8 @@ sv:
           name: "Namn"
           products_distributor: "Distributör"
           calculator: "Beräkning"
+        form:
+          tax_category: "Skattekategori"
       payment_methods:
         index:
           payment_methods: "Betalningssätt"
@@ -2107,6 +2110,7 @@ sv:
         form:
           sku: "SKU"
           price: "Pris"
+          unit_price: "Styckpris"
           display_as: "Visa som"
         autocomplete:
           producer_name: "Producent"
