@@ -310,7 +310,7 @@ describe Spree::Order do
 
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
-      allow(order).to receive(:old_outstanding_balance) { 10.55 }
+      allow(order).to receive(:new_outstanding_balance) { 10.55 }
       expect(order.display_outstanding_balance).to eq Spree::Money.new(10.55)
     end
   end

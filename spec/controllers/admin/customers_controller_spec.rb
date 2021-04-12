@@ -43,47 +43,20 @@ module Admin
               get :index, params: params
             end
 
-            context 'when the customer_balance feature is enabled' do
-              let(:customers_with_balance) { instance_double(CustomersWithBalance) }
+            it 'calls CustomersWithBalance' do
+              customers_with_balance = instance_double(CustomersWithBalance) 
+              allow(CustomersWithBalance)
+                .to receive(:new).with(enterprise) { customers_with_balance }
 
-              before do
-                allow(OpenFoodNetwork::FeatureToggle)
-                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
-              end
+              expect(customers_with_balance).to receive(:query) { Customer.none }
 
-              it 'calls CustomersWithBalance' do
-                allow(CustomersWithBalance)
-                  .to receive(:new).with(enterprise) { customers_with_balance }
-
-                expect(customers_with_balance).to receive(:query) { Customer.none }
-
-                get :index, params: params
-              end
-
-              it 'serializes using CustomerWithBalanceSerializer' do
-                expect(Api::Admin::CustomerWithBalanceSerializer).to receive(:new)
-
-                get :index, params: params
-              end
+              get :index, params: params
             end
 
-            context 'when the customer_balance feature is not enabled' do
-              let(:calculator) do
-                instance_double(OpenFoodNetwork::UserBalanceCalculator, balance: 0)
-              end
+            it 'serializes using CustomerWithBalanceSerializer' do
+              expect(Api::Admin::CustomerWithBalanceSerializer).to receive(:new)
 
-              it 'calls Customer.of' do
-                expect(Customer).to receive(:of).twice.with(enterprise) { Customer.none }
-
-                get :index, params: params
-              end
-
-              it 'serializes calling the UserBalanceCalculator' do
-                expect(OpenFoodNetwork::UserBalanceCalculator)
-                  .to receive(:new).with(customer.email, customer.enterprise) { calculator }
-
-                get :index, params: params
-              end
+              get :index, params: params
             end
 
             context 'when the customer has no orders' do
