@@ -332,6 +332,8 @@ en_GB:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
     begins_on: Begins On
     bill_address: "Bill address"
@@ -1610,7 +1612,7 @@ en_GB:
   shopping_tabs_home: "Notices"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
-  shopping_tabs_producers: "Pricing"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
   shopping_tabs_groups: "Groups"
   shopping_contact_address: "Address"
