@@ -27,6 +27,11 @@ jobs:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
+    strategy:
+      matrix:
+        specs:
+          - "spec/controllers"
+          - "spec/serializers"
     steps:
       - uses: actions/checkout@v2
 
@@ -51,7 +56,7 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run controller tests
-        run: bundle exec rspec --profile -- spec/controllers spec/serializers
+        run: bundle exec rspec --profile -- ${{ matrix.specs }}
 
       - name: Codecov
         uses: codecov/codecov-action@v1.3.1
