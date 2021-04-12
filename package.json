@@ -5,7 +5,13 @@
     "type": "git",
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
+  "scripts": {
+    "storybook": "start-storybook"
+  },
   "devDependencies": {
+    "@storybook/addon-controls": "^6.2.7",
+    "@storybook/addon-docs": "^6.2.7",
+    "@storybook/server": "^6.2.7",
     "jasmine-core": "~2.4.1",
     "karma": "~6.3.2",
     "karma-chrome-launcher": "~3.1.0",

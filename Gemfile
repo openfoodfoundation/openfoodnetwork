@@ -166,6 +166,8 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
 
+  gem "view_component_storybook", require: "view_component/storybook/engine"
+
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
   # While we don't require this gem directly, no dependents forced the upgrade to a version
   # greater than 1.0.9, so we just required the latest available version here.
