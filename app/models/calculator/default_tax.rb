@@ -23,8 +23,13 @@ module Calculator
       calculable
     end
 
-    # Enable calculation of tax for enterprise fees with tax rates where included_in_price = false
     def compute_order(order)
+      # This legacy tax calculation applies to additional taxes only, and is no longer used.
+      # In theory it should never be called any more after this has been deployed.
+      # If the message below doesn't show up in Bugsnag, we can safely delete this method and all
+      # the related methods below it.
+      Bugsnag.notify("Calculator::DefaultTax was called with legacy tax calculations")
+
       calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(order.distributor,
                                                                 order.order_cycle)
 
