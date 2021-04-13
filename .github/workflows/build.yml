@@ -6,10 +6,10 @@ on:
   pull_request:
 
 env:
-  DISABLE_KNAPSACK: true
   TIMEZONE: UTC
   COVERAGE: true
   RSPEC_RETRY_RETRY_COUNT: 3
+  CI_NODE_TOTAL: 10
 
 jobs:
   rspec:
@@ -29,29 +29,7 @@ jobs:
           POSTGRES_PASSWORD: f00d
     strategy:
       matrix:
-        specs:
-          - "spec/controllers/{,/*/**}/*_spec.rb"
-          - "spec/serializers/{,/*/**}/*_spec.rb"
-          - "spec/models/{,/*/**}/*_spec.rb"
-          - "spec/controllers/{,/*/**}/*_spec.rb"
-          - "spec/features/admin/[0-9a-o]*_spec.rb"
-          - "spec/features/admin/[p-z]*_spec.rb"
-          - "spec/features/consumer/{,/*/**}/*_spec.rb"
-          - "spec/helpers/{,/*/**}/*_spec.rb"
-          - "spec/initializers/{,/*/**}/*_spec.rb"
-          - "spec/jobs/{,/*/**}/*_spec.rb"
-          - "spec/lib/{,/*/**}/*_spec.rb"
-          - "spec/mailers/{,/*/**}/*_spec.rb"
-          - "spec/migrations/{,/*/**}/*_spec.rb"
-          - "spec/models/{,/*/**}/*_spec.rb"
-          - "spec/queries/{,/*/**}/*_spec.rb"
-          - "spec/requests/{,/*/**}/*_spec.rb"
-          - "spec/serializers/{,/*/**}/*_spec.rb"
-          - "spec/services/{,/*/**}/*_spec.rb"
-          - "spec/system/{,/*/**}/*_spec.rb"
-          - "spec/validators/{,/*/**}/*_spec.rb"
-          - "spec/views/{,/*/**}/*_spec.rb"
-          - "engines/*/spec/{,/*/**}/*_spec.rb"
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "other"]
     steps:
       - uses: actions/checkout@v2
 
@@ -76,7 +54,15 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run some specs
-        run: bundle exec rspec --pattern "${{ matrix.specs }}"
+        run: |
+          export CI_NODE_INDEX="${{ matrix.ci_node_index }}"
+
+          if [ "$CI_NODE_INDEX" == "other" ]; then
+            bundle exec rspec --format progress --tag ~performance --tag type:system
+            bundle exec rspec --format progress --tag ~performance engines/*/spec
+          else
+            bundle exec rake 'knapsack:rspec[--format progress --tag ~performance --tag ~type:system]'
+          fi
 
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
