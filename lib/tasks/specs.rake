@@ -2,35 +2,6 @@
 
 namespace :ofn do
   namespace :specs do
-    namespace :run do
-      def spec_folders
-        Pathname("spec/").children.select(&:directory?).map { |p|
-          p.split.last.to_s
-        } - %w(support factories javascripts performance)
-      end
-
-      def execute_rspec_for_pattern(pattern)
-        system "bundle exec rspec --profile --pattern \"#{pattern}\""
-      end
-
-      def execute_rspec_for_spec_folder(folder)
-        execute_rspec_for_pattern("spec/#{folder}/{,/*/**}/*_spec.rb")
-      end
-
-      def execute_rspec_for_spec_folders(folders)
-        folders = folders.join(",")
-        execute_rspec_for_pattern("spec/{#{folders}}/{,/*/**}/*_spec.rb")
-      end
-
-      desc "Run Rspec tests excluding folders"
-      task :excluding_folders, [:folders] => :environment do |_task, args|
-        success = execute_rspec_for_spec_folders(
-          spec_folders - (args[:folders].split(",") + args.extras)
-        )
-        abort "Failure when running tests" unless success
-      end
-    end
-
     namespace :engines do
       def detect_engine_paths
         Pathname("engines/").children.select(&:directory?)
