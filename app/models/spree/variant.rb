@@ -59,6 +59,8 @@ module Spree
       %w(weight volume).include?(variant.product.andand.variant_unit)
     }
 
+    validates :unit_value, numericality: { greater_than: 0 }
+
     validates :unit_description, presence: true, if: ->(variant) {
       variant.product.andand.variant_unit.present? && variant.unit_value.nil?
     }
