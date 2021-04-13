@@ -49,7 +49,8 @@
   %fieldset.tax_categories.no-border-bottom
     %legend{align: "center"}= t('.tax_category')
     = f.field_container :tax_categories do
-      = f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {}, :class => "select2 fullwidth"
+      = f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] },
+        { include_blank: t(:none) }, class: "select2 fullwidth"
       = error_message_on :shipping_method, :tax_category_id
 
   %fieldset.categories.no-border-bottom
