@@ -9,7 +9,7 @@ angular.module("admin.products").controller "editUnitsCtrl", ($scope, VariantUni
   if $scope.product.variant_unit == 'items'
     $scope.variant_unit_with_scale = 'items'
   else
-    $scope.variant_unit_with_scale = $scope.product.variant_unit + '_' + $scope.product.variant_unit_scale
+    $scope.variant_unit_with_scale = $scope.product.variant_unit + '_' + $scope.product.variant_unit_scale.replace(/\.0$/, '');
 
   $scope.setFields = ->
     if $scope.variant_unit_with_scale == 'items'
