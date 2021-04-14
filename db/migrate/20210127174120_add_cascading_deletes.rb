@@ -1,4 +1,4 @@
-class AddCascadingDeletes < ActiveRecord::Migration
+class AddCascadingDeletes < ActiveRecord::Migration[4.2]
   def change
     # Updates foreign key definitions between orders, shipments, and inventory_units
     # to allow for cascading deletes at database level. If an order is intentionally

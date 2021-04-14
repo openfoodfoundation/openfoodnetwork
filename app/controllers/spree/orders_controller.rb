@@ -104,7 +104,7 @@ module Spree
       else
         # Show order with original values, not newly entered ones
         @insufficient_stock_lines = @order.insufficient_stock_lines
-        @order.line_items(true)
+        @order.line_items.reload
         respond_with(@order)
       end
     end

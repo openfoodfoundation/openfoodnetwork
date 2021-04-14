@@ -219,7 +219,8 @@ feature "Check out with Stripe", js: true do
           stub_add_metadata_request(payment_method: "pm_123", response: {})
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
-          stub_customers_post_request email: user.email
+          stub_customers_post_request email: "test@test.com" # First checkout with default details
+          stub_customers_post_request email: user.email # Second checkout with saved user details
           stub_payment_method_attach_request
         end
 

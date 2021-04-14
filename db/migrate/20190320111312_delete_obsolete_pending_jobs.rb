@@ -1,4 +1,4 @@
-class DeleteObsoletePendingJobs < ActiveRecord::Migration
+class DeleteObsoletePendingJobs < ActiveRecord::Migration[4.2]
   def up
     Delayed::Job.all.each do |job|
       job.delete if job.name == "FinalizeAccountInvoices" ||

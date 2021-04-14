@@ -1,4 +1,4 @@
-class MigrateShippingTaxes < ActiveRecord::Migration
+class MigrateShippingTaxes < ActiveRecord::Migration[4.2]
   class Spree::Preference < ActiveRecord::Base; end
   class Spree::TaxCategory < ActiveRecord::Base
     has_many :tax_rates, class_name: "Spree::TaxRate", inverse_of: :tax_category

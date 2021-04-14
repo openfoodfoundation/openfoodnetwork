@@ -1,4 +1,4 @@
-class AddShippingCategoryToShippingMethodsAndProducts < ActiveRecord::Migration
+class AddShippingCategoryToShippingMethodsAndProducts < ActiveRecord::Migration[4.2]
   def up
     # This is different from the equivalent Spree migration
     #   Here we are creating the default shipping category even if there are already shipping categories

@@ -1,4 +1,4 @@
-class ReplaceHardDeletedPrices < ActiveRecord::Migration
+class ReplaceHardDeletedPrices < ActiveRecord::Migration[4.2]
   def up
     ActiveRecord::Base.connection.execute(
       "INSERT into spree_prices (variant_id, amount, currency, deleted_at)
