@@ -1,4 +1,4 @@
-require 'open_food_network/user_balance_calculator'
+# frozen_string_literal: true
 
 module OpenFoodNetwork
   class OrderCycleManagementReport
@@ -46,34 +46,21 @@ module OpenFoodNetwork
     end
 
     def search
-      if FeatureToggle.enabled?(:customer_balance, @user)
-        Spree::Order.
-          finalized.
-          not_state(:canceled).
-          distributed_by_user(@user).
-          managed_by(@user).
-          search(params[:q])
-      else
-        Spree::Order.
-          complete.
-          where("spree_orders.state != ?", :canceled).
-          distributed_by_user(@user).
-          managed_by(@user).
-          search(params[:q])
-      end
+      Spree::Order.
+        finalized.
+        not_state(:canceled).
+        distributed_by_user(@user).
+        managed_by(@user).
+        search(params[:q])
     end
 
     def orders
-      if FeatureToggle.enabled?(:customer_balance, @user)
-        search_result = search.result.order(:completed_at)
-        orders_with_balance = OutstandingBalance.new(search_result).
-          query.
-          select('spree_orders.*')
+      search_result = search.result.order(:completed_at)
+      orders_with_balance = OutstandingBalance.new(search_result).
+        query.
+        select('spree_orders.*')
 
-        filter(orders_with_balance)
-      else
-        filter search.result
-      end
+      filter(orders_with_balance)
     end
 
     def table_items
@@ -92,12 +79,10 @@ module OpenFoodNetwork
 
     private
 
+    # This method relies on `balance_value` as a computed DB column. See `CompleteOrdersWithBalance`
+    # for reference.
     def balance(order)
-      if FeatureToggle.enabled?(:customer_balance, @user)
-        order.balance_value
-      else
-        UserBalanceCalculator.new(order.email, order.distributor).balance
-      end
+      order.balance_value
     end
 
     def payment_method_row(order)

@@ -16,6 +16,15 @@ module OpenFoodNetwork
       end
 
       describe "fetching orders" do
+        let(:customers_with_balance) { instance_double(CustomersWithBalance) }
+
+        it 'calls the OutstandingBalance query object' do
+          outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
+          expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+
+          subject.orders
+        end
+
         it "fetches completed orders" do
           o1 = create(:order)
           o2 = create(:order, completed_at: 1.day.ago, state: 'complete')
@@ -27,27 +36,11 @@ module OpenFoodNetwork
           expect(subject.orders).to eq([order])
         end
 
-        context 'when the customer_balance feature is enabled' do
-          let(:customers_with_balance) { instance_double(CustomersWithBalance) }
+        it 'orders them by id' do
+          order1 = create(:order, completed_at: 1.day.ago, state: 'complete')
+          order2 = create(:order, completed_at: 2.days.ago, state: 'complete')
 
-          before do
-            allow(OpenFoodNetwork::FeatureToggle)
-              .to receive(:enabled?).with(:customer_balance, anything) { true }
-          end
-
-          it 'calls OutstandingBalance query object' do
-            outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
-            expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-
-            subject.orders
-          end
-
-          it 'orders them by id' do
-            order1 = create(:order, completed_at: 1.day.ago, state: 'complete')
-            order2 = create(:order, completed_at: 2.days.ago, state: 'complete')
-
-            expect(subject.orders.pluck(:id)).to eq([order2.id, order1.id])
-          end
+          expect(subject.orders.pluck(:id)).to eq([order2.id, order1.id])
         end
 
         it "does not show cancelled orders" do

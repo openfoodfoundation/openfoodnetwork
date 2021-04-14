@@ -12,22 +12,12 @@ module Balance
     OrderBalance.new(self)
   end
 
-  # This method is the one we're gradually replacing with `#new_outstanding_balance`. Having them
-  # separate enables us to choose which implementation we want depending on the context using
-  # a feature toggle. This avoids inconsistent behavior during that incremental refactoring.
-  #
-  # It is meant to be removed as soon as we get product approval that the new implementation has
-  # been working correctly in production.
-  def old_outstanding_balance
-    total - payment_total
-  end
-
   # Returns the order balance by considering the total as money owed to the order distributor aka.
   # the shop, and as a positive balance of said enterprise. If the customer pays it all, the
   # distributor and customer are even.
   #
   # Note however, this is meant to be used only in the context of a single order object. When
-  # working with a collection of orders, such an index controller action, please consider using
+  # working with a collection of orders, such as an index controller action, please consider using
   # `app/queries/outstanding_balance.rb` instead so we avoid potential N+1s.
   def new_outstanding_balance
     if state.in?(FINALIZED_NON_SUCCESSFUL_STATES)

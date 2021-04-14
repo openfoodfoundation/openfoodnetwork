@@ -104,9 +104,6 @@ feature 'Customers' do
         let!(:payment1) { create(:payment, order: order1, state: 'completed', payment_method: payment_method, response_code: 'pi_123', amount: 88.00) }
 
         before do
-          allow(OpenFoodNetwork::FeatureToggle)
-            .to receive(:enabled?).with(:customer_balance, user) { true }
-
           customer4.update enterprise: managed_distributor1
         end
 

@@ -249,7 +249,6 @@ Layout/LineLength:
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
   - spec/lib/open_food_network/tag_rule_applicator_spec.rb
-  - spec/lib/open_food_network/user_balance_calculator_spec.rb
   - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
   - spec/lib/open_food_network/xero_invoices_report_spec.rb
   - spec/lib/spree/core/calculated_adjustments_spec.rb
