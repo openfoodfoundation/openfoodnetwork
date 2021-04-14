@@ -6,6 +6,7 @@ on:
   pull_request:
 
 env:
+  RAILS_ENV: test
   TIMEZONE: UTC
   COVERAGE: true
   RSPEC_RETRY_RETRY_COUNT: 3
@@ -50,8 +51,8 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
       - name: Run some specs
         run: |
@@ -102,8 +103,8 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
       - name: Run JS tests
-        run: RAILS_ENV=test bundle exec rake karma:run
+        run: bundle exec rake karma:run
