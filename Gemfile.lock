@@ -561,15 +561,15 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.0.0)
-    unicorn (5.8.0)
+    unicorn (6.0.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     unicorn-rails (2.2.1)
       rack
       unicorn
-    unicorn-worker-killer (0.4.4)
+    unicorn-worker-killer (0.4.5)
       get_process_mem (~> 0)
-      unicorn (>= 4, < 6)
+      unicorn (>= 4, < 7)
     uniform_notifier (1.14.1)
     warden (1.2.9)
       rack (>= 2.0.9)
