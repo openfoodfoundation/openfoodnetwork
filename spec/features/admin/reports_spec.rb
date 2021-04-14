@@ -394,8 +394,8 @@ feature '
       let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
       let!(:adj_fee1) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
       let!(:adj_fee2) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
-      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
-      let!(:adj_manual2) { create(:adjustment, order: order1, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
+      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
+      let!(:adj_manual2) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
       before do
         order1.update_attribute :email, 'customer@email.com'

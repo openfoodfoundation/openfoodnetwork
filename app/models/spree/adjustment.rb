@@ -37,7 +37,6 @@ module Spree
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
     belongs_to :adjustable, polymorphic: true
-    belongs_to :source, polymorphic: true
     belongs_to :originator, -> { with_deleted }, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
 
@@ -73,7 +72,7 @@ module Spree
     scope :additional, -> { where(included: false) }
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
-    scope :admin,          -> { where(source_type: nil, originator_type: nil) }
+    scope :admin,          -> { where(originator_type: nil) }
 
     scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
     scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }

@@ -7,7 +7,7 @@ describe Admin::OrdersHelper, type: :helper do
     let(:order) { create(:order) }
 
     it "selects eligible adjustments" do
-      adjustment = create(:adjustment, order: order, adjustable: order, amount: 1, source: nil)
+      adjustment = create(:adjustment, order: order, adjustable: order, amount: 1)
 
       expect(helper.order_adjustments_for_display(order)).to eq [adjustment]
     end

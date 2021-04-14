@@ -277,7 +277,6 @@ module Spree
       elsif selected_shipping_rate_id
         shipping_method.create_adjustment(adjustment_label,
                                           self,
-                                          self,
                                           true,
                                           "open")
         reload # ensure adjustment is present on later saves
