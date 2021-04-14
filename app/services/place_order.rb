@@ -47,7 +47,7 @@ class PlaceOrder
   end
 
   def mark_as_processed
-    proxy_order.update_column(:placed_at, Time.now)
+    proxy_order.update_column(:placed_at, Time.zone.now)
   end
 
   def load_changes
