@@ -65,6 +65,9 @@ jobs:
             bundle exec rake 'knapsack:rspec[--format progress --tag ~performance --tag ~type:system]'
           fi
 
+        #- name: Generate Knapsack report
+        #  run: KNAPSACK_GENERATE_REPORT=true bundle exec rspec --format progress --tag ~performance spec engines/*/spec
+
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
 
