@@ -488,7 +488,7 @@ feature '
           expect(flash_message).to eq('Product "a product" has been successfully updated!')
           product.reload
           expect(product.variant_unit).to eq(var_unit)
-          # TODO -> expect(page).to have_select('product_variant_unit_with_scale', :selected => dropdown_option)
+          expect(page).to have_select('product_variant_unit_with_scale', selected: dropdown_option)
           expect(product.variant_unit_scale).to eq(var_unit_scale)
         end
       end
