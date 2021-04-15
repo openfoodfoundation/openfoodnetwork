@@ -130,7 +130,7 @@ describe Api::V0::VariantsController, type: :controller do
 
     it "can create a new variant" do
       original_number_of_variants = variant.product.variants.count
-      api_post :create, variant: { sku: "12345", unit_value: "weight", unit_description: "L" }, product_id: variant.product.to_param
+      api_post :create, variant: { sku: "12345", unit_value: "1", unit_description: "L" }, product_id: variant.product.to_param
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
       expect(response.status).to eq(201)

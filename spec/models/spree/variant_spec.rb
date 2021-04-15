@@ -18,6 +18,11 @@ module Spree
         variant.price = 0
         expect(variant).to be_valid
       end
+
+      it "should validate unit_value is greater than 0" do
+        variant.unit_value = 0
+        expect(variant).to be_invalid
+      end
     end
 
     context "price parsing" do
