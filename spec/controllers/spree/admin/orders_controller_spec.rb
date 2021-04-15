@@ -22,7 +22,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "does not show ineligible payment adjustments" do
         adjustment = create(
           :adjustment,
-          adjustable: order,
+          adjustable: build(:payment),
           originator_type: "Spree::PaymentMethod",
           label: "invalid adjustment",
           eligible: false,
