@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Classification < ActiveRecord::Base
+  class Classification < ApplicationRecord
     self.table_name = 'spree_products_taxons'
     belongs_to :product, class_name: "Spree::Product", touch: true
     belongs_to :taxon, class_name: "Spree::Taxon", touch: true

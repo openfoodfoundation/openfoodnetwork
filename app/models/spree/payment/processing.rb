@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Payment < ActiveRecord::Base
+  class Payment < ApplicationRecord
     module Processing
       def process!
         return unless validate!

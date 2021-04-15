@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EnterpriseRelationship < ActiveRecord::Base
+class EnterpriseRelationship < ApplicationRecord
   belongs_to :parent, class_name: 'Enterprise', touch: true
   belongs_to :child, class_name: 'Enterprise', touch: true
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy

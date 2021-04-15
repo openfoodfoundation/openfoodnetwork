@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class CreditCard < ActiveRecord::Base
+  class CreditCard < ApplicationRecord
     belongs_to :payment_method
     belongs_to :user
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Payment < ActiveRecord::Base
+  class Payment < ApplicationRecord
     include Spree::Payment::Processing
     extend Spree::LocalizedNumber
 

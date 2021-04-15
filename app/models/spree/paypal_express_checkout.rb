@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Spree
-  class PaypalExpressCheckout < ActiveRecord::Base
+  class PaypalExpressCheckout < ApplicationRecord
   end
 end

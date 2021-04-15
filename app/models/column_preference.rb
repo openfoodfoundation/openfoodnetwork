@@ -1,6 +1,6 @@
 require 'open_food_network/column_preference_defaults'
 
-class ColumnPreference < ActiveRecord::Base
+class ColumnPreference < ApplicationRecord
   extend OpenFoodNetwork::ColumnPreferenceDefaults
 
   # Non-persisted attributes that only have one

@@ -3,7 +3,7 @@
 require 'ostruct'
 
 module Spree
-  class Shipment < ActiveRecord::Base
+  class Shipment < ApplicationRecord
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :address, class_name: 'Spree::Address'
     belongs_to :stock_location, class_name: 'Spree::StockLocation'

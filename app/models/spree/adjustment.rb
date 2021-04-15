@@ -28,7 +28,7 @@ require 'concerns/adjustment_scopes'
 # total. This allows an adjustment to be preserved if it becomes ineligible so
 # it might be reinstated.
 module Spree
-  class Adjustment < ActiveRecord::Base
+  class Adjustment < ApplicationRecord
     extend Spree::LocalizedNumber
 
     # Deletion of metadata is handled in the database.

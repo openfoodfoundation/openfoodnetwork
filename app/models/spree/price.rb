@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Spree
-  class Price < ActiveRecord::Base
+  class Price < ApplicationRecord
     acts_as_paranoid without_default_scope: true
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'

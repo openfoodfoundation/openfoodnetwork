@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Address < ActiveRecord::Base
+  class Address < ApplicationRecord
     include AddressDisplay
 
     belongs_to :country, class_name: "Spree::Country"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShippingMethod < ActiveRecord::Base
+  class ShippingMethod < ApplicationRecord
     include Spree::Core::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end].freeze
 

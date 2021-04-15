@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ProductProperty < ActiveRecord::Base
+  class ProductProperty < ApplicationRecord
     belongs_to :product, class_name: "Spree::Product", touch: true
     belongs_to :property, class_name: 'Spree::Property'
 

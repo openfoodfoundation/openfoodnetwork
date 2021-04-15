@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Preference < ActiveRecord::Base
+  class Preference < ApplicationRecord
     serialize :value
 
     validates :key, presence: true
