@@ -2,6 +2,7 @@
 
 class ApplicationRecord < ActiveRecord::Base
   include DelegateBelongsTo
+  include Spree::Preferences::Preferable
 
   self.abstract_class = true
 end

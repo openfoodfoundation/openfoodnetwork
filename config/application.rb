@@ -39,10 +39,6 @@ module Openfoodnetwork
       Spree::Config = app.config.spree.preferences # legacy access
     end
 
-    initializer "spree.load_preferences", before: "spree.environment" do
-      ::ActiveRecord::Base.include Spree::Preferences::Preferable
-    end
-
     initializer "spree.register.payment_methods" do |app|
       app.config.spree.payment_methods = [
         Spree::Gateway::Bogus,
