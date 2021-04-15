@@ -93,8 +93,8 @@ feature '
       login_as_admin_and_visit spree.admin_reports_path
     end
 
-    let(:bill_address1) { create(:address, lastname: "Aman") }
-    let(:bill_address2) { create(:address, lastname: "Bman") }
+    let(:bill_address1) { create(:address, lastname: "MULLER") }
+    let(:bill_address2) { create(:address, lastname: "Mistery") }
     let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
     let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
@@ -127,6 +127,22 @@ feature '
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
       ].sort)
       expect(page).to have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
+    end
+
+    scenario "Alphabetically Sorted Pack by Customer" do
+      click_link "Pack By Customer"
+      click_button 'Search'
+      
+      rows = find("table#listing_orders").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
+      expect(table).to eq([
+        "Last Name",
+        order2.bill_address.lastname,
+        "",
+        order1.bill_address.lastname,
+        order1.bill_address.lastname,
+        ""
+      ])
     end
 
     scenario "Pack By Supplier" do
