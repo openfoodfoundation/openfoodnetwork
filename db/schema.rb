@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_171109) do
+ActiveRecord::Schema.define(version: 2021_04_15_015550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1143,6 +1143,11 @@ ActiveRecord::Schema.define(version: 2021_04_14_171109) do
     t.string "name", limit: 255
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "terms_of_service_files", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "variant_overrides", force: :cascade do |t|
