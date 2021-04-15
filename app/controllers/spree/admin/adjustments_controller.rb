@@ -18,7 +18,12 @@ module Spree
       end
 
       def collection
-        parent.all_adjustments.eligible
+        order_adjustments = parent.adjustments.where.not(originator_type: 'EnterpriseFee')
+        admin_adjustments = parent.adjustments.admin
+        payment_fees = parent.all_adjustments.payment_fee.eligible
+        shipping_fees = parent.all_adjustments.shipping
+
+        order_adjustments.or(admin_adjustments) | payment_fees.or(shipping_fees)
       end
 
       def find_resource
