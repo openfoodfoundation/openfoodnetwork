@@ -113,6 +113,10 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 gem 'good_migrations'
 
+gem 'flipper'
+gem 'flipper-active_record'
+gem 'flipper-ui'
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'unicorn-worker-killer'

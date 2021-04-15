@@ -135,6 +135,10 @@ module Spree
       spree_orders.incomplete.where(created_by_id: id).order('created_at DESC').first
     end
 
+    def flipper_id
+      "#{self.class.name};#{id}"
+    end
+
     protected
 
     def password_required?

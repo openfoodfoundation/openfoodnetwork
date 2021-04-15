@@ -3,6 +3,7 @@ Openfoodnetwork::Application.routes.draw do
 
     authenticated :spree_user, -> user { user.admin? } do
       mount DelayedJobWeb, at: '/delayed_job'
+      mount Flipper::UI.app(Flipper) => '/feature-toggle'
     end
 
     resources :bulk_line_items
