@@ -1552,6 +1552,7 @@ pt:
   hubs_distance: Mais próximo a
   hubs_distance_filter: "Mostrar lojas próximas a %{location}"
   shop_changeable_orders_alert_html:
+    one: 'A sua encomenda <a href=''%{path}'' target=''_blank''>%{shop}/%{order}</a> está actualmente aberta para revisão. Pode fazer alterações até %{oc_close}. '
     few: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
     many: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
     other: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '

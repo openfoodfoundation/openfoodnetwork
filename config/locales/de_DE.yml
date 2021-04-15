@@ -1796,9 +1796,9 @@ de_DE:
   orders_cannot_remove_the_final_item: "Der letzte verbleibende Artikel einer Bestellung kann nicht entfernt werden. Bitte stornieren Sie stattdessen die Bestellung."
   orders_bought_items_notice:
     one: "Ein zusätzlicher Artikel ist bereits für diesen Bestellzyklus bestätigt."
-    few: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
-    many: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
-    other: "%{count} zusätzliche Artikel, sind bereits für diesen Bestellzyklus bestätigt."
+    few: "%{count} zusätzliche Artikel sind bereits für diesen Bestellzyklus bestätigt."
+    many: "%{count} zusätzliche Artikel sind bereits für diesen Bestellzyklus bestätigt."
+    other: "%{count} zusätzliche Artikel sind bereits für diesen Bestellzyklus bestätigt."
   orders_bought_edit_button: "Bestätigte Artikel bearbeiten"
   orders_bought_already_confirmed: "* schon bestätigt"
   orders_confirm_cancel: "Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?"
@@ -2091,7 +2091,7 @@ de_DE:
   notify_producers: 'Produzenten benachrichtigen'
   edit_order_cycle: "Bestellzyklus bearbeiten"
   roles: "Rollen"
-  update: "Aktualisieren"
+  update: "Speichern"
   delete: Löschen
   add_producer_property: "Produzenteneigenschaft hinzufügen"
   in_progress: "In Bearbeitung"

@@ -58,7 +58,7 @@ en_GB:
         start_at: "Start"
         end_at: "End"
         distributor_ids: "Hubs"
-        producer_ids: "Pricing"
+        producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
         enterprise_fee_ids: "Fees Names"
         shipping_method_ids: "Shipping Methods"
