@@ -923,7 +923,7 @@ describe Spree::Order do
         let(:state) { "complete" }
 
         it "returns true" do
-          expect(order.send(:require_customer?)).to eq(nil)
+          expect(order.send(:require_customer?)).to eq(false)
         end
       end
 
@@ -931,7 +931,7 @@ describe Spree::Order do
         let(:state) { "cart" }
 
         it "returns false" do
-          expect(order.send(:require_customer?)).to eq(nil)
+          expect(order.send(:require_customer?)).to eq(false)
         end
       end
     end
@@ -951,7 +951,7 @@ describe Spree::Order do
         let(:state) { "cart" }
 
         it "returns false" do
-          expect(order.send(:require_customer?)).to eq(nil)
+          expect(order.send(:require_customer?)).to eq(false)
         end
       end
     end
