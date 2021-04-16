@@ -959,6 +959,30 @@ describe Spree::Order do
 
   describe "associating a customer" do
     let(:distributor) { create(:distributor_enterprise) }
+
+    context "when creating an order" do
+      it "does not create a customer" do
+        order = create(:order, distributor: distributor)
+        expect(order.customer).to be_nil
+      end
+    end
+
+    context "when updating the order" do
+      let!(:order) { create(:order, distributor: distributor) }
+
+      before do
+        order.state = "complete"
+        order.save!
+      end
+
+      it "creates a customer" do
+        expect(order.customer).not_to be_nil
+      end
+    end
+  end
+
+  describe "#associate_customer" do
+    let(:distributor) { create(:distributor_enterprise) }
     let!(:order) { create(:order, distributor: distributor) }
 
     context "when an email address is available for the order" do
