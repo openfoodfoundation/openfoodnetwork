@@ -2,11 +2,20 @@
   .columns.small-12
     %h3{"ng-bind" => "::variant.extended_name"}
 
-.row.variant-bulk-buy-price-summary
-  .columns.small-6
-    .variant-unit {{ ::variant.unit_to_display }}
-  .columns.small-6
+.flex.variant-bulk-buy-price-summary{style: "justify-content: space-around;"}
+  .variant-unit
+    {{ ::variant.unit_to_display }}
+  .div
     {{ variant.line_item.total_price | localizeCurrency }}
+
+  .unit-price{"ng-if": "show_unit_price"}
+    %question-mark-with-tooltip{"question-mark-with-tooltip": "_",
+    "question-mark-with-tooltip-append-to-body": "true",
+    "question-mark-with-tooltip-placement": "top",
+    "question-mark-with-tooltip-animation": true,
+    style: "margin-right: 5px",
+    key: "'js.shopfront.unit_price_tooltip'"} 
+    {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
 
 .row
   .columns.small-12.medium-6
