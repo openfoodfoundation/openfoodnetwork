@@ -915,6 +915,48 @@ describe Spree::Order do
     end
   end
 
+  describe "#require_customer?" do
+    context "when the record is new" do
+      let(:order) { build(:order, state: state) }
+
+      context "and the state is not cart" do
+        let(:state) { "complete" }
+
+        it "returns true" do
+          expect(order.send(:require_customer?)).to eq(nil)
+        end
+      end
+
+      context "and the state is cart" do
+        let(:state) { "cart" }
+
+        it "returns false" do
+          expect(order.send(:require_customer?)).to eq(nil)
+        end
+      end
+    end
+
+    context "when the record is not new" do
+      let(:order) { create(:order, state: state) }
+
+      context "and the state is not cart" do
+        let(:state) { "complete" }
+
+        it "returns true" do
+          expect(order.send(:require_customer?)).to eq(true)
+        end
+      end
+
+      context "and the state is cart" do
+        let(:state) { "cart" }
+
+        it "returns false" do
+          expect(order.send(:require_customer?)).to eq(nil)
+        end
+      end
+    end
+  end
+
   describe "associating a customer" do
     let(:distributor) { create(:distributor_enterprise) }
     let!(:order) { create(:order, distributor: distributor) }
