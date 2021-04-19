@@ -1239,7 +1239,7 @@ describe Spree::Order do
       it "advances to complete state without error" do
         advance_to_delivery_state(order)
         order.next!
-        create(:payment, order: order)
+        order.payments << create(:payment, order: order)
 
         expect { order.next! }.to change { order.state }.from("payment").to("complete")
       end
