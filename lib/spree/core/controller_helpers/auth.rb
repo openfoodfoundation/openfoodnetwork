@@ -25,7 +25,7 @@ module Spree
         # For example, a popup window might simply close itself.
         def unauthorized
           if spree_current_user
-            flash[:error] = Spree.t(:authorization_failure)
+            flash[:error] = t(:authorization_failure)
             redirect_to '/unauthorized'
           else
             store_location
