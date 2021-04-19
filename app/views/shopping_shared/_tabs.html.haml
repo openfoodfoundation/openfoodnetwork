@@ -5,10 +5,11 @@
 
   #shop-tabs{ ng: { controller: "PageSelectionCtrl", init: "whitelistPages(#{shop_tab_names.to_json})", cloak: true } }
     .tab-buttons
-      .row
+      .flex.row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
             .page{ "ng-class" => "{ selected: selectedPage() == '#{tab[:name]}' }" }
               %a{ href: "##{tab[:name]}" }=tab[:title]
-
+        .columns.large-4.show-for-large-up
+          = render partial: "shopping_shared/order_cycles"
     .page-view{ ng: {include: "'shop/' + selectedPage() + '.html'" } }

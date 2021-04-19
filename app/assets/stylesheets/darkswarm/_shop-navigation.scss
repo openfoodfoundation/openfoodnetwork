@@ -181,11 +181,10 @@ shop ordercycle {
   }
 }
 
-shop navigation ordercycle {
-  margin-top: 3.4em;
+shop .tab-buttons ordercycle {
   padding: 1em;
-  height: 7.6em;
   position: absolute;
+  bottom: 0;
   right: 1em;
 }
 
