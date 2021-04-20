@@ -1213,7 +1213,6 @@ Style/FrozenStringLiteralComment:
     - 'lib/open_food_network/scope_variants_for_search.rb'
     - 'lib/open_food_network/spree_api_key_loader.rb'
     - 'lib/open_food_network/tag_rule_applicator.rb'
-    - 'lib/open_food_network/user_balance_calculator.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
     - 'lib/spree/authentication_helpers.rb'

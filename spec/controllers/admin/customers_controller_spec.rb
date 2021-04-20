@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'open_food_network/user_balance_calculator'
 
 module Admin
   describe CustomersController, type: :controller do
@@ -70,11 +69,6 @@ module Admin
               let(:order) { create(:order, customer: customer, state: 'complete') }
               let!(:line_item) { create(:line_item, order: order, price: 10.0) }
 
-              before do
-                allow(OpenFoodNetwork::FeatureToggle)
-                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
-              end
-
               it 'includes the customer balance in the response' do
                 get :index, params: params
                 expect(json_response.first["balance"]).to eq("$-10.00")
@@ -87,9 +81,6 @@ module Admin
               let!(:payment) { create(:payment, order: order, amount: order.total) }
 
               before do
-                allow(OpenFoodNetwork::FeatureToggle)
-                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
-
                 allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
                 order.process_payments!
 
@@ -118,9 +109,6 @@ module Admin
               let!(:payment) { create(:payment, order: order, amount: order.total) }
 
               before do
-                allow(OpenFoodNetwork::FeatureToggle)
-                  .to receive(:enabled?).with(:customer_balance, enterprise.owner) { true }
-
                 allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
                 order.process_payments!
 
