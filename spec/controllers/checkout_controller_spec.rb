@@ -40,6 +40,46 @@ describe CheckoutController, type: :controller do
     expect(flash[:info]).to eq(I18n.t('order_cycles_closed_for_hub'))
   end
 
+  describe "#update" do
+    let(:user) { order.user }
+    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
+    let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+    let(:payment_method) { distributor.payment_methods.first }
+    let(:shipping_method) { distributor.shipping_methods.first }
+
+    before do
+      order.line_items << create(:line_item, variant: order_cycle.variants_distributed_by(distributor).first)
+
+      allow(controller).to receive(:current_distributor).and_return(distributor)
+      allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+      allow(controller).to receive(:current_order).and_return(order)
+      allow(controller).to receive(:spree_current_user).and_return(user)
+
+      user.bill_address = create(:address)
+      user.ship_address = create(:address)
+      user.save!
+    end
+
+    it "completes the order and redirects to the order confirmation page" do
+      params = {
+        "order" => {
+          "bill_address_attributes" => order.bill_address.attributes,
+          "default_bill_address" => false,
+          "default_ship_address" => false,
+          "email" => user.email,
+          "payments_attributes" => [{"payment_method_id" => payment_method.id}],
+          "ship_address_attributes" => order.bill_address.attributes,
+          "shipping_method_id" => shipping_method.id
+        }
+      }
+      expect { post :update, params: params }.
+        to change { Customer.count }.by(1)
+      expect(order.completed?).to be true
+      expect(response).to redirect_to order_path(order)
+    end
+  end
+
   describe "redirection to cart and stripe" do
     let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
@@ -99,6 +139,7 @@ describe CheckoutController, type: :controller do
       end
 
       describe "when the order is in payment state and a stripe payment intent is provided" do
+        let(:user) { order.user }
         let(:order) { create(:order_with_totals) }
         let(:payment_method) { create(:stripe_sca_payment_method) }
         let(:payment) {
@@ -116,9 +157,12 @@ describe CheckoutController, type: :controller do
           stub_payment_intent_get_request
           stub_successful_capture_request(order: order)
 
+          allow(controller).to receive(:spree_current_user).and_return(user)
+          user.bill_address = create(:address)
+          user.ship_address = create(:address)
+          user.save!
+
           order.update_attribute :state, "payment"
-          order.ship_address = create(:address)
-          order.save!
           order.payments << payment
 
           # this is called a 2nd time after order completion from the reset_order_service
@@ -129,6 +173,15 @@ describe CheckoutController, type: :controller do
           get :edit, params: { payment_intent: "pi_123" }
           expect(order.completed?).to be true
           expect(response).to redirect_to order_path(order)
+        end
+
+        it "creates a customer record" do
+          order.update_columns(customer_id: nil)
+          Customer.delete_all
+
+          expect {
+            get :edit, params: { payment_intent: "pi_123" }
+          }.to change { Customer.count }.by(1)
         end
       end
     end
