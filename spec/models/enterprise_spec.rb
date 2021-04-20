@@ -482,7 +482,7 @@ describe Enterprise do
     let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
     let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
     let(:product3) { create(:simple_product, primary_taxon: taxon3) }
-    let(:oc) { create(:order_cycle, distributors: [distributor]) }
+    let(:oc) { create(:order_cycle) }
     let(:ex) { create(:exchange, order_cycle: oc, incoming: false, sender: supplier, receiver: distributor) }
 
     it "gets all taxons of all distributed products" do
