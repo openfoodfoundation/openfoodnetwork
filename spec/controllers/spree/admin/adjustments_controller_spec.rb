@@ -91,6 +91,39 @@ module Spree
       end
     end
 
+    describe "#delete" do
+      let!(:order) { create(:completed_order_with_totals) }
+      let(:payment_fee) { create(:adjustment, amount: 0.50, order: order, adjustable: order.payments.first) }
+
+      context "as an enterprise user with edit permissions on the order" do
+        before do
+          order.adjustments << payment_fee
+          controller_login_as_enterprise_user([order.distributor])
+        end
+
+        it "deletes the adjustment" do
+          spree_delete :destroy, order_id: order.number, id: payment_fee.id
+
+          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+          expect(order.reload.all_adjustments.count).to be_zero
+        end
+      end
+
+      context "as an enterprise user with no permissions on the order" do
+        before do
+          order.adjustments << payment_fee
+          controller_login_as_enterprise_user([create(:enterprise)])
+        end
+
+        it "is unauthorized, does not delete the adjustment" do
+          spree_delete :destroy, order_id: order.number, id: payment_fee.id
+
+          expect(response).to redirect_to unauthorized_path
+          expect(order.reload.all_adjustments.count).to eq 1
+        end
+      end
+    end
+
     describe "with a cancelled order" do
       let(:order) { create(:completed_order_with_totals) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
