@@ -6,7 +6,7 @@ require 'concerns/variant_stock'
 require 'spree/localized_number'
 
 module Spree
-  class Variant < ActiveRecord::Base
+  class Variant < ApplicationRecord
     extend Spree::LocalizedNumber
     include VariantUnits::VariantAndLineItemNaming
     include VariantStock

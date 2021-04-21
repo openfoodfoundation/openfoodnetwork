@@ -1,6 +1,6 @@
 require 'open_food_network/scope_variant_to_hub'
 
-class OrderCycle < ActiveRecord::Base
+class OrderCycle < ApplicationRecord
   belongs_to :coordinator, class_name: 'Enterprise'
 
   has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'

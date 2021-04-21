@@ -238,7 +238,7 @@ describe Spree::Preferences::Preferable do
       ActiveRecord::Migration.verbose = false
       CreatePrefTest.migrate(:up)
 
-      class PrefTest < ActiveRecord::Base
+      class PrefTest < ApplicationRecord
         preference :pref_test_pref, :string, default: 'abc'
         preference :pref_test_any, :any, default: []
       end

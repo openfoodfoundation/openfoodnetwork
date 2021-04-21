@@ -13,7 +13,7 @@ module Spree
 end
 
 module Spree
-  class TaxRate < ActiveRecord::Base
+  class TaxRate < ApplicationRecord
     acts_as_paranoid
     include Spree::Core::CalculatedAdjustments
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates

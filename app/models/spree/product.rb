@@ -24,7 +24,7 @@ require 'concerns/product_stock'
 # Sum of on_hand each variant's inventory level determine "on_hand" level for the product.
 #
 module Spree
-  class Product < ActiveRecord::Base
+  class Product < ApplicationRecord
     include PermalinkGenerator
     include ProductStock
 

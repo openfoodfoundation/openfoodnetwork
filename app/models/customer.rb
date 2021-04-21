@@ -1,4 +1,4 @@
-class Customer < ActiveRecord::Base
+class Customer < ApplicationRecord
   acts_as_taggable
 
   belongs_to :enterprise

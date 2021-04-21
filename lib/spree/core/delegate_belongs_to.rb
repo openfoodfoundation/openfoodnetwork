@@ -90,5 +90,3 @@ module DelegateBelongsTo
   end
   protected :delegator_for
 end
-
-ActiveRecord::Base.include(DelegateBelongsTo)

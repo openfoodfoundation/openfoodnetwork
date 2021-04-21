@@ -7,7 +7,7 @@
 # in its shopfront. Any incoming product can be selected to be shown in the
 # shopfront (outgoing products). But the set of shown products can be smaller
 # than all incoming products.
-class Exchange < ActiveRecord::Base
+class Exchange < ApplicationRecord
   acts_as_taggable
 
   belongs_to :order_cycle

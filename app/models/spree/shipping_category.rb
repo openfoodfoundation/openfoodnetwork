@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShippingCategory < ActiveRecord::Base
+  class ShippingCategory < ApplicationRecord
     validates :name, presence: true
     has_many :products
     has_many :shipping_method_categories, inverse_of: :shipping_method

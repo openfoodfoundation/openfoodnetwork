@@ -4,7 +4,7 @@ require 'open_food_network/scope_variant_to_hub'
 require 'variant_units/variant_and_line_item_naming'
 
 module Spree
-  class LineItem < ActiveRecord::Base
+  class LineItem < ApplicationRecord
     include VariantUnits::VariantAndLineItemNaming
     include LineItemStockChanges
 

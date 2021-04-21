@@ -1,4 +1,4 @@
-class InventoryItem < ActiveRecord::Base
+class InventoryItem < ApplicationRecord
   belongs_to :enterprise
   belongs_to :variant, class_name: "Spree::Variant"
 

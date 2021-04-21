@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class StateChange < ActiveRecord::Base
+  class StateChange < ApplicationRecord
     belongs_to :user
     belongs_to :stateful, polymorphic: true
     before_create :assign_user

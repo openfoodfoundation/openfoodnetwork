@@ -4,7 +4,7 @@ require 'concerns/payment_method_distributors'
 require 'spree/core/calculated_adjustments'
 
 module Spree
-  class PaymentMethod < ActiveRecord::Base
+  class PaymentMethod < ApplicationRecord
     include Spree::Core::CalculatedAdjustments
     include PaymentMethodDistributors
 

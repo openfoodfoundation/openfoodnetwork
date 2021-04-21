@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ReturnAuthorization < ActiveRecord::Base
+  class ReturnAuthorization < ApplicationRecord
     acts_as_paranoid
 
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations

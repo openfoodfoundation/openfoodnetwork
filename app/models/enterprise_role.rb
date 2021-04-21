@@ -1,4 +1,4 @@
-class EnterpriseRole < ActiveRecord::Base
+class EnterpriseRole < ApplicationRecord
   belongs_to :user, class_name: Spree.user_class.to_s
   belongs_to :enterprise
 

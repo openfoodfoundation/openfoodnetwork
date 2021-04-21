@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Calculator < ActiveRecord::Base
+  class Calculator < ApplicationRecord
     belongs_to :calculable, polymorphic: true
 
     # This method must be overriden in concrete calculator.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class StockItem < ActiveRecord::Base
+  class StockItem < ApplicationRecord
     acts_as_paranoid
 
     belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items

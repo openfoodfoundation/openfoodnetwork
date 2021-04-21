@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Order < ActiveRecord::Base
+  class Order < ApplicationRecord
     module Checkout
       def self.included(klass)
         klass.class_eval do

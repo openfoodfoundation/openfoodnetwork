@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class TaxCategory < ActiveRecord::Base
+  class TaxCategory < ApplicationRecord
     acts_as_paranoid
     validates :name, presence: true, uniqueness: { scope: :deleted_at }
 

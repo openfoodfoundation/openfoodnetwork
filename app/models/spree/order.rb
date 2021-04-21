@@ -7,7 +7,7 @@ require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
 module Spree
-  class Order < ActiveRecord::Base
+  class Order < ApplicationRecord
     prepend OrderShipment
 
     include Checkout

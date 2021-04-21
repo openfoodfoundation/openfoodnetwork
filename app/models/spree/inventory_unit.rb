@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class InventoryUnit < ActiveRecord::Base
+  class InventoryUnit < ApplicationRecord
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :order, class_name: "Spree::Order"
     belongs_to :shipment, class_name: "Spree::Shipment"
