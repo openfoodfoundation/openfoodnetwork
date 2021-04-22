@@ -1,5 +1,5 @@
 %div{"data-hook" => "admin_orders_index_search"}
-  = form_tag :admin_orders, {name: "orders_form", "ng-submit" => "fetchResults()"} do
+  = form_tag spree.admin_orders_url, {name: "orders_form", "ng-submit" => "fetchResults()"} do
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
@@ -35,7 +35,7 @@
       .field
         = label_tag nil, t(:shipping_method)
         = select_tag("shipping_method_id",
-            options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method.#{s.name}"), s.id]}),
+            options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
             {include_blank: true, class: 'select2', 'ng-model' => 'shipping_method_id'})
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)

@@ -85,6 +85,11 @@ fr:
               no_default_card: "Pas de carte de paiement par défaut pour cet acheteur"
             shipping_method:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
+  card_details: "Détalis de la carte"
+  card_type: "Type de carte"
+  cardholder_name: "Titulaire de la carte"
+  community_forum_url: "Lien vers le forum"
+  customer_instructions: "Précisions pour l'acheteur"
   devise:
     confirmations:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
@@ -114,11 +119,39 @@ fr:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passer a été changé avec succès. Vous êtes maintenant connecté(e)."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+  home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
+  hub_signup_case_studies_html: "HTML page cas d'études hub"
+  hub_signup_detail_html: "HTML page inscription hub"
+  hub_signup_pricing_table_html: "HTML table de prix page inscription hub"
+  group_signup_case_studies_html: "HTML page inscription groupe"
+  group_signup_detail_html: "HTML page inscription groupe"
+  group_signup_pricing_table_html: "HTML table de prix page inscription groupe"
+  item_description: "Description de la pièce"
+  menu_1_icon_name: "Nom de l'icône du menu 1"
+  menu_2_icon_name: "Nom de l'icône du menu 2"
+  menu_3_icon_name: "Nom de l'icône du menu 3"
+  menu_4_icon_name: "Nom de l'icône du menu 4"
+  menu_5_icon_name: "Nom de l'icône du menu 5"
+  menu_6_icon_name: "Nom de l'icône du menu 6"
+  menu_7_icon_name: "Nom de l'icône du menu 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
     tax_rate:
       included_in_price: "Inclus dans le prix"
+  open_street_map_enabled: "Open Street Map est activé"
+  open_street_map_default_latitude: "Latitude par défaut Open Street Map"
+  open_street_map_default_longitude: "Longitude par défaut Open Street Map"
+  open_street_map_provider_name: "Nom du fournisseur Open Street Map"
+  open_street_map_provider_options: "Options du fournisseur Open Street Map"
+  producer_signup_case_studies_html: "HTML études de cas producteur"
+  producer_signup_detail_html: "HTML page inscription producteur"
+  producer_signup_pricing_table_html: "HTML table de prix page inscription producteur"
+  producers_social: "Réseau social producteur"
+  resume_order: "Reprendre la commande"
+  sku: "Référence Produit"
+  subtotal: "Sous-total"
+  tax_rate: "TVA applicable"
   validators:
     date_time_string_validator:
       not_string_error: "doit être une série"
@@ -144,6 +177,7 @@ fr:
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+  provider_settings: "Paramètres fournisseur"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Acheteur,"
@@ -264,7 +298,7 @@ fr:
   error: Erreur
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente."
-  invalid_payment_state: "Statut de paiement invalide"
+  invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
@@ -298,8 +332,12 @@ fr:
     destroy: "Détruire"
     rename: "Renommer"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
     begins_on: Commence le
+    bill_address: "Adresse de facturation"
+    ship_address: "Adresse de livraison"
     customer: Acheteur
     date: Date
     email: Email
@@ -1066,6 +1104,7 @@ fr:
       index:
         title: "Abonnements"
         new: "Nouvel abonnement"
+      issue: "Editée"
       new:
         title: "Nouvel abonnement"
       edit:
@@ -1147,6 +1186,7 @@ fr:
       yes_cancel_them: Les annuler
       no_keep_them: Les conserver
       yes_i_am_sure: Oui, je confirme
+      number: "N° commande"
       order_update_issues_msg: Certaines commandes n'ont pas pu être mises à jour automatiquement, probablement car elles ont été manuellement modifiées. Veuillez revoir les erreurs listées ci-dessous et effectuer si nécessaire les ajustements nécessaires sur les commandes individuelles.
       no_results:
         no_subscriptions: Pas encore d'abonnements...
@@ -1179,8 +1219,10 @@ fr:
       message_html: "J'accepte les %{terms_and_conditions_link}."
       link_text: "CGU & CGV"
     platform_terms_of_service:
+      message_html: "J'accepte les %{tos_link}."
       terms_of_service: "Conditions Générales d'Utilisation"
     all_terms_and_conditions:
+      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
       terms_and_conditions: "CGU & CGV"
       terms_of_service: "Conditions Générales d'Utilisation"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
@@ -1572,7 +1614,9 @@ fr:
   shopping_tabs_home: "Accueil"
   shopping_tabs_shop: "Boutique"
   shopping_tabs_about: "A propos"
+  shopping_tabs_producers: "Producteurs"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Groupes"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Suivre"
@@ -1724,39 +1768,40 @@ fr:
   shops_signup_help: Rejoindre le réseau
   shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
   shops_signup_detail: Les avantages CoopCircuits
-  orders: Commandes
-  orders_fees: Frais...
-  orders_edit_title: Panier
-  orders_edit_headline: Votre panier
-  orders_edit_time: Commande prête pour
-  orders_edit_continue: Retour à la boutique
-  orders_edit_checkout: Etape suivante (coordonnées)
+  orders: "Commandes"
+  orders_fees: "Frais..."
+  orders_edit_title: "Panier"
+  orders_edit_headline: "Votre panier"
+  orders_edit_time: "Commande prête pour"
+  orders_edit_continue: "Retour à la boutique"
+  orders_edit_checkout: "Etape suivante (coordonnées)"
   orders_form_empty_cart: "Vider le panier"
-  orders_form_subtotal: Sous-total
-  orders_form_admin: Admin & traitements
-  orders_form_total: Total
-  orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
+  orders_form_update_cart: "Mettre à jour"
+  orders_form_subtotal: "Sous-total"
+  orders_form_admin: "Admin & traitements"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}!"
   orders_oc_expired_text_others_html: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le gestionnaire de la boutique pour voir s'il accepte les commandes tardives <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou voir si d'autres cycles de vente sont ouverts pour cette boutique"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Téléphone:"
-  orders_show_title: Confirmation de commande
-  orders_show_time: Commande prête pour
+  orders_show_title: "Confirmation de commande"
+  orders_show_time: "Commande prête pour"
   orders_show_order_number: "Commande #%{number}"
-  orders_show_cancelled: Annulée
-  orders_show_confirmed: Confirmée
+  orders_show_cancelled: "Annulée"
+  orders_show_confirmed: "Confirmée"
   orders_your_order_has_been_cancelled: "Votre commande a été annulée"
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: Un produit additionnel est déjà confirmé pour ce cycle de vente.
+    one: "Un produit additionnel est déjà confirmé pour ce cycle de vente."
     few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
-  orders_bought_edit_button: Modifier les produits confirmés
+  orders_bought_edit_button: "Modifier les produits confirmés"
   orders_bought_already_confirmed: "* déjà confirmé"
-  orders_confirm_cancel: Voulez-vous vraiment annuler cette commande ?
+  orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande a été traitée avec succès"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
@@ -2417,6 +2462,7 @@ fr:
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
           qu'il n'est plus en stock ou que la boutique sur laquelle vous étiez a fermé.
     admin:
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: "J'ai compris"
@@ -2835,6 +2881,15 @@ fr:
       start_free_profile: "Créez votre profil producteur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne."
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Achats groupés Allocation"
+          bulk_coop_customer_payments: "Achats groupés - Paiement des acheteurs"
+          bulk_coop_packing_sheets: "Achats groupés - Feuilles de préparation des paniers"
+          bulk_coop_supplier_report: "Achats groupés - Totaux par Producteur"
+          date_range: "Plage de dates"
+          generate_report: "Générer le rapport"
+          report_format_csv: "Format de rapport CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Période"
@@ -2880,6 +2935,8 @@ fr:
               tax_category_name: "TVA applicable"
               total_amount: "€ total"
         invalid_filter_parameters: "Les filtres sélectionnés pour ce rapport sont invalides."
+      report:
+        none: "Aucun"
   order: "Commande"
   distribution: "Distribution"
   order_details: "Détails de la commande"
@@ -2912,7 +2969,54 @@ fr:
   previous: "Précédent"
   last: "Fin"
   spree:
+    add_country: "Ajouter un pays"
+    add_state: "Ajouter un département"
+    adjustment: "Ajustement"
+    all: "Tous"
+    associated_adjustment_closed: "L'ajustement associé est fermé"
+    authorization_failure: "Echec de l'autorisation"
+    back_to_adjustments_list: "Retour aux ajustements"
+    back_to_users_list: "Retour à la liste d'utilisateurs"
+    back_to_zones_list: "Retour à la liste de zones"
+    card_code: "Code de la carte"
+    card_number: "Numéro de la carte"
+    category: "Catégorie"
+    created_successfully: "Créé avec succès"
+    credit: "Créditer"
+    editing_tax_category: "Modifier une catégorie de taxe"
+    editing_tax_rate: "Modifier un taux"
+    editing_zone: "Modifier une zone"
+    expiration: "Expiration"
+    invalid_payment_provider: "Fournisseur de paiement invalide"
+    items_cannot_be_shipped: "Les produits ne peuvent pas être envoyés"
+    gateway_config_unavailable: "Configuration de la passerelle indisponible"
+    gateway_error: "Le paiement a échoué"
     more: "Plus"
+    new_adjustment: "Nouvel ajustement"
+    new_order_completed: "Nouvelle commande finalisée"
+    new_tax_category: "Nouvelle catégorie de taxe"
+    new_taxon: "Nouvelle taxonomie"
+    new_user: "Nouvel utilisateur"
+    no_pending_payments: "Aucun paiement en attente."
+    none: "Aucun"
+    not_found: "Non trouvé"
+    notice_messages:
+      variant_deleted: "Variante supprimée"
+    or: "Ou"
+    order_processed_successfully: "Commande traitée avec succès"
+    payment_method_not_supported: "Mode de paiement non pris en charge"
+    resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
+    rma_credit: "Crédit RMA"
+    server_error: "Erreur serveur"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Date de début"
+    successfully_removed: "Supprimé avec succès"
+    taxonomy_edit: "Modifier la taxonomie"
+    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
+    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
+    tree: "Arbre"
+    updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
@@ -2940,6 +3044,7 @@ fr:
     tracking_number: "Numéro de suivi"
     order_total: "Total Commande"
     customer_details: "Informations acheteur"
+    customer_details_updated: "Détails de l'acheteur mis à jour"
     customer_search: "Recherche Acheteur"
     choose_a_customer: "Choisir un acheteur"
     account: "Compte"
@@ -3090,6 +3195,8 @@ fr:
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
     not_available: "N/A"
+    sku: "Référence Produit"
+    there_are_no_items_for_this_order: "Il n'y a pas de produits pour cette commande."
     order_populator:
       out_of_stock: '%{item} est en rupture de stock.'
     actions:
@@ -3117,7 +3224,17 @@ fr:
         login_nav:
           header:
             store: Vue acheteur
+    validation:
+      must_be_int: "doit être un entier"
     admin:
+      mail_methods:
+        send_testmail: "Envoyer un e-mail de test"
+        testmail:
+          delivery_success: "E-mail de test envoyé."
+          error: "Une erreur s'est produite lors de l'envoi de l'e-mail de test. "
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
+      subscriptions:
+        number: "N° commande"
       tab:
         dashboard: "Tableau de bord"
         orders: "Commandes"
@@ -3186,6 +3303,8 @@ fr:
           received: "Reçu"
           canceled: "Annulé"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -3228,6 +3347,10 @@ fr:
       overview:
         enterprises_header:
           ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela CoopCircuits.
+        enterprise_row:
+          has_no_enterprise_fees: "n'a pas de marge ou commission"
+          has_no_payment_methods: "n'a pas de méthode de paiement"
+          has_no_shipping_methods: "n'a pas de méthode de livraison"
         products:
           active_products:
             zero: "Vous n'avez aucun produit actif."
@@ -3266,6 +3389,7 @@ fr:
           back_to_shipping_methods_list: "Retour à la liste des méthodes de livraison"
         form:
           categories: "Conditions de transport"
+          tax_category: "TVA applicable"
           zones: "Zones"
           both: "Vu par l'acheteur sur la boutique"
           back_end: "Visible pour l'administration uniquement"
@@ -3346,6 +3470,8 @@ fr:
           value: "Quantité"
           unit_name: "Unité"
           price: "Prix"
+          unit_price: "Prix unitaire"
+          unit_price_legend: "Calcul basé sur le prix à l'unité"
           on_hand: "En stock"
           on_demand: "A volonté"
           product_description: "Description du Produit"
@@ -3416,7 +3542,6 @@ fr:
           price: "Prix"
           options: "Options"
           no_results: "Pas de résultats"
-          to_add_variants_you_must_first_define: "Pour ajouter une variante, vous devez d'abord définir"
           option_types: "Types d'options"
           option_values: "Valeurs"
           and: "et"
@@ -3428,6 +3553,7 @@ fr:
         form:
           sku: "Référence Produit"
           price: "Prix"
+          unit_price: "Prix unitaire"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
@@ -3451,6 +3577,7 @@ fr:
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
           privacy_policy_url: "URL de la politique de confidentialité"
           enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
+          shoppers_require_tos: "Les acheteurs doivent accepter les CGU."
           cookies_policy_matomo_section: "Afficher la section Matomo sur la politique de cookies"
           footer_tos_url: "Conditions d'utilisation URL"
     checkout:
@@ -3664,3 +3791,42 @@ fr:
         spree/payment:
           one: Paiement
           other: Paiements
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: environ 1 heure
+        other: environ %{count}heures
+      about_x_months:
+        one: environ 1 mois
+        other: environ %{count} mois
+      about_x_years:
+        one: environ 1 année
+        other: environ %{count} années
+      almost_x_years:
+        one: presque 1 année
+        other: presque %{count} années
+      half_a_minute: moins d'une minute
+      less_than_x_seconds:
+        one: moins d' 1 seconde
+        other: moins de %{count} secondes
+      less_than_x_minutes:
+        one: moins d'une minute
+        other: moins de %{count} minutes
+      over_x_years:
+        one: plus d' 1 an
+        other: plus de %{count} années
+      x_seconds:
+        one: "1 seconde"
+        other: "%{count} secondes"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      x_days:
+        one: "1 jour"
+        other: "%{count} jours"
+      x_months:
+        one: "1 mois"
+        other: "%{count} mois"
+      x_years:
+        one: "1 an"
+        other: "%{count} ans"

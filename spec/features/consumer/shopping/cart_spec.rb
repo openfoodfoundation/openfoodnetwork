@@ -159,7 +159,7 @@ feature "full-page cart", js: true do
     end
 
     describe "updating quantities" do
-      let(:li) { order.line_items(true).last }
+      let(:li) { order.line_items.reload.last }
       let(:variant) { product_with_tax.variants.first }
       let(:variant2) { product_with_fee.variants.first }
 

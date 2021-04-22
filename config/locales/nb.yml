@@ -85,6 +85,11 @@ nb:
               no_default_card: "^Ingen standardkort tilgjengelig for denne kunden"
             shipping_method:
               not_available_to_shop: "er ikke tilgjengelig for %{shop}"
+  card_details: "Kortdetaljer"
+  card_type: "Korttype"
+  cardholder_name: "Kortholders navn"
+  community_forum_url: "URL for diskusjonsforum"
+  customer_instructions: "Kundeinstruksjoner"
   devise:
     confirmations:
       send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
@@ -114,9 +119,39 @@ nb:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
         updated: "Passordendringen var vellykket. Du er nå pålogget."
         send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
+  home_page_alert_html: "HTML for varsler på hjemmeside "
+  hub_signup_case_studies_html: "Hub-registrering studier HTML"
+  hub_signup_detail_html: "Hub registrering detaljer HTML"
+  hub_signup_pricing_table_html: "Hub-registrering pristabell HTML"
+  group_signup_case_studies_html: "Gruppe registrering casestudier HTML"
+  group_signup_detail_html: "Gruppe registrering detaljer HTML"
+  group_signup_pricing_table_html: "Gruppe registrering pristabell HTML"
+  item_description: "Varebeskrivelse"
+  menu_1_icon_name: "Meny 1 ikonnavn"
+  menu_2_icon_name: "Meny 2 ikonnavn"
+  menu_3_icon_name: "Meny 3 ikonnavn"
+  menu_4_icon_name: "Meny 4 ikonnavn"
+  menu_5_icon_name: "Meny 5 ikonnavn"
+  menu_6_icon_name: "Meny 6 ikonnavn"
+  menu_7_icon_name: "Meny 7 ikonnavn"
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPI AV %{order_cycle}"
+    tax_rate:
+      included_in_price: "Inkludert i prisen"
+  open_street_map_enabled: "Open Street Map aktivert"
+  open_street_map_default_latitude: "Open Street Map standard breddegrad"
+  open_street_map_default_longitude: "Open Street Map standard lengdegrad"
+  open_street_map_provider_name: "Open Street Map leverandørnavn"
+  open_street_map_provider_options: "Open Street Map leverandørvalg"
+  producer_signup_case_studies_html: "Produsentregistrering casestudier HTML"
+  producer_signup_detail_html: "Produsentregistrering detaljer HTML"
+  producer_signup_pricing_table_html: "Produsent registrering pristabell HTML"
+  producers_social: "Produsenter sosiale"
+  resume_order: "Gjenoppta bestillingen"
+  sku: "SKU"
+  subtotal: "Subtotal"
+  tax_rate: "Avgiftsrate"
   validators:
     date_time_string_validator:
       not_string_error: "må være en streng"
@@ -142,6 +177,7 @@ nb:
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
+  provider_settings: "Leverandørinnstillinger"
   shipment_mailer:
     shipped_email:
       dear_customer: "Kjære Kunde,"
@@ -262,7 +298,7 @@ nb:
   error: Feil
   processing_payment: "Behandler betaling ..."
   no_pending_payments: "Ingen ventende betalinger"
-  invalid_payment_state: "Ugyldig betalingstilstand"
+  invalid_payment_state: "Ugyldig betalingsstatus: %{state}"
   filter_results: Filtrer Resultater
   quantity: Mengde
   pick_up: Hent
@@ -296,8 +332,12 @@ nb:
     destroy: "Fjern"
     rename: "Gi nytt navn"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
     begins_on: Begynner på
+    bill_address: "Fakturaadresse"
+    ship_address: "Leveringsadresse"
     customer: Kunde
     date: Dato
     email: Epost
@@ -1062,6 +1102,7 @@ nb:
       index:
         title: "Abonnement"
         new: "Nytt abonnement"
+      issue: "Problem"
       new:
         title: "Nytt abonnement"
       edit:
@@ -1143,6 +1184,7 @@ nb:
       yes_cancel_them: Avbryt dem
       no_keep_them: Behold dem
       yes_i_am_sure: Ja jeg er sikker
+      number: "Antall"
       order_update_issues_msg: Noen bestillinger kan ikke oppdateres automatisk, dette er mest sannsynlig fordi de har blitt redigert manuelt. Vennligst gå gjennom problemene som er oppført nedenfor, og gjør eventuelle tilpasninger til individuelle bestillinger om nødvendig.
       no_results:
         no_subscriptions: Ingen abonnement ennå...
@@ -1175,8 +1217,10 @@ nb:
       message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
       link_text: "Vilkår og Betingelser"
     platform_terms_of_service:
+      message_html: "Jeg godtar plattformens %{tos_link}."
       terms_of_service: "Vilkår for bruk"
     all_terms_and_conditions:
+      message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
       terms_and_conditions: "Vilkår og Betingelser"
       terms_of_service: "Vilkår for bruk"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
@@ -1189,6 +1233,7 @@ nb:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Din handleopplevelse er drevet av %{open_food_network}."
     menu:
       cart:
         cart: "Handlekurv"
@@ -1555,6 +1600,7 @@ nb:
     set_a_password: "Du blir da bedt om å angi et passord før du kan administrere bedriften."
     mistakenly_sent: "Ikke sikker på hvorfor du har mottatt denne e-posten? Kontakt %{owner_email} for mer informasjon."
   producer_mail_greeting: "Kjære"
+  producer_mail_text_before: "Nedenfor finner du en oppdatering om bestillingssyklusen klar for:"
   producer_mail_order_text: "Her er en oppsummering av bestillingene:"
   producer_mail_delivery_instructions: "Henting / leveringsdetaljer :"
   producer_mail_signoff: "Med vennlig hilsen"
@@ -1566,7 +1612,9 @@ nb:
   shopping_tabs_home: "Hjem"
   shopping_tabs_shop: "Butikk"
   shopping_tabs_about: "Om"
+  shopping_tabs_producers: "Produsenter"
   shopping_tabs_contact: "Kontakt"
+  shopping_tabs_groups: "Grupper"
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Følg"
@@ -1718,39 +1766,40 @@ nb:
   shops_signup_help: Vi er klar til å hjelpe.
   shops_signup_help_text: Du trenger bedre resultater. Du trenger nye kunder og logistikkpartnere. Du trenger å få din historie fortalt hos grossister, i dagligvaren og rundt kjøkkenbordet.
   shops_signup_detail: Detaljene.
-  orders: Bestillinger
-  orders_fees: Gebyrer...
-  orders_edit_title: Handlekurv
-  orders_edit_headline: Din handlekurv
-  orders_edit_time: Bestilling klar for
-  orders_edit_continue: Fortsett å handle
-  orders_edit_checkout: Kassen
+  orders: "Bestillinger"
+  orders_fees: "Gebyrer..."
+  orders_edit_title: "Handlekurv"
+  orders_edit_headline: "Din handlekurv"
+  orders_edit_time: "Bestilling klar for"
+  orders_edit_continue: "Fortsett å handle"
+  orders_edit_checkout: "Kassen"
   orders_form_empty_cart: "Tøm handlekurv"
-  orders_form_subtotal: Delsum varer
-  orders_form_admin: Admin & Håndtering
-  orders_form_total: Total
-  orders_oc_expired_headline: Bestillinger stengt for denne runden
+  orders_form_update_cart: "Oppdater"
+  orders_form_subtotal: "Delsum varer"
+  orders_form_admin: "Admin & Håndtering"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Bestillinger stengt for denne runden"
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
   orders_oc_expired_text_others_html: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger <strong>%{link}</strong>."
   orders_oc_expired_text_link: "eller se på de andre bestillinsrundene tilgjengelig fra denne huben"
   orders_oc_expired_email: "Epost:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Ordrebekreftelse
-  orders_show_time: Bestilling klar for
+  orders_show_title: "Ordrebekreftelse"
+  orders_show_time: "Bestilling klar for"
   orders_show_order_number: "Bestilling # %{number}"
-  orders_show_cancelled: Avbrutt
-  orders_show_confirmed: Bekreftet
+  orders_show_cancelled: "Avbrutt"
+  orders_show_confirmed: "Bekreftet"
   orders_your_order_has_been_cancelled: "Din bestilling er avbrutt"
   orders_could_not_cancel: "Beklager, bestillingen kunne ikke avbrytes"
   orders_cannot_remove_the_final_item: "Kan ikke fjerne den siste varen fra en bestilling, vennligst avbryt bestillingen i stedet."
   orders_bought_items_notice:
-    one: En ekstra vare er allerede bekreftet for denne bestillingsrunden
+    one: "En ekstra vare er allerede bekreftet for denne bestillingsrunden"
     few: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     many: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
     other: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
-  orders_bought_edit_button: Rediger bekreftede varer
+  orders_bought_edit_button: "Rediger bekreftede varer"
   orders_bought_already_confirmed: "* allerede bekreftet"
-  orders_confirm_cancel: Er du sikker på at du vil avbryte denne bestillingen?
+  orders_confirm_cancel: "Er du sikker på at du vil avbryte denne bestillingen?"
   order_processed_successfully: "Behandlingen av din bestilling var vellykket"
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
@@ -2324,6 +2373,8 @@ nb:
   payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
   payment_method_not_supported: "Den betalingsmåten støttes ikke. Velg en annen."
   payment_updated: "Betaling Oppdatert"
+  cannot_perform_operation: "Kunne ikke oppdatere betalingen"
+  action_required: "Handling kreves"
   inventory_settings: "Beholdningsinnstillinger"
   tag_rules: "Regler merkelapper"
   shop_preferences: "Butikkvalg"
@@ -2385,6 +2436,7 @@ nb:
   js:
     saving: 'Lagrer...'
     changes_saved: 'Endringene er lagret.'
+    authorising: "Autoriserer..."
     save_changes_first: Lagre endringer først.
     all_changes_saved: Alle endringer lagret
     unsaved_changes: Du har ulagrede endringer
@@ -2406,6 +2458,7 @@ nb:
           Det oppsto et problem med å legge dette produktet til handlekurven. Kanskje
           den har blitt utilgjengelig eller butikken stenger.
     admin:
+      unit_price_tooltip: "Enhetsprisen øker gjennomsiktigheten ved at kundene dine enkelt kan sammenligne priser mellom forskjellige produkter og emballasjestørrelser. Merk at den endelige enhetsprisen som vises i butikken, kan variere ettersom den inkluderer skatter og avgifter."
       enterprise_limit_reached: "Du har nådd standardgrensen for bedrifter per konto. Skriv til %{contact_email} hvis du trenger å øke den."
       modals:
         got_it: "Jeg forstår"
@@ -2592,6 +2645,8 @@ nb:
           processing: "behandler"
           void: "ugyldig"
           invalid: "ugyldig"
+        quantity_adjusted: "Utilstrekkelig lager tilgjengelig. Ordrelinje oppdatert til maksimalt tilgjengelig antall."
+        quantity_unchanged: "Antall uendret fra forrige mengde."
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
@@ -2648,6 +2703,7 @@ nb:
         min_quantity: "Min. mengde"
         max_quantity: "Max mengde"
       price_breakdown: "Prisfordeling"
+      unit_price_tooltip: "Dette er enhetsprisen på dette produktet. Det lar deg sammenligne prisen på produkter uavhengig av størrelser og vekt."
     variants:
       on_demand:
         'yes': "Ved forespørsel"
@@ -2793,6 +2849,15 @@ nb:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Bulk Co-op Tildeling"
+          bulk_coop_customer_payments: "Bulk Co-op kundebetalinger"
+          bulk_coop_packing_sheets: "Bulk Co-op pakkeliste"
+          bulk_coop_supplier_report: "Bulk Co-op Leverandørrapport"
+          date_range: "Datointervall"
+          generate_report: "Generer rapport"
+          report_format_csv: "Rapportformat CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Datointervall"
@@ -2838,6 +2903,8 @@ nb:
               tax_category_name: "Avgiftskategori"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "Filtrene du valgte for denne rapporten er ugyldige."
+      report:
+        none: "Ingen"
   order: "Bestilling"
   distribution: "Distribusjon"
   order_details: "Ordredetaljer"
@@ -2870,12 +2937,60 @@ nb:
   previous: "Tidligere"
   last: "Siste"
   spree:
+    add_country: "Legg til land"
+    add_state: "Legg til fylke"
+    adjustment: "Justering"
+    all: "Alle"
+    associated_adjustment_closed: "Tilknyttet justering lukket"
+    authorization_failure: "Autorisasjonsfeil"
+    back_to_adjustments_list: "Tilbake til justeringer"
+    back_to_users_list: "Tilbake til brukere"
+    back_to_zones_list: "Tilbake til soner"
+    card_code: "Kortkode"
+    card_number: "Kortnummer"
+    category: "Kategori"
+    created_successfully: "Opprettet vellykket"
+    credit: "Kreditt"
+    editing_tax_category: "Redigering av avgiftskategori"
+    editing_tax_rate: "Redigering av avgiftssats"
+    editing_zone: "Redigeringssone"
+    expiration: "Utløp"
+    invalid_payment_provider: "Ugyldig betalingsleverandør"
+    items_cannot_be_shipped: "Varer kan ikke sendes"
+    gateway_config_unavailable: "Gateway-konfigurasjon utilgjengelig"
+    gateway_error: "Betalingen feilet"
     more: "Mer"
+    new_adjustment: "Ny justering"
+    new_order_completed: "Ny bestilling fullført"
+    new_tax_category: "Ny avgiftskategori"
+    new_taxon: "Ny kategori"
+    new_user: "Ny bruker"
+    no_pending_payments: "Ingen ventende betalinger"
+    none: "Ingen"
+    not_found: "Ikke funnet"
+    notice_messages:
+      variant_deleted: "Variant slettet"
+    or: "Eller"
+    order_processed_successfully: "Bestillingen ble behandlet"
+    payment_method_not_supported: "Betalingsmåte støttes ikke"
+    resend_authorization_email: "Send autorisasjons-epost på nytt"
+    rma_credit: "RMA-kreditt"
+    server_error: "Serverfeil"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Startdato"
+    successfully_removed: "Fjernet OK"
+    taxonomy_edit: "Rediger kategori"
+    taxonomy_tree_error: "Feil i kategoritre"
+    taxonomy_tree_instruction: "Instruksjon for kategoritre"
+    tree: "Tre"
+    updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
     resend: "Send på nytt"
     back_to_orders_list: "Tilbake til Bestillingsliste"
+    back_to_payments_list: "Tilbake til betalingsliste"
     return_authorizations: "Returautorisasjoner"
     cannot_create_returns: "Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer."
     select_stock: "Velg lager"
@@ -2897,6 +3012,7 @@ nb:
     tracking_number: "Sporingsnummer"
     order_total: "Bestilling Totalt"
     customer_details: "Kundedetaljer"
+    customer_details_updated: "Kundedetaljer oppdatert"
     customer_search: "Kundesøk"
     choose_a_customer: "Velg en kunde"
     account: "Konto"
@@ -2949,6 +3065,7 @@ nb:
     display_currency: "Vis valuta"
     choose_currency: "Velg Valuta"
     mail_method_settings: "Innstillinger for epost-metode"
+    mail_settings_notice_html: "Noen av følgende innstillinger kan ikke redigeres og er oppført her bare for feilsøking. Endringer kan gjøres ved å oppdatere plattformens secrets og klargjøre dem ved hjelp av <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Kontakt OFNs globale team for mer informasjon."
     general: "Generelt"
     enable_mail_delivery: "Aktiver epost-levering"
     send_mails_as: "Send Eposter Som"
@@ -3046,6 +3163,8 @@ nb:
     payment_method: "Betalingsmetode"
     payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
     not_available: "Ikke relevant"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "Det er ingen varer for denne bestillingen."
     order_populator:
       out_of_stock: '%{item} er utsolgt.'
     actions:
@@ -3066,13 +3185,24 @@ nb:
         payment_state: "Betalingsstatus"
     errors:
       messages:
+        included_price_validation: "kan ikke velges med mindre du har angitt en standard Avgiftssone"
         blank: "kan ikke være tomt"
     layouts:
       admin:
         login_nav:
           header:
             store: Butikk
+    validation:
+      must_be_int: "må være et heltall"
     admin:
+      mail_methods:
+        send_testmail: "Send test-epost"
+        testmail:
+          delivery_success: "Test-epost sendt."
+          error: "Det oppsto en feil under forsøk på å sende test-eposten."
+      unit_price_tooltip: "Enhetsprisen øker gjennomsiktigheten ved at kundene dine enkelt kan sammenligne priser mellom forskjellige produkter og emballasjestørrelser. Merk at den endelige enhetsprisen som vises i butikken, kan variere ettersom den inkluderer skatter og avgifter."
+      subscriptions:
+        number: "Antall"
       tab:
         dashboard: "Dashboard"
         orders: "Bestillinger"
@@ -3141,6 +3271,8 @@ nb:
           received: "Mottatt"
           canceled: "Avbrutt"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Kan ikke legge varen til den avbrutte bestillingen"
         index:
           listing_orders: "Lister opp bestillinger"
           new_order: "Ny bestilling"
@@ -3183,6 +3315,10 @@ nb:
       overview:
         enterprises_header:
           ofn_with_tip: Bedrifter er Produsenter og / eller Hubs og er den grunnleggende organisasjonsenheten innen Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "har ingen bedriftsavgifter"
+          has_no_payment_methods: "har ingen betalingsmåter"
+          has_no_shipping_methods: "har ingen leveringmetoder"
         products:
           active_products:
             zero: "Du har ingen aktive produkter."
@@ -3221,6 +3357,7 @@ nb:
           back_to_shipping_methods_list: "Tilbake til liste over leveringsmetoder"
         form:
           categories: "Kategorier"
+          tax_category: "Avgiftskategori"
           zones: "Soner"
           both: "Både Utsjekk og Backoffice"
           back_end: "Kun backoffice"
@@ -3276,6 +3413,13 @@ nb:
           deactivation_warning: "Ved å deaktivere en betalingsmetode kan den forsvinne fra listen din. Alternativt kan du skjule en betalingsmetode fra kassen ved å sette alternativet &quot;Vis&quot; til &quot;Kun Backoffice&quot;."
         providers:
           provider: "Tilbyder"
+          check: "Kontanter/ EFT/osv. (betalinger som det ikke kreves automatisk validering av)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3294,6 +3438,8 @@ nb:
           value: "Verdi"
           unit_name: "Enhetsnavn"
           price: "Pris"
+          unit_price: "Enhetspris"
+          unit_price_legend: "Beregnet basert på vareprisen"
           on_hand: "Tilgjengelig"
           on_demand: "Ved forespørsel"
           product_description: "Produktbeskrivelse"
@@ -3364,7 +3510,6 @@ nb:
           price: "Pris"
           options: "Valg"
           no_results: "Ingen resultater"
-          to_add_variants_you_must_first_define: "For å legge til varianter, må du først definere"
           option_types: "Valgtyper"
           option_values: "Valgverdier"
           and: "og"
@@ -3376,6 +3521,7 @@ nb:
         form:
           sku: "SKU"
           price: "Pris"
+          unit_price: "Enhetspris"
           display_as: "Vis som"
           display_name: "Visningsnavn"
           display_as_placeholder: 'f.eks. 2 kg'
@@ -3399,6 +3545,7 @@ nb:
           cookies_consent_banner_toggle: "Vis informasjonskapsler samtykkebanner"
           privacy_policy_url: "Personvernspolicy URL"
           enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
+          shoppers_require_tos: "Kundene må godta vilkårene for bruk"
           cookies_policy_matomo_section: "Vis Matomo-delen på informasjonskapsler-siden"
           footer_tos_url: "Vilkår URL"
     checkout:
@@ -3416,6 +3563,9 @@ nb:
           or_enter_new_card: "Eller skriv inn detaljer for et nytt kort:"
           remember_this_card: Husk dette kortet?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "I dag"
       now: "Nå"
     orders:
       error_flash_for_unavailable_items: "En vare i handlekurven din er blitt utilgjengelig. Oppdater valgte mengder."
@@ -3433,6 +3583,7 @@ nb:
       pending: ventende
       ready: klar
       shipped: sendt
+      canceled: avbrutt
     payment_states:
       balance_due: balanse forfaller
       completed: fullført
@@ -3444,6 +3595,7 @@ nb:
       processing: behandler
       void: ugyldig
       invalid: ugyldig
+      authorise: autorisere
     order_mailer:
       cancel_email:
         customer_greeting: "Kjære %{name},"
@@ -3458,6 +3610,8 @@ nb:
       cancel_email_for_shop:
         greeting: "Kjære %{name},"
         subject: "Kansellering av bestilling"
+        intro: "En kunde har avbrutt bestillingen sin # %{number}."
+        view_cancelled_order: "Vis avbrutt bestilling"
       confirm_email:
         subject: "Ordrebekreftelse"
       invoice_email:
@@ -3476,6 +3630,13 @@ nb:
         subject: "Tilbakestill passordinstruksjonene"
       confirmation_instructions:
         subject: "Vennligst bekreft OFN-kontoen din"
+    payment_mailer:
+      authorize_payment:
+        subject: "Vennligst autoriser betalingen din til %{distributor} på OFN"
+        instructions: "Din betaling av %{amount} til %{distributor} krever ytterligere godkjenning. Gå til følgende URL for å godkjenne betalingen din:"
+      authorization_required:
+        subject: "En betaling krever autorisasjon fra kunden"
+        message: "En betaling for bestilling %{order_number} krever ytterligere autorisasjon fra kunden. Kunden har fått beskjed via epost og betalingen vil fremstå som ventende til den er autorisert."
     shipment_mailer:
       shipped_email:
         dear_customer: "Kjære Kunde,"
@@ -3512,7 +3673,23 @@ nb:
       paused: pauset
       canceled: avbrutt
     paypal:
+      already_refunded: "Denne betalingen er tilbakebetalt og det kan ikke gjøres noe mer med den."
+      no_payment_via_admin_backend: "Du kan ikke belaste PayPal-kontoer via administrator-backend på dette tidspunktet."
+      transaction: "PayPal-transaksjon"
+      payer_id: "Betaler-ID"
+      transaction_id: "Transaksjons-ID"
+      token: "Token"
+      refund: "Refusjon"
       refund_amount: "Antall"
+      original_amount: "Opprinnelig beløp: %{amount}"
+      refund_successful: "PayPal-tilbakebetaling vellykket"
+      refund_unsuccessful: "PayPal tilbakebetaling mislyktes"
+      actions:
+        refund: "Refusjon"
+      flash:
+        cancel: "Vil du ikke bruke PayPal? Ingen problemer."
+        connection_failed: "Kunne ikke koble til PayPal."
+        generic_error: "PayPal mislyktes. %{reasons}"
     users:
       form:
         account_settings: Kontoinnstillinger
@@ -3528,6 +3705,8 @@ nb:
         past_orders: Tidligere Bestillinger
       transactions:
         transaction_history: Transaksjonshistorie
+        authorisation_required: Autorisasjon kreves
+        authorise: Autorisere
       open_orders:
         order: Bestilling
         shop: Butikk
@@ -3579,3 +3758,42 @@ nb:
         spree/payment:
           one: innbetaling
           other: Betalinger
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: omtrent 1 time
+        other: omtrent %{count} timer
+      about_x_months:
+        one: ca 1 måned
+        other: ca %{count} måneder
+      about_x_years:
+        one: ca 1 år
+        other: ca %{count} år
+      almost_x_years:
+        one: nesten 1 år
+        other: nesten %{count} år
+      half_a_minute: et halvt minutt
+      less_than_x_seconds:
+        one: mindre enn 1 sekund
+        other: mindre enn %{count} sekunder
+      less_than_x_minutes:
+        one: mindre enn ett minutt
+        other: mindre enn %{count} minutter
+      over_x_years:
+        one: over 1 år
+        other: over %{count} år
+      x_seconds:
+        one: "1 sekund"
+        other: "%{count} sekunder"
+      x_minutes:
+        one: "1 minutt"
+        other: "%{count} minutter"
+      x_days:
+        one: "1 dag"
+        other: "%{count} dager"
+      x_months:
+        one: "1 måned"
+        other: "%{count} måneder"
+      x_years:
+        one: "1 år"
+        other: "%{count} år"

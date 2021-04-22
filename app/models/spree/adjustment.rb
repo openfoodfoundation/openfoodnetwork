@@ -28,7 +28,7 @@ require 'concerns/adjustment_scopes'
 # total. This allows an adjustment to be preserved if it becomes ineligible so
 # it might be reinstated.
 module Spree
-  class Adjustment < ActiveRecord::Base
+  class Adjustment < ApplicationRecord
     extend Spree::LocalizedNumber
 
     # Deletion of metadata is handled in the database.
@@ -37,8 +37,7 @@ module Spree
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
     belongs_to :adjustable, polymorphic: true
-    belongs_to :source, polymorphic: true
-    belongs_to :originator, polymorphic: true
+    belongs_to :originator, -> { with_deleted }, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
 
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
@@ -46,6 +45,8 @@ module Spree
 
     validates :label, presence: true
     validates :amount, numericality: true
+
+    after_create :update_adjustable_adjustment_total
 
     state_machine :state, initial: :open do
       event :close do
@@ -66,15 +67,12 @@ module Spree
     scope :optional, -> { where(mandatory: false) }
     scope :charge, -> { where('amount >= 0') }
     scope :credit, -> { where('amount < 0') }
-    scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
+    scope :return_authorization, -> { where(originator_type: "Spree::ReturnAuthorization") }
     scope :inclusive, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
-    scope :admin,          -> { where(source_type: nil, originator_type: nil) }
-    scope :included_tax,   -> {
-      where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
-    }
+    scope :admin,          -> { where(originator_type: nil) }
 
     scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
     scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
@@ -99,13 +97,17 @@ module Spree
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
     def update!(calculable = nil, force: false)
-      return if immutable? && !force
+      return amount if immutable? && !force
 
-      # Fix for Spree issue #3381
-      # If we attempt to call 'source' before the reload, then source is currently
-      # the order object. After calling a reload, the source is the Shipment.
-      reload
-      originator.update_adjustment(self, calculable || source) if originator.present?
+      if originator.present?
+        amount = originator.compute_amount(calculable || adjustable)
+        update_columns(
+          amount: amount,
+          updated_at: Time.zone.now,
+        )
+      end
+
+      amount
     end
 
     def currency
@@ -116,13 +118,12 @@ module Spree
       Spree::Money.new(amount, currency: currency)
     end
 
-    def immutable?
-      state != "open"
+    def admin?
+      originator_type.nil?
     end
 
-    def set_included_tax!(rate)
-      tax = amount - (amount / (1 + rate))
-      set_absolute_included_tax! tax
+    def immutable?
+      state != "open"
     end
 
     def set_absolute_included_tax!(tax)
@@ -141,11 +142,10 @@ module Spree
       included_tax.positive?
     end
 
-    # Allow accessing soft-deleted originator objects
-    def originator
-      return if originator_type.blank?
+    private
 
-      originator_type.constantize.unscoped { super }
+    def update_adjustable_adjustment_total
+      Spree::ItemAdjustments.new(adjustable).update if adjustable
     end
   end
 end

@@ -38,11 +38,12 @@ module Spree
         @order.recreate_all_fees!
 
         unless order_params.present? && @order.update(order_params) && @order.line_items.present?
-          if @order.line_items.empty?
+          if @order.line_items.empty? && !params[:suppress_error_msg]
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
-          return redirect_to(spree.edit_admin_order_path(@order),
-                             flash: { error: @order.errors.full_messages.join(', ') })
+
+          flash[:error] = @order.errors.full_messages.join(', ') if @order.errors.present?
+          return redirect_to spree.edit_admin_order_path(@order)
         end
 
         if @order.complete?
@@ -89,7 +90,7 @@ module Spree
       end
 
       def print
-        render InvoiceRenderer.new.args(@order)
+        render_with_wicked_pdf InvoiceRenderer.new.args(@order)
       end
 
       def print_ticket

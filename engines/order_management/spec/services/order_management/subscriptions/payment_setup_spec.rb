@@ -9,7 +9,7 @@ module OrderManagement
       let(:payment_setup) { OrderManagement::Subscriptions::PaymentSetup.new(order) }
 
       describe "#call!" do
-        let!(:payment){ create(:payment, amount: 10) }
+        let!(:payment) { create(:payment, amount: 10) }
 
         context "when no pending payments are present" do
           let(:payment_method) { create(:payment_method) }
@@ -17,7 +17,7 @@ module OrderManagement
 
           before do
             allow(order).to receive(:pending_payments).once { [] }
-            allow(order).to receive(:outstanding_balance) { 5 }
+            allow(order).to receive(:new_outstanding_balance) { 5 }
             allow(order).to receive(:subscription) { subscription }
           end
 
@@ -31,14 +31,15 @@ module OrderManagement
           before { allow(order).to receive(:pending_payments).once { [payment] } }
 
           context "when the payment total doesn't match the outstanding balance on the order" do
-            before { allow(order).to receive(:outstanding_balance) { 5 } }
+            before { allow(order).to receive(:new_outstanding_balance) { 5 } }
+
             it "updates the payment total to reflect the outstanding balance" do
               expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
             end
           end
 
           context "when the payment total matches the outstanding balance on the order" do
-            before { allow(order).to receive(:outstanding_balance) { 10 } }
+            before { allow(order).to receive(:new_outstanding_balance) { 10 } }
 
             it "does nothing" do
               expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
@@ -51,7 +52,7 @@ module OrderManagement
           let!(:payment2) { create(:payment, order: order) }
 
           before do
-            allow(order).to receive(:outstanding_balance) { 7 }
+            allow(order).to receive(:new_outstanding_balance) { 7 }
             allow(order).to receive(:pending_payments).once { [payment1, payment2] }
           end
 

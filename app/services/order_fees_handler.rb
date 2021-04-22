@@ -19,6 +19,9 @@ class OrderFeesHandler
 
       create_line_item_fees!
       create_order_fees!
+
+      order.updater.update_totals
+      order.updater.persist_totals
     end
 
     order.update!
@@ -45,7 +48,7 @@ class OrderFeesHandler
   end
 
   def update_order_fees!
-    order.adjustments.enterprise_fee.where(source_type: 'Spree::Order').each do |fee|
+    order.adjustments.enterprise_fee.where(adjustable_type: 'Spree::Order').each do |fee|
       fee.update!(order, force: true)
     end
   end

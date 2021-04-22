@@ -1,4 +1,4 @@
-class RequireTimestamps < ActiveRecord::Migration
+class RequireTimestamps < ActiveRecord::Migration[4.2]
   def up
     current_time = Time.zone.now
 

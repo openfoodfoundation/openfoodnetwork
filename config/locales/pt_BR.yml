@@ -85,6 +85,7 @@ pt_BR:
               no_default_card: "^Nenhum cartão padrão disponível para este cliente"
             shipping_method:
               not_available_to_shop: "não está disponível para %{shop}"
+  customer_instructions: "Instruções para o consumidor"
   devise:
     confirmations:
       send_instructions: "Você receberá um e-mail com instruções sobre como confirmar sua conta em alguns minutos."
@@ -119,6 +120,8 @@ pt_BR:
       cloned_order_cycle_name: "COPIA DO %{order_cycle}"
     tax_rate:
       included_in_price: "Incluso no preço"
+  sku: "SKU"
+  tax_rate: "Alíquota da taxa"
   validators:
     date_time_string_validator:
       not_string_error: "deve ser uma linha"
@@ -264,7 +267,6 @@ pt_BR:
   error: Erro
   processing_payment: "Processando pagamento..."
   no_pending_payments: "Nenhum pagamento pendente"
-  invalid_payment_state: "Situação de pagamento inválido"
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Retirar
@@ -1143,6 +1145,7 @@ pt_BR:
       yes_cancel_them: Cancele-os
       no_keep_them: Mantenha-os
       yes_i_am_sure: Sim eu tenho certeza
+      number: "Número"
       order_update_issues_msg: Alguns pedidos não puderam ser atualizados automaticamente; é mais provável que tenham sido editados manualmente. Revise os problemas listados abaixo e faça ajustes nos pedidos individuais, se necessário.
       no_results:
         no_subscriptions: Ainda não há assinaturas ...
@@ -1175,8 +1178,10 @@ pt_BR:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"
     platform_terms_of_service:
+      message_html: "Eu concordo com os %{tos_link}da plataforma"
       terms_of_service: "Termos de serviço"
     all_terms_and_conditions:
+      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
       terms_and_conditions: "Termos e Condições"
       terms_of_service: "Termos de serviço"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
@@ -1189,6 +1194,7 @@ pt_BR:
     mailers:
       powered_by:
         open_food_network: "Open Food Brasil"
+        powered_html: "Esta compra é possibilitada pela %{open_food_network}."
     menu:
       cart:
         cart: "Carrinho"
@@ -1555,6 +1561,7 @@ pt_BR:
     set_a_password: "Você será solicitado a definir uma senha antes de poder administrar a empresa."
     mistakenly_sent: "Não sabe ao certo por que você recebeu este e-mail? Entre em contato com %{owner_email} para obter mais informações."
   producer_mail_greeting: "Querido"
+  producer_mail_text_before: "Veja abaixo uma atualização para o ciclo de pedidos com entregas em:"
   producer_mail_order_text: "Aqui está um resumo de pedidos para seus produtos:"
   producer_mail_delivery_instructions: "Instruções para retirada/entrega do estoque:"
   producer_mail_signoff: "Obrigado e até breve"
@@ -1566,7 +1573,9 @@ pt_BR:
   shopping_tabs_home: "Início"
   shopping_tabs_shop: "Comprar"
   shopping_tabs_about: "Sobre"
+  shopping_tabs_producers: "Produtores"
   shopping_tabs_contact: "Contato"
+  shopping_tabs_groups: "Grupos"
   shopping_contact_address: "Endereço"
   shopping_contact_web: "Contato"
   shopping_contact_social: "Seguir"
@@ -1718,39 +1727,40 @@ pt_BR:
   shops_signup_help: Estamos prontos para ajudar
   shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
   shops_signup_detail: Aqui está o detalhe.
-  orders: Encomendas
-  orders_fees: Taxas...
-  orders_edit_title: Carrinho de compras
-  orders_edit_headline: seu carrinho de compras
-  orders_edit_time: Pedido pronto para
-  orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Fechar pedido
+  orders: "Encomendas"
+  orders_fees: "Taxas..."
+  orders_edit_title: "Carrinho de compras"
+  orders_edit_headline: "seu carrinho de compras"
+  orders_edit_time: "Pedido pronto para"
+  orders_edit_continue: "Continuar comprando"
+  orders_edit_checkout: "Fechar pedido"
   orders_form_empty_cart: "Carrinho vazio"
-  orders_form_subtotal: Subtotal dos produtos
-  orders_form_admin: Administração e manejo
-  orders_form_total: Total
-  orders_oc_expired_headline: Este ciclo de pedidos está fechado para pedidos
+  orders_form_update_cart: "Atualizar"
+  orders_form_subtotal: "Subtotal dos produtos"
+  orders_form_admin: "Administração e manejo"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Este ciclo de pedidos está fechado para pedidos"
   orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados."
   orders_oc_expired_text_others_html: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou veja os outros ciclos de pedidos disponíveis nessa central"
   orders_oc_expired_email: "E-mail:"
   orders_oc_expired_phone: "Telefone:"
-  orders_show_title: Confimação de Pedido
-  orders_show_time: Pedido pronto em
+  orders_show_title: "Confimação de Pedido"
+  orders_show_time: "Pedido pronto em"
   orders_show_order_number: "Pedido #"
-  orders_show_cancelled: Cancelado
-  orders_show_confirmed: Confirmado
+  orders_show_cancelled: "Cancelado"
+  orders_show_confirmed: "Confirmado"
   orders_your_order_has_been_cancelled: "Seu pedido foi cancelado"
   orders_could_not_cancel: "Desculpa, seu pedido não pode ser cancelado"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de um pedido, ao invés disso, por favor cancele o pedido"
   orders_bought_items_notice:
-    one: 'Um item adicional já está confirmado para este ciclo de pedidos. '
+    one: "Um item adicional já está confirmado para este ciclo de pedidos. "
     few: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
     many: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
     other: "%{count} itens adicionais já confirmados para este ciclo de pedidos"
-  orders_bought_edit_button: Editar itens confirmados
+  orders_bought_edit_button: "Editar itens confirmados"
   orders_bought_already_confirmed: "* já confirmado"
-  orders_confirm_cancel: Tem certeza de que deseja cancelar este pedido?
+  orders_confirm_cancel: "Tem certeza de que deseja cancelar este pedido?"
   order_processed_successfully: "Seu pedido foi processado com sucesso"
   products_cart_distributor_choice: "Distribuidor para seu pedido:"
   products_cart_distributor_change: "O distribuidor para este pedido será trocado para %{name} se você adicionar este produto no carrinho."
@@ -2377,6 +2387,7 @@ pt_BR:
   back_to_orders_list: "Voltar à lista de pedidos"
   no_orders_found: "Nenhum pedido encontrado"
   order_information: "Informações sobre pedidos"
+  new_payment: "Novo Pagamento"
   date_completed: "Data de conclusão"
   amount: "Montante"
   state_names:
@@ -2805,6 +2816,9 @@ pt_BR:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estiver pronto!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Gerar Relatório"
       enterprise_fee_summaries:
         filters:
           date_range: "Período"
@@ -2850,6 +2864,8 @@ pt_BR:
               tax_category_name: "Categoria de taxa"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "Os filtros que você selecionou para este relatório são inválidos."
+      report:
+        none: "Nenhum"
   order: "Pedido"
   distribution: "Distribuição"
   order_details: "detalhes do pedido"
@@ -2882,12 +2898,19 @@ pt_BR:
   previous: "Anterior"
   last: "Último"
   spree:
+    all: "Todos"
+    category: "Categoria"
+    credit: "Crédito"
     more: "Mais"
+    no_pending_payments: "Nenhum pagamento pendente"
+    none: "Nenhum"
+    updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
     name_or_sku: "Nome ou SKU (digite pelo menos os 4 primeiros caracteres do nome do produto)"
     resend: "Re-enviar"
     back_to_orders_list: "Voltar à lista de pedidos"
+    back_to_payments_list: "Voltar pra Lista de Pagamentos"
     return_authorizations: "Autorizações de Devolução"
     cannot_create_returns: "Não é possível criar devoluções, pois esse pedido não possui unidades enviadas."
     select_stock: "Selecionar estoque"
@@ -3059,6 +3082,7 @@ pt_BR:
     payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pôde ser processado, favor verificar os dados informados. "
     not_available: "N/A"
+    sku: "SKU"
     order_populator:
       out_of_stock: '%{item}fora de estoque. '
     actions:
@@ -3087,6 +3111,8 @@ pt_BR:
           header:
             store: Loja
     admin:
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Painel"
         orders: "Encomendas"
@@ -3235,6 +3261,7 @@ pt_BR:
           back_to_shipping_methods_list: "Voltar à lista de métodos de envio"
         form:
           categories: "Categorias"
+          tax_category: "Categoria de taxa"
           zones: "Zonas"
           both: "Tanto Checkout quanto Área Administrativa"
           back_end: "Somente Área Administrativa"
@@ -3315,6 +3342,7 @@ pt_BR:
           value: "Quantidade"
           unit_name: "Nome da Unidade"
           price: "Preço"
+          unit_price: "Preço Unitário"
           on_hand: "Disponível"
           on_demand: "Sob Encomenda"
           product_description: "Descrição do Produto"
@@ -3385,7 +3413,6 @@ pt_BR:
           price: "Preço"
           options: "Opções"
           no_results: "Nenhum Resultado"
-          to_add_variants_you_must_first_define: "Para adicionar variantes, primeiro você precisa definir"
           option_types: "Tipos de Opções"
           option_values: "Valores das Opções"
           and: "e"
@@ -3397,6 +3424,7 @@ pt_BR:
         form:
           sku: "SKU"
           price: "Preço"
+          unit_price: "Preço Unitário"
           display_as: "Mostrar Como"
           display_name: "Mostrar Nome"
           display_as_placeholder: 'ex. 2 kg'
@@ -3420,6 +3448,7 @@ pt_BR:
           cookies_consent_banner_toggle: "Mostrar banner sobre permissão para cookies"
           privacy_policy_url: " Política de Privacidade URL"
           enterprises_require_tos: "As iniciativas devem aceitar os Termos de Serviço"
+          shoppers_require_tos: "Compradores precisam aceitar Termos de Serviço"
           cookies_policy_matomo_section: "Exibir a seção Matomo nos cookies da página de política"
           footer_tos_url: "URL Termos de Serviço"
     checkout:
@@ -3457,6 +3486,7 @@ pt_BR:
       pending: pendente
       ready: pronto
       shipped: enviado
+      canceled: cancelado
     payment_states:
       balance_due: saldo devedor
       completed: completado
@@ -3578,6 +3608,8 @@ pt_BR:
         past_orders: Pedidos passados
       transactions:
         transaction_history: Histórico de transações
+        authorisation_required: Requer Autorização
+        authorise: Autorizar
       open_orders:
         order: Pedido
         shop: Loja

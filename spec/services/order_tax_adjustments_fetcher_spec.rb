@@ -46,7 +46,7 @@ describe OrderTaxAdjustmentsFetcher do
     end
     let(:admin_adjustment) do
       create(:adjustment, order: order, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0),
-                          source: nil, label: "Admin Adjustment")
+                          label: "Admin Adjustment")
     end
 
     let(:order_cycle) do
@@ -66,14 +66,9 @@ describe OrderTaxAdjustmentsFetcher do
         distributor: coordinator
       )
     end
-
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
-      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(tax_rate15.amount)
-    end
-
     let(:shipping_method) do
-      create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 46.0))
+      create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 46.0),
+                               tax_category: tax_category15)
     end
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)

@@ -92,6 +92,13 @@ describe Enterprise do
               enterprise.reload
             }.to change { enterprise.updated_at }
           end
+
+          it "touches enterprise when a relevant exchange is updated" do
+            expect {
+              oc.exchanges.first.update!(updated_at: Time.zone.now)
+              enterprise.reload
+            }.to change { enterprise.updated_at }
+          end
         end
 
         it "touches enterprise when the product's variant is added to order cycle" do

@@ -1,7 +1,7 @@
 Darkswarm.factory 'ShopsResource', ($resource) ->
-  $resource('/api/shops/:id.json', {}, {
+  $resource('/api/v0/shops/:id.json', {}, {
     'closed_shops':
       method: 'GET'
       isArray: true
-      url: '/api/shops/closed_shops.json'
+      url: '/api/v0/shops/closed_shops.json'
   })

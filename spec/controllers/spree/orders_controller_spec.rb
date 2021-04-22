@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe Spree::OrdersController, type: :controller do
   include OpenFoodNetwork::EmailHelper
+  include CheckoutHelper
 
   let(:distributor) { double(:distributor) }
   let(:order) { create(:order) }
@@ -22,12 +23,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       it "loads page" do
-        get :show, id: order.number, token: order.token
+        get :show, params: { id: order.number, token: order.token }
         expect(response).to be_success
       end
 
       it "stores order token in session as 'access_token'" do
-        get :show, id: order.number, token: order.token
+        get :show, params: { id: order.number, token: order.token }
         expect(session[:access_token]).to eq(order.token)
       end
     end
@@ -41,7 +42,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "loads page" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to be_success
       end
     end
@@ -50,7 +51,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { order.user }
 
       it "loads page" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to be_success
       end
     end
@@ -59,7 +60,7 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { create(:user) }
 
       it "redirects to unauthorized" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -72,7 +73,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "redirects to unauthorized" do
-        get :show, id: order.number
+        get :show, params: { id: order.number }
         expect(response).to redirect_to(root_path(anchor: "login?after_login=#{order_path(order)}"))
         expect(flash[:error]).to eq("Please log in to view your order.")
       end
@@ -101,7 +102,7 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent) { "pi_123" }
 
         it "completes the payment" do
-          get :show, id: order.number, payment_intent: payment_intent
+          get :show, params: { id: order.number, payment_intent: payment_intent }
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to be nil
@@ -113,7 +114,7 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent) { "invalid" }
 
         it "does not complete the payment" do
-          get :show, id: order.number, payment_intent: payment_intent
+          get :show, params: { id: order.number, payment_intent: payment_intent }
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
@@ -225,10 +226,10 @@ describe Spree::OrdersController, type: :controller do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)
         li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
-        get :update, order: { line_items_attributes: {
+        get :update, params: { order: { line_items_attributes: {
           "0" => { quantity: "0", id: "9999" },
           "1" => { quantity: "99", id: li.id }
-        } }
+        } } }
         expect(response.status).to eq(302)
         expect(li.reload.quantity).to eq(99)
       end
@@ -253,9 +254,9 @@ describe Spree::OrdersController, type: :controller do
       line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
       adjustment = create(:adjustment, adjustable: order)
 
-      get :update, order: { line_items_attributes: {
+      get :update, params: { order: { line_items_attributes: {
         "1" => { quantity: "99", id: line_item.id }
-      } }
+      } } }
 
       expect(adjustment.state).to eq('open')
     end
@@ -264,7 +265,12 @@ describe Spree::OrdersController, type: :controller do
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member)) }
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+      let(:order) {
+        create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
+                                           payment_fee: payment_fee, shipping_tax_category: shipping_tax_category)
+      }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
       let(:shipping_fee) { 3 }
@@ -273,14 +279,16 @@ describe Spree::OrdersController, type: :controller do
       let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
 
       before do
-        allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-        allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
+        allow(order).to receive(:tax_zone) { shipping_tax_rate.zone }
+        order.reload
+        order.create_tax_charge!
 
         # Sanity check the fees
-        expect(order.all_adjustments.length).to eq 2
+        expect(order.all_adjustments.length).to eq 3
         expect(item_num).to eq 2
         expect(order.adjustment_total).to eq expected_fees
-        expect(order.shipment.fee_adjustment.included_tax).to eq 1.2
+        expect(order.shipment.adjustments.tax.first.amount).to eq 1.2
+        expect(order.shipment.included_tax_total).to eq 1.2
 
         allow(subject).to receive(:spree_current_user) { order.user }
         allow(subject).to receive(:order_to_update) { order }
@@ -295,7 +303,8 @@ describe Spree::OrdersController, type: :controller do
 
         expect(order.reload.line_items.count).to eq 1
         expect(order.adjustment_total).to eq(1 * (shipping_fee + payment_fee))
-        expect(order.shipment.fee_adjustment.included_tax).to eq 0.6
+        expect(order.shipment.adjustments.tax.first.amount).to eq 0.6
+        expect(order.shipment.included_tax_total).to eq 0.6
       end
     end
 

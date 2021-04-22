@@ -17,14 +17,14 @@ describe 'Customer', ->
 
     it "nests the params inside 'customer'", ->
       $httpBackend
-        .expectPUT('/api/customers/3.json', { customer: { id: 3 } })
+        .expectPUT('/api/v0/customers/3.json', { customer: { id: 3 } })
         .respond 200, response
       customer.update()
       $httpBackend.flush()
 
     describe "when the request succeeds", ->
       it "shows a success flash", ->
-        $httpBackend.expectPUT('/api/customers/3.json').respond 200, response
+        $httpBackend.expectPUT('/api/v0/customers/3.json').respond 200, response
         customer.update()
         $httpBackend.flush()
         expect(RailsFlashLoaderMock.loadFlash)
@@ -32,7 +32,7 @@ describe 'Customer', ->
 
     describe "when the request fails", ->
       it "shows a error flash", ->
-        $httpBackend.expectPUT('/api/customers/3.json').respond 400, { error: 'Some error' }
+        $httpBackend.expectPUT('/api/v0/customers/3.json').respond 400, { error: 'Some error' }
         customer.update()
         $httpBackend.flush()
         expect(RailsFlashLoaderMock.loadFlash)

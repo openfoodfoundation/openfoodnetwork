@@ -23,8 +23,6 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, $fil
         preferred_customer_tags: (tag.text for tag in tagGroup.tags).join(",")
         type: "TagRule::#{ruleType}"
     switch ruleType
-      when "DiscountOrder"
-        newRule.calculator = { preferred_flat_percent: 0 }
       when "FilterShippingMethods"
         newRule.peferred_shipping_method_tags = []
         newRule.preferred_matched_shipping_methods_visibility = "visible"

@@ -16,6 +16,7 @@ module.exports = function(config) {
       'app/assets/javascripts/admin/**/*.js*',
       'app/assets/javascripts/darkswarm/*.js*',
       'app/assets/javascripts/darkswarm/**/*.js*',
+      'app/assets/javascripts/shared/shared.js.coffee',
       'spec/javascripts/unit/**/*.js*'
     ],
 

@@ -13,14 +13,14 @@ module Spree
 end
 
 module Spree
-  class TaxRate < ActiveRecord::Base
+  class TaxRate < ApplicationRecord
     acts_as_paranoid
     include Spree::Core::CalculatedAdjustments
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
 
     validates :amount, presence: true, numericality: true
-    validates :tax_category_id, presence: true
+    validates :tax_category, presence: true
     validates_with DefaultTaxZoneValidator
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
@@ -36,8 +36,7 @@ module Spree
     end
 
     def self.adjust(order)
-      order.adjustments.tax.destroy_all
-      order.line_item_adjustments.where(originator_type: 'Spree::TaxRate').destroy_all
+      order.all_adjustments.tax.destroy_all
 
       match(order).each do |rate|
         rate.adjust(order)
@@ -62,14 +61,14 @@ module Spree
       label = create_label
       if included_in_price
         if default_zone_or_zone_match? order
-          order.line_items.each { |line_item| create_adjustment(label, line_item, line_item) }
+          order.line_items.each { |line_item| create_adjustment(label, line_item, false, "open") }
+          order.shipments.each { |shipment| create_adjustment(label, shipment, false, "open") }
         else
           amount = -1 * calculator.compute(order)
           label = Spree.t(:refund) + label
 
           order.adjustments.create(
             amount: amount,
-            source: order,
             originator: self,
             order: order,
             state: "closed",
@@ -77,16 +76,11 @@ module Spree
           )
         end
       else
-        create_adjustment(label, order, order)
+        create_adjustment(label, order, false, "open")
       end
 
       order.adjustments.reload
       order.line_items.reload
-      # TaxRate adjustments (order.adjustments.tax)
-      #   and line item adjustments (tax included on line items) consist of 100% tax
-      order.adjustments.tax.additional.each do |adjustment|
-        adjustment.set_absolute_included_tax! adjustment.amount
-      end
     end
 
     def default_zone_or_zone_match?(order)

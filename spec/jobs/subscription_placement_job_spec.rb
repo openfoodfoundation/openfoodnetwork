@@ -115,6 +115,18 @@ describe SubscriptionPlacementJob do
           expect(changes[line_item2.id]).to be 3
           expect(changes[line_item3.id]).to be 3
         end
+
+        context "and the order has been placed" do
+          before do
+            allow(order).to receive(:ensure_available_shipping_rates) { true }
+            allow(order).to receive(:process_each_payment) { true }
+            job.send(:place_order, order.reload)
+          end
+
+          it "removes the unavailable items from the shipment" do
+            expect(order.shipment.manifest.size).to eq 1
+          end
+        end
       end
     end
   end
@@ -170,9 +182,9 @@ describe SubscriptionPlacementJob do
           allow(job).to receive(:unavailable_stock_lines_for) { order.line_items }
         end
 
-        it "does not place the order, clears, all adjustments, and sends an empty_order email" do
+        it "does not place the order, clears all adjustments, and sends an empty_order email" do
           expect{ job.send(:place_order, order) }.to_not change{ order.reload.completed_at }.from(nil)
-          expect(order.adjustments).to be_empty
+          expect(order.all_adjustments).to be_empty
           expect(order.total).to eq 0
           expect(order.adjustment_total).to eq 0
           expect(job).to_not have_received(:send_placement_email)
@@ -203,6 +215,18 @@ describe SubscriptionPlacementJob do
             job.send(:place_order, order)
           end
         end
+      end
+    end
+
+    context "when the proxy order fails to generate an order" do
+      before do
+        allow(proxy_order).to receive(:order) { nil }
+      end
+
+      it "records an error " do
+        expect(job).to receive(:record_subscription_issue)
+        expect(job).to_not receive(:place_order)
+        job.send(:place_order_for, proxy_order)
       end
     end
   end

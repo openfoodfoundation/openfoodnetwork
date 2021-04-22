@@ -1,5 +1,5 @@
 module Spree
-  class Property < ActiveRecord::Base
+  class Property < ApplicationRecord
     has_many :product_properties, dependent: :destroy
     has_many :products, through: :product_properties
     has_many :producer_properties

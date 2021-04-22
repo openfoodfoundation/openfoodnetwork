@@ -1,4 +1,4 @@
-class AddIncludedToAdjustments < ActiveRecord::Migration
+class AddIncludedToAdjustments < ActiveRecord::Migration[4.2]
   class Spree::TaxRate < ActiveRecord::Base; end
 
   class Spree::Adjustment < ActiveRecord::Base

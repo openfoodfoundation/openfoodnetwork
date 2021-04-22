@@ -9,7 +9,8 @@ module Admin
     before_action :editable_order_cycle_ids_for_create, only: [:create]
     before_action :editable_order_cycle_ids_for_update, only: [:update]
     before_action :check_dependent_subscriptions, only: [:destroy]
-    update.after :sync_subscriptions_for_update
+
+    after_action :sync_subscriptions_for_update, only: :update
 
     respond_to :json
 
@@ -120,7 +121,7 @@ module Admin
     end
 
     def sync_subscriptions_for_update
-      return unless params[:schedule][:order_cycle_ids]
+      return unless params[:schedule][:order_cycle_ids] && @object.errors.blank?
 
       sync_subscriptions
     end

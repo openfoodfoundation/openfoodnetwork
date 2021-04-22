@@ -16,7 +16,7 @@ describe "checking out an order that initially fails", type: :request do
   let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
   let!(:order) { create(:order, shipments: [shipment], distributor: shop, order_cycle: order_cycle) }
   let(:params) do
-    { format: :json, order: {
+    { order: {
       shipping_method_id: shipping_method.id,
       payments_attributes: [{ payment_method_id: payment_method.id }],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
@@ -46,7 +46,7 @@ describe "checking out an order that initially fails", type: :request do
     end
 
     it "clears shipments and payments before rendering the checkout" do
-      put update_checkout_path, params
+      put update_checkout_path, params: params, as: :json
 
       # Checking out a BogusGateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
@@ -62,7 +62,8 @@ describe "checking out an order that initially fails", type: :request do
 
       # Use a check payment method, which should work
       params[:order][:payments_attributes][0][:payment_method_id] = check_payment_method.id
-      put update_checkout_path, params
+
+      put update_checkout_path, params: params, as: :json
 
       expect(response.status).to be 200
       order.reload

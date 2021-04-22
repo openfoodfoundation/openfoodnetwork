@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
 class OrderBalance
+  delegate :zero?, :abs, :to_s, :to_f, :to_d, :<, :>, to: :amount
+
   def initialize(order)
     @order = order
   end
 
   def label
-    to_f.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
+    amount.negative? ? I18n.t(:credit_owed) : I18n.t(:balance_due)
+  end
+
+  def display_amount
+    Spree::Money.new(amount, currency: order.currency)
   end
 
   def amount
-    Spree::Money.new(to_f, currency: order.currency)
+    order.new_outstanding_balance
   end
 
-  def to_f
-    if customer_balance_enabled?
-      order.new_outstanding_balance
-    else
-      order.outstanding_balance
-    end
+  def +(other)
+    amount + other.to_f
   end
-
-  delegate :zero?, to: :to_f
 
   private
 
   attr_reader :order
-
-  def customer_balance_enabled?
-    OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, order.user)
-  end
 end

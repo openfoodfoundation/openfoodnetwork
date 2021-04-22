@@ -74,6 +74,8 @@ require "paperclip/matchers"
 # Override setting in Spree engine: Spree::Core::MailSettings
 ActionMailer::Base.default_url_options[:host] = 'test.host'
 
+require "view_component/test_helpers"
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -184,7 +186,6 @@ RSpec.configure do |config|
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
-  config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
   config.include ControllerRequestsHelper, type: :controller
@@ -233,6 +234,8 @@ RSpec.configure do |config|
   # PerfTools::CpuProfiler.stop
   # end
   config.infer_spec_type_from_file_location!
+
+  config.include ViewComponent::TestHelpers, type: :component
 end
 
 FactoryBot.use_parent_strategy = false

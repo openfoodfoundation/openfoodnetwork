@@ -22,6 +22,10 @@
         %span.already-confirmed= t(:orders_bought_already_confirmed)
       %td.text-right.cart-item-price
         = line_item.single_display_amount_with_adjustments.to_html
+        - if feature? :unit_price, spree_current_user
+          %br
+          %span.unit-price
+            = line_item.unit_price_price_and_unit
       %td.text-center.cart-item-quantity
         = line_item.quantity
       %td.cart-item-total.text-right

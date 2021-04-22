@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Taxonomy < ActiveRecord::Base
+  class Taxonomy < ApplicationRecord
     validates :name, presence: true
 
     has_many :taxons

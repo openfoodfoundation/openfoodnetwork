@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Zone < ActiveRecord::Base
+  class Zone < ApplicationRecord
     has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone
     has_and_belongs_to_many :shipping_methods, join_table: 'spree_shipping_methods_zones'

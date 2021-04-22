@@ -170,7 +170,6 @@ Spree::Core::Engine.routes.draw do
   resources :products
 
   # Used by spree_paypal_express
-  get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
   get '/content/cvv', :to => 'content#cvv', :as => :cvv
   get '/content/*path', :to => 'content#show', :as => :content
   get '/paypal', :to => "paypal#express", :as => :paypal_express

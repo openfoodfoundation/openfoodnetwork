@@ -85,6 +85,10 @@ ar:
               no_default_card: "^ لا توجد بطاقة متاحة لهذا العميل"
             shipping_method:
               not_available_to_shop: "غير متاح لـ %{shop}"
+  card_details: "معلومات البطاقة"
+  card_type: "نوع البطاقة"
+  cardholder_name: "إسم صاحب البطاقة"
+  customer_instructions: "تعليمات العملاء"
   devise:
     confirmations:
       send_instructions: "ستتلقى رسالة بريد إلكتروني تحتوي على إرشادات حول كيفية تأكيد حسابك في بضع دقائق."
@@ -119,6 +123,8 @@ ar:
       cloned_order_cycle_name: "نسخة من %{order_cycle}"
     tax_rate:
       included_in_price: "مشمول في السعر"
+  sku: "SKU"
+  tax_rate: "معدل الضريبة"
   validators:
     date_time_string_validator:
       not_string_error: "يجب أن تكون احرف"
@@ -264,7 +270,6 @@ ar:
   error: خطأ
   processing_payment: "معالجة الدفع..."
   no_pending_payments: "لا توجد دفعات معلقة"
-  invalid_payment_state: "حالة الدفع غير صالحة"
   filter_results: تصفية النتائج
   quantity: الكمية
   pick_up: النقل
@@ -1144,6 +1149,7 @@ ar:
       yes_cancel_them: إلغاء
       no_keep_them: احتفظ بهم
       yes_i_am_sure: نعم أنا متأكد
+      number: "رقم "
       order_update_issues_msg: تعذر تحديث بعض الطلبات تلقائيًا ، وهذا على الأرجح لأنه تم تعديلها يدويًا. يرجى مراجعة المشكلات المذكورة أدناه وإجراء أي تعديلات على الطلبات الفردية إذا لزم الأمر.
       no_results:
         no_subscriptions: لا اشتراكات حتى الآن ...
@@ -1176,8 +1182,10 @@ ar:
       message_html: "أوافق على %{terms_and_conditions_link} للبائع."
       link_text: "الأحكام والشروط"
     platform_terms_of_service:
+      message_html: "أوافق على المنصة %{tos_link}."
       terms_of_service: "شروط الخدمة"
     all_terms_and_conditions:
+      message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
       terms_and_conditions: "الأحكام والشروط"
       terms_of_service: "شروط الخدمة"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
@@ -1569,7 +1577,9 @@ ar:
   shopping_tabs_home: "الصفحة الرئيسية"
   shopping_tabs_shop: "المتجر"
   shopping_tabs_about: "حول"
+  shopping_tabs_producers: "المنتجين"
   shopping_tabs_contact: "اتصل"
+  shopping_tabs_groups: "مجموعات"
   shopping_contact_address: "عنوان"
   shopping_contact_web: "اتصل"
   shopping_contact_social: "إتبع"
@@ -1721,39 +1731,40 @@ ar:
   shops_signup_help: نحن على استعداد للمساعدة.
   shops_signup_help_text: أنت بحاجة إلى عائد أفضل. تحتاج لمشترين جدد وشركاء لوجستيين. تحتاج إلى سرد قصتك عبر الجملة والتجزئة وطاولة المطبخ.
   shops_signup_detail: هنا التفاصيل.
-  orders: الطلبات
-  orders_fees: رسوم ...
-  orders_edit_title: سلة التسوق
-  orders_edit_headline: سلة التسوق الخاصة بك
-  orders_edit_time: الطلب جاهز لل
-  orders_edit_continue: مواصلة التسوق
-  orders_edit_checkout: تابع للخروج
+  orders: "الطلبات"
+  orders_fees: "رسوم ..."
+  orders_edit_title: "سلة التسوق"
+  orders_edit_headline: "سلة التسوق الخاصة بك"
+  orders_edit_time: "الطلب جاهز لل"
+  orders_edit_continue: "مواصلة التسوق"
+  orders_edit_checkout: "تابع للخروج"
   orders_form_empty_cart: "السلة فارغة"
-  orders_form_subtotal: إنتاج المجموع الفرعي
-  orders_form_admin: الادارة و المعالجة
-  orders_form_total: مجموع
-  orders_oc_expired_headline: تم إغلاق الطلبات لدورة الطلب هذه
+  orders_form_update_cart: "تحديث"
+  orders_form_subtotal: "إنتاج المجموع الفرعي"
+  orders_form_admin: "الادارة و المعالجة"
+  orders_form_total: "مجموع"
+  orders_oc_expired_headline: "تم إغلاق الطلبات لدورة الطلب هذه"
   orders_oc_expired_text: "عفوًا ، تم إغلاق أوامر دورة الطلب هذه منذ %{time}! يرجى الاتصال بالمركز مباشرة لمعرفة ما إذا كان يمكنهم قبول الطلبات المتأخرة أم لا."
   orders_oc_expired_text_others_html: "عفوًا ، تم إغلاق أوامر دورة الطلب هذه منذ %{time}! يرجى الاتصال <strong>بالمركز</strong> مباشرة لمعرفة ما إذا كان يمكنهم قبول الطلبات المتأخرة <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "أو راجع دورات الترتيب الأخرى المتاحة في هذا المركز"
   orders_oc_expired_email: "البريد الإلكتروني:"
   orders_oc_expired_phone: "هاتف:"
-  orders_show_title: تأكيد الطلب
-  orders_show_time: الطلب جاهز
+  orders_show_title: "تأكيد الطلب"
+  orders_show_time: "الطلب جاهز"
   orders_show_order_number: "الطلب # %{number}"
-  orders_show_cancelled: ألغيت
-  orders_show_confirmed: تم تأكيد
+  orders_show_cancelled: "ألغيت"
+  orders_show_confirmed: "تم تأكيد"
   orders_your_order_has_been_cancelled: "تم إلغاء طلبك"
   orders_could_not_cancel: "عذرًا ، تعذر إلغاء الطلب"
   orders_cannot_remove_the_final_item: "لا يمكن إزالة العنصر الأخير من الطلب ، يرجى إلغاء الطلب بدلاً من ذلك."
   orders_bought_items_notice:
-    one: تم بالفعل تأكيد عنصر إضافي لدورة الطلب هذه
+    one: "تم بالفعل تأكيد عنصر إضافي لدورة الطلب هذه"
     few: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     many: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
     other: "%{count} البنود الإضافية المؤكدة بالفعل لدورة الطلب هذه"
-  orders_bought_edit_button: تحرير العناصر المؤكدة
+  orders_bought_edit_button: "تحرير العناصر المؤكدة"
   orders_bought_already_confirmed: "* أكد بالفعل"
-  orders_confirm_cancel: هل أنت متأكد أنك تريد إلغاء هذا الطلب؟
+  orders_confirm_cancel: "هل أنت متأكد أنك تريد إلغاء هذا الطلب؟"
   order_processed_successfully: "تمت معالجة طلبك بنجاح"
   products_cart_distributor_choice: "الموزع لطلبك:"
   products_cart_distributor_change: "سيتم تغيير موزعك لهذا الطلب إلى %{name} إذا أضفت هذا المنتج إلى سلة التسوق الخاصة بك."
@@ -2410,6 +2421,7 @@ ar:
           حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو
           أن المحل يغلق.
     admin:
+      unit_price_tooltip: "يزيد سعر الوحدة من الشفافية من خلال السماح لعملائك بمقارنة الأسعار بسهولة بين المنتجات المختلفة وأحجام العبوات. لاحظ أن سعر الوحدة النهائي المعروض في واجهة المحل قد يختلف لأنه يشمل الضرائب والرسوم."
       enterprise_limit_reached: "لقد وصلت إلى الحد القياسي للمؤسسات لكل حساب. اكتب %{contact_email} إذا كنت بحاجة إلى زيادته."
       modals:
         got_it: "فهمتك"
@@ -2894,6 +2906,9 @@ ar:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "توليد تقرير"
       enterprise_fee_summaries:
         filters:
           date_range: "نطاق الموعد"
@@ -2939,6 +2954,8 @@ ar:
               tax_category_name: "الفئة الضريبية"
               total_amount: "$$ مجموع"
         invalid_filter_parameters: "الفلاتر التي حددتها لهذا التقرير غير صالحة."
+      report:
+        none: "لا شيء"
   order: "طلب"
   distribution: "توزيع"
   order_details: "تفاصيل الطلب"
@@ -2971,7 +2988,13 @@ ar:
   previous: "السابق"
   last: "الاخير"
   spree:
+    all: "الكل"
+    category: "الفئة"
+    credit: "اجل"
     more: "أكثر"
+    no_pending_payments: "لا توجد دفعات معلقة"
+    none: "لا شيء"
+    updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
     name_or_sku: "الاسم أو SKU (أدخل أول 4 أحرف على الأقل من اسم المنتج)"
@@ -2999,6 +3022,7 @@ ar:
     tracking_number: "أرقام التتبع"
     order_total: "مجموع الطلب "
     customer_details: "تفاصيل العميل"
+    customer_details_updated: "تم تحديث تفاصيل العميل"
     customer_search: "بحث العملاء"
     choose_a_customer: "اختيار العملاء"
     account: "الحساب"
@@ -3149,6 +3173,8 @@ ar:
     payment_method: "طريقة الدفع او السداد"
     payment_processing_failed: "لا يمكن معالجة الدفع ، يرجى التحقق من التفاصيل التي أدخلتها"
     not_available: "غير متاح"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "لا توجد عناصر لهذا الطلب."
     order_populator:
       out_of_stock: '%{item} غير متوفر.'
     actions:
@@ -3176,7 +3202,17 @@ ar:
         login_nav:
           header:
             store: متجر
+    validation:
+      must_be_int: "يجب أن يكون رقما صحيحا"
     admin:
+      mail_methods:
+        send_testmail: "إرسال بريد إلكتروني تجريبي"
+        testmail:
+          delivery_success: "تم إرسال بريد إلكتروني تجريبي."
+          error: "حدث خطأ أثناء محاولة إرسال البريد الإلكتروني التجريبي."
+      unit_price_tooltip: "يزيد سعر الوحدة من الشفافية من خلال السماح لعملائك بمقارنة الأسعار بسهولة بين المنتجات المختلفة وأحجام العبوات. لاحظ أن سعر الوحدة النهائي المعروض في واجهة المحل قد يختلف لأنه يشمل الضرائب والرسوم."
+      subscriptions:
+        number: "رقم "
       tab:
         dashboard: "لوحة العرض"
         orders: "الطلبات"
@@ -3245,6 +3281,8 @@ ar:
           received: "تم الاستلام"
           canceled: "ألغيت"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "لا يمكن إضافة عنصر إلى الطلب الملغى"
         index:
           listing_orders: "لائحة الطلبات"
           new_order: "طلب جديد"
@@ -3287,6 +3325,8 @@ ar:
       overview:
         enterprises_header:
           ofn_with_tip: المؤسسات هم المنتجون و / أو محاور وهي الوحدة الأساسية للمؤسسة ضمن شبكة الغذاء المفتوح.
+        enterprise_row:
+          has_no_enterprise_fees: "لا توجد رسوم للمؤسسة"
         products:
           active_products:
             zero: "ليس لديك أي منتجات نشطة."
@@ -3325,6 +3365,7 @@ ar:
           back_to_shipping_methods_list: "العودة إلى قائمة طرق الشحن"
         form:
           categories: "التصنيفات"
+          tax_category: "الفئة الضريبية"
           zones: "مناطق"
           both: "كل من تسجيل الخروج والمكتب الخلفي"
           back_end: "المكتب الخلفي فقط"
@@ -3405,6 +3446,8 @@ ar:
           value: "القيمة"
           unit_name: "إسم الوحدة"
           price: "السعر"
+          unit_price: "سعر الوحدة"
+          unit_price_legend: "محسوبة على أساس سعر السلعة"
           on_hand: "متوفر"
           on_demand: "حسب الطلب"
           product_description: "وصف المنتج"
@@ -3475,7 +3518,6 @@ ar:
           price: "السعر"
           options: "خيارات"
           no_results: "لا يوجد نتائج"
-          to_add_variants_you_must_first_define: "لإضافة المتغيرات ، يجب عليك أولاً تعريفها"
           option_types: "أنواع الخيارات"
           option_values: "قيم الخيارات"
           and: "و"
@@ -3487,6 +3529,7 @@ ar:
         form:
           sku: "SKU"
           price: "السعر"
+          unit_price: "سعر الوحدة"
           display_as: "عرض ب"
           display_name: "اسم العرض"
           display_as_placeholder: 'على سبيل المثال 2 كجم'
@@ -3510,6 +3553,7 @@ ar:
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
           privacy_policy_url: "رابط سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
+          shoppers_require_tos: "يجب على المتسوقين قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
           footer_tos_url: "رابط شروط الخدمة "
     checkout:
@@ -3726,3 +3770,90 @@ ar:
           few: المدفوعات
           many: المدفوعات
           other: الدفعات
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        zero: حوالي %{count} ساعة
+        one: حوالي 1 ساعة
+        two: حوالي %{count} ساعة
+        few: حوالي %{count} ساعة
+        many: حوالي %{count} ساعة
+        other: حوالي %{count} ساعة
+      about_x_months:
+        zero: حوالي %{count} شهر
+        one: حوالي 1 شهر
+        two: حوالي %{count} شهر
+        few: حوالي %{count} شهر
+        many: حوالي %{count} شهر
+        other: حوالي %{count} شهر
+      about_x_years:
+        zero: حوالي %{count} سنوات
+        one: حوالي سنة واحدة
+        two: حوالي %{count} سنوات
+        few: حوالي %{count} سنوات
+        many: حوالي %{count} سنوات
+        other: حوالي %{count} سنوات
+      almost_x_years:
+        zero: تقريبا %{count} سنوات
+        one: ما يقرب من 1 سنة
+        two: تقريبا %{count} سنوات
+        few: تقريبا %{count} سنوات
+        many: تقريبا %{count} سنوات
+        other: تقريبا %{count} سنوات
+      half_a_minute: نصف دقيقة
+      less_than_x_seconds:
+        zero: أقل من %{count} ثانية
+        one: أقل من ثانية واحدة
+        two: أقل من %{count} ثانية
+        few: أقل من %{count} ثانية
+        many: أقل من %{count} ثانية
+        other: أقل من %{count} ثانية
+      less_than_x_minutes:
+        zero: أقل من %{count} دقيقة
+        one: أقل من دقيقة
+        two: أقل من %{count} دقيقة
+        few: أقل من %{count} دقيقة
+        many: أقل من %{count} دقيقة
+        other: أقل من %{count} دقيقة
+      over_x_years:
+        zero: أكثر من %{count} سنة
+        one: أكثر من 1 سنة
+        two: أكثر من %{count} سنة
+        few: أكثر من %{count} سنة
+        many: أكثر من %{count} سنة
+        other: أكثر من %{count} سنة
+      x_seconds:
+        zero: "%{count} ثانية"
+        one: "1 ثانية"
+        two: "%{count} ثانية"
+        few: "%{count} ثانية"
+        many: "%{count} ثانية"
+        other: "%{count} ثانية"
+      x_minutes:
+        zero: "%{count} دقيقة"
+        one: "1 دقيقة"
+        two: "%{count} دقيقة"
+        few: "%{count} دقيقة"
+        many: "%{count} دقيقة"
+        other: "%{count} دقيقة"
+      x_days:
+        zero: "%{count} أيام"
+        one: "يوم 1"
+        two: "%{count} أيام"
+        few: "%{count} أيام"
+        many: "%{count} أيام"
+        other: "%{count} أيام"
+      x_months:
+        zero: "%{count} شهور"
+        one: "شهر واحد"
+        two: "%{count} شهور"
+        few: "%{count} شهور"
+        many: "%{count} شهور"
+        other: "%{count} شهور"
+      x_years:
+        zero: "%{count} سنة"
+        one: "سنة واحدة"
+        two: "%{count} سنة"
+        few: "%{count} سنة"
+        many: "%{count} سنة"
+        other: "%{count} سنوات"

@@ -38,7 +38,6 @@ module Spree
           end
         end
       rescue Paperclip::Errors::NotIdentifiedByImageMagickError
-        invoke_callbacks(:create, :fails)
         @object.errors.add(:base, t('spree.admin.products.image_upload_error'))
         respond_with(@object)
       end
@@ -80,7 +79,7 @@ module Spree
         product_set.collection.each { |p| authorize! :update, p }
 
         if product_set.save
-          redirect_to main_app.bulk_products_api_products_path(bulk_index_query)
+          redirect_to main_app.bulk_products_api_v0_products_path(bulk_index_query)
         elsif product_set.errors.present?
           render json: { errors: product_set.errors }, status: :bad_request
         else

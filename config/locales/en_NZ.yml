@@ -85,6 +85,7 @@ en_NZ:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  customer_instructions: "Customer instructions"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -117,6 +118,10 @@ en_NZ:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+    tax_rate:
+      included_in_price: "Included in price"
+  sku: "SKU"
+  tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -262,7 +267,6 @@ en_NZ:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1143,6 +1147,7 @@ en_NZ:
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
+      number: "Number"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_subscriptions: No subscriptions yet...
@@ -1175,8 +1180,10 @@ en_NZ:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}."
       terms_of_service: "Terms of Service"
     all_terms_and_conditions:
+      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
       terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
@@ -1189,6 +1196,7 @@ en_NZ:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
         cart: "Cart"
@@ -1555,6 +1563,7 @@ en_NZ:
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
   producer_mail_greeting: "Dear"
+  producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
@@ -1566,7 +1575,9 @@ en_NZ:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Groups"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -1718,39 +1729,40 @@ en_NZ:
   shops_signup_help: We're ready to help.
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
-  orders: Orders
-  orders_fees: Fees...
-  orders_edit_title: Shopping Cart
-  orders_edit_headline: Your shopping cart
-  orders_edit_time: Order ready for
-  orders_edit_continue: Continue shopping
-  orders_edit_checkout: Checkout
+  orders: "Orders"
+  orders_fees: "Fees..."
+  orders_edit_title: "Shopping Cart"
+  orders_edit_headline: "Your shopping cart"
+  orders_edit_time: "Order ready for"
+  orders_edit_continue: "Continue shopping"
+  orders_edit_checkout: "Checkout"
   orders_form_empty_cart: "Empty cart"
-  orders_form_subtotal: Produce subtotal
-  orders_form_admin: Admin & Handling
-  orders_form_total: Total
-  orders_oc_expired_headline: Orders have closed for this order cycle
+  orders_form_update_cart: "Update"
+  orders_form_subtotal: "Produce subtotal"
+  orders_form_admin: "Admin & Handling"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
   orders_oc_expired_text_others_html: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders <strong>%{link}</strong>."
   orders_oc_expired_text_link: "or see the other order cycles available at this hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Phone:"
-  orders_show_title: Order Confirmation
-  orders_show_time: Order ready on
+  orders_show_title: "Order Confirmation"
+  orders_show_time: "Order ready on"
   orders_show_order_number: "Order #%{number}"
-  orders_show_cancelled: Cancelled
-  orders_show_confirmed: Confirmed
+  orders_show_cancelled: "Cancelled"
+  orders_show_confirmed: "Confirmed"
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: An additional item is already confirmed for this order cycle
+    one: "An additional item is already confirmed for this order cycle"
     few: "%{count} additional items already confirmed for this order cycle"
     many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
-  orders_bought_edit_button: Edit confirmed items
+  orders_bought_edit_button: "Edit confirmed items"
   orders_bought_already_confirmed: "* already confirmed"
-  orders_confirm_cancel: Are you sure you want to cancel this order?
+  orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
@@ -2324,6 +2336,8 @@ en_NZ:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
+  cannot_perform_operation: "Could not update the payment"
+  action_required: "Action required"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
@@ -2385,6 +2399,7 @@ en_NZ:
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
+    authorising: "Authorising..."
     save_changes_first: Save changes first.
     all_changes_saved: All changes saved
     unsaved_changes: You have unsaved changes
@@ -2592,6 +2607,8 @@ en_NZ:
           processing: "processing"
           void: "void"
           invalid: "invalid"
+        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unchanged: "Quantity unchanged from previous amount."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2648,6 +2665,7 @@ en_NZ:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
+      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
@@ -2796,6 +2814,9 @@ en_NZ:
       start_free_profile: "Start with a basic profile, and expand when you're ready!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generate Report"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -2841,6 +2862,8 @@ en_NZ:
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
+      report:
+        none: "None"
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
@@ -2873,12 +2896,19 @@ en_NZ:
   previous: "Previous"
   last: "Last"
   spree:
+    all: "All"
+    category: "Category"
+    credit: "Credit"
     more: "More"
+    no_pending_payments: "No pending payments"
+    none: "None"
+    updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
+    back_to_payments_list: "Back To Payments List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -2952,6 +2982,7 @@ en_NZ:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
+    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3049,6 +3080,7 @@ en_NZ:
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     not_available: "N/A"
+    sku: "SKU"
     order_populator:
       out_of_stock: '%{item} is out of stock.'
     actions:
@@ -3069,6 +3101,7 @@ en_NZ:
         payment_state: "Payment State"
     errors:
       messages:
+        included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
     layouts:
       admin:
@@ -3076,6 +3109,8 @@ en_NZ:
           header:
             store: Store
     admin:
+      subscriptions:
+        number: "Number"
       tab:
         dashboard: "Dashboard"
         orders: "Orders"
@@ -3224,6 +3259,7 @@ en_NZ:
           back_to_shipping_methods_list: "Back To Shipping Methods List"
         form:
           categories: "Categories"
+          tax_category: "Tax Category"
           zones: "Zones"
           both: "Both Checkout and Back office"
           back_end: "Back office only"
@@ -3279,6 +3315,13 @@ en_NZ:
           deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
+          check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
+          pin: "Pin Payments"
+          paypalexpress: "PayPal Express"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "Bogus"
+          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3297,6 +3340,7 @@ en_NZ:
           value: "Value"
           unit_name: "Unit name"
           price: "Price"
+          unit_price: "Unit Price"
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"
@@ -3367,7 +3411,6 @@ en_NZ:
           price: "Price"
           options: "Options"
           no_results: "No results"
-          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
           option_values: "Option Values"
           and: "and"
@@ -3379,6 +3422,7 @@ en_NZ:
         form:
           sku: "SKU"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
@@ -3402,6 +3446,7 @@ en_NZ:
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
@@ -3419,6 +3464,9 @@ en_NZ:
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "Today"
       now: "Now"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
@@ -3436,6 +3484,7 @@ en_NZ:
       pending: pending
       ready: ready
       shipped: shipped
+      canceled: canceled
     payment_states:
       balance_due: balance due
       completed: completed
@@ -3447,6 +3496,7 @@ en_NZ:
       processing: processing
       void: void
       invalid: invalid
+      authorise: authorise
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
@@ -3461,6 +3511,8 @@ en_NZ:
       cancel_email_for_shop:
         greeting: "Dear %{name},"
         subject: "Cancellation of Order"
+        intro: "A customer has cancelled their order #%{number}."
+        view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
       invoice_email:
@@ -3479,6 +3531,13 @@ en_NZ:
         subject: "Reset password instructions"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
+    payment_mailer:
+      authorize_payment:
+        subject: "Please authorize your payment to %{distributor} on OFN"
+        instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
+      authorization_required:
+        subject: "A payment requires authorization from the customer"
+        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
@@ -3515,7 +3574,23 @@ en_NZ:
       paused: paused
       canceled: cancelled
     paypal:
+      already_refunded: "This payment has been refunded and no further action can be taken on it."
+      no_payment_via_admin_backend: "You cannot charge PayPal accounts through the admin backend at this time."
+      transaction: "PayPal Transaction"
+      payer_id: "Payer ID"
+      transaction_id: "Transaction ID"
+      token: "Token"
+      refund: "Refund"
       refund_amount: "Amount"
+      original_amount: "Original amount: %{amount}"
+      refund_successful: "PayPal refund successful"
+      refund_unsuccessful: "PayPal refund unsuccessful"
+      actions:
+        refund: "Refund"
+      flash:
+        cancel: "Don't want to use PayPal? No problems."
+        connection_failed: "Could not connect to PayPal."
+        generic_error: "PayPal failed. %{reasons}"
     users:
       form:
         account_settings: Account Settings
@@ -3531,6 +3606,8 @@ en_NZ:
         past_orders: Past Orders
       transactions:
         transaction_history: Transaction History
+        authorisation_required: Authorisation Required
+        authorise: Authorize
       open_orders:
         order: Order
         shop: Shop

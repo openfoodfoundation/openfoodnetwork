@@ -5,7 +5,7 @@ require 'spec_helper'
 feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationHelper
   include ShopWorkflow
-  include CheckoutHelper
+  include CheckoutRequestsHelper
   include WebHelper
   include UIComponentHelper
 
@@ -17,9 +17,15 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:variant) { product.variants.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
+  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
+  let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
 
   let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Calculator::FlatRate.new(preferred_amount: 0.00)) }
-  let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
+  let(:shipping_with_fee) {
+    create(:shipping_method, require_ship_address: false, tax_category: shipping_tax_category,
+                             name: "Donkeys", description: "blue",
+                             calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
+  }
   let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
   let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
@@ -32,9 +38,6 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   before do
-    Spree::Config.shipment_inc_vat = true
-    Spree::Config.shipping_tax_rate = 0.25
-
     add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart order, product
@@ -462,7 +465,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
             # There are two orders - our order and our new cart
             o = Spree::Order.complete.first
-            expect(o.adjustments.payment_fee.first.amount).to eq 5.67
+            expect(o.all_adjustments.payment_fee.first.amount).to eq 5.67
             expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
           end
         end

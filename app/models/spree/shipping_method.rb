@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShippingMethod < ActiveRecord::Base
+  class ShippingMethod < ApplicationRecord
     include Spree::Core::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end].freeze
 
@@ -10,10 +10,10 @@ module Spree
 
     default_scope -> { where(deleted_at: nil) }
 
+    has_many :shipping_rates, inverse_of: :shipping_method
     has_many :shipments, through: :shipping_rates
     has_many :shipping_method_categories
     has_many :shipping_categories, through: :shipping_method_categories
-    has_many :shipping_rates, inverse_of: :shipping_method
     has_many :distributor_shipping_methods
     has_many :distributors, through: :distributor_shipping_methods,
                             class_name: 'Enterprise',
@@ -22,6 +22,8 @@ module Spree
     has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
                                     class_name: 'Spree::Zone',
                                     foreign_key: 'shipping_method_id'
+
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
     validates :name, presence: true
     validate :distributor_validation

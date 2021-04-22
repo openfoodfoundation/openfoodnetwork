@@ -290,12 +290,8 @@ module Spree
       can [:destroy], Spree::Adjustment do |adjustment|
         if user.admin?
           true
-        elsif adjustment.adjustable.instance_of? Spree::Order
-          order = adjustment.adjustable
-          user.enterprises.include?(order.distributor) ||
-            order.order_cycle.andand.coordinated_by?(user)
-        elsif adjustment.adjustable.instance_of? Spree::LineItem
-          order = adjustment.adjustable.order
+        else
+          order = adjustment.order
           user.enterprises.include?(order.distributor) ||
             order.order_cycle.andand.coordinated_by?(user)
         end

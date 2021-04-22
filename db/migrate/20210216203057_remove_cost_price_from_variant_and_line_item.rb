@@ -1,4 +1,4 @@
-class RemoveCostPriceFromVariantAndLineItem < ActiveRecord::Migration
+class RemoveCostPriceFromVariantAndLineItem < ActiveRecord::Migration[4.2]
   def up
     remove_column :spree_variants, :cost_price
     remove_column :spree_line_items, :cost_price

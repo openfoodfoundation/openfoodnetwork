@@ -41,10 +41,16 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def unit_price_price
-    (rand * 10).round(2)
+    price_with_fees / (unit_price.denominator || 1)
   end
 
   def unit_price_unit
-    rand > 0.5 ? "item" : "kg"
+    unit_price.unit
+  end
+
+  private
+
+  def unit_price
+    @unit_price ||= UnitPrice.new(object)
   end
 end

@@ -7,12 +7,12 @@
 # in its shopfront. Any incoming product can be selected to be shown in the
 # shopfront (outgoing products). But the set of shown products can be smaller
 # than all incoming products.
-class Exchange < ActiveRecord::Base
+class Exchange < ApplicationRecord
   acts_as_taggable
 
   belongs_to :order_cycle
   belongs_to :sender, class_name: 'Enterprise'
-  belongs_to :receiver, class_name: 'Enterprise', touch: true
+  belongs_to :receiver, class_name: 'Enterprise'
 
   has_many :exchange_variants, dependent: :destroy
   has_many :variants, through: :exchange_variants
@@ -22,6 +22,8 @@ class Exchange < ActiveRecord::Base
 
   validates :order_cycle, :sender, :receiver, presence: true
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
+
+  after_save :touch_receiver
 
   accepts_nested_attributes_for :variants
 
@@ -94,5 +96,11 @@ class Exchange < ActiveRecord::Base
 
   def participant
     incoming? ? sender : receiver
+  end
+
+  def touch_receiver
+    return unless receiver&.persisted?
+
+    receiver.touch_later
   end
 end

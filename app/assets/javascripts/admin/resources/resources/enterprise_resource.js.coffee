@@ -9,12 +9,12 @@ angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
     'update':
       method: 'PUT'
     'removeLogo':
-      url: '/api/enterprises/:id/logo.json'
+      url: '/api/v0/enterprises/:id/logo.json'
       method: 'DELETE'
     'removePromoImage':
-      url: '/api/enterprises/:id/promo_image.json'
+      url: '/api/v0/enterprises/:id/promo_image.json'
       method: 'DELETE'
     'removeTermsAndConditions':
-      url: '/api/enterprises/:id/terms_and_conditions.json'
+      url: '/api/v0/enterprises/:id/terms_and_conditions.json'
       method: 'DELETE'
   })

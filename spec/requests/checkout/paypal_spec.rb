@@ -52,10 +52,10 @@ describe "checking out an order with a paypal express payment method", type: :re
       # Sanity check to condition of the order before we confirm the payment
       expect(order.payments.count).to eq 1
       expect(order.payments.first.state).to eq "checkout"
-      expect(order.adjustments.payment_fee.count).to eq 1
-      expect(order.adjustments.payment_fee.first.amount).to eq 1.5
+      expect(order.all_adjustments.payment_fee.count).to eq 1
+      expect(order.all_adjustments.payment_fee.first.amount).to eq 1.5
 
-      get spree.confirm_paypal_path, params
+      get spree.confirm_paypal_path, params: params
 
       # Processing was successful, order is complete
       expect(response).to redirect_to order_path(order, token: order.token)
@@ -64,8 +64,8 @@ describe "checking out an order with a paypal express payment method", type: :re
       # We have only one payment, and one transaction fee
       expect(order.payments.count).to eq 1
       expect(order.payments.first.state).to eq "completed"
-      expect(order.adjustments.payment_fee.count).to eq 1
-      expect(order.adjustments.payment_fee.first.amount).to eq 1.5
+      expect(order.all_adjustments.payment_fee.count).to eq 1
+      expect(order.all_adjustments.payment_fee.first.amount).to eq 1.5
     end
   end
 end

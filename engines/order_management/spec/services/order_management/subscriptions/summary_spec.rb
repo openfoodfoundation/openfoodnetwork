@@ -56,6 +56,15 @@ module OrderManagement
         end
       end
 
+      describe "record_subscription_issue" do
+        let(:subscription) { double(:subscription, id: 101) }
+
+        it "stores a new subscription issue" do
+          summary.record_subscription_issue(subscription)
+          expect(summary.subscription_issues).to eq [101]
+        end
+      end
+
       describe "#order_count" do
         let(:order_ids) { [1, 2, 3, 4, 5, 6, 7] }
         it "counts the number of items in the order_ids instance_variable" do
@@ -80,6 +89,21 @@ module OrderManagement
           summary.instance_variable_set(:@order_ids, order_ids)
           summary.instance_variable_set(:@success_ids, success_ids)
           expect(summary.issue_count).to be 2 # 7 & 9
+        end
+
+        context "when there are also subscription issues" do
+          let(:subscription) { double(:subscription, id: 101) }
+          let(:order) { double(:order, id: 1) }
+
+          before do
+            summary.record_order(order)
+            summary.record_success(order)
+            summary.record_subscription_issue(subscription)
+          end
+
+          it "includes subscription issues in the count" do
+            expect(summary.issue_count).to eq 1
+          end
         end
       end
 

@@ -7,7 +7,7 @@ describe Spree::Payment do
     let(:order) { create(:order) }
     let(:gateway) do
       gateway = Spree::Gateway::Bogus.new(environment: 'test', active: true)
-      gateway.stub source_required: true
+      allow(gateway).to receive(:source_required) { true }
       gateway
     end
 
@@ -382,7 +382,7 @@ describe Spree::Payment do
           end
 
           it "resulting payment should have correct values" do
-            allow(payment.order).to receive(:outstanding_balance) { 100 }
+            allow(payment.order).to receive(:new_outstanding_balance) { 100 }
             allow(payment).to receive(:credit_allowed) { 10 }
 
             offsetting_payment = payment.credit!
@@ -402,7 +402,7 @@ describe Spree::Payment do
             end
 
             it 'lets the new payment to be saved' do
-              allow(payment.order).to receive(:outstanding_balance) { 100 }
+              allow(payment.order).to receive(:new_outstanding_balance) { 100 }
               allow(payment).to receive(:credit_allowed) { 10 }
 
               offsetting_payment = payment.credit!
@@ -856,8 +856,8 @@ describe Spree::Payment do
             expect(payment.state).to eq "failed"
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
           end
         end
 
@@ -875,8 +875,8 @@ describe Spree::Payment do
             expect(payment.state).to eq "invalid"
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
           end
         end
 
@@ -895,8 +895,8 @@ describe Spree::Payment do
             expect(order.payments).to include payment
             expect(payment.state).to eq "completed"
             expect(payment.adjustment.eligible?).to be true
-            expect(order.adjustments.payment_fee.count).to eq 1
-            expect(order.adjustments.payment_fee.eligible).to include payment.adjustment
+            expect(order.all_adjustments.payment_fee.count).to eq 1
+            expect(order.all_adjustments.payment_fee.eligible).to include payment.adjustment
             expect(payment.adjustment.amount).to eq 1.5
           end
         end

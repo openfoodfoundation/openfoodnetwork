@@ -2,7 +2,7 @@
 
 require 'spree/core/s3_support'
 
-class Enterprise < ActiveRecord::Base
+class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 

@@ -21,6 +21,8 @@ describe Spree::UsersController, type: :controller do
     let(:orders) { assigns(:orders) }
     let(:shops) { Enterprise.where(id: orders.pluck(:distributor_id)) }
 
+    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+
     before do
       allow(controller).to receive(:spree_current_user) { u1 }
     end
@@ -43,20 +45,11 @@ describe Spree::UsersController, type: :controller do
       expect(orders).not_to include d1o3
     end
 
-    context 'when the customer_balance feature is enabled' do
-      let(:outstanding_balance) { instance_double(OutstandingBalance) }
+    it 'calls OutstandingBalance' do
+      allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+      expect(outstanding_balance).to receive(:query) { Spree::Order.none }
 
-      before do
-        allow(OpenFoodNetwork::FeatureToggle)
-          .to receive(:enabled?).with(:customer_balance, controller.spree_current_user) { true }
-      end
-
-      it 'calls OutstandingBalance' do
-        allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-        expect(outstanding_balance).to receive(:query) { Spree::Order.none }
-
-        spree_get :show
-      end
+      spree_get :show
     end
   end
 
@@ -66,12 +59,12 @@ describe Spree::UsersController, type: :controller do
     let!(:user) { create(:user) }
 
     it "returns true if email corresponds to a registered user" do
-      post :registered_email, email: user.email
+      post :registered_email, params: { email: user.email }
       expect(json_response['registered']).to eq true
     end
 
     it "returns false if email does not correspond to a registered user" do
-      post :registered_email, email: 'nonregistereduser@example.com'
+      post :registered_email, params: { email: 'nonregistereduser@example.com' }
       expect(json_response['registered']).to eq false
     end
   end
@@ -79,14 +72,14 @@ describe Spree::UsersController, type: :controller do
   context '#load_object' do
     it 'should redirect to signup path if user is not found' do
       allow(controller).to receive_messages(spree_current_user: nil)
-      put :update, user: { email: 'foobar@example.com' }
+      put :update, params: { user: { email: 'foobar@example.com' } }
       expect(response).to redirect_to('/login')
     end
   end
 
   context '#create' do
     it 'should create a new user' do
-      post :create, user: { email: 'foobar@example.com', password: 'foobar123', password_confirmation: 'foobar123' }
+      post :create, params: { user: { email: 'foobar@example.com', password: 'foobar123', password_confirmation: 'foobar123' } }
       expect(assigns[:user].new_record?).to be_falsey
     end
   end

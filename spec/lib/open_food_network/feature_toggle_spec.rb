@@ -24,13 +24,25 @@ module OpenFoodNetwork
         expect(FeatureToggle.enabled?(:foo)).to be false
       end
 
+      it "uses Flipper configuration" do
+        Flipper.enable(:foo)
+        expect(FeatureToggle.enabled?(:foo)).to be true
+      end
+
+      it "uses Flipper over static config" do
+        Flipper.enable(:foo, false)
+        stub_foo("true")
+        expect(FeatureToggle.enabled?(:foo)).to be false
+      end
+
       def stub_foo(value)
         allow(ENV).to receive(:fetch).with("OFN_FEATURE_FOO", nil).and_return(value)
       end
     end
 
     context 'when specifying users' do
-      let(:user) { build(:user) }
+      let(:insider) { build(:user) }
+      let(:outsider) { build(:user, email: "different") }
 
       context 'and the block does not specify arguments' do
         before do
@@ -38,19 +50,21 @@ module OpenFoodNetwork
         end
 
         it "returns the block's return value" do
-          expect(FeatureToggle.enabled?(:foo, user)).to eq('return value')
+          expect(FeatureToggle.enabled?(:foo, insider)).to eq('return value')
         end
       end
 
       context 'and the block specifies arguments' do
-        let(:users) { [user.email] }
+        let(:users) { [insider.email] }
 
         before do
-          FeatureToggle.enable(:foo) { |user| users.include?(user.email) }
+          FeatureToggle.enable(:foo) { |user| users.include?(user&.email) }
         end
 
         it "returns the block's return value" do
-          expect(FeatureToggle.enabled?(:foo, user)).to eq(true)
+          expect(FeatureToggle.enabled?(:foo, insider)).to eq(true)
+          expect(FeatureToggle.enabled?(:foo, outsider)).to eq(false)
+          expect(FeatureToggle.enabled?(:foo, nil)).to eq(false)
         end
       end
     end

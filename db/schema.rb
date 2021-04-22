@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210315163900) do
+ActiveRecord::Schema.define(version: 20210414171109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,22 @@ ActiveRecord::Schema.define(version: 20210315163900) do
     t.index ["sender_id"], name: "index_exchanges_on_sender_id", using: :btree
   end
 
+  create_table "flipper_features", force: :cascade do |t|
+    t.string   "key",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true, using: :btree
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string   "feature_key", null: false
+    t.string   "key",         null: false
+    t.string   "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true, using: :btree
+  end
+
   create_table "inventory_items", force: :cascade do |t|
     t.integer  "enterprise_id",                null: false
     t.integer  "variant_id",                   null: false
@@ -372,8 +388,9 @@ ActiveRecord::Schema.define(version: 20210315163900) do
     t.string   "state",           limit: 255
     t.integer  "order_id"
     t.boolean  "included",                                             default: false
-    t.index ["adjustable_id"], name: "index_adjustments_on_order_id", using: :btree
+    t.index ["adjustable_type", "adjustable_id"], name: "index_spree_adjustments_on_adjustable_type_and_adjustable_id", using: :btree
     t.index ["order_id"], name: "index_spree_adjustments_on_order_id", using: :btree
+    t.index ["originator_type", "originator_id"], name: "index_spree_adjustments_on_originator_type_and_originator_id", using: :btree
   end
 
   create_table "spree_assets", force: :cascade do |t|
@@ -468,14 +485,14 @@ ActiveRecord::Schema.define(version: 20210315163900) do
   create_table "spree_line_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                                                  null: false
-    t.decimal  "price",                            precision: 10, scale: 2,                 null: false
-    t.datetime "created_at",                                                                null: false
-    t.datetime "updated_at",                                                                null: false
+    t.integer  "quantity",                                                 null: false
+    t.decimal  "price",                           precision: 10, scale: 2, null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.integer  "max_quantity"
-    t.string   "currency",             limit: 255
-    t.decimal  "distribution_fee",                 precision: 10, scale: 2
-    t.decimal  "final_weight_volume",              precision: 10, scale: 2
+    t.string   "currency",            limit: 255
+    t.decimal  "distribution_fee",                precision: 10, scale: 2
+    t.decimal  "final_weight_volume",             precision: 10, scale: 2
     t.integer  "tax_category_id"
     t.index ["order_id"], name: "index_line_items_on_order_id", using: :btree
     t.index ["variant_id"], name: "index_line_items_on_variant_id", using: :btree
@@ -753,6 +770,7 @@ ActiveRecord::Schema.define(version: 20210315163900) do
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
     t.integer  "stock_location_id"
+    t.datetime "deleted_at"
   end
 
   create_table "spree_roles", force: :cascade do |t|
@@ -767,16 +785,19 @@ ActiveRecord::Schema.define(version: 20210315163900) do
   end
 
   create_table "spree_shipments", force: :cascade do |t|
-    t.string   "tracking",             limit: 255
-    t.string   "number",               limit: 255
-    t.decimal  "cost",                             precision: 10, scale: 2, default: "0.0", null: false
+    t.string   "tracking",          limit: 255
+    t.string   "number",            limit: 255
+    t.decimal  "cost",                          precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "shipped_at"
     t.integer  "order_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                                                null: false
-    t.datetime "updated_at",                                                                null: false
-    t.string   "state",                limit: 255
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
+    t.string   "state",             limit: 255
     t.integer  "stock_location_id"
+    t.decimal  "included_tax_total",               precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal  "additional_tax_total",             precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal  "adjustment_total",                 precision: 10, scale: 2, default: "0.0", null: false
     t.index ["number"], name: "index_shipments_on_number", using: :btree
     t.index ["order_id"], name: "index_spree_shipments_on_order_id", unique: true, using: :btree
   end
@@ -806,6 +827,8 @@ ActiveRecord::Schema.define(version: 20210315163900) do
     t.boolean  "require_ship_address",             default: true
     t.text     "description"
     t.string   "tracking_url",         limit: 255
+    t.integer  "tax_category_id"
+    t.index ["tax_category_id"], name: "index_spree_shipping_methods_on_tax_category_id", using: :btree
   end
 
   create_table "spree_shipping_methods_zones", id: false, force: :cascade do |t|

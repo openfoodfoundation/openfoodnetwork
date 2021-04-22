@@ -25,43 +25,21 @@ module OpenFoodNetwork
   #   - if feature? :new_shiny_feature, spree_current_user
   #     = render "new_shiny_feature"
   #
-  class FeatureToggle
+  module FeatureToggle
     def self.enabled?(feature_name, user = nil)
-      new.enabled?(feature_name, user)
+      features = Thread.current[:features] || {}
+
+      if Flipper[feature_name].exist?
+        Flipper.enabled?(feature_name, user)
+      else
+        feature = features.fetch(feature_name, DefaultFeature.new(feature_name))
+        feature.enabled?(user)
+      end
     end
 
     def self.enable(feature_name, &block)
       Thread.current[:features] ||= {}
       Thread.current[:features][feature_name] = Feature.new(block)
-    end
-
-    def initialize
-      @features = Thread.current[:features] || {}
-    end
-
-    def enabled?(feature_name, user)
-      if user.present?
-        feature = features.fetch(feature_name, NullFeature.new)
-        feature.enabled?(user)
-      else
-        true?(env_variable_value(feature_name))
-      end
-    end
-
-    private
-
-    attr_reader :features
-
-    def env_variable_value(feature_name)
-      ENV.fetch(env_variable_name(feature_name), nil)
-    end
-
-    def env_variable_name(feature_name)
-      "OFN_FEATURE_#{feature_name.to_s.upcase}"
-    end
-
-    def true?(value)
-      value.to_s.casecmp("true").zero?
     end
   end
 
@@ -79,9 +57,29 @@ module OpenFoodNetwork
     attr_reader :block
   end
 
-  class NullFeature
+  class DefaultFeature
+    attr_reader :feature_name
+
+    def initialize(feature_name)
+      @feature_name = feature_name
+    end
+
     def enabled?(_user)
-      false
+      true?(env_variable_value(feature_name))
+    end
+
+    private
+
+    def env_variable_value(feature_name)
+      ENV.fetch(env_variable_name(feature_name), nil)
+    end
+
+    def env_variable_name(feature_name)
+      "OFN_FEATURE_#{feature_name.to_s.upcase}"
+    end
+
+    def true?(value)
+      value.to_s.casecmp("true").zero?
     end
   end
 end

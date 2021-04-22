@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ResetNegativeNonbackorderableCountOnHandInStockItems < ActiveRecord::Migration
+class ResetNegativeNonbackorderableCountOnHandInStockItems < ActiveRecord::Migration[4.2]
   module Spree
     class StockItem < ActiveRecord::Base
       self.table_name = "spree_stock_items"

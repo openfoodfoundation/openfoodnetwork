@@ -19,10 +19,6 @@ module Api
         attributes :id, :enterprise_id, :type, :is_default, :preferred_customer_tags
       end
 
-      class DiscountOrderSerializer < BaseSerializer
-        has_one :calculator, serializer: Api::Admin::Calculator::FlatPercentItemTotalSerializer
-      end
-
       class FilterShippingMethodsSerializer < BaseSerializer
         attributes :preferred_matched_shipping_methods_visibility, :preferred_shipping_method_tags,
                    :shipping_method_tags

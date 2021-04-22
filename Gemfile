@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby "2.4.4"
+ruby "2.5.8"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'rails', '~> 5.0.0'
@@ -15,7 +15,7 @@ gem 'sass', '<= 4.7.1'
 gem 'sass-rails', '< 6.0.0'
 
 gem 'i18n'
-gem 'i18n-js', '~> 3.8.1'
+gem 'i18n-js', '~> 3.8.2'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
@@ -31,7 +31,7 @@ gem 'web', path: './engines/web'
 gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
-gem 'acts_as_list', '0.9.19'
+gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
@@ -48,7 +48,7 @@ gem 'devise'
 gem 'devise-encryptable'
 gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
-gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'
@@ -83,7 +83,7 @@ gem 'roadie-rails', '~> 1.3.0'
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary', '0.12.5' # We need to upgrade our CI before we can bump this :/
+gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
 gem 'roo', '~> 2.8.3'
@@ -95,7 +95,7 @@ gem 'test-unit', '~> 3.4'
 gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
-gem 'mini_racer', '0.3.1'
+gem 'mini_racer', '0.4.0'
 
 gem 'uglifier', '>= 1.0.3'
 
@@ -113,6 +113,12 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 gem 'good_migrations'
 
+gem 'flipper'
+gem 'flipper-active_record'
+gem 'flipper-ui'
+
+gem "view_component", require: "view_component/engine"
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'unicorn-worker-killer'
@@ -125,7 +131,7 @@ group :test, :development do
   gem 'bullet'
   gem 'capybara'
   gem 'database_cleaner', require: false
-  gem "factory_bot_rails", '5.2.0', require: false
+  gem "factory_bot_rails", '6.1.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
@@ -141,6 +147,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'codecov', require: false
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'webmock'
@@ -158,6 +165,8 @@ group :development do
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem "view_component_storybook", require: "view_component/storybook/engine"
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
   # While we don't require this gem directly, no dependents forced the upgrade to a version

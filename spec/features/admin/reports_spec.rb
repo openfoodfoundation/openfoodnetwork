@@ -93,8 +93,8 @@ feature '
       login_as_admin_and_visit spree.admin_reports_path
     end
 
-    let(:bill_address1) { create(:address, lastname: "Aman") }
-    let(:bill_address2) { create(:address, lastname: "Bman") }
+    let(:bill_address1) { create(:address, lastname: "MULLER") }
+    let(:bill_address2) { create(:address, lastname: "Mistery") }
     let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
     let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
@@ -127,6 +127,22 @@ feature '
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
       ].sort)
       expect(page).to have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
+    end
+
+    scenario "Alphabetically Sorted Pack by Customer" do
+      click_link "Pack By Customer"
+      click_button 'Search'
+      
+      rows = find("table#listing_orders").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
+      expect(table).to eq([
+        "Last Name",
+        order2.bill_address.lastname,
+        "",
+        order1.bill_address.lastname,
+        order1.bill_address.lastname,
+        ""
+      ])
     end
 
     scenario "Pack By Supplier" do
@@ -166,7 +182,9 @@ feature '
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create(:user, enterprises: [distributor1]) }
     let(:user2) { create(:user, enterprises: [distributor2]) }
-    let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.20, included_in_price: true, zone: zone) }
+    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+    let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1], tax_category: shipping_tax_category) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
@@ -180,12 +198,12 @@ feature '
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
     before do
-      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.2 }
-
+      order1.reload
       2.times { order1.next }
       order1.select_shipping_method shipping_method.id
       order1.reload.recreate_all_fees!
+      order1.create_tax_charge!
+      order1.update!
       order1.finalize!
 
       login_as_admin_and_visit spree.admin_reports_path
@@ -385,25 +403,20 @@ feature '
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
-    before do
-      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
-      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.1 }
-    end
-
     describe "with adjustments" do
       let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
       let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-      let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
+      let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
       let!(:adj_fee1) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
       let!(:adj_fee2) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
-      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
-      let!(:adj_manual2) { create(:adjustment, order: order1, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
+      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
+      let!(:adj_manual2) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
       before do
         order1.update_attribute :email, 'customer@email.com'
+        order1.shipment.update_columns(included_tax_total: 10.06)
         Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
-
         login_as_admin_and_visit spree.admin_reports_path
 
         click_link 'Xero Invoices'

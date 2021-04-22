@@ -1,4 +1,4 @@
-class DropPrototypesTables < ActiveRecord::Migration
+class DropPrototypesTables < ActiveRecord::Migration[4.2]
   def up
     drop_table :spree_option_types_prototypes
     drop_table :spree_properties_prototypes

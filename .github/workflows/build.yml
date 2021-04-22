@@ -8,8 +8,53 @@ on:
 env:
   DISABLE_KNAPSACK: true
   TIMEZONE: UTC
+  COVERAGE: true
 
 jobs:
+  test-controllers-and-serializers:
+    runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.15.5'
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up application.yml
+        run: cp config/application.yml.example config/application.yml
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create RAILS_ENV=test
+          bundle exec rake db:schema:load RAILS_ENV=test
+
+      - name: Run controller tests
+        run: bundle exec rspec --profile -- spec/controllers spec/serializers
+
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1
+
   test-models:
     runs-on: ubuntu-18.04
     services:
@@ -49,9 +94,12 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run tests
-        run: bundle exec rspec spec/models
+        run: bundle exec rspec --profile -- spec/models
 
-  test-admin-features:
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1
+
+  test-admin-features-1:
     runs-on: ubuntu-18.04
     services:
       postgres:
@@ -90,9 +138,12 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run admin feature tests
-        run: bundle exec rspec --profile -- spec/features/admin/*_spec.rb
+        run: bundle exec rspec --profile -- spec/features/admin/[a-o0-9]*_spec.rb
 
-  test-admin-features-folders:
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1
+
+  test-admin-features-2:
     runs-on: ubuntu-18.04
     services:
       postgres:
@@ -131,7 +182,10 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run admin feature tests
-        run: bundle exec rspec --profile --pattern "spec/features/admin/*/*_spec.rb"
+        run: bundle exec rspec --profile -- spec/features/admin/[p-z]*_spec.rb
+
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1
 
   test-consumer-features:
     runs-on: ubuntu-18.04
@@ -174,48 +228,10 @@ jobs:
       - name: Run consumer feature tests
         run: bundle exec rspec --profile -- spec/features/consumer
 
-  test-controllers:
-    runs-on: ubuntu-18.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v2
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.15.5'
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
-
-      - name: Set up database
-        run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
-
-      - name: Run tests
-        run: bundle exec rspec spec/controllers
-
-  test-other:
+  test-engines-etc:
     runs-on: ubuntu-18.04
     services:
       postgres:
@@ -256,20 +272,54 @@ jobs:
       - name: Run JS tests
         run: RAILS_ENV=test bundle exec rake karma:run
 
-      - name: Run all other tests
-        run: |
-          bundle exec rspec \
-            spec/helpers/ \
-            spec/initializers/ \
-            spec/jobs/ \
-            spec/lib/ \
-            spec/mailers/ \
-            spec/queries/ \
-            spec/requests/ \
-            spec/serializers/ \
-            spec/services/ \
-            spec/validators/ \
-            spec/views
+      # Migration tests need to be run in a separate task.
+      # See: https://github.com/openfoodfoundation/openfoodnetwork/pull/6924#issuecomment-813056525
+      - name: Run migration tests
+        run: bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"
 
-      - name: Run engines tests
-        run: bundle exec rake ofn:specs:engines:rspec
+      - name: Run all other tests
+        run: bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib,migrations"]
+
+  test-the-rest:
+    runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.15.5'
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up application.yml
+        run: cp config/application.yml.example config/application.yml
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create RAILS_ENV=test
+          bundle exec rake db:schema:load RAILS_ENV=test
+
+      - name: Run admin feature folders, engines, lib
+        run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/features/admin/*/*_spec.rb,spec/lib/{,/*/**}/*_spec.rb"
+
+      - name: Codecov
+        uses: codecov/codecov-action@v1.3.1

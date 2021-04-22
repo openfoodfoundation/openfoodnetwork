@@ -70,7 +70,7 @@ module OpenFoodNetwork
     def relevant_rates
       return @relevant_rates unless @relevant_rates.nil?
 
-      @relevant_rates = Spree::TaxRate.uniq
+      @relevant_rates = Spree::TaxRate.distinct
     end
 
     def totals_of(line_items)
@@ -101,14 +101,6 @@ module OpenFoodNetwork
 
     def tax_included_in(line_item)
       line_item.adjustments.tax.inclusive.sum(:amount)
-    end
-
-    def shipment_inc_vat
-      Spree::Config.shipment_inc_vat
-    end
-
-    def shipping_tax_rate
-      Spree::Config.shipping_tax_rate
     end
   end
 end

@@ -27,11 +27,11 @@ module Spree
           redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
         else
           flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
-          redirect_to spree.checkout_state_path(:payment)
+          redirect_to main_app.checkout_state_path(:payment)
         end
       rescue SocketError
         flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
-        redirect_to spree.checkout_state_path(:payment)
+        redirect_to main_app.checkout_state_path(:payment)
       end
     end
 
@@ -57,7 +57,7 @@ module Spree
         session[:order_id] = nil
         redirect_to completion_route(@order)
       else
-        redirect_to checkout_state_path(@order.state)
+        redirect_to main_app.checkout_state_path(@order.state)
       end
     end
 

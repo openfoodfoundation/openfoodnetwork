@@ -48,7 +48,7 @@ describe LineItemsController, type: :controller do
 
         context "where the item's order is not associated with the user" do
           it "denies deletion" do
-            delete :destroy, params
+            delete :destroy, params: params
             expect(response.status).to eq 403
           end
         end
@@ -61,7 +61,7 @@ describe LineItemsController, type: :controller do
 
           context "without an order cycle or distributor" do
             it "denies deletion" do
-              delete :destroy, params
+              delete :destroy, params: params
               expect(response.status).to eq 403
             end
           end
@@ -71,7 +71,7 @@ describe LineItemsController, type: :controller do
 
             context "where changes are not allowed" do
               it "denies deletion" do
-                delete :destroy, params
+                delete :destroy, params: params
                 expect(response.status).to eq 403
               end
             end
@@ -80,7 +80,7 @@ describe LineItemsController, type: :controller do
               before { distributor.update_attributes!(allow_order_changes: true) }
 
               it "deletes the line item" do
-                delete :destroy, params
+                delete :destroy, params: params
                 expect(response.status).to eq 204
                 expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
               end
@@ -91,7 +91,7 @@ describe LineItemsController, type: :controller do
 
                 it 'updates the payment state' do
                   expect(order.payment_state).to eq 'paid'
-                  delete :destroy, params           
+                  delete :destroy, params: params
                   order.reload
                   expect(order.payment_state).to eq 'credit_owed'
                 end
@@ -103,37 +103,50 @@ describe LineItemsController, type: :controller do
     end
 
     context "on a completed order with shipping and payment fees" do
+      let(:zone) { create(:zone_with_member) }
+      let(:shipping_tax_rate) do
+        create(:tax_rate, included_in_price: true,
+                          calculator: Calculator::DefaultTax.new,
+                          amount: 0.25,
+                          zone: zone)
+      end
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:shipping_fee) { 3 }
       let(:payment_fee) { 5 }
       let(:distributor_with_taxes) { create(:distributor_enterprise_with_tax) }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor_with_taxes, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:order) {
+        create(:completed_order_with_fees, distributor: distributor_with_taxes,
+                                           shipping_fee: shipping_fee, payment_fee: payment_fee,
+                                           shipping_tax_category: shipping_tax_category)
+      }
 
       before do
-        Spree::Config.shipment_inc_vat = true
-        Spree::Config.shipping_tax_rate = 0.25
+        allow(order).to receive(:tax_zone) { zone }
+        order.reload
+        order.create_tax_charge!
       end
 
       it "updates the fees" do
         # Sanity check fees
         item_num = order.line_items.length
         initial_fees = item_num * (shipping_fee + payment_fee)
-        expect(order.adjustment_total).to eq initial_fees
-        expect(order.shipments.last.fee_adjustment.included_tax).to eq 1.2
+
+        expect(order.shipment.adjustments.tax.count).to eq 1
+        expect(order.shipment.included_tax_total).to eq 1.2
 
         # Delete the item
         item = order.line_items.first
         allow(controller).to receive_messages spree_current_user: order.user
-        request = { format: :json, id: item }
-        delete :destroy, request
+        delete :destroy, format: :json, params: { id: item }
         expect(response.status).to eq 204
 
         # Check the fees again
         order.reload
         order.shipment.reload
         expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
-        expect(order.shipments.last.fee_adjustment.amount).to eq shipping_fee
+        expect(order.shipment.adjustment_total).to eq shipping_fee
         expect(order.payments.first.adjustment.amount).to eq payment_fee
-        expect(order.shipments.last.fee_adjustment.included_tax).to eq 0.6
+        expect(order.shipment.included_tax_total).to eq 0.6
       end
     end
 
@@ -160,7 +173,7 @@ describe LineItemsController, type: :controller do
         expect(order.reload.adjustment_total).to eq calculator.preferred_discount_amount
 
         allow(controller).to receive_messages spree_current_user: user
-        delete :destroy, params
+        delete :destroy, params: params
         expect(response.status).to eq 204
 
         expect(order.reload.adjustment_total).to eq calculator.preferred_normal_amount

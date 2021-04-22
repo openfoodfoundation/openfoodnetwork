@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShippingRate < ActiveRecord::Base
+  class ShippingRate < ApplicationRecord
     belongs_to :shipment, class_name: 'Spree::Shipment'
     belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
 
@@ -24,13 +24,7 @@ module Spree
     delegate :name, to: :shipping_method
 
     def display_price
-      price = if Spree::Config[:shipment_inc_vat]
-                (1 + Spree::TaxRate.default) * cost
-              else
-                cost
-              end
-
-      Spree::Money.new(price, { currency: currency })
+      Spree::Money.new(cost, { currency: currency })
     end
 
     alias_method :display_cost, :display_price

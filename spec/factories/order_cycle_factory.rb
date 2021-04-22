@@ -4,41 +4,32 @@ FactoryBot.define do
   factory :order_cycle, parent: :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
 
-    after(:create) do |oc|
-      # Suppliers
-      supplier1 = create(:supplier_enterprise)
-      supplier2 = create(:supplier_enterprise)
+    transient do
+      suppliers {
+        [create(:supplier_enterprise), create(:supplier_enterprise)]
+      }
+      distributors {
+        [create(:distributor_enterprise), create(:distributor_enterprise)]
+      }
+    end
 
-      # Incoming Exchanges
-      ex1 = create(:exchange, order_cycle: oc, incoming: true,
-                              sender: supplier1, receiver: oc.coordinator,
-                              receival_instructions: 'instructions 0')
-      ex2 = create(:exchange, order_cycle: oc, incoming: true,
-                              sender: supplier2, receiver: oc.coordinator,
-                              receival_instructions: 'instructions 1')
-      ExchangeFee.create!(exchange: ex1,
-                          enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
-      ExchangeFee.create!(exchange: ex2,
-                          enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
+    after(:create) do |oc, proxy|
+      proxy.exchanges.incoming.each do |exchange|
+        ExchangeFee.create!(
+          exchange: exchange,
+          enterprise_fee: create(:enterprise_fee, enterprise: exchange.sender)
+        )
+      end
 
-      # Distributors
-      distributor1 = create(:distributor_enterprise)
-      distributor2 = create(:distributor_enterprise)
-
-      # Outgoing Exchanges
-      ex3 = create(:exchange, order_cycle: oc, incoming: false,
-                              sender: oc.coordinator, receiver: distributor1,
-                              pickup_time: 'time 0', pickup_instructions: 'instructions 0')
-      ex4 = create(:exchange, order_cycle: oc, incoming: false,
-                              sender: oc.coordinator, receiver: distributor2,
-                              pickup_time: 'time 1', pickup_instructions: 'instructions 1')
-      ExchangeFee.create!(exchange: ex3,
-                          enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
-      ExchangeFee.create!(exchange: ex4,
-                          enterprise_fee: create(:enterprise_fee, enterprise: ex4.receiver))
+      proxy.exchanges.outgoing.each do |exchange|
+        ExchangeFee.create!(
+          exchange: exchange,
+          enterprise_fee: create(:enterprise_fee, enterprise: exchange.receiver)
+        )
+      end
 
       # Products with images
-      [ex1, ex2].each do |exchange|
+      proxy.exchanges.incoming.each do |exchange|
         product = create(:product, supplier: exchange.sender)
         image = File.open(File.expand_path('../../app/assets/images/logo-white.png', __dir__))
         Spree::Image.create(
@@ -52,8 +43,8 @@ FactoryBot.define do
         exchange.variants << product.variants.first
       end
 
-      variants = [ex1, ex2].map(&:variants).flatten
-      [ex3, ex4].each do |exchange|
+      variants = proxy.exchanges.incoming.map(&:variants).flatten
+      proxy.exchanges.outgoing.each do |exchange|
         variants.each { |v| exchange.variants << v }
       end
     end
@@ -84,22 +75,24 @@ FactoryBot.define do
     end
 
     after(:create) do |oc, proxy|
-      proxy.suppliers.each do |supplier|
+      # Incoming Exchanges
+      proxy.suppliers.each.with_index do |supplier, i|
         ex = create(:exchange, order_cycle: oc,
                                sender: supplier,
                                receiver: oc.coordinator,
                                incoming: true,
-                               receival_instructions: 'instructions')
+                               receival_instructions: "instructions #{i}")
         proxy.variants.each { |v| ex.variants << v }
       end
 
-      proxy.distributors.each do |distributor|
+      # Outgoing Exchanges
+      proxy.distributors.each.with_index do |distributor, i|
         ex = create(:exchange, order_cycle: oc,
                                sender: oc.coordinator,
                                receiver: distributor,
                                incoming: false,
-                               pickup_time: 'time',
-                               pickup_instructions: 'instructions')
+                               pickup_time: "time #{i}",
+                               pickup_instructions: "instructions #{i}")
         proxy.variants.each { |v| ex.variants << v }
       end
     end

@@ -5,6 +5,8 @@ require "spec_helper"
 describe "spree/shared/_order_details.html.haml" do
   include AuthenticationHelper
   helper Spree::BaseHelper
+  helper CheckoutHelper
+  helper OrderHelper
 
   let(:order) { create(:completed_order_with_fees) }
 
@@ -12,7 +14,7 @@ describe "spree/shared/_order_details.html.haml" do
     assign(:order, order)
     allow(view).to receive_messages(
       order: order,
-      current_order: order,
+      current_order: order
     )
   end
 

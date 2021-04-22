@@ -1,4 +1,4 @@
-class ConvertStringFieldsToText < ActiveRecord::Migration
+class ConvertStringFieldsToText < ActiveRecord::Migration[4.2]
   def up
     change_column :enterprises, :description, :text
     change_column :enterprises, :pickup_times, :text

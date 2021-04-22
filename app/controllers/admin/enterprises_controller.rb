@@ -48,12 +48,11 @@ module Admin
     end
 
     def update
-      invoke_callbacks(:update, :before)
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
+
       if @object.update(enterprise_params)
-        invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
@@ -61,7 +60,6 @@ module Admin
           format.json { render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user }
         end
       else
-        invoke_callbacks(:update, :fails)
         respond_with(@object) do |format|
           format.json { render json: { errors: @object.errors.messages }, status: :unprocessable_entity }
         end
@@ -219,7 +217,6 @@ module Admin
         tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each do |_i, attrs|
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
-          create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
 
           rule.update(attrs.permit(PermittedAttributes::TagRules.attributes))
         end

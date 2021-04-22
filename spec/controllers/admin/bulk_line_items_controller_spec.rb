@@ -56,7 +56,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for line items" do
         before do
-          get :index, format: :json, q: { order_id_eq: order2.id }
+          get :index, as: :json, params: { q: { order_id_eq: order2.id } }
         end
 
         it "retrives a list of line items which match the criteria" do
@@ -66,7 +66,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for orders" do
         before do
-          get :index, format: :json, q: { order: { completed_at_gt: 2.hours.ago } }
+          get :index, as: :json, params: { q: { order: { completed_at_gt: 2.hours.ago } } }
         end
 
         it "retrives a list of line items whose orders match the criteria" do
@@ -90,7 +90,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "producer enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: supplier.owner
-          get :index, format: :json
+          get :index, as: :json
         end
 
         it "does not display line items for which my enterprise is a supplier" do
@@ -101,7 +101,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "coordinator enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: coordinator.owner
-          get :index, format: :json
+          get :index, as: :json
         end
 
         it "retrieves a list of line_items" do
@@ -113,7 +113,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "hub enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: distributor1.owner
-          get :index, format: :json
+          get :index, as: :json
         end
 
         it "retrieves a list of line_items" do
@@ -130,7 +130,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "with pagination args" do
         it "returns paginated results" do
-          get :index, { page: 1, per_page: 2 }, format: :json
+          get :index, params: { page: 1, per_page: 2 }, as: :json
 
           expect(line_item_ids).to eq [line_item1.id, line_item2.id]
           expect(json_response['pagination']).to eq(
@@ -139,7 +139,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "returns paginated results for a second page" do
-          get :index, { page: 2, per_page: 2 }, format: :json
+          get :index, params: { page: 2, per_page: 2 }, as: :json
 
           expect(line_item_ids).to eq [line_item3.id, line_item4.id]
           expect(json_response['pagination']).to eq(
@@ -237,7 +237,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "hub enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: distributor1.owner
-          xhr :put, :update, params
+          put :update, params: params, xhr: true
         end
 
         it "updates the line item" do

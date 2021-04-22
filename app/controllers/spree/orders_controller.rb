@@ -86,13 +86,14 @@ module Spree
         if @order.complete?
           @order.update_shipping_fees!
           @order.update_payment_fees!
+          @order.create_tax_charge!
         end
 
         respond_with(@order) do |format|
           format.html do
             if params.key?(:checkout)
               @order.next_transition.run_callbacks if @order.cart?
-              redirect_to checkout_state_path(@order.checkout_steps.first)
+              redirect_to main_app.checkout_state_path(@order.checkout_steps.first)
             elsif @order.complete?
               redirect_to order_path(@order)
             else
@@ -103,7 +104,7 @@ module Spree
       else
         # Show order with original values, not newly entered ones
         @insufficient_stock_lines = @order.insufficient_stock_lines
-        @order.line_items(true)
+        @order.line_items.reload
         respond_with(@order)
       end
     end

@@ -13,14 +13,22 @@ describe Admin::OrdersHelper, type: :helper do
     end
 
     it "filters shipping method adjustments" do
-      create(:adjustment, order: order, adjustable: order, amount: 1, originator_type: "Spree::ShippingMethod")
+      create(:adjustment, order: order, adjustable: build(:shipment), amount: 1,
+                          originator_type: "Spree::ShippingMethod")
 
       expect(helper.order_adjustments_for_display(order)).to eq []
     end
 
-    it "filters ineligible adjustments" do
-      create(:adjustment, adjustable: order, amount: 0, eligible: false,
-                          originator_type: "Spree::TaxRate")
+    it "filters ineligible payment adjustments" do
+      create(:adjustment, adjustable: build(:payment), amount: 0, eligible: false,
+                          originator_type: "Spree::PaymentMethod", order: order)
+
+      expect(helper.order_adjustments_for_display(order)).to eq []
+    end
+
+    it "filters out line item adjustments" do
+      create(:adjustment, adjustable: build(:line_item), amount: 0, eligible: false,
+                          originator_type: "EnterpriseFee", order: order)
 
       expect(helper.order_adjustments_for_display(order)).to eq []
     end

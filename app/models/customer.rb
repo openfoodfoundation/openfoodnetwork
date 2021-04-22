@@ -1,4 +1,4 @@
-class Customer < ActiveRecord::Base
+class Customer < ApplicationRecord
   acts_as_taggable
 
   belongs_to :enterprise
@@ -19,7 +19,7 @@ class Customer < ActiveRecord::Base
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
-  validates :enterprise_id, presence: true
+  validates :enterprise, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
 
@@ -46,6 +46,6 @@ class Customer < ActiveRecord::Base
     return true unless orders.any?
 
     errors[:base] << I18n.t('admin.customers.destroy.has_associated_orders')
-    false
+    throw :abort
   end
 end

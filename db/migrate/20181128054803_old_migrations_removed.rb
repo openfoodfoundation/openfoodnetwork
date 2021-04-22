@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OldMigrationsRemoved < ActiveRecord::Migration
+class OldMigrationsRemoved < ActiveRecord::Migration[4.2]
   def up
     raise StandardError, <<-MESSAGE
 

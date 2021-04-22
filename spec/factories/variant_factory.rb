@@ -15,7 +15,7 @@ FactoryBot.define do
     option_values { [create(:option_value)] }
 
     # ensure stock item will be created for this variant
-    before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
+    before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
 
     factory :variant do
       transient do

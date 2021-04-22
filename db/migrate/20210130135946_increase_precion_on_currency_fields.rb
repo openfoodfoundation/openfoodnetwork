@@ -1,4 +1,4 @@
-class IncreasePrecionOnCurrencyFields < ActiveRecord::Migration
+class IncreasePrecionOnCurrencyFields < ActiveRecord::Migration[4.2]
   def up
     change_column :spree_line_items, :price, :decimal, precision: 10, scale: 2
     change_column :spree_line_items, :cost_price, :decimal, precision: 10, scale: 2

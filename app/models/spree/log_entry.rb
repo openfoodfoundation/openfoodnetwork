@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class LogEntry < ActiveRecord::Base
+  class LogEntry < ApplicationRecord
     belongs_to :source, polymorphic: true
 
     # Fix for Spree #1767

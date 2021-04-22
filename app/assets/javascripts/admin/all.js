@@ -52,6 +52,9 @@
 //= require admin/spree/handlebar_extensions
 
 // OFN specific
+//= require ../shared/shared
+//= require_tree ../shared/directives
+//= require_tree ../templates/shared
 //= require_tree ../templates/admin
 //= require ./admin_ofn
 //= require ./customers/customers

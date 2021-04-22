@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MoveAllCalculatorsOutsideTheSpreeNamespace < ActiveRecord::Migration
+class MoveAllCalculatorsOutsideTheSpreeNamespace < ActiveRecord::Migration[4.2]
   def up
     convert_calculator("DefaultTax")
     convert_calculator("FlatPercentItemTotal")

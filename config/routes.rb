@@ -68,8 +68,9 @@ Openfoodnetwork::Application.routes.draw do
     resources :webhooks, only: [:create]
   end
 
-  get '/checkout', :to => 'checkout#edit' , :as => :checkout
-  put '/checkout', :to => 'checkout#update' , :as => :update_checkout
+  get '/checkout', to: 'checkout#edit' , as: :checkout
+  put '/checkout', to: 'checkout#update' , as: :update_checkout
+  get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   get 'embedded_shopfront/shopfront_session', to: 'application#shopfront_session'

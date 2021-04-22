@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Address < ActiveRecord::Base
+  class Address < ApplicationRecord
     include AddressDisplay
 
     belongs_to :country, class_name: "Spree::Country"
@@ -146,7 +146,9 @@ module Spree
     end
 
     def touch_enterprise
-      enterprise.andand.touch
+      return unless enterprise&.persisted?
+
+      enterprise.touch
     end
 
     def render_address(parts)

@@ -6,6 +6,6 @@ module OrderHelper
   end
 
   def outstanding_balance_label(order)
-    order.outstanding_balance.negative? ? t(:credit_owed) : t(:balance_due)
+    order.outstanding_balance.label
   end
 end

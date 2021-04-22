@@ -2,11 +2,17 @@ describe "unitsCtrl", ->
   ctrl = null
   scope = null
   product = null
+  currencyconfig =
+    symbol: "$"
+    symbol_position: "before"
+    currency: "D"
+    hide_cents: "false"
 
   beforeEach ->
     module('admin.products')
     module ($provide)->
       $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      $provide.value "currencyConfig", currencyconfig
       null
     inject ($rootScope, $controller, VariantUnitManager) ->
       scope = $rootScope

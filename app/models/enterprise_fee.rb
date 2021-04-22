@@ -1,4 +1,4 @@
-class EnterpriseFee < ActiveRecord::Base
+class EnterpriseFee < ApplicationRecord
   include Spree::Core::CalculatedAdjustments
 
   acts_as_paranoid
@@ -41,7 +41,7 @@ class EnterpriseFee < ActiveRecord::Base
   }
 
   def self.clear_all_adjustments(order)
-    order.adjustments.enterprise_fee.destroy_all
+    order.all_adjustments.enterprise_fee.destroy_all
   end
 
   private

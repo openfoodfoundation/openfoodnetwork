@@ -1,4 +1,4 @@
-class DeleteAccountInvoicesPreferences < ActiveRecord::Migration
+class DeleteAccountInvoicesPreferences < ActiveRecord::Migration[4.2]
   def up
     Spree::Preference
       .where( key: ['spree/app_configuration/accounts_distributor_id',

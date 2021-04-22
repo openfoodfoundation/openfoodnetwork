@@ -17,7 +17,7 @@
       = label_tag nil, t("spree.tree")
       %br/
       :javascript
-        Spree.routes.taxonomy_taxons_path = "#{main_app.api_taxonomy_taxons_path(@taxonomy)}";
+        Spree.routes.taxonomy_taxons_path = "#{main_app.api_v0_taxonomy_taxons_path(@taxonomy)}";
         Spree.routes.admin_taxonomy_taxons_path = "#{spree.admin_taxonomy_taxons_path(@taxonomy)}";
       #taxonomy_tree.tree
     #progress{style: "display:none;"}

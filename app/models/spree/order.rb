@@ -7,7 +7,7 @@ require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
 module Spree
-  class Order < ActiveRecord::Base
+  class Order < ApplicationRecord
     prepend OrderShipment
 
     include Checkout
@@ -42,15 +42,15 @@ module Spree
              as: :adjustable,
              dependent: :destroy
 
-    has_many :line_item_adjustments, through: :line_items, source: :adjustments
-    has_many :shipment_adjustments, through: :shipments, source: :adjustments
-    has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
-
     has_many :shipments, dependent: :destroy do
       def states
         pluck(:state).uniq
       end
     end
+
+    has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :shipment_adjustments, through: :shipments, source: :adjustments
+    has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
@@ -541,21 +541,6 @@ module Spree
       shipments
     end
 
-    # Clean shipments and make order back to address state
-    #
-    # At some point the might need to force the order to transition from address
-    # to delivery again so that proper updated shipments are created.
-    # e.g. customer goes back from payment step and changes order items
-    def ensure_updated_shipments
-      return unless shipments.any?
-
-      shipments.destroy_all
-      update_columns(
-        state: "address",
-        updated_at: Time.zone.now
-      )
-    end
-
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
@@ -646,17 +631,15 @@ module Spree
     end
 
     def shipping_tax
-      shipment_adjustments.reload.shipping.sum(:included_tax)
+      shipment_adjustments.reload.tax.sum(:amount)
     end
 
     def enterprise_fee_tax
-      adjustments.reload.enterprise_fee.sum(:included_tax)
+      all_adjustments.reload.enterprise_fee.sum(:included_tax)
     end
 
     def total_tax
-      adjustments.sum(:included_tax) +
-        shipment_adjustments.sum(:included_tax) +
-        line_item_adjustments.tax.sum(:amount)
+      additional_tax_total + included_tax_total
     end
 
     def has_taxes_included
@@ -750,7 +733,8 @@ module Spree
     end
 
     def require_customer?
-      return true unless new_record? || state == 'cart'
+      return false if new_record? || state == 'cart'
+      true
     end
 
     def customer_is_valid?
@@ -790,7 +774,7 @@ module Spree
     # before the shipping method is set. This results in the customer not being
     # charged for their order's shipping. To fix this, we refresh the payment
     # amount here.
-    def charge_shipping_and_payment_fees!
+    def set_payment_amount!
       update_totals
       return unless pending_payments.any?
 

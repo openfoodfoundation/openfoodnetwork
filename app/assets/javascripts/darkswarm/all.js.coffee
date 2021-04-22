@@ -20,6 +20,8 @@
 #= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
 #= require ../shared/angular-slideables.js
+#= require ../shared/shared
+#= require_tree ../shared/directives
 #= require angularjs-file-upload
 #= require i18n/translations
 

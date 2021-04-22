@@ -2,14 +2,6 @@
 
 require 'spec_helper'
 describe ShopHelper, type: :helper do
-  it "should build order cycle select options" do
-    distributor = create(:distributor_enterprise)
-    oc = create(:simple_order_cycle, distributors: [distributor])
-    allow(helper).to receive(:current_distributor).and_return distributor
-
-    expect(helper.order_cycles_name_and_pickup_times([oc])).to eq([[helper.pickup_time(oc), oc.id]])
-  end
-
   describe "shop_tabs" do
     context "distributor with groups" do
       let(:group) { create(:enterprise_group) }
