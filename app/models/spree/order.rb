@@ -67,7 +67,7 @@ module Spree
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
     delegate :update_totals, to: :updater
     delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
-             :update_line_item_fees!, :recreate_all_fees!, :tax_enterprise_fees!, to: :fee_handler
+             :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
@@ -297,7 +297,7 @@ module Spree
 
       Spree::TaxRate.adjust(self, line_items)
       Spree::TaxRate.adjust(self, shipments) if shipments.any?
-      tax_enterprise_fees!
+      fee_handler.tax_enterprise_fees!
     end
 
     def name
