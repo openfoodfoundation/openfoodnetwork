@@ -21,5 +21,10 @@ describe "Terms of Service files" do
 
       expect(page).to have_link "Terms of Service"
     end
+
+    it "provides Rails' standard action for a new file" do
+      visit new_admin_terms_of_service_files_path
+      expect(page).to have_button "Create Terms of service file"
+    end
   end
 end
