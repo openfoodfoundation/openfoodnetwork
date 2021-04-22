@@ -66,29 +66,12 @@ module Api
       context 'as an admin user' do
         before do
           allow(controller).to receive(:spree_current_user) { admin_user }
-          get :index
         end
 
         it "retrieves a list of orders with appropriate attributes,
             including line items with appropriate attributes" do
+          get :index
           returns_orders(json_response)
-        end
-
-        it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
-          completed_dates = json_response['orders'].map{ |order| order['completed_at'] }
-          correct_formats = completed_dates.all?{ |a| a == order1.completed_at.strftime('%B %d, %Y') }
-
-          expect(correct_formats).to be_truthy
-        end
-
-        it "returns distributor object with id key" do
-          distributors = json_response['orders'].map{ |order| order['distributor'] }
-          expect(distributors.all?{ |d| d.key?('id') }).to be_truthy
-        end
-
-        it "returns the order number" do
-          order_numbers = json_response['orders'].map{ |order| order['number'] }
-          expect(order_numbers.all?{ |number| number.match("^R\\d{5,10}$") }).to be_truthy
         end
       end
 

@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe Api::Admin::OrderSerializer do
   let(:serializer) { described_class.new order }
+  let(:order) { build(:order) }
 
   describe "#display_outstanding_balance" do
     let(:order) { create(:order) }
@@ -65,6 +66,28 @@ describe Api::Admin::OrderSerializer do
       it "returns true" do
         expect(serializer.ready_to_capture).to be true
       end
+    end
+  end
+
+  describe "#completed_at" do
+    let(:order) { build(:order, state: 'complete', completed_at: DateTime.parse("2021-04-02")) }
+
+    it "formats the date" do
+      expect(serializer.completed_at).to eq("April 02, 2021")
+    end
+  end
+
+  describe "#distributor" do
+    before { order.distributor = build(:distributor_enterprise) }
+
+    it "returns distributor object with id key" do
+      expect(serializer.distributor.id).to eq(order.distributor.id)
+    end
+  end
+
+  describe "#number" do
+    it "returns the order number" do
+      expect(serializer.number).to eq(order.number)
     end
   end
 end
