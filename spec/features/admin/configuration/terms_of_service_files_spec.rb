@@ -13,5 +13,13 @@ describe "Terms of Service files" do
       click_link "Terms of Service"
       expect(page).to have_content "No terms of services have been uploaded yet."
     end
+
+    it "can be uploaded" do
+      visit admin_terms_of_service_files_path
+      attach_file "Attachment", Rails.root.join("public/Terms-of-service.pdf")
+      click_button "Create Terms of service file"
+
+      expect(page).to have_link "Terms of Service"
+    end
   end
 end
