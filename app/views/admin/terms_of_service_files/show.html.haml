@@ -1,4 +1,12 @@
 - content_for :page_title do
   = t(".title")
 
-= t(".no_files")
+- if @current_file
+  = link_to t(".terms_of_service"), @current_file.attachment.url
+- else
+  = t(".no_files")
+
+= form_for [main_app, :admin, @new_file] do |f|
+  = f.label :attachment
+  = f.file_field :attachment
+  = f.submit
