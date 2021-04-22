@@ -9,20 +9,37 @@ module Spree
     before { controller_login_as_admin }
 
     describe "index" do
-      let!(:order) { create(:order) }
+      let!(:order) { create(:completed_order_with_totals) }
       let!(:adjustment1) {
-        create(:adjustment, originator_type: "Spree::ShippingMethod", order: order)
+        create(:adjustment, originator_type: "Spree::ShippingMethod", order: order,
+                            adjustable: order.shipment)
       }
       let!(:adjustment2) {
+        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: true, order: order)
+      }
+      let!(:adjustment3) {
         create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: false, order: order)
       }
-      let!(:adjustment3) { create(:adjustment, originator_type: "EnterpriseFee", order: order) }
+      let!(:adjustment4) { create(:adjustment, originator_type: "EnterpriseFee", order: order) }
+      let!(:adjustment5) { create(:adjustment, originator: nil, adjustable: order, order: order) }
 
-      it "loads all eligible adjustments" do
+      it "displays eligible adjustments" do
         spree_get :index, order_id: order.number
 
-        expect(assigns(:collection)).to include adjustment1, adjustment3
-        expect(assigns(:collection)).to_not include adjustment2
+        expect(assigns(:collection)).to include adjustment1, adjustment2
+        expect(assigns(:collection)).to_not include adjustment3
+      end
+
+      it "displays admin adjustments" do
+        spree_get :index, order_id: order.number
+
+        expect(assigns(:collection)).to include adjustment5
+      end
+
+      it "does not display enterprise fee adjustments" do
+        spree_get :index, order_id: order.number
+
+        expect(assigns(:collection)).to_not include adjustment4
       end
     end
 

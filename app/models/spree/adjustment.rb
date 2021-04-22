@@ -118,6 +118,10 @@ module Spree
       Spree::Money.new(amount, currency: currency)
     end
 
+    def admin?
+      originator_type.nil?
+    end
+
     def immutable?
       state != "open"
     end
