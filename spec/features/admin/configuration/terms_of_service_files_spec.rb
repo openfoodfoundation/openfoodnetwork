@@ -29,12 +29,13 @@ describe "Terms of Service files" do
       expect(page).to have_button "Create Terms of service file"
     end
 
-    it "can delete the current file" do
+    it "can delete the current file", js: true do
       attachment = File.open(Rails.root.join(test_file_path))
       TermsOfServiceFile.create!(attachment: attachment)
 
       visit admin_terms_of_service_files_path
-      click_link "Delete"
+
+      accept_alert { click_link "Delete" }
 
       expect(page).to have_content "No terms of services have been uploaded yet."
     end

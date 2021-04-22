@@ -3,7 +3,7 @@
 
 - if @current_file
   = link_to t(".terms_of_service"), @current_file.attachment.url
-  = link_to t(".delete"), main_app.admin_terms_of_service_files_path, method: "delete"
+  = link_to t(".delete"), main_app.admin_terms_of_service_files_path, method: "delete", data: { confirm: t(".confirm_delete") }
 - else
   = t(".no_files")
 
