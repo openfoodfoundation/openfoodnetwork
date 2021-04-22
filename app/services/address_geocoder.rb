@@ -18,13 +18,17 @@ class AddressGeocoder
   attr_reader :address
 
   def geocode_address
+    address_parts.select(&:present?).join(', ')
+  end
+
+  def address_parts
     [
       address.address1,
       address.address2,
       address.zipcode,
       address.city,
-      address.country.andand.name,
-      address.state.andand.name
-    ].select(&:present?).join(', ')
+      address.country&.name,
+      address.state&.name
+    ]
   end
 end
