@@ -6,8 +6,7 @@
       #distributor_title
         - if distributor.logo?
           %img.left{src: distributor.logo.url(:thumb)}
-        %h3
-          = distributor.name
+        = render DistributorTitleComponent.new(name: distributor.name)
         %location= distributor.address.city
 
     = yield :ordercycle_sidebar

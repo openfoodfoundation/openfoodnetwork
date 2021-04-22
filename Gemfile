@@ -117,6 +117,8 @@ gem 'flipper'
 gem 'flipper-active_record'
 gem 'flipper-ui'
 
+gem "view_component", require: "view_component/engine"
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'unicorn-worker-killer'
@@ -163,6 +165,8 @@ group :development do
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem "view_component_storybook", require: "view_component/storybook/engine"
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
   # While we don't require this gem directly, no dependents forced the upgrade to a version

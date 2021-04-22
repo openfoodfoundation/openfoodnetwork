@@ -90,7 +90,7 @@ module Spree
       end
 
       def print
-        render InvoiceRenderer.new.args(@order)
+        render_with_wicked_pdf InvoiceRenderer.new.args(@order)
       end
 
       def print_ticket
