@@ -3081,6 +3081,8 @@ tr:
           many: "%{count}hata kaydedilmeyi engelledi:"
           other: "%{count}hata kaydedilmeyi engelledi:"
         there_were_problems_with_the_following_fields: "Belirtilen alanlar ile ilgili sorun oluştu:"
+        password_confirmation_string: "Şifre onayı"
+        password_string: "Şifre"
       payments_list:
         date_time: "Gün/Saat"
         amount: "Tutar"

@@ -3048,6 +3048,8 @@ pl:
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Wystąpiły problemy z następującymi polami"
+        password_confirmation_string: "Potwierdzenie hasła"
+        password_string: "Hasło"
       payments_list:
         date_time: "Data / godzina"
         amount: "Kwota"

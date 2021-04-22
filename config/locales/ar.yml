@@ -3188,6 +3188,8 @@ ar:
           many: "منعت أخطاء %{count} حفظ هذا السجل:"
           other: "منعت أخطاء %{count} حفظ هذا السجل:"
         there_were_problems_with_the_following_fields: "كانت هناك مشاكل مع الحقول التالية"
+        password_confirmation_string: "تأكيد كلمة المرور"
+        password_string: "كلمه السر"
       payments_list:
         date_time: "التاريخ / الوقت"
         amount: "القيمة"

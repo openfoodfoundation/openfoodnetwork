@@ -3178,6 +3178,8 @@ nb:
           many: "%{count} feil forbød at denne posten ble lagret:"
           other: "%{count} feil forbød at denne posten ble lagret:"
         there_were_problems_with_the_following_fields: "Det var problemer med følgende felt"
+        password_confirmation_string: "Passord bekreftelse"
+        password_string: "Passord"
       payments_list:
         date_time: "Dato/tid"
         amount: "Antall"

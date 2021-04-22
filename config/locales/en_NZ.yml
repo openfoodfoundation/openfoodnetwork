@@ -3094,6 +3094,8 @@ en_NZ:
           many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
+        password_confirmation_string: "Password confirmation"
+        password_string: "Password"
       payments_list:
         date_time: "Date/time"
         amount: "Amount"

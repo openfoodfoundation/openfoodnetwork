@@ -3190,6 +3190,8 @@ de_DE:
           many: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
           other: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
         there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern:"
+        password_confirmation_string: "Passwort Bestätigung"
+        password_string: "Passwort"
       payments_list:
         date_time: "Datum/Uhrzeit"
         amount: "Betrag"

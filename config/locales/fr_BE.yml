@@ -2956,6 +2956,8 @@ fr_BE:
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Il y a u des erreur avec les champs suivant"
+        password_confirmation_string: "Confirmation mot de passe"
+        password_string: "Mot de passe"
       payments_list:
         date_time: "Date/Temps"
         amount: "Quantité"
