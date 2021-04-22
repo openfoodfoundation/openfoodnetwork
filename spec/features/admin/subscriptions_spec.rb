@@ -224,17 +224,42 @@ feature 'Subscriptions' do
         select2_select "Australia", from: "bill_address_country_id"
         select2_select "Victoria", from: "bill_address_state_id"
 
+        # Making sure that once set with empty it actually changes, and add the phone back
+        fill_in "bill_address_phone", with: ''
+        expect(page).to have_input "bill_address_phone", with: ''
+        expect(page).to have_content 'can\'t be blank', count: 1
+        fill_in "bill_address_phone", with: '0400 123 456'
+
         # Use copy button to fill in ship address
         click_link "Copy"
         expect(page).to have_input "ship_address_firstname", with: 'Freda'
         expect(page).to have_input "ship_address_lastname", with: 'Figapple'
         expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
+        expect(page).to have_input "ship_address_city", with: 'Natte Yallock'
+        expect(page).to have_input "ship_address_zipcode", with: '3465'
+        expect(page).to have_input "ship_address_phone", with: '0400 123 456'
+        expect(page).to have_input "ship_address_country_id", with: 'Australia'
+        expect(page).to have_input "ship_address_state_id", with: 'Victoria'
 
         click_button('Next')
         expect(page).to have_content 'NAME OR SKU'
         click_button('Next')
         expect(page).to have_content 'Please add at least one product'
 
+        # Adding a product when the quantity is zero
+        add_variant_to_subscription test_variant, 0
+        within 'table#subscription-line-items tr.item', match: :first do
+          expect(page).to have_selector '.description', text: "#{test_product.name} - #{test_variant.full_name}"
+          expect(page).to have_selector 'td.price', text: "$13.75"
+          expect(page).to have_input 'quantity', with: "0"
+          expect(page).to have_selector 'td.total', text: "0"
+        end
+        # Deleting the existing product
+        within 'table#subscription-line-items tr.item', match: :first do
+          find("a.delete-item").click
+        end
+
+        expect(page).to have_content 'Please add at least one product'
         # Adding a product and getting a price estimate
         add_variant_to_subscription test_variant, 2
         within 'table#subscription-line-items tr.item', match: :first do
