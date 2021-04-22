@@ -96,7 +96,7 @@ de_DE:
       failed_to_send: "Beim Senden der E-Mail-Bestätigung ist ein Fehler aufgetreten."
       resend_confirmation_email: "E-Mail-Bestätigung erneut senden."
       confirmed: "Danke für die Bestätigung Ihrer E-Mail-Adresse! Sie können sich jetzt einloggen."
-      not_confirmed: "Ihre E-Mail-Adresse konnte nicht bestätigt werden. Haben Sie diesen Schritt vielleicht bereits abgeschlossen?"
+      not_confirmed: "Ihre E-Mail-Adresse konnte nicht bestätigt werden. Möglicherweise haben Sie diesen Schritt bereits abgeschlossen. Bitte versuchen Sie sich einzuloggen oder wählen Sie \"Passwort vergessen?\"."
     user_confirmations:
       spree_user:
         send_instructions: "Sie erhalten in Kürze eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
@@ -104,7 +104,7 @@ de_DE:
         confirmation_not_sent: "Fehler beim Senden der E-Mail-Bestätigung"
     user_registrations:
       spree_user:
-        signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
+        signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren. Sollten Sie die E-Mail nach einigen Minuten nicht erhalten haben, schauen Sie bitte in Ihrem Spam-Ordner nach."
         unknown_error: "Beim Erstellen Ihres Kontos ist ein Fehler aufgetreten. Überprüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut."
     failure:
       invalid: |
@@ -161,16 +161,16 @@ de_DE:
       invalid_element_error: "darf nur ganze Zahlen enthalten"
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network DE"
+      subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network"
     welcome:
-      subject: "%{enterprise} ist jetzt auf %{sitename}"
+      subject: "%{enterprise} ist jetzt im Open Food Network"
       email_welcome: "Willkommen"
       email_registered: "ist jetzt Teil des"
       email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Hubs finden Sie hier: %{link}"
       userguide: "Open Food Network Benutzerhandbuch"
       email_admin_html: "Sie können Ihr Konto verwalten, indem Sie direkt den Link %{link} verwenden oder indem Sie sich auf der Startseite einloggen und im Menü \"Verwaltung\" auswählen."
       admin_panel: "Verwaltung"
-      email_community_html: "Wir haben auch ein Online-Forum für Diskussionen innerhalb der Community zuden Themen OFN-Software, Herausforderungen eines Lebensmittelunternehmens und mehr. Reden Sie doch mit. Wir entwickeln uns ständig weiter und mit Ihrem Beitrag in diesem Forum bestimmen Sie mit, was als nächstes passiert. %{link}"
+      email_community_html: "Wir haben auch ein Online-Forum für Diskussionen innerhalb der Community zu den Themen Open Food Network Software, Herausforderungen eines Lebensmittelunternehmens und mehr. Reden Sie doch mit. Wir entwickeln uns ständig weiter und mit Ihrem Beitrag in diesem Forum bestimmen Sie mit, was als nächstes passiert. %{link}"
       join_community: "Jetzt Teil der Community werden!"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
@@ -1539,19 +1539,19 @@ de_DE:
   email_confirmation_profile_created: "Das Profil für %{name} wurde erfolgreich erstellt! Zur Aktivierung des Profils, bitten wir Sie diese E-Mail-Adresse zu bestätigen."
   email_confirmation_click_link: "Bitte klicken Sie auf den untenstehenden Link, um Ihre E-Mail-Adresse zu bestätigen und mit der Einrichtung Ihres Profils fortzufahren."
   email_confirmation_link_label: "E-Mail-Adresse bestätigen"
-  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf die Einstellungen dieses Unternehmens zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen von %{sitename} zu erfahren und Ihr Profil oder Ihren Online-Shop zu verwenden."
-  email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich bei %{sitename} angemeldet haben oder von einer Person eingeladen wurden, die Sie wahrscheinlich kennen. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
+  email_confirmation_help_html: "Nachdem Sie Ihre E-Mail-Adresse bestätigt haben, können Sie auf die Einstellungen dieses Unternehmens zugreifen. Sehen Sie sich die %{link} an, um mehr über die Funktionen des Open Food Networks zu erfahren und Ihr Profil oder Ihren Online-Shop einzurichten."
+  email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich im Open Food Network angemeldet haben oder von einer Person dazu eingeladen wurden. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
-  email_contact: "Schreib uns eine E-Mail:"
-  email_signoff: "Mit freundlichen Grüßen,"
-  email_signature: "das Team von %{sitename}"
+  email_contact: "Schreiben Sie uns eine E-Mail:"
+  email_signoff: "Viele Grüße,"
+  email_signature: "das Team vom Open Food Network"
   email_confirm_customer_greeting: "Hallo %{name},"
   email_confirm_customer_intro_html: "vielen Dank für Ihren Einkauf bei <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
   email_confirm_customer_details_html: "Nachfolgend finden Sie Ihre <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
-  email_confirm_customer_signoff: "Mit freundlichen Grüßen,"
+  email_confirm_customer_signoff: "Viele Grüße,"
   email_confirm_shop_greeting: "Hallo %{name},"
-  email_confirm_shop_order_html: "Gut gemacht! Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"
+  email_confirm_shop_order_html: "gut gemacht! <strong>%{distributor}</strong> hat eine neue Bestellung erhalten!"
   email_confirm_shop_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Menge"
@@ -1590,11 +1590,11 @@ de_DE:
   email_shipping_collection_instructions: "Informationen zur Abholung:"
   email_special_instructions: "Ihre Notizen:"
   email_signup_greeting: Hallo!
-  email_signup_welcome: "Willkommen bei %{sitename}!"
+  email_signup_welcome: "Willkommen im Open Food Network!"
   email_signup_confirmed_email: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
   email_signup_shop_html: "Sie können sich jetzt unter %{link} einloggen."
   email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Landwirte, wunderbare Läden und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmer sind, freuen wir uns, Sie als Teil des Netzwerks zu begrüßen."
-  email_signup_help_html: "Wir freuen und über Ihre Fragen und Rückmeldungen. Schreiben Sie uns gerne eine E-Mail an %{email}."
+  email_signup_help_html: "Wir freuen uns über Ihre Fragen und Rückmeldungen. Schreiben Sie uns gerne eine E-Mail an %{email}."
   invite_email:
     greeting: "Hallo!"
     invited_to_manage: "Sie wurden eingeladen, %{enterprise} auf %{instance} zu verwalten."
@@ -1605,7 +1605,7 @@ de_DE:
   producer_mail_text_before: "Nachfolgend senden wir Ihnen eine Aktualisierung des Bestellzyklus, bereit am:"
   producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
-  producer_mail_signoff: "Mit freundlichen Grüßen,"
+  producer_mail_signoff: "Viele Grüße,"
   shopping_oc_closed: Bestellzyklen sind derzeit geschlossen!
   shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Bestellzyklus öffnet (oder kontaktieren Sie uns direkt, um zu erfahren, ob wir verspätete Bestellungen annehmen können)."
   shopping_oc_last_closed: "Der letzte Bestellzyklus wurde vor %{distance_of_time} geschlossen."
@@ -1753,7 +1753,7 @@ de_DE:
   sell_hubs_detail: "Richten Sie im Open Food Network ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit erweitern und Produkte von anderen Produzenten und Läden direkt an Kunden verkaufen."
   sell_groups_detail: "Richten Sie eine Gruppe von Unternehmen ein, um Ihren Kunden den Zugang zu den Läden Ihrer Gruppe zu erleichtern. Fassen Sie in der Gruppe z. B. Produzenten und andere Lebensmittelunternehmen Ihrer Region, Ihres Bauernmarktes oder Ihrer Organisation zusammen."
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
-  sell_listing_price: "Die Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Ladens im OFN ist während einer Einführungsphase kostenlos."
+  sell_listing_price: "Die Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Online-Shops ist für Unternehmen mit einem monatlichen Umsatz unter 500 € kostenlos. Bei höherem Umsatz erlauben wir uns nach einer 3-monatigen kostenlosen Testphase die Berechnung von 3 % Gebühr, um unsere Kosten zu decken."
   sell_embed: "Wir bieten noch weitere Dienste rund um Ihr Unternehmen an."
   sell_ask_services: "Fragen Sie uns nach OFN-Dienstleistungen."
   shops_title: Regional Einkaufen
@@ -1860,7 +1860,7 @@ de_DE:
   email_required: "Sie müssen eine E-Mail-Adresse angeben."
   logging_in: "Einen Moment bitte, wir loggen Sie ein ..."
   signup_email: "Ihre E-Mail-Adresse"
-  choose_password: "Ihr Passwort"
+  choose_password: "Wählen Sie ein Passwort"
   confirm_password: "Passwort erneut eingeben"
   action_signup: "Jetzt registrieren"
   forgot_password: "Passwort vergessen?"
@@ -2776,7 +2776,7 @@ de_DE:
         order: "Bestellung"
     registration:
       welcome_to_ofn: "Willkommen im Open Food Network!"
-      signup_or_login: "Beginnen Sie mit der Registrierung (oder loggen Sie sich ein)."
+      signup_or_login: "Beginnen Sie mit der Registrierung oder loggen Sie sich ein"
       have_an_account: "Haben Sie bereits ein Konto?"
       action_login: "Jetzt einloggen."
     stripe_elements:
@@ -3640,10 +3640,10 @@ de_DE:
             Falls dies nicht funktionieren sollte, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen.
         subject: "Anweisungen zum Zurücksetzen des Passworts"
       confirmation_instructions:
-        subject: "Bitte bestätigen Sie Ihre Registrierung bei Open Food Network DE"
+        subject: "Bitte bestätigen Sie Ihre Registrierung im Open Food Network"
     payment_mailer:
       authorize_payment:
-        subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network DE"
+        subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network"
         instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Bestätigung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
       authorization_required:
         subject: "Eine Zahlung muss durch den Kunden bestätigt werden"
