@@ -23,6 +23,9 @@ en:
   language_name: "English" # Localised name of this language
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
+        password_confirmation: "Password confirmation"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
