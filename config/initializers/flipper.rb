@@ -1,9 +1,12 @@
 require "flipper"
 require "flipper/adapters/active_record"
+require "flipper/instrumentation/log_subscriber"
 
 Flipper.configure do |config|
   config.default do
-    Flipper.new(Flipper::Adapters::ActiveRecord.new)
+    adapter = Flipper::Adapters::ActiveRecord.new
+    instrumented = Flipper::Adapters::Instrumented.new(adapter, instrumenter: ActiveSupport::Notifications)
+    Flipper.new(instrumented, instrumenter: ActiveSupport::Notifications)
   end
 end
 Rails.configuration.middleware.use Flipper::Middleware::Memoizer, preload_all: true
