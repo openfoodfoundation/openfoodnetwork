@@ -453,6 +453,7 @@ en:
         title: "Terms of Service files"
         no_files: "No terms of services have been uploaded yet."
         terms_of_service: "Terms of Service"
+        delete: "Delete"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
