@@ -4,7 +4,7 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.select = RegistrationService.select
   $scope.geocodedAddress = ''
   $scope.latLong = null
-  $scope.addressConfirmed
+  $scope.addressConfirmed = false
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
 
   # Filter countries without states since the form requires a state to be selected.
@@ -39,9 +39,9 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
           $scope.map = {center: {latitude: location.lat(), longitude: location.lng()}, zoom: 16 }
         )
 
-  $scope.confirmAddressChange = (isConfirmed) ->
-    $scope.addressConfirmed = isConfirmed
-    if isConfirmed
+  $scope.toggleAddressConfirmed = ->
+    $scope.addressConfirmed = !$scope.addressConfirmed
+    if $scope.addressConfirmed
       $scope.enterprise.address.latitude = $scope.latLong.latitude
       $scope.enterprise.address.longitude = $scope.latLong.longitude
     else
