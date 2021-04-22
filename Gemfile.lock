@@ -316,7 +316,7 @@ GEM
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
     kgio (2.11.3)
-    knapsack (1.20.0)
+    knapsack (1.22.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
