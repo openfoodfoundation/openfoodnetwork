@@ -3185,8 +3185,6 @@ es:
           many: "%{count} errores impidieron que se guardara este registro:"
           other: "%{count} errores impidieron que se guardara este registro:"
         there_were_problems_with_the_following_fields: "Hubo problemas con los siguientes campos"
-        password_confirmation_string: "Confirmación de contraseña"
-        password_string: "Contraseña"
       payments_list:
         date_time: "Fecha y hora"
         amount: "Cantidad"

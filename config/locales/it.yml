@@ -3183,8 +3183,6 @@ it:
           many: "%{count} errori hanno proibito il salvataggio di questo record:"
           other: "%{count} errori hanno proibito il salvataggio di questo record:"
         there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
-        password_confirmation_string: "Conferma password"
-        password_string: "Password"
       payments_list:
         date_time: "Data/ora"
         amount: "Quantità"

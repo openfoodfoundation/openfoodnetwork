@@ -3122,8 +3122,6 @@ cy:
           many: "gwaharddodd gwallau %{count} y cofnod hwn rhag cael ei gadw:"
           other: "gwaharddodd gwallau %{count} y cofnod hwn rhag cael ei gadw:"
         there_were_problems_with_the_following_fields: "Roedd problemau gyda&#39;r meysydd canlynol"
-        password_confirmation_string: "Cadarnhau cyfrinair"
-        password_string: "Cyfrinair"
       payments_list:
         date_time: "Dyddiad / amser"
         amount: "Swm"

@@ -7,8 +7,4 @@
       \:
     %ul
       - target.errors.full_messages.each do |msg|
-        - if msg.include?('Password confirmation')
-          -msg= msg.gsub("Password confirmation", t(".password_confirmation_string"))
-        - if msg.include?('Password')
-          -msg= msg.gsub("Password", t(".password_string"))
         %li= msg

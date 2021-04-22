@@ -3096,8 +3096,6 @@ pt_BR:
           many: "%{count}erros não permitiram que esse registro fosse salvo:"
           other: "%{count}erros não permitiram que esse registro fosse salvo:"
         there_were_problems_with_the_following_fields: "Houve problemas com os seguintes campos"
-        password_confirmation_string: "ConfirmaÇão da senha"
-        password_string: "Senha"
       payments_list:
         date_time: "Data/hora"
         amount: "Montante"

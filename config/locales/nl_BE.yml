@@ -2951,8 +2951,6 @@ nl_BE:
     shared:
       error_messages:
         there_were_problems_with_the_following_fields: "Er waren fouten met de volgende velden"
-        password_confirmation_string: "Wachtwoordbevestiging"
-        password_string: "Wachtwoord"
       payments_list:
         date_time: "Datum/tijd"
         amount: "Bedrag"

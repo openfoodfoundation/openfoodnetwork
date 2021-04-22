@@ -23,6 +23,9 @@ en:
   language_name: "English" # Localised name of this language
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
+        password_confirmation: "Password confirmation"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -3346,8 +3349,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           many: "%{count} errors prohibited this record from being saved:"
           other: "%{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
-        password_confirmation_string: "Password confirmation"
-        password_string: "Password"
       payments_list:
         date_time: "Date/time"
         amount: "Amount"

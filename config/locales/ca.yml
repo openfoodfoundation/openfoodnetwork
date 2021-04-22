@@ -3185,8 +3185,6 @@ ca:
           many: "%{count} errors han impedit guardar aquest registre:"
           other: "%{count} errors han impedit guardar aquest registre:"
         there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
-        password_confirmation_string: "Confirmació de contrasenya"
-        password_string: "Contrasenya"
       payments_list:
         date_time: "Data i hora"
         amount: "Quantitat"

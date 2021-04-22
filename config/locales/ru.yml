@@ -3237,8 +3237,6 @@ ru:
           many: "%{count} ошибок не позволили сохранить эту запись:"
           other: "%{count} ошибок не позволили сохранить эту запись:"
         there_were_problems_with_the_following_fields: "Были проблемы со следующими полями"
-        password_confirmation_string: "Подтверждение пароля"
-        password_string: "Пароль"
       payments_list:
         date_time: "Дата/Время"
         amount: "К оплате"

@@ -3210,8 +3210,6 @@ fr:
           many: "%{count} erreurs ne permettent pas de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
         there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
-        password_confirmation_string: "Confirmation mot de passe"
-        password_string: "Mot de passe"
       payments_list:
         date_time: "Date/heure"
         amount: "Montant"
