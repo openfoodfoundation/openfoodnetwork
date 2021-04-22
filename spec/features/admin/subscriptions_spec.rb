@@ -17,6 +17,8 @@ feature 'Subscriptions' do
 
     context 'listing subscriptions' do
       let!(:subscription) { create(:subscription, shop: shop, with_items: true, with_proxy_orders: true) }
+      let!(:customer) { create(:customer, name: "Customer A") }
+      let!(:other_subscription) { create(:subscription, shop: shop, customer: customer, with_items: true, with_proxy_orders: true) }
       let!(:subscription2) { create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true) }
       let!(:subscription_unmanaged) { create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
 
@@ -57,10 +59,27 @@ feature 'Subscriptions' do
 
         # Using the Quick Search
         expect(page).to have_selector "tr#so_#{subscription.id}"
+        expect(page).to have_selector "tr#so_#{other_subscription.id}"
+
+        # Using the Quick Search: no result
         fill_in 'query', with: 'blah blah blah'
         expect(page).to have_no_selector "tr#so_#{subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{other_subscription.id}"
+
+        # Using the Quick Search: filter by email
+        fill_in 'query', with: other_subscription.customer.email
+        expect(page).to have_selector "tr#so_#{other_subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+        # Using the Quick Search: filter by name
+        fill_in 'query', with: other_subscription.customer.name
+        expect(page).to have_selector "tr#so_#{other_subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+        # Using the Quick Search: reset filter
         fill_in 'query', with: ''
         expect(page).to have_selector "tr#so_#{subscription.id}"
+        expect(page).to have_selector "tr#so_#{other_subscription.id}"
 
         # Toggling columns
         expect(page).to have_selector "th.customer"
