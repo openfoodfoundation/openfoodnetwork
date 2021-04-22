@@ -7,6 +7,11 @@ module Admin
       @new_file = TermsOfServiceFile.new
     end
 
+    def new
+      show
+      render :show
+    end
+
     def create
       TermsOfServiceFile.create!(file_params)
       redirect_to main_app.admin_terms_of_service_files_path
