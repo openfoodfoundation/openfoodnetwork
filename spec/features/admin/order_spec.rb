@@ -61,6 +61,13 @@ feature '
     select2_select order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
 
+    expect(page).not_to have_selector '.flash.error'
+    expect(page).not_to have_content "Line items can't be blank"
+
+    click_button "Update And Recalculate Fees"
+    expect(page).to have_selector '.flash.error'
+    expect(page).to have_content "Line items can't be blank"
+
     # it suppresses validation errors when setting distribution
     expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
