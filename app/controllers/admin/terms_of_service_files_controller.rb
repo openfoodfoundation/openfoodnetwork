@@ -17,6 +17,11 @@ module Admin
       redirect_to main_app.admin_terms_of_service_files_path
     end
 
+    def destroy
+      TermsOfServiceFile.current.destroy!
+      redirect_to main_app.admin_terms_of_service_files_path
+    end
+
     private
 
     # Needed by Spree::Admin::BaseController#authorize_admin or it
