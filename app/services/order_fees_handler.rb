@@ -19,9 +19,9 @@ class OrderFeesHandler
 
       create_line_item_fees!
       create_order_fees!
-      tax_enterprise_fees!
     end
 
+    tax_enterprise_fees!
     order.update_order!
   end
 
