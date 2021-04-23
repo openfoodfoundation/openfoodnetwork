@@ -33,4 +33,22 @@ describe TermsOfServiceFile do
       expect(subject).to match /^\/system\/terms_of_service_files\/attachments.*Terms-of-service\.pdf\?\d+$/
     end
   end
+
+  describe ".updated_at" do
+    let(:subject) { TermsOfServiceFile.updated_at }
+
+    it "gives the most conservative time if not known" do
+      Timecop.freeze do
+        expect(subject).to eq Time.zone.now
+      end
+    end
+
+    it "returns the time when the terms were last updated" do
+      update_time = 1.day.ago
+      file = TermsOfServiceFile.create!(attachment: pdf, updated_at: update_time)
+
+      # The database isn't as precise as Ruby's time and rounds.
+      expect(subject).to be_within(0.001).of(update_time)
+    end
+  end
 end

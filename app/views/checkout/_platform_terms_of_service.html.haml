@@ -1,4 +1,4 @@
 %p
-  %input{ type: "checkbox", id: "platform_tos_accepted", ng: { model: "platform_tos_accepted", init: "platform_tos_accepted = false" } }
+  %input{ type: "checkbox", id: "platform_tos_accepted", ng: { model: "platform_tos_accepted", init: "platform_tos_accepted = #{platform_tos_already_accepted?}" } }
   %label.small{for: "platform_tos_accepted"}
     = t(".message_html", tos_link: link_to_platform_terms)
