@@ -9,4 +9,8 @@ class TermsOfServiceFile < ApplicationRecord
   def self.current
     order(:id).last
   end
+
+  def self.current_url
+    current&.attachment&.url || Spree::Config.footer_tos_url
+  end
 end
