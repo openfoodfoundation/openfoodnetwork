@@ -1,5 +1,5 @@
 %form{action: main_app.cart_path}
-  %products{"ng-controller" => "ProductsCtrl", "ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
+  %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
     = render partial: "shop/products/searchbar"
 
