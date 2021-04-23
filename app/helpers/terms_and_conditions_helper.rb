@@ -2,7 +2,7 @@
 
 module TermsAndConditionsHelper
   def link_to_platform_terms
-    link_to(t("terms_of_service"), Spree::Config.footer_tos_url, target: "_blank")
+    link_to(t("terms_of_service"), TermsOfServiceFile.current_url, target: "_blank")
   end
 
   def render_terms_and_conditions
