@@ -5,6 +5,8 @@ module Spree
     # Inline stylesheets
     include Roadie::Rails::Automatic
 
+    helper TermsAndConditionsHelper
+
     layout 'mailer'
 
     def from_address

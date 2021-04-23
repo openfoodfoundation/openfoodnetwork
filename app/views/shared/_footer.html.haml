@@ -100,8 +100,7 @@
       .small-12.medium-5.columns.text-left
         %p.text-small
           = t '.footer_legal_call'
-          %a{href: Spree::Config.footer_tos_url, target: "_blank"}
-            = t '.footer_legal_tos'
+          = link_to_platform_terms
           &#124;
           = t '.footer_legal_visit'
           %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub

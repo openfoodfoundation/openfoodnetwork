@@ -42,8 +42,7 @@
               %tr
                 %td{:align => "center"}
                   %p
-                    %a{:href => "#{ URI.join(main_app.root_url, Spree::Config.footer_tos_url).to_s }", :target => "_blank"}
-                      = t :terms_of_service
+                    = link_to_platform_terms
                     |
                     %a{:href => "#{ main_app.root_url }"}
                       = Spree::Config[:site_name]

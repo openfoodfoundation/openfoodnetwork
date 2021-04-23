@@ -1300,11 +1300,9 @@ en:
       link_text: "Terms and Conditions"
     platform_terms_of_service:
       message_html: "I agree to the platform %{tos_link}."
-      terms_of_service: "Terms of Service"
     all_terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
-      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1344,7 +1342,6 @@ en:
       footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
-      footer_legal_tos: "Terms and conditions"
       footer_legal_visit: "Find us on"
       footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
@@ -2323,7 +2320,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
-  enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
 
   tax_settings: "Tax Settings"
