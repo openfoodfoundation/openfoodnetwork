@@ -23,6 +23,19 @@ module TermsAndConditionsHelper
     current_order.distributor.terms_and_conditions.file?
   end
 
+  def all_terms_and_conditions_already_accepted?
+    platform_tos_already_accepted? && terms_and_conditions_already_accepted?
+  end
+
+  def platform_tos_already_accepted?
+    customer_terms_and_conditions_accepted_at = spree_current_user&.
+      customer_of(current_order.distributor)&.terms_and_conditions_accepted_at
+
+    customer_terms_and_conditions_accepted_at.present? &&
+      (customer_terms_and_conditions_accepted_at >
+       TermsOfServiceFile.updated_at)
+  end
+
   def terms_and_conditions_already_accepted?
     customer_terms_and_conditions_accepted_at = spree_current_user&.
       customer_of(current_order.distributor)&.terms_and_conditions_accepted_at

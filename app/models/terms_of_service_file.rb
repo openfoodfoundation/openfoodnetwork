@@ -13,4 +13,10 @@ class TermsOfServiceFile < ApplicationRecord
   def self.current_url
     current&.attachment&.url || Spree::Config.footer_tos_url
   end
+
+  # If no file has been uploaded, we don't know when the old terms have
+  # been updated last. So we return the most recent possible update time.
+  def self.updated_at
+    current&.updated_at || Time.zone.now
+  end
 end

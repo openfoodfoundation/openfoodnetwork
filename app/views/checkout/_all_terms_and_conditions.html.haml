@@ -1,4 +1,4 @@
 %p
-  %input{ type: 'checkbox', id: 'accept_terms', ng: { model: "terms_and_conditions_accepted", init: "terms_and_conditions_accepted=false" } }
+  %input{ type: 'checkbox', id: 'accept_terms', ng: { model: "terms_and_conditions_accepted", init: "terms_and_conditions_accepted = #{all_terms_and_conditions_already_accepted?}" } }
   %label.small{for: "accept_terms"}
     = t('.message_html', terms_and_conditions_link: link_to( t(".terms_and_conditions"), current_order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms)
