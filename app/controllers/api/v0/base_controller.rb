@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Base controller for OFN's API
-require_dependency 'spree/api/controller_setup'
+require "spree/api/controller_setup"
 require "spree/core/controller_helpers/ssl"
 
 module Api

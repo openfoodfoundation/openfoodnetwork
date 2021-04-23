@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/authentication_helpers'
+require "spree/authentication_helpers"
 require "application_responder"
 require 'cancan'
 require 'spree/core/controller_helpers/auth'
