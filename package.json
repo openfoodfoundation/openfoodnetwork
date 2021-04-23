@@ -9,7 +9,7 @@
     "storybook": "start-storybook"
   },
   "devDependencies": {
-    "@storybook/addon-controls": "^6.2.7",
+    "@storybook/addon-controls": "^6.2.9",
     "@storybook/addon-docs": "^6.2.7",
     "@storybook/server": "^6.2.9",
     "jasmine-core": "~2.4.1",
