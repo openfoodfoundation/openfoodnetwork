@@ -1324,13 +1324,9 @@ describe Spree::Order do
       end
     end
 
-    context 'when the is not complete' do
+    context 'when the order is not complete' do
       let(:order) do
-        build(
-          :order,
-          completed_at: nil,
-          line_items: [build(:line_item)]
-        )
+        build(:order, completed_at: nil, line_items: [build(:line_item)])
       end
 
       it 'transitions to :cart state' do
