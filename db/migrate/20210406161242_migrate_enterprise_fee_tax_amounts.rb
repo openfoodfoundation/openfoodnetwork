@@ -1,5 +1,5 @@
 class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
-  class Spree::Adjustment < ActiveRecord::Base
+  class Spree::Adjustment < ApplicationRecord
     belongs_to :originator, -> { with_deleted }, polymorphic: true
     belongs_to :adjustable, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
@@ -8,18 +8,18 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
   end
-  class EnterpriseFee < ActiveRecord::Base
+  class EnterpriseFee < ApplicationRecord
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
   end
-  class Spree::LineItem < ActiveRecord::Base
+  class Spree::LineItem < ApplicationRecord
     belongs_to :variant, class_name: "Spree::Variant"
     has_one :product, through: :variant
   end
-  class Spree::Variant < ActiveRecord::Base
+  class Spree::Variant < ApplicationRecord
     belongs_to :product, class_name: 'Spree::Product'
     has_many :line_items, inverse_of: :variant
   end
-  class Spree::Product < ActiveRecord::Base
+  class Spree::Product < ApplicationRecord
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     has_many :variants, class_name: 'Spree::Variant'
   end
