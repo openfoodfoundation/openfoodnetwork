@@ -126,26 +126,14 @@ module Spree
         joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
     }
 
-    scope :not_state, lambda { |state|
-      where.not(state: state)
-    }
-
     # All the states an order can be in after completing the checkout
     FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
 
     scope :finalized, -> { where(state: FINALIZED_STATES) }
-
-    def self.by_state(state)
-      where(state: state)
-    end
-
-    def self.complete
-      where('completed_at IS NOT NULL')
-    end
-
-    def self.incomplete
-      where(completed_at: nil)
-    end
+    scope :complete, -> { where.not(completed_at: nil) }
+    scope :incomplete, -> { where(completed_at: nil) }
+    scope :by_state, lambda { |state| where(state: state) }
+    scope :not_state, lambda { |state| where.not(state: state) }
 
     # For compatiblity with Calculator::PriceSack
     def amount
