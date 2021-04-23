@@ -11,6 +11,8 @@ Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Product
   $scope.supplied_taxons = null
   $scope.supplied_properties = null
   $scope.showFilterSidebar = false
+  $scope.activeTaxons = []
+  $scope.activeProperties = []
 
   # Update filters after initial load of shop tab
   $timeout =>
