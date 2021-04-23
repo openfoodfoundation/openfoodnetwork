@@ -444,6 +444,8 @@ en:
       embedded_shopfronts_whitelist: "External Domains Whitelist"
 
     terms_of_service_files:
+      create:
+        select_file: "Please select a file first."
       show:
         title: "Terms of Service files"
         no_files: "No terms of services have been uploaded yet."
