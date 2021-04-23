@@ -22,6 +22,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Product
   $rootScope.$on "orderCycleSelected", ->
     $scope.update_filters()
     $scope.clearAll()
+    $scope.page = 1
 
   $scope.update_filters = ->
     order_cycle_id = OrderCycle.order_cycle.order_cycle_id
