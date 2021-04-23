@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module TermsAndConditionsHelper
+  def link_to_platform_terms
+    link_to(t("terms_of_service"), Spree::Config.footer_tos_url, target: "_blank")
+  end
+
   def render_terms_and_conditions
     if platform_terms_required? && terms_and_conditions_activated?
       render("checkout/all_terms_and_conditions")
