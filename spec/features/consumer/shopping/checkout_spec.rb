@@ -200,6 +200,32 @@ feature "As a consumer I want to check out my cart", js: true do
         uncheck "Terms of service"
         expect(page).to have_button("Place order now", disabled: true)
       end
+
+      context "when the terms have been accepted in the past" do
+        before do
+          TermsOfServiceFile.create!(
+            attachment: File.open(Rails.root.join("public/Terms-of-service.pdf")),
+            updated_at: 1.day.ago,
+          )
+          customer = create(:customer, enterprise: order.distributor, user: user)
+          customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+        end
+
+        it "remembers the acceptance" do
+          visit checkout_path
+
+          within "#checkout_form" do
+            expect(page).to have_link("Terms of service")
+            expect(page).to have_button("Place order now", disabled: false)
+          end
+
+          uncheck "Terms of service"
+          expect(page).to have_button("Place order now", disabled: true)
+
+          check "Terms of service"
+          expect(page).to have_button("Place order now", disabled: false)
+        end
+      end
     end
 
     context "when the seller's terms and the platform's terms have to be accepted" do
