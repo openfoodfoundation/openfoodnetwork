@@ -1113,7 +1113,7 @@ en_IE:
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
       filters:
-        query_placeholder: "Search by email..."
+        query_placeholder: "Search by email or name..."
       setup_explanation:
         title: "Subscriptions"
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
