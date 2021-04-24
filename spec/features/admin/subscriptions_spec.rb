@@ -238,8 +238,7 @@ feature 'Subscriptions' do
         expect(page).to have_input "ship_address_city", with: 'Natte Yallock'
         expect(page).to have_input "ship_address_zipcode", with: '3465'
         expect(page).to have_input "ship_address_phone", with: '0400 123 456'
-        expect(page).to have_input "ship_address_country_id", with: 'Australia'
-        expect(page).to have_input "ship_address_state_id", with: 'Victoria'
+
 
         click_button('Next')
         expect(page).to have_content 'NAME OR SKU'
