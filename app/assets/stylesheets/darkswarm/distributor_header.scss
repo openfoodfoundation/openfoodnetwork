@@ -11,14 +11,12 @@ section {
   display: block;
   background: $white;
   position: relative;
+  top: 2em;
   z-index: 20;
 
   .details {
     box-sizing: border-box;
     display: block;
-    min-height: 150px;
-    padding: 30px 0 0;
-    position: relative;
 
     img {
       display: block;
@@ -45,5 +43,9 @@ section {
         margin-bottom: 8px;
       }
     }
+  }
+
+  @include breakpoint(desktop) {
+    margin-bottom: 6em;
   }
 }
