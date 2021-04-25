@@ -201,7 +201,7 @@ module Spree
     end
 
     def update_order
-      if completed?
+      if completed? || void?
         order.updater.update_payment_total
       end
 
