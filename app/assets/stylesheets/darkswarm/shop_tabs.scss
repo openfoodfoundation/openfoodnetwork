@@ -28,14 +28,25 @@
   .page {
     text-align: center;
     border-top: 4px solid transparent;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     width: 100%;
-
+    
     >a {
+      position: absolute;
+      bottom: 0;
       outline: none;
       display: block;
       color: $black;
       font-family: "Oswald", sans-serif;
+
+      @include breakpoint(desktop) {
+        position: relative;
+      }
+
+      @include breakpoint(tablet) {
+        position: relative;
+      }
     }
 
     a {
