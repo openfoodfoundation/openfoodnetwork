@@ -38,7 +38,7 @@ module OrderManagement
       # - adjustment_total - total value of all adjustments
       # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
-        order.payment_total = payments.completed.sum(:amount)
+        update_payment_total
         update_item_total
         update_adjustment_total
         update_order_total
@@ -47,6 +47,10 @@ module OrderManagement
       # Give each of the shipments a chance to update themselves
       def update_shipments
         shipments.each { |shipment| shipment.update!(order) }
+      end
+
+      def update_payment_total
+        order.payment_total = payments.completed.sum(:amount)
       end
 
       def update_item_total
