@@ -9,7 +9,9 @@ ordercycle {
   width: 100%;
   border-radius: $radius-medium $radius-medium 0 0;
   margin-top: 1em;
-  padding: 1em 1.25em 0;
+  padding: 1em 1.25em 1em;
+  display: flex;
+  justify-content: center;
 
   p {
     max-width: 400px;
@@ -44,8 +46,6 @@ ordercycle {
     display: flex;
     font-size: 1em;
     border-radius: $radius-small;
-    margin-right: 10px;
-    margin-left: 10px;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
@@ -115,6 +115,8 @@ ordercycle {
     @include breakpoint(mobile) {
       display: flex;
       margin-right: 0;
+      margin-top: 1em;
+      margin-bottom: .3em;
     }
   }
 
@@ -182,11 +184,8 @@ shop ordercycle {
 }
 
 shop navigation ordercycle {
-  margin-top: 3.4em;
   padding: 1em;
-  height: 7.6em;
   position: absolute;
-  right: 1em;
 }
 
 .sub-header {
