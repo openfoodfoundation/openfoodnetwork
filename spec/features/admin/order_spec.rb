@@ -174,6 +174,30 @@ feature '
     expect(order.reload.line_items.first.quantity).to eq(1000)
   end
 
+  scenario "there is a variant override" do
+    # Move the order back to the cart state
+    order.state = 'cart'
+    order.completed_at = nil
+    variant = order.line_items.first.variant
+    variant.update_attribute(:on_demand, false)
+    variant.update_attribute(:on_hand, 0)
+    override = create(:variant_override, hub: order.distributor, variant: variant, count_on_hand: 100)
+
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
+
+    within("tr.stock-item", text: order.products.first.name) do
+      find("a.edit-item").click
+      expect(page).to have_input(:quantity)
+      fill_in(:quantity, with: 50)
+      find("a.save-item").click
+    end
+
+    within("tr.stock-item", text: order.products.first.name) do
+      expect(page).to have_text("50 x")
+    end
+    expect(order.reload.line_items.first.quantity).to eq(50)
+  end
+
   scenario "can't change distributor or order cycle once order has been finalized" do
     login_as_admin_and_visit spree.edit_admin_order_path(order)
 
