@@ -54,10 +54,14 @@ class EnterpriseGroup < ApplicationRecord
   }
 
   def set_unused_address_fields
+    build_address unless address.present?
+    
     address.firstname = address.lastname = I18n.t(:unused)
   end
 
   def set_undefined_address_fields
+    build_address unless address.present?
+
     address.phone.present? || address.phone = I18n.t(:undefined)
     address.address1.present? || address.address1 = I18n.t(:undefined)
     address.city.present? || address.city = I18n.t(:undefined)
