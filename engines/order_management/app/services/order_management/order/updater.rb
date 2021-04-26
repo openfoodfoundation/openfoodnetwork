@@ -141,6 +141,22 @@ module OrderManagement
         order.ship_address = order.address_from_distributor
       end
 
+      def after_payment_update(payment)
+        if payment.completed? || payment.void?
+          update_payment_total
+        end
+
+        if order.completed?
+          update_payment_state
+          update_shipments
+          update_shipment_state
+        end
+
+        if payment.completed? || order.completed?
+          persist_totals
+        end
+      end
+
       private
 
       def round_money(value)
