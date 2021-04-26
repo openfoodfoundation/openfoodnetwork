@@ -766,9 +766,7 @@ module Spree
       )
       customer.save
 
-      if customer.invalid?
-        Bugsnag.notify(customer.errors.full_messages.join(", "))
-      end
+      Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
     end
 
     def update_adjustment!(adjustment)
