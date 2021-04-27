@@ -201,7 +201,7 @@ module Spree
     end
 
     def update_order
-      order.update!
+      order.reload.update!
     end
 
     # Necessary because some payment gateways will refuse payments with
