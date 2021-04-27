@@ -46,7 +46,7 @@ feature '
       )
     end
 
-    xit "creates the payment, completes the order, and updates payment and shipping states" do
+    it "creates the payment, completes the order, and updates payment and shipping states" do
       login_as_admin_and_visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
