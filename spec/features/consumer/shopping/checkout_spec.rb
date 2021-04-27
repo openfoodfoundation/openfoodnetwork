@@ -255,6 +255,10 @@ feature "As a consumer I want to check out my cart", js: true do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
         end.to enqueue_job ConfirmOrderJob
+
+        order = Spree::Order.complete.last
+        expect(order.payment_state).to eq "balance_due"
+        expect(order.shipment_state).to eq "pending"
       end
     end
   end
@@ -389,10 +393,10 @@ feature "As a consumer I want to check out my cart", js: true do
         end.to enqueue_job ConfirmOrderJob
 
         # And the order's special instructions should be set
-        order = Spree::Order.complete.first
+        order = Spree::Order.complete.last
         expect(order.special_instructions).to eq "SpEcIaL NoTeS"
 
-        # Shipment and payments states should be set
+        # Shipment and payments states should be set ###
         expect(order.payment_state).to eq "balance_due"
         expect(order.shipment_state).to eq "pending"
 
@@ -421,6 +425,10 @@ feature "As a consumer I want to check out my cart", js: true do
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
+
+          order = Spree::Order.complete.last
+          expect(order.payment_state).to eq "balance_due"
+          expect(order.shipment_state).to eq "pending"
         end
 
         it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
@@ -443,9 +451,11 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_content "Your order has been processed successfully"
 
             # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.shipment_adjustments.first.amount).to eq(4.56)
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
+            order = Spree::Order.complete.last
+            expect(order.shipment_adjustments.first.amount).to eq(4.56)
+            expect(order.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
+            expect(order.payment_state).to eq "balance_due"
+            expect(order.shipment_state).to eq "pending"
           end
         end
 
@@ -464,9 +474,11 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_content "Your order has been processed successfully"
 
             # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.all_adjustments.payment_fee.first.amount).to eq 5.67
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
+            order = Spree::Order.complete.last
+            expect(order.all_adjustments.payment_fee.first.amount).to eq 5.67
+            expect(order.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
+            expect(order.payment_state).to eq "balance_due"
+            expect(order.shipment_state).to eq "pending"
           end
         end
 
@@ -485,8 +497,10 @@ feature "As a consumer I want to check out my cart", js: true do
                 expect(page).to have_content "Your order has been processed successfully"
 
                 # Order should have a payment with the correct amount
-                o = Spree::Order.complete.first
-                expect(o.payments.first.amount).to eq(11.23)
+                order = Spree::Order.complete.last
+                expect(order.payments.first.amount).to eq(11.23)
+                expect(order.payment_state).to eq "paid"
+                expect(order.shipment_state).to eq "ready"
               end
 
               it "shows the payment processing failed message when submitted with an invalid credit card" do
