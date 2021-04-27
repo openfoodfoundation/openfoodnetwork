@@ -174,28 +174,61 @@ feature '
     expect(order.reload.line_items.first.quantity).to eq(1000)
   end
 
-  scenario "there is a variant override" do
-    # Move the order back to the cart state
-    order.state = 'cart'
-    order.completed_at = nil
-    variant = order.line_items.first.variant
-    variant.update_attribute(:on_demand, false)
-    variant.update_attribute(:on_hand, 0)
-    override = create(:variant_override, hub: order.distributor, variant: variant, count_on_hand: 100)
+  # Regression test for #7337
+  context "creating a new order with a variant override" do
+    let!(:override) { create(:variant_override, hub: distributor, variant: product.variants.first,
+                                                      count_on_hand: 100) }
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    before do
+      product.variants.first.update(on_demand: false, on_hand: 0)
 
-    within("tr.stock-item", text: order.products.first.name) do
-      find("a.edit-item").click
-      expect(page).to have_input(:quantity)
-      fill_in(:quantity, with: 50)
-      find("a.save-item").click
+      login_as user
+      new_order_with_distribution(distributor, order_cycle)
+      expect(page).to have_content I18n.t('spree.add_product').upcase
     end
 
-    within("tr.stock-item", text: order.products.first.name) do
-      expect(page).to have_text("50 x")
+    it "creates order and shipment successfully and allows proceeding to payment" do
+      select2_select product.name, from: 'add_variant_id', search: true
+
+      within("table.stock-levels") do
+        expect(page).to have_selector("#stock_item_quantity")
+        fill_in "stock_item_quantity", with: 50
+        find("button.add_variant").click
+      end
+
+      expect(page).to_not have_selector("table.stock-levels")
+      expect(page).to have_selector("table.stock-contents")
+
+      within("tr.stock-item") do
+        expect(page).to have_text("50 x")
+      end
+
+      order = Spree::Order.last
+      expect(order.line_items.first.quantity).to eq(50)
+      expect(order.shipments.count).to eq(1)
+
+      click_button "Update And Recalculate Fees"
+      expect(page).to have_selector 'h1', text: "Customer Details"
+
+      fill_in "order_email", with: "test@test.com"
+      check "order_use_billing"
+      fill_in "order_bill_address_attributes_firstname", with: "xxx"
+      fill_in "order_bill_address_attributes_lastname", with: "xxx"
+      fill_in "order_bill_address_attributes_address1", with: "xxx"
+      fill_in "order_bill_address_attributes_city", with: "xxx"
+      fill_in "order_bill_address_attributes_zipcode", with: "xxx"
+      select "Australia", from: "order_bill_address_attributes_country_id"
+      select "Victoria", from: "order_bill_address_attributes_state_id"
+      fill_in "order_bill_address_attributes_phone", with: "xxx"
+
+      click_button "Update"
+
+      expect(page).to have_content "Customer Details updated"
+
+      click_link "Payments"
+
+      expect(page).to have_content "New Payment"
     end
-    expect(order.reload.line_items.first.quantity).to eq(50)
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
