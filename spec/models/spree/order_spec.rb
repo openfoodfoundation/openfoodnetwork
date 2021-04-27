@@ -922,7 +922,7 @@ describe Spree::Order do
       context "and the state is not cart" do
         let(:state) { "complete" }
 
-        it "returns true" do
+        it "returns false" do
           expect(order.send(:require_customer?)).to eq(false)
         end
       end
@@ -1048,18 +1048,34 @@ describe Spree::Order do
       end
 
       context "and order#email_for_customer does not match any existing customers" do
-        before {
+        before do
           order.bill_address = create(:address)
           order.ship_address = create(:address)
-        }
-        it "creates a new customer with defaut name and addresses" do
-          expect(order.customer).to be_nil
-          expect{ order.send(:ensure_customer) }.to change{ Customer.count }.by 1
-          expect(order.customer).to be_a Customer
+        end
 
-          expect(order.customer.name).to eq order.bill_address.full_name
-          expect(order.customer.bill_address.same_as?(order.bill_address)).to be true
-          expect(order.customer.ship_address.same_as?(order.ship_address)).to be true
+        context "and the customer is not valid" do
+          before do
+            order.distributor = nil
+            order.user = nil
+            order.email = nil
+          end
+
+          it "sends an error to Bugsnag" do
+            expect(Bugsnag)
+              .to receive(:notify).with("Email can't be blank, Enterprise can't be blank")
+            order.send(:ensure_customer)
+          end
+        end
+
+        context "and the customer is valid" do
+          it "creates a new customer with defaut name and addresses" do
+            expect(order.customer).to be_nil
+            expect { order.send(:ensure_customer) }.to change{ Customer.count }.by 1
+
+            expect(order.customer.name).to eq order.bill_address.full_name
+            expect(order.customer.bill_address.same_as?(order.bill_address)).to be true
+            expect(order.customer.ship_address.same_as?(order.ship_address)).to be true
+          end
         end
       end
     end
@@ -1308,13 +1324,9 @@ describe Spree::Order do
       end
     end
 
-    context 'when the is not complete' do
+    context 'when the order is not complete' do
       let(:order) do
-        build(
-          :order,
-          completed_at: nil,
-          line_items: [build(:line_item)]
-        )
+        build(:order, completed_at: nil, line_items: [build(:line_item)])
       end
 
       it 'transitions to :cart state' do
@@ -1327,7 +1339,7 @@ describe Spree::Order do
   describe '#set_payment_amount!' do
     let(:order) do
       shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
-      build(:order, shipments: [shipment] )
+      build(:order, shipments: [shipment])
     end
 
     context 'after transitioning to payment' do

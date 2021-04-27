@@ -69,6 +69,7 @@ describe Spree::Order::Checkout do
       before do
         order.state = 'address'
         order.shipments << create(:shipment)
+        order.distributor = build(:distributor_enterprise)
         order.email = "user@example.com"
         order.save!
       end

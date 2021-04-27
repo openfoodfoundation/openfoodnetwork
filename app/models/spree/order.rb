@@ -732,11 +732,17 @@ module Spree
     def ensure_customer
       return if associate_customer
 
-      customer_name = bill_address.andand.full_name
-      self.customer = Customer.create(enterprise: distributor, email: email_for_customer,
-                                      user: user, name: customer_name,
-                                      bill_address: bill_address.andand.clone,
-                                      ship_address: ship_address.andand.clone)
+      self.customer = Customer.new(
+        enterprise: distributor,
+        email: email_for_customer,
+        user: user,
+        name: bill_address.andand.full_name,
+        bill_address: bill_address.andand.clone,
+        ship_address: ship_address.andand.clone
+      )
+      customer.save
+
+      Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
     end
 
     def update_adjustment!(adjustment)
