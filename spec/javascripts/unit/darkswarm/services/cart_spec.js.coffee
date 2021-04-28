@@ -225,9 +225,10 @@ describe 'Cart service', ->
   describe "when modifying a confirmed order", ->
     it "displays flash error when attempting to remove final item", ->
       spyOn(RailsFlashLoader, 'loadFlash')
-      li = {variant: {id: 1}, quantity: 3}
-      Cart.line_items_finalised = [li]
-      expect(Cart.has_one_line_item()).toBe(true)
+      li = {id: 1, order_id: 1, variant: {id: 1}, quantity: 3}
+      li2 = {id: 2, order_id: 2, variant: {id: 2}, quantity: 1}
+      Cart.line_items_finalised = [li, li2]
+      expect(Cart.isOnlyItemInOrder(li.id)).toBe(true)
 
   it "pops the queue", ->
     Cart.update_enqueued = true
