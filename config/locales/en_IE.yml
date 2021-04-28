@@ -332,6 +332,8 @@ en_IE:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
     begins_on: Begins On
     bill_address: "Bill address"
@@ -1111,7 +1113,7 @@ en_IE:
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
       filters:
-        query_placeholder: "Search by email..."
+        query_placeholder: "Search by email or name..."
       setup_explanation:
         title: "Subscriptions"
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
