@@ -327,6 +327,7 @@ module Spree
     end
 
     def after_ship
+      order.update_column(:shipment_state, "shipped")
       inventory_units.each(&:ship!)
       fee_adjustment.finalize!
       send_shipped_email
