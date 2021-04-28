@@ -15,7 +15,7 @@ module Spree
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
     before_create :generate_shipment_number
-    after_save :ensure_correct_adjustment, :update_adjustments
+    after_save :ensure_correct_adjustment, :update_adjustments, :update_order_shipment_state
 
     attr_accessor :special_instructions
     alias_attribute :amount, :cost
@@ -327,7 +327,6 @@ module Spree
     end
 
     def after_ship
-      order.update_column(:shipment_state, "shipped")
       inventory_units.each(&:ship!)
       fee_adjustment.finalize!
       send_shipped_email
@@ -346,6 +345,10 @@ module Spree
 
     def recalculate_adjustments
       Spree::ItemAdjustments.new(self).update
+    end
+
+    def update_order_shipment_state
+      order.update_column(:shipment_state, order.updater.derived_shipment_state)
     end
   end
 end

@@ -93,14 +93,14 @@ module OrderManagement
       # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way
       #   to locate Orders needing attention.
       def update_shipment_state
-        order.shipment_state = if order.shipment&.backordered?
-                                 'backorder'
-                               else
-                                 # It returns nil if there is no shipment
-                                 order.shipment&.state
-                               end
+        order.shipment_state = derived_shipment_state
 
         order.state_changed('shipment')
+      end
+
+      def derived_shipment_state
+        # It returns nil if there is no shipment
+        order.shipment&.backordered? ? 'backorder' : order.shipment&.state
       end
 
       # Updates the +payment_state+ attribute according to the following logic:
