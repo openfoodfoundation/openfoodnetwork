@@ -15,9 +15,12 @@ module OrderManagement
         order.line_items.each do |line_item|
           next unless stock_location.stock_item(line_item.variant)
 
-          on_hand, backordered = stock_location.fill_status(line_item.variant, line_item.quantity)
-          package.add line_item.variant, on_hand, :on_hand if on_hand.positive?
-          package.add line_item.variant, backordered, :backordered if backordered.positive?
+          variant = line_item.variant
+          OpenFoodNetwork::ScopeVariantToHub.new(order.distributor).scope(variant)
+
+          on_hand, backordered = stock_location.fill_status(variant, line_item.quantity)
+          package.add variant, on_hand, :on_hand if on_hand.positive?
+          package.add variant, backordered, :backordered if backordered.positive?
         end
         package
       end
