@@ -6,18 +6,14 @@ module Spree
       def process!
         return unless validate!
 
-        if response_code
-          capture!
-        else
-          purchase!
-        end
+        purchase!
       end
 
       def process_offline!
         return unless validate!
         return if authorization_action_required?
 
-        if response_code
+        if preauthorized?
           capture!
         else
           charge_offline!
@@ -191,6 +187,10 @@ module Spree
       end
 
       private
+
+      def preauthorized?
+        response_code.presence&.match("pi_")
+      end
 
       def validate!
         return false unless payment_method&.source_required?
