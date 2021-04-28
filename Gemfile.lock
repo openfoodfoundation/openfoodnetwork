@@ -582,7 +582,7 @@ GEM
       get_process_mem (~> 0)
       unicorn (>= 4, < 7)
     uniform_notifier (1.14.1)
-    view_component (2.31.0)
+    view_component (2.31.1)
       activesupport (>= 5.0.0, < 7.0)
     view_component_storybook (0.8.0)
       view_component (>= 2.2)
