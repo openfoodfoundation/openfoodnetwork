@@ -103,9 +103,8 @@ describe Spree::Payment do
             allow(payment).to receive(:response_code) { "pi_123" }
           end
 
-          it "should call capture instead of purchase" do
-            expect(payment).to receive(:capture!)
-            expect(payment).to_not receive(:purchase!)
+          it "should call purchase" do
+            expect(payment).to receive(:purchase!)
             payment.process!
           end
         end
@@ -119,7 +118,7 @@ describe Spree::Payment do
         it "should call capture if the payment is already authorized" do
           expect(payment).to receive(:capture!)
           expect(payment).to_not receive(:purchase!)
-          payment.process!
+          payment.process_offline!
         end
       end
 
