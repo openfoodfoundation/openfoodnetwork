@@ -1,6 +1,8 @@
 @import "mixins";
 @import 'typography';
 
+$shop-navigation-zindex: 20;
+
 section {
   :not(shop) navigation {
     box-shadow: $distributor-header-shadow;
@@ -11,7 +13,7 @@ section {
   display: block;
   background: $white;
   position: relative;
-  z-index: 20;
+  z-index: $shop-navigation-zindex;
 
   .details {
     box-sizing: border-box;
