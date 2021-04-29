@@ -75,10 +75,6 @@ module OrderManagement
         end
       end
 
-      def currency
-        # TODO calculate from first variant?
-      end
-
       # Returns the shipping methods that are enabled by the order's distributor
       #
       # @return [Array<Spree::ShippingMethod>]
