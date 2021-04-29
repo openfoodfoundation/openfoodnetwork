@@ -97,6 +97,29 @@ describe Spree::Payment do
           expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
         end
+
+        context "the payment is already authorized" do
+          before do
+            allow(payment).to receive(:response_code) { "pi_123" }
+          end
+
+          it "should call purchase" do
+            expect(payment).to receive(:purchase!)
+            payment.process!
+          end
+        end
+      end
+
+      context "#process_offline when payment is already authorized" do
+        before do
+          allow(payment).to receive(:response_code) { "pi_123" }
+        end
+
+        it "should call capture if the payment is already authorized" do
+          expect(payment).to receive(:capture!)
+          expect(payment).to_not receive(:purchase!)
+          payment.process_offline!
+        end
       end
 
       context "#authorize" do

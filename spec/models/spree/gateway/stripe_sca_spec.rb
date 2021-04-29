@@ -16,6 +16,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
         amount: order.total,
         payment_method: subject,
         source: credit_card,
+        response_code: "12345"
       )
     }
     let(:gateway_options) {
