@@ -171,16 +171,6 @@ module OrderManagement
             expect(package.shipping_methods).to_not include shipping_method3
           end
         end
-
-        describe '#shipping_categories' do
-          it "returns ship categories that are not the ship categories of the order's products" do
-            package
-            other_shipping_category = Spree::ShippingCategory.create(name: "Custom")
-
-            expect(package.shipping_categories).to eq [shipping_method1.shipping_categories.first,
-                                                       other_shipping_category]
-          end
-        end
       end
     end
   end
