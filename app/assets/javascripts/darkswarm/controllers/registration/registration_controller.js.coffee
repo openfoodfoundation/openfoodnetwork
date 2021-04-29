@@ -1,8 +1,10 @@
-Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseRegistrationService, availableCountries) ->
+Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseRegistrationService, availableCountries, GmapsGeo) ->
   $scope.currentStep = RegistrationService.currentStep
   $scope.enterprise = EnterpriseRegistrationService.enterprise
   $scope.select = RegistrationService.select
-
+  $scope.geocodedAddress = ''
+  $scope.latLong = null
+  $scope.addressConfirmed = false
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
 
   # Filter countries without states since the form requires a state to be selected.
@@ -22,3 +24,26 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
 
   $scope.countryHasStates = ->
     $scope.enterprise.country.states.length > 0
+
+  $scope.map = {center: {latitude: 0.000000, longitude: 0.000000 }, zoom: 1}
+  $scope.options = {scrollwheel: false}
+  $scope.locateAddress = () ->
+    { address1, address2, city, state_id, zipcode } = $scope.enterprise.address
+    addressQuery = [address1, address2, city, state_id, zipcode].filter((value) => !!value).join(", ")
+    GmapsGeo.geocode addressQuery, (results, status) =>
+      $scope.geocodedAddress = results && results[0]?.formatted_address
+      location = results[0]?.geometry?.location
+      if location
+        $scope.$apply(() =>
+          $scope.latLong = {latitude: location.lat(), longitude: location.lng()}
+          $scope.map = {center: {latitude: location.lat(), longitude: location.lng()}, zoom: 16 }
+        )
+
+  $scope.toggleAddressConfirmed = ->
+    $scope.addressConfirmed = !$scope.addressConfirmed
+    if $scope.addressConfirmed
+      $scope.enterprise.address.latitude = $scope.latLong.latitude
+      $scope.enterprise.address.longitude = $scope.latLong.longitude
+    else
+      $scope.enterprise.address.latitude = null
+      $scope.enterprise.address.longitude = null

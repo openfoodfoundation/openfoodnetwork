@@ -51,6 +51,8 @@ feature '
     fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', with: '3072'
+    fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
+    fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
     select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
@@ -167,6 +169,8 @@ feature '
     fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', with: '3072'
+    fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
+    fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
     select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
