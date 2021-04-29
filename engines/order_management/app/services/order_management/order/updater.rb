@@ -19,6 +19,7 @@ module OrderManagement
       # object with callbacks (otherwise you will end up in an infinite recursion as the
       # associations try to save and then in turn try to call +update!+ again.)
       def update
+        update_all_adjustments
         update_totals
 
         if order.completed?
@@ -27,9 +28,6 @@ module OrderManagement
           update_shipment_state
         end
 
-        update_all_adjustments
-        # update totals a second time in case updated adjustments have an effect on the total
-        update_totals
         persist_totals
       end
 

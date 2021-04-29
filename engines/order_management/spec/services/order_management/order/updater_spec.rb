@@ -132,8 +132,8 @@ module OrderManagement
         end
       end
 
-      it "updates totals twice" do
-        expect(updater).to receive(:update_totals).twice
+      it "updates totals once" do
+        expect(updater).to receive(:update_totals).once
         updater.update
       end
 
