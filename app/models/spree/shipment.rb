@@ -331,6 +331,15 @@ module Spree
       fee_adjustment.finalize!
       send_shipped_email
       touch :shipped_at
+      update_order_shipment_state
+    end
+
+    def update_order_shipment_state
+      new_state = order.updater.update_shipment_state
+      order.update_columns(
+        shipment_state: new_state,
+        updated_at: Time.zone.now,
+      )
     end
 
     def send_shipped_email

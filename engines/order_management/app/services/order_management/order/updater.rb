@@ -101,6 +101,7 @@ module OrderManagement
                                end
 
         order.state_changed('shipment')
+        order.shipment_state
       end
 
       # Updates the +payment_state+ attribute according to the following logic:

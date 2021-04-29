@@ -93,6 +93,7 @@ feature '
 
         expect(page).to have_css "i.success"
         expect(order.reload.shipments.any?(&:shipped?)).to be true
+        expect(order.shipment_state).to eq("shipped")
       end
     end
   end
