@@ -170,6 +170,12 @@ module OrderManagement
           it "does not return soft-deleted shipping methods" do
             expect(package.shipping_methods).to_not include shipping_method3
           end
+
+          it "returns an empty array if distributor is nil" do
+            allow(order).to receive(:distributor) { nil }
+
+            expect(package.shipping_methods).to eq []
+          end
         end
       end
     end

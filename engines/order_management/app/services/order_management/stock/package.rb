@@ -79,6 +79,8 @@ module OrderManagement
       #
       # @return [Array<Spree::ShippingMethod>]
       def shipping_methods
+        return [] unless order.distributor.present?
+
         order.distributor.shipping_methods.uniq.to_a
       end
 
