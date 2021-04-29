@@ -41,7 +41,8 @@ FactoryBot.define do
     end
 
     trait :flat_rate do
-      calculator { Calculator::FlatRate.new(preferred_amount: 50.0) }
+      transient { amount { 50.0 } }
+      calculator { Calculator::FlatRate.new(preferred_amount: amount) }
     end
 
     trait :expensive_name do
