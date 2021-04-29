@@ -338,7 +338,7 @@ module Spree
       new_state = order.updater.update_shipment_state
       order.update_columns(
         shipment_state: new_state,
-        updated_at: Time.now,
+        updated_at: Time.zone.now,
       )
     end
 
