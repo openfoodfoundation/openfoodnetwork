@@ -1354,6 +1354,12 @@ es:
   address2: Dirección (cont.)
   city: Ciudad
   city_placeholder: ej. Barcelona
+  latitude: Latitud
+  latitude_placeholder: p.ej. -37.4713077
+  latitude_longitude_tip: La latitud y la longitud son necesarias para mostrar su organización en el mapa.
+  longitude: Longitud
+  longitude_placeholder: p.ej. 144.7851531
+  use_geocoder: ¿Calcular la latitud y la longitud automáticamente desde la dirección?
   postcode: Código postal
   postcode_placeholder: ej. 08025
   suburb: Barrio
@@ -1887,7 +1893,7 @@ es:
       details:
         title: "Detalles"
         headline: "Empecemos"
-        enterprise: "Ei! Primero necesitamos saber un poco sobre tu organización:"
+        enterprise: "Primero necesitamos saber un poco sobre tu organización:"
         producer: "Primero necesitamos saber un poco sobre tu productora:"
         enterprise_name_field: "Nombre de la organización:"
         producer_name_field: "Nombre de la productora:"
@@ -1907,6 +1913,11 @@ es:
         state_field_error: "Región requerida"
         country_field: "País:"
         country_field_error: "Por favor selecciona un país"
+        map_location: "Ubicación en el mapa"
+        locate_address: "Localizar la dirección en el mapa"
+        drag_pin: "Arrastre y suelte la chincheta en la ubicación correcta si no es precisa."
+        confirm_address: "Confirmo que la posición indicada de la organización en el mapa es correcta."
+        drag_map_marker: "Debido a que muchos productores operan en áreas rurales, la precisión de los mapas está en mejora contínua. Ayúdanos a comprender mejor dónde estás ubicado interactuando con el mapa de arriba para mover el marcador haciendo clic o arrastrandolo a la ubicación que sea más precisa según lo que sabes."
       contact:
         title: "Contacto"
         who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
@@ -2949,7 +2960,6 @@ es:
     adjustment: "Ajuste"
     all: "Todos"
     associated_adjustment_closed: "Ajuste asociado cerrado"
-    authorization_failure: "Fallo de autorización"
     back_to_adjustments_list: "Volver a ajustes"
     back_to_users_list: "Volver a los usuarios"
     back_to_zones_list: "Volver a zonas"
