@@ -120,6 +120,8 @@ gem 'flipper-ui'
 
 gem "view_component", require: "view_component/engine"
 
+gem 'webpacker', '~> 6.x'
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'unicorn-worker-killer'
