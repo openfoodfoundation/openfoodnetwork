@@ -31,7 +31,7 @@ module Api
         unlock = params[:shipment].delete(:unlock)
 
         if unlock == 'yes'
-          @shipment.fee_adjustment.open
+          @shipment.fee_adjustment.fire_events(:open)
         end
 
         if @shipment.update(shipment_params)

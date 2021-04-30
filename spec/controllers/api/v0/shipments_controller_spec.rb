@@ -244,20 +244,13 @@ describe Api::V0::ShipmentsController, type: :controller do
               }.to_not change { order.reload.shipment.fee_adjustment.amount }
             end
 
-            xit "updates closed adjustments with unlock option selected" do
+            it "updates closed adjustments with unlock option selected" do
               params[:shipment][:unlock] = "yes"
 
               expect {
                 api_put :update, params
                 expect(response.status).to eq 200
               }.to change { order.reload.shipment.fee_adjustment.amount }
-            end
-
-            it "hits a fatal error when the unlock option is used" do
-              params[:shipment][:unlock] = "yes"
-
-              api_put :update, params
-              expect(response.status).to eq 422
             end
           end
         end
