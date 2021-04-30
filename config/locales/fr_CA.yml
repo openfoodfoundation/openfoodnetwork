@@ -1851,7 +1851,7 @@ fr_CA:
       details:
         title: "Détails"
         headline: "Commençons !"
-        enterprise: "Hey ! Nous avons d'abord besoin de quelques informations sur votre entreprise :"
+        enterprise: "Woohoo! Dites-nous déjà quelques mots à propos de votre entreprise:"
         producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
         enterprise_name_field: "Nom de l'entreprise:"
         producer_name_field: "Nom de la ferme:"

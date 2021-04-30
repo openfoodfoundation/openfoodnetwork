@@ -1884,7 +1884,7 @@ it:
       details:
         title: "Dettagli"
         headline: "Iniziamo!"
-        enterprise: "Wow! Innanzitutto abbiamo bisogno di sapere qualcosa della tua impresa:"
+        enterprise: "Bene! Innanzitutto abbiamo bisogno di sapere qualcosa in più sulla tua azienda:"
         producer: "Bene! Innanzitutto abbiamo bisogno di sapere qualcosa in più sulla tua azienda:"
         enterprise_name_field: "Nome Azienda:"
         producer_name_field: "Nome Azienda:"
@@ -2947,7 +2947,6 @@ it:
     adjustment: "Aggiustamenti"
     all: "Tutti"
     associated_adjustment_closed: "Aggiustamenti associati chiusi"
-    authorization_failure: "Autorizzazione fallita"
     back_to_adjustments_list: "Indietro ad Aggiustamenti"
     back_to_users_list: "Indietro a Utenti"
     back_to_zones_list: "Indietro a Zone"

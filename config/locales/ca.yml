@@ -1916,7 +1916,7 @@ ca:
         country_field_error: "Si us plau, selecciona un país"
         map_location: "Ubicació del mapa"
         locate_address: "Localitzeu l'adreça al mapa"
-        drag_pin: "Si no és precís, arrossegueu i deixeu anar la xinxeta a la ubicació correcta."
+        drag_pin: "Si no és precís, arrossegueu i deixeu anar el pin a la ubicació correcta."
         confirm_address: "Confirmo que la posició indicada de l'organització al mapa és correcta."
         drag_map_marker: "A causa dels molts productors que operen a les zones rurals, la precisió dels mapes està en millora continua. Ajudeu-nos a entendre millor on esteu ubicat interactuant amb el mapa anterior per moure el pin fent clic o arrossegant-lo fins a la ubicació més precisa segons el que vosaltres sabeu."
       contact:

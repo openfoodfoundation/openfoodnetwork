@@ -1842,7 +1842,6 @@ tr:
       details:
         title: "Ayrıntılar"
         headline: "Hadi Başlayalım !"
-        enterprise: "Merhaba! Öncelikle işletmenizi tanıyalım:"
         producer: "Merhaba! Öncelikle çiftliğinizi tanıyalım:"
         enterprise_name_field: "İŞLETME ADI:"
         producer_name_field: "ÇİFTLİK ADI:"

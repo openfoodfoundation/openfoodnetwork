@@ -1782,7 +1782,6 @@ es_CR:
       details:
         title: "Detalles"
         headline: "Empecemos"
-        enterprise: "Ei! Primero necesitamos saber un poco sobre tu organización:"
         producer: "Primero necesitamos saber un poco sobre tu productora:"
         enterprise_name_field: "Nombre de la organización:"
         producer_name_field: "Nombre de la productora:"

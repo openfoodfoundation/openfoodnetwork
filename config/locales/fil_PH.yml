@@ -1782,7 +1782,6 @@ fil_PH:
       details:
         title: "mga detalye"
         headline: "magsimula na tayo"
-        enterprise: "una ay kailangan naming makilala ang inyong enterprise:"
         producer: "una ay kailangan naming makilala  ang inyong bukid:"
         enterprise_name_field: "pangalan ng enterprise:"
         producer_name_field: "pangalan ng bukid:"

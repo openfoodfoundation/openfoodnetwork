@@ -1848,7 +1848,6 @@ en_AU:
       details:
         title: "Details"
         headline: "Tell us about your enterprise"
-        enterprise: "This will put you on our map, and be shared on your profile."
         producer: "This will put you on our map, and be shared on your profile."
         enterprise_name_field: "Enterprise Name"
         producer_name_field: "Farm Name"

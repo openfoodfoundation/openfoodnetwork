@@ -1885,7 +1885,7 @@ nb:
       details:
         title: "Detaljer"
         headline: "La oss komme i gang"
-        enterprise: "Woot! Først må du vite litt om bedriften din:"
+        enterprise: "Woot! Først må vi vite litt om bedriften din:"
         producer: "Woot! Først må vi vite litt om gården din:"
         enterprise_name_field: "Bedriftsnavn:"
         producer_name_field: "Gårdsnavn:"
@@ -2942,7 +2942,6 @@ nb:
     adjustment: "Justering"
     all: "Alle"
     associated_adjustment_closed: "Tilknyttet justering lukket"
-    authorization_failure: "Autorisasjonsfeil"
     back_to_adjustments_list: "Tilbake til justeringer"
     back_to_users_list: "Tilbake til brukere"
     back_to_zones_list: "Tilbake til soner"

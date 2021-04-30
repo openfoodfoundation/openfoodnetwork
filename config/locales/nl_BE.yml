@@ -1817,7 +1817,7 @@ nl_BE:
       details:
         title: "Details"
         headline: "Laten we beginnen"
-        enterprise: "Goed bezig! Eerst een woordje over je bedrijf. "
+        enterprise: "Goed bezig! Eerst moeten we nog wat meer weten over je onderneming:"
         producer: "Goed bezig! Eerst moeten we nog wat meer weten over je kweekbedrijf:"
         enterprise_name_field: "Naam bedrijf : "
         producer_name_field: "Naam boerderij : "

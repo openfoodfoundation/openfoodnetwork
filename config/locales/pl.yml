@@ -1805,7 +1805,6 @@ pl:
       details:
         title: "Informacje"
         headline: "Zacznijmy"
-        enterprise: "Najpierw musisz trochę powiedzieć o swoim podmiocie:"
         producer: "Woot! Najpierw musimy dowiedzieć się trochę o Twojej farmie:"
         enterprise_name_field: "Nazwa podmiotu:"
         producer_name_field: "Nazwa gospodarstwa:"

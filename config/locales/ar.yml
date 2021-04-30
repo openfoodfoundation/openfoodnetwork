@@ -1850,7 +1850,6 @@ ar:
       details:
         title: "تفاصيل"
         headline: "هيا بنا نبدأ"
-        enterprise: "اهلا و سهلا ! يجب أولاً معرفة القليل عن شركتك:"
         producer: "اهلا و سهلا ! أولاً نحتاج إلى معرفة القليل عن مزرعتك:"
         enterprise_name_field: "اسم المؤسسة:"
         producer_name_field: "اسم المزرعة:"

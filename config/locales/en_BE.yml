@@ -1736,7 +1736,7 @@ en_BE:
       details:
         title: "Details"
         headline: "Let's Get Started"
-        enterprise: "Woot! First need to know a little bit about your enterprise:"
+        enterprise: "Woot! First we need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"

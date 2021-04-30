@@ -1784,7 +1784,7 @@ pt:
       details:
         title: "Detalhes"
         headline: "Vamos começar"
-        enterprise: "Primeiro precisamos de saber um pouco sobre a sua organização:"
+        enterprise: "Primeiro precisamos saber mais sobre a sua organização:"
         producer: "Primeiro precisamos de saber um pouco sobre a sua quinta:"
         enterprise_name_field: "Nome da Organização:"
         producer_name_field: "Nome da Quinta"

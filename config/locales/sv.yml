@@ -1150,6 +1150,7 @@ sv:
         registration_action: "Låt oss börja!"
       details:
         headline: "Låt oss börja"
+        enterprise: "Hej! Först bejöver vi veta lite om ditt företag:"
         producer: "Hej! Först behöver vi veta lite om din gård:"
         enterprise_name_field: "Företagets namn:"
         producer_name_field: "Gårdens namn:"

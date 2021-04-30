@@ -1500,7 +1500,7 @@ en_CA:
   checkout_instructions: "Any comments or special instructions?"
   checkout_payment: Payment
   checkout_send: Place order now
-  checkout_your_order: Your order
+  checkout_your_order: Your order (applicable taxes charged at checkout)
   checkout_cart_total: Cart total
   checkout_shipping_price: Shipping
   checkout_total_price: Total
@@ -1885,7 +1885,7 @@ en_CA:
       details:
         title: "Details"
         headline: "Let's Get Started"
-        enterprise: "Great! First we need to know a little bit about your enterprise:"
+        enterprise: "Woot! First we need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
@@ -2944,7 +2944,6 @@ en_CA:
     adjustment: "Adjustment"
     all: "All"
     associated_adjustment_closed: "Associated adjustment closed"
-    authorization_failure: "Authorization failure"
     back_to_adjustments_list: "Back to adjustments"
     back_to_users_list: "Back to users"
     back_to_zones_list: "Back to zones"

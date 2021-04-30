@@ -1115,7 +1115,7 @@ de_DE:
         unpause_subscription: Abonnement fortsetzen
         cancel_subscription: Abonnement kündigen
       filters:
-        query_placeholder: "Suche nach E-Mail-Adresse ..."
+        query_placeholder: "Suche nach Name oder E-Mail-Adresse ..."
       setup_explanation:
         title: "Abonnements"
         just_a_few_more_steps: 'Nur noch ein paar Schritte bevor Sie beginnen können:'
@@ -1887,7 +1887,7 @@ de_DE:
       details:
         title: "Ihr Unternehmen"
         headline: "Ihr Unternehmen"
-        enterprise: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Unternehmens."
+        enterprise: "Woot! Zuerst müssen wir ein wenig über Ihr Unternehmen wissen:"
         producer: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Betriebs."
         enterprise_name_field: "Name des Unternehmens:"
         producer_name_field: "Name des Betriebs:"
@@ -2954,7 +2954,6 @@ de_DE:
     adjustment: "Anpassung"
     all: "Alle"
     associated_adjustment_closed: "Zugehörige Anpassung geschlossen"
-    authorization_failure: "Fehler bei der Autorisierung"
     back_to_adjustments_list: "Zurück zu Anpassungen"
     back_to_users_list: "Zurück zur Benutzerliste"
     back_to_zones_list: "Zurück zur Zonenliste"

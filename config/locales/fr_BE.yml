@@ -1173,11 +1173,11 @@ fr_BE:
         cart: "Panier"
       cart_sidebar:
         checkout: "Etape suivante (coordonnées)"
-        edit_cart: "Modifier le pannier"
-        items_in_cart_singular: "%{num}Article dans le pannier"
-        items_in_cart_plural: "%{num}Articles dans le pannier"
+        edit_cart: "Modifier le panier"
+        items_in_cart_singular: "%{num}Article dans le panier"
+        items_in_cart_plural: "%{num}Articles dans le panier"
         close: "Ferme"
-        cart_empty: "Votre pannier est vide"
+        cart_empty: "Votre panier est vide"
         take_me_shopping: "Emmenez moi vaire le magazin"
       signed_in:
         profile: "Profil"
@@ -1815,7 +1815,7 @@ fr_BE:
       details:
         title: "Informations"
         headline: "Commençons"
-        enterprise: "Bien! D'abord quelques mots sur votre entreprise"
+        enterprise: "Hey ! Nous avons d'abord besoin de quelques informations sur votre entreprise :"
         producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
         enterprise_name_field: "Nom de l'entreprise :"
         producer_name_field: "Nom de la ferme:"
