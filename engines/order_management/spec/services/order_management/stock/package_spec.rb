@@ -158,10 +158,17 @@ module OrderManagement
 
         let(:shipping_method1) { create(:shipping_method, distributors: [enterprise]) }
         let(:shipping_method2) { create(:shipping_method, distributors: [other_enterprise]) }
+        let!(:shipping_method3) {
+          create(:shipping_method, distributors: [enterprise], deleted_at: Time.zone.now)
+        }
 
-        describe '#shipping_methods' do
-          it 'does not return shipping methods not used by the package\'s order distributor' do
+        describe "#shipping_methods" do
+          it "does not return shipping methods not used by the package's order distributor" do
             expect(package.shipping_methods).to eq [shipping_method1]
+          end
+
+          it "does not return soft-deleted shipping methods" do
+            expect(package.shipping_methods).to_not include shipping_method3
           end
         end
 
