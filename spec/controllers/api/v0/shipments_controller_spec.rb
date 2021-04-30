@@ -225,12 +225,7 @@ describe Api::V0::ShipmentsController, type: :controller do
 
           expect(order.shipment.shipping_method).to eq shipping_method2
           expect(order.shipment.cost).to eq 20
-          expect(order.total).to eq 60 # order totals have not been updated
-          expect(order.payment_state).to eq "paid" # payment state not updated
-
-          order.update! # Simulate "Update and recalculate fees" button
-
-          expect(order.total).to eq 70 # order total has now changed
+          expect(order.total).to eq 70 # item total is 50, shipping cost is 20
           expect(order.payment_state).to eq "balance_due" # total changed, payment is due
         end
       end

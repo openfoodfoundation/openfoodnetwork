@@ -34,7 +34,9 @@ module Api
           @shipment.fee_adjustment.open
         end
 
-        @shipment.update(shipment_params)
+        if @shipment.update(shipment_params)
+          @order.updater.update_totals_and_states
+        end
 
         if unlock == 'yes'
           @shipment.fee_adjustment.close
