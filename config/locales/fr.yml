@@ -1115,7 +1115,7 @@ fr:
         unpause_subscription: Reprendre Abonnement
         cancel_subscription: Annuler Abonnement
       filters:
-        query_placeholder: "Recherche par email"
+        query_placeholder: "Recherche par email ou nom/prénom"
       setup_explanation:
         title: "Abonnements"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
@@ -1354,6 +1354,12 @@ fr:
   address2: Adresse (suite)
   city: Ville
   city_placeholder: 'ex: Nantes'
+  latitude: Latitude
+  latitude_placeholder: par ex. -37.4713077
+  latitude_longitude_tip: La latitude et la longitude sont nécessaires pour afficher votre profil sur la carte.
+  longitude: Longitude
+  longitude_placeholder: par ex. 144.7851531
+  use_geocoder: Souhaitez-vous calculer automatiquement la latitude et la longitude depuis l'adresse ?
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
   suburb: Ville
@@ -1887,7 +1893,7 @@ fr:
       details:
         title: "Informations"
         headline: "Commençons"
-        enterprise: "Nous avons d'abord besoin de quelques informations sur votre entreprise :"
+        enterprise: "Hey ! Nous avons d'abord besoin de quelques informations sur votre entreprise :"
         producer: "Nous avons d'abord besoin de quelques informations sur votre ferme :"
         enterprise_name_field: "Nom de l'entreprise :"
         producer_name_field: "Nom de la ferme :"
@@ -1907,6 +1913,11 @@ fr:
         state_field_error: "Veuillez saisir un Département"
         country_field: "Pays :"
         country_field_error: "Veuillez saisir une Pays"
+        map_location: "Emplacement de la carte"
+        locate_address: "Localiser l'adresse sur la carte"
+        drag_pin: "Faites glisser et déposez le pointeur sur l'emplacement exact, s'il n'est pas correct."
+        confirm_address: "Je confirme que la position indiquée sur la carte est correcte. "
+        drag_map_marker: "En raison de nombreux producteurs opérant dans les zones rurales, la précision des cartes est toujours en cours d'amélioration. Aidez-nous à mieux comprendre où vous vous trouvez en interagissant avec la carte ci-dessus. Déplacez le pointeur en cliquant ou en appuyant dessus pour le maintenir, puis en le faisant glisser vers l'emplacement le plus précis d'après vos connaissances. "
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Qui gère %{enterprise} ?"
@@ -2974,7 +2985,6 @@ fr:
     adjustment: "Ajustement"
     all: "Tous"
     associated_adjustment_closed: "L'ajustement associé est fermé"
-    authorization_failure: "Echec de l'autorisation"
     back_to_adjustments_list: "Retour aux ajustements"
     back_to_users_list: "Retour à la liste d'utilisateurs"
     back_to_zones_list: "Retour à la liste de zones"
