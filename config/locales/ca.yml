@@ -1355,6 +1355,12 @@ ca:
   address2: Adreça (continua)
   city: Municipi
   city_placeholder: 'p. ex: Sitges'
+  latitude: Latitud
+  latitude_placeholder: 'ex: -37,4713077'
+  latitude_longitude_tip: La latitud i la longitud són necessàries per mostrar la vostra organització al mapa.
+  longitude: Longitud
+  longitude_placeholder: 'ex: 144,7851531'
+  use_geocoder: Voleu calcular la latitud i la longitud automàticament a partir de l'adreça?
   postcode: Codi postal
   postcode_placeholder: 'p. ex: 08870'
   suburb: Barri
@@ -1888,7 +1894,7 @@ ca:
       details:
         title: "Detalls"
         headline: "Comencem!"
-        enterprise: "Ep! Primer ens cal saber una mica sobre la vostra organització:"
+        enterprise: "Ep! Primer necessitem saber una mica sobre la vostra organització:"
         producer: "Ep! Primer necessitem saber una mica sobre la teva granja:"
         enterprise_name_field: "Nom de l'organització:"
         producer_name_field: "Nom de la granja:"
@@ -1908,6 +1914,11 @@ ca:
         state_field_error: "Estat obligatori"
         country_field: "País:"
         country_field_error: "Si us plau, selecciona un país"
+        map_location: "Ubicació del mapa"
+        locate_address: "Localitzeu l'adreça al mapa"
+        drag_pin: "Si no és precís, arrossegueu i deixeu anar la xinxeta a la ubicació correcta."
+        confirm_address: "Confirmo que la posició indicada de l'organització al mapa és correcta."
+        drag_map_marker: "A causa dels molts productors que operen a les zones rurals, la precisió dels mapes està en millora continua. Ajudeu-nos a entendre millor on esteu ubicat interactuant amb el mapa anterior per moure el pin fent clic o arrossegant-lo fins a la ubicació més precisa segons el que vosaltres sabeu."
       contact:
         title: "Contacte"
         who_is_managing_enterprise: "Qui és responsable de gestionar %{enterprise}?"
@@ -2949,7 +2960,6 @@ ca:
     adjustment: "Ajustament"
     all: "Tots"
     associated_adjustment_closed: "S'ha tancat l'ajustament associat"
-    authorization_failure: "Error d'autorització"
     back_to_adjustments_list: "Torna als ajustaments"
     back_to_users_list: "Tornar als usuaris"
     back_to_zones_list: "Tornar a zones"
