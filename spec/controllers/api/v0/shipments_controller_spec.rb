@@ -212,21 +212,54 @@ describe Api::V0::ShipmentsController, type: :controller do
       end
 
       context "when an order has multiple shipping methods available which could be chosen" do
-        it "allows changing the selected shipping rate (changing the shipping method)" do
-          expect(order.shipment.shipping_method).to eq shipping_method1
-          expect(order.shipment.cost).to eq 10
-          expect(order.total).to eq 60 # item total is 50, shipping cost is 10
-          expect(order.payment_state).to eq "paid" # order is fully paid for
+        context "changing the selected shipping method" do
+          it "updates the order's totals and states" do
+            expect(order.shipment.shipping_method).to eq shipping_method1
+            expect(order.shipment.cost).to eq 10
+            expect(order.total).to eq 60 # item total is 50, shipping cost is 10
+            expect(order.payment_state).to eq "paid" # order is fully paid for
 
-          api_put :update, params
-          expect(response.status).to eq 200
+            api_put :update, params
+            expect(response.status).to eq 200
 
-          order.reload
+            order.reload
 
-          expect(order.shipment.shipping_method).to eq shipping_method2
-          expect(order.shipment.cost).to eq 20
-          expect(order.total).to eq 70 # item total is 50, shipping cost is 20
-          expect(order.payment_state).to eq "balance_due" # total changed, payment is due
+            expect(order.shipment.shipping_method).to eq shipping_method2
+            expect(order.shipment.cost).to eq 20
+            expect(order.total).to eq 70 # item total is 50, shipping cost is 20
+            expect(order.payment_state).to eq "balance_due" # total changed, payment is due
+          end
+
+          context "using the 'unlock' parameter with closed adjustments"  do
+            before do
+              order.shipment_adjustments.each(&:close)
+            end
+
+            it "does not update closed adjustments without unlock option" do
+              params[:shipment][:unlock] = "no"
+
+              expect {
+                api_put :update, params
+                expect(response.status).to eq 200
+              }.to_not change { order.reload.shipment.fee_adjustment.amount }
+            end
+
+            xit "updates closed adjustments with unlock option selected" do
+              params[:shipment][:unlock] = "yes"
+
+              expect {
+                api_put :update, params
+                expect(response.status).to eq 200
+              }.to change { order.reload.shipment.fee_adjustment.amount }
+            end
+
+            it "hits a fatal error when the unlock option is used" do
+              params[:shipment][:unlock] = "yes"
+
+              api_put :update, params
+              expect(response.status).to eq 422
+            end
+          end
         end
       end
     end
