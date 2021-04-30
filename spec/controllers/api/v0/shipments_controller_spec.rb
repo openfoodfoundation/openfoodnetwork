@@ -176,7 +176,67 @@ describe Api::V0::ShipmentsController, type: :controller do
       end
     end
 
-    context "can transition a shipment from ready to ship" do
+    describe "#update" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:shipping_method1) {
+        create(:shipping_method_with, :flat_rate, distributors: [distributor], amount: 10)
+      }
+      let!(:shipping_method2) {
+        create(:shipping_method_with, :flat_rate, distributors: [distributor], amount: 20)
+      }
+      let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
+      let!(:order) {
+        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor)
+      }
+      let(:new_shipping_rate) {
+        order.shipment.shipping_rates.select{ |sr| sr.shipping_method == shipping_method2 }.first
+      }
+      let(:params) {
+        {
+          id: order.shipment.number,
+          order_id: order.number,
+          shipment: {
+            selected_shipping_rate_id: new_shipping_rate.id
+          }
+        }
+      }
+
+      before do
+        order.shipments.first.shipping_methods = [shipping_method1, shipping_method2]
+        order.select_shipping_method(shipping_method1.id)
+        order.update!
+        order.update_columns(
+          payment_total: 60,
+          payment_state: "paid"
+        )
+      end
+
+      context "when an order has multiple shipping methods available which could be chosen" do
+        it "allows changing the selected shipping rate (changing the shipping method)" do
+          expect(order.shipment.shipping_method).to eq shipping_method1
+          expect(order.shipment.cost).to eq 10
+          expect(order.total).to eq 60 # item total is 50, shipping cost is 10
+          expect(order.payment_state).to eq "paid" # order is fully paid for
+
+          api_put :update, params
+          expect(response.status).to eq 200
+
+          order.reload
+
+          expect(order.shipment.shipping_method).to eq shipping_method2
+          expect(order.shipment.cost).to eq 20
+          expect(order.total).to eq 60 # order totals have not been updated
+          expect(order.payment_state).to eq "paid" # payment state not updated
+
+          order.update! # Simulate "Update and recalculate fees" button
+
+          expect(order.total).to eq 70 # order total has now changed
+          expect(order.payment_state).to eq "balance_due" # total changed, payment is due
+        end
+      end
+    end
+
+    context "#ship" do
       before do
         allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
         # For the shipment notification email
