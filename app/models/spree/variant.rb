@@ -70,7 +70,7 @@ module Spree
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
 
     after_save :save_default_price
-    after_save :update_units
+    after_save :update_unit_option_values
 
     after_create :create_stock_items
     after_create :set_position

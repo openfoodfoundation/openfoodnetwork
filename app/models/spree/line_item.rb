@@ -35,7 +35,7 @@ module Spree
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
     after_save :update_order
-    after_save :update_units
+    after_save :update_unit_option_values
     before_destroy :update_inventory_before_destroy
     after_destroy :update_order
 

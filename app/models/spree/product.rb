@@ -437,7 +437,7 @@ module Spree
 
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
-      variants_including_master.each(&:update_units)
+      variants_including_master.each(&:update_unit_option_values)
     end
 
     def touch_distributors

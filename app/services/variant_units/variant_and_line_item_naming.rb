@@ -72,7 +72,7 @@ module VariantUnits
       options_text
     end
 
-    def update_units
+    def update_unit_option_values
       delete_unit_option_values
 
       option_type = product.variant_unit_option_type
