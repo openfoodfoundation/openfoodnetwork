@@ -16,7 +16,7 @@ module Api
         quantity = params[:quantity].to_i
         @shipment = get_or_create_shipment(params[:stock_location_id])
 
-        @order.contents.add(variant, quantity, nil, @shipment)
+        @order.contents.add(variant, quantity, @shipment)
 
         @shipment.refresh_rates
         @shipment.save!
@@ -68,7 +68,7 @@ module Api
         variant = scoped_variant(params[:variant_id])
         quantity = params[:quantity].to_i
 
-        @order.contents.add(variant, quantity, nil, @shipment)
+        @order.contents.add(variant, quantity, @shipment)
         @order.recreate_all_fees!
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
