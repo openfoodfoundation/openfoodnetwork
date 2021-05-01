@@ -85,8 +85,7 @@ module VariantUnits
     end
 
     def delete_unit_option_values
-      ovs = option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
-      option_values.destroy ovs
+      option_values.destroy_all
     end
 
     def weight_from_unit_value
