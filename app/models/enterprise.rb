@@ -105,7 +105,7 @@ class Enterprise < ApplicationRecord
   after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  after_create :send_welcome_email
+  after_create_commit :send_welcome_email
 
   after_rollback :restore_permalink
 
