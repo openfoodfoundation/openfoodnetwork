@@ -402,6 +402,8 @@ GEM
       rack (>= 1.2.0)
     rack-protection (2.1.0)
       rack
+    rack-proxy (0.6.5)
+      rack
     rack-rewrite (1.5.1)
     rack-ssl (1.4.1)
       rack
@@ -536,6 +538,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    semantic_range (3.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
     simplecov (0.21.2)
@@ -605,6 +608,11 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webpacker (6.0.0.beta.7)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -741,6 +749,7 @@ DEPENDENCIES
   web!
   webdrivers
   webmock
+  webpacker (= 6.0.0.beta.7)
   whenever
   wicked_pdf
   wkhtmltopdf-binary
