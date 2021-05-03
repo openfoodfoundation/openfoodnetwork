@@ -66,5 +66,3 @@ SMTP_PASSWORD: 'f00d'
 # config/initializers/feature_toggles.rb for details.
 #
 # BETA_TESTERS: ofn@example.com,superadmin@example.com
-
-MEMCACHED_VALUE_MAX_MEGABYTES: '4'
