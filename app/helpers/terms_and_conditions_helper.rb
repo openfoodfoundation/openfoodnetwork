@@ -28,20 +28,13 @@ module TermsAndConditionsHelper
   end
 
   def platform_tos_already_accepted?
-    customer_terms_and_conditions_accepted_at = spree_current_user&.
-      customer_of(current_order.distributor)&.terms_and_conditions_accepted_at
-
-    customer_terms_and_conditions_accepted_at.present? &&
-      (customer_terms_and_conditions_accepted_at >
-       TermsOfServiceFile.updated_at)
+    TermsOfService.tos_accepted?(spree_current_user&.customer_of(current_order.distributor))
   end
 
   def terms_and_conditions_already_accepted?
-    customer_terms_and_conditions_accepted_at = spree_current_user&.
-      customer_of(current_order.distributor)&.terms_and_conditions_accepted_at
-
-    customer_terms_and_conditions_accepted_at.present? &&
-      (customer_terms_and_conditions_accepted_at >
-        current_order.distributor.terms_and_conditions_updated_at)
+    TermsOfService.tos_accepted?(
+      spree_current_user&.customer_of(current_order.distributor),
+      current_order.distributor
+    )
   end
 end
