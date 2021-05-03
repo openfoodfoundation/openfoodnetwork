@@ -18,7 +18,7 @@ angular.module("admin.indexUtils").factory 'QueryPersistence', (localStorageServ
     restoreFilters: (scope) ->
       storedFilters = @getStoredFilters()
 
-      if storedFilters
+      unless _.isEmpty(storedFilters)
         for k,v of storedFilters
           scope[k] = v
 
