@@ -401,8 +401,8 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
-    paper_trail (10.3.1)
-      activerecord (>= 4.2)
+    paper_trail (12.0.0)
+      activerecord (>= 5.2)
       request_store (~> 1.1)
     paperclip (3.4.2)
       activemodel (>= 3.0.0)
@@ -756,7 +756,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   ofn-qz!
   order_management!
-  paper_trail (~> 10.3.1)
+  paper_trail (~> 12.0.0)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
