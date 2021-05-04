@@ -1,0 +1,31 @@
+%div.max-w-max
+  %div.bg-white.border.border-gray-300.py-2.px-5.relative.max-w-max.rounded-sm
+    %div.text-gray-500.absolute.-top-2.px-3.-ml-3.bg-white.text-xs= @title
+    %div.inline-flex.items-center.justify-between.pt-2
+      - if @selected.length > 0
+        %div.inline-flex.items-center.leading-sm.px-3.py-1.bg-gray-100.rounded-full.-ml-3
+          %div.text-xs.text-gray-600
+            = @selected
+          %div.text-blue-400.ml-3.cursor-pointer
+            %svg{xmlns: "http://www.w3.org/2000/svg", class:"h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor"}
+              %path{"fill-rule": "evenodd", "d": "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "clip-rule": "evenodd"}
+      - else
+        %div.text-sm.py-1.text-gray-600
+          All categories
+
+      %div.leading-4.text-gray-500.ml-4.mt-1.cursor-pointer
+        %svg{xmlns: "http://www.w3.org/2000/svg", class: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor"}
+          %path{"fill-rule": "evenodd", d: "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z", "clip-rule": "evenodd" }
+  - if @open
+    %div.bg-white.border.border-gray-300.min-w-max.shadow.mt-1
+      %div.bg-white.border.border-gray-300.m-1.h-8.inline-flex.items-center.rounded-sm
+        %div.text-gray-400.px-2
+          %svg{xmlns: "http://www.w3.org/2000/svg", class: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor"}
+            %path{"fill-rule": "evenodd", "d": "M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z", "clip-rule": "evenodd"}
+        %input.outline-none.border-none.shadow-none.focus:bg-white{type: "text", placeholder: "Search categories" }
+      %div.bg-white.border-t.border-gray-300.flex.flex-col.px-2.max-h-20.overflow-x-scroll
+        - @options.each do |x|
+          %label.inline-flex.items-center.mt-2
+            %input.form-checkbox.h-4.w-4.text-gray-600{type: "checkbox", checked: @selected === x}
+            %span.ml-2.text-gray-500= x
+
