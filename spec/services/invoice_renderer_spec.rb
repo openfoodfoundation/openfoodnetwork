@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/admin/payments_helper'
+require 'spree/payment_methods_helper'
 
 describe InvoiceRenderer do
-  include Spree::Admin::PaymentsHelper
+  include Spree::PaymentMethodsHelper
 
   let(:service) { described_class.new }
   let(:order) do
