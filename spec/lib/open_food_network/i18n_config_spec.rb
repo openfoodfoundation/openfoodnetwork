@@ -5,6 +5,14 @@ require 'open_food_network/i18n_config'
 
 module OpenFoodNetwork
   describe I18nConfig do
+    before do
+      # These are only needed here because we are stubbing ENV elsewhere in this file
+      #   Here we make these calls to ENV return a value and that makes database_cleaner work
+      allow(ENV).to receive(:[]).with("DATABASE_CLEANER_ALLOW_PRODUCTION").and_return("false")
+      allow(ENV).to receive(:[]).with("DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL").
+        and_return("false")
+    end
+
     context "in default test configuration" do
       before do
         allow(ENV).to receive(:[]).with("LOCALE").and_return("en")
