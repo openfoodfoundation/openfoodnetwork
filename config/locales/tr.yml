@@ -85,6 +85,10 @@ tr:
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
               not_available_to_shop: "%{shop} için müsait değil"
+  card_details: "Kart detayları"
+  card_type: "Kart türü"
+  cardholder_name: "Kart sahibinin adı"
+  community_forum_url: "Topluluk forumu URL"
   customer_instructions: "Müşteri talimatları"
   devise:
     confirmations:
@@ -115,6 +119,7 @@ tr:
         updated_not_active: "Parolanız sıfırlandı, ancak e-postanız henüz doğrulanmadı."
         updated: "Parolanız başarılı bir şekilde değiştirildi. Şimdi oturum açtınız."
         send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
+  home_page_alert_html: "Ana sayfa uyarısı HTML"
   models:
     order_cycle:
       cloned_order_cycle_name: "%{order_cycle} KOPYALA"
