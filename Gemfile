@@ -108,7 +108,7 @@ gem 'foundation-rails', '= 5.5.2.1'
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
-gem 'select2-rails', '~> 3.4.7'
+gem 'select2-rails', '~> 3.5'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 

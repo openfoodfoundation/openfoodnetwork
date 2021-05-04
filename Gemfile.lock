@@ -530,9 +530,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    select2-rails (3.4.9)
-      sass-rails
-      thor (~> 0.14)
+    select2-rails (3.5.11)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -721,7 +719,7 @@ DEPENDENCIES
   rubocop-rails
   sass (<= 4.7.1)
   sass-rails (< 6.0.0)
-  select2-rails (~> 3.4.7)
+  select2-rails (~> 3.5)
   selenium-webdriver
   shoulda-matchers
   simplecov
