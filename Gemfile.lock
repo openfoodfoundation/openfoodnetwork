@@ -194,7 +194,12 @@ GEM
       addressable
     daemons (1.4.0)
     dalli (2.7.11)
-    database_cleaner (1.99.0)
+    database_cleaner (2.0.1)
+      database_cleaner-active_record (~> 2.0.0)
+    database_cleaner-active_record (2.0.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     ddtrace (0.49.0)
       ffi (~> 1.0)
       msgpack
