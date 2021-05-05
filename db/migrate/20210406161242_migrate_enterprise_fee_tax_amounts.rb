@@ -1,3 +1,8 @@
+# It turns out the good_migrations gem doesn't play nicely with loading classes on polymorphic
+# associations. The only workaround seems to be to load the class explicitly, which essentially
+# skips the whole point of good_migrations... :/
+require 'enterprise_fee'
+
 class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
   class Spree::Adjustment < ApplicationRecord
     belongs_to :originator, -> { with_deleted }, polymorphic: true
@@ -7,9 +12,6 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
-  end
-  class EnterpriseFee < ApplicationRecord
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
   end
   class Spree::LineItem < ApplicationRecord
     belongs_to :variant, class_name: "Spree::Variant"
@@ -22,6 +24,14 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
   class Spree::Product < ApplicationRecord
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     has_many :variants, class_name: 'Spree::Variant'
+  end
+  class Spree::TaxCategory < ApplicationRecord
+    has_many :tax_rates, dependent: :destroy, inverse_of: :tax_category
+  end
+  class Spree::TaxRate < ApplicationRecord
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
+    has_many :adjustments, as: :originator
   end
 
   def up
