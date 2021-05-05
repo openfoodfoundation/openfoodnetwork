@@ -384,7 +384,7 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
-    pg (0.21.0)
+    pg (1.2.3)
     power_assert (2.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -694,7 +694,7 @@ DEPENDENCIES
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
-  pg (~> 0.21.0)
+  pg (~> 1.2.3)
   pry
   pry-byebug
   rack-mini-profiler (< 3.0.0)
