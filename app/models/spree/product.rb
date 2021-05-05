@@ -266,13 +266,6 @@ module Spree
       duplicator.duplicate
     end
 
-    # use deleted? rather than checking the attribute directly. this
-    # allows extensions to override deleted? if they want to provide
-    # their own definition.
-    def deleted?
-      !!deleted_at
-    end
-
     # split variants list into hash which shows mapping of opt value onto matching variants
     # eg categorise_variants_from_option(color) => {"red" -> [...], "blue" -> [...]}
     def categorise_variants_from_option(opt_type)
