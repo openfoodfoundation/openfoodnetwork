@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require_dependency 'spree/calculator'
 require 'spree/localized_number'
 
 module Calculator
