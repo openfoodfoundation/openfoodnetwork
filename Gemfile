@@ -80,7 +80,7 @@ gem 'paper_trail', '~> 10.3.1'
 gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
-gem 'roadie-rails', '~> 1.3.0'
+gem 'roadie-rails', '~> 2.2.0'
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
