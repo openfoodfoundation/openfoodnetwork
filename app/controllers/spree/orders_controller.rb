@@ -26,8 +26,14 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-      ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-      @order.reload
+
+      if params.key?("payment_intent")
+        result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
+        unless result.ok?
+          flash[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
+        end
+        @order.reload
+      end
     end
 
     def empty

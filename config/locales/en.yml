@@ -349,6 +349,8 @@ en:
   height: "Height"
   width: "Width"
   depth: "Depth"
+  payment_could_not_process: "The payment could not be processed"
+  payment_could_not_complete: "The payment could not be completed"
 
   actions:
     create_and_add_another: "Create and Add Another"
