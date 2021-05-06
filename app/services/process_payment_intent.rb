@@ -33,12 +33,12 @@ class ProcessPaymentIntent
     validate_intent!
     return Result.new(ok: false) unless valid?
 
-    mark_as_processed
-
     OrderWorkflow.new(order).next
 
     if last_payment.can_complete?
       last_payment.complete!
+      last_payment.mark_as_processed
+
       Result.new(ok: true)
     else
       Result.new(ok: false, error: "The payment could not be completed")
@@ -62,10 +62,6 @@ class ProcessPaymentIntent
 
   def matches_last_payment?
     last_payment&.state == "pending" && last_payment&.response_code == payment_intent
-  end
-
-  def mark_as_processed
-    last_payment.update_attribute(:cvv_response_message, nil)
   end
 
   def stripe_account_id
