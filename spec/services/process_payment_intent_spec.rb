@@ -94,5 +94,27 @@ describe ProcessPaymentIntent do
         expect(payment.reload.state).to eq("failed")
       end
     end
+
+    context "when the payment can't be completed" do
+      let(:intent) { "pi_123" }
+      let(:service) { ProcessPaymentIntent.new(intent, order, payment) }
+
+      before do
+        allow(payment).to receive(:can_complete?).and_return(false)
+        allow(validator).to receive(:call).with(intent, anything).and_return(intent)
+      end
+
+      it "returns a failed result" do
+        result = service.call!
+
+        expect(result.ok?).to eq(false)
+        expect(result.error).to eq("The payment could not be completed")
+      end
+
+      it "does not complete the payment" do
+        service.call!
+        expect(payment.reload.state).to eq("pending")
+      end
+    end
   end
 end
