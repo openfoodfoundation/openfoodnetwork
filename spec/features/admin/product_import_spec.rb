@@ -393,7 +393,44 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).to have_no_selector '.updated-count'
     end
+    
+    it "imports lines with item products" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "shipping_category_id"]
+        csv << ["Cupcake", "User Enterprise", "Cake", "5", "2.2", "1", "", "Bunch", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
 
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "1"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to have_no_selector '.update-count'
+      
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_no_selector '.updated-count'
+      expect(page).to have_content "GO TO PRODUCTS PAGE"
+      expect(page).to have_content "UPLOAD ANOTHER FILE"
+
+      visit spree.admin_products_path
+
+      within "#p_#{Spree::Product.find_by(name: 'Cupcake').id}" do
+        expect(page).to have_input "product_name", with: "Cupcake"
+        expect(page).to have_select "variant_unit_with_scale", selected: "Items"
+        expect(page).to have_input "variant_unit_name", with: "Bunch"
+        expect(page).to have_content "5" #on_hand
+      end
+    end
+    
     it "does not allow import for lines with unknown units" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
