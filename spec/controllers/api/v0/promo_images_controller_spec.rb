@@ -30,7 +30,7 @@ module Api
         it "removes promo image" do
           spree_delete :destroy, enterprise_id: enterprise
 
-          expect(response).to be_success
+          expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
           expect(enterprise.promo_image?).to be false
@@ -53,7 +53,7 @@ module Api
 
         it "allows removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
 
@@ -62,7 +62,7 @@ module Api
 
         it "allows removal of promo image" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
 

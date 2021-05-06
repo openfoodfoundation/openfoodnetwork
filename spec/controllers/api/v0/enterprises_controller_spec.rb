@@ -31,7 +31,7 @@ describe Api::V0::EnterprisesController, type: :controller do
 
       it "creates as sells=any when it is not a producer" do
         api_post :create, { enterprise: new_enterprise_params }
-        expect(response).to be_success
+        expect(response.status).to eq 201
 
         enterprise = Enterprise.last
         expect(enterprise.sells).to eq('any')
@@ -44,7 +44,7 @@ describe Api::V0::EnterprisesController, type: :controller do
           enterprise: new_enterprise_params.
             merge({ user_ids: [enterprise_owner.id, manager1.id, manager2.id] })
         }
-        expect(response).to be_success
+        expect(response.status).to eq 201
 
         enterprise = Enterprise.last
         expect(enterprise.user_ids).to match_array([enterprise_owner.id, manager1.id, manager2.id])
@@ -83,7 +83,7 @@ describe Api::V0::EnterprisesController, type: :controller do
 
       it "I can update enterprise image" do
         api_post :update_image, logo: 'a logo', id: enterprise.id
-        expect(response).to be_success
+        expect(response.status).to eq 200
       end
     end
   end

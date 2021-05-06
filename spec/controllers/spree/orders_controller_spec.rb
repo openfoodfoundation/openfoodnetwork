@@ -24,7 +24,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number, token: order.token }
-        expect(response).to be_success
+        expect(response.status).to eq 200
       end
 
       it "stores order token in session as 'access_token'" do
@@ -43,7 +43,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number }
-        expect(response).to be_success
+        expect(response.status).to eq 200
       end
     end
 
@@ -52,7 +52,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "loads page" do
         get :show, params: { id: order.number }
-        expect(response).to be_success
+        expect(response.status).to eq 200
       end
     end
 
@@ -113,7 +113,7 @@ describe Spree::OrdersController, type: :controller do
         it "completes the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
-          expect(response).to be_success
+          expect(response.status).to eq 200
           payment.reload
           expect(payment.cvv_response_message).to be nil
           expect(payment.state).to eq("completed")
@@ -153,7 +153,7 @@ describe Spree::OrdersController, type: :controller do
         it "does not complete the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
-          expect(response).to be_success
+          expect(response.status).to eq 200
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("pending")

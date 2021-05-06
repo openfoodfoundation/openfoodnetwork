@@ -118,7 +118,7 @@ describe CheckoutController, type: :controller do
 
         it "does not redirect" do
           get :edit
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
 
         it "returns a specific flash message when Spree::Core::GatewayError occurs" do
