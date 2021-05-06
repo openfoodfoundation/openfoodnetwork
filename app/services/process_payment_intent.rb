@@ -41,7 +41,7 @@ class ProcessPaymentIntent
 
       Result.new(ok: true)
     else
-      Result.new(ok: false, error: "The payment could not be completed")
+      Result.new(ok: false, error: I18n.t("payment_could_not_complete"))
     end
 
   rescue Stripe::StripeError => e

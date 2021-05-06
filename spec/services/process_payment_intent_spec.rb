@@ -108,7 +108,7 @@ describe ProcessPaymentIntent do
         result = service.call!
 
         expect(result.ok?).to eq(false)
-        expect(result.error).to eq("The payment could not be completed")
+        expect(result.error).to eq(I18n.t("payment_could_not_complete"))
       end
 
       it "does not complete the payment" do
