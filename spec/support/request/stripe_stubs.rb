@@ -37,7 +37,6 @@ module StripeStubs
 
   def stub_retrieve_payment_method_request(payment_method_id = "pm_1234")
     stub_request(:get, "https://api.stripe.com/v1/payment_methods/#{payment_method_id}")
-      .with(headers: { 'Authorization' => 'Bearer sk_test_12345' })
       .to_return(retrieve_payment_method_response_mock({}))
   end
 
@@ -52,7 +51,7 @@ module StripeStubs
   def stub_list_customers_request(email:, response: {})
     stub = stub_request(:get, "https://api.stripe.com/v1/customers?email=#{email}&limit=100")
     stub = stub.with(
-      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+      headers: { 'Stripe-Account' => 'abc123' }
     )
     stub.to_return(list_customers_response_mock(response))
   end
@@ -62,7 +61,7 @@ module StripeStubs
       :get, "https://api.stripe.com/v1/payment_methods?customer=#{customer}&limit=100&type=card"
     )
     stub = stub.with(
-      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+      headers: { 'Stripe-Account' => 'abc123' }
     )
     stub.to_return(get_customer_payment_methods_response_mock(response))
   end
@@ -71,7 +70,7 @@ module StripeStubs
     stub = stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{payment_method}")
     stub = stub.with(body: { metadata: { "ofn-clone": true } })
     stub = stub.with(
-      headers: { 'Authorization' => 'Bearer sk_test_12345', 'Stripe-Account' => 'abc123' }
+      headers: { 'Stripe-Account' => 'abc123' }
     )
     stub.to_return(add_metadata_response_mock(response))
   end
