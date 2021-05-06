@@ -9,6 +9,8 @@ env:
   DISABLE_KNAPSACK: true
   TIMEZONE: UTC
   COVERAGE: true
+  STRIPE_INSTANCE_SECRET_KEY: 'sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD'
+  STRIPE_INSTANCE_PUBLISHABLE_KEY: 'pk_test_eEobkSV1pzlSnnXIxf1vXvOm00ASnsfCDd'
 
 jobs:
   test-controllers-and-serializers:
