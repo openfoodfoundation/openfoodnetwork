@@ -287,6 +287,112 @@ describe Admin::BulkLineItemsController, type: :controller do
     end
   end
 
+  context "updating the order's taxes, fees, and states" do
+    let(:distributor) { create(:distributor_enterprise_with_tax) }
+    let!(:order_cycle) {
+      create(:order_cycle, distributors: [distributor],
+                           coordinator_fees: [line_item_fee1, line_item_fee2, order_fee])
+    }
+    let(:outgoing_exchange) { order_cycle.exchanges.outgoing.first }
+
+    let!(:order) {
+      create(:order_with_line_items, line_items_count: 2, distributor: distributor, order_cycle: order_cycle)
+    }
+    let(:line_item1) { order.line_items.first }
+    let(:line_item2) { order.line_items.last }
+
+    let!(:zone) { create(:zone_with_member) }
+    let(:tax_included) { true }
+    let(:tax_rate5) { create(:tax_rate, amount: 0.05, zone: zone, included_in_price: tax_included) }
+    let(:tax_rate10) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: tax_included) }
+    let(:tax_rate15) { create(:tax_rate, amount: 0.15, zone: zone, included_in_price: tax_included) }
+    let(:tax_cat5) { create(:tax_category, tax_rates: [tax_rate5]) }
+    let(:tax_cat10) { create(:tax_category, tax_rates: [tax_rate10]) }
+    let(:tax_cat15) { create(:tax_category, tax_rates: [tax_rate15]) }
+
+    let!(:shipping_method) {
+      create(:shipping_method_with, :shipping_fee, tax_category: tax_cat5, name: "Shiperoo",
+                                    distributors: [distributor])
+    }
+    let!(:payment_method) { create(:payment_method, :per_item, distributors: [distributor]) }
+
+    let(:line_item_fee1) {
+      create(:enterprise_fee, :per_item, amount: 1, inherits_tax_category: false, tax_category: tax_cat15)
+    }
+    let(:line_item_fee2) {
+      create(:enterprise_fee, :per_item, amount: 2, inherits_tax_category: true)
+    }
+    let(:order_fee) { create(:enterprise_fee, :flat_rate, amount: 3, tax_category: tax_cat15 ) }
+
+    before do
+      outgoing_exchange.variants << [line_item1.variant, line_item2.variant]
+      allow(order).to receive(:tax_zone) { zone }
+      line_item1.product.update_columns(tax_category_id: tax_cat5.id)
+      line_item2.product.update_columns(tax_category_id: tax_cat10.id)
+
+      order.refresh_shipment_rates
+      order.select_shipping_method(shipping_method.id)
+      order.finalize!
+      order.recreate_all_fees!
+      order.create_tax_charge!
+      order.update!
+      order.payments << create(:payment, payment_method: payment_method, amount: order.total, state: "completed")
+
+      allow(controller).to receive(:spree_current_user) { distributor.owner }
+      allow(Spree::LineItem).to receive(:find) { line_item1 }
+      allow(line_item1).to receive(:order) { order }
+    end
+
+    describe "updating a line item" do
+      let(:line_item_params) { { quantity: 3 } }
+      let(:params) { { id: line_item1.id, order_id: order.number, line_item: line_item_params } }
+
+      it "correctly updates order totals and states" do
+        expect(order.total).to eq 35.0
+        expect(order.item_total).to eq 20.0
+        expect(order.adjustment_total).to eq 15.0
+        expect(order.included_tax_total).to eq 1.22
+        expect(order.payment_state).to eq "paid"
+
+        expect(order).to receive(:update!).at_least(:once).and_call_original
+        expect(order).to receive(:create_tax_charge!).at_least(:once).and_call_original
+
+        spree_put :update, params
+        order.reload
+
+        expect(order.total).to eq 61.0
+        expect(order.item_total).to eq 40.0
+        expect(order.adjustment_total).to eq 21.0
+        expect(order.included_tax_total).to eq 2.65 # Pending: this should be 3.10!
+        expect(order.payment_state).to eq "balance_due"
+      end
+    end
+
+    describe "deleting a line item" do
+      let(:params) { { id: line_item1.id, order_id: order.number } }
+
+      it "correctly updates order totals and states" do
+        expect(order.total).to eq 35.0
+        expect(order.item_total).to eq 20.0
+        expect(order.adjustment_total).to eq 15.0
+        expect(order.included_tax_total).to eq 1.22
+        expect(order.payment_state).to eq "paid"
+
+        expect(order).to receive(:update!).at_least(:once).and_call_original
+        expect(order).to receive(:create_tax_charge!).at_least(:once).and_call_original
+
+        spree_delete :destroy, params
+        order.reload
+
+        expect(order.total).to eq 22.0
+        expect(order.item_total).to eq 10.0
+        expect(order.adjustment_total).to eq 12.0
+        expect(order.included_tax_total).to eq 0.99
+        expect(order.payment_state).to eq "credit_owed"
+      end
+    end
+  end
+
   private
 
   def line_item_ids
