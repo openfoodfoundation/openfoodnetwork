@@ -24,7 +24,6 @@ gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-5"
 gem "fog-aws", ">= 0.6.0"
 
 gem "catalog", path: "./engines/catalog"
-gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 

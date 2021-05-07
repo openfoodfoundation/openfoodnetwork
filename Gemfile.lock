@@ -27,14 +27,6 @@ PATH
     catalog (0.0.1)
 
 PATH
-  remote: engines/dfc_provider
-  specs:
-    dfc_provider (0.0.1)
-      active_model_serializers (~> 0.8.4)
-      jwt (~> 2.2)
-      rspec (~> 3.9)
-
-PATH
   remote: engines/order_management
   specs:
     order_management (0.0.1)
@@ -655,7 +647,6 @@ DEPENDENCIES
   devise
   devise-encryptable
   devise-token_authenticatable
-  dfc_provider!
   eventmachine (>= 1.2.3)
   factory_bot_rails (= 6.2.0)
   ffaker
