@@ -20,7 +20,6 @@ Bundler/OrderedGems:
 Gemspec/RequiredRubyVersion:
   Exclude:
     - 'engines/catalog/catalog.gemspec'
-    - 'engines/dfc_provider/dfc_provider.gemspec'
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
@@ -344,12 +343,6 @@ Rails/ActiveRecordAliases:
     - 'spec/features/admin/subscriptions_spec.rb'
     - 'spec/features/consumer/shopping/orders_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Rails/ApplicationController:
-  Exclude:
-    - 'engines/dfc_provider/app/controllers/dfc_provider/api/base_controller.rb'
 
 # Offense count: 6
 # Cop supports --auto-correct.
