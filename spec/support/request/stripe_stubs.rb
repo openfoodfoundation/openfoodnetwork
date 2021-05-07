@@ -14,8 +14,8 @@ module StripeStubs
       .to_return(payment_intent_redirect_response_mock(redirect_url))
   end
 
-  def stub_payment_intent_get_request(response: {}, stripe_account_header: true)
-    stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/pi_123")
+  def stub_payment_intent_get_request(response: {}, stripe_account_header: true, payment_intent_id: "pi_123")
+    stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(payment_intent_authorize_response_mock(response))
   end

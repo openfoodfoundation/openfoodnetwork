@@ -5,6 +5,7 @@ require 'spec_helper'
 describe Spree::OrdersController, type: :controller do
   include OpenFoodNetwork::EmailHelper
   include CheckoutHelper
+  include StripeStubs
 
   let(:distributor) { double(:distributor) }
   let(:order) { create(:order) }
@@ -178,11 +179,11 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow(payment).to receive(:response_code).and_return("invalid")
           allow(OrderPaymentFinder).to receive(:new).with(order).and_return(finder)
-
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
             .with(payment_intent, kind_of(String))
             .and_return(payment_intent)
+          stub_payment_intent_get_request(payment_intent_id: "valid")
         end
 
         it "does not complete the payment" do
