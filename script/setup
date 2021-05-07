@@ -18,17 +18,10 @@ RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
 RUBY_VERSION=$(cat .ruby-version)
-NODE_VERSION=$(cat .node-version)
 
 # Check ruby version
 if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. Have a look at: https://github.com/rbenv/rbenv\n"
-  exit 1
-fi
-
-# Check node version
-if ! node --version | grep $NODE_VERSION > /dev/null; then
-  printf "${RED}Open Food Network requires node ${NODE_VERSION}${NO_COLOR}. Have a look at: https://github.com/nodenv/nodenv\n"
   exit 1
 fi
 
