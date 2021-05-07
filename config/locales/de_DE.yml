@@ -1354,6 +1354,12 @@ de_DE:
   address2: Adresszusatz (optional)
   city: Ort
   city_placeholder: z. B. Nordwestheim
+  latitude: Breitengrad
+  latitude_placeholder: z. B. 51.65574
+  latitude_longitude_tip: Breiten- und Längengrad werden benötigt, um das Unternehmen auf der Karte dazustellen.
+  longitude: Längengrad
+  longitude_placeholder: z. B. 10.33109
+  use_geocoder: Breiten- und Längengrad automatisch aus der Adresse bestimmen
   postcode: Postleitzahl
   postcode_placeholder: z. B. 30701
   suburb: Vorort
@@ -1907,6 +1913,11 @@ de_DE:
         state_field_error: "Bitte wählen Sie das Bundesland aus."
         country_field: "Land:"
         country_field_error: "Bitte wählen Sie das Land aus."
+        map_location: "Position auf der Karte"
+        locate_address: "Adresse auf der Karte zeigen"
+        drag_pin: "Falls nötig, korrigieren Sie die Position Ihres Unternehmens, indem Sie die Markierung an den richtigen Ort ziehen. Bestätigen Sie dies anschließend durch das Setzen des Häkchens unter der Karte und klicken Sie dann ganz unten auf \"Weiter\"."
+        confirm_address: "Ich bestätige, dass die auf der Karte angegebene Position des Unternehmens korrekt ist."
+        drag_map_marker: "Die korrekte Position Ihres Unternehmens auf der Karte ist wichtig, damit Ihre Kunden Sie möglichst einfach finden können."
       contact:
         title: "Kontaktdaten"
         who_is_managing_enterprise: "Wer ist für die Verwaltung von %{enterprise} verantwortlich?"

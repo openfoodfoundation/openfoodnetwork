@@ -83,8 +83,10 @@ describe Spree::OrdersController, type: :controller do
   describe "confirming a payment intent" do
     let(:customer) { create(:customer) }
     let(:order) { create(:order, customer: customer, distributor: customer.enterprise) }
+    let(:payment_method) { create(:stripe_sca_payment_method) }
     let!(:payment) { create(
       :payment,
+      payment_method: payment_method,
       cvv_response_message: "https://stripe.com/redirect",
       response_code: "pi_123",
       order: order,
@@ -101,8 +103,16 @@ describe Spree::OrdersController, type: :controller do
       context "with a valid payment intent" do
         let(:payment_intent) { "pi_123" }
 
+        before do
+          allow_any_instance_of(Stripe::PaymentIntentValidator)
+            .to receive(:call)
+            .with(payment_intent, anything)
+            .and_return(payment_intent)
+        end
+
         it "completes the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
+
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to be nil
@@ -112,9 +122,37 @@ describe Spree::OrdersController, type: :controller do
 
       context "with an invalid payment intent" do
         let(:payment_intent) { "invalid" }
+        let(:result) { instance_double(ProcessPaymentIntent::Result) }
+
+        before do
+          allow_any_instance_of(Stripe::PaymentIntentValidator)
+            .to receive(:call)
+            .with(payment_intent, anything)
+            .and_return(result)
+        end
 
         it "does not complete the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
+
+          expect(response).to be_success
+          payment.reload
+          expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
+          expect(payment.state).to eq("pending")
+        end
+      end
+
+      context "with an invalid last payment" do
+        let(:payment_intent) { "valid" }
+        let(:finder) { instance_double(OrderPaymentFinder, last_payment: payment) }
+
+        before do
+          allow(payment).to receive(:response_code).and_return("invalid")
+          allow(OrderPaymentFinder).to receive(:new).with(order).and_return(finder)
+        end
+
+        it "does not complete the payment" do
+          get :show, params: { id: order.number, payment_intent: payment_intent }
+
           expect(response).to be_success
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")

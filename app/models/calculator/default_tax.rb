@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require_dependency 'spree/calculator'
 require 'open_food_network/enterprise_fee_calculator'
 
 module Calculator

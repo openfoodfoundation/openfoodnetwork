@@ -926,4 +926,13 @@ describe Spree::Payment do
       end
     end
   end
+
+  describe "#mark_as_processed" do
+    let(:payment) { create(:payment, cvv_response_message: "message") }
+
+    it "removes the cvv_response_message" do
+      payment.mark_as_processed
+      expect(payment.cvv_response_message).to eq(nil)
+    end
+  end
 end

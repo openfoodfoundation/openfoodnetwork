@@ -317,6 +317,8 @@ fr:
   height: "Hauteur"
   width: "Largeur"
   depth: "Profondeur"
+  payment_could_not_process: "Le paiement n'a pas pu être traité"
+  payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -3016,7 +3018,7 @@ fr:
     order_processed_successfully: "Commande traitée avec succès"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
-    rma_credit: "Crédit RMA"
+    rma_credit: "Crédit ARM"
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3286,7 +3288,7 @@ fr:
           new_return_authorization: "Nouvelle autorisation de retour"
           return_authorizations: "Autorisations de retours"
           back_to_orders_list: "Retour à la liste des commandes"
-          rma_number: "Numéro RMA"
+          rma_number: "Numéro ARM"
           status: "Statut"
           amount: "Montant"
           cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
@@ -3305,7 +3307,7 @@ fr:
           quantity_returned: "Quantité retournée"
           return_quantity: "Quantité à retourner"
           amount: "Montant"
-          rma_value: "Valeur RMA"
+          rma_value: "Valeur ARM"
           reason: "Raison"
           stock_location: "Localisation"
         states:
