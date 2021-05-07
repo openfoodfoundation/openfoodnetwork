@@ -317,6 +317,8 @@ ca:
   height: "Alçada"
   width: "Amplada"
   depth: "Profunditat"
+  payment_could_not_process: "No s'ha pogut processar el pagament"
+  payment_could_not_complete: "No s'ha pogut completar el pagament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"

@@ -317,6 +317,8 @@ fr:
   height: "Hauteur"
   width: "Largeur"
   depth: "Profondeur"
+  payment_could_not_process: "Le paiement n'a pas pu être traité"
+  payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
