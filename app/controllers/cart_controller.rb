@@ -24,11 +24,11 @@ class CartController < BaseController
     populate_variant_attributes
   end
 
+  private
+
   def variant_ids_in(variants_h)
     variants_h.map { |v| v[:variant_id].to_i }
   end
-
-  private
 
   def check_authorization
     session[:access_token] ||= params[:token]

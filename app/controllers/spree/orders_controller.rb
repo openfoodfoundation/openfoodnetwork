@@ -38,17 +38,6 @@ module Spree
       redirect_to main_app.cart_path
     end
 
-    def check_authorization
-      session[:access_token] ||= params[:token]
-      order = Spree::Order.find_by(number: params[:id]) || current_order
-
-      if order
-        authorize! :edit, order, session[:access_token]
-      else
-        authorize! :create, Spree::Order
-      end
-    end
-
     # Patching to redirect to shop if order is empty
     def edit
       @order = current_order(true)
@@ -109,23 +98,6 @@ module Spree
       end
     end
 
-    def set_current_order
-      @order = current_order(true)
-    end
-
-    def filter_order_params
-      if params[:order] && params[:order][:line_items_attributes]
-        params[:order][:line_items_attributes] =
-          remove_missing_line_items(params[:order][:line_items_attributes])
-      end
-    end
-
-    def remove_missing_line_items(attrs)
-      attrs.select do |_i, line_item|
-        Spree::LineItem.find_by(id: line_item[:id])
-      end
-    end
-
     def cancel
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order
@@ -140,6 +112,21 @@ module Spree
 
     private
 
+    def set_current_order
+      @order = current_order(true)
+    end
+
+    def check_authorization
+      session[:access_token] ||= params[:token]
+      order = Spree::Order.find_by(number: params[:id]) || current_order
+
+      if order
+        authorize! :edit, order, session[:access_token]
+      else
+        authorize! :create, Spree::Order
+      end
+    end
+
     # Stripe can redirect here after a payment is processed in the backoffice.
     # We verify if it was successful here and persist the changes.
     def handle_stripe_response
@@ -151,6 +138,19 @@ module Spree
         flash.now[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
       end
       @order.reload
+    end
+
+    def filter_order_params
+      if params[:order] && params[:order][:line_items_attributes]
+        params[:order][:line_items_attributes] =
+          remove_missing_line_items(params[:order][:line_items_attributes])
+      end
+    end
+
+    def remove_missing_line_items(attrs)
+      attrs.select do |_i, line_item|
+        Spree::LineItem.find_by(id: line_item[:id])
+      end
     end
 
     def discard_empty_line_items

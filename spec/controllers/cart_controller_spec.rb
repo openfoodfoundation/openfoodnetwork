@@ -54,7 +54,7 @@ describe CartController, type: :controller do
       variants_h = [{ variant_id: "900", quantity: 2, max_quantity: nil },
                     { variant_id: "940", quantity: 3, max_quantity: 3 }]
 
-      expect(controller.variant_ids_in(variants_h)).to eq([900, 940])
+      expect(controller.__send__(:variant_ids_in, variants_h)).to eq([900, 940])
     end
   end
 

@@ -315,7 +315,7 @@ describe Spree::OrdersController, type: :controller do
         "1" => { quantity: "99", id: li.id }
       }
 
-      expect(controller.remove_missing_line_items(attrs)).to eq(
+      expect(controller.__send__(:remove_missing_line_items, attrs)).to eq(
         "1" => { quantity: "99", id: li.id }
       )
     end
