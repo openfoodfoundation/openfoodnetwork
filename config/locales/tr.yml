@@ -85,6 +85,10 @@ tr:
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
               not_available_to_shop: "%{shop} için müsait değil"
+  card_details: "Kart detayları"
+  card_type: "Kart türü"
+  cardholder_name: "Kart sahibinin adı"
+  community_forum_url: "Topluluk forumu URL"
   customer_instructions: "Müşteri talimatları"
   devise:
     confirmations:
@@ -115,6 +119,7 @@ tr:
         updated_not_active: "Parolanız sıfırlandı, ancak e-postanız henüz doğrulanmadı."
         updated: "Parolanız başarılı bir şekilde değiştirildi. Şimdi oturum açtınız."
         send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
+  home_page_alert_html: "Ana sayfa uyarısı HTML"
   models:
     order_cycle:
       cloned_order_cycle_name: "%{order_cycle} KOPYALA"
@@ -2890,12 +2895,14 @@ tr:
     more: "Daha Fazla"
     no_pending_payments: "Bekleyen ödeme yok"
     none: "SATIŞ YAPMIYOR"
+    tree: "Ağaç"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
     name_or_sku: "Ad veya STOK KODU (ürün adının en az ilk 4 karakterini girin)"
     resend: "Yeniden gönder"
     back_to_orders_list: "Sipariş Listesine Geri Dön"
+    back_to_payments_list: "Ödeme Listesine Geri Dön"
     return_authorizations: "İade Yetkileri"
     cannot_create_returns: "Bu siparişin sevk edilmiş birimi olmadığı için iade oluşturulamıyor."
     select_stock: "Stok seçin"
@@ -2917,6 +2924,7 @@ tr:
     tracking_number: "Takip Numarası"
     order_total: "sipariş toplamı"
     customer_details: "MÜŞTERİ DETAYLARI"
+    customer_details_updated: "Müşteri Detayları güncellendi"
     customer_search: "Müşteri Arama"
     choose_a_customer: "Bir müşteri seçin"
     account: "Hesap"
@@ -3537,7 +3545,15 @@ tr:
       paused: durduruldu
       canceled: iptal edildi
     paypal:
+      payer_id: "Alıcı ID"
+      transaction_id: "İşlem ID"
+      refund: "İade"
       refund_amount: "Tutar"
+      original_amount: "İlk tutar:%{amount}"
+      refund_successful: "PayPal iade başarılı"
+      refund_unsuccessful: "PayPal iade başarısız"
+      actions:
+        refund: "İade"
     users:
       form:
         account_settings: Hesap Ayarları
