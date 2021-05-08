@@ -36,7 +36,7 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.not_state(:canceled).managed_by(@user).search(params[:q])
+      Spree::Order.complete.not_state(:canceled).managed_by(@user).ransack(params[:q])
     end
 
     def table_items
