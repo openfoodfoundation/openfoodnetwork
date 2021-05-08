@@ -48,3 +48,4 @@ coverage
 !/reports/README.md
 bin/
 /spec/components/stories/**/*.stories.json
+npm-debug.log
