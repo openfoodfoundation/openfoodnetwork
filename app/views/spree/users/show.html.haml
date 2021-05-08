@@ -1,5 +1,5 @@
 - content_for :injection_data do
-  = inject_json_array("orders", @orders.all, Api::OrderSerializer)
+  = inject_json_array("orders", @orders.all.includes(:line_items), Api::OrderSerializer)
   = inject_json_array("shops", @shops.all, Api::ShopForOrdersSerializer)
   = inject_saved_credit_cards
 
