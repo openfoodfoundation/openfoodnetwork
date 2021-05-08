@@ -2,7 +2,9 @@
 
 require 'spec_helper'
 
-describe Spree::BaseHelper, type: :helper do
+describe Spree::Admin::BaseHelper, type: :helper do
+  helper 'spree/admin/navigation'
+
   describe "#link_to_remove_fields" do
     let(:name) { 'Hola' }
     let(:form) { double('form_for', hidden_field: '<input type="hidden" name="_method" value="destroy">') }

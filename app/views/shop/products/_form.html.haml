@@ -1,5 +1,5 @@
 %form{action: main_app.cart_path}
-  %products{"ng-controller" => "ProductsCtrl", "ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
+  %products{"ng-init" => "refreshStaleData()", "ng-show" => "order_cycle.order_cycle_id != null", "ng-cloak" => true }
 
     = render partial: "shop/products/searchbar"
 
@@ -9,12 +9,12 @@
           .medium-12.large-9.columns.full
             = render partial: "shop/products/search_feedback"
 
-            %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
+            %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading', "infinite-scroll-immediate-check": "false" }
               %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
                 = render "shop/products/summary"
                 .shop-variants
                   - if feature? :unit_price, spree_current_user
-                    %shop-variant-with-unit-price{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
+                    %shop-variant-with-unit-price{showunitprice: 'true', variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
                   - else
                     %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
               %product{"ng-show" => "Products.loading"}

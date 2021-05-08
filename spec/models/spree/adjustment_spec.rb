@@ -8,8 +8,8 @@ module Spree
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
     describe "scopes" do
-      let!(:arbitrary_adjustment) { create(:adjustment, source: nil, label: "Arbitrary") }
-      let!(:return_authorization_adjustment) { create(:adjustment, source: create(:return_authorization)) }
+      let!(:arbitrary_adjustment) { create(:adjustment, label: "Arbitrary") }
+      let!(:return_authorization_adjustment) { create(:adjustment, originator: create(:return_authorization)) }
 
       it "returns return_authorization adjustments" do
         expect(Spree::Adjustment.return_authorization.to_a).to eq [return_authorization_adjustment]
@@ -18,39 +18,39 @@ module Spree
 
     context "#update!" do
       context "when originator present" do
-        let(:originator) { double("originator", update_adjustment: nil) }
+        let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
+
         before do
-          allow(originator).to receive_messages update_amount: true
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
 
         it "should do nothing when closed" do
           adjustment.close
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
         it "should do nothing when finalized" do
           adjustment.finalize
-          expect(originator).not_to receive(:update_adjustment)
+          expect(originator).not_to receive(:compute_amount)
           adjustment.update!
         end
 
-        it "should ask the originator to update_adjustment" do
-          expect(originator).to receive(:update_adjustment)
+        it "should ask the originator to recalculate the amount" do
+          expect(originator).to receive(:compute_amount)
           adjustment.update!
         end
 
         context "using the :force argument" do
           it "should update adjustments without changing their state" do
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
             expect(adjustment.state).to eq "open"
           end
 
           it "should update closed adjustments" do
             adjustment.close
-            expect(originator).to receive(:update_adjustment)
+            expect(originator).to receive(:compute_amount)
             adjustment.update!(force: true)
           end
         end
@@ -58,7 +58,7 @@ module Spree
 
       it "should do nothing when originator is nil" do
         allow(adjustment).to receive_messages originator: nil
-        expect(adjustment).not_to receive(:amount=)
+        expect(adjustment).not_to receive(:update_columns)
         adjustment.update!
       end
     end
@@ -186,7 +186,7 @@ module Spree
         end
 
         it "has tax included" do
-          expect(adjustment.amount).to be > 0
+          expect(adjustment.amount).to be_positive
           expect(adjustment.included).to be true
         end
 
@@ -197,11 +197,17 @@ module Spree
       end
 
       describe "Shipment adjustments" do
+        let(:zone) { create(:zone_with_member) }
+        let(:inclusive_tax) { true }
+        let(:tax_rate) {
+          create(:tax_rate, included_in_price: inclusive_tax, zone: zone, amount: 0.25)
+        }
+        let(:tax_category)    { create(:tax_category, name: "Shipping", tax_rates: [tax_rate] ) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:order)           { create(:order, distributor: hub) }
         let(:line_item)       { create(:line_item, order: order) }
 
-        let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+        let(:shipping_method) { create(:shipping_method_with, :flat_rate, tax_category: tax_category) }
         let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
 
         describe "the shipping charge" do
@@ -212,54 +218,114 @@ module Spree
           end
         end
 
-        describe "when tax on shipping is disabled" do
+        context "with tax" do
           before do
-            allow(Config).to receive(:shipment_inc_vat).and_return(false)
+            allow(order).to receive(:tax_zone) { zone }
           end
 
-          it "records 0% tax on shipment adjustments" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0)
-            order.shipments = [shipment]
+          context "when the shipment has an inclusive tax rate" do
+            it "calculates the shipment tax from the tax rate" do
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
 
-            expect(order.shipment_adjustments.first.included_tax).to eq(0)
+              # Finding the tax included in an amount that's already inclusive of tax:
+              # total - ( total / (1 + rate) )
+              # 50    - ( 50    / (1 + 0.25) )
+              # = 10
+              expect(order.shipment_adjustments.tax.first.amount).to eq(10)
+              expect(order.shipment_adjustments.tax.first.included).to eq true
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(10)
+              expect(shipment.additional_tax_total).to eq(0)
+
+              expect(order.included_tax_total).to eq(10)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
 
-          it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has an added tax rate" do
+            let(:inclusive_tax) { false }
 
-            expect(order.shipment_adjustments.first.included_tax).to eq(0)
+            # Current behaviour. Will be replaced by the pending test below
+            it "records the tax on the order's adjustments" do
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
+
+              expect(order.shipment_adjustments.tax.count).to be_zero
+
+              # Finding the added tax for an amount:
+              # total * rate
+              # 50    * 0.25
+              # = 12.5
+              expect(order.adjustments.tax.first.amount).to eq(12.50)
+              expect(order.adjustments.tax.first.included).to eq false
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(0)
+
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(12.50)
+            end
+
+            xit "records the tax on the shipment's adjustments" do
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
+
+              # Finding the added tax for an amount:
+              # total * rate
+              # 50    * 0.25
+              # = 12.5
+              expect(order.shipment_adjustments.tax.first.amount).to eq(12.50)
+              expect(order.shipment_adjustments.tax.first.included).to eq false
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(12.50)
+
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(12.50)
+            end
           end
-        end
 
-        describe "when tax on shipping is enabled" do
-          before do
-            allow(Config).to receive(:shipment_inc_vat).and_return(true)
+          context "when the distributor does not charge sales tax" do
+            it "records 0% tax on shipments" do
+              order.distributor.update! charges_sales_tax: false
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
+
+              expect(order.shipment_adjustments.tax.count).to be_zero
+
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(0)
+
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
 
-          it "takes the shipment adjustment tax included from the system setting" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
-            order.shipments = [shipment]
+          context "when the shipment has no applicable tax rate" do
+            it "records 0% tax on shipments" do
+              allow(shipment).to receive(:tax_category) { nil }
+              order.shipments = [shipment]
+              order.create_tax_charge!
+              order.update_totals
 
-            # Finding the tax included in an amount that's already inclusive of tax:
-            # total - ( total / (1 + rate) )
-            # 50    - ( 50    / (1 + 0.25) )
-            # = 10
-            expect(order.shipment_adjustments.first.included_tax).to eq(10.00)
-          end
+              expect(order.shipment_adjustments.tax.count).to be_zero
 
-          it "records 0% tax on shipments when shipping_tax_rate is not set" do
-            allow(Config).to receive(:shipping_tax_rate).and_return(0)
-            order.shipments = [shipment]
+              expect(shipment.reload.cost).to eq(50)
+              expect(shipment.included_tax_total).to eq(0)
+              expect(shipment.additional_tax_total).to eq(0)
 
-            expect(order.shipment_adjustments.first.included_tax).to eq(0)
-          end
-
-          it "records 0% tax on shipments when the distributor does not charge sales tax" do
-            order.distributor.update! charges_sales_tax: false
-            order.shipments = [shipment]
-
-            expect(order.shipment_adjustments.first.included_tax).to eq(0)
+              expect(order.included_tax_total).to eq(0)
+              expect(order.additional_tax_total).to eq(0)
+            end
           end
         end
       end
@@ -417,15 +483,6 @@ module Spree
           end
         end
       end
-
-      describe "setting the included tax by tax rate" do
-        let(:adjustment) { Adjustment.new label: 'foo', amount: 50 }
-
-        it "sets it, rounding to two decimal places" do
-          adjustment.set_included_tax! 0.25
-          expect(adjustment.included_tax).to eq(10.00)
-        end
-      end
     end
 
     context "extends LocalizedNumber" do
@@ -472,8 +529,7 @@ module Spree
       describe "inclusive and additional scopes" do
         let(:included) { true }
         let(:adjustment) {
-          create(:adjustment, adjustable: order, source: order,
-                 originator: tax_rate, included: included)
+          create(:adjustment, adjustable: order, originator: tax_rate, included: included)
         }
 
         context "when tax is included in price" do
@@ -488,6 +544,22 @@ module Spree
           it "is returned by the #additional scope" do
             expect(Spree::Adjustment.additional).to eq [adjustment]
           end
+        end
+      end
+    end
+
+    context "return authorization adjustments" do
+      let!(:return_authorization) { create(:return_authorization, amount: 123) }
+      let(:order) { return_authorization.order }
+      let!(:return_adjustment) {
+        create(:adjustment, originator: return_authorization, order: order,
+                            adjustable: order, amount: 456)
+      }
+
+      describe "#update!" do
+        it "sets a negative value equal to the return authorization amount" do
+          expect { return_adjustment.update! }.
+            to change { return_adjustment.reload.amount }.to(-123)
         end
       end
     end

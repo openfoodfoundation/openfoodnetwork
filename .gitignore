@@ -47,3 +47,4 @@ coverage
 /reports/
 !/reports/README.md
 bin/
+/spec/components/stories/**/*.stories.json

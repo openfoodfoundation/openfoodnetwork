@@ -3,7 +3,15 @@ module Spree
     class BaseController < ApplicationController
       ssl_required
 
+      helper 'shared'
       helper 'spree/admin/navigation'
+      helper 'spree/admin/orders'
+      helper 'admin/injection'
+      helper 'admin/orders'
+      helper 'admin/enterprises'
+      helper 'enterprise_fees'
+      helper 'angular_form'
+
       layout '/spree/layouts/admin'
 
       include I18nHelper
@@ -19,18 +27,6 @@ module Spree
 
         warning = OrderCycleWarning.new(spree_current_user).call
         flash[:notice] = warning if warning.present?
-      end
-
-      # This is in Spree::Core::ControllerHelpers::Auth
-      # But you can't easily reopen modules in Ruby
-      def unauthorized
-        if spree_current_user
-          flash[:error] = t(:authorization_failure)
-          redirect_to '/unauthorized'
-        else
-          store_location
-          redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
-        end
       end
 
       protected

@@ -85,6 +85,11 @@ es:
               no_default_card: "^ Ninguna tarjeta predeterminada disponible para esta consumidora"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  card_details: "Detalles de tarjeta"
+  card_type: "Tipo de tarjeta"
+  cardholder_name: "Nombre del titular de la tarjeta"
+  community_forum_url: "URL del foro de la comunidad"
+  customer_instructions: "Instrucciones del Consumidor"
   devise:
     confirmations:
       send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
@@ -114,11 +119,39 @@ es:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  home_page_alert_html: "HTML de alerta de página de inicio"
+  hub_signup_case_studies_html: "HTML casos de estudio de registro de hub"
+  hub_signup_detail_html: "HTML detalle de registro de hub"
+  hub_signup_pricing_table_html: "HTML tabla de precios de registro de hub"
+  group_signup_case_studies_html: "HTML casos de estudio de registro de grupo"
+  group_signup_detail_html: "HTML detalle de registro de grupo"
+  group_signup_pricing_table_html: "HTML tabla de precios de registro de grupo"
+  item_description: "Descripción del artículo"
+  menu_1_icon_name: "Nombre del icono del menú 1"
+  menu_2_icon_name: "Nombre del icono del menú 2"
+  menu_3_icon_name: "Nombre del icono del menú 3"
+  menu_4_icon_name: "Nombre del icono del menú 4"
+  menu_5_icon_name: "Nombre del icono del menú 5"
+  menu_6_icon_name: "Nombre del icono del menú 6"
+  menu_7_icon_name: "Nombre del icono del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Incluido en el precio"
+  open_street_map_enabled: "Open Street Map habilitado"
+  open_street_map_default_latitude: "Latitud predeterminada de Open Street Map"
+  open_street_map_default_longitude: "Longitud predeterminada de Open Street Map"
+  open_street_map_provider_name: "Nombre del proveedor de Open Street Map"
+  open_street_map_provider_options: "Opciones de proveedor de Open Street Map"
+  producer_signup_case_studies_html: "HTML casos de estudio de registro de productoras"
+  producer_signup_detail_html: "HTML detalle de registro de productora"
+  producer_signup_pricing_table_html: "HTML de tabla de precios de registro de productora"
+  producers_social: "Razón social de la productora"
+  resume_order: "Reanudar pedido"
+  sku: "SKU"
+  subtotal: "Subtotal"
+  tax_rate: "% Impuestos"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -144,6 +177,7 @@ es:
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
+  provider_settings: "Configuración del proveedor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimada consumidora,"
@@ -264,7 +298,7 @@ es:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
-  invalid_payment_state: "Estado de pago no válido"
+  invalid_payment_state: "Estado de pago inválido: %{state}"
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
@@ -283,6 +317,8 @@ es:
   height: "Altura"
   width: "Anchura"
   depth: "Profundidad"
+  payment_could_not_process: "No se pudo procesar el pago"
+  payment_could_not_complete: "No se pudo completar el pago"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -298,8 +334,12 @@ es:
     destroy: "Eliminar"
     rename: "Renombrar"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
     begins_on: Comienza en
+    bill_address: "Dirección de factura"
+    ship_address: "Dirección de envío"
     customer: Consumidora
     date: Fecha
     email: Email
@@ -1066,6 +1106,7 @@ es:
       index:
         title: "Suscripciones"
         new: "Nueva suscripción"
+      issue: "Incidéncia"
       new:
         title: "Nueva suscripción"
       edit:
@@ -1147,6 +1188,7 @@ es:
       yes_cancel_them: Cancelarlos
       no_keep_them: Guárdalos
       yes_i_am_sure: Sí estoy seguro
+      number: "Número"
       order_update_issues_msg: Algunas órdenes no se pudieron actualizar automáticamente, esto es más probable porque se han editado manualmente. Revise los problemas que se detallan a continuación y realice los ajustes a los pedidos individuales si es necesario.
       no_results:
         no_subscriptions: Aún no hay suscripciones ...
@@ -1314,6 +1356,12 @@ es:
   address2: Dirección (cont.)
   city: Ciudad
   city_placeholder: ej. Barcelona
+  latitude: Latitud
+  latitude_placeholder: p.ej. -37.4713077
+  latitude_longitude_tip: La latitud y la longitud son necesarias para mostrar su organización en el mapa.
+  longitude: Longitud
+  longitude_placeholder: p.ej. 144.7851531
+  use_geocoder: ¿Calcular la latitud y la longitud automáticamente desde la dirección?
   postcode: Código postal
   postcode_placeholder: ej. 08025
   suburb: Barrio
@@ -1574,7 +1622,9 @@ es:
   shopping_tabs_home: "Inicio"
   shopping_tabs_shop: "Tienda"
   shopping_tabs_about: "Acerca de"
+  shopping_tabs_producers: "Productoras"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Redes"
   shopping_contact_address: "Dirección"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -1726,39 +1776,40 @@ es:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: Pedidos
-  orders_fees: Comisiones...
-  orders_edit_title: Carrito de compras
-  orders_edit_headline: Su carrito de compras
-  orders_edit_time: Pedido listo para
-  orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Validar
+  orders: "Pedidos"
+  orders_fees: "Comisiones..."
+  orders_edit_title: "Carrito de compras"
+  orders_edit_headline: "Su carrito de compras"
+  orders_edit_time: "Pedido listo para"
+  orders_edit_continue: "Continuar comprando"
+  orders_edit_checkout: "Validar"
   orders_form_empty_cart: "Vaciar carrito"
-  orders_form_subtotal: Subtotal de productos
-  orders_form_admin: Administrar y Gestionar
-  orders_form_total: Total
-  orders_oc_expired_headline: Los pedidos están cerrados para este ciclo
+  orders_form_update_cart: "Actualizar"
+  orders_form_subtotal: "Subtotal de productos"
+  orders_form_admin: "Administrar y Gestionar"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos."
   orders_oc_expired_text_others_html: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos <strong>%{link}</strong>."
   orders_oc_expired_text_link: "o visitar otros ciclos de pedidos disponibles en este grupo de consumo"
   orders_oc_expired_email: "Correo electrónico:"
   orders_oc_expired_phone: "Teléfono:"
-  orders_show_title: Confirmación del pedido
-  orders_show_time: Pedido listo en
+  orders_show_title: "Confirmación del pedido"
+  orders_show_time: "Pedido listo en"
   orders_show_order_number: "Pedido #%{number}"
-  orders_show_cancelled: Cancelado
-  orders_show_confirmed: Confirmado
+  orders_show_cancelled: "Cancelado"
+  orders_show_confirmed: "Confirmado"
   orders_your_order_has_been_cancelled: "Su pedido ha sido cancelado"
   orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
   orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
   orders_bought_items_notice:
-    one: Ya se ha confirmado un artículo adicional para este ciclo de pedido
+    one: "Ya se ha confirmado un artículo adicional para este ciclo de pedido"
     few: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     many: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     other: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
-  orders_bought_edit_button: Editar artículos confirmados
+  orders_bought_edit_button: "Editar artículos confirmados"
   orders_bought_already_confirmed: "* ya confirmados"
-  orders_confirm_cancel: Seguro que desea cancelar este pedido?
+  orders_confirm_cancel: "Seguro que desea cancelar este pedido?"
   order_processed_successfully: "Su pedido ha sido procesado con éxito."
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
@@ -1844,7 +1895,7 @@ es:
       details:
         title: "Detalles"
         headline: "Empecemos"
-        enterprise: "Ei! Primero necesitamos saber un poco sobre tu organización:"
+        enterprise: "Primero necesitamos saber un poco sobre tu organización:"
         producer: "Primero necesitamos saber un poco sobre tu productora:"
         enterprise_name_field: "Nombre de la organización:"
         producer_name_field: "Nombre de la productora:"
@@ -1864,6 +1915,11 @@ es:
         state_field_error: "Región requerida"
         country_field: "País:"
         country_field_error: "Por favor selecciona un país"
+        map_location: "Ubicación en el mapa"
+        locate_address: "Localizar la dirección en el mapa"
+        drag_pin: "Arrastre y suelte la chincheta en la ubicación correcta si no es precisa."
+        confirm_address: "Confirmo que la posición indicada de la organización en el mapa es correcta."
+        drag_map_marker: "Debido a que muchos productores operan en áreas rurales, la precisión de los mapas está en mejora contínua. Ayúdanos a comprender mejor dónde estás ubicado interactuando con el mapa de arriba para mover el marcador haciendo clic o arrastrandolo a la ubicación que sea más precisa según lo que sabes."
       contact:
         title: "Contacto"
         who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
@@ -2417,6 +2473,7 @@ es:
           Ha habido un problema al añadir este producto en el carrito. Puede que haya
           dejado de estar disponible o que la tinda haya cerrado.
     admin:
+      unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir a sus clientes comparar fácilmente los precios entre diferentes productos y tamaños de envase. Tenga en cuenta que el precio unitario final que se muestra en el escaparate puede diferir, ya que incluye impuestos y tarifas."
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
         got_it: "Lo entiendo"
@@ -2665,8 +2722,7 @@ es:
         min_quantity: "Cantidad mínima"
         max_quantity: "Cantidad máxima"
       price_breakdown: "Desglose de el precio"
-      unit_price_tooltip:
-        shopfront: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
+      unit_price_tooltip: "Este es el precio unitario de este producto. Le permite comparar el precio de los productos independientemente de los tamaños y pesos de los envases."
     variants:
       on_demand:
         'yes': "Bajo demanda"
@@ -2813,6 +2869,15 @@ es:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Compra grupal - Assignación"
+          bulk_coop_customer_payments: "Compra grupal - Pagos de las consumidoras"
+          bulk_coop_packing_sheets: "Compra grupal - Hojas de embalaje"
+          bulk_coop_supplier_report: "Compra grupal - Totales por proveedor"
+          date_range: "Rango de fechas"
+          generate_report: "Generar informe"
+          report_format_csv: "Descargar como CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Rango de fechas"
@@ -2858,6 +2923,8 @@ es:
               tax_category_name: "Categoría de impuestos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Los filtros que seleccionó para este informe no son válidos."
+      report:
+        none: "Ninguno"
   order: "Pedido"
   distribution: "Distribución"
   order_details: "Detalles del pedido"
@@ -2890,7 +2957,53 @@ es:
   previous: "Anterior"
   last: "Último"
   spree:
+    add_country: "Agregar pais"
+    add_state: "Agregar estado"
+    adjustment: "Ajuste"
+    all: "Todos"
+    associated_adjustment_closed: "Ajuste asociado cerrado"
+    back_to_adjustments_list: "Volver a ajustes"
+    back_to_users_list: "Volver a los usuarios"
+    back_to_zones_list: "Volver a zonas"
+    card_code: "Código de la tarjeta"
+    card_number: "Número de tarjeta"
+    category: "Categoría"
+    created_successfully: "Creado con éxito"
+    credit: "Crédito"
+    editing_tax_category: "Editando categoría fiscal"
+    editing_tax_rate: "Editando la tasa de impuestos"
+    editing_zone: "Editando zona"
+    expiration: "Vencimiento"
+    invalid_payment_provider: "Proveedor de pago inválido"
+    items_cannot_be_shipped: "Los artículos no se pueden enviar"
+    gateway_config_unavailable: "Configuración de la pasarela no disponible"
+    gateway_error: "Pago fallido"
     more: "Más"
+    new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
+    new_tax_category: "Nueva categoría de impuestos"
+    new_taxon: "Nuevo taxón"
+    new_user: "Nuevo usuario"
+    no_pending_payments: "No tiene pagos pendientes"
+    none: "Ninguno"
+    not_found: "No encontrado"
+    notice_messages:
+      variant_deleted: "Variante eliminada"
+    or: "O"
+    order_processed_successfully: "Pedido procesado correctamente"
+    payment_method_not_supported: "Método de pago no admitido"
+    resend_authorization_email: "Reenviar correo electrónico de autorización"
+    rma_credit: "Crédito RMA"
+    server_error: "Error del Servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Fecha de inicio"
+    successfully_removed: "Eliminado con éxito"
+    taxonomy_edit: "editar taxonomía"
+    taxonomy_tree_error: "Error del árbol de taxonomía"
+    taxonomy_tree_instruction: "Instrucción del árbol de taxonomía"
+    tree: "Árbol"
+    updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
@@ -2918,6 +3031,7 @@ es:
     tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
     customer_details: "Detalles de la consumidora"
+    customer_details_updated: "Datos de la consumidora actualizados"
     customer_search: "Búsqueda de consumidores"
     choose_a_customer: "Elige una consumidora "
     account: "Cuenta"
@@ -3068,6 +3182,8 @@ es:
     payment_method: "Método de pago"
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     not_available: "No disponible"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "No hay artículos para este pedido."
     order_populator:
       out_of_stock: '%{item} está agotado.'
     actions:
@@ -3095,7 +3211,17 @@ es:
         login_nav:
           header:
             store: Tienda
+    validation:
+      must_be_int: "debe ser un entero"
     admin:
+      mail_methods:
+        send_testmail: "Enviar correo electrónico de prueba"
+        testmail:
+          delivery_success: "Se envió el correo electrónico de prueba."
+          error: "Se produjo un error al intentar enviar el correo electrónico de prueba."
+      unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir a sus clientes comparar fácilmente los precios entre diferentes productos y tamaños de envase. Tenga en cuenta que el precio unitario final que se muestra en el escaparate puede diferir, ya que incluye impuestos y tarifas."
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panel de inicio"
         orders: "Pedidos"
@@ -3164,6 +3290,8 @@ es:
           received: "recibido"
           canceled: "cancelado"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
@@ -3206,6 +3334,10 @@ es:
       overview:
         enterprises_header:
           ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "no tiene comisiones de organización"
+          has_no_payment_methods: "no tiene métodos de pago"
+          has_no_shipping_methods: "no tiene métodos de envío"
         products:
           active_products:
             zero: "No tienes ningún producto activo"
@@ -3244,6 +3376,7 @@ es:
           back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         form:
           categories: "Categorías"
+          tax_category: "Categoría de impuestos"
           zones: "Zonas"
           both: "Tanto en Hacer pedido como en Administración"
           back_end: "Solo en Administración"
@@ -3325,6 +3458,7 @@ es:
           unit_name: "Nombre de la unidad"
           price: "Precio"
           unit_price: "Precio por unidad"
+          unit_price_legend: "Calculado en base al precio del artículo"
           on_hand: "Disponibles"
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
@@ -3395,7 +3529,6 @@ es:
           price: "Precio"
           options: "Opciones"
           no_results: "No hay resultados"
-          to_add_variants_you_must_first_define: "para agregar variantes, se debe primero definir"
           option_types: "Tipos de opciones"
           option_values: "valores de opción"
           and: "y"
@@ -3407,6 +3540,7 @@ es:
         form:
           sku: "SKU"
           price: "Precio"
+          unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
           display_as_placeholder: 'p. ej. 2 Kg'
@@ -3643,3 +3777,42 @@ es:
         spree/payment:
           one: Pago
           other: Pagos
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: alrededor de 1 hora
+        other: aprox. %{count} horas
+      about_x_months:
+        one: alrededor de 1 mes
+        other: aprox. %{count} meses
+      about_x_years:
+        one: alrededor de 1 año
+        other: aprox. %{count} años
+      almost_x_years:
+        one: casi 1 año
+        other: casi %{count} años
+      half_a_minute: medio minuto
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      less_than_x_minutes:
+        one: menos de un minuto
+        other: menos de %{count} minutos
+      over_x_years:
+        one: más de 1 año
+        other: más de %{count} años
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      x_days:
+        one: "1 día"
+        other: "%{count} días"
+      x_months:
+        one: "1 mes"
+        other: "%{count} meses"
+      x_years:
+        one: "1 año"
+        other: "%{count} años"

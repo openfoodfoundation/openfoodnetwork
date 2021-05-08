@@ -5,7 +5,8 @@ require 'spec_helper'
 module OrderManagement
   module Stock
     describe Packer do
-      let(:order) { create(:order_with_line_items, line_items_count: 5) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:order) { create(:order_with_line_items, line_items_count: 5, distributor: distributor) }
       let(:stock_location) { create(:stock_location) }
 
       subject { Packer.new(stock_location, order) }
@@ -25,6 +26,18 @@ module OrderManagement
         package = subject.package
         expect(package.on_hand.size).to eq 5
         expect(package.backordered.size).to eq 5
+      end
+
+      it "accounts for variant overrides" do
+        variant = order.line_items.first.variant
+        variant.on_hand = 0
+        variant.on_demand = false
+        variant.save
+        expect {
+          create(:variant_override, variant: variant, hub: distributor, count_on_hand: 10)
+        }.to change {
+          subject.package.on_hand.size
+        }.from(4).to(5)
       end
     end
   end

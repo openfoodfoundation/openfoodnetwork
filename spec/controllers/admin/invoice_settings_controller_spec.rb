@@ -20,7 +20,7 @@ describe Admin::InvoiceSettingsController, type: :controller do
 
     it "disables invoices" do
       expect {
-        post :update, params
+        post :update, params: params
       }.to change {
         Spree::Config[:enable_invoices?]
       }.to(false)
@@ -28,7 +28,7 @@ describe Admin::InvoiceSettingsController, type: :controller do
 
     it "changes the invoice style" do
       expect {
-        post :update, params
+        post :update, params: params
       }.to change {
         Spree::Config[:invoice_style2?]
       }.to(true)
@@ -36,7 +36,7 @@ describe Admin::InvoiceSettingsController, type: :controller do
 
     it "disables receipt printing" do
       expect {
-        post :update, params
+        post :update, params: params
       }.to change {
         Spree::Config[:enable_receipt_printing?]
       }.to(true)

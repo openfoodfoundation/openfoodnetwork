@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class State < ActiveRecord::Base
+  class State < ApplicationRecord
     belongs_to :country, class_name: 'Spree::Country'
 
     validates :country, :name, presence: true

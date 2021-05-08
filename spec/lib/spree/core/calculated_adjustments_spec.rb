@@ -25,24 +25,24 @@ describe Spree::Core::CalculatedAdjustments do
 
     it "should be associated with the target" do
       expect(target.adjustments).to receive(:create)
-      tax_rate.create_adjustment("foo", target, order)
+      tax_rate.create_adjustment("foo", target)
     end
 
     it "should be associated with the order" do
-      tax_rate.create_adjustment("foo", target, order)
+      tax_rate.create_adjustment("foo", target)
       expect(target.adjustments.first.order_id).to eq order.id
     end
 
     it "should have the correct originator and an amount derived from the calculator and supplied calculable" do
-      adjustment = tax_rate.create_adjustment("foo", target, order)
+      adjustment = tax_rate.create_adjustment("foo", target)
       expect(adjustment).not_to be_nil
       expect(adjustment.amount).to eq 10
-      expect(adjustment.source).to eq order
+      expect(adjustment.adjustable).to eq order
       expect(adjustment.originator).to eq tax_rate
     end
 
     it "should be mandatory if true is supplied for that parameter" do
-      adjustment = tax_rate.create_adjustment("foo", target, order, true)
+      adjustment = tax_rate.create_adjustment("foo", target, true)
       expect(adjustment).to be_mandatory
     end
 
@@ -50,7 +50,7 @@ describe Spree::Core::CalculatedAdjustments do
       before { allow(calculator).to receive_messages(compute: 0) }
 
       context "when adjustment is mandatory" do
-        before { tax_rate.create_adjustment("foo", target, order, true) }
+        before { tax_rate.create_adjustment("foo", target, true) }
 
         it "should create an adjustment" do
           expect(Spree::Adjustment.count).to eq 1
@@ -64,15 +64,6 @@ describe Spree::Core::CalculatedAdjustments do
           expect(Spree::Adjustment.count).to eq 0
         end
       end
-    end
-  end
-
-  context "#update_adjustment" do
-    it "should update the adjustment using its calculator (and the specified source)" do
-      adjustment = double(:adjustment).as_null_object
-      calculable = double :calculable
-      expect(adjustment).to receive(:update_column).with(:amount, 10)
-      tax_rate.update_adjustment(adjustment, calculable)
     end
   end
 end

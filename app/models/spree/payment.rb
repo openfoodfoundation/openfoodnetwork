@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Payment < ActiveRecord::Base
+  class Payment < ApplicationRecord
     include Spree::Payment::Processing
     extend Spree::LocalizedNumber
 
@@ -135,13 +135,17 @@ module Spree
         adjustment.label = adjustment_label
         adjustment.save
       else
-        payment_method.create_adjustment(adjustment_label, self, self, true)
+        payment_method.create_adjustment(adjustment_label, self, true)
         adjustment.reload
       end
     end
 
     def adjustment_label
       I18n.t('payment_method_fee')
+    end
+
+    def mark_as_processed
+      update_attribute(:cvv_response_message, nil)
     end
 
     private
@@ -201,7 +205,7 @@ module Spree
     end
 
     def update_order
-      order.reload.update!
+      order.update!
     end
 
     # Necessary because some payment gateways will refuse payments with

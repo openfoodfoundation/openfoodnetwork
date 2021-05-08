@@ -52,7 +52,7 @@ module Spree
 
           return unless @current_order
 
-          @current_order.last_ip_address = ip_address
+          @current_order.update_columns(last_ip_address: ip_address)
           session[:order_id] = @current_order.id
           @current_order
         end

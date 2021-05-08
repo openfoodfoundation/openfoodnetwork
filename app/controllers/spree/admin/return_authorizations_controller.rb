@@ -3,13 +3,12 @@ module Spree
     class ReturnAuthorizationsController < ::Admin::ResourceController
       belongs_to 'spree/order', find_by: :number
 
-      update.after :associate_inventory_units
-      create.after :associate_inventory_units
+      after_action :associate_inventory_units, only: [:create, :update]
 
       def fire
         @return_authorization.public_send("#{params[:e]}!")
         flash[:success] = Spree.t(:return_authorization_updated)
-        redirect_to :back
+        redirect_back fallback_location: spree.admin_dashboard_path
       end
 
       protected

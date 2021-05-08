@@ -390,7 +390,7 @@ describe Spree::Shipment do
     it "should create adjustment when not present" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       expect(shipping_method).to receive(:create_adjustment).with(shipment.adjustment_label,
-                                                                  shipment, shipment, true, "open")
+                                                                  shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
 
@@ -423,13 +423,6 @@ describe Spree::Shipment do
     end
   end
 
-  context "update_order" do
-    it "should update order" do
-      expect(order).to receive_message_chain(:reload, :update!)
-      shipment.__send__(:update_order)
-    end
-  end
-
   describe "#update_amounts" do
     it "persists the shipping cost from the shipping fee adjustment" do
       allow(shipment).to receive(:fee_adjustment) { double(:adjustment, amount: 10) }
@@ -442,7 +435,7 @@ describe Spree::Shipment do
   context "after_save" do
     it "should run correct callbacks" do
       expect(shipment).to receive(:ensure_correct_adjustment)
-      expect(shipment).to receive(:update_order)
+      expect(shipment).to receive(:update_adjustments)
       shipment.run_callbacks(:save)
     end
   end

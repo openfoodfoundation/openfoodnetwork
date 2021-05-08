@@ -81,6 +81,7 @@ es_CR:
               no_default_card: "^No hay una tarjeta predeterminada disponible para este cliente"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  customer_instructions: "Instrucciones del cliente"
   devise:
     confirmations:
       send_instructions: "En unos minutos recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta."
@@ -113,6 +114,8 @@ es_CR:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Tarifa de impuestos"
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -256,7 +259,6 @@ es_CR:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
-  invalid_payment_state: "Estado de pago no válido"
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recoger
@@ -1113,6 +1115,7 @@ es_CR:
       yes_cancel_them: Cancelarlos
       no_keep_them: Guárdalos
       yes_i_am_sure: Sí estoy seguro
+      number: "Número"
       order_update_issues_msg: Algunas órdenes no se pudieron actualizar automáticamente, esto es más probable porque se han editado manualmente. Revise los problemas que se detallan a continuación y realice los ajustes a los pedidos individuales si es necesario.
       no_results:
         no_subscriptions: Aún no hay suscripciones ...
@@ -1517,7 +1520,9 @@ es_CR:
   shopping_tabs_home: "Inicio"
   shopping_tabs_shop: "Tienda"
   shopping_tabs_about: "Acerca de"
+  shopping_tabs_producers: "Productores"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Grupos"
   shopping_contact_address: "Dirección"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -1660,28 +1665,29 @@ es_CR:
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
-  orders: Pedidos
-  orders_fees: Comisiones...
-  orders_edit_title: Carrito de compras
-  orders_edit_headline: Su carrito de compras
-  orders_edit_time: Pedido listo para
-  orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Validar
+  orders: "Pedidos"
+  orders_fees: "Comisiones..."
+  orders_edit_title: "Carrito de compras"
+  orders_edit_headline: "Su carrito de compras"
+  orders_edit_time: "Pedido listo para"
+  orders_edit_continue: "Continuar comprando"
+  orders_edit_checkout: "Validar"
   orders_form_empty_cart: "Vaciar carrito"
-  orders_form_subtotal: Subtotal de productos
-  orders_form_admin: Administrar y Gestionar
-  orders_form_total: Total
-  orders_oc_expired_headline: Los pedidos están cerrados para este ciclo
+  orders_form_update_cart: "Actualizar"
+  orders_form_subtotal: "Subtotal de productos"
+  orders_form_admin: "Administrar y Gestionar"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos."
   orders_oc_expired_text_others_html: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos <strong>%{link}</strong>."
   orders_oc_expired_text_link: "o visitar otros ciclos de pedidos disponibles en este grupo de consumo"
   orders_oc_expired_email: "Correo electrónico:"
   orders_oc_expired_phone: "Teléfono:"
-  orders_show_title: Confirmación del pedido
-  orders_show_time: Pedido listo en
+  orders_show_title: "Confirmación del pedido"
+  orders_show_time: "Pedido listo en"
   orders_show_order_number: "Pedido #%{number}"
-  orders_show_cancelled: Cancelado
-  orders_show_confirmed: Confirmado
+  orders_show_cancelled: "Cancelado"
+  orders_show_confirmed: "Confirmado"
   orders_your_order_has_been_cancelled: "Su pedido ha sido cancelado"
   orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
   orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
@@ -1689,9 +1695,9 @@ es_CR:
     few: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     many: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
     other: "%{count} artículos adicionales ya confirmados para este ciclo de pedido"
-  orders_bought_edit_button: Editar artículos confirmados
+  orders_bought_edit_button: "Editar artículos confirmados"
   orders_bought_already_confirmed: "* ya confirmados"
-  orders_confirm_cancel: Seguro que desea cancelar este pedido?
+  orders_confirm_cancel: "Seguro que desea cancelar este pedido?"
   order_processed_successfully: "Su pedido ha sido procesado con éxito."
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
@@ -1776,7 +1782,6 @@ es_CR:
       details:
         title: "Detalles"
         headline: "Empecemos"
-        enterprise: "Ei! Primero necesitamos saber un poco sobre tu organización:"
         producer: "Primero necesitamos saber un poco sobre tu productora:"
         enterprise_name_field: "Nombre de la organización:"
         producer_name_field: "Nombre de la productora:"
@@ -2709,6 +2714,9 @@ es_CR:
       start_free_profile: "¡Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generar reporte"
       enterprise_fee_summaries:
         filters:
           date_range: "Rango de fechas"
@@ -2754,6 +2762,8 @@ es_CR:
               tax_category_name: "Categoría de impuestos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Los filtros que seleccionó para este reporte no son válidos."
+      report:
+        none: "Ninguno"
   order: "Pedido"
   distribution: "Distribución"
   order_details: "Detalles del pedido"
@@ -2784,7 +2794,13 @@ es_CR:
   previous: "Anterior"
   last: "Último"
   spree:
+    all: "Todos"
+    category: "Categoría"
+    credit: "Crédito"
     more: "Más"
+    no_pending_payments: "No tiene pagos pendientes"
+    none: "Ninguno"
+    updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
@@ -2947,6 +2963,7 @@ es_CR:
     successfully_updated: '%{resource} ha sido actualizado exitosamente!'
     payment_method: "Método de pago"
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
+    sku: "SKU"
     actions:
       update: "Actualizar"
       cancel: "Cancelar"
@@ -2964,6 +2981,8 @@ es_CR:
           header:
             store: Tienda
     admin:
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panel de inicio"
         orders: "Pedidos"
@@ -3110,6 +3129,7 @@ es_CR:
           back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         form:
           categories: "Categorías"
+          tax_category: "Categoría de impuestos"
           zones: "Zonas"
       payment_methods:
         index:
@@ -3240,7 +3260,6 @@ es_CR:
           price: "Precio"
           options: "Opciones"
           no_results: "No hay resultados"
-          to_add_variants_you_must_first_define: "Para agregar variantes, usted debe primero definir"
           option_types: "Tipos de opciones"
           option_values: "Valores de opción"
           and: "y"
@@ -3252,6 +3271,7 @@ es_CR:
         form:
           sku: "SKU"
           price: "Precio"
+          unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
         autocomplete:

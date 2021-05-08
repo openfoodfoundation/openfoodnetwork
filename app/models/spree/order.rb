@@ -7,7 +7,7 @@ require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
 module Spree
-  class Order < ActiveRecord::Base
+  class Order < ApplicationRecord
     prepend OrderShipment
 
     include Checkout
@@ -126,38 +126,14 @@ module Spree
         joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
     }
 
-    scope :not_state, lambda { |state|
-      where.not(state: state)
-    }
-
     # All the states an order can be in after completing the checkout
     FINALIZED_STATES = %w(complete canceled resumed awaiting_return returned).freeze
 
     scope :finalized, -> { where(state: FINALIZED_STATES) }
-
-    def self.by_number(number)
-      where(number: number)
-    end
-
-    def self.between(start_date, end_date)
-      where(created_at: start_date..end_date)
-    end
-
-    def self.by_customer(customer)
-      joins(:user).where("#{Spree.user_class.table_name}.email" => customer)
-    end
-
-    def self.by_state(state)
-      where(state: state)
-    end
-
-    def self.complete
-      where('completed_at IS NOT NULL')
-    end
-
-    def self.incomplete
-      where(completed_at: nil)
-    end
+    scope :complete, -> { where.not(completed_at: nil) }
+    scope :incomplete, -> { where(completed_at: nil) }
+    scope :by_state, lambda { |state| where(state: state) }
+    scope :not_state, lambda { |state| where.not(state: state) }
 
     # For compatiblity with Calculator::PriceSack
     def amount
@@ -541,21 +517,6 @@ module Spree
       shipments
     end
 
-    # Clean shipments and make order back to address state
-    #
-    # At some point the might need to force the order to transition from address
-    # to delivery again so that proper updated shipments are created.
-    # e.g. customer goes back from payment step and changes order items
-    def ensure_updated_shipments
-      return unless shipments.any?
-
-      shipments.destroy_all
-      update_columns(
-        state: "address",
-        updated_at: Time.zone.now
-      )
-    end
-
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
@@ -646,7 +607,7 @@ module Spree
     end
 
     def shipping_tax
-      shipment_adjustments.reload.shipping.sum(:included_tax)
+      shipment_adjustments.reload.tax.sum(:amount)
     end
 
     def enterprise_fee_tax
@@ -748,7 +709,8 @@ module Spree
     end
 
     def require_customer?
-      return true unless new_record? || state == 'cart'
+      return false if new_record? || state == 'cart'
+      true
     end
 
     def customer_is_valid?
@@ -770,11 +732,17 @@ module Spree
     def ensure_customer
       return if associate_customer
 
-      customer_name = bill_address.andand.full_name
-      self.customer = Customer.create(enterprise: distributor, email: email_for_customer,
-                                      user: user, name: customer_name,
-                                      bill_address: bill_address.andand.clone,
-                                      ship_address: ship_address.andand.clone)
+      self.customer = Customer.new(
+        enterprise: distributor,
+        email: email_for_customer,
+        user: user,
+        name: bill_address.andand.full_name,
+        bill_address: bill_address.andand.clone,
+        ship_address: ship_address.andand.clone
+      )
+      customer.save
+
+      Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
     end
 
     def update_adjustment!(adjustment)
@@ -788,7 +756,7 @@ module Spree
     # before the shipping method is set. This results in the customer not being
     # charged for their order's shipping. To fix this, we refresh the payment
     # amount here.
-    def charge_shipping_and_payment_fees!
+    def set_payment_amount!
       update_totals
       return unless pending_payments.any?
 

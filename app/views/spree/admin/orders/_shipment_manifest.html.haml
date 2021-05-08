@@ -14,12 +14,12 @@
           = "#{count} x #{t(state.humanize.downcase, scope: [:spree, :shipment_states], default: [:missing, "none"])}"
       - unless shipment.shipped?
         %td.item-qty-edit.hidden
-          = number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5, :max => item.variant.on_hand + item.quantity
+          = quantity_field_tag(item)
       %td.item-total.align-center
         = line_item_shipment_price(line_item, item.quantity)
 
       %td.cart-item-delete.actions{ "data-hook" => "cart_item_delete" }
-        - if !shipment.shipped? && can?(:update, shipment)
+        - if shipment.can_modify? && can?(:update, shipment)
           = link_to '', '#', :class => 'save-item icon_link icon-ok no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'save'}, :title => t('actions.save'), :style => 'display: none'
           = link_to '', '#', :class => 'cancel-item icon_link icon-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => t('actions.cancel'), :style => 'display: none'
           = link_to '', '#', :class => 'edit-item icon_link icon-edit no-text with-tip', :data => {:action => 'edit'}, :title => t('actions.edit')

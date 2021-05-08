@@ -18,18 +18,10 @@ module Admin
         format.html
         format.json do
           render json: @collection,
-                 each_serializer: index_each_serializer,
+                 each_serializer: ::Api::Admin::CustomerWithBalanceSerializer,
                  tag_rule_mapping: tag_rule_mapping,
                  customer_tags: customer_tags_by_id
         end
-      end
-    end
-
-    def index_each_serializer
-      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
-        ::Api::Admin::CustomerWithBalanceSerializer
-      else
-        ::Api::Admin::CustomerWithCalculatedBalanceSerializer
       end
     end
 
@@ -53,15 +45,12 @@ module Admin
 
     # copy of Admin::ResourceController without flash notice
     def destroy
-      invoke_callbacks(:destroy, :before)
       if @object.destroy
-        invoke_callbacks(:destroy, :after)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_destroy }
           format.js   { render partial: "spree/admin/shared/destroy" }
         end
       else
-        invoke_callbacks(:destroy, :fails)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_destroy }
           format.json { render json: { errors: @object.errors.full_messages }, status: :conflict }
@@ -73,7 +62,7 @@ module Admin
 
     def collection
       if json_request? && params[:enterprise_id].present?
-        customers_relation.
+        CustomersWithBalance.new(managed_enterprise_id).query.
           includes(
             :enterprise,
             { bill_address: [:state, :country] },
@@ -82,14 +71,6 @@ module Admin
           )
       else
         Customer.where('1=0')
-      end
-    end
-
-    def customers_relation
-      if OpenFoodNetwork::FeatureToggle.enabled?(:customer_balance, spree_current_user)
-        CustomersWithBalance.new(managed_enterprise_id).query
-      else
-        Customer.of(managed_enterprise_id)
       end
     end
 

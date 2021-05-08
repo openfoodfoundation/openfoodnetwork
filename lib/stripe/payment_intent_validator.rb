@@ -23,9 +23,10 @@ module Stripe
     end
 
     def raise_if_not_in_capture_state(payment_intent_response)
-      return unless payment_intent_response.status != 'requires_capture'
+      state = payment_intent_response.status
+      return unless state != 'requires_capture'
 
-      raise Stripe::StripeError, I18n.t(:invalid_payment_state)
+      raise Stripe::StripeError, I18n.t(:invalid_payment_state, state: state)
     end
   end
 end

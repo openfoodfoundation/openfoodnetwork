@@ -127,7 +127,7 @@ describe "Enterprises service", ->
 
       beforeEach ->
         enterprise = new EnterpriseResource({ id: 15, permalink: "enterprise1", name: "Enterprise 1", logo: {} })
-        $httpBackend.expectDELETE("/api/enterprises/enterprise1/logo.json").respond 200, { id: 15, name: "Enterprise 1"}
+        $httpBackend.expectDELETE("/api/v0/enterprises/enterprise1/logo.json").respond 200, { id: 15, name: "Enterprise 1"}
         Enterprises.removeLogo(enterprise).then( -> resolved = true)
         $httpBackend.flush()
 
@@ -144,7 +144,7 @@ describe "Enterprises service", ->
 
       beforeEach ->
         enterprise = new EnterpriseResource( { id: 15, permalink: "enterprise1", name: "Enterprise 1" } )
-        $httpBackend.expectDELETE("/api/enterprises/enterprise1/logo.json").respond 409, { error: "obj" }
+        $httpBackend.expectDELETE("/api/v0/enterprises/enterprise1/logo.json").respond 409, { error: "obj" }
         Enterprises.removeLogo(enterprise).catch( -> rejected = true)
         $httpBackend.flush()
 
@@ -162,7 +162,7 @@ describe "Enterprises service", ->
 
       beforeEach ->
         enterprise = new EnterpriseResource({ id: 15, permalink: "enterprise1", name: "Enterprise 1", promo_image: {} })
-        $httpBackend.expectDELETE("/api/enterprises/enterprise1/promo_image.json").respond 200, { id: 15, name: "Enterprise 1"}
+        $httpBackend.expectDELETE("/api/v0/enterprises/enterprise1/promo_image.json").respond 200, { id: 15, name: "Enterprise 1"}
         Enterprises.removePromoImage(enterprise).then( -> resolved = true)
         $httpBackend.flush()
 
@@ -179,7 +179,7 @@ describe "Enterprises service", ->
 
       beforeEach ->
         enterprise = new EnterpriseResource( { id: 15, permalink: "enterprise1", name: "Enterprise 1" } )
-        $httpBackend.expectDELETE("/api/enterprises/enterprise1/promo_image.json").respond 409, { error: "obj" }
+        $httpBackend.expectDELETE("/api/v0/enterprises/enterprise1/promo_image.json").respond 409, { error: "obj" }
         Enterprises.removePromoImage(enterprise).catch( -> rejected = true)
         $httpBackend.flush()
 

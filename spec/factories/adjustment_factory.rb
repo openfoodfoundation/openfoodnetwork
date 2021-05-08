@@ -5,7 +5,6 @@ FactoryBot.define do
     association(:adjustable, factory: :order)
     amount { 100.0 }
     label { 'Shipping' }
-    association(:source, factory: :shipment)
     eligible { true }
   end
 end

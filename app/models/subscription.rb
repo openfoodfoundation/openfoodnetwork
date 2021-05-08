@@ -1,4 +1,4 @@
-class Subscription < ActiveRecord::Base
+class Subscription < ApplicationRecord
   ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check",
                                   "Spree::Gateway::StripeConnect",
                                   "Spree::Gateway::StripeSCA"].freeze

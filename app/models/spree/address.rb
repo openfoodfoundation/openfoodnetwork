@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Address < ActiveRecord::Base
+  class Address < ApplicationRecord
     include AddressDisplay
 
     belongs_to :country, class_name: "Spree::Country"
@@ -21,8 +21,6 @@ module Spree
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
     delegate :name, to: :state, prefix: true, allow_nil: true
-
-    geocoded_by :geocode_address
 
     def self.default
       country = begin
@@ -87,10 +85,6 @@ module Spree
         country: country.try(:iso),
         phone: phone
       }
-    end
-
-    def geocode_address
-      render_address([address1, address2, zipcode, city, country.andand.name, state.andand.name])
     end
 
     def full_address

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Spree
-  class InventoryUnit < ActiveRecord::Base
-    belongs_to :variant, class_name: "Spree::Variant"
+  class InventoryUnit < ApplicationRecord
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :order, class_name: "Spree::Order"
     belongs_to :shipment, class_name: "Spree::Shipment"
     belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization",
@@ -57,11 +57,6 @@ module Spree
     def find_stock_item
       Spree::StockItem.find_by(stock_location_id: shipment.stock_location_id,
                                variant_id: variant_id)
-    end
-
-    # Remove variant default_scope `deleted_at: nil`
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     private

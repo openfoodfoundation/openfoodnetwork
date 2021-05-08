@@ -1,6 +1,6 @@
-[![Build Status](https://semaphoreci.com/api/v1/openfoodfoundation/openfoodnetwork-2/branches/master/badge.svg)](https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2)
-[![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 [![Build](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml/badge.svg)](https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/openfoodfoundation/openfoodnetwork/branch/master/graph/badge.svg?token=FBSOod4qiu)](https://codecov.io/gh/openfoodfoundation/openfoodnetwork)
+[![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
 
@@ -34,7 +34,7 @@ We also have a [Super Admin Guide][super-admin-guide] to help with configuration
 
 ## Testing
 
-If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite] and download the [ZenHub browser extension][zenhub] to view the development pipeline.
+If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite] and download the [ZenHub browser extension][zenhub] to view the development pipeline. Also, do have a look in our [Welcome New QAs board](https://github.com/openfoodfoundation/openfoodnetwork/projects/31) for some good first issues, both on manual and automated testing (RSpec/Capybara).
 
 We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them! 
 

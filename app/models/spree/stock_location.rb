@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class StockLocation < ActiveRecord::Base
+  class StockLocation < ApplicationRecord
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
 

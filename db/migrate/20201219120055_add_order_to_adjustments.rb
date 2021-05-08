@@ -1,4 +1,4 @@
-class AddOrderToAdjustments < ActiveRecord::Migration
+class AddOrderToAdjustments < ActiveRecord::Migration[4.2]
   class Spree::Adjustment < ActiveRecord::Base
     belongs_to :adjustable, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"

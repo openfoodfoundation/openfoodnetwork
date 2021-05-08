@@ -1,4 +1,4 @@
-class TagRule < ActiveRecord::Base
+class TagRule < ApplicationRecord
   belongs_to :enterprise
 
   preference :customer_tags, :string, default: ""

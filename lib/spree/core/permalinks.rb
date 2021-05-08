@@ -23,14 +23,6 @@ module Spree
           before_validation(on: :create) { save_permalink }
         end
 
-        def find_by_param(value, *args)
-          __send__("find_by_#{permalink_field}", value, *args)
-        end
-
-        def find_by_param!(value, *args)
-          __send__("find_by_#{permalink_field}!", value, *args)
-        end
-
         def permalink_field
           permalink_options[:field]
         end
@@ -70,6 +62,3 @@ module Spree
     end
   end
 end
-
-ActiveRecord::Base.include(Spree::Core::Permalinks)
-ActiveRecord::Relation.include(Spree::Core::Permalinks)

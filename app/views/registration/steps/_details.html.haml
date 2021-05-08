@@ -7,7 +7,6 @@
           %h2= t('.headline')
           %h5{ ng: { if: "::enterprise.type != 'own'" } }= t(".enterprise")
           %h5{ ng: { if: "::enterprise.type == 'own'" } }= t(".producer")
-
     %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('contact',details)" } }
 
       .row
@@ -57,6 +56,8 @@
                 %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { init: "setDefaultCountry(#{Spree::Config[:default_country_id]})", model: 'enterprise.country', options: 'c as c.name for c in countries' } }
                 %span.error{ ng: { show: "details.country.$error.required && submitted" } }
                   = t(".country_field_error")
+
+      = render 'registration/steps/location_map' if using_google_maps?
 
       .row.buttons
         .small-12.columns

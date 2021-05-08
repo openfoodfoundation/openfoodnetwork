@@ -85,6 +85,11 @@ tr:
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
               not_available_to_shop: "%{shop} için müsait değil"
+  card_details: "Kart detayları"
+  card_type: "Kart türü"
+  cardholder_name: "Kart sahibinin adı"
+  community_forum_url: "Topluluk forumu URL"
+  customer_instructions: "Müşteri talimatları"
   devise:
     confirmations:
       send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
@@ -114,9 +119,12 @@ tr:
         updated_not_active: "Parolanız sıfırlandı, ancak e-postanız henüz doğrulanmadı."
         updated: "Parolanız başarılı bir şekilde değiştirildi. Şimdi oturum açtınız."
         send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
+  home_page_alert_html: "Ana sayfa uyarısı HTML"
   models:
     order_cycle:
       cloned_order_cycle_name: "%{order_cycle} KOPYALA"
+  sku: "Stok Kodu"
+  tax_rate: "Vergi oranı"
   validators:
     date_time_string_validator:
       not_string_error: "Dizili olmalı"
@@ -262,7 +270,6 @@ tr:
   error: Hata
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
   no_pending_payments: "Bekleyen ödeme yok"
-  invalid_payment_state: "Geçersiz ödeme durumu"
   filter_results: SONUÇLARI FİLTRELE
   quantity: Miktar
   pick_up: Teslim Alma
@@ -1143,6 +1150,7 @@ tr:
       yes_cancel_them: Bunları iptal et
       no_keep_them: Bunları sakla
       yes_i_am_sure: Evet eminim
+      number: "Numara"
       order_update_issues_msg: Bazı siparişler otomatik olarak güncellenemedi, bunun nedeni büyük olasılıkla manuel olarak düzenlenmiş olmasıdır. Lütfen aşağıda listelenen sorunları gözden geçirin ve gerekirse siparişler özelinde ayarlamalarını yapın.
       no_results:
         no_subscriptions: Henüz üyelik yok ...
@@ -1566,7 +1574,9 @@ tr:
   shopping_tabs_home: "Ana sayfa"
   shopping_tabs_shop: "ALIŞVERİŞ YAP"
   shopping_tabs_about: "Hakkında"
+  shopping_tabs_producers: "ÜRETİCİLER"
   shopping_tabs_contact: "İLETİŞİM"
+  shopping_tabs_groups: "AĞLAR"
   shopping_contact_address: "Adres"
   shopping_contact_web: "İLETİŞİM"
   shopping_contact_social: "TAKİP ET"
@@ -1718,39 +1728,40 @@ tr:
   shops_signup_help: Yardım etmeye hazırız.
   shops_signup_help_text: Daha yüksek bir iş potansiyeliniz var. Yeni alıcılarla ve ortak hareket edebileceğiniz diğer üretici ve gruplarla iletişime geçin. Birlikte daha güçlüyüz. Hikayeniz, bir ailenin sofrasında anlatılmayı bekliyor.
   shops_signup_detail: İşte detay.
-  orders: Siparişler
-  orders_fees: Ücretler ...
-  orders_edit_title: Alışveriş Sepeti
-  orders_edit_headline: Alışveriş sepetiniz
-  orders_edit_time: Sipariş Teslimat
-  orders_edit_continue: Alışverişe devam
-  orders_edit_checkout: Ödeme Yap
+  orders: "Siparişler"
+  orders_fees: "Ücretler ..."
+  orders_edit_title: "Alışveriş Sepeti"
+  orders_edit_headline: "Alışveriş sepetiniz"
+  orders_edit_time: "Sipariş Teslimat"
+  orders_edit_continue: "Alışverişe devam"
+  orders_edit_checkout: "Ödeme Yap"
   orders_form_empty_cart: "Sepeti Boşalt"
-  orders_form_subtotal: Ürün Ara Toplamı
-  orders_form_admin: Yönetim & Operasyon
-  orders_form_total: Toplam
-  orders_oc_expired_headline: Bu sipariş dönemi için siparişler kapatıldı
+  orders_form_update_cart: "Güncelle"
+  orders_form_subtotal: "Ürün Ara Toplamı"
+  orders_form_admin: "Yönetim & Operasyon"
+  orders_form_total: "Toplam"
+  orders_oc_expired_headline: "Bu sipariş dönemi için siparişler kapatıldı"
   orders_oc_expired_text: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin."
   orders_oc_expired_text_others_html: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin<strong>%{link}</strong> ."
   orders_oc_expired_text_link: "veya bu pazarın diğer sipariş dönemlerine bakın"
   orders_oc_expired_email: "E-posta:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: Sipariş Onayı
-  orders_show_time: Sipariş hazır
+  orders_show_title: "Sipariş Onayı"
+  orders_show_time: "Sipariş hazır"
   orders_show_order_number: "Sipariş # %{number}"
-  orders_show_cancelled: İptal edildi
-  orders_show_confirmed: Onaylandı
+  orders_show_cancelled: "İptal edildi"
+  orders_show_confirmed: "Onaylandı"
   orders_your_order_has_been_cancelled: "Siparişiniz iptal edildi"
   orders_could_not_cancel: "Maalesef sipariş iptal edilemedi"
   orders_cannot_remove_the_final_item: "Son ürün siparişten kaldırılamaz, lütfen bunun yerine siparişi iptal edin."
   orders_bought_items_notice:
-    one: Bu sipariş döngüsü için ek bir ürün zaten onaylandı.
+    one: "Bu sipariş döngüsü için ek bir ürün zaten onaylandı."
     few: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     many: "%{count} ürün bu sipariş dönemi için onaylandı bile"
     other: "%{count} ürün bu sipariş dönemi için onaylandı bile"
-  orders_bought_edit_button: Onaylanan ürünleri düzenle
+  orders_bought_edit_button: "Onaylanan ürünleri düzenle"
   orders_bought_already_confirmed: "* zaten onaylandı"
-  orders_confirm_cancel: Bu siparişi iptal etmek istediğinize emin misiniz?
+  orders_confirm_cancel: "Bu siparişi iptal etmek istediğinize emin misiniz?"
   order_processed_successfully: "Siparişiniz başarıyla işlendi"
   products_cart_distributor_choice: "Siparişinizin dağıtımcısı:"
   products_cart_distributor_change: "Bu ürünü sepetinize eklerseniz, bu sipariş için dağıtımcınız %{name} olarak değiştirilecektir."
@@ -1836,7 +1847,6 @@ tr:
       details:
         title: "Ayrıntılar"
         headline: "Hadi Başlayalım !"
-        enterprise: "Merhaba! Öncelikle işletmenizi tanıyalım:"
         producer: "Merhaba! Öncelikle çiftliğinizi tanıyalım:"
         enterprise_name_field: "İŞLETME ADI:"
         producer_name_field: "ÇİFTLİK ADI:"
@@ -2797,6 +2807,9 @@ tr:
       start_free_profile: "Ücretsiz bir profille başlayın ve hazır olduğunuzda devam edin!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Rapor Oluştur"
       enterprise_fee_summaries:
         filters:
           date_range: "Tarih Aralığı"
@@ -2842,6 +2855,8 @@ tr:
               tax_category_name: "Vergi Kategorisi"
               total_amount: "₺₺ TOPLAM"
         invalid_filter_parameters: "Bu rapor için seçtiğiniz filtreler geçersiz."
+      report:
+        none: "SATIŞ YAPMIYOR"
   order: "Sipariş"
   distribution: "dağıtım"
   order_details: "sipariş detayları"
@@ -2874,12 +2889,20 @@ tr:
   previous: "Önceki"
   last: "Son"
   spree:
+    all: "Hepsi"
+    category: "Kategori"
+    credit: "Bakiye"
     more: "Daha Fazla"
+    no_pending_payments: "Bekleyen ödeme yok"
+    none: "SATIŞ YAPMIYOR"
+    tree: "Ağaç"
+    updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
     name_or_sku: "Ad veya STOK KODU (ürün adının en az ilk 4 karakterini girin)"
     resend: "Yeniden gönder"
     back_to_orders_list: "Sipariş Listesine Geri Dön"
+    back_to_payments_list: "Ödeme Listesine Geri Dön"
     return_authorizations: "İade Yetkileri"
     cannot_create_returns: "Bu siparişin sevk edilmiş birimi olmadığı için iade oluşturulamıyor."
     select_stock: "Stok seçin"
@@ -2901,6 +2924,7 @@ tr:
     tracking_number: "Takip Numarası"
     order_total: "sipariş toplamı"
     customer_details: "MÜŞTERİ DETAYLARI"
+    customer_details_updated: "Müşteri Detayları güncellendi"
     customer_search: "Müşteri Arama"
     choose_a_customer: "Bir müşteri seçin"
     account: "Hesap"
@@ -3050,6 +3074,7 @@ tr:
     payment_method: "ÖDEME YÖNTEMİ"
     payment_processing_failed: "Ödeme işlenemedi, lütfen girdiğiniz bilgileri kontrol edin"
     not_available: "Yok"
+    sku: "Stok Kodu"
     order_populator:
       out_of_stock: '%{item} stokta yok'
     actions:
@@ -3077,6 +3102,8 @@ tr:
           header:
             store: Ana Site
     admin:
+      subscriptions:
+        number: "Numara"
       tab:
         dashboard: "KONTROL PANELİ"
         orders: "SİPARİŞLER"
@@ -3225,6 +3252,7 @@ tr:
           back_to_shipping_methods_list: "Teslimat Yöntemlerine Gerİ Dön"
         form:
           categories: "Kategoriler"
+          tax_category: "Vergi Kategorisi"
           zones: "bölgeler"
           both: "Ödeme Sayfası ve Panel"
           back_end: "Sadece panel"
@@ -3369,7 +3397,6 @@ tr:
           price: "Fiyat"
           options: "Seçenekler"
           no_results: "Sonuç yok"
-          to_add_variants_you_must_first_define: "Varyant eklemeden önce tanımlamanız gerekir"
           option_types: "Seçenek Türleri"
           option_values: "Seçenek Değerleri"
           and: "ve"
@@ -3381,6 +3408,7 @@ tr:
         form:
           sku: "Stok Kodu"
           price: "Fiyat"
+          unit_price: "Birim fiyat"
           display_as: "Gösterme Şekli"
           display_name: "Ekran adı"
           display_as_placeholder: 'Örn. 2 kg'
@@ -3517,7 +3545,15 @@ tr:
       paused: durduruldu
       canceled: iptal edildi
     paypal:
+      payer_id: "Alıcı ID"
+      transaction_id: "İşlem ID"
+      refund: "İade"
       refund_amount: "Tutar"
+      original_amount: "İlk tutar:%{amount}"
+      refund_successful: "PayPal iade başarılı"
+      refund_unsuccessful: "PayPal iade başarısız"
+      actions:
+        refund: "İade"
     users:
       form:
         account_settings: Hesap Ayarları

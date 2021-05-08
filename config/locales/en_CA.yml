@@ -85,6 +85,11 @@ en_CA:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  card_details: "Card details"
+  card_type: "Card type"
+  cardholder_name: "Cardholder name"
+  community_forum_url: "Community forum URL"
+  customer_instructions: "Customer instructions"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -114,11 +119,39 @@ en_CA:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+  home_page_alert_html: "Home page alert HTML"
+  hub_signup_case_studies_html: "Hub signup case studies HTML"
+  hub_signup_detail_html: "Hub signup detail HTML"
+  hub_signup_pricing_table_html: "Hub signup pricing table HTML"
+  group_signup_case_studies_html: "Group signup case studies HTML"
+  group_signup_detail_html: "Group signup detail HTML"
+  group_signup_pricing_table_html: "Group signup pricing table HTML"
+  item_description: "Item description"
+  menu_1_icon_name: "Menu 1 icon name"
+  menu_2_icon_name: "Menu 2 icon name"
+  menu_3_icon_name: "Menu 3 icon name"
+  menu_4_icon_name: "Menu 4 icon name"
+  menu_5_icon_name: "Menu 5 icon name"
+  menu_6_icon_name: "Menu 6 icon name"
+  menu_7_icon_name: "Menu 7 icon name"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF%{order_cycle}"
     tax_rate:
       included_in_price: "Included in price"
+  open_street_map_enabled: "Open Street Map enabled"
+  open_street_map_default_latitude: "Open Street Map default latitude"
+  open_street_map_default_longitude: "Open Street Map default longitude"
+  open_street_map_provider_name: "Open Street Map provider name"
+  open_street_map_provider_options: "Open Street Map provider options"
+  producer_signup_case_studies_html: "Producer signup case studies HTML"
+  producer_signup_detail_html: "Producer signup detail HTML"
+  producer_signup_pricing_table_html: "Producer signup pricing table HTML"
+  producers_social: "Producers social"
+  resume_order: "Resume order"
+  sku: "SKU"
+  subtotal: "Subtotal"
+  tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -144,6 +177,7 @@ en_CA:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  provider_settings: "Provider settings"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer, "
@@ -264,7 +298,7 @@ en_CA:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state"
+  invalid_payment_state: "Invalid payment state %{state}"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -298,8 +332,12 @@ en_CA:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
     begins_on: Begins On
+    bill_address: "Bill address"
+    ship_address: "Ship address"
     customer: Customer
     date: Date
     email: Email
@@ -1064,6 +1102,7 @@ en_CA:
       index:
         title: "Subscriptions"
         new: "New Subscription"
+      issue: "Issue"
       new:
         title: "New Subscription"
       edit:
@@ -1145,6 +1184,7 @@ en_CA:
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
+      number: "Number"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_subscriptions: No subscriptions yet...
@@ -1177,8 +1217,10 @@ en_CA:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"
     platform_terms_of_service:
+      message_html: "I agree to the platform %{tos_link}"
       terms_of_service: "Terms of Service"
     all_terms_and_conditions:
+      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
       terms_and_conditions: "Terms and Conditions"
       terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
@@ -1255,11 +1297,11 @@ en_CA:
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
-  invoice_tax_total: "Sales Tax (on product):"
+  invoice_tax_total: "Sales Tax:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
-  total_excl_tax: "Total (incl. shipping tax if applicable)"
-  total_incl_tax: "Total (Incl. tax):"
+  total_excl_tax: "Total (Excl. tax):"
+  total_incl_tax: "Total "
   abn: "Business Number:"
   acn: "Business Number:"
   invoice_issued_on: "Invoice issued on:"
@@ -1310,6 +1352,12 @@ en_CA:
   address2: Address (contd.)
   city: City
   city_placeholder: eg. Northcote
+  latitude: Latitude
+  latitude_placeholder: eg. -37.4713077
+  latitude_longitude_tip: Latitude and longitude are needed to display your enterprise on the map.
+  longitude: Longitude
+  longitude_placeholder: eg. 144.7851531
+  use_geocoder: Calculate latitude and longitude automatically from address?
   postcode: Postal Code
   postcode_placeholder: eg. N0B 2L0
   suburb: City
@@ -1458,7 +1506,7 @@ en_CA:
   checkout_instructions: "Any comments or special instructions?"
   checkout_payment: Payment
   checkout_send: Place order now
-  checkout_your_order: Your order
+  checkout_your_order: Your order (applicable taxes charged at checkout)
   checkout_cart_total: Cart total
   checkout_shipping_price: Shipping
   checkout_total_price: Total
@@ -1570,7 +1618,9 @@ en_CA:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Markets"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -1722,39 +1772,40 @@ en_CA:
   shops_signup_help: We're ready to help.
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
-  orders: Orders
-  orders_fees: Fees...
-  orders_edit_title: Shopping Cart
-  orders_edit_headline: Your shopping cart
-  orders_edit_time: Order for
-  orders_edit_continue: Continue shopping
-  orders_edit_checkout: Checkout
+  orders: "Orders"
+  orders_fees: "Fees..."
+  orders_edit_title: "Shopping Cart"
+  orders_edit_headline: "Your shopping cart"
+  orders_edit_time: "Order for"
+  orders_edit_continue: "Continue shopping"
+  orders_edit_checkout: "Checkout"
   orders_form_empty_cart: "Empty cart"
-  orders_form_subtotal: Subtotal
-  orders_form_admin: Admin & Handling
-  orders_form_total: Total
-  orders_oc_expired_headline: Orders have closed for this order cycle
+  orders_form_update_cart: "Update"
+  orders_form_subtotal: "Subtotal"
+  orders_form_admin: "Admin & Handling"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
   orders_oc_expired_text_others_html: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders <strong>%{link}</strong>."
   orders_oc_expired_text_link: "or see the other order cycles available at this hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Phone:"
-  orders_show_title: Order Confirmation
-  orders_show_time: Order ready on
+  orders_show_title: "Order Confirmation"
+  orders_show_time: "Order ready on"
   orders_show_order_number: "Order #%{number}"
-  orders_show_cancelled: Cancelled
-  orders_show_confirmed: Confirmed
+  orders_show_cancelled: "Cancelled"
+  orders_show_confirmed: "Confirmed"
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: An additional item is already confirmed for this order cycle.
+    one: "An additional item is already confirmed for this order cycle."
     few: "%{count} additional items already confirmed for this order cycle"
     many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
-  orders_bought_edit_button: Edit confirmed items
+  orders_bought_edit_button: "Edit confirmed items"
   orders_bought_already_confirmed: "* already confirmed"
-  orders_confirm_cancel: Are you sure you want to cancel this order?
+  orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
@@ -1840,7 +1891,7 @@ en_CA:
       details:
         title: "Details"
         headline: "Let's Get Started"
-        enterprise: "Great! First we need to know a little bit about your enterprise:"
+        enterprise: "Woot! First we need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
@@ -1860,6 +1911,11 @@ en_CA:
         state_field_error: "Province required"
         country_field: "Country:"
         country_field_error: "Please select a country"
+        map_location: "Map Location"
+        locate_address: "Locate address on map"
+        drag_pin: "Drag and drop the pin to the correct location if not accurate."
+        confirm_address: "I confirm that the indicated position of the enterprise on the map is correct."
+        drag_map_marker: "Due to many producers operating in rural areas, the accuracy of maps is always being improved on. Help us to understand where you’re located better by interacting with the map above to move the pin by clicking or tapping to hold the pin and then dragging to the location that is more accurate based off your knowledge."
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
@@ -2413,6 +2469,7 @@ en_CA:
           There was a problem adding this product to the cart. Perhaps it has become
           unavailable or the shop is closing
     admin:
+      unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ. For example, shopfront prices might include enterprise fees (mark-ups)  if you are using them."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: "Got it"
@@ -2656,8 +2713,7 @@ en_CA:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
       price_breakdown: "Price breakdown"
-      unit_price_tooltip:
-        shopfront: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
+      unit_price_tooltip: "This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights."
     variants:
       on_demand:
         'yes': "On demand"
@@ -2806,6 +2862,15 @@ en_CA:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Bulk Co-op Allocation"
+          bulk_coop_customer_payments: "Bulk Co-op Customer Payments"
+          bulk_coop_packing_sheets: "Bulk Co-op Packing Sheets"
+          bulk_coop_supplier_report: "Bulk Co-op Supplier Report"
+          date_range: "Date range"
+          generate_report: "Generate Report"
+          report_format_csv: "Report format CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -2851,6 +2916,8 @@ en_CA:
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
+      report:
+        none: "None"
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
@@ -2883,7 +2950,53 @@ en_CA:
   previous: "Previous"
   last: "Last"
   spree:
+    add_country: "Add country"
+    add_state: "Add state"
+    adjustment: "Adjustment"
+    all: "All"
+    associated_adjustment_closed: "Associated adjustment closed"
+    back_to_adjustments_list: "Back to adjustments"
+    back_to_users_list: "Back to users"
+    back_to_zones_list: "Back to zones"
+    card_code: "Card code"
+    card_number: "Card number"
+    category: "Category"
+    created_successfully: "Created Successfully"
+    credit: "Credit"
+    editing_tax_category: "Editing tax category"
+    editing_tax_rate: "Editing tax rate"
+    editing_zone: "Editing zone"
+    expiration: "Expiration"
+    invalid_payment_provider: "Invalid payment provider"
+    items_cannot_be_shipped: "Items cannot be shipped"
+    gateway_config_unavailable: "Gateway config unavailable"
+    gateway_error: "Payment failed"
     more: "More"
+    new_adjustment: "New adjustment"
+    new_order_completed: "New order completed"
+    new_tax_category: "New Tax Category"
+    new_taxon: "New taxon"
+    new_user: "New user"
+    no_pending_payments: "No pending payments"
+    none: "None"
+    not_found: "Not found"
+    notice_messages:
+      variant_deleted: "Variant deleted"
+    or: "Or"
+    order_processed_successfully: "Order processed successfully"
+    payment_method_not_supported: "Payment method not supported"
+    resend_authorization_email: "Resend authorization email"
+    rma_credit: "RMA credit"
+    server_error: "Server error"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Start date"
+    successfully_removed: "Successfully Removed"
+    taxonomy_edit: "Taxonomy edit"
+    taxonomy_tree_error: "Taxonomy tree error"
+    taxonomy_tree_instruction: "Taxonomy tree instruction"
+    tree: "Tree"
+    updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
@@ -2911,6 +3024,7 @@ en_CA:
     tracking_number: "Tracking Number"
     order_total: "Order Total"
     customer_details: "Customer Details"
+    customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
     choose_a_customer: "Choose a customer"
     account: "Account"
@@ -3061,6 +3175,8 @@ en_CA:
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered."
     not_available: "N/A"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "There are no items for this order."
     order_populator:
       out_of_stock: '%{item} is out of stock.'
     actions:
@@ -3088,7 +3204,17 @@ en_CA:
         login_nav:
           header:
             store: Store
+    validation:
+      must_be_int: "must be an integer"
     admin:
+      mail_methods:
+        send_testmail: "Send test email"
+        testmail:
+          delivery_success: "Test email sent"
+          error: "An error occurred trying to send the test email."
+      unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ. For example, shopfront prices might include enterprise fees (mark-ups)  if you are using them."
+      subscriptions:
+        number: "Number"
       tab:
         dashboard: "Dashboard"
         orders: "Orders"
@@ -3157,6 +3283,8 @@ en_CA:
           received: "Received"
           canceled: "Canceled"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "You cannot add an item to a cancelled order."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3199,6 +3327,10 @@ en_CA:
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "has no enterprise fees"
+          has_no_payment_methods: "has no payment methods"
+          has_no_shipping_methods: "has no shipping methods"
         products:
           active_products:
             zero: "You don't have any active products."
@@ -3237,6 +3369,7 @@ en_CA:
           back_to_shipping_methods_list: "Back to Shipping Methods List"
         form:
           categories: "Categories"
+          tax_category: "Tax Category"
           zones: "Zones"
           both: "Both Checkout and Back office"
           back_end: "Back office only"
@@ -3318,6 +3451,7 @@ en_CA:
           unit_name: "Unit Name"
           price: "Price"
           unit_price: "Unit Price"
+          unit_price_legend: "Calculated based on the item price."
           on_hand: "On Hand"
           on_demand: "On Demand"
           product_description: "Product Description"
@@ -3388,7 +3522,6 @@ en_CA:
           price: "Price"
           options: "Options"
           no_results: "No results"
-          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
           option_values: "Option Values"
           and: "and"
@@ -3400,6 +3533,7 @@ en_CA:
         form:
           sku: "SKU"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
@@ -3423,6 +3557,7 @@ en_CA:
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          shoppers_require_tos: "Shoppers must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
@@ -3635,3 +3770,42 @@ en_CA:
         spree/payment:
           one: Payment
           other: Payments
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      over_x_years:
+        one: over 1 year
+        other: over %{count} years
+      x_seconds:
+        one: "1 second"
+        other: "%{count} seconds"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      x_days:
+        one: "1 day"
+        other: "%{count} days"
+      x_months:
+        one: "1 month"
+        other: "%{count} months"
+      x_years:
+        one: "1 year"
+        other: "%{count} years"

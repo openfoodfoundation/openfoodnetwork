@@ -85,6 +85,7 @@ cy:
               no_default_card: "^ Nid oes cerdyn diofyn ar gael i&#39;r cwsmer hwn"
             shipping_method:
               not_available_to_shop: "ddim ar gael i %{shop}"
+  customer_instructions: "Cyfarwyddiadau cwsmeriaid"
   devise:
     confirmations:
       send_instructions: "Byddwch yn derbyn e-bost gyda chyfarwyddiadau ar sut i gadarnhau eich cyfrif mewn ychydig funudau."
@@ -117,6 +118,8 @@ cy:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPI %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Gyfradd dreth"
   validators:
     date_time_string_validator:
       not_string_error: "rhaid iddo fod yn llinyn"
@@ -262,7 +265,6 @@ cy:
   error: Gwall
   processing_payment: "Prosesu taliad ..."
   no_pending_payments: "Dim taliadau yn yr arfaeth"
-  invalid_payment_state: "Cyflwr talu annilys"
   filter_results: Canlyniadau Hidlo
   quantity: Nifer
   pick_up: Codi
@@ -1143,6 +1145,7 @@ cy:
       yes_cancel_them: Canslo nhw
       no_keep_them: Cadwch nhw
       yes_i_am_sure: Ydw, rwy&#39;n siŵr
+      number: "Rhif"
       order_update_issues_msg: Ni ellid diweddaru rhai archebion yn awtomatig, mae hyn yn fwyaf tebygol oherwydd eu bod wedi&#39;u golygu â llaw. Adolygwch y materion a restrir isod a gwnewch unrhyw addasiadau i archebion unigol os oes angen.
       no_results:
         no_subscriptions: Dim tanysgrifiadau eto ...
@@ -1563,7 +1566,9 @@ cy:
   shopping_tabs_home: "Hafan"
   shopping_tabs_shop: "Siop"
   shopping_tabs_about: "Am"
+  shopping_tabs_producers: "Cynhyrchwyr"
   shopping_tabs_contact: "Cysylltwch"
+  shopping_tabs_groups: "Grwpiau"
   shopping_contact_address: "Cyfeiriad"
   shopping_contact_web: "Cysylltwch"
   shopping_contact_social: "Dilynwch"
@@ -1714,39 +1719,40 @@ cy:
   shops_signup_help: Rydyn ni&#39;n barod i helpu.
   shops_signup_help_text: Mae angen gwell dychweliad arnoch chi. Mae angen prynwyr a phartneriaid logisteg newydd arnoch chi. Mae angen i&#39;ch stori gael ei hadrodd ar draws cyfanwerth, manwerthu a bwrdd y gegin.
   shops_signup_detail: Dyma&#39;r manylion.
-  orders: Gorchmynion
-  orders_fees: Ffioedd ...
-  orders_edit_title: Cart Siopa
-  orders_edit_headline: Eich trol siopa
-  orders_edit_time: Archeb yn barod ar gyfer
-  orders_edit_continue: Parhewch i siopa
-  orders_edit_checkout: Til
+  orders: "Gorchmynion"
+  orders_fees: "Ffioedd ..."
+  orders_edit_title: "Cart Siopa"
+  orders_edit_headline: "Eich trol siopa"
+  orders_edit_time: "Archeb yn barod ar gyfer"
+  orders_edit_continue: "Parhewch i siopa"
+  orders_edit_checkout: "Til"
   orders_form_empty_cart: "Cart gwag"
-  orders_form_subtotal: Cynhyrchu subtotal
-  orders_form_admin: Gweinyddiaeth a Thrin
-  orders_form_total: Cyfanswm
-  orders_oc_expired_headline: Mae archebion wedi cau ar gyfer y cylch archebu hwn
+  orders_form_update_cart: "Diweddariad"
+  orders_form_subtotal: "Cynhyrchu subtotal"
+  orders_form_admin: "Gweinyddiaeth a Thrin"
+  orders_form_total: "Cyfanswm"
+  orders_oc_expired_headline: "Mae archebion wedi cau ar gyfer y cylch archebu hwn"
   orders_oc_expired_text: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a allan nhw dderbyn archebion hwyr."
   orders_oc_expired_text_others_html: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a <strong>allan</strong> nhw dderbyn archebion hwyr <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "neu gwelwch y cylchoedd archebu eraill sydd ar gael yn y canolbwynt hwn"
   orders_oc_expired_email: "E-bost:"
   orders_oc_expired_phone: "Ffôn:"
-  orders_show_title: Cadarnhad Gorchymyn
-  orders_show_time: Archeb yn barod ymlaen
+  orders_show_title: "Cadarnhad Gorchymyn"
+  orders_show_time: "Archeb yn barod ymlaen"
   orders_show_order_number: "Gorchymyn # %{number}"
-  orders_show_cancelled: Wedi&#39;i ganslo
-  orders_show_confirmed: Cadarnhawyd
+  orders_show_cancelled: "Wedi&#39;i ganslo"
+  orders_show_confirmed: "Cadarnhawyd"
   orders_your_order_has_been_cancelled: "Mae eich archeb wedi&#39;i ganslo"
   orders_could_not_cancel: "Mae&#39;n ddrwg gennym, ni ellid canslo&#39;r gorchymyn"
   orders_cannot_remove_the_final_item: "Ni all dynnu’r eitem olaf o orchymyn, canslwch yr archeb yn lle."
   orders_bought_items_notice:
-    one: Mae eitem ychwanegol eisoes wedi&#39;i chadarnhau ar gyfer y cylch archebu hwn
+    one: "Mae eitem ychwanegol eisoes wedi&#39;i chadarnhau ar gyfer y cylch archebu hwn"
     few: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     many: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     other: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
-  orders_bought_edit_button: Golygu eitemau wedi&#39;u cadarnhau
+  orders_bought_edit_button: "Golygu eitemau wedi&#39;u cadarnhau"
   orders_bought_already_confirmed: "* wedi&#39;i gadarnhau eisoes"
-  orders_confirm_cancel: Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r gorchymyn hwn?
+  orders_confirm_cancel: "Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r gorchymyn hwn?"
   order_processed_successfully: "Mae eich archeb wedi&#39;i phrosesu&#39;n llwyddiannus"
   products_cart_distributor_choice: "Dosbarthwr ar gyfer eich archeb:"
   products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer y gorchymyn hwn yn cael ei newid i %{name} os ychwanegwch y cynnyrch hwn at eich trol."
@@ -1832,7 +1838,6 @@ cy:
       details:
         title: "Manylion"
         headline: "Dewch i ni Ddechrau"
-        enterprise: "Woot! Yn gyntaf mae angen i chi wybod ychydig am eich menter:"
         producer: "Woot! Yn gyntaf mae angen i ni wybod ychydig am eich fferm:"
         enterprise_name_field: "Enw Menter:"
         producer_name_field: "Enw&#39;r Fferm:"
@@ -2838,6 +2843,9 @@ cy:
       start_free_profile: "Dechreuwch gyda phroffil am ddim, ac ehangwch pan fyddwch chi&#39;n barod!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Cynhyrchu Adroddiad"
       enterprise_fee_summaries:
         filters:
           date_range: "Ystod Dyddiad"
@@ -2883,6 +2891,8 @@ cy:
               tax_category_name: "Categori Treth"
               total_amount: "SUM $ $"
         invalid_filter_parameters: "Mae&#39;r hidlwyr a ddewisoch ar gyfer yr adroddiad hwn yn annilys."
+      report:
+        none: "Dim"
   order: "Gorchymyn"
   distribution: "Dosbarthiad"
   order_details: "Manylion y Gorchymyn"
@@ -2915,7 +2925,13 @@ cy:
   previous: "Blaenorol"
   last: "Diwethaf"
   spree:
+    all: "I gyd"
+    category: "Categori"
+    credit: "Credyd"
     more: "Mwy"
+    no_pending_payments: "Dim taliadau yn yr arfaeth"
+    none: "Dim"
+    updating: "Diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"
     add_product: "Ychwanegu Cynnyrch"
     name_or_sku: "Enw neu SKU (nodwch o leiaf 4 nod cyntaf enw&#39;r cynnyrch)"
@@ -3091,6 +3107,7 @@ cy:
     payment_method: "Dull talu"
     payment_processing_failed: "Ni ellid prosesu taliad, gwiriwch y manylion a nodwyd gennych"
     not_available: "Amherthnasol"
+    sku: "SKU"
     order_populator:
       out_of_stock: 'mae %{item} allan o stoc.'
     actions:
@@ -3118,6 +3135,8 @@ cy:
           header:
             store: Storfa
     admin:
+      subscriptions:
+        number: "Rhif"
       tab:
         dashboard: "Dangosfwrdd"
         orders: "Gorchmynion"
@@ -3266,6 +3285,7 @@ cy:
           back_to_shipping_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Llongau"
         form:
           categories: "Categorïau"
+          tax_category: "Categori Treth"
           zones: "Parthau"
           both: "Checkout a Swyddfa Gefn"
           back_end: "Swyddfa gefn yn unig"
@@ -3410,7 +3430,6 @@ cy:
           price: "Pris"
           options: "Opsiynau"
           no_results: "Dim canlyniadau"
-          to_add_variants_you_must_first_define: "I ychwanegu amrywiadau, rhaid i chi ddiffinio yn gyntaf"
           option_types: "Mathau Opsiwn"
           option_values: "Gwerthoedd Opsiwn"
           and: "a"
@@ -3422,6 +3441,7 @@ cy:
         form:
           sku: "SKU"
           price: "Pris"
+          unit_price: "Pris Uned"
           display_as: "Arddangos Fel"
           display_name: "Enw Arddangos"
           display_as_placeholder: 'ee. 2 kg'

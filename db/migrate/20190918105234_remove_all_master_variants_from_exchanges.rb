@@ -1,4 +1,4 @@
-class RemoveAllMasterVariantsFromExchanges < ActiveRecord::Migration
+class RemoveAllMasterVariantsFromExchanges < ActiveRecord::Migration[4.2]
   def up
     # 1. We add standard variants of the products of "lonely masters" into the Exchanges where the master variants are lonely
     match_master_variants

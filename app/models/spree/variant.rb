@@ -6,14 +6,15 @@ require 'concerns/variant_stock'
 require 'spree/localized_number'
 
 module Spree
-  class Variant < ActiveRecord::Base
+  class Variant < ApplicationRecord
     extend Spree::LocalizedNumber
     include VariantUnits::VariantAndLineItemNaming
     include VariantStock
 
     acts_as_paranoid
 
-    belongs_to :product, touch: true, class_name: 'Spree::Product'
+    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
+
     delegate_belongs_to :product, :name, :description, :permalink, :available_on,
                         :tax_category_id, :shipping_category_id, :meta_description,
                         :meta_keywords, :tax_category, :shipping_category
@@ -33,7 +34,7 @@ module Spree
     accepts_nested_attributes_for :images
 
     has_one :default_price,
-            -> { where currency: Spree::Config[:currency] },
+            -> { with_deleted.where(currency: Spree::Config[:currency]) },
             class_name: 'Spree::Price',
             dependent: :destroy
     has_many :prices,
@@ -57,6 +58,8 @@ module Spree
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product.andand.variant_unit)
     }
+
+    validates :unit_value, numericality: { greater_than: 0 }
 
     validates :unit_description, presence: true, if: ->(variant) {
       variant.product.andand.variant_unit.present? && variant.unit_value.nil?
@@ -151,11 +154,6 @@ module Spree
                                           select("spree_variants.id"))
     end
 
-    # Allow variant to access associated soft-deleted prices.
-    def default_price
-      Spree::Price.unscoped { super }
-    end
-
     def price_with_fees(distributor, order_cycle)
       price + fees_for(distributor, order_cycle)
     end
@@ -166,13 +164,6 @@ module Spree
 
     def fees_by_type_for(distributor, order_cycle)
       OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
-    end
-
-    # use deleted? rather than checking the attribute directly. this
-    # allows extensions to override deleted? if they want to provide
-    # their own definition.
-    def deleted?
-      deleted_at
     end
 
     def option_value(opt_name)
@@ -186,13 +177,6 @@ module Spree
 
     def amount_in(currency)
       price_in(currency).try(:amount)
-    end
-
-    # Product may be created with deleted_at already set,
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
-    def product
-      Spree::Product.unscoped { super }
     end
 
     # can_supply? is implemented in VariantStock

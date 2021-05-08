@@ -9,7 +9,7 @@
   - if product_has_variant_unit_option_type?(@product)
     - if @product.variant_unit != 'items'
       .field
-        = f.label :unit_value, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
+        = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
         = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
         = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
         = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
@@ -39,14 +39,15 @@
         = hidden_field_tag 'product_variant_unit', @product.variant_unit
         = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name
         = f.field_container :unit_price do
-          = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
-          %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
-            "question-mark-with-tooltip-append-to-body" => "true",
-            "question-mark-with-tooltip-placement" => "top",
-            "question-mark-with-tooltip-animation" => true, 
-            key: "'js.admin.unit_price_tooltip'"}
-          %br/
-          = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
+          %div{style: "display: flex"}
+            = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
+            %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+              "question-mark-with-tooltip-append-to-body" => "true",
+              "question-mark-with-tooltip-placement" => "top",
+              "question-mark-with-tooltip-animation" => true, 
+              key: "'js.admin.unit_price_tooltip'"}
+          %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]",
+            "class" => 'fullwidth', "disabled" => true, "ng-model" => "unit_price"}
           %div{style: "color: black"}
             = t("spree.admin.products.new.unit_price_legend")
     %div{ 'set-on-demand' => '' }

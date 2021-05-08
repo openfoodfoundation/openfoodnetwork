@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShippingMethod < ActiveRecord::Base
+  class ShippingMethod < ApplicationRecord
     include Spree::Core::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end].freeze
 
@@ -22,6 +22,8 @@ module Spree
     has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
                                     class_name: 'Spree::Zone',
                                     foreign_key: 'shipping_method_id'
+
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
     validates :name, presence: true
     validate :distributor_validation

@@ -14,7 +14,7 @@ FactoryBot.define do
     association(:source, factory: :credit_card)
     order
     state { 'checkout' }
-    response_code { '12345' }
+    response_code { nil }
 
     payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
   end

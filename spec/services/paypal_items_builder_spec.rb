@@ -21,11 +21,12 @@ describe PaypalItemsBuilder do
   context "listing adjustments" do
     let!(:admin_adjustment) {
       create(:adjustment, label: "Admin Adjustment", order: order, adjustable: order,
-                          amount: 12, source: nil, originator: nil, state: "closed")
+                          amount: 12, originator: nil, state: "closed")
     }
     let!(:ineligible_adjustment) {
       create(:adjustment, label: "Ineligible Adjustment", order: order, adjustable: order,
-                          amount: 34, eligible: false, state: "closed")
+                          amount: 34, eligible: false, state: "closed",
+                          originator_type: "Spree::PaymentMethod")
     }
     let!(:zone) { create(:zone_with_member) }
     let!(:included_tax_rate) {
@@ -47,9 +48,8 @@ describe PaypalItemsBuilder do
     }
     let!(:enterprise_fee) { create(:enterprise_fee) }
     let!(:line_item_enterprise_fee) {
-      create(:adjustment, label: "Line Item Fee", order: order, adjustable: order,
-                          amount: 91, originator: enterprise_fee, source: order.line_items.first,
-                          state: "closed")
+      create(:adjustment, label: "Line Item Fee", order: order, adjustable: order.line_items.first,
+                          amount: 91, originator: enterprise_fee, state: "closed")
     }
     let!(:order_enterprise_fee) {
       create(:adjustment, label: "Order Fee", order: order, adjustable: order,

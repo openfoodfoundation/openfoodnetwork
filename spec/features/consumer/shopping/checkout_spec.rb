@@ -17,9 +17,15 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:variant) { product.variants.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
+  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
+  let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
 
   let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Calculator::FlatRate.new(preferred_amount: 0.00)) }
-  let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
+  let(:shipping_with_fee) {
+    create(:shipping_method, require_ship_address: false, tax_category: shipping_tax_category,
+                             name: "Donkeys", description: "blue",
+                             calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
+  }
   let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
   let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
   let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
@@ -32,9 +38,6 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   before do
-    Spree::Config.shipment_inc_vat = true
-    Spree::Config.shipping_tax_rate = 0.25
-
     add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart order, product
@@ -252,6 +255,10 @@ feature "As a consumer I want to check out my cart", js: true do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
         end.to enqueue_job ConfirmOrderJob
+
+        order = Spree::Order.complete.last
+        expect(order.payment_state).to eq "balance_due"
+        expect(order.shipment_state).to eq "pending"
       end
     end
   end
@@ -386,7 +393,7 @@ feature "As a consumer I want to check out my cart", js: true do
         end.to enqueue_job ConfirmOrderJob
 
         # And the order's special instructions should be set
-        order = Spree::Order.complete.first
+        order = Spree::Order.complete.last
         expect(order.special_instructions).to eq "SpEcIaL NoTeS"
 
         # Shipment and payments states should be set
@@ -418,6 +425,10 @@ feature "As a consumer I want to check out my cart", js: true do
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
+
+          order = Spree::Order.complete.last
+          expect(order.payment_state).to eq "balance_due"
+          expect(order.shipment_state).to eq "pending"
         end
 
         it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
@@ -440,9 +451,11 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_content "Your order has been processed successfully"
 
             # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.shipment_adjustments.first.amount).to eq(4.56)
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
+            order = Spree::Order.complete.last
+            expect(order.shipment_adjustments.first.amount).to eq(4.56)
+            expect(order.payments.first.amount).to eq(10 + 1.23 + 4.56) # items + fees + shipping
+            expect(order.payment_state).to eq "balance_due"
+            expect(order.shipment_state).to eq "pending"
           end
         end
 
@@ -461,9 +474,11 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_content "Your order has been processed successfully"
 
             # There are two orders - our order and our new cart
-            o = Spree::Order.complete.first
-            expect(o.all_adjustments.payment_fee.first.amount).to eq 5.67
-            expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
+            order = Spree::Order.complete.last
+            expect(order.all_adjustments.payment_fee.first.amount).to eq 5.67
+            expect(order.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
+            expect(order.payment_state).to eq "balance_due"
+            expect(order.shipment_state).to eq "pending"
           end
         end
 
@@ -482,8 +497,10 @@ feature "As a consumer I want to check out my cart", js: true do
                 expect(page).to have_content "Your order has been processed successfully"
 
                 # Order should have a payment with the correct amount
-                o = Spree::Order.complete.first
-                expect(o.payments.first.amount).to eq(11.23)
+                order = Spree::Order.complete.last
+                expect(order.payments.first.amount).to eq(11.23)
+                expect(order.payment_state).to eq "paid"
+                expect(order.shipment_state).to eq "ready"
               end
 
               it "shows the payment processing failed message when submitted with an invalid credit card" do

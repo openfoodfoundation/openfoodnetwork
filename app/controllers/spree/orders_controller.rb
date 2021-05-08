@@ -26,8 +26,14 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-      ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-      @order.reload
+
+      if params.key?("payment_intent")
+        result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
+        unless result.ok?
+          flash[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
+        end
+        @order.reload
+      end
     end
 
     def empty
@@ -86,13 +92,14 @@ module Spree
         if @order.complete?
           @order.update_shipping_fees!
           @order.update_payment_fees!
+          @order.create_tax_charge!
         end
 
         respond_with(@order) do |format|
           format.html do
             if params.key?(:checkout)
               @order.next_transition.run_callbacks if @order.cart?
-              redirect_to checkout_state_path(@order.checkout_steps.first)
+              redirect_to main_app.checkout_state_path(@order.checkout_steps.first)
             elsif @order.complete?
               redirect_to order_path(@order)
             else
@@ -103,7 +110,7 @@ module Spree
       else
         # Show order with original values, not newly entered ones
         @insufficient_stock_lines = @order.insufficient_stock_lines
-        @order.line_items(true)
+        @order.line_items.reload
         respond_with(@order)
       end
     end

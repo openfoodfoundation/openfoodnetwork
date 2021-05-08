@@ -3,6 +3,9 @@
 require "spec_helper"
 
 describe "spree/admin/orders/index.html.haml" do
+  helper Spree::Admin::NavigationHelper
+  helper EnterprisesHelper
+
   around do |example|
     original_config = Spree::Config[:enable_invoices?]
     example.run

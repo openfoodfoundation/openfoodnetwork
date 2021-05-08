@@ -31,7 +31,7 @@
             %input{ type: 'hidden', 'ng-value' => 'product.variant_unit_scale', name: 'product[variant_unit_scale]' }
         .two.columns
           = f.field_container :unit_value do
-            = f.label :product_unit_value_with_description, t(".value"), 'ng-disabled' => "!hasUnit(product)"
+            = f.label :unit_value_with_description, t(".value"), 'ng-disabled' => "!hasUnit(product)"
             %span.required *
             %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
             %input{ type: 'hidden', 'ng-value' => 'product.master.unit_value', name: 'product[unit_value]' }
@@ -55,14 +55,15 @@
         - if feature? :unit_price, spree_current_user
           .four.columns{ ng: { app: 'ofn.admin'}}
             = f.field_container :unit_price do
-              = f.label :unit_price, t(".unit_price")
-              %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+              %div{style: "display: flex"}
+                = f.label :unit_price, t(".unit_price")
+                %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
                   "question-mark-with-tooltip-append-to-body" => "true",
                   "question-mark-with-tooltip-placement" => "top",
                   "question-mark-with-tooltip-animation" => true, 
                   key: "'js.admin.unit_price_tooltip'"}
-              %br/
-              = f.text_field :price, {"class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
+              %input{ "type" => "text", "id" => "product_unit_price", "name" => "product[unit_price]",
+                  "class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
               %div{style: "color: black"}
                 = t(".unit_price_legend")
       .sixteen.columns.alpha

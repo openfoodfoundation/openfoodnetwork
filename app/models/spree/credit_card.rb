@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class CreditCard < ActiveRecord::Base
+  class CreditCard < ApplicationRecord
     belongs_to :payment_method
     belongs_to :user
 
@@ -147,7 +147,7 @@ module Spree
     end
 
     def default_card_needs_updating?
-      is_default_changed? || gateway_customer_profile_id_changed?
+      saved_change_to_is_default? || saved_change_to_gateway_customer_profile_id?
     end
 
     def ensure_single_default_card

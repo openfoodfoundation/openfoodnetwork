@@ -18,9 +18,10 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       Loading.message = t('creating') + " " + @enterprise.name
       $http(
         method: "POST"
-        url: "/api/enterprises"
+        url: "/api/v0/enterprises"
         data:
           enterprise: @prepare()
+          use_geocoder: @useGeocoder()
         params:
           token: spreeApiKey
       ).success((data) =>
@@ -42,9 +43,10 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       Loading.message = t('updating') + " " + @enterprise.name
       $http(
         method: "PUT"
-        url: "/api/enterprises/#{@enterprise.id}"
+        url: "/api/v0/enterprises/#{@enterprise.id}"
         data:
           enterprise: @prepare()
+          use_geocoder: @useGeocoder()
         params:
           token: spreeApiKey
       ).success((data) ->
@@ -63,3 +65,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       enterprise.address_attributes = @enterprise.address if @enterprise.address?
       enterprise.address_attributes.country_id = @enterprise.country.id if @enterprise.country?
       enterprise
+
+    useGeocoder: =>
+      if @enterprise.address? && !@enterprise.address.latitude? && !@enterprise.address.longitude?
+        return "1"

@@ -7,7 +7,7 @@ describe Spree::Payment do
     let(:order) { create(:order) }
     let(:gateway) do
       gateway = Spree::Gateway::Bogus.new(environment: 'test', active: true)
-      gateway.stub source_required: true
+      allow(gateway).to receive(:source_required) { true }
       gateway
     end
 
@@ -96,6 +96,29 @@ describe Spree::Payment do
           expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
           expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
+        end
+
+        context "the payment is already authorized" do
+          before do
+            allow(payment).to receive(:response_code) { "pi_123" }
+          end
+
+          it "should call purchase" do
+            expect(payment).to receive(:purchase!)
+            payment.process!
+          end
+        end
+      end
+
+      context "#process_offline when payment is already authorized" do
+        before do
+          allow(payment).to receive(:response_code) { "pi_123" }
+        end
+
+        it "should call capture if the payment is already authorized" do
+          expect(payment).to receive(:capture!)
+          expect(payment).to_not receive(:purchase!)
+          payment.process_offline!
         end
       end
 
@@ -382,7 +405,7 @@ describe Spree::Payment do
           end
 
           it "resulting payment should have correct values" do
-            allow(payment.order).to receive(:outstanding_balance) { 100 }
+            allow(payment.order).to receive(:new_outstanding_balance) { 100 }
             allow(payment).to receive(:credit_allowed) { 10 }
 
             offsetting_payment = payment.credit!
@@ -402,7 +425,7 @@ describe Spree::Payment do
             end
 
             it 'lets the new payment to be saved' do
-              allow(payment.order).to receive(:outstanding_balance) { 100 }
+              allow(payment.order).to receive(:new_outstanding_balance) { 100 }
               allow(payment).to receive(:credit_allowed) { 10 }
 
               offsetting_payment = payment.credit!
@@ -901,6 +924,15 @@ describe Spree::Payment do
           end
         end
       end
+    end
+  end
+
+  describe "#mark_as_processed" do
+    let(:payment) { create(:payment, cvv_response_message: "message") }
+
+    it "removes the cvv_response_message" do
+      payment.mark_as_processed
+      expect(payment.cvv_response_message).to eq(nil)
     end
   end
 end

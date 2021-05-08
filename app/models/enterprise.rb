@@ -2,7 +2,7 @@
 
 require 'spree/core/s3_support'
 
-class Enterprise < ActiveRecord::Base
+class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 
@@ -100,7 +100,6 @@ class Enterprise < ActiveRecord::Base
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
-  after_validation :geocode_address
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   after_touch :touch_distributors
@@ -409,10 +408,6 @@ class Enterprise < ActiveRecord::Base
 
   def set_unused_address_fields
     address.firstname = address.lastname = address.phone = 'unused' if address.present?
-  end
-
-  def geocode_address
-    address.geocode if address.andand.changed?
   end
 
   def ensure_owner_is_manager

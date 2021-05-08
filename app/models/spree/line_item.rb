@@ -4,13 +4,12 @@ require 'open_food_network/scope_variant_to_hub'
 require 'variant_units/variant_and_line_item_naming'
 
 module Spree
-  class LineItem < ActiveRecord::Base
+  class LineItem < ApplicationRecord
     include VariantUnits::VariantAndLineItemNaming
     include LineItemStockChanges
-    include LineItemBasedAdjustmentHandling
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
-    belongs_to :variant, class_name: "Spree::Variant"
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_one :product, through: :variant
@@ -154,18 +153,6 @@ module Spree
       @preferred_shipment = shipment
     end
 
-    # Remove product default_scope `deleted_at: nil`
-    def product
-      variant.product
-    end
-
-    # This ensures that LineItems always have access to soft-deleted variants.
-    # In some situations, unscoped super will be nil. In these cases,
-    #   we fetch the variant using variant_id. See issue #4946 for more details.
-    def variant
-      Spree::Variant.unscoped { super } || Spree::Variant.unscoped.find(variant_id)
-    end
-
     def cap_quantity_at_stock!
       scoper.scope(variant)
       return if variant.on_demand
@@ -222,7 +209,7 @@ module Spree
     def unit_price_price_and_unit
       unit_price = UnitPrice.new(variant)
       Spree::Money.new(price_with_adjustments / unit_price.denominator).to_html +
-        " / " + unit_price.unit
+        "&nbsp;/&nbsp;".html_safe + unit_price.unit
     end
 
     def scoper
@@ -239,7 +226,7 @@ module Spree
     end
 
     def update_order
-      return unless changed? || destroyed?
+      return unless saved_changes.present? || destroyed?
 
       # update the order totals, etc.
       order.create_tax_charge!

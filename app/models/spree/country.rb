@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Country < ActiveRecord::Base
+  class Country < ApplicationRecord
     has_many :states, -> { order('name ASC') }
 
     validates :name, :iso_name, presence: true

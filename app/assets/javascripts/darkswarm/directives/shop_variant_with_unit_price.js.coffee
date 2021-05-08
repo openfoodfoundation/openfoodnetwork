@@ -4,4 +4,5 @@ Darkswarm.directive "shopVariantWithUnitPrice", ->
   templateUrl: 'shop_variant_with_unit_price.html'
   scope:
     variant: '='
+    show_unit_price: '=showunitprice'
   controller: 'ShopVariantCtrl'

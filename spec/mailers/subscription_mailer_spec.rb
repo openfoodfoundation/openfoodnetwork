@@ -88,7 +88,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     context 'when the order has outstanding balance' do
-      before { allow(order).to receive(:outstanding_balance) { 123 } }
+      before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
       it 'renders the amount as money' do
         expect(email.body).to include('$123')
@@ -96,7 +96,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     context 'when the order has no outstanding balance' do
-      before { allow(order).to receive(:outstanding_balance) { 0 } }
+      before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
         expect(email.body).to include(I18n.t(:email_payment_not_paid))
@@ -141,7 +141,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     context 'when the order has outstanding balance' do
-      before { allow(order).to receive(:outstanding_balance) { 123 } }
+      before { allow(order).to receive(:new_outstanding_balance) { 123 } }
 
       it 'renders the amount as money' do
         expect(email.body).to include('$123')
@@ -149,7 +149,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     context 'when the order has no outstanding balance' do
-      before { allow(order).to receive(:outstanding_balance) { 0 } }
+      before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
         expect(email.body).to include(I18n.t(:email_payment_not_paid))
@@ -229,7 +229,10 @@ describe SubscriptionMailer, type: :mailer do
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
 
-    before { allow(summary).to receive(:unrecorded_ids) { [] } }
+    before do
+      allow(summary).to receive(:unrecorded_ids) { [] }
+      allow(summary).to receive(:subscription_issues) { [] }
+    end
 
     context "when no issues were encountered while processing subscriptions" do
       before do
@@ -339,7 +342,10 @@ describe SubscriptionMailer, type: :mailer do
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
 
-    before { allow(summary).to receive(:unrecorded_ids) { [] } }
+    before do
+      allow(summary).to receive(:unrecorded_ids) { [] }
+      allow(summary).to receive(:subscription_issues) { [] }
+    end
 
     context "when no issues were encountered while processing subscriptions" do
       before do

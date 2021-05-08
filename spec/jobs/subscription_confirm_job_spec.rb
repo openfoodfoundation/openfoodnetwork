@@ -158,11 +158,18 @@ describe SubscriptionConfirmJob do
           allow(order).to receive(:pending_payments) { [stripe_sca_payment] }
           allow(stripe_sca_payment_method).to receive(:provider) { provider }
           allow(stripe_sca_payment_method.provider).to receive(:purchase) { true }
+          allow(stripe_sca_payment_method.provider).to receive(:capture) { true }
         end
 
         it "runs the charges in offline mode" do
           job.send(:confirm_order!, order)
           expect(stripe_sca_payment_method.provider).to have_received(:purchase)
+        end
+
+        it "uses #capture if the payment is already authorized" do
+          allow(stripe_sca_payment).to receive(:preauthorized?) { true }
+          expect(stripe_sca_payment_method.provider).to receive(:capture)
+          job.send(:confirm_order!, order)
         end
       end
 

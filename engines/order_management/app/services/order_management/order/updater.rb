@@ -19,6 +19,7 @@ module OrderManagement
       # object with callbacks (otherwise you will end up in an infinite recursion as the
       # associations try to save and then in turn try to call +update!+ again.)
       def update
+        update_all_adjustments
         update_totals
 
         if order.completed?
@@ -27,9 +28,6 @@ module OrderManagement
           update_shipment_state
         end
 
-        update_all_adjustments
-        # update totals a second time in case updated adjustments have an effect on the total
-        update_totals
         persist_totals
       end
 
@@ -61,7 +59,7 @@ module OrderManagement
         order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
         order.included_tax_total = order.line_item_adjustments.tax.inclusive.sum(:amount) +
                                    all_adjustments.enterprise_fee.sum(:included_tax) +
-                                   all_adjustments.shipping.sum(:included_tax) +
+                                   order.shipment_adjustments.tax.inclusive.sum(:amount) +
                                    adjustments.admin.sum(:included_tax)
       end
 
@@ -101,6 +99,7 @@ module OrderManagement
                                end
 
         order.state_changed('shipment')
+        order.shipment_state
       end
 
       # Updates the +payment_state+ attribute according to the following logic:
@@ -122,7 +121,7 @@ module OrderManagement
       end
 
       def update_all_adjustments
-        order.adjustments.reload.each(&:update!)
+        order.all_adjustments.reload.each(&:update!)
       end
 
       def before_save_hook
@@ -157,8 +156,7 @@ module OrderManagement
       def infer_payment_state_from_balance
         # This part added so that we don't need to override
         # order.outstanding_balance
-        balance = order.outstanding_balance
-        balance = -1 * order.payment_total if canceled_and_paid_for?
+        balance = order.new_outstanding_balance
 
         infer_state(balance)
       end
@@ -184,18 +182,8 @@ module OrderManagement
         order.state_changed('payment')
       end
 
-      # Taken from order.outstanding_balance in Spree 2.4
-      # See: https://github.com/spree/spree/commit/7b264acff7824f5b3dc6651c106631d8f30b147a
-      def canceled_and_paid_for?
-        order.canceled? && paid?
-      end
-
       def canceled_and_not_paid_for?
         order.state == 'canceled' && order.payment_total.zero?
-      end
-
-      def paid?
-        payments.present? && !payments.completed.empty?
       end
 
       def failed_payments?

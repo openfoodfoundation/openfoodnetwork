@@ -1,4 +1,4 @@
-class Schedule < ActiveRecord::Base
+class Schedule < ApplicationRecord
   has_paper_trail meta: { custom_data: proc { |schedule| schedule.order_cycle_ids.to_s } }
 
   has_many :order_cycle_schedules, dependent: :destroy

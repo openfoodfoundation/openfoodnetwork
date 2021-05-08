@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/authentication_helpers'
+require "spree/authentication_helpers"
 require "application_responder"
 require 'cancan'
 require 'spree/core/controller_helpers/auth'
@@ -12,6 +12,20 @@ require 'open_food_network/referer_parser'
 class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
+
+  helper 'spree/base'
+  helper 'spree/orders'
+  helper 'spree/payment_methods'
+  helper 'shared'
+  helper 'enterprises'
+  helper 'order_cycles'
+  helper 'order'
+  helper 'shop'
+  helper 'injection'
+  helper 'markdown'
+  helper 'footer_links'
+  helper 'discourse'
+  helper 'checkout'
 
   protect_from_forgery
 

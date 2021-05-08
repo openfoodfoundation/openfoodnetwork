@@ -19,7 +19,7 @@ describe "Orders service", ->
 
     beforeEach ->
       response = { orders: [{ id: 5, name: 'Order 1'}], pagination: {page: 1, pages: 1, results: 1} }
-      $httpBackend.expectGET('/api/orders.json').respond 200, response
+      $httpBackend.expectGET('/api/v0/orders.json').respond 200, response
       result = Orders.index()
       $httpBackend.flush()
 

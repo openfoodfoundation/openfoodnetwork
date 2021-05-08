@@ -37,13 +37,11 @@ describe Spree::Order do
       before do
         @adj1 = line_item1.adjustments.create(
           amount: 2,
-          source: line_item1,
           label: "VAT 5%"
         )
 
         @adj2 = line_item1.adjustments.create(
           amount: 5,
-          source: line_item1,
           label: "VAT 10%"
         )
       end
@@ -58,13 +56,11 @@ describe Spree::Order do
       before do
         @adj1 = line_item1.adjustments.create(
           amount: 2,
-          source: line_item1,
           label: "VAT 5%"
         )
 
         @adj2 = line_item2.adjustments.create(
           amount: 5,
-          source: line_item2,
           label: "VAT 10%"
         )
       end

@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require_dependency 'spree/calculator'
 # For #to_d method on Ruby 1.8
 require 'bigdecimal/util'
 require 'spree/localized_number'

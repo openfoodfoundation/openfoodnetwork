@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Taxon < ActiveRecord::Base
+  class Taxon < ApplicationRecord
     acts_as_nested_set dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true

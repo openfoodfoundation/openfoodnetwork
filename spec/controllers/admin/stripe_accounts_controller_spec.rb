@@ -15,7 +15,7 @@ describe Admin::StripeAccountsController, type: :controller do
     end
 
     it "redirects to Stripe Authorization url constructed OAuth" do
-      get :connect, enterprise_id: 1 # A deterministic id results in a deterministic state JWT token
+      get :connect, params: { enterprise_id: 1 } # A deterministic id results in a deterministic state JWT token
 
       expect(response).to redirect_to("https://connect.stripe.com/oauth/authorize?state=eyJhbGciOiJIUzI1NiJ9.eyJlbnRlcnByaXNlX2lkIjoiMSJ9.jSSFGn0bLhwuiQYK5ORmHWW7aay1l030bcfGwn1JbFg&scope=read_write&client_id=some_id&response_type=code")
     end
@@ -98,7 +98,7 @@ describe Admin::StripeAccountsController, type: :controller do
       end
 
       it "redirects to unauthorized" do
-        get :status, params
+        get :status, params: params
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -110,7 +110,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       context "when Stripe is not enabled" do
         it "returns with a status of 'stripe_disabled'" do
-          get :status, params
+          get :status, params: params
           json_response = JSON.parse(response.body)
           expect(json_response["status"]).to eq "stripe_disabled"
         end
@@ -121,7 +121,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
         context "when no stripe account is associated with the specified enterprise" do
           it "returns with a status of 'account_missing'" do
-            get :status, params
+            get :status, params: params
             json_response = JSON.parse(response.body)
             expect(json_response["status"]).to eq "account_missing"
           end
@@ -136,7 +136,7 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             it "returns with a status of 'access_revoked'" do
-              get :status, params
+              get :status, params: params
               json_response = JSON.parse(response.body)
               expect(json_response["status"]).to eq "access_revoked"
             end
@@ -157,7 +157,7 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             it "returns with a status of 'connected'" do
-              get :status, params
+              get :status, params: params
               json_response = JSON.parse(response.body)
               expect(json_response["status"]).to eq "connected"
               # serializes required attrs

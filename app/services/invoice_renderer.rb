@@ -5,7 +5,7 @@ class InvoiceRenderer
 
   def render_to_string(order)
     renderer.instance_variable_set(:@order, order)
-    renderer.render_to_string(args(order))
+    renderer.render_to_string_with_wicked_pdf(args(order))
   end
 
   def args(order)

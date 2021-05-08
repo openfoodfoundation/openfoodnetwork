@@ -65,7 +65,7 @@ feature '
     context "with a capturable order" do
       before do
         order.finalize! # ensure order has a payment to capture
-        create :check_payment, order: order, amount: order.total
+        order.payments << create(:check_payment, order: order, amount: order.total)
       end
 
       scenario "capture payment" do
@@ -93,6 +93,7 @@ feature '
 
         expect(page).to have_css "i.success"
         expect(order.reload.shipments.any?(&:shipped?)).to be true
+        expect(order.shipment_state).to eq("shipped")
       end
     end
   end

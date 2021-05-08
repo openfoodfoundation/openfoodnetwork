@@ -13,13 +13,14 @@ describe Admin::EnterprisesController, type: :controller do
 
   let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
   let(:supplier) { create(:supplier_enterprise, owner: supplier_owner) }
+  let(:country) { Spree::Country.find_by name: 'Australia' }
+  let(:state) { Spree::State.find_by name: 'Victoria' }
+  let(:address_params) { { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id } }
 
   before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
 
   describe "creating an enterprise" do
-    let(:country) { Spree::Country.find_by name: 'Australia' }
-    let(:state) { Spree::State.find_by name: 'Victoria' }
-    let(:enterprise_params) { { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id } } } }
+    let(:enterprise_params) { { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: address_params } } }
 
     it "grants management permission if the current user is an enterprise user" do
       allow(controller).to receive_messages spree_current_user: distributor_manager
@@ -97,6 +98,27 @@ describe Admin::EnterprisesController, type: :controller do
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by name: 'zzz'
         expect(enterprise.sells).to eq('any')
+      end
+    end
+
+    context "geocoding" do
+      before do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        enterprise_params[:enterprise][:owner_id] = admin_user.id
+      end
+
+      it "geocodes the address when the :use_geocoder parameter is set" do
+        expect_any_instance_of(AddressGeocoder).to receive(:geocode)
+        enterprise_params[:use_geocoder] = "1"
+
+        spree_put :create, enterprise_params
+      end
+
+      it "doesn't geocode the address when the :use_geocoder parameter is not set" do
+        expect_any_instance_of(AddressGeocoder).not_to receive(:geocode)
+        enterprise_params[:use_geocoder] = "0"
+
+        spree_put :create, enterprise_params
       end
     end
   end
@@ -185,13 +207,13 @@ describe Admin::EnterprisesController, type: :controller do
 
       describe "tag rules" do
         let(:enterprise) { create(:distributor_enterprise) }
-        let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
+        let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise) }
 
         before do
           controller_login_as_enterprise_user [enterprise]
         end
 
-        context "discount order rules" do
+        context "with filter_order_cycles rule" do
           it "updates the existing rule with new attributes" do
             spree_put :update,
                       id: enterprise,
@@ -199,16 +221,13 @@ describe Admin::EnterprisesController, type: :controller do
                         tag_rules_attributes: {
                           '0' => {
                             id: tag_rule.id,
-                            type: "TagRule::DiscountOrder",
-                            preferred_customer_tags: "some,new,tags",
-                            calculator_type: "Calculator::FlatPercentItemTotal",
-                            calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
+                            type: "TagRule::FilterOrderCycles",
+                            preferred_exchange_tags: "some,new,tags"
                           }
                         }
                       }
             tag_rule.reload
-            expect(tag_rule.preferred_customer_tags).to eq "some,new,tags"
-            expect(tag_rule.calculator.preferred_flat_percent).to eq 15
+            expect(tag_rule.preferred_exchange_tags).to eq "some,new,tags"
           end
 
           it "creates new rules with new attributes" do
@@ -218,17 +237,14 @@ describe Admin::EnterprisesController, type: :controller do
                         tag_rules_attributes: {
                           '0' => {
                             id: "",
-                            type: "TagRule::DiscountOrder",
-                            preferred_customer_tags: "tags,are,awesome",
-                            calculator_type: "Calculator::FlatPercentItemTotal",
-                            calculator_attributes: { id: "", preferred_flat_percent: "24" }
+                            type: "TagRule::FilterOrderCycles",
+                            preferred_exchange_tags: "tags,are,awesome"
                           }
                         }
                       }
             expect(tag_rule.reload).to be
-            new_tag_rule = TagRule::DiscountOrder.last
-            expect(new_tag_rule.preferred_customer_tags).to eq "tags,are,awesome"
-            expect(new_tag_rule.calculator.preferred_flat_percent).to eq 24
+            new_tag_rule = TagRule::FilterOrderCycles.last
+            expect(new_tag_rule.preferred_exchange_tags).to eq "tags,are,awesome"
           end
         end
       end
@@ -289,6 +305,26 @@ describe Admin::EnterprisesController, type: :controller do
 
         distributor.reload
         expect(distributor.users).to include user
+      end
+    end
+
+    context "geocoding" do
+      before do
+        allow(controller).to receive_messages spree_current_user: profile_enterprise.owner
+      end
+
+      it "geocodes the address when the :use_geocoder parameter is set" do
+        expect_any_instance_of(AddressGeocoder).to receive(:geocode)
+        enterprise_params = { id: profile_enterprise, enterprise: {}, use_geocoder: "1" }
+
+        spree_put :update, enterprise_params
+      end
+
+      it "doesn't geocode the address when the :use_geocoder parameter is not set" do
+        expect_any_instance_of(AddressGeocoder).not_to receive(:geocode)
+        enterprise_params = { id: profile_enterprise, enterprise: {}, use_geocoder: "0" }
+
+        spree_put :update, enterprise_params
       end
     end
   end
@@ -464,21 +500,21 @@ describe Admin::EnterprisesController, type: :controller do
     end
 
     context "when an order_cycle_id is provided in params" do
-      before { get :for_order_cycle, format: :json, order_cycle_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end
     end
 
     context "when a coordinator is provided in params" do
-      before { get :for_order_cycle, format: :json, coordinator_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { coordinator_id: 1 } }
       it "initializes permissions with a new OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
       end
     end
 
     context "when both an order cycle and a coordinator are provided in params" do
-      before { get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
+      before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1, coordinator_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
         expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
       end

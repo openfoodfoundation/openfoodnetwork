@@ -1,4 +1,4 @@
-class RemoveGaCookiesPreference < ActiveRecord::Migration
+class RemoveGaCookiesPreference < ActiveRecord::Migration[4.2]
   class Spree::Preference < ActiveRecord::Base; end
 
   def up

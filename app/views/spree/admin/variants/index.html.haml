@@ -30,17 +30,9 @@
           = link_to_with_icon('icon-edit', Spree.t(:edit), edit_object_url(variant, @url_filters), no_text: true) unless variant.deleted?
           = link_to_delete(variant, { url: object_url(variant, @url_filters), no_text: true }) unless variant.deleted?
 
-- if @product.empty_option_values?
-  %p.first_add_option_types.no-objects-found
-    = t('.to_add_variants_you_must_first_define')
-    = link_to t('.option_types'), admin_product_url(@product)
-    = t('.and')
-    = link_to t('.option_values'), admin_option_types_url
+- content_for :page_actions do
+  %ul.inline-menu
+    %li#new_var_link
+      = link_to_with_icon('icon-plus', t('.new_variant'), new_admin_product_variant_url(@product, @url_filters), class: 'button')
 
-- else
-  - content_for :page_actions do
-    %ul.inline-menu
-      %li#new_var_link
-        = link_to_with_icon('icon-plus', t('.new_variant'), new_admin_product_variant_url(@product, @url_filters), class: 'button')
-
-      %li= link_to_with_icon('icon-filter', @deleted.blank? ? t('.show_deleted') : t('.show_active'), admin_product_variants_url(@product, @url_filters.merge(deleted: @deleted.blank? ? "on" : "off")), class: 'button')
+    %li= link_to_with_icon('icon-filter', @deleted.blank? ? t('.show_deleted') : t('.show_active'), admin_product_variants_url(@product, @url_filters.merge(deleted: @deleted.blank? ? "on" : "off")), class: 'button')

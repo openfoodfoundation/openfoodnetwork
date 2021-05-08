@@ -4,7 +4,7 @@ OFNShared.directive "questionMarkWithTooltip", ($tooltip)->
   # Subsequently we patch the scope, template and restrictions
   tooltip = $tooltip 'questionMarkWithTooltip', 'questionMarkWithTooltip', 'click'
   tooltip.scope =
-    variant: "="
+    context: "="
     key: "="
   tooltip.templateUrl = "shared/question_mark_with_tooltip_icon.html"
   tooltip.replace = true

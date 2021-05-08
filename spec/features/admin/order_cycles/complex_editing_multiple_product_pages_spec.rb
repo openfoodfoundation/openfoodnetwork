@@ -16,7 +16,7 @@ feature '
     let!(:new_product) { create(:product, supplier: supplier_enterprise) }
 
     before do
-      stub_const("#{Api::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
+      stub_const("#{Api::V0::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
 
       login_as_admin_and_visit admin_order_cycle_incoming_path(order_cycle)
       expect(page).to have_content "1 / 2 selected"

@@ -85,6 +85,7 @@ pt:
               no_default_card: "^Nenhum cartão por defeito para este/a consumidor/a"
             shipping_method:
               not_available_to_shop: "não está disponível para %{shop}"
+  customer_instructions: "Instruções para o consumidor"
   devise:
     confirmations:
       send_instructions: "Daqui a uns minutos irá receber um email com instruções sobre como confirmar a sua conta."
@@ -117,6 +118,8 @@ pt:
   models:
     order_cycle:
       cloned_order_cycle_name: "CÓPIA DE%{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Taxa de imposto"
   validators:
     date_time_string_validator:
       not_string_error: "deve ser texto"
@@ -262,7 +265,6 @@ pt:
   error: Erro
   processing_payment: "Pagamento em processamento..."
   no_pending_payments: "Sem pagamentos pendentes"
-  invalid_payment_state: "Estado do pagamento inválido"
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
@@ -1122,6 +1124,7 @@ pt:
       yes_cancel_them: Cancelá-las
       no_keep_them: Mantê-las
       yes_i_am_sure: Sim, tenho a certeza
+      number: "Número"
       order_update_issues_msg: Não foi possível actualizar automaticamente algumas das encomendas, provavelmente porque foram editadas manualmente. Por favor reveja os problemas listados abaixo e faça os ajustes necessários às encomendas individuais.
       no_results:
         no_subscriptions: Ainda não existem subscrições....
@@ -1518,7 +1521,9 @@ pt:
   shopping_tabs_home: "Início"
   shopping_tabs_shop: "Loja"
   shopping_tabs_about: "Sobre"
+  shopping_tabs_producers: "Produtores"
   shopping_tabs_contact: "Contacto"
+  shopping_tabs_groups: "Grupos"
   shopping_contact_address: "Morada"
   shopping_contact_web: "Contacto"
   shopping_contact_social: "Seguir"
@@ -1547,6 +1552,7 @@ pt:
   hubs_distance: Mais próximo a
   hubs_distance_filter: "Mostrar lojas próximas a %{location}"
   shop_changeable_orders_alert_html:
+    one: 'A sua encomenda <a href=''%{path}'' target=''_blank''>%{shop}/%{order}</a> está actualmente aberta para revisão. Pode fazer alterações até %{oc_close}. '
     few: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
     many: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
     other: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
@@ -1662,28 +1668,29 @@ pt:
   shops_signup_help: Estamos prontos para ajudar.
   shops_signup_help_text: Você está a precisar de melhor retorno, de novos clientes e parceiros de logística. Está a precisar que a sua história seja contada em grupos de consumo, em retalho e à mesa de jantar.
   shops_signup_detail: Aqui está o detalhe.
-  orders: Encomendas
-  orders_fees: Taxas...
-  orders_edit_title: Carrinho de Compras
-  orders_edit_headline: O seu carrinho de compras
-  orders_edit_time: Encomenda pronta para
-  orders_edit_continue: Continuar a comprar
-  orders_edit_checkout: Finalizar compra
+  orders: "Encomendas"
+  orders_fees: "Taxas..."
+  orders_edit_title: "Carrinho de Compras"
+  orders_edit_headline: "O seu carrinho de compras"
+  orders_edit_time: "Encomenda pronta para"
+  orders_edit_continue: "Continuar a comprar"
+  orders_edit_checkout: "Finalizar compra"
   orders_form_empty_cart: "Carrinho vazio"
-  orders_form_subtotal: Subtotal dos produtos
-  orders_form_admin: Administração & Logística
-  orders_form_total: Total
-  orders_oc_expired_headline: Este ciclo de encomendas está fechado
+  orders_form_update_cart: "Atualizar"
+  orders_form_subtotal: "Subtotal dos produtos"
+  orders_form_admin: "Administração & Logística"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Este ciclo de encomendas está fechado"
   orders_oc_expired_text: "Desculpe, este ciclo de encomendas fechou há %{time} atrás. Por favor entre em contacto directamente com a sua central para saber se podem aceitar encomendas tardias."
   orders_oc_expired_text_others_html: "Desculpe, este ciclo de encomendas fechou há %{time} atrás.  Por favor entre em contacto directamente com a sua central para saber se podem aceitar encomendas tardias <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou veja os outros ciclos de encomendas que estão disponíveis nesta central"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefone:"
-  orders_show_title: Confimação de Encomenda
-  orders_show_time: Encomenda pronta em
+  orders_show_title: "Confimação de Encomenda"
+  orders_show_time: "Encomenda pronta em"
   orders_show_order_number: "Encomenda #%{number}"
-  orders_show_cancelled: Cancelada
-  orders_show_confirmed: Confirmada
+  orders_show_cancelled: "Cancelada"
+  orders_show_confirmed: "Confirmada"
   orders_your_order_has_been_cancelled: "A sua encomenda foi cancelada"
   orders_could_not_cancel: "Pedimos desculpa, a sua encomenda não pode ser cancelada"
   orders_cannot_remove_the_final_item: "Não é possível remover o item final de uma encomenda, em vez disso, por favor cancele a encomenda."
@@ -1691,9 +1698,9 @@ pt:
     few: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
     many: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
     other: "%{count}itens adicionais já confirmados para este ciclo de encomendas "
-  orders_bought_edit_button: Editar itens confirmados
+  orders_bought_edit_button: "Editar itens confirmados"
   orders_bought_already_confirmed: "* já confirmado"
-  orders_confirm_cancel: Tem a certeza que quer cancelar esta encomenda?
+  orders_confirm_cancel: "Tem a certeza que quer cancelar esta encomenda?"
   order_processed_successfully: "A sua encomenda foi processada com sucesso"
   products_cart_distributor_choice: "Distribuidor para a sua encomenda:"
   products_cart_distributor_change: "O distribuidor para esta encomenda será alterado para %{name} se adicionar este produto ao carrinho."
@@ -1777,7 +1784,7 @@ pt:
       details:
         title: "Detalhes"
         headline: "Vamos começar"
-        enterprise: "Primeiro precisamos de saber um pouco sobre a sua organização:"
+        enterprise: "Primeiro precisamos saber mais sobre a sua organização:"
         producer: "Primeiro precisamos de saber um pouco sobre a sua quinta:"
         enterprise_name_field: "Nome da Organização:"
         producer_name_field: "Nome da Quinta"
@@ -2649,6 +2656,9 @@ pt:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estivere pronto/a!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Gerar Relatório"
       enterprise_fee_summaries:
         filters:
           date_range: "Intervalo de Datas"
@@ -2694,6 +2704,8 @@ pt:
               tax_category_name: "Categoria de Imposto"
               total_amount: "Soma Total"
         invalid_filter_parameters: "Os filtros que selecionou para este relatório são inválidos."
+      report:
+        none: "Nenhum"
   order: "Encomenda"
   distribution: "Distribuição"
   order_details: "Detalhes da Encomenda"
@@ -2724,7 +2736,13 @@ pt:
   previous: "Anterior"
   last: "Último"
   spree:
+    all: "Tudo"
+    category: "Categoria"
+    credit: "Crédito"
     more: "Mais"
+    no_pending_payments: "Sem pagamentos pendentes"
+    none: "Nenhum"
+    updating: "Atualizando"
     your_order_is_empty_add_product: "A sua encomenda está vazia, por favor procure e adicione um produto em cima"
     add_product: "Adicionar Produto"
     name_or_sku: "Nome ou Código (insira pelo menos 4 caracteres)"
@@ -2865,6 +2883,7 @@ pt:
     successfully_updated: '%{resource} foi actualizado/a com sucesso!'
     payment_method: "Método de Pagamento"
     payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
+    sku: "SKU"
     actions:
       update: "Atualizar"
       cancel: "Cancelar"
@@ -2882,6 +2901,8 @@ pt:
           header:
             store: Loja
     admin:
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Painel de controlo"
         orders: "Encomendas"
@@ -3009,6 +3030,7 @@ pt:
           back_to_shipping_methods_list: "Voltar à Lista de Categorias de Envio"
         form:
           categories: "Categorias"
+          tax_category: "Categoria de Imposto"
           zones: "Zonas"
           both: "Ambos Checkout e Administração"
           back_end: "Só Administração"
@@ -3147,7 +3169,6 @@ pt:
           price: "Preço"
           options: "Opções"
           no_results: "Nenhum resultado"
-          to_add_variants_you_must_first_define: "Para adicionar variants, primeiro tem de"
           option_types: "Tipos de Opções"
           option_values: "Opções de Valor"
           and: "e"
@@ -3159,6 +3180,7 @@ pt:
         form:
           sku: "SKU"
           price: "Preço"
+          unit_price: "Preço Unitário"
           display_as: "Mostrar como"
           display_name: "Nome a apresentar"
           display_as_placeholder: 'por ex. 2 kg'

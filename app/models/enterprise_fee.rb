@@ -1,4 +1,4 @@
-class EnterpriseFee < ActiveRecord::Base
+class EnterpriseFee < ApplicationRecord
   include Spree::Core::CalculatedAdjustments
 
   acts_as_paranoid

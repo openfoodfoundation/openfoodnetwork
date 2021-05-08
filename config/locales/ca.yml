@@ -85,6 +85,11 @@ ca:
               no_default_card: "^ No hi ha cap targeta predeterminada disponible per a aquesta consumidora"
             shipping_method:
               not_available_to_shop: "no està disponible per %{shop}"
+  card_details: "Dades de la targeta"
+  card_type: "Tipus de targeta"
+  cardholder_name: "Nom del titular de la targeta"
+  community_forum_url: "URL del fòrum de la comunitat"
+  customer_instructions: "Instruccions de la consumidora"
   devise:
     confirmations:
       send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
@@ -114,11 +119,39 @@ ca:
         updated_not_active: "La vostra contrasenya s'ha restablert, però el vostre correu electrònic encara no s'ha confirmat."
         updated: "La vostra contrasenya s'ha canviat correctament. Ja teniu la sessió iniciada."
         send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
+  home_page_alert_html: "HTML banner d'alerta de la pàgina d'inici"
+  hub_signup_case_studies_html: "HTML casos d'estudi de hub"
+  hub_signup_detail_html: "HTML detall del registre de hub"
+  hub_signup_pricing_table_html: "HTML taula de preus de registre de hub"
+  group_signup_case_studies_html: "HTML casos d'estudi d’inscripció de grup"
+  group_signup_detail_html: "HTML informació detallada de registre de grup"
+  group_signup_pricing_table_html: "HTML taula de preus d'inscripció de grup"
+  item_description: "Descripció de l'article"
+  menu_1_icon_name: "Nom de la icona del menú 1"
+  menu_2_icon_name: "Nom de la icona del menú 2"
+  menu_3_icon_name: "Nom de la icona del menú 3"
+  menu_4_icon_name: "Nom de la icona del menú 4"
+  menu_5_icon_name: "Nom de la icona del menú 5"
+  menu_6_icon_name: "Nom de la icona del menú 6"
+  menu_7_icon_name: "Nom de la icona del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "CÒPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Inclòs en el preu"
+  open_street_map_enabled: "S'ha activat Open Street Map"
+  open_street_map_default_latitude: "latitud predeterminada d'Open Street Map"
+  open_street_map_default_longitude: "longitud predeterminada d'Open Street Map"
+  open_street_map_provider_name: "nom del proveïdor d'Open Street Map"
+  open_street_map_provider_options: "opcions del proveïdor d'Open Street Map"
+  producer_signup_case_studies_html: "HTML estudis de casos de productora"
+  producer_signup_detail_html: "HTML detall del registre de la productora"
+  producer_signup_pricing_table_html: "HTML taula de preus d'inscripció de la productora"
+  producers_social: "Raó social de la productora"
+  resume_order: "Reprèn la comanda"
+  sku: "Número de referència (SKU)"
+  subtotal: "Subtotal"
+  tax_rate: "Taxa d'impost"
   validators:
     date_time_string_validator:
       not_string_error: "ha de ser una seqüència"
@@ -144,6 +177,7 @@ ca:
   producer_mailer:
     order_cycle:
       subject: "Informe del cicle de comanda per %{producer}"
+  provider_settings: "Configuració del proveïdor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Benvolguda consumidora:"
@@ -264,7 +298,7 @@ ca:
   error: Error
   processing_payment: "S'està processant el pagament..."
   no_pending_payments: "No hi ha pagaments pendents"
-  invalid_payment_state: "Estat de pagament no vàlid"
+  invalid_payment_state: "Estat de pagament invàlid: %{state}"
   filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
@@ -283,6 +317,8 @@ ca:
   height: "Alçada"
   width: "Amplada"
   depth: "Profunditat"
+  payment_could_not_process: "No s'ha pogut processar el pagament"
+  payment_could_not_complete: "No s'ha pogut completar el pagament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -298,8 +334,12 @@ ca:
     destroy: "Eliminar"
     rename: "Reanomenar"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
     begins_on: Comença
+    bill_address: "Adreça de factura"
+    ship_address: "Adreça d'enviament"
     customer: Consumidora
     date: Data
     email: E-mail
@@ -1067,6 +1107,7 @@ ca:
       index:
         title: "Subscripcions"
         new: "Nova subscripció"
+      issue: "Incidència"
       new:
         title: "Nova subscripció"
       edit:
@@ -1148,6 +1189,7 @@ ca:
       yes_cancel_them: Cancel·lar-les
       no_keep_them: Conservar-les
       yes_i_am_sure: Sí, n'estic segur
+      number: "Número"
       order_update_issues_msg: Algunes comandes no s'han pogut actualitzar automàticament, probablement perquè s'han editat manualment. Reviseu els problemes que es detallen a continuació i realitzeu els ajustaments a comandes individuals si és necessari.
       no_results:
         no_subscriptions: Encara no hi ha cap subscripció...
@@ -1315,6 +1357,12 @@ ca:
   address2: Adreça (continua)
   city: Municipi
   city_placeholder: 'p. ex: Sitges'
+  latitude: Latitud
+  latitude_placeholder: 'ex: -37,4713077'
+  latitude_longitude_tip: La latitud i la longitud són necessàries per mostrar la vostra organització al mapa.
+  longitude: Longitud
+  longitude_placeholder: 'ex: 144,7851531'
+  use_geocoder: Voleu calcular la latitud i la longitud automàticament a partir de l'adreça?
   postcode: Codi postal
   postcode_placeholder: 'p. ex: 08870'
   suburb: Barri
@@ -1575,7 +1623,9 @@ ca:
   shopping_tabs_home: "Inici"
   shopping_tabs_shop: "Botiga"
   shopping_tabs_about: "Sobre"
+  shopping_tabs_producers: "Productors"
   shopping_tabs_contact: "Contacte"
+  shopping_tabs_groups: "Xarxes/Grups"
   shopping_contact_address: "Adreça"
   shopping_contact_web: "Contacte"
   shopping_contact_social: "Segueix"
@@ -1727,39 +1777,40 @@ ca:
   shops_signup_help: Estem preparadess per ajudar.
   shops_signup_help_text: Necessites un millor retorn. Necessites noves compradores i sòcies logístiques. Necessites la teva història explicada a través de majoristes, minoristes i de la taula de la cuina.
   shops_signup_detail: Aquest és el detall.
-  orders: Comandes
-  orders_fees: Comissions...
-  orders_edit_title: Cistella de la compra
-  orders_edit_headline: El teu cistell de la compra
-  orders_edit_time: Comanda llesta per
-  orders_edit_continue: Continuar comprant
-  orders_edit_checkout: Realitza la compra
+  orders: "Comandes"
+  orders_fees: "Comissions..."
+  orders_edit_title: "Cistella de la compra"
+  orders_edit_headline: "El teu cistell de la compra"
+  orders_edit_time: "Comanda llesta per"
+  orders_edit_continue: "Continuar comprant"
+  orders_edit_checkout: "Realitza la compra"
   orders_form_empty_cart: "Cistella buida"
-  orders_form_subtotal: Subtotal
-  orders_form_admin: Administració i manipulació
-  orders_form_total: Total
-  orders_oc_expired_headline: S'han tancat les comandes per a aquest cicle de comanda
+  orders_form_update_cart: "Actualitzar"
+  orders_form_subtotal: "Subtotal"
+  orders_form_admin: "Administració i manipulació"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "S'han tancat les comandes per a aquest cicle de comanda"
   orders_oc_expired_text: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps."
   orders_oc_expired_text_others_html: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps<strong> %{link} </strong>."
   orders_oc_expired_text_link: "o consulta els altres cicles de comanda disponibles en aquest grup"
   orders_oc_expired_email: "Correu electrònic:"
   orders_oc_expired_phone: "Telèfon:"
-  orders_show_title: Confirmació de la comanda
-  orders_show_time: Comanda preparada
+  orders_show_title: "Confirmació de la comanda"
+  orders_show_time: "Comanda preparada"
   orders_show_order_number: "Comanda # %{number}"
-  orders_show_cancelled: Cancel·lada
-  orders_show_confirmed: Confirmada
+  orders_show_cancelled: "Cancel·lada"
+  orders_show_confirmed: "Confirmada"
   orders_your_order_has_been_cancelled: "S'ha cancel·lat la teva comanda"
   orders_could_not_cancel: "Disculpa, no s'ha pogut cancel·lar la teva comanda "
   orders_cannot_remove_the_final_item: "No es pot eliminar l'article final d'una comanda, si us plau, en comptes d'això cancel·leu la comanda."
   orders_bought_items_notice:
-    one: Ja s'ha confirmat un article addicional per a aquest cicle de comanda
+    one: "Ja s'ha confirmat un article addicional per a aquest cicle de comanda"
     few: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     many: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
     other: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
-  orders_bought_edit_button: Edita articles confirmats
+  orders_bought_edit_button: "Edita articles confirmats"
   orders_bought_already_confirmed: "* ja confirmat"
-  orders_confirm_cancel: Estàs segur que vols cancel·lar aquesta comanda?
+  orders_confirm_cancel: "Estàs segur que vols cancel·lar aquesta comanda?"
   order_processed_successfully: "La teva comanda s'ha processat amb èxit"
   products_cart_distributor_choice: "Distribuïdora de la teva comanda:"
   products_cart_distributor_change: "La teva distribuïdora d'aquesta comanda canviarà a %{name} si afegeixes aquest producte a la teva cistella."
@@ -1845,7 +1896,7 @@ ca:
       details:
         title: "Detalls"
         headline: "Comencem!"
-        enterprise: "Ep! Primer ens cal saber una mica sobre la vostra organització:"
+        enterprise: "Ep! Primer necessitem saber una mica sobre la vostra organització:"
         producer: "Ep! Primer necessitem saber una mica sobre la teva granja:"
         enterprise_name_field: "Nom de l'organització:"
         producer_name_field: "Nom de la granja:"
@@ -1865,6 +1916,11 @@ ca:
         state_field_error: "Estat obligatori"
         country_field: "País:"
         country_field_error: "Si us plau, selecciona un país"
+        map_location: "Ubicació del mapa"
+        locate_address: "Localitzeu l'adreça al mapa"
+        drag_pin: "Si no és precís, arrossegueu i deixeu anar el pin a la ubicació correcta."
+        confirm_address: "Confirmo que la posició indicada de l'organització al mapa és correcta."
+        drag_map_marker: "A causa dels molts productors que operen a les zones rurals, la precisió dels mapes està en millora continua. Ajudeu-nos a entendre millor on esteu ubicat interactuant amb el mapa anterior per moure el pin fent clic o arrossegant-lo fins a la ubicació més precisa segons el que vosaltres sabeu."
       contact:
         title: "Contacte"
         who_is_managing_enterprise: "Qui és responsable de gestionar %{enterprise}?"
@@ -2418,6 +2474,7 @@ ca:
           S'ha produït un problema en afegir aquest producte a la cistella. Potser
           ha deixat d'estar disponible o la botiga a tancat.
     admin:
+      unit_price_tooltip: "El preu unitari augmenta la transparència, ja que permet als vostres clients comparar fàcilment preus entre diferents productes i mides d’envàs. Tingueu en compte que el preu unitari final que es mostra a l’aparador pot variar ja que inclou impostos i taxes."
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
         got_it: "Ho tinc"
@@ -2665,8 +2722,7 @@ ca:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
       price_breakdown: "Desglossament del preu"
-      unit_price_tooltip:
-        shopfront: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
+      unit_price_tooltip: "Aquest és el preu unitari d’aquest producte. Us permet comparar el preu dels productes independentment de les mides i els pesos dels envasos."
     variants:
       on_demand:
         'yes': "Sota demanda"
@@ -2813,6 +2869,15 @@ ca:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Compra grupal - Assignació"
+          bulk_coop_customer_payments: "Compra grupal - Pagaments de les consumidores"
+          bulk_coop_packing_sheets: "Compra grupal - Fulls de preparació de cistelles"
+          bulk_coop_supplier_report: "Compra grupal - Totals per proveïdor"
+          date_range: "Interval de dates"
+          generate_report: "Generar informe"
+          report_format_csv: "Descarrega com a CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Interval de dates"
@@ -2858,6 +2923,8 @@ ca:
               tax_category_name: "Categoria d'impostos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Els filtres que heu seleccionat per a aquest informe no són vàlids."
+      report:
+        none: "Cap"
   order: "Comanda"
   distribution: "Distribució"
   order_details: "Detalls de la comanda"
@@ -2890,7 +2957,53 @@ ca:
   previous: "Anterior"
   last: "Últim"
   spree:
+    add_country: "Afegeix país"
+    add_state: "Afegeix estat"
+    adjustment: "Ajustament"
+    all: "Tots"
+    associated_adjustment_closed: "S'ha tancat l'ajustament associat"
+    back_to_adjustments_list: "Torna als ajustaments"
+    back_to_users_list: "Tornar als usuaris"
+    back_to_zones_list: "Tornar a zones"
+    card_code: "Codi de la targeta"
+    card_number: "Número de targeta"
+    category: "Categoria"
+    created_successfully: "Creat correctament"
+    credit: "Crèdit"
+    editing_tax_category: "Editant la categoria fiscal"
+    editing_tax_rate: "Editant el tipus impositiu"
+    editing_zone: "Editant zona"
+    expiration: "Caducitat"
+    invalid_payment_provider: "Proveïdor de pagaments invàlid"
+    items_cannot_be_shipped: "Els articles no es poden enviar"
+    gateway_config_unavailable: "La configuració de la passarel·la no està disponible"
+    gateway_error: "El pagament ha fallat"
     more: "Més"
+    new_adjustment: "Nou ajustament"
+    new_order_completed: "S'ha completat la nova comanda"
+    new_tax_category: "Nova categoria fiscal"
+    new_taxon: "Nou tàxon"
+    new_user: "Nou usuari"
+    no_pending_payments: "No hi ha pagaments pendents"
+    none: "Cap"
+    not_found: "No trobat"
+    notice_messages:
+      variant_deleted: "Variant eliminada"
+    or: "O bé"
+    order_processed_successfully: "La comanda s'ha processat correctament"
+    payment_method_not_supported: "No s'admet la forma de pagament"
+    resend_authorization_email: "Torneu a enviar el correu electrònic d’autorització"
+    rma_credit: "credit RMA"
+    server_error: "Error del servidor"
+    shipping_method_names:
+      UPS Ground: "UPS Ground"
+    start_date: "Data d'inici"
+    successfully_removed: "S'ha suprimit correctament"
+    taxonomy_edit: "Edició de taxonomia"
+    taxonomy_tree_error: "Error d'arbre de taxonomia"
+    taxonomy_tree_instruction: "Instrucció d'arbre de taxonomia"
+    tree: "Arbre"
+    updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"
@@ -2918,6 +3031,7 @@ ca:
     tracking_number: "Número de seguiment"
     order_total: "Total comanda"
     customer_details: "Detalls de la consumidora"
+    customer_details_updated: "S'han actualitzat les dades de la consumidora"
     customer_search: "Cerca la consumidora"
     choose_a_customer: "Tria una consumidora"
     account: "Compte"
@@ -3068,6 +3182,8 @@ ca:
     payment_method: "Mètode de pagament"
     payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
     not_available: "No disponible"
+    sku: "Número de referència (SKU)"
+    there_are_no_items_for_this_order: "No hi ha articles per a aquesta comanda."
     order_populator:
       out_of_stock: '%{item} està esgotat.'
     actions:
@@ -3095,7 +3211,17 @@ ca:
         login_nav:
           header:
             store: Botiga
+    validation:
+      must_be_int: "ha de ser un nombre enter"
     admin:
+      mail_methods:
+        send_testmail: "Enviar correu electrònic de prova"
+        testmail:
+          delivery_success: "S'ha enviat el correu electrònic de prova."
+          error: "S'ha produït un error en intentar enviar el correu electrònic de prova."
+      unit_price_tooltip: "El preu unitari augmenta la transparència, ja que permet als vostres clients comparar fàcilment preus entre diferents productes i mides d’envàs. Tingueu en compte que el preu unitari final que es mostra a l’aparador pot variar ja que inclou impostos i taxes."
+      subscriptions:
+        number: "Número"
       tab:
         dashboard: "Panell"
         orders: "Comandes"
@@ -3164,6 +3290,8 @@ ca:
           received: "Rebut"
           canceled: "Cancel·lat"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No es pot afegir l'article a la comanda cancel·lada"
         index:
           listing_orders: "Llistat comandes"
           new_order: "Nova comanda"
@@ -3206,6 +3334,10 @@ ca:
       overview:
         enterprises_header:
           ofn_with_tip: Les organitzacions són productores i/o grups de consum i són la unitat bàsica d'organització dins d'Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "no té comissions d'organització"
+          has_no_payment_methods: "no té mètodes de pagament"
+          has_no_shipping_methods: "no té mètodes d'enviament"
         products:
           active_products:
             zero: "No tens cap producte actiu."
@@ -3244,6 +3376,7 @@ ca:
           back_to_shipping_methods_list: "Tornar al llistat de mètodes d'enviament"
         form:
           categories: "Categories"
+          tax_category: "Categoria d'impostos"
           zones: "Zones"
           both: "Comandes com administració"
           back_end: "Només pàgina administració (back office) "
@@ -3325,6 +3458,7 @@ ca:
           unit_name: "Nom de la unitat"
           price: "Preu"
           unit_price: "Preu unitari"
+          unit_price_legend: "Calculat en funció del preu de l'article"
           on_hand: "Disponibles"
           on_demand: "Sota demanda"
           product_description: "Descripció del producte"
@@ -3395,7 +3529,6 @@ ca:
           price: "Preu"
           options: "Opcions"
           no_results: "Sense resultats"
-          to_add_variants_you_must_first_define: "Per afegir variants, primer heu de definir"
           option_types: "Tipus d'opcions"
           option_values: "Valors d’opció"
           and: "i"
@@ -3407,6 +3540,7 @@ ca:
         form:
           sku: "Número de referència (SKU)"
           price: "Preu"
+          unit_price: "Preu unitari"
           display_as: "Mostra com"
           display_name: "Nom de visualització"
           display_as_placeholder: 'per exemple. 2 kg'
@@ -3643,3 +3777,42 @@ ca:
         spree/payment:
           one: Pagament
           other: Pagaments
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadament 1 hora
+        other: aprox. %{count} hores
+      about_x_months:
+        one: aproximadament 1 mes
+        other: aprox. %{count} mesos
+      about_x_years:
+        one: aproximadament 1 any
+        other: aprox. %{count} anys
+      almost_x_years:
+        one: gairebé 1 any
+        other: gairebé %{count} anys
+      half_a_minute: mig minut
+      less_than_x_seconds:
+        one: menys d&#39;1 segon
+        other: menys de %{count} segons
+      less_than_x_minutes:
+        one: menys d’un minut
+        other: menys de %{count} minuts
+      over_x_years:
+        one: més d’un any
+        other: més de %{count} anys
+      x_seconds:
+        one: "1 segon"
+        other: "%{count} segons"
+      x_minutes:
+        one: "1 minut"
+        other: "%{count} minuts"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dies"
+      x_months:
+        one: "1 mes"
+        other: "%{count} mesos"
+      x_years:
+        one: "1 any"
+        other: "%{count} anys"

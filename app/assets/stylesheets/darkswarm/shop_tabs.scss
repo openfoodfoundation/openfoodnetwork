@@ -9,7 +9,7 @@
     color: $dark-grey;
     box-shadow: $distributor-header-shadow;
     position: relative;
-    z-index: 10;
+    z-index: $shop-navigation-zindex + 1;
 
     .columns {
       display: flex;

@@ -5,6 +5,7 @@ module Spree
 
       prepend_before_action :set_included_tax, only: [:create, :update]
       before_action :set_order_id, only: [:create, :update]
+      before_action :skip_changing_canceled_orders, only: [:create, :update]
       after_action :update_order, only: [:create, :update, :destroy]
       before_action :set_default_tax_rate, only: :edit
       before_action :enable_updates, only: :update
@@ -17,7 +18,12 @@ module Spree
       end
 
       def collection
-        parent.all_adjustments.eligible
+        order_adjustments = parent.adjustments.where.not(originator_type: 'EnterpriseFee')
+        admin_adjustments = parent.adjustments.admin
+        payment_fees = parent.all_adjustments.payment_fee.eligible
+        shipping_fees = parent.all_adjustments.shipping
+
+        order_adjustments.or(admin_adjustments) | payment_fees.or(shipping_fees)
       end
 
       def find_resource
@@ -26,6 +32,13 @@ module Spree
 
       def set_order_id
         @adjustment.order_id = parent.id
+      end
+
+      def skip_changing_canceled_orders
+        return unless @order.canceled?
+
+        flash[:error] = t("admin.adjustments.skipped_changing_canceled_order")
+        redirect_to admin_order_adjustments_path(@order) if @order.canceled?
       end
 
       # Choose a default tax rate to show on the edit form. The adjustment stores its included

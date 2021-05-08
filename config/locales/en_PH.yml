@@ -81,6 +81,7 @@ en_PH:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  customer_instructions: "Customer instructions"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -113,6 +114,8 @@ en_PH:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+  sku: "SKU"
+  tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -256,7 +259,6 @@ en_PH:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1110,6 +1112,7 @@ en_PH:
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
+      number: "Number"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_subscriptions: No subscriptions yet...
@@ -1514,7 +1517,9 @@ en_PH:
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
+  shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
+  shopping_tabs_groups: "Fees"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -1657,28 +1662,29 @@ en_PH:
   shops_signup_help: We're ready to help.
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
-  orders: Orders
-  orders_fees: Fees...
-  orders_edit_title: Shopping Cart
-  orders_edit_headline: Your shopping cart
-  orders_edit_time: Order ready for
-  orders_edit_continue: Continue shopping
-  orders_edit_checkout: Checkout
+  orders: "Orders"
+  orders_fees: "Fees..."
+  orders_edit_title: "Shopping Cart"
+  orders_edit_headline: "Your shopping cart"
+  orders_edit_time: "Order ready for"
+  orders_edit_continue: "Continue shopping"
+  orders_edit_checkout: "Checkout"
   orders_form_empty_cart: "Empty cart"
-  orders_form_subtotal: Produce subtotal
-  orders_form_admin: Admin & Handling
-  orders_form_total: Total
-  orders_oc_expired_headline: Orders have closed for this order cycle
+  orders_form_update_cart: "Update"
+  orders_form_subtotal: "Produce subtotal"
+  orders_form_admin: "Admin & Handling"
+  orders_form_total: "Total"
+  orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
   orders_oc_expired_text_others_html: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders <strong>%{link}</strong>."
   orders_oc_expired_text_link: "or see the other order cycles available at this hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Phone:"
-  orders_show_title: Order Confirmation
-  orders_show_time: Order ready on
+  orders_show_title: "Order Confirmation"
+  orders_show_time: "Order ready on"
   orders_show_order_number: "Order #%{number}"
-  orders_show_cancelled: Cancelled
-  orders_show_confirmed: Confirmed
+  orders_show_cancelled: "Cancelled"
+  orders_show_confirmed: "Confirmed"
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
@@ -1686,9 +1692,9 @@ en_PH:
     few: "%{count} additional items already confirmed for this order cycle"
     many: "%{count} additional items already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
-  orders_bought_edit_button: Edit confirmed items
+  orders_bought_edit_button: "Edit confirmed items"
   orders_bought_already_confirmed: "* already confirmed"
-  orders_confirm_cancel: Are you sure you want to cancel this order?
+  orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
@@ -1773,7 +1779,6 @@ en_PH:
       details:
         title: "Details"
         headline: "Let's Get Started"
-        enterprise: "Woot! First need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
@@ -2701,6 +2706,9 @@ en_PH:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          generate_report: "Generate Report"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -2746,6 +2754,8 @@ en_PH:
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
+      report:
+        none: "None"
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
@@ -2776,7 +2786,13 @@ en_PH:
   previous: "Previous"
   last: "Last"
   spree:
+    all: "All"
+    category: "Category"
+    credit: "Credit"
     more: "More"
+    no_pending_payments: "No pending payments"
+    none: "None"
+    updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
@@ -2939,6 +2955,7 @@ en_PH:
     successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
+    sku: "SKU"
     actions:
       update: "Update"
       cancel: "Cancel"
@@ -2956,6 +2973,8 @@ en_PH:
           header:
             store: Store
     admin:
+      subscriptions:
+        number: "Number"
       tab:
         dashboard: "Dashboard"
         orders: "Orders"
@@ -3102,6 +3121,7 @@ en_PH:
           back_to_shipping_methods_list: "Back To Shipping Methods List"
         form:
           categories: "Categories"
+          tax_category: "Tax Category"
           zones: "Zones"
       payment_methods:
         index:
@@ -3232,7 +3252,6 @@ en_PH:
           price: "Price"
           options: "Options"
           no_results: "No results"
-          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
           option_values: "Option Values"
           and: "and"
@@ -3244,6 +3263,7 @@ en_PH:
         form:
           sku: "SKU"
           price: "Price"
+          unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
         autocomplete:
