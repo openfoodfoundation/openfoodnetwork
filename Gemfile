@@ -12,6 +12,7 @@ gem 'awesome_nested_set'
 gem 'ransack', '2.4.2'
 gem 'responders'
 gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails's version
+gem 'webpacker', '~> 5'
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.3'

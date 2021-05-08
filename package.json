@@ -16,12 +16,16 @@
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
-    "karma-jasmine": "~0.3.8"
+    "karma-jasmine": "~0.3.8",
+    "webpack-dev-server": "^3.11.2"
   },
   "license": "AGPL-3.0",
   "dependencies": {
+    "@rails/webpacker": "5.3.0",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
-    "shortcut-buttons-flatpickr": "^0.3.1"
+    "shortcut-buttons-flatpickr": "^0.3.1",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   }
 }
