@@ -14,7 +14,7 @@ module Api
     end
 
     def payments
-      object.payments.joins(:payment_method).where('state IN (?)', %w(completed pending))
+      object.payments.joins(:payment_method).includes(:spree_payments).where('state IN (?)', %w(completed pending))
     end
 
     def shop_id
@@ -22,7 +22,7 @@ module Api
     end
 
     def item_count
-      object.line_items.size
+      object.line_items.inject(0) {|sum, line_item| sum + line_item.quantity}
     end
 
     def completed_at
