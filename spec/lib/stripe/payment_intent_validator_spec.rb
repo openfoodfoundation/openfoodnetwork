@@ -12,7 +12,7 @@ module Stripe
       let(:payment_intent_response_mock) { { status: 200, body: payment_intent_response_body } }
 
       before do
-        allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+        Stripe.api_key = "sk_test_12345"
 
         stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
           .with(headers: { 'Stripe-Account' => stripe_account_id })

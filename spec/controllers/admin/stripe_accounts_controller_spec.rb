@@ -6,7 +6,7 @@ describe Admin::StripeAccountsController, type: :controller do
   let(:enterprise) { create(:distributor_enterprise) }
 
   before do
-    allow(Stripe).to receive(:client_id) { "some_id" }
+    Stripe.client_id = "some_id"
   end
 
   describe "#connect" do
@@ -86,7 +86,7 @@ describe Admin::StripeAccountsController, type: :controller do
     end
 
     before do
-      allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+      Stripe.api_key = "sk_test_12345"
       Spree::Config.set(stripe_connect_enabled: false)
     end
 
