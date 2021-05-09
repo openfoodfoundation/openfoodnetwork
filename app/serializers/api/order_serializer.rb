@@ -22,7 +22,7 @@ module Api
     end
 
     def item_count
-      object.line_items.inject(0) {|sum, line_item| sum + line_item.quantity}
+      object.line_items.sum(&:quantity)
     end
 
     def completed_at
