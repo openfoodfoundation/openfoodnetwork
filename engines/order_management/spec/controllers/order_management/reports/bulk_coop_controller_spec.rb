@@ -17,7 +17,7 @@ describe OrderManagement::Reports::BulkCoopController, type: :controller do
     it "renders the report form" do
       get :new
 
-      expect(response).to be_success
+      expect(response.status).to eq 200
       expect(response).to render_template(new_template_path)
     end
   end
@@ -32,7 +32,7 @@ describe OrderManagement::Reports::BulkCoopController, type: :controller do
           }, report_format: "csv"
         }
 
-        expect(response).to be_success
+        expect(response.status).to eq 200
         expect(response.body).not_to be_blank
         expect(response.header["Content-Type"]).to eq("text/csv")
       end

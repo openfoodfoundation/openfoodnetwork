@@ -17,7 +17,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummariesController, type: :cont
     it "renders the report form" do
       get :new
 
-      expect(response).to be_success
+      expect(response.status).to eq 200
       expect(response).to render_template(new_template_path)
     end
   end
@@ -29,7 +29,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummariesController, type: :cont
           report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
         }
 
-        expect(response).to be_success
+        expect(response.status).to eq 200
         expect(response.body).not_to be_blank
         expect(response.header["Content-Type"]).to eq("text/csv")
       end

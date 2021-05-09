@@ -36,7 +36,7 @@ describe ShopController, type: :controller do
         oc2 = create(:simple_order_cycle, distributors: [distributor])
 
         spree_post :order_cycle, order_cycle_id: oc2.id
-        expect(response).to be_success
+        expect(response.status).to eq 200
         expect(controller.current_order_cycle).to eq(oc2)
       end
 
@@ -48,7 +48,7 @@ describe ShopController, type: :controller do
           oc2 = create(:simple_order_cycle, distributors: [distributor])
 
           spree_post :order_cycle, order_cycle_id: oc2.id
-          expect(response).to be_success
+          expect(response.status).to eq 200
           expect(response.body).to have_content oc2.id
         end
 
@@ -68,7 +68,7 @@ describe ShopController, type: :controller do
 
           it "returns the new order cycle details" do
             spree_post :order_cycle, order_cycle_id: oc2.id
-            expect(response).to be_success
+            expect(response.status).to eq 200
             expect(response.body).to have_content oc2.id
           end
         end
