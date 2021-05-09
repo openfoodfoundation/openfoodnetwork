@@ -531,6 +531,7 @@ describe Spree::Payment do
     end
 
     context "#save" do
+<<<<<<< HEAD
       context "completed payments" do
         it "updates order payment total" do
           payment = create(:payment, amount: 100, order: order, state: "completed")
@@ -571,6 +572,17 @@ describe Spree::Payment do
           expect(order_updater).to receive(:update_shipment_state)
           create(:payment, amount: 100, order: order)
         end
+=======
+      it "should call order#update_order!" do
+        gateway.name = 'Gateway'
+        gateway.distributors << create(:distributor_enterprise)
+        gateway.save!
+
+        order = create(:order)
+        payment = Spree::Payment.create(amount: 100, order: order, payment_method: gateway)
+        expect(order).to receive(:update_order!)
+        payment.save
+>>>>>>> 95ea3f27b... Rename order.update! to order.update_order! and adjustment.update! to adjustment.update_adjustment!
       end
 
       context "when profiles are supported" do
@@ -846,7 +858,7 @@ describe Spree::Payment do
       let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
 
       before do
-        order.reload.update!
+        order.reload.update_order!
       end
 
       context "when order-based calculator" do
@@ -878,7 +890,7 @@ describe Spree::Payment do
       let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
 
       before do
-        order.reload.update!
+        order.reload.update_order!
       end
 
       context "to Stripe payments" do

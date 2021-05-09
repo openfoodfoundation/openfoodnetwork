@@ -56,7 +56,7 @@ describe PaypalItemsBuilder do
                           amount: 23, originator: enterprise_fee, state: "closed")
     }
 
-    before { order.update! }
+    before { order.update_order! }
 
     it "should add up to the order total, minus any additional tax and the shipping cost" do
       items_total = items.sum { |i| i[:Quantity] * i[:Amount][:value] }

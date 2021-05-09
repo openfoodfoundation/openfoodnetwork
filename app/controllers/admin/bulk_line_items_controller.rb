@@ -35,7 +35,7 @@ module Admin
         if @line_item.update(line_item_params)
           order.update_line_item_fees! @line_item
           order.update_order_fees!
-          order.update!
+          order.update_order!
           render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed

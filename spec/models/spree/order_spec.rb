@@ -481,7 +481,7 @@ describe Spree::Order do
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }
-      allow(subject).to receive(:update!)
+      allow(subject).to receive(:update_order!)
     end
 
     it "clears all enterprise fee adjustments on the order" do
@@ -679,7 +679,7 @@ describe Spree::Order do
                           included_tax: 2, order: order)
       create(:adjustment, adjustable: shipment, originator: shipping_tax_rate,
                           amount: 10, order: order, state: "closed")
-      order.update!
+      order.update_order!
     end
 
     it "returns a sum of all tax on the order" do

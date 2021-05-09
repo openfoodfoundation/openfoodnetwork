@@ -230,7 +230,7 @@ module Spree
 
       # update the order totals, etc.
       order.create_tax_charge!
-      order.update!
+      order.update_order!
     end
 
     def update_inventory_before_destroy

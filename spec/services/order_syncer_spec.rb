@@ -178,7 +178,7 @@ describe OrderSyncer do
       context "when the bill_address on the order doesn't match that on the subscription" do
         before do
           order.bill_address.update!(firstname: "Jane")
-          order.update!
+          order.update_order!
         end
 
         it "does not update bill_address or ship_address on the order" do
@@ -223,7 +223,7 @@ describe OrderSyncer do
       context "when the bill_address on the order doesn't match that on the subscription" do
         before do
           order.bill_address.update!(firstname: "Jane")
-          order.update!
+          order.update_order!
         end
 
         it "does not update bill_address or ship_address on the order" do
@@ -351,7 +351,7 @@ describe OrderSyncer do
       context "when the ship address on the order doesn't match that on the subscription" do
         before do
           order.ship_address.update(firstname: "Jane")
-          order.update!
+          order.update_order!
         end
 
         it "does not update ship_address on the order" do

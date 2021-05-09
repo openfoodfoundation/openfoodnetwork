@@ -72,7 +72,7 @@ describe Spree::ReturnAuthorization do
     before do
       allow(return_authorization).to receive_messages(inventory_units: [inventory_unit], amount: -20)
       allow(Spree::Adjustment).to receive(:create)
-      allow(order).to receive(:update!)
+      allow(order).to receive(:update_order!)
     end
 
     it "should mark all inventory units are returned" do
@@ -95,7 +95,7 @@ describe Spree::ReturnAuthorization do
     end
 
     it "should update order state" do
-      expect(order).to receive :update!
+      expect(order).to receive :update_order!
       return_authorization.receive!
     end
   end

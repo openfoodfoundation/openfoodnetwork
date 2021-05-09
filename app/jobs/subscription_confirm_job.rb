@@ -90,13 +90,13 @@ class SubscriptionConfirmJob < ActiveJob::Base
   end
 
   def send_confirmation_email(order)
-    order.update!
+    order.update_order!
     record_success(order)
     SubscriptionMailer.confirmation_email(order).deliver_now
   end
 
   def send_failed_payment_email(order, error_message = nil)
-    order.update!
+    order.update_order!
     record_and_log_error(:failed_payment, order, error_message)
     SubscriptionMailer.failed_payment_email(order).deliver_now
   rescue StandardError => e

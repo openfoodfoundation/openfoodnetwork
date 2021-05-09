@@ -41,7 +41,7 @@ describe CheckoutHelper, type: :helper do
     }
 
     before do
-      order.update!
+      order.update_order!
       # Sanity check initial adjustments state
       expect(order.shipment_adjustments.count).to eq 1
       expect(order.adjustments.enterprise_fee.count).to eq 1

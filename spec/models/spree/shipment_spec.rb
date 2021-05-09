@@ -279,7 +279,7 @@ describe Spree::Shipment do
   context "#cancel" do
     it 'cancels the shipment' do
       allow(shipment).to receive(:ensure_correct_adjustment)
-      allow(shipment.order).to receive(:update!)
+      allow(shipment.order).to receive(:update_order!)
 
       shipment.state = 'pending'
       expect(shipment).to receive(:after_cancel)
@@ -302,7 +302,7 @@ describe Spree::Shipment do
   context "#resume" do
     it 'will determine new state based on order' do
       allow(shipment).to receive(:ensure_correct_adjustment)
-      allow(shipment.order).to receive(:update!)
+      allow(shipment.order).to receive(:update_order!)
 
       shipment.state = 'canceled'
       expect(shipment).to receive(:determine_state).and_return(:ready)
@@ -324,7 +324,7 @@ describe Spree::Shipment do
 
     it 'will determine new state based on order' do
       allow(shipment).to receive(:ensure_correct_adjustment)
-      allow(shipment.order).to receive(:update!)
+      allow(shipment.order).to receive(:update_order!)
 
       shipment.state = 'canceled'
       expect(shipment).to receive(:determine_state).twice.and_return('ready')
@@ -337,7 +337,7 @@ describe Spree::Shipment do
 
   context "#ship" do
     before do
-      allow(order).to receive(:update!)
+      allow(order).to receive(:update_order!)
       allow(shipment).to receive_messages(update_order: true, state: 'ready')
       allow(shipment).to receive_messages(fee_adjustment: charge)
       allow(shipping_method).to receive(:create_adjustment)

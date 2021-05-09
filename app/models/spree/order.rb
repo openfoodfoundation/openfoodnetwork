@@ -212,7 +212,7 @@ module Spree
       @updater ||= OrderManagement::Order::Updater.new(self)
     end
 
-    def update!
+    def update_order!
       updater.update
     end
 
@@ -748,8 +748,8 @@ module Spree
     def update_adjustment!(adjustment)
       return if adjustment.finalized?
 
-      adjustment.update!(force: true)
-      update!
+      adjustment.update_adjustment!(force: true)
+      update_order!
     end
 
     # object_params sets the payment amount to the order total, but it does this

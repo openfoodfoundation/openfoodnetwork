@@ -96,7 +96,7 @@ module Spree
     # more than on line items at once via accepted_nested_attributes the order
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
-    def update!(calculable = nil, force: false)
+    def update_adjustment!(calculable = nil, force: false)
       return amount if immutable? && !force
 
       if originator.present?

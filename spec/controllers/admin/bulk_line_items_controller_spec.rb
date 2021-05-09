@@ -212,7 +212,7 @@ describe Admin::BulkLineItemsController, type: :controller do
             expect(line_item1.order).to receive(:reload).with(lock: true)
             expect(line_item1.order).to receive(:update_line_item_fees!)
             expect(line_item1.order).to receive(:update_order_fees!)
-            expect(line_item1.order).to receive(:update!).twice
+            expect(line_item1.order).to receive(:update_order!).twice
 
             spree_put :update, params
           end

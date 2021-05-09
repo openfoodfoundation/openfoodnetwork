@@ -254,7 +254,7 @@ describe SubscriptionConfirmJob do
     end
 
     it "records a success and sends the email" do
-      expect(order).to receive(:update!)
+      expect(order).to receive(:update_order!)
       expect(job).to receive(:record_success).with(order).once
       job.send(:send_confirmation_email, order)
       expect(SubscriptionMailer).to have_received(:confirmation_email).with(order)
@@ -271,7 +271,7 @@ describe SubscriptionConfirmJob do
     end
 
     it "records and logs an error and sends the email" do
-      expect(order).to receive(:update!)
+      expect(order).to receive(:update_order!)
       expect(job).to receive(:record_and_log_error).with(:failed_payment, order, nil).once
       job.send(:send_failed_payment_email, order)
       expect(SubscriptionMailer).to have_received(:failed_payment_email).with(order)

@@ -16,7 +16,7 @@ module Spree
       end
     end
 
-    context "#update!" do
+    context "#update_adjustment!" do
       context "when originator present" do
         let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
 
@@ -27,31 +27,31 @@ module Spree
         it "should do nothing when closed" do
           adjustment.close
           expect(originator).not_to receive(:compute_amount)
-          adjustment.update!
+          adjustment.update_adjustment!
         end
 
         it "should do nothing when finalized" do
           adjustment.finalize
           expect(originator).not_to receive(:compute_amount)
-          adjustment.update!
+          adjustment.update_adjustment!
         end
 
         it "should ask the originator to recalculate the amount" do
           expect(originator).to receive(:compute_amount)
-          adjustment.update!
+          adjustment.update_adjustment!
         end
 
         context "using the :force argument" do
           it "should update adjustments without changing their state" do
             expect(originator).to receive(:compute_amount)
-            adjustment.update!(force: true)
+            adjustment.update_adjustment!(force: true)
             expect(adjustment.state).to eq "open"
           end
 
           it "should update closed adjustments" do
             adjustment.close
             expect(originator).to receive(:compute_amount)
-            adjustment.update!(force: true)
+            adjustment.update_adjustment!(force: true)
           end
         end
       end
@@ -59,7 +59,7 @@ module Spree
       it "should do nothing when originator is nil" do
         allow(adjustment).to receive_messages originator: nil
         expect(adjustment).not_to receive(:update_columns)
-        adjustment.update!
+        adjustment.update_adjustment!
       end
     end
 
@@ -556,9 +556,9 @@ module Spree
                             adjustable: order, amount: 456)
       }
 
-      describe "#update!" do
+      describe "#update_adjustment!" do
         it "sets a negative value equal to the return authorization amount" do
-          expect { return_adjustment.update! }.
+          expect { return_adjustment.update_adjustment! }.
             to change { return_adjustment.reload.amount }.to(-123)
         end
       end

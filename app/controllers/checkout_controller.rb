@@ -55,7 +55,7 @@ class CheckoutController < ::BaseController
     flash[:error] = I18n.t("checkout.failed")
     action_failed(e)
   ensure
-    @order.update!
+    @order.update_order!
   end
 
   # Clears the cached order. Required for #current_order to return a new order

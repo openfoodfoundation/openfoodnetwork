@@ -129,7 +129,7 @@ module OrderManagement
       end
 
       def update_all_adjustments
-        order.all_adjustments.reload.each(&:update!)
+        order.all_adjustments.reload.each(&:update_adjustment!)
       end
 
       def before_save_hook

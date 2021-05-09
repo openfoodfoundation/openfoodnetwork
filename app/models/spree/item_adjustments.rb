@@ -17,9 +17,9 @@ module Spree
     end
 
     def update_adjustments
-      adjustment_total = adjustments.additional.map(&:update!).compact.sum
-      included_tax_total = tax_adjustments.inclusive.reload.map(&:update!).compact.sum
-      additional_tax_total = tax_adjustments.additional.reload.map(&:update!).compact.sum
+      adjustment_total = adjustments.additional.map(&:update_adjustment!).compact.sum
+      included_tax_total = tax_adjustments.inclusive.reload.map(&:update_adjustment!).compact.sum
+      additional_tax_total = tax_adjustments.additional.reload.map(&:update_adjustment!).compact.sum
 
       item.update_columns(
         included_tax_total: included_tax_total,

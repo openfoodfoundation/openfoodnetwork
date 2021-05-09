@@ -66,7 +66,7 @@ module Spree
       order.shipped_shipments.collect{ |s| s.inventory_units.to_a }.flatten
     end
 
-    # Used when Adjustment#update! wants to update the related adjustment
+    # Used when Adjustment#update_adjustment! wants to update the related adjustment
     def compute_amount(*_args)
       -amount.abs
     end
@@ -105,7 +105,7 @@ module Spree
       )
 
       order.return if inventory_units.all?(&:returned?)
-      order.update!
+      order.update_order!
     end
 
     def allow_receive?

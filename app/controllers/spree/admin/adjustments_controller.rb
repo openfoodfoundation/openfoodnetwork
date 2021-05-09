@@ -14,7 +14,7 @@ module Spree
 
       def update_order
         @order.reload
-        @order.update!
+        @order.update_order!
       end
 
       def collection
