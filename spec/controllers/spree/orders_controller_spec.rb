@@ -533,7 +533,7 @@ describe Spree::OrdersController, type: :controller do
             end
 
             before do
-              order.update_attributes!(order_cycle_id: order_cycle.id, distributor_id: distributor.id)
+              order.update!(order_cycle_id: order_cycle.id, distributor_id: distributor.id)
             end
 
             it "returns the order" do
