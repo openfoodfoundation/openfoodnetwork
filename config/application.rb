@@ -3,16 +3,16 @@ require_relative 'boot'
 require "rails"
 [
   "active_record/railtie",
-  "active_storage/engine",
+  #"active_storage/engine",
   "action_controller/railtie",
   "action_view/railtie",
   "action_mailer/railtie",
   "active_job/railtie",
-  "action_cable/engine",
-  "action_mailbox/engine",
-  "action_text/engine",
+  #"action_cable/engine", # Enable this when installing StimulusReflex
+  #"action_mailbox/engine",
+  #"action_text/engine",
   "rails/test_unit/railtie",
-  "sprockets/railtie",
+  "sprockets/railtie" # Disable this after migrating to Webpacker
 ].each do |railtie|
   begin
     require railtie
