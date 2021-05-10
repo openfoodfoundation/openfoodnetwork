@@ -17,8 +17,7 @@
           %th.cart-item-delete-header
 
       %tbody#line_items{"data-hook" => ""}
-        = order_form.fields_for :line_items do |item_form|
-          = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
+        = render partial: 'line_item', collection: order_form.object.line_items, locals: {order_form: order_form}
 
       = render 'bought' if show_bought_items? && @order.cart?
 
