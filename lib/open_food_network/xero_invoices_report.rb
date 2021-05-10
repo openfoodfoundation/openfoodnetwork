@@ -20,7 +20,7 @@ module OpenFoodNetwork
 
     def search
       permissions = ::Permissions::Order.new(@user)
-      permissions.editable_orders.complete.not_state(:canceled).search(@opts[:q])
+      permissions.editable_orders.complete.not_state(:canceled).ransack(@opts[:q])
     end
 
     def orders

@@ -44,7 +44,7 @@ module Permissions
     def filtered_orders(orders)
       return orders unless filter_orders?
 
-      orders.complete.not_state(:canceled).search(search_params).result
+      orders.complete.not_state(:canceled).ransack(search_params).result
     end
 
     def filter_orders?

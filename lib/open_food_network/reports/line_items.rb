@@ -38,7 +38,7 @@ module OpenFoodNetwork
       attr_reader :orders_relation, :order_permissions
 
       def search_orders
-        orders_relation.search(@params[:q])
+        orders_relation.ransack(@params[:q])
       end
 
       # From the line_items given, returns the ones that are editable by the user
