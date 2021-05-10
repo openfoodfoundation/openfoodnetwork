@@ -21,6 +21,15 @@ GIT
   specs:
     ofn-qz (0.1.0)
 
+GIT
+  remote: https://github.com/openfoodfoundation/select2-rails.git
+  revision: fc240e85fbdf1878ff3c39d972c0cd9a312f5ed4
+  branch: v349_with_thor_v1
+  specs:
+    select2-rails (3.4.9)
+      sass-rails
+      thor (>= 0.14)
+
 PATH
   remote: engines/catalog
   specs:
@@ -563,9 +572,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    select2-rails (3.4.9)
-      sass-rails
-      thor (~> 0.14)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -764,7 +770,7 @@ DEPENDENCIES
   rubocop-rails
   sass (~> 3.4.0)
   sass-rails (< 5.1.0)
-  select2-rails (~> 3.4.7)
+  select2-rails!
   selenium-webdriver
   shoulda-matchers
   sidekiq
