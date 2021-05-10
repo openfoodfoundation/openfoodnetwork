@@ -27,6 +27,17 @@ module Spree
       remove_from_line_item(line_item, variant, quantity, shipment)
     end
 
+    def update_cart(params)
+      if order.update_attributes(params)
+        order.line_items = order.line_items.select {|li| li.quantity > 0 }
+        order.ensure_updated_shipments
+        update_order
+        true
+      else
+        false
+      end
+    end
+
     private
 
     def add_to_line_item(line_item, variant, quantity, shipment = nil)
@@ -40,7 +51,7 @@ module Spree
       end
 
       line_item.save
-      order.reload
+      update_order
       line_item
     end
 
@@ -55,8 +66,12 @@ module Spree
         line_item.save!
       end
 
-      order.reload
+      update_order
       line_item
+    end
+
+    def update_order
+      order.reload
     end
   end
 end
