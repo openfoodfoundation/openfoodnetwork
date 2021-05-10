@@ -517,6 +517,21 @@ module Spree
       shipments
     end
 
+    # Clear shipments and move order back to address state
+    def ensure_updated_shipments
+      if !self.completed? && shipments.any?
+        shipments.destroy_all
+        restart_checkout_flow
+      end
+    end
+
+    def restart_checkout_flow
+      self.update_columns(
+        state: checkout_steps.first,
+        updated_at: Time.zone.now,
+      )
+    end
+
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
