@@ -13,6 +13,7 @@ module Spree
     def add(variant, quantity = 1, shipment = nil)
       line_item = order.find_line_item_by_variant(variant)
       add_to_line_item(line_item, variant, quantity, shipment)
+      update_order
     end
 
     # Get current line item for variant
@@ -25,6 +26,7 @@ module Spree
       end
 
       remove_from_line_item(line_item, variant, quantity, shipment)
+      update_order
     end
 
     def update_cart(params)
@@ -51,7 +53,6 @@ module Spree
       end
 
       line_item.save
-      update_order
       line_item
     end
 
@@ -66,7 +67,6 @@ module Spree
         line_item.save!
       end
 
-      update_order
       line_item
     end
 
