@@ -164,6 +164,7 @@ describe Api::V0::ProductsController, type: :controller do
 
     context 'as an enterprise user' do
       let(:current_api_user) { supplier_enterprise_user(supplier) }
+      let!(:variant) { create(:variant, product_id: product.id) }
 
       it 'responds with a successful response' do
         spree_post :clone, product_id: product.id, format: :json
@@ -182,6 +183,27 @@ describe Api::V0::ProductsController, type: :controller do
 
         expect(response.status).to eq(201)
         expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
+      end
+
+      # test cases related to bug #660: product duplication clones master variant
+      
+      # stock info - clone is set to zero
+      it '(does not) clone the stock info of the product' do
+        spree_post :clone, product_id: product.id, format: :json
+        expect(json_response['on_hand']).to eq(0)
+      end
+
+      # variants: only the master variant of the product is cloned
+      it '(does not) clone variants from a product with several variants' do
+        spree_post :clone, product_id: product.id, format: :json
+        expect(Spree::Product.second.variants.count).not_to eq Spree::Product.first.variants.count
+      end
+
+      #price info: it does not consider price changes; it considers the price set upon product creation
+      it '(does not) clone price which was updated' do
+        product.update_attribute(:price, 2.22)
+        spree_post :clone, product_id: product.id, format: :json
+        expect(json_response['price']).not_to eq(2.22)
       end
     end
 
