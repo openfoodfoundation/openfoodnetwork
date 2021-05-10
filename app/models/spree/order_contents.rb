@@ -67,7 +67,6 @@ module Spree
       line_item.target_shipment = shipment
 
       if line_item.quantity == 0
-        Spree::OrderInventory.new(order).verify(line_item, shipment)
         line_item.destroy
       else
         line_item.save!
