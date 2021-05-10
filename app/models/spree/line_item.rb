@@ -65,10 +65,10 @@ module Spree
     # Find line items that are from order sorted by variant name and unit value
     scope :sorted_by_name_and_unit_value, -> {
       joins(variant: :product).
-        reorder("
+        reorder(Arel.sql("
           lower(spree_products.name) asc,
             lower(spree_variants.display_name) asc,
-            spree_variants.unit_value asc")
+            spree_variants.unit_value asc"))
     }
 
     scope :from_order_cycle, lambda { |order_cycle|
