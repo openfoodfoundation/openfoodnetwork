@@ -16,8 +16,9 @@ class CartService
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
 
+    variants_data = read_variants from_hash
+
     @order.with_lock do
-      variants_data = read_variants from_hash
       attempt_cart_add_variants variants_data
       overwrite_variants variants_data if overwrite
     end
