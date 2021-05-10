@@ -325,6 +325,12 @@ feature "Product Import", js: true do
       save_data
 
       expect(page).to have_selector '.inv-created-count', text: '1'
+
+      visit main_app.admin_inventory_path
+
+      expect(page).to have_content "Beets"
+      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand", selected: "Yes"
+      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price", with: "3.2"
     end
 
     it "handles on_demand and on_hand validations with inventory" do
