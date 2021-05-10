@@ -160,10 +160,6 @@ module Spree
       Spree::Money.new(item_cost, currency: currency)
     end
 
-    def editable_by?(_user)
-      !shipped?
-    end
-
     def update_amounts
       return unless fee_adjustment&.amount != cost
 
