@@ -132,7 +132,7 @@ group :test, :development do
   gem 'bullet'
   gem 'capybara'
   gem 'database_cleaner', require: false
-  gem "factory_bot_rails", '6.1.0', require: false
+  gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
