@@ -121,7 +121,7 @@ class Enterprise < ApplicationRecord
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
-    ready_enterprises = Enterprise.ready_for_checkout.
+    ready_enterprises = Enterprise.default_scoped.ready_for_checkout.
       except(:select).
       select('DISTINCT enterprises.id')
 

@@ -309,7 +309,7 @@ module Spree
       record = true
       while record
         random = "H#{Array.new(11) { rand(9) }.join}"
-        record = self.class.find_by(number: random)
+        record = self.class.default_scoped.find_by(number: random)
       end
       self.number = random
     end
