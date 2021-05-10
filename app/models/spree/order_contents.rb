@@ -13,7 +13,7 @@ module Spree
     def add(variant, quantity = 1, shipment = nil)
       line_item = order.find_line_item_by_variant(variant)
       add_to_line_item(line_item, variant, quantity, shipment)
-      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+      update_shipment(shipment)
       update_order
     end
 
@@ -27,7 +27,7 @@ module Spree
       end
 
       remove_from_line_item(line_item, variant, quantity, shipment)
-      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+      update_shipment(shipment)
       update_order
     end
 
@@ -43,6 +43,10 @@ module Spree
     end
 
     private
+
+    def update_shipment(shipment)
+      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+    end
 
     def add_to_line_item(line_item, variant, quantity, shipment = nil)
       if line_item
