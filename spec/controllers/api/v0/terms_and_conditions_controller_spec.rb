@@ -26,7 +26,7 @@ module Api
         it "removes terms and conditions file" do
           spree_delete :destroy, enterprise_id: enterprise
 
-          expect(response).to be_success
+          expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
           expect(enterprise.terms_and_conditions?).to be false

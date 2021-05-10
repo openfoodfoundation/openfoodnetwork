@@ -1141,12 +1141,8 @@ describe Spree::Order do
       end
 
       context "when finalized fee adjustments exist on the order" do
-        let(:payment_fee_adjustment) { order.all_adjustments.payment_fee.first }
-        let(:shipping_fee_adjustment) { order.shipment_adjustments.first }
-
         before do
-          payment_fee_adjustment.finalize!
-          shipping_fee_adjustment.finalize!
+          order.all_adjustments.each(&:finalize!)
           order.reload
         end
 
@@ -1155,6 +1151,7 @@ describe Spree::Order do
 
           # Check if fees got updated
           order.reload
+
           expect(order.adjustment_total).to eq expected_fees
           expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
           expect(order.shipment.included_tax_total).to eq 1.2

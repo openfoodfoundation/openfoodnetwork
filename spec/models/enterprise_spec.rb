@@ -195,7 +195,7 @@ describe Enterprise do
       e2 = create(:enterprise, permalink: "not_taken")
       e2.permalink = "taken"
       e2.save
-      expect(e2.permalink).to eq "not_taken"
+      expect(e2.reload.permalink).to eq "not_taken"
     end
   end
 

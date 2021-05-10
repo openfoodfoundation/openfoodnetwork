@@ -1,5 +1,5 @@
 - if Rails.env.test?
   %script{type: "text/javascript"}
-    = render file: "spec/support/fixtures/stripejs-mock.js"
+    = raw render file: "spec/support/fixtures/stripejs-mock.js"
 - else
   %script{src: "https://js.stripe.com/v3/", type: "text/javascript"}

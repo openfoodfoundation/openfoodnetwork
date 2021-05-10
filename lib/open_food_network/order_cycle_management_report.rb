@@ -51,7 +51,7 @@ module OpenFoodNetwork
         not_state(:canceled).
         distributed_by_user(@user).
         managed_by(@user).
-        search(params[:q])
+        ransack(params[:q])
     end
 
     def orders

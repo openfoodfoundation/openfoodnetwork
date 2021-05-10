@@ -30,7 +30,7 @@ module Api
         it "removes logo" do
           spree_delete :destroy, enterprise_id: enterprise
 
-          expect(response).to be_success
+          expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
           expect(enterprise.logo?).to be false
@@ -53,7 +53,7 @@ module Api
 
         it "allows removal of logo" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
 
@@ -62,7 +62,7 @@ module Api
 
         it "allows removal of logo" do
           spree_delete :destroy, enterprise_id: enterprise
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
 

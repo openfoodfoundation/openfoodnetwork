@@ -317,6 +317,8 @@ de_DE:
   height: "Höhe"
   width: "Breite"
   depth: "Tiefe"
+  payment_could_not_process: "Die Zahlung konnte nicht verarbeitet werden"
+  payment_could_not_complete: "Die Zahlung konnte nicht abgeschlossen werden"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"

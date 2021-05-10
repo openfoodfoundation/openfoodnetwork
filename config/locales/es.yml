@@ -317,6 +317,8 @@ es:
   height: "Altura"
   width: "Anchura"
   depth: "Profundidad"
+  payment_could_not_process: "No se pudo procesar el pago"
+  payment_could_not_complete: "No se pudo completar el pago"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
