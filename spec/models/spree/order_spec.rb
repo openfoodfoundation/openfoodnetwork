@@ -468,11 +468,6 @@ describe Spree::Order do
       li = Spree::LineItem.last
       expect(li.max_quantity).to eq(3)
     end
-
-    it "does nothing when the line item is not found" do
-      p = build_stubbed(:simple_product)
-      subject.set_variant_attributes(p.master, { 'max_quantity' => '3' }.with_indifferent_access)
-    end
   end
 
   describe "applying enterprise fees" do

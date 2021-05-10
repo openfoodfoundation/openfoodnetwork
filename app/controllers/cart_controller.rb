@@ -20,8 +20,6 @@ class CartController < BaseController
       render json: { error: cart_service.errors.full_messages.join(",") },
              status: :precondition_failed
     end
-
-    populate_variant_attributes
   end
 
   private
@@ -38,28 +36,6 @@ class CartController < BaseController
       authorize! :edit, order, session[:access_token]
     else
       authorize! :create, Spree::Order
-    end
-  end
-
-  def populate_variant_attributes
-    order = current_order.reload
-
-    populate_variant_attributes_from_variant(order) if params.key? :variant_attributes
-    populate_variant_attributes_from_product(order) if params.key? :quantity
-  end
-
-  def populate_variant_attributes_from_variant(order)
-    params[:variant_attributes].each do |variant_id, attributes|
-      permitted = attributes.permit(:quantity, :max_quantity).to_h.with_indifferent_access
-      order.set_variant_attributes(Spree::Variant.find(variant_id), permitted)
-    end
-  end
-
-  def populate_variant_attributes_from_product(order)
-    params[:products].each do |_product_id, variant_id|
-      max_quantity = params[:max_quantity].to_i
-      order.set_variant_attributes(Spree::Variant.find(variant_id),
-                                   max_quantity: max_quantity)
     end
   end
 end
