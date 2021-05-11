@@ -63,16 +63,9 @@ module Admin
       Spree::LineItem
     end
 
-    # Returns the appropriate serializer for this controller
-    #
-    # @return [Api::Admin::LineItemSerializer]
-    def serializer(_ams_prefix)
-      Api::Admin::LineItemSerializer
-    end
-
     def serialized_line_items
       ActiveModel::ArraySerializer.new(
-        @line_items, each_serializer: serializer(nil)
+        @line_items, each_serializer: Api::Admin::LineItemSerializer
       )
     end
 
