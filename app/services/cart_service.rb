@@ -77,7 +77,7 @@ class CartService
     if quantity_to_add > 0
       @order.add_variant(variant, quantity_to_add, max_quantity_to_add)
     else
-      @order.remove_variant variant
+      @order.contents.remove(variant)
     end
   end
 
@@ -119,7 +119,7 @@ class CartService
 
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)
-    @order.remove_variant(variant)
+    @order.contents.remove(variant)
   end
 
   def distributor_and_order_cycle

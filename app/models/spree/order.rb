@@ -575,12 +575,6 @@ module Spree
       save!
     end
 
-    def remove_variant(variant)
-      line_items.reload
-      current_item = find_line_item_by_variant(variant)
-      current_item.andand.destroy
-    end
-
     def cap_quantity_at_stock!
       line_items.includes(variant: :stock_items).find_each(&:cap_quantity_at_stock!)
     end
