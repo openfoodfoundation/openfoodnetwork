@@ -69,22 +69,22 @@ class CartService
   end
 
   def cart_add(variant, quantity, max_quantity)
-    quantity_to_add, max_quantity_to_add = quantities_to_add(variant, quantity, max_quantity)
-    if quantity_to_add > 0
-      @order.add_variant(variant, quantity_to_add, max_quantity_to_add)
+    final_quantity, final_max_quantity = final_quantities(variant, quantity, max_quantity)
+    if final_quantity > 0
+      @order.add_variant(variant, final_quantity, final_max_quantity)
     else
       @order.contents.remove(variant)
     end
   end
 
-  def quantities_to_add(variant, quantity, max_quantity)
+  def final_quantities(variant, quantity, max_quantity)
     # If not enough stock is available, add as much as we can to the cart
     on_hand = variant.on_hand
     on_hand = [quantity, max_quantity].compact.max if variant.on_demand
-    quantity_to_add = [quantity, on_hand].min
-    max_quantity_to_add = max_quantity # max_quantity is not capped
+    final_quantity = [quantity, on_hand].min
+    final_max_quantity = max_quantity # max_quantity is not capped
 
-    [quantity_to_add, max_quantity_to_add]
+    [final_quantity, final_max_quantity]
   end
 
   def overwrite_variants(variants)
