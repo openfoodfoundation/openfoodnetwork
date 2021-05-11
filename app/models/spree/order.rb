@@ -253,7 +253,7 @@ module Spree
     # This add_variant is equivalent but slightly different from Spree::OrderContents#add above.
     # Spree::OrderContents#add is the more modern version in Spree history
     #   but this add_variant has been customized for OFN FrontOffice.
-    def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
+    def add_variant(variant, quantity = 1, max_quantity = nil)
       line_items.reload
       current_item = find_line_item_by_variant(variant)
 
@@ -268,18 +268,11 @@ module Spree
       if current_item
         current_item.quantity = quantity
         current_item.max_quantity = max_quantity
-
-        current_item.currency = currency unless currency.nil?
         current_item.save
       else
         current_item = Spree::LineItem.new(quantity: quantity, max_quantity: max_quantity)
         current_item.variant = variant
-        if currency
-          current_item.currency = currency unless currency.nil?
-          current_item.price    = variant.price_in(currency).amount
-        else
-          current_item.price    = variant.price
-        end
+        current_item.price = variant.price
         line_items << current_item
       end
 

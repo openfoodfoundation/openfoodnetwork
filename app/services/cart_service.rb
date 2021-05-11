@@ -3,13 +3,12 @@ require 'open_food_network/scope_variant_to_hub'
 # Previously Spree::OrderPopulator. Modified to work with max_quantity and variant overrides.
 
 class CartService
-  attr_accessor :order, :currency
+  attr_accessor :order
   attr_reader :variants_h
   attr_reader :errors
 
   def initialize(order)
     @order = order
-    @currency = order.currency
     @errors = ActiveModel::Errors.new(self)
   end
 
@@ -76,7 +75,7 @@ class CartService
   def cart_add(variant, quantity, max_quantity)
     quantity_to_add, max_quantity_to_add = quantities_to_add(variant, quantity, max_quantity)
     if quantity_to_add > 0
-      @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
+      @order.add_variant(variant, quantity_to_add, max_quantity_to_add)
     else
       @order.remove_variant variant
     end
