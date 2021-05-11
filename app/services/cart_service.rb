@@ -36,7 +36,7 @@ class CartService
     variants_data.each do |variant_data|
       loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
 
-      if loaded_variant.deleted?
+      if loaded_variant.deleted? || !variant_data[:quantity].to_i.positive?
         order.contents.remove(loaded_variant)
         next
       end
@@ -60,7 +60,6 @@ class CartService
   def attempt_cart_add(variant, quantity, max_quantity = nil)
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
-    return unless quantity > 0
 
     scoper.scope(variant)
     return unless valid_variant?(variant)
@@ -70,7 +69,8 @@ class CartService
 
   def cart_add(variant, quantity, max_quantity)
     attributes = final_quantities(variant, quantity, max_quantity)
-    if attributes[:quantity] > 0
+
+    if attributes[:quantity].positive?
       @order.contents.update_or_create(variant, attributes)
     else
       @order.contents.remove(variant)
@@ -88,8 +88,9 @@ class CartService
   end
 
   def overwrite_variants(variants)
-    variants_removed(variants).each do |id|
-      cart_remove(id)
+    variants_removed(variants).each do |variant_id|
+      variant = Spree::Variant.with_deleted.find(variant_id)
+      cart_remove(variant)
     end
   end
 
