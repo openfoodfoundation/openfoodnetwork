@@ -30,13 +30,6 @@ describe CartController, type: :controller do
       expect(response.status).to eq(412)
     end
 
-    it "tells cart_service to overwrite" do
-      allow(cart_service).to receive(:variants_h) { {} }
-      allow(cart_service).to receive(:valid?) { true }
-      expect(cart_service).to receive(:populate).with({}, true)
-      post :populate, xhr: true, params: { use_route: :spree }, as: :json
-    end
-
     it "returns stock levels as JSON on success" do
       allow(controller).to receive(:variant_ids_in) { [123] }
       allow_any_instance_of(VariantsStockLevels).to receive(:call).and_return("my_stock_levels")

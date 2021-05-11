@@ -12,14 +12,14 @@ class CartService
     @errors = ActiveModel::Errors.new(self)
   end
 
-  def populate(from_hash, overwrite = false)
+  def populate(from_hash)
     @distributor, @order_cycle = distributor_and_order_cycle
 
     variants_data = read_variants from_hash
 
     @order.with_lock do
       attempt_cart_add_variants variants_data
-      overwrite_variants variants_data if overwrite
+      overwrite_variants variants_data
     end
     valid?
   end

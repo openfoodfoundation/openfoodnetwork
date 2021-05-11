@@ -27,9 +27,9 @@ describe CartService do
     describe "#populate" do
       it "adds a variant" do
         cart_service.populate(
-          ActionController::Parameters.new({ variants: { variant.id.to_s => { quantity: '1',
-                                                                              max_quantity: '2' } } }),
-          true
+          ActionController::Parameters.new(
+            { variants: { variant.id.to_s => { quantity: '1', max_quantity: '2' } } }
+          )
         )
         li = order.find_line_item_by_variant(variant)
         expect(li).to be
@@ -42,10 +42,11 @@ describe CartService do
         order.add_variant variant, 1, 2
 
         cart_service.populate(
-          ActionController::Parameters.new({ variants: { variant.id.to_s => { quantity: '2',
-                                                                              max_quantity: '3' } } }),
-          true
+          ActionController::Parameters.new(
+            { variants: { variant.id.to_s => { quantity: '2', max_quantity: '3' } } }
+          )
         )
+
         li = order.find_line_item_by_variant(variant)
         expect(li).to be
         expect(li.quantity).to eq(2)
@@ -56,7 +57,7 @@ describe CartService do
       it "removes a variant" do
         order.add_variant variant, 1, 2
 
-        cart_service.populate(ActionController::Parameters.new({ variants: {} }), true)
+        cart_service.populate(ActionController::Parameters.new({ variants: {} }))
         order.line_items.reload
         li = order.find_line_item_by_variant(variant)
         expect(li).not_to be
@@ -69,7 +70,11 @@ describe CartService do
           it "does not add the deleted variant to the cart" do
             variant.delete
 
-            cart_service.populate(ActionController::Parameters.new({ variants: { variant.id.to_s => { quantity: '2' } } }), true)
+            cart_service.populate(
+              ActionController::Parameters.new(
+                { variants: { variant.id.to_s => { quantity: '2' } } }
+              )
+            )
 
             expect(relevant_line_item).to be_nil
             expect(cart_service.errors.count).to be 0
@@ -84,7 +89,11 @@ describe CartService do
           it "removes the line_item from the cart" do
             variant.delete
 
-            cart_service.populate(ActionController::Parameters.new({ variants: { variant.id.to_s => { quantity: '3' } } }), true)
+            cart_service.populate(
+              ActionController::Parameters.new(
+                { variants: { variant.id.to_s => { quantity: '3' } } }
+              )
+            )
 
             expect(Spree::LineItem.where(id: relevant_line_item).first).to be_nil
             expect(cart_service.errors.count).to be 0
