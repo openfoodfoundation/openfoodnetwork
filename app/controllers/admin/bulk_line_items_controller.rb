@@ -32,7 +32,7 @@ module Admin
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
-        if @line_item.update(line_item_params)
+        if order.contents.update_item(@line_item, line_item_params)
           order.update_line_item_fees! @line_item
           order.update_order_fees!
           order.update_order!

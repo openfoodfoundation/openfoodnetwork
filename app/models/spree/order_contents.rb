@@ -37,6 +37,17 @@ module Spree
       end
     end
 
+    def update_item(line_item, params)
+      if line_item.update_attributes(params)
+        discard_empty_line_items
+        order.ensure_updated_shipments
+        update_order
+        true
+      else
+        false
+      end
+    end
+
     private
 
     def discard_empty_line_items
