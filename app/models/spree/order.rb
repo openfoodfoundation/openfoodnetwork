@@ -35,7 +35,7 @@ module Spree
     alias_attribute :shipping_address, :ship_address
 
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at ASC') }, dependent: :destroy
+    has_many :line_items, -> { order('created_at ASC') }, class_name: "Spree::LineItem", dependent: :destroy
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
