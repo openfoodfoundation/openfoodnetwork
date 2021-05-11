@@ -18,17 +18,10 @@ RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
 RUBY_VERSION=$(cat .ruby-version)
-NODE_VERSION=$(cat .node-version)
 
 # Check ruby version
 if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. Have a look at: https://github.com/rbenv/rbenv\n"
-  exit 1
-fi
-
-# Check node version
-if ! node --version | grep $NODE_VERSION > /dev/null; then
-  printf "${RED}Open Food Network requires node ${NODE_VERSION}${NO_COLOR}. Have a look at: https://github.com/nodenv/nodenv\n"
   exit 1
 fi
 
@@ -39,18 +32,12 @@ fi
 
 # Install all dependencies
 bundle check || bundle install
-npm install
+yarn install
 
 # Set up configurable environment variables
 if [ ! -f config/application.yml ]; then
   cp config/application.yml.example config/application.yml
   printf "${YELLOW}Copied config/application.yml Make sure to fill it with the appropriate configuration values.\n\n${NO_COLOR}"
-fi
-
-# Set up newrelic.yml for development environment, used by the newrelic_rpm gem
-if [ ! -f config/newrelic.yml ]; then
-  cp config/newrelic.yml.example config/newrelic.yml
-  printf "${YELLOW}Copied config/newrelic.yml which configures the development environment for the newrelic_rpm gem.\n\n${NO_COLOR}"
 fi
 
 # Set up the database for both development and test
