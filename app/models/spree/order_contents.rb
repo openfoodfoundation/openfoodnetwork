@@ -11,24 +11,19 @@ module Spree
     # Get current line item for variant if exists
     # Add variant qty to line_item
     def add(variant, quantity = 1, shipment = nil)
-      line_item = order.find_line_item_by_variant(variant)
-      add_to_line_item(line_item, variant, quantity, shipment)
+      line_item = add_to_line_item(variant, quantity, shipment)
       update_shipment(shipment)
       update_order
+      line_item
     end
 
     # Get current line item for variant
     # Remove variant qty from line_item
     def remove(variant, quantity = 1, shipment = nil)
-      line_item = order.find_line_item_by_variant(variant)
-
-      unless line_item
-        raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
-      end
-
-      remove_from_line_item(line_item, variant, quantity, shipment)
+      line_item = remove_from_line_item(variant, quantity, shipment)
       update_shipment(shipment)
       update_order
+      line_item
     end
 
     def update_cart(params)
@@ -52,7 +47,9 @@ module Spree
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
     end
 
-    def add_to_line_item(line_item, variant, quantity, shipment = nil)
+    def add_to_line_item(variant, quantity, shipment = nil)
+      line_item = find_line_item_by_variant(variant)
+
       if line_item
         line_item.target_shipment = shipment
         line_item.quantity += quantity.to_i
@@ -66,7 +63,9 @@ module Spree
       line_item
     end
 
-    def remove_from_line_item(line_item, _variant, quantity, shipment = nil)
+    def remove_from_line_item(variant, quantity, shipment = nil)
+      line_item = find_line_item_by_variant(variant, true)
+
       line_item.quantity += -quantity
       line_item.target_shipment = shipment
 
@@ -74,6 +73,16 @@ module Spree
         line_item.destroy
       else
         line_item.save!
+      end
+
+      line_item
+    end
+
+    def find_line_item_by_variant(variant, raise_error = false)
+      line_item = order.find_line_item_by_variant(variant)
+
+      if !line_item.present? && raise_error
+        raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
       end
 
       line_item
