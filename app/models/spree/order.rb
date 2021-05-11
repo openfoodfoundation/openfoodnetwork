@@ -243,41 +243,9 @@ module Spree
       return_authorizations.any?(&:authorized?)
     end
 
-    # This is currently used when adding a variant to an order in the BackOffice.
-    # Spree::OrderContents#add is equivalent but slightly different from add_variant below.
+    # OrderContents should always be used when modifying an order's line items
     def contents
       @contents ||= Spree::OrderContents.new(self)
-    end
-
-    # This is currently used when adding a variant to an order in the FrontOffice.
-    # This add_variant is equivalent but slightly different from Spree::OrderContents#add above.
-    # Spree::OrderContents#add is the more modern version in Spree history
-    #   but this add_variant has been customized for OFN FrontOffice.
-    def add_variant(variant, quantity = 1, max_quantity = nil)
-      line_items.reload
-      current_item = find_line_item_by_variant(variant)
-
-      # Notify bugsnag if we get line items with a quantity of zero
-      if quantity == 0
-        Bugsnag.notify(RuntimeError.new("Zero Quantity Line Item"),
-                       current_item: current_item.as_json,
-                       line_items: line_items.map(&:id),
-                       variant: variant.as_json)
-      end
-
-      if current_item
-        current_item.quantity = quantity
-        current_item.max_quantity = max_quantity
-        current_item.save
-      else
-        current_item = Spree::LineItem.new(quantity: quantity, max_quantity: max_quantity)
-        current_item.variant = variant
-        current_item.price = variant.price
-        line_items << current_item
-      end
-
-      reload
-      current_item
     end
 
     # Associates the specified user with the order.

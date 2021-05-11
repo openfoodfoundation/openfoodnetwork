@@ -69,9 +69,9 @@ class CartService
   end
 
   def cart_add(variant, quantity, max_quantity)
-    final_quantity, final_max_quantity = final_quantities(variant, quantity, max_quantity)
-    if final_quantity > 0
-      @order.add_variant(variant, final_quantity, final_max_quantity)
+    attributes = final_quantities(variant, quantity, max_quantity)
+    if attributes[:quantity] > 0
+      @order.contents.update_or_create(variant, attributes)
     else
       @order.contents.remove(variant)
     end
@@ -84,7 +84,7 @@ class CartService
     final_quantity = [quantity, on_hand].min
     final_max_quantity = max_quantity # max_quantity is not capped
 
-    [final_quantity, final_max_quantity]
+    { quantity: final_quantity, max_quantity: final_max_quantity }
   end
 
   def overwrite_variants(variants)

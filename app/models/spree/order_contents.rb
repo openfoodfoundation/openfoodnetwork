@@ -26,6 +26,22 @@ module Spree
       line_item
     end
 
+    def update_or_create(variant, attributes)
+      line_item = find_line_item_by_variant(variant)
+
+      if line_item
+        line_item.update(attributes)
+      else
+        line_item = Spree::LineItem.new(attributes)
+        line_item.variant = variant
+        line_item.price = variant.price
+        order.line_items << line_item
+      end
+
+      order.reload
+      line_item
+    end
+
     def update_cart(params)
       if order.update_attributes(params)
         discard_empty_line_items
