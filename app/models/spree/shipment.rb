@@ -185,7 +185,8 @@ module Spree
 
     def line_items
       if order.complete?
-        order.line_items.select { |li| inventory_units.pluck(:variant_id).include?(li.variant_id) }
+        inventory_unit_ids = inventory_units.pluck(:variant_id)
+        order.line_items.select { |li| inventory_unit_ids.include?(li.variant_id) }
       else
         order.line_items
       end
