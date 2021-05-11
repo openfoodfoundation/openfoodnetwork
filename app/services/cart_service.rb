@@ -37,7 +37,7 @@ class CartService
       loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
 
       if loaded_variant.deleted?
-        remove_deleted_variant(loaded_variant)
+        order.contents.remove(loaded_variant)
         next
       end
 
@@ -55,10 +55,6 @@ class CartService
         includes(:default_price, :stock_items, :product).
         index_by(&:id)
     end
-  end
-
-  def remove_deleted_variant(variant)
-    line_item_for_variant(variant).andand.destroy
   end
 
   def attempt_cart_add(variant, quantity, max_quantity = nil)
