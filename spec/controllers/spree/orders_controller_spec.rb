@@ -106,7 +106,7 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
-            .with(payment_intent, anything)
+            .with(payment_intent, kind_of(String))
             .and_return(payment_intent)
         end
 
@@ -122,19 +122,19 @@ describe Spree::OrdersController, type: :controller do
 
       context "with an invalid payment intent" do
         let(:payment_intent) { "invalid" }
-        let(:result) { instance_double(ProcessPaymentIntent::Result) }
 
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
-            .with(payment_intent, anything)
-            .and_return(result)
+            .with(payment_intent, kind_of(String))
+            .and_raise(Stripe::StripeError, "error message")
         end
 
         it "does not complete the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
           expect(response).to be_success
+          expect(flash[:error]).to eq("#{I18n.t("payment_could_not_process")}. error message")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("pending")
@@ -148,12 +148,18 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow(payment).to receive(:response_code).and_return("invalid")
           allow(OrderPaymentFinder).to receive(:new).with(order).and_return(finder)
+
+          allow_any_instance_of(Stripe::PaymentIntentValidator)
+            .to receive(:call)
+            .with(payment_intent, kind_of(String))
+            .and_return(payment_intent)
         end
 
         it "does not complete the payment" do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
           expect(response.status).to eq 200
+          expect(flash[:error]).to eq("#{I18n.t("payment_could_not_process")}. ")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("pending")
