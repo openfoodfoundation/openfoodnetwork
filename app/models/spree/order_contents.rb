@@ -33,7 +33,7 @@ module Spree
 
     def update_cart(params)
       if order.update_attributes(params)
-        order.line_items = order.line_items.select {|li| li.quantity > 0 }
+        discard_empty_line_items
         order.ensure_updated_shipments
         update_order
         true
@@ -43,6 +43,10 @@ module Spree
     end
 
     private
+
+    def discard_empty_line_items
+      order.line_items = order.line_items.select {|li| li.quantity.positive? }
+    end
 
     def update_shipment(shipment)
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
