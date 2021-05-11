@@ -19,7 +19,7 @@ module Spree
 
     # Get current line item for variant
     # Remove variant qty from line_item
-    def remove(variant, quantity = 1, shipment = nil)
+    def remove(variant, quantity = nil, shipment = nil)
       line_item = remove_from_line_item(variant, quantity, shipment)
       update_shipment(shipment)
       update_order
@@ -66,7 +66,7 @@ module Spree
     def remove_from_line_item(variant, quantity, shipment = nil)
       line_item = find_line_item_by_variant(variant, true)
 
-      line_item.quantity += -quantity
+      quantity.present? ? line_item.quantity += -quantity : line_item.quantity = 0
       line_item.target_shipment = shipment
 
       if line_item.quantity == 0
