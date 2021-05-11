@@ -378,9 +378,6 @@ describe Admin::BulkLineItemsController, type: :controller do
         expect(order.included_tax_total).to eq 1.22
         expect(order.payment_state).to eq "paid"
 
-        expect(order).to receive(:update_order!).at_least(:once).and_call_original
-        expect(order).to receive(:create_tax_charge!).at_least(:once).and_call_original
-
         spree_delete :destroy, params
         order.reload
 

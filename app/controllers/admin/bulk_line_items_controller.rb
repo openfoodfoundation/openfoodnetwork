@@ -49,7 +49,7 @@ module Admin
       load_line_item
       authorize! :update, order
 
-      @line_item.destroy
+      order.contents.remove(@line_item.variant, @line_item.quantity)
       render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
     end
 
