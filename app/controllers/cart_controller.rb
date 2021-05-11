@@ -11,7 +11,7 @@ class CartController < BaseController
       order.cap_quantity_at_stock!
       order.recreate_all_fees!
 
-      variant_ids = variant_ids_in(cart_service.variants_h)
+      variant_ids = order.line_items.pluck(:variant_id)
 
       render json: { error: false,
                      stock_levels: VariantsStockLevels.new.call(order, variant_ids) },
@@ -23,10 +23,6 @@ class CartController < BaseController
   end
 
   private
-
-  def variant_ids_in(variants_h)
-    variants_h.map { |v| v[:variant_id].to_i }
-  end
 
   def check_authorization
     session[:access_token] ||= params[:token]

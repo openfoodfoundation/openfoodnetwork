@@ -4,7 +4,6 @@ require 'open_food_network/scope_variant_to_hub'
 
 class CartService
   attr_accessor :order
-  attr_reader :variants_h
   attr_reader :errors
 
   def initialize(order)
@@ -15,7 +14,7 @@ class CartService
   def populate(from_hash)
     @distributor, @order_cycle = distributor_and_order_cycle
 
-    variants_data = read_variants from_hash
+    variants_data = read_variants_hash(from_hash)
 
     @order.with_lock do
       attempt_cart_add_variants variants_data
@@ -96,10 +95,6 @@ class CartService
 
   def scoper
     @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
-  end
-
-  def read_variants(data)
-    @variants_h = read_variants_hash(data)
   end
 
   def read_variants_hash(data)

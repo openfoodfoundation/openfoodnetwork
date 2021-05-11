@@ -16,7 +16,6 @@ describe CartController, type: :controller do
     it "returns HTTP success when successful" do
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:valid?) { true }
-      allow(cart_service).to receive(:variants_h) { {} }
       post :populate, xhr: true, params: { use_route: :spree }, as: :json
       expect(response.status).to eq(200)
     end
@@ -35,19 +34,11 @@ describe CartController, type: :controller do
       allow_any_instance_of(VariantsStockLevels).to receive(:call).and_return("my_stock_levels")
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:valid?) { true }
-      allow(cart_service).to receive(:variants_h) { {} }
 
       post :populate, xhr: true, params: { use_route: :spree }, as: :json
 
       data = JSON.parse(response.body)
       expect(data['stock_levels']).to eq('my_stock_levels')
-    end
-
-    it "extracts variant ids from the cart service" do
-      variants_h = [{ variant_id: "900", quantity: 2, max_quantity: nil },
-                    { variant_id: "940", quantity: 3, max_quantity: 3 }]
-
-      expect(controller.__send__(:variant_ids_in, variants_h)).to eq([900, 940])
     end
   end
 
