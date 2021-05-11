@@ -22,6 +22,7 @@ module Spree
     def remove(variant, quantity = nil, shipment = nil)
       line_item = remove_from_line_item(variant, quantity, shipment)
       update_shipment(shipment)
+      order.update_order_fees! if order.completed?
       update_order
       line_item
     end

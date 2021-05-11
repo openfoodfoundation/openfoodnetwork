@@ -39,12 +39,9 @@ class LineItemsController < BaseController
   def destroy_with_lock(item)
     order = item.order
     order.with_lock do
-      item.destroy
+      order.contents.remove(item.variant)
       order.update_shipping_fees!
       order.update_payment_fees!
-      order.update_order_fees!
-      order.update_order!
-      order.create_tax_charge!
     end
   end
 end
