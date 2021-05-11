@@ -183,15 +183,6 @@ module Spree
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
     end
 
-    def line_items
-      if order.complete?
-        inventory_unit_ids = inventory_units.pluck(:variant_id)
-        order.line_items.select { |li| inventory_unit_ids.include?(li.variant_id) }
-      else
-        order.line_items
-      end
-    end
-
     def finalize!
       InventoryUnit.finalize_units!(inventory_units)
       manifest.each { |item| manifest_unstock(item) }
@@ -291,6 +282,15 @@ module Spree
     end
 
     private
+
+    def line_items
+      if order.complete?
+        inventory_unit_ids = inventory_units.pluck(:variant_id)
+        order.line_items.select { |li| inventory_unit_ids.include?(li.variant_id) }
+      else
+        order.line_items
+      end
+    end
 
     def manifest_unstock(item)
       stock_location.unstock item.variant, item.quantity, self
