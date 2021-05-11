@@ -109,11 +109,6 @@ class CartService
     variants_array
   end
 
-  def cart_remove(variant_id)
-    variant = Spree::Variant.find(variant_id)
-    @order.contents.remove(variant)
-  end
-
   def distributor_and_order_cycle
     [@order.distributor, @order.order_cycle]
   end
