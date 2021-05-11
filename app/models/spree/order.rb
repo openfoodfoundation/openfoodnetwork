@@ -287,19 +287,6 @@ module Spree
       current_item
     end
 
-    def set_variant_attributes(variant, attributes)
-      line_item = find_line_item_by_variant(variant)
-
-      return unless line_item
-
-      if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
-        attributes[:max_quantity] = line_item.quantity
-      end
-
-      line_item.assign_attributes(attributes)
-      line_item.save!
-    end
-
     # Associates the specified user with the order.
     def associate_user!(user)
       self.user = user
