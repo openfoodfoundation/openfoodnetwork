@@ -66,10 +66,7 @@ module Spree
 
       # This action is called either from the cart page when the order is not yet complete, or from
       # the edit order page (frontoffice) if the hub allows users to update completed orders.
-      # This line item updating logic should probably be handled through CartService#populate.
-      if @order.update(order_params)
-        discard_empty_line_items
-
+      if @order.contents.update_cart(order_params)
         @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
 
         if @order.complete?
