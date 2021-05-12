@@ -3,12 +3,11 @@
 require 'spec_helper'
 
 describe Spree::OrderContents do
-  let(:order) { Spree::Order.create }
+  let!(:order) { create(:order) }
+  let!(:variant) { create(:variant) }
   subject { described_class.new(order) }
 
   context "#add" do
-    let(:variant) { create(:variant) }
-
     context 'given quantity is not explicitly provided' do
       it 'should add one line item' do
         line_item = subject.add(variant)
@@ -42,8 +41,6 @@ describe Spree::OrderContents do
   end
 
   context "#remove" do
-    let(:variant) { create(:variant) }
-
     context "given an invalid variant" do
       it "raises an exception" do
         expect {
@@ -53,11 +50,12 @@ describe Spree::OrderContents do
     end
 
     context 'given quantity is not explicitly provided' do
-      it 'should remove one line item' do
-        line_item = subject.add(variant, 3)
-        subject.remove(variant)
+      it 'should remove line item' do
+        subject.add(variant, 3)
 
-        expect(line_item.reload.quantity).to eq 2
+        expect{
+          subject.remove(variant)
+        }.to change(Spree::LineItem, :count).by -1
       end
     end
 
@@ -87,6 +85,46 @@ describe Spree::OrderContents do
       subject.remove(variant, 1)
       expect(order.item_total.to_f).to eq 19.99
       expect(order.total.to_f).to eq 19.99
+    end
+  end
+
+  context "#update_cart" do
+    let!(:line_item) { subject.add variant, 1 }
+
+    let(:params) do
+      { line_items_attributes: {
+        "0" => { id: line_item.id, quantity: 3 }
+      } }
+    end
+
+    it "changes item quantity" do
+      subject.update_cart params
+      expect(line_item.reload.quantity).to eq 3
+    end
+
+    it "updates order totals" do
+      expect {
+        subject.update_cart params
+      }.to change { subject.order.total }
+    end
+
+    context "submits item quantity 0" do
+      let(:params) do
+        { line_items_attributes: {
+          "0" => { id: line_item.id, quantity: 0 }
+        } }
+      end
+
+      it "removes item from order" do
+        expect {
+          subject.update_cart params
+        }.to change { order.line_items.count }
+      end
+    end
+
+    it "ensures updated shipments" do
+      expect(subject.order).to receive(:ensure_updated_shipments)
+      subject.update_cart params
     end
   end
 end
