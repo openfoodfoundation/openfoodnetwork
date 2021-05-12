@@ -57,9 +57,6 @@ class CartService
   end
 
   def attempt_cart_add(variant, quantity, max_quantity = nil)
-    quantity = quantity
-    max_quantity = max_quantity if max_quantity
-
     scoper.scope(variant)
     return unless valid_variant?(variant)
 
