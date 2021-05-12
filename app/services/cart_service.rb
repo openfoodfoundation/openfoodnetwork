@@ -33,9 +33,9 @@ class CartService
     loaded_variants = indexed_variants(variants_data)
 
     variants_data.each do |variant_data|
-      loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+      loaded_variant = loaded_variants[variant_data[:variant_id]]
 
-      if loaded_variant.deleted? || !variant_data[:quantity].to_i.positive?
+      if loaded_variant.deleted? || !variant_data[:quantity].positive?
         order.contents.remove(loaded_variant)
         next
       end
@@ -57,8 +57,8 @@ class CartService
   end
 
   def attempt_cart_add(variant, quantity, max_quantity = nil)
-    quantity = quantity.to_i
-    max_quantity = max_quantity.to_i if max_quantity
+    quantity = quantity
+    max_quantity = max_quantity if max_quantity
 
     scoper.scope(variant)
     return unless valid_variant?(variant)
@@ -101,9 +101,16 @@ class CartService
     variants_array = []
     (data[:variants] || []).each do |variant_id, quantity|
       if quantity.is_a?(ActionController::Parameters)
-        variants_array.push({ variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity] })
+        variants_array.push({
+          variant_id: variant_id.to_i,
+          quantity: quantity[:quantity].to_i,
+          max_quantity: quantity[:max_quantity].to_i
+        })
       else
-        variants_array.push({ variant_id: variant_id, quantity: quantity })
+        variants_array.push({
+          variant_id: variant_id.to_i,
+          quantity: quantity.to_i
+        })
       end
     end
     variants_array
@@ -118,7 +125,7 @@ class CartService
     li = line_item_for_variant loaded_variant
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
-    li_quantity_changed = li.present? && li.quantity.to_i != variant_data[:quantity].to_i
+    li_quantity_changed = li.present? && li.quantity != variant_data[:quantity].to_i
     li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
 
     li_added || li_quantity_changed || li_max_quantity_changed
