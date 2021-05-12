@@ -1,6 +1,7 @@
 describe "ShopVariantCtrl", ->
   ctrl = null
   scope = null
+  CartMock = null
 
   beforeEach ->
     module 'Darkswarm'
@@ -16,7 +17,10 @@ describe "ShopVariantCtrl", ->
           max_quantity: undefined
         }
       }
-      ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: null}
+      CartMock =
+        adjust: ->
+          true
+      ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: CartMock}
 
   it "initializes the quantity for shop display", ->
     expect(scope.variant.line_item.quantity).toEqual 0
