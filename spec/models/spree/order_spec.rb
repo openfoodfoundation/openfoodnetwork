@@ -455,21 +455,6 @@ describe Spree::Order do
     end
   end
 
-  describe "setting variant attributes" do
-    it "sets attributes on line items for variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product)
-
-      subject.distributor = d
-      subject.save!
-
-      subject.add_variant(p.master, 1, 3)
-
-      li = Spree::LineItem.last
-      expect(li.max_quantity).to eq(3)
-    end
-  end
-
   describe "applying enterprise fees" do
     subject { create(:order) }
     let(:fee_handler) { ::OrderFeesHandler.new(subject) }
@@ -719,59 +704,6 @@ describe Spree::Order do
       subject.set_distributor! nil
 
       expect(subject.distributor).to be_nil
-    end
-  end
-
-  describe "removing an item from the order" do
-    let(:order) { create(:order) }
-    let(:v1)    { create(:variant) }
-    let(:v2)    { create(:variant) }
-    let(:v3)    { create(:variant) }
-
-    before do
-      order.add_variant v1
-      order.add_variant v2
-
-      order.recreate_all_fees!
-    end
-
-    it "removes the variant's line item" do
-      order.remove_variant v1
-      expect(order.line_items.reload.map(&:variant)).to eq([v2])
-    end
-
-    it "does nothing when there is no matching line item" do
-      expect do
-        order.remove_variant v3
-      end.to change(order.line_items.reload, :count).by(0)
-    end
-
-    context "when the item has an associated adjustment" do
-      let(:distributor) { create(:distributor_enterprise) }
-
-      let(:order_cycle) do
-        create(:order_cycle).tap do
-          create(:exchange, variants: [v1], incoming: true)
-          create(:exchange, variants: [v1], incoming: false, receiver: distributor)
-        end
-      end
-
-      let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
-
-      it "removes the variant's line item" do
-        order.remove_variant v1
-        expect(order.line_items.reload.map(&:variant)).to eq([v2])
-      end
-
-      it "removes the variant's adjustment" do
-        line_item = order.line_items.where(variant_id: v1.id).first
-        adjustment_scope = Spree::Adjustment.where(adjustable_type: "Spree::LineItem",
-                                                   adjustable_id: line_item.id)
-        expect(adjustment_scope.count).to eq(1)
-        adjustment = adjustment_scope.first
-        order.remove_variant v1
-        expect { adjustment.reload }.to raise_error
-      end
     end
   end
 
