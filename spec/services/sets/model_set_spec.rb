@@ -51,7 +51,7 @@ describe Sets::ModelSet do
       attributes = { collection_attributes: { '1' => { name: 'deleteme' } } }
 
       ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
-                              proc { |attrs| attrs['name'] == 'deleteme' })
+                              proc { |attrs| attrs[:name] == 'deleteme' })
 
       expect { ms.save }.to change(Enterprise, :count).by(0)
     end
