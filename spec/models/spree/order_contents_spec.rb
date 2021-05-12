@@ -127,4 +127,65 @@ describe Spree::OrderContents do
       subject.update_cart params
     end
   end
+
+  describe "#update_item" do
+    let!(:line_item) { subject.add variant, 1 }
+
+    context "updating enterprise fees" do
+      it "updates the line item's enterprise fees" do
+        expect(order).to receive(:update_line_item_fees!).with(line_item)
+
+        subject.update_item(line_item, { quantity: 3 })
+      end
+
+      it "updates the order's enterprise fees if completed" do
+        allow(order).to receive(:completed?) { true }
+        expect(order).to receive(:update_order_fees!)
+
+        subject.update_item(line_item, { quantity: 3 })
+      end
+
+      it "does not update the order's enterprise fees if not complete" do
+        expect(order).to_not receive(:update_order_fees!)
+
+        subject.update_item(line_item, { quantity: 3 })
+      end
+    end
+
+    it "ensures updated shipments" do
+      expect(order).to receive(:ensure_updated_shipments)
+
+      subject.update_item(line_item, { quantity: 3 })
+    end
+
+    it "updates the order" do
+      expect(order).to receive(:update_order!)
+
+      subject.update_item(line_item, { quantity: 3 })
+    end
+  end
+
+  describe "#update_or_create" do
+    describe "creating" do
+      it "creates a new line item with given attributes" do
+        subject.update_or_create(variant, { quantity: 2, max_quantity: 3 })
+
+        line_item = order.line_items.reload.first
+        expect(line_item.quantity).to eq 2
+        expect(line_item.max_quantity).to eq 3
+        expect(line_item.price).to eq variant.price
+      end
+    end
+
+    describe "updating" do
+      let!(:line_item) { subject.add variant, 2 }
+
+      it "updates existing line item with given attributes" do
+        subject.update_or_create(variant, { quantity: 3, max_quantity: 4 })
+
+        expect(line_item.reload.quantity).to eq 3
+        expect(line_item.max_quantity).to eq 4
+      end
+    end
+  end
 end
