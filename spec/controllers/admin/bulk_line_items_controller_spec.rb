@@ -209,10 +209,10 @@ describe Admin::BulkLineItemsController, type: :controller do
             allow(Spree::LineItem)
               .to receive(:find).with(line_item1.id.to_s).and_return(line_item1)
 
-            expect(line_item1.order).to receive(:reload).with(lock: true)
+            expect(line_item1.order).to receive(:with_lock).and_call_original
             expect(line_item1.order).to receive(:update_line_item_fees!)
             expect(line_item1.order).to receive(:update_order_fees!)
-            expect(line_item1.order).to receive(:update_order!)
+            expect(line_item1.order).to receive(:update_order!).once
 
             spree_put :update, params
           end

@@ -56,6 +56,8 @@ module Spree
 
     def update_item(line_item, params)
       if line_item.update_attributes(params)
+        order.update_line_item_fees! line_item
+        order.update_order_fees! if order.completed?
         discard_empty_line_items
         order.ensure_updated_shipments
         update_order
