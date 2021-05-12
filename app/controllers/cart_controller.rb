@@ -3,11 +3,9 @@ class CartController < BaseController
 
   def populate
     order = current_order(true)
-
     cart_service = CartService.new(order)
 
-    cart_service.populate(params.slice(:variants, :quantity))
-    if cart_service.valid?
+    if cart_service.populate(params.slice(:variants, :quantity))
       order.cap_quantity_at_stock!
       order.recreate_all_fees!
 
