@@ -318,6 +318,8 @@ ru:
   height: "Высота"
   width: "Ширина"
   depth: "Глубина"
+  payment_could_not_process: "Платеж не может быть обработан"
+  payment_could_not_complete: "Платеж не может быть завершен"
   actions:
     create_and_add_another: "Создать и Добавить Другой"
     create: "Создать"
