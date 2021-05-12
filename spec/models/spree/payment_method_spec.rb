@@ -79,7 +79,7 @@ module Spree
       expect(flat_percent_payment_method.compute_amount(order)).to eq 0
 
       product = create(:product)
-      order.add_variant(product.master)
+      order.contents.add(product.variants.first)
       expect(flat_percent_payment_method.compute_amount(order)).to eq 2.0
     end
 

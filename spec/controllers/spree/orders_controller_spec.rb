@@ -250,7 +250,7 @@ describe Spree::OrdersController, type: :controller do
 
       before do
         order.set_distribution! d, oc
-        order.add_variant variant, 5
+        order.contents.add(variant, 5)
       end
 
       describe "the page" do
@@ -296,7 +296,7 @@ describe Spree::OrdersController, type: :controller do
     describe "when I pass params that includes a line item no longer in our cart" do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)
-        li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
+        li = order.contents.add(create(:simple_product, on_hand: 110).variants.first)
         get :update, params: { order: { line_items_attributes: {
           "0" => { quantity: "0", id: "9999" },
           "1" => { quantity: "99", id: li.id }
@@ -308,7 +308,7 @@ describe Spree::OrdersController, type: :controller do
 
     it "filters line items that are missing from params" do
       order = subject.current_order(true)
-      li = order.add_variant(create(:simple_product).master)
+      li = order.contents.add(create(:simple_product).variants.first)
 
       attrs = {
         "0" => { quantity: "0", id: "9999" },
@@ -322,7 +322,7 @@ describe Spree::OrdersController, type: :controller do
 
     it "keeps the adjustments' previous state" do
       order = subject.current_order(true)
-      line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
+      line_item = order.contents.add(create(:simple_product, on_hand: 110).variants.first)
       adjustment = create(:adjustment, adjustable: order)
 
       get :update, params: { order: { line_items_attributes: {
