@@ -11,11 +11,7 @@ class CartController < BaseController
       order.cap_quantity_at_stock!
       order.recreate_all_fees!
 
-      variant_ids = order.line_items.pluck(:variant_id)
-
-      render json: { error: false,
-                     stock_levels: VariantsStockLevels.new.call(order, variant_ids) },
-             status: :ok
+      render json: { error: false, stock_levels: stock_levels(order) }, status: :ok
     else
       render json: { error: cart_service.errors.full_messages.join(",") },
              status: :precondition_failed
@@ -23,6 +19,13 @@ class CartController < BaseController
   end
 
   private
+
+  def stock_levels(order)
+    variants_in_cart = order.line_items.pluck(:variant_id)
+    variants_in_request = raw_params[:variants]&.map(&:first) || []
+
+    VariantsStockLevels.new.call(order, (variants_in_cart + variants_in_request).uniq)
+  end
 
   def check_authorization
     session[:access_token] ||= params[:token]
