@@ -18,49 +18,42 @@ module SampleData
       fruit = Spree::Taxon.find_by(name: 'Fruit')
       fungi = Spree::Taxon.find_by(name: 'Fungi')
       producers = enterprises.select(&:is_primary_producer)
-      distributors = enterprises.select(&:is_distributor)
       [
         {
           name: 'Garlic',
           price: 20.00,
           supplier: producers[0],
           taxons: [vegetables],
-          distributor: distributors[0]
         },
         {
           name: 'Fuji Apple',
           price: 5.00,
           supplier: producers[1],
           taxons: [fruit],
-          distributor: distributors[0]
         },
         {
           name: 'Mushrooms',
           price: 50.00,
           supplier: producers[1],
           taxons: [fungi],
-          distributor: distributors[0]
         },
         {
           name: 'Carrots',
           price: 3.00,
           supplier: producers[2],
           taxons: [vegetables],
-          distributor: distributors[0]
         },
         {
           name: 'Potatoes',
           price: 2.00,
           supplier: producers[2],
           taxons: [vegetables],
-          distributor: distributors[0]
         },
         {
           name: 'Tomatoes',
           price: 2.00,
           supplier: producers[2],
           taxons: [vegetables],
-          distributor: distributors[0]
         }
       ]
     end
