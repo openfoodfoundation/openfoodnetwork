@@ -93,7 +93,10 @@ module Spree
     def process_return
       inventory_units.each do |iu|
         iu.return!
-        Spree::StockMovement.create!(stock_item_id: iu.find_stock_item.id, quantity: 1) if iu.find_stock_item
+        if iu.find_stock_item
+          Spree::StockMovement.create!(stock_item_id: iu.find_stock_item.id,
+                                       quantity: 1)
+        end
       end
 
       Adjustment.create(
