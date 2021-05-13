@@ -25,11 +25,7 @@ Usage: $0 openfoodnetwork@openfoodnetwork.org.au" >&2
   exit 1
 fi
 
-if hash zeus 2>/dev/null && [ -e .zeus.sock ]; then
-  RAILS_RUN='zeus r'
-else
-  RAILS_RUN='bundle exec rails runner'
-fi
+RAILS_RUN='bundle exec rails runner'
 
 # -- Mirror database
 echo "Mirroring database..."

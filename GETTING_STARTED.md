@@ -78,8 +78,6 @@ Note: If your OS is not explicitly supported in the setup guides then not all te
 
 Note: The time zone on your machine should match the one defined in `config/application.yml`.
 
-The project is configured to use [Zeus][zeus] to reduce the pre-test startup time while Rails loads. See the [Zeus GitHub page][zeus] for usage instructions.
-
 Once [npm dependencies are installed][karma], AngularJS tests can be run with:
 
     ./script/karma run
@@ -119,7 +117,6 @@ If these commands succeed, you should be able to [continue the setup process](#g
 [ubuntu]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-Ubuntu
 [debian]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-Debian
 [wiki]: https://github.com/openfoodfoundation/openfoodnetwork/wiki
-[zeus]: https://github.com/burke/zeus
 [rubocop]: https://rubocop.readthedocs.io/en/latest/
 [karma]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
