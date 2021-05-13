@@ -487,7 +487,7 @@ feature 'Subscriptions' do
       end
 
       it "permit creating and editing of the subscription" do
-        customer.update_attributes(allow_charges: true)
+        customer.update(allow_charges: true)
         # Fill in other details
         fill_in_subscription_basic_details
         click_button "Next"
