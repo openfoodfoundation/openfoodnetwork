@@ -31,10 +31,12 @@ module Api
         unlock = params[:shipment].delete(:unlock)
 
         if unlock == 'yes'
-          @shipment.fee_adjustment.open
+          @shipment.fee_adjustment.fire_events(:open)
         end
 
-        @shipment.update(shipment_params[:shipment])
+        if @shipment.update(shipment_params)
+          @order.updater.update_totals_and_states
+        end
 
         if unlock == 'yes'
           @shipment.fee_adjustment.close
@@ -94,7 +96,7 @@ module Api
 
       def find_and_update_shipment
         @shipment = @order.shipments.find_by!(number: params[:id])
-        @shipment.update(shipment_params[:shipment]) if shipment_params[:shipment].present?
+        @shipment.update(shipment_params)
         @shipment.reload
       end
 
@@ -113,10 +115,9 @@ module Api
       end
 
       def shipment_params
-        params.permit(
-          [:id, :order_id, :variant_id, :quantity,
-           { shipment: [:tracking, :selected_shipping_rate_id] }]
-        )
+        return {} unless params.has_key? :shipment
+
+        params.require(:shipment).permit(:tracking, :selected_shipping_rate_id)
       end
     end
   end

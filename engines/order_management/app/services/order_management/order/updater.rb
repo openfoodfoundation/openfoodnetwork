@@ -20,6 +20,10 @@ module OrderManagement
       # associations try to save and then in turn try to call +update!+ again.)
       def update
         update_all_adjustments
+        update_totals_and_states
+      end
+
+      def update_totals_and_states
         update_totals
 
         if order.completed?
