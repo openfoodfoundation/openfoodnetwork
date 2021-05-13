@@ -564,7 +564,7 @@ GEM
     stringex (2.8.5)
     stripe (5.30.0)
     temple (0.8.2)
-    test-prof (1.0.3)
+    test-prof (1.0.4)
     test-unit (3.4.1)
       power_assert
     thor (0.20.3)
