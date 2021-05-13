@@ -6,7 +6,7 @@ This is a general guide to setting up an Open Food Network **development environ
 
 The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
 Otherwise, for a local setup you will need:
-* Ruby 2.4.4 and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
+* Ruby and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
 * PostgreSQL database
 * Chrome (for testing)
 
