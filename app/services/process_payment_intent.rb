@@ -30,7 +30,6 @@ class ProcessPaymentIntent
   end
 
   def call!
-    validate_intent!
     return Result.new(ok: false) unless valid?
 
     OrderWorkflow.new(order).next
@@ -53,11 +52,14 @@ class ProcessPaymentIntent
   attr_reader :order, :payment_intent, :last_payment
 
   def valid?
-    order.present? && matches_last_payment?
+    order.present? && matches_last_payment? && ready_for_capture?
   end
 
-  def validate_intent!
-    Stripe::PaymentIntentValidator.new.call(payment_intent, stripe_account_id)
+  def ready_for_capture?
+    payment_intent_response = Stripe::PaymentIntentValidator.new.
+      call(payment_intent, stripe_account_id)
+
+    payment_intent_response.status == 'requires_capture'
   end
 
   def matches_last_payment?
