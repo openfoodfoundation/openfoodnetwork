@@ -139,7 +139,7 @@ module Spree
 
       def raise_if_not_in_capture_state(payment_intent_response)
         state = payment_intent_response.status
-        return unless state != 'requires_capture'
+        return if state == 'requires_capture'
 
         raise Stripe::StripeError, I18n.t(:invalid_payment_state, state: state)
       end
