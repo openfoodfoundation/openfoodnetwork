@@ -163,7 +163,7 @@ de_DE:
     confirmation_instructions:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network"
     welcome:
-      subject: "%{enterprise} ist jetzt im Open Food Network"
+      subject: "%{enterprise} ist jetzt Teil des Open Food Network"
       email_welcome: "Willkommen"
       email_registered: "ist jetzt Teil des"
       email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Hubs finden Sie hier: %{link}"
@@ -710,7 +710,7 @@ de_DE:
           name: Name der Gebühr
           fee_type: Art der Gebühr
           manage_fees: Unternehmensgebühren verwalten
-          no_fees_yet: Sie haben noch keine Unternehmensgebühren.
+          no_fees_yet: Sie erheben noch keine Unternehmensgebühren.
           create_button: Jetzt erstellen
         images:
           logo: Logo
@@ -735,7 +735,7 @@ de_DE:
           name: Name der Zahlungsart
           applies: Aktiv?
           manage: Zahlungsarten verwalten
-          no_method_yet: Sie haben noch keine Zahlungsarten. Bitte erstellen Sie eine.
+          no_method_yet: Sie haben noch keine Zahlungsart angelegt. Bitte erstellen Sie eine.
           create_button: Neue Zahlungsart
           create_one_button: Jetzt erstellen
         primary_details:
@@ -768,7 +768,7 @@ de_DE:
           manage: "Lieferoptionen verwalten"
           create_button: "Neue Lieferoption"
           create_one_button: "Jetzt erstellen"
-          no_method_yet: "Sie haben noch keine Lieferoptionen angelegt."
+          no_method_yet: "Sie haben noch keine Lieferoption angelegt. Bitte erstellen Sie eine."
         shop_preferences:
           shopfront_requires_login: "Öffentlich sichtbarer Laden?"
           shopfront_requires_login_tip: "Wählen Sie aus, ob sich Kunden einloggen müssen, um den Laden zu sehen oder ob er für alle sichtbar ist."
@@ -794,7 +794,7 @@ de_DE:
           shopfront_message: "'Willkommen'-Nachricht im Laden"
           shopfront_message_placeholder: >
               Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
-              wie Sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
+              wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
               wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
               ihn zum ersten Mal besuchen.
           shopfront_message_link_tooltip: "Link einfügen/bearbeiten"
@@ -862,7 +862,7 @@ de_DE:
         shipping_methods: Lieferoptionen
         shipping_methods_tip: Dieses Unternehmen hat Lieferoptionen.
         enterprise_fees: Unternehmensgebühren
-        enterprise_fees_tip: Dieses Unternehmen hat keine Gebühren.
+        enterprise_fees_tip: Dieses Unternehmen erhebt keine Gebühren.
       admin_index:
         name: Name
         role: Rolle
@@ -1044,7 +1044,7 @@ de_DE:
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten."
         has_no_shipping_methods: "%{enterprise} hat keine Lieferoptionen."
-        has_no_enterprise_fees: "%{enterprise} hat keine Gebühren."
+        has_no_enterprise_fees: "%{enterprise} erhebt keine Gebühren."
     enterprise_issues:
       create_new: Erstellen
       resend_email: E-Mail erneut senden
@@ -1208,7 +1208,7 @@ de_DE:
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo existiert nicht"
     enterprise_promo_image:
-      destroy_attachment_does_not_exist: "Werbebild existiert nicht."
+      destroy_attachment_does_not_exist: "Hintergrundbild existiert nicht."
     enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "AGB-Datei existiert nicht."
     orders:
@@ -1237,10 +1237,10 @@ de_DE:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
-        powered_html: "Dieser Einkauf wurde ermöglicht durch das %{open_food_network}."
+        powered_html: "Ermöglicht durch das %{open_food_network}."
     menu:
       cart:
-        cart: "Warenkorb"
+        cart: "Warenkorb/Kasse"
       cart_sidebar:
         checkout: "Zur Kasse"
         edit_cart: "Warenkorb bearbeiten"
@@ -1252,7 +1252,7 @@ de_DE:
       signed_in:
         profile: "Profil"
       mobile_menu:
-        cart: "Warenkorb"
+        cart: "Warenkorb/Kasse"
     register_call:
       selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier registrieren!"
@@ -1472,7 +1472,7 @@ de_DE:
   brandstory_part2: "Kaufen Sie ein in Hofläden, auf Bauernmärkten, in Food-Hubs oder schließen Sie sich zu Einkaufsgemeinschaften, Kooperativen, Genossenschaften oder einer solidarischen Landwirtschaft zusammen."
   brandstory_part3: "Die Anbieter bilden gemeinsam ein regionales Netzwerk, in dem sich Käufer und Verkäufer wieder kennen und mit Vertrauen wertschätzend umgegangen wird."
   brandstory_part4: "Der Programmcode dieser Internet-Plattform ist öffentlich frei verfügbar (Open Source), sie gehört also auch Ihnen und ist unverkäuflich. Alle Einnahmen werden wieder in die Weiterentwicklung des Netzwerks investiert!"
-  brandstory_part5_strong: "Wir nennen es Open Food Network."
+  brandstory_part5_strong: "Das ist das Open Food Network."
   brandstory_part6: "Sie lieben Ihr Essen! Jetzt können Sie auch Ihr regionales Lebensmittelsystem lieben!"
   learn_body: "Erkunden Sie Modelle, Geschichten und Ressourcen, um Sie bei der Entwicklung Ihres Fair-Food-Geschäfts oder Ihrer Organisation zu unterstützen. Finden Sie Schulungen, Veranstaltungen und andere Möglichkeiten, um von Gleichgesinnten zu lernen."
   learn_cta: "Lassen Sie sich inspirieren"
@@ -1484,7 +1484,7 @@ de_DE:
   system_step2: "2. Welche regionalen Lebensmittel kann ich online kaufen?"
   system_step2_text: "Im Online-Shop des Ladens finden Sie ein großes Sortiment regionaler und saisonaler Produkte. Von Obst und Gemüse über Eier, Milch, Käse, Wurst und Fleisch bis hin zu Backwaren, Süßigkeiten und Fertiggerichten werden Sie fündig. Nutzen Sie die Suche oder die Filter nach Kategorien und Eigenschaften, wie bio, unverpackt oder fair gehandelt."
   system_step3: "3. Wie kommen regionale Lebensmittel zu mir nach Hause?"
-  system_step3_text: "Jeder Laden kann seine Lieferoptionen selbst festlegen. Viele bieten einen Lieferservice an, oft ist auch die Abholung vor Ort oder an einer Abholstation möglich. Wählen Sie die gewünschte Option einfach beim Abschluss der Bestellung aus. Im Open Food Network kennt man sich - auch das Abstellen der Lieferung auf der Terrasse oder im Gartenhaus lässt sich sicher organisieren. "
+  system_step3_text: "Jeder Laden kann seine Lieferoptionen selbst festlegen. Viele bieten einen Lieferservice an, oft ist auch die Abholung vor Ort oder an einer Abholstation möglich. Wählen Sie die gewünschte Option einfach beim Abschluss der Bestellung aus. Im Open Food Network kennt man sich - auch das Vereinbaren eines Ablageortes lässt sich sicher organisieren. "
   cta_headline: "Machen Sie die Welt mit Ihrem Einkauf ein kleines bisschen besser."
   cta_label: "Jetzt regional einkaufen"
   stats_headline: "Wir erschaffen ein neues Ernährungssystem."
@@ -1552,7 +1552,7 @@ de_DE:
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
   email_signoff: "Viele Grüße,"
-  email_signature: "das Team vom Open Food Network"
+  email_signature: "das Team des Open Food Network"
   email_confirm_customer_greeting: "Hallo %{name},"
   email_confirm_customer_intro_html: "vielen Dank für Ihren Einkauf bei <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
@@ -1763,7 +1763,7 @@ de_DE:
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
   sell_listing_price: "Die Aufnahme ins Open Food Network ist kostenlos. Das Eröffnen und Betreiben eines Online-Shops ist für Unternehmen mit einem monatlichen Umsatz unter 500 € kostenlos. Bei höherem Umsatz erlauben wir uns nach einer 3-monatigen kostenlosen Testphase die Berechnung von 3 % Gebühr, um unsere Kosten zu decken."
   sell_embed: "Wir bieten noch weitere Dienste rund um Ihr Unternehmen an."
-  sell_ask_services: "Fragen Sie uns nach OFN-Dienstleistungen."
+  sell_ask_services: "Fragen Sie uns nach Dienstleistungen rund um das Open Food Network."
   shops_title: Regional Einkaufen
   shops_headline: Wählen Sie einen Laden aus der Liste.
   shops_text: Pflanzen wachsen in Zyklen, Landwirte ernten in Zyklen und bei uns bestellen Sie Lebensmittel in Zyklen. Ist ein Bestellzyklus gerade geschlossen, wählen Sie einen anderen Laden oder schauen Sie später wieder vorbei.
@@ -1879,23 +1879,23 @@ de_DE:
     steps:
       introduction:
         registration_greeting: "Herzlich willkommen!"
-        registration_intro: "Sie können jetzt ein Profil als Produzent oder Hub erstellen!"
+        registration_intro: "Erstellen Sie zunächst ein Profil um sich oder Ihre Produkte zu präsentieren!"
         registration_checklist: "Was brauche ich?"
         registration_time: "5-10 Minuten Zeit"
-        registration_enterprise_address: "Unternehmensadresse"
-        registration_contact_details: "Kontaktdaten (Ansprechpartner, E-Mail-Adresse, Telefonnummer)"
-        registration_logo: "Ihr Logo"
-        registration_promo_image: "Hintergrundbild für Ihr Profil"
-        registration_about_us: "\"Über uns\" Text"
+        registration_enterprise_address: "Unternehmensname und -adresse"
+        registration_contact_details: "Kontaktdaten (Ansprechpartner, E-Mail-Adresse)"
+        registration_logo: "Ihr Logo (empfohlen)"
+        registration_promo_image: "Hintergrundbild für Ihr Profil (empfohlen)"
+        registration_about_us: "\"Über uns\" Text (empfohlen)"
         registration_outcome_headline: "Was bekomme ich?"
         registration_outcome1_html: "Ihr Profil hilft dabei, Sie im Open Food Network zu <strong>finden</strong> und zu <strong>kontaktieren</strong>."
         registration_outcome2: "Nutzen Sie Ihr Profil, um die Geschichte Ihres Unternehmens zu erzählen und verknüpfen Sie Ihren Social-Media- und Web-Auftritt."
-        registration_outcome3: "Ihr Profil ist auch der erste Schritt, um im Open Food Network Produkte zu handeln oder einen Laden zu eröffnen."
+        registration_outcome3: "Ihr Profil ist auch der erste Schritt, um im Open Food Network Produkte zu handeln oder einen Online-Shop zu eröffnen."
         registration_action: "Los geht's!"
       details:
         title: "Ihr Unternehmen"
         headline: "Ihr Unternehmen"
-        enterprise: "Woot! Zuerst müssen wir ein wenig über Ihr Unternehmen wissen:"
+        enterprise: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Unternehmens."
         producer: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Betriebs."
         enterprise_name_field: "Name des Unternehmens:"
         producer_name_field: "Name des Betriebs:"
@@ -1926,80 +1926,80 @@ de_DE:
         contact_field: "Hauptansprechpartner"
         contact_field_placeholder: "Vorname Nachname"
         contact_field_required: "Bitte geben Sie einen Hauptansprechpartner ein."
-        phone_field: "Telefonnummer"
+        phone_field: "Telefonnummer (optional)"
         phone_field_placeholder: "z. B. 030 1234 5678"
       type:
-        title: "Art"
-        headline: "Wählen Sie bitte die Profilart von %{enterprise} aus!"
-        question: "Sind Sie ein Produzent?"
-        yes_producer: "Ja, ich bin ein Produzent."
-        no_producer: "Nein, ich bin kein Produzent."
-        producer_field_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
+        title: "Art des Profils"
+        headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
+        question: "Ist das Unternehmen ein Produzent?"
+        yes_producer: "Ja, es ist ein Produzent."
+        no_producer: "Nein, es ist kein Produzent."
+        producer_field_error: "Bitte wählen Sie: Ist das Unternehmen ein Produzent?"
         yes_producer_help: "Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
-        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Großhändler oder Vergleichbares sein."
+        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Food Hub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Großhändler oder Vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
         title: "Über uns"
-        headline: "Sehr gut!"
-        message: "Lassen Sie uns nun die Details Ihres Profils bearbeiten:"
+        headline: "Über uns"
+        message: "Beschreiben Sie nun "
         success: "Sehr gut! %{enterprise} wurde dem Open Food Network hinzugefügt."
-        registration_exit_message: "Wenn Sie diesen Assistenten zu einem beliebigen Zeitpunkt beenden, können Sie mit der Erstellung Ihres Profils fortfahren, indem Sie in das Menü \"Verwaltung\" gehen."
-        enterprise_description: "Kurzbeschreibung"
+        registration_exit_message: "Wenn Sie diesen Assistenten zu einem beliebigen Zeitpunkt beenden, können Sie mit der Erstellung Ihres Profils fortfahren, indem Sie sich einloggen und zum Menü \"Verwaltung\" wechseln."
+        enterprise_description: "Kurzbeschreibung (empfohlen)"
         enterprise_description_placeholder: "Ein kurzer Satz, der Ihr Unternehmen beschreibt."
-        enterprise_long_desc: "Ausführliche Beschreibung"
+        enterprise_long_desc: "Ausführliche Beschreibung (empfohlen)"
         enterprise_long_desc_placeholder: "Erzählen Sie hier die Geschichte Ihres Unternehmens - was macht Sie anders und wunderbar? Wir empfehlen, die Beschreibung unter 600 Zeichen oder 150 Wörtern zu halten."
         enterprise_long_desc_length: "%{num} Zeichen/bis zu 600 empfohlen"
-        enterprise_abn: "USt-IdNr."
+        enterprise_abn: "USt-IdNr. (optional für Rechnungserstellung)"
         enterprise_abn_placeholder: "z. B. DE999999999"
-        enterprise_acn: "St.-Nr."
+        enterprise_acn: "St.-Nr. (optional für Rechnungserstellung)"
         enterprise_acn_placeholder: "z. B. 93815/08152"
         enterprise_tax_required: "Bitte treffen Sie eine Auswahl."
       images:
         title: "Bilder"
-        headline: "Vielen Dank!"
+        headline: "Bilder"
         description: "Laden Sie einige schöne Bilder hoch, um ein ansprechendes Profil zu gestalten!"
         uploading: "Wird hochgeladen ..."
         continue: "Weiter"
         back: "Zurück"
       logo:
-        select_logo: "Schritt 1. Wählen Sie ein Bild als Ihr Logo aus"
+        select_logo: "Schritt 1: Laden Sie Ihr Logo hoch (empfohlen)"
         logo_tip: "Tipp: Am besten funktionieren quadratische Bilder, vorzugsweise mindestens 300 × 300 Pixel."
-        logo_label: "Wählen Sie ein Logo aus"
+        logo_label: "Bilddatei auswählen"
         logo_drag: "Ziehen Sie Ihr Logo hierher."
-        review_logo: "Schritt 2. Überprüfen Sie Ihr Logo"
+        review_logo: "Schritt 2: Überprüfen Sie Ihr Logo"
         review_logo_tip: "Tipp: Um das schönste Ergebnis zu erzielen, sollte Ihr Logo den gesamten verfügbaren Platz ausfüllen."
         logo_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde."
       promo:
-        select_promo_image: "Schritt 3. Wählen Sie ein Werbebild"
+        select_promo_image: "Schritt 3: Laden Sie ein Hintergrundbild hoch (empfohlen)"
         promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260 Pixel."
-        promo_image_label: "Wählen Sie ein Werbebild"
+        promo_image_label: "Bilddatei auswählen"
         promo_image_drag: "Ziehen Sie Ihr Bild hierher."
-        review_promo_image: "Schritt 4. Überprüfen Sie Ihr Werbebild"
-        review_promo_image_tip: "Tipp: Für ein optimales Ergebnis sollte Ihr Werbebild den verfügbaren Platz ausfüllen."
+        review_promo_image: "Schritt 4: Überprüfen Sie Ihr Hintergrundbild"
+        review_promo_image_tip: "Tipp: Für ein optimales Ergebnis sollte Ihr Hintergrundbild den verfügbaren Platz ausfüllen."
         promo_image_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde."
       social:
         title: "Soziale Medien"
         enterprise_final_step: "Letzter Schritt!"
         enterprise_social_text: "Wie ist %{enterprise} im Internet erreichbar?"
-        website: "Homepage"
+        website: "Homepage (empfohlen)"
         website_placeholder: "z. B. openfoodnetwork.de"
-        facebook: "Facebook"
+        facebook: "Facebook (optional)"
         facebook_placeholder: "z. B. www.facebook.com/IhrNameHier"
-        linkedin: "LinkedIn"
+        linkedin: "LinkedIn (optional)"
         linkedin_placeholder: "z. B. www.linkedin.com/IhrNameHier"
-        twitter: "Twitter"
+        twitter: "Twitter (optional)"
         twitter_placeholder: "z. B. @twitter_name"
-        instagram: "Instagram"
+        instagram: "Instagram (optional)"
         instagram_placeholder: "z. B. @instagram_name"
       limit_reached:
         headline: "Oh nein!"
         message: "Sie haben das Limit erreicht!"
-        text: "Sie haben die maximale Anzahl der Unternehmen erreicht, die Sie besitzen dürfen im"
+        text: "Sie haben die maximale Anzahl der Unternehmen erreicht, die Sie verwalten dürfen im"
         action: "Zurück zur Startseite"
       finished:
         headline: "Fertig!"
         thanks: "Vielen Dank, dass Sie die Details für %{enterprise} ausgefüllt haben."
-        login: "Sie können die Angaben Ihres Unternehmens jederzeit ändern oder aktualisieren, indem Sie sich bei Open Food Network einloggen und zum Menü \"Verwaltung\" wechseln."
+        login: "Sie können die Angaben Ihres Unternehmens jederzeit ändern oder aktualisieren, indem Sie sich einloggen und zum Menü \"Verwaltung\" wechseln."
         action: "Zur Übersicht der Unternehmen"
   back: "Zurück"
   continue: "Weiter"
@@ -2972,7 +2972,7 @@ de_DE:
     back_to_zones_list: "Zurück zur Zonenliste"
     card_code: "Kartenprüfnummer (3-stellig)"
     card_number: "Kreditkartennummer"
-    category: "Produktkategorie"
+    category: "Steuerkategorie"
     created_successfully: "Erfolgreich erstellt"
     credit: "Guthaben"
     editing_tax_category: "Steuerkategorie bearbeiten"
@@ -3089,7 +3089,7 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
-    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale OFN-Team, um weitere Informationen zu erhalten."
+    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale Team des Open Food Network, um weitere Informationen zu erhalten."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
@@ -3340,7 +3340,7 @@ de_DE:
         enterprises_header:
           ofn_with_tip: Unternehmen sind Produzenten und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
         enterprise_row:
-          has_no_enterprise_fees: "hat keine Unternehmensgebühren"
+          has_no_enterprise_fees: "erhebt keine Unternehmensgebühren"
           has_no_payment_methods: "hat keine Zahlungsarten"
           has_no_shipping_methods: "hat keine Lieferoptionen"
         products:
