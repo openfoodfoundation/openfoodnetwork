@@ -23,35 +23,54 @@ describe ProcessPaymentIntent do
       allow(Stripe::PaymentIntentValidator).to receive(:new).and_return(validator)
     end
 
-    context "an invalid intent" do
-      let(:intent) { "invalid" }
+    context "with an invalid intent" do
+      let(:intent) { "pi_123" }
       let(:service) { ProcessPaymentIntent.new(intent, order) }
 
-      before do
-        allow(validator)
-          .to receive(:call).with(intent, anything).and_raise(Stripe::StripeError, "error message")
+      context "which does not match the last payment" do
+        let(:intent) { "pi_456" }
+
+        it "returns false" do
+          result = service.call!
+
+          expect(result.ok?).to eq(false)
+          expect(result.error).to eq("")
+        end
+
+        it "does not complete the payment" do
+          service.call!
+          expect(payment.reload.state).to eq("pending")
+        end
       end
 
-      it "returns the error message" do
-        result = service.call!
+      context "where the stripe payment intent validation responds with errors" do
+        before do
+          allow(validator)
+            .to receive(:call).with(intent, anything).and_raise(Stripe::StripeError, "error message")
+        end
 
-        expect(result.ok?).to eq(false)
-        expect(result.error).to eq("error message")
-      end
+        it "returns returns the error message" do
+          result = service.call!
 
-      it "does not complete the payment" do
-        service.call!
-        expect(payment.reload.state).to eq("pending")
+          expect(result.ok?).to eq(false)
+          expect(result.error).to eq("error message")
+        end
+
+        it "does not complete the payment" do
+          service.call!
+          expect(payment.reload.state).to eq("pending")
+        end
       end
     end
 
     context "a valid intent" do
       let(:intent) { "pi_123" }
+      let(:intent_response) { double(status: "requires_capture") }
       let(:service) { ProcessPaymentIntent.new(intent, order) }
 
       before do
         allow(order).to receive(:deliver_order_confirmation_email)
-        allow(validator).to receive(:call).with(intent, anything).and_return(intent) 
+        allow(validator).to receive(:call).with(intent, anything).and_return(intent_response)
       end
 
       it "validates the intent" do
@@ -97,11 +116,12 @@ describe ProcessPaymentIntent do
 
     context "when the payment can't be completed" do
       let(:intent) { "pi_123" }
+      let(:intent_response) { double(id: "pi_123", status: "requires_capture") }
       let(:service) { ProcessPaymentIntent.new(intent, order, payment) }
 
       before do
         allow(payment).to receive(:can_complete?).and_return(false)
-        allow(validator).to receive(:call).with(intent, anything).and_return(intent)
+        allow(validator).to receive(:call).with(intent, anything).and_return(intent_response)
       end
 
       it "returns a failed result" do
