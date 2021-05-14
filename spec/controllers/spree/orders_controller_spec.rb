@@ -82,7 +82,10 @@ describe Spree::OrdersController, type: :controller do
 
   describe "confirming a payment intent" do
     let(:customer) { create(:customer) }
-    let(:order) { create(:order, customer: customer, distributor: customer.enterprise) }
+    let(:order) {
+      create(:order_with_totals, customer: customer, distributor: customer.enterprise,
+                                 state: "payment")
+    }
     let(:payment_method) { create(:stripe_sca_payment_method) }
     let!(:payment) { create(
       :payment,
@@ -102,12 +105,19 @@ describe Spree::OrdersController, type: :controller do
 
       context "with a valid payment intent" do
         let(:payment_intent) { "pi_123" }
+        let(:payment_intent_response) { double(id: "pi_123", status: "requires_capture") }
 
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
             .with(payment_intent, kind_of(String))
-            .and_return(payment_intent)
+            .and_return(payment_intent_response)
+
+          allow(Spree::Order).to receive(:find_by!) { order }
+
+          allow(order).to receive(:process_payments!) do
+            payment.complete!
+          end
         end
 
         it "completes the payment" do
@@ -120,8 +130,8 @@ describe Spree::OrdersController, type: :controller do
         end
       end
 
-      context "with an invalid payment intent" do
-        let(:payment_intent) { "invalid" }
+      context "when the payment intent response has errors" do
+        let(:payment_intent) { "pi_123" }
 
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
