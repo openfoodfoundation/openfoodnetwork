@@ -9,6 +9,7 @@ module Spree
       before_action :load_payment, only: [:fire, :show]
       before_action :load_data
       before_action :can_transition_to_payment
+      before_action :ensure_sufficient_stock_lines
 
       respond_to :html
 
@@ -140,6 +141,17 @@ module Spree
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
         redirect_to spree.edit_admin_order_customer_url(@order)
+      end
+
+      def ensure_sufficient_stock_lines
+        return if @order.insufficient_stock_lines.blank? || !@order.payment?
+
+        out_of_stock_items = @order.insufficient_stock_lines.map do |line_item|
+          line_item.variant.name
+        end.join(", ")
+        flash[:error] = I18n.t("spree.orders.line_item.insufficient_stock",
+          on_hand: "0 #{out_of_stock_items}")
+        redirect_to spree.edit_admin_order_url(@order)
       end
 
       def load_order
