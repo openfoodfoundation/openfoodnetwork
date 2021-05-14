@@ -1,3 +1,20 @@
+- content_for :page_actions do
+  :javascript
+    function toggleSettings(){
+      if( $('#advanced_settings').is(":visible") ){
+        $('button#toggle_settings i').switchClass("icon-chevron-up","icon-chevron-down")
+      }
+      else {
+        $('button#toggle_settings i').switchClass("icon-chevron-down","icon-chevron-up")
+      }
+      $("#advanced_settings").slideToggle()
+    }
+
+  %li
+    %button#toggle_settings{ onClick: 'toggleSettings()' }
+      = t('.advanced_settings')
+      %i.icon-chevron-down
+
 - content_for :page_title do
   = t :edit_order_cycle
 
