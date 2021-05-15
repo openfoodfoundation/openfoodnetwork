@@ -45,7 +45,8 @@ Openfoodnetwork::Application.configure do
   config.cache_store = :redis_cache_store, {
     driver: :hiredis,
     url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0"),
-    namespace: "cache"
+    namespace: "cache",
+    reconnect_attempts: 1
   }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
