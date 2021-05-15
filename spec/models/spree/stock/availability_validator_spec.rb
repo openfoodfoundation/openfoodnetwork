@@ -52,6 +52,33 @@ module Spree
             expect(line_item).not_to be_valid
           end
         end
+
+        context "when the line item's variant has an override" do
+          let(:hub) { order.distributor }
+          let(:variant) { line_item.variant }
+          let(:vo_stock) { 999 }
+          let!(:variant_override) {
+            create(:variant_override, variant: variant, hub: hub, count_on_hand: vo_stock)
+          }
+
+          context "when the override has stock" do
+            it "is valid" do
+              line_item.quantity = 999
+              validator.validate(line_item)
+              expect(line_item).to be_valid
+            end
+          end
+
+          context "when the override is out of stock" do
+            let(:vo_stock) { 1 }
+
+            it "is not valid" do
+              line_item.quantity = 999
+              validator.validate(line_item)
+              expect(line_item).to_not be_valid
+            end
+          end
+        end
       end
     end
   end
