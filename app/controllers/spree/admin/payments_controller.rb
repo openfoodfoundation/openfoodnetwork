@@ -144,7 +144,7 @@ module Spree
       end
 
       def ensure_sufficient_stock_lines
-        return if @order.insufficient_stock_lines.blank? || !@order.payment?
+        return if !@order.payment? || @order.insufficient_stock_lines.blank?
 
         out_of_stock_items = @order.insufficient_stock_lines.map do |line_item|
           line_item.variant.name
