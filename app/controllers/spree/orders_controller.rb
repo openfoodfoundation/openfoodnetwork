@@ -14,7 +14,7 @@ module Spree
     respond_to :html
     respond_to :json
 
-    before_action :update_distribution, only: :update
+    before_action :set_current_order, only: :update
     before_action :filter_order_params, only: :update
     before_action :enable_embedded_shopfront
 
@@ -115,24 +115,8 @@ module Spree
       end
     end
 
-    def update_distribution
+    def set_current_order
       @order = current_order(true)
-
-      if params[:commit] == 'Choose Hub'
-        distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
-        @order.set_distributor! distributor
-
-        flash[:notice] = I18n.t(:order_choosing_hub_notice)
-        redirect_to request.referer
-
-      elsif params[:commit] == 'Choose Order Cycle'
-        @order.empty! # empty cart
-        order_cycle = OrderCycle.active.find params[:order][:order_cycle_id]
-        @order.set_order_cycle! order_cycle
-
-        flash[:notice] = I18n.t(:order_choosing_hub_notice)
-        redirect_to request.referer
-      end
     end
 
     def filter_order_params
