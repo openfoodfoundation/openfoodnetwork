@@ -76,21 +76,59 @@ describe ProcessPaymentIntent do
       end
 
       it "validates the intent" do
+        expect(order).to receive(:process_payments!) { true }
         service.call!
         expect(validator).to have_received(:call)
       end
 
-      it "completes the payment" do
+      it "processes the order's payment" do
+        allow(order).to receive(:pending_payments) { [payment] }
+
+        expect(order).to receive(:process_payments!).and_call_original
+        expect(payment).to receive(:purchase!) { true }
         service.call!
-        payment.reload
-        expect(payment.state).to eq("completed")
-        expect(payment.cvv_response_message).to be nil
       end
 
-      it "completes the order" do
-        service.call!
-        expect(order.state).to eq("complete")
-        expect(order).to have_received(:deliver_order_confirmation_email)
+      context "when payment processing succeeds" do
+        before do
+          allow(order).to receive(:process_payments!) do
+            payment.complete!
+          end
+        end
+
+        it "completes the payment" do
+          service.call!
+          payment.reload
+          expect(payment.state).to eq("completed")
+          expect(payment.cvv_response_message).to be nil
+        end
+
+        it "completes the order" do
+          service.call!
+          expect(order.state).to eq("complete")
+          expect(order).to have_received(:deliver_order_confirmation_email)
+        end
+      end
+
+      context "when payment processing fails" do
+        before do
+          allow(order).to receive(:process_payments!) do
+            payment.failure!
+          end
+        end
+
+        it "does not complete the payment" do
+          service.call!
+          payment.reload
+          expect(payment.state).to eq("failed")
+        end
+
+        it "completes the order, but with failed payment state recorded" do
+          service.call!
+          expect(order.state).to eq("complete")
+          expect(order.payment_state).to eq("failed")
+          expect(order).to have_received(:deliver_order_confirmation_email)
+        end
       end
     end
 
@@ -122,7 +160,7 @@ describe ProcessPaymentIntent do
       let(:service) { ProcessPaymentIntent.new(intent, order, payment) }
 
       before do
-        allow(payment).to receive(:can_complete?).and_return(false)
+        allow(order).to receive(:process_payments!) { nil }
         allow(validator).to receive(:call).with(intent, anything).and_return(intent_response)
       end
 
