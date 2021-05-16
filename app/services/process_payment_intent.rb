@@ -23,10 +23,10 @@ class ProcessPaymentIntent
     end
   end
 
-  def initialize(payment_intent, order, last_payment = nil)
+  def initialize(payment_intent, order)
     @payment_intent = payment_intent
     @order = order
-    @last_payment = last_payment.presence || OrderPaymentFinder.new(order).last_payment
+    @last_payment = OrderPaymentFinder.new(order).last_payment
   end
 
   def call!

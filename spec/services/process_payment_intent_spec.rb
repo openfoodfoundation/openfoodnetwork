@@ -157,7 +157,7 @@ describe ProcessPaymentIntent do
     context "when the payment can't be completed" do
       let(:intent) { "pi_123" }
       let(:intent_response) { double(id: "pi_123", status: "requires_capture") }
-      let(:service) { ProcessPaymentIntent.new(intent, order, payment) }
+      let(:service) { ProcessPaymentIntent.new(intent, order) }
 
       before do
         allow(order).to receive(:process_payments!) { nil }
