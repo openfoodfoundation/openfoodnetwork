@@ -35,8 +35,7 @@ class ProcessPaymentIntent
 
     OrderWorkflow.new(order).next
 
-    if last_payment.can_complete?
-      last_payment.complete!
+    if last_payment.completed?
       last_payment.mark_as_processed
 
       Result.new(ok: true)
