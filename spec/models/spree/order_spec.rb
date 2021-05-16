@@ -1313,4 +1313,36 @@ describe Spree::Order do
       end
     end
   end
+
+  describe "#ensure_updated_shipments" do
+    before { Spree::Shipment.create!(order: order) }
+
+    context "when the order is not completed" do
+      it "destroys current shipments" do
+        order.ensure_updated_shipments
+        expect(order.shipments).to be_empty
+      end
+
+      it "puts order back in address state" do
+        order.ensure_updated_shipments
+        expect(order.state).to eq "address"
+      end
+    end
+
+    context "when the order is completed" do
+      before do
+        allow(order).to receive(:completed?) { true }
+      end
+
+      it "does not change the shipments" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipments }
+
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.state }
+      end
+    end
+  end
 end
