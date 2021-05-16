@@ -26,19 +26,19 @@ class ProcessPaymentIntent
   def initialize(payment_intent, order)
     @payment_intent = payment_intent
     @order = order
-    @last_payment = OrderPaymentFinder.new(order).last_payment
+    @payment = order.payments.pending.with_payment_intent(payment_intent).first
   end
 
   def call!
-    return Result.new(ok: false) unless valid?
+    return Result.new(ok: false) unless payment.present? && ready_for_capture?
     return Result.new(ok: true) if already_processed?
 
     # Moves the order to competed state, which calls #process_payments! (and #purchase!)
     # This completes the payment via Stripe and sets the payment's state to completed if successful
     OrderWorkflow.new(order).next
 
-    if last_payment.reload.completed?
-      last_payment.mark_as_processed
+    if payment.reload.completed?
+      payment.mark_as_processed
 
       Result.new(ok: true)
     else
@@ -51,11 +51,7 @@ class ProcessPaymentIntent
 
   private
 
-  attr_reader :order, :payment_intent, :last_payment
-
-  def valid?
-    order.present? && matches_last_payment? && ready_for_capture?
-  end
+  attr_reader :order, :payment_intent, :payment
 
   def ready_for_capture?
     payment_intent_status == 'requires_capture'
@@ -71,15 +67,11 @@ class ProcessPaymentIntent
       status
   end
 
-  def matches_last_payment?
-    last_payment&.state == "pending" && last_payment&.response_code == payment_intent
-  end
-
   def stripe_account_id
     StripeAccount.find_by(enterprise_id: preferred_enterprise_id).stripe_user_id
   end
 
   def preferred_enterprise_id
-    last_payment.payment_method.preferred_enterprise_id
+    payment.payment_method.preferred_enterprise_id
   end
 end
