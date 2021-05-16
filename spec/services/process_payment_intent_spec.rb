@@ -7,7 +7,9 @@ describe ProcessPaymentIntent do
 
   describe "processing a payment intent" do
     let(:customer) { create(:customer) }
-    let(:order) { create(:order, customer: customer, distributor: customer.enterprise, state: "payment") }
+    let(:order) {
+      create(:order_with_totals, customer: customer, distributor: customer.enterprise, state: "payment")
+    }
     let(:payment_method) { create(:stripe_sca_payment_method) }
     let!(:payment) { create(
       :payment,
