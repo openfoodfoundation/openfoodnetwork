@@ -33,9 +33,7 @@ class ProcessPaymentIntent
     return Result.new(ok: false) unless payment.present? && ready_for_capture?
     return Result.new(ok: true) if already_processed?
 
-    # Moves the order to competed state, which calls #process_payments! (and #purchase!)
-    # This completes the payment via Stripe and sets the payment's state to completed if successful
-    OrderWorkflow.new(order).next
+    process_payment
 
     if payment.reload.completed?
       payment.mark_as_processed
@@ -52,6 +50,15 @@ class ProcessPaymentIntent
   private
 
   attr_reader :order, :payment_intent, :payment
+
+  def process_payment
+    if order.state == "payment"
+      # Moves the order to completed, which calls #process_payments!
+      OrderWorkflow.new(order).next
+    else
+      order.process_payments!
+    end
+  end
 
   def ready_for_capture?
     payment_intent_status == 'requires_capture'

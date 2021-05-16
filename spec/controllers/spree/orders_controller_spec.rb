@@ -114,19 +114,39 @@ describe Spree::OrdersController, type: :controller do
             .and_return(payment_intent_response)
 
           allow(Spree::Order).to receive(:find_by!) { order }
+        end
 
-          allow(order).to receive(:process_payments!) do
-            payment.complete!
+        context "when the order is in payment state" do
+          it "completes the payment" do
+            expect(order).to receive(:process_payments!) do
+              payment.complete!
+            end
+
+            get :show, params: { id: order.number, payment_intent: payment_intent }
+
+            expect(response.status).to eq 200
+            payment.reload
+            expect(payment.state).to eq("completed")
+            expect(payment.cvv_response_message).to be nil
           end
         end
 
-        it "completes the payment" do
-          get :show, params: { id: order.number, payment_intent: payment_intent }
+        context "when the order is already completed" do
+          before do
+            order.update_columns(state: "complete")
+          end
 
-          expect(response.status).to eq 200
-          payment.reload
-          expect(payment.cvv_response_message).to be nil
-          expect(payment.state).to eq("completed")
+          it "should still process the payment" do
+            expect(order).to receive(:process_payments!) do
+              payment.complete!
+            end
+
+            get :show, params: { id: order.number, payment_intent: payment_intent }
+            expect(response.status).to eq 200
+            payment.reload
+            expect(payment.state).to eq("completed")
+            expect(payment.cvv_response_message).to be nil
+          end
         end
       end
 
