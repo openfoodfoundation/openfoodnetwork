@@ -33,6 +33,8 @@ class ProcessPaymentIntent
     return Result.new(ok: false) unless valid?
     return Result.new(ok: true) if already_processed?
 
+    # Moves the order to competed state, which calls #process_payments! (and #purchase!)
+    # This completes the payment via Stripe and sets the payment's state to completed if successful
     OrderWorkflow.new(order).next
 
     if last_payment.reload.completed?
