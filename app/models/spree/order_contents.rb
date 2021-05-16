@@ -46,7 +46,7 @@ module Spree
     def update_cart(params)
       if order.update_attributes(params)
         discard_empty_line_items
-        order.ensure_updated_shipments
+        update_shipment
         update_order
         true
       else
@@ -56,10 +56,10 @@ module Spree
 
     def update_item(line_item, params)
       if line_item.update_attributes(params)
+        discard_empty_line_items
         order.update_line_item_fees! line_item
         order.update_order_fees! if order.completed?
-        discard_empty_line_items
-        order.ensure_updated_shipments
+        update_shipment
         update_order
         true
       else
@@ -73,8 +73,12 @@ module Spree
       order.line_items = order.line_items.select {|li| li.quantity.positive? }
     end
 
-    def update_shipment(shipment)
-      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+    def update_shipment(target_shipment = nil)
+      if order.completed? || target_shipment.present?
+        order.update_shipping_fees!
+      else
+        order.ensure_updated_shipments
+      end
     end
 
     def add_to_line_item(variant, quantity, shipment = nil)

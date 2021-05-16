@@ -70,7 +70,6 @@ module Spree
         @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
 
         if @order.complete?
-          @order.update_shipping_fees!
           @order.update_payment_fees!
           @order.create_tax_charge!
         end

@@ -347,7 +347,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       let(:line_item_params) { { quantity: 3 } }
       let(:params) { { id: line_item1.id, order_id: order.number, line_item: line_item_params } }
 
-      xit "correctly updates order totals and states" do
+      it "correctly updates order totals and states" do
         expect(order.total).to eq 35.0
         expect(order.shipment_adjustments.shipping.sum(:amount)).to eq 6.0
         expect(order.shipment_adjustments.tax.sum(:amount)).to eq 0.29
@@ -374,7 +374,7 @@ describe Admin::BulkLineItemsController, type: :controller do
     describe "deleting a line item" do
       let(:params) { { id: line_item1.id, order_id: order.number } }
 
-      xit "correctly updates order totals and states" do
+      it "correctly updates order totals and states" do
         expect(order.total).to eq 35.0
         expect(order.shipment_adjustments.shipping.sum(:amount)).to eq 6.0
         expect(order.shipment_adjustments.tax.sum(:amount)).to eq 0.29

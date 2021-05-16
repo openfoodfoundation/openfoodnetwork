@@ -40,7 +40,6 @@ class LineItemsController < BaseController
     order = item.order
     order.with_lock do
       order.contents.remove(item.variant)
-      order.update_shipping_fees!
       order.update_payment_fees!
     end
   end
