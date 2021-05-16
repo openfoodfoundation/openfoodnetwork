@@ -31,6 +31,7 @@ class ProcessPaymentIntent
 
   def call!
     return Result.new(ok: false) unless valid?
+    return Result.new(ok: true) if already_processed?
 
     OrderWorkflow.new(order).next
 
@@ -56,10 +57,17 @@ class ProcessPaymentIntent
   end
 
   def ready_for_capture?
-    payment_intent_response = Stripe::PaymentIntentValidator.new.
-      call(payment_intent, stripe_account_id)
+    payment_intent_status == 'requires_capture'
+  end
 
-    payment_intent_response.status == 'requires_capture'
+  def already_processed?
+    payment_intent_status == 'succeeded'
+  end
+
+  def payment_intent_status
+    @payment_intent_status ||= Stripe::PaymentIntentValidator.new.
+      call(payment_intent, stripe_account_id).
+      status
   end
 
   def matches_last_payment?
