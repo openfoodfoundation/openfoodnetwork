@@ -706,7 +706,7 @@ module Spree
       return if adjustment.finalized?
 
       adjustment.update_adjustment!(force: true)
-      update_order!
+      updater.update_totals_and_states
     end
 
     # object_params sets the payment amount to the order total, but it does this
