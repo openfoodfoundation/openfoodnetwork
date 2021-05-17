@@ -50,6 +50,7 @@ module Spree
     scope :failed, -> { with_state('failed') }
     scope :valid, -> { where('state NOT IN (?)', %w(failed invalid)) }
     scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
+    scope :with_payment_intent, ->(code) { where(response_code: code) }
 
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :checkout do

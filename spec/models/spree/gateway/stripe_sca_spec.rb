@@ -50,6 +50,35 @@ describe Spree::Gateway::StripeSCA, type: :model do
       expect(response.success?).to eq false
       expect(response.message).to eq "Invalid payment state: succeeded"
     end
+
+    context "when payment intent state is not in 'requires_capture' state" do
+      before do
+        payment
+      end
+
+      it "succeeds if payment intent state is requires_capture" do
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents/12345/capture").
+          with(body: {"amount_to_capture" => order.total}).
+          to_return(status: 200, body: capture_successful)
+
+        allow(Stripe::PaymentIntentValidator).to receive_message_chain(:new, :call).
+          and_return(double(status: "requires_capture"))
+
+        response = subject.purchase(order.total, credit_card, gateway_options)
+
+        expect(response.success?).to eq true
+      end
+
+      it "does not succeed if payment intent state is not requires_capture" do
+        allow(Stripe::PaymentIntentValidator).to receive_message_chain(:new, :call).
+          and_return(double(status: "not_ready_yet"))
+
+        response = subject.purchase(order.total, credit_card, gateway_options)
+
+        expect(response.success?).to eq false
+        expect(response.message).to eq "Invalid payment state: not_ready_yet"
+      end
+    end
   end
 
   def payment_intent(amount, status)

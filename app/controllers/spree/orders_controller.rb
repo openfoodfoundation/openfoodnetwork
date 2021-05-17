@@ -27,13 +27,7 @@ module Spree
     def show
       @order = Spree::Order.find_by!(number: params[:id])
 
-      if params.key?("payment_intent")
-        result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-        unless result.ok?
-          flash[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
-        end
-        @order.reload
-      end
+      handle_stripe_response
     end
 
     def empty
@@ -145,6 +139,19 @@ module Spree
     end
 
     private
+
+    # Stripe can redirect here after a payment is processed in the backoffice.
+    # We verify if it was successful here and persist the changes.
+    def handle_stripe_response
+      return unless params.key?("payment_intent")
+
+      result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
+
+      unless result.ok?
+        flash.now[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
+      end
+      @order.reload
+    end
 
     def discard_empty_line_items
       @order.line_items = @order.line_items.select { |li| li.quantity > 0 }

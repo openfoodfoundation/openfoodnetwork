@@ -8,9 +8,8 @@ module Stripe
                                                                stripe_account: stripe_account_id)
 
       raise_if_last_payment_error_present(payment_intent_response)
-      raise_if_not_in_capture_state(payment_intent_response)
 
-      payment_intent_id
+      payment_intent_response
     end
 
     private
@@ -20,13 +19,6 @@ module Stripe
                     payment_intent_response.last_payment_error.present?
 
       raise Stripe::StripeError, payment_intent_response.last_payment_error.message
-    end
-
-    def raise_if_not_in_capture_state(payment_intent_response)
-      state = payment_intent_response.status
-      return unless state != 'requires_capture'
-
-      raise Stripe::StripeError, I18n.t(:invalid_payment_state, state: state)
     end
   end
 end

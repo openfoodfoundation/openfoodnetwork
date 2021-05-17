@@ -23,21 +23,20 @@ class ProcessPaymentIntent
     end
   end
 
-  def initialize(payment_intent, order, last_payment = nil)
+  def initialize(payment_intent, order)
     @payment_intent = payment_intent
     @order = order
-    @last_payment = last_payment.presence || OrderPaymentFinder.new(order).last_payment
+    @payment = order.payments.pending.with_payment_intent(payment_intent).first
   end
 
   def call!
-    validate_intent!
-    return Result.new(ok: false) unless valid?
+    return Result.new(ok: false) unless payment.present? && ready_for_capture?
+    return Result.new(ok: true) if already_processed?
 
-    OrderWorkflow.new(order).next
+    process_payment
 
-    if last_payment.can_complete?
-      last_payment.complete!
-      last_payment.mark_as_processed
+    if payment.reload.completed?
+      payment.mark_as_processed
 
       Result.new(ok: true)
     else
@@ -50,18 +49,29 @@ class ProcessPaymentIntent
 
   private
 
-  attr_reader :order, :payment_intent, :last_payment
+  attr_reader :order, :payment_intent, :payment
 
-  def valid?
-    order.present? && matches_last_payment?
+  def process_payment
+    if order.state == "payment"
+      # Moves the order to completed, which calls #process_payments!
+      OrderWorkflow.new(order).next
+    else
+      order.process_payments!
+    end
   end
 
-  def validate_intent!
-    Stripe::PaymentIntentValidator.new.call(payment_intent, stripe_account_id)
+  def ready_for_capture?
+    payment_intent_status == 'requires_capture'
   end
 
-  def matches_last_payment?
-    last_payment&.state == "pending" && last_payment&.response_code == payment_intent
+  def already_processed?
+    payment_intent_status == 'succeeded'
+  end
+
+  def payment_intent_status
+    @payment_intent_status ||= Stripe::PaymentIntentValidator.new.
+      call(payment_intent, stripe_account_id).
+      status
   end
 
   def stripe_account_id
@@ -69,6 +79,6 @@ class ProcessPaymentIntent
   end
 
   def preferred_enterprise_id
-    last_payment.payment_method.preferred_enterprise_id
+    payment.payment_method.preferred_enterprise_id
   end
 end
