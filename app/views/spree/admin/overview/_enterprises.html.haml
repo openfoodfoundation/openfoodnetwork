@@ -25,8 +25,7 @@
         %span.centered.three.columns
           = t "spree_admin_enterprises_fees"
     %div.sixteen.columns.alpha.list
-      - @enterprises.each do |enterprise|
-        = render 'enterprise_row', { enterprise: enterprise }
+      = render partial: 'enterprise_row', collection: @enterprises, as: :enterprise
 
     %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
       = t "spree_admin_overview_enterprises_footer"
