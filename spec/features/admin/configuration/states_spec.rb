@@ -11,7 +11,7 @@ describe "States" do
   before(:each) do
     login_as_admin
     @hungary = Spree::Country.create!(name: "Hungary", iso_name: "Hungary")
-    Spree::Config[:default_country_id] = country.id
+    DefaultCountry.code = country.iso
   end
 
   # TODO: For whatever reason, rendering of the states page takes a non-trivial amount of time

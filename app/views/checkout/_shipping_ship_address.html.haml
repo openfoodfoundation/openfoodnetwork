@@ -22,7 +22,7 @@
           .small-6.columns
             = validated_input t(:postcode), "order.ship_address.zipcode"
           .small-6.columns.right
-            = validated_select t(:country), "order.ship_address.country_id", {}, {"ng-init" => "order.ship_address.country_id = order.ship_address.country_id || #{Spree::Config[:default_country_id]}", "ng-options" => "c.id as c.name for c in countries"}
+            = validated_select t(:country), "order.ship_address.country_id", {}, {"ng-init" => "order.ship_address.country_id = order.ship_address.country_id || #{DefaultCountry.id}", "ng-options" => "c.id as c.name for c in countries"}
         .row
           .small-6.columns
             = validated_input t(:phone), "order.ship_address.phone"

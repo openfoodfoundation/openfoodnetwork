@@ -38,7 +38,7 @@
               = validated_input t(:postcode), "order.bill_address.zipcode"
 
             .small-6.columns.right
-              = validated_select t(:country), "order.bill_address.country_id", {}, {"ng-init" => "order.bill_address.country_id = order.bill_address.country_id || #{Spree::Config[:default_country_id]}", "ng-options" => "c.id as c.name for c in countries"}
+              = validated_select t(:country), "order.bill_address.country_id", {}, {"ng-init" => "order.bill_address.country_id = order.bill_address.country_id || #{DefaultCountry.id}", "ng-options" => "c.id as c.name for c in countries"}
 
       .row
         .small-12.columns.text-right

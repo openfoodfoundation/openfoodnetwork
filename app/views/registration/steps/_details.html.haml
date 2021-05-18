@@ -53,7 +53,7 @@
             .small-12.medium-8.large-8.columns
               .field
                 %label{ for: 'enterprise_country' }= t(".country_field")
-                %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { init: "setDefaultCountry(#{Spree::Config[:default_country_id]})", model: 'enterprise.country', options: 'c as c.name for c in countries' } }
+                %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { init: "setDefaultCountry(#{DefaultCountry.id})", model: 'enterprise.country', options: 'c as c.name for c in countries' } }
                 %span.error{ ng: { show: "details.country.$error.required && submitted" } }
                   = t(".country_field_error")
 
