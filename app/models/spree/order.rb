@@ -473,13 +473,6 @@ module Spree
       end
     end
 
-    def restart_checkout_flow
-      self.update_columns(
-        state: checkout_steps.first,
-        updated_at: Time.zone.now,
-      )
-    end
-
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
