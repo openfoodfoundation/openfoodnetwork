@@ -465,7 +465,9 @@ module Spree
       shipments
     end
 
-    # Clear shipments and move order back to address state
+    # Clear shipments and move order back to address state unless compete. This is relevant where
+    # an order is part-way through checkout and the user changes items in the cart; in that case
+    # we need to reset the checkout flow to ensure the order is processed correctly.
     def ensure_updated_shipments
       if !self.completed? && shipments.any?
         shipments.destroy_all
