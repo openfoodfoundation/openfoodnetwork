@@ -206,7 +206,7 @@ module Spree
     end
 
     def update_order
-      order.update!
+      OrderManagement::Order::Updater.new(order).after_payment_update(self)
     end
 
     # Necessary because some payment gateways will refuse payments with

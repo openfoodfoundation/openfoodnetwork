@@ -8,7 +8,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
-  let!(:order) { create(:order, distributor: shop, state: 'complete') }
+  let!(:order) { create(:completed_order_with_totals, distributor: shop) }
   let!(:line_item) { create(:line_item, order: order, price: 5.0) }
 
   before do

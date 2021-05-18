@@ -531,15 +531,46 @@ describe Spree::Payment do
     end
 
     context "#save" do
-      it "should call order#update!" do
-        gateway.name = 'Gateway'
-        gateway.distributors << create(:distributor_enterprise)
-        gateway.save!
+      context "completed payments" do
+        it "updates order payment total" do
+          payment = create(:payment, amount: 100, order: order, state: "completed")
+          expect(order.payment_total).to eq payment.amount
+        end
+      end
 
-        order = create(:order)
-        payment = Spree::Payment.create(amount: 100, order: order, payment_method: gateway)
-        expect(order).to receive(:update!)
-        payment.save
+      context "non-completed payments" do
+        it "doesn't update order payment total" do
+          expect {
+            create(:payment, amount: 100, order: order)
+          }.not_to change { order.payment_total }
+        end
+      end
+
+      context 'when the payment was completed but now void' do
+        let(:payment) { create(:payment, amount: 100, order: order, state: 'completed') }
+
+        it 'updates order payment total' do
+          payment.void
+          expect(order.payment_total).to eq 0
+        end
+      end
+
+      context "completed orders" do
+        let(:order_updater) { OrderManagement::Order::Updater.new(order) }
+
+        before { allow(order).to receive(:completed?) { true } }
+
+        it "updates payment_state and shipments" do
+          expect(OrderManagement::Order::Updater).to receive(:new).with(order).
+            and_return(order_updater)
+
+          expect(order_updater).to receive(:after_payment_update).with(kind_of(Spree::Payment)).
+            and_call_original
+
+          expect(order_updater).to receive(:update_payment_state)
+          expect(order_updater).to receive(:update_shipment_state)
+          create(:payment, amount: 100, order: order)
+        end
       end
 
       context "when profiles are supported" do
