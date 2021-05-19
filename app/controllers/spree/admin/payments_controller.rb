@@ -9,6 +9,10 @@ module Spree
       before_action :load_payment, only: [:fire, :show]
       before_action :load_data
       before_action :can_transition_to_payment
+      # We ensure that items are in stock before all screens if the order is in the Payment state.
+      # This way, we don't allow someone to enter credit card details for an order only to be told
+      # that it can't be processed. 
+      before_action :ensure_sufficient_stock_lines
 
       respond_to :html
 
@@ -140,6 +144,20 @@ module Spree
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
         redirect_to spree.edit_admin_order_customer_url(@order)
+      end
+
+      def ensure_sufficient_stock_lines
+        return if !@order.payment? || @order.insufficient_stock_lines.blank?
+
+        flash[:error] = I18n.t("spree.orders.line_item.insufficient_stock",
+          on_hand: "0 #{out_of_stock_item_names}")
+        redirect_to spree.edit_admin_order_url(@order)
+      end
+
+      def out_of_stock_item_names
+        @order.insufficient_stock_lines.map do |line_item|
+          line_item.variant.name
+        end.join(", ")
       end
 
       def load_order
