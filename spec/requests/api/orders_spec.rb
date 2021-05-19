@@ -52,7 +52,7 @@ describe 'api/v0/orders', type: :request do
           context "and queried by distributor id" do
             let(:'q[distributor_id_eq]') { order_dist_2.distributor.id }
 
-            before { order_dist_2.distributor.update_attributes owner: user }
+            before { order_dist_2.distributor.update owner: user }
 
             run_test! do |response|
               expect(response).to have_http_status(200)
@@ -119,7 +119,7 @@ describe 'api/v0/orders', type: :request do
               order_dist_2.order_cycle.id
             }
 
-            before { order_dist_2.distributor.update_attributes owner: user }
+            before { order_dist_2.distributor.update owner: user }
 
             run_test! do |response|
               expect(response).to have_http_status(200)

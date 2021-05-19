@@ -55,7 +55,7 @@ describe LineItemsController, type: :controller do
 
         context "where the item's order is associated with the current user" do
           before do
-            order.update_attributes!(user_id: user.id)
+            order.update!(user_id: user.id)
             allow(controller).to receive_messages spree_current_user: item.order.user
           end
 
@@ -67,7 +67,7 @@ describe LineItemsController, type: :controller do
           end
 
           context "with an order cycle and distributor" do
-            before { order.update_attributes!(order_cycle_id: order_cycle.id, distributor_id: distributor.id) }
+            before { order.update!(order_cycle_id: order_cycle.id, distributor_id: distributor.id) }
 
             context "where changes are not allowed" do
               it "denies deletion" do
@@ -77,7 +77,7 @@ describe LineItemsController, type: :controller do
             end
 
             context "where changes are allowed" do
-              before { distributor.update_attributes!(allow_order_changes: true) }
+              before { distributor.update!(allow_order_changes: true) }
 
               it "deletes the line item" do
                 delete :destroy, params: params

@@ -26,7 +26,7 @@ feature "Order Management", js: true do
     before do
       # For some reason, both bill_address and ship_address are not set
       # automatically.
-      order.update_attributes!(
+      order.update!(
         bill_address: bill_address,
         ship_address: ship_address
       )

@@ -32,7 +32,7 @@ FactoryBot.define do
 
         create_list(:line_item, evaluator.line_items_count, order: order)
         order.line_items.reload
-        order.update!
+        order.update_order!
       end
 
       factory :completed_order_with_totals do

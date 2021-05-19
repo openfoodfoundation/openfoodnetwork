@@ -17,7 +17,7 @@ module Spree
 
         # Pay the order
         order.payments.first.complete
-        order.update!
+        order.update_order!
 
         # Ship the order
         order.shipment.ship!

@@ -96,7 +96,7 @@ module Spree
     # more than on line items at once via accepted_nested_attributes the order
     # object on the association would be in a old state and therefore the
     # adjustment calculations would not performed on proper values
-    def update!(calculable = nil, force: false)
+    def update_adjustment!(calculable = nil, force: false)
       return amount if immutable? && !force
 
       if originator.present?
@@ -127,11 +127,7 @@ module Spree
     end
 
     def set_absolute_included_tax!(tax)
-      # This rubocop issue can now fixed by renaming Adjustment#update! to something else,
-      #   then AR's update! can be used instead of update_attributes!
-      # rubocop:disable Rails/ActiveRecordAliases
-      update_attributes! included_tax: tax.round(2)
-      # rubocop:enable Rails/ActiveRecordAliases
+      update! included_tax: tax.round(2)
     end
 
     def display_included_tax

@@ -29,7 +29,7 @@ feature '
       let!(:credit_order) { create(:order_with_credit_payment, distributor: distributor_credit, user: user) }
 
       before do
-        credit_order.update!
+        credit_order.update_order!
       end
 
       it "shows all hubs that have been ordered from with balance or credit" do

@@ -212,7 +212,7 @@ describe Admin::BulkLineItemsController, type: :controller do
             expect(line_item1.order).to receive(:reload).with(lock: true)
             expect(line_item1.order).to receive(:update_line_item_fees!)
             expect(line_item1.order).to receive(:update_order_fees!)
-            expect(line_item1.order).to receive(:update!).twice
+            expect(line_item1.order).to receive(:update_order!).twice
 
             spree_put :update, params
           end
@@ -335,7 +335,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       order.finalize!
       order.recreate_all_fees!
       order.create_tax_charge!
-      order.update!
+      order.update_order!
       order.payments << create(:payment, payment_method: payment_method, amount: order.total, state: "completed")
 
       allow(controller).to receive(:spree_current_user) { distributor.owner }
@@ -354,7 +354,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         expect(order.included_tax_total).to eq 1.22
         expect(order.payment_state).to eq "paid"
 
-        expect(order).to receive(:update!).at_least(:once).and_call_original
+        expect(order).to receive(:update_order!).at_least(:once).and_call_original
         expect(order).to receive(:create_tax_charge!).at_least(:once).and_call_original
 
         spree_put :update, params
@@ -378,7 +378,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         expect(order.included_tax_total).to eq 1.22
         expect(order.payment_state).to eq "paid"
 
-        expect(order).to receive(:update!).at_least(:once).and_call_original
+        expect(order).to receive(:update_order!).at_least(:once).and_call_original
         expect(order).to receive(:create_tax_charge!).at_least(:once).and_call_original
 
         spree_delete :destroy, params

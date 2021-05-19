@@ -291,7 +291,7 @@ describe CheckoutController, type: :controller do
       allow(controller).to receive(:current_order).and_return(order)
     end
 
-    it "returns errors and flash if order.update_attributes fails" do
+    it "returns errors and flash if order.update fails" do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
       expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: order.errors.full_messages.to_sentence } }.to_json)

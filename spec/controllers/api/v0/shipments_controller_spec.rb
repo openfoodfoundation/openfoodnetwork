@@ -204,7 +204,7 @@ describe Api::V0::ShipmentsController, type: :controller do
       before do
         order.shipments.first.shipping_methods = [shipping_method1, shipping_method2]
         order.select_shipping_method(shipping_method1.id)
-        order.update!
+        order.update_order!
         order.update_columns(
           payment_total: 60,
           payment_state: "paid"

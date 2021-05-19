@@ -572,7 +572,7 @@ describe Spree::Payment do
           create(:payment, amount: 100, order: order)
         end
       end
-
+      
       context "when profiles are supported" do
         before do
           gateway.stub payment_profiles_supported?: true
@@ -846,7 +846,7 @@ describe Spree::Payment do
       let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
 
       before do
-        order.reload.update!
+        order.reload.update_order!
       end
 
       context "when order-based calculator" do
@@ -878,7 +878,7 @@ describe Spree::Payment do
       let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
 
       before do
-        order.reload.update!
+        order.reload.update_order!
       end
 
       context "to Stripe payments" do

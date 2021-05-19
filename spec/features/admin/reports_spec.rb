@@ -203,7 +203,7 @@ feature '
       order1.select_shipping_method shipping_method.id
       order1.reload.recreate_all_fees!
       order1.create_tax_charge!
-      order1.update!
+      order1.update_order!
       order1.finalize!
 
       login_as_admin_and_visit spree.admin_reports_path
