@@ -75,13 +75,6 @@ module Openfoodnetwork
     initializer 'ofn.spree_locale_settings', before: 'spree.promo.environment' do |app|
       Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
       Spree::Config['currency'] = ENV['CURRENCY']
-
-      begin
-        country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
-        Spree::Config['default_country_id'] = country.id if country.present?
-      rescue ::ActiveRecord::StatementInvalid
-        Spree::Config['default_country_id'] = 12  # Australia
-      end
     end
 
     # Register Spree calculators
