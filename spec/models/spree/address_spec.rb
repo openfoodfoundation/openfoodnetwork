@@ -144,23 +144,21 @@ describe Spree::Address do
   end
 
   context ".default" do
-    before do
-      @default_country_id = DefaultCountry.id
-      new_country = create(:country)
-      DefaultCountry.code = new_country.iso
-    end
-
-    after do
-      DefaultCountry.id = @default_country_id
-    end
     it "sets up a new record the default country" do
       expect(Spree::Address.default.country).to eq DefaultCountry.country
     end
 
     # Regression test for #1142
-    it "uses the first available country if :default_country_id is set to an invalid value" do
-      DefaultCountry.code = "notacountry"
-      expect(Spree::Address.default.country).to eq Spree::Country.first
+
+    context "The default country code is set to an invalid value" do
+      before do
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with("DEFAULT_COUNTRY_CODE").and_return("notacountry")
+      end
+
+      it "uses the first available country" do
+        expect(Spree::Address.default.country).to eq Spree::Country.first
+      end
     end
   end
 
