@@ -82,6 +82,9 @@ gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails', '~> 2.2.0'
 
+gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
+gem 'hiredis'
+
 gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

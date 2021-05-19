@@ -42,9 +42,12 @@ Openfoodnetwork::Application.configure do
   config.log_formatter = Logger::Formatter.new.tap { |f| f.datetime_format = "%Y-%m-%d %H:%M:%S" }
 
   # Use a different cache store in production
-  memcached_value_max_megabytes = ENV.fetch("MEMCACHED_VALUE_MAX_MEGABYTES", 1).to_i
-  memcached_value_max_bytes = memcached_value_max_megabytes * 1024 * 1024
-  config.cache_store = :mem_cache_store, { value_max_bytes: memcached_value_max_bytes }
+  config.cache_store = :redis_cache_store, {
+    driver: :hiredis,
+    url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0"),
+    namespace: "cache",
+    reconnect_attempts: 1
+  }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

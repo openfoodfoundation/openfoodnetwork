@@ -285,6 +285,7 @@ GEM
       tilt
     hashdiff (1.0.1)
     highline (2.0.3)
+    hiredis (0.6.3)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     i18n-js (3.8.2)
@@ -447,6 +448,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
+    redis (4.2.5)
     regexp_parser (2.1.1)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -672,6 +674,7 @@ DEPENDENCIES
   good_migrations
   haml
   highline (= 2.0.3)
+  hiredis
   i18n
   i18n-js (~> 3.8.2)
   immigrant
@@ -706,6 +709,7 @@ DEPENDENCIES
   rails_safe_tasks (~> 1.0)
   ransack (= 2.4.1)
   redcarpet
+  redis (>= 4.0)
   responders
   roadie-rails (~> 2.2.0)
   roo (~> 2.8.3)
