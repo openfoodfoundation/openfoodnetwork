@@ -193,7 +193,7 @@ GEM
     daemons (1.4.0)
     dalli (2.7.11)
     database_cleaner (1.99.0)
-    ddtrace (0.48.0)
+    ddtrace (0.49.0)
       ffi (~> 1.0)
       msgpack
     debugger-linecache (1.2.0)
