@@ -85,6 +85,10 @@ es_US:
               no_default_card: "^ Ninguna tarjeta predeterminada disponible para esta consumidora"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  card_details: "Detalles de la tarjeta"
+  card_type: "Tipo de tarjeta"
+  cardholder_name: "Nombre del titular de la tarjeta"
+  community_forum_url: "Liga URL para el foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
   devise:
     confirmations:
@@ -120,7 +124,11 @@ es_US:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
     tax_rate:
       included_in_price: "Incluido en el precio"
+  open_street_map_enabled: "Open Street Map activado"
+  open_street_map_default_latitude: "latitud por defecto en Open Street Map"
+  open_street_map_default_longitude: "longitud por defecto en Open Street Map"
   sku: "SKU"
+  subtotal: "Subtotal"
   tax_rate: "% Impuestos"
   validators:
     date_time_string_validator:
@@ -285,6 +293,8 @@ es_US:
   height: "Altura"
   width: "Anchura"
   depth: "Profundidad"
+  payment_could_not_process: "El pago no pudo procesarse"
+  payment_could_not_complete: "El pago no pudo completarse"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -300,8 +310,12 @@ es_US:
     destroy: "Eliminar"
     rename: "Renombrar"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No puede modificar un pedido cancelado."
     begins_at: Empieza en
     begins_on: Comienza en
+    bill_address: "Dirección de facturación"
+    ship_address: "Dirección de envío"
     customer: Consumidora
     date: Fecha
     email: Email
@@ -1311,6 +1325,9 @@ es_US:
   address2: Dirección (cont.)
   city: Ciudad
   city_placeholder: ej. Barcelona
+  latitude: Latitud
+  longitude: Longitud
+  use_geocoder: ¿Calcular la latitud y longitud automáticamente a partir de la dirección?
   postcode: Código postal
   postcode_placeholder: ej. 08025
   suburb: Barrio
@@ -1863,6 +1880,9 @@ es_US:
         state_field_error: "Región requerida"
         country_field: "País:"
         country_field_error: "Por favor selecciona un país"
+        locate_address: "Localizar una dirección en el mapa"
+        confirm_address: "Confirmo que la posición indicada de la empresa en el mapa es correcta."
+        drag_map_marker: "Debido a que muchos productores operan en áreas rurales, la precisión de los mapas siempre se puede ir mejorando. Ayúdanos a comprender mejor dónde está ubicada/o interactuando con el mapa de arriba para mover el marcador haciendo clic o seleccionando el marcador y luego arrastrando a la ubicación que sea más precisa de acuerdo a su conocimiento."
       contact:
         title: "Contacto"
         who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
@@ -2813,6 +2833,7 @@ es_US:
     reports:
       bulk_coop:
         filters:
+          date_range: "Rango de fecha"
           generate_report: "Generar informe"
       enterprise_fee_summaries:
         filters:
