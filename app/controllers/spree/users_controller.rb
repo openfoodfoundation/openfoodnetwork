@@ -14,7 +14,7 @@ module Spree
 
     def show
       @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
-      @orders = orders_collection
+      @orders = orders_collection.includes(:line_items)
 
       customers = spree_current_user.customers
       @shops = Enterprise
