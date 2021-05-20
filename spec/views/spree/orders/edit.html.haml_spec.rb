@@ -10,6 +10,7 @@ describe "spree/orders/edit.html.haml" do
   helper SharedHelper
   helper FooterLinksHelper
   helper MarkdownHelper
+  helper TermsAndConditionsHelper
 
   let(:order) { create(:completed_order_with_fees) }
 
