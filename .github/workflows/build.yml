@@ -322,4 +322,4 @@ jobs:
         run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/features/admin/*/*_spec.rb,spec/lib/{,/*/**}/*_spec.rb"
 
       - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
+        uses: codecov/codecov-action@v1.5.0
