@@ -15,6 +15,7 @@ FactoryBot.define do
       after(:create) do |order|
         create(:line_item, order: order)
         order.line_items.reload # to ensure order.line_items is accessible after
+        order.updater.update_totals_and_states
       end
     end
 
