@@ -108,8 +108,7 @@ module Admin
             end
 
             context 'when the customer has an order with a void payment' do
-              let(:order) { create(:order, customer: customer, state: 'complete') }
-              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+              let(:order) { create(:order_with_totals, customer: customer, state: 'complete') }
               let!(:payment) { create(:payment, order: order, amount: order.total) }
 
               before do
