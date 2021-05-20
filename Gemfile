@@ -130,7 +130,6 @@ end
 
 group :test, :development do
   # Pretty printed test output
-  gem 'atomic'
   gem 'awesome_print'
   gem 'bullet'
   gem 'capybara'

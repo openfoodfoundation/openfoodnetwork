@@ -124,7 +124,6 @@ GEM
     angularjs-rails (1.5.5)
     arel (9.0.0)
     ast (2.4.2)
-    atomic (1.1.101)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
     awesome_print (1.9.2)
@@ -631,7 +630,6 @@ DEPENDENCIES
   angular_rails_csrf
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.5.5)
-  atomic
   awesome_nested_set
   awesome_print
   aws-sdk (= 1.67.0)

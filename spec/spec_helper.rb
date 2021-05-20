@@ -122,7 +122,6 @@ RSpec.configure do |config|
   config.after(:each)            { DatabaseCleaner.clean }
   config.after(:each, js: true) do
     Capybara.reset_sessions!
-    RackRequestBlocker.wait_for_requests_complete
   end
 
   def restart_driver
