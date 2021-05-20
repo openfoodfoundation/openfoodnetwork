@@ -111,4 +111,53 @@ feature '
       expect(page).to have_current_path spree.edit_admin_order_path(incomplete_order)
     end
   end
+
+  context "save the filter params" do
+    scenario "when reloading the page" do
+      user = create(:user, email: 'an@email.com')
+      shipping_method = create(:shipping_method, name: "UPS Ground")
+      order = create(
+        :order,
+        distributor: distributor,
+        order_cycle: order_cycle,
+        user: user,
+        number: "R123456",
+        state: 'complete',
+        payment_state: 'balance_due',
+        completed_at: 1.day.ago
+      )
+
+      login_as_admin_and_visit spree.admin_orders_path
+
+      # Specify each filters
+      uncheck 'Only show complete orders'
+      fill_in "Invoice number", with: "R123456"
+      select2_select order_cycle.name, from: 'q_order_cycle_id_in'
+      select2_select distributor.name, from: 'q_distributor_id_in'
+      select2_select shipping_method.name, from: 'shipping_method_id'
+      select2_select "complete", from: 'q_state_eq'
+      fill_in "Email", with: user.email
+      fill_in "First name begins with", with: "J"
+      fill_in "Last name begins with", with: "D"
+      find('#q_completed_at_gteq').click
+      select_date_from_datepicker Time.zone.at(1.week.ago)
+      find('#q_completed_at_lteq').click
+      select_date_from_datepicker Time.zone.now
+
+      page.find('a.icon-search').click
+
+      page.driver.refresh
+
+      # Check every filters to be equal
+      expect(find_field("Only show complete orders")).not_to be_checked
+      expect(find_field("Invoice number").value).to eq "R123456"
+      expect(find("#s2id_shipping_method_id").text).to eq shipping_method.name
+      expect(find("#s2id_q_state_eq").text).to eq "complete"
+      expect(find_field("Email").value).to eq user.email
+      expect(find_field("First name begins with").value).to eq "J"
+      expect(find_field("Last name begins with").value).to eq "D"
+      expect(find("#q_completed_at_gteq").value).to eq 1.week.ago.strftime("%Y-%m-%d")
+      expect(find("#q_completed_at_lteq").value).to eq Time.now.strftime("%Y-%m-%d")
+    end
+  end
 end
