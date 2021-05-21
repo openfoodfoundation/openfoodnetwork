@@ -156,6 +156,8 @@ feature '
       expect(find_field("Invoice number").value).to eq "R123456"
       expect(find("#s2id_q_shipping_method_id").text).to eq shipping_method.name
       expect(find("#s2id_q_state_eq").text).to eq "complete"
+      expect(find("#s2id_q_distributor_id_in").text).to eq distributor.name
+      expect(find("#s2id_q_order_cycle_id_in").text).to eq order_cycle.name
       expect(find_field("Email").value).to eq user.email
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
@@ -169,6 +171,8 @@ feature '
       expect(find_field("Invoice number").value).to eq ""
       expect(find("#s2id_q_shipping_method_id").text).to be_empty
       expect(find("#s2id_q_state_eq").text).to be_empty
+      expect(find("#s2id_q_distributor_id_in").text).to be_empty
+      expect(find("#s2id_q_order_cycle_id_in").text).to be_empty
       expect(find_field("Email").value).to be_empty
       expect(find_field("First name begins with").value).to be_empty
       expect(find_field("Last name begins with").value).to be_empty
