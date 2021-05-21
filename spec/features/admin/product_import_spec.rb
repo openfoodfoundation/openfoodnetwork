@@ -504,9 +504,11 @@ feature "Product Import", js: true do
   end
 
   describe "handling a large file (120 data rows)" do
-    let!(:producer) { enterprise }
-
-    let(:tmp_csv_path) { "/tmp/test.csv" }
+    let!(:producer) {enterprise}
+    let!(:tax_category) { create(:tax_category, name: "Tax Category Name") }
+    let!(:shipping_category) { create(:shipping_category, name: "Shipping Category Name") }
+    
+    let!(:csv_file) { file_fixture('sample_file_120_products.csv') }
 
     before do
       login_as admin
@@ -514,22 +516,9 @@ feature "Product Import", js: true do
     end
 
     context "when importing to product list" do
-      def write_tmp_csv_file
-        CSV.open(tmp_csv_path, "w") do |csv|
-          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                  "tax_category", "shipping_category"]
-          120.times do |i|
-            csv << ["Imported Product #{i + 1}", producer.name, category.name, 1, "1.00", "500",
-                    "g", tax_category.name, shipping_category.name]
-          end
-        end
-      end
-
-      before { write_tmp_csv_file }
-
       it "validates and saves all batches" do
         # Upload and validate file.
-        attach_file "file", tmp_csv_path
+        attach_file "file", csv_file
         click_button I18n.t("admin.product_import.index.upload")
         proceed_to_validation
 
