@@ -19,7 +19,7 @@
         = text_field_tag "q[number_cont]", nil, "ng-model" => "q.number_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
       .field
         = label_tag "q_email_cont", t(:email)
-        = email_field_tag "q[email_cont", nil, "ng-model" => "q.email_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = email_field_tag "q[email_cont]", nil, "ng-model" => "q.email_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
     .four.columns
       .field
         = label_tag "q_bill_address_firstname_start", t(:first_name_begins_with)
