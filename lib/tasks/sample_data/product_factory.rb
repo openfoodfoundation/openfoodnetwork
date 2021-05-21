@@ -60,7 +60,7 @@ module SampleData
 
     def create_product(hash)
       log "- #{hash[:name]}"
-      params = hash.merge(
+      params = hash.slice(:name, :price).merge(
         supplier_id: hash[:supplier].id,
         primary_taxon_id: hash[:taxons].first.id,
         variant_unit: "weight",
