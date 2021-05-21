@@ -113,10 +113,10 @@ feature '
   end
 
   context "save the filter params" do
-    scenario "when reloading the page" do
-      user = create(:user, email: 'an@email.com')
-      shipping_method = create(:shipping_method, name: "UPS Ground")
-      order = create(
+    let!(:shipping_method) { create(:shipping_method, name: "UPS Ground") }
+    let!(:user) { create(:user, email: 'an@email.com') }
+    let!(:order) do
+      create(
         :order,
         distributor: distributor,
         order_cycle: order_cycle,
@@ -126,7 +126,8 @@ feature '
         payment_state: 'balance_due',
         completed_at: 1.day.ago
       )
-
+    end
+    before :each do
       login_as_admin_and_visit spree.admin_orders_path
 
       # Specify each filters
@@ -145,7 +146,9 @@ feature '
       select_date_from_datepicker Time.zone.now
 
       page.find('a.icon-search').click
+    end
 
+    scenario "when reloading the page" do
       page.driver.refresh
 
       # Check every filters to be equal
@@ -157,7 +160,20 @@ feature '
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
       expect(find("#q_completed_at_gteq").value).to eq 1.week.ago.strftime("%Y-%m-%d")
-      expect(find("#q_completed_at_lteq").value).to eq Time.now.strftime("%Y-%m-%d")
+      expect(find("#q_completed_at_lteq").value).to eq Time.zone.now.strftime("%Y-%m-%d")
+    end
+
+    scenario "and clear filters" do
+      find("a#clear_filters_button").click
+      expect(find_field("Only show complete orders")).to be_checked
+      expect(find_field("Invoice number").value).to eq ""
+      expect(find("#s2id_q_shipping_method_id").text).to be_empty
+      expect(find("#s2id_q_state_eq").text).to be_empty
+      expect(find_field("Email").value).to be_empty
+      expect(find_field("First name begins with").value).to be_empty
+      expect(find_field("Last name begins with").value).to be_empty
+      expect(find("#q_completed_at_gteq").value).to be_empty
+      expect(find("#q_completed_at_lteq").value).to be_empty
     end
   end
 end
