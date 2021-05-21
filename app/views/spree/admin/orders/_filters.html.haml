@@ -53,6 +53,8 @@
             {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.order_cycle_id_in'})
     .clearfix
     .actions.filter-actions
-      %div
-        %a.button.icon-search{'ng-click' => 'fetchResults()'}
-          = t(:filter_results)
+      %a.button.icon-search{'ng-click' => 'fetchResults()'}
+        = t(:filter_results)
+      %a.button{'ng-click' => 'clearFilters()', "id": "clear_filters_button"}
+        =  t(:clear_filters)
+          

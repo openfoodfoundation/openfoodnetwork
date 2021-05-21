@@ -30,6 +30,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       completed_at_not_null: true
     }
 
+  $scope.clearFilters = () ->
+    QueryPersistence.clearFilters()
+    $scope.setDefaults()
+    $scope.fetchResults()
+
   $scope.fetchResults = (page=1) ->
     startDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_gteq, ' 00:00:00')
     endDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_lteq, ' 23:59:59')

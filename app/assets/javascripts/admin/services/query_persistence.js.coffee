@@ -25,3 +25,6 @@ angular.module("admin.indexUtils").factory 'QueryPersistence', (localStorageServ
         return true
 
       false
+
+    clearFilters: () ->
+      localStorageService.remove(@storageKey)
