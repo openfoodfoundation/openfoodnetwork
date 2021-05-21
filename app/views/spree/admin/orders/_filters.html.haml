@@ -35,8 +35,9 @@
       .field
         = label_tag nil, t(:shipping_method)
         = select_tag("shipping_method_id",
+          = select_tag("q[shipping_method_id]",
             options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
-            {include_blank: true, class: 'select2', 'ng-model' => 'shipping_method_id', 'ng-value' => 'shipping_method_id'})
+            {include_blank: true, class: 'select2', 'ng-model': 'q.shipping_method_id'})
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)
       = select_tag("q[distributor_id_in]",

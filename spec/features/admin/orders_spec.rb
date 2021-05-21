@@ -134,7 +134,7 @@ feature '
       fill_in "Invoice number", with: "R123456"
       select2_select order_cycle.name, from: 'q_order_cycle_id_in'
       select2_select distributor.name, from: 'q_distributor_id_in'
-      select2_select shipping_method.name, from: 'shipping_method_id'
+      select2_select shipping_method.name, from: 'q_shipping_method_id'
       select2_select "complete", from: 'q_state_eq'
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
@@ -151,7 +151,7 @@ feature '
       # Check every filters to be equal
       expect(find_field("Only show complete orders")).not_to be_checked
       expect(find_field("Invoice number").value).to eq "R123456"
-      expect(find("#s2id_shipping_method_id").text).to eq shipping_method.name
+      expect(find("#s2id_q_shipping_method_id").text).to eq shipping_method.name
       expect(find("#s2id_q_state_eq").text).to eq "complete"
       expect(find_field("Email").value).to eq user.email
       expect(find_field("First name begins with").value).to eq "J"

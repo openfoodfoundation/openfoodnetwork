@@ -16,7 +16,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
   $scope.rowStatus = {}
 
   QueryPersistence.storageKey = 'ordersFilters'
-  QueryPersistence.storableFilters = ["q", "sorting", "shipping_method_id", "page", "per_page"]
+  QueryPersistence.storableFilters = ["q", "sorting", "page", "per_page"]
 
   $scope.initialise = ->
     unless QueryPersistence.restoreFilters($scope)
@@ -48,7 +48,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       'q[distributor_id_in][]': $scope.q?.distributor_id_in,
       'q[order_cycle_id_in][]': $scope.q?.order_cycle_id_in,
       'q[s]': $scope.sorting || 'completed_at desc',
-      shipping_method_id: $scope.shipping_method_id,
+      shipping_method_id: $scope.q?.shipping_method_id,
       per_page: $scope.per_page,
       page: page
     }
