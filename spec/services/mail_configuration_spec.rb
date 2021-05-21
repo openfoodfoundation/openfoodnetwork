@@ -3,33 +3,29 @@
 require 'spec_helper'
 
 describe MailConfiguration do
-  describe 'entries=' do
-    let(:mail_settings) { instance_double(Spree::Core::MailSettings) }
-    let(:entries) do
-      { smtp_username: "smtp_username", mail_auth_type: "login" }
-    end
-
+  describe 'apply!' do
     before do
-      allow(Spree::Core::MailSettings).to receive(:init) { mail_settings }
-    end
-
-    # keeps spree_config unchanged
-    around do |example|
-      original_smtp_username = Spree::Config[:smtp_username]
-      original_mail_auth_type = Spree::Config[:mail_auth_type]
-      example.run
-      Spree::Config[:smtp_username] = original_smtp_username
-      Spree::Config[:mail_auth_type] = original_mail_auth_type
+      allow(Spree::Core::MailSettings).to receive(:init) { true }
     end
 
     it 'sets config entries in the Spree Config' do
-      described_class.entries = entries
-      expect(Spree::Config[:smtp_username]).to eq("smtp_username")
-      expect(Spree::Config[:mail_auth_type]).to eq("login")
+      allow(Spree::Config).to receive(:[]=)
+
+      described_class.apply!
+      expect(Spree::Config).to have_received(:[]=).with(:mail_host, "example.com")
+      expect(Spree::Config).to have_received(:[]=).with(:mail_domain, "example.com")
+      expect(Spree::Config).to have_received(:[]=).with(:mail_port, "25")
+      expect(Spree::Config).to have_received(:[]=).with(:mail_auth_type, "login")
+      expect(Spree::Config).to have_received(:[]=).with(:smtp_username, "ofn")
+      expect(Spree::Config).to have_received(:[]=).with(:smtp_password, "f00d")
+      expect(Spree::Config).to have_received(:[]=).with(:secure_connection_type, "None")
+      expect(Spree::Config).to have_received(:[]=).with(:mails_from, "no-reply@example.com")
+      expect(Spree::Config).to have_received(:[]=).with(:mail_bcc, "")
+      expect(Spree::Config).to have_received(:[]=).with(:intercept_email, "")
     end
 
     it 'initializes the mail settings' do
-      described_class.entries = entries
+      described_class.apply!
       expect(Spree::Core::MailSettings).to have_received(:init)
     end
   end

@@ -31,6 +31,10 @@ Spree.config do |config|
   config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
 
+# Read mail configuration from ENV vars at boot time and ensure the values are
+# applied correctly in Spree::Config.
+MailConfiguration.apply!
+
 # Attachments settings
 Spree::Image.set_attachment_attribute(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
 Spree::Image.set_attachment_attribute(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
