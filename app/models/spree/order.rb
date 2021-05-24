@@ -598,7 +598,7 @@ module Spree
       # For instances that use additional taxes, old orders can have taxes recorded in
       # lump-sum amounts per-order. We clear them here before re-applying the order's taxes,
       # which will now be applied per-item.
-      adjustments.tax.additional.delete_all
+      adjustments.legacy_tax.delete_all
     end
 
     def process_each_payment

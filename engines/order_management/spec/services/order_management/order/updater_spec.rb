@@ -289,6 +289,52 @@ module OrderManagement
           end
         end
       end
+
+      describe "updating order totals" do
+        describe "#update_totals_and_states" do
+          it "deals with legacy taxes" do
+            expect(updater).to receive(:handle_legacy_taxes)
+
+            updater.update_totals_and_states
+          end
+        end
+
+        describe "#handle_legacy_taxes" do
+          context "when the order is incomplete" do
+            it "doesn't touch taxes" do
+              allow(order).to receive(:completed?) { false }
+
+              expect(order).to_not receive(:create_tax_charge!)
+              updater.__send__(:handle_legacy_taxes)
+            end
+          end
+
+          context "when the order is complete" do
+            before { allow(order).to receive(:completed?) { true } }
+
+            context "and the order has legacy taxes" do
+              let!(:legacy_tax_adjustment) {
+                create(:adjustment, order: order, adjustable: order, included: false,
+                                    originator_type: "Spree::TaxRate")
+              }
+
+              it "re-applies order taxes" do
+                expect(order).to receive(:create_tax_charge!)
+
+                updater.__send__(:handle_legacy_taxes)
+              end
+            end
+
+            context "and the order has no legacy taxes" do
+              it "leaves taxes untouched" do
+                expect(order).to_not receive(:create_tax_charge!)
+
+                updater.__send__(:handle_legacy_taxes)
+              end
+            end
+          end
+        end
+      end
     end
   end
 end
