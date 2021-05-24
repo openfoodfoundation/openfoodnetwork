@@ -33,7 +33,10 @@ feature "Product Import", js: true do
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
   describe "when importing products from uploaded file" do
-    before { login_as_admin }
+    before do
+      allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
+      login_as_admin
+    end
     after { File.delete('/tmp/test.csv') }
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
@@ -322,6 +325,40 @@ feature "Product Import", js: true do
       save_data
 
       expect(page).to have_selector '.inv-created-count', text: '1'
+
+      visit main_app.admin_inventory_path
+
+      expect(page).to have_content "Beets"
+      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand", selected: "Yes"
+      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price", with: "3.2"
+    end
+
+    it "handles the Items unit for inventory import" do
+
+      product = create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine', unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type", "units", "on_demand", "variant_unit_name"]
+        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",  "kg", "1", "true", "Bag"]
+      end
+
+      File.write('/tmp/test.csv', csv_data)
+      visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+      proceed_to_validation
+      expect(page).to have_selector '.item-count', text: "1"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.inv-create-count', text: '1'
+      save_data
+
+      expect(page).to have_selector '.inv-created-count', text: '1'
+
+      visit main_app.admin_inventory_path
+
+      expect(page).to have_content "Aubergine"
+      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand", selected: "Yes"
+      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price", with: "3.3"
     end
 
     it "handles on_demand and on_hand validations with inventory" do
@@ -392,6 +429,51 @@ feature "Product Import", js: true do
 
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).to have_no_selector '.updated-count'
+
+      visit spree.admin_products_path
+
+      within "#p_#{Spree::Product.find_by(name: 'Carrots').id}" do
+        expect(page).to have_input "product_name", with: "Carrots"
+        expect(page).to have_select "variant_unit_with_scale", selected: "Weight (lb)"
+        expect(page).to have_content "5" #on_hand
+      end
+    end
+
+    it "imports lines with item products" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "shipping_category_id"]
+        csv << ["Cupcake", "User Enterprise", "Cake", "5", "2.2", "1", "", "Bunch", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "1"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to have_no_selector '.update-count'
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_no_selector '.updated-count'
+      expect(page).to have_content "GO TO PRODUCTS PAGE"
+      expect(page).to have_content "UPLOAD ANOTHER FILE"
+
+      visit spree.admin_products_path
+
+      within "#p_#{Spree::Product.find_by(name: 'Cupcake').id}" do
+        expect(page).to have_input "product_name", with: "Cupcake"
+        expect(page).to have_select "variant_unit_with_scale", selected: "Items"
+        expect(page).to have_input "variant_unit_name", with: "Bunch"
+        expect(page).to have_content "5" #on_hand
+      end
     end
 
     it "does not allow import for lines with unknown units" do
