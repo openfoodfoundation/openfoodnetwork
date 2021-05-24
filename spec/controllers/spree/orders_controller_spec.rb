@@ -255,10 +255,6 @@ describe Spree::OrdersController, type: :controller do
       describe "the page" do
         render_views
 
-        it "provides the right registration path" do
-          expect(subject.registration_path).to eq registration_path
-        end
-
         it "shows the right registration link" do
           # We fixed our view by hardcoding the link.
           spree_registration_path = '/signup'
