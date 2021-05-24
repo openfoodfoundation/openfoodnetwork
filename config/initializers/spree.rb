@@ -18,6 +18,7 @@ Spree::Gateway.class_eval do
 end
 
 Spree.config do |config|
+  config.site_url = ENV['SITE_URL'] if ENV['SITE_URL']
   config.shipping_instructions = true
   config.address_requires_state = true
   config.admin_interface_logo = '/default_images/ofn-logo.png'
