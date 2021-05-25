@@ -28,9 +28,7 @@ module Admin
     def build_resource
       enterprise_group = super
       enterprise_group.address = Spree::Address.new
-      enterprise_group.address.country = Spree::Country.find_by(
-        id: Spree::Config[:default_country_id]
-      )
+      enterprise_group.address.country = DefaultCountry.country
       enterprise_group
     end
 

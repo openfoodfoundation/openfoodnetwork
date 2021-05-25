@@ -227,4 +227,3 @@ Spree::Country.create!([
   { name: "Saint Kitts and Nevis", iso3: "KNA", iso: "KN", iso_name: "SAINT KITTS AND NEVIS", numcode: "659" },
   { name: "Serbia", iso3: "SRB", iso: "RS", "iso_name" => "SERBIA", numcode: "999" }
 ])
-Spree::Config[:default_country_id] = Spree::Country.find_by(iso: ENV.fetch("DEFAULT_COUNTRY_CODE", "US")).id

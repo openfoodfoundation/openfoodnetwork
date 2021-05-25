@@ -10,7 +10,7 @@
   = "admin.enterprises"
 
 = admin_inject_available_countries(module: 'admin.enterprises')
-= admin_inject_json "admin.enterprises", "defaultCountryID", Spree::Config[:default_country_id]
+= admin_inject_json "admin.enterprises", "defaultCountryID", DefaultCountry.id
 
 -# Form
 

@@ -24,7 +24,7 @@ module Spree
 
     def self.default
       country = begin
-                  Spree::Country.find(Spree::Config[:default_country_id])
+                  DefaultCountry.country
                 rescue StandardError
                   Spree::Country.first
                 end
