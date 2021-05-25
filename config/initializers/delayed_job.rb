@@ -1,3 +1,4 @@
+Delayed::Worker.logger = Logger.new(Rails.root.join('log', 'delayed_job.log'))
 Delayed::Worker.destroy_failed_jobs = false
 Delayed::Worker.max_run_time = 15.minutes
 
@@ -13,5 +14,17 @@ class Delayed::Worker
   def handle_failed_job(job, error)
     Bugsnag.notify(error)
     original_handle_failed_job(job, error)
+  end
+
+  def self.before_fork
+    ActiveRecord::Base.clear_all_connections!
+    Redis.current.disconnect! if defined?(Redis)
+  end
+
+  def self.after_fork
+    ActiveRecord::Base.establish_connection(Rails.env.to_sym)
+
+    Rails.logger.reopen
+    Delayed::Worker.logger.reopen
   end
 end
