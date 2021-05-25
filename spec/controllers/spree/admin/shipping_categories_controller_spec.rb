@@ -26,6 +26,15 @@ module Spree
           expect(response).to redirect_to spree.admin_shipping_categories_url
           expect(shipping_category.reload.name).to eq "Super Frozen"
         end
+
+        it "deletes an existing shipping category" do
+          shipping_category = create(:shipping_category)
+          expect {
+            spree_delete :destroy, id: shipping_category.id
+          }.to change(Spree::ShippingCategory.all, :count).by(-1)
+
+          expect(response).to redirect_to spree.admin_shipping_categories_url
+        end
       end
     end
   end
