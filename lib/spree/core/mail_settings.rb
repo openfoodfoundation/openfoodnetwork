@@ -12,7 +12,7 @@ module Spree
       end
 
       def override!
-        ActionMailer::Base.default_url_options[:host] ||= Config.site_url
+        ActionMailer::Base.default_url_options[:host] ||= ENV.fetch("SITE_URL", Config.site_url)
         ActionMailer::Base.smtp_settings = mail_server_settings
         ActionMailer::Base.perform_deliveries = true
       end

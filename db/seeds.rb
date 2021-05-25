@@ -2,22 +2,8 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 require 'yaml'
 
-def set_mail_configuration
-  MailConfiguration.entries= {
-    mail_host: ENV.fetch('MAIL_HOST'),
-    mail_domain: ENV.fetch('MAIL_DOMAIN'),
-    mail_port: ENV.fetch('MAIL_PORT'),
-    mail_auth_type: ENV.fetch('MAIL_AUTH_TYPE', 'login'),
-    smtp_username: ENV.fetch('SMTP_USERNAME'),
-    smtp_password: ENV.fetch('SMTP_PASSWORD'),
-    secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
-    mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
-    mail_bcc: ENV.fetch('MAIL_BCC', ''),
-    intercept_email: ''
-  }
-end
 # We need mail_configuration to create a user account, because it sends a confirmation email.
-set_mail_configuration
+MailConfiguration.apply!
 
 puts "[db:seed] Seeding Roles"
 Spree::Role.where(:name => "admin").first_or_create
