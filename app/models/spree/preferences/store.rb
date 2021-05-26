@@ -14,17 +14,16 @@ module Spree
       attr_accessor :persistence
 
       def initialize
-        @cache = Rails.cache
         @persistence = true
       end
 
       def set(key, value, type)
-        @cache.write(key, value)
+        cache.write(key, value)
         persist(key, value, type)
       end
 
       def exist?(key)
-        @cache.exist?(key) ||
+        cache.exist?(key) ||
           should_persist? && Spree::Preference.where(key: key).exists?
       end
 
@@ -32,7 +31,7 @@ module Spree
         # return the retrieved value, if it's in the cache
         # use unless nil? incase the value is actually boolean false
         #
-        unless (val = @cache.read(key)).nil?
+        unless (val = cache.read(key)).nil?
           return val
         end
 
@@ -43,7 +42,7 @@ module Spree
           # does it exist in the database?
           if Spree::Preference.table_exists? && preference = Spree::Preference.find_by(key: key)
             # it does exist, so let's put it back into the cache
-            @cache.write(preference.key, preference.value)
+            cache.write(preference.key, preference.value)
 
             # and return the value
             return preference.value
@@ -54,7 +53,7 @@ module Spree
           # cache fallback so we won't hit the db above on
           # subsequent queries for the same key
           #
-          @cache.write(key, fallback)
+          cache.write(key, fallback)
         end
 
         fallback
@@ -63,15 +62,19 @@ module Spree
       def delete(key)
         return if key.nil?
 
-        @cache.delete(key)
+        cache.delete(key)
         destroy(key)
       end
 
       def clear_cache
-        @cache.clear
+        cache.clear
       end
 
       private
+
+      def cache
+        Rails.cache
+      end
 
       def persist(cache_key, value, type)
         return unless should_persist?
