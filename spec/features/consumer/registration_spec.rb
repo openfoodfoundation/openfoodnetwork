@@ -100,9 +100,19 @@ feature "Registration", js: true do
       expect(e.charges_sales_tax).to be true
 
       # Images
+      # Upload logo image
+      attach_file "image-select", Rails.root.join("spec/fixtures/files/logo.png"), visible: false
+      expect(page).to have_no_css('#image-placeholder .loading')
+      expect(page.find('#image-placeholder img')['src']).to_not be_empty
+
       # Move from logo page
       click_button "Continue"
       expect(page).to have_content 'Step 3. Select Promo Image'
+
+      # Upload promo image
+      attach_file "image-select", Rails.root.join("spec/fixtures/files/promo.png"), visible: false
+      expect(page).to have_no_css('#image-placeholder .loading')
+      expect(page.find('#image-placeholder img')['src']).to_not be_empty
 
       # Move from promo page
       click_button "Continue"

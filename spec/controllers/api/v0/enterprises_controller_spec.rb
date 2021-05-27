@@ -75,15 +75,24 @@ describe Api::V0::EnterprisesController, type: :controller do
     end
 
     describe "submitting a valid image" do
+      let!(:logo) { fixture_file_upload("files/logo.png", "image/png") }
       before do
         allow(Enterprise)
           .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
-        allow(enterprise).to receive(:update).and_return(true)
       end
 
-      it "I can update enterprise image" do
-        api_post :update_image, logo: 'a logo', id: enterprise.id
+      it "I can update enterprise logo image" do
+        api_post :update_image, logo: logo, id: enterprise.id
         expect(response.status).to eq 200
+        expect(response.content_type).to eq "text/html"
+        expect(response.body).to match %r{/images/enterprises/logos/\d*/medium/logo\.png\?\d*}
+      end
+
+      it "I can update enterprise promo image" do
+        api_post :update_image, promo: logo, id: enterprise.id
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq "text/html"
+        expect(response.body).to match %r{/images/enterprises/promo_images/\d*/medium/logo\.jpg\?\d*}
       end
     end
   end
