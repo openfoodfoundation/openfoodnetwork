@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y \
   wait-for-it \
   imagemagick \
   unzip \
-  libjemalloc-dev
+  libjemalloc-dev \
+  libssl-dev
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
