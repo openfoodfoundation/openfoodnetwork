@@ -25,6 +25,8 @@ class Delayed::Worker
     ActiveRecord::Base.establish_connection(Rails.env.to_sym)
 
     Delayed::Worker.logger.reopen
+    Delayed::Backend::ActiveRecord::Job.logger = Delayed::Worker.logger
+    Delayed::Backend::ActiveRecord::Job.logger.level = Logger::ERROR
 
     Rails.logger.reopen
     ActiveRecord::Base.logger     = Rails.logger
