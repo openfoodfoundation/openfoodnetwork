@@ -958,11 +958,11 @@ describe Spree::Payment do
     end
   end
 
-  describe "#mark_as_processed" do
+  describe "#clear_authorization_url" do
     let(:payment) { create(:payment, cvv_response_message: "message") }
 
     it "removes the cvv_response_message" do
-      payment.mark_as_processed
+      payment.clear_authorization_url
       expect(payment.cvv_response_message).to eq(nil)
     end
   end

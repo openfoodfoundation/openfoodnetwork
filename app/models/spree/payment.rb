@@ -50,6 +50,7 @@ module Spree
     scope :failed, -> { with_state('failed') }
     scope :valid, -> { where('state NOT IN (?)', %w(failed invalid)) }
     scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
+    scope :requires_authorization, -> { with_state("requires_authorization") }
     scope :with_payment_intent, ->(code) { where(response_code: code) }
 
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
@@ -76,6 +77,15 @@ module Spree
       # when the card brand isnt supported
       event :invalidate do
         transition from: [:checkout], to: :invalid
+      end
+      event :require_authorization do
+        transition from: [:checkout, :processing], to: :requires_authorization
+      end
+      event :failed_authorization do
+        transition from: [:requires_authorization], to: :failed
+      end
+      event :completed_authorization do
+        transition from: [:requires_authorization], to: :completed
       end
     end
 
@@ -145,7 +155,7 @@ module Spree
       I18n.t('payment_method_fee')
     end
 
-    def mark_as_processed
+    def clear_authorization_url
       update_attribute(:cvv_response_message, nil)
     end
 

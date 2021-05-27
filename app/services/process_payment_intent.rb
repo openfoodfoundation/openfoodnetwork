@@ -36,7 +36,8 @@ class ProcessPaymentIntent
     process_payment
 
     if payment.reload.completed?
-      payment.mark_as_processed
+      payment.completed_authorization
+      payment.clear_authorization_url
 
       Result.new(ok: true)
     else
