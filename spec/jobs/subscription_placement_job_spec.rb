@@ -202,7 +202,9 @@ describe SubscriptionPlacementJob do
         end
 
         it "does not enqueue confirmation emails" do
-          expect{ job.send(:place_order, order) }.to_not enqueue_job ConfirmOrderJob
+          expect{ job.send(:place_order, order) }
+              .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
+
           expect(job).to have_received(:send_placement_email).with(order, anything).once
         end
 

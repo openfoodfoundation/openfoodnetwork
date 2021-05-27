@@ -251,10 +251,14 @@ feature "As a consumer I want to check out my cart", js: true do
         choose shipping_with_fee.name
         choose check_without_fee.name
 
-        expect do
+        perform_enqueued_jobs do
           place_order
+
           expect(page).to have_content "Your order has been processed successfully"
-        end.to enqueue_job ConfirmOrderJob
+
+          expect(ActionMailer::Base.deliveries.first.subject).to match(/Order Confirmation/)
+          expect(ActionMailer::Base.deliveries.second.subject).to match(/Order Confirmation/)
+        end
 
         order = Spree::Order.complete.last
         expect(order.payment_state).to eq "balance_due"
@@ -390,7 +394,7 @@ feature "As a consumer I want to check out my cart", js: true do
         expect do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
-        end.to enqueue_job ConfirmOrderJob
+        end.to have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
 
         # And the order's special instructions should be set
         order = Spree::Order.complete.last

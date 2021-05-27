@@ -169,10 +169,13 @@ describe Spree::Order do
       expect(order.shipment_state).to eq 'ready'
     end
 
-    it "should send an order confirmation email" do
-      expect do
-        order.finalize!
-      end.to enqueue_job ConfirmOrderJob
+    it "sends confirmation emails to both the user and the shop owner" do
+      mailer = double(:mailer, deliver_later: true)
+
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return(mailer)
+
+      order.finalize!
     end
 
     it "should freeze all adjustments" do
@@ -901,17 +904,20 @@ describe Spree::Order do
     let!(:order) { create(:order, distributor: distributor) }
 
     it "sends confirmation emails" do
-      expect do
-        order.deliver_order_confirmation_email
-      end.to enqueue_job ConfirmOrderJob
+      mailer = double(:mailer, deliver_later: true)
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return(mailer)
+
+      order.deliver_order_confirmation_email
     end
 
     it "does not send confirmation emails when the order belongs to a subscription" do
       create(:proxy_order, order: order)
 
-      expect do
-        order.deliver_order_confirmation_email
-      end.to_not enqueue_job ConfirmOrderJob
+      expect(Spree::OrderMailer).not_to receive(:confirm_email_for_customer)
+      expect(Spree::OrderMailer).not_to receive(:confirm_email_for_shop)
+
+      order.deliver_order_confirmation_email
     end
   end
 

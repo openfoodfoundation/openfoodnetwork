@@ -395,7 +395,8 @@ module Spree
     def deliver_order_confirmation_email
       return if subscription.present?
 
-      ConfirmOrderJob.perform_later(id)
+      Spree::OrderMailer.confirm_email_for_customer(id).deliver_later
+      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later
     end
 
     # Helper methods for checkout steps
