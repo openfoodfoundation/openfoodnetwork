@@ -7,7 +7,22 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" >> /etc/apt/sources.list
 
 # Install all the requirements
-RUN apt-get update && apt-get install -y curl git build-essential software-properties-common wget zlib1g-dev libssl1.0-dev libreadline-dev libyaml-dev libffi-dev libxml2-dev libxslt1-dev wait-for-it imagemagick unzip
+RUN apt-get update && apt-get install -y \
+  curl \
+  git \
+  build-essential \
+  software-properties-common \
+  wget \
+  zlib1g-dev \
+  libreadline-dev \
+  libyaml-dev \
+  libffi-dev \
+  libxml2-dev \
+  libxslt1-dev \
+  wait-for-it \
+  imagemagick \
+  unzip \
+  libjemalloc-dev
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
@@ -23,7 +38,7 @@ RUN git clone --depth 1 --branch v1.1.2 https://github.com/rbenv/rbenv.git ${RBE
     git clone --depth 1 --branch v20200520 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     ${RBENV_ROOT}/plugins/ruby-build/install.sh && \
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
-    rbenv install $(cat .ruby-version) && \
+    RUBY_CONFIGURE_OPTS=--with-jemalloc rbenv install $(cat .ruby-version) && \
     rbenv global $(cat .ruby-version) && \
     gem install bundler --version=1.17.3
 
