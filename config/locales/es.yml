@@ -1570,6 +1570,7 @@ es:
   email_order_summary_includes_tax: "(incluye impuestos):"
   email_payment_paid: PAGADO
   email_payment_not_paid: NO PAGADO
+  email_payment_description: Descripción de pago de la compra
   email_payment_summary: Resumen de pago
   email_payment_method: "Pagando con:"
   email_so_placement_intro_html: "Tiene un nuevo pedido con <strong> %{distributor} </strong>"
