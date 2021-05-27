@@ -41,6 +41,7 @@ class ProcessPaymentIntent
 
       Result.new(ok: true)
     else
+      payment.failed_authorization
       Result.new(ok: false, error: I18n.t("payment_could_not_complete"))
     end
 
