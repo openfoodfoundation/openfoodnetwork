@@ -24,7 +24,12 @@ class Delayed::Worker
   def self.after_fork
     ActiveRecord::Base.establish_connection(Rails.env.to_sym)
 
-    Rails.logger.reopen
     Delayed::Worker.logger.reopen
+
+    Rails.logger.reopen
+    ActiveRecord::Base.logger     = Rails.logger
+    ActionController::Base.logger = Rails.logger
+    ActionMailer::Base.logger     = Rails.logger
+    Rails.cache.logger            = Rails.logger
   end
 end
