@@ -15,6 +15,8 @@ class VariantOverride < ApplicationRecord
   validates :variant, presence: true
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   default_scope { where(permission_revoked_at: nil) }
 

@@ -264,16 +264,6 @@ module Spree
           li.cap_quantity_at_stock!
           expect(li.quantity).to eq 2
         end
-
-        context "when count on hand is negative" do
-          before { vo.update(count_on_hand: -3) }
-
-          it "caps at zero" do
-            v.__send__(:stock_item).update_column(:count_on_hand, -2)
-            li.cap_quantity_at_stock!
-            expect(li.reload.quantity).to eq 0
-          end
-        end
       end
     end
 
