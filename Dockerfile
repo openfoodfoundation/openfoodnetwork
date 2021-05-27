@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y \
   software-properties-common \
   wget \
   zlib1g-dev \
-  libssl1.0-dev \
   libreadline-dev \
   libyaml-dev \
   libffi-dev \
