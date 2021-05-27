@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y \
   wait-for-it \
   imagemagick \
   unzip \
-  libjemalloc-dev
+  libjemalloc-dev \
+  libssl-dev
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
@@ -34,9 +35,8 @@ WORKDIR /usr/src/app
 COPY .ruby-version .
 
 # Install Rbenv & Ruby
-RUN git clone --depth 1 --branch v1.1.2 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
-    git clone --depth 1 --branch v20200520 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
-    ${RBENV_ROOT}/plugins/ruby-build/install.sh && \
+RUN git clone --depth 1 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
+    git clone --depth 1 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     RUBY_CONFIGURE_OPTS=--with-jemalloc rbenv install $(cat .ruby-version) && \
     rbenv global $(cat .ruby-version) && \
