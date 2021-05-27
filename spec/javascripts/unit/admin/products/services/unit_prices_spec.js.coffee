@@ -138,3 +138,19 @@ describe "UnitPrices service", ->
       unit_value = 453.6
       expect(UnitPrices.price(price, scale, unit_type, unit_value)).toEqual 1
       expect(UnitPrices.unit(scale, unit_type)).toEqual "lb"
+
+  describe "get unit price when price is a decimal string", ->
+    unit_type = "weight"
+
+    it "with price: '1,0'", ->
+      price = '1,0'
+      scale = 1
+      unit_value = 1
+      expect(UnitPrices.displayableUnitPrice(price, scale, unit_type, unit_value)).toEqual "$1,000.00 / kg"
+
+    it "with price: '1.0'", ->
+      price = '1.0'
+      scale = 1
+      unit_value = 1
+      expect(UnitPrices.displayableUnitPrice(price, scale, unit_type, unit_value)).toEqual "$1,000.00 / kg"
+    
