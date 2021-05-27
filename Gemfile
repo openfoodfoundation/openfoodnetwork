@@ -155,6 +155,7 @@ group :test do
   gem 'test-prof'
   gem 'webmock'
   gem 'rails-controller-testing'
+  gem 'pdf-reader'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
