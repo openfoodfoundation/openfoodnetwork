@@ -1570,6 +1570,7 @@ fr:
   email_order_summary_includes_tax: "(dont TVA)"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
+  email_payment_description: Informations concernant le mode de paiement
   email_payment_summary: Résumé du paiement
   email_payment_method: "Payer via :"
   email_so_placement_intro_html: "Une nouvelle commande automatique a été passée pour vous chez <strong>%{distributor}</strong>"
