@@ -1571,6 +1571,7 @@ ru:
   email_order_summary_includes_tax: "(включает налог):"
   email_payment_paid: ОПЛАЧЕН
   email_payment_not_paid: НЕ ОПЛАЧЕН
+  email_payment_description: Описание Платежа при Оформлении Заказа
   email_payment_summary: Статус оплаты
   email_payment_method: "Тип оплаты:"
   email_so_placement_intro_html: "У Вас есть новый заказ с <strong>%{distributor}</strong>"
