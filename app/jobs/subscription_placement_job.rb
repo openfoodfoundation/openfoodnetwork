@@ -27,7 +27,7 @@ class SubscriptionPlacementJob < ActiveJob::Base
   end
 
   def place_order_for(proxy_order)
-    JobLogger.logger.info("Placing Order for Proxy Order #{proxy_order.id}")
+    SubsLogger.logger.info("Placing Order for Proxy Order #{proxy_order.id}")
     initialise_order(proxy_order)
     return unless proxy_order.order.present?
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module JobLogger
+module SubsLogger
   class Formatter < ::Logger::Formatter
     def call(_severity, timestamp, _progname, msg)
       time = timestamp.strftime('%FT%T%z')
@@ -10,7 +10,7 @@ module JobLogger
 
   def self.logger
     @logger ||= begin
-                  logger = Delayed::Worker.logger.clone
+                  logger = ActiveSupport::Logger.new(Rails.root.join('log', 'subscriptions.log'))
                   logger.formatter = Formatter.new
                   logger
                 end

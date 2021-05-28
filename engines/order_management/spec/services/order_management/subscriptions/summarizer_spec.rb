@@ -8,7 +8,7 @@ module OrderManagement
       let(:order) { create(:order) }
       let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
-      before { allow(JobLogger.logger).to receive(:info) }
+      before { allow(SubsLogger.logger).to receive(:info) }
 
       describe "#summary_for" do
         let(:order) { double(:order, distributor_id: 123) }

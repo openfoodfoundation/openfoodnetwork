@@ -18,7 +18,7 @@ module OrderManagement
       end
 
       def record_issue(type, order, message = nil)
-        JobLogger.logger.info("Issue in Subscription Order #{order.id}: #{type}")
+        SubsLogger.logger.info("Issue in Subscription Order #{order.id}: #{type}")
         summary_for(order).record_issue(type, order, message)
       end
 
@@ -35,7 +35,7 @@ module OrderManagement
         error_message ||= order.errors.full_messages.join(', ')
         line2 = "Errors: #{error_message}"
 
-        JobLogger.logger.info("#{line1}\n#{line2}")
+        SubsLogger.logger.info("#{line1}\n#{line2}")
         record_issue(type, order, line2)
       end
 
