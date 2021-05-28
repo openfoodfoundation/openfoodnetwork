@@ -6,7 +6,6 @@ class Api::ProductSerializer < ActiveModel::Serializer
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
-  has_one :master, serializer: Api::VariantSerializer
 
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_many :taxons, serializer: Api::IdSerializer
@@ -30,10 +29,6 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   def variants
     options[:variants][object.id] || []
-  end
-
-  def master
-    options[:master_variants][object.id].andand.first
   end
 
   private

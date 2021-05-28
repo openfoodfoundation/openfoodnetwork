@@ -19,7 +19,6 @@ class ProductsRenderer
                                      current_order_cycle: order_cycle,
                                      current_distributor: distributor,
                                      variants: variants_for_shop_by_id,
-                                     master_variants: master_variants_for_shop_by_id,
                                      enterprise_fee_calculator: enterprise_fee_calculator).to_json
   end
 
@@ -82,10 +81,6 @@ class ProductsRenderer
 
   def variants_for_shop_by_id
     index_by_product_id variants_for_shop.reject(&:is_master)
-  end
-
-  def master_variants_for_shop_by_id
-    index_by_product_id variants_for_shop.select(&:is_master)
   end
 
   def index_by_product_id(variants)
