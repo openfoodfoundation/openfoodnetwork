@@ -1571,6 +1571,7 @@ ca:
   email_order_summary_includes_tax: "(inclou impostos):"
   email_payment_paid: PAGAT
   email_payment_not_paid: 'NO PAGAT '
+  email_payment_description: Descripció del pagament de la comanda
   email_payment_summary: Resum del pagament
   email_payment_method: "Pagament a través de:"
   email_so_placement_intro_html: "Tens una nova comanda amb <strong> %{distributor}</strong>"

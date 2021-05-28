@@ -50,7 +50,7 @@ de_DE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
-            on_demand_but_count_on_hand_set: "muss leer sein, wenn die Produktion auf Anfrage erfolgt"
+            on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
   activemodel:
     attributes:
@@ -347,8 +347,8 @@ de_DE:
     ends_on: Endet am
     name: Name
     on_hand: Verfügbar
-    on_demand: Auf Anfrage
-    on_demand?: Auf Anfrage?
+    on_demand: Unbegrenzt/auf Bestellung
+    on_demand?: Unbegrenzt/auf Bestellung
     order_cycle: Bestellzyklus
     payment: Zahlung
     payment_method: Zahlungsart
@@ -986,7 +986,7 @@ de_DE:
         add: Koordinatorgebühr hinzufügen
       filters:
         search_by_order_cycle_name: "Suche nach Name des Bestellzyklus ..."
-        involving: "Betrifft"
+        involving: "Unternehmen"
         any_enterprise: "Alle Unternehmen"
         any_schedule: "Alle Zeitpläne"
       form:
@@ -1369,7 +1369,7 @@ de_DE:
   country: Land
   unauthorized: Nicht autorisiert
   terms_of_service: "AGB"
-  on_demand: Auf Anfrage
+  on_demand: Unbegrenzt/auf Bestellung
   none: Keine
   not_allowed: Nicht erlaubt
   no_shipping: keine Lieferoptionen
@@ -2729,7 +2729,7 @@ de_DE:
       unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht."
     variants:
       on_demand:
-        'yes': "Auf Anfrage"
+        'yes': "Unbegrenzt/auf Bestellung"
     variant_overrides:
       on_demand:
         use_producer_settings: "Einstellungen des Produzentenbestands verwenden"
@@ -3021,7 +3021,7 @@ de_DE:
     location: "Ort"
     count_on_hand: "Verfügbar"
     quantity: "Menge"
-    on_demand: "Unbegrenzt"
+    on_demand: "Unbegrenzt/auf Bestellung"
     on_hand: "Verfügbar"
     package_from: "Paket von"
     item_description: "Artikelbeschreibung"
@@ -3465,7 +3465,7 @@ de_DE:
           unit_price: "Grundpreis"
           unit_price_legend: "Berechnet aus Preis und Menge."
           on_hand: "Verfügbar"
-          on_demand: "Unbegrenzt"
+          on_demand: "Unbegrenzt/auf Bestellung"
           product_description: "Produktbeschreibung"
           image: "Bild"
           or: "oder"

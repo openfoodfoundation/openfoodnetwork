@@ -1238,7 +1238,7 @@ ru:
     mailers:
       powered_by:
         open_food_network: "Открытая Сеть Продуктов"
-        powered_html: "Ваш опыт покупок обеспечивается %{open_food_network}."
+        powered_html: "Ваш опыт покупок обеспечивает %{open_food_network}."
     menu:
       cart:
         cart: "Корзина"
