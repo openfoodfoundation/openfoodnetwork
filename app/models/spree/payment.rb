@@ -127,7 +127,7 @@ module Spree
     end
 
     def resend_authorization_email!
-      return unless authorization_action_required?
+      return unless requires_authorization?
 
       PaymentMailer.authorize_payment(self).deliver_later
     end
