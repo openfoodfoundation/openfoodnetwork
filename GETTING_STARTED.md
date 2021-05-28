@@ -47,7 +47,11 @@ $ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f0
 
 This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
-Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
+Next, it is _strongly recommended_ to run the setup script.
+```sh
+$ script/setup
+```
+If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
 Now, your dreams of spinning up a development server can be realised:
 
