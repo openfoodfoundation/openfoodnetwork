@@ -37,12 +37,12 @@ describe Api::Admin::OrderSerializer do
       allow(order).to receive(:payment_required?) { true }
     end
 
-    context "there is a pending payment requiring authorization" do
-      let!(:pending_payment) do
+    context "there is a payment requiring authorization" do
+      let!(:payment) do
         create(
           :payment,
           order: order,
-          state: 'pending',
+          state: 'requires_authorization',
           amount: 123.45,
           cvv_response_message: "https://stripe.com/redirect"
         )

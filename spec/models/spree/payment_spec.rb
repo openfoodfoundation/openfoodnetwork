@@ -181,7 +181,7 @@ describe Spree::Payment do
           end
 
           it "should move the payment to requires_authorization" do
-            expect(payment).to receive(:require_authorization)
+            expect(payment).to receive(:require_authorization!)
             payment.authorize!
           end
         end
