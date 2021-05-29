@@ -82,7 +82,7 @@ feature '
 
           expect(page).to have_link "StripeSCA"
           expect(page).to have_content "PENDING"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "pending"
+          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "requires_authorization"
         end
       end
     end

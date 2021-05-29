@@ -65,7 +65,7 @@ module OrderManagement
                 allow(PaymentMailer).to receive(:authorize_payment) { mail_mock }
                 allow(PaymentMailer).to receive(:authorization_required) { mail_mock }
                 allow(payment).to receive(:authorize!) {
-                  payment.state = "pending"
+                  payment.state = "requires_authorization"
                   payment.cvv_response_message = "https://stripe.com/redirect"
                 }
               end

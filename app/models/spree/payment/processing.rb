@@ -236,7 +236,9 @@ module Spree
             if response.cvv_result
               self.cvv_response_code = response.cvv_result['code']
               self.cvv_response_message = response.cvv_result['message']
-              self.require_authorization if self.cvv_response_message.present?
+              if self.cvv_response_message.present?
+                return self.require_authorization!
+              end
             end
           end
           __send__("#{success_state}!")

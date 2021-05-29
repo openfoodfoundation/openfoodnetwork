@@ -175,7 +175,9 @@ module Spree
 
         @payment.authorize!(full_order_path(@payment.order))
 
-        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
+        unless @payment.pending? || @payment.requires_authorization?
+          raise Spree::Core::GatewayError, I18n.t('authorization_failure')
+        end
 
         return unless @payment.requires_authorization?
 
