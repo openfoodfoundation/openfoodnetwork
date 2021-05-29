@@ -24,6 +24,10 @@ class Delayed::Worker
   def self.after_fork
     ActiveRecord::Base.establish_connection(Rails.env.to_sym)
 
+    unless ActiveRecord::Base.connection.query_cache.empty?
+      ActiveRecord::Base.connection.query_cache.clear
+    end
+
     Delayed::Worker.logger.reopen
 
     Rails.logger.reopen
