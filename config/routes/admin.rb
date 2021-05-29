@@ -1,4 +1,5 @@
 require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
 
 Openfoodnetwork::Application.routes.draw do
   namespace :admin do
