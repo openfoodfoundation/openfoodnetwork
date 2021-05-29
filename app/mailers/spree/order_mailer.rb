@@ -49,8 +49,10 @@ module Spree
       end
     end
 
-    def invoice_email(order_or_order_id, pdf)
+    def invoice_email(order_or_order_id)
       @order = find_order(order_or_order_id)
+      pdf = InvoiceRenderer.new.render_to_string(@order)
+
       attach_file("invoice-#{@order.number}.pdf", pdf)
       I18n.with_locale valid_locale(@order.user) do
         mail(to: @order.email,
