@@ -15,7 +15,6 @@ Openfoodnetwork::Application.configure do
     config.cache_store = :redis_cache_store, {
       driver: :hiredis,
       url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0"),
-      namespace: "cache",
       expires_in: 90.minutes
     }
   end
