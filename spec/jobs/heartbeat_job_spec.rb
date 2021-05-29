@@ -13,16 +13,8 @@ describe HeartbeatJob do
     end
 
     it "updates the last_job_queue_heartbeat_at config var" do
-      run_job
+      HeartbeatJob.perform_now
       expect(Time.parse(Spree::Config.last_job_queue_heartbeat_at).in_time_zone).to eq(run_time)
     end
-  end
-
-  private
-
-  def run_job
-    clear_jobs
-    HeartbeatJob.perform_now
-    flush_jobs ignore_exceptions: false
   end
 end
