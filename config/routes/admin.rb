@@ -1,9 +1,12 @@
+require 'sidekiq/web'
+
 Openfoodnetwork::Application.routes.draw do
   namespace :admin do
 
     authenticated :spree_user, -> user { user.admin? } do
       mount DelayedJobWeb, at: '/delayed_job'
       mount Flipper::UI.app(Flipper) => '/feature-toggle'
+      mount Sidekiq::Web, at: "/sidekiq"
     end
 
     resources :bulk_line_items
