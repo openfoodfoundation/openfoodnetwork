@@ -12,10 +12,12 @@ describe ProductsRenderer do
   describe "sorting" do
     let(:t1) { create(:taxon) }
     let(:t2) { create(:taxon) }
-    let!(:p1) { create(:product, name: "abc", primary_taxon_id: t2.id) }
-    let!(:p2) { create(:product, name: "def", primary_taxon_id: t1.id) }
-    let!(:p3) { create(:product, name: "ghi", primary_taxon_id: t2.id) }
-    let!(:p4) { create(:product, name: "jkl", primary_taxon_id: t1.id) }
+    let(:s1) { create(:supplier_enterprise) }
+    let(:s2) { create(:supplier_enterprise) }
+    let!(:p1) { create(:product, name: "abc", primary_taxon_id: t2.id, supplier_id: s1.id) }
+    let!(:p2) { create(:product, name: "def", primary_taxon_id: t1.id, supplier_id: s2.id) }
+    let!(:p3) { create(:product, name: "ghi", primary_taxon_id: t2.id, supplier_id: s1.id) }
+    let!(:p4) { create(:product, name: "jkl", primary_taxon_id: t1.id, supplier_id: s2.id) }
 
     before do
       exchange.variants << p1.variants.first
@@ -29,6 +31,20 @@ describe ProductsRenderer do
       products = products_renderer.send(:products)
       expect(products).to eq([p2, p4, p1, p3])
     end
+
+    it "sorts products by producer id" do # todo: remove this temporary test
+      allow(distributor).to receive(:preferred_shopfront_product_sorting_method) { "by_producer" }
+      puts(distributor.preferred_shopfront_product_sorting_method)
+      products = products_renderer.send(:products)
+      expect(products).to eq([p1, p3, p2, p4])
+    end
+
+    # todo: it "sorts products by the distributor's preferred producer list" do
+    #   allow(distributor).to receive(:preferred_shopfront_product_sorting_method) { "by_producer" }
+    #   allow(distributor).to receive(:preferred_shopfront_producer_order) { "#{s2.id},#{s1.id}" }
+    #   products = products_renderer.send(:products)
+    #   expect(products).to eq([p2, p4, p1, p3])
+    # end
 
     it "alphabetizes products by name when taxon list is not set" do
       allow(distributor).to receive(:preferred_shopfront_taxon_order) { "" }

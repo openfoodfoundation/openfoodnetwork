@@ -187,6 +187,8 @@ describe Enterprise do
         expect(enterprise).to be_invalid
       end
     end
+
+    # todo: describe "preferred_shopfront_producer_order"
   end
 
   describe "callbacks" do
