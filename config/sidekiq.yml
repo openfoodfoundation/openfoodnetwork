@@ -1,0 +1,16 @@
+---
+
+:verbose: false
+:concurrency: 5
+
+:queues:
+  - default
+  - mailers
+
+:schedule:
+  HeartbeatJob:
+    every: "5m"
+  SubscriptionPlacementJob:
+    every: "5m"
+  SubscriptionConfirmJob:
+    every: "5m"

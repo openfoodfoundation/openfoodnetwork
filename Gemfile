@@ -52,7 +52,6 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'
-gem 'delayed_job_web'
 
 gem 'kaminari', '~> 1.2.1'
 
@@ -84,6 +83,8 @@ gem 'roadie-rails', '~> 2.2.0'
 
 gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'hiredis'
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
