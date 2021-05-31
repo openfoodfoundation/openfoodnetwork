@@ -52,7 +52,6 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'
-gem 'delayed_job_web'
 
 gem 'kaminari', '~> 1.2.1'
 
