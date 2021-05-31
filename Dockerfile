@@ -30,6 +30,7 @@ ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
 ENV RBENV_ROOT /usr/local/src/rbenv
 ENV CONFIGURE_OPTS --disable-install-doc
 ENV BUNDLE_PATH /bundles
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
 
 WORKDIR /usr/src/app
 COPY .ruby-version .
