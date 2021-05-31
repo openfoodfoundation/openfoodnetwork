@@ -2,7 +2,6 @@
 
 :verbose: false
 :concurrency: 5
-:logfile: ./log/sidekiq.log
 
 :queues:
   - default
