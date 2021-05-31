@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, RequestMonitor, Orders, SortOptions, $window, $filter, $location, QueryPersistence) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, RequestMonitor, Orders, SortOptions, $window, $filter, $location, KeyValueMapStore) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -15,11 +15,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
   $scope.poll = 0
   $scope.rowStatus = {}
 
-  QueryPersistence.storageKey = 'ordersFilters'
-  QueryPersistence.storableFilters = ["q", "sorting", "page", "per_page"]
+  KeyValueMapStore.localStorageKey = 'ordersFilters'
+  KeyValueMapStore.storableKeys = ["q", "sorting", "page", "per_page"]
 
   $scope.initialise = ->
-    unless QueryPersistence.restoreFilters($scope)
+    unless KeyValueMapStore.restoreValues($scope)
       $scope.setDefaults()
 
     $scope.fetchResults()
@@ -31,7 +31,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     }
 
   $scope.clearFilters = () ->
-    QueryPersistence.clearFilters()
+    KeyValueMapStore.clearKeyValueMap()
     $scope.setDefaults()
     $scope.fetchResults()
 
@@ -57,7 +57,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       per_page: $scope.per_page,
       page: page
     }
-    QueryPersistence.setStoredFilters($scope)
+    KeyValueMapStore.setStoredValues($scope)
     RequestMonitor.load(Orders.index(params).$promise)
 
   $scope.appendStringIfNotEmpty = (baseString, stringToAppend) ->
