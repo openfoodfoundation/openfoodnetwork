@@ -1570,6 +1570,7 @@ de_DE:
   email_order_summary_includes_tax: "(inkl. Steuern):"
   email_payment_paid: BEZAHLT
   email_payment_not_paid: NICHT BEZAHLT
+  email_payment_description: 'Hinweise zur Zahlung '
   email_payment_summary: Zahlungsübersicht
   email_payment_method: "Zahlungsart:"
   email_so_placement_intro_html: "Sie haben eine neue Bestellung bei <strong>%{distributor}</strong> erhalten!"

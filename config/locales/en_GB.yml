@@ -1568,6 +1568,7 @@ en_GB:
   email_order_summary_includes_tax: "(includes tax):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
+  email_payment_description: Payment Description at Checkout
   email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
