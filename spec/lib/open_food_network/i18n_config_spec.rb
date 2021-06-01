@@ -5,6 +5,11 @@ require 'open_food_network/i18n_config'
 
 module OpenFoodNetwork
   describe I18nConfig do
+    before do
+      # Allow non-stubbed calls to ENV to proceed
+      allow(ENV).to receive(:[]).and_call_original
+    end
+
     context "in default test configuration" do
       before do
         allow(ENV).to receive(:[]).with("LOCALE").and_return("en")
