@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 # Formats uploaded files to UTF-8 encoding and strips unexpected BOM characters.
 # Takes an open File object as input
