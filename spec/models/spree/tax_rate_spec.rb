@@ -289,7 +289,7 @@ module Spree
 
           context "when the default category has tax rates in the default tax zone" do
             before(:each) do
-              Spree::Config[:default_country_id] = country.id
+              allow(DefaultCountry).to receive(:id) { country.id }
               @zone = create(:zone, name: "Country Zone", default_tax: true)
               @zone.zone_members.create(zoneable: country)
               rate = Spree::TaxRate.create(
