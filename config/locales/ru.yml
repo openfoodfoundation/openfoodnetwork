@@ -1368,7 +1368,7 @@ ru:
   suburb: Город
   state: Область
   country: Страна
-  unauthorized: На разрешено
+  unauthorized: Неавторизованный
   terms_of_service: "Условия Сервиса"
   on_demand: По запросу
   none: Ничего

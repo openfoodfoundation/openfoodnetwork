@@ -121,11 +121,23 @@ pt_BR:
         send_instructions: "Você receberá um e-mail com instruções sobre como confirmar sua conta em alguns minutos."
   home_page_alert_html: "HTML de alerta da página"
   item_description: "Descrição do item"
+  menu_1_icon_name: "Nome do ícone do Menu 1"
+  menu_2_icon_name: "Nome do ícone do Menu 2"
+  menu_3_icon_name: "Nome do ícone do Menu 3"
+  menu_4_icon_name: "Nome do ícone do Menu 4"
+  menu_5_icon_name: "Nome do ícone do Menu 5"
+  menu_6_icon_name: "Nome do ícone do Menu 6"
+  menu_7_icon_name: "Nome do ícone do Menu 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DO %{order_cycle}"
     tax_rate:
       included_in_price: "Incluso no preço"
+  open_street_map_enabled: "Open Street Map ativado"
+  open_street_map_default_latitude: "Latitude padrão do Open Street Map"
+  open_street_map_default_longitude: "Longitude padrão do Open Street Map"
+  open_street_map_provider_name: "Nome do provedor do Open Street Map"
+  open_street_map_provider_options: "Opções do provedor do Open Street Map"
   resume_order: "Retomar pedido"
   sku: "SKU"
   subtotal: "Subtotal"
@@ -1328,6 +1340,12 @@ pt_BR:
   address2: Complemento
   city: Cidade
   city_placeholder: 'ex: República'
+  latitude: Latitude
+  latitude_placeholder: ex. -13.51772776
+  latitude_longitude_tip: A Latitude e Longitude são necessárias para mostrar sua iniciativa no mapa.
+  longitude: Longitude
+  longitude_placeholder: ex. 46.40625
+  use_geocoder: 'Calcular latitude e longitude automaticamente a partir do endereço? '
   postcode: CEP
   postcode_placeholder: 'ex: 05429-130'
   suburb: Cidade
@@ -1536,6 +1554,7 @@ pt_BR:
   email_order_summary_includes_tax: "(inclui taxa):"
   email_payment_paid: PAGO
   email_payment_not_paid: NÃO PAGO
+  email_payment_description: Descrição do Pagamento no Checkout
   email_payment_summary: Resumo do pagamento
   email_payment_method: "Pagando com:"
   email_so_placement_intro_html: "Você tem um novo pedido com <strong>%{distributor}</strong>"
@@ -1881,6 +1900,11 @@ pt_BR:
         state_field_error: "Estado requerido"
         country_field: "País:"
         country_field_error: "Por favor, selecione um país"
+        map_location: "Localização no Mapa"
+        locate_address: "Localizar endereço no mapa"
+        drag_pin: "Arraste e solte o marcador na localização correta, caso ele não esteja no lugar certo"
+        confirm_address: "Eu confirmo que a localização da iniciativa no mapa está correta."
+        drag_map_marker: "Ajude-nos a entender melhor onde você está localizado arrastando o marcador no mapa acima para uma localização mais precisa, com base no seu conhecimento."
       contact:
         title: "Contato"
         who_is_managing_enterprise: "Quem é responsável por gerenciar %{enterprise}? "
@@ -3730,6 +3754,9 @@ pt_BR:
           other: Pagamentos
   datetime:
     distance_in_words:
+      about_x_hours:
+        one: cerca de 1 hora
+        other: cerca de %{count}horas
       about_x_months:
         one: cerca de 1 mês
         other: cerca de %{count}mês
