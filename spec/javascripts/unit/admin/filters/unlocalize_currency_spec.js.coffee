@@ -89,3 +89,10 @@ describe 'convert string to number with configurated currency', ->
 
     it "handle integer number with no thousands separator", ->
       expect(filter("1000")).toEqual 1000
+  
+  describe "handle null/undefined case", ->
+    it "null case", ->
+      expect(filter(null)).toEqual null
+    
+    it "undefined case ", ->
+      expect(filter(undefined)).toEqual null
