@@ -13,7 +13,7 @@ module Spree
         it "creates a shipping shipping category" do
           expect {
             spree_post :create, shipping_category: { name: "Frozen" }
-          }.to change(Spree::ShippingCategory.all, :count).by(1)
+          }.to change { Spree::ShippingCategory.count }.by(1)
 
           expect(response).to redirect_to spree.admin_shipping_categories_url
         end
@@ -31,7 +31,7 @@ module Spree
           shipping_category = create(:shipping_category)
           expect {
             spree_delete :destroy, id: shipping_category.id
-          }.to change(Spree::ShippingCategory.all, :count).by(-1)
+          }.to change { Spree::ShippingCategory.count }.by(-1)
 
           expect(response).to redirect_to spree.admin_shipping_categories_url
         end
