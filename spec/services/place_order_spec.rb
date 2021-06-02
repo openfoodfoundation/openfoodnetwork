@@ -5,9 +5,8 @@ require 'spec_helper'
 describe PlaceOrder do
   include ActiveSupport::Testing::TimeHelpers
 
-  subject { described_class.new(proxy_order, summarizer, logger, changes) }
+  subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }
 
-  let(:changes) { {} }
   let(:proxy_order) { create(:proxy_order, order: order) }
   let(:order) { build(:order) }
   let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer) }
@@ -19,7 +18,7 @@ describe PlaceOrder do
     let!(:subscription) { create(:subscription, with_items: true) }
     let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
 
-    let(:changes) { lambda { {} } }
+    let(:stock_changes_loader) { lambda { {} } }
     let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_issue: true) }
 
     before do
@@ -49,7 +48,7 @@ describe PlaceOrder do
     end
 
     context "when no changes are present" do
-      let(:changes) { lambda { {} } }
+      let(:stock_changes_loader) { lambda { {} } }
 
       it "logs a success and sends the email" do
         expect(summarizer).to receive(:record_success).with(order).once
@@ -63,7 +62,7 @@ describe PlaceOrder do
 
     context "when changes are present" do
       let(:changeset) { double(:changes) }
-      let(:changes) { lambda { changeset } }
+      let(:stock_changes_loader) { lambda { changeset } }
 
       it "logs an issue and sends the email" do
         expect(summarizer).to receive(:record_issue).with(:changes, order).once
@@ -80,7 +79,7 @@ describe PlaceOrder do
     let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true) }
 
     let(:changeset) { double(:changes) }
-    let(:changes) { lambda { changeset } }
+    let(:stock_changes_loader) { lambda { changeset } }
 
     before do
       allow(SubscriptionMailer).to receive(:empty_email) { mail_mock }
@@ -93,43 +92,6 @@ describe PlaceOrder do
 
       expect(SubscriptionMailer).to have_received(:empty_email).with(order, changeset)
       expect(mail_mock).to have_received(:deliver_now)
-    end
-  end
-
-  describe "#move_to_completion" do
-    let(:order_cycle) { create(:simple_order_cycle) }
-    let(:shop) { order_cycle.coordinator }
-    let(:order) { create(:order, order_cycle: order_cycle, distributor: shop) }
-    let(:ex) { create(:exchange, order_cycle: order_cycle, sender: shop, receiver: shop, incoming: false) }
-    let(:variant1) { create(:variant, on_hand: 5) }
-    let(:variant2) { create(:variant, on_hand: 5) }
-    let(:variant3) { create(:variant, on_hand: 5) }
-    let!(:line_item1) { create(:line_item, order: order, variant: variant1, quantity: 3) }
-    let!(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 3) }
-    let!(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 3) }
-
-    context "and some items are not available from the order cycle" do
-      before { [variant2, variant3].each { |v| ex.variants << v } }
-
-      context "and insufficient stock exists to fulfil the order for some items" do
-        before do
-          variant1.update_attribute(:on_hand, 5)
-          variant2.update_attribute(:on_hand, 2)
-          variant3.update_attribute(:on_hand, 0)
-        end
-
-        context "and the order has been placed" do
-          before do
-            allow(order).to receive(:ensure_available_shipping_rates) { true }
-            allow(order).to receive(:process_each_payment) { true }
-          end
-
-          it "removes the unavailable items from the shipment" do
-            subject.move_to_completion
-            expect(order.reload.shipment.manifest.size).to eq 1
-          end
-        end
-      end
     end
   end
 end

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class PlaceOrder
-  def initialize(proxy_order, summarizer, logger, changes_loader)
+  def initialize(proxy_order, summarizer, logger, stock_changes_loader)
     @proxy_order = proxy_order
     @subscription = proxy_order.subscription
     @summarizer = summarizer
     @logger = logger
-    @changes_loader = changes_loader
+    @stock_changes_loader = stock_changes_loader
   end
 
   def call
@@ -29,7 +29,7 @@ class PlaceOrder
 
   private
 
-  attr_reader :proxy_order, :subscription, :order, :summarizer, :logger, :changes_loader, :changes
+  attr_reader :proxy_order, :subscription, :order, :summarizer, :logger, :stock_changes_loader, :changes
 
   def initialise_order
     logger.info("Placing Order for Proxy Order #{proxy_order.id}")
@@ -51,7 +51,7 @@ class PlaceOrder
   end
 
   def load_changes
-    @changes = changes_loader.call
+    @changes = stock_changes_loader.call
   end
 
   def empty_order?
