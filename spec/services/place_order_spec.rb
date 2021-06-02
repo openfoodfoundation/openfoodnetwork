@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe PlaceOrder do
+  include ActiveSupport::Testing::TimeHelpers
+
   subject { described_class.new(proxy_order, summarizer, logger, changes) }
 
   let(:changes) { {} }
@@ -22,12 +24,13 @@ describe PlaceOrder do
 
     before do
       allow(SubscriptionMailer).to receive(:empty_email) { mail_mock }
-      subject.initialise_order
     end
 
     it "marks placeable proxy_orders as processed by setting placed_at" do
-      expect{ subject.call(order, subject) }.to change{ proxy_order.reload.placed_at }
-      expect(proxy_order.placed_at).to be_within(5.seconds).of Time.zone.now
+      freeze_time do
+        expect { subject.call }.to change { proxy_order.reload.placed_at }
+        expect(proxy_order.placed_at).to eq(Time.zone.now)
+      end
     end
   end
 
