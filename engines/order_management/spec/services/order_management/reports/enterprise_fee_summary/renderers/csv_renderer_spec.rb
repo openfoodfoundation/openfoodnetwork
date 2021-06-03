@@ -13,9 +13,11 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
   # Context which will be passed to the renderer. The response object is not automatically prepared,
   # so this has to be assigned explicitly.
   let!(:response) { ActionDispatch::TestResponse.new }
+  let!(:request) { double(Rack::Request) }
   let!(:controller) do
     ActionController::Base.new.tap do |controller_mock|
       controller_mock.instance_variable_set(:@_response, response)
+      controller_mock.instance_variable_set(:@_request, request)
     end
   end
 
@@ -48,6 +50,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
 
   before do
     allow(service).to receive(:list) { enterprise_fee_type_totals }
+    allow(request).to receive_messages(variant: double(Spree::Variant),
+                                       should_apply_vary_header?: true)
   end
 
   it "generates CSV header" do
