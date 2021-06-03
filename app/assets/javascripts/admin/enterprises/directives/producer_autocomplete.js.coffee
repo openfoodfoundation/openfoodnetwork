@@ -1,10 +1,10 @@
-angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, $sanitize) ->
-  # Adapted from Spree's existing taxon autocompletion
+angular.module("admin.enterprises").directive "ofnProducerAutocomplete", (Enterprises, $sanitize) ->
   scope: true
   link: (scope,element,attrs) ->
     multiple = scope.$eval attrs.multipleSelection
     placeholder = attrs.placeholder
     initialSelection = scope.$eval attrs.ngModel
+    suppliers = scope.suppliers
 
     setTimeout ->
       element.select2
@@ -12,15 +12,15 @@ angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, $sanit
         multiple: multiple
         initSelection: (element, callback) ->
           if multiple
-            callback Taxons.findByIDs(initialSelection)
+            callback Enterprises.findByIDs(initialSelection)
           else
-            callback Taxons.findByID(initialSelection)
+            callback Enterprises.findByID(initialSelection)
         query: (query) ->
-          query.callback { results: Taxons.findByTerm(query.term) }
-        formatResult: (taxon) ->
-          $sanitize(taxon.name)
-        formatSelection: (taxon) ->
-          taxon.name
+          query.callback { results: Enterprises.findByTerm(suppliers, query.term) }
+        formatResult: (producer) ->
+          $sanitize(producer.name)
+        formatSelection: (producer) ->
+          producer.name
 
       #Allows drag and drop
       if multiple

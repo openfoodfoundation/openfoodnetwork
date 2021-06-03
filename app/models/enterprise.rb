@@ -98,6 +98,7 @@ class Enterprise < ApplicationRecord
   validates :owner, presence: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
+  validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
@@ -458,6 +459,12 @@ class Enterprise < ApplicationRecord
   def shopfront_taxons
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
       errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
+    end
+  end
+
+  def shopfront_producers
+    unless preferred_shopfront_producer_order =~ /\A((\d+,)*\d+)?\z/
+      errors.add(:shopfront_category_ordering, "must contain a list of producers.")
     end
   end
 

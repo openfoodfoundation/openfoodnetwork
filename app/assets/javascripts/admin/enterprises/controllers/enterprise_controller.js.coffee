@@ -1,12 +1,14 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, Enterprises, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, Enterprises, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage, RequestMonitor) ->
     $scope.Enterprise = enterprise
+    $scope.Enterprises = Enterprises
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
     $scope.menu = SideMenu
     $scope.newManager = { id: null, email: (t('add_manager')) }
     $scope.StatusMessage = StatusMessage
+    $scope.RequestMonitor = RequestMonitor
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
       StatusMessage.display 'notice', t('admin.unsaved_changes') if newValue
@@ -90,3 +92,5 @@ angular.module("admin.enterprises")
 
     $scope.translation = (key) ->
       t('js.admin.enterprises.form.images.' + key)
+
+    RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")

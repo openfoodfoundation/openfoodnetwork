@@ -30,11 +30,10 @@
   .three.columns.alpha
     = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
     = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
-  -# todo: create directive to support producer selector below
-  -# .eight.columns.omega
-  -#   %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6,
-  -#     'ofn-producer-autocomplete' => '', 'multiple-selection' => 'true', placeholder: 'Producer',
-  -#     ng: { model: 'Enterprise.preferred_shopfront_producer_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }}
+  .eight.columns.omega
+    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6,
+      'ofn-producer-autocomplete' => '', 'multiple-selection' => 'true', placeholder: 'Producer',
+      ng: { model: 'Enterprise.preferred_shopfront_producer_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }}
 
 .row
   .three.columns.alpha

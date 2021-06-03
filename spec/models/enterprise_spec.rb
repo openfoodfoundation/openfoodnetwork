@@ -188,7 +188,40 @@ describe Enterprise do
       end
     end
 
-    # todo: describe "preferred_shopfront_producer_order"
+    describe "preferred_shopfront_producer_order" do
+      it "empty strings are valid" do
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "")
+        expect(enterprise).to be_valid
+      end
+
+      it "a single integer is valid" do
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "11")
+        expect(enterprise).to be_valid
+      end
+
+      it "comma delimited integers are valid" do
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "1,2,3")
+        expect(enterprise).to be_valid
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "1,22,333")
+        expect(enterprise).to be_valid
+      end
+
+      it "commas at the beginning and end are disallowed" do
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: ",1,2,3")
+        expect(enterprise).to be_invalid
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "1,2,3,")
+        expect(enterprise).to be_invalid
+      end
+
+      it "any other characters are invalid" do
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: "a1,2,3")
+        expect(enterprise).to be_invalid
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: ".1,2,3")
+        expect(enterprise).to be_invalid
+        enterprise = build(:enterprise, preferred_shopfront_producer_order: " 1,2,3")
+        expect(enterprise).to be_invalid
+      end
+    end
   end
 
   describe "callbacks" do
