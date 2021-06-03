@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails/all'
 require 'active_merchant'
 require 'acts_as_list'
 require 'awesome_nested_set'

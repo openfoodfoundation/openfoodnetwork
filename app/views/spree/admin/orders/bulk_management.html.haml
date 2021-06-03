@@ -152,7 +152,7 @@
             %th.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
               = t("admin.orders.bulk_management.weight_volume")
             %th.price{ 'ng-show' => 'columns.price.visible' }
-              = "#{t('admin.price')} (#{currency_symbol})"
+              = "#{t('admin.price')} (#{Spree::Money.currency_symbol})"
             %th.actions
             %th.actions
               = t("admin.orders.bulk_management.ask")

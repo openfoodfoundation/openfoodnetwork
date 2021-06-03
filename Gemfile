@@ -4,15 +4,15 @@ source 'https://rubygems.org'
 ruby "2.5.9"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0.3.6'
 
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '2.4.1'
 gem 'responders'
-gem 'sass', '<= 4.7.1'
-gem 'sass-rails', '< 6.0.0'
+gem 'sass', '~> 3.4.0' # this restriction originates from foundation-rails's version
+gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails's version
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.3'
@@ -20,8 +20,8 @@ gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-5"
-gem "fog-aws", ">= 0.6.0"
+gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-6"
+gem "fog-aws", "~> 2.0" # db2fog does not support v3
 
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
@@ -79,7 +79,7 @@ gem 'paper_trail', '~> 10.3.1'
 gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
-gem 'roadie-rails', '~> 2.2.0'
+gem 'roadie-rails'
 
 gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'hiredis'
@@ -113,6 +113,9 @@ gem 'jquery-migrate-rails'
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
 gem 'select2-rails', '~> 3.4.7'
+# Thor v0.20 works with both select2-rails 3.4.7 and railties 6.0.3.6
+#   To upgrade to thor v1 we need to upgrade select2-rails to v3.5 which requires some work
+gem 'thor', '~> 0.20'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 

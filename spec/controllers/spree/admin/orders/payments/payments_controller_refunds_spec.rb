@@ -31,7 +31,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          Stripe.api_key = "sk_test_12345"
         end
 
         context "where the request succeeds" do
@@ -90,7 +90,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          Stripe.api_key = "sk_test_12345"
         end
 
         context "where the request succeeds" do
@@ -152,7 +152,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         let(:stripe_account) { create(:stripe_account, enterprise: shop) }
 
         before do
-          allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          Stripe.api_key = "sk_test_12345"
           allow(StripeAccount).to receive(:find_by) { stripe_account }
         end
 
@@ -236,7 +236,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          Stripe.api_key = "sk_test_12345"
 
           stub_payment_intent_get_request stripe_account_header: false
         end
