@@ -8,6 +8,7 @@ The fastest way to make it work locally is to use Docker, you only need to setup
 Otherwise, for a local setup you will need:
 * Ruby and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
 * PostgreSQL database
+* Redis (for background jobs)
 * Chrome (for testing)
 
 The following guides will provide OS-specific step-by-step instructions to get these requirements installed:
