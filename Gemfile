@@ -163,6 +163,7 @@ end
 
 group :development do
   gem 'debugger-linecache'
+  gem 'foreman'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rubocop'
