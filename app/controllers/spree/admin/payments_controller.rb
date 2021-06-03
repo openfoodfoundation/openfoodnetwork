@@ -11,7 +11,7 @@ module Spree
       before_action :can_transition_to_payment
       # We ensure that items are in stock before all screens if the order is in the Payment state.
       # This way, we don't allow someone to enter credit card details for an order only to be told
-      # that it can't be processed. 
+      # that it can't be processed.
       before_action :ensure_sufficient_stock_lines
 
       respond_to :html
@@ -35,9 +35,8 @@ module Spree
             return
           end
 
-          authorize_stripe_sca_payment
-
           if @order.completed?
+            authorize_stripe_sca_payment
             @payment.process!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
