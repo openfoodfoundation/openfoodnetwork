@@ -188,11 +188,11 @@ module OpenFoodNetwork
     end
 
     def total_untaxable_fees(order)
-      order.all_adjustments.enterprise_fee.without_tax.sum(:amount)
+      order.all_adjustments.enterprise_fee.where(tax_category: nil).sum(:amount)
     end
 
     def total_taxable_fees(order)
-      order.all_adjustments.enterprise_fee.with_tax.sum(:amount)
+      order.all_adjustments.enterprise_fee.where.not(tax_category: nil).sum(:amount)
     end
 
     def total_shipping(order)
