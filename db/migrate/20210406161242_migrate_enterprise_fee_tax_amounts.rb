@@ -2,6 +2,8 @@
 # associations. The only workaround seems to be to load the class explicitly, which essentially
 # skips the whole point of good_migrations... :/
 require 'enterprise_fee'
+require 'concerns/balance'
+require 'spree/order'
 
 class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
   class Spree::Adjustment < ApplicationRecord
@@ -39,7 +41,9 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
   end
 
   def migrate_enterprise_fee_taxes!
-    Spree::Adjustment.enterprise_fee.where('included_tax <> 0').includes(:originator).find_each do |fee|
+    Spree::Adjustment.enterprise_fee.where('included_tax <> 0').
+      includes(:originator, :adjustable).find_each do |fee|
+
       tax_category = tax_category_for(fee)
       tax_rate = tax_rate_for(tax_category)
 
