@@ -6,6 +6,7 @@ on:
   pull_request:
 
 env:
+  BUGSNAG_DISABLE_AUTOCONFIGURE: true
   DISABLE_KNAPSACK: true
   TIMEZONE: UTC
   COVERAGE: true
