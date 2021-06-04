@@ -72,7 +72,7 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
     return if enterprise_fee.nil?
 
     if line_item_fee?(fee) && enterprise_fee.inherits_tax_category?
-      fee.adjustable.product.tax_category
+      fee.adjustable&.product&.tax_category
     else
       enterprise_fee.tax_category
     end
