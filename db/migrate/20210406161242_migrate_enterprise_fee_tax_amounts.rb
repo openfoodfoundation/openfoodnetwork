@@ -83,8 +83,6 @@ class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
   end
 
   def tax_rate_for(tax_category)
-    return if tax_category.nil?
-
-    tax_category.tax_rates.first
+    tax_category&.tax_rates&.first
   end
 end
