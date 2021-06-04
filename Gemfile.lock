@@ -159,6 +159,7 @@ GEM
       json (~> 1.4)
       nokogiri (~> 1)
     bcrypt (3.1.16)
+    bigdecimal (1.4.2)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
     bugsnag (6.20.0)
@@ -688,6 +689,7 @@ DEPENDENCIES
   awesome_nested_set
   awesome_print
   aws-sdk (= 1.67.0)
+  bigdecimal (= 1.4.2)
   bootsnap
   bugsnag
   bullet
