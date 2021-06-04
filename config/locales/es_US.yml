@@ -119,6 +119,7 @@ es_US:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  item_description: "Descripción del artículo"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
@@ -127,6 +128,9 @@ es_US:
   open_street_map_enabled: "Open Street Map activado"
   open_street_map_default_latitude: "latitud por defecto en Open Street Map"
   open_street_map_default_longitude: "longitud por defecto en Open Street Map"
+  open_street_map_provider_name: "nombre del proveedor de Open Street Map"
+  open_street_map_provider_options: "opciones de proveedor de Open Street Map"
+  resume_order: "Reanudar pedido"
   sku: "SKU"
   subtotal: "Subtotal"
   tax_rate: "% Impuestos"
@@ -155,6 +159,7 @@ es_US:
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
+  provider_settings: "Configuración de proveedor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimada consumidora,"
@@ -1082,6 +1087,7 @@ es_US:
       index:
         title: "Suscripciones"
         new: "Nueva suscripción"
+      issue: "Asunto"
       new:
         title: "Nueva suscripción"
       edit:
@@ -1195,8 +1201,11 @@ es_US:
     terms_and_conditions:
       message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
       link_text: "Términos y Condiciones"
+    platform_terms_of_service:
+      terms_of_service: "La latitud y longitud son necesarias para mostrar su empresa en el mapa."
     all_terms_and_conditions:
       terms_and_conditions: "Términos y Condiciones"
+      terms_of_service: "La latitud y longitud son necesarios para mostrar su empresa en el mapa."
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:
@@ -1861,6 +1870,7 @@ es_US:
       details:
         title: "Detalles"
         headline: "Empecemos"
+        enterprise: "Bueno! Primero necesitamos saber un poco más acerca de tu empresa"
         producer: "Primero necesitamos saber un poco sobre tu productora:"
         enterprise_name_field: "Nombre de la organización:"
         producer_name_field: "Nombre de la productora:"
@@ -2436,6 +2446,7 @@ es_US:
           Ha habido un problema al añadir este producto en el carrito. Puede que haya
           dejado de estar disponible o que la tinda haya cerrado.
     admin:
+      unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir a sus clientes comparar fácilmente los precios entre diferentes productos y tamaños de empaque. Tenga en cuenta que el precio unitario final que se muestra en la tienda puede diferir, ya que incluye impuestos y comisiones."
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
         got_it: "Lo entiendo"
@@ -2914,18 +2925,48 @@ es_US:
   previous: "Anterior"
   last: "Último"
   spree:
+    add_country: "Agregar país"
+    add_state: "Agregar estado"
     all: "Todos"
+    back_to_adjustments_list: "Regresar a ajustes"
+    back_to_users_list: "Regresar a usuarios"
+    back_to_zones_list: "Regresar a zonas"
+    card_code: "Código de la tarjeta"
+    card_number: "Número de tarjeta"
     category: "Categoría"
+    created_successfully: "Creado con éxito"
     credit: "Crédito"
+    editing_tax_category: "Editar categoría de impuestos"
+    editing_tax_rate: "Editar tasa de impuestos"
+    editing_zone: "Editar zona"
+    expiration: "Vencimiento"
+    invalid_payment_provider: "Proveedor de pago no válido"
+    items_cannot_be_shipped: "Estos artículos no pueden ser enviados"
+    gateway_config_unavailable: "Configuración de puerta de enlace no disponible"
+    gateway_error: "Pago fallido"
     more: "Más"
+    new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
+    new_tax_category: "Nueva categoría de impuestos"
+    new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
     none: "Ninguno"
+    not_found: "no encontrado"
+    notice_messages:
+      variant_deleted: "Variante eliminada"
+    or: "O"
+    order_processed_successfully: "Pedido procesado con éxito"
+    payment_method_not_supported: "Método de pago no admitido"
+    resend_authorization_email: "Reenviar email de autorización"
+    server_error: "Error del Servidor"
+    tree: "Árbol"
     updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
     resend: "Reenviar"
     back_to_orders_list: "Volver a la lista de pedidos"
+    back_to_payments_list: "Regresar a la lista de pagos"
     return_authorizations: "Autorizaciones de devolución"
     cannot_create_returns: "No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas."
     select_stock: "Seleccionar stock"
@@ -2947,6 +2988,7 @@ es_US:
     tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
     customer_details: "Detalles de la consumidora"
+    customer_details_updated: "Detalles del consumir actualizados"
     customer_search: "Búsqueda de consumidores"
     choose_a_customer: "Elige una consumidora "
     account: "Cuenta"
@@ -3098,6 +3140,7 @@ es_US:
     payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
     not_available: "No disponible"
     sku: "SKU"
+    there_are_no_items_for_this_order: "No hay artículos para este pedido."
     order_populator:
       out_of_stock: '%{item} está agotado.'
     actions:
@@ -3125,7 +3168,15 @@ es_US:
         login_nav:
           header:
             store: Tienda
+    validation:
+      must_be_int: "debe ser un entero"
     admin:
+      mail_methods:
+        send_testmail: "Enviar email de prueba"
+        testmail:
+          delivery_success: "email de prueba enviado"
+          error: "Ha ocurrido un error para el envío del email de prueba."
+      unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir a sus clientes comparar fácilmente los precios entre diferentes productos y tamaños de empaque. Tenga en cuenta que el precio unitario final que se muestra en la tienda puede diferir, ya que incluye impuestos y comisiones."
       subscriptions:
         number: "Número"
       tab:
@@ -3196,6 +3247,8 @@ es_US:
           received: "recibido"
           canceled: "cancelado"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "No se puede agregar un artículo a un pedido cancelado"
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
@@ -3238,6 +3291,9 @@ es_US:
       overview:
         enterprises_header:
           ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
+        enterprise_row:
+          has_no_payment_methods: "no tiene métodos de pago"
+          has_no_shipping_methods: "No tiene métodos de envío"
         products:
           active_products:
             zero: "No tienes ningún producto activo"
@@ -3358,6 +3414,7 @@ es_US:
           unit_name: "Nombre de la unidad"
           price: "Precio"
           unit_price: "Precio por unidad"
+          unit_price_legend: "Calculado a partir del precio del artículo"
           on_hand: "Disponibles"
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
@@ -3463,6 +3520,7 @@ es_US:
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
           privacy_policy_url: "Vínculo con la Política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
+          shoppers_require_tos: "Los compradores tienen que aceptar los Términos y Condiciones de Servicio"
           cookies_policy_matomo_section: "Mostrar la sección de Matomo en la página de política de cookies"
           footer_tos_url: "URL de términos y servicios"
     checkout:
@@ -3500,6 +3558,7 @@ es_US:
       pending: pendiente
       ready: Listo
       shipped: enviado
+      canceled: cancelado
     payment_states:
       balance_due: saldo debido
       completed: completado
@@ -3621,6 +3680,8 @@ es_US:
         past_orders: Pedidos anteriores
       transactions:
         transaction_history: Historial de transacciones
+        authorisation_required: Autorización requerida
+        authorise: Autorizar
       open_orders:
         order: Pedido
         shop: Tienda
@@ -3672,3 +3733,6 @@ es_US:
         spree/payment:
           one: Pago
           other: Pagos
+  datetime:
+    distance_in_words:
+      half_a_minute: medio minuto
