@@ -113,10 +113,7 @@ gem 'foundation-rails', '= 5.5.2.1'
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
-gem 'select2-rails', '~> 3.4.7'
-# Thor v0.20 works with both select2-rails 3.4.7 and railties 6.0.3.6
-#   To upgrade to thor v1 we need to upgrade select2-rails to v3.5 which requires some work
-gem 'thor', '~> 0.20'
+gem "select2-rails", github: "openfoodfoundation/select2-rails", branch: "v349_with_thor_v1"
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
