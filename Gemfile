@@ -152,6 +152,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'byebug'
   gem 'codecov', require: false
   gem 'simplecov', require: false
   gem 'test-prof'
@@ -163,7 +164,6 @@ group :test do
 end
 
 group :development do
-  gem 'byebug'
   gem 'debugger-linecache'
   gem 'pry'
   gem 'pry-byebug'
