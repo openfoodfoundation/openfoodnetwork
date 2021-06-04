@@ -12,7 +12,7 @@ module Spree
       helper 'enterprise_fees'
       helper 'angular_form'
 
-      layout '/spree/layouts/admin'
+      layout 'spree/layouts/admin'
 
       include I18nHelper
 
