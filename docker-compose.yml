@@ -12,6 +12,8 @@ services:
       - 5432:5432
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+  redis:
+    image: redis
   web:
     tty: true
     stdin_open: true
@@ -25,8 +27,11 @@ services:
       - ./config/application.yml.example:/usr/src/app/config/application.yml
     depends_on:
       - db
+      - redis
     environment:
       OFN_DB_HOST: db
+      OFN_REDIS_URL: redis://redis/
+      OFN_REDIS_JOBS_URL: redis://redis
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                rm -f tmp/pids/server.pid &&
@@ -44,8 +49,11 @@ services:
       - ./config/application.yml.example:/usr/src/app/config/application.yml
     depends_on:
       - db
+      - redis
     environment:
       OFN_DB_HOST: db
+      OFN_REDIS_URL: redis://redis
+      OFN_REDIS_JOBS_URL: redis://redis
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                (bundle check || bundle install)
