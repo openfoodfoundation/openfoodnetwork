@@ -29,9 +29,8 @@ module Spree
           def self.ssl_supported?
             return Spree::Config[:allow_ssl_in_production] if Rails.env.production?
             return Spree::Config[:allow_ssl_in_staging] if Rails.env.staging?
-            return unless Rails.env.development? || Rails.env.test?
 
-            Spree::Config[:allow_ssl_in_development_and_test]
+            false
           end
 
           private
