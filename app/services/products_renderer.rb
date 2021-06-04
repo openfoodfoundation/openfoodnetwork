@@ -31,7 +31,9 @@ class ProductsRenderer
     return unless order_cycle
 
     @products ||= begin
-      results = distributed_products.products_relation.order(taxon_order)
+      results = distributed_products.
+        products_relation.
+        order(Arel.sql(taxon_order))
 
       filter_and_paginate(results).
         each { |product| product_scoper.scope(product) } # Scope results with variant_overrides

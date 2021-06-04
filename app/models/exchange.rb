@@ -56,7 +56,7 @@ class Exchange < ApplicationRecord
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').
       joins('INNER JOIN enterprises AS receiver ON (receiver.id = exchanges.receiver_id)').
-      order("CASE WHEN exchanges.incoming='t' THEN sender.name ELSE receiver.name END")
+      order(Arel.sql("CASE WHEN exchanges.incoming='t' THEN sender.name ELSE receiver.name END"))
   }
 
   # Exchanges on order cycles that are dated and are upcoming or open are cached
