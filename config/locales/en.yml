@@ -2796,6 +2796,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          authorization_required: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
