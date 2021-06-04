@@ -172,6 +172,8 @@ module OrderManagement
           'failed'
         elsif canceled_and_not_paid_for?
           'void'
+        elsif requires_authorization?
+          'requires_authorization'
         else
           infer_payment_state_from_balance
         end
@@ -219,6 +221,10 @@ module OrderManagement
         return unless order.completed? && order.adjustments.legacy_tax.any?
 
         order.create_tax_charge!
+      end
+
+      def requires_authorization?
+        payments.requires_authorization.any? && payments.completed.empty?
       end
     end
   end
