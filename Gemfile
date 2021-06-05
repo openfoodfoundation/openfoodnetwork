@@ -83,6 +83,7 @@ gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
+gem 'puma'
 gem 'hiredis'
 gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
@@ -128,7 +129,7 @@ gem "view_component", require: "view_component/engine"
 
 group :production, :staging do
   gem 'ddtrace'
-  gem 'unicorn-worker-killer'
+  gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
 
 group :test, :development do
@@ -148,7 +149,6 @@ group :test, :development do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
-  gem 'unicorn-rails'
   gem 'webdrivers'
   gem 'cuprite'
 end
