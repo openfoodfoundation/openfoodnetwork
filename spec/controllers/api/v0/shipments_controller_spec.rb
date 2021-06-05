@@ -174,6 +174,42 @@ describe Api::V0::ShipmentsController, type: :controller do
           }.to_not change { existing_variant.reload.on_hand }
         end
       end
+
+      context "with shipping fees" do
+        let!(:distributor) { create(:distributor_enterprise) }
+        let(:fee_amount) { 10 }
+        let!(:shipping_method_with_fee) {
+          create(:shipping_method_with, :shipping_fee, distributors: [distributor],
+                                                       shipping_fee: fee_amount)
+        }
+        let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
+        let!(:order) {
+          create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor)
+        }
+        let(:shipping_fee) { order.reload.shipment.adjustments.first }
+
+        before do
+          order.shipments.first.shipping_methods = [shipping_method_with_fee]
+          order.select_shipping_method(shipping_method_with_fee.id)
+          order.update_order!
+        end
+
+        context "adding item to a shipment" do
+          it "updates the shipping fee" do
+            expect {
+              api_put :add, params.merge(variant_id: new_variant.to_param)
+            }.to change { order.reload.shipment.adjustments.first.amount }.by(20)
+          end
+        end
+
+        context "removing item from a shipment" do
+          it "updates the shipping fee" do
+            expect {
+              api_put :remove, params.merge(variant_id: existing_variant.to_param)
+            }.to change { order.reload.shipment.adjustments.first.amount }.by(-20)
+          end
+        end
+      end
     end
 
     describe "#update" do

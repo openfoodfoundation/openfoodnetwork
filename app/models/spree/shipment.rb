@@ -160,10 +160,6 @@ module Spree
       Spree::Money.new(item_cost, currency: currency)
     end
 
-    def editable_by?(_user)
-      !shipped?
-    end
-
     def update_amounts
       return unless fee_adjustment&.amount != cost
 
@@ -185,14 +181,6 @@ module Spree
 
     def scoper
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
-    end
-
-    def line_items
-      if order.complete?
-        order.line_items.select { |li| inventory_units.pluck(:variant_id).include?(li.variant_id) }
-      else
-        order.line_items
-      end
     end
 
     def finalize!
@@ -294,6 +282,15 @@ module Spree
     end
 
     private
+
+    def line_items
+      if order.complete?
+        inventory_unit_ids = inventory_units.pluck(:variant_id)
+        order.line_items.select { |li| inventory_unit_ids.include?(li.variant_id) }
+      else
+        order.line_items
+      end
+    end
 
     def manifest_unstock(item)
       stock_location.unstock item.variant, item.quantity, self

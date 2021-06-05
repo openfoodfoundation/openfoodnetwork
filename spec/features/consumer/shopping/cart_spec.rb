@@ -164,7 +164,7 @@ feature "full-page cart", js: true do
       let(:variant2) { product_with_fee.variants.first }
 
       before do
-        add_product_to_cart order, product_with_tax
+        order.contents.add(product_with_tax.variants.first)
       end
 
       describe "when on_hand is zero but variant is on demand" do
@@ -179,7 +179,7 @@ feature "full-page cart", js: true do
 
       describe "with insufficient stock available" do
         it "prevents user from entering invalid values" do
-          add_product_to_cart order, product_with_fee
+          order.contents.add(product_with_fee.variants.first)
 
           variant.update!(on_hand: 2, on_demand: false)
           variant2.update!(on_hand: 3, on_demand: false)

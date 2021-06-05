@@ -11,7 +11,6 @@ module Spree
       it 'should update inventory, totals, and tax' do
         # Regression check for Spree #1481
         expect(line_item.order).to receive(:create_tax_charge!)
-        expect(line_item.order).to receive(:update_order!)
         line_item.quantity = 2
         line_item.save
       end

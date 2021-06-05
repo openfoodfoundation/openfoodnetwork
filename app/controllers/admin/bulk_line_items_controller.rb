@@ -32,10 +32,7 @@ module Admin
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
-        if @line_item.update(line_item_params)
-          order.update_line_item_fees! @line_item
-          order.update_order_fees!
-          order.update_order!
+        if order.contents.update_item(@line_item, line_item_params)
           render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed
@@ -49,7 +46,7 @@ module Admin
       load_line_item
       authorize! :update, order
 
-      @line_item.destroy
+      order.contents.remove(@line_item.variant)
       render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
     end
 
@@ -63,16 +60,9 @@ module Admin
       Spree::LineItem
     end
 
-    # Returns the appropriate serializer for this controller
-    #
-    # @return [Api::Admin::LineItemSerializer]
-    def serializer(_ams_prefix)
-      Api::Admin::LineItemSerializer
-    end
-
     def serialized_line_items
       ActiveModel::ArraySerializer.new(
-        @line_items, each_serializer: serializer(nil)
+        @line_items, each_serializer: Api::Admin::LineItemSerializer
       )
     end
 

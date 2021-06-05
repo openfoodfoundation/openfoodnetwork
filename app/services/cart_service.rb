@@ -3,23 +3,22 @@ require 'open_food_network/scope_variant_to_hub'
 # Previously Spree::OrderPopulator. Modified to work with max_quantity and variant overrides.
 
 class CartService
-  attr_accessor :order, :currency
-  attr_reader :variants_h
+  attr_accessor :order
   attr_reader :errors
 
   def initialize(order)
     @order = order
-    @currency = order.currency
     @errors = ActiveModel::Errors.new(self)
   end
 
-  def populate(from_hash, overwrite = false)
+  def populate(from_hash)
     @distributor, @order_cycle = distributor_and_order_cycle
 
+    variants_data = read_variants_hash(from_hash)
+
     @order.with_lock do
-      variants_data = read_variants from_hash
       attempt_cart_add_variants variants_data
-      overwrite_variants variants_data if overwrite
+      overwrite_variants variants_data
     end
     valid?
   end
@@ -34,10 +33,10 @@ class CartService
     loaded_variants = indexed_variants(variants_data)
 
     variants_data.each do |variant_data|
-      loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+      loaded_variant = loaded_variants[variant_data[:variant_id]]
 
-      if loaded_variant.deleted?
-        remove_deleted_variant(loaded_variant)
+      if loaded_variant.deleted? || !variant_data[:quantity].positive?
+        cart_remove(loaded_variant)
         next
       end
 
@@ -57,15 +56,7 @@ class CartService
     end
   end
 
-  def remove_deleted_variant(variant)
-    line_item_for_variant(variant).andand.destroy
-  end
-
   def attempt_cart_add(variant, quantity, max_quantity = nil)
-    quantity = quantity.to_i
-    max_quantity = max_quantity.to_i if max_quantity
-    return unless quantity > 0
-
     scoper.scope(variant)
     return unless valid_variant?(variant)
 
@@ -73,27 +64,37 @@ class CartService
   end
 
   def cart_add(variant, quantity, max_quantity)
-    quantity_to_add, max_quantity_to_add = quantities_to_add(variant, quantity, max_quantity)
-    if quantity_to_add > 0
-      @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
+    attributes = final_quantities(variant, quantity, max_quantity)
+
+    if attributes[:quantity].positive?
+      @order.contents.update_or_create(variant, attributes)
     else
-      @order.remove_variant variant
+      cart_remove(variant)
     end
   end
 
-  def quantities_to_add(variant, quantity, max_quantity)
+  def cart_remove(variant)
+    begin
+      order.contents.remove(variant)
+    rescue ActiveRecord::RecordNotFound
+      # Nothing to remove; no line items for this variant were found.
+    end
+  end
+
+  def final_quantities(variant, quantity, max_quantity)
     # If not enough stock is available, add as much as we can to the cart
     on_hand = variant.on_hand
     on_hand = [quantity, max_quantity].compact.max if variant.on_demand
-    quantity_to_add = [quantity, on_hand].min
-    max_quantity_to_add = max_quantity # max_quantity is not capped
+    final_quantity = [quantity, on_hand].min
+    final_max_quantity = max_quantity # max_quantity is not capped
 
-    [quantity_to_add, max_quantity_to_add]
+    { quantity: final_quantity, max_quantity: final_max_quantity }
   end
 
   def overwrite_variants(variants)
-    variants_removed(variants).each do |id|
-      cart_remove(id)
+    variants_removed(variants).each do |variant_id|
+      variant = Spree::Variant.with_deleted.find(variant_id)
+      cart_remove(variant)
     end
   end
 
@@ -101,25 +102,23 @@ class CartService
     @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
   end
 
-  def read_variants(data)
-    @variants_h = read_variants_hash(data)
-  end
-
   def read_variants_hash(data)
     variants_array = []
     (data[:variants] || []).each do |variant_id, quantity|
       if quantity.is_a?(ActionController::Parameters)
-        variants_array.push({ variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity] })
+        variants_array.push({
+          variant_id: variant_id.to_i,
+          quantity: quantity[:quantity].to_i,
+          max_quantity: quantity[:max_quantity].to_i
+        })
       else
-        variants_array.push({ variant_id: variant_id, quantity: quantity })
+        variants_array.push({
+          variant_id: variant_id.to_i,
+          quantity: quantity.to_i
+        })
       end
     end
     variants_array
-  end
-
-  def cart_remove(variant_id)
-    variant = Spree::Variant.find(variant_id)
-    @order.remove_variant(variant)
   end
 
   def distributor_and_order_cycle
@@ -131,7 +130,7 @@ class CartService
     li = line_item_for_variant loaded_variant
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
-    li_quantity_changed = li.present? && li.quantity.to_i != variant_data[:quantity].to_i
+    li_quantity_changed = li.present? && li.quantity != variant_data[:quantity].to_i
     li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
 
     li_added || li_quantity_changed || li_max_quantity_changed

@@ -35,7 +35,7 @@ module Spree
     alias_attribute :shipping_address, :ship_address
 
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at ASC') }, dependent: :destroy
+    has_many :line_items, -> { order('created_at ASC') }, class_name: "Spree::LineItem", dependent: :destroy
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
@@ -243,61 +243,9 @@ module Spree
       return_authorizations.any?(&:authorized?)
     end
 
-    # This is currently used when adding a variant to an order in the BackOffice.
-    # Spree::OrderContents#add is equivalent but slightly different from add_variant below.
+    # OrderContents should always be used when modifying an order's line items
     def contents
       @contents ||= Spree::OrderContents.new(self)
-    end
-
-    # This is currently used when adding a variant to an order in the FrontOffice.
-    # This add_variant is equivalent but slightly different from Spree::OrderContents#add above.
-    # Spree::OrderContents#add is the more modern version in Spree history
-    #   but this add_variant has been customized for OFN FrontOffice.
-    def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
-      line_items.reload
-      current_item = find_line_item_by_variant(variant)
-
-      # Notify bugsnag if we get line items with a quantity of zero
-      if quantity == 0
-        Bugsnag.notify(RuntimeError.new("Zero Quantity Line Item"),
-                       current_item: current_item.as_json,
-                       line_items: line_items.map(&:id),
-                       variant: variant.as_json)
-      end
-
-      if current_item
-        current_item.quantity = quantity
-        current_item.max_quantity = max_quantity
-
-        current_item.currency = currency unless currency.nil?
-        current_item.save
-      else
-        current_item = Spree::LineItem.new(quantity: quantity, max_quantity: max_quantity)
-        current_item.variant = variant
-        if currency
-          current_item.currency = currency unless currency.nil?
-          current_item.price    = variant.price_in(currency).amount
-        else
-          current_item.price    = variant.price
-        end
-        line_items << current_item
-      end
-
-      reload
-      current_item
-    end
-
-    def set_variant_attributes(variant, attributes)
-      line_item = find_line_item_by_variant(variant)
-
-      return unless line_item
-
-      if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
-        attributes[:max_quantity] = line_item.quantity
-      end
-
-      line_item.assign_attributes(attributes)
-      line_item.save!
     end
 
     # Associates the specified user with the order.
@@ -517,6 +465,16 @@ module Spree
       shipments
     end
 
+    # Clear shipments and move order back to address state unless compete. This is relevant where
+    # an order is part-way through checkout and the user changes items in the cart; in that case
+    # we need to reset the checkout flow to ensure the order is processed correctly.
+    def ensure_updated_shipments
+      if !self.completed? && shipments.any?
+        shipments.destroy_all
+        restart_checkout_flow
+      end
+    end
+
     def refresh_shipment_rates
       shipments.map(&:refresh_rates)
     end
@@ -578,12 +536,6 @@ module Spree
       self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
       empty!
       save!
-    end
-
-    def remove_variant(variant)
-      line_items.reload
-      current_item = find_line_item_by_variant(variant)
-      current_item.andand.destroy
     end
 
     def cap_quantity_at_stock!
@@ -749,7 +701,7 @@ module Spree
       return if adjustment.finalized?
 
       adjustment.update_adjustment!(force: true)
-      update_order!
+      updater.update_totals_and_states
     end
 
     # object_params sets the payment amount to the order total, but it does this

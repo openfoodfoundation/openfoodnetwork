@@ -15,6 +15,7 @@ class OrderSyncer
                               distributor_id: shop_id)
       update_associations_for(order)
       line_item_syncer.sync!(order)
+      order.update_order!
       order.save
     end
   end

@@ -70,6 +70,7 @@ module Admin
               let!(:line_item) { create(:line_item, order: order, price: 10.0) }
 
               it 'includes the customer balance in the response' do
+                order.update_order!
                 get :index, params: params
                 expect(json_response.first["balance"]).to eq("$-10.00")
               end
@@ -77,13 +78,16 @@ module Admin
 
             context 'when the customer has canceled orders' do
               let(:order) { create(:order, customer: customer) }
-              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
-              let!(:payment) { create(:payment, order: order, amount: order.total) }
+              let!(:variant) { create(:variant, price: 10.0) }
 
               before do
                 allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
-                order.process_payments!
 
+                order.contents.add(variant)
+                order.payments << create(:payment, order: order, amount: order.total)
+                order.reload
+
+                order.process_payments!
                 order.update_attribute(:state, 'canceled')
               end
 
@@ -104,8 +108,7 @@ module Admin
             end
 
             context 'when the customer has an order with a void payment' do
-              let(:order) { create(:order, customer: customer, state: 'complete') }
-              let!(:line_item) { create(:line_item, order: order, price: 10.0) }
+              let(:order) { create(:order_with_totals, customer: customer, state: 'complete') }
               let!(:payment) { create(:payment, order: order, amount: order.total) }
 
               before do

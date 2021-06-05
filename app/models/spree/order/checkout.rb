@@ -130,6 +130,13 @@ module Spree
             steps << "complete" unless steps.include?("complete")
             steps
           end
+
+          def restart_checkout_flow
+            update_columns(
+              state: checkout_steps.first,
+              updated_at: Time.zone.now,
+            )
+          end
         end
       end
     end

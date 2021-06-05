@@ -443,7 +443,10 @@ describe OrderSyncer do
       before { variant.update_attribute(:on_hand, 3) }
 
       context "when the changed line_item quantity matches the new quantity on the subscription line item" do
-        before { changed_line_item.update(quantity: 3) }
+        before do
+          changed_line_item.update(quantity: 3)
+          order.update_order!
+        end
 
         it "does not change the quantity, and doesn't add the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 99.95
@@ -456,7 +459,10 @@ describe OrderSyncer do
       end
 
       context "when the changed line_item quantity doesn't match the new quantity on the subscription line item" do
-        before { changed_line_item.update(quantity: 2) }
+        before do
+          changed_line_item.update(quantity: 2)
+          order.update_order!
+        end
 
         it "does not change the quantity, and adds the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 79.96

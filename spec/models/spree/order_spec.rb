@@ -455,26 +455,6 @@ describe Spree::Order do
     end
   end
 
-  describe "setting variant attributes" do
-    it "sets attributes on line items for variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product)
-
-      subject.distributor = d
-      subject.save!
-
-      subject.add_variant(p.master, 1, 3)
-
-      li = Spree::LineItem.last
-      expect(li.max_quantity).to eq(3)
-    end
-
-    it "does nothing when the line item is not found" do
-      p = build_stubbed(:simple_product)
-      subject.set_variant_attributes(p.master, { 'max_quantity' => '3' }.with_indifferent_access)
-    end
-  end
-
   describe "applying enterprise fees" do
     subject { create(:order) }
     let(:fee_handler) { ::OrderFeesHandler.new(subject) }
@@ -724,59 +704,6 @@ describe Spree::Order do
       subject.set_distributor! nil
 
       expect(subject.distributor).to be_nil
-    end
-  end
-
-  describe "removing an item from the order" do
-    let(:order) { create(:order) }
-    let(:v1)    { create(:variant) }
-    let(:v2)    { create(:variant) }
-    let(:v3)    { create(:variant) }
-
-    before do
-      order.add_variant v1
-      order.add_variant v2
-
-      order.recreate_all_fees!
-    end
-
-    it "removes the variant's line item" do
-      order.remove_variant v1
-      expect(order.line_items.reload.map(&:variant)).to eq([v2])
-    end
-
-    it "does nothing when there is no matching line item" do
-      expect do
-        order.remove_variant v3
-      end.to change(order.line_items.reload, :count).by(0)
-    end
-
-    context "when the item has an associated adjustment" do
-      let(:distributor) { create(:distributor_enterprise) }
-
-      let(:order_cycle) do
-        create(:order_cycle).tap do
-          create(:exchange, variants: [v1], incoming: true)
-          create(:exchange, variants: [v1], incoming: false, receiver: distributor)
-        end
-      end
-
-      let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
-
-      it "removes the variant's line item" do
-        order.remove_variant v1
-        expect(order.line_items.reload.map(&:variant)).to eq([v2])
-      end
-
-      it "removes the variant's adjustment" do
-        line_item = order.line_items.where(variant_id: v1.id).first
-        adjustment_scope = Spree::Adjustment.where(adjustable_type: "Spree::LineItem",
-                                                   adjustable_id: line_item.id)
-        expect(adjustment_scope.count).to eq(1)
-        adjustment = adjustment_scope.first
-        order.remove_variant v1
-        expect { adjustment.reload }.to raise_error
-      end
     end
   end
 
@@ -1199,8 +1126,11 @@ describe Spree::Order do
     context "when no order has been finalised in this order cycle" do
       let(:product) { create(:product) }
 
+      before do
+        order.contents.update_or_create(product.variants.first, { quantity: 1, max_quantity: 3 })
+      end
+
       it "returns no items even though the cart contains items" do
-        order.add_variant(product.master, 1, 3)
         expect(order.finalised_line_items).to eq []
       end
     end
@@ -1210,9 +1140,12 @@ describe Spree::Order do
       let!(:prev_order2) { create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle, user: order.user) }
       let(:product) { create(:product) }
 
-      it "returns previous items" do
-        prev_order.add_variant(product.master, 1, 3)
+      before do
+        prev_order.contents.update_or_create(product.variants.first, { quantity: 1, max_quantity: 3 })
         prev_order2.reload # to get the right response from line_items
+      end
+
+      it "returns previous items" do
         expect(order.finalised_line_items.length).to eq 11
         expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
       end
@@ -1377,6 +1310,38 @@ describe Spree::Order do
           expect(failed_payment.reload.amount).to eq 100
           expect(pending_payment.reload.amount).to eq 120
         end
+      end
+    end
+  end
+
+  describe "#ensure_updated_shipments" do
+    before { Spree::Shipment.create!(order: order) }
+
+    context "when the order is not completed" do
+      it "destroys current shipments" do
+        order.ensure_updated_shipments
+        expect(order.shipments).to be_empty
+      end
+
+      it "puts order back in address state" do
+        order.ensure_updated_shipments
+        expect(order.state).to eq "address"
+      end
+    end
+
+    context "when the order is completed" do
+      before do
+        allow(order).to receive(:completed?) { true }
+      end
+
+      it "does not change the shipments" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipments }
+
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.state }
       end
     end
   end
