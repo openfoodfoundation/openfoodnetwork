@@ -21,7 +21,7 @@ namespace :ofn do
       end
 
       desc "Run Rspec tests excluding folders"
-      task :excluding_folders, [:folders] do |_task, args|
+      task :excluding_folders, [:folders] => :environment do |_task, args|
         success = execute_rspec_for_spec_folders(
           spec_folders - (args[:folders].split(",") + args.extras)
         )
@@ -49,7 +49,7 @@ namespace :ofn do
 
         namespace engine_name do
           desc "Run RSpec tests for engine \"#{engine_name}\""
-          task :rspec do
+          task rspec: :environment do
             success = execute_rspec_for_engine(engine_path)
             abort "Failure when running tests for engine \"#{engine_name}\"" unless success
           end
@@ -58,7 +58,7 @@ namespace :ofn do
 
       namespace :all do
         desc "Run RSpec tests for all engines"
-        task :rspec do
+        task rspec: :environment do
           success = true
 
           engine_paths.each do |engine_path|
