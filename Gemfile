@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 ruby "2.7.3"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
+gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
+
 gem 'rails', '~> 6.1.4'
 
 gem 'activemerchant', '>= 1.78.0'
@@ -70,7 +72,6 @@ gem 'bigdecimal', '3.0.2'
 gem 'bootsnap', require: false
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
-gem 'figaro'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
