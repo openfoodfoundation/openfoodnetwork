@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 # Responsible for keeping line items on initialised orders for a subscription in sync with
 # the subscription line items on that subscription.
