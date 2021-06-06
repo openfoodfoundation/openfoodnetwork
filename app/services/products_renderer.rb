@@ -32,7 +32,7 @@ class ProductsRenderer
     @products ||= begin
       results = distributed_products.
         products_relation.
-        order(Arel.sql(taxon_order))
+        order(Arel.sql(products_order))
 
       filter_and_paginate(results).
         each { |product| product_scoper.scope(product) } # Scope results with variant_overrides
@@ -59,7 +59,7 @@ class ProductsRenderer
     OrderCycleDistributedProducts.new(distributor, order_cycle, customer)
   end
 
-  def taxon_order
+  def products_order
     if distributor.preferred_shopfront_product_sorting_method == "by_producer" && distributor.preferred_shopfront_producer_order.present?
       distributor
         .preferred_shopfront_producer_order

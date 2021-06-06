@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").directive "ofnProducerAutocomplete", (Enterprises, $sanitize) ->
+angular.module("admin.enterprises").directive "ofnProducerAutocomplete", (Enterprises, AutocompleteSelect2) ->
   scope: true
   link: (scope,element,attrs) ->
     multiple = scope.$eval attrs.multipleSelection
@@ -7,24 +7,11 @@ angular.module("admin.enterprises").directive "ofnProducerAutocomplete", (Enterp
     suppliers = scope.suppliers
 
     setTimeout ->
-      element.select2
-        placeholder: placeholder
-        multiple: multiple
-        initSelection: (element, callback) ->
-          if multiple
-            callback Enterprises.findByIDs(initialSelection)
-          else
-            callback Enterprises.findByID(initialSelection)
-        query: (query) ->
-          query.callback { results: Enterprises.findByTerm(suppliers, query.term) }
-        formatResult: (producer) ->
-          $sanitize(producer.name)
-        formatSelection: (producer) ->
-          producer.name
-
-      #Allows drag and drop
-      if multiple
-        element.select2("container").find("ul.select2-choices").sortable
-          containment: 'parent'
-          start: -> element.select2("onSortStart")
-          update: -> element.select2("onSortEnd")
+      AutocompleteSelect2.autocomplete(
+        multiple,
+        placeholder,
+        element,
+        (-> Enterprises.findByID(initialSelection)),
+        (-> Enterprises.findByIDs(initialSelection)),
+        ((term) -> Enterprises.findByTerm(suppliers, term))
+      )

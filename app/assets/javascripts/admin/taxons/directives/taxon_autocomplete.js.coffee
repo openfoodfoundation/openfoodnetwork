@@ -1,4 +1,4 @@
-angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, $sanitize) ->
+angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, AutocompleteSelect2) ->
   # Adapted from Spree's existing taxon autocompletion
   scope: true
   link: (scope,element,attrs) ->
@@ -7,24 +7,11 @@ angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, $sanit
     initialSelection = scope.$eval attrs.ngModel
 
     setTimeout ->
-      element.select2
-        placeholder: placeholder
-        multiple: multiple
-        initSelection: (element, callback) ->
-          if multiple
-            callback Taxons.findByIDs(initialSelection)
-          else
-            callback Taxons.findByID(initialSelection)
-        query: (query) ->
-          query.callback { results: Taxons.findByTerm(query.term) }
-        formatResult: (taxon) ->
-          $sanitize(taxon.name)
-        formatSelection: (taxon) ->
-          taxon.name
-
-      #Allows drag and drop
-      if multiple
-        element.select2("container").find("ul.select2-choices").sortable
-          containment: 'parent'
-          start: -> element.select2("onSortStart")
-          update: -> element.select2("onSortEnd")
+      AutocompleteSelect2.autocomplete(
+        multiple,
+        placeholder,
+        element,
+        (-> Taxons.findByID(initialSelection)),
+        (-> Taxons.findByIDs(initialSelection)),
+        ((term) -> Taxons.findByTerm(term))
+      )

@@ -1,11 +1,13 @@
+$disabled-background: #c3c3c3;
+
 label.disabled {
-  color: #c3c3c3;
+  color: $disabled-background;
   pointer-events: none;
 }
 
 input[type='button'], input[type='submit'] {
   &:disabled {
-    background-color: #c3c3c3;
+    background-color: $disabled-background;
     color: #ffffff;
   }
 }
@@ -18,6 +20,6 @@ input[type='button'], input[type='submit'] {
   }
 
   .select2-search-choice {
-    background-color: #c3c3c3 !important;
+    background-color: $disabled-background !important;
   }
 }
