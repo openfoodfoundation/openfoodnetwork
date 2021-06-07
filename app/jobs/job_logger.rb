@@ -10,7 +10,7 @@ module JobLogger
 
   def self.logger
     @logger ||= begin
-                  logger = Delayed::Worker.logger.clone
+                  logger = Rails.logger.clone
                   logger.formatter = Formatter.new
                   logger
                 end

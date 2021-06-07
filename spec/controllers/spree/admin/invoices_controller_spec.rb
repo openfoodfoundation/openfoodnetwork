@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-xdescribe Spree::Admin::InvoicesController, type: :controller do
+describe Spree::Admin::InvoicesController, type: :controller do
   let(:order) { create(:order_with_totals_and_distribution) }
   let(:enterprise_user) { create(:user) }
   let!(:enterprise) { create(:enterprise, owner: enterprise_user) }
@@ -15,9 +15,7 @@ xdescribe Spree::Admin::InvoicesController, type: :controller do
     it "enqueues a job to create a bulk invoice and returns the filename" do
       expect do
         spree_post :create, order_ids: [order.id]
-      end.to enqueue_job Delayed::PerformableMethod
-
-      expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
+      end.to enqueue_job BulkInvoiceJob
     end
   end
 

@@ -334,7 +334,6 @@ Layout/LineLength:
   - spec/services/variant_units/option_value_namer_spec.rb
   - spec/spec_helper.rb
   - spec/support/cancan_helper.rb
-  - spec/support/delayed_job_helper.rb
   - spec/support/matchers/delegate_matchers.rb
   - spec/support/matchers/select2_matchers.rb
   - spec/support/matchers/table_matchers.rb
@@ -549,7 +548,6 @@ Metrics/BlockLength:
   - spec/models/tag_rule/discount_order_spec.rb
   - spec/requests/api/orders_spec.rb
   - spec/spec_helper.rb
-  - spec/support/delayed_job_helper.rb
   - spec/support/matchers/select2_matchers.rb
   - spec/support/matchers/table_matchers.rb
   - spec/swagger_helper.rb
