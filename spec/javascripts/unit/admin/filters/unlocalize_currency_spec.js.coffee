@@ -22,7 +22,16 @@ describe 'convert string to number with configurated currency', ->
       expect(filter("1.000")).toEqual 1.0
 
     it "also handle comma as decimal separator", ->
+      expect(filter("1,0")).toEqual 1.0
+
+    it "also handle comma as decimal separator", ->
       expect(filter("1,00")).toEqual 1.0
+
+    it "also handle comma as decimal separator", ->
+      expect(filter("11,00")).toEqual 11.0
+
+    it "handle comma as decimal separator but not confusing with thousands separator", ->
+      expect(filter("11,000")).toEqual 11000
 
     it "handle point as decimal separator and comma as thousands separator", ->
       expect(filter("1,000,000.00")).toEqual 1000000
@@ -47,9 +56,21 @@ describe 'convert string to number with configurated currency', ->
     
     it "handle comma as decimal separator", ->
       expect(filter("1,00")).toEqual 1.0
+
+    it "handle comma as decimal separator with one digit after the comma", ->
+      expect(filter("11,0")).toEqual 11.0
+
+    it "handle comma as decimal separator with two digit after the comma", ->
+      expect(filter("11,00")).toEqual 11.0
+
+    it "handle comma as decimal separator with three digit after the comma", ->
+      expect(filter("11,000")).toEqual 11.0
     
     it "also handle point as decimal separator", ->
       expect(filter("1.00")).toEqual 1.0
+
+    it "also handle point as decimal separator with integer part with two digits", ->
+      expect(filter("11.00")).toEqual 11.0
 
     it "handle point as decimal separator and final point as thousands separator", ->
       expect(filter("1.000.000,00")).toEqual 1000000
@@ -75,8 +96,20 @@ describe 'convert string to number with configurated currency', ->
     it "handle comma as decimal separator", ->
       expect(filter("1,00")).toEqual 1.0
 
+    it "handle comma as decimal separator with one digit after the comma", ->
+      expect(filter("11,0")).toEqual 11.0
+
+    it "handle comma as decimal separator with two digit after the comma", ->
+      expect(filter("11,00")).toEqual 11.0
+
+    it "handle comma as decimal separator with three digit after the comma", ->
+      expect(filter("11,000")).toEqual 11.0
+
     it "also handle final point as decimal separator", ->
       expect(filter("1.00")).toEqual 1.0
+
+    it "also handle final point as decimal separator with integer part with two digits", ->
+      expect(filter("11.00")).toEqual 11.0
 
     it "handle point as decimal separator and space as thousands separator", ->
       expect(filter("1 000 000,00")).toEqual 1000000
