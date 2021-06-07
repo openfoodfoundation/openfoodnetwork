@@ -34,22 +34,21 @@
     .field
       = f.label :price, t('.price')
       = f.text_field :price, class: 'fullwidth', "ng-model" => "variant.price", "ng-init" => "variant.price = '#{number_to_currency(@variant.price, unit: '')}'"
-    - if feature? :unit_price, spree_current_user  
-      .field
-        = hidden_field_tag 'product_variant_unit', @product.variant_unit
-        = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name
-        = f.field_container :unit_price do
-          %div{style: "display: flex"}
-            = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
-            %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
-              "question-mark-with-tooltip-append-to-body" => "true",
-              "question-mark-with-tooltip-placement" => "top",
-              "question-mark-with-tooltip-animation" => true, 
-              key: "'js.admin.unit_price_tooltip'"}
-          %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]",
-            "class" => 'fullwidth', "disabled" => true, "ng-model" => "unit_price"}
-          %div{style: "color: black"}
-            = t("spree.admin.products.new.unit_price_legend")
+    .field
+      = hidden_field_tag 'product_variant_unit', @product.variant_unit
+      = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name
+      = f.field_container :unit_price do
+        %div{style: "display: flex"}
+          = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
+          %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+            "question-mark-with-tooltip-append-to-body" => "true",
+            "question-mark-with-tooltip-placement" => "top",
+            "question-mark-with-tooltip-animation" => true, 
+            key: "'js.admin.unit_price_tooltip'"}
+        %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]",
+          "class" => 'fullwidth', "disabled" => true, "ng-model" => "unit_price"}
+        %div{style: "color: black"}
+          = t("spree.admin.products.new.unit_price_legend")
     %div{ 'set-on-demand' => '' }
       .field.checkbox
         %label
