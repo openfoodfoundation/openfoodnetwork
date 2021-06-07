@@ -317,6 +317,8 @@ en_CA:
   height: "Height"
   width: "Width"
   depth: "Depth"
+  payment_could_not_process: "The payment could not be processed"
+  payment_could_not_complete: "The payment could not be completed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1566,6 +1568,7 @@ en_CA:
   email_order_summary_includes_tax: "(includes tax):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
+  email_payment_description: Payment Description at Checkout
   email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
@@ -3066,7 +3069,6 @@ en_CA:
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     security_settings: "Security Settings"
-    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
