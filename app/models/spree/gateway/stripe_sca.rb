@@ -5,7 +5,6 @@ require 'stripe/credit_card_cloner'
 require 'stripe/authorize_response_patcher'
 require 'stripe/payment_intent_validator'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
-require 'active_merchant/billing/gateways/stripe_decorator'
 
 module Spree
   class Gateway
