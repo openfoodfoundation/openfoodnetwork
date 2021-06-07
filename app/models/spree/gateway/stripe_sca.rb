@@ -111,6 +111,7 @@ module Spree
         options[:description] = "Spree Order ID: #{gateway_options[:order_id]}"
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
+        options[:execute_threed] = true # Handle 3DS responses
         options
       end
 
