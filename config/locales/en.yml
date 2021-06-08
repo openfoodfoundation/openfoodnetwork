@@ -3082,6 +3082,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shipment_inc_vat: "Shipment including VAT"
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
+  import_date: "Import Date"
   delivery: "Delivery"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"

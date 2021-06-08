@@ -16,7 +16,7 @@
       %br
       %select.fullwidth{ id: 'category_filter', 'ofn-select2-min-search' => 5, ng: {model: 'q.categoryFilter', options: 'taxon.id as taxon.name for taxon in taxons'} }
     .filter_select.three.columns
-      %label{ for: 'import_filter' } Import Date
+      %label{ for: 'import_filter' }= t 'import_date'
       %br
       %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'q.importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}", options: 'date.id as date.name for date in importDates'} }
 
