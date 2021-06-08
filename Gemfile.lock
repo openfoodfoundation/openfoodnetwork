@@ -133,7 +133,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    acts-as-taggable-on (7.0.0)
+    acts-as-taggable-on (8.0.0)
       activerecord (>= 5.0, < 6.2)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
@@ -211,7 +211,7 @@ GEM
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crack (0.4.5)
       rexml
@@ -672,7 +672,7 @@ DEPENDENCIES
   activerecord-import
   activerecord-postgresql-adapter
   activerecord-session_store
-  acts-as-taggable-on (~> 7.0)
+  acts-as-taggable-on (~> 8.0)
   acts_as_list (= 1.0.4)
   andand
   angular-rails-templates (>= 0.3.0)
