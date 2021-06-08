@@ -1,4 +1,4 @@
-angular.module("admin.products").controller "variantUnitsCtrl", ($scope, VariantUnitManager, $timeout, UnitPrices) ->
+angular.module("admin.products").controller "variantUnitsCtrl", ($scope, VariantUnitManager, $timeout, UnitPrices, unlocalizeCurrencyFilter) ->
 
   $scope.unitName = (scale, type) ->
     VariantUnitManager.getUnitName(scale, type)
@@ -23,7 +23,7 @@ angular.module("admin.products").controller "variantUnitsCtrl", ($scope, Variant
 
   $scope.updateValue = ->
     unit_value_human = angular.element('#unit_value_human').val()
-    $scope.unit_value = unit_value_human * $scope.scale
+    $scope.unit_value = unlocalizeCurrencyFilter(unit_value_human) * $scope.scale
 
   variant_unit_value = angular.element('#variant_unit_value').val()
   $scope.unit_value_human = variant_unit_value / $scope.scale
