@@ -129,3 +129,6 @@ describe 'convert string to number with configurated currency', ->
     
     it "undefined case ", ->
       expect(filter(undefined)).toEqual null
+
+    it "wtf case", ->
+      expect(filter("wtf")).toEqual null

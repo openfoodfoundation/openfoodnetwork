@@ -18,4 +18,9 @@ angular.module("admin.utils").filter "unlocalizeCurrency", ()->
     if (decimal_separator == ",")
       price = price.replace(",", ".")
 
-    return parseFloat(price)
+    price = parseFloat(price)
+
+    if (isNaN(price))
+      return null
+
+    return price
