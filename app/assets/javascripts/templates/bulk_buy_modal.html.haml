@@ -8,7 +8,7 @@
   .div
     {{ variant.line_item.total_price | localizeCurrency }}
 
-  .unit-price{"ng-if": "show_unit_price"}
+  .unit-price
     %question-mark-with-tooltip{"question-mark-with-tooltip": "_",
     "question-mark-with-tooltip-append-to-body": "true",
     "question-mark-with-tooltip-placement": "top",

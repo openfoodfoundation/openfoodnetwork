@@ -11,10 +11,6 @@ feature '
 
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
 
-  before do
-    allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(:unit_price, anything) { true }
-  end
-
   describe "product" do
     scenario "creating a new product" do
       login_as_admin_and_visit spree.admin_products_path

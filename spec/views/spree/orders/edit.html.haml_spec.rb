@@ -25,18 +25,9 @@ describe "spree/orders/edit.html.haml" do
   end
 
   describe "unit prices" do
-    it "displays unit prices informations if feature toggle is activated" do
-      allow(OpenFoodNetwork::FeatureToggle)
-        .to receive(:enabled?).with(:unit_price, anything) { true }
+    it "displays unit prices informations" do
       render
       expect(rendered).to have_selector(".unit-price")
-    end
-    
-    it "not displays unit prices informations if feature toggle is desactivated" do
-      allow(OpenFoodNetwork::FeatureToggle)
-        .to receive(:enabled?).with(:unit_price, anything) { false }
-      render
-      expect(rendered).not_to have_selector(".unit-price")
     end
   end
 end

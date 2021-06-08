@@ -19,8 +19,6 @@ feature "As a consumer, I want to check unit price information for a product", j
     set_order order
     exchange1.update_attribute :pickup_time, "monday"
     add_variant_to_order_cycle(exchange1, variant)
-    allow(OpenFoodNetwork::FeatureToggle)
-      .to receive(:enabled?).with(:unit_price, anything) { true }
   end
 
   describe "for the shopfront" do
