@@ -153,7 +153,7 @@ class ApplicationController < ActionController::Base
       current_order.empty!
       current_order.set_order_cycle! nil
       flash[:info] = I18n.t('order_cycle_closed')
-      redirect_to main_app.root_url
+      redirect_to main_app.shop_path
     end
   end
 
