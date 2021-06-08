@@ -5,7 +5,6 @@ require 'stripe/credit_card_cloner'
 require 'stripe/authorize_response_patcher'
 require 'stripe/payment_intent_validator'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
-require 'active_merchant/billing/gateways/stripe_decorator'
 
 module Spree
   class Gateway
@@ -112,6 +111,7 @@ module Spree
         options[:description] = "Spree Order ID: #{gateway_options[:order_id]}"
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
+        options[:execute_threed] = true # Handle 3DS responses
         options
       end
 
