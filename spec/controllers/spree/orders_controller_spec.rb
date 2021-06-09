@@ -115,7 +115,7 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
-            .with(payment_intent, kind_of(String))
+            .with(payment)
             .and_return(payment_intent_response)
 
           allow(Spree::Order).to receive(:find_by!) { order }
@@ -161,7 +161,7 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow_any_instance_of(Stripe::PaymentIntentValidator)
             .to receive(:call)
-            .with(payment_intent, kind_of(String))
+            .with(payment)
             .and_raise(Stripe::StripeError, "error message")
         end
 
