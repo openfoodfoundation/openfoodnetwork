@@ -2,6 +2,9 @@ en_FR:
   language_name: "English"
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
+        password_confirmation: "Password confirmation"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -2937,6 +2940,7 @@ en_FR:
   shipment_inc_vat: "Shipment including VAT"
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
+  import_date: "Import Date"
   delivery: "Delivery"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
@@ -3070,7 +3074,6 @@ en_FR:
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     security_settings: "Security Settings"
-    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
