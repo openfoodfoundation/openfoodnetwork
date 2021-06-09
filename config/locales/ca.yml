@@ -2,6 +2,9 @@ ca:
   language_name: "Català"
   activerecord:
     attributes:
+      spree/user:
+        password: "Contrasenya"
+        password_confirmation: "confirmació de la contrasenya"
       enterprise_fee:
         fee_type: Tipus de comissió
       spree/order:
@@ -2941,6 +2944,7 @@ ca:
   shipment_inc_vat: "Enviament incloent VAT"
   shipping_tax_rate: "Taxa d'impostos d'enviament"
   category: "Categoria"
+  import_date: "Data d'importació"
   delivery: "Lliurament "
   temperature_controlled: "Control de temperatura"
   new_product: "Nou producte"
@@ -3074,7 +3078,6 @@ ca:
     default_meta_description: "Descripció Meta predeterminada"
     default_meta_keywords: "Paraules clau meta predeterminades"
     security_settings: "Configuració de seguretat"
-    allow_ssl_in_development_and_test: "Permet que s'utilitzi SSL quan s'utilitzi el desenvolupament i els modes de prova"
     allow_ssl_in_production: "Permet que SSL s'utilitzi en mode de producció"
     allow_ssl_in_staging: "Permet que SSL s'utilitzi en mode de staging"
     currency_decimal_mark: "Separador decimal de moneda"
