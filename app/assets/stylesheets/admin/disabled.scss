@@ -19,7 +19,7 @@ input[type='button'], input[type='submit'] {
     color: #a1a1a1;
   }
 
-  .select2-search-choice {
-    background-color: $disabled-background !important;
+  &.select2-container-multi .select2-choices .select2-search-choice {
+    background-color: $disabled-background;
   }
 }
