@@ -2,6 +2,9 @@ ru:
   language_name: "Русский"
   activerecord:
     attributes:
+      spree/user:
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
       enterprise_fee:
         fee_type: Способ Оплаты
       spree/order:
@@ -2993,6 +2996,7 @@ ru:
   shipment_inc_vat: "Достаква включает налог"
   shipping_tax_rate: "Налог На Доставку"
   category: "Категория"
+  import_date: "Дата Импорта"
   delivery: "Доставка"
   temperature_controlled: "Контроль Температуры"
   new_product: "Новый Товар"
@@ -3126,7 +3130,6 @@ ru:
     default_meta_description: "Meta Description По Умолчанию"
     default_meta_keywords: "Meta Keywords По Умолчанию"
     security_settings: "Настройки Безопасности"
-    allow_ssl_in_development_and_test: "Использовать SSL в development и test режимах"
     allow_ssl_in_production: "Использовать SSL в production режиме"
     allow_ssl_in_staging: "Использовать SSL в staging режиме"
     currency_decimal_mark: "Разделитель десятых"
