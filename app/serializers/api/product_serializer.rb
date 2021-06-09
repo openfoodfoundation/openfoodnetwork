@@ -3,10 +3,9 @@ require "open_food_network/scope_variant_to_hub"
 class Api::ProductSerializer < ActiveModel::Serializer
   attributes :id, :name, :permalink, :meta_keywords
   attributes :group_buy, :notes, :description, :description_html
-  attributes :properties_with_values, :price
+  attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
-  has_one :master, serializer: Api::VariantSerializer
 
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_many :taxons, serializer: Api::IdSerializer
@@ -30,18 +29,6 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   def variants
     options[:variants][object.id] || []
-  end
-
-  def master
-    options[:master_variants][object.id].andand.first
-  end
-
-  def price
-    if options[:enterprise_fee_calculator]
-      object.master.price + options[:enterprise_fee_calculator].indexed_fees_for(object.master)
-    else
-      object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
-    end
   end
 
   private
