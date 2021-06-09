@@ -21,12 +21,16 @@ feature '
     end
 
     context "displaying the list of line items" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:o3) { create(:order_with_distributor, state: 'address', completed_at: nil ) }
+      let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o5) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
       let!(:li3) { create(:line_item, order: o3 ) }
+      let!(:li4) { create(:line_item_with_shipment, order: o4) }
+      let!(:li5) { create(:line_item_with_shipment, order: o5) }
 
       before :each do
         visit_bulk_order_management
@@ -37,15 +41,22 @@ feature '
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li3.id}"
       end
+
+      it "displays only line items that are not shipped" do
+        expect(page).to have_selector "tr#li_#{li1.id}"
+        expect(page).to have_selector "tr#li_#{li2.id}"
+        expect(page).to have_no_selector "tr#li_#{li4.id}"
+        expect(page).to have_no_selector "tr#li_#{li5.id}"
+      end
     end
 
     context "displaying individual columns" do
       let!(:o1) {
-        create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                         bill_address: create(:address) )
       }
       let!(:o2) {
-        create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                         bill_address: nil )
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
@@ -99,8 +110,8 @@ feature '
     end
 
     describe "sorting of line items" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now) }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
 
@@ -143,7 +154,7 @@ feature '
     end
 
     context "tracking changes" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1, quantity: 5 ) }
 
       before :each do
@@ -203,7 +214,7 @@ feature '
                                          variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
     }
     let!(:v1) { p1.variants.first }
-    let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+    let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
     let!(:li1) {
       create(:line_item_with_shipment, order: o1, variant: v1, quantity: 5, final_weight_volume: 1000,
                                        price: 10.00 )
@@ -282,7 +293,7 @@ feature '
         let!(:s1) { create(:supplier_enterprise) }
         let!(:s2) { create(:supplier_enterprise) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) {
@@ -326,11 +337,11 @@ feature '
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d1,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d2,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -369,11 +380,11 @@ feature '
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                           order_cycle: oc1 )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                           order_cycle: oc2 )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -416,11 +427,11 @@ feature '
         let!(:p1) { create(:product, supplier: s1) }
         let!(:p2) { create(:product, supplier: s2) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d1,
                                           order_cycle: oc1 )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d2,
                                           order_cycle: oc2 )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1, product: p1 ) }
@@ -469,9 +480,9 @@ feature '
     end
 
     context "using quick search" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o3) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
       let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
@@ -493,17 +504,17 @@ feature '
 
     context "using date restriction controls" do
       let!(:o1) {
-        create(:order_with_distributor, state: 'complete',
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                         completed_at: Time.zone.today - 7.days - 1.second)
       }
       let!(:o2) {
-        create(:order_with_distributor, state: 'complete', completed_at: Time.zone.today - 7.days)
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.today - 7.days)
       }
       let!(:o3) {
-        create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day)
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now.end_of_day)
       }
       let!(:o4) {
-        create(:order_with_distributor, state: 'complete',
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                         completed_at: Time.zone.now.end_of_day + 1.second)
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1, quantity: 1 ) }
@@ -582,8 +593,8 @@ feature '
     end
 
     context "bulk action controls" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
@@ -663,11 +674,11 @@ feature '
       context "using edit buttons" do
         let(:address) { create(:address) }
         let!(:o1) {
-          create(:order_with_distributor, ship_address: address, state: 'complete',
+          create(:order_with_distributor, ship_address: address, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now )
         }
         let!(:o2) {
-          create(:order_with_distributor, ship_address: address, state: 'complete',
+          create(:order_with_distributor, ship_address: address, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -705,10 +716,10 @@ feature '
 
       context "using delete buttons" do
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now )
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now )
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
@@ -731,8 +742,8 @@ feature '
     end
 
     context "clicking the link on variant name" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
       let!(:p3) {
@@ -740,7 +751,7 @@ feature '
                                            variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
       }
       let!(:v3) { p3.variants.first }
-      let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+      let!(:o3) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:li3) {
         create(:line_item_with_shipment, order: o3, variant: v3, quantity: 3, max_quantity: 6 )
       }
@@ -805,11 +816,11 @@ feature '
     let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:o1) {
-      create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+      create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                       distributor: d1 )
     }
     let!(:o2) {
-      create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now,
+      create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                       distributor: d2 )
     }
     let!(:line_item_distributed) {

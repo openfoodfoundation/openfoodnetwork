@@ -52,6 +52,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.loadOrders = ->
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
+      "q[shipment_state_not_eq]": "shipped",
       "q[completed_at_not_null]": "true",
       "q[distributor_id_eq]": $scope.distributorFilter,
       "q[order_cycle_id_eq]": $scope.orderCycleFilter,
@@ -62,6 +63,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.loadLineItems = ->
     RequestMonitor.load LineItems.index(
       "q[order_state_not_eq]": "canceled",
+      "q[order_shipment_state_not_eq]": "shipped",
       "q[order_completed_at_not_null]": "true",
       "q[order_distributor_id_eq]": $scope.distributorFilter,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
