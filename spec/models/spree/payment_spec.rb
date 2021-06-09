@@ -27,7 +27,7 @@ describe Spree::Payment do
       double('success_response', success?: true,
                                  authorization: '123',
                                  avs_result: { 'code' => 'avs-code' },
-                                 cvv_result: nil)
+                                 cvv_result: { code: nil, message: nil })
     end
 
     let(:failed_response) { double('gateway_response', success?: false) }
