@@ -2,6 +2,9 @@ es:
   language_name: "Castellano"
   activerecord:
     attributes:
+      spree/user:
+        password: "Contraseña"
+        password_confirmation: "confirmación de contraseña"
       enterprise_fee:
         fee_type: Tipo de Comisión
       spree/order:
@@ -2941,6 +2944,7 @@ es:
   shipment_inc_vat: "Envío incluido VAT"
   shipping_tax_rate: "Impuestos de envío"
   category: "Categoría"
+  import_date: "Fecha de importación"
   delivery: "Entrega"
   temperature_controlled: "Control de temperatura"
   new_product: "Nuevo producto"
@@ -3074,7 +3078,6 @@ es:
     default_meta_description: "Meta Descripción predeterminada"
     default_meta_keywords: "Palabras clave Meta predeterminadas"
     security_settings: "Configuraciones de seguridad"
-    allow_ssl_in_development_and_test: "Permitir el uso de SSL en los modos de desarrollo y prueba"
     allow_ssl_in_production: "Permitir que SSL se utilice en modo de producción"
     allow_ssl_in_staging: "Permitir que SSL se utilice en modo de staging"
     currency_decimal_mark: "Marca decimal de la moneda"
