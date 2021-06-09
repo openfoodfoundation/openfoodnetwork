@@ -2,6 +2,9 @@ fr:
   language_name: "Français"
   activerecord:
     attributes:
+      spree/user:
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
       enterprise_fee:
         fee_type: Type de marge
       spree/order:
@@ -1466,8 +1469,8 @@ fr:
       cookies_policy_link: "politique de cookies"
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
-  brandstory_headline: "On change de nom !"
-  brandstory_intro: "Votre plateforme Open Food France change de nom et devient CoopCircuits, une plateforme libre, cogérée et accessible à tous."
+  brandstory_headline: "Les circuits courts connectés"
+  brandstory_intro: "CoopCircuits est une plateforme libre, cogérée et accessible à tous."
   brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative CoopCircuits. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
   brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, CoopCircuits vous accompagne :-)"
   brandstory_part3: " "
@@ -2966,6 +2969,7 @@ fr:
   shipment_inc_vat: "Livraison incluant TVA"
   shipping_tax_rate: "Taux TVA livraison"
   category: "Catégorie"
+  import_date: "Date d'import (si import)"
   delivery: "Livraison"
   temperature_controlled: "Température contrôlée"
   new_product: "Nouveau Produit"
@@ -3099,7 +3103,6 @@ fr:
     default_meta_description: "Meta description par défaut"
     default_meta_keywords: "Meta mots clés par défaut"
     security_settings: "Paramètres de sécurité"
-    allow_ssl_in_development_and_test: "Autoriser l'utilisation SSL dans les environnements de développement et de test"
     allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
     allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
     currency_decimal_mark: "Symbole du séparateur de décimales"
