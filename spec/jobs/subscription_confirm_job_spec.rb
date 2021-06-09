@@ -237,7 +237,9 @@ describe SubscriptionConfirmJob do
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
-            expect{ job.send(:confirm_order!, order) }.to_not enqueue_job ConfirmOrderJob
+            expect{ job.send(:confirm_order!, order) }
+              .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
+
             expect(job).to have_received(:send_confirmation_email).once
           end
         end
