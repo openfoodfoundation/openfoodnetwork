@@ -9,7 +9,7 @@
 
 :schedule:
   HeartbeatJob:
-    every: "5m"
+    every: ["5m", first_in: "0s"]
   SubscriptionPlacementJob:
     every: "5m"
   SubscriptionConfirmJob:
