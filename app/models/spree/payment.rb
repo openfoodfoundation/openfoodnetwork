@@ -164,6 +164,10 @@ module Spree
       Stripe::PaymentIntentValidator.new.call(self).status
     end
 
+    def stripe_captured?
+      stripe_status == "succeeded"
+    end
+
     def clear_authorization_url
       update_attribute(:cvv_response_message, nil)
     end
