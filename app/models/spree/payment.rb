@@ -153,25 +153,6 @@ module Spree
       I18n.t('payment_method_fee')
     end
 
-    # Returns the current payment status from a live call to the Stripe API.
-    # Returns nil if the payment is not a Stripe payment or does not have a payment intent.
-    # If the payment requires authorization the status will be "requires_action".
-    # If the payment has been captured the status will be "succeeded".
-    # https://stripe.com/docs/api/payment_intents/object#payment_intent_object-status
-    def stripe_status
-      return if response_code.blank?
-
-      Stripe::PaymentIntentValidator.new.call(self).status
-    rescue Stripe::StripeError
-      # The Stripe::PaymentIntentValidator will raise an error if the Stripe API call indicates
-      # the last attempted action on the payment intent failed.
-      "failed"
-    end
-
-    def stripe_captured?
-      stripe_status == "succeeded"
-    end
-
     def clear_authorization_url
       update_attribute(:cvv_response_message, nil)
     end
