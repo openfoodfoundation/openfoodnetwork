@@ -23,6 +23,14 @@ class OrderWorkflow
     result
   end
 
+  def advance_to_payment
+    until order.state == "payment"
+      break unless order.next
+
+      after_transition_hook(advance_order_options)
+    end
+  end
+
   private
 
   def advance_order_options
