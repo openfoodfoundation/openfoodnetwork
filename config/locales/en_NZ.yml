@@ -2,6 +2,8 @@ en_NZ:
   language_name: "English"
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -362,6 +364,9 @@ en_NZ:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Terms of Service"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -1181,11 +1186,9 @@ en_NZ:
       link_text: "Terms and Conditions"
     platform_terms_of_service:
       message_html: "I agree to the platform %{tos_link}."
-      terms_of_service: "Terms of Service"
     all_terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
-      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1225,7 +1228,6 @@ en_NZ:
       footer_join_body: "Create a listing, build a shop or group directory on the Open Food Network."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
-      footer_legal_tos: "Terms and conditions"
       footer_legal_visit: "Find us on"
       footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} "
@@ -2128,7 +2130,6 @@ en_NZ:
   new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
-  enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
@@ -2878,6 +2879,7 @@ en_NZ:
   shipment_inc_vat: "Shipment including GST"
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
+  import_date: "Import Date"
   delivery: "Delivery"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
@@ -2970,7 +2972,6 @@ en_NZ:
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     security_settings: "Security Settings"
-    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
@@ -3431,6 +3432,8 @@ en_NZ:
           producer_name: "Producer"
           unit: "Unit"
       shared:
+        configuration_menu:
+          terms_of_service: "Terms of Service"
         sortable_header:
           name: "Name"
           number: "Number"

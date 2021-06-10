@@ -2,6 +2,8 @@ pt:
   language_name: "Português"
   activerecord:
     attributes:
+      spree/user:
+        password: "Palavra-passe"
       enterprise_fee:
         fee_type: Tipo de Taxa
       spree/order:
@@ -1181,7 +1183,6 @@ pt:
       footer_join_body: "Crie uma lista de ofertas, uma loja ou um grupo de consumo na Open Food Network"
       footer_join_cta: "Quero saber mais!"
       footer_legal_call: "Leia os nossos"
-      footer_legal_tos: "Termos e condições"
       footer_legal_visit: "Encontre-nos no"
       footer_legal_text_html: "A Open Food Network é uma plataforma livre e de código aberto. O nosso conteúdo tem uma licença %{content_license} e o nosso código %{code_license}."
       footer_data_text_with_privacy_policy_html: "Nós tratamos com cuidado dos nosso dados. Veja a nossa %{privacy_policy} e a nossa %{cookies_policy}"
@@ -2058,7 +2059,6 @@ pt:
   new_order: "Nova Encomenda"
   enterprise_tos_link: "Ligação para Termos de Serviço da Organização"
   enterprise_tos_message: "Queremos trabalhar com pessoas que partilham os nossos objectivos e valores. Por isso pedimos às organizações novas que concordem com os nossos"
-  enterprise_tos_link_text: "Termos de Serviço."
   enterprise_tos_agree: "Concordo com os Termos e Serviço acima"
   tax_settings: "Configurações de Impostos"
   products_require_tax_category: "produtos necessitam uma categoria de imposto"
@@ -2719,6 +2719,7 @@ pt:
   shipment_inc_vat: "Envio incluíndo IVA"
   shipping_tax_rate: "Taxa de Imposto sobre o Envio"
   category: "Categoria"
+  import_date: "Data de Importação"
   delivery: "Entrega"
   temperature_controlled: "Temperatura Controlada"
   new_product: "Novo Produto"
@@ -2797,7 +2798,6 @@ pt:
     default_meta_description: "Meta Description por defeito"
     default_meta_keywords: "Meta keywords por defeito"
     security_settings: "Configurações de Segurança"
-    allow_ssl_in_development_and_test: "Permitir que SSL seja utilizado quando em desenvolvimento e testes"
     allow_ssl_in_production: "Permitir que SSL seja usado em produção"
     allow_ssl_in_staging: "Permitir que SSL seja usado em pre-produção"
     currency_decimal_mark: "Separador Decimal da Moeda"

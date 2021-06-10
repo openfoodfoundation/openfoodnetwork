@@ -2,6 +2,8 @@ de_DE:
   language_name: "Deutsch"
   activerecord:
     attributes:
+      spree/user:
+        password: "Passwort"
       enterprise_fee:
         fee_type: Art der Gebühr
       spree/order:
@@ -400,6 +402,9 @@ de_DE:
       embedded_shopfront_settings: "Einstellungen für eingebettete Läden"
       enable_embedded_shopfronts: "Eingebettete Läden erlauben"
       embedded_shopfronts_whitelist: "Zugelassene externe Domains"
+    terms_of_service_files:
+      show:
+        terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
     number_localization:
       number_localization_settings: "Zahlenformateinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
@@ -1222,11 +1227,9 @@ de_DE:
       link_text: "Allgemeinen Geschäftsbedingungen"
     platform_terms_of_service:
       message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
-      terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
     all_terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
       terms_and_conditions: "Allgemeinen Geschäftsbedingungen"
-      terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
   shops:
     hubs:
@@ -1266,7 +1269,6 @@ de_DE:
       footer_join_body: "Erstellen Sie ein Profil, einen Online-Shop oder eine Gruppe im Open Food Network."
       footer_join_cta: "Los geht's!"
       footer_legal_call: "Lesen Sie unsere"
-      footer_legal_tos: "AGB"
       footer_legal_visit: "Besuchen Sie uns auf"
       footer_legal_text_html: "Open Food Network ist eine kostenlose Open-Source Software-Plattform. Unser Inhalt ist mit %{content_license} und unser Code mit %{code_license} lizenziert."
       footer_data_text_with_privacy_policy_html: "Wir passen auf Ihre Daten auf. Lesen Sie unsere %{privacy_policy} und %{cookies_policy}."
@@ -2182,7 +2184,6 @@ de_DE:
   new_order: "Neue Bestellung"
   enterprise_tos_link: "Link zu den AGB des Unternehmens"
   enterprise_tos_message: "Wir möchten mit Menschen zusammenarbeiten, die unsere Ziele und Werte teilen. Daher bitten wir neue Unternehmen, unseren Allgemeinen Geschäftsbedingungen zuzustimmen:"
-  enterprise_tos_link_text: "AGB."
   enterprise_tos_agree: "Ich stimme den oben genannten Geschäftsbedingungen zu"
   tax_settings: "Steuereinstellungen"
   products_require_tax_category: "Produkte benötigen eine Steuerkategorie."
@@ -2946,6 +2947,7 @@ de_DE:
   shipment_inc_vat: "Liefergebühr inkl. Mehrwertsteuer"
   shipping_tax_rate: "Steuersatz der Liefergebühr"
   category: "Produktkategorie"
+  import_date: "Importdatum"
   delivery: "Lieferung"
   temperature_controlled: "Temperaturüberwacht"
   new_product: "Neues Produkt"
@@ -3079,7 +3081,6 @@ de_DE:
     default_meta_description: "Standard Meta-Beschreibung"
     default_meta_keywords: "Standard Meta-Schlüsselwörter"
     security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_development_and_test: "Zulassen, dass SSL im Entwicklungs- und Testmodus verwendet wird"
     allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
     allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
@@ -3556,6 +3557,8 @@ de_DE:
           producer_name: "Produzent"
           unit: "Einheit"
       shared:
+        configuration_menu:
+          terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
         sortable_header:
           name: "Name"
           number: "Nummer"

@@ -403,6 +403,9 @@ ca:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
       embedded_shopfronts_whitelist: "Llista blanca de dominis externs"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Termes del servei"
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
@@ -1226,11 +1229,9 @@ ca:
       link_text: "Termes i condicions"
     platform_terms_of_service:
       message_html: "Accepto els %{tos_link} de la plataforma."
-      terms_of_service: "Termes del servei"
     all_terms_and_conditions:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
       terms_and_conditions: "Termes i condicions"
-      terms_of_service: "Termes del servei"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:
@@ -1270,7 +1271,6 @@ ca:
       footer_join_body: "Crea un directori de botigues a grups a Open Food Network."
       footer_join_cta: "Vull saber-ne més!"
       footer_legal_call: "Llegiu el nostre"
-      footer_legal_tos: "Termes i condicions"
       footer_legal_visit: "Troba'ns a"
       footer_legal_text_html: "Open Food Network és una plataforma de programari lliure i de codi obert. El nostre contingut està llicenciat amb %{content_license} i el nostre codi amb %{code_license}."
       footer_data_text_with_privacy_policy_html: "Tenim cura de les vostres dades. Vegeu les nostres %{privacy_policy} i %{cookies_policy}"
@@ -2186,7 +2186,6 @@ ca:
   new_order: "Nova comanda"
   enterprise_tos_link: "Enllaç a les condicions d'ús de l'organització"
   enterprise_tos_message: "Volem treballar amb persones que comparteixen els nostres objectius i valors. Com a tal, demanem a les noves organitzacions que acceptin la nostra"
-  enterprise_tos_link_text: "Termes del servei."
   enterprise_tos_agree: "Accepto els Termes i condicions anteriors"
   tax_settings: "Configuració fiscal"
   products_require_tax_category: "els productes requereixen una categoria fiscal"
@@ -3554,6 +3553,8 @@ ca:
           producer_name: "Productor"
           unit: "Unitat"
       shared:
+        configuration_menu:
+          terms_of_service: "Termes del servei"
         sortable_header:
           name: "Nom"
           number: "Número"

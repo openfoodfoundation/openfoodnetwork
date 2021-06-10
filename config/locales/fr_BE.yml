@@ -2,6 +2,8 @@ fr_BE:
   language_name: "Français"
   activerecord:
     attributes:
+      spree/user:
+        password: "Mot de passe"
       enterprise_fee:
         fee_type: Type de marge
       spree/order:
@@ -1196,7 +1198,6 @@ fr_BE:
       footer_join_body: "Créer un profil, un comptoir ou un groupe sur Open Food Network."
       footer_join_cta: "Je veux en savoir plus!"
       footer_legal_call: "Lire nos"
-      footer_legal_tos: "Termes et conditions"
       footer_legal_visit: "Nous trouver sur"
       footer_legal_text_html: "Open Food Network est une plateforme logicielle open source et libre. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
       footer_data_text_with_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{privacy_policy} et %{cookies_policy}."
@@ -2094,7 +2095,6 @@ fr_BE:
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des acteurs et actrices qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux acteurs s'enregistrant sur Open Food Network de valider nos "
-  enterprise_tos_link_text: "Conditions d'utilisation"
   enterprise_tos_agree: "J'adhère aux valeurs d'Open Food Network et valide les Conditions Générales d'Utilisation."
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
@@ -2757,6 +2757,7 @@ fr_BE:
   shipment_inc_vat: "Expédition TVA incluse "
   shipping_tax_rate: "TVA applicable pour l'expédition "
   category: "Catégorie"
+  import_date: "Date d'import (si import)"
   delivery: "Livraison"
   temperature_controlled: "Tempéré"
   new_product: "Nouveau Produit"
@@ -2844,7 +2845,6 @@ fr_BE:
     default_meta_description: "Meta Description par défaut"
     default_meta_keywords: "Meta Mots-clés par défaut"
     security_settings: "Paramètres de sécurité "
-    allow_ssl_in_development_and_test: "Autoriser l’utilisation de SSL pendant le développement et les modes test"
     allow_ssl_in_production: "Autoriser SSL en mode production "
     allow_ssl_in_staging: "Autoriser SSL quand est employé en mode visible "
     currency_decimal_mark: "Devise à la décimale "

@@ -2,6 +2,8 @@ fil_PH:
   language_name: "Filipino"
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
       enterprise_fee:
         fee_type: Uri ng Bayarin
       spree/order:
@@ -1175,7 +1177,6 @@ fil_PH:
       footer_join_body: "Gumawa ng profile, shop, o listahan ng grupo sa Open Food Network."
       footer_join_cta: "sabihin pa sa akin ang iba pa!"
       footer_legal_call: "basahin ang aming"
-      footer_legal_tos: "mga tuntunin at kondisyon"
       footer_legal_visit: "Hanapin kami sa"
       footer_legal_text_html: "ang Open Food Network ay isang libre at open source software platform. ang mga nilalaman nito ay lisensiyado ng%{content_license}at ang aming mga code ng %{code_license}."
       footer_data_text_with_privacy_policy_html: "Pinangangalagaan namin ang inyong impormasyon. Basahin ang aming%{privacy_policy}at%{cookies_policy}"
@@ -2058,7 +2059,6 @@ fil_PH:
   new_order: "bagong order"
   enterprise_tos_link: "Link para sa palatuntunan ng serbisyo ng Enterprise"
   enterprise_tos_message: "nais naming makiisa sa mga taong kapareho ng aming layunin at adhikain. Dahil dito, hinihiling namin sa mga bagong enterprise na sumang-ayon sa aming"
-  enterprise_tos_link_text: "Mga Tuntunin ng Serbisyo."
   enterprise_tos_agree: "ako ay sumasang-ayon sa mga tuntunin ng serbisyo na nasa itaas."
   tax_settings: "settings ng tax"
   products_require_tax_category: "ang mga produkto ay kailangang may kategorya ng tax"
@@ -2782,6 +2782,7 @@ fil_PH:
   shipment_inc_vat: "kargamento kasama ang VAT"
   shipping_tax_rate: "rate ng tax para sa pagpapadala"
   category: "kategorya"
+  import_date: "petsa ng pag-import"
   delivery: "pagdeliver"
   temperature_controlled: "kontrolado ang temperatura"
   new_product: "bagong produkto"
@@ -2863,7 +2864,6 @@ fil_PH:
     default_meta_description: "Default na paglalarawan ng Meta"
     default_meta_keywords: "Default Meta Keywords"
     security_settings: "mga setting para sa seguridad"
-    allow_ssl_in_development_and_test: "payagan na gamitin ang SSL kapag nasa moda ng pagpapaunlad at pagsubok.."
     allow_ssl_in_production: "payagan na gamitin ang SSL sa moda ng produksiyon"
     allow_ssl_in_staging: "payagan ang SSL sa moda ng staging"
     currency_decimal_mark: "marka para sa currency decimal"

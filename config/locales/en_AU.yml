@@ -2,6 +2,8 @@ en_AU:
   language_name: "English"
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -1227,7 +1229,6 @@ en_AU:
       footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
-      footer_legal_tos: "Terms and conditions"
       footer_legal_visit: "Find us on"
       footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
@@ -2127,7 +2128,6 @@ en_AU:
   new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
-  enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
@@ -2870,6 +2870,7 @@ en_AU:
   shipment_inc_vat: "Shipment including VAT"
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
+  import_date: "Import Date"
   delivery: "Delivery"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
@@ -2961,7 +2962,6 @@ en_AU:
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
     security_settings: "Security Settings"
-    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"

@@ -2,6 +2,8 @@ nl_BE:
   language_name: "Nederlands"
   activerecord:
     attributes:
+      spree/user:
+        password: "Wachtwoord"
       enterprise_fee:
         fee_type: Soort commissie
       spree/order:
@@ -1198,7 +1200,6 @@ nl_BE:
       footer_join_body: "Creëer een lijst, winkel of groep directory in het Open Food Network."
       footer_join_cta: "Vertel mij meer !"
       footer_legal_call: "Lees onze"
-      footer_legal_tos: "Voorwaarden"
       footer_legal_visit: "Vind ons op"
       footer_legal_text_html: "Open Food Network is een vrij en opensource-software-platform. Onze inhoud valt onder de %{content_license} en onze code onder %{code_license} licentie."
       footer_data_text_with_privacy_policy_html: "We dragen op een goede manier zorg voor je gegevens. Neem een kijkje naar onze %{privacy_policy} en onze %{cookies_policy}."
@@ -2096,7 +2097,6 @@ nl_BE:
   new_order: "Nieuwe bestelling"
   enterprise_tos_link: "Link Voorwaarden Onderneming"
   enterprise_tos_message: "We willen met mensen werken die onze normen en waarden en delen. Daarom vragen wij aan de nieuwe bedrijven akkoord te gaan met onze  "
-  enterprise_tos_link_text: "Dienstvoorwaarden"
   enterprise_tos_agree: "Ik ga akkoord met bovenstaande Voorwaarden"
   tax_settings: "Belastings Instellingen"
   products_require_tax_category: "product vereist een belastingscategorie"
@@ -2752,6 +2752,7 @@ nl_BE:
   shipment_inc_vat: "Verzending BTW inbegrepen"
   shipping_tax_rate: "Toegepaste BTW op verzending "
   category: "Categorie"
+  import_date: "Importdatum"
   delivery: "Levering"
   temperature_controlled: "Temperatuurgestuurd"
   new_product: "Nieuw product"
@@ -2839,7 +2840,6 @@ nl_BE:
     default_meta_description: "Standaard Meta Beschrijving"
     default_meta_keywords: "Standaard Meta Sleutelwoorden "
     security_settings: "Beveiligheidsinstellingen"
-    allow_ssl_in_development_and_test: "SSL toelaten bij ontwikkeling en testmode"
     allow_ssl_in_production: "SSl toelaten wanneer  in productiemode wordt gebruikt "
     allow_ssl_in_staging: "SSL toelaten wanneer in mode zichtbaar wordt gebruikt"
     currency_decimal_mark: "Valuta 1 decimaal bij"

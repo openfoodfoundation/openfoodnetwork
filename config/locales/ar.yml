@@ -2,6 +2,8 @@ ar:
   language_name: "عربي"
   activerecord:
     attributes:
+      spree/user:
+        password: "كلمه السر"
       enterprise_fee:
         fee_type: نوع الرسوم
       spree/order:
@@ -365,6 +367,9 @@ ar:
       embedded_shopfront_settings: "إعدادات واجهة المتجر المدمجة "
       enable_embedded_shopfronts: "تمكين واجهة المتجر المدمجة"
       embedded_shopfronts_whitelist: "دومين الخارجي للقائمة البيضاء"
+    terms_of_service_files:
+      show:
+        terms_of_service: "شروط الخدمة"
     number_localization:
       number_localization_settings: "إعدادات تعريب الأرقام"
       enable_localized_number: "استخدم المنطق الفاصل الدولي الف / العشري"
@@ -1183,11 +1188,9 @@ ar:
       link_text: "الأحكام والشروط"
     platform_terms_of_service:
       message_html: "أوافق على المنصة %{tos_link}."
-      terms_of_service: "شروط الخدمة"
     all_terms_and_conditions:
       message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
       terms_and_conditions: "الأحكام والشروط"
-      terms_of_service: "شروط الخدمة"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
   shops:
     hubs:
@@ -1227,7 +1230,6 @@ ar:
       footer_join_body: "إنشاء مركز تجاري أو متجر أو مجموعة على منصة فلاحة - شبكة الغذاء المفتوح."
       footer_join_cta: "اخبرني المزيد!"
       footer_legal_call: "اقراء"
-      footer_legal_tos: "الأحكام والشروط"
       footer_legal_visit: "تجدنا على"
       footer_legal_text_html: "فلاحة شبكة الغذاء المفتوح عبارة عن منصة حرة ومفتوحة البرمجيات. تم ترخيص المحتوى الخاص بنا باستخدام %{content_license} ورمزنا مع %{code_license}."
       footer_data_text_with_privacy_policy_html: "نحن نحرص على البيانات الخاصة بك. انظر %{privacy_policy} و %{cookies_policy}"
@@ -2130,7 +2132,6 @@ ar:
   new_order: "طلب جديد"
   enterprise_tos_link: "شروط المؤسسة لخدمة الرابط"
   enterprise_tos_message: "نريد العمل مع أشخاص يشاركوننا أهدافنا وقيمنا. على هذا النحو ، نطلب من المؤسسات الجديدة الموافقة على"
-  enterprise_tos_link_text: "شروط الخدمة."
   enterprise_tos_agree: "أوافق على شروط الخدمة المذكورة أعلاه"
   tax_settings: "الإعدادات الضريبية"
   products_require_tax_category: "المنتجات تتطلب فئة الضريبة"
@@ -2970,6 +2971,7 @@ ar:
   shipment_inc_vat: "الشحنة شاملة ضريبة القيمة المضافة"
   shipping_tax_rate: "معدل ضريبة الشحن"
   category: "الفئة"
+  import_date: "تاريخ الاستيراد"
   delivery: "توصيل"
   temperature_controlled: "متحكم بدرجة الحرارة "
   new_product: "منتج جديد"
@@ -3063,7 +3065,6 @@ ar:
     default_meta_description: "وصف التعريف الافتراضي"
     default_meta_keywords: "الكلمات الرئيسية الوصفية الافتراضية"
     security_settings: "اعدادات الامان"
-    allow_ssl_in_development_and_test: "السماح باستخدام طبقة المقابس الآمنة SSL عندما تكون في أوضاع التطوير والاختبار"
     allow_ssl_in_production: "السماح باستخدام طبقة المقابس الآمنة في وضع الإنتاج"
     allow_ssl_in_staging: "اسمح باستخدام طبقة المقابس الآمنة في وضع التدريج"
     currency_decimal_mark: "العملة العشرية"
@@ -3538,6 +3539,8 @@ ar:
           producer_name: "المنتج"
           unit: "وحدة"
       shared:
+        configuration_menu:
+          terms_of_service: "شروط الخدمة"
         sortable_header:
           name: "الاسم"
           number: "رقم "

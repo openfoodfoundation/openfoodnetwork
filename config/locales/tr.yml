@@ -2,6 +2,8 @@ tr:
   language_name: "Türkçe"
   activerecord:
     attributes:
+      spree/user:
+        password: "Parola"
       enterprise_fee:
         fee_type: Ücret Türü
       spree/order:
@@ -365,6 +367,9 @@ tr:
       embedded_shopfront_settings: "YERLEŞTİRİLMİŞ DÜKKAN AYARLARI"
       enable_embedded_shopfronts: "YERLEŞTİRİLMİŞ DÜKKANLARI ETKİNLEŞTİR"
       embedded_shopfronts_whitelist: "Beyaz Listedeki harici Domain'ler"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Üyelik Sözleşmesi"
     number_localization:
       number_localization_settings: "Numara Yerelleştirme Ayarları"
       enable_localized_number: "Uluslararası bin/ondalık ayırıcı mantığını kullanın"
@@ -1182,11 +1187,8 @@ tr:
     terms_and_conditions:
       message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
       link_text: "Şartlar ve Koşullar"
-    platform_terms_of_service:
-      terms_of_service: "Üyelik Sözleşmesi"
     all_terms_and_conditions:
       terms_and_conditions: "Şartlar ve Koşullar"
-      terms_of_service: "Üyelik Sözleşmesi"
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
     hubs:
@@ -1225,7 +1227,6 @@ tr:
       footer_join_body: "Açık Gıda Ağı üzerinden ürünlerinizi sergileyin, dükkanınızı oluşturun veya topluluğunuzu, grubunuzu listeleyin."
       footer_join_cta: "Daha fazlasını anlat!"
       footer_legal_call: "Okuyun"
-      footer_legal_tos: "Şartlar ve koşullar"
       footer_legal_visit: "Bizi bulun"
       footer_legal_text_html: "Açık Gıda Ağı ücretsiz ve açık kaynaklı bir yazılım platformudur. İçeriklerimiz %{content_license} ve kodumuz %{code_license} ile lisanslıdır."
       footer_data_text_with_privacy_policy_html: "Verilerinize iyi bakıyoruz. Bkz. %{privacy_policy} ve %{cookies_policy}"
@@ -2127,7 +2128,6 @@ tr:
   new_order: "Yeni Sipariş"
   enterprise_tos_link: "İşletme Üyelik Sözleşmesi bağlantısı"
   enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Yasal zorunluluk gereği de yeni işletmelerden kabul etmesini istiyoruz:"
-  enterprise_tos_link_text: "Üyelik Sözleşmesi"
   enterprise_tos_agree: "Yukarıdaki Üyelik Sözleşmesini kabul ediyorum"
   tax_settings: "Vergi Ayarları"
   products_require_tax_category: "ürünler vergi kategorisi gerektirir"
@@ -2872,6 +2872,7 @@ tr:
   shipment_inc_vat: "KDV dahil teslimat"
   shipping_tax_rate: "Kargo Vergi Oranı"
   category: "Kategori"
+  import_date: "İçe Aktarım Tarihi"
   delivery: "Eve Teslim"
   temperature_controlled: "Soğuk Sevkiyat"
   new_product: "Yeni ürün"
@@ -2966,7 +2967,6 @@ tr:
     default_meta_description: "Varsayılan Meta Açıklaması"
     default_meta_keywords: "Varsayılan Meta Anahtar Kelimeleri"
     security_settings: "Güvenlik ayarları"
-    allow_ssl_in_development_and_test: "Geliştirme ve test modlarında SSL'nin kullanılmasına izin ver"
     allow_ssl_in_production: "SSL'nin üretim modunda kullanılmasına izin ver"
     allow_ssl_in_staging: "SSL'nin hazırlama modunda kullanılmasına izin ver"
     currency_decimal_mark: "Para birimi ondalık işareti"
@@ -3418,6 +3418,8 @@ tr:
           producer_name: "Üretici"
           unit: "Birim"
       shared:
+        configuration_menu:
+          terms_of_service: "Üyelik Sözleşmesi"
         sortable_header:
           name: "Ad"
           number: "Numara"

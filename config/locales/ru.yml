@@ -404,6 +404,9 @@ ru:
       embedded_shopfront_settings: "Настройки Встроенного Магазина"
       enable_embedded_shopfronts: "Включить Встроенные Витрины"
       embedded_shopfronts_whitelist: "Белый Список Внешних Доменов"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Условия Сервиса"
     number_localization:
       number_localization_settings: "Настройки локализации чисел"
       enable_localized_number: "Использовать международную логику разделителя тысяч/десятых"
@@ -1226,11 +1229,9 @@ ru:
       link_text: "Условия и Положения"
     platform_terms_of_service:
       message_html: "Я согласен c условиями платформы %{tos_link}."
-      terms_of_service: "Условия Сервиса"
     all_terms_and_conditions:
       message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
       terms_and_conditions: "Условия и Положения"
-      terms_of_service: "Условия Сервиса"
     failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
   shops:
     hubs:
@@ -1270,7 +1271,6 @@ ru:
       footer_join_body: "Создайте список, каталог магазина или группы в Открытой Сети Продуктов."
       footer_join_cta: "Узнать больше!"
       footer_legal_call: "Читайте"
-      footer_legal_tos: "Условия и положения"
       footer_legal_visit: "Найти нас на"
       footer_legal_text_html: "Открытая Сеть Продуктов - бесплатная программная платформа с открытым исходным кодом. Наш контент лицензируется по %{content_license}, а наш код по %{code_license}."
       footer_data_text_with_privacy_policy_html: "Мы заботимся о ваших данных. Смотрите наши %{privacy_policy} и %{cookies_policy}"
@@ -2186,7 +2186,6 @@ ru:
   new_order: "Новый Заказ"
   enterprise_tos_link: "Ссылка Условий Сервиса Предприятия"
   enterprise_tos_message: "Мы хотим работать с людьми, которые разделяют наши цели и ценности. Поэтому мы просим новые предприятия согласиться с нашими "
-  enterprise_tos_link_text: "Условия Сервиса."
   enterprise_tos_agree: "Я согласен с вышеуказанными Условиями Сервиса"
   tax_settings: "Настройки Налогов"
   products_require_tax_category: "товары требуют налоговой категории"
@@ -3606,6 +3605,8 @@ ru:
           producer_name: "Производитель"
           unit: "Единица"
       shared:
+        configuration_menu:
+          terms_of_service: "Условия Сервиса"
         sortable_header:
           name: "Имя"
           number: "Номер"

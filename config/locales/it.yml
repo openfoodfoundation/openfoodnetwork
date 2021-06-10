@@ -2,6 +2,8 @@ it:
   language_name: "Italiano"
   activerecord:
     attributes:
+      spree/user:
+        password: "Password"
       enterprise_fee:
         fee_type: Tipo Tariffa
       spree/order:
@@ -396,6 +398,9 @@ it:
       embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
       enable_embedded_shopfronts: "Abilita vetrine incorporate"
       embedded_shopfronts_whitelist: "Whitelist dei domini esterni"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Termini di Servizio"
     number_localization:
       number_localization_settings: "Settaggi del Numero di Localizzazione"
       enable_localized_number: "Usa la logica internazionale di separazione migliaia/decimali"
@@ -1217,11 +1222,9 @@ it:
       link_text: "Termini e Condizioni"
     platform_terms_of_service:
       message_html: "Acconsento ai %{tos_link} della piattaforma."
-      terms_of_service: "Termini di Servizio"
     all_terms_and_conditions:
       message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
       terms_and_conditions: "Termini e Condizioni"
-      terms_of_service: "Termini di Servizio"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
     hubs:
@@ -1261,7 +1264,6 @@ it:
       footer_join_body: "Crea un catalogo, un negozio o un gruppo su Open Food Network."
       footer_join_cta: "Dimmi di più!"
       footer_legal_call: "Leggi i nostri"
-      footer_legal_tos: "Termini e condizioni"
       footer_legal_visit: "Trovaci su"
       footer_legal_text_html: "Open Food Network è un software gratuito e open source. Il nostro contenuto è distribuito con licenza %{content_license} e il nostro codice con licenza %{code_license}."
       footer_data_text_with_privacy_policy_html: "Ci prendiamo cura dei tuoi dati. Leggi la nostra %{privacy_policy} e %{cookies_policy}"
@@ -2165,7 +2167,6 @@ it:
   new_order: "Nuovo ordine"
   enterprise_tos_link: "link Termini di Servizio Aziende"
   enterprise_tos_message: "Abbiamo bisogno di lavorare con persone che condividono i nostri scopi e i nostri valori. Per questo chiediamo alle nuove aziende di sottoscrivere i nostri"
-  enterprise_tos_link_text: "Termini di Servizio"
   enterprise_tos_agree: "Accetto i Termini di Servizio"
   tax_settings: "Impostazione contributi"
   products_require_tax_category: "i prodotto richiedono la categoria di tassa"
@@ -2925,6 +2926,7 @@ it:
   shipment_inc_vat: "Spedizione inclusa IVA"
   shipping_tax_rate: "Tariffa spedizione"
   category: "Categoria"
+  import_date: "Data di importazione"
   delivery: "Consegna"
   temperature_controlled: "Temperatura controllata"
   new_product: "Nuovo prodotto"
@@ -3058,7 +3060,6 @@ it:
     default_meta_description: "Meta Descrizione predefinita"
     default_meta_keywords: "Parole chiave Meta predefinite"
     security_settings: "Impostazioni di sicurezza"
-    allow_ssl_in_development_and_test: "Consentire l'utilizzo di SSL nelle modalità di sviluppo e test"
     allow_ssl_in_production: "Consentire l'utilizzo di SSL in modalità produzione"
     allow_ssl_in_staging: "Consentire l'utilizzo di SSL nella modalità di gestione temporanea"
     currency_decimal_mark: "Valuta decimale"
@@ -3535,6 +3536,8 @@ it:
           producer_name: "Produttore"
           unit: "Unità"
       shared:
+        configuration_menu:
+          terms_of_service: "Termini di Servizio"
         sortable_header:
           name: "Nome"
           number: "Numero"

@@ -2,6 +2,8 @@ sv:
   language_name: "Svenska"
   activerecord:
     attributes:
+      spree/user:
+        password: "Lösenord"
       enterprise_fee:
         fee_type: Avgiftstyp
       spree/order:
@@ -660,7 +662,6 @@ sv:
       footer_join_body: "Skapa en lista, butik eller gruppförteckning på Open Food Network."
       footer_join_cta: "Berätta mer!"
       footer_legal_call: "Läs vår"
-      footer_legal_tos: "Användarvillkor"
       footer_legal_visit: "Hitta oss på"
       footer_legal_text_html: "Open Food Network är en avgiftsfri plattform för öppen källkod. Vårt innehåll har licens med  %{content_license} och vår kod med %{code_license}."
   shop:
@@ -1397,7 +1398,6 @@ sv:
   remove_tax: "Tag bort skatt"
   enterprise_tos_link: "Länk till företagets servicevillkor"
   enterprise_tos_message: "Vi vill arbeta med personer som delar våra mål och värderingar. Därför ber vi nya företag att samtycka med vår"
-  enterprise_tos_link_text: "Servicevillkor"
   enterprise_tos_agree: "Jag samtycker med ovanstående servicevillkor "
   tax_settings: "Skatteskalor"
   products_require_tax_category: "produkter kräver skattekategori"

@@ -2,6 +2,8 @@ pt_BR:
   language_name: "Português do Brasil"
   activerecord:
     attributes:
+      spree/user:
+        password: "Senha"
       enterprise_fee:
         fee_type: Tipo de taxa
       spree/order:
@@ -388,6 +390,9 @@ pt_BR:
       embedded_shopfront_settings: "Configurações incorporadas à loja virtual"
       enable_embedded_shopfronts: "Ativar lojas virtuais incorporadas"
       embedded_shopfronts_whitelist: "Lista de permissões de domínios externos"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Termos de serviço"
     number_localization:
       number_localization_settings: "Configurações de localização de número"
       enable_localized_number: "Usar a lógica internacional de separação de casas decimais e milhares"
@@ -1206,11 +1211,9 @@ pt_BR:
       link_text: "Termos e Condições"
     platform_terms_of_service:
       message_html: "Eu concordo com os %{tos_link}da plataforma"
-      terms_of_service: "Termos de serviço"
     all_terms_and_conditions:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
       terms_and_conditions: "Termos e Condições"
-      terms_of_service: "Termos de serviço"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
     hubs:
@@ -1250,7 +1253,6 @@ pt_BR:
       footer_join_body: "Crie uma lista de ofertas, loja ou cooperativa na Open Food Brasil."
       footer_join_cta: "Quero saber mais!"
       footer_legal_call: "Leia nosso"
-      footer_legal_tos: "Termos e condições"
       footer_legal_visit: "Nos encontre em "
       footer_legal_text_html: "A Open Food Brasil é uma plataforma grátis e open-source. Nosso conteúdo está sob licença de %{content_license} e nosso código de %{code_license}."
       footer_data_text_with_privacy_policy_html: "Nós cuidamos bem dos seus dados. Veja nossos %{privacy_policy} e %{cookies_policy}"
@@ -2166,7 +2168,6 @@ pt_BR:
   new_order: "Novo Pedido"
   enterprise_tos_link: "Link de Termos de Serviço da iniciativa"
   enterprise_tos_message: "Queremos trabalhar com pessoas que compartilham nossos objetivos e valores. Como tal, pedimos às novas iniciativas que concordem com nossos"
-  enterprise_tos_link_text: "Termos de Serviço."
   enterprise_tos_agree: "Aceito os Termos de Serviço acima"
   tax_settings: "Configurações de Taxas"
   products_require_tax_category: "produtos necessitam uma categoria de taxa"
@@ -3048,7 +3049,6 @@ pt_BR:
     default_meta_description: "Meta padrão Descrição"
     default_meta_keywords: "Meta Palavras-chave Padrão"
     security_settings: "Configurações de segurança"
-    allow_ssl_in_development_and_test: "Permitir que o SSL seja usado nos modos de desenvolvimento e teste"
     allow_ssl_in_production: "Permitir que o SSL seja usado no modo de produção"
     allow_ssl_in_staging: "Permitir que o SSL seja usado no modo de preparação"
     currency_decimal_mark: "Marca decimal da moeda"
@@ -3525,6 +3525,8 @@ pt_BR:
           producer_name: "Produtor"
           unit: "Unidade"
       shared:
+        configuration_menu:
+          terms_of_service: "Termos de serviço"
         sortable_header:
           name: "Nome"
           number: "Número"

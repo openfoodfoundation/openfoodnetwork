@@ -2,6 +2,8 @@ nb:
   language_name: "Norsk"
   activerecord:
     attributes:
+      spree/user:
+        password: "Passord"
       enterprise_fee:
         fee_type: Avfgiftstype
       spree/order:
@@ -398,6 +400,9 @@ nb:
       embedded_shopfront_settings: "Innstillinger Innebygd Nettbutikk"
       enable_embedded_shopfronts: "Aktiver Innebygd Nettbutikk"
       embedded_shopfronts_whitelist: "Hviteliste for Eksterne Domener"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Vilkår for bruk"
     number_localization:
       number_localization_settings: "Innstillinger for nummerlokalisering"
       enable_localized_number: "Bruk internasjonale tusen- og desimalskilletegn"
@@ -1218,11 +1223,9 @@ nb:
       link_text: "Vilkår og Betingelser"
     platform_terms_of_service:
       message_html: "Jeg godtar plattformens %{tos_link}."
-      terms_of_service: "Vilkår for bruk"
     all_terms_and_conditions:
       message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
       terms_and_conditions: "Vilkår og Betingelser"
-      terms_of_service: "Vilkår for bruk"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
     hubs:
@@ -1262,7 +1265,6 @@ nb:
       footer_join_body: "Opprette en profil, butikk eller gruppe på Open Food Network."
       footer_join_cta: "Fortell meg mer!"
       footer_legal_call: "Les våre"
-      footer_legal_tos: "Vilkår og betingelser"
       footer_legal_visit: "Finn oss på"
       footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
       footer_data_text_with_privacy_policy_html: "Vi tar godt vare på dine data. Se vår %{privacy_policy} og %{cookies_policy}"
@@ -2166,7 +2168,6 @@ nb:
   new_order: "Ny bestilling"
   enterprise_tos_link: "Lenke til Tjenestevilkår for Bedrifter"
   enterprise_tos_message: "Vi ønsker å jobbe med bedrifter som deler våre mål og verdier. Derfor ber vi nye bedrifter om å godta vår"
-  enterprise_tos_link_text: "Tjenestevilkår."
   enterprise_tos_agree: "Jeg godtar Tjenestevilkårene over"
   tax_settings: "Avgiftsinnstillinger"
   products_require_tax_category: "produkter krever avgiftskategori"
@@ -2920,6 +2921,7 @@ nb:
   shipment_inc_vat: "Levering inkludert MVA"
   shipping_tax_rate: "Rate Leveringsavgift"
   category: "Kategori"
+  import_date: "Importdato"
   delivery: "Levering"
   temperature_controlled: "Temperaturkontrollert"
   new_product: "Nytt produkt"
@@ -3053,7 +3055,6 @@ nb:
     default_meta_description: "Standard Meta Beskrivelse"
     default_meta_keywords: "Standard Meta Nøkkelord"
     security_settings: "Sikkerhetsinnstillinger"
-    allow_ssl_in_development_and_test: "Tillat at SSL brukes i utviklings- og testmodus"
     allow_ssl_in_production: "Tillat at SSL brukes i produksjonsmodus"
     allow_ssl_in_staging: "Tillat at SSL brukes i staging-modus"
     currency_decimal_mark: "Valuta desimaltegn"
@@ -3530,6 +3531,8 @@ nb:
           producer_name: "Produsent"
           unit: "Enhet"
       shared:
+        configuration_menu:
+          terms_of_service: "Vilkår for bruk"
         sortable_header:
           name: "Navn"
           number: "Antall"

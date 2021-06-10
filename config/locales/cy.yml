@@ -2,6 +2,8 @@ cy:
   language_name: "Saesneg"
   activerecord:
     attributes:
+      spree/user:
+        password: "Cyfrinair"
       enterprise_fee:
         fee_type: Math o Ffi
       spree/order:
@@ -1217,7 +1219,6 @@ cy:
       footer_join_body: "Creu cyfeirlyfr rhestru, siop neu grŵp ar y Rhwydwaith Bwyd Agored."
       footer_join_cta: "Dywedwch fwy wrthyf!"
       footer_legal_call: "Darllenwch ein"
-      footer_legal_tos: "Telerau ac Amodau"
       footer_legal_visit: "Dewch o hyd i ni ar"
       footer_legal_text_html: "Mae Open Food Network yn blatfform meddalwedd ffynhonnell agored am ddim. Mae ein cynnwys wedi&#39;i drwyddedu gydag %{content_license} a&#39;n cod gydag %{code_license}."
       footer_data_text_with_privacy_policy_html: "Rydym yn cymryd gofal da o&#39;ch data. Gweler ein %{privacy_policy} ac %{cookies_policy}"
@@ -2117,7 +2118,6 @@ cy:
   new_order: "Gorchymyn Newydd"
   enterprise_tos_link: "Dolen Telerau Gwasanaeth Menter"
   enterprise_tos_message: "Rydyn ni eisiau gweithio gyda phobl sy&#39;n rhannu ein nodau a&#39;n gwerthoedd. O&#39;r herwydd, gofynnwn i fentrau newydd gytuno â&#39;n"
-  enterprise_tos_link_text: "Telerau Gwasanaeth."
   enterprise_tos_agree: "Rwy&#39;n cytuno i&#39;r Telerau Gwasanaeth uchod"
   tax_settings: "Gosodiadau Treth"
   products_require_tax_category: "mae angen categori treth ar gynhyrchion"
@@ -2908,6 +2908,7 @@ cy:
   shipment_inc_vat: "Cludo gan gynnwys TAW"
   shipping_tax_rate: "Cyfradd Treth Llongau"
   category: "Categori"
+  import_date: "Dyddiad Mewnforio"
   delivery: "Dosbarthu"
   temperature_controlled: "Tymheredd a Reolir"
   new_product: "Cynnyrch Newydd"
@@ -2999,7 +3000,6 @@ cy:
     default_meta_description: "Disgrifiad Meta Rhagosodedig"
     default_meta_keywords: "Allweddeiriau Meta diofyn"
     security_settings: "Gosodiadau Diogelwch"
-    allow_ssl_in_development_and_test: "Caniatáu defnyddio SSL pan fydd mewn dulliau datblygu a phrofi"
     allow_ssl_in_production: "Caniatáu defnyddio SSL yn y modd cynhyrchu"
     allow_ssl_in_staging: "Caniatáu defnyddio SSL yn y modd llwyfannu"
     currency_decimal_mark: "Marc degol arian cyfred"
