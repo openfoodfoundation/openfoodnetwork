@@ -138,9 +138,9 @@ module Spree
 
     private
 
-    def create_label(amount)
+    def create_label(adjustment_amount)
       label = ""
-      label << "#{Spree.t(:refund)} " if amount.negative?
+      label << "#{Spree.t(:refund)} " if adjustment_amount.negative?
       label << "#{(name.presence || tax_category.name)} "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
