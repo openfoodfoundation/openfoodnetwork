@@ -98,12 +98,10 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # Retry
+  # Show retries in test output
   config.verbose_retry = true
-  # Try twice (retry once)
-  config.default_retry_count = 2
-  # Only retry when Selenium raises Net::ReadTimeout
-  config.exceptions_to_retry = [Net::ReadTimeout]
+  # Set maximum retry count
+  config.default_retry_count = 3
 
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
