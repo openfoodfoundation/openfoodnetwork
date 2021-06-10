@@ -211,7 +211,7 @@ GEM
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crack (0.4.5)
       rexml
@@ -635,7 +635,7 @@ GEM
       get_process_mem (~> 0)
       unicorn (>= 4, < 7)
     uniform_notifier (1.14.2)
-    view_component (2.33.0)
+    view_component (2.34.0)
       activesupport (>= 5.0.0, < 7.0)
     view_component_storybook (0.8.0)
       view_component (>= 2.2)
