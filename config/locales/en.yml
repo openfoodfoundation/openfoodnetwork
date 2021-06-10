@@ -448,6 +448,17 @@ en:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
 
+    terms_of_service_files:
+      create:
+        select_file: "Please select a file first."
+      show:
+        title: "Terms of Service files"
+        no_files: "No terms of services have been uploaded yet."
+        using_default_terms_html: "The site is currently linking to your old %{tos_link}."
+        current_terms_html: "View the current %{tos_link}. Upload time: %{datetime}."
+        terms_of_service: "Terms of Service"
+        delete: "Delete file"
+        confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -1293,11 +1304,9 @@ en:
       link_text: "Terms and Conditions"
     platform_terms_of_service:
       message_html: "I agree to the platform %{tos_link}."
-      terms_of_service: "Terms of Service"
     all_terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
-      terms_of_service: "Terms of Service"
     failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
@@ -1337,7 +1346,6 @@ en:
       footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
-      footer_legal_tos: "Terms and conditions"
       footer_legal_visit: "Find us on"
       footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
@@ -2316,7 +2324,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
-  enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
 
   tax_settings: "Tax Settings"
@@ -3717,6 +3724,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           producer_name: "Producer"
           unit: "Unit"
       shared:
+        configuration_menu:
+          terms_of_service: "Terms of Service"
         sortable_header:
           name: "Name"
           number: "Number"

@@ -127,7 +127,10 @@ feature "As a consumer I want to check out my cart", js: true do
 
         expect(page).to have_no_link("Terms and Conditions")
 
-        expect(page).to have_no_link("Terms of Service")
+        # We always have this link in the footer.
+        within "#checkout_form" do
+          expect(page).to have_no_link("Terms of service")
+        end
       end
     end
 
@@ -184,15 +187,44 @@ feature "As a consumer I want to check out my cart", js: true do
 
       it "shows the terms which need to be accepted" do
         visit checkout_path
-        expect(page).to have_link("Terms of Service", href: tos_url)
-        expect(find_link("Terms of Service")[:target]).to eq "_blank"
-        expect(page).to have_button("Place order now", disabled: true)
 
-        check "Terms of Service"
+        within "#checkout_form" do
+          expect(page).to have_link("Terms of service", href: tos_url)
+          expect(find_link("Terms of service")[:target]).to eq "_blank"
+          expect(page).to have_button("Place order now", disabled: true)
+        end
+
+        check "Terms of service"
         expect(page).to have_button("Place order now", disabled: false)
 
-        uncheck "Terms of Service"
+        uncheck "Terms of service"
         expect(page).to have_button("Place order now", disabled: true)
+      end
+
+      context "when the terms have been accepted in the past" do
+        before do
+          TermsOfServiceFile.create!(
+            attachment: File.open(Rails.root.join("public/Terms-of-service.pdf")),
+            updated_at: 1.day.ago,
+          )
+          customer = create(:customer, enterprise: order.distributor, user: user)
+          customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+        end
+
+        it "remembers the acceptance" do
+          visit checkout_path
+
+          within "#checkout_form" do
+            expect(page).to have_link("Terms of service")
+            expect(page).to have_button("Place order now", disabled: false)
+          end
+
+          uncheck "Terms of service"
+          expect(page).to have_button("Place order now", disabled: true)
+
+          check "Terms of service"
+          expect(page).to have_button("Place order now", disabled: false)
+        end
       end
     end
 
@@ -212,15 +244,17 @@ feature "As a consumer I want to check out my cart", js: true do
       it "shows links to both terms and all need accepting" do
         visit checkout_path
 
-        expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
-        expect(page).to have_link("Terms of Service", href: tos_url)
-        expect(page).to have_button("Place order now", disabled: true)
+        within "#checkout_form" do
+          expect(page).to have_link("Terms and Conditions", href: order.distributor.terms_and_conditions.url)
+          expect(page).to have_link("Terms of service", href: tos_url)
+          expect(page).to have_button("Place order now", disabled: true)
+        end
 
         # Both Ts&Cs and TOS appear in the one label for the one checkbox.
         check "Terms and Conditions"
         expect(page).to have_button("Place order now", disabled: false)
 
-        uncheck "Terms of Service"
+        uncheck "Terms of service"
         expect(page).to have_button("Place order now", disabled: true)
       end
     end
