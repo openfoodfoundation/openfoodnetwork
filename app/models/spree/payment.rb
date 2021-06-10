@@ -162,6 +162,10 @@ module Spree
       return if response_code.blank?
 
       Stripe::PaymentIntentValidator.new.call(self).status
+    rescue Stripe::StripeError
+      # The Stripe::PaymentIntentValidator will raise an error if the Stripe API call indicates
+      # the last attempted action on the payment intent failed.
+      "failed"
     end
 
     def stripe_captured?
