@@ -37,7 +37,7 @@ class CheckoutController < ::BaseController
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
     # the #action_failed method, then we can remove this call
-    OrderCheckoutRestart.new(@order).call
+    reset_order_to_cart
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   end
@@ -82,7 +82,7 @@ class CheckoutController < ::BaseController
     @order = current_order
 
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
-    redirect_to_cart_path && return unless valid_order_line_items?
+    handle_invalid_stock && return unless valid_order_line_items?
 
     before_address
     setup_for_current_state
@@ -100,7 +100,10 @@ class CheckoutController < ::BaseController
         distributes_order_variants?(@order)
   end
 
-  def redirect_to_cart_path
+  def handle_invalid_stock
+    cancel_incomplete_payments if valid_payment_intent_provided?
+    reset_order_to_cart
+
     respond_to do |format|
       format.html do
         redirect_to main_app.cart_path
@@ -110,6 +113,17 @@ class CheckoutController < ::BaseController
         render json: { path: main_app.cart_path }, status: :bad_request
       end
     end
+  end
+
+  def cancel_incomplete_payments
+    # The checkout could not complete due to stock running out. We void any pending (incomplete)
+    # Stripe payments here as the order will need to be changed and resubmitted (or abandoned).
+    @order.payments.pending.each(&:void!)
+    flash[:notice] = I18n.t("checkout.payment_cancelled_due_to_stock")
+  end
+
+  def reset_order_to_cart
+    OrderCheckoutRestart.new(@order).call
   end
 
   def setup_for_current_state
