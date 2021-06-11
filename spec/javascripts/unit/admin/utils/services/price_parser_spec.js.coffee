@@ -6,6 +6,23 @@ describe "PriceParser service", ->
     inject (PriceParser) ->
       priceParser = PriceParser
 
+  describe "test internal method with Regexp", -> 
+    describe "test replaceCommaByFinalPoint() method", ->
+      it "handle the default case (with two numbers after comma)", ->
+        expect(priceParser.replaceCommaByFinalPoint("1,00")).toEqual "1.00"
+      it "doesn't confuse with thousands separator", ->
+        expect(priceParser.replaceCommaByFinalPoint("1,000")).toEqual "1,000"
+      it "handle also when there is only one number after the decimal separator", ->
+        expect(priceParser.replaceCommaByFinalPoint("1,0")).toEqual "1.0"
+    describe "test removeThousandsSeparator() method", ->
+      it "handle the default case", ->
+        expect(priceParser.removeThousandsSeparator("1,000", ",")).toEqual "1000"
+        expect(priceParser.removeThousandsSeparator("1,000,000", ",")).toEqual "1000000"
+      it "handle the case with decimal separator", ->
+         expect(priceParser.removeThousandsSeparator("1,000,000.00", ",")).toEqual "1000000.00"
+      it "handle the case when it is actually a decimal separator (and not a thousands one)", ->
+         expect(priceParser.removeThousandsSeparator("1,00", ",")).toEqual "1,00"
+
   describe "with point as decimal separator and comma as thousands separator for I18n service", ->
 
     beforeEach ->
