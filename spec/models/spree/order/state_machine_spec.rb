@@ -31,9 +31,9 @@ describe Spree::Order do
         context "when credit card processing fails" do
           before { allow(order).to receive_messages process_payments!: false }
 
-          it "should not complete the order" do
+          it "should still complete the order" do
             order.next
-            expect(order.state).to eq "payment"
+            expect(order.state).to eq "complete"
           end
         end
       end
@@ -41,9 +41,9 @@ describe Spree::Order do
       context "when payment processing fails" do
         before { allow(order).to receive_messages process_payments!: false }
 
-        it "cannot transition to complete" do
+        it "can transition to complete" do
           order.next
-          expect(order.state).to eq "payment"
+          expect(order.state).to eq "complete"
         end
       end
     end

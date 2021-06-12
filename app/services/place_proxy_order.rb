@@ -21,6 +21,7 @@ class PlaceProxyOrder
     load_changes
     return handle_empty_order if empty_order?
 
+    order.process_payments! if order.payment_required?
     move_to_completion
     send_placement_email
   rescue StandardError => e

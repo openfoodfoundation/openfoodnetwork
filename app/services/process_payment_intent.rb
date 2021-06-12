@@ -54,12 +54,8 @@ class ProcessPaymentIntent
   attr_reader :order, :payment_intent, :payment
 
   def process_payment
-    if order.state == "payment"
-      # Moves the order to completed, which calls #process_payments!
-      OrderWorkflow.new(order).next
-    else
-      order.process_payments!
-    end
+    OrderWorkflow.new(order).next if order.state == "payment"
+    order.process_payments!
   end
 
   def ready_for_capture?

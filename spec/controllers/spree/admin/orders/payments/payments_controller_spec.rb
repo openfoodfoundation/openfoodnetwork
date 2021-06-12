@@ -48,7 +48,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         before do
           allow_any_instance_of(Spree::Payment).
-            to receive(:process!).
+            to receive(:process_offline!).
             and_raise(Spree::Core::GatewayError.new("Payment Gateway Error"))
         end
 
@@ -110,7 +110,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
               payment.update state: "pending"
             end
-            allow_any_instance_of(Spree::Payment).to receive(:process!).and_return(true)
+            allow_any_instance_of(Spree::Payment).to receive(:process_offline!).and_return(true)
           end
 
           it "makes a payment with the provided card details" do
