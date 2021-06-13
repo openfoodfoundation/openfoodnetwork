@@ -1,5 +1,3 @@
-@import "compass/css3/transition";
-
 .off-canvas-fixed {
   @include transition(transform 1000ms ease-in-out);
 }

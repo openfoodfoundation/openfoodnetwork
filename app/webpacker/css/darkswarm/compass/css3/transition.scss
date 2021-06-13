@@ -1,8 +1,5 @@
-@import "compass/support";
-
 // The the user threshold for transition support. Defaults to `$graceful-usage-threshold`
 $transition-support-threshold: $graceful-usage-threshold !default;
-
 
 // CSS Transitions
 // Currently only works in Webkit.

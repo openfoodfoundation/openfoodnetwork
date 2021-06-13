@@ -3,8 +3,6 @@
 // they become available in browsers:
 // http://www.w3.org/TR/2000/WD-css3-userint-20000216
 
-@import "compass/support";
-
 // The prefixed support threshold for user-select.
 // Defaults to the $graceful-usage-threshold.
 $userselect-support-threshold: $graceful-usage-threshold !default;

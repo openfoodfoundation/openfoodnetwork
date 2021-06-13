@@ -1,9 +1,3 @@
-@import "branding";
-@import "mixins";
-@import "typography";
-@import "animations";
-@import "variables";
-
 #producer-signup.pane, #shops-signup.pane {
   @include tiledPane;
 

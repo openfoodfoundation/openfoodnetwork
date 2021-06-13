@@ -1,7 +1,3 @@
-@import 'branding';
-@import 'mixins';
-@import 'admin/globals/variables';
-
 // Generic styles for use
 
 .modal-centered {
@@ -32,10 +28,10 @@
   margin-bottom: 0.5rem;
 
   a.heading {
-    color: $color-link;
+    color: $teal-400;
 
     &:hover {
-      color: $color-link-hover;
+      color: $teal-500;
       text-decoration: underline;
     }
   }
