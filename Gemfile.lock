@@ -302,9 +302,6 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     foreman (0.87.2)
     formatador (0.2.5)
-    foundation-icons-sass-rails (3.0.0)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
     foundation-rails (5.5.2.1)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
@@ -734,7 +731,6 @@ DEPENDENCIES
   flipper-ui
   fog-aws (~> 2.0)
   foreman
-  foundation-icons-sass-rails
   foundation-rails (= 5.5.2.1)
   fuubar (~> 2.5.1)
   geocoder
