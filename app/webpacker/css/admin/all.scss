@@ -1,25 +1,14 @@
-/*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *
+@import 'vendor/assets/stylesheets/normalize';
+@import 'vendor/assets/stylesheets/responsive-tables';
+@import 'vendor/assets/stylesheets/jquery.powertip';
+@import 'jquery.ui.dialog';
+@import '../shared/textAngular';
+@import '../shared/ng-tags-input.min';
+@import 'select2';
+@import '~flatpickr/dist/flatpickr';
+@import '~flatpickr/dist/themes/material_blue';
+@import '~shortcut-buttons-flatpickr/dist/themes/light';
 
- *= require normalize
- *= require responsive-tables
- *= require jquery.powertip
- *= require jquery.ui.dialog
- *= require shared/textAngular
- *= require shared/ng-tags-input.min
- *= require select2
- *= require flatpickr/dist/flatpickr
- *= require flatpickr/dist/themes/material_blue
- *= require shortcut-buttons-flatpickr/dist/themes/light
-
- *= require_self
-*/
-
-//************************************************************************//
-//************************************************************************//
 @import 'globals/functions';
 @import 'globals/variables';
 @import 'variables';
