@@ -9,13 +9,13 @@
    *= require_self
 */
 @import 'variables';
-@import 'foundation';
-@import 'foundation-icons';
+//@import 'foundation';
+//@import 'foundation-icons';
 
-@import 'base/*';
-@import 'layout/*';
-@import '*';
-@import 'pages/*';
+@import 'base/colors';
+@import 'layout/offcanvas';
+//@import '*';
+@import 'pages/login_modal';
 @import 'web/all';
 
 ofn-modal {

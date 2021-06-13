@@ -15,7 +15,7 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
     %link{href: font_path("OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
 
-    = stylesheet_link_tag "darkswarm/all", "data-turbo-track": "reload"
+    = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload"
     = javascript_pack_tag "application", "data-turbo-track": "reload"
 
     = render "layouts/shopfront_script" if @shopfront_layout
