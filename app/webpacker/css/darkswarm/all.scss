@@ -9,8 +9,7 @@
    *= require_self
 */
 @import 'variables';
-//@import 'foundation';
-//@import 'foundation-icons';
+@import "~foundation-sites/scss/foundation";
 
 @import 'base/colors';
 @import 'layout/offcanvas';

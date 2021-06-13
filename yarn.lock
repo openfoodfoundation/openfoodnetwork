@@ -6164,6 +6164,11 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
+foundation-sites@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/foundation-sites/-/foundation-sites-5.5.2.tgz#99c387ce3cd79672f79cb31745b39b5b1c782c03"
+  integrity sha1-mcOHzjzXlnL3nLMXRbObWxx4LAM=
+
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
