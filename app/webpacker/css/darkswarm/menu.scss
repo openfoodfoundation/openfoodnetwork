@@ -14,7 +14,7 @@ nav.top-bar {
   z-index: 190;
 }
 
-@media #{$large-only} {
+@media #{$large-up} {
   .top-bar--menu-item-with-icon span {
     display: none;
   }
@@ -237,7 +237,7 @@ nav.top-bar {
 [role="main"] {
   margin-top: 2.8em;
 
-  @media #{$large-up} {
+  @media  #{$large-up} {
     margin-top: 0;
   }
 }

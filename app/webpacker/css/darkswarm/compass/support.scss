@@ -109,3 +109,10 @@ $default-capability-options: (
        #{inspect($current-browser-versions)} */
   }
 }
+
+// Output a property and value using the current prefix.
+// It will be unprefixed if $current-prefix is null.
+@mixin prefix-prop($property, $value, $prefix: $current-prefix) {
+  #{prefix-identifier($property, $prefix)}: $value;
+}
+

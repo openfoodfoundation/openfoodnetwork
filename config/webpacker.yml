@@ -13,6 +13,8 @@ default: &default
   additional_paths: [
     'vendor',
     'app/webpacker/css',
+    'app/webpacker/fonts',
+    'app/webpacker/images',
     'engines/web/app/assets/stylesheets'
   ]
 
@@ -50,6 +52,9 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .eot
+    - .ttf
+    - .woff
 
 development:
   <<: *default

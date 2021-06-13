@@ -31,7 +31,7 @@
     padding: 0 2.25em 0 2.75em;
     width: 100%;
     min-width: 0;
-    background: $white image-url("icn-search-grey.png") 1em center no-repeat;
+    background: $white url("../images/icn-search-grey.png") 1em center no-repeat;
     font-size: 1rem; // avoid zoom on iphone, see issue #4535
 
     &::placeholder {

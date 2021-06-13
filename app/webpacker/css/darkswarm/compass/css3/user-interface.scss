@@ -55,7 +55,7 @@ $input-placeholder-support-threshold: $graceful-usage-threshold !default;
     @if $current-prefix == -webkit {
       &::-webkit-input-placeholder { @content; }
     }
-    @elseif $current-prefix == -moz {
+    @else if $current-prefix == -moz {
       // for Firefox 19 and below
       @if support-legacy-browser("firefox", "4", "19", $threshold: $input-placeholder-support-threshold) {
         &:-moz-placeholder { @content; }
@@ -63,7 +63,7 @@ $input-placeholder-support-threshold: $graceful-usage-threshold !default;
       // for Firefox 20 and above
       &::-moz-placeholder { @content; }
     }
-    @elseif $current-prefix == -ms {
+    @else if $current-prefix == -ms {
       &:-ms-input-placeholder { @content; }
     }
   }

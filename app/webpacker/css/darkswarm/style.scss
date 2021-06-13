@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'OFN';
-	src: font-url('OFN-v2.eot');
-	src: font-url('OFN-v2.eot') format('embedded-opentype'),
-		font-url('OFN-v2.woff') format('woff'),
-		font-url('OFN-v2.ttf') format('truetype'),
-		font-url('OFN-v2.svg') format('svg');
+	src: url('../fonts/OFN-v2.eot');
+	src: url('../fonts/OFN-v2.eot') format('embedded-opentype'),
+		url('../fonts/OFN-v2.woff') format('woff'),
+		url('../fonts/OFN-v2.ttf') format('truetype'),
+		url('../fonts/OFN-v2.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

@@ -42,7 +42,7 @@
 }
 
 #stats.pane {
-  background-image: image-url("home/background-blurred-oranges.jpg");
+  background-image: url("../images/home/background-blurred-oranges.jpg");
   background-position: center center;
   background-color: $ofn-grey;
 
@@ -94,7 +94,7 @@
   }
 
   .home-icon-box {
-    background-image: image-url("ofn-o.png");
+    background-image: url("../images/ofn-o.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: auto 100%;
@@ -121,15 +121,15 @@
       background-size: auto 100%;
 
       &.search {
-        background-image: image-url("icon-mask-magnifier.png");
+        background-image: url("../images/icon-mask-magnifier.png");
       }
 
       &.shop {
-        background-image: image-url("icon-mask-apple.png");
+        background-image: url("../images/icon-mask-apple.png");
       }
 
       &.pick-up-delivery {
-        background-image: image-url("icon-mask-truck.png");
+        background-image: url("../images/icon-mask-truck.png");
       }
     }
   }
