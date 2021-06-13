@@ -8,7 +8,7 @@
   }
   
   .jstree-icon {
-    @extend [class^="icon-"]:before;
+    @extend [class^="icon-"], :before;
   }
 
   .jstree-open > .jstree-icon {    
@@ -46,7 +46,7 @@
 #jstree-marker {
   background-image: none !important;
   background-color: transparent !important;
-  @extend [class^="icon-"]:before;   
+  @extend [class^="icon-"], :before;
 }
 #vakata-dragged.jstree-apple .jstree-invalid {
   @extend .icon-remove;  

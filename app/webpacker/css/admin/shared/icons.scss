@@ -15,12 +15,12 @@
   }
 }
 
-.icon-email:before    { @extend .icon-envelope:before }
-.icon-resend_authorization_email:before    { @extend .icon-envelope:before }
-.icon-resume:before   { @extend .icon-refresh:before  }
+.icon-email:before    { @extend .icon-envelope, :before }
+.icon-resend_authorization_email:before    { @extend .icon-envelope, :before }
+.icon-resume:before   { @extend .icon-refresh, :before  }
 
 .icon-cancel:before,
-.icon-void:before     { @extend .icon-remove:before   }
+.icon-void:before     { @extend .icon-remove, :before   }
 
-.icon-capture:before  { @extend .icon-ok:before       }
-.icon-credit:before   { @extend .icon-ok:before       }
+.icon-capture:before  { @extend .icon-ok, :before       }
+.icon-credit:before   { @extend .icon-ok, :before       }

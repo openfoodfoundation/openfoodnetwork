@@ -32,7 +32,7 @@
       background-image: none !important;
       font-size: 100% !important;
       @extend .icon-remove;
-      @extend [class^="icon-"]:before;
+      @extend [class^="icon-"], :before;
       margin-top: 2px;
     }
   }
@@ -66,7 +66,7 @@
   padding: 0 9px 0 0;
 
   &:before {
-    @extend [class^="icon-"]:before;
+    @extend [class^="icon-"], :before;
 
     position: absolute;
     top: 13px;
@@ -174,7 +174,7 @@
         background-image: none !important;
         font-size: 85% !important;
         @extend .icon-remove;
-        @extend [class^="icon-"]:before;
+        @extend [class^="icon-"], :before;
         margin-left: 2px;
         color: $color-1;
       }

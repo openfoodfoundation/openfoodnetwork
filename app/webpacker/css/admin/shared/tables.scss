@@ -107,7 +107,7 @@ table {
     }
 
     .handle {
-      @extend [class^="icon-"]:before;
+      @extend [class^="icon-"], :before;
       @extend .icon-reorder;
       cursor: move;
     }
