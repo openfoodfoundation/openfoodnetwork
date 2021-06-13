@@ -1,7 +1,7 @@
 @import 'vendor/assets/stylesheets/normalize';
 @import 'vendor/assets/stylesheets/responsive-tables';
 @import 'vendor/assets/stylesheets/jquery.powertip';
-@import 'jquery.ui.dialog';
+@import '~jquery-ui/themes/base/jquery.ui.dialog';
 @import '../shared/textAngular';
 @import '../shared/ng-tags-input.min';
 @import 'select2';

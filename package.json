@@ -33,6 +33,7 @@
     "cable_ready": "^5.0.0-pre2",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.2",
+    "jquery-ui": "1.10.4",
     "moment": "^2.29.1",
     "mrujs": "^0.7.2",
     "shortcut-buttons-flatpickr": "^0.3.1",
