@@ -1,11 +1,3 @@
-@import 'admin/globals/functions';
-@import 'admin/globals/variables';
-@import 'admin/globals/mixins';
-
-@import 'admin/shared/forms';
-
-@import 'admin/plugins/font-awesome';
-
 .select2-container {
   &:hover .select2-choice, &.select2-container-active .select2-choice {
     background-color: $color-sel-hover-bg !important;

@@ -4,7 +4,6 @@
 @import '~jquery-ui/themes/base/jquery.ui.dialog';
 @import '../shared/textAngular';
 @import '../shared/ng-tags-input.min';
-@import 'select2';
 @import '~flatpickr/dist/flatpickr';
 @import '~flatpickr/dist/themes/material_blue';
 @import '~shortcut-buttons-flatpickr/dist/themes/light';
@@ -14,6 +13,7 @@
 @import 'variables';
 @import 'globals/mixins';
 
+@import '../shared/variables/layout';
 @import 'shared/typography';
 @import 'shared/tables';
 @import 'shared/icons';
@@ -21,7 +21,6 @@
 @import 'shared/layout';
 
 @import 'plugins/flatpickr-customization';
-
 @import 'plugins/powertip';
 @import 'plugins/jstree';
 @import 'plugins/font-awesome';
