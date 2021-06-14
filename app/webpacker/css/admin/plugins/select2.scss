@@ -66,7 +66,7 @@
   }
 
   input {
-    @extend input[type="text"];
+    @extend input, [type="text"];
 
     padding: 6px 0 6px 25px;
     margin: 5px 0 0 5px;
@@ -143,7 +143,7 @@
     }
   }
   .select2-choices {
-    @extend input[type="text"];
+    @extend input, [type="text"];
     padding: 6px 3px 3px 3px;
     box-shadow: none;
     background-image: none !important;
