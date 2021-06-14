@@ -6,7 +6,7 @@
 %p.error{ ng: { show: 'error' } }
   {{error}}
 
-%img.spinner{ src: image_pack_path("spinning-circles.svg"), ng: { show: "loading" } }
+%img.spinner{ src: image_path("/spinning-circles.svg"), ng: { show: "loading" } }
 %p{ ng: { show: "loading" } }
   = t('js.admin.orders.index.please_wait')
 
