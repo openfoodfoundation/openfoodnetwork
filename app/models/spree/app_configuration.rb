@@ -27,7 +27,7 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     # Should state/state_name be required
     preference :address_requires_state, :boolean, default: true
-    preference :admin_interface_logo, :string, default: 'ofn-logo.png'
+    preference :admin_interface_logo, :string, default: '/default_images/ofn-logo.png'
     preference :admin_products_per_page, :integer, default: 10
     # Should only be true if you don't need to track inventory
     preference :allow_backorder_shipping, :boolean, default: false
@@ -48,7 +48,7 @@ module Spree
     preference :default_seo_title, :string, default: ''
     preference :hide_cents, :boolean, default: false
     preference :layout, :string, default: 'darkswarm'
-    preference :logo, :string, default: 'ofn-logo.png'
+    preference :logo, :string, default: '/default_images/ofn-logo.png'
 
     # Maximum nesting level in taxons menu
     preference :max_level_in_taxons_menu, :integer, default: 1
