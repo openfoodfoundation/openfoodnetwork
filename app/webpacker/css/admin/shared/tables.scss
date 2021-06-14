@@ -104,8 +104,11 @@ table {
     }
 
     .handle {
-      @extend [class^="icon-"], :before;
       @extend .icon-reorder;
+      font-family: FontAwesome;
+      text-decoration: inherit;
+      display: inline-block;
+      speak: none;
       cursor: move;
     }
 
