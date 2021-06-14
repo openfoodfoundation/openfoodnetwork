@@ -36,6 +36,7 @@
     "jquery-ui": "1.10.4",
     "moment": "^2.29.1",
     "mrujs": "^0.7.2",
+    "select2": "^3.4.5",
     "shortcut-buttons-flatpickr": "^0.3.1",
     "stimulus": "^2.0.0",
     "webpack": "~4",
