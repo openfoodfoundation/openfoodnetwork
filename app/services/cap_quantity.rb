@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CapQuantityAndStoreChanges
+class CapQuantity
   def initialize(order)
     @order = order
     @changes = {}

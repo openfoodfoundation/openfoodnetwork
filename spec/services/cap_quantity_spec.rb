@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CapQuantityAndStoreChanges do
+describe CapQuantity do
   describe "checking that line items are available to purchase" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:shop) { order_cycle.coordinator }
@@ -26,7 +26,7 @@ describe CapQuantityAndStoreChanges do
         end
 
         it "caps quantity at the stock level for stock-limited items, and reports the change" do
-          changes = CapQuantityAndStoreChanges.new(order.reload).call
+          changes = CapQuantity.new(order.reload).call
 
           expect(line_item1.reload.quantity).to be 3 # not capped
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -49,7 +49,7 @@ describe CapQuantityAndStoreChanges do
         end
 
         it "sets quantity to 0 for unavailable items, and reports the change" do
-          changes = CapQuantityAndStoreChanges.new(order.reload).call
+          changes = CapQuantity.new(order.reload).call
 
           expect(line_item1.reload.quantity).to be 0 # unavailable
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -68,11 +68,8 @@ describe CapQuantityAndStoreChanges do
           end
 
           it "removes the unavailable items from the shipment" do
-            expect {
-              CapQuantityAndStoreChanges.new(order.reload).call
-            }.to change {
-              order.reload.shipment.manifest.size
-            }.from(2).to(1)
+            expect { CapQuantity.new(order.reload).call }
+              .to change { order.reload.shipment.manifest.size }.from(2).to(1)
           end
         end
       end

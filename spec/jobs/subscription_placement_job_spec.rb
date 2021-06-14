@@ -63,7 +63,7 @@ describe SubscriptionPlacementJob do
           proxy_order,
           summarizer,
           JobLogger.logger,
-          CapQuantityAndStoreChanges.new(proxy_order.order)
+          CapQuantity.new(proxy_order.order)
         )
 
         allow(PlaceOrder).to receive(:new) { service }
@@ -105,7 +105,7 @@ describe SubscriptionPlacementJob do
           proxy_order,
           summarizer,
           JobLogger.logger,
-          CapQuantityAndStoreChanges.new(order)
+          CapQuantity.new(order)
         )
 
         ActionMailer::Base.deliveries.clear
@@ -132,7 +132,7 @@ describe SubscriptionPlacementJob do
       end
 
       context "when no stock items are available after capping stock" do
-        let(:store_changes) { CapQuantityAndStoreChanges.new(order) }
+        let(:store_changes) { CapQuantity.new(order) }
 
         before do
           allow(store_changes).to receive(:unavailable_stock_lines_for) { order.line_items }
@@ -168,7 +168,7 @@ describe SubscriptionPlacementJob do
             proxy_order,
             summarizer,
             JobLogger.logger,
-            CapQuantityAndStoreChanges.new(order)
+            CapQuantity.new(order)
           )
         end
 
