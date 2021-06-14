@@ -14,7 +14,7 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a logo" do
       let(:image) do
-        image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
+        image_path = File.open(Rails.root.join("app", "webpacker", "images", "logo-black.png"))
         Rack::Test::UploadedFile.new(image_path, "image/png")
       end
 
@@ -40,7 +40,7 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a promo image" do
       let(:image) do
-        image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
+        image_path = File.open(Rails.root.join("app", "webpacker", "images", "logo-black.png"))
         Rack::Test::UploadedFile.new(image_path, "image/png")
       end
 

@@ -17,7 +17,7 @@ module Api
     }
 
     describe "removing logo" do
-      image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
+      image_path = File.open(Rails.root.join("app", "webpacker", "images", "logo-black.png"))
       let(:image) { Rack::Test::UploadedFile.new(image_path, "image/png") }
 
       let(:enterprise) { create(:enterprise, owner: enterprise_owner, logo: image) }

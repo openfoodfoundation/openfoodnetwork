@@ -12,7 +12,7 @@ module Api
         allow(controller).to receive(:spree_current_user) { current_api_user }
       end
 
-      image_path = File.open(Rails.root.join('app', 'assets', 'images', 'logo-black.png'))
+      image_path = File.open(Rails.root.join('app', 'webpacker', 'images', 'logo-black.png'))
       let(:image) { Rack::Test::UploadedFile.new(image_path, 'image/png') }
       let!(:product_without_image) { create(:product) }
       let!(:product_with_image) { create(:product_with_image) }

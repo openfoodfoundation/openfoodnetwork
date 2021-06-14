@@ -23,13 +23,13 @@ describe "Uploading Terms and Conditions PDF" do
         end
       end
 
-      let(:white_pdf_file_name) { Rails.root.join("app/assets/images/logo-white.pdf") }
-      let(:black_pdf_file_name) { Rails.root.join("app/assets/images/logo-black.pdf") }
+      let(:white_pdf_file_name) { Rails.root.join("app/webpacker/images/logo-white.pdf") }
+      let(:black_pdf_file_name) { Rails.root.join("app/webpacker/images/logo-black.pdf") }
 
       around do |example|
         # Create fake PDFs from PNG images
-        FileUtils.cp(Rails.root.join("app/assets/images/logo-white.png"), white_pdf_file_name)
-        FileUtils.cp(Rails.root.join("app/assets/images/logo-black.png"), black_pdf_file_name)
+        FileUtils.cp(Rails.root.join("app/webpacker/images/logo-white.png"), white_pdf_file_name)
+        FileUtils.cp(Rails.root.join("app/webpacker/images/logo-black.png"), black_pdf_file_name)
 
         example.run
 

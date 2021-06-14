@@ -35,7 +35,7 @@ describe "
   end
 
   it "uploads logos" do
-    attach_file "logo", Rails.root.join('app/assets/images/logo-white.png')
+    attach_file "logo", Rails.root.join('app/webpacker/images/logo-white.png')
     click_button "Update"
     expect(page).to have_content "Your content has been successfully updated!"
 
