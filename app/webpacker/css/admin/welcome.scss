@@ -7,7 +7,7 @@
 
     @include fullbg;
     background-color: black;
-    background-image: image-url("home/tagline-bg.jpg");
+    background-image: url("../images/home/tagline-bg.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     margin-bottom: 2em;
