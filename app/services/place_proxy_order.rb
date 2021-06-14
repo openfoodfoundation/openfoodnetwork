@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PlaceOrder
+class PlaceProxyOrder
   def initialize(proxy_order, summarizer, logger, stock_changes_loader)
     @proxy_order = proxy_order
     @subscription = proxy_order.subscription

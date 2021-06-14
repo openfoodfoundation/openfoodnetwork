@@ -59,14 +59,14 @@ describe SubscriptionPlacementJob do
 
       it "processes placeable proxy_orders" do
         summarizer = instance_double(OrderManagement::Subscriptions::Summarizer)
-        service = PlaceOrder.new(
+        service = PlaceProxyOrder.new(
           proxy_order,
           summarizer,
           JobLogger.logger,
           CapQuantity.new(proxy_order.order)
         )
 
-        allow(PlaceOrder).to receive(:new) { service }
+        allow(PlaceProxyOrder).to receive(:new) { service }
         allow(service).to receive(:call)
 
         job.perform
@@ -92,8 +92,8 @@ describe SubscriptionPlacementJob do
 
     before do
       expect_any_instance_of(Spree::Payment).to_not receive(:process!)
-      allow_any_instance_of(PlaceOrder).to receive(:send_placement_email)
-      allow_any_instance_of(PlaceOrder).to receive(:send_empty_email)
+      allow_any_instance_of(PlaceProxyOrder).to receive(:send_placement_email)
+      allow_any_instance_of(PlaceProxyOrder).to receive(:send_empty_email)
     end
 
     context "when the order is already complete" do
@@ -101,7 +101,7 @@ describe SubscriptionPlacementJob do
 
       it "records an issue and ignores it" do
         summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
-        service = PlaceOrder.new(
+        service = PlaceProxyOrder.new(
           proxy_order,
           summarizer,
           JobLogger.logger,
@@ -140,7 +140,7 @@ describe SubscriptionPlacementJob do
 
         it "does not place the order, clears all adjustments, and sends an empty_order email" do
           summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_issue: true)
-          service = PlaceOrder.new(
+          service = PlaceProxyOrder.new(
             proxy_order,
             summarizer,
             JobLogger.logger,
@@ -164,7 +164,7 @@ describe SubscriptionPlacementJob do
           instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_success: true)
         end
         let(:service) do
-          PlaceOrder.new(
+          PlaceProxyOrder.new(
             proxy_order,
             summarizer,
             JobLogger.logger,
