@@ -49,8 +49,7 @@ describe CheckoutController, type: :controller do
     let(:shipping_method) { distributor.shipping_methods.first }
 
     before do
-      order.line_items << create(:line_item,
-                                 variant: order_cycle.variants_distributed_by(distributor).first)
+      order.contents.add(order_cycle.variants_distributed_by(distributor).first)
 
       allow(controller).to receive(:current_distributor).and_return(distributor)
       allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
