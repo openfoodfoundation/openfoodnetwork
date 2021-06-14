@@ -97,7 +97,7 @@
     %fieldset.no-border-bottom{ id: "image" }
       %legend{align: "center"}= t(".image")
       .row
-        = image_pack_tag "/noimage/product.png", class: "four columns alpha"
+        = image_tag "/noimage/product.png", class: "four columns alpha"
       .row
         = f.fields_for 'images_attributes[]', f.object.images.build do |image_fields|
           = image_fields.file_field :attachment

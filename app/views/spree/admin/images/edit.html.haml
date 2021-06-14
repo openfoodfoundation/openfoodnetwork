@@ -11,7 +11,7 @@
     .field.alpha.three.columns.align-center
       = f.label t('spree.thumbnail')
       %br/
-      = link_to image_pack_tag(@image.attachment.url(:small)), @image.attachment.url(:product)
+      = link_to image_tag(@image.attachment.url(:small)), @image.attachment.url(:product)
     .nine.columns.omega
       = render partial: 'form', locals: { f: f }
     .clear
