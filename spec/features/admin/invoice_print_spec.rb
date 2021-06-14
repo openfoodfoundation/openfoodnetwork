@@ -23,6 +23,10 @@ describe '
                                                 payment_state: 'balance_due')
   end
 
+  before do
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+  end
+
   describe "that contains right Payment Description at Checkout information" do
     let!(:payment_method1) do
       create(:stripe_sca_payment_method, distributors: [distributor], description: "description1")
