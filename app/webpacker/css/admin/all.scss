@@ -13,6 +13,8 @@
 @import 'variables';
 @import 'globals/mixins';
 
+@import 'plugins/font-awesome';
+
 @import '../shared/variables/layout';
 @import 'shared/typography';
 @import 'shared/tables';
@@ -23,7 +25,6 @@
 @import 'plugins/flatpickr-customization';
 @import 'plugins/powertip';
 @import 'plugins/jstree';
-@import 'plugins/font-awesome';
 @import 'plugins/select2';
 
 @import 'sections/orders';
