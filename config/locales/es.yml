@@ -404,8 +404,16 @@ es:
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
     terms_of_service_files:
+      create:
+        select_file: "Primero seleccione un archivo."
       show:
+        title: "Archivos de condiciones de servicio"
+        no_files: "Aún no se han subido los términos de servicio."
+        using_default_terms_html: "El sitio está actualmente vinculado a su antiguo %{tos_link}."
+        current_terms_html: "Ver el archivo %{tos_link} actual. Tiempo de carga: %{datetime}."
         terms_of_service: "Términos de servicio"
+        delete: "Eliminar archivo"
+        confirm_delete: "¿Está seguro de que desea eliminar el archivo de Condiciones de servicio actual?"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"

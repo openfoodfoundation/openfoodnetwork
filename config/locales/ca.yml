@@ -404,8 +404,16 @@ ca:
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
       embedded_shopfronts_whitelist: "Llista blanca de dominis externs"
     terms_of_service_files:
+      create:
+        select_file: "Seleccioneu primer un fitxer."
       show:
+        title: "Fitxers de Condicions del servei"
+        no_files: "Encara no s’han penjat termes de serveis."
+        using_default_terms_html: "El lloc actualment enllaça amb el vostre antic %{tos_link}."
+        current_terms_html: "Vegeu l’actual %{tos_link}. Temps de càrrega: %{datetime}."
         terms_of_service: "Termes del servei"
+        delete: "Eliminar arxiu"
+        confirm_delete: "Esteu segur que voleu suprimir el fitxer de condicions del servei actual?"
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
