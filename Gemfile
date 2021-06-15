@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby "2.5.9"
+ruby "2.7.3"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'rails', '~> 6.0.3.7'
@@ -66,6 +66,7 @@ gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on', '~> 8.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
+gem 'bigdecimal', '1.4.2' # There are issues using later versions of bigdecimal
 gem 'bootsnap', require: false
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
