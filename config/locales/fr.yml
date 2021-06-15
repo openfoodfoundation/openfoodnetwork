@@ -404,8 +404,16 @@ fr:
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     terms_of_service_files:
+      create:
+        select_file: "Veuillez d'abord sélectionner un document."
       show:
+        title: "CGU & CGV"
+        no_files: "Aucun document n'a été mis en ligne pour l'instant."
+        using_default_terms_html: "Le site pointe actuellement sur l'ancien %{tos_link}."
+        current_terms_html: "Visualiser l'actuel %{tos_link}. Temps de chargement : %{datetime}."
         terms_of_service: "Conditions Générales d'Utilisation"
+        delete: "Supprimer le fichier"
+        confirm_delete: "Etes-vous certain de vouloir supprimer les CGU & CGV actuelles ?"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"

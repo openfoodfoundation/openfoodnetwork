@@ -4,6 +4,7 @@ en_GB:
     attributes:
       spree/user:
         password: "Password"
+        password_confirmation: "Password confirmation"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -403,8 +404,16 @@ en_GB:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     terms_of_service_files:
+      create:
+        select_file: "Please select a file first."
       show:
+        title: "Terms of Service files"
+        no_files: "No terms of services have been uploaded yet."
+        using_default_terms_html: "The site is currently linking to your old %{tos_link}."
+        current_terms_html: "View the current %{tos_link}. Upload time: %{datetime}."
         terms_of_service: "Terms of Service"
+        delete: "Delete file"
+        confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
     number_localization:
       number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
