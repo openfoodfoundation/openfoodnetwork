@@ -4,6 +4,7 @@ require "system_helper"
 
 describe "Uploading Terms and Conditions PDF" do
   include AuthenticationHelper
+  include FileHelper
 
   context "as an Enterprise user", js: true do
     let(:enterprise_user) { create(:user, enterprise_limit: 1) }
@@ -28,8 +29,8 @@ describe "Uploading Terms and Conditions PDF" do
 
       around do |example|
         # Create fake PDFs from PNG images
-        FileUtils.cp(Rails.root.join("app/webpacker/images/logo-white.png"), white_pdf_file_name)
-        FileUtils.cp(Rails.root.join("app/webpacker/images/logo-black.png"), black_pdf_file_name)
+        FileUtils.cp(white_logo_path, white_pdf_file_name)
+        FileUtils.cp(black_logo_path, black_pdf_file_name)
 
         example.run
 

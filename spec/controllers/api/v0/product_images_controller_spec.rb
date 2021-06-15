@@ -5,6 +5,7 @@ require 'spec_helper'
 module Api
   describe V0::ProductImagesController, type: :controller do
     include AuthenticationHelper
+    include FileHelper
     render_views
 
     describe "uploading an image" do
@@ -12,8 +13,7 @@ module Api
         allow(controller).to receive(:spree_current_user) { current_api_user }
       end
 
-      image_path = File.open(Rails.root.join('app', 'webpacker', 'images', 'logo-black.png'))
-      let(:image) { Rack::Test::UploadedFile.new(image_path, 'image/png') }
+      let(:image) { Rack::Test::UploadedFile.new(black_logo_file, 'image/png') }
       let!(:product_without_image) { create(:product) }
       let!(:product_with_image) { create(:product_with_image) }
       let(:current_api_user) { create(:admin_user) }

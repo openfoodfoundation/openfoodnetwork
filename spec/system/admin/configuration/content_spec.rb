@@ -7,6 +7,7 @@ describe "
   I want to configure the site content
 " do
   include AuthenticationHelper
+  include FileHelper
   include WebHelper
 
   before do
@@ -35,7 +36,7 @@ describe "
   end
 
   it "uploads logos" do
-    attach_file "logo", Rails.root.join('app/webpacker/images/logo-white.png')
+    attach_file "logo", white_logo_path
     click_button "Update"
     expect(page).to have_content "Your content has been successfully updated!"
 

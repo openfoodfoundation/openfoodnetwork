@@ -8,6 +8,7 @@ describe '
 ' do
   include WebHelper
   include AuthenticationHelper
+  include FileHelper
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
@@ -503,7 +504,7 @@ describe '
 
     it "loading edit product image page including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../app/webpacker/images/logo-white.png', __dir__))
+      image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.master.id,
                                          viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
@@ -523,7 +524,7 @@ describe '
 
     it "updating a product image including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../app/webpacker/images/logo-white.png', __dir__))
+      image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.master.id,
                                          viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
@@ -544,7 +545,7 @@ describe '
       unsupported_image_file_path = Rails.root + "README.md"
       product = create(:simple_product, supplier: @supplier2)
 
-      image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
+      image = white_logo_file
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
                           alt: "position 1", attachment: image, position: 1)
 
@@ -559,7 +560,7 @@ describe '
 
     it "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../app/webpacker/images/logo-white.png', __dir__))
+      image = white_logo_file
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
                           alt: "position 1", attachment: image, position: 1)
 
@@ -577,7 +578,7 @@ describe '
 
     it "deleting product image including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../app/webpacker/images/logo-white.png', __dir__))
+      image = white_logo_file
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
                           alt: "position 1", attachment: image, position: 1)
 

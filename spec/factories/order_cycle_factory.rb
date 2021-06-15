@@ -31,12 +31,11 @@ FactoryBot.define do
       # Products with images
       proxy.exchanges.incoming.each do |exchange|
         product = create(:product, supplier: exchange.sender)
-        image = File.open(File.expand_path('../../app/webpacker/images/logo-white.png', __dir__))
         Spree::Image.create(
           viewable_id: product.master.id,
           viewable_type: 'Spree::Variant',
           alt: "position 1",
-          attachment: image,
+          attachment: white_logo_file,
           position: 1
         )
 

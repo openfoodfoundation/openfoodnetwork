@@ -44,8 +44,7 @@ FactoryBot.define do
 
   factory :product_with_image, parent: :product do
     after(:create) do |product|
-      image = File.open(Rails.root.join('app', 'webpacker', 'images', 'logo-white.png'))
-      Spree::Image.create(attachment: image,
+      Spree::Image.create(attachment: white_logo_file,
                           viewable_id: product.master.id,
                           viewable_type: 'Spree::Variant')
     end
