@@ -1,4 +1,9 @@
 Openfoodnetwork::Application.routes.draw do
+  unless Rails.env.production?
+    # Mount DFC API endpoints
+    mount DfcProvider::Engine, at: '/'
+  end
+  
   namespace :api do
     namespace :v0 do
       resources :products do
