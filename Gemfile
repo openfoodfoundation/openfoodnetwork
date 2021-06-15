@@ -162,6 +162,7 @@ group :test do
 end
 
 group :development do
+  gem 'web-console'
   gem 'debugger-linecache'
   gem 'pry'
   gem 'pry-byebug'
