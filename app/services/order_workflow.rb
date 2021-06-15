@@ -8,7 +8,7 @@ class OrderWorkflow
   end
 
   def complete
-    advance_order(advance_order_options)
+    advance_to_state("complete", advance_order_options)
   end
 
   def complete!
@@ -24,11 +24,7 @@ class OrderWorkflow
   end
 
   def advance_to_payment
-    until order.state == "payment"
-      break unless order.next
-
-      after_transition_hook(advance_order_options)
-    end
+    advance_to_state("payment", advance_order_options)
   end
 
   private
@@ -38,8 +34,8 @@ class OrderWorkflow
     { shipping_method_id: shipping_method_id }
   end
 
-  def advance_order(options)
-    until order.state == "complete"
+  def advance_to_state(target_state, options)
+    until order.state == target_state
       break unless order.next
 
       after_transition_hook(options)
