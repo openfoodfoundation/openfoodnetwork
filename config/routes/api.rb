@@ -2,6 +2,9 @@ Openfoodnetwork::Application.routes.draw do
   unless Rails.env.production?
     mount Rswag::Ui::Engine => '/api-docs'
     mount Rswag::Api::Engine => '/api-docs'
+
+    # Mount DFC API endpoints
+    mount DfcProvider::Engine, at: '/'
   end
 
   namespace :api do
