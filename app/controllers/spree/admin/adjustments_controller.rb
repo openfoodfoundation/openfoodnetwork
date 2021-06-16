@@ -5,10 +5,10 @@ module Spree
     class AdjustmentsController < ::Admin::ResourceController
       belongs_to 'spree/order', find_by: :number
 
-      prepend_before_action :set_included_tax, only: [:create, :update]
       before_action :set_order_id, only: [:create, :update]
       before_action :skip_changing_canceled_orders, only: [:create, :update]
       after_action :update_order, only: [:create, :update, :destroy]
+      after_action :apply_tax, only: [:create, :update]
 
       private
 
@@ -41,19 +41,13 @@ module Spree
         redirect_to admin_order_adjustments_path(@order) if @order.canceled?
       end
 
-      def set_included_tax
-        included_tax = 0
-        if params[:tax_rate_id].present?
-          tax_rate = TaxRate.find params[:tax_rate_id]
-          amount = params[:adjustment][:amount].to_f
-          included_tax = tax_rate.compute_tax amount
-        end
-        params[:adjustment][:included_tax] = included_tax
+      def apply_tax
+        Spree::TaxRate.adjust(@order, [@adjustment])
       end
 
       def permitted_resource_params
         params.require(:adjustment).permit(
-          :label, :amount, :included_tax
+          :label, :amount, :tax_category_id
         )
       end
     end
