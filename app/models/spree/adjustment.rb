@@ -137,6 +137,14 @@ module Spree
       tax_total.positive?
     end
 
+    def included_tax_total
+      adjustments.tax.inclusive.sum(:amount)
+    end
+
+    def additional_tax_total
+      adjustments.tax.additional.sum(:amount)
+    end
+
     private
 
     def tax_total

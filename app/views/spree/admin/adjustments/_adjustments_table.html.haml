@@ -4,7 +4,7 @@
       %th= "#{t('spree.date')}/#{t('spree.time')}"
       %th= t(:description)
       %th= t(:amount)
-      %th= t(:included_tax)
+      %th= t(:tax)
       %th.actions
   %tbody
     - @collection.each do |adjustment|
@@ -13,10 +13,14 @@
       - tr_class = cycle('odd', 'even')
       - tr_id = spree_dom_id(adjustment)
       %tr{:class => tr_class, "data-hook" => "adjustment_row", :id => tr_id}
-        %td.align-center.created_at= pretty_time(adjustment.created_at)
-        %td.align-center.label= adjustment.label
-        %td.align-center.amount= adjustment.display_amount.to_html
-        %td.align-center.included-tax= adjustment.display_included_tax.to_html
+        %td.align-center.created_at
+          = pretty_time(adjustment.created_at)
+        %td.align-center.label
+          = adjustment.label
+        %td.align-center.amount
+          = adjustment.display_amount.to_html
+        %td.align-center.tax
+          = display_adjustment_taxes(adjustment)
         - unless @order.canceled?
           %td.actions
             - if adjustment.originator_type.nil?
