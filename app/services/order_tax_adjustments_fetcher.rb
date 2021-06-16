@@ -24,25 +24,11 @@ class OrderTaxAdjustmentsFetcher
 
     Hash[tax_rates.collect do |tax_rate|
       tax_amount = if tax_rates.one?
-                     adjustment_tax_amount(adjustment)
+                     adjustment.amount
                    else
                      tax_rate.compute_tax(adjustment.amount)
                    end
       [tax_rate, tax_amount]
     end]
-  end
-
-  def adjustment_tax_amount(adjustment)
-    if no_tax_adjustments?(adjustment)
-      adjustment.included_tax
-    else
-      adjustment.amount
-    end
-  end
-
-  def no_tax_adjustments?(adjustment)
-    # Admin Adjustments currently do not have tax adjustments.
-    # The tax amount is stored in the included_tax attribute.
-    adjustment.originator_type.nil?
   end
 end
