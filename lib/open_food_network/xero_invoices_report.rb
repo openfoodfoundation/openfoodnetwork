@@ -219,11 +219,11 @@ module OpenFoodNetwork
     end
 
     def total_untaxable_admin_adjustments(order)
-      order.adjustments.admin.without_tax.sum(:amount)
+      order.adjustments.admin.where(tax_category: nil).sum(:amount)
     end
 
     def total_taxable_admin_adjustments(order)
-      order.adjustments.admin.with_tax.sum(:amount)
+      order.adjustments.admin.where.not(tax_category: nil).sum(:amount)
     end
 
     def detail?

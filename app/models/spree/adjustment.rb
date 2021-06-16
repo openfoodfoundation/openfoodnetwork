@@ -77,8 +77,6 @@ module Spree
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
     scope :admin,          -> { where(originator_type: nil) }
 
-    scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
-    scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
     scope :payment_fee,    -> { where(AdjustmentScopes::PAYMENT_FEE_SCOPE) }
     scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
     scope :eligible,       -> { where(AdjustmentScopes::ELIGIBLE_SCOPE) }
