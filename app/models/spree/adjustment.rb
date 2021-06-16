@@ -129,10 +129,6 @@ module Spree
       state != "open"
     end
 
-    def set_absolute_included_tax!(tax)
-      update! included_tax: tax.round(2)
-    end
-
     def display_included_tax
       Spree::Money.new(included_tax, currency: currency)
     end
