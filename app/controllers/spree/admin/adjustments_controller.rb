@@ -10,7 +10,6 @@ module Spree
       before_action :skip_changing_canceled_orders, only: [:create, :update]
       after_action :update_order, only: [:create, :update, :destroy]
       before_action :set_default_tax_rate, only: :edit
-      before_action :enable_updates, only: :update
 
       private
 
@@ -79,17 +78,6 @@ module Spree
           included_tax = tax_rate.compute_tax amount
         end
         params[:adjustment][:included_tax] = included_tax
-      end
-
-      # Spree 2.0 keeps shipping fee adjustments open unless they are manually
-      # closed. But open adjustments cannot be edited.
-      # To preserve updates, like changing the amount of the shipping fee,
-      # we close the adjustment first.
-      #
-      # The Spree admin interface allows to open and close adjustments manually
-      # but we removed that functionality as it had no purpose for us.
-      def enable_updates
-        @adjustment.close
       end
 
       def permitted_resource_params
