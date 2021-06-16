@@ -9,7 +9,7 @@ gem 'rails', '~> 6.0.3.7'
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
-gem 'ransack', '2.4.1'
+gem 'ransack', '2.4.2'
 gem 'responders'
 gem 'sass', '~> 3.4.0' # this restriction originates from foundation-rails's version
 gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails's version
