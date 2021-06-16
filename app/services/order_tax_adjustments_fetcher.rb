@@ -9,7 +9,7 @@ class OrderTaxAdjustmentsFetcher
   end
 
   def totals
-    all.each_with_object({}) do |adjustment, hash|
+    order.all_adjustments.tax.each_with_object({}) do |adjustment, hash|
       tax_rates_hash = tax_rates_hash(adjustment)
       hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
     end
@@ -18,13 +18,6 @@ class OrderTaxAdjustmentsFetcher
   private
 
   attr_reader :order
-
-  def all
-    tax_adjustments = order.all_adjustments.tax
-    admin_adjustments_with_tax = order.all_adjustments.admin.with_tax
-
-    tax_adjustments.or(admin_adjustments_with_tax)
-  end
 
   def tax_rates_hash(adjustment)
     tax_rates = TaxRateFinder.tax_rates_of(adjustment)
