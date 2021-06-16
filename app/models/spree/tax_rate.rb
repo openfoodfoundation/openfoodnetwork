@@ -127,19 +127,5 @@ module Spree
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
       label
     end
-
-    def with_tax_included_in_price
-      old_included_in_price = included_in_price
-
-      self.included_in_price = true
-      calculator.calculable.included_in_price = true
-
-      result = yield
-    ensure
-      self.included_in_price = old_included_in_price
-      calculator.calculable.included_in_price = old_included_in_price
-
-      result
-    end
   end
 end
