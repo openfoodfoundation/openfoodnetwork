@@ -127,10 +127,6 @@ module Spree
       state != "open"
     end
 
-    def display_included_tax
-      Spree::Money.new(included_tax, currency: currency)
-    end
-
     def has_tax?
       tax_total.positive?
     end
