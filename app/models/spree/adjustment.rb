@@ -134,10 +134,14 @@ module Spree
     end
 
     def has_tax?
-      included_tax.positive?
+      tax_total.positive?
     end
 
     private
+
+    def tax_total
+      adjustments.tax.sum(:amount)
+    end
 
     def update_adjustable_adjustment_total
       Spree::ItemAdjustments.new(adjustable).update if adjustable
