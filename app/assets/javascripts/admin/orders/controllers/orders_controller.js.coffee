@@ -49,7 +49,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       'q[bill_address_firstname_start]': $scope.q?.bill_address_firstname_start,
       'q[bill_address_lastname_start]': $scope.q?.bill_address_lastname_start,
       # Set default checkbox values to null. See: https://github.com/openfoodfoundation/openfoodnetwork/pull/3076#issuecomment-440010498
-      'q[completed_at_not_null]': $scope.q?.completed_at_not_null,
+      'q[completed_at_not_null]': $scope.q?.completed_at_not_null || null,
       'q[distributor_id_in][]': $scope.q?.distributor_id_in,
       'q[order_cycle_id_in][]': $scope.q?.order_cycle_id_in,
       'q[s]': $scope.sorting || 'completed_at desc',

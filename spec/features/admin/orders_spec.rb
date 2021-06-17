@@ -112,6 +112,30 @@ feature '
     end
   end
 
+  context "test the 'Only show the complete orders' checkbox" do
+    scenario "display or not incomplete order" do
+      incomplete_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+      complete_order = create(
+        :order,
+        distributor: distributor,
+        order_cycle: order_cycle,
+        user: user,
+        state: 'complete',
+        payment_state: 'balance_due',
+        completed_at: 1.day.ago
+      )
+      login_as_admin_and_visit spree.admin_orders_path
+      expect(page).to have_content complete_order.number
+      expect(page).to have_no_content incomplete_order.number
+
+      uncheck 'Only show complete orders'
+      page.find('a.icon-search').click
+
+      expect(page).to have_content complete_order.number
+      expect(page).to have_content incomplete_order.number
+    end
+  end
+
   context "save the filter params" do
     let!(:shipping_method) { create(:shipping_method, name: "UPS Ground") }
     let!(:user) { create(:user, email: 'an@email.com') }
