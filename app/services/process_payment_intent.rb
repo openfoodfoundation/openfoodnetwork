@@ -69,6 +69,6 @@ class ProcessPaymentIntent
   end
 
   def payment_intent_status
-    @payment_intent_status ||= Stripe::PaymentIntentValidator.new.call(payment).status
+    @payment_intent_status ||= Stripe::PaymentIntentValidator.new(payment).call.status
   end
 end

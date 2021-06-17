@@ -129,7 +129,7 @@ module Spree
         payment = fetch_payment(creditcard, gateway_options)
         raise Stripe::StripeError, I18n.t(:no_pending_payments) unless payment&.response_code
 
-        payment_intent_response = Stripe::PaymentIntentValidator.new.call(payment)
+        payment_intent_response = Stripe::PaymentIntentValidator.new(payment).call
 
         raise_if_not_in_capture_state(payment_intent_response)
 

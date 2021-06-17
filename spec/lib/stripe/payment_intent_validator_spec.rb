@@ -6,7 +6,7 @@ require 'stripe/payment_intent_validator'
 module Stripe
   describe PaymentIntentValidator do
     describe "#call" do
-      let(:validator) { Stripe::PaymentIntentValidator.new }
+      let(:validator) { Stripe::PaymentIntentValidator.new(payment) }
       let(:payment) { build(:payment, response_code: payment_intent_id) }
       let(:payment_intent_id) { "pi_123" }
       let(:stripe_account_id) { "abc123" }
@@ -31,7 +31,7 @@ module Stripe
 
         it "returns payment intent id and does not raise" do
           expect {
-            result = validator.call(payment)
+            result = validator.call
             expect(result).to eq payment_intent_response_body
           }.to_not raise_error Stripe::StripeError
         end
@@ -44,7 +44,7 @@ module Stripe
 
         it "raises Stripe error with payment intent last_payment_error as message" do
           expect {
-            validator.call(payment)
+            validator.call
           }.to raise_error Stripe::StripeError, "No money"
         end
       end

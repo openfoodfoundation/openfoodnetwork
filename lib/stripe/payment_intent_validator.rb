@@ -3,10 +3,14 @@
 # This class validates if a given payment intent ID is valid in Stripe
 module Stripe
   class PaymentIntentValidator
-    def call(payment)
+    def initialize(payment)
+      @payment = payment
+    end
+
+    def call
       payment_intent_response = Stripe::PaymentIntent.retrieve(
-        payment_intent_id(payment),
-        stripe_account: stripe_account_id(payment)
+        payment_intent_id,
+        stripe_account: stripe_account_id
       )
 
       raise_if_last_payment_error_present(payment_intent_response)
@@ -16,11 +20,13 @@ module Stripe
 
     private
 
-    def payment_intent_id(payment)
+    attr_accessor :payment
+
+    def payment_intent_id
       payment.response_code
     end
 
-    def stripe_account_id(payment)
+    def stripe_account_id
       enterprise_id = payment.payment_method&.preferred_enterprise_id
 
       StripeAccount.find_by(enterprise_id: enterprise_id)&.stripe_user_id
