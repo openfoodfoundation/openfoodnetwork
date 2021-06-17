@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :ofn do
   namespace :data do
     desc "Adding relationships based on recent order cycles"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/products_and_inventory_report_base'
 require 'variant_units/option_value_namer'
 

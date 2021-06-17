@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Processes requests for pages embedded in iframes
 
 class EmbeddedPageService

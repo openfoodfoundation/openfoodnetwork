@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Returns a (paginatable) AR object for the products or variants in stock for a given shop and OC.
 # The stock-checking includes on_demand and stock level overrides from variant_overrides.
 class OrderCycleDistributedProducts

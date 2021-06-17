@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Formats uploaded files to UTF-8 encoding and strips unexpected BOM characters.
 # Takes an open File object as input
 class UploadSanitizer

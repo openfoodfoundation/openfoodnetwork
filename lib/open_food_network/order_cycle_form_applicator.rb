@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/order_cycle_permissions'
 
 module OpenFoodNetwork

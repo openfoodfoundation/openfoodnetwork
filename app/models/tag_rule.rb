@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TagRule < ApplicationRecord
   belongs_to :enterprise
 

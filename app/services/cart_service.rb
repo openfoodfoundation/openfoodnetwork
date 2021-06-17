@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variant_to_hub'
 
 # Previously Spree::OrderPopulator. Modified to work with max_quantity and variant overrides.

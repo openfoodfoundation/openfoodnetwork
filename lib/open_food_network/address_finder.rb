@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Finds an address based on the data provided
 # Can take any combination of an email String, Customer or Spree::User as args
 # The #bill_address and #ship_address methods automatically return matched addresses

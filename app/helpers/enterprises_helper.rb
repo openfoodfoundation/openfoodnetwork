@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/available_payment_method_filter'
 
 module EnterprisesHelper

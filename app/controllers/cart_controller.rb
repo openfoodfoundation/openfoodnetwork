@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartController < BaseController
   before_action :check_authorization
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TagRule::FilterOrderCycles < TagRule
   preference :matched_order_cycles_visibility, :string, default: "visible"
   preference :exchange_tags, :string, default: ""

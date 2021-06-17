@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class handles conversion of human-readable unit weights for products/variants into
 # the non-human-readable format needed by the database. The table below shows how fields
 # from a spreadsheet (left) become database fields (right):

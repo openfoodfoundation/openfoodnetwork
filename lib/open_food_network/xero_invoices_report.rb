@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class XeroInvoicesReport
     def initialize(user, opts = {}, compile_table = false)

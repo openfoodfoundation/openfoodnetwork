@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This module is included in both the Spree::Variant and Spree::LineItem model decorators
 # It contains all of our logic for creating and naming option values (which are associated
 # with both models) and methods for printing human readable "names" for instances of these models.

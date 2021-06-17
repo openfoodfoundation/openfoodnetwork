@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variant_to_hub'
 
 # Builds orders based on a set of attributes

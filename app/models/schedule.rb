@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Schedule < ApplicationRecord
   has_paper_trail meta: { custom_data: proc { |schedule| schedule.order_cycle_ids.to_s } }
 

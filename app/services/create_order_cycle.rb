@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Creates an order cycle for the provided enterprise and selecting all the
 # variants specified for both incoming and outgoing exchanges
 class CreateOrderCycle

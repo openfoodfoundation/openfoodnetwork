@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Our error logging API currently wraps Bugsnag.
 # It makes us more flexible if we wanted to replace Bugsnag or change logging
 # behaviour.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "tasks/sample_data/customer_factory"
 require "tasks/sample_data/enterprise_factory"
 require "tasks/sample_data/fee_factory"

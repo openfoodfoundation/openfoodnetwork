@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PreferenceSections
   class HubSignupPageSection
     def name

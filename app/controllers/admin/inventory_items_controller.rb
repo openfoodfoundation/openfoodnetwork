@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class InventoryItemsController < Admin::ResourceController
     respond_to :json

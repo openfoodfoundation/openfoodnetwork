@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This module provides EnterpriseFeeSummary::Scope DB result to report mappings for exchange fees
 # that use order-based calculators.
 

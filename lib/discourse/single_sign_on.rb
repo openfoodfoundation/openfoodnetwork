@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class is the reference implementation of a SSO provider from Discourse.
 
 module Discourse

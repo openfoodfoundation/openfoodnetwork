@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   # Provides access to the language settings.
   # Currently, language settings are read from the environment.

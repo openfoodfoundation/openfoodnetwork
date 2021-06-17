@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AngularFormHelper
   def ng_options_for_select(container, _angular_field = nil)
     return container if container.is_a?(String)

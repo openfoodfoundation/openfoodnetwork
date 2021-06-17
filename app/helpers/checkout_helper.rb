@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckoutHelper
   def guest_checkout_allowed?
     current_order.distributor.allow_guest_orders?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class OrderGrouper
     def initialize(rules, column_constructors, report = nil)

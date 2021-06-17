@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class User < ApplicationRecord
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,

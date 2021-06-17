@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderWorkflow
   attr_reader :order
 

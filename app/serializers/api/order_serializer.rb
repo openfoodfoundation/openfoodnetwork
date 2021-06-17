@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class OrderSerializer < ActiveModel::Serializer
     attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state,

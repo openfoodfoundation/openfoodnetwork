@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :ofn do
   namespace :specs do
     namespace :run do

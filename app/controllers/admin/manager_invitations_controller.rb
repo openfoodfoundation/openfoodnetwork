@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ManagerInvitationsController < Spree::Admin::BaseController
     authorize_resource class: false

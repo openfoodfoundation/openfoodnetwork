@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Locks a controller's current order including its variants.
 #
 # It should be used when making major changes like checking out the order.

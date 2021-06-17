@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "As a consumer, I want to check unit price information for a product", js: true do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork

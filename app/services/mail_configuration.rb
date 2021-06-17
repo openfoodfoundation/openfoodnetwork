@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Configures Rails to use the specified mail configuration
 #   by setting entries on the Spree Config
 #   and initializing Spree:MailSettings that uses the Spree::Config.

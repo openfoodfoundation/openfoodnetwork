@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 require 'open_food_network/reports/list'

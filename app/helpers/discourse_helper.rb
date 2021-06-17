@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DiscourseHelper
   def discourse_configured?
     discourse_url.present?

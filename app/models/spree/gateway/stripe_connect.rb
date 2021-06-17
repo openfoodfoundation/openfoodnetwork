@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stripe/profile_storer'
 
 module Spree

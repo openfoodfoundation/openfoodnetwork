@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ColumnPreferencesController < Admin::ResourceController
     before_action :load_collection, only: [:bulk_update]

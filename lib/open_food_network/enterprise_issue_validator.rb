@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class EnterpriseIssueValidator
     include Rails.application.routes.url_helpers

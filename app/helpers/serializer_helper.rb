@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SerializerHelper
   def ids_to_objs(ids)
     return [] if ids.blank?

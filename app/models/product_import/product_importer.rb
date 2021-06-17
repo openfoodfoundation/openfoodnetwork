@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the main class for product import. It handles the initial processing of the CSV file,
 # and begins the processing of the spreadsheet entries by the other product import classes.
 # As spreadsheets can contain any number of entries (1000+), the import is split into smaller chunks

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "tasks/sample_data/addressing"
 require "tasks/sample_data/logging"
 

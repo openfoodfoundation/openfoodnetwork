@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GroupsHelper
   def link_to_service(baseurl, name, html_options = {}, &block)
     return if name.blank?

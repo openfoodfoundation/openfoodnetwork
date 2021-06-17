@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Allow use of Paperclip's has_attached_file on non-ActiveRecord classes
 # https://gist.github.com/basgys/5712426
 

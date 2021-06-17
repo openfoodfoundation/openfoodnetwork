@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Responsible for ensuring that any updates to a Subscription are propagated to any
 # orders belonging to that Subscription which have been instantiated
 class OrderSyncer

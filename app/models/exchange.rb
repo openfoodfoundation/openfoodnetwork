@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Representation of an enterprise being part of an order cycle.
 #
 # A producer can be part as supplier. The supplier's products can be selected to

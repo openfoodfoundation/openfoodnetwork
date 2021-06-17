@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Validates a datetime string with relaxed rules
 #
 # This uses ActiveSupport::TimeZone.parse behind the scenes.

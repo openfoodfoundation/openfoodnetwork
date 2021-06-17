@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This module provides EnterpriseFeeSummary::Scope DB result to report mappings for incoming
 # exchange fees that use line item -based calculators.
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   EnterpriseFeeApplicator = Struct.new(:enterprise_fee, :variant, :role) do
     def create_line_item_adjustment(line_item)
