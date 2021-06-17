@@ -16,11 +16,20 @@ feature 'Subscriptions' do
     before { login_as user }
 
     context 'listing subscriptions' do
-      let!(:subscription) { create(:subscription, shop: shop, with_items: true, with_proxy_orders: true) }
+      let!(:subscription) {
+        create(:subscription, shop: shop, with_items: true, with_proxy_orders: true)
+      }
       let!(:customer) { create(:customer, name: "Customer A") }
-      let!(:other_subscription) { create(:subscription, shop: shop, customer: customer, with_items: true, with_proxy_orders: true) }
-      let!(:subscription2) { create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true) }
-      let!(:subscription_unmanaged) { create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
+      let!(:other_subscription) {
+        create(:subscription, shop: shop, customer: customer, with_items: true,
+                              with_proxy_orders: true)
+      }
+      let!(:subscription2) {
+        create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true)
+      }
+      let!(:subscription_unmanaged) {
+        create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true)
+      }
 
       before do
         subscription.update(shipping_fee_estimate: 3.5)
@@ -34,7 +43,8 @@ feature 'Subscriptions' do
         click_link 'Orders'
         click_link 'Subscriptions'
 
-        expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name], without_options: [shop_unmanaged.name]
+        expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name],
+                                                without_options: [shop_unmanaged.name]
 
         select2_select shop2.name, from: "shop_id"
 
@@ -183,17 +193,35 @@ feature 'Subscriptions' do
     context 'creating a new subscription' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
-      let!(:credit_card1) { create(:stored_credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
-      let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user, allow_charges: true) }
+      let!(:credit_card1) {
+        create(:stored_credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10,
+                                    year: 2030)
+      }
+      let!(:customer) {
+        create(:customer, enterprise: shop, bill_address: address, user: customer_user,
+                          allow_charges: true)
+      }
       let!(:test_product) { create(:product, supplier: shop) }
-      let!(:test_variant) { create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: []) }
+      let!(:test_variant) {
+        create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: [])
+      }
       let!(:shop_product) { create(:product, supplier: shop) }
-      let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "1000", price: 6.00, option_values: []) }
+      let!(:shop_variant) {
+        create(:variant, product: shop_product, unit_value: "1000", price: 6.00, option_values: [])
+      }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
-      let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [test_variant, shop_variant], enterprise_fees: [enterprise_fee]) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now,
+                                    orders_close_at: 7.days.from_now)
+      }
+      let!(:outgoing_exchange) {
+        order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [test_variant, shop_variant],
+                                     enterprise_fees: [enterprise_fee])
+      }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-      let!(:payment_method) { create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop]) }
+      let!(:payment_method) {
+        create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop])
+      }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
       before do
@@ -257,7 +285,8 @@ feature 'Subscriptions' do
         # Adding a product and getting a price estimate
         add_variant_to_subscription test_variant, 2
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description', text: "#{test_product.name} - #{test_variant.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{test_product.name} - #{test_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$13.75"
           expect(page).to have_input 'quantity', with: "2"
           expect(page).to have_selector 'td.total', text: "$27.50"
@@ -281,7 +310,8 @@ feature 'Subscriptions' do
         # Adding a new product
         add_variant_to_subscription shop_variant, 3
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description', text: "#{shop_product.name} - #{shop_variant.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{shop_product.name} - #{shop_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
@@ -300,7 +330,8 @@ feature 'Subscriptions' do
 
         # Prices are shown in the index
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description', text: "#{shop_product.name} - #{shop_variant.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{shop_product.name} - #{shop_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
@@ -328,17 +359,36 @@ feature 'Subscriptions' do
       let!(:product1) { create(:product, supplier: shop) }
       let!(:product2) { create(:product, supplier: shop) }
       let!(:product3) { create(:product, supplier: shop) }
-      let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
-      let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
-      let!(:variant3) { create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: []) }
+      let!(:variant1) {
+        create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+      }
+      let!(:variant2) {
+        create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+      }
+      let!(:variant3) {
+        create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: [])
+      }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
-      let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now,
+                                    orders_close_at: 7.days.from_now)
+      }
+      let!(:outgoing_exchange) {
+        order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2],
+                                     enterprise_fees: [enterprise_fee])
+      }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-      let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-      let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
+      let!(:variant3_oc) {
+        create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now,
+                                    orders_close_at: 7.days.from_now)
+      }
+      let!(:variant3_ex) {
+        variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3])
+      }
       let!(:payment_method) { create(:payment_method, distributors: [shop]) }
-      let!(:stripe_payment_method) { create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop]) }
+      let!(:stripe_payment_method) {
+        create(:stripe_connect_payment_method, name: 'Credit Card', distributors: [shop])
+      }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
       let!(:subscription) {
         create(:subscription,
@@ -347,7 +397,8 @@ feature 'Subscriptions' do
                schedule: schedule,
                payment_method: payment_method,
                shipping_method: shipping_method,
-               subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2, price_estimate: 13.75)],
+               subscription_line_items: [create(:subscription_line_item, variant: variant1,
+                                                                         quantity: 2, price_estimate: 13.75)],
                with_proxy_orders: true)
       }
 
@@ -370,7 +421,8 @@ feature 'Subscriptions' do
         # Existing products should be visible
         click_button 'edit-products'
         within "#sli_0" do
-          expect(page).to have_selector '.description', text: "#{product1.name} - #{variant1.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{product1.name} - #{variant1.full_name}"
           expect(page).to have_selector 'td.price', text: "$13.75"
           expect(page).to have_input 'quantity', with: "2"
           expect(page).to have_selector 'td.total', text: "$27.50"
@@ -386,7 +438,8 @@ feature 'Subscriptions' do
         # Add variant2 to the subscription
         add_variant_to_subscription(variant2, 1)
         within "#sli_0" do
-          expect(page).to have_selector '.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "1"
           expect(page).to have_selector 'td.total', text: "$7.75"
@@ -398,7 +451,8 @@ feature 'Subscriptions' do
         # Add variant3 to the subscription (even though it is not available)
         add_variant_to_subscription(variant3, 1)
         within "#sli_1" do
-          expect(page).to have_selector '.description', text: "#{product3.name} - #{variant3.full_name}"
+          expect(page).to have_selector '.description',
+                                        text: "#{product3.name} - #{variant3.full_name}"
           expect(page).to have_selector 'td.price', text: "$22.00"
           expect(page).to have_input 'quantity', with: "1"
           expect(page).to have_selector 'td.total', text: "$22.00"
@@ -444,7 +498,8 @@ feature 'Subscriptions' do
           click_button 'Save Changes'
           expect(page).to have_content 'Saved'
 
-          expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.subscriptions.order_update_issues_msg")
+          expect(page).to have_selector "#order_update_issues_dialog .message",
+                                        text: I18n.t("admin.subscriptions.order_update_issues_msg")
         end
       end
     end
@@ -456,21 +511,26 @@ feature 'Subscriptions' do
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
       let!(:permitted_supplier) do
         create(:supplier_enterprise).tap do |supplier|
-          create(:enterprise_relationship, child: shop, parent: supplier, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, child: shop, parent: supplier,
+                                           permissions_list: [:add_to_order_cycle])
         end
       end
       let!(:permitted_supplier_product) { create(:product, supplier: permitted_supplier) }
-      let!(:permitted_supplier_variant) { create(:variant, product: permitted_supplier_product, unit_value: "2000") }
+      let!(:permitted_supplier_variant) {
+        create(:variant, product: permitted_supplier_product, unit_value: "2000")
+      }
       let!(:incoming_exchange_product) { create(:product) }
       let!(:incoming_exchange_variant) do
         create(:variant, product: incoming_exchange_product, unit_value: "2000").tap do |variant|
-          create(:exchange, order_cycle: order_cycle, incoming: true, receiver: shop, variants: [variant])
+          create(:exchange, order_cycle: order_cycle, incoming: true, receiver: shop,
+                            variants: [variant])
         end
       end
       let!(:outgoing_exchange_product) { create(:product) }
       let!(:outgoing_exchange_variant) do
         create(:variant, product: outgoing_exchange_product, unit_value: "2000").tap do |variant|
-          create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])
+          create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop,
+                            variants: [variant])
         end
       end
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }

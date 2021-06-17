@@ -3,6 +3,7 @@
 module OpenFoodNetwork
   class PaymentsReport
     attr_reader :params
+
     def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user

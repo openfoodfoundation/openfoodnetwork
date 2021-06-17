@@ -77,6 +77,8 @@ describe Calculator::PriceSack do
   end
 
   context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module", [:preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount]
+    it_behaves_like "a model using the LocalizedNumber module",
+                    [:preferred_minimal_amount, :preferred_normal_amount,
+                     :preferred_discount_amount]
   end
 end

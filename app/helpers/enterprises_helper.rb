@@ -16,7 +16,8 @@ module EnterprisesHelper
 
     shipping_methods = current_distributor.shipping_methods.display_on_checkout.to_a
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterShippingMethods", current_customer.andand.tag_list)
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
+                                                        "FilterShippingMethods", current_customer.andand.tag_list)
     applicator.filter!(shipping_methods)
 
     shipping_methods.uniq
@@ -30,7 +31,8 @@ module EnterprisesHelper
     filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new
     filter.filter!(payment_methods)
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterPaymentMethods", current_customer.andand.tag_list)
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
+                                                        "FilterPaymentMethods", current_customer.andand.tag_list)
     applicator.filter!(payment_methods)
 
     payment_methods
@@ -47,7 +49,10 @@ module EnterprisesHelper
   end
 
   def enterprises_options(enterprises)
-    enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
+    enterprises.map { |enterprise|
+      [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city,
+       enterprise.id.to_i]
+    }
   end
 
   def enterprises_to_names(enterprises)
@@ -64,7 +69,8 @@ module EnterprisesHelper
 
   def enterprise_confirm_delete_message(enterprise)
     if enterprise.supplied_products.present?
-      I18n.t(:enterprise_confirm_delete_message, product: pluralize(enterprise.supplied_products.count, 'product'))
+      I18n.t(:enterprise_confirm_delete_message,
+             product: pluralize(enterprise.supplied_products.count, 'product'))
     else
       t(:are_you_sure)
     end

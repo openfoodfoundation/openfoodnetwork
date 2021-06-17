@@ -8,17 +8,8 @@ module ProductImport
     include ActiveModel::Conversion
     include ActiveModel::Validations
 
-    attr_accessor :line_number, :valid, :validates_as, :product_object,
-                  :product_validations, :on_hand_nil, :has_overrides, :units,
-                  :unscaled_units, :unit_type, :tax_category, :shipping_category
-
-    attr_accessor :id, :product_id, :producer, :producer_id, :distributor,
-                  :distributor_id, :name, :display_name, :sku, :unit_value,
-                  :unit_description, :variant_unit, :variant_unit_scale,
-                  :variant_unit_name, :display_as, :category, :primary_taxon_id,
-                  :price, :on_hand, :on_demand,
-                  :tax_category_id, :shipping_category_id, :description,
-                  :import_date, :enterprise, :enterprise_id
+    attr_accessor :line_number, :valid, :validates_as, :product_object, :product_validations,
+                  :on_hand_nil, :has_overrides, :units, :unscaled_units, :unit_type, :tax_category, :shipping_category, :id, :product_id, :producer, :producer_id, :distributor, :distributor_id, :name, :display_name, :sku, :unit_value, :unit_description, :variant_unit, :variant_unit_scale, :variant_unit_name, :display_as, :category, :primary_taxon_id, :price, :on_hand, :on_demand, :tax_category_id, :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id
 
     NON_DISPLAY_ATTRIBUTES = ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
                               'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
@@ -92,8 +83,8 @@ module ProductImport
       units = UnitConverter.new(attrs)
 
       units.converted_attributes.each do |attr, value|
-        if respond_to?("#{attr}=")
-          public_send("#{attr}=", value) unless NON_PRODUCT_ATTRIBUTES.include?(attr)
+        if respond_to?("#{attr}=") && !NON_PRODUCT_ATTRIBUTES.include?(attr)
+          public_send("#{attr}=", value)
         end
       end
     end

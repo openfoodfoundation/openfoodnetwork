@@ -33,7 +33,8 @@ module OpenFoodNetwork
     def fees_by_type_for(variant)
       per_item_enterprise_fee_applicators_for(variant).each_with_object({}) do |applicator, fees|
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
-        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator.enterprise_fee
+        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant,
+                                                                             applicator.enterprise_fee
       end.select { |_fee_type, amount| amount > 0 }
     end
 
@@ -58,7 +59,8 @@ module OpenFoodNetwork
 
       @order_cycle.exchanges_carrying(variant, @distributor).each do |exchange|
         exchange.enterprise_fees.per_item.each do |enterprise_fee|
-          fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
+          fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant,
+                                                               exchange.role)
         end
       end
 
@@ -129,7 +131,8 @@ module OpenFoodNetwork
     def calculate_fee_for(variant, enterprise_fee)
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
-      line_item = OpenStruct.new variant: variant, quantity: 1, price: variant.price, amount: variant.price
+      line_item = OpenStruct.new variant: variant, quantity: 1, price: variant.price,
+                                 amount: variant.price
       enterprise_fee.compute_amount(line_item)
     end
   end

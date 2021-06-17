@@ -12,7 +12,9 @@ module Api
     let(:enterprise_manager) { create(:user, enterprise_limit: 10, enterprises: [enterprise]) }
     let(:other_enterprise_owner) { create(:user) }
     let(:other_enterprise) { create(:enterprise, owner: other_enterprise_owner ) }
-    let(:other_enterprise_manager) { create(:user, enterprise_limit: 10, enterprises: [other_enterprise]) }
+    let(:other_enterprise_manager) {
+      create(:user, enterprise_limit: 10, enterprises: [other_enterprise])
+    }
 
     describe "removing promo image" do
       image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))

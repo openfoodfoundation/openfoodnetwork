@@ -1,6 +1,7 @@
 module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
+
     def initialize(params = {}, compile_table = false)
       @params = params
       @compile_table = compile_table

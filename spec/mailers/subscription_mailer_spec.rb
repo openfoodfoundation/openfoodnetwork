@@ -192,7 +192,8 @@ describe SubscriptionMailer, type: :mailer do
     it "sends the email" do
       body = strip_tags(SubscriptionMailer.deliveries.last.body.encoded)
       expect(body).to include I18n.t("email_so_failed_payment_intro_html")
-      explainer = I18n.t("email_so_failed_payment_explainer_html", distributor: subscription.shop.name)
+      explainer = I18n.t("email_so_failed_payment_explainer_html",
+                         distributor: subscription.shop.name)
       expect(body).to include strip_tags(explainer)
       details = I18n.t("email_so_failed_payment_details_html", distributor: subscription.shop.name)
       expect(body).to include strip_tags(details)
@@ -258,7 +259,9 @@ describe SubscriptionMailer, type: :mailer do
         allow(summary).to receive(:order_count) { 37 }
         allow(summary).to receive(:success_count) { 35 }
         allow(summary).to receive(:issue_count) { 2 }
-        allow(summary).to receive(:issues) { { processing: { 1 => "Some Error Message", 2 => nil } } }
+        allow(summary).to receive(:issues) {
+                            { processing: { 1 => "Some Error Message", 2 => nil } }
+                          }
         allow(summary).to receive(:orders_affected_by) { [order1, order2] }
       end
 
@@ -371,14 +374,17 @@ describe SubscriptionMailer, type: :mailer do
         allow(summary).to receive(:order_count) { 37 }
         allow(summary).to receive(:success_count) { 35 }
         allow(summary).to receive(:issue_count) { 2 }
-        allow(summary).to receive(:issues) { { failed_payment: { 1 => "Some Error Message", 2 => nil } } }
+        allow(summary).to receive(:issues) {
+                            { failed_payment: { 1 => "Some Error Message", 2 => nil } }
+                          }
         allow(summary).to receive(:orders_affected_by) { [order1, order2] }
       end
 
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
-          expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
+          expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro",
+                                         shop: shop.name)
           expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
           expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
           expect(body).to include I18n.t("#{scope}.summary_overview.issues")

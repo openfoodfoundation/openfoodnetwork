@@ -10,7 +10,9 @@ class ColumnPreference < ApplicationRecord
   belongs_to :user, class_name: "Spree::User"
 
   validates :action_name, presence: true, inclusion: { in: proc { known_actions } }
-  validates :column_name, presence: true, inclusion: { in: proc { |p| valid_columns_for(p.action_name) } }
+  validates :column_name, presence: true, inclusion: { in: proc { |p|
+                                                             valid_columns_for(p.action_name)
+                                                           } }
 
   def self.for(user, action_name)
     stored_preferences = where(user_id: user.id, action_name: action_name)
@@ -19,16 +21,17 @@ class ColumnPreference < ApplicationRecord
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
       stored_preference = stored_preferences.find_by(column_name: column_name)
       if stored_preference
-        stored_preference.assign_attributes(default_attributes.select{ |k, _v| stored_preference[k].nil? })
+        stored_preference.assign_attributes(default_attributes.select{ |k, _v|
+                                              stored_preference[k].nil?
+                                            } )
         preferences << stored_preference
       else
-        attributes = default_attributes.merge(user_id: user.id, action_name: action_name, column_name: column_name)
+        attributes = default_attributes.merge(user_id: user.id, action_name: action_name,
+                                              column_name: column_name)
         preferences << ColumnPreference.new(attributes)
       end
     end
   end
-
-  private
 
   def self.valid_columns_for(action_name)
     __send__("#{action_name}_columns").keys.map(&:to_s)

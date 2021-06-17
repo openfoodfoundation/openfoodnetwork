@@ -16,7 +16,8 @@ FactoryBot.define do
 
     country  { |stock_location| Spree::Country.first || stock_location.association(:country) }
     state do |stock_location|
-      stock_location.country.states.first || stock_location.association(:state, country: stock_location.country)
+      stock_location.country.states.first || stock_location.association(:state,
+                                                                        country: stock_location.country)
     end
 
     factory :stock_location_with_items do

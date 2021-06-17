@@ -9,7 +9,9 @@ describe Api::EnterpriseShopfrontSerializer do
 
   let!(:taxon1) { create(:taxon, name: 'Meat') }
   let!(:taxon2) { create(:taxon, name: 'Veg') }
-  let!(:product) { create(:product, supplier: producer, primary_taxon: taxon1, taxons: [taxon1, taxon2] ) }
+  let!(:product) {
+    create(:product, supplier: producer, primary_taxon: taxon1, taxons: [taxon1, taxon2] )
+  }
 
   let(:close_time) { 2.days.from_now }
   let!(:oc) { create(:simple_order_cycle, orders_close_at: close_time, distributors: [hub]) }

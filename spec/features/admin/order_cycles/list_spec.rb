@@ -53,8 +53,10 @@ feature '
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
       # Then I should see the basic fields
       expect(page).to have_input "oc#{oc1.id}[name]", value: oc1.name
-      expect(page).to have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at, visible: false
-      expect(page).to have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at, visible: false
+      expect(page).to have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at,
+                                                                visible: false
+      expect(page).to have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at,
+                                                                 visible: false
       expect(page).to have_content oc1.coordinator.name
 
       # And I should see the suppliers and distributors
@@ -114,7 +116,8 @@ feature '
 
     # Attempting to edit dates of an open order cycle with active subscriptions
     find("#oc#{oc1.id}_orders_open_at").click
-    expect(page).to have_selector "#confirm-dialog .message", text: I18n.t('admin.order_cycles.date_warning.msg', n: 1)
+    expect(page).to have_selector "#confirm-dialog .message",
+                                  text: I18n.t('admin.order_cycles.date_warning.msg', n: 1)
   end
 
   describe 'listing order cycles with other locales' do

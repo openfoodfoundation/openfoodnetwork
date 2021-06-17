@@ -18,7 +18,7 @@ feature "Account Settings", js: true do
       setup_email
       login_as user
       visit "/account"
-      find("a", :text => %r{#{I18n.t('spree.users.show.tabs.settings')}}i).click
+      find("a", text: /#{I18n.t('spree.users.show.tabs.settings')}/i).click
       expect(page).to have_content I18n.t('spree.users.form.account_settings')
     end
 
@@ -37,7 +37,7 @@ feature "Account Settings", js: true do
       user.reload
       expect(user.email).to eq 'old@email.com'
       expect(user.unconfirmed_email).to eq 'new@email.com'
-      find("a", :text => %r{#{I18n.t('spree.users.show.tabs.settings')}}i).click
+      find("a", text: /#{I18n.t('spree.users.show.tabs.settings')}/i).click
       expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email',
                                           unconfirmed_email: 'new@email.com')
     end

@@ -44,9 +44,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
     price_with_fees / (unit_price.denominator || 1)
   end
 
-  def unit_price_unit
-    unit_price.unit
-  end
+  delegate :unit, to: :unit_price, prefix: true
 
   private
 

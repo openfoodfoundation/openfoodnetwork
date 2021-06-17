@@ -23,7 +23,8 @@ module Api
     context "pagination" do
       before do
         expect(Spree::State).to receive(:all).and_return(@scope = double)
-        allow(@scope).to receive_message_chain(:ransack, :result, :includes, :order).and_return(@scope)
+        allow(@scope).to receive_message_chain(:ransack, :result, :includes,
+                                               :order).and_return(@scope)
       end
 
       it "does not paginate states results when asked not to do so" do

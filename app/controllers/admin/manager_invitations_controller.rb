@@ -11,7 +11,8 @@ module Admin
       existing_user = Spree::User.find_by(email: @email)
 
       if existing_user
-        render json: { errors: t('admin.enterprises.invite_manager.user_already_exists') }, status: :unprocessable_entity
+        render json: { errors: t('admin.enterprises.invite_manager.user_already_exists') },
+               status: :unprocessable_entity
         return
       end
 
@@ -20,7 +21,8 @@ module Admin
       if new_user
         render json: { user: new_user.id }, status: :ok
       else
-        render json: { errors: t('admin.enterprises.invite_manager.error') }, status: :internal_server_error
+        render json: { errors: t('admin.enterprises.invite_manager.error') },
+               status: :internal_server_error
       end
     end
 

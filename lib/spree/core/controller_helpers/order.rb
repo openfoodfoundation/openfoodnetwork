@@ -59,10 +59,8 @@ module Spree
 
         def associate_user
           @order ||= current_order
-          if spree_current_user && @order
-            if @order.user.blank? || @order.email.blank?
-              @order.associate_user!(spree_current_user)
-            end
+          if spree_current_user && @order && (@order.user.blank? || @order.email.blank?)
+            @order.associate_user!(spree_current_user)
           end
 
           session[:guest_token] = nil

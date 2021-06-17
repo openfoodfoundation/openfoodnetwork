@@ -1,13 +1,15 @@
 module OpenFoodNetwork
   GroupBuyVariantRow = Struct.new(:variant, :sum_quantities, :sum_max_quantities) do
     def to_row
-      [variant.product.supplier.name, variant.product.name, I18n.t('admin.reports.unitsize'), variant.options_text, variant.weight, sum_quantities, sum_max_quantities]
+      [variant.product.supplier.name, variant.product.name, I18n.t('admin.reports.unitsize'),
+       variant.options_text, variant.weight, sum_quantities, sum_max_quantities]
     end
   end
 
   GroupBuyProductRow = Struct.new(:product, :sum_quantities, :sum_max_quantities) do
     def to_row
-      [product.supplier.name, product.name, I18n.t('admin.reports.unitsize'), I18n.t('admin.reports.total'), "", sum_quantities, sum_max_quantities]
+      [product.supplier.name, product.name, I18n.t('admin.reports.unitsize'),
+       I18n.t('admin.reports.total'), "", sum_quantities, sum_max_quantities]
     end
   end
 
@@ -40,13 +42,17 @@ module OpenFoodNetwork
           variant_groups.each do |variant, line_items_by_variant|
             sum_quantities = line_items_by_variant.to_a.sum(&:quantity)
             sum_max_quantities = line_items_by_variant.sum { |li| li.max_quantity || 0 }
-            variants_and_quantities << GroupBuyVariantRow.new(variant, sum_quantities, sum_max_quantities)
+            variants_and_quantities << GroupBuyVariantRow.new(variant, sum_quantities,
+                                                              sum_max_quantities)
           end
 
           # Sum quantities for each product (Total line)
           sum_quantities = line_items_by_product.sum { |li| (li.variant.weight || 0) * li.quantity }
-          sum_max_quantities = line_items_by_product.sum { |li| (li.variant.weight || 0) * (li.max_quantity || 0) }
-          variants_and_quantities << GroupBuyProductRow.new(product, sum_quantities, sum_max_quantities)
+          sum_max_quantities = line_items_by_product.sum { |li|
+            (li.variant.weight || 0) * (li.max_quantity || 0)
+          }
+          variants_and_quantities << GroupBuyProductRow.new(product, sum_quantities,
+                                                            sum_max_quantities)
         end
       end
       variants_and_quantities

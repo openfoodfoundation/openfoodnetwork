@@ -108,12 +108,10 @@ module Spree
     def actions
       return [] unless payment_source&.respond_to?(:actions)
 
-      actions = payment_source.actions.select do |action|
+      payment_source.actions.select do |action|
         !payment_source.respond_to?("can_#{action}?") ||
           payment_source.__send__("can_#{action}?", self)
       end
-
-      actions
     end
 
     def resend_authorization_email!

@@ -116,7 +116,8 @@ module Api
         end
 
         it 'can show only completed orders' do
-          get :index, params: { q: { completed_at_not_null: true, s: 'created_at desc' } }, as: :json
+          get :index, params: { q: { completed_at_not_null: true, s: 'created_at desc' } },
+                      as: :json
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
         end
@@ -143,7 +144,9 @@ module Api
     end
 
     describe "#show" do
-      let!(:order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor ) }
+      let!(:order) {
+        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor )
+      }
 
       context "Resource not found" do
         before { allow(controller).to receive(:spree_current_user) { admin_user } }
@@ -179,7 +182,9 @@ module Api
         end
 
         it "returns unauthorized, as the order product's supplier owner" do
-          allow(controller).to receive(:spree_current_user) { order.line_items.first.variant.product.supplier.owner }
+          allow(controller).to receive(:spree_current_user) {
+                                 order.line_items.first.variant.product.supplier.owner
+                               }
           get :show, params: { id: order.number }
           assert_unauthorized!
         end
@@ -192,7 +197,9 @@ module Api
       end
 
       context "as distributor owner" do
-        let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor ) }
+        let!(:order) {
+          create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor )
+        }
 
         before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
 
@@ -203,7 +210,8 @@ module Api
         end
 
         it "can view an order with weight calculator (this validates case where options[current_order] is nil on the shipping method serializer)" do
-          order.shipping_method.update_attribute(:calculator, create(:weight_calculator, calculable: order))
+          order.shipping_method.update_attribute(:calculator,
+                                                 create(:weight_calculator, calculable: order))
           allow(controller).to receive(:current_order).and_return order
           get :show, params: { id: order.number }
           expect_order
@@ -236,7 +244,7 @@ module Api
 
           expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
           expect(json_response[:line_items].size).to eq order.line_items.size
-          expect(json_response[:line_items].first[:variant][:product_name]). to eq order.line_items.first.variant.product.name
+          expect(json_response[:line_items].first[:variant][:product_name]).to eq order.line_items.first.variant.product.name
         end
       end
     end

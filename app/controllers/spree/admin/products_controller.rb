@@ -161,7 +161,9 @@ module Spree
       private
 
       def product_set_from_params
-        collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i| [i, p] }]
+        collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i|
+                                 [i, p]
+                               } ]
         Sets::ProductSet.new(collection_attributes: collection_hash)
       end
 

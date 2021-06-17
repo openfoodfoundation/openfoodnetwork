@@ -3,6 +3,7 @@ require "open_food_network/reports/line_items"
 module OpenFoodNetwork
   class PackingReport
     attr_reader :params
+
     def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user

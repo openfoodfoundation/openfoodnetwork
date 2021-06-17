@@ -10,12 +10,23 @@ feature "full-page cart", js: true do
 
   describe "viewing the cart" do
     let!(:zone) { create(:zone_with_member) }
-    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:distributor) {
+      create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
+    }
     let(:supplier) { create(:supplier_enterprise) }
-    let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product_with_tax.variants.first, product_with_fee.variants.first]) }
-    let(:enterprise_fee) { create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category) }
-    let(:product_with_tax) { create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1) }
-    let(:product_with_fee) { create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100) }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
+                                  coordinator: create(:distributor_enterprise), variants: [product_with_tax.variants.first, product_with_fee.variants.first])
+    }
+    let(:enterprise_fee) {
+      create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
+    }
+    let(:product_with_tax) {
+      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1)
+    }
+    let(:product_with_fee) {
+      create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100)
+    }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
     before do
@@ -61,7 +72,10 @@ feature "full-page cart", js: true do
     end
 
     describe "percentage fees" do
-      let(:percentage_fee) { create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
+      let(:percentage_fee) {
+        create(:enterprise_fee,
+               calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20))
+      }
 
       before do
         add_enterprise_fee percentage_fee
@@ -95,10 +109,13 @@ feature "full-page cart", js: true do
         it "shows admin and handlings row" do
           expect(page).to have_selector('#cart-detail')
           expect(page).to have_content('Admin & Handling')
-          expect(page).to have_selector '.cart-item-price',                 text: with_currency(0.86)
-          expect(page).to have_selector '.order-total.item-total',          text: with_currency(2.58)
-          expect(page).to have_selector '.order-total.distribution-total',  text: with_currency(1.00)
-          expect(page).to have_selector '.order-total.grand-total',         text: with_currency(3.58) # price * 3 + 1
+          expect(page).to have_selector '.cart-item-price',
+                                        text: with_currency(0.86)
+          expect(page).to have_selector '.order-total.item-total',
+                                        text: with_currency(2.58)
+          expect(page).to have_selector '.order-total.distribution-total',
+                                        text: with_currency(1.00)
+          expect(page).to have_selector '.order-total.grand-total', text: with_currency(3.58) # price * 3 + 1
         end
       end
 
@@ -131,7 +148,8 @@ feature "full-page cart", js: true do
           add_enterprise_fee admin_fee
 
           cart_service = CartService.new(order)
-          cart_service.populate(variants: { product_with_fee.variants.first.id => 3, product_with_tax.variants.first.id => 3 })
+          cart_service.populate(variants: { product_with_fee.variants.first.id => 3,
+                                            product_with_tax.variants.first.id => 3 })
           order.recreate_all_fees!
 
           visit main_app.cart_path
@@ -226,7 +244,8 @@ feature "full-page cart", js: true do
             visit main_app.cart_path
 
             # shows a relevant Flash message
-            expect(page).to have_selector ".alert-box", text: I18n.t('spree.orders.error_flash_for_unavailable_items')
+            expect(page).to have_selector ".alert-box",
+                                          text: I18n.t('spree.orders.error_flash_for_unavailable_items')
 
             # "Continue Shopping" and "Checkout" buttons are disabled
             expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
@@ -255,8 +274,14 @@ feature "full-page cart", js: true do
     context "when ordered in the same order cycle" do
       let(:address) { create(:address) }
       let(:user) { create(:user, bill_address: address, ship_address: address) }
-      let!(:prev_order1) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
-      let!(:prev_order2) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
+      let!(:prev_order1) {
+        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
+                                             user: user)
+      }
+      let!(:prev_order2) {
+        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
+                                             user: user)
+      }
 
       before do
         order.user = user

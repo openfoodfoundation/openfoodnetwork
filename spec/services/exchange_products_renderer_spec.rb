@@ -31,7 +31,8 @@ describe ExchangeProductsRenderer do
       it "loads products" do
         products = renderer.exchange_products(false, exchange.receiver)
 
-        suppliers = [exchange.variants[0].product.supplier.name, exchange.variants[1].product.supplier.name]
+        suppliers = [exchange.variants[0].product.supplier.name,
+                     exchange.variants[1].product.supplier.name]
         expect(suppliers).to include products.first.supplier.name
         expect(suppliers).to include products.second.supplier.name
       end
@@ -44,7 +45,9 @@ describe ExchangeProductsRenderer do
       end
 
       context "showing products from coordinator inventory only" do
-        before { order_cycle.update prefers_product_selection_from_coordinator_inventory_only: true }
+        before {
+          order_cycle.update prefers_product_selection_from_coordinator_inventory_only: true
+        }
 
         it "loads no products if there are no products from the coordinator inventory" do
           products = renderer.exchange_products(false, exchange.receiver)
@@ -54,7 +57,8 @@ describe ExchangeProductsRenderer do
 
         it "loads products from the coordinator inventory" do
           # Add variant already in the exchange to the coordinator's inventory
-          exchange.variants.first.inventory_items = [create(:inventory_item, enterprise: order_cycle.coordinator)]
+          exchange.variants.first.inventory_items = [create(:inventory_item,
+                                                            enterprise: order_cycle.coordinator)]
 
           products = renderer.exchange_products(false, exchange.receiver)
 
@@ -76,8 +80,14 @@ describe ExchangeProductsRenderer do
       describe "when OC is showing only the coordinators inventory" do
         let(:exchange_with_visible_variant) { order_cycle.exchanges.incoming.last }
         let(:exchange_with_hidden_variant) { order_cycle.exchanges.incoming.first }
-        let!(:visible_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_visible_variant.variants.first, visible: true) }
-        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_hidden_variant.variants.first, visible: false) }
+        let!(:visible_inventory_item) {
+          create(:inventory_item, enterprise: order_cycle.coordinator,
+                                  variant: exchange_with_visible_variant.variants.first, visible: true)
+        }
+        let!(:hidden_inventory_item) {
+          create(:inventory_item, enterprise: order_cycle.coordinator,
+                                  variant: exchange_with_hidden_variant.variants.first, visible: false)
+        }
 
         before do
           order_cycle.prefers_product_selection_from_coordinator_inventory_only = true

@@ -83,12 +83,14 @@ feature 'Enterprises Index' do
         it "does not update the enterprises and displays errors" do
           d_row_index = enterprise_row_index(d.name)
           within("tr.enterprise-#{d.id}") do
-            select d_manager.email, from: "sets_enterprise_set_collection_attributes_#{d_row_index}_owner_id"
+            select d_manager.email,
+                   from: "sets_enterprise_set_collection_attributes_#{d_row_index}_owner_id"
           end
 
           second_distributor_row_index = enterprise_row_index(second_distributor.name)
           within("tr.enterprise-#{second_distributor.id}") do
-            select d_manager.email, from: "sets_enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
+            select d_manager.email,
+                   from: "sets_enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
           end
           click_button "Update"
           expect(flash_message).to eq('Update failed')
@@ -107,7 +109,10 @@ feature 'Enterprises Index' do
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_manager) { create(:user) }
-    let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
+    let!(:er) {
+      create(:enterprise_relationship, parent: distributor3, child: distributor1,
+                                       permissions_list: [:edit_profile])
+    }
 
     before(:each) do
       enterprise_manager.enterprise_roles.build(enterprise: supplier1).save
@@ -165,7 +170,9 @@ feature 'Enterprises Index' do
 
   describe "as the owner of an enterprise" do
     let!(:user) { create(:user) }
-    let!(:owned_distributor) { create(:distributor_enterprise, name: 'Owned Distributor', owner: user) }
+    let!(:owned_distributor) {
+      create(:distributor_enterprise, name: 'Owned Distributor', owner: user)
+    }
 
     before do
       login_as user

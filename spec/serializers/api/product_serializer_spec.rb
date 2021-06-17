@@ -30,7 +30,6 @@ describe Api::ProductSerializer do
       :id, :name, :permalink, :meta_keywords, :group_buy, :notes, :description, :description_html,
       :properties_with_values, :variants, :primary_taxon, :taxons, :images, :supplier
     ]
-
   end
 
   it "serializes product properties" do

@@ -28,14 +28,16 @@ module Spree
     belongs_to :user, class_name: Spree.user_class.to_s
     belongs_to :created_by, class_name: Spree.user_class.to_s
 
-    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
+    belongs_to :bill_address, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
 
-    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
+    belongs_to :ship_address, class_name: 'Spree::Address'
     alias_attribute :shipping_address, :ship_address
 
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at ASC') }, class_name: "Spree::LineItem", dependent: :destroy
+    has_many :line_items, -> {
+                            order('created_at ASC')
+                          }, class_name: "Spree::LineItem", dependent: :destroy
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
@@ -88,7 +90,7 @@ module Spree
     after_create :create_tax_charge!
 
     validates :email, presence: true,
-                      format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
+                      format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
 
     make_permalink field: :number
@@ -474,7 +476,7 @@ module Spree
     # an order is part-way through checkout and the user changes items in the cart; in that case
     # we need to reset the checkout flow to ensure the order is processed correctly.
     def ensure_updated_shipments
-      if !self.completed? && shipments.any?
+      if !completed? && shipments.any?
         shipments.destroy_all
         restart_checkout_flow
       end
@@ -674,6 +676,7 @@ module Spree
 
     def require_customer?
       return false if new_record? || state == 'cart'
+
       true
     end
 

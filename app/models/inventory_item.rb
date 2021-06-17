@@ -5,7 +5,8 @@ class InventoryItem < ApplicationRecord
   validates :variant_id, uniqueness: { scope: :enterprise_id }
   validates :enterprise, presence: true
   validates :variant, presence: true
-  validates :visible, inclusion: { in: [true, false], message: I18n.t(:inventory_item_visibility_error) }
+  validates :visible,
+            inclusion: { in: [true, false], message: I18n.t(:inventory_item_visibility_error) }
 
   scope :visible, -> { where(visible: true) }
   scope :hidden, -> { where(visible: false) }

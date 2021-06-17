@@ -54,8 +54,7 @@ module OpenFoodNetwork
 
     def table(items)
       tree = build_tree(items, @rules)
-      table = build_table(tree)
-      table
+      build_table(tree)
     end
 
     private

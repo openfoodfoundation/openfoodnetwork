@@ -6,8 +6,12 @@ feature "Shops caching", js: true, caching: true do
   include WebHelper
   include UIComponentHelper
 
-  let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true) }
-  let!(:order_cycle) { create(:open_order_cycle, distributors: [distributor], coordinator: distributor) }
+  let!(:distributor) {
+    create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true)
+  }
+  let!(:order_cycle) {
+    create(:open_order_cycle, distributors: [distributor], coordinator: distributor)
+  }
 
   describe "caching enterprises AMS data" do
     it "caches data for all enterprises, with the provided options" do
@@ -43,12 +47,20 @@ feature "Shops caching", js: true, caching: true do
     let!(:taxon2) { create(:taxon, name: "New Taxon") }
     let!(:property) { create(:property, presentation: "Cached Property") }
     let!(:property2) { create(:property, presentation: "New Property") }
-    let!(:product) { create(:product, taxons: [taxon], primary_taxon: taxon, properties: [property]) }
+    let!(:product) {
+      create(:product, taxons: [taxon], primary_taxon: taxon, properties: [property])
+    }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
-    let(:test_domain) { "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}" }
-    let(:taxons_key) { "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/taxons.json?distributor=#{distributor.id}" }
-    let(:properties_key) { "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/properties.json?distributor=#{distributor.id}" }
+    let(:test_domain) {
+      "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+    }
+    let(:taxons_key) {
+      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/taxons.json?distributor=#{distributor.id}"
+    }
+    let(:properties_key) {
+      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/properties.json?distributor=#{distributor.id}"
+    }
     let(:options) { { expires_in: CacheService::FILTERS_EXPIRY } }
 
     before do

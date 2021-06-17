@@ -5,18 +5,15 @@ class CacheService
   FILTERS_EXPIRY = 30.seconds.freeze
   SHOPS_EXPIRY = 15.seconds.freeze
 
-  def self.cache(cache_key, options = {})
-    Rails.cache.fetch cache_key.to_s, options do
-      yield
-    end
+  def self.cache(cache_key, options = {}, &block)
+    Rails.cache.fetch cache_key.to_s, options, &block
   end
 
   # Yields a cached query, expired by the most recently updated record for a given class.
   # E.g: if *any* Spree::Taxon record is updated, all keys based on Spree::Taxon will auto-expire.
-  def self.cached_data_by_class(cache_key, cached_class)
-    Rails.cache.fetch "#{cache_key}-#{cached_class}-#{latest_timestamp_by_class(cached_class)}" do
-      yield
-    end
+  def self.cached_data_by_class(cache_key, cached_class, &block)
+    Rails.cache.fetch "#{cache_key}-#{cached_class}-#{latest_timestamp_by_class(cached_class)}",
+                      &block
   end
 
   # Gets the :updated_at value of the most recently updated record for a given class, and returns
@@ -25,12 +22,10 @@ class CacheService
     cached_class.maximum(:updated_at).to_i
   end
 
-  def self.home_stats(statistic)
+  def self.home_stats(statistic, &block)
     Rails.cache.fetch("home_stats_count_#{statistic}",
                       expires_in: HOME_STATS_EXPIRY,
-                      race_condition_ttl: 10) do
-      yield
-    end
+                      race_condition_ttl: 10, &block)
   end
 
   module FragmentCaching

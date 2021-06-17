@@ -69,17 +69,20 @@ module Spree
           end
 
           it 'deletes the variant' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+                                   format: 'html'
             expect(variant).to have_received(:destroy)
           end
 
           it 'shows a success flash message' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+                                   format: 'html'
             expect(flash[:success]).to be
           end
 
           it 'redirects to admin_product_variants_url' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+                                   format: 'html'
             expect(response).to redirect_to spree.admin_product_variants_url(variant.product.permalink)
           end
 
@@ -87,7 +90,8 @@ module Spree
             exchange = create(:exchange)
             variant.exchanges << exchange
 
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+                                   format: 'html'
             expect(variant.exchanges.reload).to be_empty
           end
         end

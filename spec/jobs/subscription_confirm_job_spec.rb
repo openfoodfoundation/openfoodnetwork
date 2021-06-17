@@ -9,8 +9,14 @@ describe SubscriptionConfirmJob do
 
   describe "finding proxy_orders that are ready to be confirmed" do
     let(:shop) { create(:distributor_enterprise) }
-    let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 59.minutes.ago, updated_at: 1.day.ago) }
-    let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 61.minutes.ago, updated_at: 1.day.ago) }
+    let(:order_cycle1) {
+      create(:simple_order_cycle, coordinator: shop, orders_close_at: 59.minutes.ago,
+                                  updated_at: 1.day.ago)
+    }
+    let(:order_cycle2) {
+      create(:simple_order_cycle, coordinator: shop, orders_close_at: 61.minutes.ago,
+                                  updated_at: 1.day.ago)
+    }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
     let(:subscription) { create(:subscription, with_items: true, shop: shop, schedule: schedule) }
     let!(:proxy_order) do
@@ -105,10 +111,18 @@ describe SubscriptionConfirmJob do
   end
 
   describe "finding recently closed order cycles" do
-    let!(:order_cycle1) { create(:simple_order_cycle, orders_close_at: 61.minutes.ago, updated_at: 61.minutes.ago) }
-    let!(:order_cycle2) { create(:simple_order_cycle, orders_close_at: nil, updated_at: 59.minutes.ago) }
-    let!(:order_cycle3) { create(:simple_order_cycle, orders_close_at: 61.minutes.ago, updated_at: 59.minutes.ago) }
-    let!(:order_cycle4) { create(:simple_order_cycle, orders_close_at: 59.minutes.ago, updated_at: 61.minutes.ago) }
+    let!(:order_cycle1) {
+      create(:simple_order_cycle, orders_close_at: 61.minutes.ago, updated_at: 61.minutes.ago)
+    }
+    let!(:order_cycle2) {
+      create(:simple_order_cycle, orders_close_at: nil, updated_at: 59.minutes.ago)
+    }
+    let!(:order_cycle3) {
+      create(:simple_order_cycle, orders_close_at: 61.minutes.ago, updated_at: 59.minutes.ago)
+    }
+    let!(:order_cycle4) {
+      create(:simple_order_cycle, orders_close_at: 59.minutes.ago, updated_at: 61.minutes.ago)
+    }
     let!(:order_cycle5) { create(:simple_order_cycle, orders_close_at: 1.minute.from_now) }
 
     it "returns closed order cycles whose orders_close_at or updated_at date is within the last hour" do
@@ -150,11 +164,15 @@ describe SubscriptionConfirmJob do
 
       context "Stripe SCA" do
         let(:stripe_sca_payment_method) { create(:stripe_sca_payment_method) }
-        let(:stripe_sca_payment) { create(:payment, amount: 10, payment_method: stripe_sca_payment_method) }
+        let(:stripe_sca_payment) {
+          create(:payment, amount: 10, payment_method: stripe_sca_payment_method)
+        }
         let(:provider) { double }
 
         before do
-          allow_any_instance_of(Stripe::CreditCardCloner).to receive(:find_or_clone) { ["cus_123", "pm_1234"] }
+          allow_any_instance_of(Stripe::CreditCardCloner).to receive(:find_or_clone) {
+                                                               ["cus_123", "pm_1234"]
+                                                             }
           allow(order).to receive(:pending_payments) { [stripe_sca_payment] }
           allow(stripe_sca_payment_method).to receive(:provider) { provider }
           allow(stripe_sca_payment_method.provider).to receive(:purchase) { true }
@@ -175,7 +193,9 @@ describe SubscriptionConfirmJob do
 
       context "Stripe Connect" do
         let(:stripe_connect_payment_method) { create(:stripe_connect_payment_method) }
-        let(:stripe_connect_payment) { create(:payment, amount: 10, payment_method: stripe_connect_payment_method) }
+        let(:stripe_connect_payment) {
+          create(:payment, amount: 10, payment_method: stripe_connect_payment_method)
+        }
 
         before do
           allow(order).to receive(:pending_payments) { [stripe_connect_payment] }
@@ -200,7 +220,9 @@ describe SubscriptionConfirmJob do
 
       context "and an error is added to the order when updating payments" do
         before do
-          expect(job).to receive(:setup_payment!) { |order| order.errors.add(:base, "a payment error") }
+          expect(job).to receive(:setup_payment!) { |order|
+                           order.errors.add(:base, "a payment error")
+                         }
         end
 
         it "sends a failed payment email" do
@@ -215,7 +237,8 @@ describe SubscriptionConfirmJob do
 
         context "when an error occurs while processing the payment" do
           before do
-            expect(payment).to receive(:process_offline!).and_raise Spree::Core::GatewayError, "payment failure error"
+            expect(payment).to receive(:process_offline!).and_raise Spree::Core::GatewayError,
+                                                                    "payment failure error"
           end
 
           it "sends a failed payment email" do

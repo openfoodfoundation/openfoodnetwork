@@ -7,8 +7,8 @@ class CurrentOrderLocker
   #
   #   https://guides.rubyonrails.org/action_controller_overview.html#filters
   #
-  def self.around(controller)
-    lock_order_and_variants(controller.current_order) { yield }
+  def self.around(controller, &block)
+    lock_order_and_variants(controller.current_order, &block)
   end
 
   # Locking will not prevent all access to these rows. Other processes are

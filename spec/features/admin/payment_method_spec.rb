@@ -32,12 +32,26 @@ feature '
 
     context "using stripe connect" do
       let(:user) { create(:user, enterprise_limit: 5) }
-      let!(:connected_enterprise) { create(:distributor_enterprise, name: "Connected", owner: user) }
-      let!(:revoked_account_enterprise) { create(:distributor_enterprise, name: "Revoked", owner: user) }
-      let!(:missing_account_enterprise) { create(:distributor_enterprise, name: "Missing", owner: user) }
-      let!(:valid_stripe_account) { create(:stripe_account, enterprise: connected_enterprise, stripe_user_id: "acc_connected123") }
-      let!(:disconnected_stripe_account) { create(:stripe_account, enterprise: revoked_account_enterprise, stripe_user_id: "acc_revoked123") }
-      let!(:stripe_account_mock) { { id: "acc_connected123", business_name: "My Org", charges_enabled: true } }
+      let!(:connected_enterprise) {
+        create(:distributor_enterprise, name: "Connected", owner: user)
+      }
+      let!(:revoked_account_enterprise) {
+        create(:distributor_enterprise, name: "Revoked", owner: user)
+      }
+      let!(:missing_account_enterprise) {
+        create(:distributor_enterprise, name: "Missing", owner: user)
+      }
+      let!(:valid_stripe_account) {
+        create(:stripe_account, enterprise: connected_enterprise,
+                                stripe_user_id: "acc_connected123")
+      }
+      let!(:disconnected_stripe_account) {
+        create(:stripe_account, enterprise: revoked_account_enterprise,
+                                stripe_user_id: "acc_revoked123")
+      }
+      let!(:stripe_account_mock) {
+        { id: "acc_connected123", business_name: "My Org", charges_enabled: true }
+      }
 
       around do |example|
         original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
@@ -48,8 +62,10 @@ feature '
       before do
         Spree::Config.set(stripe_connect_enabled: true)
         Stripe.api_key = "sk_test_12345"
-        stub_request(:get, "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
-        stub_request(:get, "https://api.stripe.com/v1/accounts/acc_revoked123").to_return(status: 404)
+        stub_request(:get,
+                     "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
+        stub_request(:get,
+                     "https://api.stripe.com/v1/accounts/acc_revoked123").to_return(status: 404)
       end
 
       it "communicates the status of the stripe connection to the user" do
@@ -59,32 +75,43 @@ feature '
         select2_select "Stripe", from: "payment_method_type"
 
         select2_select "Missing", from: "payment_method_preferred_enterprise_id"
-        expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
+        expect(page).to have_selector "#stripe-account-status .alert-box.error",
+                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
         connect_one = I18n.t("spree.admin.payment_methods.stripe_connect.connect_one")
-        expect(page).to have_link connect_one, href: edit_admin_enterprise_path(missing_account_enterprise, anchor: "/payment_methods")
+        expect(page).to have_link connect_one,
+                                  href: edit_admin_enterprise_path(missing_account_enterprise,
+                                                                   anchor: "/payment_methods")
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
-        expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
+        expect(page).to have_selector "#stripe-account-status .alert-box.error",
+                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
 
         select2_select "Connected", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"
-        expect(page).to have_selector "#stripe-account-status .account_id", text: "Account ID: acc_connected123"
-        expect(page).to have_selector "#stripe-account-status .business_name", text: "Business Name: My Org"
-        expect(page).to have_selector "#stripe-account-status .charges_enabled", text: "Charges Enabled: Yes"
+        expect(page).to have_selector "#stripe-account-status .account_id",
+                                      text: "Account ID: acc_connected123"
+        expect(page).to have_selector "#stripe-account-status .business_name",
+                                      text: "Business Name: My Org"
+        expect(page).to have_selector "#stripe-account-status .charges_enabled",
+                                      text: "Charges Enabled: Yes"
       end
     end
 
     scenario "checking a single distributor is checked by default" do
       2.times.each { Enterprise.last.destroy }
       login_as_admin_and_visit spree.new_admin_payment_method_path
-      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: true
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
+                                 checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
       login_as_admin_and_visit spree.new_admin_payment_method_path
-      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: false
-      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}", checked: false
-      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}", checked: false
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
+                                 checked: false
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}",
+                                 checked: false
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}",
+                                 checked: false
     end
   end
 
@@ -139,7 +166,9 @@ feature '
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
     let(:payment_method1) { create(:payment_method, name: 'One', distributors: [distributor1]) }
-    let(:payment_method2) { create(:payment_method, name: 'Two', distributors: [distributor1, distributor2]) }
+    let(:payment_method2) {
+      create(:payment_method, name: 'Two', distributors: [distributor1, distributor2])
+    }
     let(:payment_method3) { create(:payment_method, name: 'Three', distributors: [distributor3]) }
 
     before(:each) do
@@ -299,5 +328,4 @@ feature '
       end
     end
   end
-
 end

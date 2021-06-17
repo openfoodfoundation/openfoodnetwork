@@ -13,7 +13,9 @@ describe TagRule::FilterShippingMethods, type: :model do
     end
 
     context "when the shipping method is not nil" do
-      let(:shipping_method) { build_stubbed(:shipping_method, tag_list: ["member", "local", "volunteer"]) }
+      let(:shipping_method) {
+        build_stubbed(:shipping_method, tag_list: ["member", "local", "volunteer"])
+      }
 
       context "when the rule has no preferred shipping method tags specified" do
         before { allow(tag_rule).to receive(:preferred_shipping_method_tags) { "" } }
@@ -21,12 +23,20 @@ describe TagRule::FilterShippingMethods, type: :model do
       end
 
       context "when the rule has preferred customer tags specified that match ANY of the customer tags" do
-        before { allow(tag_rule).to receive(:preferred_shipping_method_tags) { "wholesale,some_tag,member" } }
+        before {
+          allow(tag_rule).to receive(:preferred_shipping_method_tags) {
+                               "wholesale,some_tag,member"
+                             }
+        }
         it { expect(tag_rule.send(:tags_match?, shipping_method)).to be true }
       end
 
       context "when the rule has preferred customer tags specified that match NONE of the customer tags" do
-        before { allow(tag_rule).to receive(:preferred_shipping_method_tags) { "wholesale,some_tag,some_other_tag" } }
+        before {
+          allow(tag_rule).to receive(:preferred_shipping_method_tags) {
+                               "wholesale,some_tag,some_other_tag"
+                             }
+        }
         it { expect(tag_rule.send(:tags_match?, shipping_method)).to be false }
       end
     end

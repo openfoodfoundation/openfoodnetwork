@@ -48,7 +48,8 @@ describe Customer, type: :model do
     let!(:enterprise) { create(:distributor_enterprise) }
 
     it "associates no user using non-existing email" do
-      c = Customer.create(enterprise: enterprise, email: 'some-email-not-associated-with-a-user@email.com')
+      c = Customer.create(enterprise: enterprise,
+                          email: 'some-email-not-associated-with-a-user@email.com')
       expect(c.user).to be_nil
     end
 

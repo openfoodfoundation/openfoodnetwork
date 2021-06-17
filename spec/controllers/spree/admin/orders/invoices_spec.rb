@@ -8,7 +8,10 @@ describe Spree::Admin::OrdersController, type: :controller do
   describe "#invoice" do
     let!(:user) { create(:user) }
     let!(:enterprise_user) { create(:user) }
-    let!(:order) { create(:order_with_distributor, bill_address: create(:address), ship_address: create(:address)) }
+    let!(:order) {
+      create(:order_with_distributor, bill_address: create(:address),
+                                      ship_address: create(:address))
+    }
     let!(:distributor) { order.distributor }
     let(:params) { { id: order.number } }
 
@@ -69,7 +72,10 @@ describe Spree::Admin::OrdersController, type: :controller do
   describe "#print" do
     let!(:user) { create(:user) }
     let!(:enterprise_user) { create(:user) }
-    let!(:order) { create(:order_with_distributor, bill_address: create(:address), ship_address: create(:address)) }
+    let!(:order) {
+      create(:order_with_distributor, bill_address: create(:address),
+                                      ship_address: create(:address))
+    }
     let!(:distributor) { order.distributor }
     let(:params) { { id: order.number } }
 

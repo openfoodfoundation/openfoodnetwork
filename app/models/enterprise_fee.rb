@@ -4,7 +4,7 @@ class EnterpriseFee < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :enterprise
-  belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
+  belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
   has_many :coordinator_fees, dependent: :destroy
   has_many :order_cycles, through: :coordinator_fees

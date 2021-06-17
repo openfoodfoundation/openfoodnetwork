@@ -16,7 +16,8 @@ feature '
     scenario "listing relationships" do
       # Given some users and enterprises with relationships
       u1, u2 = create(:user), create(:user)
-      e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
+      e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise),
+create(:enterprise)
       create(:enterprise_role, user: u1, enterprise: e1)
       create(:enterprise_role, user: u1, enterprise: e2)
       create(:enterprise_role, user: u2, enterprise: e3)
@@ -94,7 +95,9 @@ feature '
       let(:new_email) { 'new@manager.com' }
 
       let!(:enterprise) { create(:enterprise, name: 'Test Enterprise', owner: user1) }
-      let!(:enterprise_role) { create(:enterprise_role, user_id: user2.id, enterprise_id: enterprise.id) }
+      let!(:enterprise_role) {
+        create(:enterprise_role, user_id: user2.id, enterprise_id: enterprise.id)
+      }
 
       before do
         click_link 'Enterprises'

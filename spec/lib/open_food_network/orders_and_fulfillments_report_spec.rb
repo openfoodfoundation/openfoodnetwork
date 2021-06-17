@@ -61,7 +61,9 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
             ship_address: create(:address)
           )
         }
-        let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
+        let(:li2) {
+          build(:line_item_with_shipment, product: create(:simple_product, supplier: s1))
+        }
 
         before do
           o2.line_items << li2
@@ -101,7 +103,9 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
             ship_address: create(:address)
           )
         }
-        let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
+        let(:li2) {
+          build(:line_item_with_shipment, product: create(:simple_product, supplier: s1))
+        }
 
         before do
           o2.line_items << li2
@@ -215,7 +219,8 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
         # Add a second line item for Fuji variant to the order, to test grouping in this edge case.
         order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil, quantity: 4)
 
-        second_order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil, quantity: 8)
+        second_order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil,
+                                                                   quantity: 8)
       end
 
       it "groups line items by variant and order" do

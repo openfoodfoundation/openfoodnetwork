@@ -12,7 +12,10 @@ feature "As a consumer I want to check out my cart", js: true do
   describe "using the checkout" do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
-    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, distributors: [distributor],
+                                  coordinator: create(:distributor_enterprise), variants: [product.variants.first])
+    }
     let(:product) { create(:simple_product, supplier: supplier) }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
     let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }

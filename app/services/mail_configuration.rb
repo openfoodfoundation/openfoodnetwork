@@ -9,8 +9,6 @@ class MailConfiguration
     apply_mail_settings
   end
 
-  private
-
   def self.configuration
     {
       mail_host: ENV.fetch('MAIL_HOST'),

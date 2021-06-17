@@ -46,7 +46,8 @@ module Spree
       def customers
         @report_types = report_types[:customers]
         @report_type = params[:report_type]
-        @report = OpenFoodNetwork::CustomersReport.new spree_current_user, raw_params, render_content?
+        @report = OpenFoodNetwork::CustomersReport.new spree_current_user, raw_params,
+                                                       render_content?
         render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
       end
 
@@ -91,7 +92,8 @@ module Spree
       def sales_tax
         @distributors = my_distributors
         @report_type = params[:report_type]
-        @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, raw_params, render_content?
+        @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, raw_params,
+                                                      render_content?
         render_report(@report.header, @report.table, params[:csv], "sales_tax.csv")
       end
 
@@ -101,7 +103,8 @@ module Spree
         @report_type = params[:report_type]
 
         # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, raw_params, render_content?
+        @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, raw_params,
+                                                      render_content?
         @table = order_grouper_table
         csv_file_name = "payments_#{timestamp}.csv"
 
@@ -279,14 +282,14 @@ module Spree
       def describe_report(report)
         name = I18n.t(:name, scope: [:admin, :reports, report])
         description = begin
-                        I18n.t!(:description, scope: [:admin, :reports, report])
-                      rescue I18n::MissingTranslationData
-                        render_to_string(
-                          partial: "#{report}_description",
-                          layout: false,
-                          locals: { report_types: report_types[report] }
-                        ).html_safe
-                      end
+          I18n.t!(:description, scope: [:admin, :reports, report])
+        rescue I18n::MissingTranslationData
+          render_to_string(
+            partial: "#{report}_description",
+            layout: false,
+            locals: { report_types: report_types[report] }
+          ).html_safe
+        end
         { name: name, url: url_for_report(report), description: description }
       end
 

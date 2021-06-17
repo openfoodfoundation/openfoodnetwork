@@ -53,7 +53,8 @@ module OrderManagement
         def for_orders
           chain_to_scope do
             where(
-              adjustable_type: ["Spree::Order", "Spree::Shipment", "Spree::LineItem", "Spree::Payment"]
+              adjustable_type: ["Spree::Order", "Spree::Shipment", "Spree::LineItem",
+                                "Spree::Payment"]
             )
           end
         end

@@ -81,7 +81,7 @@ describe UnitPrice do
       it "returns 2 for a 2 pound variant" do
         allow(product).to receive(:variant_unit_scale) { 453.6 }
         allow(product).to receive(:variant_unit) { "weight" }
-        variant.unit_value = 2*453.6
+        variant.unit_value = 2 * 453.6
         expect(subject.denominator).to eq(2)
       end
     end

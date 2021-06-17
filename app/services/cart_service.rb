@@ -74,11 +74,9 @@ class CartService
   end
 
   def cart_remove(variant)
-    begin
-      order.contents.remove(variant)
-    rescue ActiveRecord::RecordNotFound
-      # Nothing to remove; no line items for this variant were found.
-    end
+    order.contents.remove(variant)
+  rescue ActiveRecord::RecordNotFound
+    # Nothing to remove; no line items for this variant were found.
   end
 
   def final_quantities(variant, quantity, max_quantity)
@@ -107,15 +105,15 @@ class CartService
     (data[:variants] || []).each do |variant_id, quantity|
       if quantity.is_a?(ActionController::Parameters)
         variants_array.push({
-          variant_id: variant_id.to_i,
-          quantity: quantity[:quantity].to_i,
-          max_quantity: quantity[:max_quantity].to_i
-        })
+                              variant_id: variant_id.to_i,
+                              quantity: quantity[:quantity].to_i,
+                              max_quantity: quantity[:max_quantity].to_i
+                            })
       else
         variants_array.push({
-          variant_id: variant_id.to_i,
-          quantity: quantity.to_i
-        })
+                              variant_id: variant_id.to_i,
+                              quantity: quantity.to_i
+                            })
       end
     end
     variants_array
@@ -153,7 +151,8 @@ class CartService
   end
 
   def check_variant_available_under_distribution(variant)
-    return true if OrderCycleDistributedVariants.new(@order_cycle, @distributor).available_variants.include? variant
+    return true if OrderCycleDistributedVariants.new(@order_cycle,
+                                                     @distributor).available_variants.include? variant
 
     errors.add(:base, I18n.t(:spree_order_populator_availability_error))
     false

@@ -11,7 +11,10 @@ feature "As a consumer I want to view products", js: true do
   describe "Viewing a product" do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
-    let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
+    let(:oc1) {
+      create(:simple_order_cycle, distributors: [distributor],
+                                  coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+    }
     let(:product) { create(:simple_product, supplier: supplier) }
     let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor: distributor) }

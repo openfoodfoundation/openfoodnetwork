@@ -12,7 +12,8 @@ module Admin
 
     def import
       @filepath = save_uploaded_file(params[:file])
-      @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
+      @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user,
+                                                     params[:settings])
       @original_filename = params[:file].try(:original_filename)
       @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
 
@@ -34,7 +35,8 @@ module Admin
     end
 
     def reset_absent_products
-      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]), spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], settings: params[:settings])
+      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]),
+                                                     spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], settings: params[:settings])
 
       if params.key?(:enterprises_to_reset) && params.key?(:updated_ids)
         @importer.reset_absent(params[:updated_ids])
@@ -52,7 +54,8 @@ module Admin
     end
 
     def process_data(method)
-      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
+      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]),
+                                                     spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
       begin
         @importer.public_send("#{method}_entries")
@@ -75,7 +78,8 @@ module Admin
 
     def check_spreadsheet_has_data(importer)
       unless importer.item_count
-        redirect_to '/admin/product_import', notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
+        redirect_to '/admin/product_import',
+                    notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
         true
       end
     end

@@ -61,11 +61,13 @@ module OpenFoodNetwork
     attr_accessor :touched_exchanges
 
     def exchange_exists?(sender_id, receiver_id, incoming)
-      @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming).present?
+      @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id,
+                                   incoming: incoming).present?
     end
 
     def add_exchange(sender_id, receiver_id, incoming, attrs = {})
-      attrs = attrs.reverse_merge(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming)
+      attrs = attrs.reverse_merge(sender_id: sender_id, receiver_id: receiver_id,
+                                  incoming: incoming)
       variant_ids = attrs.delete :variant_ids
       exchange = @order_cycle.exchanges.build attrs
 
@@ -78,7 +80,8 @@ module OpenFoodNetwork
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs = {})
-      exchange = @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming).first
+      exchange = @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id,
+                                              incoming: incoming).first
       return unless permission_for(exchange)
 
       remove_unauthorized_exchange_attributes(exchange, attrs)

@@ -18,8 +18,12 @@ feature '
   let(:taxon_fruit) { create(:taxon, name: 'Fruit') }
   let(:taxon_veg) { create(:taxon, name: 'Vegetables') }
 
-  let!(:product1) { create(:simple_product, supplier: producer1, primary_taxon: taxon_fruit, taxons: [taxon_fruit]) }
-  let!(:product2) { create(:simple_product, supplier: producer2, primary_taxon: taxon_veg, taxons: [taxon_veg]) }
+  let!(:product1) {
+    create(:simple_product, supplier: producer1, primary_taxon: taxon_fruit, taxons: [taxon_fruit])
+  }
+  let!(:product2) {
+    create(:simple_product, supplier: producer2, primary_taxon: taxon_veg, taxons: [taxon_veg])
+  }
 
   let(:shop) { create(:distributor_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: shop, child: producer1) }

@@ -9,9 +9,15 @@ describe VariantOverride do
   describe "scopes" do
     let(:hub1) { create(:distributor_enterprise) }
     let(:hub2) { create(:distributor_enterprise) }
-    let!(:vo1) { create(:variant_override, hub: hub1, variant: variant, import_date: Time.zone.now.yesterday) }
-    let!(:vo2) { create(:variant_override, hub: hub2, variant: variant, import_date: Time.zone.now) }
-    let!(:vo3) { create(:variant_override, hub: hub1, variant: variant, permission_revoked_at: Time.zone.now) }
+    let!(:vo1) {
+      create(:variant_override, hub: hub1, variant: variant, import_date: Time.zone.now.yesterday)
+    }
+    let!(:vo2) {
+      create(:variant_override, hub: hub2, variant: variant, import_date: Time.zone.now)
+    }
+    let!(:vo3) {
+      create(:variant_override, hub: hub1, variant: variant, permission_revoked_at: Time.zone.now)
+    }
 
     it "ignores variant_overrides with revoked_permissions by default" do
       expect(VariantOverride.all).to_not include vo3
@@ -259,7 +265,8 @@ describe VariantOverride do
   describe "resetting stock levels" do
     describe "forcing the on hand level to the value in the default_stock field" do
       it "succeeds for variant override that forces limited stock" do
-        vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
+        vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12,
+                                       default_stock: 20, resettable: true)
         vo.reset_stock!
 
         vo.reload
@@ -268,7 +275,8 @@ describe VariantOverride do
       end
 
       it "succeeds for variant override that forces unlimited stock" do
-        vo = create(:variant_override, :on_demand, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo = create(:variant_override, :on_demand, variant: variant, hub: hub, default_stock: 20,
+                                                   resettable: true)
         vo.reset_stock!
 
         vo.reload
@@ -277,7 +285,8 @@ describe VariantOverride do
       end
 
       it "succeeds for variant override that uses producer stock settings" do
-        vo = create(:variant_override, :use_producer_stock_settings, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo = create(:variant_override, :use_producer_stock_settings, variant: variant, hub: hub,
+                                                                     default_stock: 20, resettable: true)
         vo.reset_stock!
 
         vo.reload
@@ -287,14 +296,16 @@ describe VariantOverride do
     end
 
     it "silently logs an error if the variant override doesn't have a default stock level" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: nil, resettable: true)
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12,
+                                     default_stock: nil, resettable: true)
       expect(Bugsnag).to receive(:notify)
       vo.reset_stock!
       expect(vo.reload.count_on_hand).to eq(12)
     end
 
     it "doesn't reset the level if the behaviour is disabled" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, resettable: false)
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12,
+                                     default_stock: 10, resettable: false)
       vo.reset_stock!
       expect(vo.reload.count_on_hand).to eq(12)
     end

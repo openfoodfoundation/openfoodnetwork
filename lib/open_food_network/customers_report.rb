@@ -1,6 +1,7 @@
 module OpenFoodNetwork
   class CustomersReport
     attr_reader :params
+
     def initialize(user, params = {}, compile_table = false)
       @params = params
       @user = user

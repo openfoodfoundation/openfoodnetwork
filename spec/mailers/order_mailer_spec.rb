@@ -142,10 +142,14 @@ describe Spree::OrderMailer do
 
   describe "order confimation" do
     let(:bill_address) { create(:address) }
-    let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+    let(:distributor_address) {
+      create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
+    }
     let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:shipping_instructions) { "pick up on thursday please!" }
-    let(:ship_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+    let(:ship_address) {
+      create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
+    }
     let(:order) {
       create(:order_with_line_items, distributor: distributor, bill_address: bill_address, ship_address: ship_address,
                                      special_instructions: shipping_instructions)

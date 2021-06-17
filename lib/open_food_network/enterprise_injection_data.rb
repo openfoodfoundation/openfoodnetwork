@@ -10,24 +10,21 @@ module OpenFoodNetwork
     end
 
     def shipping_method_services
-      @shipping_method_services ||= begin
-        CacheService.cached_data_by_class("shipping_method_services", Spree::ShippingMethod) do
-          # This result relies on a simple join with DistributorShippingMethod.
-          # Updated DistributorShippingMethod records touch their associated Spree::ShippingMethod.
-          Spree::ShippingMethod.services
-        end
+      @shipping_method_services ||= CacheService.cached_data_by_class("shipping_method_services",
+                                                                      Spree::ShippingMethod) do
+        # This result relies on a simple join with DistributorShippingMethod.
+        # Updated DistributorShippingMethod records touch their associated Spree::ShippingMethod.
+        Spree::ShippingMethod.services
       end
     end
 
     def supplied_taxons
-      @supplied_taxons ||= begin
-        CacheService.cached_data_by_class("supplied_taxons", Spree::Taxon) do
-          # This result relies on a join with associated supplied products, through the
-          # class Classification which maps the relationship. Classification records touch
-          # their associated Spree::Taxon when updated. A Spree::Product's primary_taxon
-          # is also touched when changed.
-          Spree::Taxon.supplied_taxons
-        end
+      @supplied_taxons ||= CacheService.cached_data_by_class("supplied_taxons", Spree::Taxon) do
+        # This result relies on a join with associated supplied products, through the
+        # class Classification which maps the relationship. Classification records touch
+        # their associated Spree::Taxon when updated. A Spree::Product's primary_taxon
+        # is also touched when changed.
+        Spree::Taxon.supplied_taxons
       end
     end
 

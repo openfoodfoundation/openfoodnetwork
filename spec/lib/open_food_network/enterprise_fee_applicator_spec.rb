@@ -65,7 +65,7 @@ module OpenFoodNetwork
       let(:variant) { double(:variant, product: double(:product, name: 'Bananas')) }
       let(:enterprise_fee) {
         double(:enterprise_fee, fee_type: 'packing',
-               enterprise: double(:enterprise, name: 'Ballantyne'))
+                                enterprise: double(:enterprise, name: 'Ballantyne'))
       }
       let(:applicator) { EnterpriseFeeApplicator.new enterprise_fee, variant, 'distributor' }
 

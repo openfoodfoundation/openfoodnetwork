@@ -6,7 +6,8 @@ class DefaultStockLocation
   def self.create!
     country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
     state = country.states.first
-    Spree::StockLocation.create!(name: NAME, country_id: country.id, state_id: state.id, backorderable_default: false)
+    Spree::StockLocation.create!(name: NAME, country_id: country.id, state_id: state.id,
+                                 backorderable_default: false)
   end
 
   def self.destroy_all

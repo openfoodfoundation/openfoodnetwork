@@ -78,7 +78,8 @@ module VariantUnits
       option_type = product.variant_unit_option_type
       if option_type
         name = option_value_name
-        ov = Spree::OptionValue.where(option_type_id: option_type, name: name, presentation: name).first ||
+        ov = Spree::OptionValue.where(option_type_id: option_type, name: name,
+                                      presentation: name).first ||
              Spree::OptionValue.create!(option_type: option_type, name: name, presentation: name)
         option_values << ov
       end

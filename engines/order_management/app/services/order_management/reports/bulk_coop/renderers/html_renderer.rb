@@ -10,9 +10,7 @@ module OrderManagement
             context.render(action: :create, renderer: self)
           end
 
-          def header
-            report_data.header
-          end
+          delegate :header, to: :report_data
 
           def data_rows
             report_data.list

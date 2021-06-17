@@ -70,7 +70,7 @@ module Spree
     private
 
     def discard_empty_line_items
-      order.line_items = order.line_items.select {|li| li.quantity.positive? }
+      order.line_items = order.line_items.select { |li| li.quantity.positive? }
     end
 
     def update_shipment(target_shipment = nil)

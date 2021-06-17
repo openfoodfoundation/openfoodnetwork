@@ -131,7 +131,7 @@ module Spree
       result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
 
       unless result.ok?
-        flash.now[:error] = "#{I18n.t("payment_could_not_process")}. #{result.error}"
+        flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
       end
       @order.reload
     end

@@ -36,10 +36,15 @@ module OpenFoodNetwork
                                    count_on_hand: 10,
                                    price: 100)
         allow(variant).to receive_message_chain(:product, :supplier, :name).and_return("Supplier")
-        allow(variant).to receive_message_chain(:product, :supplier, :address, :city).and_return("A city")
+        allow(variant).to receive_message_chain(:product, :supplier, :address,
+                                                :city).and_return("A city")
         allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
-        allow(variant).to receive_message_chain(:product, :properties).and_return [double(name: "property1"), double(name: "property2")]
-        allow(variant).to receive_message_chain(:product, :taxons).and_return [double(name: "taxon1"), double(name: "taxon2")]
+        allow(variant).to receive_message_chain(:product,
+                                                :properties).and_return [double(name: "property1"),
+                                                                         double(name: "property2")]
+        allow(variant).to receive_message_chain(:product,
+                                                :taxons).and_return [double(name: "taxon1"),
+                                                                     double(name: "taxon2")]
         allow(variant).to receive_message_chain(:product, :group_buy_unit_size).and_return(21)
         allow(subject).to receive(:variants).and_return [variant]
 
@@ -121,7 +126,8 @@ module OpenFoodNetwork
           distributor = create(:distributor_enterprise)
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
-          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product2.variants.first])
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier],
+                                                    distributors: [distributor], variants: [product2.variants.first])
 
           allow(subject).to receive(:params).and_return(distributor_id: distributor.id)
           expect(subject.filter(variants)).to eq([product2.variants.first])
@@ -131,7 +137,8 @@ module OpenFoodNetwork
           distributor = create(:distributor_enterprise)
           product = create(:simple_product, supplier: supplier, price: 5)
           variant = product.variants.first
-          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product.variants.first])
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier],
+                                                    distributors: [distributor], variants: [product.variants.first])
           create(:variant_override, hub: distributor, variant: variant, price: 2)
 
           result = subject.filter(variants)
@@ -143,7 +150,8 @@ module OpenFoodNetwork
           distributor = create(:distributor_enterprise)
           product = create(:simple_product, supplier: supplier, price: 5)
           variant = product.variants.first
-          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product.variants.first])
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier],
+                                                    distributors: [distributor], variants: [product.variants.first])
           create(:variant_override, hub: distributor, variant: variant, price: 2)
 
           allow(subject).to receive(:params).and_return(distributor_id: distributor.id)
@@ -156,7 +164,8 @@ module OpenFoodNetwork
           distributor = create(:distributor_enterprise)
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
-          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier],
+                                                    distributors: [distributor], variants: [product1.variants.first])
 
           allow(subject).to receive(:params).and_return(order_cycle_id: order_cycle.id)
           expect(subject.filter(variants)).to eq([product1.variants.first])
@@ -169,10 +178,14 @@ module OpenFoodNetwork
           other_distributor = create(:distributor_enterprise)
           other_supplier = create(:supplier_enterprise)
           not_filtered_variant = create(:simple_product, supplier: supplier).variants.first
-          variant_filtered_by_order_cycle = create(:simple_product, supplier: supplier).variants.first
-          variant_filtered_by_distributor = create(:simple_product, supplier: supplier).variants.first
-          variant_filtered_by_supplier = create(:simple_product, supplier: other_supplier).variants.first
-          variant_filtered_by_stock = create(:simple_product, supplier: supplier, on_hand: 0).variants.first
+          variant_filtered_by_order_cycle = create(:simple_product,
+                                                   supplier: supplier).variants.first
+          variant_filtered_by_distributor = create(:simple_product,
+                                                   supplier: supplier).variants.first
+          variant_filtered_by_supplier = create(:simple_product,
+                                                supplier: other_supplier).variants.first
+          variant_filtered_by_stock = create(:simple_product, supplier: supplier,
+                                                              on_hand: 0).variants.first
 
           # This OC contains all products except the one that should be filtered
           # by order cycle. We create a separate OC further down to proof that

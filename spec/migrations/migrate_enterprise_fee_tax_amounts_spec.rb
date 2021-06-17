@@ -10,13 +10,17 @@ describe MigrateEnterpriseFeeTaxAmounts do
   let(:tax_rate_regular) { create(:tax_rate, tax_category: tax_category_regular) }
   let(:tax_category_inherited) { create(:tax_category) }
   let(:tax_rate_inherited) { create(:tax_rate, tax_category: tax_category_inherited) }
-  let(:enterprise_fee_regular) { create(:enterprise_fee, inherits_tax_category: false,
-                                        tax_category: tax_category_regular) }
+  let(:enterprise_fee_regular) {
+    create(:enterprise_fee, inherits_tax_category: false,
+                            tax_category: tax_category_regular)
+  }
   let(:enterprise_fee_inheriting) { create(:enterprise_fee, inherits_tax_category: true) }
   let(:fee_without_tax) { create(:adjustment, originator: enterprise_fee_regular, included_tax: 0) }
   let(:fee_regular) { create(:adjustment, originator: enterprise_fee_regular, included_tax: 1.23) }
-  let(:fee_inheriting) { create(:adjustment, originator: enterprise_fee_inheriting,
-                                adjustable: line_item, included_tax: 4.56) }
+  let(:fee_inheriting) {
+    create(:adjustment, originator: enterprise_fee_inheriting,
+                        adjustable: line_item, included_tax: 4.56)
+  }
   let(:product) { create(:product, tax_category: tax_category_inherited) }
   let!(:line_item) { create(:line_item, variant: product.variants.first) }
 
