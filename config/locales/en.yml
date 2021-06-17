@@ -3836,7 +3836,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
-        instructions: "Your order has been shipped"
+        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
         thanks: "Thank you for your business."

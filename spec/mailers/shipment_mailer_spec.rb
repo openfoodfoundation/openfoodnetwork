@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Spree::ShipmentMailer do
   let(:shipment) do
-    order = build(:order)
+    order = build(:order_with_distributor)
     product = build(:product, name: %{The "BEST" product})
     variant = build(:variant, product: product)
     line_item = build(:line_item, variant: variant, order: order, quantity: 1, price: 5)
@@ -13,6 +13,7 @@ describe Spree::ShipmentMailer do
     allow(shipment).to receive_messages(tracking_url: "TRACK_ME")
     shipment
   end
+  let(:distributor) { shipment.order.distributor }
 
   context ":from not set explicitly" do
     it "falls back to spree config" do
@@ -32,5 +33,15 @@ describe Spree::ShipmentMailer do
     expect {
       Spree::ShipmentMailer.shipped_email(shipment.id).deliver_now
     }.to_not raise_error
+  end
+
+  it "includes the distributor's name in the subject" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment)
+    expect(shipment_email.subject).to include("#{distributor.name} Shipment Notification")
+  end
+
+  it "includes the distributor's name in the body" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment)
+    expect(shipment_email.body).to include("Your order from #{distributor.name} has been shipped")
   end
 end
