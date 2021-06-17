@@ -51,7 +51,8 @@ describe SubscriptionPlacementJob do
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
       let!(:subscription) { create(:subscription, with_items: true) }
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: build(:order)) }
+      let(:order) { build(:order, distributor: create(:enterprise)) }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
@@ -72,6 +73,18 @@ describe SubscriptionPlacementJob do
         job.perform
 
         expect(service).to have_received(:call)
+      end
+
+      it "records exceptions" do
+        order.line_items << build(:line_item)
+
+        summarizer = TestSummarizer.new
+        allow(OrderManagement::Subscriptions::Summarizer).to receive(:new).and_return(summarizer)
+
+        job.perform
+
+        expect(summarizer.recorded_issues[order.id])
+          .to eq("Errors: Cannot transition state via :next from :address (Reason(s): Items cannot be shipped)")
       end
     end
   end

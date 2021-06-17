@@ -8,7 +8,7 @@ describe PlaceProxyOrder do
   subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }
 
   let(:proxy_order) { create(:proxy_order, order: order) }
-  let(:order) { build(:order) }
+  let(:order) { build(:order, distributor: build(:enterprise)) }
   let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer) }
   let(:logger) { instance_double(JobLogger.logger.class, info: true) }
 
@@ -19,7 +19,7 @@ describe PlaceProxyOrder do
     let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
 
     let(:stock_changes_loader) { lambda { {} } }
-    let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_issue: true) }
+    let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
     before do
       allow(SubscriptionMailer).to receive(:empty_email) { mail_mock }
@@ -30,6 +30,15 @@ describe PlaceProxyOrder do
         expect { subject.call }.to change { proxy_order.reload.placed_at }
         expect(proxy_order.placed_at).to eq(Time.zone.now)
       end
+    end
+
+    it "tracks exceptions" do
+      order.line_items << build(:line_item)
+
+      expect(summarizer).to receive(:record_and_log_error).with(:processing, order, kind_of(String))
+      expect(Bugsnag).to receive(:notify).with(kind_of(StandardError), order: order)
+
+      subject.call
     end
   end
 

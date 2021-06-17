@@ -23,7 +23,7 @@ class PlaceProxyOrder
     move_to_completion
     send_placement_email
   rescue StandardError => e
-    summarizer.record_and_log_error(:processing, e.message)
+    summarizer.record_and_log_error(:processing, order, e.message)
     Bugsnag.notify(e, order: order)
   end
 
