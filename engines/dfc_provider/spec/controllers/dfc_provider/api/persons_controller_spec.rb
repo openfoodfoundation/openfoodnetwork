@@ -24,7 +24,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           before { api_get :show, id: user.id }
 
           it 'is successful' do
-            expect(response).to be_success
+            expect(response).to be_successful
           end
 
           it 'renders the required content' do

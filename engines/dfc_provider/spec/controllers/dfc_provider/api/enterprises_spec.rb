@@ -27,7 +27,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
             before { api_get :show, id: 'default' }
 
             it 'is successful' do
-              expect(response).to be_success
+              expect(response).to be_successful
             end
 
             it 'renders the required content' do

@@ -30,7 +30,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
             end
 
             it 'is successful' do
-              expect(response).to be_success
+              expect(response).to be_successful
             end
 
             it 'renders the required content' do
