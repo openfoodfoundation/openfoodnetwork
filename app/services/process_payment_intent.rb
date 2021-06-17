@@ -26,7 +26,7 @@ class ProcessPaymentIntent
   def initialize(payment_intent, order)
     @payment_intent = payment_intent
     @order = order
-    @payment = order.payments.pending.with_payment_intent(payment_intent).first
+    @payment = order.payments.requires_authorization.with_payment_intent(payment_intent).first
   end
 
   def call!

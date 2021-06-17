@@ -364,6 +364,7 @@ module Spree
     # These are both valid states to process the payment
     def pending_payments
       (payments.select(&:pending?) +
+        payments.select(&:requires_authorization?) +
         payments.select(&:processing?) +
         payments.select(&:checkout?)).uniq
     end

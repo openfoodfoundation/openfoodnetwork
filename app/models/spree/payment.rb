@@ -57,11 +57,11 @@ module Spree
     state_machine initial: :checkout do
       # With card payments, happens before purchase or authorization happens
       event :started_processing do
-        transition from: [:checkout, :pending, :completed, :processing], to: :processing
+        transition from: [:checkout, :pending, :completed, :processing, :requires_authorization], to: :processing
       end
       # When processing during checkout fails
       event :failure do
-        transition from: [:pending, :processing], to: :failed
+        transition from: [:pending, :processing, :requires_authorization], to: :failed
       end
       # With card payments this represents authorizing the payment
       event :pend do
@@ -69,7 +69,7 @@ module Spree
       end
       # With card payments this represents completing a purchase or capture transaction
       event :complete do
-        transition from: [:processing, :pending, :checkout], to: :completed
+        transition from: [:processing, :pending, :checkout, :requires_authorization], to: :completed
       end
       event :void do
         transition from: [:pending, :completed, :checkout], to: :void
