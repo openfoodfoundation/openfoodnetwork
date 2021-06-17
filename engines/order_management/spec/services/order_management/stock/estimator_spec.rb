@@ -76,7 +76,7 @@ module OrderManagement
 
           allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
 
-          expected_costs = %w[3.00 4.00 5.00].map(&BigDecimal.method(:new))
+          expected_costs = [3.00, 4.00, 5.00]
           expect(subject.shipping_rates(package).map(&:cost)).to eq expected_costs
         end
 
