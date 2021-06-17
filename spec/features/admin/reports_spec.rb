@@ -186,7 +186,7 @@ feature '
     let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
     let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1], tax_category: shipping_tax_category) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
-    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.variants.first, product2.variants.first]) }
 
     let!(:zone) { create(:zone_with_member) }
     let(:address) { create(:address) }
@@ -194,20 +194,20 @@ feature '
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
 
-    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
-    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+    let!(:line_item1) { create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1, order: order1) }
+    let!(:line_item2) { create(:line_item, variant: product2.variants.first, price: 500.15, quantity: 3, order: order1) }
 
     before do
       order1.reload
-      2.times { order1.next }
-      order1.select_shipping_method shipping_method.id
-      order1.reload.recreate_all_fees!
-      order1.create_tax_charge!
-      order1.update_order!
-      order1.finalize!
+      break unless order1.next! until order1.delivery?
+      order1.select_shipping_method(shipping_method.id)
+      order1.recreate_all_fees!
+      break unless order1.next! until order1.payment?
+      create(:payment, state: "checkout", order: order1, amount: order1.reload.total,
+                       payment_method: create(:payment_method, distributors: [distributor1]))
+      break unless order1.next! until order1.complete?
 
       login_as_admin_and_visit spree.admin_reports_path
-
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
     end
@@ -397,20 +397,25 @@ feature '
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
-    let(:country) { Spree::Country.find Spree::Config.default_country_id }
-    let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
+    let(:bill_address) {
+      create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1',
+                       address2: '', city: 'customer city', zipcode: 1234)
+    }
     let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipments: [shipment], bill_address: bill_address) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
     describe "with adjustments" do
-      let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
-      let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+      let!(:line_item1) { create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1, order: order1) }
+      let!(:line_item2) { create(:line_item, variant: product2.variants.first, price: 500.15, quantity: 3, order: order1) }
 
+      let!(:tax_category) { create(:tax_category) }
+      let!(:tax_rate) { create(:tax_rate, tax_category: tax_category) }
       let!(:adj_shipping) { create(:adjustment, order: order1, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
-      let!(:adj_fee1) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
-      let!(:adj_fee2) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
-      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
+      let!(:adj_fee1) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10) }
+      let!(:adj_fee2) { create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, tax_category: tax_category) }
+      let!(:adj_fee2_tax) { create(:adjustment, order: order1, adjustable: adj_fee2, originator: tax_rate, amount: 3, state: "closed") }
+      let!(:adj_manual1) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 30) }
       let!(:adj_manual2) { create(:adjustment, order: order1, adjustable: order1, originator: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
       before do
@@ -418,8 +423,10 @@ feature '
         order1.update_attribute :email, 'customer@email.com'
         order1.shipment.update_columns(included_tax_total: 10.06)
         Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
-        login_as_admin_and_visit spree.admin_reports_path
+        order1.reload
+        order1.create_tax_charge!
 
+        login_as_admin_and_visit spree.admin_reports_path
         click_link 'Xero Invoices'
       end
 
@@ -508,7 +515,7 @@ feature '
     end
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts = {})
-      opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales')
+      opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: 'Australia', invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales')
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
 

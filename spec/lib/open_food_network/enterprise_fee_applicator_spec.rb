@@ -5,65 +5,85 @@ require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork
   describe EnterpriseFeeApplicator do
-    it "creates an adjustment for a line item" do
-      line_item = create(:line_item)
-      enterprise_fee = create(:enterprise_fee)
-      product = create(:simple_product)
+    let(:line_item) { create(:line_item) }
+    let(:inherits_tax) { true }
+    let(:enterprise_fee) {
+      create(:enterprise_fee, inherits_tax_category: inherits_tax, tax_category: fee_tax_category)
+    }
+    let(:fee_tax_category) { nil }
+    let(:tax_category) { create(:tax_category) }
+    let(:product) { create(:simple_product, tax_category: tax_category) }
+    let(:target_variant) { product.variants.first }
+    let(:applicator) { EnterpriseFeeApplicator.new(enterprise_fee, target_variant, 'role') }
 
-      efa = EnterpriseFeeApplicator.new enterprise_fee, product.master, 'role'
-      allow(efa).to receive(:line_item_adjustment_label) { 'label' }
-      efa.create_line_item_adjustment line_item
+    describe "#create_line_item_adjustment" do
+      it "creates an adjustment for a line item" do
+        allow(applicator).to receive(:line_item_adjustment_label) { 'label' }
+        applicator.create_line_item_adjustment line_item
 
-      adjustment = Spree::Adjustment.last
-      expect(adjustment.label).to eq('label')
-      expect(adjustment.adjustable).to eq(line_item)
-      expect(adjustment.originator).to eq(enterprise_fee)
-      expect(adjustment).to be_mandatory
+        adjustment = Spree::Adjustment.last
+        expect(adjustment.label).to eq('label')
+        expect(adjustment.adjustable).to eq(line_item)
+        expect(adjustment.originator).to eq(enterprise_fee)
+        expect(adjustment.tax_category).to eq(tax_category)
+        expect(adjustment).to be_mandatory
 
-      md = adjustment.metadata
-      expect(md.enterprise).to eq(enterprise_fee.enterprise)
-      expect(md.fee_name).to eq(enterprise_fee.name)
-      expect(md.fee_type).to eq(enterprise_fee.fee_type)
-      expect(md.enterprise_role).to eq('role')
+        metadata = adjustment.metadata
+        expect(metadata.enterprise).to eq(enterprise_fee.enterprise)
+        expect(metadata.fee_name).to eq(enterprise_fee.name)
+        expect(metadata.fee_type).to eq(enterprise_fee.fee_type)
+        expect(metadata.enterprise_role).to eq('role')
+      end
     end
 
-    it "creates an adjustment for an order" do
-      order = create(:order)
-      enterprise_fee = create(:enterprise_fee)
-      product = create(:simple_product)
+    describe "#create_order_adjustment" do
+      let(:target_variant) { nil }
+      let(:inherits_tax) { false }
+      let(:fee_tax_category) { tax_category }
+      let(:order) { line_item.order }
 
-      efa = EnterpriseFeeApplicator.new enterprise_fee, nil, 'role'
-      allow(efa).to receive(:order_adjustment_label) { 'label' }
-      efa.create_order_adjustment order
+      it "creates an adjustment for an order" do
+        allow(applicator).to receive(:order_adjustment_label) { 'label' }
+        applicator.create_order_adjustment order
 
-      adjustment = Spree::Adjustment.last
-      expect(adjustment.label).to eq('label')
-      expect(adjustment.adjustable).to eq(order)
-      expect(adjustment.originator).to eq(enterprise_fee)
-      expect(adjustment).to be_mandatory
+        adjustment = Spree::Adjustment.last
+        expect(adjustment.label).to eq('label')
+        expect(adjustment.adjustable).to eq(order)
+        expect(adjustment.originator).to eq(enterprise_fee)
+        expect(adjustment.tax_category).to eq(tax_category)
+        expect(adjustment).to be_mandatory
 
-      md = adjustment.metadata
-      expect(md.enterprise).to eq(enterprise_fee.enterprise)
-      expect(md.fee_name).to eq(enterprise_fee.name)
-      expect(md.fee_type).to eq(enterprise_fee.fee_type)
-      expect(md.enterprise_role).to eq('role')
+        metadata = adjustment.metadata
+        expect(metadata.enterprise).to eq(enterprise_fee.enterprise)
+        expect(metadata.fee_name).to eq(enterprise_fee.name)
+        expect(metadata.fee_type).to eq(enterprise_fee.fee_type)
+        expect(metadata.enterprise_role).to eq('role')
+      end
     end
 
-    it "makes an adjustment label for a line item" do
-      variant = double(:variant, product: double(:product, name: 'Bananas'))
-      enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
+    describe "making labels" do
+      let(:variant) { double(:variant, product: double(:product, name: 'Bananas')) }
+      let(:enterprise_fee) {
+        double(:enterprise_fee, fee_type: 'packing',
+               enterprise: double(:enterprise, name: 'Ballantyne'))
+      }
+      let(:applicator) { EnterpriseFeeApplicator.new enterprise_fee, variant, 'distributor' }
 
-      efa = EnterpriseFeeApplicator.new enterprise_fee, variant, 'distributor'
+      describe "#line_item_adjustment_label" do
+        it "makes an adjustment label for a line item" do
+          expect(applicator.send(:line_item_adjustment_label)).
+            to eq("Bananas - packing fee by distributor Ballantyne")
+        end
+      end
 
-      expect(efa.send(:line_item_adjustment_label)).to eq("Bananas - packing fee by distributor Ballantyne")
-    end
+      describe "#order_adjustment_label" do
+        let(:applicator) { EnterpriseFeeApplicator.new enterprise_fee, nil, 'distributor' }
 
-    it "makes an adjustment label for an order" do
-      enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
-
-      efa = EnterpriseFeeApplicator.new enterprise_fee, nil, 'distributor'
-
-      expect(efa.send(:order_adjustment_label)).to eq("Whole order - packing fee by distributor Ballantyne")
+        it "makes an adjustment label for an order" do
+          expect(applicator.send(:order_adjustment_label)).
+            to eq("Whole order - packing fee by distributor Ballantyne")
+        end
+      end
     end
   end
 end

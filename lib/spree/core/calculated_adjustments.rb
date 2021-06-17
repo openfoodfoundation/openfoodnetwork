@@ -26,7 +26,7 @@ module Spree
           #   (which is any class that has_many :adjustments) and sets amount based on the
           #   calculator as applied to the given calculable (Order, LineItems[], Shipment, etc.)
           # By default the adjustment will not be considered mandatory
-          def create_adjustment(label, adjustable, mandatory = false, state = "closed")
+          def create_adjustment(label, adjustable, mandatory = false, state = "closed", tax_category = nil)
             amount = compute_amount(adjustable)
             return if amount.zero? && !mandatory
 
@@ -37,7 +37,7 @@ module Spree
               label: label,
               mandatory: mandatory,
               state: state,
-              included: tax_included?(self, adjustable)
+              tax_category: tax_category
             }
 
             if adjustable.respond_to?(:adjustments)
@@ -64,15 +64,6 @@ module Spree
           private_class_method :spree_calculators
 
           private
-
-          # Used for setting the #included boolean on tax adjustments. This will be removed in a
-          # later step, as the responsibility for creating all adjustments related to tax will be
-          # moved into the Spree::TaxRate class.
-          def tax_included?(originator, target)
-            originator.is_a?(Spree::TaxRate) &&
-              originator.included_in_price &&
-              originator.default_zone_or_zone_match?(order_object_for(target))
-          end
 
           def order_object_for(target)
             # Temporary method for adjustments transition.

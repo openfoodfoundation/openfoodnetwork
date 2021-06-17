@@ -311,7 +311,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
     end
 
     context "the order contains an item that is out of stock" do
-      let!(:order) { create(:order, distributor: shop, state: 'payment') }
+      let!(:order) { create(:order_with_totals, distributor: shop, state: 'payment') }
 
       before do
         order.line_items.first.variant.update_attribute(:on_hand, 0)

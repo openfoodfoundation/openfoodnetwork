@@ -13,7 +13,9 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [variant]) }
-  let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
+  let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
+  let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
+  let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:variant) { product.variants.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }

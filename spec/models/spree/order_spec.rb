@@ -630,38 +630,54 @@ describe Spree::Order do
     end
   end
 
-  describe "getting the enterprise fee tax" do
+  describe "#enterprise_fee_tax" do
     let!(:order) { create(:order) }
-    let(:enterprise_fee1) { create(:enterprise_fee) }
-    let(:enterprise_fee2) { create(:enterprise_fee) }
-    let!(:adjustment1) {
-      create(:adjustment, adjustable: order, originator: enterprise_fee1, label: "EF 1",
-             amount: 123, included_tax: 10.00, order: order)
+    let(:enterprise_fee) { create(:enterprise_fee) }
+    let!(:fee_adjustment) {
+      create(:adjustment, adjustable: order, originator: enterprise_fee,
+                          amount: 100, order: order, state: "closed")
     }
-    let!(:adjustment2) {
-      create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2",
-             amount: 123, included_tax: 2.00, order: order)
+    let!(:fee_tax1) {
+      create(:adjustment, adjustable: fee_adjustment, originator_type: "Spree::TaxRate",
+                          amount: 12.3, order: order, state: "closed")
+    }
+    let!(:fee_tax2) {
+      create(:adjustment, adjustable: fee_adjustment, originator_type: "Spree::TaxRate",
+                          amount: 4.5, order: order, state: "closed")
+    }
+    let!(:admin_adjustment) {
+      create(:adjustment, adjustable: order, originator: nil,
+             amount: 6.7, order: order, state: "closed")
     }
 
-    it "returns a sum of the tax included in all enterprise fees" do
-      expect(order.reload.enterprise_fee_tax).to eq(12)
+    it "returns a sum of all taxes on enterprise fees" do
+      expect(order.reload.enterprise_fee_tax).to eq(16.8)
     end
   end
 
   describe "getting the total tax" do
     let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25) }
+    let(:fee_tax_rate) { create(:tax_rate, amount: 0.10) }
     let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
     end
     let(:enterprise_fee) { create(:enterprise_fee) }
-
-    before do
-      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123,
-                          included_tax: 2, order: order)
+    let!(:fee) {
+      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 20,
+                          order: order)
+    }
+    let!(:fee_tax) {
+      create(:adjustment, adjustable: fee, originator: fee_tax_rate,
+                          amount: 2, order: order, state: "closed")
+    }
+    let!(:shipping_tax) {
       create(:adjustment, adjustable: shipment, originator: shipping_tax_rate,
                           amount: 10, order: order, state: "closed")
+    }
+
+    before do
       order.update_order!
     end
 

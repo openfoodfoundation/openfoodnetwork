@@ -293,7 +293,11 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      Spree::TaxRate.adjust(self)
+      clear_legacy_taxes!
+
+      Spree::TaxRate.adjust(self, line_items)
+      Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      fee_handler.tax_enterprise_fees!
     end
 
     def name
@@ -564,7 +568,7 @@ module Spree
     end
 
     def enterprise_fee_tax
-      all_adjustments.reload.enterprise_fee.sum(:included_tax)
+      all_adjustments.tax.where(adjustable: all_adjustments.enterprise_fee).sum(:amount)
     end
 
     def total_tax
@@ -589,6 +593,13 @@ module Spree
 
     def fee_handler
       @fee_handler ||= OrderFeesHandler.new(self)
+    end
+
+    def clear_legacy_taxes!
+      # For instances that use additional taxes, old orders can have taxes recorded in
+      # lump-sum amounts per-order. We clear them here before re-applying the order's taxes,
+      # which will now be applied per-item.
+      adjustments.legacy_tax.delete_all
     end
 
     def process_each_payment

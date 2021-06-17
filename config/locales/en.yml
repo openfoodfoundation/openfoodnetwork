@@ -3150,6 +3150,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
+    refund: "Refund"
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
