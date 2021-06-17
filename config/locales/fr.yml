@@ -3031,6 +3031,7 @@ fr:
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
+    refund: "Remboursement"
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3232,7 +3233,7 @@ fr:
           few: "%{count} erreurs ne permettent pas de sauvegarder:"
           many: "%{count} erreurs ne permettent pas de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
-        there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
+        there_were_problems_with_the_following_fields: "Il y a eu un souci avec les champs suivants"
       payments_list:
         date_time: "Date/heure"
         amount: "Montant"
