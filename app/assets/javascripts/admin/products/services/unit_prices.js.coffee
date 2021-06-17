@@ -1,7 +1,7 @@
-angular.module("admin.products").factory "UnitPrices", (VariantUnitManager, localizeCurrencyFilter, unlocalizeCurrencyFilter) ->
+angular.module("admin.products").factory "UnitPrices", (VariantUnitManager, localizeCurrencyFilter, PriceParser) ->
   class UnitPrices
     @displayableUnitPrice: (price, scale, unit_type, unit_value, variant_unit_name) ->
-      price = unlocalizeCurrencyFilter(price)
+      price = PriceParser.parse(price)
       if price && !isNaN(price) && unit_type && unit_value
         value = localizeCurrencyFilter(UnitPrices.price(price, scale, unit_type, unit_value, variant_unit_name))
         unit = UnitPrices.unit(scale, unit_type, variant_unit_name)
