@@ -3006,6 +3006,7 @@ es:
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar correo electrónico de autorización"
     rma_credit: "Crédito RMA"
+    refund: "Reembolso"
     server_error: "Error del Servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
