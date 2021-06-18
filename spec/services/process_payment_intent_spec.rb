@@ -65,7 +65,7 @@ describe ProcessPaymentIntent do
 
         it "does not complete the payment" do
           service.call!
-          expect(payment.reload.state).to eq("requires_authorization")
+          expect(payment.reload.state).to eq("failed")
         end
       end
     end
