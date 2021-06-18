@@ -186,7 +186,7 @@ module ProductImport
       @validator = EntryValidator.new(@current_user, @import_time, @spreadsheet_data,
                                       @editable_enterprises, @inventory_permissions, @reset_counts,
                                       @import_settings, build_all_entries)
-      @processor = EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data,
+      @processor = Catalog::ProductImport::EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data,
                                       @editable_enterprises, @import_time, @updated_ids)
 
       @processor.count_existing_items unless staged_import?

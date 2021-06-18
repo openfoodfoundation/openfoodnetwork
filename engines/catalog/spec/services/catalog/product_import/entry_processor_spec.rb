@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProductImport::EntryProcessor do
+describe Catalog::ProductImport::EntryProcessor do
   let(:importer) { double(:importer) }
   let(:validator) { double(:validator) }
   let(:import_settings) { double(:import_settings) }
