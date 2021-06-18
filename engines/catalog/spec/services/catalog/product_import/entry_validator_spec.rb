@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProductImport::EntryValidator do
+describe Catalog::ProductImport::EntryValidator do
   let(:current_user) { double(:current_user) }
   let(:import_time) { double(:import_time) }
   let(:spreadsheet_data) { double(:spreadsheet_data) }
