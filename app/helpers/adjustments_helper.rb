@@ -11,4 +11,9 @@ module AdjustmentsHelper
       Spree::Money.new(0.00, currency: adjustment.currency)
     end
   end
+
+  def display_adjustment_total_with_tax(adjustment)
+    total = adjustment.amount + adjustment.additional_tax_total
+    Spree::Money.new(total, currency: adjustment.currency)
+  end
 end

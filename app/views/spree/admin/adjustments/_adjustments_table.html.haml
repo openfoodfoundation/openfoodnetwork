@@ -4,12 +4,15 @@
       %th= "#{t('spree.date')}/#{t('spree.time')}"
       %th= t(:description)
       %th= t(:amount)
+      %th= t(:tax_category)
       %th= t(:tax)
+      %th= t(:total_incl_tax)
       %th.actions
   %tbody
     - @collection.each do |adjustment|
       - @edit_url = edit_admin_order_adjustment_path(@order, adjustment)
       - @delete_url = admin_order_adjustment_path(@order, adjustment)
+      - taxable = adjustment.adjustable_type == "Spree::Shipment" ? adjustment.adjustable : adjustment
       - tr_class = cycle('odd', 'even')
       - tr_id = spree_dom_id(adjustment)
       %tr{:class => tr_class, "data-hook" => "adjustment_row", :id => tr_id}
@@ -19,8 +22,12 @@
           = adjustment.label
         %td.align-center.amount
           = adjustment.display_amount.to_html
+        %td.align-center.tax-category
+          = taxable.tax_category&.name || "-"
         %td.align-center.tax
-          = display_adjustment_taxes(adjustment)
+          = display_adjustment_taxes(taxable)
+        %td.align-center.total
+          = display_adjustment_total_with_tax(taxable)
         - unless @order.canceled?
           %td.actions
             - if adjustment.originator_type.nil?
