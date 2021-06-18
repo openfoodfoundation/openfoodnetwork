@@ -57,7 +57,7 @@ module Spree
       end
 
       def authorize(_money, _creditcard, _gateway_options)
-        ActiveMerchant::Billing::Response.new(true, "", {}, {})
+        Gateway::SuccessfulResponse.new
       end
 
       private

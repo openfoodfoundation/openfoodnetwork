@@ -439,7 +439,7 @@ describe Spree::Payment do
             end
 
             let(:successful_response) do
-              ActiveMerchant::Billing::Response.new(true, "Yay!")
+              Spree::Gateway::SuccessfulResponse.new("Yay!")
             end
 
             it 'lets the new payment to be saved' do
@@ -962,7 +962,7 @@ describe Spree::Payment do
         end
 
         context "when the payment is processed successfully" do
-          let(:successful_response) { ActiveMerchant::Billing::Response.new(true, "Yay!") }
+          let(:successful_response) { Spree::Gateway::SuccessfulResponse.new("Yay!") }
 
           before do
             allow(payment_method).to receive(:purchase) { successful_response }

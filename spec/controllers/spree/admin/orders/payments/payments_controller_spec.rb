@@ -169,7 +169,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       create(:payment, order: order, payment_method: payment_method, amount: order.total)
     end
 
-    let(:successful_response) { ActiveMerchant::Billing::Response.new(true, "Yay!") }
+    let(:successful_response) { Spree::Gateway::SuccessfulResponse.new("Yay!") }
 
     context 'on credit event' do
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }

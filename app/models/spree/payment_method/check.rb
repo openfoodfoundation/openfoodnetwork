@@ -18,11 +18,11 @@ module Spree
       end
 
       def capture(*_args)
-        ActiveMerchant::Billing::Response.new(true, "", {}, {})
+        Gateway::SuccessfulResponse.new
       end
 
       def void(*_args)
-        ActiveMerchant::Billing::Response.new(true, "", {}, {})
+        Gateway::SuccessfulResponse.new
       end
 
       def authorize(_money, _creditcard, _gateway_options)
