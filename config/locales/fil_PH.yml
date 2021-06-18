@@ -1285,8 +1285,6 @@ fil_PH:
   label_producers: "Mga Producer"
   label_groups: "mga grupo"
   label_about: "tungkol sa"
-  label_connect: "kumonekta"
-  label_learn: "matuto"
   label_blog: "Blog"
   label_support: "Suporta"
   label_shopping: "Pamimili"
@@ -1374,10 +1372,6 @@ fil_PH:
   brandstory_part4: "ito ay gumagana sa lahat ng lugar. kaya nitong baguhin ang lahat."
   brandstory_part5_strong: "tinatawag namin itong Open Food Network."
   brandstory_part6: "lahat tayo ay mahilig kumain. ngayon ay maaari narin nating mahalin ang sistema ng pagkain."
-  learn_body: "galugarin ang mga modelo, mga kuwento at pinagkukuhanan para ikaw ay matulungan sa pagbuo ng sarili mong negosyo o organisayon. Humanap ng mga pagsasanay, kaganapan at iba  pang mga oportunidad para matuto sa iba."
-  learn_cta: "makakuha ng inspirasyon"
-  connect_body: "tumingin sa aming directory ng mga producer, hub at mga grupo upang makahanap ng patas na mangangalakal ng pagkain na pinakamalapit sa iyo. Ilagay ang iyong negosyo o organisasyon sa OFN para kayo'y makita ng mga mamimili. Sumali sa aming komunidad para makakuha ng mga payo ay makapagtulungan sa paglutas ng mga problema."
-  connect_cta: "halilka na at ma-explore"
   system_headline: "Pamimili - ganito ang paraan."
   system_step1: "1. humanap"
   system_step1_text: "humanap sa iba't ibang mga shop ng lokal na napapanahong pagkain. humanap sa pamamagitan ng malapit na lokasyon o kategorya ng pagkain, o kung mas nais mo ang pick-up kesa sa delivery."
@@ -3365,7 +3359,6 @@ fil_PH:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
-        instructions: "ang iyong order ay na-ship na "
         shipment_summary: "buod ng kargamento"
         subject: "notification ukol sa kargamento"
         thanks: "Salamat sa inyong pagtangkilik"

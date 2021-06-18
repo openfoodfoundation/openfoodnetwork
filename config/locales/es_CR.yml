@@ -1285,8 +1285,6 @@ es_CR:
   label_producers: "Productores"
   label_groups: "Grupos"
   label_about: "Acerca de"
-  label_connect: "Conectar"
-  label_learn: "Aprender"
   label_blog: "Blog"
   label_support: "Soporte"
   label_shopping: "Tienda"
@@ -1374,10 +1372,6 @@ es_CR:
   brandstory_part4: "Funciona en cualquier lugar. Lo cambia todo."
   brandstory_part5_strong: "Le llamamos Open Food Network."
   brandstory_part6: "Todos amamos la comida. Ahora podemos amar nuestro sistema de comida también."
-  learn_body: "Explora modelos, historias y recursos para ayudarte a desarrollar tu organización. Encuentra formación, eventos y otras oportunidades para aprender de tus compañeros."
-  learn_cta: "Inspírate"
-  connect_body: "Busca en nuestros directorios de productoras, grupos u otras organizaciones. Haz una lista de tu organización en  OFN para que los consumidores puedan encontrarte. Únete a la comunidad para obtener consejos y resolver problemas juntos."
-  connect_cta: "Explorar"
   system_headline: "Compras - aquí está cómo funcionan."
   system_step1: "1. Buscar"
   system_step1_text: "Busque comida local y de temporada en nuestras tiendas diversas e independientes. Puede buscar por cantón y tipo de comida o si prefiere por método de envío."
@@ -3360,7 +3354,6 @@ es_CR:
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"
-        instructions: "Su pedido ha sido enviado"
         shipment_summary: "Resumen de envío"
         subject: "Notificación de envío"
         thanks: "Gracias por su negocio."

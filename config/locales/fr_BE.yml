@@ -1310,8 +1310,6 @@ fr_BE:
   label_producers: "Producteur·trice·s"
   label_groups: "Groupes"
   label_about: "A propos"
-  label_connect: "Se connecter"
-  label_learn: "Apprendre"
   label_blog: "Blog"
   label_support: "Soutien"
   label_shopping: "Achats"
@@ -1399,10 +1397,6 @@ fr_BE:
   brandstory_part4: "Vous êtes\n● Un producteur : inscrivez-vous et présentez vos produits pour les faire connaître dans votre région. Vous dynamisez la plateforme et entrez en contact avec de nouveaux clients.\n● Un distributeur : inscrivez-vous et présentez votre projet pour le faire connaître et convaincre de nouveaux clients.\n● Un consommateur : trouvez des produits près de chez vous et allez à la découverte de leurs histoires."
   brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
   brandstory_part6: "Nous pouvons toutes et tous participer à la construction d’un système alimentaire plus juste, respectueux de l’Homme qui préserve la planète."
-  learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
-  learn_cta: "Découvrir "
-  connect_body: "Rechercher dans le répertoire des producteurs, des comptoirs et des groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur la plateforme OFN de votre pays/région pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
-  connect_cta: "Explorer"
   system_headline: "Faire mes courses - comment ça marche?"
   system_step1: "1. Recherche"
   system_step1_text: "Recherchez des produits locaux, de saison, parmi nos multiples comptoirs. Filtrez par localisation, catégorie de produits, livraison ou propriétés du produits."
@@ -3378,7 +3372,6 @@ fr_BE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Client,"
-        instructions: "Votre commande a été expédiée"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."

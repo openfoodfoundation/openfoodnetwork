@@ -1312,8 +1312,6 @@ nl_BE:
   label_producers: "Producenten"
   label_groups: "Groepen"
   label_about: "Over"
-  label_connect: "Verbinden"
-  label_learn: "Ontdek"
   label_blog: "Blog"
   label_support: "Ondersteuning"
   label_shopping: "Winkelen"
@@ -1401,10 +1399,6 @@ nl_BE:
   brandstory_part4: "U bent\n● Een producent: registreer en presenteer uw producten om ze in uw regio te promoten. U geeft het platform energie en maakt contact met nieuwe klanten.\n● Een distributeur: registreer en presenteer uw project om het bekend te maken en nieuwe klanten te overtuigen.\n● Een consument: vind producten bij u in de buurt en ontdek hun verhalen."
   brandstory_part5_strong: "Wij noemen het Open Food Network."
   brandstory_part6: "We kunnen allemaal meewerken aan de opbouw van een eerlijker voedselsysteem dat de mensheid respecteert en de planeet in stand houdt."
-  learn_body: "Verken rolmodellen, verhalen en bronnen om je te ondersteunen in de ontwikkeling van een eerlijke voedselzaak of organisatie. Vind opleidingen, evenementen, en andere mogelijkheden om te leren van mensen zoals jij."
-  learn_cta: "Vind Inspiratie"
-  connect_body: "Zoek in onze volledige lijst van producenten, hubs en groepen om een eerlijke voedselhandelaar te vinden bij jou in de buurt. Maak je zaak or organisatie deel van het OFN zodat klanten je kunnen vinden. Maak deel van de gemeenschap om advies te krijgen en samen moeilijkheden te overkomen."
-  connect_cta: "Ontdek Nu"
   system_headline: "Winkelen - dit is hoe het werkt."
   system_step1: "1. Zoek"
   system_step1_text: "Zoek in onze uitgebreide, onafhankelijke winkels voor lokale seizoenswaren. Zoek op basis van buurt-en-voedselcategorie, of indien je levering of ophaling verkiest. "
@@ -3373,7 +3367,6 @@ nl_BE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Geachte klant,"
-        instructions: "Uw bestelling is verzonden"
         shipment_summary: "Samenvatting van de zending"
         subject: "Kennisgeving van verzending"
         thanks: "Bedankt voor uw bedrijf."

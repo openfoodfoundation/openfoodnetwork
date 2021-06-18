@@ -1387,8 +1387,6 @@ fr_CA:
   label_producers: "Producteurs"
   label_groups: "Groupes"
   label_about: "A propos"
-  label_connect: "Se connecter"
-  label_learn: "Apprendre"
   label_blog: "Blog"
   label_support: "Soutien"
   label_shopping: "Achats"
@@ -1476,10 +1474,6 @@ fr_CA:
   brandstory_part4: "Elle fonctionne partout. Elle change tout."
   brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
   brandstory_part6: "Nous aimons notre nourriture. Maintenant nous pouvons aussi aimer notre système alimentaire."
-  learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
-  learn_cta: "Découvrir "
-  connect_body: "Rechercher dans le répertoire des producteurs, hubs et groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur OFN pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
-  connect_cta: "Explorer"
   system_headline: "Faire mes courses - comment ça marche?"
   system_step1: "1. Recherche"
   system_step1_text: "Recherchez des produits locaux, de saison, parmi nos multiples boutiques indépendantes. Filtrez par localisation ou catégorie de produits, livraison en point retrait ou à domicile."
@@ -3006,6 +3000,7 @@ fr_CA:
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
+    refund: "Remboursement"
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3673,7 +3668,6 @@ fr_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande a été expédiée"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
