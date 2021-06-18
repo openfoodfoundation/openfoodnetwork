@@ -1,4 +1,5 @@
 window.OFNShared = angular.module("OFNShared", [
-  "mm.foundation"
+  "mm.foundation",
+  "LocalStorageModule"
 ]).config ($httpProvider) ->
   $httpProvider.defaults.headers.common["Accept"] = "application/json, text/javascript, */*"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'discourse/single_sign_on'
 
 class DiscourseSsoController < ApplicationController

@@ -7,9 +7,16 @@ feature "Darkswarm data caching", js: true, caching: true do
   let!(:property) { create(:property, presentation: "Cached Property") }
 
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true) }
-  let!(:product) { create(:simple_product, supplier: producer, primary_taxon: taxon, taxons: [taxon], properties: [property]) }
-  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: distributor) }
+  let!(:distributor) {
+    create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true)
+  }
+  let!(:product) {
+    create(:simple_product, supplier: producer, primary_taxon: taxon, taxons: [taxon],
+                            properties: [property])
+  }
+  let!(:order_cycle) {
+    create(:simple_order_cycle, distributors: [distributor], coordinator: distributor)
+  }
   let(:exchange) { order_cycle.exchanges.outgoing.where(receiver_id: distributor.id).first }
 
   before do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/referer_parser'
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
@@ -32,7 +34,10 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix], spree_current_user: spree_current_user }
+        format.json {
+          render_as_json @collection, ams_prefix: params[:ams_prefix],
+                                      spree_current_user: spree_current_user
+        }
       end
     end
 
@@ -56,11 +61,15 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
-          format.json { render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user }
+          format.json {
+            render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user
+          }
         end
       else
         respond_with(@object) do |format|
-          format.json { render json: { errors: @object.errors.messages }, status: :unprocessable_entity }
+          format.json {
+            render json: { errors: @object.errors.messages }, status: :unprocessable_entity
+          }
         end
       end
     end
@@ -101,7 +110,8 @@ module Admin
     def for_order_cycle
       respond_to do |format|
         format.json do
-          render json: @collection, each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, order_cycle: @order_cycle, spree_current_user: spree_current_user
+          render json: @collection,
+                 each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, order_cycle: @order_cycle, spree_current_user: spree_current_user
         end
       end
     end
@@ -109,7 +119,8 @@ module Admin
     def visible
       respond_to do |format|
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic', spree_current_user: spree_current_user
+          render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic',
+                                      spree_current_user: spree_current_user
         end
       end
     end
@@ -152,7 +163,7 @@ module Admin
         if enterprises.present?
           enterprises.includes(
             supplied_products:
-              [:supplier, master: [:images], variants: { option_values: :option_type }]
+              [:supplier, { master: [:images], variants: { option_values: :option_type } }]
           )
         end
       when :index
@@ -284,7 +295,8 @@ module Admin
     end
 
     def strip_new_properties
-      unless spree_current_user.admin? || params.dig(:enterprise, :producer_properties_attributes).nil?
+      unless spree_current_user.admin? || params.dig(:enterprise,
+                                                     :producer_properties_attributes).nil?
         names = Spree::Property.pluck(:name)
         enterprise_params[:producer_properties_attributes].each do |key, property|
           enterprise_params[:producer_properties_attributes].delete key unless names.include? property[:property_name]

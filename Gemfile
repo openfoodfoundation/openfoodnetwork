@@ -74,14 +74,14 @@ gem 'figaro'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
-gem 'paper_trail', '~> 10.3.1'
 gem 'paperclip', '~> 3.4.1'
+gem 'paper_trail', '~> 10.3.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
-gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'hiredis'
+gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
@@ -152,17 +152,16 @@ end
 group :test do
   gem 'byebug'
   gem 'codecov', require: false
+  gem 'pdf-reader'
+  gem 'rails-controller-testing'
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'webmock'
-  gem 'rails-controller-testing'
-  gem 'pdf-reader'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
 
 group :development do
-  gem 'web-console'
   gem 'debugger-linecache'
   gem 'pry'
   gem 'pry-byebug'
@@ -170,6 +169,7 @@ group :development do
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'web-console'
 
   gem "view_component_storybook", require: "view_component/storybook/engine"
 

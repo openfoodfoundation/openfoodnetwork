@@ -94,7 +94,7 @@ feature '
         stub_payment_intents_post_request order: order, stripe_account_header: true
         stub_successful_capture_request order: order
 
-        while !order.payment? do break unless order.next! end
+        break unless order.next! while !order.payment?
       end
 
       it "adds a payment with state complete" do

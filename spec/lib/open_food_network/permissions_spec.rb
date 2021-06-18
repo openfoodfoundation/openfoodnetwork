@@ -16,7 +16,8 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e2]
+          expect(permissions.send(:managed_and_related_enterprises_granting,
+                                  :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -26,8 +27,11 @@ module OpenFoodNetwork
 
         it "returns only my managed enterprises any that have granting them P-OC" do
           expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
-          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3).select(:id) }
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e3]
+          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) {
+                                   Enterprise.where(id: e3).select(:id)
+                                 }
+          expect(permissions.send(:managed_and_related_enterprises_granting,
+                                  :some_permission)).to match_array [e1, e3]
         end
       end
     end
@@ -37,7 +41,8 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e2]
+          expect(permissions.send(:managed_and_related_enterprises_granting,
+                                  :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -48,9 +53,14 @@ module OpenFoodNetwork
 
         it "returns only my managed enterprises any that have granting them P-OC" do
           expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
-          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3).select(:id) }
-          expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) { Enterprise.where(id: e4).select(:id) }
-          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to match_array [e1, e3, e4]
+          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) {
+                                   Enterprise.where(id: e3).select(:id)
+                                 }
+          expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) {
+                                   Enterprise.where(id: e4).select(:id)
+                                 }
+          expect(permissions.send(:managed_and_related_enterprises_with,
+                                  :some_permission)).to match_array [e1, e3, e4]
         end
       end
     end
@@ -151,7 +161,9 @@ module OpenFoodNetwork
         }
 
         before do
-          allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: producer_managed.id) }
+          allow(permissions).to receive(:managed_enterprises) {
+                                  Enterprise.where(id: producer_managed.id)
+                                }
         end
 
         it "does not allow the user to create variant overrides for the hub" do
@@ -161,7 +173,9 @@ module OpenFoodNetwork
 
       it "does not return managed producers (ie. only uses explicitly granted VO permissions)" do
         producer2 = create(:supplier_enterprise)
-        allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub, producer2]) }
+        allow(permissions).to receive(:managed_enterprises) {
+                                Enterprise.where(id: [hub, producer2])
+                              }
 
         expect(permissions.variant_override_enterprises_per_hub[hub.id]).to_not include producer2.id
       end
@@ -179,7 +193,9 @@ module OpenFoodNetwork
 
       before do
         allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where('1=0') }
-        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) { Enterprise.where("1=0").select(:id) }
+        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
+                                Enterprise.where("1=0").select(:id)
+                              }
       end
 
       it "returns products produced by managed enterprises" do
@@ -201,8 +217,12 @@ module OpenFoodNetwork
 
       before do
         allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where("1=0") }
-        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) { Enterprise.where("1=0").select(:id) }
-        allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle) { Enterprise.where("1=0").select(:id) }
+        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) {
+                                Enterprise.where("1=0").select(:id)
+                              }
+        allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle) {
+                                Enterprise.where("1=0").select(:id)
+                              }
       end
 
       it "returns products produced by managed enterprises" do
@@ -239,7 +259,9 @@ module OpenFoodNetwork
     ########################################
 
     describe "finding related enterprises with a particular permission" do
-      let!(:er) { create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [permission]) }
+      let!(:er) {
+        create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [permission])
+      }
 
       it "returns the enterprises" do
         allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e2) }
@@ -255,7 +277,9 @@ module OpenFoodNetwork
     describe "finding enterprises that are managed or with a particular permission" do
       before do
         allow(permissions).to receive(:managed_enterprises) { Enterprise.where('1=0') }
-        allow(permissions).to receive(:related_enterprises_granting) { Enterprise.where('1=0').select(:id) }
+        allow(permissions).to receive(:related_enterprises_granting) {
+                                Enterprise.where('1=0').select(:id)
+                              }
         allow(permissions).to receive(:admin?) { false }
       end
 

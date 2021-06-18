@@ -8,16 +8,20 @@ describe ProcessPaymentIntent do
   describe "processing a payment intent" do
     let(:customer) { create(:customer) }
     let(:order) {
-      create(:order_with_totals, customer: customer, distributor: customer.enterprise, state: "payment")
+      create(:order_with_totals, customer: customer, distributor: customer.enterprise,
+                                 state: "payment")
     }
     let(:payment_method) { create(:stripe_sca_payment_method) }
-    let!(:payment) { create(
-      :payment,
-      payment_method: payment_method,
-      cvv_response_message: "https://stripe.com/redirect",
-      response_code: "pi_123",
-      order: order,
-      state: "requires_authorization")
+
+    let!(:payment) {
+      create(
+        :payment,
+        payment_method: payment_method,
+        cvv_response_message: "https://stripe.com/redirect",
+        response_code: "pi_123",
+        order: order,
+        state: "requires_authorization"
+      )
     }
     let(:validator) { instance_double(Stripe::PaymentIntentValidator) }
 
@@ -48,7 +52,8 @@ describe ProcessPaymentIntent do
       context "where the stripe payment intent validation responds with errors" do
         before do
           allow(validator)
-            .to receive(:call).with(intent, anything).and_raise(Stripe::StripeError, "error message")
+            .to receive(:call).with(intent, anything).and_raise(Stripe::StripeError,
+                                                                "error message")
         end
 
         it "returns returns the error message" do

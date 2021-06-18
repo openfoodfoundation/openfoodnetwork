@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class ShipmentSerializer < ActiveModel::Serializer
     attributes :id, :tracking, :number, :order_id, :cost, :shipped_at, :stock_location_name, :state

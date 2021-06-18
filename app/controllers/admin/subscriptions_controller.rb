@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/permissions'
 
 module Admin
@@ -85,7 +87,8 @@ module Admin
     def collection
       if request.format.json?
         permissions.editable_subscriptions.ransack(params[:q]).result
-          .preload([:shop, :customer, :schedule, :subscription_line_items, :ship_address, :bill_address, proxy_orders: { order: :order_cycle }])
+          .preload([:shop, :customer, :schedule, :subscription_line_items, :ship_address,
+                    :bill_address, { proxy_orders: { order: :order_cycle } }])
       else
         Subscription.where("1=0")
       end
@@ -116,11 +119,13 @@ module Admin
     end
 
     def wrap_bill_address_attrs
-      subscription_params[:bill_address_attributes] = raw_params[:bill_address].slice(*Spree::Address.attribute_names)
+      subscription_params[:bill_address_attributes] =
+        raw_params[:bill_address].slice(*Spree::Address.attribute_names)
     end
 
     def wrap_ship_address_attrs
-      subscription_params[:ship_address_attributes] = raw_params[:ship_address].slice(*Spree::Address.attribute_names)
+      subscription_params[:ship_address_attributes] =
+        raw_params[:ship_address].slice(*Spree::Address.attribute_names)
     end
 
     def check_for_open_orders
@@ -129,14 +134,16 @@ module Admin
       @open_orders_to_keep = @subscription.proxy_orders.placed_and_open.pluck(:id)
       return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
 
-      render json: { errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') } }, status: :conflict
+      render json: { errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') } },
+             status: :conflict
     end
 
     def check_for_canceled_orders
       return if params[:canceled_orders] == 'notified'
       return if @subscription.proxy_orders.active.canceled.empty?
 
-      render json: { errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') } }, status: :conflict
+      render json: { errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') } },
+             status: :conflict
     end
 
     def strip_banned_attrs

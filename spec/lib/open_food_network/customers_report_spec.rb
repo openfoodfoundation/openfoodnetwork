@@ -41,7 +41,8 @@ module OpenFoodNetwork
         end
 
         it "returns headers for addresses" do
-          expect(subject.header).to eq(["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"])
+          expect(subject.header).to eq(["First Name", "Last Name", "Billing Address", "Email",
+                                        "Phone", "Hub", "Hub Address", "Shipping Method"])
         end
 
         it "builds a table from a list of variants" do

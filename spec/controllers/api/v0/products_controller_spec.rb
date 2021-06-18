@@ -9,12 +9,19 @@ describe Api::V0::ProductsController, type: :controller do
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
   let!(:product) { create(:product, supplier: supplier) }
-  let!(:inactive_product) { create(:product, available_on: Time.zone.now.tomorrow, name: "inactive") }
+  let!(:inactive_product) {
+    create(:product, available_on: Time.zone.now.tomorrow, name: "inactive")
+  }
   let(:product_other_supplier) { create(:product, supplier: supplier2) }
   let(:product_with_image) { create(:product_with_image, supplier: supplier) }
-  let(:attributes) { ["id", "name", "supplier", "price", "on_hand", "available_on", "permalink_live"] }
+  let(:attributes) {
+    ["id", "name", "supplier", "price", "on_hand", "available_on", "permalink_live"]
+  }
   let(:all_attributes) { ["id", "name", "price", "available_on", "variants"] }
-  let(:variants_attributes) { ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand", "display_as", "display_name", "name_to_display", "sku", "on_hand", "price"] }
+  let(:variants_attributes) {
+    ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
+     "display_as", "display_name", "name_to_display", "sku", "on_hand", "price"]
+  }
 
   let(:current_api_user) { build(:user) }
 
@@ -36,11 +43,15 @@ describe Api::V0::ProductsController, type: :controller do
       api_get :show, id: product.to_param
 
       expect(all_attributes.all?{ |attr| json_response.keys.include? attr }).to eq(true)
-      expect(variants_attributes.all?{ |attr| json_response['variants'].first.keys.include? attr }).to eq(true)
+      expect(variants_attributes.all?{ |attr|
+               json_response['variants'].first.keys.include? attr
+             } ).to eq(true)
     end
 
     context "finds a product by permalink first then by id" do
-      let!(:other_product) { create(:product, permalink: "these-are-not-the-droids-you-are-looking-for") }
+      let!(:other_product) {
+        create(:product, permalink: "these-are-not-the-droids-you-are-looking-for")
+      }
 
       before do
         product.update_attribute(:permalink, "#{other_product.id}-and-1-ways")
@@ -122,7 +133,8 @@ describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(422)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
-      expect(errors.keys).to match_array(["name", "price", "primary_taxon", "shipping_category", "supplier", "variant_unit"])
+      expect(errors.keys).to match_array(["name", "price", "primary_taxon", "shipping_category",
+                                          "supplier", "variant_unit"])
     end
 
     it "can update a product" do
@@ -186,7 +198,7 @@ describe Api::V0::ProductsController, type: :controller do
       end
 
       # test cases related to bug #660: product duplication clones master variant
-      
+
       # stock info - clone is set to zero
       it '(does not) clone the stock info of the product' do
         spree_post :clone, product_id: product.id, format: :json
@@ -199,7 +211,7 @@ describe Api::V0::ProductsController, type: :controller do
         expect(Spree::Product.second.variants.count).not_to eq Spree::Product.first.variants.count
       end
 
-      #price info: it does not consider price changes; it considers the price set upon product creation
+      # price info: it does not consider price changes; it considers the price set upon product creation
       it '(does not) clone price which was updated' do
         product.update_attribute(:price, 2.22)
         spree_post :clone, product_id: product.id, format: :json
@@ -246,17 +258,20 @@ describe Api::V0::ProductsController, type: :controller do
 
       it "returns a list of products" do
         api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-        expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, inactive_product.id, product.id]
+        expect(returned_product_ids).to eq [product4.id, product3.id, product2.id,
+                                            inactive_product.id, product.id]
       end
 
       it "returns pagination data" do
         api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
+        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1,
+                                                  "per_page" => 15
       end
 
       it "uses defaults when page and per_page are not supplied" do
         api_get :bulk_products, format: :json
-        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
+        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1,
+                                                  "per_page" => 15
       end
 
       it "returns paginated products by page" do
@@ -268,12 +283,14 @@ describe Api::V0::ProductsController, type: :controller do
       end
 
       it "filters results by supplier" do
-        api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } }, format: :json
+        api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } },
+                format: :json
         expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
       end
 
       it "filters results by product category" do
-        api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } }, format: :json
+        api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } },
+                format: :json
         expect(returned_product_ids).to eq [product3.id, product2.id]
       end
 
@@ -282,7 +299,8 @@ describe Api::V0::ProductsController, type: :controller do
         product2.variants.first.update_attribute :import_date, 2.days.ago
         product3.variants.first.update_attribute :import_date, 1.day.ago
 
-        api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
+        api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s },
+                format: :json
         expect(returned_product_ids).to eq [product3.id, product.id]
       end
     end

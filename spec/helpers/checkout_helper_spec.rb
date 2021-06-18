@@ -8,7 +8,8 @@ describe CheckoutHelper, type: :helper do
       "shared/validated_input",
       name: "test",
       path: "foo",
-      attributes: { :required => true, :type => :email, :name => "foo", :id => "foo", "ng-model" => "foo", "ng-class" => "{error: !fieldValid('foo')}" }
+      attributes: { :required => true, :type => :email, :name => "foo", :id => "foo",
+                    "ng-model" => "foo", "ng-class" => "{error: !fieldValid('foo')}" }
     )
 
     helper.validated_input("test", "foo", type: :email)
@@ -18,7 +19,8 @@ describe CheckoutHelper, type: :helper do
     let(:order) { double(:order, total_tax: 123.45, currency: 'AUD') }
 
     it "retrieves the total tax on the order" do
-      expect(helper.display_checkout_tax_total(order)).to eq(Spree::Money.new(123.45, currency: 'AUD'))
+      expect(helper.display_checkout_tax_total(order)).to eq(Spree::Money.new(123.45,
+                                                                              currency: 'AUD'))
     end
   end
 

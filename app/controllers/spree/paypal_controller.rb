@@ -26,7 +26,9 @@ module Spree
           # sent back and the response is handled in the #confirm action in this controller.
           redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
         else
-          flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
+          flash[:error] =
+            Spree.t('flash.generic_error', scope: 'paypal',
+                                           reasons: pp_response.errors.map(&:long_message).join(" "))
           redirect_to main_app.checkout_state_path(:payment)
         end
       rescue SocketError

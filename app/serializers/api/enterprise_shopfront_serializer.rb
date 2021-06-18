@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Represents the properties of an Enterprise when viewing the details of listed shopfronts
 module Api
   class EnterpriseShopfrontSerializer < ActiveModel::Serializer

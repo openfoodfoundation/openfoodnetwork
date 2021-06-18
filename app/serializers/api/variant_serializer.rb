@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::VariantSerializer < ActiveModel::Serializer
   attributes :id, :is_master, :product_name, :sku,
              :options_text, :unit_value, :unit_description, :unit_to_display,
@@ -44,9 +46,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
     price_with_fees / (unit_price.denominator || 1)
   end
 
-  def unit_price_unit
-    unit_price.unit
-  end
+  delegate :unit, to: :unit_price, prefix: true
 
   private
 

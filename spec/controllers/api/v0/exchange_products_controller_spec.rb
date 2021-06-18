@@ -36,14 +36,16 @@ module Api
 
         describe "when an exchange id param is provided" do
           it "uses exchange order_cycle, incoming and enterprise to fetch products" do
-            api_get :index, exchange_id: exchange.id, order_cycle_id: 666, enterprise_id: 666, incoming: false
+            api_get :index, exchange_id: exchange.id, order_cycle_id: 666, enterprise_id: 666,
+                            incoming: false
             expect(json_response["products"].first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
           end
         end
 
         describe "when an exchange id param is not provided" do
           it "uses params order_cycle, incoming and enterprise to fetch products" do
-            api_get :index, order_cycle_id: order_cycle.id, enterprise_id: exchange.sender_id, incoming: true
+            api_get :index, order_cycle_id: order_cycle.id, enterprise_id: exchange.sender_id,
+                            incoming: true
             expect(json_response["products"].first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
           end
         end
@@ -51,7 +53,9 @@ module Api
 
       describe "pagination" do
         let(:exchange) { order_cycle.exchanges.outgoing.first }
-        let(:products_relation) { Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id)) }
+        let(:products_relation) {
+          Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id))
+        }
 
         before do
           stub_const("#{Api::V0::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)

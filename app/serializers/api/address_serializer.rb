@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::AddressSerializer < ActiveModel::Serializer
   # cached
   # delegate :cache_key, to: :object

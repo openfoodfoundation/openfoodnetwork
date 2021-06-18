@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DistributorTitleComponentStories < ViewComponent::Storybook::Stories
   story(:default) do
     controls do

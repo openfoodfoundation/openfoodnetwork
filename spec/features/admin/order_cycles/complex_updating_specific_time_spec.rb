@@ -10,8 +10,12 @@ xfeature '
   include AuthenticationHelper
   include WebHelper
 
-  let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z") }
-  let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z") }
+  let(:order_cycle_opening_time) {
+    Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z")
+  }
+  let(:order_cycle_closing_time) {
+    Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z")
+  }
 
   scenario "updating an order cycle", js: true do
     # Given an order cycle with all the settings
@@ -21,15 +25,19 @@ xfeature '
     # And a coordinating, supplying and distributing enterprise with some products with variants
     coordinator = oc.coordinator
     supplier = create(:supplier_enterprise, name: 'My supplier')
-    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
+    distributor = create(:distributor_enterprise, name: 'My distributor',
+                                                  with_payment_and_shipping: true)
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
 
     # Relationships required for interface to work
-    create(:enterprise_relationship, parent: supplier, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: distributor, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: supplier, child: distributor, permissions_list: [:add_to_order_cycle])
+    create(:enterprise_relationship, parent: supplier, child: coordinator,
+                                     permissions_list: [:add_to_order_cycle])
+    create(:enterprise_relationship, parent: distributor, child: coordinator,
+                                     permissions_list: [:add_to_order_cycle])
+    create(:enterprise_relationship, parent: supplier, child: distributor,
+                                     permissions_list: [:add_to_order_cycle])
 
     # And some enterprise fees
     supplier_fee1 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 1')
@@ -71,7 +79,8 @@ xfeature '
 
     open_all_exchange_product_tabs
 
-    expect(page).to have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
+    expect(page).to have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}",
+                                  visible: true
     page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
@@ -79,12 +88,14 @@ xfeature '
     # And I configure some supplier fees
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
     select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Supplier fee 1', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    select 'Supplier fee 1',
+           from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
     click_link 'order_cycle_incoming_exchange_2_enterprise_fees_0_remove'
     select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    select 'Supplier fee 2',
+           from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     click_button 'Save and Next'
     expect(page).to have_content 'Your order cycle has been updated.'
@@ -114,12 +125,14 @@ xfeature '
     # And I configure some distributor fees
     within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
     select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Distributor fee 1', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    select 'Distributor fee 1',
+           from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
     within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
     within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
     click_link 'order_cycle_outgoing_exchange_2_enterprise_fees_0_remove'
     select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    select 'Distributor fee 2',
+           from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     expect(page).to have_selector "#save-bar"
     click_button 'Save and Back to List'
@@ -149,11 +162,14 @@ xfeature '
 
     # And it should have some variants selected
     selected_initial_variants = initial_variants.take initial_variants.size - 1
-    expect(oc.variants.map(&:id)).to match_array((selected_initial_variants.map(&:id) + [v1.id, v2.id]))
+    expect(oc.variants.map(&:id)).to match_array((selected_initial_variants.map(&:id) + [v1.id,
+                                                                                         v2.id]))
 
     # And the collection details should have been updated
-    expect(oc.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0')).to be_present
-    expect(oc.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1')).to be_present
+    expect(oc.exchanges.where(pickup_time: 'New time 0',
+                              pickup_instructions: 'New instructions 0')).to be_present
+    expect(oc.exchanges.where(pickup_time: 'New time 1',
+                              pickup_instructions: 'New instructions 1')).to be_present
   end
 
   private

@@ -43,7 +43,7 @@ module Admin
             end
 
             it 'calls CustomersWithBalance' do
-              customers_with_balance = instance_double(CustomersWithBalance) 
+              customers_with_balance = instance_double(CustomersWithBalance)
               allow(CustomersWithBalance)
                 .to receive(:new).with(enterprise) { customers_with_balance }
 
@@ -162,7 +162,8 @@ module Admin
           end
 
           it "allows me to update the customer" do
-            spree_put :update, format: :json, id: customer.id, customer: { email: 'new.email@gmail.com' }
+            spree_put :update, format: :json, id: customer.id,
+                               customer: { email: 'new.email@gmail.com' }
             expect(JSON.parse(response.body)["id"]).to eq customer.id
             expect(assigns(:customer)).to eq customer
             expect(customer.reload.email).to eq 'new.email@gmail.com'
@@ -175,7 +176,8 @@ module Admin
           end
 
           it "prevents me from updating the customer" do
-            spree_put :update, format: :json, id: customer.id, customer: { email: 'new.email@gmail.com' }
+            spree_put :update, format: :json, id: customer.id,
+                               customer: { email: 'new.email@gmail.com' }
             expect(response).to redirect_to unauthorized_path
             expect(assigns(:customer)).to eq nil
             expect(customer.email).to_not eq 'new.email@gmail.com'
@@ -189,7 +191,8 @@ module Admin
       let(:another_enterprise) { create(:distributor_enterprise) }
 
       def create_customer(enterprise)
-        spree_put :create, format: :json, customer: { email: 'new@example.com', enterprise_id: enterprise.id }
+        spree_put :create, format: :json,
+                           customer: { email: 'new@example.com', enterprise_id: enterprise.id }
       end
 
       context "json" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class OrderDetailedSerializer < Api::Admin::OrderSerializer
     has_one :shipping_method, serializer: Api::ShippingMethodSerializer

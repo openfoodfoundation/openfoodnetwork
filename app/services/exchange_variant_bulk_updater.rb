@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ExchangeVariantBulkUpdater
   def initialize(exchange)
     @exchange = exchange

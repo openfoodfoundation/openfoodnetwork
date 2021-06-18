@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class SupplierTotalsByDistributorReport
-      REPORT_TYPE = "order_cycle_supplier_totals_by_distributor".freeze
+      REPORT_TYPE = "order_cycle_supplier_totals_by_distributor"
 
       attr_reader :context
 

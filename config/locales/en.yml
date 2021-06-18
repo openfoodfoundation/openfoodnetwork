@@ -333,6 +333,7 @@ en:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   ok: Ok

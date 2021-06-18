@@ -69,7 +69,9 @@ module Stripe
 
         context "when some stripe accounts are destroyed" do
           before do
-            allow(handler).to receive(:destroy_stripe_accounts_linked_to).with('some.account') { [double(:destroyed_stripe_account)] }
+            allow(handler).to receive(:destroy_stripe_accounts_linked_to).with('some.account') {
+                                [double(:destroyed_stripe_account)]
+                              }
           end
 
           it { expect(handler.send(:deauthorize)).to be :success }
@@ -77,7 +79,9 @@ module Stripe
 
         context "when no stripe accounts are destroyed" do
           before do
-            allow(handler).to receive(:destroy_stripe_accounts_linked_to).with('some.account') { [] }
+            allow(handler).to receive(:destroy_stripe_accounts_linked_to).with('some.account') {
+                                []
+                              }
           end
 
           it { expect(handler.send(:deauthorize)).to be :ignored }

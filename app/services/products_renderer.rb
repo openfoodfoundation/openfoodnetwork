@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_product_to_hub'
 
 class ProductsRenderer

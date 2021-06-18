@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stripe/profile_storer'
 
 module Spree
@@ -88,7 +90,8 @@ module Spree
       end
 
       def tokenize_instance_customer_card(customer, card)
-        token = Stripe::Token.create({ card: card, customer: customer }, stripe_account: stripe_account_id)
+        token = Stripe::Token.create({ card: card, customer: customer },
+                                     stripe_account: stripe_account_id)
         token.id
       end
 

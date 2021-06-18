@@ -89,7 +89,9 @@ feature "Order Management", js: true do
   describe "editing a completed order" do
     let(:address) { create(:address) }
     let(:user) { create(:user, bill_address: address, ship_address: address) }
-    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:distributor) {
+      create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
+    }
     let(:order_cycle) { create(:order_cycle) }
     let(:shipping_method) { distributor.shipping_methods.first }
     let(:order) do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LineItemsController < BaseController
   respond_to :json
 

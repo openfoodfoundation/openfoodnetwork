@@ -14,10 +14,13 @@ feature '
 
     scenario "listing relationships" do
       # Given some enterprises with relationships
-      e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
-      create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_to_order_cycle])
+      e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise),
+create(:enterprise)
+      create(:enterprise_relationship, parent: e1, child: e2,
+                                       permissions_list: [:add_to_order_cycle])
       create(:enterprise_relationship, parent: e2, child: e3, permissions_list: [:manage_products])
-      create(:enterprise_relationship, parent: e3, child: e4, permissions_list: [:add_to_order_cycle, :manage_products])
+      create(:enterprise_relationship, parent: e3, child: e4,
+                                       permissions_list: [:add_to_order_cycle, :manage_products])
 
       # When I go to the relationships page
       visit spree.admin_dashboard_path
@@ -49,10 +52,12 @@ feature '
 
       # Wait for row to appear since have_relationship doesn't wait
       expect(page).to have_selector 'tr', count: 2
-      expect_relationship_with_permissions e1, e2, ['to add to order cycle', 'to add products to inventory', 'to edit profile']
+      expect_relationship_with_permissions e1, e2,
+                                           ['to add to order cycle', 'to add products to inventory', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       expect(er).to be_present
-      expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
+      expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle', 'edit_profile',
+                                                         'create_variant_overrides']
     end
 
     scenario "attempting to create a relationship with invalid data" do
@@ -75,7 +80,8 @@ feature '
     scenario "deleting a relationship" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
-      er = create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_to_order_cycle])
+      er = create(:enterprise_relationship, parent: e1, child: e2,
+                                            permissions_list: [:add_to_order_cycle])
 
       visit admin_enterprise_relationships_path
       expect(page).to have_relationship e1, e2, 'to add to order cycle'
@@ -112,7 +118,8 @@ feature '
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
       expect(page).to have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
-      expect(page).to have_select2 'enterprise_relationship_child_id', with_options: ['', d1.name, d2.name, d3.name]
+      expect(page).to have_select2 'enterprise_relationship_child_id',
+                                   with_options: ['', d1.name, d2.name, d3.name]
     end
   end
 

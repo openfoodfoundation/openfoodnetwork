@@ -11,9 +11,15 @@ feature "Using embedded shopfront functionality", js: true do
   include UIComponentHelper
 
   describe "using iframes" do
-    let(:distributor) { create(:distributor_enterprise, name: 'My Embedded Hub', permalink: 'test_enterprise', with_payment_and_shipping: true) }
+    let(:distributor) {
+      create(:distributor_enterprise, name: 'My Embedded Hub', permalink: 'test_enterprise',
+                                      with_payment_and_shipping: true)
+    }
     let(:supplier) { create(:supplier_enterprise) }
-    let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
+    let(:oc1) {
+      create(:simple_order_cycle, distributors: [distributor],
+                                  coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+    }
     let(:product) { create(:simple_product, name: 'Framed Apples', supplier: supplier) }
     let(:variant) { create(:variant, product: product, price: 19.99) }
     let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }

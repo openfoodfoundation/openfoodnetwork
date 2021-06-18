@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Encapsulation of logic used to handle the response from Stripe following an
 # attempt to connect an account to the instance using the OAuth Connection Flow
 # https://stripe.com/docs/connect/standard-accounts#oauth-flow

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   module SpreeApiKeyLoader
     def load_spree_api_key

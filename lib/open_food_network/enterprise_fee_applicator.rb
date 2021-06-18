@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
-  class EnterpriseFeeApplicator < Struct.new(:enterprise_fee, :variant, :role)
+  EnterpriseFeeApplicator = Struct.new(:enterprise_fee, :variant, :role) do
     def create_line_item_adjustment(line_item)
       create_adjustment(line_item_adjustment_label, line_item)
     end
@@ -15,7 +17,8 @@ module OpenFoodNetwork
         label, adjustable, true, "closed", tax_category(adjustable)
       )
 
-      AdjustmentMetadata.create! adjustment: adjustment, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
+      AdjustmentMetadata.create! adjustment: adjustment, enterprise: enterprise_fee.enterprise,
+                                 fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
     end
 
     def line_item_adjustment_label
@@ -27,7 +30,8 @@ module OpenFoodNetwork
     end
 
     def base_adjustment_label
-      I18n.t(:enterprise_fee_by, type: enterprise_fee.fee_type, role: role, enterprise_name: enterprise_fee.enterprise.name)
+      I18n.t(:enterprise_fee_by, type: enterprise_fee.fee_type, role: role,
+                                 enterprise_name: enterprise_fee.enterprise.name)
     end
 
     def tax_category(target)

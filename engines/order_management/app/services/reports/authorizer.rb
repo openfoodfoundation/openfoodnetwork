@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Reports
   class Authorizer
     class ParameterNotAllowedError < StandardError; end

@@ -15,7 +15,9 @@ feature '
   let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', sells: 'none') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
-  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', sells: 'none') }
+  let(:distributor_profile) {
+    create(:distributor_enterprise, name: 'Distributor profile', sells: 'none')
+  }
 
   describe "creating an enterprise user" do
     context "with a limitted number of owned enterprises" do

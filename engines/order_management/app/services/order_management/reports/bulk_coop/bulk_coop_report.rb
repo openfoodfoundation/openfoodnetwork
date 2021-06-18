@@ -92,10 +92,39 @@ module OrderManagement
                                  proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
                                  proc { |_lis| "" },
                                  proc { |_lis| "" },
-                                 proc { |lis| lis.sum { |li| li.quantity * (li.weight_from_unit_value || 0) } },
-                                 proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.weight_from_unit_value || 0) } },
-                                 proc { |lis| ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| [li.max_quantity || 0, li.quantity || 0].max * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor },
-                                 proc { |lis| lis.sum { |li| [li.max_quantity || 0, li.quantity || 0].max * (li.weight_from_unit_value || 0) } - ( ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| [li.max_quantity || 0, li.quantity || 0].max * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor * (lis.first.product.group_buy_unit_size || 0) ) }] },
+                                 proc { |lis|
+                                   lis.sum { |li|
+                                     li.quantity * (li.weight_from_unit_value || 0)
+                                   }
+                                 },
+                                 proc { |lis|
+                                   lis.sum { |li|
+                                     (li.max_quantity || 0) * (li.weight_from_unit_value || 0)
+                                   }
+                                 },
+                                 proc { |lis|
+                                   ( if (lis.first.product.group_buy_unit_size || 0).zero?
+                                       0
+                                     else
+                                       ( lis.sum { |li|
+                                           [li.max_quantity || 0,
+                                            li.quantity || 0].max * (li.weight_from_unit_value || 0)
+                                         } / lis.first.product.group_buy_unit_size )
+                                     end ).floor
+                                 },
+                                 proc { |lis|
+                                   lis.sum { |li|
+                                     [li.max_quantity || 0,
+                                      li.quantity || 0].max * (li.weight_from_unit_value || 0)
+                                   } - ( ( if (lis.first.product.group_buy_unit_size || 0).zero?
+                                             0
+                                           else
+                                             ( lis.sum { |li|
+                                                 [li.max_quantity || 0,
+                                                  li.quantity || 0].max * (li.weight_from_unit_value || 0)
+                                               } / lis.first.product.group_buy_unit_size )
+                                           end ).floor * (lis.first.product.group_buy_unit_size || 0) )
+                                 }] },
              { group_by: proc { |li| li.full_name },
                sort_by: proc { |full_name| full_name } }]
           end

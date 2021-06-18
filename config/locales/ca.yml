@@ -3006,6 +3006,7 @@ ca:
     payment_method_not_supported: "No s'admet la forma de pagament"
     resend_authorization_email: "Torneu a enviar el correu electrònic d’autorització"
     rma_credit: "credit RMA"
+    refund: "Reembossament"
     server_error: "Error del servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3672,7 +3673,7 @@ ca:
     shipment_mailer:
       shipped_email:
         dear_customer: "Benvolguda consumidora:"
-        instructions: "La vostra comanda s'ha enviat"
+        instructions: "La vostra comanda de %{distributor} s'ha enviat"
         shipment_summary: "Resum de l'enviament"
         subject: "Notificació d'enviament"
         thanks: "Gràcies per la teva compra."

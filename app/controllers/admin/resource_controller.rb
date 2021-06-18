@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ResourceController < Spree::Admin::BaseController
     helper_method :new_object_url, :edit_object_url, :object_url, :collection_url

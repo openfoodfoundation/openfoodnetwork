@@ -53,7 +53,8 @@ describe UserPasswordsController, type: :controller do
     end
 
     it "returns error when user is unconfirmed" do
-      post :create, xhr: true, params: { spree_user: { email: unconfirmed_user.email }, use_route: :spree }
+      post :create, xhr: true,
+                    params: { spree_user: { email: unconfirmed_user.email }, use_route: :spree }
       expect(response.status).to eq 401
       expect(json_response).to eq 'error' => I18n.t('email_unconfirmed')
     end

@@ -82,9 +82,9 @@ describe OrderBalance do
   end
 
   describe '#amount' do
-      before do
-        allow(order).to receive(:new_outstanding_balance) { 123 }
-      end
+    before do
+      allow(order).to receive(:new_outstanding_balance) { 123 }
+    end
 
     it 'calls #new_outstanding_balance' do
       expect(order).to receive(:new_outstanding_balance)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderCycleDistributedVariants
   def initialize(order_cycle, distributor)
     @order_cycle = order_cycle

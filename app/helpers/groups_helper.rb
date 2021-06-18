@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 module GroupsHelper
-  def link_to_service(baseurl, name, html_options = {})
+  def link_to_service(baseurl, name, html_options = {}, &block)
     return if name.blank?
 
     html_options = html_options.merge target: '_blank'
-    link_to ext_url(baseurl, name), html_options do
-      yield
-    end
+    link_to ext_url(baseurl, name), html_options, &block
   end
 
   def ext_url(prefix, url)

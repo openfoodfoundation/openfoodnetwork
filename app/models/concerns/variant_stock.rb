@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 
 # These methods were available in Spree 1, but were removed in Spree 2.  We

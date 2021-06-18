@@ -33,10 +33,10 @@ module Spree
 
     def number=(num)
       @number = begin
-                  num.gsub(/[^0-9]/, '')
-                rescue StandardError
-                  nil
-                end
+        num.gsub(/[^0-9]/, '')
+      rescue StandardError
+        nil
+      end
     end
 
     # cc_type is set by jquery.payment, which helpfully provides different

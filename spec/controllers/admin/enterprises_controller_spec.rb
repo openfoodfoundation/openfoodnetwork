@@ -15,12 +15,17 @@ describe Admin::EnterprisesController, type: :controller do
   let(:supplier) { create(:supplier_enterprise, owner: supplier_owner) }
   let(:country) { Spree::Country.find_by name: 'Australia' }
   let(:state) { Spree::State.find_by name: 'Victoria' }
-  let(:address_params) { { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id } }
+  let(:address_params) {
+    { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id }
+  }
 
   before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
 
   describe "creating an enterprise" do
-    let(:enterprise_params) { { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: address_params } } }
+    let(:enterprise_params) {
+      { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0',
+                      address_attributes: address_params } }
+    }
 
     it "grants management permission if the current user is an enterprise user" do
       allow(controller).to receive_messages spree_current_user: distributor_manager
@@ -148,7 +153,9 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "does not allow managers to be changed" do
         allow(controller).to receive_messages spree_current_user: distributor_manager
-        update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
+        update_params = { id: distributor,
+                          enterprise: { user_ids: [distributor_owner.id, distributor_manager.id,
+                                                   user.id] } }
         spree_post :update, update_params
 
         distributor.reload
@@ -157,7 +164,8 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "updates enterprise preferences" do
         allow(controller).to receive_messages spree_current_user: distributor_manager
-        update_params = { id: distributor, enterprise: { preferred_show_customer_names_to_suppliers: "1" } }
+        update_params = { id: distributor,
+                          enterprise: { preferred_show_customer_names_to_suppliers: "1" } }
         spree_post :update, update_params
 
         distributor.reload
@@ -271,7 +279,9 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "allows managers to be changed" do
         allow(controller).to receive_messages spree_current_user: distributor_owner
-        update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
+        update_params = { id: distributor,
+                          enterprise: { user_ids: [distributor_owner.id, distributor_manager.id,
+                                                   user.id] } }
         spree_post :update, update_params
 
         distributor.reload
@@ -300,7 +310,9 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "allows managers to be changed" do
         allow(controller).to receive_messages spree_current_user: admin_user
-        update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
+        update_params = { id: distributor,
+                          enterprise: { user_ids: [distributor_owner.id, distributor_manager.id,
+                                                   user.id] } }
         spree_post :update, update_params
 
         distributor.reload
@@ -421,7 +433,10 @@ describe Admin::EnterprisesController, type: :controller do
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         profile_enterprise2.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: new_owner
-        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, sells: 'any',
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+        } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload
@@ -436,7 +451,9 @@ describe Admin::EnterprisesController, type: :controller do
         allow_any_instance_of(Sets::EnterpriseSet).to receive(:save) { false }
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: new_owner
-        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => {
+          id: profile_enterprise1.id, visible: 'false'
+        } } } }
         spree_put :bulk_update, bulk_enterprise_params
         expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
       end
@@ -445,7 +462,10 @@ describe Admin::EnterprisesController, type: :controller do
     context "as the owner of an enterprise" do
       it "allows 'sells' and 'owner' to be changed" do
         allow(controller).to receive_messages spree_current_user: original_owner
-        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, sells: 'any',
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+        } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload
@@ -462,7 +482,10 @@ describe Admin::EnterprisesController, type: :controller do
         profile_enterprise1.enterprise_roles.build(user: new_owner).save
         profile_enterprise2.enterprise_roles.build(user: new_owner).save
         allow(controller).to receive_messages spree_current_user: admin_user
-        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+        bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
+          '0' => { id: profile_enterprise1.id, sells: 'any',
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+        } } }
 
         spree_put :bulk_update, bulk_enterprise_params
         profile_enterprise1.reload
@@ -502,21 +525,24 @@ describe Admin::EnterprisesController, type: :controller do
     context "when an order_cycle_id is provided in params" do
       before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
-        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
+        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user,
+                                                                                   "existing OrderCycle")
       end
     end
 
     context "when a coordinator is provided in params" do
       before { get :for_order_cycle, as: :json, params: { coordinator_id: 1 } }
       it "initializes permissions with a new OrderCycle" do
-        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
+        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user,
+                                                                                   "new OrderCycle")
       end
     end
 
     context "when both an order cycle and a coordinator are provided in params" do
       before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1, coordinator_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
-        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
+        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user,
+                                                                                   "existing OrderCycle")
       end
     end
   end
@@ -531,11 +557,13 @@ describe Admin::EnterprisesController, type: :controller do
       allow(controller).to receive_messages spree_current_user: user
 
       # :create_variant_overrides does not affect visiblity (at time of writing)
-      create(:enterprise_relationship, parent: not_visible_enterprise, child: visible_enterprise, permissions_list: [:create_variant_overrides])
+      create(:enterprise_relationship, parent: not_visible_enterprise, child: visible_enterprise,
+                                       permissions_list: [:create_variant_overrides])
     end
 
     it "uses permissions to determine which enterprises are visible and should be rendered" do
-      expect(controller).to receive(:render_as_json).with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
+      expect(controller).to receive(:render_as_json).with([visible_enterprise],
+                                                          ams_prefix: 'basic', spree_current_user: user).and_call_original
       get :visible, format: :json
     end
   end

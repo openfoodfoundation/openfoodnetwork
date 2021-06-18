@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This controller is used by super admin users to update the settings the app is using
 
 module Admin

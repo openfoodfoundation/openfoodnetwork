@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Represents the minimum details of an Enterprise when all shopfronts are being listed
 module Api
   class EnterpriseShopfrontListSerializer < ActiveModel::Serializer

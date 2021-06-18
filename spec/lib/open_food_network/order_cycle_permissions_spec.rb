@@ -17,7 +17,9 @@ module OpenFoodNetwork
         let(:permissions) { OrderCyclePermissions.new(user, nil) }
 
         before do
-          allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          allow(permissions).to receive(:managed_enterprises) {
+                                  Enterprise.where(id: [coordinator])
+                                }
         end
 
         it "returns an empty scope" do
@@ -27,7 +29,9 @@ module OpenFoodNetwork
 
       context "as a manager of the coordinator" do
         before do
-          allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          allow(permissions).to receive(:managed_enterprises) {
+                                  Enterprise.where(id: [coordinator])
+                                }
         end
 
         it "returns the coordinator itself" do
@@ -36,7 +40,8 @@ module OpenFoodNetwork
 
         context "where P-OC has been granted to the coordinator by other enterprises" do
           before do
-            create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: hub, child: coordinator,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where the coordinator sells any" do
@@ -58,8 +63,14 @@ module OpenFoodNetwork
 
         context "where P-OC has not been granted to the coordinator by other enterprises" do
           context "where the other enterprise are already in the order cycle" do
-            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
-            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex_incoming) {
+              create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                incoming: true)
+            }
+            let!(:ex_outgoing) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             context "where the coordinator sells any" do
               it "returns enterprises which have granted P-OC to the coordinator" do
@@ -93,11 +104,15 @@ module OpenFoodNetwork
 
         context "that has granted P-OC to the coordinator" do
           before do
-            create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: hub, child: coordinator,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where my hub is in the order cycle" do
-            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex_outgoing) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             it "returns my hub" do
               enterprises = permissions.visible_enterprises
@@ -107,11 +122,15 @@ module OpenFoodNetwork
 
             context "and has been granted P-OC by a producer" do
               before do
-                create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: producer, child: hub,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               context "where the producer is in the order cycle" do
-                let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+                let!(:ex_incoming) {
+                  create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                    incoming: true)
+                }
 
                 it "returns the producer" do
                   enterprises = permissions.visible_enterprises
@@ -131,11 +150,15 @@ module OpenFoodNetwork
 
             context "and has granted P-OC to a producer" do
               before do
-                create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: hub, child: producer,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               context "where the producer is in the order cycle" do
-                let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+                let!(:ex_incoming) {
+                  create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                    incoming: true)
+                }
 
                 it "returns the producer" do
                   enterprises = permissions.visible_enterprises
@@ -171,7 +194,10 @@ module OpenFoodNetwork
           end
 
           context "but is already in the order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             it "returns my hub" do
               enterprises = permissions.visible_enterprises
@@ -180,7 +206,9 @@ module OpenFoodNetwork
             end
 
             context "and distributes variants distributed by an unmanaged and unpermitted producer" do
-              before { ex.variants << create(:variant, product: create(:product, supplier: producer)) }
+              before {
+                ex.variants << create(:variant, product: create(:product, supplier: producer))
+              }
 
               # TODO: update this when we are confident about P-OCs
               it "returns that producer as well" do
@@ -200,11 +228,15 @@ module OpenFoodNetwork
 
         context "which has granted P-OC to the coordinator" do
           before do
-            create(:enterprise_relationship, parent: producer, child: coordinator, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: producer, child: coordinator,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where my producer is in the order cycle" do
-            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+            let!(:ex_incoming) {
+              create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                incoming: true)
+            }
 
             it "returns my producer" do
               enterprises = permissions.visible_enterprises
@@ -214,11 +246,15 @@ module OpenFoodNetwork
 
             context "and has been granted P-OC by a hub" do
               before do
-                create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: hub, child: producer,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               context "where the hub is also in the order cycle" do
-                let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+                let!(:ex_outgoing) {
+                  create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                    incoming: false)
+                }
 
                 it "returns the hub as well" do
                   enterprises = permissions.visible_enterprises
@@ -239,11 +275,15 @@ module OpenFoodNetwork
 
             context "and has granted P-OC to a hub" do
               before do
-                create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: producer, child: hub,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               context "where the hub is also in the order cycle" do
-                let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+                let!(:ex_outgoing) {
+                  create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                    incoming: false)
+                }
 
                 it "returns the hub as well" do
                   enterprises = permissions.visible_enterprises
@@ -280,7 +320,10 @@ module OpenFoodNetwork
           end
 
           context "but is already in the order cycle" do
-            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+            let!(:ex_incoming) {
+              create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                incoming: true)
+            }
 
             # TODO: update this when we are confident about P-OCs
             it "returns my producer" do
@@ -290,8 +333,14 @@ module OpenFoodNetwork
             end
 
             context "and has variants distributed by an outgoing hub" do
-              let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
-              before { ex_outgoing.variants << create(:variant, product: create(:product, supplier: producer)) }
+              let!(:ex_outgoing) {
+                create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                  incoming: false)
+              }
+              before {
+                ex_outgoing.variants << create(:variant,
+                                               product: create(:product, supplier: producer))
+              }
 
               # TODO: update this when we are confident about P-OCs
               it "returns that hub as well" do
@@ -307,11 +356,18 @@ module OpenFoodNetwork
 
     describe "finding exchanges of an order cycle that an admin can manage" do
       describe "as the manager of the coordinator" do
-        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
-        let!(:ex_out) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+        let!(:ex_in) {
+          create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                            incoming: true)
+        }
+        let!(:ex_out) {
+          create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false)
+        }
 
         before do
-          allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          allow(permissions).to receive(:managed_enterprises) {
+                                  Enterprise.where(id: [coordinator])
+                                }
         end
 
         it "returns all exchanges in the order cycle, regardless of hubE permissions" do
@@ -320,14 +376,19 @@ module OpenFoodNetwork
       end
 
       describe "as the manager of a hub" do
-        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+        let!(:ex_in) {
+          create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                            incoming: true)
+        }
 
         before do
           allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub]) }
         end
 
         context "where my hub is in the order cycle" do
-          let!(:ex_out) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+          let!(:ex_out) {
+            create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false)
+          }
 
           it "returns my hub's outgoing exchange" do
             expect(permissions.visible_exchanges).to eq([ex_out])
@@ -335,7 +396,8 @@ module OpenFoodNetwork
 
           context "where my hub has been granted P-OC by an incoming producer" do
             before do
-              create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+              create(:enterprise_relationship, parent: producer, child: hub,
+                                               permissions_list: [:add_to_order_cycle])
             end
 
             it "returns the producer's incoming exchange" do
@@ -361,7 +423,9 @@ module OpenFoodNetwork
           context "where my hub's outgoing exchange contains variants of a producer I don't manage and has not given my hub P-OC" do
             let!(:product) { create(:product, supplier: producer) }
             let!(:variant) { create(:variant, product: product) }
-            let!(:ex_out) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: true) }
+            let!(:ex_out) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: true)
+            }
             before { ex_out.variants << variant }
 
             it "returns incoming exchanges supplying the variants in my outgoing exchange" do
@@ -372,14 +436,19 @@ module OpenFoodNetwork
       end
 
       describe "as the manager of a producer" do
-        let!(:ex_out) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+        let!(:ex_out) {
+          create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false)
+        }
 
         before do
           allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer]) }
         end
 
         context "where my producer supplies to the order cycle" do
-          let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+          let!(:ex_in) {
+            create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                              incoming: true)
+          }
 
           it "returns my producer's incoming exchange" do
             expect(permissions.visible_exchanges).to eq([ex_in])
@@ -387,7 +456,8 @@ module OpenFoodNetwork
 
           context "my producer has granted P-OC to an outgoing hub" do
             before do
-              create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+              create(:enterprise_relationship, parent: producer, child: hub,
+                                               permissions_list: [:add_to_order_cycle])
             end
 
             it "returns the hub's outgoing exchange" do
@@ -416,7 +486,10 @@ module OpenFoodNetwork
             before { ex_out.variants << variant }
 
             context "where my producer supplies to the order cycle" do
-              let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+              let!(:ex_in) {
+                create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator,
+                                  incoming: true)
+              }
 
               it "returns the outgoing exchange" do
                 expect(permissions.visible_exchanges).to include ex_out
@@ -442,7 +515,9 @@ module OpenFoodNetwork
       describe "incoming exchanges" do
         context "as a manager of the coordinator" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [coordinator])
+                                  }
           end
 
           it "returns all variants belonging to the sending producer" do
@@ -454,7 +529,9 @@ module OpenFoodNetwork
 
         context "as a manager of the producer" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer1]) }
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer1])
+                                  }
           end
 
           it "returns all variants belonging to the sending producer" do
@@ -467,11 +544,15 @@ module OpenFoodNetwork
         context "as a manager of a hub which has been granted P-OC by the producer" do
           before do
             allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where the hub is in the order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             it "returns variants produced by that producer only" do
               visible = permissions.visible_variants_for_incoming_exchanges_from(producer1)
@@ -494,8 +575,11 @@ module OpenFoodNetwork
       describe "outgoing exchanges" do
         context "as a manager of the coordinator" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [coordinator])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
@@ -522,7 +606,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "when an exchange exists between the coordinator and the hub within this order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             # producer2 produces v2 and has not granted P-OC to hub (or coordinator for that matter)
             before { ex.variants << v2 }
@@ -537,7 +624,8 @@ module OpenFoodNetwork
         context "as manager of an outgoing hub" do
           before do
             allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
@@ -558,7 +646,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "when an exchange exists between the coordinator and the hub within this order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             # producer2 produces v2 and has not granted P-OC to hub
             before { ex.variants << v2 }
@@ -572,12 +663,18 @@ module OpenFoodNetwork
 
         context "as the manager of a producer which has granted P-OC to an outgoing hub" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer1]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer1])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where my producer is in the order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: producer1, receiver: coordinator, incoming: true) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: producer1, receiver: coordinator,
+                                incoming: true)
+            }
 
             it "returns all of my produced variants" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
@@ -598,8 +695,11 @@ module OpenFoodNetwork
 
         context "as the manager of a producer which has not granted P-OC to an outgoing hub" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer2]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer2])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns an empty array" do
@@ -608,7 +708,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "but which has variants already in the exchange" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
             # This one won't be in the exchange, and so shouldn't be visible
             let!(:v3) { create(:variant, product: create(:simple_product, supplier: producer2)) }
 
@@ -633,7 +736,9 @@ module OpenFoodNetwork
       describe "incoming exchanges" do
         context "as a manager of the coordinator" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [coordinator])
+                                  }
           end
 
           it "returns all variants belonging to the sending producer" do
@@ -645,7 +750,9 @@ module OpenFoodNetwork
 
         context "as a manager of the producer" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer1]) }
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer1])
+                                  }
           end
 
           it "returns all variants belonging to the sending producer" do
@@ -658,7 +765,8 @@ module OpenFoodNetwork
         context "as a manager of a hub which has been granted P-OC by the producer" do
           before do
             allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "does not return variants produced by that producer" do
@@ -671,8 +779,11 @@ module OpenFoodNetwork
       describe "outgoing exchanges" do
         context "as a manager of the coordinator" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [coordinator])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
@@ -699,7 +810,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "when an exchange exists between the coordinator and the hub within this order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             # producer2 produces v2 and has not granted P-OC to hub (or coordinator for that matter)
             before { ex.variants << v2 }
@@ -714,7 +828,8 @@ module OpenFoodNetwork
         context "as manager of an outgoing hub" do
           before do
             allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
@@ -735,7 +850,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "when an exchange exists between the coordinator and the hub within this order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
 
             # producer2 produces v2 and has not granted P-OC to hub
             before { ex.variants << v2 }
@@ -749,16 +867,23 @@ module OpenFoodNetwork
 
         context "as the manager of a producer which has granted P-OC to an outgoing hub" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer1]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer1])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           context "where my producer is in the order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: producer1, receiver: coordinator, incoming: true) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: producer1, receiver: coordinator,
+                                incoming: true)
+            }
 
             context "where the outgoing hub has granted P-OC to my producer" do
               before do
-                create(:enterprise_relationship, parent: hub, child: producer1, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: hub, child: producer1,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               it "returns all of my produced variants" do
@@ -790,8 +915,11 @@ module OpenFoodNetwork
 
         context "as the manager of a producer which has not granted P-OC to an outgoing hub" do
           before do
-            allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [producer2]) }
-            create(:enterprise_relationship, parent: producer1, child: hub, permissions_list: [:add_to_order_cycle])
+            allow(permissions).to receive(:managed_enterprises) {
+                                    Enterprise.where(id: [producer2])
+                                  }
+            create(:enterprise_relationship, parent: producer1, child: hub,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
           it "returns an empty array" do
@@ -800,7 +928,10 @@ module OpenFoodNetwork
 
           # TODO: for backwards compatability, remove later
           context "but which has variants already in the exchange" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            let!(:ex) {
+              create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
+                                incoming: false)
+            }
             # This one won't be in the exchange, and so shouldn't be visible
             let!(:v3) { create(:variant, product: create(:simple_product, supplier: producer2)) }
 

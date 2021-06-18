@@ -16,4 +16,4 @@
           %span{class: "state #{payment.state}"}= t(payment.state, scope: "spree.payment_states", default: payment.state.capitalize)
         %td.actions
           - payment.actions.each do |action|
-            = link_to_with_icon "icon-#{action}", Spree.t(action), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action}
+            = link_to_with_icon "icon-#{action}", Spree.t(action), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action, disable_with: ""}

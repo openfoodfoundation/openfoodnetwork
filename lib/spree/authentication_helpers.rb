@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module AuthenticationHelpers
     def self.included(receiver)

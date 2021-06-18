@@ -139,7 +139,8 @@ module Api
 
         it "returns hidden variants made visible for this specific customer" do
           vo1.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
-          vo3.update_attribute(:tag_list, "#{show_rule.preferred_variant_tags},#{default_hide_rule.preferred_variant_tags}")
+          vo3.update_attribute(:tag_list,
+                               "#{show_rule.preferred_variant_tags},#{default_hide_rule.preferred_variant_tags}")
           customer.update_attribute(:tag_list, show_rule.preferred_customer_tags)
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
@@ -206,10 +207,18 @@ module Api
 
     context "with custom taxon ordering applied and duplicate product names in the order cycle" do
       let!(:supplier) { create(:supplier_enterprise) }
-      let!(:product5) { create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier) }
-      let!(:product6) { create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier) }
-      let!(:product7) { create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier) }
-      let!(:product8) { create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier) }
+      let!(:product5) {
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier)
+      }
+      let!(:product6) {
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier)
+      }
+      let!(:product7) {
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier)
+      }
+      let!(:product8) {
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier)
+      }
 
       before do
         distributor.preferred_shopfront_taxon_order = "#{taxon2.id},#{taxon3.id},#{taxon1.id}"
@@ -221,7 +230,8 @@ module Api
 
       it "displays products in new order" do
         api_get :products, id: order_cycle.id, distributor: distributor.id
-        expect(product_ids).to eq [product7.id, product8.id, product2.id, product3.id, product5.id, product6.id, product1.id]
+        expect(product_ids).to eq [product7.id, product8.id, product2.id, product3.id, product5.id,
+                                   product6.id, product1.id]
       end
 
       it "displays products in correct order across multiple pages" do

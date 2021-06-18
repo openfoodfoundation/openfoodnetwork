@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Checks the validity of a soft-delete call.
 class VariantDeleter
   def delete(variant)

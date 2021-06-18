@@ -3006,6 +3006,7 @@ es:
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar correo electrónico de autorización"
     rma_credit: "Crédito RMA"
+    refund: "Reembolso"
     server_error: "Error del Servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3672,7 +3673,7 @@ es:
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"
-        instructions: "Tu pedido ha sido enviado"
+        instructions: "Su pedido de %{distributor} ha sido enviado"
         shipment_summary: "Resumen de envío"
         subject: "Notificación de envío"
         thanks: "Gracias por hacer negocios."

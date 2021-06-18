@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This mailer is configured to be the Devise mailer
 # Some methods here override Devise::Mailer methods
 module Spree

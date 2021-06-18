@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/address_finder'
 
 module Admin
@@ -10,7 +12,10 @@ module Admin
         tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
         render_as_json @customer, tag_rule_mapping: tag_rule_mapping
       },
-      failure: lambda { render json: { errors: @customer.errors.full_messages }, status: :unprocessable_entity }
+      failure: lambda {
+                 render json: { errors: @customer.errors.full_messages },
+                        status: :unprocessable_entity
+               }
     } }
 
     def index

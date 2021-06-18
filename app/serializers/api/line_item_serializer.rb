@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::LineItemSerializer < ActiveModel::Serializer
   attributes :id, :quantity, :max_quantity, :price, :order_id
 

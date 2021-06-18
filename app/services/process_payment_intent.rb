@@ -45,7 +45,6 @@ class ProcessPaymentIntent
       payment.clear_authorization_url
       Result.new(ok: false, error: I18n.t("payment_could_not_complete"))
     end
-
   rescue Stripe::StripeError => e
     Result.new(ok: false, error: e.message)
   end

@@ -28,7 +28,9 @@ module Spree
     context "price parsing" do
       before(:each) do
         I18n.locale = I18n.default_locale
-        I18n.backend.store_translations(:de, { number: { currency: { format: { delimiter: '.', separator: ',' } } } })
+        I18n.backend.store_translations(:de,
+                                        { number: { currency: { format: { delimiter: '.',
+                                                                          separator: ',' } } } })
       end
 
       after do
@@ -308,8 +310,12 @@ module Spree
         let!(:hidden_variant) { create(:variant) }
         let!(:visible_variant) { create(:variant) }
 
-        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false ) }
-        let!(:visible_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true ) }
+        let!(:hidden_inventory_item) {
+          create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false )
+        }
+        let!(:visible_inventory_item) {
+          create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true )
+        }
 
         context "finding variants that are not hidden from an enterprise's inventory" do
           context "when the enterprise given is nil" do
@@ -331,9 +337,18 @@ module Spree
             context "when inventory items exist for other enterprises" do
               let(:other_enterprise) { create(:distributor_enterprise) }
 
-              let!(:new_inventory_item) { create(:inventory_item, enterprise: other_enterprise, variant: new_variant, visible: true ) }
-              let!(:hidden_inventory_item2) { create(:inventory_item, enterprise: other_enterprise, variant: visible_variant, visible: false ) }
-              let!(:visible_inventory_item2) { create(:inventory_item, enterprise: other_enterprise, variant: hidden_variant, visible: true ) }
+              let!(:new_inventory_item) {
+                create(:inventory_item, enterprise: other_enterprise, variant: new_variant,
+                                        visible: true )
+              }
+              let!(:hidden_inventory_item2) {
+                create(:inventory_item, enterprise: other_enterprise, variant: visible_variant,
+                                        visible: false )
+              }
+              let!(:visible_inventory_item2) {
+                create(:inventory_item, enterprise: other_enterprise, variant: hidden_variant,
+                                        visible: true )
+              }
 
               it "lists any variants that are not listed as visible=false only for the relevant enterprise" do
                 expect(variants).to include new_variant, visible_variant
@@ -358,12 +373,16 @@ module Spree
         let(:add_to_oc_producer) { create(:supplier_enterprise) }
         let(:other_producer) { create(:supplier_enterprise) }
         let!(:v1) { create(:variant, product: create(:simple_product, supplier: shop ) ) }
-        let!(:v2) { create(:variant, product: create(:simple_product, supplier: add_to_oc_producer ) ) }
+        let!(:v2) {
+          create(:variant, product: create(:simple_product, supplier: add_to_oc_producer ) )
+        }
         let!(:v3) { create(:variant, product: create(:simple_product, supplier: other_producer ) ) }
 
         before do
-          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop, permissions_list: [:add_to_order_cycle])
-          create(:enterprise_relationship, parent: other_producer, child: shop, permissions_list: [:manage_products])
+          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
+                                           permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: other_producer, child: shop,
+                                           permissions_list: [:manage_products])
         end
 
         it 'shows variants produced by the enterprise and any producers granting P-OC' do
@@ -425,7 +444,9 @@ module Spree
         order_cycle = double(:order_cycle)
         variant = Variant.new
 
-        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_for).with(variant) { 23 }
+        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_for).with(variant) {
+                                                                              23
+                                                                            }
 
         expect(variant.fees_for(distributor, order_cycle)).to eq(23)
       end
@@ -438,7 +459,9 @@ module Spree
         variant = Variant.new
         fees = double(:fees)
 
-        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_by_type_for).with(variant) { fees }
+        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_by_type_for).with(variant) {
+                                                                              fees
+                                                                            }
 
         expect(variant.fees_by_type_for(distributor, order_cycle)).to eq(fees)
       end
@@ -645,7 +668,9 @@ module Spree
 
       context "when the variant does not have a display_as value set" do
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '') }
+        let!(:v) {
+          create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '')
+        }
 
         it "requests the name of the new option_value from OptionValueName" do
           expect_any_instance_of(VariantUnits::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
@@ -657,7 +682,9 @@ module Spree
 
       context "when the variant has a display_as value set" do
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
+        let!(:v) {
+          create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!')
+        }
 
         it "does not request the name of the new option_value from OptionValueName" do
           expect_any_instance_of(VariantUnits::OptionValueNamer).not_to receive(:name)
@@ -747,7 +774,6 @@ module Spree
       end
     end
   end
-
 
   describe "#default_price" do
     let(:variant) { create(:variant) }

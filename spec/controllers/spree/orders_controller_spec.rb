@@ -13,7 +13,9 @@ describe Spree::OrdersController, type: :controller do
 
   describe "viewing an order" do
     let(:customer) { create(:customer) }
-    let(:order) { create(:order_with_credit_payment, customer: customer, distributor: customer.enterprise) }
+    let(:order) {
+      create(:order_with_credit_payment, customer: customer, distributor: customer.enterprise)
+    }
 
     before do
       allow(controller).to receive(:spree_current_user) { current_user }
@@ -88,13 +90,15 @@ describe Spree::OrdersController, type: :controller do
                                  state: "payment")
     }
     let(:payment_method) { create(:stripe_sca_payment_method) }
-    let!(:payment) { create(
-      :payment,
-      payment_method: payment_method,
-      cvv_response_message: "https://stripe.com/redirect",
-      response_code: "pi_123",
-      order: order,
-      state: "requires_authorization")
+    let!(:payment) {
+      create(
+        :payment,
+        payment_method: payment_method,
+        cvv_response_message: "https://stripe.com/redirect",
+        response_code: "pi_123",
+        order: order,
+        state: "requires_authorization"
+      )
     }
 
     before do
@@ -165,7 +169,7 @@ describe Spree::OrdersController, type: :controller do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq("#{I18n.t("payment_could_not_process")}. error message")
+          expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. error message")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("requires_authorization")
@@ -190,7 +194,7 @@ describe Spree::OrdersController, type: :controller do
           get :show, params: { id: order.number, payment_intent: payment_intent }
 
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq("#{I18n.t("payment_could_not_process")}. ")
+          expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. ")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
           expect(payment.state).to eq("requires_authorization")
@@ -244,7 +248,10 @@ describe Spree::OrdersController, type: :controller do
     describe "when an item is in the cart" do
       let(:order) { subject.current_order(true) }
       let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
-      let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
+      let(:d) {
+        create(:distributor_enterprise, shipping_methods: [create(:shipping_method)],
+                                        payment_methods: [create(:payment_method)])
+      }
       let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
       let(:line_item) { order.line_items.last }
 
@@ -335,8 +342,12 @@ describe Spree::OrdersController, type: :controller do
 
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
-      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
-      let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member)) }
+      let(:distributor) {
+        create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true)
+      }
+      let(:shipping_tax_rate) {
+        create(:tax_rate, amount: 0.25, included_in_price: true, zone: create(:zone_with_member))
+      }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:order) {
         create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
@@ -386,12 +397,16 @@ describe Spree::OrdersController, type: :controller do
       let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
-      let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+      let!(:exchange) {
+        create(:exchange, incoming: true, sender: variant1.product.supplier,
+                          receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+      }
       let!(:order) do
-        order = create(:completed_order_with_totals, line_items_count: 2, user: user, distributor: distributor, order_cycle: order_cycle)
+        order = create(:completed_order_with_totals, line_items_count: 2, user: user,
+                                                     distributor: distributor, order_cycle: order_cycle)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.reload.line_items.last.update(variant_id: variant2.id)
-        while !order.completed? do break unless order.next! end
+        break unless order.next! while !order.completed?
         order.recreate_all_fees!
         order
       end
@@ -568,7 +583,10 @@ describe Spree::OrdersController, type: :controller do
       end
 
       context "when the order is complete" do
-        let(:order) { create(:completed_order_with_totals, user: user, distributor: create(:distributor_enterprise)) }
+        let(:order) {
+          create(:completed_order_with_totals, user: user,
+                                               distributor: create(:distributor_enterprise))
+        }
 
         before do
           setup_email

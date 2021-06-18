@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::PropertySerializer < ActiveModel::Serializer
   attributes :id, :name, :presentation
 

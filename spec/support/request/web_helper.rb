@@ -23,7 +23,7 @@ module WebHelper
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
 
     visible = opts.key?(:visible) ? opts[:visible] : true
-    
+
     element = page.all(selector, visible: visible).first
     expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
@@ -32,11 +32,9 @@ module WebHelper
 
   def fill_in_fields(field_values)
     field_values.each do |key, value|
-      begin
-        fill_in key, with: value
-      rescue Capybara::ElementNotFound
-        find_field(key).select(value)
-      end
+      fill_in key, with: value
+    rescue Capybara::ElementNotFound
+      find_field(key).select(value)
     end
   end
 
@@ -120,7 +118,8 @@ module WebHelper
   end
 
   def open_select2(selector)
-    page.find(selector).scroll_to(page.find(selector)).find(:css, '.select2-choice, .select2-search-field').click
+    page.find(selector).scroll_to(page.find(selector)).find(:css,
+                                                            '.select2-choice, .select2-search-field').click
   end
 
   def close_select2

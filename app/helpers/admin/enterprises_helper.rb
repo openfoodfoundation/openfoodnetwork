@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   module EnterprisesHelper
     def add_check_if_single(count)

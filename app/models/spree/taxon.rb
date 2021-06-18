@@ -51,8 +51,7 @@ module Spree
     end
 
     def active_products
-      scope = products.active
-      scope
+      products.active
     end
 
     def pretty_name
