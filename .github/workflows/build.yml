@@ -42,6 +42,7 @@ jobs:
           - "spec/serializers"
           - "spec/system"
           - "engines/*/spec"
+      fail-fast: false
     steps:
       - uses: actions/checkout@v2
 
