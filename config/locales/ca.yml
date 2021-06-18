@@ -303,6 +303,7 @@ ca:
   no_pending_payments: "No hi ha pagaments pendents"
   invalid_payment_state: "Estat de pagament invàlid: %{state}"
   filter_results: Aplicar filtre
+  clear_filters: Esborra els filtres
   quantity: Quantitat
   pick_up: Recollida
   copy: Còpia
@@ -1397,8 +1398,6 @@ ca:
   label_producers: "Productors"
   label_groups: "Xarxes/Grups"
   label_about: "Sobre"
-  label_connect: "Connecta"
-  label_learn: "Aprèn"
   label_blog: "Blog"
   label_support: "Suport"
   label_shopping: "Compres"
@@ -1486,10 +1485,6 @@ ca:
   brandstory_part4: "Funciona a tot arreu. Ho canvia tot."
   brandstory_part5_strong: "L'anomenem Open Food Network."
   brandstory_part6: "A totes ens agrada menjar. Ara també podem estimar el nostre sistema alimentari."
-  learn_body: "Explora models, històries i recursos per ajudar-te a desenvolupar el teu negoci o organització de menjar just. Troba coneixements, esdeveniments i altres oportunitats d'aprendre dels companys."
-  learn_cta: "Inspira't"
-  connect_body: "Busca els nostres directoris complets de productores, organitzacions o xarxes per trobar menjar de proximitat i just a prop teu. Indica i llista la teva empresa o organització a l'OFN perquè les consumidores et trobin. Uneix-te a la comunitat per obtenir consells i resoldre problemes juntes."
-  connect_cta: "Explorar"
   system_headline: "Compres - aquí t'expliquem com funcionen."
   system_step1: "1. Cerca"
   system_step1_text: "Cerca a les nostres botigues diverses i independents per menjar producte local de temporada. Cerca per població i categoria d'aliments, o bé si prefereixes lliurament o recollida."
