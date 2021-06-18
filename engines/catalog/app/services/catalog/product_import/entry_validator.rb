@@ -48,7 +48,8 @@ module Catalog
             inventory_validation(entry)
           else
             category_validation(entry)
-            tax_and_shipping_validation(entry, 'tax', entry.tax_category, @spreadsheet_data.tax_index)
+            tax_and_shipping_validation(entry, 'tax', entry.tax_category,
+                                        @spreadsheet_data.tax_index)
             tax_and_shipping_validation(entry,
                                         'shipping',
                                         entry.shipping_category,
