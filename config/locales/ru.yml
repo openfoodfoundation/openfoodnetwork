@@ -304,6 +304,7 @@ ru:
   no_pending_payments: "Нет ожидающих платежей"
   invalid_payment_state: "Неверное состояние платежа: %{state}"
   filter_results: Результаты фильтрации
+  clear_filters: Очистить фильтры
   quantity: Количество
   pick_up: Самовывоз
   copy: Копия
@@ -405,8 +406,16 @@ ru:
       enable_embedded_shopfronts: "Включить Встроенные Витрины"
       embedded_shopfronts_whitelist: "Белый Список Внешних Доменов"
     terms_of_service_files:
+      create:
+        select_file: "Пожалуйста, сначала выберите файл."
       show:
+        title: "Файлы Условий Сервиса"
+        no_files: "Условия Сервиса еще не загружены."
+        using_default_terms_html: "Сайт в настоящее время ссылается на ваш старый %{tos_link}."
+        current_terms_html: "Просмотреть текущий файл %{tos_link}. Время загрузки: %{datetime}."
         terms_of_service: "Условия Сервиса"
+        delete: "Удалить файл"
+        confirm_delete: "Вы уверены, что хотите удалить текущий файл Условий Сервиса?"
     number_localization:
       number_localization_settings: "Настройки локализации чисел"
       enable_localized_number: "Использовать международную логику разделителя тысяч/десятых"
@@ -3712,6 +3721,7 @@ ru:
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"
+        instructions: "Ваш заказ от %{distributor} отправлен"
         shipment_summary: "Информация о доставке"
         subject: "Уведомление об отправке"
         thanks: "Спасибо за покупки."
