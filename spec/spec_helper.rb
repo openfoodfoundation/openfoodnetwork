@@ -101,7 +101,7 @@ RSpec.configure do |config|
   # Show retries in test output
   config.verbose_retry = true
   # Set maximum retry count
-  config.default_retry_count = 3
+  config.default_retry_count = 1
 
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
