@@ -3673,7 +3673,7 @@ es:
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"
-        instructions: "Tu pedido ha sido enviado"
+        instructions: "Su pedido de %{distributor} ha sido enviado"
         shipment_summary: "Resumen de envío"
         subject: "Notificación de envío"
         thanks: "Gracias por hacer negocios."
