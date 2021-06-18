@@ -3699,7 +3699,7 @@ fr:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande a été expédiée"
+        instructions: "Votre commande de %{distributor} a été envoyée"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
