@@ -12,6 +12,7 @@ describe ProcessPaymentIntent do
                                  state: "payment")
     }
     let(:payment_method) { create(:stripe_sca_payment_method) }
+
     let!(:payment) {
       create(
         :payment,
@@ -19,7 +20,7 @@ describe ProcessPaymentIntent do
         cvv_response_message: "https://stripe.com/redirect",
         response_code: "pi_123",
         order: order,
-        state: "pending"
+        state: "requires_authorization"
       )
     }
     let(:validator) { instance_double(Stripe::PaymentIntentValidator) }
@@ -44,7 +45,7 @@ describe ProcessPaymentIntent do
 
         it "does not complete the payment" do
           service.call!
-          expect(payment.reload.state).to eq("pending")
+          expect(payment.reload.state).to eq("requires_authorization")
         end
       end
 
@@ -64,7 +65,7 @@ describe ProcessPaymentIntent do
 
         it "does not complete the payment" do
           service.call!
-          expect(payment.reload.state).to eq("pending")
+          expect(payment.reload.state).to eq("requires_authorization")
         end
       end
     end
@@ -175,9 +176,9 @@ describe ProcessPaymentIntent do
         expect(result.error).to eq(I18n.t("payment_could_not_complete"))
       end
 
-      it "does not complete the payment" do
+      it "does fails the payment" do
         service.call!
-        expect(payment.reload.state).to eq("pending")
+        expect(payment.reload.state).to eq("failed")
       end
     end
   end

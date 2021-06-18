@@ -97,7 +97,7 @@ describe Spree::OrdersController, type: :controller do
         cvv_response_message: "https://stripe.com/redirect",
         response_code: "pi_123",
         order: order,
-        state: "pending"
+        state: "requires_authorization"
       )
     }
 
@@ -172,7 +172,7 @@ describe Spree::OrdersController, type: :controller do
           expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. error message")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
-          expect(payment.state).to eq("pending")
+          expect(payment.state).to eq("requires_authorization")
         end
       end
 
@@ -197,7 +197,7 @@ describe Spree::OrdersController, type: :controller do
           expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. ")
           payment.reload
           expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
-          expect(payment.state).to eq("pending")
+          expect(payment.state).to eq("requires_authorization")
         end
       end
     end

@@ -6,7 +6,7 @@ module OrderManagement
       def call!(redirect_url = full_order_path(@order))
         super(redirect_url)
 
-        return unless @payment.authorization_action_required?
+        return unless @payment.requires_authorization?
 
         PaymentMailer.authorize_payment(@payment).deliver_now
         PaymentMailer.authorization_required(@payment).deliver_now

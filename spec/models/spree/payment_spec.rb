@@ -27,7 +27,7 @@ describe Spree::Payment do
       double('success_response', success?: true,
                                  authorization: '123',
                                  avs_result: { 'code' => 'avs-code' },
-                                 cvv_result: { 'code' => 'cvv-code', 'message' => "CVV Result" })
+                                 cvv_result: { code: nil, message: nil })
     end
 
     let(:failed_response) { double('gateway_response', success?: false) }
@@ -161,12 +161,27 @@ describe Spree::Payment do
             payment.authorize!
             expect(payment.response_code).to eq('123')
             expect(payment.avs_response).to eq('avs-code')
-            expect(payment.cvv_response_code).to eq('cvv-code')
-            expect(payment.cvv_response_message).to eq('CVV Result')
           end
 
           it "should make payment pending" do
             expect(payment).to receive(:pend!)
+            payment.authorize!
+          end
+        end
+
+        context "authorization is required" do
+          before do
+            allow(success_response).to receive(:cvv_result) {
+              { 'code' => "123",
+                'message' => "https://stripe.com/redirect" }
+            }
+            expect(payment.payment_method).to receive(:authorize).with(
+              amount_in_cents, card, anything
+            ).and_return(success_response)
+          end
+
+          it "should move the payment to requires_authorization" do
+            expect(payment).to receive(:require_authorization!)
             payment.authorize!
           end
         end
@@ -970,11 +985,11 @@ describe Spree::Payment do
     end
   end
 
-  describe "#mark_as_processed" do
+  describe "#clear_authorization_url" do
     let(:payment) { create(:payment, cvv_response_message: "message") }
 
     it "removes the cvv_response_message" do
-      payment.mark_as_processed
+      payment.clear_authorization_url
       expect(payment.cvv_response_message).to eq(nil)
     end
   end

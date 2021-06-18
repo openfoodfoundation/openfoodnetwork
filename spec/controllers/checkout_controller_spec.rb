@@ -147,7 +147,7 @@ describe CheckoutController, type: :controller do
           create(
             :payment,
             amount: order.total,
-            state: "pending",
+            state: "requires_authorization",
             payment_method: payment_method,
             response_code: "pi_123"
           )

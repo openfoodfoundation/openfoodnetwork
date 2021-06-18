@@ -153,6 +153,26 @@ module OrderManagement
           end
         end
 
+        context "when the order has a payment that requires authorization" do
+          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
+
+          it "returns requires_authorization" do
+            expect {
+              updater.update_payment_state
+            }.to change { order.payment_state }.to 'requires_authorization'
+          end
+        end
+
+        context "when the order has a payment that requires authorization and a completed payment" do
+          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
+          let!(:completed_payment) { create(:payment, order: order, state: "completed") }
+
+          it "returns paid" do
+            updater.update_payment_state
+            expect(order.payment_state).to_not eq("requires_authorization")
+          end
+        end
+
         context "payment total is greater than order total" do
           it "is credit_owed" do
             order.payment_total = 2
@@ -206,6 +226,7 @@ module OrderManagement
               order.total = 30
               allow(order).to receive_message_chain(:payments, :valid, :empty?) { false }
               allow(order).to receive_message_chain(:payments, :completed, :empty?) { false }
+              allow(order).to receive_message_chain(:payments, :requires_authorization, :any?) { false }
 
               expect {
                 updater.update_payment_state

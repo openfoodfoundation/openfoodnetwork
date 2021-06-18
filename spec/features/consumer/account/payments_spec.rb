@@ -15,7 +15,11 @@ feature "Payments requiring action", js: true do
 
     context "there is a payment requiring authorization" do
       let!(:payment) do
-        create(:payment, order: order, cvv_response_message: "https://stripe.com/redirect")
+        create(:payment,
+          order: order,
+          cvv_response_message: "https://stripe.com/redirect",
+          state: "requires_authorization"
+        )
       end
 
       it "shows a table of payments requiring authorization" do

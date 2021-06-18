@@ -137,7 +137,7 @@ class CheckoutController < ::BaseController
 
     last_payment = OrderPaymentFinder.new(@order).last_payment
     @order.state == "payment" &&
-      last_payment&.state == "pending" &&
+      last_payment&.state == "requires_authorization" &&
       last_payment&.response_code == params["payment_intent"]
   end
 

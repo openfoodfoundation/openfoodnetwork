@@ -2789,6 +2789,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3782,6 +3783,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorization required"
       void: void
       invalid: invalid
       authorise: authorise

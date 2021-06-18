@@ -15,7 +15,9 @@ module OrderManagement
 
         @payment.authorize!(redirect_url)
 
-        @order.errors.add(:base, I18n.t('authorization_failure')) unless @payment.pending?
+        unless @payment.pending? || @payment.requires_authorization?
+          @order.errors.add(:base, I18n.t('authorization_failure'))
+        end
 
         @payment
       end

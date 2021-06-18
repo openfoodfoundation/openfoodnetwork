@@ -83,12 +83,12 @@ module Spree
     end
 
     def can_resend_authorization_email?(payment)
-      payment.pending? && payment.authorization_action_required?
+      payment.requires_authorization?
     end
 
     # Indicates whether its possible to capture the payment
     def can_capture?(payment)
-      return false if payment.authorization_action_required?
+      return false if payment.requires_authorization?
 
       payment.pending? || payment.checkout?
     end
