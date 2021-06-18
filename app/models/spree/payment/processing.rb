@@ -23,6 +23,7 @@ module Spree
       def authorize!(return_url = nil)
         started_processing!
         gateway_action(source, :authorize, :pend, return_url: return_url)
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless pending?
       end
 
       def purchase!

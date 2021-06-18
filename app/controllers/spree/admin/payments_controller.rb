@@ -174,10 +174,6 @@ module Spree
       def authorize_stripe_sca_payment
         @payment.authorize!(full_order_path(@payment.order))
 
-        unless @payment.pending? || @payment.requires_authorization?
-          raise Spree::Core::GatewayError, I18n.t('authorization_failure')
-        end
-
         return unless @payment.requires_authorization?
 
         PaymentMailer.authorize_payment(@payment).deliver_later

@@ -80,7 +80,9 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where payment.authorize! does not move payment to pending state" do
           before do
-            allow_any_instance_of(Spree::Payment).to receive(:authorize!).and_return(true)
+            allow_any_instance_of(Spree::Payment)
+              .to receive(:authorize!)
+              .and_raise(Spree::Core::GatewayError, I18n.t('authorization_failure'))
           end
 
           it "redirects to new payment page with flash error" do

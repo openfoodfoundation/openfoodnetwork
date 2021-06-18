@@ -164,8 +164,8 @@ describe Spree::Payment do
           end
 
           it "should make payment pending" do
-            expect(payment).to receive(:pend!)
             payment.authorize!
+            expect(payment).to be_pending
           end
         end
 
