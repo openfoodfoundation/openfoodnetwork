@@ -141,7 +141,9 @@ module OpenFoodNetwork
     end
 
     def has_temperature_controlled_items?(order)
-      order.line_items.any? { |line_item| line_item.product.shipping_category.andand.temperature_controlled }
+      order.line_items.any? { |line_item|
+        line_item.product.shipping_category.andand.temperature_controlled
+      }
     end
 
     def is_payment_methods?

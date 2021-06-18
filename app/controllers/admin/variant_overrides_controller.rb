@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/spree_api_key_loader'
 
 module Admin

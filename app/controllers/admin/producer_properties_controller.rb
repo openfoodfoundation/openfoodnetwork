@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ProducerPropertiesController < Admin::ResourceController
     before_action :load_enterprise

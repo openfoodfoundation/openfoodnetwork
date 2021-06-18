@@ -28,9 +28,12 @@ module OrderManagement
         end
 
         it "updates adjustment totals" do
-          allow(order).to receive_message_chain(:all_adjustments, :additional, :eligible, :sum).and_return(-5)
-          allow(order).to receive_message_chain(:all_adjustments, :tax, :additional, :sum).and_return(20)
-          allow(order).to receive_message_chain(:all_adjustments, :tax, :inclusive, :sum).and_return(15)
+          allow(order).to receive_message_chain(:all_adjustments, :additional, :eligible,
+                                                :sum).and_return(-5)
+          allow(order).to receive_message_chain(:all_adjustments, :tax, :additional,
+                                                :sum).and_return(20)
+          allow(order).to receive_message_chain(:all_adjustments, :tax, :inclusive,
+                                                :sum).and_return(15)
           allow(order).to receive_message_chain(:adjustments, :admin, :sum).and_return(2)
 
           updater.update_adjustment_total

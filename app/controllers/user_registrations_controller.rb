@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'open_food_network/error_logger'
 
 class UserRegistrationsController < Spree::UserRegistrationsController
-  I18N_SCOPE = 'devise.user_registrations.spree_user'.freeze
+  I18N_SCOPE = 'devise.user_registrations.spree_user'
 
   before_action :set_checkout_redirect, only: :create
 

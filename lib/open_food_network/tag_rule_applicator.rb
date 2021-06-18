@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class TagRuleApplicator
     attr_reader :enterprise, :rule_class, :customer_tags

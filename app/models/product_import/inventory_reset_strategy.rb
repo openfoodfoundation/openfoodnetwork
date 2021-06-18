@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ProductImport
   class InventoryResetStrategy
     def initialize(excluded_items_ids)

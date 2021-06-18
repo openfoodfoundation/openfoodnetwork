@@ -53,7 +53,9 @@ module Stripe
 
           context "and the decoded state param contains an 'enterprise_id' key" do
             let(:payload) { { enterprise_id: enterprise.permalink } }
-            let(:token_response) { { "stripe_user_id" => "some_user_id", "stripe_publishable_key" => "some_key" } }
+            let(:token_response) {
+              { "stripe_user_id" => "some_user_id", "stripe_publishable_key" => "some_key" }
+            }
 
             before do
               stub_request(:post, "https://connect.stripe.com/oauth/token").

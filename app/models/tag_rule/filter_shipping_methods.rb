@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TagRule::FilterShippingMethods < TagRule
   preference :matched_shipping_methods_visibility, :string, default: "visible"
   preference :shipping_method_tags, :string, default: ""

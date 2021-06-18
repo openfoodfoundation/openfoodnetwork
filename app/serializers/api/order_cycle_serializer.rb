@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class OrderCycleSerializer < ActiveModel::Serializer
     attributes :order_cycle_id, :orders_close_at

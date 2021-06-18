@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class AvailablePaymentMethodFilter
     def filter!(payment_methods)

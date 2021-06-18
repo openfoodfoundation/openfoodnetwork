@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/permissions'
 require 'order_management/subscriptions/proxy_order_syncer'
 
@@ -15,18 +17,31 @@ module Admin
     respond_to :json
 
     respond_override create: { json: {
-      success: lambda { render_as_json @schedule, editable_schedule_ids: permissions.editable_schedules.pluck(:id) },
-      failure: lambda { render json: { errors: @schedule.errors.full_messages }, status: :unprocessable_entity }
+      success: lambda {
+                 render_as_json @schedule,
+                                editable_schedule_ids: permissions.editable_schedules.pluck(:id)
+               },
+      failure: lambda {
+                 render json: { errors: @schedule.errors.full_messages },
+                        status: :unprocessable_entity
+               }
     } }
     respond_override update: { json: {
-      success: lambda { render_as_json @schedule, editable_schedule_ids: permissions.editable_schedules.pluck(:id) },
-      failure: lambda { render json: { errors: @schedule.errors.full_messages }, status: :unprocessable_entity }
+      success: lambda {
+                 render_as_json @schedule,
+                                editable_schedule_ids: permissions.editable_schedules.pluck(:id)
+               },
+      failure: lambda {
+                 render json: { errors: @schedule.errors.full_messages },
+                        status: :unprocessable_entity
+               }
     } }
 
     def index
       respond_to do |format|
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_prefix], editable_schedule_ids: permissions.editable_schedules.pluck(:id)
+          render_as_json @collection, ams_prefix: params[:ams_prefix],
+                                      editable_schedule_ids: permissions.editable_schedules.pluck(:id)
         end
       end
     end
@@ -111,7 +126,8 @@ module Admin
     def check_dependent_subscriptions
       return if Subscription.where(schedule_id: @schedule).empty?
 
-      render json: { errors: [t('admin.schedules.destroy.associated_subscriptions_error')] }, status: :conflict
+      render json: { errors: [t('admin.schedules.destroy.associated_subscriptions_error')] },
+             status: :conflict
     end
 
     def permissions

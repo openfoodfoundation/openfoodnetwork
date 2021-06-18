@@ -150,7 +150,10 @@ describe OrderSyncer do
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
     let!(:ship_address_attrs) { subscription.ship_address.attributes }
 
-    let(:params) { { bill_address_attributes: { id: bill_address_attrs["id"], firstname: "Bill", address1: "123 abc st", phone: "1123581321" } } }
+    let(:params) {
+      { bill_address_attributes: { id: bill_address_attrs["id"], firstname: "Bill",
+                                   address1: "123 abc st", phone: "1123581321" } }
+    }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     context "when a ship address is not required" do
@@ -255,7 +258,10 @@ describe OrderSyncer do
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
     let!(:ship_address_attrs) { subscription.ship_address.attributes }
 
-    let(:params) { { ship_address_attributes: { id: ship_address_attrs["id"], firstname: "Ship", address1: "123 abc st", phone: "1123581321" } } }
+    let(:params) {
+      { ship_address_attributes: { id: ship_address_attrs["id"], firstname: "Ship",
+                                   address1: "123 abc st", phone: "1123581321" } }
+    }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     context "when a ship address is not required" do
@@ -275,7 +281,9 @@ describe OrderSyncer do
       end
 
       context "but the shipping method is being changed to one that requires a ship_address" do
-        let(:new_shipping_method) { create(:shipping_method, distributors: [distributor], require_ship_address: true) }
+        let(:new_shipping_method) {
+          create(:shipping_method, distributors: [distributor], require_ship_address: true)
+        }
 
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
@@ -384,7 +392,8 @@ describe OrderSyncer do
         expect(order.reload.total.to_f).to eq 59.97
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
-        line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+        line_items = Spree::LineItem.where(order_id: subscription.orders,
+                                           variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [2]
         expect(order.reload.total.to_f).to eq 79.96
       end
@@ -403,7 +412,8 @@ describe OrderSyncer do
         it "updates the line_item quantities and totals on all orders" do
           expect(syncer.sync!).to be true
 
-          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          line_items = Spree::LineItem.where(order_id: subscription.orders,
+                                             variant_id: sli.variant_id)
           expect(line_items.map(&:quantity)).to eq [3]
           expect(order.reload.total.to_f).to eq 99.95
         end
@@ -415,7 +425,8 @@ describe OrderSyncer do
 
           expect(syncer.sync!).to be true
 
-          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          line_items = Spree::LineItem.where(order_id: subscription.orders,
+                                             variant_id: sli.variant_id)
           expect(line_items.map(&:quantity)).to eq [1]
           expect(order.reload.total.to_f).to eq 59.97
           line_item = order.line_items.find_by(variant_id: sli.variant_id)
@@ -490,7 +501,9 @@ describe OrderSyncer do
     end
 
     context "when quantity is within available stock" do
-      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
+      let(:params) {
+        { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] }
+      }
 
       it "adds the line item and updates the total on all orders" do
         expect(syncer.sync!).to be true
@@ -502,7 +515,9 @@ describe OrderSyncer do
     end
 
     context "when quantity is greater than available stock" do
-      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 7 }] } }
+      let(:params) {
+        { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 7 }] }
+      }
 
       context "when order is not complete" do
         it "adds the line_item and updates totals on all orders" do
@@ -530,15 +545,19 @@ describe OrderSyncer do
           it "does nothing to the order and adds the order to order_update_issues" do
             expect(syncer.sync!).to be true
 
-            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            line_items = Spree::LineItem.where(order_id: subscription.orders,
+                                               variant_id: variant.id)
             expect(line_items.map(&:quantity)).to eq []
 
             subscription.save # this is necessary to get an id on the subscription_line_items
-            params = { subscription_line_items_attributes: [{ id: subscription.subscription_line_items.last.id, quantity: 2 }] }
+            params = { subscription_line_items_attributes: [{
+              id: subscription.subscription_line_items.last.id, quantity: 2
+            }] }
             subscription.assign_attributes(params)
             expect(syncer.sync!).to be true
 
-            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            line_items = Spree::LineItem.where(order_id: subscription.orders,
+                                               variant_id: variant.id)
             expect(line_items.map(&:quantity)).to eq []
             expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name}"
           end

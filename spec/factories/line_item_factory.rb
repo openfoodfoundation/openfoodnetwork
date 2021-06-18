@@ -19,7 +19,8 @@ FactoryBot.define do
       if shipment.nil?
         shipping_method = evaluator.shipping_method
         unless shipping_method
-          shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+          shipping_method = create(:shipping_method_with, :shipping_fee,
+                                   shipping_fee: evaluator.shipping_fee)
           shipping_method.distributors << line_item.order.distributor if line_item.order.distributor
         end
         shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method,

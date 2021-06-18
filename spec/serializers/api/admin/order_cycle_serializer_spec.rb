@@ -6,7 +6,10 @@ module Api
   module Admin
     describe OrderCycleSerializer do
       let(:order_cycle) { create(:order_cycle) }
-      let(:serializer) { Api::Admin::OrderCycleSerializer.new order_cycle, current_user: order_cycle.coordinator.owner }
+      let(:serializer) {
+        Api::Admin::OrderCycleSerializer.new order_cycle,
+                                             current_user: order_cycle.coordinator.owner
+      }
 
       it "serializes an order cycle" do
         expect(serializer.to_json).to include order_cycle.name

@@ -32,7 +32,8 @@ module OrderCyclesHelper
   end
 
   def permitted_hub_enterprise_options_for(order_cycle)
-    validated_enterprise_options permitted_hub_enterprises_for(order_cycle), shipping_and_payment_methods: true
+    validated_enterprise_options permitted_hub_enterprises_for(order_cycle),
+                                 shipping_and_payment_methods: true
   end
 
   def order_cycle_status_class(order_cycle)

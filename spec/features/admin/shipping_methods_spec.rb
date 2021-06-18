@@ -70,15 +70,18 @@ feature 'shipping methods' do
     scenario "checking a single distributor is checked by default" do
       first_distributor = Enterprise.first
       visit spree.new_admin_shipping_method_path
-      expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}", checked: true
+      expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}",
+                                 checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
       distributor1 = create(:distributor_enterprise, name: 'Alice Farm Shop')
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Hub')
       visit spree.new_admin_shipping_method_path
-      expect(page).to have_field "shipping_method_distributor_ids_#{distributor1.id}", checked: false
-      expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}", checked: false
+      expect(page).to have_field "shipping_method_distributor_ids_#{distributor1.id}",
+                                 checked: false
+      expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}",
+                                 checked: false
     end
   end
 
@@ -88,7 +91,9 @@ feature 'shipping methods' do
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
     let(:shipping_method1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
-    let(:shipping_method2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
+    let(:shipping_method2) {
+      create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2])
+    }
     let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
     let(:shipping_category) { create(:shipping_category) }
 

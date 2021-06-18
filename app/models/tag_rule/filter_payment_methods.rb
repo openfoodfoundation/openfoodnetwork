@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TagRule::FilterPaymentMethods < TagRule
   preference :matched_payment_methods_visibility, :string, default: "visible"
   preference :payment_method_tags, :string, default: ""

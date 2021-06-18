@@ -56,7 +56,8 @@ module Spree
     def no_attachment_errors
       return if attachment.errors.empty?
 
-      errors.add :attachment, "Paperclip returned errors for file '#{attachment_file_name}' - check ImageMagick installation or image source file."
+      errors.add :attachment,
+                 "Paperclip returned errors for file '#{attachment_file_name}' - check ImageMagick installation or image source file."
       false
     end
 

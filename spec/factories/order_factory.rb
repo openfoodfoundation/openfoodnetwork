@@ -93,10 +93,10 @@ FactoryBot.define do
                          payment_method: evaluator.payment_method)
         order.recreate_all_fees!
         order.ship_address = evaluator.ship_address
-        while !order.delivery? do break unless a = order.next! end
+        break unless a = order.next! while !order.delivery?
         order.select_shipping_method(evaluator.shipping_method.id)
 
-        while !order.completed? do break unless a = order.next! end
+        break unless a = order.next! while !order.completed?
       end
     end
   end
@@ -129,7 +129,7 @@ FactoryBot.define do
         create(:payment, state: "checkout", order: order, amount: order.total,
                          payment_method: evaluator.payment_method)
         order.ship_address = evaluator.ship_address
-        while !order.completed? do break unless order.next! end
+        break unless order.next! while !order.completed?
 
         order.update_columns(
           completed_at: evaluator.completed_at,
@@ -174,7 +174,8 @@ FactoryBot.define do
     end
 
     after(:create) do |order, evaluator|
-      create(:payment, amount: order.total + evaluator.credit_amount, order: order, state: "completed")
+      create(:payment, amount: order.total + evaluator.credit_amount, order: order,
+                       state: "completed")
       order.reload
     end
   end
@@ -188,7 +189,8 @@ FactoryBot.define do
     end
 
     after(:create) do |order, evaluator|
-      create(:payment, amount: order.total - evaluator.unpaid_amount, order: order, state: "completed")
+      create(:payment, amount: order.total - evaluator.unpaid_amount, order: order,
+                       state: "completed")
       order.reload
     end
   end
@@ -220,7 +222,7 @@ FactoryBot.define do
                                                    tax_category: evaluator.shipping_tax_category)
 
       order.reload
-      while !order.completed? do break unless order.next! end
+      break unless order.next! while !order.completed?
       order.reload
     end
   end

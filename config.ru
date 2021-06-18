@@ -15,5 +15,5 @@ if ENV.fetch('KILL_UNICORNS', false) && ['production', 'staging'].include?(ENV['
       ( ENV.fetch('UWK_MEM_MAX', 850).to_i * (1024**2) )
 end
 
-require ::File.expand_path('../config/environment', __FILE__)
+require ::File.expand_path('config/environment', __dir__)
 run Openfoodnetwork::Application

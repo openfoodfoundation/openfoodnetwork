@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class allows orders with eager-loaded adjustment objects to calculate various adjustment
 # types without triggering additional queries.
 #

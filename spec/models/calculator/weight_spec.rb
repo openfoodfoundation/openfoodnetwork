@@ -174,7 +174,10 @@ describe Calculator::Weight do
     end
 
     context "when the product uses item unit" do
-      let!(:product_attributes) { { variant_unit: "items", variant_unit_scale: nil, variant_unit_name: "pc", display_as: "pc" } }
+      let!(:product_attributes) {
+        { variant_unit: "items", variant_unit_scale: nil, variant_unit_name: "pc",
+          display_as: "pc" }
+      }
       let!(:variant_attributes) { { unit_value: 3.0, weight: 2.5, display_as: "pc" } }
 
       it "is correct" do
@@ -187,7 +190,8 @@ describe Calculator::Weight do
 
   context "when variant_unit is 'items'" do
     let(:product) {
-      build_stubbed(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: "bunch")
+      build_stubbed(:product, variant_unit: 'items', variant_unit_scale: nil,
+                              variant_unit_name: "bunch")
     }
     let(:line_item) { build_stubbed(:line_item, variant: variant, quantity: 1) }
 
@@ -214,7 +218,8 @@ describe Calculator::Weight do
 
     context "when unit_value is nil and variant.weight is present" do
       let(:variant) {
-        build_stubbed(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: 10.0)
+        build_stubbed(:variant, product: product, unit_description: "bunches", unit_value: nil,
+                                weight: 10.0)
       }
 
       it "uses the variant weight" do
@@ -226,7 +231,8 @@ describe Calculator::Weight do
 
     context "when unit_value is nil and variant.weight is nil" do
       let(:variant) {
-        build_stubbed(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: nil)
+        build_stubbed(:variant, product: product, unit_description: "bunches", unit_value: nil,
+                                weight: nil)
       }
 
       it "uses zero weight" do

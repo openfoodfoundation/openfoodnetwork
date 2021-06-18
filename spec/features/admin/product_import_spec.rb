@@ -13,7 +13,10 @@ feature "Product Import", js: true do
   let!(:user2) { create(:user) }
   let!(:enterprise) { create(:supplier_enterprise, owner: user, name: "User Enterprise") }
   let!(:enterprise2) { create(:distributor_enterprise, owner: user2, name: "Another Enterprise") }
-  let!(:relationship) { create(:enterprise_relationship, parent: enterprise, child: enterprise2, permissions_list: [:create_variant_overrides]) }
+  let!(:relationship) {
+    create(:enterprise_relationship, parent: enterprise, child: enterprise2,
+                                     permissions_list: [:create_variant_overrides])
+  }
 
   let!(:category) { create(:taxon, name: 'Vegetables') }
   let!(:category2) { create(:taxon, name: 'Cake') }
@@ -22,13 +25,31 @@ feature "Product Import", js: true do
   let!(:shipping_category) { create(:shipping_category) }
 
   let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
-  let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500', display_name: 'Preexisting Banana') }
-  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beans', unit_value: '500', description: '', primary_taxon_id: category.id) }
-  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Sprouts', unit_value: '500') }
-  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Cabbage', unit_value: '500') }
-  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: 100, name: 'Lettuce', unit_value: '500') }
-  let!(:variant_override) { create(:variant_override, variant_id: product4.variants.first.id, hub: enterprise2, count_on_hand: 42) }
-  let!(:variant_override2) { create(:variant_override, variant_id: product5.variants.first.id, hub: enterprise, count_on_hand: 96) }
+  let!(:variant) {
+    create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500',
+                     display_name: 'Preexisting Banana')
+  }
+  let!(:product2) {
+    create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beans', unit_value: '500',
+                            description: '', primary_taxon_id: category.id)
+  }
+  let!(:product3) {
+    create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Sprouts', unit_value: '500')
+  }
+  let!(:product4) {
+    create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Cabbage', unit_value: '500')
+  }
+  let!(:product5) {
+    create(:simple_product, supplier: enterprise2, on_hand: 100, name: 'Lettuce', unit_value: '500')
+  }
+  let!(:variant_override) {
+    create(:variant_override, variant_id: product4.variants.first.id, hub: enterprise2,
+                              count_on_hand: 42)
+  }
+  let!(:variant_override2) {
+    create(:variant_override, variant_id: product5.variants.first.id, hub: enterprise,
+                              count_on_hand: 96)
+  }
 
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
@@ -41,9 +62,12 @@ feature "Product Import", js: true do
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -84,10 +108,14 @@ feature "Product Import", js: true do
 
     it "displays info about invalid entries but no save button if all items are invalid" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "5.50", "1", "kg", shipping_category_id_str]
-        csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                shipping_category_id_str]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "5.50", "1", "kg",
+                shipping_category_id_str]
+        csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g",
+                shipping_category_id_str]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
       end
       File.write('/tmp/test.csv', csv_data)
@@ -110,8 +138,10 @@ feature "Product Import", js: true do
 
     it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "tax_category", "shipping_category"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                tax_category.name, shipping_category.name]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -139,9 +169,12 @@ feature "Product Import", js: true do
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -185,8 +218,10 @@ feature "Product Import", js: true do
 
     it "can reset product stock to zero for products not present in the CSV" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -212,10 +247,14 @@ feature "Product Import", js: true do
 
     it "can save a new product and variant of that product at the same time, add variant to existing product" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "g", "Big Bag", shipping_category_id_str]
-        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil, shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "display_name", "shipping_category_id"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "g", "Big Bag",
+                shipping_category_id_str]
+        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil,
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -251,8 +290,10 @@ feature "Product Import", js: true do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50", "500"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
+                "500"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50",
+                "500"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -277,9 +318,12 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.inv-created-count', text: '2'
       expect(page).to have_selector '.inv-updated-count', text: '1'
 
-      beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
-      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
-      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+      beans_override = VariantOverride.where(variant_id: product2.variants.first.id,
+                                             hub_id: enterprise2.id).first
+      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id,
+                                               hub_id: enterprise2.id).first
+      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id,
+                                               hub_id: enterprise2.id).first
 
       expect(Float(beans_override.price)).to eq 3.20
       expect(beans_override.count_on_hand).to eq 5
@@ -303,10 +347,13 @@ feature "Product Import", js: true do
     end
 
     it "handles a unit of kg for inventory import" do
-      product = create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beets', unit_value: '1000', variant_unit_scale: 1000)
+      product = create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beets',
+                                        unit_value: '1000', variant_unit_scale: 1000)
       csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type", "units", "on_demand"]
-        csv << ["Beets", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "kg", "1", "true"]
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
+                "units", "on_demand"]
+        csv << ["Beets", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "kg",
+                "1", "true"]
       end
 
       File.write('/tmp/test.csv', csv_data)
@@ -329,16 +376,20 @@ feature "Product Import", js: true do
       visit main_app.admin_inventory_path
 
       expect(page).to have_content "Beets"
-      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand", selected: "Yes"
-      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price", with: "3.2"
+      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand",
+                                  selected: "Yes"
+      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price",
+                                 with: "3.2"
     end
 
     it "handles the Items unit for inventory import" do
-
-      product = create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine', unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
+      product = create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine',
+                                        unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
       csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type", "units", "on_demand", "variant_unit_name"]
-        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",  "kg", "1", "true", "Bag"]
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
+                "units", "on_demand", "variant_unit_name"]
+        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
+                "kg", "1", "true", "Bag"]
       end
 
       File.write('/tmp/test.csv', csv_data)
@@ -357,16 +408,22 @@ feature "Product Import", js: true do
       visit main_app.admin_inventory_path
 
       expect(page).to have_content "Aubergine"
-      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand", selected: "Yes"
-      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price", with: "3.3"
+      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand",
+                                  selected: "Yes"
+      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price",
+                                 with: "3.3"
     end
 
     it "handles on_demand and on_hand validations with inventory" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units", "on_demand"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "500", "true"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500", "false"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50", "500", nil]
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
+                "on_demand"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "500",
+                "true"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
+                "500", "false"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
+                "500", nil]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -387,9 +444,12 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.inv-created-count', text: '2'
       expect(page).to have_selector '.inv-updated-count', text: '1'
 
-      beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
-      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
-      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+      beans_override = VariantOverride.where(variant_id: product2.variants.first.id,
+                                             hub_id: enterprise2.id).first
+      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id,
+                                               hub_id: enterprise2.id).first
+      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id,
+                                               hub_id: enterprise2.id).first
 
       expect(Float(beans_override.price)).to eq 3.20
       expect(beans_override.count_on_hand).to be_nil
@@ -406,9 +466,12 @@ feature "Product Import", js: true do
 
     it "imports lines with all allowed units" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "1", "lb", shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "8", "oz", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "1", "lb",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "8", "oz",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -435,14 +498,16 @@ feature "Product Import", js: true do
       within "#p_#{Spree::Product.find_by(name: 'Carrots').id}" do
         expect(page).to have_input "product_name", with: "Carrots"
         expect(page).to have_select "variant_unit_with_scale", selected: "Weight (lb)"
-        expect(page).to have_content "5" #on_hand
+        expect(page).to have_content "5" # on_hand
       end
     end
 
     it "imports lines with item products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "shipping_category_id"]
-        csv << ["Cupcake", "User Enterprise", "Cake", "5", "2.2", "1", "", "Bunch", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "variant_unit_name", "shipping_category_id"]
+        csv << ["Cupcake", "User Enterprise", "Cake", "5", "2.2", "1", "", "Bunch",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -472,14 +537,16 @@ feature "Product Import", js: true do
         expect(page).to have_input "product_name", with: "Cupcake"
         expect(page).to have_select "variant_unit_with_scale", selected: "Items"
         expect(page).to have_input "variant_unit_name", with: "Bunch"
-        expect(page).to have_content "5" #on_hand
+        expect(page).to have_content "5" # on_hand
       end
     end
 
     it "does not allow import for lines with unknown units" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["Heavy Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "1", "stones", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["Heavy Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "1",
+                "stones", shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -550,7 +617,8 @@ feature "Product Import", js: true do
       expect(page).to have_no_selector '.create-count'
       expect(page).to have_no_selector '.update-count'
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
-      expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv', error_message: ""))
+      expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv',
+                                            error_message: ""))
 
       File.delete('/tmp/test.csv')
     end
@@ -561,9 +629,12 @@ feature "Product Import", js: true do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
-        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
-        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category_id"]
+        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                shipping_category_id_str]
+        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -586,10 +657,10 @@ feature "Product Import", js: true do
   end
 
   describe "handling a large file (120 data rows)" do
-    let!(:producer) {enterprise}
+    let!(:producer) { enterprise }
     let!(:tax_category) { create(:tax_category, name: "Tax Category Name") }
     let!(:shipping_category) { create(:shipping_category, name: "Shipping Category Name") }
-    
+
     let!(:csv_file) { file_fixture('sample_file_120_products.csv') }
 
     before do

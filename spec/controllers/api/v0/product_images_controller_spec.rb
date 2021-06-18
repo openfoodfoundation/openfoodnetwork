@@ -19,14 +19,16 @@ module Api
       let(:current_api_user) { create(:admin_user) }
 
       it "saves a new image when none is present" do
-        post :update_product_image, xhr: true, params: { product_id: product_without_image.id, file: image, use_route: :product_images }
+        post :update_product_image, xhr: true,
+                                    params: { product_id: product_without_image.id, file: image, use_route: :product_images }
 
         expect(response.status).to eq 201
         expect(product_without_image.images.first.id).to eq json_response['id']
       end
 
       it "updates an existing product image" do
-        post :update_product_image, xhr: true, params: { product_id: product_with_image.id, file: image, use_route: :product_images }
+        post :update_product_image, xhr: true,
+                                    params: { product_id: product_with_image.id, file: image, use_route: :product_images }
 
         expect(response.status).to eq 200
         expect(product_with_image.images.first.id).to eq json_response['id']

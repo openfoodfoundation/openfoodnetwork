@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'order_management/subscriptions/summarizer'
 
 class SubscriptionPlacementJob < ActiveJob::Base

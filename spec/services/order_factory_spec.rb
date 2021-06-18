@@ -22,7 +22,8 @@ describe OrderFactory do
   describe "create" do
     let(:attrs) do
       attrs = {}
-      attrs[:line_items] = [{ variant_id: variant1.id, quantity: 2 }, { variant_id: variant2.id, quantity: 4 }]
+      attrs[:line_items] =
+        [{ variant_id: variant1.id, quantity: 2 }, { variant_id: variant2.id, quantity: 4 }]
       attrs[:customer_id] = customer.id
       attrs[:distributor_id] = shop.id
       attrs[:order_cycle_id] = order_cycle.id
@@ -104,7 +105,9 @@ describe OrderFactory do
       end
 
       context "when an override is present" do
-        let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant1.id, count_on_hand: 3) }
+        let!(:override) {
+          create(:variant_override, hub_id: shop.id, variant_id: variant1.id, count_on_hand: 3)
+        }
         before { attrs[:line_items].first[:quantity] = 6 }
 
         context "when skip_stock_check is not requested" do
@@ -135,7 +138,9 @@ describe OrderFactory do
       end
 
       context "when an override is present" do
-        let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant1.id, price: 3.0) }
+        let!(:override) {
+          create(:variant_override, hub_id: shop.id, variant_id: variant1.id, price: 3.0)
+        }
 
         it "uses the price from the override" do
           expect_new_order

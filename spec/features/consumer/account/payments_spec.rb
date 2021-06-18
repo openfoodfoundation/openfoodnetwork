@@ -21,7 +21,7 @@ feature "Payments requiring action", js: true do
       it "shows a table of payments requiring authorization" do
         visit "/account"
 
-        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
+        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
         expect(page).to have_content I18n.t("spree.users.transactions.authorisation_required")
       end
     end
@@ -34,7 +34,7 @@ feature "Payments requiring action", js: true do
       it "does not show the table of payments requiring authorization" do
         visit "/account"
 
-        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
+        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
         expect(page).to_not have_content I18n.t("spree.users.transactions.authorisation_required")
       end
     end

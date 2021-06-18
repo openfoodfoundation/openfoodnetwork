@@ -10,7 +10,9 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
     let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+    let!(:proxy_order) {
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+    }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -73,7 +75,9 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:subscription) do
       create(:subscription, shipping_method: shipping_method, shop: shop, with_items: true)
     end
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+    let!(:proxy_order) {
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+    }
     let(:order) { proxy_order.initialise_order! }
 
     before do

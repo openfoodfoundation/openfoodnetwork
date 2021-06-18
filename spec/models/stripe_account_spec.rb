@@ -9,7 +9,9 @@ describe StripeAccount do
     let!(:enterprise2) { create(:enterprise) }
     let(:client_id) { 'ca_abc123' }
     let(:stripe_user_id) { 'acct_abc123' }
-    let!(:stripe_account) { create(:stripe_account, enterprise: enterprise, stripe_user_id: stripe_user_id) }
+    let!(:stripe_account) {
+      create(:stripe_account, enterprise: enterprise, stripe_user_id: stripe_user_id)
+    }
 
     before do
       Stripe.api_key = "sk_test_12345"
@@ -20,7 +22,8 @@ describe StripeAccount do
       before do
         stub_request(:post, "https://connect.stripe.com/oauth/deauthorize").
           with(body: { "client_id" => client_id, "stripe_user_id" => stripe_user_id }).
-          to_return(status: 400, body: JSON.generate(error: 'invalid_grant', error_description: "Some Message"))
+          to_return(status: 400, body: JSON.generate(error: 'invalid_grant',
+                                                     error_description: "Some Message"))
       end
 
       it "destroys the record and notifies Bugsnag" do
@@ -44,7 +47,9 @@ describe StripeAccount do
     end
 
     context "if the account is also associated with another Enterprise" do
-      let!(:another_stripe_account) { create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_user_id) }
+      let!(:another_stripe_account) {
+        create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_user_id)
+      }
 
       it "Doesn't make a Stripe API disconnection request " do
         expect(Stripe::OAuth).to_not receive(:deauthorize)

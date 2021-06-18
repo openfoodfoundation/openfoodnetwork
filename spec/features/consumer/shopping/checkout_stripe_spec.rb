@@ -10,14 +10,25 @@ feature "Check out with Stripe", js: true do
   include StripeStubs
 
   let(:distributor) { create(:distributor_enterprise) }
-  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
+  let!(:order_cycle) {
+    create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+  }
   let(:product) { create(:product, price: 10) }
   let(:variant) { product.variants.first }
-  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
+  let(:order) {
+    create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
+                   ship_address_id: nil)
+  }
 
-  let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
+  let(:shipping_with_fee) {
+    create(:shipping_method, require_ship_address: false, name: "Donkeys",
+                             calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
+  }
   let(:free_shipping) { create(:shipping_method) }
-  let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
+  let!(:check_with_fee) {
+    create(:payment_method, distributors: [distributor],
+                            calculator: Calculator::FlatRate.new(preferred_amount: 5.67))
+  }
 
   before do
     setup_stripe
@@ -49,7 +60,9 @@ feature "Check out with Stripe", js: true do
                gateway_customer_profile_id: "i_am_saved")
       end
 
-      let!(:stripe_account) { create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id') }
+      let!(:stripe_account) {
+        create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id')
+      }
 
       let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000 } }
 
@@ -215,7 +228,8 @@ feature "Check out with Stripe", js: true do
           stub_list_customers_request(email: order.user.email, response: {})
           stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
           stub_get_customer_payment_methods_request(customer: "cus_A123", response: {})
-          stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" }, response: { pm_id: "pm_123" }
+          stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" },
+                                            response: { pm_id: "pm_123" }
           stub_add_metadata_request(payment_method: "pm_123", response: {})
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
@@ -237,7 +251,8 @@ feature "Check out with Stripe", js: true do
           expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
 
           # Prepare a second order
-          new_order = create(:order, user: user, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil)
+          new_order = create(:order, user: user, order_cycle: order_cycle,
+                                     distributor: distributor, bill_address_id: nil, ship_address_id: nil)
           set_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)
           stub_payment_intents_post_request order: new_order

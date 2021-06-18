@@ -11,9 +11,29 @@ module OpenFoodNetwork
 
     context "constructing the table" do
       it "should build a tree then build a table" do
-        rules = [{ group_by: proc { |sentence| sentence.paragraph.chapter }, sort_by: proc { |chapter| chapter.name }, summary_columns: [proc { |is| is.first.paragraph.chapter.name }, proc { |_is| "TOTAL" }, proc { |_is| "" }, proc { |is| is.sum(&:property1) }] },
-                 { group_by: proc { |sentence| sentence.paragraph }, sort_by: proc { |paragraph| paragraph.name } }]
-        columns = [proc { |is| is.first.paragraph.chapter.name }, proc { |is| is.first.paragraph.name }, proc { |is| is.first.name }, proc { |is| is.sum(&:property1) }]
+        rules = [{ group_by: proc { |sentence|
+                               sentence.paragraph.chapter
+                             }, sort_by: proc { |chapter|
+                                           chapter.name
+                                         }, summary_columns: [proc { |is|
+                                                                is.first.paragraph.chapter.name
+                                                              }, proc { |_is|
+                                                                   "TOTAL"
+                                                                 }, proc { |_is|
+                                                                      ""
+                                                                    }, proc { |is|
+                                                                         is.sum(&:property1)
+                                                                       }] },
+                 { group_by: proc { |sentence| sentence.paragraph }, sort_by: proc { |paragraph|
+                                                                                paragraph.name
+                                                                              } }]
+        columns = [proc { |is| is.first.paragraph.chapter.name }, proc { |is|
+                                                                    is.first.paragraph.name
+                                                                  }, proc { |is|
+                                                                       is.first.name
+                                                                     }, proc { |is|
+                                                                          is.sum(&:property1)
+                                                                        }]
 
         subject = OrderGrouper.new rules, columns
 
@@ -64,7 +84,8 @@ module OpenFoodNetwork
         subject = OrderGrouper.new @rules, @columns
 
         grouped_tree = double(:grouped_tree)
-        expect(subject).to receive(:group_and_sort).with(@rule1, @rules[1..-1], @items).and_return(grouped_tree)
+        expect(subject).to receive(:group_and_sort).with(@rule1, @rules[1..-1],
+                                                         @items).and_return(grouped_tree)
 
         expect(subject.build_tree(@items, @rules)).to eq(grouped_tree)
       end
@@ -79,7 +100,9 @@ module OpenFoodNetwork
         groups = double(:groups)
         expect(@items).to receive(:group_by).and_return(groups)
         sorted_groups = {}
-        1.upto(number_of_categories) { |i| sorted_groups[i] = double(:group, name: "Group " + i.to_s ) }
+        1.upto(number_of_categories) { |i|
+          sorted_groups[i] = double(:group, name: "Group " + i.to_s )
+        }
         expect(groups).to receive(:sort_by).and_return(sorted_groups)
         group = { group1: 1, group2: 2, group3: 3 }
         expect(subject).to receive(:build_tree).exactly(number_of_categories).times.and_return(group)
@@ -133,7 +156,8 @@ module OpenFoodNetwork
       end
 
       it "should return an extra row when a :summary_row key appears in a given Hash" do
-        groups = { items1: @items1, items2: @items2, items3: @items3, summary_row: { items: { items2: @items2, items3: @items3 }, columns: @sumcols } }
+        groups = { items1: @items1, items2: @items2, items3: @items3,
+                   summary_row: { items: { items2: @items2, items3: @items3 }, columns: @sumcols } }
 
         subject = OrderGrouper.new @rules, @columns
 

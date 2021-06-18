@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class is the reference implementation of a SSO provider from Discourse.
 
 module Discourse
@@ -5,11 +7,11 @@ module Discourse
     ACCESSORS = [:nonce, :name, :username, :email, :avatar_url, :avatar_force_update, :require_activation,
                  :about_me, :external_id, :return_sso_url, :admin, :moderator, :suppress_welcome_message].freeze
     FIXNUMS = [].freeze
-    BOOLS = [:avatar_force_update, :admin, :moderator, :require_activation, :suppress_welcome_message].freeze
+    BOOLS = [:avatar_force_update, :admin, :moderator, :require_activation,
+             :suppress_welcome_message].freeze
     NONCE_EXPIRY_TIME = 10.minutes
 
-    attr_accessor(*ACCESSORS)
-    attr_accessor :sso_secret, :sso_url
+    attr_accessor(*ACCESSORS, :sso_secret, :sso_url)
 
     def self.sso_secret
       raise "sso_secret not implemented on class, be sure to set it on instance"

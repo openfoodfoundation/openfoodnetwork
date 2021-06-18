@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class EnterpriseGroupsController < Admin::ResourceController
     before_action :load_data, except: :index

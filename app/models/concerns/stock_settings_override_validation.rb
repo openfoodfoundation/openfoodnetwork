@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Validates the combination of on_demand and count_on_hand values.
 #
 # `on_demand` can have three values: true, false or nil

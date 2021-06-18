@@ -7,11 +7,19 @@ describe SubscriptionPlacementJob do
 
   describe "finding proxy_orders that are ready to be placed" do
     let(:shop) { create(:distributor_enterprise) }
-    let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 1.minute.ago, orders_close_at: 10.minutes.from_now) }
-    let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 10.minutes.ago, orders_close_at: 1.minute.ago) }
+    let(:order_cycle1) {
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 1.minute.ago,
+                                  orders_close_at: 10.minutes.from_now)
+    }
+    let(:order_cycle2) {
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 10.minutes.ago,
+                                  orders_close_at: 1.minute.ago)
+    }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
     let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle1) } # OK
+    let!(:proxy_order) {
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle1)
+    } # OK
 
     it "ignores proxy orders where the OC has closed" do
       expect(job.send(:proxy_orders)).to include proxy_order
@@ -66,7 +74,9 @@ describe SubscriptionPlacementJob do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:shop) { order_cycle.coordinator }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: shop) }
-    let(:ex) { create(:exchange, order_cycle: order_cycle, sender: shop, receiver: shop, incoming: false) }
+    let(:ex) {
+      create(:exchange, order_cycle: order_cycle, sender: shop, receiver: shop, incoming: false)
+    }
     let(:variant1) { create(:variant, on_hand: 5) }
     let(:variant2) { create(:variant, on_hand: 5) }
     let(:variant3) { create(:variant, on_hand: 5) }
@@ -152,7 +162,7 @@ describe SubscriptionPlacementJob do
     end
 
     context "when the order is already complete" do
-      before { while !order.completed? do break unless order.next! end }
+      before { break unless order.next! while !order.completed? }
 
       it "records an issue and ignores it" do
         ActionMailer::Base.deliveries.clear
@@ -183,7 +193,9 @@ describe SubscriptionPlacementJob do
         end
 
         it "does not place the order, clears all adjustments, and sends an empty_order email" do
-          expect{ job.send(:place_order, order) }.to_not change{ order.reload.completed_at }.from(nil)
+          expect{ job.send(:place_order, order) }.to_not change{
+                                                           order.reload.completed_at
+                                                         }.from(nil)
           expect(order.all_adjustments).to be_empty
           expect(order.total).to eq 0
           expect(order.adjustment_total).to eq 0
@@ -203,7 +215,7 @@ describe SubscriptionPlacementJob do
 
         it "does not enqueue confirmation emails" do
           expect{ job.send(:place_order, order) }
-              .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
+            .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
 
           expect(job).to have_received(:send_placement_email).with(order, anything).once
         end

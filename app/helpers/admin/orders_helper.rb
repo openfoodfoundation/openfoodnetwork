@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   module OrdersHelper
     # Adjustments to display under "Order adjustments".

@@ -52,7 +52,9 @@ describe OrderShipment do
       context "when shipping_method_id is not valid for the order" do
         it "returns nil" do
           invalid_shipping_method_id = order.shipment.shipping_method.id + 1000
-          expect(shipment.shipping_rates).to receive(:find_by).with(shipping_method_id: invalid_shipping_method_id) { nil }
+          expect(shipment.shipping_rates).to receive(:find_by).with(shipping_method_id: invalid_shipping_method_id) {
+                                               nil
+                                             }
 
           expect(order.select_shipping_method(invalid_shipping_method_id)).to be_nil
         end

@@ -82,12 +82,16 @@ describe Spree::Admin::OrdersController, type: :controller do
         }
         let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
-        let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+        let!(:exchange) {
+          create(:exchange, incoming: true, sender: variant1.product.supplier,
+                            receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+        }
         let!(:order) do
-          order = create(:completed_order_with_totals, line_items_count: 2, distributor: distributor, order_cycle: order_cycle)
+          order = create(:completed_order_with_totals, line_items_count: 2,
+                                                       distributor: distributor, order_cycle: order_cycle)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
-          while !order.completed? do break unless order.next! end
+          break unless order.next! while !order.completed?
           order.recreate_all_fees!
           order
         end
@@ -187,7 +191,7 @@ describe Spree::Admin::OrdersController, type: :controller do
             context "when the order has legacy taxes" do
               let(:legacy_tax_adjustment) {
                 create(:adjustment, amount: 0.5, included: false, originator: tax_rate,
-                       order: order, adjustable: order, state: "closed")
+                                    order: order, adjustable: order, state: "closed")
               }
 
               before do
@@ -230,7 +234,8 @@ describe Spree::Admin::OrdersController, type: :controller do
         before do
           order.line_items << line_item
           order.save
-          params[:order][:line_items_attributes] = [{ id: line_item.id, quantity: line_item.quantity }]
+          params[:order][:line_items_attributes] =
+            [{ id: line_item.id, quantity: line_item.quantity }]
         end
 
         context "and no errors" do

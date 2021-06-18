@@ -31,9 +31,15 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         context "and there is a schedule of an OC coordinated by _another_ enterprise I manage and the first enterprise is given" do
-          let!(:other_managed_coordinator) { create(:distributor_enterprise, owner: managed_coordinator.owner) }
-          let!(:other_coordinated_order_cycle) { create(:simple_order_cycle, coordinator: other_managed_coordinator) }
-          let!(:other_coordinated_schedule) { create(:schedule, order_cycles: [other_coordinated_order_cycle] ) }
+          let!(:other_managed_coordinator) {
+            create(:distributor_enterprise, owner: managed_coordinator.owner)
+          }
+          let!(:other_coordinated_order_cycle) {
+            create(:simple_order_cycle, coordinator: other_managed_coordinator)
+          }
+          let!(:other_coordinated_schedule) {
+            create(:schedule, order_cycles: [other_coordinated_order_cycle] )
+          }
           let(:params) { { format: :json, enterprise_id: managed_coordinator.id } }
 
           it "scopes @collection to schedules containing order_cycles coordinated by the first enterprise" do
@@ -56,12 +62,26 @@ describe Admin::SchedulesController, type: :controller do
     let(:user) { create(:user, enterprise_limit: 10) }
     let!(:managed_coordinator) { create(:enterprise, owner: user) }
     let!(:managed_enterprise) { create(:enterprise, owner: user) }
-    let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
-    let!(:coordinated_order_cycle2) { create(:simple_order_cycle, coordinator: managed_enterprise ) }
-    let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
-    let!(:uncoordinated_order_cycle2) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
-    let!(:uncoordinated_order_cycle3) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
-    let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle, uncoordinated_order_cycle3] ) }
+    let!(:coordinated_order_cycle) {
+      create(:simple_order_cycle, coordinator: managed_coordinator )
+    }
+    let!(:coordinated_order_cycle2) {
+      create(:simple_order_cycle, coordinator: managed_enterprise )
+    }
+    let!(:uncoordinated_order_cycle) {
+      create(:simple_order_cycle, coordinator: create(:enterprise) )
+    }
+    let!(:uncoordinated_order_cycle2) {
+      create(:simple_order_cycle, coordinator: create(:enterprise))
+    }
+    let!(:uncoordinated_order_cycle3) {
+      create(:simple_order_cycle, coordinator: create(:enterprise))
+    }
+    let!(:coordinated_schedule) {
+      create(:schedule,
+             order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle,
+                            uncoordinated_order_cycle3] )
+    }
     let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
 
     context "json" do
@@ -73,7 +93,8 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to update basic information" do
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             schedule: { name: "my awesome schedule" }
           expect(JSON.parse(response.body)["id"]).to eq coordinated_schedule.id
           expect(JSON.parse(response.body)["name"]).to eq "my awesome schedule"
           expect(assigns(:schedule)).to eq coordinated_schedule
@@ -81,13 +102,17 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
-          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: order_cycle_ids
+          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id,
+                             uncoordinated_order_cycle3.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             order_cycle_ids: order_cycle_ids
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
-          expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle, uncoordinated_order_cycle3
+          expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2,
+                                                                      uncoordinated_order_cycle, uncoordinated_order_cycle3
           # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
-          expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle, uncoordinated_order_cycle2
+          expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle,
+                                                                          uncoordinated_order_cycle2
         end
 
         it "syncs proxy orders when order_cycle_ids change" do
@@ -95,11 +120,14 @@ describe Admin::SchedulesController, type: :controller do
           allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
           expect(syncer_mock).to receive(:sync!).exactly(2).times
 
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
           reset_controller_environment
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             order_cycle_ids: [coordinated_order_cycle.id]
           reset_controller_environment
-          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             order_cycle_ids: [coordinated_order_cycle.id]
         end
       end
 
@@ -109,7 +137,8 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "prevents me from updating the schedule" do
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          spree_put :update, format: :json, id: coordinated_schedule.id,
+                             schedule: { name: "my awesome schedule" }
           expect(response).to redirect_to unauthorized_path
           expect(assigns(:schedule)).to eq nil
           expect(coordinated_schedule.name).to_not eq "my awesome schedule"
@@ -121,8 +150,12 @@ describe Admin::SchedulesController, type: :controller do
   describe "create" do
     let(:user) { create(:user) }
     let!(:managed_coordinator) { create(:enterprise, owner: user) }
-    let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
-    let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
+    let!(:coordinated_order_cycle) {
+      create(:simple_order_cycle, coordinator: managed_coordinator )
+    }
+    let!(:uncoordinated_order_cycle) {
+      create(:simple_order_cycle, coordinator: create(:enterprise))
+    }
 
     def create_schedule(params)
       spree_put :create, params
@@ -142,7 +175,8 @@ describe Admin::SchedulesController, type: :controller do
 
         context "where I manage at least one of the order cycles to be added to the schedules" do
           before do
-            params.merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+            params.merge!( order_cycle_ids: [coordinated_order_cycle.id,
+                                             uncoordinated_order_cycle.id] )
           end
 
           it "allows me to create the schedule, adding only order cycles that I manage" do
@@ -175,13 +209,15 @@ describe Admin::SchedulesController, type: :controller do
       context 'as an admin user' do
         before do
           allow(controller).to receive(:spree_current_user) { create(:admin_user) }
-          params.merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+          params.merge!( order_cycle_ids: [coordinated_order_cycle.id,
+                                           uncoordinated_order_cycle.id] )
         end
 
         it "allows me to create a schedule" do
           expect { create_schedule params }.to change(Schedule, :count).by(1)
           schedule = Schedule.last
-          expect(schedule.order_cycles).to include coordinated_order_cycle, uncoordinated_order_cycle
+          expect(schedule.order_cycles).to include coordinated_order_cycle,
+                                                   uncoordinated_order_cycle
         end
       end
     end
@@ -191,8 +227,12 @@ describe Admin::SchedulesController, type: :controller do
     let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_coordinator) { create(:enterprise, owner: user) }
     let(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
-    let(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
-    let(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle] ) }
+    let(:uncoordinated_order_cycle) {
+      create(:simple_order_cycle, coordinator: create(:enterprise) )
+    }
+    let(:coordinated_schedule) {
+      create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle] )
+    }
     let(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
     let(:params) { { format: :json } }
 

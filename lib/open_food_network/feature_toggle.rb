@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   # This feature toggles implementation provides two mechanisms to conditionally enable features.
   #

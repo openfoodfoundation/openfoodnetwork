@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Validates an integer array
 #
 # This uses Integer() behind the scenes.

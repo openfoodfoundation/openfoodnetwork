@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class ScopeVariantToHub
     def initialize(hub, variant_overrides = nil)

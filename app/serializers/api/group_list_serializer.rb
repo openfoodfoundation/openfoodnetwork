@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class GroupListSerializer < ActiveModel::Serializer
     attributes :id, :name, :permalink, :email, :website, :facebook, :instagram,

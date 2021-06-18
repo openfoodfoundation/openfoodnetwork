@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DefaultCountry
   def self.id
     country.id

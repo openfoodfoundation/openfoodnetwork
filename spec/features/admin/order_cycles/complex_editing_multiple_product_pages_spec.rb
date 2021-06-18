@@ -42,7 +42,8 @@ feature '
 
       expect_all_products_loaded
 
-      expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{new_product.variants.first.id}", disabled: false
+      expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{new_product.variants.first.id}",
+                                         disabled: false
     end
 
     def expect_all_products_loaded

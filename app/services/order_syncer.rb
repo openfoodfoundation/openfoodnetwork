@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Responsible for ensuring that any updates to a Subscription are propagated to any
 # orders belonging to that Subscription which have been instantiated
 class OrderSyncer
@@ -81,8 +83,8 @@ class OrderSyncer
     # switching from pick-up to delivery affects whether simultaneous changes to shipping address
     # are ignored or not.
     pickup_to_delivery = force_ship_address_required?(order)
-    if !pickup_to_delivery || order.shipment.present?
-      save_ship_address_in_order(order) if (ship_address.changes.keys & relevant_address_attrs).any?
+    if (!pickup_to_delivery || order.shipment.present?) && (ship_address.changes.keys & relevant_address_attrs).any?
+      save_ship_address_in_order(order)
     end
     if !pickup_to_delivery || order.shipment.blank?
       order.updater.shipping_address_from_distributor

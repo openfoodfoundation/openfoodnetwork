@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SharedHelper
   def distributor_link_class(distributor)
     cart = current_order(true)

@@ -10,8 +10,12 @@ describe EnterprisesHelper, type: :helper do
   before { allow(helper).to receive(:spree_current_user) { user } }
 
   describe "loading available shipping methods" do
-    let!(:distributor_shipping_method) { create(:shipping_method, require_ship_address: false, distributors: [distributor]) }
-    let!(:other_distributor_shipping_method) { create(:shipping_method, require_ship_address: false, distributors: [some_other_distributor]) }
+    let!(:distributor_shipping_method) {
+      create(:shipping_method, require_ship_address: false, distributors: [distributor])
+    }
+    let!(:other_distributor_shipping_method) {
+      create(:shipping_method, require_ship_address: false, distributors: [some_other_distributor])
+    }
 
     context "when the order has no current_distributor" do
       before do
@@ -32,7 +36,8 @@ describe EnterprisesHelper, type: :helper do
       end
 
       it "does not return 'back office only' shipping method" do
-        backoffice_only_shipping_method = create(:shipping_method, require_ship_address: false, distributors: [distributor], display_on: 'back_end')
+        backoffice_only_shipping_method = create(:shipping_method, require_ship_address: false,
+                                                                   distributors: [distributor], display_on: 'back_end')
 
         expect(helper.available_shipping_methods).to_not include backoffice_only_shipping_method
         expect(helper.available_shipping_methods).to_not include other_distributor_shipping_method
@@ -64,8 +69,13 @@ describe EnterprisesHelper, type: :helper do
       end
 
       context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
-        before { tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'visible') }
-        before { default_tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'hidden') }
+        before {
+          tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'visible')
+        }
+        before {
+          default_tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility,
+                                            'hidden')
+        }
 
         context "when the customer is nil" do
           it "applies default action (hide)" do
@@ -96,8 +106,13 @@ describe EnterprisesHelper, type: :helper do
       end
 
       context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
-        before { tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'hidden') }
-        before { default_tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'visible') }
+        before {
+          tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility, 'hidden')
+        }
+        before {
+          default_tag_rule.update_attribute(:preferred_matched_shipping_methods_visibility,
+                                            'visible')
+        }
 
         context "when the customer is nil" do
           it "applies default action (show)" do
@@ -175,8 +190,12 @@ describe EnterprisesHelper, type: :helper do
       end
 
       context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
-        before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible') }
-        before { default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden') }
+        before {
+          tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible')
+        }
+        before {
+          default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden')
+        }
 
         context "when the customer is nil" do
           it "applies default action (hide)" do
@@ -207,8 +226,13 @@ describe EnterprisesHelper, type: :helper do
       end
 
       context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
-        before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden') }
-        before { default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible') }
+        before {
+          tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden')
+        }
+        before {
+          default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility,
+                                            'visible')
+        }
 
         context "when the customer is nil" do
           it "applies default action (show)" do
@@ -239,8 +263,14 @@ describe EnterprisesHelper, type: :helper do
     end
 
     context "when StripeConnect payment methods are present" do
-      let!(:pm3) { create(:stripe_connect_payment_method, distributors: [distributor], preferred_enterprise_id: distributor.id) }
-      let!(:pm4) { create(:stripe_connect_payment_method, distributors: [distributor], preferred_enterprise_id: some_other_distributor.id) }
+      let!(:pm3) {
+        create(:stripe_connect_payment_method, distributors: [distributor],
+                                               preferred_enterprise_id: distributor.id)
+      }
+      let!(:pm4) {
+        create(:stripe_connect_payment_method, distributors: [distributor],
+                                               preferred_enterprise_id: some_other_distributor.id)
+      }
       let(:available_payment_methods) { helper.available_payment_methods }
 
       around do |example|

@@ -88,7 +88,10 @@ module OpenFoodNetwork
     describe "last_used_bill_address" do
       let(:distributor) { create(:distributor_enterprise) }
       let(:address) { create(:address) }
-      let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor, bill_address: nil) }
+      let(:order) {
+        create(:completed_order_with_totals, user: nil, email: email, distributor: distributor,
+                                             bill_address: nil)
+      }
       let(:finder) { AddressFinder.new(email) }
 
       context "when searching by email is not allowed" do
@@ -147,7 +150,10 @@ module OpenFoodNetwork
         end
 
         context "and an order with a required ship address exists" do
-          let(:order) { create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [], ship_address: address) }
+          let(:order) {
+            create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [],
+                                   ship_address: address)
+          }
 
           before do
             order.shipping_method.update_attribute(:require_ship_address, true)
@@ -165,7 +171,10 @@ module OpenFoodNetwork
         end
 
         context "and an order with a ship address exists" do
-          let(:order) { create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [], ship_address: address) }
+          let(:order) {
+            create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [],
+                                   ship_address: address)
+          }
 
           context "and the shipping method requires an address" do
             before { order.shipping_method.update_attribute(:require_ship_address, true) }
@@ -185,7 +194,10 @@ module OpenFoodNetwork
         end
 
         context "and an order without a ship address exists" do
-          let!(:order) { create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [], ship_address: nil) }
+          let!(:order) {
+            create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [],
+                                   ship_address: nil)
+          }
 
           it "return nil" do
             expect(finder.send(:last_used_ship_address)).to eq nil

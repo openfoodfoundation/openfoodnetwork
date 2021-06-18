@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MapHelper
   def using_google_maps?
     ENV["GOOGLE_MAPS_API_KEY"].present? || google_maps_configured_with_geocoder_api_key?

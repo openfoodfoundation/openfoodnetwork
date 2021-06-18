@@ -7,14 +7,14 @@ describe AddressGeocoder do
   let(:victoria) { Spree::State.find_or_create_by(name: "Victoria", country: australia) }
   let(:address) do
     create(:address,
-      address1: "12 Galvin Street",
-      address2: "Unit 1",
-      city: "Altona",
-      country: australia,
-      state: victoria,
-      zipcode: 3018,
-      latitude: nil,
-      longitude: nil)
+           address1: "12 Galvin Street",
+           address2: "Unit 1",
+           city: "Altona",
+           country: australia,
+           state: victoria,
+           zipcode: 3018,
+           latitude: nil,
+           longitude: nil)
   end
 
   it "formats the address into a single comma separated string when passing it to the geocoder" do

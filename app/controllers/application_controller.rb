@@ -52,10 +52,10 @@ class ApplicationController < ActionController::Base
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{begin
-                                            caller(1).first
-                                          rescue StandardError
-                                            'unknown'
-                                          end}")
+      caller(1).first
+    rescue StandardError
+      'unknown'
+    end}")
     super(options, response_status)
   end
 

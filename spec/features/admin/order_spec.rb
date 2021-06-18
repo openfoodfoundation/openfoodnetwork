@@ -176,8 +176,10 @@ feature '
 
   # Regression test for #7337
   context "creating a new order with a variant override" do
-    let!(:override) { create(:variant_override, hub: distributor, variant: product.variants.first,
-                                                      count_on_hand: 100) }
+    let!(:override) {
+      create(:variant_override, hub: distributor, variant: product.variants.first,
+                                count_on_hand: 100)
+    }
 
     before do
       product.variants.first.update(on_demand: false, on_hand: 0)
@@ -358,7 +360,8 @@ feature '
                                     href: spree.resend_admin_order_path(order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+          expect(page).to have_link "Cancel Order",
+                                    href: spree.fire_admin_order_path(order, e: 'cancel')
         end
       end
 

@@ -8,7 +8,9 @@ describe Admin::SubscriptionsHelper, type: :helper do
     let(:customer) { create(:customer, enterprise: shop) }
     let(:shipping_method) { create(:shipping_method, distributors: [shop]) }
     let(:payment_method) { create(:payment_method, distributors: [shop]) }
-    let(:schedule) { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)] ) }
+    let(:schedule) {
+      create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)] )
+    }
 
     context "when a shop has no shipping methods present" do
       before { customer; payment_method; schedule }
@@ -16,7 +18,9 @@ describe Admin::SubscriptionsHelper, type: :helper do
     end
 
     context "when a shop has no Cash or Stripe payment methods present" do
-      let!(:paypal) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id]) }
+      let!(:paypal) {
+        Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id])
+      }
       before { customer; shipping_method; schedule }
       it { expect(helper.subscriptions_setup_complete?([shop])).to be false }
     end

@@ -9,10 +9,18 @@ module Permissions
     let!(:basic_permissions) { OpenFoodNetwork::Permissions.new(user) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
-    let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, distributors: [distributor]) }
-    let(:order_completed) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor ) }
-    let(:order_cancelled) { create(:order, order_cycle: order_cycle, distributor: distributor, state: 'canceled' ) }
-    let(:order_cart) { create(:order, order_cycle: order_cycle, distributor: distributor, state: 'cart' ) }
+    let(:order_cycle) {
+      create(:simple_order_cycle, coordinator: coordinator, distributors: [distributor])
+    }
+    let(:order_completed) {
+      create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor )
+    }
+    let(:order_cancelled) {
+      create(:order, order_cycle: order_cycle, distributor: distributor, state: 'canceled' )
+    }
+    let(:order_cart) {
+      create(:order, order_cycle: order_cycle, distributor: distributor, state: 'cart' )
+    }
     let(:order_from_last_year) {
       create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
                                            completed_at: Time.zone.now - 1.year)
@@ -32,7 +40,9 @@ module Permissions
 
       context "as the hub through which the order was placed" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: distributor) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: distributor)
+                                      }
         end
 
         it "should let me see the order" do
@@ -42,8 +52,12 @@ module Permissions
 
       context "as the coordinator of the order cycle through which the order was placed" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: coordinator) }
-          allow(basic_permissions).to receive(:coordinated_order_cycles) { OrderCycle.where(id: order_cycle) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: coordinator)
+                                      }
+          allow(basic_permissions).to receive(:coordinated_order_cycles) {
+                                        OrderCycle.where(id: order_cycle)
+                                      }
         end
 
         it "should let me see the order" do
@@ -65,8 +79,11 @@ module Permissions
 
       context "as a producer which has granted P-OC to the distributor of an order" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: producer) }
-          create(:enterprise_relationship, parent: producer, child: distributor, permissions_list: [:add_to_order_cycle])
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: producer)
+                                      }
+          create(:enterprise_relationship, parent: producer, child: distributor,
+                                           permissions_list: [:add_to_order_cycle])
         end
 
         context "which contains my products" do
@@ -89,7 +106,9 @@ module Permissions
 
       context "as an enterprise that is a distributor in the order cycle, but not the distributor of the order" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: random_enterprise) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: random_enterprise)
+                                      }
         end
 
         it "should not let me see the order" do
@@ -111,7 +130,9 @@ module Permissions
 
       context "as the hub through which the parent order was placed" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: distributor) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: distributor)
+                                      }
         end
 
         it "should let me see the line_items" do
@@ -121,8 +142,12 @@ module Permissions
 
       context "as the coordinator of the order cycle through which the parent order was placed" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: coordinator) }
-          allow(basic_permissions).to receive(:coordinated_order_cycles) { OrderCycle.where(id: order_cycle) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: coordinator)
+                                      }
+          allow(basic_permissions).to receive(:coordinated_order_cycles) {
+                                        OrderCycle.where(id: order_cycle)
+                                      }
         end
 
         it "should let me see the line_items" do
@@ -132,8 +157,11 @@ module Permissions
 
       context "as the manager producer which has granted P-OC to the distributor of the parent order" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: producer) }
-          create(:enterprise_relationship, parent: producer, child: distributor, permissions_list: [:add_to_order_cycle])
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: producer)
+                                      }
+          create(:enterprise_relationship, parent: producer, child: distributor,
+                                           permissions_list: [:add_to_order_cycle])
 
           line_item1.product.supplier = producer
           line_item1.product.save
@@ -148,7 +176,9 @@ module Permissions
 
       context "as an enterprise that is a distributor in the order cycle, but not the distributor of the parent order" do
         before do
-          allow(basic_permissions).to receive(:managed_enterprises) { Enterprise.where(id: random_enterprise) }
+          allow(basic_permissions).to receive(:managed_enterprises) {
+                                        Enterprise.where(id: random_enterprise)
+                                      }
         end
 
         it "should not let me see the line_items" do

@@ -41,8 +41,7 @@ module Spree
 
     delegate :product, :unit_description, :display_name, to: :variant
 
-    attr_accessor :skip_stock_check # Allows manual skipping of Stock::AvailabilityValidator
-    attr_accessor :target_shipment
+    attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
 
     # -- Scopes
     scope :managed_by, lambda { |user|

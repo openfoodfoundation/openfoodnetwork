@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderWorkflow
   attr_reader :order
 
@@ -52,8 +54,8 @@ class OrderWorkflow
   end
 
   def after_transition_hook(options)
-    if order.state == "delivery"
-      order.select_shipping_method(options[:shipping_method_id]) if options[:shipping_method_id]
+    if order.state == "delivery" && (options[:shipping_method_id])
+      order.select_shipping_method(options[:shipping_method_id])
     end
 
     persist_all_payments if order.state == "payment"

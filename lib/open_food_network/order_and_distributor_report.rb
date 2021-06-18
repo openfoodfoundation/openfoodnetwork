@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class OrderAndDistributorReport
     def initialize(user, params = {}, render_table = false)

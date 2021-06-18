@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserPasswordsController < Spree::UserPasswordsController
   layout 'darkswarm'
 

@@ -8,12 +8,17 @@ describe InjectionHelper, type: :helper do
   let!(:distributor1) { create(:distributor_enterprise) }
   let!(:distributor2) { create(:distributor_enterprise) }
   let!(:user) { create(:user) }
-  let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 10_000) }
-  let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 5000) }
+  let!(:d1o1) {
+    create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 10_000)
+  }
+  let!(:d1o2) {
+    create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 5000)
+  }
   let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id) }
 
   it "will inject via AMS" do
-    expect(helper.inject_json_array("test", [enterprise], Api::IdSerializer)).to match /#{enterprise.id}/
+    expect(helper.inject_json_array("test", [enterprise],
+                                    Api::IdSerializer)).to match /#{enterprise.id}/
   end
 
   it "injects enterprises" do
@@ -70,8 +75,10 @@ describe InjectionHelper, type: :helper do
 
   it "only injects credit cards with a payment profile" do
     allow(helper).to receive(:spree_current_user) { user }
-    card1 = create(:credit_card, last_digits: "1234", user_id: user.id, gateway_customer_profile_id: 'cust_123')
-    card2 = create(:credit_card, last_digits: "4321", user_id: user.id, gateway_customer_profile_id: nil)
+    card1 = create(:credit_card, last_digits: "1234", user_id: user.id,
+                                 gateway_customer_profile_id: 'cust_123')
+    card2 = create(:credit_card, last_digits: "4321", user_id: user.id,
+                                 gateway_customer_profile_id: nil)
     injected_cards = helper.inject_saved_credit_cards
     expect(injected_cards).to match "1234"
     expect(injected_cards).to_not match "4321"

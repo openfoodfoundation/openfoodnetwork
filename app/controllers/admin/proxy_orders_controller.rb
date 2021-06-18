@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ProxyOrdersController < Admin::ResourceController
     respond_to :json

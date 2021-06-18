@@ -16,7 +16,7 @@ module PermittedAttributes
       [
         :name, :orders_open_at, :orders_close_at, :coordinator_id,
         :preferred_product_selection_from_coordinator_inventory_only,
-        schedule_ids: [], coordinator_fee_ids: []
+        { schedule_ids: [], coordinator_fee_ids: [] }
       ]
     end
 
@@ -33,9 +33,9 @@ module PermittedAttributes
         :select_all_variants, :receival_instructions,
         :pickup_time, :pickup_instructions,
         :tag_list,
-        tags: [:text],
-        enterprise_fee_ids: [],
-        variants: {}
+        { tags: [:text],
+          enterprise_fee_ids: [],
+          variants: {} }
       ]
     end
   end

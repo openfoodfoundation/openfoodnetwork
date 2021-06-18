@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubscriptionMailer < Spree::BaseMailer
   helper 'checkout'
   helper MailerHelper

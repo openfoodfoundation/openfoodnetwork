@@ -13,7 +13,7 @@ FactoryBot.define do
       }
     end
 
-    after(:create) do |oc, proxy|
+    after(:create) do |_oc, proxy|
       proxy.exchanges.incoming.each do |exchange|
         ExchangeFee.create!(
           exchange: exchange,

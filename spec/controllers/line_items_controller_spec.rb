@@ -9,8 +9,9 @@ describe LineItemsController, type: :controller do
 
   context "listing bought items" do
     let!(:completed_order) do
-      order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
-      while !order.completed? do break unless order.next! end
+      order = create(:completed_order_with_totals, user: user, distributor: distributor,
+                                                   order_cycle: order_cycle, line_items_count: 1)
+      break unless order.next! while !order.completed?
       order
     end
 
@@ -34,12 +35,15 @@ describe LineItemsController, type: :controller do
       let(:item) do
         order = create(:completed_order_with_totals)
         item = create(:line_item, order: order)
-        while !order.completed? do break unless order.next! end
+        break unless order.next! while !order.completed?
         item
       end
 
       let(:order) { item.order }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [order.line_item_variants]) }
+      let(:order_cycle) {
+        create(:simple_order_cycle, distributors: [distributor],
+                                    variants: [order.line_item_variants])
+      }
 
       before { allow(controller).to receive_messages spree_current_user: item.order.user }
 
@@ -86,7 +90,9 @@ describe LineItemsController, type: :controller do
               end
 
               context "after a payment is captured" do
-                let(:payment) { create(:check_payment, amount: order.total, order: order, state: 'completed') }
+                let(:payment) {
+                  create(:check_payment, amount: order.total, order: order, state: 'completed')
+                }
                 before { payment.capture! }
 
                 it 'updates the payment state' do
@@ -156,14 +162,21 @@ describe LineItemsController, type: :controller do
       let(:variant2) { create(:variant) }
       let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-      let(:calculator) { Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22, preferred_discount_amount: 11) }
+      let(:calculator) {
+        Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22,
+                                  preferred_discount_amount: 11)
+      }
       let(:enterprise_fee) { create(:enterprise_fee, calculator: calculator) }
-      let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+      let!(:exchange) {
+        create(:exchange, incoming: true, sender: variant1.product.supplier,
+                          receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+      }
       let!(:order) do
-        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 2)
+        order = create(:completed_order_with_totals, user: user, distributor: distributor,
+                                                     order_cycle: order_cycle, line_items_count: 2)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.line_items.last.update(variant_id: variant2.id)
-        while !order.completed? do break unless order.next! end
+        break unless order.next! while !order.completed?
         order.recreate_all_fees!
         order
       end

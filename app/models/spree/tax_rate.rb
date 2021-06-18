@@ -77,10 +77,10 @@ module Spree
     def potentially_applicable?(order_tax_zone)
       # If the rate's zone matches the order's tax zone, then it's applicable.
       zone == order_tax_zone ||
-      # If the rate's zone *contains* the order's tax zone, then it's applicable.
-      zone.contains?(order_tax_zone) ||
-      # The rate's zone is the default zone, then it's always applicable.
-      (included_in_price? && zone.default_tax)
+        # If the rate's zone *contains* the order's tax zone, then it's applicable.
+        zone.contains?(order_tax_zone) ||
+        # The rate's zone is the default zone, then it's always applicable.
+        (included_in_price? && zone.default_tax)
     end
 
     # Creates necessary tax adjustments for the item.
@@ -90,7 +90,7 @@ module Spree
 
       included = included_in_price && default_zone_or_zone_match?(order)
 
-      self.adjustments.create!(
+      adjustments.create!(
         adjustable: item,
         amount: amount,
         order: order,
@@ -141,7 +141,7 @@ module Spree
     def create_label(adjustment_amount)
       label = ""
       label << "#{Spree.t(:refund)} " if adjustment_amount.negative?
-      label << "#{(name.presence || tax_category.name)} "
+      label << "#{name.presence || tax_category.name} "
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
       label

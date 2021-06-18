@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserConfirmationsController < DeviseController
   # Needed for access to current_ability, so we can authorize! actions
   include Spree::Core::ControllerHelpers::Auth

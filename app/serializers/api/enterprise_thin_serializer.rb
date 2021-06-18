@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class EnterpriseThinSerializer < ActiveModel::Serializer
     attributes :name, :id, :active, :path

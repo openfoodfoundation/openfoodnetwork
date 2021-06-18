@@ -29,10 +29,12 @@ describe Calculator::FlexiRate do
   end
 
   it "allows creation of new object with all the attributes" do
-    Calculator::FlexiRate.new(preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1)
+    Calculator::FlexiRate.new(preferred_first_item: 1, preferred_additional_item: 1,
+                              preferred_max_items: 1)
   end
 
   context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module", [:preferred_first_item, :preferred_additional_item]
+    it_behaves_like "a model using the LocalizedNumber module",
+                    [:preferred_first_item, :preferred_additional_item]
   end
 end
