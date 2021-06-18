@@ -172,8 +172,6 @@ module Spree
       end
 
       def authorize_stripe_sca_payment
-        return unless @payment.payment_method.instance_of?(Spree::Gateway::StripeSCA)
-
         @payment.authorize!(full_order_path(@payment.order))
 
         unless @payment.pending? || @payment.requires_authorization?

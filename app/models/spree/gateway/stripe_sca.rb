@@ -69,8 +69,8 @@ module Spree
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def authorize(money, creditcard, gateway_options)
-        authorize_response =
-          provider.authorize(*options_for_authorize(money, creditcard, gateway_options))
+        options = *options_for_authorize(money, creditcard, gateway_options)
+        authorize_response = provider.authorize(*options)
         Stripe::AuthorizeResponsePatcher.new(authorize_response).call!
       rescue Stripe::StripeError => e
         failed_activemerchant_billing_response(e.message)

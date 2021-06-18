@@ -40,7 +40,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           spree_post :create, payment: params, order_id: order.number
 
           redirects_to_list_of_payments_with_success_flash
-          expect(order.reload.payments.last.state).to eq "checkout"
+          expect(order.reload.payments.last.state).to eq "pending"
         end
       end
 
@@ -56,7 +56,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           spree_post :create, payment: params, order_id: order.number
 
           redirects_to_new_payment_page_with_flash_error("Payment Gateway Error")
-          expect(order.reload.payments.last.state).to eq "checkout"
+          expect(order.reload.payments.last.state).to eq "pending"
         end
       end
 
@@ -98,6 +98,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
               payment.update state: "requires_authorization"
             end
           end
+
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 

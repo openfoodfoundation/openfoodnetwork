@@ -25,6 +25,10 @@ module Spree
         ActiveMerchant::Billing::Response.new(true, "", {}, {})
       end
 
+      def authorize(_money, _creditcard, _gateway_options)
+        Gateway::SuccessfulResponse.new
+      end
+
       def source_required?
         false
       end

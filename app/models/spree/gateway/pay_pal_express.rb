@@ -105,6 +105,10 @@ module Spree
         end
         refund_transaction_response
       end
+
+      def authorize(_money, _creditcard, _gateway_options)
+        ActiveMerchant::Billing::Response.new(true, "", {}, {})
+      end
     end
   end
 end

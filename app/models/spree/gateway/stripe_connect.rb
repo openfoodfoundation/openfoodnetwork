@@ -56,6 +56,10 @@ module Spree
         profile_storer.create_customer_from_token
       end
 
+      def authorize(_money, _creditcard, _gateway_options)
+        ActiveMerchant::Billing::Response.new(true, "", {}, {})
+      end
+
       private
 
       # In this gateway, what we call 'secret_key' is the 'login'
