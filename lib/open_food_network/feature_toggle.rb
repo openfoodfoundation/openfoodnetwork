@@ -1,12 +1,10 @@
 module OpenFoodNetwork
   # This feature toggles implementation provides two mechanisms to conditionally enable features.
   #
-  # You can provide an ENV var with the prefix `OFN_FEATURE_` and query it using the
-  # `ApplicationHelper#feature?` helper method. For instance, providing the ENV var
-  # `OFN_FEATURE_NEW_SHINNY_FEATURE` you could then query it from view as follows:
+  # You can configure features via the Flipper config and web interface. See:
   #
-  #   - if feature? :new_shiny_feature
-  #     = render "new_shiny_feature"
+  # - config/initializers/flipper.rb
+  # - http://localhost:3000/admin/feature-toggle/features
   #
   # Alternatively, you can choose which users have the feature toggled on. To do that you need to
   # register the feature and its users from an initializer like:
@@ -32,7 +30,7 @@ module OpenFoodNetwork
       if Flipper[feature_name].exist?
         Flipper.enabled?(feature_name, user)
       else
-        feature = features.fetch(feature_name, DefaultFeature.new(feature_name))
+        feature = features.fetch(feature_name, DefaultFeature.new)
         feature.enabled?(user)
       end
     end
@@ -58,28 +56,8 @@ module OpenFoodNetwork
   end
 
   class DefaultFeature
-    attr_reader :feature_name
-
-    def initialize(feature_name)
-      @feature_name = feature_name
-    end
-
     def enabled?(_user)
-      true?(env_variable_value(feature_name))
-    end
-
-    private
-
-    def env_variable_value(feature_name)
-      ENV.fetch(env_variable_name(feature_name), nil)
-    end
-
-    def env_variable_name(feature_name)
-      "OFN_FEATURE_#{feature_name.to_s.upcase}"
-    end
-
-    def true?(value)
-      value.to_s.casecmp("true").zero?
+      false
     end
   end
 end
