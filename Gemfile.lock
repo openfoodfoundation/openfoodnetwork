@@ -769,7 +769,6 @@ DEPENDENCIES
   rswag
   rubocop
   rubocop-rails
-  sass (~> 3.4.0)
   sass-rails (< 5.1.0)
   select2-rails!
   selenium-webdriver
