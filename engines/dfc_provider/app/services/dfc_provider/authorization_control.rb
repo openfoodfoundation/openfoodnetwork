@@ -11,6 +11,8 @@ module DfcProvider
     def process
       decode_token
       find_ofn_user
+    rescue JWT::DecodeError
+      return nil
     end
 
     private
