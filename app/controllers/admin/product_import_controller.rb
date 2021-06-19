@@ -14,10 +14,10 @@ module Admin
 
     def import
       @filepath = save_uploaded_file(params[:file])
-      @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user,
+      @importer = Catalog::ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user,
                                                      params[:settings])
       @original_filename = params[:file].try(:original_filename)
-      @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
+      @non_updatable_fields = Catalog::ProductImport::EntryValidator.non_updatable_fields
 
       return if contains_errors? @importer
 
@@ -37,7 +37,7 @@ module Admin
     end
 
     def reset_absent_products
-      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]),
+      @importer = Catalog::ProductImport::ProductImporter.new(File.new(params[:filepath]),
                                                      spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], settings: params[:settings])
 
       if params.key?(:enterprises_to_reset) && params.key?(:updated_ids)
@@ -110,7 +110,7 @@ module Admin
 
     # Define custom model class for Cancan permissions
     def model_class
-      ProductImport::ProductImporter
+      Catalog::ProductImport::ProductImporter
     end
   end
 end

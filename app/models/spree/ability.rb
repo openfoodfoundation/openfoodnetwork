@@ -233,7 +233,7 @@ module Spree
       can [:admin, :index, :read, :create, :edit], Spree::Classification
 
       can [:admin, :index, :guide, :import, :save, :save_data,
-           :validate_data, :reset_absent_products], ProductImport::ProductImporter
+           :validate_data, :reset_absent_products], Catalog::ProductImport::ProductImporter
 
       # Reports page
       can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :payments,

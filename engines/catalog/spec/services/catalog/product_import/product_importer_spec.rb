@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-describe ProductImport::ProductImporter do
+describe Catalog::ProductImport::ProductImporter do
   let!(:admin) { create(:admin_user) }
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }
@@ -858,7 +858,7 @@ def import_data(csv_data, args = {})
 
   File.write('/tmp/test-m.csv', csv_data)
   @file ||= File.new('/tmp/test-m.csv')
-  ProductImport::ProductImporter.new(@file,
+  Catalog::ProductImport::ProductImporter.new(@file,
                                      import_user,
                                      start: start_row,
                                      end: end_row,
