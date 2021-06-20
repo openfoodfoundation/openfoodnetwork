@@ -82,6 +82,11 @@ Openfoodnetwork::Application.routes.draw do
           constraints: lambda { |_| Flipper.enabled?(:api_reports) }
     end
 
+    namespace :v1 do
+      resources :customers
+    end
+
+
     match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v[0-9]).+/ }
   end
 end
