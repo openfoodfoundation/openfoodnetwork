@@ -303,6 +303,7 @@ fr:
   no_pending_payments: "Aucun paiement en attente."
   invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
+  clear_filters: Effacer les filtres
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
@@ -1396,8 +1397,6 @@ fr:
   label_producers: "Producteurs"
   label_groups: "Groupes"
   label_about: "A propos"
-  label_connect: "Se connecter"
-  label_learn: "Apprendre"
   label_blog: "Blog"
   label_support: "Soutien"
   label_shopping: "Achats"
@@ -1485,10 +1484,6 @@ fr:
   brandstory_part4: " "
   brandstory_part5_strong: " "
   brandstory_part6: " "
-  learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
-  learn_cta: "Découvrir "
-  connect_body: "Rechercher dans le répertoire des boutiques producteurs ou multi-producteurs et groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur CoopCircuits pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
-  connect_cta: "Explorer"
   system_headline: "Commander en ligne - comment ça marche?"
   system_step1: "1. Recherche"
   system_step1_text: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
@@ -2694,6 +2689,7 @@ fr:
           failed: "échec"
           paid: "payé"
           pending: "en attente"
+          requires_authorization: "authorisation requise"
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
@@ -3651,6 +3647,7 @@ fr:
       paid: payé
       pending: en attente
       processing: en traitement
+      requires_authorization: "authorisation requise"
       void: faire un avoir
       invalid: invalide
       authorise: autorise
