@@ -14,9 +14,9 @@ class MigrateAdminTaxAmounts < ActiveRecord::Migration[6.0]
   end
 
   def migrate_admin_taxes!
-    Spree::Adjustment.admin.where('included_tax <> 0').find_each do |adjustment|
+    Spree::Adjustment.admin.where('included_tax <> 0').includes(:order).find_each do |adjustment|
 
-      tax_rate = find_tax_rate(adjustment.amount, adjustment.included_tax)
+      tax_rate = find_tax_rate(adjustment)
       tax_category = tax_rate&.tax_category
       label = tax_adjustment_label(tax_rate)
 
@@ -35,11 +35,15 @@ class MigrateAdminTaxAmounts < ActiveRecord::Migration[6.0]
     end
   end
 
-  def find_tax_rate(amount, included_tax)
+  def find_tax_rate(adjustment)
+    amount = adjustment.amount
+    included_tax = adjustment.included_tax
     approximation = (included_tax / (amount - included_tax))
+
     return if approximation.infinite? || approximation.zero? || approximation.nan?
 
-    Spree::TaxRate.order(Arel.sql("ABS(amount - #{approximation})")).first
+    applicable_rates = Spree::TaxRate.match(adjustment.order)
+    applicable_rates.min_by{ |rate| (rate.amount - approximation).abs  }
   end
 
   def tax_adjustment_label(tax_rate)
