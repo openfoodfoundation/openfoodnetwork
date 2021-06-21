@@ -34,11 +34,11 @@ module DfcProvider
         @current_enterprise ||=
           case params[enterprise_id_param_name]
           when 'default'
-            return current_user.enterprises.first!
+            current_user.enterprises.first!
           when nil
-            return nil
+            nil
           else
-            return current_user.enterprises.find(params[enterprise_id_param_name])
+            current_user.enterprises.find(params[enterprise_id_param_name])
           end
       end
 
