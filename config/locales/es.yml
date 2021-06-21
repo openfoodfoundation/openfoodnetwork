@@ -2667,6 +2667,7 @@ es:
           failed: "fallido"
           paid: "pagado"
           pending: "pendiente"
+          requires_authorization: "Autorización requerida"
           processing: "procesando"
           void: "pendiente"
           invalid: "inválido"
@@ -3621,6 +3622,7 @@ es:
       paid: pagado
       pending: pendiente
       processing: procesando
+      requires_authorization: "Autorización requerida"
       void: pendiente
       invalid: inválido
       authorise: autorizar
