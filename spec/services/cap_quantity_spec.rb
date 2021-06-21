@@ -66,6 +66,7 @@ describe CapQuantity do
             allow(order).to receive(:ensure_available_shipping_rates) { true }
             allow(order).to receive(:process_each_payment) { true }
 
+            order.reload
             order.create_proposed_shipments
           end
 
