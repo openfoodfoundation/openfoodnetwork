@@ -43,7 +43,9 @@ describe PlaceProxyOrder do
   end
 
   describe "#send_placement_email" do
-    let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true) }
+    let(:summarizer) {
+      instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
+    }
 
     before do
       allow(SubscriptionMailer).to receive(:placement_email) { mail_mock }
@@ -85,7 +87,9 @@ describe PlaceProxyOrder do
   end
 
   describe "#send_empty_email" do
-    let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true) }
+    let(:summarizer) {
+      instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
+    }
 
     let(:changeset) { double(:changes) }
     let(:stock_changes_loader) { lambda { changeset } }
