@@ -78,18 +78,18 @@ describe Spree::Admin::PaymentsController, type: :controller do
           end
         end
 
-        context "where payment.authorize! does not move payment to pending state" do
+        context "when payment.authorize! raises StateMachines::InvalidTransition" do
           before do
-            allow_any_instance_of(Spree::Payment)
-              .to receive(:authorize!)
-              .and_raise(Spree::Core::GatewayError, I18n.t('authorization_failure'))
+            allow_any_instance_of(Spree::Payment).to receive(:pend).and_return(false)
+            allow_any_instance_of(Spree::Gateway::StripeSCA)
+              .to receive(:authorize).and_return(Spree::Gateway::SuccessfulResponse.new)
           end
 
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
             redirects_to_new_payment_page_with_flash_error("Authorization Failure")
-            expect(order.reload.payments.last.state).to eq "checkout"
+            expect(order.reload.payments.last.state).to eq "processing"
           end
         end
 

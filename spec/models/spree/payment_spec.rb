@@ -196,6 +196,13 @@ describe Spree::Payment do
             }.to raise_error(Spree::Core::GatewayError)
           end
         end
+
+        context "when the payment cannot transition to the success state" do
+          it "raises StateMachines::InvalidTransition" do
+            allow(payment).to receive(:pend).and_return(false)
+            expect { payment.authorize! }.to raise_error(StateMachines::InvalidTransition)
+          end
+        end
       end
 
       context "purchase" do

@@ -52,6 +52,9 @@ module Spree
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
           redirect_to spree.new_admin_order_payment_path(@order)
+        rescue StateMachines::InvalidTransition
+          flash[:error] = I18n.t('authorization_failure')
+          redirect_to spree.new_admin_order_payment_path(@order)
         end
       end
 
