@@ -94,17 +94,33 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         context "where further action is required" do
+          let(:stripe_response) do
+            instance_double(
+              ActiveMerchant::Billing::Response,
+              success?: true,
+              authorization: true,
+              avs_result: { "code" => "xxx" },
+              cvv_result: { "message" => "https://www.stripe.com/authorize" }
+            )
+          end
+
           before do
-            allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
-              payment.update cvv_response_message: "https://www.stripe.com/authorize"
-              payment.update state: "requires_authorization"
-            end
+            allow_any_instance_of(Spree::Gateway::StripeSCA)
+              .to receive(:authorize).and_return(stripe_response)
           end
 
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
             redirects_to_new_payment_page_with_flash_error(I18n.t('action_required'))
+          end
+
+          it "sends an authorize_payment email" do
+            mail = double(:authorize_payment, deliver_later: true)
+            expect(PaymentMailer).to receive(:authorize_payment)
+              .with(kind_of(Spree::Payment)).and_return(mail)
+
+            spree_post :create, payment: params, order_id: order.number
           end
         end
 

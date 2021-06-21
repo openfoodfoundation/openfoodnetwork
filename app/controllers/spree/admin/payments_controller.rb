@@ -35,15 +35,29 @@ module Spree
             return
           end
 
+          @payment.authorize!(full_order_path(@payment.order))
+          @payment.request_user_authorization do
+            PaymentMailer.authorize_payment(@payment).deliver_later
+          end
+
           if @order.completed?
-            authorize_stripe_sca_payment
+            @payment.authorize!(full_order_path(@payment.order))
+            @payment.request_user_authorization do
+              PaymentMailer.authorize_payment(@payment).deliver_later
+            end
+
             @payment.process_offline!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
             redirect_to spree.admin_order_payments_path(@order)
           else
             OrderWorkflow.new(@order).complete!
-            authorize_stripe_sca_payment
+
+            @payment.authorize!(full_order_path(@payment.order))
+            @payment.request_user_authorization do
+              PaymentMailer.authorize_payment(@payment).deliver_later
+            end
+
             @payment.process_offline!
 
             flash[:success] = Spree.t(:new_order_completed)
@@ -172,15 +186,6 @@ module Spree
 
       def load_payment
         @payment = Payment.find(params[:id])
-      end
-
-      def authorize_stripe_sca_payment
-        @payment.authorize!(full_order_path(@payment.order))
-
-        return unless @payment.requires_authorization?
-
-        PaymentMailer.authorize_payment(@payment).deliver_later
-        raise Spree::Core::GatewayError, I18n.t('action_required')
       end
 
       def allowed_events
