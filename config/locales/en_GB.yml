@@ -303,6 +303,7 @@ en_GB:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -1394,8 +1395,6 @@ en_GB:
   label_producers: "Producers"
   label_groups: "Groups"
   label_about: "About"
-  label_connect: "Connect"
-  label_learn: "Learn"
   label_blog: "Blog"
   label_support: "Support"
   label_shopping: "Shopping"
@@ -1483,10 +1482,6 @@ en_GB:
   brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
   brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
-  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation. Find training, events and other opportunities to learn from peers."
-  learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you. List your business or organisation on the OFN so buyers can find you. Join the community to get advice and solve problems together."
-  connect_cta: "Go Exploring"
   system_headline: "Selling on OFN - 3 easy steps"
   system_step1: "1. Create Your Enterprise"
   system_step1_text: "Set up your enterprise with a name, description, photos, contact details and social media links."
@@ -2672,6 +2667,7 @@ en_GB:
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorisation required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3008,6 +3004,7 @@ en_GB:
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorisation email"
     rma_credit: "RMA credit"
+    refund: "Refund"
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3627,6 +3624,7 @@ en_GB:
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorisation required"
       void: void
       invalid: invalid
       authorise: authorise
@@ -3674,7 +3672,7 @@ en_GB:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
-        instructions: "Your order has been shipped"
+        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
         thanks: "Thank you for your order with us."
