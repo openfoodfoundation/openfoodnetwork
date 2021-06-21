@@ -2667,6 +2667,7 @@ ca:
           failed: "error"
           paid: "pagat"
           pending: "pendents"
+          requires_authorization: "cal autorització"
           processing: "processant"
           void: "pendent"
           invalid: "invàlid"
@@ -3621,6 +3622,7 @@ ca:
       paid: pagat
       pending: pendents
       processing: processant
+      requires_authorization: "cal autorització"
       void: pendent
       invalid: invàlid
       authorise: autoritzar
