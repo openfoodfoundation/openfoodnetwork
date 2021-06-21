@@ -13,9 +13,16 @@ describe CapQuantity do
     let(:variant1) { create(:variant, on_hand: 5) }
     let(:variant2) { create(:variant, on_hand: 5) }
     let(:variant3) { create(:variant, on_hand: 5) }
-    let!(:line_item1) { create(:line_item, order: order, variant: variant1, quantity: 3) }
-    let!(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 3) }
-    let!(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 3) }
+
+    let(:line_item1) { create(:line_item, variant: variant1, quantity: 3) }
+    let(:line_item2) { create(:line_item, variant: variant2, quantity: 3) }
+    let(:line_item3) { create(:line_item, variant: variant3, quantity: 3) }
+
+    before do
+      order.line_items << line_item1
+      order.line_items << line_item2
+      order.line_items << line_item3
+    end
 
     context "when all items are available from the order cycle" do
       before { [variant1, variant2, variant3].each { |v| ex.variants << v } }
@@ -28,7 +35,7 @@ describe CapQuantity do
         end
 
         it "caps quantity at the stock level for stock-limited items, and reports the change" do
-          changes = CapQuantity.new(order.reload).call
+          changes = CapQuantity.new(order).call
 
           expect(line_item1.reload.quantity).to be 3 # not capped
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -51,7 +58,7 @@ describe CapQuantity do
         end
 
         it "sets quantity to 0 for unavailable items, and reports the change" do
-          changes = CapQuantity.new(order.reload).call
+          changes = CapQuantity.new(order).call
 
           expect(line_item1.reload.quantity).to be 0 # unavailable
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -66,12 +73,11 @@ describe CapQuantity do
             allow(order).to receive(:ensure_available_shipping_rates) { true }
             allow(order).to receive(:process_each_payment) { true }
 
-            order.reload
             order.create_proposed_shipments
           end
 
           it "removes the unavailable items from the shipment" do
-            expect { CapQuantity.new(order.reload).call }
+            expect { CapQuantity.new(order).call }
               .to change { order.reload.shipment.manifest.size }.from(2).to(1)
           end
         end
