@@ -46,5 +46,10 @@ vendor/bundle/
 coverage
 /reports/
 !/reports/README.md
-bin/
 /spec/components/stories/**/*.stories.json
+
+/public/packs
+/public/packs-test
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
