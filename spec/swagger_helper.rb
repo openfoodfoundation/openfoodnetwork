@@ -3,72 +3,41 @@
 require 'spec_helper'
 
 RSpec.configure do |config|
+  # Specify a root folder where Swagger JSON files are generated
+  # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
+  # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join('swagger').to_s
+
+  # Define one or more Swagger documents and provide global metadata for each one
+  # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
+  # be generated at the provided relative path under swagger_root
+  # By default, the operations defined in spec files are added to the first
+  # document below. You can override this behavior by adding a swagger_doc tag to the
+  # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'The Open Food Network',
-        description: 'This spec is auto generated using the rswag gem. It is incomplete and not yet valid for openapi 3.0.1. Do not publish this. \
-Some endpoints are public and require no authorization; others require authorization. Talk to us to get your credentials set up. \
-Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork',
-        version: '0.1',
-      },
-      components: {
-        securitySchemes: {
-          api_key: {
-            type: :apiKey,
-            name: 'X-Spree-Token',
-            in: :header
-          }
-        },
-        schemas: {
-          Order_Concise: {
-            type: 'object',
-            properties: {
-              id: { type: 'integer' },
-              number: { type: 'string' },
-              full_name: { type: 'string' },
-              email: { type: 'string' },
-              phone: { type: 'string' },
-              completed_at: { type: 'string' },
-              display_total: { type: 'string' },
-              show_path: { type: 'string' },
-              edit_path: { type: 'string' },
-              state: { type: 'string' },
-              payment_state: { type: 'string' },
-              shipment_state: { type: 'string' },
-              payments_path: { type: 'string' },
-              shipments_path: { type: 'string' },
-              ship_path: { type: 'string' },
-              ready_to_ship: { type: 'string' },
-              created_at: { type: 'string' },
-              distributor_name: { type: 'string' },
-              special_instructions: { type: 'string' },
-              payment_capture_path: { type: 'string' },
-              distributor: {
-                type: 'object',
-                properties: {
-                  id: { type: 'integer' }
-                }
-              },
-              order_cycle: {
-                type: 'object',
-                properties: {
-                  id: { type: 'integer' }
-                }
-              }
-            }
-          }
-        }
+        title: 'API V1',
+        version: 'v1'
       },
       paths: {},
       servers: [
         {
-          url: 'https://staging.katuma.org/api'
+          url: 'https://{defaultHost}',
+          variables: {
+            defaultHost: {
+              default: 'www.example.com'
+            }
+          }
         }
       ]
     }
   }
+
+  # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
+  # The swagger_docs configuration option has the filename including format in
+  # the key, this may want to be changed to avoid putting yaml in json files.
+  # Defaults to json. Accepts ':json' and ':yaml'.
   config.swagger_format = :yaml
 end
