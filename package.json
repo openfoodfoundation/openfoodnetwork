@@ -21,7 +21,7 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
-    "@rails/webpacker": "5.3.0",
+    "@rails/webpacker": "5.4.0",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
     "shortcut-buttons-flatpickr": "^0.3.1",
