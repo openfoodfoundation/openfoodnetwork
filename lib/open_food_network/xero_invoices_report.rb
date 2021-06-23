@@ -72,7 +72,7 @@ module OpenFoodNetwork
 
     def line_item_detail_row(line_item, invoice_number, opts)
       row(line_item.order,
-          line_item.product.sku,
+          line_item.variant.sku,
           line_item.product_and_full_name,
           line_item.quantity.to_s,
           line_item.price.to_s,
