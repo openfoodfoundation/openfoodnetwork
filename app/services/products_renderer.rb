@@ -52,9 +52,7 @@ class ProductsRenderer
   def filter_and_paginate(query)
     query.
       ransack(args[:q]).
-      result.
-      page(args[:page] || 1).
-      per(args[:per_page] || DEFAULT_PER_PAGE)
+      result
   end
 
   def distributed_products

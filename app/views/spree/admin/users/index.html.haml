@@ -27,7 +27,7 @@
         %td.actions
           = link_to_delete user, no_text: true
 - _with_routes Spree::Core::Engine.routes do
-  = paginate @users
+  = pagy_nav @pagy
 
 - content_for :sidebar_title do
   = t(".search")
