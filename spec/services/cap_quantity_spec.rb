@@ -35,7 +35,7 @@ describe CapQuantity do
         end
 
         it "caps quantity at the stock level for stock-limited items, and reports the change" do
-          changes = CapQuantity.new(order).call
+          changes = CapQuantity.new.call(order)
 
           expect(line_item1.reload.quantity).to be 3 # not capped
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -58,7 +58,7 @@ describe CapQuantity do
         end
 
         it "sets quantity to 0 for unavailable items, and reports the change" do
-          changes = CapQuantity.new(order).call
+          changes = CapQuantity.new.call(order)
 
           expect(line_item1.reload.quantity).to be 0 # unavailable
           expect(line_item2.reload.quantity).to be 2 # capped
@@ -77,7 +77,7 @@ describe CapQuantity do
           end
 
           it "removes the unavailable items from the shipment" do
-            expect { CapQuantity.new(order).call }
+            expect { CapQuantity.new.call(order) }
               .to change { order.reload.shipment.manifest.size }.from(2).to(1)
           end
         end

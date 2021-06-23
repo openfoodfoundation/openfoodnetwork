@@ -26,6 +26,6 @@ class SubscriptionPlacementJob < ActiveJob::Base
   end
 
   def place_order_for(proxy_order)
-    PlaceProxyOrder.new(proxy_order, summarizer, JobLogger.logger, CapQuantity.new(proxy_order.order)).call
+    PlaceProxyOrder.new(proxy_order, summarizer, JobLogger.logger, CapQuantity.new).call
   end
 end

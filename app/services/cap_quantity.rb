@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class CapQuantity
-  def initialize(order)
-    @order = order
+  def initialize
     @changes = {}
   end
 
-  def call
+  def call(order)
+    @order = order
+
     cap_insufficient_stock!
     verify_line_items
 

@@ -7,6 +7,7 @@ class PlaceProxyOrder
     @summarizer = summarizer
     @logger = logger
     @stock_changes_loader = stock_changes_loader
+    @order = nil
   end
 
   def call
@@ -29,12 +30,13 @@ class PlaceProxyOrder
 
   private
 
-  attr_reader :proxy_order, :subscription, :order, :summarizer, :logger, :stock_changes_loader, :changes
+  attr_reader :proxy_order, :subscription, :summarizer, :logger, :stock_changes_loader, :changes
+  attr_accessor :order
 
   def initialise_order
     logger.info("Placing Order for Proxy Order #{proxy_order.id}")
 
-    @order = proxy_order.initialise_order!
+    self.order = proxy_order.initialise_order!
 
     if order.nil?
       summarizer.record_subscription_issue(subscription)
@@ -51,7 +53,7 @@ class PlaceProxyOrder
   end
 
   def load_changes
-    @changes = stock_changes_loader.call
+    @changes = stock_changes_loader.call(order)
   end
 
   def empty_order?

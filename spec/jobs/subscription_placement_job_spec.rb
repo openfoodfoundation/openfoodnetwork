@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe SubscriptionPlacementJob do
   let(:job) { SubscriptionPlacementJob.new }
+  let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
   describe "finding proxy_orders that are ready to be placed" do
     let(:shop) { create(:distributor_enterprise) }
@@ -59,13 +60,7 @@ describe SubscriptionPlacementJob do
       end
 
       it "processes placeable proxy_orders" do
-        summarizer = instance_double(OrderManagement::Subscriptions::Summarizer)
-        service = PlaceProxyOrder.new(
-          proxy_order,
-          summarizer,
-          JobLogger.logger,
-          CapQuantity.new(proxy_order.order)
-        )
+        service = PlaceProxyOrder.new(proxy_order, summarizer, JobLogger.logger, CapQuantity.new)
 
         allow(PlaceProxyOrder).to receive(:new) { service }
         allow(service).to receive(:call)
@@ -110,44 +105,35 @@ describe SubscriptionPlacementJob do
 
     context "when the order is not already complete" do
       context "when no stock items are available after capping stock" do
-        let(:store_changes) { CapQuantity.new(order) }
+        let(:service) do
+          PlaceProxyOrder.new(proxy_order, summarizer, JobLogger.logger, store_updater)
+        end
+        let(:store_updater) { CapQuantity.new }
 
         before do
-          allow(store_changes).to receive(:unavailable_stock_lines_for) { order.line_items }
+          fake_relation = instance_double(ActiveRecord::Relation, select: -123)
+          allow(store_updater).to receive(:available_variants_for).and_return(fake_relation)
         end
 
         it "does not place the order, clears all adjustments, and sends an empty_order email" do
-          summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_issue: true)
-          service = PlaceProxyOrder.new(
-            proxy_order,
-            summarizer,
-            JobLogger.logger,
-            store_changes
-          )
-
           allow(service).to receive(:send_placement_email)
           allow(service).to receive(:send_empty_email)
 
-          expect { service.call }.to_not change { order.reload.completed_at }.from(nil)
-          expect(order.all_adjustments).to be_empty
-          expect(order.total).to eq 0
-          expect(order.adjustment_total).to eq 0
+          service.call
+
+          expect(proxy_order.order.reload.completed_at).to be_nil
+          expect(proxy_order.order.all_adjustments).to be_empty
+          expect(proxy_order.order.total).to eq 0
+          expect(proxy_order.order.adjustment_total).to eq 0
+
           expect(service).to_not have_received(:send_placement_email)
           expect(service).to have_received(:send_empty_email)
         end
       end
 
       context "when at least one stock item is available after capping stock" do
-        let(:summarizer) do
-          instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true, record_success: true)
-        end
         let(:service) do
-          PlaceProxyOrder.new(
-            proxy_order,
-            summarizer,
-            JobLogger.logger,
-            CapQuantity.new(order)
-          )
+          PlaceProxyOrder.new(proxy_order, summarizer, JobLogger.logger, CapQuantity.new)
         end
 
         before do
@@ -178,18 +164,6 @@ describe SubscriptionPlacementJob do
             service.call
           end
         end
-      end
-    end
-
-    context "when the proxy order fails to generate an order" do
-      before do
-        allow(proxy_order).to receive(:order) { nil }
-      end
-
-      it "records an error " do
-        expect_any_instance_of(OrderManagement::Subscriptions::Summarizer).to receive(:record_subscription_issue)
-        expect(job).to_not receive(:place_order)
-        job.send(:place_order_for, proxy_order)
       end
     end
   end
