@@ -101,7 +101,6 @@ describe SubscriptionPlacementJob do
     let(:ex) { oc.exchanges.outgoing.find_by(sender_id: shop.id, receiver_id: shop.id) }
     let(:fee) { create(:enterprise_fee, enterprise: shop, fee_type: 'sales', amount: 10) }
     let!(:exchange_fee) { ExchangeFee.create!(exchange: ex, enterprise_fee: fee) }
-    let!(:order) { proxy_order.initialise_order! }
 
     before do
       expect_any_instance_of(Spree::Payment).to_not receive(:process!)
@@ -109,41 +108,7 @@ describe SubscriptionPlacementJob do
       allow_any_instance_of(PlaceProxyOrder).to receive(:send_empty_email)
     end
 
-    context "when the order is already complete" do
-      before { break unless order.next! while !order.completed? }
-
-      it "records an issue and ignores it" do
-        summarizer = instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
-        service = PlaceProxyOrder.new(
-          proxy_order,
-          summarizer,
-          JobLogger.logger,
-          CapQuantity.new(order)
-        )
-
-        ActionMailer::Base.deliveries.clear
-        expect(summarizer).to receive(:record_issue).with(:complete, order).once
-        expect{ service.call }.to_not change{ order.reload.state }
-        expect(order.payments.first.state).to eq "checkout"
-        expect(ActionMailer::Base.deliveries.count).to be 0
-      end
-    end
-
     context "when the order is not already complete" do
-      describe "selection of shipping method" do
-        let!(:subscription) do
-          create(:subscription, shop: shop, shipping_method: shipping_method, with_items: true)
-        end
-
-        it "uses the same shipping method after advancing the order" do
-          allow(proxy_order).to receive(:order) { order }
-          job.send(:place_order_for, proxy_order)
-          order.reload
-          expect(order.state).to eq "complete"
-          expect(order.shipping_method).to eq(shipping_method)
-        end
-      end
-
       context "when no stock items are available after capping stock" do
         let(:store_changes) { CapQuantity.new(order) }
 

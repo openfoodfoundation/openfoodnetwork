@@ -40,6 +40,51 @@ describe PlaceProxyOrder do
 
       subject.call
     end
+
+    context "when the order is already complete" do
+      let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true) }
+
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
+      let(:order) { proxy_order.order }
+
+      before do
+        proxy_order.initialise_order!
+        break unless order.next! while !order.completed?
+      end
+
+      it "records an issue and ignores it" do
+        ActionMailer::Base.deliveries.clear
+
+        expect(summarizer).to receive(:record_issue).with(:complete, order).once
+        expect { subject.call }.to_not change { order.reload.state }
+        expect(order.payments.first.state).to eq "checkout"
+        expect(ActionMailer::Base.deliveries.count).to be 0
+      end
+    end
+
+    context "when the order is not already complete" do
+      describe "selection of shipping method" do
+        let(:shop) { create(:distributor_enterprise) }
+        let(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+        let!(:subscription) do
+          create(:subscription, shop: shop, shipping_method: shipping_method, with_items: true)
+        end
+        let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+
+        before do
+          proxy_order.order_cycle.orders_close_at = 1.day.ago
+          proxy_order.order_cycle.save!
+        end
+
+        it "uses the same shipping method after advancing the order" do
+          subject.call
+
+          proxy_order.reload
+          expect(proxy_order.state).to eq "complete"
+          expect(proxy_order.order.shipping_method).to eq(shipping_method)
+        end
+      end
+    end
   end
 
   describe "#send_placement_email" do
