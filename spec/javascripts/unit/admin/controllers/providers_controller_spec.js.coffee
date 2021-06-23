@@ -27,4 +27,4 @@ describe "ProvidersCtrl", ->
         ctrl = $controller 'ProvidersCtrl', {$scope: scope, paymentMethod: paymentMethod }
 
     it "sets the include_html porperty on scope to some address", ->
-      expect(scope.include_html).toBe "/admin/payment_methods/show_provider_preferences?provider_type=NOT NULL;pm_id=#{paymentMethod.id};"
+      expect(scope.include_html).toBe "/admin/payment_methods/show_provider_preferences?provider_type=NOT NULL;pm_id=#{paymentMethod.id || ''};"
