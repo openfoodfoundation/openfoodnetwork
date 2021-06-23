@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe SubscriptionPlacementJob do
+  include ActiveSupport::Testing::TimeHelpers
+
   let(:job) { SubscriptionPlacementJob.new }
   let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
@@ -141,11 +143,13 @@ describe SubscriptionPlacementJob do
         end
 
         it "processes the order to completion, but does not process the payment" do
-          # If this spec starts complaining about no shipping methods being available
-          # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-          expect{ service.call }.to change{ order.reload.completed_at }.from(nil)
-          expect(order.completed_at).to be_within(5.seconds).of Time.zone.now
-          expect(order.payments.first.state).to eq "checkout"
+          freeze_time do
+            service.call
+            proxy_order.order.reload.completed_at
+
+            expect(proxy_order.order.completed_at).to eq(Time.zone.now)
+            expect(proxy_order.order.payments.first.state).to eq "checkout"
+          end
         end
 
         it "does not enqueue confirmation emails" do
