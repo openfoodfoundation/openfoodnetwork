@@ -11,13 +11,19 @@ describe Admin::ColumnPreferencesController, type: :controller do
     let!(:enterprise) { create(:enterprise, owner: user1, users: [user1, user2]) }
 
     context "json" do
-      let!(:column_preference) { ColumnPreference.create(user_id: user1.id, action_name: 'enterprises_index', column_name: "name", visible: true) }
+      let!(:column_preference) {
+        ColumnPreference.create(user_id: user1.id, action_name: 'enterprises_index', column_name: "name",
+                                visible: true)
+      }
 
       let(:column_preference_params) {
         [
-          { id: column_preference.id, user_id: user1.id, action_name: "enterprises_index", column_name: 'name', visible: false },
-          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'producer', visible: true },
-          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'status', visible: true }
+          { id: column_preference.id, user_id: user1.id, action_name: "enterprises_index",
+            column_name: 'name', visible: false },
+          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'producer',
+            visible: true },
+          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'status',
+            visible: true }
         ]
       }
 
@@ -27,7 +33,8 @@ describe Admin::ColumnPreferencesController, type: :controller do
         end
 
         it "prevents me from updating the column preferences" do
-          spree_put :bulk_update, format: :json, action_name: "enterprises_index", column_preferences: column_preference_params
+          spree_put :bulk_update, format: :json, action_name: "enterprises_index",
+                                  column_preferences: column_preference_params
           expect(ColumnPreference.count).to be 1
         end
       end
@@ -38,8 +45,10 @@ describe Admin::ColumnPreferencesController, type: :controller do
         end
 
         it "allows me to update the column preferences" do
-          spree_put :bulk_update, format: :json, action_name: "enterprises_index", column_preferences: column_preference_params
-          expect(ColumnPreference.where(user_id: user1.id, action_name: 'enterprises_index').count).to be 3
+          spree_put :bulk_update, format: :json, action_name: "enterprises_index",
+                                  column_preferences: column_preference_params
+          expect(ColumnPreference.where(user_id: user1.id,
+                                        action_name: 'enterprises_index').count).to be 3
         end
       end
     end

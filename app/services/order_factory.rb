@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variant_to_hub'
 
 # Builds orders based on a set of attributes
@@ -79,7 +81,8 @@ class OrderFactory
 
   def create_payment
     @order.recreate_all_fees!
-    @order.payments.create(payment_method_id: attrs[:payment_method_id], amount: @order.reload.total)
+    @order.payments.create(payment_method_id: attrs[:payment_method_id],
+                           amount: @order.reload.total)
   end
 
   def stock_limited_quantity(variant_on_demand, variant_on_hand, requested)

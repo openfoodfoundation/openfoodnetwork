@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class CreditCardSerializer < ActiveModel::Serializer
     attributes :id, :brand, :number, :expiry, :formatted, :delete_link, :is_default

@@ -1302,8 +1302,6 @@ pl:
   label_producers: "Producenci"
   label_groups: "Grupy"
   label_about: "O nas"
-  label_connect: "Połącz się"
-  label_learn: "Dowiedz się"
   label_blog: "Blog"
   label_support: "Wsparcie"
   label_shopping: "Zakupy"
@@ -1391,10 +1389,6 @@ pl:
   brandstory_part4: "Działa wszędzie. Zmienia wszystko."
   brandstory_part5_strong: "Nazywamy to Open Food Network."
   brandstory_part6: "Wszyscy kochamy jeść. Teraz możemy również pokochać nasz system dostaw żywności."
-  learn_body: "Przeglądaj modele, historie i zasoby, które pomogą Ci rozwinąć Twój biznes lub organizację fair food. Znajdź szkolenia, wydarzenia i inne możliwości uczenia się od rówieśników."
-  learn_cta: "Zainspirować się"
-  connect_body: "Przeszukaj nasze pełne katalogi producentów, hubów, kooperatyw i grup, aby znaleźć uczciwych sprzedawców żywności w Twojej okolicy. Umieść swoją firmę lub organizację w OFN, aby kupujący mogli Cię znaleźć. Dołącz do społeczności, aby uzyskać porady i wspólnie rozwiązywać problemy."
-  connect_cta: "Idź eksplorować"
   system_headline: "Zakupy - tak to działa."
   system_step1: "1. Szukaj"
   system_step1_text: "Przeszukaj nasze różnorodne, niezależne sklepy z sezonową, lokalną żywnością. Szukaj według okolicy i kategorii żywności lub czy wolisz dostawę czy odbiór."
@@ -3456,7 +3450,6 @@ pl:
     shipment_mailer:
       shipped_email:
         dear_customer: "Drogi Kliencie,"
-        instructions: "Twoje zamówienie zostało wysłane"
         shipment_summary: "Podsumowanie przesyłki"
         subject: "Powiadomienie o wysyłce"
         thanks: "Dziękuję za Twoje zaangażowanie."

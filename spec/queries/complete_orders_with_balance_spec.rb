@@ -11,7 +11,7 @@ describe CompleteOrdersWithBalance do
 
     context 'when the user has complete orders' do
       let(:order) do
-        create(:order, state: 'complete', total: 2.0, payment_total: 1.0, completed_at: 2.day.ago)
+        create(:order, state: 'complete', total: 2.0, payment_total: 1.0, completed_at: 2.days.ago)
       end
       let!(:other_order) do
         create(
@@ -20,7 +20,7 @@ describe CompleteOrdersWithBalance do
           state: 'complete',
           total: 2.0,
           payment_total: 1.0,
-          completed_at: 1.days.ago
+          completed_at: 1.day.ago
         )
       end
 

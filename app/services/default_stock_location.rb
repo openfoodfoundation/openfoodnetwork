@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 # Encapsulates the concept of default stock location that OFN has, as explained
 # in https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-Upgrade%3A-Stock-locations
 class DefaultStockLocation
-  NAME = 'default'.freeze
+  NAME = 'default'
 
   def self.create!
     country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
     state = country.states.first
-    Spree::StockLocation.create!(name: NAME, country_id: country.id, state_id: state.id, backorderable_default: false)
+    Spree::StockLocation.create!(name: NAME, country_id: country.id, state_id: state.id,
+                                 backorderable_default: false)
   end
 
   def self.destroy_all

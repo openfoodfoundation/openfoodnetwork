@@ -15,22 +15,3 @@
           = Spree.t(:transaction_id)
           \:
         %dd= payment.source.transaction_id
-    - if payment.source.state != 'refunded'
-      = button_link_to Spree.t('actions.refund', scope: :paypal),
-        spree.paypal_refund_admin_order_payment_path(@order, payment),
-        icon: 'icon-dollar'
-    - else
-      .alpha.six.columns
-        %dl
-          %dt
-            = Spree.t(:state, scope: :paypal)
-            \:
-          %dd= payment.source.state.titleize
-          %dt
-            = Spree.t(:refunded_at, scope: :paypal)
-            \:
-          %dd= pretty_time(payment.source.refunded_at)
-          %dt
-            = Spree.t(:refund_transaction_id, scope: :paypal)
-            \:
-          %dd= payment.source.refund_transaction_id

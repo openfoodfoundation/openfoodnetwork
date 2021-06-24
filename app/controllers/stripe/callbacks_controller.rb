@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stripe/account_connector'
 
 module Stripe
@@ -13,7 +15,8 @@ module Stripe
       else
         flash[:error] = t('admin.controllers.enterprises.stripe_connect_fail')
       end
-      redirect_to main_app.edit_admin_enterprise_path(connector.enterprise, anchor: 'payment_methods')
+      redirect_to main_app.edit_admin_enterprise_path(connector.enterprise,
+                                                      anchor: 'payment_methods')
     rescue Stripe::StripeError => e
       render plain: e.message, status: :internal_server_error
     end

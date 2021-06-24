@@ -10,8 +10,13 @@ feature "Credit Cards", js: true do
   describe "as a logged in user" do
     let(:user) { create(:user) }
     let!(:customer) { create(:customer, user: user) }
-    let!(:default_card) { create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ', is_default: true) }
-    let!(:non_default_card) { create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
+    let!(:default_card) {
+      create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ',
+                                  is_default: true)
+    }
+    let!(:non_default_card) {
+      create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG')
+    }
 
     around do |example|
       original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
@@ -39,7 +44,7 @@ feature "Credit Cards", js: true do
     it "passes the smoke test" do
       visit "/account"
 
-      find("a", :text => %r{#{I18n.t('spree.users.show.tabs.cards')}}i).click
+      find("a", text: /#{I18n.t('spree.users.show.tabs.cards')}/i).click
 
       expect(page).to have_content I18n.t(:saved_cards)
 
@@ -81,7 +86,8 @@ feature "Credit Cards", js: true do
         click_link I18n.t(:delete)
       end
 
-      expect(page).to have_content I18n.t(:card_has_been_removed, number: "x-#{default_card.last_digits}")
+      expect(page).to have_content I18n.t(:card_has_been_removed,
+                                          number: "x-#{default_card.last_digits}")
       expect(page).to have_no_selector ".card#card#{default_card.id}"
 
       # Allows authorisation of card use by shops

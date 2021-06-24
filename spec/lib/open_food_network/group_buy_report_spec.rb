@@ -8,7 +8,8 @@ module OpenFoodNetwork
     before(:each) do
       @orders = []
       bill_address = create(:address)
-      distributor_address = create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
+      distributor_address = create(:address, address1: "distributor address", city: 'The Shire',
+                                             zipcode: "1234")
       distributor = create(:distributor_enterprise, address: distributor_address)
 
       @supplier1 = create(:supplier_enterprise)
@@ -19,11 +20,13 @@ module OpenFoodNetwork
 
       shipping_instructions = "pick up on thursday please!"
 
-      order1 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
+      order1 = create(:order, distributor: distributor, bill_address: bill_address,
+                              special_instructions: shipping_instructions)
       line_item11 = create(:line_item, variant: @variant1, order: order1)
       @orders << order1.reload
 
-      order2 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
+      order2 = create(:order, distributor: distributor, bill_address: bill_address,
+                              special_instructions: shipping_instructions)
       line_item21 = create(:line_item, variant: @variant1, order: order2)
 
       @variant2 = create(:variant)
@@ -38,7 +41,8 @@ module OpenFoodNetwork
       @variant3.product.supplier = @supplier2
       @variant3.product.save!
 
-      order3 = create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions)
+      order3 = create(:order, distributor: distributor, bill_address: bill_address,
+                              special_instructions: shipping_instructions)
       line_item31 = create(:line_item, variant: @variant3, order: order3)
       @orders << order3.reload
     end
@@ -46,7 +50,8 @@ module OpenFoodNetwork
     it "should return a header row describing the report" do
       subject = GroupBuyReport.new [@order1]
       header = subject.header
-      expect(header).to eq(["Supplier", "Product", "Unit Size", "Variant", "Weight", "Total Ordered", "Total Max"])
+      expect(header).to eq(["Supplier", "Product", "Unit Size", "Variant", "Weight",
+                            "Total Ordered", "Total Max"])
     end
 
     it "should provide the required variant and quantity information in a table" do
@@ -54,12 +59,15 @@ module OpenFoodNetwork
 
       table = subject.table
 
-      line_items = @orders.map(&:line_items).flatten.select{ |li| li.product.supplier == @supplier1 && li.variant == @variant1 }
+      line_items = @orders.map(&:line_items).flatten.select{ |li|
+        li.product.supplier == @supplier1 && li.variant == @variant1
+      }
 
       sum_quantities = line_items.map(&:quantity).sum
       sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.sum
 
-      expect(table[0]).to eq([@variant1.product.supplier.name, @variant1.product.name, "UNITSIZE", @variant1.options_text, @variant1.weight, sum_quantities, sum_max_quantities])
+      expect(table[0]).to eq([@variant1.product.supplier.name, @variant1.product.name, "UNITSIZE",
+                              @variant1.options_text, @variant1.weight, sum_quantities, sum_max_quantities])
     end
 
     it "should return a table wherein each rows contains the same number of columns as the heading" do
@@ -78,8 +86,12 @@ module OpenFoodNetwork
 
       table_row_objects = subject.variants_and_quantities
 
-      variant_rows = table_row_objects.select { |r| r.class == OpenFoodNetwork::GroupBuyVariantRow }
-      product_rows = table_row_objects.select { |r| r.class == OpenFoodNetwork::GroupBuyProductRow }
+      variant_rows = table_row_objects.select { |r|
+        r.instance_of?(OpenFoodNetwork::GroupBuyVariantRow)
+      }
+      product_rows = table_row_objects.select { |r|
+        r.instance_of?(OpenFoodNetwork::GroupBuyProductRow)
+      }
 
       supplier_groups = variant_rows.group_by { |r| r.variant.product.supplier }
       variant_groups = variant_rows.group_by(&:variant)

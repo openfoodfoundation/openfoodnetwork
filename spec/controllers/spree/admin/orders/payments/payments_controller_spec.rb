@@ -95,7 +95,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
               payment.update cvv_response_message: "https://www.stripe.com/authorize"
-              payment.update state: "pending"
+              payment.update state: "requires_authorization"
             end
           end
           it "redirects to new payment page with flash error" do
@@ -251,6 +251,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         request.env["HTTP_REFERER"] = "http://foo.com"
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
         allow(payment).to receive(:cvv_response_message).and_return("https://www.stripe.com/authorize")
+        allow(payment).to receive(:requires_authorization?) { true }
       end
 
       it "resends the authorization email" do
@@ -311,7 +312,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
     end
 
     context "the order contains an item that is out of stock" do
-      let!(:order) { create(:order, distributor: shop, state: 'payment') }
+      let!(:order) { create(:order_with_totals, distributor: shop, state: 'payment') }
 
       before do
         order.line_items.first.variant.update_attribute(:on_hand, 0)

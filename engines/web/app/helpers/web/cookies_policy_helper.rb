@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   module CookiesPolicyHelper
     def render_cookie_entry(cookie_name, cookie_desc, cookie_domain = nil)

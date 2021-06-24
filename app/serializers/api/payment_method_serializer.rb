@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::PaymentMethodSerializer < ActiveModel::Serializer
   attributes :name, :description, :id, :method_type,
              :price

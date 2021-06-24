@@ -28,14 +28,16 @@ module Spree
     belongs_to :user, class_name: Spree.user_class.to_s
     belongs_to :created_by, class_name: Spree.user_class.to_s
 
-    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
+    belongs_to :bill_address, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
 
-    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
+    belongs_to :ship_address, class_name: 'Spree::Address'
     alias_attribute :shipping_address, :ship_address
 
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at ASC') }, class_name: "Spree::LineItem", dependent: :destroy
+    has_many :line_items, -> {
+                            order('created_at ASC')
+                          }, class_name: "Spree::LineItem", dependent: :destroy
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
@@ -88,7 +90,7 @@ module Spree
     after_create :create_tax_charge!
 
     validates :email, presence: true,
-                      format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
+                      format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
 
     make_permalink field: :number
@@ -293,7 +295,11 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      Spree::TaxRate.adjust(self)
+      clear_legacy_taxes!
+
+      Spree::TaxRate.adjust(self, line_items)
+      Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      fee_handler.tax_enterprise_fees!
     end
 
     def name
@@ -343,8 +349,8 @@ module Spree
     def deliver_order_confirmation_email
       return if subscription.present?
 
-      Spree::OrderMailer.confirm_email_for_customer(id).deliver_later
-      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later
+      Spree::OrderMailer.confirm_email_for_customer(id).deliver_later(wait: 10.seconds)
+      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later(wait: 10.seconds)
     end
 
     # Helper methods for checkout steps
@@ -360,6 +366,7 @@ module Spree
     # These are both valid states to process the payment
     def pending_payments
       (payments.select(&:pending?) +
+        payments.select(&:requires_authorization?) +
         payments.select(&:processing?) +
         payments.select(&:checkout?)).uniq
     end
@@ -470,7 +477,7 @@ module Spree
     # an order is part-way through checkout and the user changes items in the cart; in that case
     # we need to reset the checkout flow to ensure the order is processed correctly.
     def ensure_updated_shipments
-      if !self.completed? && shipments.any?
+      if !completed? && shipments.any?
         shipments.destroy_all
         restart_checkout_flow
       end
@@ -564,7 +571,7 @@ module Spree
     end
 
     def enterprise_fee_tax
-      all_adjustments.reload.enterprise_fee.sum(:included_tax)
+      all_adjustments.tax.where(adjustable: all_adjustments.enterprise_fee).sum(:amount)
     end
 
     def total_tax
@@ -589,6 +596,13 @@ module Spree
 
     def fee_handler
       @fee_handler ||= OrderFeesHandler.new(self)
+    end
+
+    def clear_legacy_taxes!
+      # For instances that use additional taxes, old orders can have taxes recorded in
+      # lump-sum amounts per-order. We clear them here before re-applying the order's taxes,
+      # which will now be applied per-item.
+      adjustments.legacy_tax.delete_all
     end
 
     def process_each_payment
@@ -663,6 +677,7 @@ module Spree
 
     def require_customer?
       return false if new_record? || state == 'cart'
+
       true
     end
 

@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, RequestMonitor, Orders, SortOptions, $window, $filter) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, RequestMonitor, Orders, SortOptions, $window, $filter, $location, KeyValueMapStore) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -15,39 +15,54 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
   $scope.poll = 0
   $scope.rowStatus = {}
 
+  KeyValueMapStore.localStorageKey = 'ordersFilters'
+  KeyValueMapStore.storableKeys = ["q", "sorting", "page", "per_page"]
+
   $scope.initialise = ->
+    unless KeyValueMapStore.restoreValues($scope)
+      $scope.setDefaults()
+
+    $scope.fetchResults()
+
+  $scope.setDefaults = ->
     $scope.per_page = 15
     $scope.q = {
       completed_at_not_null: true
     }
+
+  $scope.clearFilters = () ->
+    KeyValueMapStore.clearKeyValueMap()
+    $scope.setDefaults()
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
-    startDateWithTime = $scope.appendStringIfNotEmpty($scope['q']['completed_at_gteq'], ' 00:00:00')
-    endDateWithTime = $scope.appendStringIfNotEmpty($scope['q']['completed_at_lteq'], ' 23:59:59')
+    startDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_gteq, ' 00:00:00')
+    endDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_lteq, ' 23:59:59')
 
     $scope.resetSelected()
     params = {
       'q[completed_at_gteq]': startDateWithTime,
       'q[completed_at_lteq]': endDateWithTime,
-      'q[state_eq]': $scope['q']['state_eq'],
-      'q[number_cont]': $scope['q']['number_cont'],
-      'q[email_cont]': $scope['q']['email_cont'],
-      'q[bill_address_firstname_start]': $scope['q']['bill_address_firstname_start'],
-      'q[bill_address_lastname_start]': $scope['q']['bill_address_lastname_start'],
+      'q[state_eq]': $scope.q?.state_eq,
+      'q[number_cont]': $scope.q?.number_cont,
+      'q[email_cont]': $scope.q?.email_cont,
+      'q[bill_address_firstname_start]': $scope.q?.bill_address_firstname_start,
+      'q[bill_address_lastname_start]': $scope.q?.bill_address_lastname_start,
       # Set default checkbox values to null. See: https://github.com/openfoodfoundation/openfoodnetwork/pull/3076#issuecomment-440010498
-      'q[completed_at_not_null]': $scope['q']['completed_at_not_null'] || null,
-      'q[distributor_id_in][]': $scope['q']['distributor_id_in'],
-      'q[order_cycle_id_in][]': $scope['q']['order_cycle_id_in'],
+      'q[completed_at_not_null]': $scope.q?.completed_at_not_null || null,
+      'q[distributor_id_in][]': $scope.q?.distributor_id_in,
+      'q[order_cycle_id_in][]': $scope.q?.order_cycle_id_in,
       'q[s]': $scope.sorting || 'completed_at desc',
-      shipping_method_id: $scope.shipping_method_id,
+      shipping_method_id: $scope.q?.shipping_method_id,
       per_page: $scope.per_page,
       page: page
     }
+    KeyValueMapStore.setStoredValues($scope)
     RequestMonitor.load(Orders.index(params).$promise)
 
   $scope.appendStringIfNotEmpty = (baseString, stringToAppend) ->
     return baseString unless baseString
+    return baseString if baseString.endsWith(stringToAppend)
 
     baseString + stringToAppend
 

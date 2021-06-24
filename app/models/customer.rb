@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Customer < ApplicationRecord
   acts_as_taggable
 
@@ -6,11 +8,11 @@ class Customer < ApplicationRecord
   has_many :orders, class_name: "Spree::Order"
   before_destroy :check_for_orders
 
-  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: "Spree::Address"
+  belongs_to :bill_address, class_name: "Spree::Address"
   alias_attribute :billing_address, :bill_address
   accepts_nested_attributes_for :bill_address
 
-  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: "Spree::Address"
+  belongs_to :ship_address, class_name: "Spree::Address"
   alias_attribute :shipping_address, :ship_address
   accepts_nested_attributes_for :ship_address
 
@@ -18,15 +20,15 @@ class Customer < ApplicationRecord
   before_validation :empty_code
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
-  validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
+  validates :email, presence: true,
+                    uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
   validates :enterprise, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
 
   before_create :associate_user
 
-  attr_accessor :gateway_recurring_payment_client_secret
-  attr_accessor :gateway_shop_id
+  attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
 
   private
 

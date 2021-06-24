@@ -30,7 +30,7 @@ describe TermsOfServiceFile do
     it "points to the last uploaded file with timestamp parameter" do
       file = TermsOfServiceFile.create!(attachment: pdf)
 
-      expect(subject).to match /^\/system\/terms_of_service_files\/attachments.*Terms-of-service\.pdf\?\d+$/
+      expect(subject).to match %r{^/system/terms_of_service_files/attachments.*Terms-of-service\.pdf\?\d+$}
     end
   end
 

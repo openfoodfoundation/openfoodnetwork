@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TagRule
   class FilterProducts < TagRule
     preference :matched_variants_visibility, :string, default: "visible"

@@ -333,6 +333,7 @@ en:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   ok: Ok
@@ -1476,8 +1477,6 @@ en:
   label_producers: "Producers"
   label_groups: "Groups"
   label_about: "About"
-  label_connect: "Connect"
-  label_learn: "Learn"
   label_blog: "Blog"
   label_support: "Support"
   label_shopping: "Shopping"
@@ -1570,12 +1569,6 @@ en:
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
-
-  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation.  Find training, events and other opportunities to learn from peers."
-  learn_cta: "Get Inspired"
-
-  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
-  connect_cta: "Go Exploring"
 
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
@@ -2796,6 +2789,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3150,6 +3144,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
+    refund: "Refund"
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3788,6 +3783,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorization required"
       void: void
       invalid: invalid
       authorise: authorise
@@ -3835,7 +3831,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
-        instructions: "Your order has been shipped"
+        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
         thanks: "Thank you for your business."

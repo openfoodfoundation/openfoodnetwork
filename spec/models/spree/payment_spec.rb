@@ -27,7 +27,7 @@ describe Spree::Payment do
       double('success_response', success?: true,
                                  authorization: '123',
                                  avs_result: { 'code' => 'avs-code' },
-                                 cvv_result: { 'code' => 'cvv-code', 'message' => "CVV Result" })
+                                 cvv_result: { code: nil, message: nil })
     end
 
     let(:failed_response) { double('gateway_response', success?: false) }
@@ -161,12 +161,27 @@ describe Spree::Payment do
             payment.authorize!
             expect(payment.response_code).to eq('123')
             expect(payment.avs_response).to eq('avs-code')
-            expect(payment.cvv_response_code).to eq('cvv-code')
-            expect(payment.cvv_response_message).to eq('CVV Result')
           end
 
           it "should make payment pending" do
             expect(payment).to receive(:pend!)
+            payment.authorize!
+          end
+        end
+
+        context "authorization is required" do
+          before do
+            allow(success_response).to receive(:cvv_result) {
+              { 'code' => "123",
+                'message' => "https://stripe.com/redirect" }
+            }
+            expect(payment.payment_method).to receive(:authorize).with(
+              amount_in_cents, card, anything
+            ).and_return(success_response)
+          end
+
+          it "should move the payment to requires_authorization" do
+            expect(payment).to receive(:require_authorization!)
             payment.authorize!
           end
         end
@@ -185,7 +200,8 @@ describe Spree::Payment do
 
       context "purchase" do
         it "should call purchase on the gateway with the payment amount" do
-          expect(gateway).to receive(:purchase).with(amount_in_cents, card, anything).and_return(success_response)
+          expect(gateway).to receive(:purchase).with(amount_in_cents, card,
+                                                     anything).and_return(success_response)
           payment.purchase!
         end
 
@@ -288,7 +304,8 @@ describe Spree::Payment do
         context "when profiles are supported" do
           it "should call payment_gateway.void with the payment's response_code" do
             gateway.stub payment_profiles_supported?: true
-            expect(gateway).to receive(:void).with('123', card, anything).and_return(success_response)
+            expect(gateway).to receive(:void).with('123', card,
+                                                   anything).and_return(success_response)
             payment.void_transaction!
           end
         end
@@ -354,7 +371,8 @@ describe Spree::Payment do
           end
 
           it "should call credit on the gateway with the credit amount and response_code" do
-            expect(gateway).to receive(:credit).with(1000, card, '123', anything).and_return(success_response)
+            expect(gateway).to receive(:credit).with(1000, card, '123',
+                                                     anything).and_return(success_response)
             payment.credit!
           end
         end
@@ -460,7 +478,9 @@ describe Spree::Payment do
       context "raises an error if no source is specified" do
         specify do
           payment = build_stubbed(:payment, source: nil, payment_method: gateway)
-          expect { payment.process! }.to raise_error(Spree::Core::GatewayError, Spree.t(:payment_processing_failed))
+          expect {
+            payment.process!
+          }.to raise_error(Spree::Core::GatewayError, Spree.t(:payment_processing_failed))
         end
       end
     end
@@ -572,7 +592,7 @@ describe Spree::Payment do
           create(:payment, amount: 100, order: order)
         end
       end
-      
+
       context "when profiles are supported" do
         before do
           gateway.stub payment_profiles_supported?: true
@@ -883,8 +903,13 @@ describe Spree::Payment do
 
       context "to Stripe payments" do
         let(:shop) { create(:enterprise) }
-        let(:payment_method) { create(:stripe_connect_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
-        let(:payment) { create(:payment, order: order, payment_method: payment_method, amount: order.total) }
+        let(:payment_method) {
+          create(:stripe_connect_payment_method, distributor_ids: [create(:distributor_enterprise).id],
+                                                 preferred_enterprise_id: shop.id)
+        }
+        let(:payment) {
+          create(:payment, order: order, payment_method: payment_method, amount: order.total)
+        }
         let(:calculator) { ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         before do
@@ -895,7 +920,9 @@ describe Spree::Payment do
         end
 
         context "when the payment fails" do
-          let(:failed_response) { ActiveMerchant::Billing::Response.new(false, "This is an error message") }
+          let(:failed_response) {
+            ActiveMerchant::Billing::Response.new(false, "This is an error message")
+          }
 
           before do
             allow(payment_method).to receive(:purchase) { failed_response }
@@ -958,11 +985,11 @@ describe Spree::Payment do
     end
   end
 
-  describe "#mark_as_processed" do
+  describe "#clear_authorization_url" do
     let(:payment) { create(:payment, cvv_response_message: "message") }
 
     it "removes the cvv_response_message" do
-      payment.mark_as_processed
+      payment.clear_authorization_url
       expect(payment.cvv_response_message).to eq(nil)
     end
   end

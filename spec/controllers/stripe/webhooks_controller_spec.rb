@@ -17,7 +17,8 @@ describe Stripe::WebhooksController, type: :controller do
 
     context "when invalid json is provided" do
       before do
-        allow(Stripe::Webhook).to receive(:construct_event).and_raise JSON::ParserError, "parsing failed"
+        allow(Stripe::Webhook).to receive(:construct_event).and_raise JSON::ParserError,
+                                                                      "parsing failed"
       end
 
       it "responds with a 400" do
@@ -28,7 +29,9 @@ describe Stripe::WebhooksController, type: :controller do
 
     context "when event signature verification fails" do
       before do
-        allow(Stripe::Webhook).to receive(:construct_event).and_raise Stripe::SignatureVerificationError.new("verfication failed", "header")
+        allow(Stripe::Webhook).to receive(:construct_event).and_raise Stripe::SignatureVerificationError.new(
+          "verfication failed", "header"
+        )
       end
 
       it "responds with a 401" do

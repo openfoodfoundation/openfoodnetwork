@@ -31,7 +31,9 @@ describe EnterpriseFee do
 
     describe "for tax_category" do
       let(:tax_category) { create(:tax_category) }
-      let(:enterprise_fee) { create(:enterprise_fee, tax_category_id: nil, inherits_tax_category: true) }
+      let(:enterprise_fee) {
+        create(:enterprise_fee, tax_category_id: nil, inherits_tax_category: true)
+      }
 
       it "maintains valid tax_category settings" do
         # Changing just tax_category, when inheriting
@@ -117,7 +119,8 @@ describe EnterpriseFee do
     it "clears adjustments from per-order fees" do
       order = create(:order)
       enterprise_fee = create(:enterprise_fee)
-      enterprise_fee_aplicator = OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+      enterprise_fee_aplicator = OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil,
+                                                                              'coordinator')
       enterprise_fee_aplicator.create_order_adjustment(order)
 
       expect do

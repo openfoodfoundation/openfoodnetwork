@@ -39,7 +39,9 @@ module ProductImport
           )
         end
 
-        let(:reset_stock_strategy) { instance_double(Catalog::ProductImport::ProductsResetStrategy) }
+        let(:reset_stock_strategy) {
+          instance_double(Catalog::ProductImport::ProductsResetStrategy)
+        }
 
         before do
           allow(entry_processor)

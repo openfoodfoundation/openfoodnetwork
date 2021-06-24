@@ -137,7 +137,7 @@ class CheckoutController < ::BaseController
 
     last_payment = OrderPaymentFinder.new(@order).last_payment
     @order.state == "payment" &&
-      last_payment&.state == "pending" &&
+      last_payment&.state == "requires_authorization" &&
       last_payment&.response_code == params["payment_intent"]
   end
 
@@ -152,8 +152,8 @@ class CheckoutController < ::BaseController
 
   def checkout_workflow(shipping_method_id)
     while @order.state != "complete"
-      if @order.state == "payment"
-        return if redirect_to_payment_gateway
+      if @order.state == "payment" && redirect_to_payment_gateway
+        return
       end
 
       next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })

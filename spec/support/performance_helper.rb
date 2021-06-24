@@ -2,12 +2,12 @@
 
 module OpenFoodNetwork
   module PerformanceHelper
-    def multi_benchmark(num_samples, cache_key_patterns: [])
+    def multi_benchmark(num_samples, cache_key_patterns: [], &block)
       results = (0..num_samples).map do |_i|
         ActiveRecord::Base.connection.query_cache.clear
         delete_cache_keys(cache_key_patterns)
 
-        result = Benchmark.measure { yield }
+        result = Benchmark.measure(&block)
 
         puts result
 

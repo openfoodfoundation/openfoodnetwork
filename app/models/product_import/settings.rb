@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ProductImport
   class Settings
     def initialize(import_settings)

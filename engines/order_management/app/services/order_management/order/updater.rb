@@ -24,6 +24,8 @@ module OrderManagement
       end
 
       def update_totals_and_states
+        handle_legacy_taxes
+
         update_totals
 
         if order.completed?
@@ -65,9 +67,7 @@ module OrderManagement
       def update_adjustment_total
         order.adjustment_total = all_adjustments.additional.eligible.sum(:amount)
         order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
-        order.included_tax_total = order.line_item_adjustments.tax.inclusive.sum(:amount) +
-                                   all_adjustments.enterprise_fee.sum(:included_tax) +
-                                   order.shipment_adjustments.tax.inclusive.sum(:amount) +
+        order.included_tax_total = all_adjustments.tax.inclusive.sum(:amount) +
                                    adjustments.admin.sum(:included_tax)
       end
 
@@ -172,6 +172,8 @@ module OrderManagement
           'failed'
         elsif canceled_and_not_paid_for?
           'void'
+        elsif requires_authorization?
+          'requires_authorization'
         else
           infer_payment_state_from_balance
         end
@@ -212,6 +214,17 @@ module OrderManagement
 
       def failed_payments?
         payments.present? && payments.valid.empty?
+      end
+
+      # Re-applies tax if any legacy taxes are present
+      def handle_legacy_taxes
+        return unless order.completed? && order.adjustments.legacy_tax.any?
+
+        order.create_tax_charge!
+      end
+
+      def requires_authorization?
+        payments.requires_authorization.any? && payments.completed.empty?
       end
     end
   end

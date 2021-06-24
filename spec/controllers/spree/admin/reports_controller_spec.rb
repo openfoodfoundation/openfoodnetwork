@@ -20,12 +20,19 @@ describe Spree::Admin::ReportsController, type: :controller do
   let(:product3) { create(:product, price: 34.56, supplier: supplier3) }
 
   # Given two order cycles with both distributors
-  let(:ocA) { create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product1.master, product3.master]) }
-  let(:ocB) { create(:simple_order_cycle, coordinator: coordinator2, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product2.master]) }
+  let(:ocA) {
+    create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2],
+                                suppliers: [supplier1, supplier2, supplier3], variants: [product1.master, product3.master])
+  }
+  let(:ocB) {
+    create(:simple_order_cycle, coordinator: coordinator2, distributors: [distributor1, distributor2],
+                                suppliers: [supplier1, supplier2, supplier3], variants: [product2.master])
+  }
 
   # orderA1 can only be accessed by supplier1, supplier3 and distributor1
   let(:orderA1) do
-    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order = create(:order, distributor: distributor1, bill_address: bill_address,
+                           ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
     order.line_items << create(:line_item, variant: product1.master)
     order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
@@ -34,7 +41,8 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
   # orderA2 can only be accessed by supplier2 and distributor2
   let(:orderA2) do
-    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order = create(:order, distributor: distributor2, bill_address: bill_address,
+                           ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
     order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
@@ -42,7 +50,8 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
   # orderB1 can only be accessed by supplier1, supplier3 and distributor1
   let(:orderB1) do
-    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order = create(:order, distributor: distributor1, bill_address: bill_address,
+                           ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
     order.line_items << create(:line_item, variant: product1.master)
     order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
@@ -51,7 +60,8 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
   # orderB2 can only be accessed by supplier2 and distributor2
   let(:orderB2) do
-    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order = create(:order, distributor: distributor2, bill_address: bill_address,
+                           ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
     order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
@@ -151,7 +161,8 @@ describe Spree::Admin::ReportsController, type: :controller do
 
       context "where I have granted P-OC to the distributor" do
         before do
-          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: supplier1, child: distributor1,
+                                           permissions_list: [:add_to_order_cycle])
         end
 
         it "only shows product line items that I am supplying" do
@@ -291,7 +302,6 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
   end
 
-
   context 'Order Cycle Management' do
     let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
@@ -302,7 +312,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     it 'renders the delivery report' do
       spree_post :order_cycle_management, {
         q: { completed_at_lt: 1.day.ago },
-        shipping_method_in: [ "123" ], # We just need to search for shipping methods
+        shipping_method_in: ["123"], # We just need to search for shipping methods
         report_type: "delivery",
       }
 

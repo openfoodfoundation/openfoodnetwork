@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class CustomerSerializer < ActiveModel::Serializer
     attributes :id, :enterprise_id, :name, :code, :email, :allow_charges

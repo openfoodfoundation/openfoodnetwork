@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class ShopForOrdersSerializer < ActiveModel::Serializer
     attributes :id, :name, :hash, :logo

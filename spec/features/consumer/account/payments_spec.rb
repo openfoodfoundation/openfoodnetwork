@@ -15,13 +15,17 @@ feature "Payments requiring action", js: true do
 
     context "there is a payment requiring authorization" do
       let!(:payment) do
-        create(:payment, order: order, cvv_response_message: "https://stripe.com/redirect")
+        create(:payment,
+          order: order,
+          cvv_response_message: "https://stripe.com/redirect",
+          state: "requires_authorization"
+        )
       end
 
       it "shows a table of payments requiring authorization" do
         visit "/account"
 
-        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
+        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
         expect(page).to have_content I18n.t("spree.users.transactions.authorisation_required")
       end
     end
@@ -34,7 +38,7 @@ feature "Payments requiring action", js: true do
       it "does not show the table of payments requiring authorization" do
         visit "/account"
 
-        find("a", :text => %r{#{I18n.t('spree.users.show.tabs.transactions')}}i).click
+        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
         expect(page).to_not have_content I18n.t("spree.users.transactions.authorisation_required")
       end
     end

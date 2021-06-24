@@ -1387,8 +1387,6 @@ de_DE:
   label_producers: "Produzenten"
   label_groups: "Gruppen"
   label_about: "Über uns"
-  label_connect: "Kontakt"
-  label_learn: "Mehr erfahren"
   label_blog: "Blog"
   label_support: "Hilfe"
   label_shopping: "Einkaufen"
@@ -1476,10 +1474,6 @@ de_DE:
   brandstory_part4: "Der Programmcode dieser Internet-Plattform ist öffentlich frei verfügbar (Open Source), sie gehört also auch Ihnen und ist unverkäuflich. Alle Einnahmen werden wieder in die Weiterentwicklung des Netzwerks investiert!"
   brandstory_part5_strong: "Das ist das Open Food Network."
   brandstory_part6: "Sie lieben Ihr Essen! Jetzt können Sie auch Ihr regionales Lebensmittelsystem lieben!"
-  learn_body: "Erkunden Sie Modelle, Geschichten und Ressourcen, um Sie bei der Entwicklung Ihres Fair-Food-Geschäfts oder Ihrer Organisation zu unterstützen. Finden Sie Schulungen, Veranstaltungen und andere Möglichkeiten, um von Gleichgesinnten zu lernen."
-  learn_cta: "Lassen Sie sich inspirieren"
-  connect_body: "Durchsuchen Sie unsere Verzeichnisse von Produzenten, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Präsentieren Sie Ihr Unternehmen oder Ihre Organisation im Open Food Network, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
-  connect_cta: "Erkunden"
   system_headline: "So einfach regional einkaufen:"
   system_step1: "1. Wo kann ich regionale und saisonale Produkte kaufen?"
   system_step1_text: "Auf der Seite \"Einkaufen\" finden Sie die Liste der Läden in Ihrer Nähe. Sie können nach einem Ort suchen oder die Liste nach Kategorien, Lieferoptionen oder Produkteigenschaften filtern. Klicken Sie auf den Namen eines Ladens, um dort einzukaufen.\nAlternativ verwenden Sie die Seite \"Karte\" und finden Sie Produzenten und Läden in Ihrer Region."
@@ -3002,6 +2996,7 @@ de_DE:
     payment_method_not_supported: "Zahlungsart wird nicht unterstützt"
     resend_authorization_email: "Autorisierungs-E-Mail erneut senden"
     rma_credit: "Gutschrift aus Retour"
+    refund: "Rückerstattung"
     server_error: "Serverfehler"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3667,7 +3662,6 @@ de_DE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
-        instructions: "Ihre Bestellung wurde versandt."
         shipment_summary: "Übersicht"
         subject: "Versandbenachrichtigung"
         thanks: "Danke für Ihren Einkauf!"

@@ -172,7 +172,9 @@ module Spree
 
       describe "finding line items with and without tax" do
         let(:tax_rate) { create(:tax_rate, calculator: ::Calculator::DefaultTax.new) }
-        let!(:adjustment1) { create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
+        let!(:adjustment1) {
+          create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00)
+        }
 
         before do
           li1
@@ -289,13 +291,15 @@ module Spree
                  ship_address: bill_address)
         }
         let!(:shipping_method) { create(:shipping_method, distributors: [hub]) }
-        let!(:line_item) { create(:line_item, variant: variant_on_demand, quantity: 10, order: order) }
+        let!(:line_item) {
+          create(:line_item, variant: variant_on_demand, quantity: 10, order: order)
+        }
 
         before do
           order.reload
           order.update_totals
           order.payments << create(:payment, amount: order.total)
-          until order.completed? do break unless order.next! end
+          break unless order.next! until order.completed?
           order.payment_state = 'paid'
           order.select_shipping_method(shipping_method.id)
           order.shipment.update!(order)
@@ -344,14 +348,18 @@ module Spree
 
           it "draws stock from the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
-            expect{ line_item.increment!(:quantity) }.to_not change{ Spree::Variant.find(variant.id).on_hand }
+            expect{ line_item.increment!(:quantity) }.to_not change{
+                                                               Spree::Variant.find(variant.id).on_hand
+                                                             }
             expect(vo.reload.count_on_hand).to eq 2
           end
         end
 
         context "when a variant override does not apply" do
           it "draws stock from the variant" do
-            expect{ line_item.increment!(:quantity) }.to change{ Spree::Variant.find(variant.id).on_hand }.by(-1)
+            expect{ line_item.increment!(:quantity) }.to change{
+                                                           Spree::Variant.find(variant.id).on_hand
+                                                         }.by(-1)
           end
         end
       end
@@ -388,7 +396,9 @@ module Spree
       let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
       let!(:v_on_demand) { create(:variant, on_demand: true, on_hand: 1) }
       let(:li) { build_stubbed(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
-      let(:li_on_demand) { build_stubbed(:line_item, variant: v_on_demand, order: o, quantity: 99, max_quantity: 99) }
+      let(:li_on_demand) {
+        build_stubbed(:line_item, variant: v_on_demand, order: o, quantity: 99, max_quantity: 99)
+      }
 
       context "when the variant is on_demand" do
         it { expect(li_on_demand.sufficient_stock?).to be true }
@@ -475,7 +485,10 @@ module Spree
 
     describe "unit value/description" do
       describe "inheriting units" do
-        let!(:p) { create(:product, variant_unit: "weight", variant_unit_scale: 1, master: create(:variant, unit_value: 1000 )) }
+        let!(:p) {
+          create(:product, variant_unit: "weight", variant_unit_scale: 1,
+                           master: create(:variant, unit_value: 1000 ))
+        }
         let!(:v) { p.variants.first }
         let!(:o) { create(:order) }
 
@@ -491,7 +504,9 @@ module Spree
           end
 
           context "when a final_weight_volume has been set" do
-            let(:li) { build(:line_item, order: o, variant: v, quantity: 3, final_weight_volume: 2000) }
+            let(:li) {
+              build(:line_item, order: o, variant: v, quantity: 3, final_weight_volume: 2000)
+            }
 
             it "uses the changed value" do
               expect(li.final_weight_volume).to eq 2000

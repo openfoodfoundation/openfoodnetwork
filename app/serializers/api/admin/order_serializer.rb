@@ -41,7 +41,7 @@ module Api
       # This methods requires to eager load the payment association (with its required WHERE
       # constraints) so as not to cause and N+1.
       def ready_to_capture
-        pending_payments = object.pending_payments.reject(&:authorization_action_required?)
+        pending_payments = object.pending_payments.reject(&:requires_authorization?)
         object.payment_required? && pending_payments.any?
       end
 

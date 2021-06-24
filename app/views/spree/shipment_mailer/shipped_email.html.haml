@@ -1,7 +1,7 @@
 %p
   = t('.dear_customer')
 %p
-  = t('.instructions')
+  = t('.instructions', distributor: @shipment.order.distributor.name)
 
 %p
   = "============================================================"

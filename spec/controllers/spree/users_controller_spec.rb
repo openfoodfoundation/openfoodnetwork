@@ -14,7 +14,9 @@ describe Spree::UsersController, type: :controller do
     let!(:distributor2) { create(:distributor_enterprise) }
     let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: u1.id) }
     let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: u1.id) }
-    let!(:d1_order_for_u2) { create(:completed_order_with_totals, distributor: distributor1, user_id: u2.id) }
+    let!(:d1_order_for_u2) {
+      create(:completed_order_with_totals, distributor: distributor1, user_id: u2.id)
+    }
     let!(:d1o3) { create(:order, state: 'cart', distributor: distributor1, user_id: u1.id) }
     let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: u2.id) }
 
@@ -79,7 +81,9 @@ describe Spree::UsersController, type: :controller do
 
   context '#create' do
     it 'should create a new user' do
-      post :create, params: { user: { email: 'foobar@example.com', password: 'foobar123', password_confirmation: 'foobar123' } }
+      post :create,
+           params: { user: { email: 'foobar@example.com', password: 'foobar123',
+                             password_confirmation: 'foobar123' } }
       expect(assigns[:user].new_record?).to be_falsey
     end
   end

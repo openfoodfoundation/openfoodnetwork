@@ -31,10 +31,17 @@ describe OrderTaxAdjustmentsFetcher do
                         amount: 0.25,
                         zone: zone)
     end
+    let(:tax_rate30) do
+      create(:tax_rate, included_in_price: false,
+                        calculator: Calculator::DefaultTax.new,
+                        amount: 0.30,
+                        zone: zone)
+    end
     let(:tax_category10) { create(:tax_category, tax_rates: [tax_rate10]) }
     let(:tax_category15) { create(:tax_category, tax_rates: [tax_rate15]) }
     let(:tax_category20) { create(:tax_category, tax_rates: [tax_rate20]) }
     let(:tax_category25) { create(:tax_category, tax_rates: [tax_rate25]) }
+    let(:tax_category30) { create(:tax_category, tax_rates: [tax_rate30]) }
 
     let(:variant) do
       create(:variant, product: create(:product, tax_category: tax_category10))
@@ -73,18 +80,23 @@ describe OrderTaxAdjustmentsFetcher do
     let!(:shipment) do
       create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
     end
+    let(:legacy_tax_adjustment) do
+      create(:adjustment, order: order, adjustable: order, amount: 1.23, originator: tax_rate30,
+                          label: "Additional Tax Adjustment", state: "closed")
+    end
 
     before do
       order.reload
       order.adjustments << admin_adjustment
-      order.create_tax_charge!
       order.recreate_all_fees!
+      order.create_tax_charge!
+      legacy_tax_adjustment
     end
 
     subject { OrderTaxAdjustmentsFetcher.new(order).totals }
 
-    it "returns a hash with all 4 taxes" do
-      expect(subject.size).to eq(4)
+    it "returns a hash with all 5 taxes" do
+      expect(subject.size).to eq(5)
     end
 
     it "contains tax on all line_items" do
@@ -101,6 +113,10 @@ describe OrderTaxAdjustmentsFetcher do
 
     it "contains tax on admin adjustment" do
       expect(subject[tax_rate25]).to eq(10.0)
+    end
+
+    it "contains (legacy) additional taxes recorded on the order" do
+      expect(subject[tax_rate30]).to eq(1.23)
     end
   end
 end

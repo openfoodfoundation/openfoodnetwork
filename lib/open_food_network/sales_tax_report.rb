@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class SalesTaxReport
     include Spree::ReportsHelper

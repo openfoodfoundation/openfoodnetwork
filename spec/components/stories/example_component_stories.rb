@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ExampleComponentStories < ViewComponent::Storybook::Stories
   story(:with_short_text) do
     controls do

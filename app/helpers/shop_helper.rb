@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShopHelper
   def oc_select_options
     @order_cycles.map { |oc| { time: pickup_time(oc), id: oc.id } }

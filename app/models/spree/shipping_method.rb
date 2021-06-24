@@ -20,8 +20,7 @@ module Spree
                             foreign_key: 'distributor_id'
 
     has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
-                                    class_name: 'Spree::Zone',
-                                    foreign_key: 'shipping_method_id'
+                                    class_name: 'Spree::Zone'
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 

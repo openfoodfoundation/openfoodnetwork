@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
   class OrderGrouper
     def initialize(rules, column_constructors, report = nil)
@@ -54,8 +56,7 @@ module OpenFoodNetwork
 
     def table(items)
       tree = build_tree(items, @rules)
-      table = build_table(tree)
-      table
+      build_table(tree)
     end
 
     private

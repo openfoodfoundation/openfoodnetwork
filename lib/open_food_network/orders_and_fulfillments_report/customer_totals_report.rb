@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/ClassLength
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class CustomerTotalsReport
-      REPORT_TYPE = "order_cycle_customer_totals".freeze
+      REPORT_TYPE = "order_cycle_customer_totals"
 
       attr_reader :context
 

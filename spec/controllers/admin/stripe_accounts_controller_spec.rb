@@ -128,11 +128,14 @@ describe Admin::StripeAccountsController, type: :controller do
         end
 
         context "when a stripe account is associated with the specified enterprise" do
-          let!(:account) { create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise) }
+          let!(:account) {
+            create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise)
+          }
 
           context "but access has been revoked or does not exist on stripe's servers" do
             before do
-              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(status: 404)
+              stub_request(:get,
+                           "https://api.stripe.com/v1/accounts/acc_123").to_return(status: 404)
             end
 
             it "returns with a status of 'access_revoked'" do
@@ -153,7 +156,8 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             before do
-              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))
+              stub_request(:get,
+                           "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))
             end
 
             it "returns with a status of 'connected'" do

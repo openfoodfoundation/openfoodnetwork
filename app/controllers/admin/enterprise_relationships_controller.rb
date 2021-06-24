@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class EnterpriseRelationshipsController < Admin::ResourceController
     def index
@@ -16,7 +18,8 @@ module Admin
       if @enterprise_relationship.save
         render plain: Api::Admin::EnterpriseRelationshipSerializer.new(@enterprise_relationship).to_json
       else
-        render status: :bad_request, json: { errors: @enterprise_relationship.errors.full_messages.join(', ') }
+        render status: :bad_request,
+               json: { errors: @enterprise_relationship.errors.full_messages.join(', ') }
       end
     end
 

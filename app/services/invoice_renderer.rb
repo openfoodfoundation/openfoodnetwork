@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvoiceRenderer
   def initialize(renderer = ApplicationController.new)
     @renderer = renderer

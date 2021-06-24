@@ -13,17 +13,24 @@ describe Api::Admin::ExchangeSerializer do
 
   context "serializing incoming exchanges" do
     let(:exchange) { create(:exchange, incoming: true, variants: [v1, v2, v3]) }
-    let!(:inventory_item) { create(:inventory_item, enterprise: exchange.order_cycle.coordinator, variant: v1, visible: true) }
+    let!(:inventory_item) {
+      create(:inventory_item, enterprise: exchange.order_cycle.coordinator, variant: v1,
+                              visible: true)
+    }
 
     before do
       allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permissions_mock }
-      allow(permissions_mock).to receive(:visible_variants_for_incoming_exchanges_from) { permitted_variants }
+      allow(permissions_mock).to receive(:visible_variants_for_incoming_exchanges_from) {
+                                   permitted_variants
+                                 }
       allow(permitted_variants).to receive(:visible_for).and_call_original
     end
 
     context "when order cycle shows only variants in the coordinator's inventory" do
       before do
-        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) { true }
+        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) {
+                                         true
+                                       }
       end
 
       it "filters variants within the exchange based on permissions, and visibility in inventory" do
@@ -38,7 +45,9 @@ describe Api::Admin::ExchangeSerializer do
 
     context "when order cycle shows all available products" do
       before do
-        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) { false }
+        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) {
+                                         false
+                                       }
       end
 
       it "filters variants within the exchange based on permissions only" do
@@ -54,18 +63,24 @@ describe Api::Admin::ExchangeSerializer do
 
   context "serializing outgoing exchanges" do
     let(:exchange) { create(:exchange, incoming: false, variants: [v1, v2, v3]) }
-    let!(:inventory_item) { create(:inventory_item, enterprise: exchange.receiver, variant: v1, visible: true) }
+    let!(:inventory_item) {
+      create(:inventory_item, enterprise: exchange.receiver, variant: v1, visible: true)
+    }
 
     before do
       allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permissions_mock }
-      allow(permissions_mock).to receive(:visible_variants_for_outgoing_exchanges_to) { permitted_variants }
+      allow(permissions_mock).to receive(:visible_variants_for_outgoing_exchanges_to) {
+                                   permitted_variants
+                                 }
       allow(permitted_variants).to receive(:visible_for).and_call_original
       allow(permitted_variants).to receive(:not_hidden_for).and_call_original
     end
 
     context "when the receiver prefers to see all variants (not just those in their inventory)" do
       before do
-        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) { false }
+        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) {
+                                      false
+                                    }
       end
 
       it "filters variants within the exchange based on permissions only" do
@@ -81,7 +96,9 @@ describe Api::Admin::ExchangeSerializer do
 
     context "when the receiver prefers to restrict visible variants to only those in their inventory" do
       before do
-        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) { true }
+        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) {
+                                      true
+                                    }
       end
 
       it "filters variants within the exchange based on permissions, and inventory visibility" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ProductImport
   class ResetAbsent
     def initialize(entry_processor, settings, reset_stock_strategy)

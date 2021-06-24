@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Property < ApplicationRecord
     has_many :product_properties, dependent: :destroy

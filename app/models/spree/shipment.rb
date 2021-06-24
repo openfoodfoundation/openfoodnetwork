@@ -18,6 +18,7 @@ module Spree
     after_save :ensure_correct_adjustment, :update_adjustments
 
     attr_accessor :special_instructions
+
     alias_attribute :amount, :cost
 
     accepts_nested_attributes_for :address

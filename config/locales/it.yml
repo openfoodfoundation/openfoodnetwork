@@ -1376,8 +1376,6 @@ it:
   label_producers: "Produttori"
   label_groups: "Reti"
   label_about: "Chi siamo"
-  label_connect: "Connetti"
-  label_learn: "Impara"
   label_blog: "Blog"
   label_support: "Aiuto"
   label_shopping: "Acquisto"
@@ -1465,10 +1463,6 @@ it:
   brandstory_part4: "Funziona ovunque. Cambia ogni cosa."
   brandstory_part5_strong: "Noi lo chiamiamo Open Food Network."
   brandstory_part6: "Noi tutti amiamo il cibo. Adesso possiamo amare anche la nostra filiera del cibo."
-  learn_body: "Esplora modelli, storie e risorse per aiutarti e sviluppare la tua azienda o la tua organizzazione in modo equo. Cerca corsi, eventi e altre opportunità per imparare da chi è come te."
-  learn_cta: "Prendi ispirazione"
-  connect_body: "Cerca la nostra intera lista di produttori, hub e reti per trovare chi è vicino a te. Aggiungi alla lista di OFN la tua azienda o organizzazionie così i clienti potranno trovarti. Unisciti alla comunità per avere consigli e risolvere problemi insieme."
-  connect_cta: "Esplora"
   system_headline: "La spesa - ecco come funziona"
   system_step1: "1. Cerca"
   system_step1_text: "Cerca i nostri diversi, indipendenti negozi di cibo locale di stagione. Cerca per zona e categoria di cibo, o se preferisci la consegna o il ritiro."
@@ -2981,6 +2975,7 @@ it:
     payment_method_not_supported: "Metodo di pagamento non supportato"
     resend_authorization_email: "Invia di nuovo mail di autorizzazione"
     rma_credit: "Credito RMA"
+    refund: "Rimborsa"
     server_error: "Errore Server"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3647,7 +3642,6 @@ it:
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Cliente,"
-        instructions: "Il tuo ordine è stato spedito"
         shipment_summary: "Riepilogo della Spedizione"
         subject: "Notifica di Spedizione"
         thanks: "Grazie per il tuo lavoro."

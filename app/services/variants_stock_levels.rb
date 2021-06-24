@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Report the stock levels of:
 #   - all variants in the order
 #   - all requested variant ids

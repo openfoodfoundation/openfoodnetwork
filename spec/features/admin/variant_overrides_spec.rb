@@ -46,17 +46,30 @@ feature "
     end
 
     context "when inventory_items exist for variants" do
-      let!(:product) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
+      let!(:product) {
+        create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1)
+      }
       let!(:variant) { create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12) }
       let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: variant ) }
 
-      let!(:product_managed) { create(:simple_product, supplier: producer_managed, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:variant_managed) { create(:variant, product: product_managed, unit_value: 3, price: 3.65, on_hand: 2) }
-      let!(:inventory_item_managed) { create(:inventory_item, enterprise: hub, variant: variant_managed ) }
+      let!(:product_managed) {
+        create(:simple_product, supplier: producer_managed, variant_unit: 'weight',
+                                variant_unit_scale: 1)
+      }
+      let!(:variant_managed) {
+        create(:variant, product: product_managed, unit_value: 3, price: 3.65, on_hand: 2)
+      }
+      let!(:inventory_item_managed) {
+        create(:inventory_item, enterprise: hub, variant: variant_managed )
+      }
 
       let!(:product_related) { create(:simple_product, supplier: producer_related) }
-      let!(:variant_related) { create(:variant, product: product_related, unit_value: 2, price: 2.34, on_hand: 23) }
-      let!(:inventory_item_related) { create(:inventory_item, enterprise: hub, variant: variant_related ) }
+      let!(:variant_related) {
+        create(:variant, product: product_related, unit_value: 2, price: 2.34, on_hand: 23)
+      }
+      let!(:inventory_item_related) {
+        create(:inventory_item, enterprise: hub, variant: variant_related )
+      }
 
       let!(:product_unrelated) { create(:simple_product, supplier: producer_unrelated) }
 
@@ -76,11 +89,14 @@ feature "
             expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ON DEMAND?']
             expect(page).to have_table_row [producer.name, product.name, '', '', '']
             expect(page).to have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
-            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand",
+                                       placeholder: '12'
 
             expect(page).to have_table_row [producer_related.name, product_related.name, '', '', '']
-            expect(page).to have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
-            expect(page).to have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
+            expect(page).to have_input "variant-overrides-#{variant_related.id}-price",
+                                       placeholder: '2.34'
+            expect(page).to have_input "variant-overrides-#{variant_related.id}-count_on_hand",
+                                       placeholder: '23'
 
             # filters the products to those the hub can override
             expect(page).not_to have_content producer_managed.name
@@ -224,14 +240,32 @@ feature "
         end
 
         context "with overrides" do
-          let!(:vo) { create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77, default_stock: 1000, resettable: true, tag_list: ["tag1", "tag2", "tag3"]) }
-          let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
-          let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
-          let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
+          let!(:vo) {
+            create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77,
+                                                  default_stock: 1000, resettable: true, tag_list: ["tag1", "tag2", "tag3"])
+          }
+          let!(:vo_no_auth) {
+            create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2)
+          }
+          let!(:product2) {
+            create(:simple_product, supplier: producer, variant_unit: 'weight',
+                                    variant_unit_scale: 1)
+          }
+          let!(:variant2) {
+            create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12)
+          }
           let!(:inventory_item2) { create(:inventory_item, enterprise: hub, variant: variant2) }
-          let!(:vo_no_reset) { create(:variant_override, variant: variant2, hub: hub, price: 3.99, count_on_hand: 40, default_stock: 100, resettable: false) }
-          let!(:variant3) { create(:variant, product: product, unit_value: 2, price: 5.00, on_hand: 6) }
-          let!(:vo3) { create(:variant_override, variant: variant3, hub: hub, price: 6, count_on_hand: 7, sku: "SOMESKU", default_stock: 100, resettable: false) }
+          let!(:vo_no_reset) {
+            create(:variant_override, variant: variant2, hub: hub, price: 3.99, count_on_hand: 40,
+                                      default_stock: 100, resettable: false)
+          }
+          let!(:variant3) {
+            create(:variant, product: product, unit_value: 2, price: 5.00, on_hand: 6)
+          }
+          let!(:vo3) {
+            create(:variant_override, variant: variant3, hub: hub, price: 6, count_on_hand: 7, sku: "SOMESKU",
+                                      default_stock: 100, resettable: false)
+          }
           let!(:inventory_item3) { create(:inventory_item, enterprise: hub, variant: variant3) }
 
           before do
@@ -240,11 +274,15 @@ feature "
           end
 
           it "product values are affected by overrides" do
-            expect(page).to have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
-            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "", placeholder: I18n.t("js.variants.on_demand.yes")
-            expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.yes")
+            expect(page).to have_input "variant-overrides-#{variant.id}-price", with: '77.77',
+                                                                                placeholder: '1.23'
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "",
+                                                                                        placeholder: I18n.t("js.variants.on_demand.yes")
+            expect(page).to have_select "variant-overrides-#{variant.id}-on_demand",
+                                        selected: I18n.t("js.variant_overrides.on_demand.yes")
 
-            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand", with: "40", placeholder: ""
+            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand",
+                                       with: "40", placeholder: ""
           end
 
           it "updates existing overrides" do
@@ -327,25 +365,30 @@ feature "
 
           it "resets stock to defaults" do
             first("div#bulk-actions-dropdown").click
-            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item",
+                  text: "Reset Stock Levels To Defaults").click
             expect(page).to have_content 'Stocks reset to defaults.'
             vo.reload
-            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "1000", placeholder: ""
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand",
+                                       with: "1000", placeholder: ""
             expect(vo.count_on_hand).to eq(1000)
           end
 
           it "doesn't reset stock levels if the behaviour is disabled" do
             first("div#bulk-actions-dropdown").click
-            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item",
+                  text: "Reset Stock Levels To Defaults").click
             vo_no_reset.reload
-            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand", with: "40", placeholder: ""
+            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand",
+                                       with: "40", placeholder: ""
             expect(vo_no_reset.count_on_hand).to eq(40)
           end
 
           it "prompts to save changes before reset if any are pending" do
             fill_in "variant-overrides-#{variant.id}-price", with: '200'
             first("div#bulk-actions-dropdown").click
-            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item",
+                  text: "Reset Stock Levels To Defaults").click
             expect(page).to have_content "Save changes first"
           end
 
@@ -418,8 +461,12 @@ feature "
     end
 
     describe "when inventory_items do not exist for variants" do
-      let!(:product) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:variant1) { create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12) }
+      let!(:product) {
+        create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1)
+      }
+      let!(:variant1) {
+        create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12)
+      }
       let!(:variant2) { create(:variant, product: product, unit_value: 2, price: 4.56, on_hand: 3) }
 
       context "when a hub is selected" do
@@ -432,7 +479,8 @@ feature "
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
 
-          expect(page).to have_selector '.alert-row span.message', text: "There are 1 new products available to add to your inventory."
+          expect(page).to have_selector '.alert-row span.message',
+                                        text: "There are 1 new products available to add to your inventory."
           click_button "Review Now"
 
           expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'HIDE']

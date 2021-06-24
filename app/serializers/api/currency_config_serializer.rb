@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::CurrencyConfigSerializer < ActiveModel::Serializer
   attributes :currency, :display_currency, :symbol, :symbol_position, :hide_cents
 

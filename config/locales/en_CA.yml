@@ -4,6 +4,7 @@ en_CA:
     attributes:
       spree/user:
         password: "Password"
+        password_confirmation: "Password confirmation"
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -302,6 +303,7 @@ en_CA:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -403,8 +405,15 @@ en_CA:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     terms_of_service_files:
+      create:
+        select_file: "Please select a file first."
       show:
+        title: "Terms of Service files"
+        no_files: "No terms of services have been uploaded yet."
+        using_default_terms_html: "This site is currently linking to your old %{tos_link}."
+        current_terms_html: "View the current %{tos_link}.. Upload time: %{datetime}."
         terms_of_service: "Terms of Service"
+        delete: "Delete file"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -1385,8 +1394,6 @@ en_CA:
   label_producers: "Producers"
   label_groups: "Markets"
   label_about: "About"
-  label_connect: "Connect"
-  label_learn: "Learn"
   label_blog: "Blog"
   label_support: "Support"
   label_shopping: "Shopping"
@@ -1474,10 +1481,6 @@ en_CA:
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
-  learn_body: "Explore models, stories and resources to support you to develop your local business or organisation.  Find training, events and other opportunities to learn from peers."
-  learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and markets to find fair and sustainably produced products near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
-  connect_cta: "Go Exploring"
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
   system_step1_text: "Search our diverse, independent shops for seasonal, sustainably produced products locally. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
@@ -2992,6 +2995,7 @@ en_CA:
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
+    refund: "Refund"
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3658,7 +3662,6 @@ en_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "
-        instructions: "Your order has been shipped or picked up."
         shipment_summary: "Shipment/Pick Up Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."

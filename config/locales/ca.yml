@@ -303,6 +303,7 @@ ca:
   no_pending_payments: "No hi ha pagaments pendents"
   invalid_payment_state: "Estat de pagament invàlid: %{state}"
   filter_results: Aplicar filtre
+  clear_filters: Esborra els filtres
   quantity: Quantitat
   pick_up: Recollida
   copy: Còpia
@@ -404,8 +405,16 @@ ca:
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
       embedded_shopfronts_whitelist: "Llista blanca de dominis externs"
     terms_of_service_files:
+      create:
+        select_file: "Seleccioneu primer un fitxer."
       show:
+        title: "Fitxers de Condicions del servei"
+        no_files: "Encara no s’han penjat termes de serveis."
+        using_default_terms_html: "El lloc actualment enllaça amb el vostre antic %{tos_link}."
+        current_terms_html: "Vegeu l’actual %{tos_link}. Temps de càrrega: %{datetime}."
         terms_of_service: "Termes del servei"
+        delete: "Eliminar arxiu"
+        confirm_delete: "Esteu segur que voleu suprimir el fitxer de condicions del servei actual?"
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
@@ -1389,8 +1398,6 @@ ca:
   label_producers: "Productors"
   label_groups: "Xarxes/Grups"
   label_about: "Sobre"
-  label_connect: "Connecta"
-  label_learn: "Aprèn"
   label_blog: "Blog"
   label_support: "Suport"
   label_shopping: "Compres"
@@ -1478,10 +1485,6 @@ ca:
   brandstory_part4: "Funciona a tot arreu. Ho canvia tot."
   brandstory_part5_strong: "L'anomenem Open Food Network."
   brandstory_part6: "A totes ens agrada menjar. Ara també podem estimar el nostre sistema alimentari."
-  learn_body: "Explora models, històries i recursos per ajudar-te a desenvolupar el teu negoci o organització de menjar just. Troba coneixements, esdeveniments i altres oportunitats d'aprendre dels companys."
-  learn_cta: "Inspira't"
-  connect_body: "Busca els nostres directoris complets de productores, organitzacions o xarxes per trobar menjar de proximitat i just a prop teu. Indica i llista la teva empresa o organització a l'OFN perquè les consumidores et trobin. Uneix-te a la comunitat per obtenir consells i resoldre problemes juntes."
-  connect_cta: "Explorar"
   system_headline: "Compres - aquí t'expliquem com funcionen."
   system_step1: "1. Cerca"
   system_step1_text: "Cerca a les nostres botigues diverses i independents per menjar producte local de temporada. Cerca per població i categoria d'aliments, o bé si prefereixes lliurament o recollida."
@@ -2998,6 +3001,7 @@ ca:
     payment_method_not_supported: "No s'admet la forma de pagament"
     resend_authorization_email: "Torneu a enviar el correu electrònic d’autorització"
     rma_credit: "credit RMA"
+    refund: "Reembossament"
     server_error: "Error del servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3664,7 +3668,7 @@ ca:
     shipment_mailer:
       shipped_email:
         dear_customer: "Benvolguda consumidora:"
-        instructions: "La vostra comanda s'ha enviat"
+        instructions: "La vostra comanda de %{distributor} s'ha enviat"
         shipment_summary: "Resum de l'enviament"
         subject: "Notificació d'enviament"
         thanks: "Gràcies per la teva compra."

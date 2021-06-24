@@ -6,11 +6,23 @@ describe Admin::BulkLineItemsController, type: :controller do
   describe '#index' do
     render_views
 
-    let(:line_item_attributes) { %i[id quantity max_quantity price supplier final_weight_volume units_product units_variant order] }
+    let(:line_item_attributes) {
+      %i[id quantity max_quantity price supplier final_weight_volume units_product units_variant
+         order]
+    }
     let!(:dist1) { FactoryBot.create(:distributor_enterprise) }
-    let!(:order1) { FactoryBot.create(:order, state: 'complete', completed_at: 1.day.ago, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-    let!(:order2) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-    let!(:order3) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
+    let!(:order1) {
+      FactoryBot.create(:order, state: 'complete', completed_at: 1.day.ago, distributor: dist1,
+                                billing_address: FactoryBot.create(:address) )
+    }
+    let!(:order2) {
+      FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1,
+                                billing_address: FactoryBot.create(:address) )
+    }
+    let!(:order3) {
+      FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1,
+                                billing_address: FactoryBot.create(:address) )
+    }
     let!(:line_item1) { FactoryBot.create(:line_item_with_shipment, order: order1) }
     let!(:line_item2) { FactoryBot.create(:line_item_with_shipment, order: order2) }
     let!(:line_item3) { FactoryBot.create(:line_item_with_shipment, order: order2) }
@@ -46,11 +58,15 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "formats final_weight_volume as a float" do
-          expect(json_response['line_items'].map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
+          expect(json_response['line_items'].map{ |line_item|
+                   line_item['final_weight_volume']
+                 }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
         end
 
         it "returns distributor object with id key" do
-          expect(json_response['line_items'].map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }).to eq(true)
+          expect(json_response['line_items'].map{ |line_item|
+                   line_item['supplier']
+                 }.all?{ |d| d.key?('id') }).to eq(true)
         end
       end
 
@@ -81,11 +97,26 @@ describe Admin::BulkLineItemsController, type: :controller do
       let(:distributor2) { create(:distributor_enterprise) }
       let(:coordinator) { create(:distributor_enterprise) }
       let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-      let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:order2) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item3) { FactoryBot.create(:line_item_with_shipment, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:order1) {
+        FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
+                                  completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+      }
+      let!(:line_item1) {
+        FactoryBot.create(:line_item_with_shipment, order: order1,
+                                                    product: FactoryBot.create(:product, supplier: supplier))
+      }
+      let!(:line_item2) {
+        FactoryBot.create(:line_item_with_shipment, order: order1,
+                                                    product: FactoryBot.create(:product, supplier: supplier))
+      }
+      let!(:order2) {
+        FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
+                                  completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) )
+      }
+      let!(:line_item3) {
+        FactoryBot.create(:line_item_with_shipment, order: order2,
+                                                    product: FactoryBot.create(:product, supplier: supplier))
+      }
 
       context "producer enterprise" do
         before do
@@ -155,9 +186,13 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:distributor1) { create(:distributor_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-    let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
+    let!(:order1) {
+      FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
+                                completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+    }
     let!(:line_item1) {
-      line_item1 = FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier))
+      line_item1 = FactoryBot.create(:line_item_with_shipment, order: order1,
+                                                               product: FactoryBot.create(:product, supplier: supplier))
       # make sure shipment is available through db reloads of this line_item
       line_item1.tap(&:save!)
     }
@@ -257,8 +292,14 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:distributor1) { create(:distributor_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-    let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-    let!(:line_item1) { FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+    let!(:order1) {
+      FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
+                                completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+    }
+    let!(:line_item1) {
+      FactoryBot.create(:line_item_with_shipment, order: order1,
+                                                  product: FactoryBot.create(:product, supplier: supplier))
+    }
     let(:params) { { id: line_item1.id, order_id: order1.number } }
 
     before do
@@ -296,7 +337,8 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:outgoing_exchange) { order_cycle.exchanges.outgoing.first }
 
     let!(:order) {
-      create(:order_with_line_items, line_items_count: 2, distributor: distributor, order_cycle: order_cycle)
+      create(:order_with_line_items, line_items_count: 2, distributor: distributor,
+                                     order_cycle: order_cycle)
     }
     let(:line_item1) { order.line_items.first }
     let(:line_item2) { order.line_items.last }
@@ -304,20 +346,25 @@ describe Admin::BulkLineItemsController, type: :controller do
     let!(:zone) { create(:zone_with_member) }
     let(:tax_included) { true }
     let(:tax_rate5) { create(:tax_rate, amount: 0.05, zone: zone, included_in_price: tax_included) }
-    let(:tax_rate10) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: tax_included) }
-    let(:tax_rate15) { create(:tax_rate, amount: 0.15, zone: zone, included_in_price: tax_included) }
+    let(:tax_rate10) {
+      create(:tax_rate, amount: 0.10, zone: zone, included_in_price: tax_included)
+    }
+    let(:tax_rate15) {
+      create(:tax_rate, amount: 0.15, zone: zone, included_in_price: tax_included)
+    }
     let(:tax_cat5) { create(:tax_category, tax_rates: [tax_rate5]) }
     let(:tax_cat10) { create(:tax_category, tax_rates: [tax_rate10]) }
     let(:tax_cat15) { create(:tax_category, tax_rates: [tax_rate15]) }
 
     let!(:shipping_method) {
       create(:shipping_method_with, :shipping_fee, tax_category: tax_cat5, name: "Shiperoo",
-                                    distributors: [distributor])
+                                                   distributors: [distributor])
     }
     let!(:payment_method) { create(:payment_method, :per_item, distributors: [distributor]) }
 
     let(:line_item_fee1) {
-      create(:enterprise_fee, :per_item, amount: 1, inherits_tax_category: false, tax_category: tax_cat15)
+      create(:enterprise_fee, :per_item, amount: 1, inherits_tax_category: false,
+                                         tax_category: tax_cat15)
     }
     let(:line_item_fee2) {
       create(:enterprise_fee, :per_item, amount: 2, inherits_tax_category: true)
@@ -336,7 +383,8 @@ describe Admin::BulkLineItemsController, type: :controller do
       order.recreate_all_fees!
       order.create_tax_charge!
       order.update_order!
-      order.payments << create(:payment, payment_method: payment_method, amount: order.total, state: "completed")
+      order.payments << create(:payment, payment_method: payment_method, amount: order.total,
+                                         state: "completed")
 
       allow(controller).to receive(:spree_current_user) { distributor.owner }
       allow(Spree::LineItem).to receive(:find) { line_item1 }
@@ -366,7 +414,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         expect(order.shipment_adjustments.sum(:amount)).to eq 12.57
         expect(order.item_total).to eq 40.0
         expect(order.adjustment_total).to eq 27.0
-        expect(order.included_tax_total).to eq 2.93 # Pending: taxes on enterprise fees unchanged
+        expect(order.included_tax_total).to eq 3.38
         expect(order.payment_state).to eq "balance_due"
       end
     end

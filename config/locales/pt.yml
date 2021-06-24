@@ -1288,8 +1288,6 @@ pt:
   label_producers: "Produtores"
   label_groups: "Grupos"
   label_about: "Sobre"
-  label_connect: "Conectar"
-  label_learn: "Aprender"
   label_blog: "Blog"
   label_support: "Assistência"
   label_shopping: "A comprar"
@@ -1376,10 +1374,6 @@ pt:
   brandstory_part4: "Funciona em todo o lado e muda tudo. "
   brandstory_part5_strong: "Chamamos-lhe Open Food Network"
   brandstory_part6: "Todos nós adoramos comer bem. Agora também podemos amar o nosso sistema alimentar. "
-  learn_body: "Explore novos modelos, histórias e recursos para apoiar a sua iniciativa agroalimentar. Encontre acções de formação, eventos e outras oportunidades para aprender com os seus pares. "
-  learn_cta: "Inspire-se"
-  connect_body: "Procure no nosso directório de produtores, centrais de abastecimento e grupos de consumo para encontrar um comércio justo perto de si. Registe o seu negócio ou organização na OFN para que os consumidores possam encontrá-lo. Junte-se à comunidade para trocar experiências e resolver problemas em conjunto."
-  connect_cta: "Explore"
   system_headline: "As Compras — eis como funcionam:"
   system_step1: "1. Procurar"
   system_step1_text: "Escolha produtos sazonais de proximidade entre diversos pontos de venda independentes. Procure por região, tipo de alimento, e participe num grupo de consumo. "
@@ -3282,7 +3276,6 @@ pt:
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Consumidor,"
-        instructions: "A sua encomenda foi enviada"
         shipment_summary: "Sumário de Envio"
         subject: "Notificação de Envio"
         thanks: "Obrigado."

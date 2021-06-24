@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Takes a Spree::Variant AR object and filters results based on applicable tag rules.
 # Tag rules exists in the context of enterprise, customer, and variant_overrides,
 # and are applied to variant_overrides only. Returns a Spree::Variant AR object.

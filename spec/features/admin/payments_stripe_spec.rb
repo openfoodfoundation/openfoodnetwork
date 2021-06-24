@@ -73,7 +73,7 @@ feature '
                                                           redirect_url: "https://www.stripe.com/authorize"
         end
 
-        it "fails to add a payment due to card error" do
+        it "adds the payment and it is in the requires_authorization state" do
           login_as_admin_and_visit spree.new_admin_order_payment_path order
 
           fill_in "payment_amount", with: order.total.to_s
@@ -81,8 +81,8 @@ feature '
           click_button "Update"
 
           expect(page).to have_link "StripeSCA"
-          expect(page).to have_content "PENDING"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "pending"
+          expect(page).to have_content "AUTHORIZATION REQUIRED"
+          expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "requires_authorization"
         end
       end
     end
@@ -94,7 +94,7 @@ feature '
         stub_payment_intents_post_request order: order, stripe_account_header: true
         stub_successful_capture_request order: order
 
-        while !order.payment? do break unless order.next! end
+        break unless order.next! while !order.payment?
       end
 
       it "adds a payment with state complete" do

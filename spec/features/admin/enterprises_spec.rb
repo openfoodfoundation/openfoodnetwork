@@ -273,13 +273,15 @@ feature '
       login_as_admin_and_visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I remove the property
-      expect(page).to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      expect(page).to have_field 'enterprise_producer_properties_attributes_0_property_name',
+                                 with: 'Certified Organic'
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
       click_button 'Update'
 
       # Then the property should have been removed
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
-      expect(page).not_to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      expect(page).not_to have_field 'enterprise_producer_properties_attributes_0_property_name',
+                                     with: 'Certified Organic'
       expect(s.producer_properties.reload).to be_empty
     end
   end
@@ -291,7 +293,10 @@ feature '
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_user) { create(:user, enterprise_limit: 1) }
-    let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
+    let!(:er) {
+      create(:enterprise_relationship, parent: distributor3, child: distributor1,
+                                       permissions_list: [:edit_profile])
+    }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
@@ -315,7 +320,8 @@ feature '
           click_link 'New Enterprise'
         end
 
-        expect(page).to have_content I18n.t('js.admin.enterprise_limit_reached', contact_email: ContentConfig.footer_email)
+        expect(page).to have_content I18n.t('js.admin.enterprise_limit_reached',
+                                            contact_email: ContentConfig.footer_email)
       end
     end
 
@@ -413,7 +419,8 @@ feature '
       end
 
       # -- Update only
-      select2_select "Certified Organic", from: 'enterprise_producer_properties_attributes_0_property_name'
+      select2_select "Certified Organic",
+                     from: 'enterprise_producer_properties_attributes_0_property_name'
 
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
 

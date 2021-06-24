@@ -20,6 +20,8 @@ module Spree
         base.class_eval do
           extend Spree::Preferences::PreferableClassMethods
 
+          # Disabling rubocop rule because the fix to this rubocop warning breaks specs
+          # rubocop:disable Style/SymbolProc
           if respond_to?(:after_create)
             after_create do |obj|
               obj.save_pending_preferences
@@ -31,6 +33,7 @@ module Spree
               obj.clear_preferences
             end
           end
+          # rubocop:enable Style/SymbolProc
         end
       end
 
@@ -120,15 +123,17 @@ module Spree
         when :integer
           value.to_i
         when :boolean
+          # rubocop:disable Style/NumericPredicate
           if value.is_a?(FalseClass) ||
              value.nil? ||
              value == 0 ||
-             value =~ /^(f|false|0)$/i ||
+             (value.is_a?(String) && value =~ /^(f|false|0)$/i) ||
              (value.respond_to?(:empty?) && value.empty?)
             false
           else
             true
           end
+          # rubocop:enable Style/NumericPredicate
         else
           value
         end

@@ -1377,8 +1377,6 @@ nb:
   label_producers: "Produsenter"
   label_groups: "Grupper"
   label_about: "Om"
-  label_connect: "Koble til"
-  label_learn: "Lære"
   label_blog: "Blogg"
   label_support: "Støtte"
   label_shopping: "Handle"
@@ -1466,10 +1464,6 @@ nb:
   brandstory_part4: "Det fungerer overalt. Det forandrer alt."
   brandstory_part5_strong: "Vi kaller det Open Food Network."
   brandstory_part6: "Alle er vi glad i mat. Nå kan vi elske vårt matsystem også."
-  learn_body: "Se på modeller, historier og ressurser for å støtte deg å utvikle en god mat bedrift eller organisasjon. Finne opplæring, arrangement og andre muligheter til å lære fra andre."
-  learn_cta: "Bli Inspirert"
-  connect_body: "Søk i vår katalog av produsenter, hubs og grupper for å finne god mat nær deg. Vise din bedrift eller organisasjon på OFN slik at kjøpere kan finne deg. Bli med i fellesskapet for å få råd og løse problemer sammen."
-  connect_cta: "Utforske"
   system_headline: "Shopping - slik virker det."
   system_step1: "1. Søk"
   system_step1_text: "Søk blant våre mangfoldige, uavhengige butikker for lokal mat i sesong. Søk i nabolag og matkategori, eller om du foretrekker levering eller å hente selv."
@@ -2976,6 +2970,7 @@ nb:
     payment_method_not_supported: "Betalingsmåte støttes ikke"
     resend_authorization_email: "Send autorisasjons-epost på nytt"
     rma_credit: "RMA-kreditt"
+    refund: "Refusjon"
     server_error: "Serverfeil"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3642,7 +3637,6 @@ nb:
     shipment_mailer:
       shipped_email:
         dear_customer: "Kjære Kunde,"
-        instructions: "Din bestilling har blitt sendt"
         shipment_summary: "Leveringssammendrag"
         subject: "Leveringsvarsling"
         thanks: "Takk for handelen."

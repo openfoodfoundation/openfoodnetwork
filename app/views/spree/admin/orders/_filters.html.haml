@@ -10,22 +10,23 @@
           = text_field_tag "q[completed_at_lteq]", nil, class: 'datepicker', datepicker: 'q.completed_at_lteq', 'ng-model' => 'q.completed_at_lteq', :placeholder => t(:stop)
       .field
         = label_tag nil, t(:status)
-        = select_tag("q[state_eq]",
-            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
-            {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
+        %select2-watch-ng-model{'ng-model': 'q.state_eq'}
+          = select_tag("q[state_eq]",
+              options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
+              {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
     .four.columns
       .field
-        = label_tag nil, t(:order_number)
+        = label_tag "q_number_cont", t(:order_number)
         = text_field_tag "q[number_cont]", nil, "ng-model" => "q.number_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
       .field
-        = label_tag nil, t(:email)
-        = email_field_tag "q[email_cont", nil, "ng-model" => "q.email_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = label_tag "q_email_cont", t(:email)
+        = email_field_tag "q[email_cont]", nil, "ng-model" => "q.email_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
     .four.columns
       .field
-        = label_tag nil, t(:first_name_begins_with)
+        = label_tag "q_bill_address_firstname_start", t(:first_name_begins_with)
         = text_field_tag "q[bill_address_firstname_start]", nil, size: 25, "ng-model" => "q.bill_address_firstname_start", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
       .field
-        = label_tag nil, t(:last_name_begins_with)
+        = label_tag "q_bill_address_lastname_start", t(:last_name_begins_with)
         = text_field_tag "q[bill_address_lastname_start]", nil, size: 25, "ng-model" => "q.bill_address_lastname_start", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
     .omega.four.columns
       .field.checkbox
@@ -34,21 +35,26 @@
           = t(:show_only_complete_orders)
       .field
         = label_tag nil, t(:shipping_method)
-        = select_tag("shipping_method_id",
+        %select2-watch-ng-model{'ng-model': 'q.shipping_method_id'}
+          = select_tag("q[shipping_method_id]",
             options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
-            {include_blank: true, class: 'select2', 'ng-model' => 'shipping_method_id'})
+            {include_blank: true, class: 'select2', 'ng-model': 'q.shipping_method_id'})
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)
-      = select_tag("q[distributor_id_in]",
-          options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
-          {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.distributor_id_in'})
+      %select2-watch-ng-model{'ng-model': 'q.distributor_id_in'}
+        = select_tag("q[distributor_id_in]",
+            options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
+            {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.distributor_id_in'})
     .field-block.omega.eight.columns
       = label_tag nil, t(:order_cycles)
-      = select_tag("q[order_cycle_id_in]",
-          options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
-          {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.order_cycle_id_in'})
+      %select2-watch-ng-model{'ng-model': 'q.order_cycle_id_in'}
+        = select_tag("q[order_cycle_id_in]",
+            options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
+            {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.order_cycle_id_in'})
     .clearfix
     .actions.filter-actions
-      %div
-        %a.button.icon-search{'ng-click' => 'fetchResults()'}
-          = t(:filter_results)
+      %a.button.icon-search{'ng-click' => 'fetchResults()'}
+        = t(:filter_results)
+      %a.button{'ng-click' => 'clearFilters()', "id": "clear_filters_button"}
+        =  t(:clear_filters)
+          

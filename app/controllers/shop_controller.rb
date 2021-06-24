@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ShopController < BaseController
   layout "darkswarm"
   before_action :require_distributor_chosen, :set_order_cycles, except: :changeable_orders_alert

@@ -60,7 +60,10 @@ feature 'Groups', js: true do
   describe "shops" do
     describe "filtering by product property" do
       let!(:group) { create(:enterprise_group, enterprises: [d1, d2], on_front_page: true) }
-      let!(:order_cycle) { create(:simple_order_cycle, distributors: [d1, d2], coordinator: create(:distributor_enterprise)) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, distributors: [d1, d2],
+                                    coordinator: create(:distributor_enterprise))
+      }
       let(:producer) { create(:supplier_enterprise) }
       let(:d1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
       let(:d2) { create(:distributor_enterprise, with_payment_and_shipping: true) }

@@ -4,6 +4,7 @@ pt_BR:
     attributes:
       spree/user:
         password: "Senha"
+        password_confirmation: "Confirmação de senha"
       enterprise_fee:
         fee_type: Tipo de taxa
       spree/order:
@@ -309,6 +310,8 @@ pt_BR:
   height: "Altura"
   width: "Largura"
   depth: "Profundidade"
+  payment_could_not_process: "O pagamento não pôde ser processado"
+  payment_could_not_complete: "O pagamento não pôde ser completado"
   actions:
     create_and_add_another: "Criar e adicionar outro"
     create: "Criar"
@@ -391,8 +394,16 @@ pt_BR:
       enable_embedded_shopfronts: "Ativar lojas virtuais incorporadas"
       embedded_shopfronts_whitelist: "Lista de permissões de domínios externos"
     terms_of_service_files:
+      create:
+        select_file: "Favor selecionar um arquivo antes."
       show:
+        title: "Arquivos de Termos de Serviço"
+        no_files: "Nenhum termo de serviço foi adicionado ainda. "
+        using_default_terms_html: "No momento o site está redirecionando para o seu antigo %{tos_link}."
+        current_terms_html: "Ver o atual%{tos_link}. Tempo de upload: %{datetime}."
         terms_of_service: "Termos de serviço"
+        delete: "Deletar arquivo"
+        confirm_delete: "Tem certeza que quer deletar o atual arquivo dos Termos de Serviço?"
     number_localization:
       number_localization_settings: "Configurações de localização de número"
       enable_localized_number: "Usar a lógica internacional de separação de casas decimais e milhares"
@@ -1371,8 +1382,6 @@ pt_BR:
   label_producers: "Produtores"
   label_groups: "Grupos"
   label_about: "Sobre"
-  label_connect: "Conectar"
-  label_learn: "Aprender"
   label_blog: "Blog"
   label_support: "Suporte"
   label_shopping: "Compras"
@@ -1460,10 +1469,6 @@ pt_BR:
   brandstory_part4: "Colabore com essa (des)construção!"
   brandstory_part5_strong: "Open Food Brasil"
   brandstory_part6: "–"
-  learn_body: "Explore modelos, histórias e recursos para te dar suporte para desenvolver seu próprio negócio ou organização justa de alimentos. Encontre treinamento, eventos e outras oportunidades para aprender com quem faz parte do seu setor. "
-  learn_cta: "Inspire-se"
-  connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os compradores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
-  connect_cta: "Explore"
   system_headline: "Como comprar:"
   system_step1: "1. Busca"
   system_step1_text: "Dentre os diversos mercados independentes, escolha o de sua preferência. Procure por região, tipo de alimentos, alimentos locais e sazonais e escolha o método de recebimento que pode ser receber em casa ou retirar no local. "
@@ -2859,7 +2864,9 @@ pt_BR:
     reports:
       bulk_coop:
         filters:
+          date_range: "Período"
           generate_report: "Gerar Relatório"
+          report_format_csv: "Relatório formato CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Período"
@@ -2922,6 +2929,7 @@ pt_BR:
   shipment_inc_vat: "Envio incluindo IVA"
   shipping_tax_rate: "Taxa do frete"
   category: "Categoria"
+  import_date: "Data de importação"
   delivery: "Entrega"
   temperature_controlled: "Temperatura Controlada"
   new_product: "Novo produto"
@@ -2975,10 +2983,14 @@ pt_BR:
     order_processed_successfully: "Pedido processado com sucesso"
     payment_method_not_supported: "Este método de pagamento não é aceito"
     resend_authorization_email: "Reenviar email de autorização"
+    refund: "Estorno"
     server_error: "Erro de servidor"
     start_date: "Data de início"
     successfully_removed: "Removido com Sucesso"
     taxonomy_edit: "Editar Taxonomia"
+    taxonomy_tree_error: "Erro na árvore taxonômica"
+    taxonomy_tree_instruction: "Guia para a árvore taxonômica"
+    tree: "Árvore"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
@@ -3636,7 +3648,6 @@ pt_BR:
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimado cliente,"
-        instructions: "Seu pedido foi enviado"
         shipment_summary: "Resumo de Envio"
         subject: "Notificação de envio"
         thanks: "Agradeço pelos seus serviços."

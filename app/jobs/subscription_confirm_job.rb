@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'order_management/subscriptions/summarizer'
 
 # Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
@@ -38,7 +40,9 @@ class SubscriptionConfirmJob < ActiveJob::Base
   end
 
   def recently_closed_order_cycles
-    OrderCycle.closed.where('order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now)
+    OrderCycle.closed.where(
+      'order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now
+    )
   end
 
   # It sets up payments, processes payments and sends confirmation emails

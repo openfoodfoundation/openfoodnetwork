@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
 require 'order_management/subscriptions/proxy_order_syncer'

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby "2.5.9"
+ruby "2.7.3"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'rails', '~> 6.1.3.2'
@@ -9,10 +9,10 @@ gem 'rails', '~> 6.1.3.2'
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
-gem 'ransack', '2.4.1'
+gem 'ransack', '2.4.2'
 gem 'responders'
-gem 'sass', '~> 3.4.0' # this restriction originates from foundation-rails's version
 gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails's version
+gem 'webpacker', '~> 5'
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.8.3'
@@ -66,6 +66,7 @@ gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on', '~> 8.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
+gem 'bigdecimal', '3.0.2'
 gem 'bootsnap', require: false
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
@@ -73,14 +74,14 @@ gem 'figaro'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
-gem 'paper_trail', '~> 10.3.1'
 gem 'paperclip', '~> 3.4.1'
+gem 'paper_trail', '~> 10.3.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
-gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'hiredis'
+gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
@@ -151,23 +152,25 @@ end
 group :test do
   gem 'byebug'
   gem 'codecov', require: false
+  gem 'pdf-reader'
+  gem 'rails-controller-testing'
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'webmock'
-  gem 'rails-controller-testing'
-  gem 'pdf-reader'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
 
 group :development do
   gem 'debugger-linecache'
+  gem 'foreman'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'web-console'
 
   gem "view_component_storybook", require: "view_component/storybook/engine"
 

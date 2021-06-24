@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class EnterpriseRolesController < Admin::ResourceController
     def index
@@ -13,7 +15,8 @@ module Admin
         render plain: Api::Admin::EnterpriseRoleSerializer.new(@enterprise_role).to_json
 
       else
-        render status: :bad_request, json: { errors: @enterprise_role.errors.full_messages.join(', ') }
+        render status: :bad_request,
+               json: { errors: @enterprise_role.errors.full_messages.join(', ') }
       end
     end
 

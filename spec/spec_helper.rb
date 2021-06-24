@@ -101,7 +101,7 @@ RSpec.configure do |config|
   # Show retries in test output
   config.verbose_retry = true
   # Set maximum retry count
-  config.default_retry_count = 3
+  config.default_retry_count = 0
 
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
@@ -112,10 +112,16 @@ RSpec.configure do |config|
   end
 
   # DatabaseCleaner
-  config.before(:suite)          { DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states'] }
+  config.before(:suite) {
+    DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states']
+  }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] } }
-  config.before(:each, concurrency: true) { DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] } }
+  config.before(:each, js: true) {
+    DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
+  }
+  config.before(:each, concurrency: true) {
+    DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
+  }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
   config.after(:each, js: true) do
@@ -164,7 +170,9 @@ RSpec.configure do |config|
   end
 
   # Geocoding
-  config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1]) }
+  config.before(:each) {
+    allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1])
+  }
 
   default_country_id = DefaultCountry.id
   checkout_zone = Spree::Config[:checkout_zone]

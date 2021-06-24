@@ -33,10 +33,10 @@ module Spree
 
     def number=(num)
       @number = begin
-                  num.gsub(/[^0-9]/, '')
-                rescue StandardError
-                  nil
-                end
+        num.gsub(/[^0-9]/, '')
+      rescue StandardError
+        nil
+      end
     end
 
     # cc_type is set by jquery.payment, which helpfully provides different
@@ -56,8 +56,8 @@ module Spree
     end
 
     def set_last_digits
-      number.to_s.gsub!(/\s/, '')
-      verification_value.to_s.gsub!(/\s/, '')
+      number = @number.to_s.gsub(/\s/, '')
+      verification_value = verification_value.to_s.gsub(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
@@ -83,12 +83,12 @@ module Spree
     end
 
     def can_resend_authorization_email?(payment)
-      payment.pending? && payment.authorization_action_required?
+      payment.requires_authorization?
     end
 
     # Indicates whether its possible to capture the payment
     def can_capture?(payment)
-      return false if payment.authorization_action_required?
+      return false if payment.requires_authorization?
 
       payment.pending? || payment.checkout?
     end

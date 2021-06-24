@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   module SubscriptionsHelper
     def subscriptions_setup_complete?(shops)

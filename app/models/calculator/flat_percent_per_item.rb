@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/localized_number'
 
 class Calculator::FlatPercentPerItem < Spree::Calculator

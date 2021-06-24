@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubscriptionLineItem < ApplicationRecord
   belongs_to :subscription, inverse_of: :subscription_line_items
   belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'

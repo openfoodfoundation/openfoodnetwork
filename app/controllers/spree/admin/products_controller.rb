@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/spree_api_key_loader'
 require 'open_food_network/referer_parser'
 require 'open_food_network/permissions'
@@ -161,7 +163,9 @@ module Spree
       private
 
       def product_set_from_params
-        collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i| [i, p] }]
+        collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i|
+                                 [i, p]
+                               } ]
         Sets::ProductSet.new(collection_attributes: collection_hash)
       end
 

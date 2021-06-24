@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Find gaps in the sequence of payment ids.
 # If there are gaps then see if there is a log entry with a payment result for
 # the now lost payment. If there are some then you probably want to follow up

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_052410) do
+ActiveRecord::Schema.define(version: 2021_05_27_201938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -388,9 +388,11 @@ ActiveRecord::Schema.define(version: 2021_04_15_052410) do
     t.string "state", limit: 255
     t.integer "order_id"
     t.boolean "included", default: false
+    t.integer  "tax_category_id"
     t.index ["adjustable_type", "adjustable_id"], name: "index_spree_adjustments_on_adjustable_type_and_adjustable_id"
     t.index ["order_id"], name: "index_spree_adjustments_on_order_id"
     t.index ["originator_type", "originator_id"], name: "index_spree_adjustments_on_originator_type_and_originator_id"
+    t.index ["tax_category_id"], name: "index_spree_adjustments_on_tax_category_id"
   end
 
   create_table "spree_assets", force: :cascade do |t|

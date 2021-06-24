@@ -28,11 +28,12 @@ module OrderManagement
         end
 
         it "updates adjustment totals" do
-          allow(order).to receive_message_chain(:all_adjustments, :additional, :eligible, :sum).and_return(-5)
-          allow(order).to receive_message_chain(:all_adjustments, :tax, :additional, :sum).and_return(20)
-          allow(order).to receive_message_chain(:all_adjustments, :enterprise_fee, :sum).and_return(10)
-          allow(order).to receive_message_chain(:all_adjustments, :shipping, :sum).and_return(5)
-          allow(order).to receive_message_chain(:shipment_adjustments, :tax, :inclusive, :sum).and_return(5)
+          allow(order).to receive_message_chain(:all_adjustments, :additional, :eligible,
+                                                :sum).and_return(-5)
+          allow(order).to receive_message_chain(:all_adjustments, :tax, :additional,
+                                                :sum).and_return(20)
+          allow(order).to receive_message_chain(:all_adjustments, :tax, :inclusive,
+                                                :sum).and_return(15)
           allow(order).to receive_message_chain(:adjustments, :admin, :sum).and_return(2)
 
           updater.update_adjustment_total
@@ -152,6 +153,26 @@ module OrderManagement
           end
         end
 
+        context "when the order has a payment that requires authorization" do
+          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
+
+          it "returns requires_authorization" do
+            expect {
+              updater.update_payment_state
+            }.to change { order.payment_state }.to 'requires_authorization'
+          end
+        end
+
+        context "when the order has a payment that requires authorization and a completed payment" do
+          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
+          let!(:completed_payment) { create(:payment, order: order, state: "completed") }
+
+          it "returns paid" do
+            updater.update_payment_state
+            expect(order.payment_state).to_not eq("requires_authorization")
+          end
+        end
+
         context "payment total is greater than order total" do
           it "is credit_owed" do
             order.payment_total = 2
@@ -205,6 +226,7 @@ module OrderManagement
               order.total = 30
               allow(order).to receive_message_chain(:payments, :valid, :empty?) { false }
               allow(order).to receive_message_chain(:payments, :completed, :empty?) { false }
+              allow(order).to receive_message_chain(:payments, :requires_authorization, :any?) { false }
 
               expect {
                 updater.update_payment_state
@@ -288,6 +310,52 @@ module OrderManagement
           it "does not populate the shipping address from distributor" do
             updater.before_save_hook
             expect(order.ship_address.firstname).to eq("will")
+          end
+        end
+      end
+
+      describe "updating order totals" do
+        describe "#update_totals_and_states" do
+          it "deals with legacy taxes" do
+            expect(updater).to receive(:handle_legacy_taxes)
+
+            updater.update_totals_and_states
+          end
+        end
+
+        describe "#handle_legacy_taxes" do
+          context "when the order is incomplete" do
+            it "doesn't touch taxes" do
+              allow(order).to receive(:completed?) { false }
+
+              expect(order).to_not receive(:create_tax_charge!)
+              updater.__send__(:handle_legacy_taxes)
+            end
+          end
+
+          context "when the order is complete" do
+            before { allow(order).to receive(:completed?) { true } }
+
+            context "and the order has legacy taxes" do
+              let!(:legacy_tax_adjustment) {
+                create(:adjustment, order: order, adjustable: order, included: false,
+                                    originator_type: "Spree::TaxRate")
+              }
+
+              it "re-applies order taxes" do
+                expect(order).to receive(:create_tax_charge!)
+
+                updater.__send__(:handle_legacy_taxes)
+              end
+            end
+
+            context "and the order has no legacy taxes" do
+              it "leaves taxes untouched" do
+                expect(order).to_not receive(:create_tax_charge!)
+
+                updater.__send__(:handle_legacy_taxes)
+              end
+            end
           end
         end
       end

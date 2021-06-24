@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module OpenFoodNetwork
-  class EnterpriseFeeApplicator < Struct.new(:enterprise_fee, :variant, :role)
+  EnterpriseFeeApplicator = Struct.new(:enterprise_fee, :variant, :role) do
     def create_line_item_adjustment(line_item)
       create_adjustment(line_item_adjustment_label, line_item)
     end
@@ -11,11 +13,12 @@ module OpenFoodNetwork
     private
 
     def create_adjustment(label, adjustable)
-      adjustment = enterprise_fee.create_adjustment(label, adjustable, true)
+      adjustment = enterprise_fee.create_adjustment(
+        label, adjustable, true, "closed", tax_category(adjustable)
+      )
 
-      AdjustmentMetadata.create! adjustment: adjustment, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
-
-      adjustment.set_absolute_included_tax! adjustment_tax(adjustment)
+      AdjustmentMetadata.create! adjustment: adjustment, enterprise: enterprise_fee.enterprise,
+                                 fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
     end
 
     def line_item_adjustment_label
@@ -27,14 +30,15 @@ module OpenFoodNetwork
     end
 
     def base_adjustment_label
-      I18n.t(:enterprise_fee_by, type: enterprise_fee.fee_type, role: role, enterprise_name: enterprise_fee.enterprise.name)
+      I18n.t(:enterprise_fee_by, type: enterprise_fee.fee_type, role: role,
+                                 enterprise_name: enterprise_fee.enterprise.name)
     end
 
-    def adjustment_tax(adjustment)
-      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
-
-      tax_rates.select(&:included_in_price).sum do |rate|
-        rate.compute_tax adjustment.amount
+    def tax_category(target)
+      if target.is_a?(Spree::LineItem) && enterprise_fee.inherits_tax_category?
+        target.product.tax_category
+      else
+        enterprise_fee.tax_category
       end
     end
   end

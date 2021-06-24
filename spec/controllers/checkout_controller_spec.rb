@@ -49,7 +49,8 @@ describe CheckoutController, type: :controller do
     let(:shipping_method) { distributor.shipping_methods.first }
 
     before do
-      order.line_items << create(:line_item, variant: order_cycle.variants_distributed_by(distributor).first)
+      order.line_items << create(:line_item,
+                                 variant: order_cycle.variants_distributed_by(distributor).first)
 
       allow(controller).to receive(:current_distributor).and_return(distributor)
       allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
@@ -68,7 +69,7 @@ describe CheckoutController, type: :controller do
           "default_bill_address" => false,
           "default_ship_address" => false,
           "email" => user.email,
-          "payments_attributes" => [{"payment_method_id" => payment_method.id}],
+          "payments_attributes" => [{ "payment_method_id" => payment_method.id }],
           "ship_address_attributes" => order.bill_address.attributes,
           "shipping_method_id" => shipping_method.id
         }
@@ -146,7 +147,7 @@ describe CheckoutController, type: :controller do
           create(
             :payment,
             amount: order.total,
-            state: "pending",
+            state: "requires_authorization",
             payment_method: payment_method,
             response_code: "pi_123"
           )
@@ -294,14 +295,16 @@ describe CheckoutController, type: :controller do
     it "returns errors and flash if order.update fails" do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
-      expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: order.errors.full_messages.to_sentence } }.to_json)
+      expect(response.body).to eq({ errors: assigns[:order].errors,
+                                    flash: { error: order.errors.full_messages.to_sentence } }.to_json)
     end
 
     it "returns errors and flash if order.next fails" do
       allow(order).to receive(:update).and_return true
       allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}
-      expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: "Payment could not be processed, please check the details you entered" } }.to_json)
+      expect(response.body).to eq({ errors: assigns[:order].errors,
+                                    flash: { error: "Payment could not be processed, please check the details you entered" } }.to_json)
     end
 
     it "returns order confirmation url on success" do
@@ -321,7 +324,8 @@ describe CheckoutController, type: :controller do
 
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
-      expect(response.body).to eq({ errors: {}, flash: { error: I18n.t("checkout.failed") } }.to_json)
+      expect(response.body).to eq({ errors: {},
+                                    flash: { error: I18n.t("checkout.failed") } }.to_json)
     end
 
     it "returns a specific error on Spree::Core::GatewayError" do
@@ -355,7 +359,9 @@ describe CheckoutController, type: :controller do
 
       it "tries a maximum of 3 times before giving up and returning an error" do
         allow(order).to receive(:update).and_return true
-        allow(order).to receive(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
+        allow(order).to receive(:next) {
+                          raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update')
+                        }
 
         spree_post :update, format: :json, order: {}
         expect(response.status).to eq(400)
@@ -380,7 +386,8 @@ describe CheckoutController, type: :controller do
         expect(Checkout::PaypalRedirect).to receive(:new).and_return(paypal_redirect)
         expect(paypal_redirect).to receive(:path).and_return("test_path")
 
-        spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
+        spree_post :update,
+                   order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
 
         expect(response.body).to eq({ path: "test_path" }.to_json)
       end
@@ -394,7 +401,8 @@ describe CheckoutController, type: :controller do
         expect(Checkout::StripeRedirect).to receive(:new).and_return(stripe_redirect)
         expect(stripe_redirect).to receive(:path).and_return("test_path")
 
-        spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
+        spree_post :update,
+                   order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
 
         expect(response.body).to eq({ path: "test_path" }.to_json)
       end

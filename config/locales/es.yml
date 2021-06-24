@@ -303,6 +303,7 @@ es:
   no_pending_payments: "No tiene pagos pendientes"
   invalid_payment_state: "Estado de pago inválido: %{state}"
   filter_results: Filtrar resultados
+  clear_filters: Borrar filtros
   quantity: Cantidad
   pick_up: Recogida
   copy: Copia
@@ -404,8 +405,16 @@ es:
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
     terms_of_service_files:
+      create:
+        select_file: "Primero seleccione un archivo."
       show:
+        title: "Archivos de condiciones de servicio"
+        no_files: "Aún no se han subido los términos de servicio."
+        using_default_terms_html: "El sitio está actualmente vinculado a su antiguo %{tos_link}."
+        current_terms_html: "Ver el archivo %{tos_link} actual. Tiempo de carga: %{datetime}."
         terms_of_service: "Términos de servicio"
+        delete: "Eliminar archivo"
+        confirm_delete: "¿Está seguro de que desea eliminar el archivo de Condiciones de servicio actual?"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
@@ -1388,8 +1397,6 @@ es:
   label_producers: "Productoras"
   label_groups: "Redes"
   label_about: "Acerca de"
-  label_connect: "Conectar"
-  label_learn: "Aprender"
   label_blog: "Blog"
   label_support: "Soporte"
   label_shopping: "Tienda"
@@ -1477,10 +1484,6 @@ es:
   brandstory_part4: "Funciona en cualquier lugar. Lo cambia todo."
   brandstory_part5_strong: "Le llamamos Open Food Network."
   brandstory_part6: "Todos amamos la comida. Ahora podemos amar nuestro sistema de comida también."
-  learn_body: "Explora modelos, historias y recursos para ayudarte a desarrollar tu organización. Encuentra formación, eventos y otras oportunidades para aprender de tus compañeros."
-  learn_cta: "Inspírate"
-  connect_body: "Busca en nuestros directorios de productoras, grupos u otras organizaciones. Haz una lista de tu organización en  OFN para que los consumidores puedan encontrarte. Únete a la comunidad para obtener consejos y resolver problemas juntos."
-  connect_cta: "Explorar"
   system_headline: "Compras - cómo funcionan."
   system_step1: "1. Buscar"
   system_step1_text: "Busca comida local y de temporada en nuestras tiendas diversas e independientes. Busca por municipio y participa en un grupo de consumo."
@@ -2998,6 +3001,7 @@ es:
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar correo electrónico de autorización"
     rma_credit: "Crédito RMA"
+    refund: "Reembolso"
     server_error: "Error del Servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3664,7 +3668,7 @@ es:
     shipment_mailer:
       shipped_email:
         dear_customer: "Estimada consumidora,"
-        instructions: "Tu pedido ha sido enviado"
+        instructions: "Su pedido de %{distributor} ha sido enviado"
         shipment_summary: "Resumen de envío"
         subject: "Notificación de envío"
         thanks: "Gracias por hacer negocios."

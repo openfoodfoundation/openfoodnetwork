@@ -55,8 +55,12 @@ describe Exchange do
     let(:coordinator) { create(:distributor_enterprise) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
-    let(:incoming_exchange) { oc.exchanges.create! sender: supplier, receiver: coordinator, incoming: true }
-    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false }
+    let(:incoming_exchange) {
+      oc.exchanges.create! sender: supplier, receiver: coordinator, incoming: true
+    }
+    let(:outgoing_exchange) {
+      oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false
+    }
 
     describe "reporting whether it is an incoming exchange" do
       it "returns true for incoming exchanges" do
@@ -142,8 +146,12 @@ describe Exchange do
     end
 
     describe "finding exchanges by direction" do
-      let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator, incoming: true }
-      let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false }
+      let!(:incoming_exchange) {
+        oc.exchanges.create! sender: supplier,    receiver: coordinator, incoming: true
+      }
+      let!(:outgoing_exchange) {
+        oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false
+      }
 
       it "finds incoming exchanges" do
         expect(Exchange.incoming).to eq([incoming_exchange])
@@ -172,17 +180,22 @@ describe Exchange do
 
       it "finds exchanges coming from any of a number of enterprises" do
         expect(Exchange.from_enterprises([coordinator])).to eq([outgoing_exchange])
-        expect(Exchange.from_enterprises([supplier, coordinator])).to match_array [incoming_exchange, outgoing_exchange]
+        expect(Exchange.from_enterprises([supplier,
+                                          coordinator])).to match_array [incoming_exchange,
+                                                                         outgoing_exchange]
       end
 
       it "finds exchanges going to any of a number of enterprises" do
         expect(Exchange.to_enterprises([coordinator])).to eq([incoming_exchange])
-        expect(Exchange.to_enterprises([coordinator, distributor])).to match_array [incoming_exchange, outgoing_exchange]
+        expect(Exchange.to_enterprises([coordinator,
+                                        distributor])).to match_array [incoming_exchange,
+                                                                       outgoing_exchange]
       end
 
       it "finds exchanges involving any of a number of enterprises" do
         expect(Exchange.involving([supplier])).to eq([incoming_exchange])
-        expect(Exchange.involving([coordinator])).to match_array [incoming_exchange, outgoing_exchange]
+        expect(Exchange.involving([coordinator])).to match_array [incoming_exchange,
+                                                                  outgoing_exchange]
         expect(Exchange.involving([distributor])).to eq([outgoing_exchange])
       end
     end

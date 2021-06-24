@@ -27,7 +27,8 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         end
 
         it 'shows canceled orders' do
-          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
+                              distributor: d1)
           line_item = build(:line_item_with_shipment)
           o2.line_items << line_item
           expect(subject.table_items).to include(line_item)
@@ -44,7 +45,8 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         end
 
         it 'shows canceled orders' do
-          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1, distributor: d1)
+          o2 = create(:order, state: 'canceled', completed_at: 1.day.ago, order_cycle: oc1,
+                              distributor: d1)
           line_item = build(:line_item_with_shipment)
           o2.line_items << line_item
           expect(subject.table_items).to include(line_item)

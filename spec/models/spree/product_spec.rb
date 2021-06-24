@@ -410,7 +410,10 @@ module Spree
         let(:product) { create(:simple_product) }
         let(:supplier) { product.supplier }
         let(:distributor) { create(:distributor_enterprise) }
-        let!(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first]) }
+        let!(:oc) {
+          create(:simple_order_cycle, distributors: [distributor],
+                                      variants: [product.variants.first])
+        }
 
         it "touches the supplier" do
           expect { product.destroy }.to change { supplier.reload.updated_at }
@@ -558,8 +561,10 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
-          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
+          oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1],
+                                            variants: [p1.master])
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2],
+                                            variants: [p2.master])
           expect(Product.in_order_cycle(oc1)).to eq([p1])
         end
       end
@@ -572,8 +577,10 @@ module Spree
           p1 = create(:product)
           p2 = create(:product)
           p3 = create(:product)
-          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
-          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2],
+                                            variants: [p2.master], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3],
+                                            variants: [p3.master], orders_close_at: Date.tomorrow)
           expect(Product.in_an_active_order_cycle).to eq([p3])
         end
       end
@@ -611,8 +618,12 @@ module Spree
         let!(:new_variant) { create(:variant) }
         let!(:hidden_variant) { create(:variant) }
         let!(:visible_variant) { create(:variant) }
-        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false ) }
-        let!(:visible_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true ) }
+        let!(:hidden_inventory_item) {
+          create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false )
+        }
+        let!(:visible_inventory_item) {
+          create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true )
+        }
 
         let!(:products) { Spree::Product.visible_for(enterprise) }
 
@@ -631,8 +642,10 @@ module Spree
         let!(:p3) { create(:simple_product, supplier: other_producer ) }
 
         before do
-          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop, permissions_list: [:add_to_order_cycle])
-          create(:enterprise_relationship, parent: other_producer, child: shop, permissions_list: [:manage_products])
+          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
+                                           permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: other_producer, child: shop,
+                                           permissions_list: [:manage_products])
         end
 
         it 'shows products produced by the enterprise and any producers granting P-OC' do
@@ -660,7 +673,8 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
+        expect(product.properties_including_inherited).to eq([{ id: property.id,
+                                                                name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       it "returns producer properties as a hash" do
@@ -670,7 +684,8 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
+        expect(product.properties_including_inherited).to eq([{ id: property.id,
+                                                                name: "Organic Certified", value: 'NASAA 54321' }])
       end
 
       it "overrides producer properties with product properties" do
@@ -681,7 +696,8 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
+        expect(product.properties_including_inherited).to eq([{ id: property.id,
+                                                                name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -692,7 +708,8 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
+          expect(product.properties_including_inherited).to eq([{ id: property.id,
+                                                                  name: "Organic Certified", value: 'NASAA 54321' }])
         end
       end
 
@@ -859,7 +876,9 @@ module Spree
       let(:v)  { create(:variant, product: p) }
       let(:oc) { create(:simple_order_cycle) }
       let(:s)  { create(:supplier_enterprise) }
-      let(:e)  { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
+      let(:e)  {
+        create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator)
+      }
 
       it "removes the master variant from all order cycles" do
         e.variants << p.master
@@ -896,8 +915,12 @@ module Spree
 
       context "when some variants have import date and some do not" do
         let!(:variant_a) { create(:variant, product: product, import_date: nil) }
-        let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
-        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 2.hours) }
+        let!(:variant_b) {
+          create(:variant, product: product, import_date: reference_time - 1.hour)
+        }
+        let!(:variant_c) {
+          create(:variant, product: product, import_date: reference_time - 2.hours)
+        }
 
         it "returns the most recent import date" do
           expect(product.import_date).to eq(variant_b.import_date)
@@ -905,9 +928,15 @@ module Spree
       end
 
       context "when all variants have import date" do
-        let!(:variant_a) { create(:variant, product: product, import_date: reference_time - 2.hours) }
-        let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
-        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 3.hours) }
+        let!(:variant_a) {
+          create(:variant, product: product, import_date: reference_time - 2.hours)
+        }
+        let!(:variant_b) {
+          create(:variant, product: product, import_date: reference_time - 1.hour)
+        }
+        let!(:variant_c) {
+          create(:variant, product: product, import_date: reference_time - 3.hours)
+        }
 
         it "returns the most recent import date" do
           expect(product.import_date).to eq(variant_b.import_date)

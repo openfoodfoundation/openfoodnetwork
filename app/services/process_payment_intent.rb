@@ -26,7 +26,7 @@ class ProcessPaymentIntent
   def initialize(payment_intent, order)
     @payment_intent = payment_intent
     @order = order
-    @payment = order.payments.pending.with_payment_intent(payment_intent).first
+    @payment = order.payments.requires_authorization.with_payment_intent(payment_intent).first
   end
 
   def call!
@@ -36,13 +36,15 @@ class ProcessPaymentIntent
     process_payment
 
     if payment.reload.completed?
-      payment.mark_as_processed
+      payment.completed_authorization
+      payment.clear_authorization_url
 
       Result.new(ok: true)
     else
+      payment.failed_authorization
+      payment.clear_authorization_url
       Result.new(ok: false, error: I18n.t("payment_could_not_complete"))
     end
-
   rescue Stripe::StripeError => e
     Result.new(ok: false, error: e.message)
   end

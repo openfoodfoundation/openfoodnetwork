@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class handles the saving of new product, variant, and inventory records created during
 # product import. It also collates data regarding this process for user feedback, as the import
 # is processed in small stages sequentially over a number of requests.
@@ -36,7 +38,10 @@ module ProductImport
         end
       end
 
-      @importer.errors.add(:importer, I18n.t(:product_importer_products_save_error)) if total_saved_count.zero?
+      if total_saved_count.zero?
+        @importer.errors.add(:importer,
+                             I18n.t(:product_importer_products_save_error))
+      end
     end
 
     def count_existing_items

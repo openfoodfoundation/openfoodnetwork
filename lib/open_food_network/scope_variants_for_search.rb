@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variant_to_hub'
 
 # Used to return a set of variants which match the criteria provided

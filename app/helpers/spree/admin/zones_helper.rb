@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 module Spree
   module Admin
     module ZonesHelper

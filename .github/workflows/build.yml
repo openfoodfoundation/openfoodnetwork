@@ -9,6 +9,7 @@ env:
   DISABLE_KNAPSACK: true
   TIMEZONE: UTC
   COVERAGE: true
+  RSPEC_RETRY_RETRY_COUNT: 3
 
 jobs:
   test-controllers-and-serializers:

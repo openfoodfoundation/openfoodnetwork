@@ -1331,8 +1331,6 @@ cy:
   label_producers: "Cynhyrchwyr"
   label_groups: "Grwpiau"
   label_about: "Am"
-  label_connect: "Cysylltu"
-  label_learn: "Dysgu"
   label_blog: "Blog"
   label_support: "Cefnogaeth"
   label_shopping: "Siopa"
@@ -1420,10 +1418,6 @@ cy:
   brandstory_part4: "Mae&#39;n gweithio ym mhobman. Mae&#39;n newid popeth."
   brandstory_part5_strong: "Rydyn ni&#39;n ei alw&#39;n Open Food Network."
   brandstory_part6: "Rydyn ni i gyd yn caru bwyd. Nawr gallwn garu ein system fwyd hefyd."
-  learn_body: "Archwiliwch fodelau, straeon ac adnoddau i&#39;ch cefnogi chi i ddatblygu eich busnes neu sefydliad bwyd teg. Dewch o hyd i hyfforddiant, digwyddiadau a chyfleoedd eraill i ddysgu gan gyfoedion."
-  learn_cta: "Cael eich Ysbrydoli"
-  connect_body: "Chwiliwch ein cyfeirlyfrau llawn o gynhyrchwyr, hybiau a grwpiau i ddod o hyd i fasnachwyr bwyd teg yn eich ardal chi. Rhestrwch eich busnes neu sefydliad ar yr OFN fel y gall prynwyr ddod o hyd i chi. Ymunwch â&#39;r gymuned i gael cyngor a datrys problemau gyda&#39;ch gilydd."
-  connect_cta: "Ewch i Archwilio"
   system_headline: "Siopa - dyma sut mae&#39;n gweithio."
   system_step1: "1. Chwilio"
   system_step1_text: "Chwiliwch ein siopau amrywiol, annibynnol am fwyd lleol tymhorol. Chwilio yn ôl categori cymdogaeth a bwyd, neu a yw&#39;n well gennych ddanfon neu godi."
@@ -3545,7 +3539,6 @@ cy:
     shipment_mailer:
       shipped_email:
         dear_customer: "Annwyl Gwsmer,"
-        instructions: "Mae eich archeb wedi&#39;i gludo"
         shipment_summary: "Crynodeb Cludo"
         subject: "Hysbysiad Cludo"
         thanks: "Diolch am eich busnes."

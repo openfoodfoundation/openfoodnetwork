@@ -1,5 +1,4 @@
 #table-filter {
-
   .field {
     input[type="text"], input[type="phone"],
     input[type="email"], input[type="number"],
@@ -9,6 +8,9 @@
   }
 
   .actions {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
   }
 }

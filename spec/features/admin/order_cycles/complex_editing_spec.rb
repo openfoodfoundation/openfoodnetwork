@@ -35,8 +35,10 @@ feature '
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.first.name
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.last.name
 
-    expect(page).to have_field 'order_cycle_incoming_exchange_0_receival_instructions', with: 'instructions 0'
-    expect(page).to have_field 'order_cycle_incoming_exchange_1_receival_instructions', with: 'instructions 1'
+    expect(page).to have_field 'order_cycle_incoming_exchange_0_receival_instructions',
+                               with: 'instructions 0'
+    expect(page).to have_field 'order_cycle_incoming_exchange_1_receival_instructions',
+                               with: 'instructions 1'
 
     # And the suppliers should have products
     page.all('table.exchanges tbody tr.supplier').each_with_index do |row, i|
@@ -50,12 +52,16 @@ feature '
 
     # And the suppliers should have fees
     supplier = oc.suppliers.min_by(&:name)
-    expect(page).to have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: supplier.name
-    expect(page).to have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
+    expect(page).to have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id',
+                                selected: supplier.name
+    expect(page).to have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id',
+                                selected: supplier.enterprise_fees.first.name
 
     supplier = oc.suppliers.max_by(&:name)
-    expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: supplier.name
-    expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
+    expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id',
+                                selected: supplier.name
+    expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id',
+                                selected: supplier.enterprise_fees.first.name
 
     click_button 'Next'
 
@@ -64,9 +70,11 @@ feature '
     expect(page).to have_selector 'td.distributor_name', text: oc.distributors.last.name
 
     expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
-    expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'
+    expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_instructions',
+                               with: 'instructions 0'
     expect(page).to have_field 'order_cycle_outgoing_exchange_1_pickup_time', with: 'time 1'
-    expect(page).to have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
+    expect(page).to have_field 'order_cycle_outgoing_exchange_1_pickup_instructions',
+                               with: 'instructions 1'
 
     # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each_with_index do |row, i|
@@ -80,12 +88,16 @@ feature '
 
     # And the distributors should have fees
     distributor = oc.distributors.min_by(&:id)
-    expect(page).to have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
-    expect(page).to have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
+    expect(page).to have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id',
+                                selected: distributor.name
+    expect(page).to have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id',
+                                selected: distributor.enterprise_fees.first.name
 
     distributor = oc.distributors.max_by(&:id)
-    expect(page).to have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
-    expect(page).to have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
+    expect(page).to have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id',
+                                selected: distributor.name
+    expect(page).to have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id',
+                                selected: distributor.enterprise_fees.first.name
   end
 
   private

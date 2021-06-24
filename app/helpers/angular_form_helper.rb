@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module AngularFormHelper
   def ng_options_for_select(container, _angular_field = nil)
-    return container if String === container
+    return container if container.is_a?(String)
 
     container.map do |element|
       html_attributes = option_html_attributes(element)

@@ -44,7 +44,7 @@ module Spree
 
     def self.valid_localizable_number?(number)
       return true unless number.is_a?(String) || number.respond_to?(:to_d)
-      return false if number =~ /[\.,]\d{2}[\.,]/
+      return false if number =~ /[.,]\d{2}[.,]/
 
       true
     end
@@ -57,16 +57,16 @@ module Spree
 
       add_trailing_zeros(number)
 
-      number = number.gsub(/[\.,]/, '')    # Replace all (.) and (,) so the string result becomes in "cents"
-      number.to_d / 100                    # Let to_decimal do the rest
+      number = number.gsub(/[.,]/, '') # Replace all (.) and (,) so the string result becomes in "cents"
+      number.to_d / 100 # Let to_decimal do the rest
     end
 
     def self.add_trailing_zeros(number)
       # If string ends in a single digit (e.g. ,2), make it ,20 in order for the result to be in "cents"
-      number << "0" if number =~ /^.*[\.,]\d{1}$/
+      number << "0" if number =~ /^.*[.,]\d{1}$/
 
       # If does not end in ,00 / .00 then add trailing 00 to turn it into cents
-      number << "00" unless number =~ /^.*[\.,]\d{2}$/
+      number << "00" unless number =~ /^.*[.,]\d{2}$/
     end
 
     private

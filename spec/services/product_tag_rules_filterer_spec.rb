@@ -13,7 +13,9 @@ describe ProductTagRulesFilterer do
     let(:variant_hidden_by_default) { create(:variant_override, variant: v1, hub: distributor) }
     let(:variant_hidden_by_rule) { create(:variant_override, variant: v2, hub: distributor) }
     let(:variant_shown_by_rule) { create(:variant_override, variant: v3, hub: distributor) }
-    let(:variant_hidden_for_another_customer) { create(:variant_override, variant: v4, hub: distributor) }
+    let(:variant_hidden_for_another_customer) {
+      create(:variant_override, variant: v4, hub: distributor)
+    }
     let(:customer) { create(:customer, enterprise: distributor) }
     let(:variants_relation) {
       Spree::Variant.joins(:product).where("spree_products.supplier_id = ?", distributor.id)
@@ -66,7 +68,8 @@ describe ProductTagRulesFilterer do
     describe "#overrides_to_hide" do
       context "with default rules" do
         it "lists overrides tagged as hidden for this customer" do
-          variant_hidden_by_default.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
+          variant_hidden_by_default.update_attribute(:tag_list,
+                                                     default_hide_rule.preferred_variant_tags)
 
           overrides_to_hide = filterer.__send__(:overrides_to_hide)
           expect(overrides_to_hide).to eq [variant_hidden_by_default.id]
@@ -76,12 +79,15 @@ describe ProductTagRulesFilterer do
       context "with default and specific rules" do
         it "lists overrides tagged as hidden for this customer" do
           customer.update_attribute(:tag_list, hide_rule.preferred_customer_tags)
-          variant_hidden_by_default.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
+          variant_hidden_by_default.update_attribute(:tag_list,
+                                                     default_hide_rule.preferred_variant_tags)
           variant_hidden_by_rule.update_attribute(:tag_list, hide_rule.preferred_variant_tags)
-          variant_hidden_for_another_customer.update_attribute(:tag_list, non_applicable_rule.preferred_variant_tags)
+          variant_hidden_for_another_customer.update_attribute(:tag_list,
+                                                               non_applicable_rule.preferred_variant_tags)
 
           overrides_to_hide = filterer.__send__(:overrides_to_hide)
-          expect(overrides_to_hide).to include variant_hidden_by_default.id, variant_hidden_by_rule.id
+          expect(overrides_to_hide).to include variant_hidden_by_default.id,
+                                               variant_hidden_by_rule.id
         end
       end
     end

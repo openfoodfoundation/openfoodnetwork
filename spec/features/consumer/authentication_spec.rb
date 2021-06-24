@@ -113,7 +113,9 @@ feature "Authentication", js: true do
 
           context "user with unconfirmed email" do
             let(:email) { "test@example.org" }
-            let!(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }
+            let!(:user) {
+              Spree::User.create(email: email, unconfirmed_email: email, password: "secret")
+            }
 
             scenario "cannot reset password before confirming email" do
               fill_in "Your email", with: email

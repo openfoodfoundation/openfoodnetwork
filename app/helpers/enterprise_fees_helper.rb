@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EnterpriseFeesHelper
   def angular_name(method)
     "sets_enterprise_fee_set[collection_attributes][{{ $index }}][#{method}]"

@@ -165,17 +165,17 @@ module OpenFoodNetwork
 
           it 'returns rows with payment information' do
             expect(subject.table_items).to eq([[
-              order.billing_address.firstname,
-              order.billing_address.lastname,
-              order.distributor.name,
-              '',
-              order.email,
-              order.billing_address.phone,
-              order.shipment.shipping_method.name,
-              nil,
-              nil,
-              -order.total
-            ]])
+                                                order.billing_address.firstname,
+                                                order.billing_address.lastname,
+                                                order.distributor.name,
+                                                '',
+                                                order.email,
+                                                order.billing_address.phone,
+                                                order.shipment.shipping_method.name,
+                                                nil,
+                                                nil,
+                                                -order.total
+                                              ]])
           end
         end
 
@@ -191,20 +191,20 @@ module OpenFoodNetwork
 
           it 'returns rows with delivery information' do
             expect(subject.table_items).to eq([[
-              order.ship_address.firstname,
-              order.ship_address.lastname,
-              order.distributor.name,
-              "",
-              "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
-              order.ship_address.zipcode,
-              order.ship_address.phone,
-              order.shipment.shipping_method.name,
-              nil,
-              nil,
-              -order.total,
-              false,
-              order.special_instructions
-            ]])
+                                                order.ship_address.firstname,
+                                                order.ship_address.lastname,
+                                                order.distributor.name,
+                                                "",
+                                                "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
+                                                order.ship_address.zipcode,
+                                                order.ship_address.phone,
+                                                order.shipment.shipping_method.name,
+                                                nil,
+                                                nil,
+                                                -order.total,
+                                                false,
+                                                order.special_instructions
+                                              ]])
           end
         end
       end

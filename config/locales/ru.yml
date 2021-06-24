@@ -304,6 +304,7 @@ ru:
   no_pending_payments: "Нет ожидающих платежей"
   invalid_payment_state: "Неверное состояние платежа: %{state}"
   filter_results: Результаты фильтрации
+  clear_filters: Очистить фильтры
   quantity: Количество
   pick_up: Самовывоз
   copy: Копия
@@ -405,8 +406,16 @@ ru:
       enable_embedded_shopfronts: "Включить Встроенные Витрины"
       embedded_shopfronts_whitelist: "Белый Список Внешних Доменов"
     terms_of_service_files:
+      create:
+        select_file: "Пожалуйста, сначала выберите файл."
       show:
+        title: "Файлы Условий Сервиса"
+        no_files: "Условия Сервиса еще не загружены."
+        using_default_terms_html: "Сайт в настоящее время ссылается на ваш старый %{tos_link}."
+        current_terms_html: "Просмотреть текущий файл %{tos_link}. Время загрузки: %{datetime}."
         terms_of_service: "Условия Сервиса"
+        delete: "Удалить файл"
+        confirm_delete: "Вы уверены, что хотите удалить текущий файл Условий Сервиса?"
     number_localization:
       number_localization_settings: "Настройки локализации чисел"
       enable_localized_number: "Использовать международную логику разделителя тысяч/десятых"
@@ -1389,8 +1398,6 @@ ru:
   label_producers: "Производители"
   label_groups: "Группы"
   label_about: "О нас"
-  label_connect: "Подключить"
-  label_learn: "Узнать"
   label_blog: "Блог"
   label_support: "Поддержка"
   label_shopping: "Покупки"
@@ -1478,10 +1485,6 @@ ru:
   brandstory_part4: "Это работает везде. Это меняет все."
   brandstory_part5_strong: "Мы называем это Открытая Сеть Продуктов."
   brandstory_part6: "Все мы любим еду. Теперь мы можем так же любить нашу продуктовую систему."
-  learn_body: "Изучите модели, истории и ресурсы, которые помогут вам развить свой бизнес или организацию по продаже продуктов питания. Найдите обучение, события и другие возможности учиться у соседей."
-  learn_cta: "Вдохновитесь"
-  connect_body: "Ищите наши каталоги производителей, центров и групп, чтобы найти честных продавцов продуктами питания рядом с Вами. Зарегистрируйте свой бизнес или организацию в ОСП, чтобы покупатели могли найти Вас. Присоединяйтесь к сообществу, чтобы получать советы и решать проблемы вместе."
-  connect_cta: "Исследовать"
   system_headline: "Покупки - как это работает."
   system_step1: "1. Поиск"
   system_step1_text: "Ищите наши разнообразные, независимые магазины для сезонной местной еды. Поиск по району и категории продуктов питания, с доставкой или самовывозом."
@@ -3050,6 +3053,7 @@ ru:
     payment_method_not_supported: "Способ оплаты не поддерживается"
     resend_authorization_email: "Повторно отправить письмо для авторизации"
     rma_credit: "Кредит RMA"
+    refund: "Возврат"
     server_error: "Ошибка сервера"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3717,7 +3721,7 @@ ru:
     shipment_mailer:
       shipped_email:
         dear_customer: "Уважаемый Клиент,"
-        instructions: "Ваш заказ был отправлен"
+        instructions: "Ваш заказ от %{distributor} отправлен"
         shipment_summary: "Информация о доставке"
         subject: "Уведомление об отправке"
         thanks: "Спасибо за покупки."

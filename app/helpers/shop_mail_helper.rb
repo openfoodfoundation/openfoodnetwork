@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShopMailHelper
   # Long datetime format string used in emails to customers
   #

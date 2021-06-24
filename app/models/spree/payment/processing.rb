@@ -11,7 +11,7 @@ module Spree
 
       def process_offline!
         return unless validate!
-        return if authorization_action_required?
+        return if requires_authorization?
 
         if preauthorized?
           capture!
@@ -182,10 +182,6 @@ module Spree
         options
       end
 
-      def authorization_action_required?
-        cvv_response_message.present?
-      end
-
       private
 
       def preauthorized?
@@ -240,6 +236,9 @@ module Spree
             if response.cvv_result
               self.cvv_response_code = response.cvv_result['code']
               self.cvv_response_message = response.cvv_result['message']
+              if self.cvv_response_message.present?
+                return self.require_authorization!
+              end
             end
           end
           __send__("#{success_state}!")

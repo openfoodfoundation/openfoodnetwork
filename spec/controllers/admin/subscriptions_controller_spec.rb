@@ -117,7 +117,9 @@ describe Admin::SubscriptionsController, type: :controller do
 
     context 'as an non-manager of the specified shop' do
       before do
-        allow(controller).to receive(:spree_current_user) { create(:user, enterprises: [create(:enterprise)]) }
+        allow(controller).to receive(:spree_current_user) {
+                               create(:user, enterprises: [create(:enterprise)])
+                             }
       end
 
       it 'redirects to unauthorized' do
@@ -135,17 +137,25 @@ describe Admin::SubscriptionsController, type: :controller do
         it 'returns errors' do
           expect{ spree_post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
-          expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'begins_at'
+          expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
+                                                          'shipping_method', 'begins_at'
         end
       end
 
       context 'when I submit params containing ids of inaccessible objects' do
         # As 'user' I shouldnt be able to associate a subscription with any of these.
         let(:unmanaged_enterprise) { create(:enterprise) }
-        let(:unmanaged_schedule) { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: unmanaged_enterprise)]) }
+        let(:unmanaged_schedule) {
+          create(:schedule,
+                 order_cycles: [create(:simple_order_cycle, coordinator: unmanaged_enterprise)])
+        }
         let(:unmanaged_customer) { create(:customer, enterprise: unmanaged_enterprise) }
-        let(:unmanaged_payment_method) { create(:payment_method, distributors: [unmanaged_enterprise]) }
-        let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
+        let(:unmanaged_payment_method) {
+          create(:payment_method, distributors: [unmanaged_enterprise])
+        }
+        let(:unmanaged_shipping_method) {
+          create(:shipping_method, distributors: [unmanaged_enterprise])
+        }
 
         before do
           params[:subscription].merge!(
@@ -161,7 +171,8 @@ describe Admin::SubscriptionsController, type: :controller do
         it 'returns errors' do
           expect{ spree_post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
-          expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'ends_at'
+          expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
+                                                          'shipping_method', 'ends_at'
         end
       end
 
@@ -194,7 +205,10 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         context 'where the specified variants are available from the shop' do
-          let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant]) }
+          let!(:exchange) {
+            create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop,
+                              variants: [variant])
+          }
 
           it 'creates subscription line items for the subscription' do
             expect{ spree_post :create, params }.to change{ Subscription.count }.by(1)
@@ -248,10 +262,18 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:shop) { create(:distributor_enterprise, owner: user) }
     let!(:customer) { create(:customer, enterprise: shop) }
     let!(:product1) { create(:product, supplier: shop) }
-    let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
+    let!(:variant1) {
+      create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+    }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
-    let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-    let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1], enterprise_fees: [enterprise_fee]) }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now,
+                                  orders_close_at: 7.days.from_now)
+    }
+    let!(:outgoing_exchange) {
+      order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1],
+                                   enterprise_fees: [enterprise_fee])
+    }
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
@@ -262,14 +284,17 @@ describe Admin::SubscriptionsController, type: :controller do
              schedule: schedule,
              payment_method: payment_method,
              shipping_method: shipping_method,
-             subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2)])
+             subscription_line_items: [create(:subscription_line_item, variant: variant1,
+                                                                       quantity: 2)])
     }
     let(:subscription_line_item1) { subscription.subscription_line_items.first }
     let(:params) { { format: :json, id: subscription.id, subscription: {} } }
 
     context 'as an non-manager of the subscription shop' do
       before do
-        allow(controller).to receive(:spree_current_user) { create(:user, enterprises: [create(:enterprise)]) }
+        allow(controller).to receive(:spree_current_user) {
+                               create(:user, enterprises: [create(:enterprise)])
+                             }
       end
 
       it 'redirects to unauthorized' do
@@ -302,8 +327,12 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'when I submit params containing ids of inaccessible objects' do
         # As 'user' I shouldnt be able to associate a subscription with any of these.
         let(:unmanaged_enterprise) { create(:enterprise) }
-        let(:unmanaged_payment_method) { create(:payment_method, distributors: [unmanaged_enterprise]) }
-        let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
+        let(:unmanaged_payment_method) {
+          create(:payment_method, distributors: [unmanaged_enterprise])
+        }
+        let(:unmanaged_shipping_method) {
+          create(:shipping_method, distributors: [unmanaged_enterprise])
+        }
 
         before do
           params[:subscription].merge!(
@@ -344,15 +373,21 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context 'with subscription_line_items params' do
           let!(:product2) { create(:product) }
-          let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
+          let!(:variant2) {
+            create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+          }
 
           before do
-            params[:subscription_line_items] = [{ id: subscription_line_item1.id, quantity: 1, variant_id: variant1.id }, { quantity: 2, variant_id: variant2.id }]
+            params[:subscription_line_items] =
+              [{ id: subscription_line_item1.id, quantity: 1, variant_id: variant1.id },
+               { quantity: 2, variant_id: variant2.id }]
           end
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{ subscription.subscription_line_items.count }
+              expect{ spree_post :update, params }.to_not change{
+                                                            subscription.subscription_line_items.count
+                                                          }
               json_response = JSON.parse(response.body)
               expect(json_response['errors']['subscription_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
@@ -362,7 +397,9 @@ describe Admin::SubscriptionsController, type: :controller do
             before { outgoing_exchange.update(variants: [variant1, variant2]) }
 
             it 'creates subscription line items for the subscription' do
-              expect{ spree_post :update, params }.to change{ subscription.subscription_line_items.count }.by(1)
+              expect{ spree_post :update, params }.to change{
+                                                        subscription.subscription_line_items.count
+                                                      }.by(1)
               subscription.reload
               expect(subscription.subscription_line_items.count).to be 2
               subscription_line_item = subscription.subscription_line_items.last
@@ -380,7 +417,9 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
     let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+    let!(:proxy_order) {
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+    }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -412,10 +451,12 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
-            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+            let(:proxy_order) {
+              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+            }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { while !order.completed? do break unless order.next! end }
+            before { break unless order.next! while !order.completed? }
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
@@ -511,10 +552,12 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
-            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+            let(:proxy_order) {
+              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+            }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { while !order.completed? do break unless order.next! end }
+            before { break unless order.next! while !order.completed? }
 
             context "when no 'open_orders' directive has been provided" do
               it "renders an error, asking what to do" do
@@ -578,7 +621,9 @@ describe Admin::SubscriptionsController, type: :controller do
   describe 'unpause' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
-    let!(:subscription) { create(:subscription, shop: shop, paused_at: Time.zone.now, with_items: true) }
+    let!(:subscription) {
+      create(:subscription, shop: shop, paused_at: Time.zone.now, with_items: true)
+    }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -610,10 +655,12 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context "when at least one order in an open order cycle is 'complete'" do
             let(:order_cycle) { subscription.order_cycles.first }
-            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+            let(:proxy_order) {
+              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+            }
             let!(:order) { proxy_order.initialise_order! }
 
-            before { while !order.completed? do break unless order.next! end }
+            before { break unless order.next! while !order.completed? }
 
             context "when no associated orders are 'canceled'" do
               it 'renders the unpaused subscription as json, leaves the order untouched' do
@@ -707,7 +754,9 @@ describe Admin::SubscriptionsController, type: :controller do
 
     context "when other payment methods exist" do
       let!(:stripe) { create(:stripe_connect_payment_method, distributors: [shop]) }
-      let!(:paypal) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id]) }
+      let!(:paypal) {
+        Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id])
+      }
       let!(:bogus) { create(:bogus_payment_method, distributors: [shop]) }
 
       it "only loads Stripe and Cash payment methods" do

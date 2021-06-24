@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/scope_variants_for_search'
 
 module Spree

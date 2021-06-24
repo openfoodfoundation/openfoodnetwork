@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Web
   class CookiesConsent
-    COOKIE_NAME = 'cookies_consent'.freeze
+    COOKIE_NAME = 'cookies_consent'
 
     def initialize(cookies, domain)
       @cookies = cookies

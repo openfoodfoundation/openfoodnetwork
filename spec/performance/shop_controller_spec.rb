@@ -5,7 +5,9 @@ require 'spec_helper'
 describe ShopController, type: :controller, performance: true do
   let(:d) { create(:distributor_enterprise) }
   let(:enterprise_fee) { create(:enterprise_fee) }
-  let(:order_cycle) { create(:simple_order_cycle, distributors: [d], coordinator_fees: [enterprise_fee]) }
+  let(:order_cycle) {
+    create(:simple_order_cycle, distributors: [d], coordinator_fees: [enterprise_fee])
+  }
 
   before do
     allow(controller).to receive(:current_distributor) { d }
@@ -29,7 +31,8 @@ describe ShopController, type: :controller, performance: true do
         p.set_property 'Organic Certified', 'NASAA 12345'
         v1 = create(:variant, product: p)
         v2 = create(:variant, product: p)
-        Spree::Image.create! viewable_id: p.master.id, viewable_type: 'Spree::Variant', attachment: image
+        Spree::Image.create! viewable_id: p.master.id, viewable_type: 'Spree::Variant',
+                             attachment: image
 
         exchange.variants << [v1, v2]
       end

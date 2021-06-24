@@ -58,27 +58,40 @@ describe Spree::Admin::OrdersController, type: :controller do
         expect(response.status).to eq 302
       end
 
-      it "updates distribution charges and redirects to order details page" do
-        expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
+      context "recalculating fees and taxes" do
+        before do
+          allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order }
+        end
 
-        spree_put :update, params
+        it "updates fees and taxes and redirects to order details page" do
+          expect(order).to receive(:recreate_all_fees!)
+          expect(order).to receive(:create_tax_charge!)
 
-        expect(response).to redirect_to spree.edit_admin_order_path(order)
+          spree_put :update, params
+
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
       end
 
       context "recalculating enterprise fees" do
         let(:user) { create(:admin_user) }
         let(:variant1) { create(:variant) }
         let(:variant2) { create(:variant) }
-        let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+        let(:distributor) {
+          create(:distributor_enterprise, allow_order_changes: true, charges_sales_tax: true)
+        }
         let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
-        let!(:exchange) { create(:exchange, incoming: true, sender: variant1.product.supplier, receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+        let!(:exchange) {
+          create(:exchange, incoming: true, sender: variant1.product.supplier,
+                            receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+        }
         let!(:order) do
-          order = create(:completed_order_with_totals, line_items_count: 2, distributor: distributor, order_cycle: order_cycle)
+          order = create(:completed_order_with_totals, line_items_count: 2,
+                                                       distributor: distributor, order_cycle: order_cycle)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
-          while !order.completed? do break unless order.next! end
+          break unless order.next! while !order.completed?
           order.recreate_all_fees!
           order
         end
@@ -133,6 +146,74 @@ describe Spree::Admin::OrdersController, type: :controller do
             expect(order.adjustment_total).to eq 0
           end
         end
+
+        context "with taxes on enterprise fees" do
+          let(:zone) { create(:zone_with_member) }
+          let(:tax_included) { true }
+          let(:tax_rate) {
+            create(:tax_rate, amount: 0.25, included_in_price: tax_included, zone: zone)
+          }
+          let!(:enterprise_fee) {
+            create(:enterprise_fee, tax_category: tax_rate.tax_category, amount: 1)
+          }
+
+          before do
+            allow(order).to receive(:tax_zone) { zone }
+          end
+
+          context "with included taxes" do
+            it "taxes fees correctly" do
+              spree_put :update, { id: order.number }
+              order.reload
+
+              expect(order.all_adjustments.tax.count).to eq 2
+              expect(order.enterprise_fee_tax).to eq 0.4
+
+              expect(order.included_tax_total).to eq 0.4
+              expect(order.additional_tax_total).to eq 0
+            end
+          end
+
+          context "with added taxes" do
+            let(:tax_included) { false }
+
+            it "taxes fees correctly" do
+              spree_put :update, { id: order.number }
+              order.reload
+
+              expect(order.all_adjustments.tax.count).to eq 2
+              expect(order.enterprise_fee_tax).to eq 0.5
+
+              expect(order.included_tax_total).to eq 0
+              expect(order.additional_tax_total).to eq 0.5
+            end
+
+            context "when the order has legacy taxes" do
+              let(:legacy_tax_adjustment) {
+                create(:adjustment, amount: 0.5, included: false, originator: tax_rate,
+                                    order: order, adjustable: order, state: "closed")
+              }
+
+              before do
+                order.all_adjustments.tax.delete_all
+                order.adjustments << legacy_tax_adjustment
+              end
+
+              it "removes legacy tax adjustments before recalculating tax" do
+                expect(order.all_adjustments.tax.count).to eq 1
+                expect(order.all_adjustments.tax).to include legacy_tax_adjustment
+                expect(order.additional_tax_total).to eq 0.5
+
+                spree_put :update, { id: order.number }
+                order.reload
+
+                expect(order.all_adjustments.tax.count).to eq 2
+                expect(order.all_adjustments.tax).to_not include legacy_tax_adjustment
+                expect(order.additional_tax_total).to eq 0.5
+              end
+            end
+          end
+        end
       end
     end
 
@@ -153,7 +234,8 @@ describe Spree::Admin::OrdersController, type: :controller do
         before do
           order.line_items << line_item
           order.save
-          params[:order][:line_items_attributes] = [{ id: line_item.id, quantity: line_item.quantity }]
+          params[:order][:line_items_attributes] =
+            [{ id: line_item.id, quantity: line_item.quantity }]
         end
 
         context "and no errors" do

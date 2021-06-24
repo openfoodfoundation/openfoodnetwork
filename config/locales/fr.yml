@@ -404,8 +404,16 @@ fr:
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     terms_of_service_files:
+      create:
+        select_file: "Veuillez d'abord sélectionner un document."
       show:
+        title: "CGU & CGV"
+        no_files: "Aucun document n'a été mis en ligne pour l'instant."
+        using_default_terms_html: "Le site pointe actuellement sur l'ancien %{tos_link}."
+        current_terms_html: "Visualiser l'actuel %{tos_link}. Temps de chargement : %{datetime}."
         terms_of_service: "Conditions Générales d'Utilisation"
+        delete: "Supprimer le fichier"
+        confirm_delete: "Etes-vous certain de vouloir supprimer les CGU & CGV actuelles ?"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -1388,8 +1396,6 @@ fr:
   label_producers: "Producteurs"
   label_groups: "Groupes"
   label_about: "A propos"
-  label_connect: "Se connecter"
-  label_learn: "Apprendre"
   label_blog: "Blog"
   label_support: "Soutien"
   label_shopping: "Achats"
@@ -1477,10 +1483,6 @@ fr:
   brandstory_part4: " "
   brandstory_part5_strong: " "
   brandstory_part6: " "
-  learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
-  learn_cta: "Découvrir "
-  connect_body: "Rechercher dans le répertoire des boutiques producteurs ou multi-producteurs et groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur CoopCircuits pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
-  connect_cta: "Explorer"
   system_headline: "Commander en ligne - comment ça marche?"
   system_step1: "1. Recherche"
   system_step1_text: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
@@ -3023,6 +3025,7 @@ fr:
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
+    refund: "Remboursement"
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
@@ -3224,7 +3227,7 @@ fr:
           few: "%{count} erreurs ne permettent pas de sauvegarder:"
           many: "%{count} erreurs ne permettent pas de sauvegarder:"
           other: "%{count} erreurs ne permettent pas de sauvegarder:"
-        there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
+        there_were_problems_with_the_following_fields: "Il y a eu un souci avec les champs suivants"
       payments_list:
         date_time: "Date/heure"
         amount: "Montant"
@@ -3690,7 +3693,7 @@ fr:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande a été expédiée"
+        instructions: "Votre commande de %{distributor} a été envoyée"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
