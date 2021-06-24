@@ -2669,6 +2669,7 @@ ru:
           failed: "неудача"
           paid: "оплачен"
           pending: "в ожидании"
+          requires_authorization: "требуется авторизация"
           processing: "в обработке"
           void: "аннулирован"
           invalid: "Недействительный"
@@ -3673,6 +3674,7 @@ ru:
       paid: оплачен
       pending: в ожидании
       processing: в обработке
+      requires_authorization: "требуется авторизация"
       void: аннулирован
       invalid: Недействительный
       authorise: разрешить
