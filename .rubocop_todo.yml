@@ -540,7 +540,6 @@ Rails/UnknownEnv:
   Exclude:
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
     - 'app/models/spree/app_configuration.rb'
-    - 'lib/spree/core/controller_helpers/ssl.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

@@ -3,7 +3,6 @@
 require "spree/core/controller_helpers/auth"
 require "spree/core/controller_helpers/common"
 require "spree/core/controller_helpers/order"
-require "spree/core/controller_helpers/ssl"
 
 module Spree
   class UserRegistrationsController < Devise::RegistrationsController
@@ -12,9 +11,7 @@ module Spree
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
-    include Spree::Core::ControllerHelpers::SSL
 
-    ssl_required
     before_action :check_permissions, only: [:edit, :update]
     skip_before_action :require_no_authentication
 

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PaymentsController < BaseController
-  ssl_required :redirect_to_authorize
-
   respond_to :html
 
   prepend_before_action :require_logged_in, only: :redirect_to_authorize

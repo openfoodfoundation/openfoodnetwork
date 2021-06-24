@@ -2,7 +2,6 @@
 
 # Base controller for OFN's API
 require "spree/api/controller_setup"
-require "spree/core/controller_helpers/ssl"
 
 module Api
   module V0
@@ -11,7 +10,6 @@ module Api
       include ActionController::StrongParameters
       include ActionController::RespondWith
       include Spree::Api::ControllerSetup
-      include Spree::Core::ControllerHelpers::SSL
       include ::ActionController::Head
       include ::ActionController::ConditionalGet
       include ActionView::Layouts

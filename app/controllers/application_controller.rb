@@ -5,7 +5,6 @@ require "application_responder"
 require 'cancan'
 require 'spree/core/controller_helpers/auth'
 require 'spree/core/controller_helpers/respond_with'
-require 'spree/core/controller_helpers/ssl'
 require 'spree/core/controller_helpers/common'
 require 'open_food_network/referer_parser'
 
@@ -32,7 +31,6 @@ class ApplicationController < ActionController::Base
 
   include Spree::Core::ControllerHelpers::Auth
   include Spree::Core::ControllerHelpers::RespondWith
-  include Spree::Core::ControllerHelpers::SSL
   include Spree::Core::ControllerHelpers::Common
 
   prepend_before_action :restrict_iframes
