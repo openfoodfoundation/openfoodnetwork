@@ -119,7 +119,5 @@ feature '
       click_link 'Groups'
       expect(page).to have_content 'My Group'
     end
-
-    xit "should show me only enterprises I manage when creating a new enterprise group"
   end
 end

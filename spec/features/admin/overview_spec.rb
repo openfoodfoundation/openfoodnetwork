@@ -43,7 +43,7 @@ feature '
         end
       end
 
-      pending "when user is a profile only" do
+      context "when user is a profile only" do
         before do
           d1.sells = "none"
           d1.save!
@@ -51,7 +51,7 @@ feature '
 
         it "does not show a products item" do
           visit '/admin'
-          page.should_not have_selector "#products"
+          expect(page).to have_no_selector "#products"
         end
       end
     end
