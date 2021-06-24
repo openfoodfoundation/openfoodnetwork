@@ -1,39 +1,50 @@
 # It turns out the good_migrations gem doesn't play nicely with loading classes on polymorphic
 # associations. The only workaround seems to be to load the class explicitly, which essentially
 # skips the whole point of good_migrations... :/
-require 'enterprise_fee'
-require 'concerns/balance'
-require 'spree/order'
 
 class MigrateEnterpriseFeeTaxAmounts < ActiveRecord::Migration[5.0]
-  class Spree::Adjustment < ApplicationRecord
-    belongs_to :originator, -> { with_deleted }, polymorphic: true
-    belongs_to :adjustable, polymorphic: true
-    belongs_to :order, class_name: "Spree::Order"
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
-    has_many :adjustments, as: :adjustable, dependent: :destroy
+  module Spree
+    class Adjustment < ApplicationRecord
+      self.table_name =  "spree_adjustments"
 
-    scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
-  end
-  class Spree::LineItem < ApplicationRecord
-    belongs_to :variant, class_name: "Spree::Variant"
-    has_one :product, through: :variant
-  end
-  class Spree::Variant < ApplicationRecord
-    belongs_to :product, class_name: 'Spree::Product'
-    has_many :line_items, inverse_of: :variant
-  end
-  class Spree::Product < ApplicationRecord
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
-    has_many :variants, class_name: 'Spree::Variant'
-  end
-  class Spree::TaxCategory < ApplicationRecord
-    has_many :tax_rates, dependent: :destroy, inverse_of: :tax_category
-  end
-  class Spree::TaxRate < ApplicationRecord
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
-    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
-    has_many :adjustments, as: :originator
+      belongs_to :originator, -> { with_deleted }, polymorphic: true
+      belongs_to :adjustable, polymorphic: true
+      belongs_to :order
+      belongs_to :tax_category
+      has_many :adjustments, as: :adjustable, dependent: :destroy
+
+      scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
+    end
+    class LineItem < ApplicationRecord
+      self.table_name =  "spree_line_items"
+
+      belongs_to :variant
+      has_one :product, through: :variant
+    end
+    class Variant < ApplicationRecord
+      self.table_name =  "spree_variants"
+
+      belongs_to :product
+      has_many :line_items, inverse_of: :variant
+    end
+    class Product < ApplicationRecord
+      self.table_name =  "spree_products"
+
+      belongs_to :tax_category
+      has_many :variants
+    end
+    class TaxCategory < ApplicationRecord
+      self.table_name =  "spree_tax_categories"
+
+      has_many :tax_rates, dependent: :destroy, inverse_of: :tax_category
+    end
+    class TaxRate < ApplicationRecord
+      self.table_name =  "spree_tax_rates"
+
+      belongs_to :zone, inverse_of: :tax_rates
+      belongs_to :tax_category, inverse_of: :tax_rates
+      has_many :adjustments, as: :originator
+    end
   end
 
   def up

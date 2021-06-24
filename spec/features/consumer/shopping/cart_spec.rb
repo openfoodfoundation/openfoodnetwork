@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require_relative '../../../../db/migrate/20210406161242_migrate_enterprise_fee_tax_amounts'
 
 feature "full-page cart", js: true do
   include AuthenticationHelper
