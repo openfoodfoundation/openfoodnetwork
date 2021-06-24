@@ -21,8 +21,8 @@ feature '
     end
 
     context "displaying the list of line items" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', shipment_state: 'ready', completed_at: Time.zone.now ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now ) }
       let!(:o3) { create(:order_with_distributor, state: 'address', completed_at: nil ) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o5) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
