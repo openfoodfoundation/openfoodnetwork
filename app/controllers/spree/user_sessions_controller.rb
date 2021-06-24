@@ -12,8 +12,6 @@ module Spree
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
 
-    ssl_allowed :login_bar
-
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
 

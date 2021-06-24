@@ -25,8 +25,6 @@ module Api
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-      ssl_allowed
-
       # Include these because we inherit from ActionController::Metal
       #   rather than ActionController::Base and these are required for AMS
       include ActionController::Serialization
