@@ -127,7 +127,7 @@ feature 'Multilingual', js: true do
 
         find('.language-switcher').click
         within '.language-switcher .dropdown' do
-          expect(page).to have_link I18n.t('language_name', locale: :en), href: '/locales/en'
+          expect(page).not_to have_link I18n.t('language_name', locale: :en), href: '/locales/en'
           expect(page).to have_link I18n.t('language_name', locale: :es, default: 'Language Name'),
                                     href: '/locales/es'
 

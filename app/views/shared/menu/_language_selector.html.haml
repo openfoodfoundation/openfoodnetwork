@@ -3,6 +3,6 @@
     %i.ofn-i_071-globe
     %span= t 'language_name'
   %ul.dropdown
-    - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
+    - OpenFoodNetwork::I18nConfig.locale_options.each do |l|
       %li
         = link_to t('language_name', locale: l), main_app.locale_path(l.to_s)
