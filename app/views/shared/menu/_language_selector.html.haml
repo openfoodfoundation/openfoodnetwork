@@ -5,4 +5,4 @@
   %ul.dropdown
     - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
       %li
-        %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
+        = link_to t('language_name', locale: l), main_app.locale_path(l.to_s)

@@ -127,11 +127,11 @@ feature 'Multilingual', js: true do
 
         find('.language-switcher').click
         within '.language-switcher .dropdown' do
-          expect(page).to have_link I18n.t('language_name', locale: :en), href: '?locale=en'
+          expect(page).to have_link I18n.t('language_name', locale: :en), href: '/locales/en'
           expect(page).to have_link I18n.t('language_name', locale: :es, default: 'Language Name'),
-                                    href: '?locale=es'
+                                    href: '/locales/es'
 
-          find('li a[href="?locale=es"]').click
+          find('li a[href="/locales/es"]').click
         end
 
         expect_menu_and_cookie_in_es

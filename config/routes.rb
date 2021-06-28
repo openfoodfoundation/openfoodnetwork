@@ -20,6 +20,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/register", to: "registration#index", as: :registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
   post "/user/registered_email", to: "spree/users#registered_email"
+  resources :locales, only: [:show]
 
   # Redirects to global website
   get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/connect/")
