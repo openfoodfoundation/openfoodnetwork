@@ -114,7 +114,7 @@ module Spree
     end
 
     def default_zone_or_zone_match?(order)
-      Zone.default_tax.contains?(order.tax_zone) || order.tax_zone == zone
+      Zone.default_tax&.contains?(order.tax_zone) || order.tax_zone == zone
     end
 
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
