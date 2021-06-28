@@ -14,9 +14,7 @@ module Spree
         end
 
         def edit
-          country_id = Address.default.country.id
-          @order.build_bill_address(country_id: country_id) if @order.bill_address.nil?
-          @order.build_ship_address(country_id: country_id) if @order.ship_address.nil?
+          build_addresses
         end
 
         def update
@@ -43,6 +41,12 @@ module Spree
         end
 
         private
+
+        def build_addresses
+          country_id = Address.default.country.id
+          @order.build_bill_address(country_id: country_id) if @order.bill_address.nil?
+          @order.build_ship_address(country_id: country_id) if @order.ship_address.nil?
+        end
 
         def refresh_shipment_rates
           @order.shipments.map(&:refresh_rates)
