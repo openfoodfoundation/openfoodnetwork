@@ -42,8 +42,13 @@ class MigrateAdminTaxAmounts < ActiveRecord::Migration[6.0]
 
     return if approximation.infinite? || approximation.zero? || approximation.nan?
 
-    applicable_rates = Spree::TaxRate.match(adjustment.order)
-    applicable_rates.min_by{ |rate| (rate.amount - approximation).abs  }
+    applicable_rates(adjustment).min_by{ |rate| (rate.amount - approximation).abs  }
+  end
+
+  def applicable_rates(adjustment)
+    return [] unless adjustment.order&.distributor_id.present?
+
+    Spree::TaxRate.match(adjustment.order)
   end
 
   def tax_adjustment_label(tax_rate)

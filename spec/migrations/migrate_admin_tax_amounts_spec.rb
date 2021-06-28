@@ -25,7 +25,10 @@ describe MigrateAdminTaxAmounts do
     end
 
     context "when the adjustments have tax" do
-      before { adjustment10; adjustment50 }
+      before do
+        adjustment10; adjustment50
+        allow(subject).to receive(:applicable_rates) { [tax_rate10, tax_rate50] }
+      end
 
       it "moves the tax to an adjustment" do
         expect(Spree::Adjustment).to receive(:create!).at_least(:once).and_call_original
@@ -54,23 +57,55 @@ describe MigrateAdminTaxAmounts do
   end
 
   describe "#find_tax_rate" do
-    it "matches rates correctly" do
-      expect(
-        subject.find_tax_rate(adjustment10.amount, adjustment10.included_tax)
-      ).to eq(tax_rate10)
+    before do
+      allow(subject).to receive(:applicable_rates) { [tax_rate10, tax_rate50] }
+    end
 
-      expect(
-        subject.find_tax_rate(adjustment50.amount, adjustment50.included_tax)
-      ).to eq(tax_rate50)
+    it "matches rates correctly" do
+      expect(subject.find_tax_rate(adjustment10)).to eq(tax_rate10)
+
+      expect(subject.find_tax_rate(adjustment50)).to eq(tax_rate50)
     end
 
     context "without a perfect match" do
       let(:adjustment45) { create(:adjustment, amount: 100, included_tax: 45) }
 
       it "finds the closest match" do
-        expect(
-          subject.find_tax_rate(adjustment45.amount, adjustment45.included_tax)
-        ).to eq(tax_rate50)
+        expect(subject.find_tax_rate(adjustment45)).to eq(tax_rate50)
+      end
+    end
+  end
+
+  describe "#applicabe_rates" do
+    let(:distributor) { create(:enterprise) }
+    let(:order) { create(:order, distributor: distributor) }
+    let!(:adjustment) { create(:adjustment, order: order) }
+
+    context "when the order is nil" do
+      let(:order) { nil }
+
+      it "returns an empty array" do
+        expect(Spree::TaxRate).to_not receive(:match)
+
+        expect(subject.applicable_rates(adjustment)).to eq []
+      end
+    end
+
+    context "when the order has no distributor" do
+      let(:distributor) { nil }
+
+      it "returns an empty array" do
+        expect(Spree::TaxRate).to_not receive(:match)
+
+        expect(subject.applicable_rates(adjustment)).to eq []
+      end
+    end
+
+    context "when the order has a distributor" do
+      it "calls TaxRate#match for an array of applicable taxes for the order" do
+        expect(Spree::TaxRate).to receive(:match) { [tax_rate10] }
+
+        expect(subject.applicable_rates(adjustment)).to eq [tax_rate10]
       end
     end
   end
