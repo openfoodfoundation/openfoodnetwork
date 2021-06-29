@@ -107,7 +107,7 @@ Pagy::VARS[:items]  = 100                                 # default
 
 # Items extra: Allow the client to request a custom number of items per page with an optional selector UI
 # See https://ddnexus.github.io/pagy/extras/items
-# require 'pagy/extras/items'
+require 'pagy/extras/items'
 Pagy::VARS[:items_param] = :per_page    # default
 Pagy::VARS[:max_items]   = 100       # default
 # set to false if you want to make :enable_items_extra an opt-in variable
