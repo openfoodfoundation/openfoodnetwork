@@ -32,7 +32,7 @@ module Api
           includes(:country).order('name ASC')
 
         if pagination?
-          states = states.page(params[:page]).per(params[:per_page])
+          _pagy, states = pagy(states, items: params[:per_page])
         end
 
         states
