@@ -16,7 +16,7 @@ module Admin
         reorder('spree_line_items.order_id ASC, spree_line_items.id ASC')
 
       pagy = nil
-      pagy, @line_items = pagy(@line_items, items: params[:per_page]) if pagination_required?
+      pagy, @line_items = pagy(@line_items) if pagination_required?
 
       render json: {
         line_items: serialized_line_items,
