@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/jeremydurham/custom-err-msg.git
-  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  remote: https://github.com/andrewpbrett/custom-err-msg.git
+  revision: f65d7d20f042e8b26d56adeadf03b7d1c2a70368
   specs:
     custom_error_message (1.1.1)
 
