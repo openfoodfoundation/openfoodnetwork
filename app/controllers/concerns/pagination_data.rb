@@ -3,12 +3,12 @@
 module PaginationData
   extend ActiveSupport::Concern
 
-  def pagination_data(pagination)
-    return unless pagination.respond_to? :pages
+  def pagination_data
+    return unless defined? @pagy
 
     {
-      results: pagination.count,
-      pages: pagination.pages,
+      results: @pagy.count,
+      pages: @pagy.pages,
       page: (params[:page] || 1).to_i,
       per_page: (params[:per_page] || default_per_page).to_i
     }
