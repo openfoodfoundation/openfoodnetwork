@@ -2,8 +2,6 @@
 
 module Spree
   class PaypalController < ::BaseController
-    ssl_allowed
-
     include OrderStockCheck
 
     before_action :enable_embedded_shopfront

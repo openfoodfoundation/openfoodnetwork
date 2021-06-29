@@ -44,7 +44,7 @@ module Spree
     end
 
     def update_cart(params)
-      if order.update_attributes(params)
+      if order.update(params)
         discard_empty_line_items
         update_shipment
         update_order
@@ -55,7 +55,7 @@ module Spree
     end
 
     def update_item(line_item, params)
-      if line_item.update_attributes(params)
+      if line_item.update(params)
         discard_empty_line_items
         order.update_line_item_fees! line_item
         order.update_order_fees! if order.completed?

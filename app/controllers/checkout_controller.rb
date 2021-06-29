@@ -10,8 +10,6 @@ class CheckoutController < ::BaseController
   helper 'terms_and_conditions'
   helper 'checkout'
 
-  ssl_required
-
   # We need pessimistic locking to avoid race conditions.
   # Otherwise we fail on duplicate indexes or end up with negative stock.
   prepend_around_action CurrentOrderLocker, only: [:edit, :update]

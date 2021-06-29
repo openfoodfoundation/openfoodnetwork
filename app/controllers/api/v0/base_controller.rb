@@ -2,7 +2,6 @@
 
 # Base controller for OFN's API
 require "spree/api/controller_setup"
-require "spree/core/controller_helpers/ssl"
 
 module Api
   module V0
@@ -11,7 +10,6 @@ module Api
       include ActionController::StrongParameters
       include ActionController::RespondWith
       include Spree::Api::ControllerSetup
-      include Spree::Core::ControllerHelpers::SSL
       include ::ActionController::Head
       include ::ActionController::ConditionalGet
       include ActionView::Layouts
@@ -26,8 +24,6 @@ module Api
       rescue_from Exception, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
-      ssl_allowed
 
       # Include these because we inherit from ActionController::Metal
       #   rather than ActionController::Base and these are required for AMS

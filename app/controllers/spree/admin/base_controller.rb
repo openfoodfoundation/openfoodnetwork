@@ -3,8 +3,6 @@
 module Spree
   module Admin
     class BaseController < ApplicationController
-      ssl_required
-
       helper 'shared'
       helper 'spree/admin/navigation'
       helper 'spree/admin/orders'

@@ -484,7 +484,6 @@ Metrics/AbcSize:
   - lib/spree/core/calculated_adjustments.rb
   - lib/spree/core/controller_helpers/order.rb
   - lib/spree/core/controller_helpers/respond_with.rb
-  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/core/delegate_belongs_to.rb
   - lib/spree/core/permalinks.rb
   - lib/spree/core/s3_support.rb
@@ -528,7 +527,6 @@ Metrics/BlockLength:
   - app/models/spree/payment/processing.rb
   - app/models/spree/shipment.rb
   - lib/spree/core/controller_helpers/common.rb
-  - lib/spree/core/controller_helpers/ssl.rb
   - lib/tasks/data.rake
   - spec/controllers/spree/admin/invoices_controller_spec.rb
   - spec/factories/address_factory.rb
@@ -607,7 +605,6 @@ Metrics/CyclomaticComplexity:
   - lib/spree/core/calculated_adjustments.rb
   - lib/spree/core/controller_helpers/order.rb
   - lib/spree/core/controller_helpers/respond_with.rb
-  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
 
@@ -651,7 +648,6 @@ Metrics/PerceivedComplexity:
   - lib/spree/core/calculated_adjustments.rb
   - lib/spree/core/controller_helpers/order.rb
   - lib/spree/core/controller_helpers/respond_with.rb
-  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
 

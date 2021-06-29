@@ -47,7 +47,7 @@ class Customer < ApplicationRecord
   def check_for_orders
     return true unless orders.any?
 
-    errors[:base] << I18n.t('admin.customers.destroy.has_associated_orders')
+    errors.add(:base, I18n.t('admin.customers.destroy.has_associated_orders'))
     throw :abort
   end
 end
