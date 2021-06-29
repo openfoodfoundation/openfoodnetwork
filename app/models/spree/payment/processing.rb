@@ -29,7 +29,7 @@ module Spree
         return unless requires_authorization?
 
         yield if block_given?
-        raise Spree::Core::GatewayError, I18n.t('action_required')
+        true
       end
 
       def purchase!

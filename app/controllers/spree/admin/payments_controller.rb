@@ -36,8 +36,14 @@ module Spree
           end
 
           @payment.authorize!(full_order_path(@payment.order))
-          @payment.request_user_authorization do
+          auth_requested = @payment.request_user_authorization do
             PaymentMailer.authorize_payment(@payment).deliver_later
+          end
+
+          if auth_requested
+            flash[:error] = I18n.t('action_required')
+            redirect_to spree.new_admin_order_payment_path(@order)
+            return
           end
 
           if @order.completed?
