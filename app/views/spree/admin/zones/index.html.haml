@@ -38,4 +38,4 @@
             = link_to_delete zone, no_text: true
 
 - _with_routes Spree::Core::Engine.routes do
-  = pagy_nav @pagy
+  = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }
