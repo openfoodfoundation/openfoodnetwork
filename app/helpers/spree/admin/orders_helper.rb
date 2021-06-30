@@ -18,7 +18,7 @@ module Spree
         @order ||= order
         links = []
         links << edit_order_link unless action_name == "edit"
-        links.concat(complete_order_links) if @order.complete?
+        links.concat(complete_order_links) if @order.complete? || @order.resumed?
         links << ship_order_link if @order.ready_to_ship?
         links << cancel_order_link if @order.can_cancel?
         links
