@@ -1,1 +1,30 @@
-%div Add FilterField template here
+%div
+  %div.border.position-relative{style: "max-width: max-content;"}
+    %div.position-absolute.top-0.start-0.translate-middle.d-inline-bloc.px-2.ms-5.bg-white= @title
+    %div.px-3.py-2.pt-3.d-flex.flex-row.align-items-center
+      - if @selected.length > 0
+        %div.border.d-flex.flex-row.align-items-center.rounded-pill.py-1.px-2.ps-3.bg-light
+          %div
+            = @selected
+          %div.text-primary.ms-3{style: "height: 20px; width: 20px; cursor: pointer;"}
+            %svg{xmlns: "http://www.w3.org/2000/svg", class:"", viewBox: "0 0 20 20", fill: "currentColor"}
+              %path{"fill-rule": "evenodd", "d": "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "clip-rule": "evenodd"}
+      - else
+        %div
+          All categories
+      %div.ms-3{style: "height: 20px; width: 20px; cursor: pointer;"}
+        %svg{xmlns: "http://www.w3.org/2000/svg", class: "", viewBox: "0 0 20 20", fill: "currentColor"}
+          %path{"fill-rule": "evenodd", d: "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z", "clip-rule": "evenodd" }
+  - if @open
+    %div.border.mt-1{style: "max-width: max-content;"}
+      %div.d-flex.flex-row.align-items-center.border.m-2
+        %div.mx-1.text-muted{style: "height: 25px; width: 25px;"}
+          %svg{xmlns: "http://www.w3.org/2000/svg", class: "", viewBox: "0 0 20 20", fill: "currentColor"}
+            %path{"fill-rule": "evenodd", "d": "M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z", "clip-rule": "evenodd"}
+        %input.m-0.border-0.py-0.bg-white{type: "text", placeholder: "Search categories", style: "box-shadow: none;" }
+      %div.mt-2.border-top.pt-2
+        - @options.each do |x|
+          %div.mx-2
+            %label
+              %input{type: "checkbox", checked: @selected === x}
+              %span= x
