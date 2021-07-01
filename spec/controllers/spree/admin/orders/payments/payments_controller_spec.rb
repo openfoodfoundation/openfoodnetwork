@@ -35,6 +35,18 @@ describe Spree::Admin::PaymentsController, type: :controller do
                                                     completed_at: Time.zone.now)
       end
 
+      context "when the payment cannot be saved" do
+        before do
+          allow_any_instance_of(Spree::Payment).to receive(:save).and_return(false)
+        end
+
+        it "redirects to the list of payments" do
+          spree_post :create, payment: params, order_id: order.number
+
+          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        end
+      end
+
       context "with Check payment (payment.process! does nothing)" do
         it "redirects to list of payments with success flash" do
           spree_post :create, payment: params, order_id: order.number
