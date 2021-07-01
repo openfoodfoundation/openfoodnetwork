@@ -187,6 +187,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             select "frogs", from: "order_cycle_id"
             expect(page).to have_selector("product", count: 10)
             scroll_to(page.find(".product-listing"), align: :bottom)
+            expect(page).to_not have_content "Loading..."
             expect(page).to have_selector("product", count: 20)
 
             scroll_to(page.find("distributor"))
