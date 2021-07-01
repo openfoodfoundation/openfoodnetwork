@@ -497,6 +497,51 @@ describe OrderCycle do
     end
   end
 
+  describe "version tracking", versioning: true do
+    let!(:oc) { create(:order_cycle, name: "Original") }
+
+    it "remembers old versions" do
+      expect {
+        oc.update!(name: "New name")
+      }.to change {
+        oc.versions.count
+      }.by(1)
+
+      expect(oc.versions.last.reify.name).to eq "Original"
+    end
+
+    # Needs additional gem:
+    # https://github.com/westonganger/paper_trail-association_tracking
+    xit "records versions when adding schedules" do
+      pending "seems broken with current version"
+
+      expect {
+        # Creating a schedule associates it automatically:
+        create(:schedule)
+        expect(oc.schedules.count).to eq 1
+      }.to change {
+        oc.versions.count
+      }.by(1)
+    end
+
+    it "records associated schedules" do
+      schedule = create(:schedule)
+      expect(oc.reload.schedules).to eq [schedule]
+      oc.update!(name: "New name")
+
+      expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+    end
+
+    it "remembers schedules of the previous version" do
+      schedule = create(:schedule)
+      expect(oc.reload.schedules).to eq [schedule]
+      oc.update!(name: "New name", schedules: [])
+
+      pending "gathering schedule ids before save"
+      expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+    end
+  end
+
   def core_exchange_attributes(exchange)
     exterior_attribute_keys = %w(id order_cycle_id created_at updated_at)
     exchange.attributes.
