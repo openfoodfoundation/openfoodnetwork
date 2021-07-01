@@ -942,7 +942,6 @@ en_GB:
         cancel: "Cancel"
         back_to_list: "Back To List"
       edit:
-        advanced_settings: "Advanced Settings"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -995,6 +994,8 @@ en_GB:
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
+      order_cycle_top_buttons:
+        advanced_settings: "Advanced Settings"
       coordinator_fees:
         add: Add coordinator fee
       filters:
@@ -2345,8 +2346,8 @@ en_GB:
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: 20%(VAT on Income)
-  report_header_gst_free_income: Zero Rated Income
+  report_header_gst_on_income: 20%
+  report_header_gst_free_income: No VAT 0% and excluded from the VAT return
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
