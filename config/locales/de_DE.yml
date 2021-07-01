@@ -944,7 +944,6 @@ de_DE:
         cancel: "Abbrechen"
         back_to_list: "Zurück zur Liste"
       edit:
-        advanced_settings: "Erweiterte Einstellungen"
         save: "Speichern"
         save_and_next: "Speichern und weiter"
         next: "Weiter"
@@ -997,6 +996,8 @@ de_DE:
         preferred_product_selection_from_coordinator_inventory_only_here: Nur vom Katalog des Koordinators
         preferred_product_selection_from_coordinator_inventory_only_all: Alle verfügbaren Produkte
         save_reload: Speichern und neu laden
+      order_cycle_top_buttons:
+        advanced_settings: "Erweiterte Einstellungen"
       coordinator_fees:
         add: Koordinatorgebühr hinzufügen
       filters:
@@ -2371,8 +2372,8 @@ de_DE:
   success: "Erfolgreich."
   failure: "Fehler!"
   unsaved_changes_confirmation: "Nicht gespeicherte Änderungen gehen verloren. Trotzdem fortfahren?"
-  one_product_unsaved: "Änderungen an einem Produkt bleiben ungespeichert."
-  products_unsaved: "Änderungen an %{n} Produkten bleiben ungespeichert."
+  one_product_unsaved: "Änderungen an einem Produkt sind noch nicht gespeichert."
+  products_unsaved: "Änderungen an %{n} Produkten sind noch nicht gespeichert."
   is_already_manager: "ist bereits ein Manager."
   no_change_to_save: "Keine Änderung zum Speichern vorhanden."
   user_invited: "%{email} wurde eingeladen, dieses Unternehmen zu verwalten."
@@ -2749,7 +2750,7 @@ de_DE:
       changes_to: Änderungen an
       one_override: ein Override
       overrides: überschreibt
-      remain_unsaved: bleiben ungespeichert.
+      remain_unsaved: sind noch nicht gespeichert.
       no_changes_to_save: Keine Änderungen zum Speichern.
       no_authorisation: "Keine Berechtigung zum Speichern dieser Änderungen. Änderungen werden nicht gespeichert."
       some_trouble: "Probleme beim Speichern: %{errors}"
@@ -3674,7 +3675,7 @@ de_DE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
-        instructions: "Ihre Bestellung von %{distributor} wurde versandt"
+        instructions: "Ihre Bestellung bei %{distributor} wurde versandt"
         shipment_summary: "Übersicht"
         subject: "Versandbenachrichtigung"
         thanks: "Danke für Ihren Einkauf!"
