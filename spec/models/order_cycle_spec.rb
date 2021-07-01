@@ -497,6 +497,61 @@ describe OrderCycle do
     end
   end
 
+  describe "version tracking", versioning: true do
+    let!(:oc) { create(:order_cycle) }
+
+    it "remembers old versions" do
+      expect {
+        oc.update!(name: "New name")
+      }.to change {
+        oc.versions.count
+      }.by(1)
+    end
+
+    it "records versions when adding schedules" do
+      pending "seems broken with current version"
+
+      expect {
+        # Creating a schedule associates it automatically:
+        create(:schedule)
+        expect(oc.schedules.count).to eq 1
+      }.to change {
+        oc.versions.count
+      }.by(1)
+    end
+
+    it "records associated schedules" do
+      schedule = create(:schedule)
+      expect(oc.reload.schedules).to eq [schedule]
+      oc.update!(name: "New name")
+
+      expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+    end
+
+    it "can restore schedules" do
+      schedule = create(:schedule)
+      expect(oc.reload.schedules).to eq [schedule]
+      oc.update!(name: "New name")
+      oc.update!(schedules: [])
+
+      expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+
+      pending "seems broken with current version"
+      expect(oc.versions.last.reify.schedules).to eq [schedule]
+    end
+
+    it "records schedule ids in each version" do
+      schedule = create(:schedule)
+      expect(oc.reload.schedules).to eq [schedule]
+      oc.update!(name: "New name")
+      oc.update!(name: "Another new name", schedules: [])
+
+      pending "seems broken with current version"
+      expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+      expect(oc.versions.last.reify.schedules).to eq [schedule]
+    end
+  end
+
   def core_exchange_attributes(exchange)
     exterior_attribute_keys = %w(id order_cycle_id created_at updated_at)
     exchange.attributes.
