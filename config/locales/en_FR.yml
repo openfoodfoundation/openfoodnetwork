@@ -303,6 +303,7 @@ en_FR:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -2235,7 +2236,7 @@ en_FR:
   report_header_hub: Hub
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
-  report_header_hub_code: Hub Code
+  report_header_hub_code: Code
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2660,6 +2661,7 @@ en_FR:
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3616,6 +3618,7 @@ en_FR:
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorization required"
       void: void
       invalid: invalid
       authorise: authorise

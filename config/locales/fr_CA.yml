@@ -4,6 +4,7 @@ fr_CA:
     attributes:
       spree/user:
         password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
       enterprise_fee:
         fee_type: Type de commissions
       spree/order:
@@ -303,6 +304,7 @@ fr_CA:
   no_pending_payments: "Aucun paiement en attente."
   invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
+  clear_filters: Annuler les filtres
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
@@ -404,8 +406,15 @@ fr_CA:
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     terms_of_service_files:
+      create:
+        select_file: "Veuillez d'abord sélectionner un document."
       show:
+        title: "fichiers de conditions de service"
+        no_files: "Aucun document n'a été mis en ligne pour l'instant."
+        current_terms_html: "Visualiser l'actuel %{tos_link}. Temps de chargement:%{datetime}."
         terms_of_service: "Conditions Générales d'Utilisation"
+        delete: "Supprimer le fichier"
+        confirm_delete: "Etes-vous certain de vouloir supprimer les fichiers de conditions de service actuelles ?"
     number_localization:
       number_localization_settings: "Paramètres de localisation de numéro"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -3668,6 +3677,7 @@ fr_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
+        instructions: "Votre commande de %{distributor} a été envoyéeonfirmation du mot de passe."
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."

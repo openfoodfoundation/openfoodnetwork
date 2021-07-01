@@ -303,6 +303,7 @@ en_GB:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -2344,8 +2345,8 @@ en_GB:
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: 20%(VAT on Income)
-  report_header_gst_free_income: Zero Rated Income
+  report_header_gst_on_income: 20%
+  report_header_gst_free_income: No VAT 0% and excluded from the VAT return
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
@@ -2666,6 +2667,7 @@ en_GB:
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorisation required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3622,6 +3624,7 @@ en_GB:
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorisation required"
       void: void
       invalid: invalid
       authorise: authorise
@@ -3669,6 +3672,7 @@ en_GB:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
+        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
         thanks: "Thank you for your order with us."

@@ -303,6 +303,7 @@ fr:
   no_pending_payments: "Aucun paiement en attente."
   invalid_payment_state: "Statut de paiement invalide : %{state}"
   filter_results: Filtrer les résultats
+  clear_filters: Effacer les filtres
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
@@ -2237,7 +2238,7 @@ fr:
   report_header_hub: Boutique
   report_header_hub_address: Adresse de la boutique
   report_header_to_hub: Distributeur
-  report_header_hub_code: Code de la boutique
+  report_header_hub_code: Code
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2688,6 +2689,7 @@ fr:
           failed: "échec"
           paid: "payé"
           pending: "en attente"
+          requires_authorization: "authorisation requise"
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
@@ -3038,7 +3040,7 @@ fr:
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
-    name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
+    name_or_sku: "Nom ou Ref Produit (entrer au moins les 3 premiers caractères du nom du produit)"
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
     back_to_payments_list: "Retour à la liste des paiements"
@@ -3645,6 +3647,7 @@ fr:
       paid: payé
       pending: en attente
       processing: en traitement
+      requires_authorization: "authorisation requise"
       void: faire un avoir
       invalid: invalide
       authorise: autorise

@@ -4,6 +4,7 @@ de_DE:
     attributes:
       spree/user:
         password: "Passwort"
+        password_confirmation: "Passwort erneut eingeben"
       enterprise_fee:
         fee_type: Art der Gebühr
       spree/order:
@@ -302,6 +303,7 @@ de_DE:
   no_pending_payments: "Keine ausstehenden Zahlungen."
   invalid_payment_state: "Ungültiger Zahlungsstatus: %{state}"
   filter_results: Suchen
+  clear_filters: Zurücksetzen
   quantity: Menge
   pick_up: Abholen
   copy: Kopieren
@@ -403,8 +405,16 @@ de_DE:
       enable_embedded_shopfronts: "Eingebettete Läden erlauben"
       embedded_shopfronts_whitelist: "Zugelassene externe Domains"
     terms_of_service_files:
+      create:
+        select_file: "Bitte wählen Sie zuerst eine Datei aus."
       show:
-        terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
+        title: "Nutzungsbedingungen"
+        no_files: "Es wurden noch keine Nutzungsbedingungen hochgeladen."
+        using_default_terms_html: "Die Website verweist derzeit auf die alten %{tos_link}."
+        current_terms_html: "Aktuelle %{tos_link} anzeigen. Hochgeladen am: %{datetime}"
+        terms_of_service: "Nutzungsbedingungen"
+        delete: "Löschen"
+        confirm_delete: "Sind Sie sicher, dass Sie die derzeitigen Nutzungsbedingungen löschen möchten?"
     number_localization:
       number_localization_settings: "Zahlenformateinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
@@ -698,7 +708,7 @@ de_DE:
           acn_placeholder: z. B. 93815/08152
           display_invoice_logo: Logo auf Rechnungen anzeigen
           invoice_text: Fügen Sie einen eigenen Text am Ende der Rechnungen hinzu
-          terms_and_conditions: "Geschäftsbedingungen"
+          terms_and_conditions: "Allgemeine Geschäftsbedingungen"
           remove_terms_and_conditions: "Datei löschen"
           uploaded_on: "hochgeladen am"
         contact:
@@ -1224,12 +1234,12 @@ de_DE:
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
-      link_text: "Allgemeinen Geschäftsbedingungen"
+      link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
     platform_terms_of_service:
       message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
     all_terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
-      terms_and_conditions: "Allgemeinen Geschäftsbedingungen"
+      terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
   shops:
     hubs:
@@ -1370,7 +1380,7 @@ de_DE:
   state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
-  terms_of_service: "AGB"
+  terms_of_service: "Nutzungsbedingungen"
   on_demand: Unbegrenzt/auf Bestellung
   none: Keine
   not_allowed: Nicht erlaubt
@@ -2176,9 +2186,9 @@ de_DE:
   last_name_begins_with: "Nachname beginnt mit"
   shipping_method: "Lieferoption"
   new_order: "Neue Bestellung"
-  enterprise_tos_link: "Link zu den AGB des Unternehmens"
+  enterprise_tos_link: "Link zu den Nutzungsbedingungen"
   enterprise_tos_message: "Wir möchten mit Menschen zusammenarbeiten, die unsere Ziele und Werte teilen. Daher bitten wir neue Unternehmen, unseren Allgemeinen Geschäftsbedingungen zuzustimmen:"
-  enterprise_tos_agree: "Ich stimme den oben genannten Geschäftsbedingungen zu"
+  enterprise_tos_agree: "Ich stimme den oben genannten Nutzungsbedingungen zu"
   tax_settings: "Steuereinstellungen"
   products_require_tax_category: "Produkte benötigen eine Steuerkategorie."
   admin_shared_address_1: "Adresse"
@@ -2361,8 +2371,8 @@ de_DE:
   success: "Erfolgreich."
   failure: "Fehler!"
   unsaved_changes_confirmation: "Nicht gespeicherte Änderungen gehen verloren. Trotzdem fortfahren?"
-  one_product_unsaved: "Änderungen an einem Produkt bleiben ungespeichert."
-  products_unsaved: "Änderungen an %{n} Produkten bleiben ungespeichert."
+  one_product_unsaved: "Änderungen an einem Produkt sind noch nicht gespeichert."
+  products_unsaved: "Änderungen an %{n} Produkten sind noch nicht gespeichert."
   is_already_manager: "ist bereits ein Manager."
   no_change_to_save: "Keine Änderung zum Speichern vorhanden."
   user_invited: "%{email} wurde eingeladen, dieses Unternehmen zu verwalten."
@@ -2497,8 +2507,8 @@ de_DE:
               überschreiben und Elemente für bestimmte Kunden wieder anzeigen.
         terms_and_conditions_info:
           title: "Allgemeine Geschäftsbedingungen hochladen"
-          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen (dem Verkäufer) und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihre Allgemeinen Geschäftsbedingungen akzeptieren, um die Kaufabwicklung abzuschließen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
-          message_2: "Käufer müssen die Allgemeinen Geschäftsbedingungen nur einmal akzeptieren. Wenn Sie jedoch Ihre Allgemeinen Geschäftsbedingungen ändern, müssen Käufer diese erneut akzeptieren, bevor sie zur Kasse gehen können."
+          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen (dem Verkäufer) und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihren Allgemeinen Geschäftsbedingungen zustimmen, um die Kaufabwicklung abzuschließen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
+          message_2: "Käufer müssen den Allgemeinen Geschäftsbedingungen nur einmal zustimmen. Wenn Sie jedoch Ihre Allgemeinen Geschäftsbedingungen ändern, müssen Käufer diesen erneut zustimmen, bevor sie zur Kasse gehen können."
         terms_and_conditions_warning:
           title: "Allgemeine Geschäftsbedingungen hochladen"
           message_1: "Alle Ihre Käufer müssen ihnen einmal an der Kasse zustimmen. Wenn Sie die Datei aktualisieren, müssen alle Ihre Käufer an der Kasse erneut zustimmen."
@@ -2661,6 +2671,7 @@ de_DE:
           failed: "fehlgeschlagen"
           paid: "bezahlt"
           pending: "ausstehend"
+          requires_authorization: "Bestätigung erforderlich"
           processing: "in Verarbeitung"
           void: "keine Angabe"
           invalid: "ungültig"
@@ -2738,7 +2749,7 @@ de_DE:
       changes_to: Änderungen an
       one_override: ein Override
       overrides: überschreibt
-      remain_unsaved: bleiben ungespeichert.
+      remain_unsaved: sind noch nicht gespeichert.
       no_changes_to_save: Keine Änderungen zum Speichern.
       no_authorisation: "Keine Berechtigung zum Speichern dieser Änderungen. Änderungen werden nicht gespeichert."
       some_trouble: "Probleme beim Speichern: %{errors}"
@@ -3198,7 +3209,7 @@ de_DE:
           few: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
           many: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
           other: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
-        there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern:"
+        there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern"
       payments_list:
         date_time: "Datum/Uhrzeit"
         amount: "Betrag"
@@ -3553,7 +3564,7 @@ de_DE:
           unit: "Einheit"
       shared:
         configuration_menu:
-          terms_of_service: "allgemeine Geschäftsbedingungen (AGB)"
+          terms_of_service: "Nutzungsbedingungen"
         sortable_header:
           name: "Name"
           number: "Nummer"
@@ -3567,8 +3578,8 @@ de_DE:
           legal_settings: "Rechtliche Einstellungen"
           cookies_consent_banner_toggle: "Zustimmungsbanner für Cookies anzeigen"
           privacy_policy_url: "URL der Datenschutzerklärung"
-          enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
-          shoppers_require_tos: "Kunden müssen den Allgemeinen Geschäftsbedingungen (AGB) zustimmen"
+          enterprises_require_tos: "Unternehmen müssen den Nutzungsbedingungen zustimmen"
+          shoppers_require_tos: "Kunden müssen den Allgemeinen Geschäftsbedingungen zustimmen"
           cookies_policy_matomo_section: "Matomo auf der Richtlinienseite für Cookies anzeigen"
           footer_tos_url: "URL der Allgemeinen Geschäftsbedingungen"
     checkout:
@@ -3616,6 +3627,7 @@ de_DE:
       paid: bezahlt
       pending: ausstehend
       processing: in Verarbeitung
+      requires_authorization: "Bestätigung erforderlich"
       void: keine Angabe
       invalid: ungültig
       authorise: zu bestätigen
@@ -3662,6 +3674,7 @@ de_DE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
+        instructions: "Ihre Bestellung bei %{distributor} wurde versandt"
         shipment_summary: "Übersicht"
         subject: "Versandbenachrichtigung"
         thanks: "Danke für Ihren Einkauf!"

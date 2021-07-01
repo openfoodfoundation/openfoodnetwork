@@ -4,6 +4,7 @@ ar:
     attributes:
       spree/user:
         password: "كلمه السر"
+        password_confirmation: "تأكيد كلمة المرور"
       enterprise_fee:
         fee_type: نوع الرسوم
       spree/order:
@@ -120,6 +121,8 @@ ar:
         updated_not_active: "تمت إعادة تعيين كلمة المرور الخاصة بك ، ولكن لم يتم تأكيد بريدك الإلكتروني بعد."
         updated: "تم تغيير كلمة المرور الخاصة بك بنجاح. انت الآن مسجل دخولك."
         send_instructions: "ستتلقى رسالة بريد إلكتروني تحتوي على إرشادات حول كيفية تأكيد حسابك في بضع دقائق."
+  home_page_alert_html: "الصفحة الرئيسية تنبيه HTML"
+  item_description: "وصف السلعة"
   models:
     order_cycle:
       cloned_order_cycle_name: "نسخة من %{order_cycle}"
@@ -290,6 +293,8 @@ ar:
   height: "الارتفاع"
   width: "العرض"
   depth: "العمق"
+  payment_could_not_process: "لا يمكن معالجة الدفع"
+  payment_could_not_complete: "لا يمكن إتمام الدفع"
   actions:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
@@ -305,8 +310,12 @@ ar:
     destroy: "الغاء"
     rename: "إعادة تسمية"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
     begins_on: يبدأ في
+    bill_address: "عنوان الفاتورة"
+    ship_address: "عنوان الشحن"
     customer: عميل
     date: تاريخ
     email: البريد الإلكتروني
@@ -368,8 +377,16 @@ ar:
       enable_embedded_shopfronts: "تمكين واجهة المتجر المدمجة"
       embedded_shopfronts_whitelist: "دومين الخارجي للقائمة البيضاء"
     terms_of_service_files:
+      create:
+        select_file: "الرجاء تحديد ملف أولا."
       show:
+        title: "ملفات شروط الخدمة"
+        no_files: "لم يتم تحميل أي شروط الخدمات حتى الآن."
+        using_default_terms_html: "يرتبط الموقع حاليًا بـ %{tos_link} القديم الخاص بك."
+        current_terms_html: "عرض الملف %{tos_link} الحالي. وقت التحميل: %{datetime}."
         terms_of_service: "شروط الخدمة"
+        delete: "حذف ملف"
+        confirm_delete: "هل أنت متأكد أنك تريد حذف ملف شروط الخدمة الحالي؟"
     number_localization:
       number_localization_settings: "إعدادات تعريب الأرقام"
       enable_localized_number: "استخدم المنطق الفاصل الدولي الف / العشري"
@@ -1319,6 +1336,12 @@ ar:
   address2: العنوان (تابع)
   city: مدينة
   city_placeholder: على سبيل المثال. نورثكوت
+  latitude: خط العرض
+  latitude_placeholder: على سبيل المثال -37.4713077
+  latitude_longitude_tip: هناك حاجة إلى خطوط الطول والعرض لعرض مؤسستك على الخريطة.
+  longitude: خط الطول
+  longitude_placeholder: على سبيل المثال 144.7851531
+  use_geocoder: حساب خطوط الطول والعرض تلقائيًا من العنوان؟
   postcode: الرمز البريدي
   postcode_placeholder: على سبيل المثال. 3070
   suburb: ضاحية
@@ -1521,6 +1544,7 @@ ar:
   email_order_summary_includes_tax: "(يشمل الضريبة):"
   email_payment_paid: دفع
   email_payment_not_paid: لم يتم الدفع
+  email_payment_description: وصف الدفع عند الخروج
   email_payment_summary: ملخص الدفع
   email_payment_method: "الدفع عن طريق:"
   email_so_placement_intro_html: "لديك طلب جديد مع <strong>%{distributor}</strong>"
@@ -1846,6 +1870,7 @@ ar:
       details:
         title: "تفاصيل"
         headline: "هيا بنا نبدأ"
+        enterprise: "واووووو! نحتاج أولاً إلى معرفة القليل عن مؤسستك:"
         producer: "اهلا و سهلا ! أولاً نحتاج إلى معرفة القليل عن مزرعتك:"
         enterprise_name_field: "اسم المؤسسة:"
         producer_name_field: "اسم المزرعة:"
@@ -1865,6 +1890,11 @@ ar:
         state_field_error: "المدينة مطلوبة"
         country_field: "الدولة :"
         country_field_error: "رجاء قم بإختيار الدوله"
+        map_location: "خريطة الموقع"
+        locate_address: "حدد موقع العنوان على الخريطة"
+        drag_pin: "اسحب الدبوس وأسقطه في المكان الصحيح إذا لم يكن دقيقًا."
+        confirm_address: "أؤكد أن الموقع المشار إليه للمؤسسة على الخريطة صحيح."
+        drag_map_marker: "نظرًا لوجود العديد من المنتجين العاملين في المناطق الريفية ، يتم دائمًا تحسين دقة الخرائط. ساعدنا في فهم موقعك بشكل أفضل من خلال التفاعل مع الخريطة أعلاه لتحريك الدبوس عن طريق النقر أو النقر لتثبيت الدبوس ثم السحب إلى الموقع الأكثر دقة بناءً على معرفتك."
       contact:
         title: "اتصل"
         who_is_managing_enterprise: "من المسؤول عن إدارة %{enterprise}؟"
@@ -2983,13 +3013,24 @@ ar:
   previous: "السابق"
   last: "الاخير"
   spree:
+    add_country: "أضف دولة"
+    adjustment: "تعديل"
     all: "الكل"
     category: "الفئة"
     credit: "اجل"
+    gateway_error: "عملية الدفع فشلت"
     more: "أكثر"
+    new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
     none: "لا شيء"
+    not_found: "غير موجود"
+    order_processed_successfully: "تمت معالجة الطلب بنجاح"
+    payment_method_not_supported: "طريقة الدفع غير مدعومة"
+    resend_authorization_email: "إعادة إرسال البريد الإلكتروني الخاص بالتفويض"
     refund: "إعادة المال"
+    server_error: "خطأ في الخادم"
+    start_date: "تاريخ البدء"
+    successfully_removed: "تمت الإزالة بنجاح"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
@@ -3322,6 +3363,8 @@ ar:
           ofn_with_tip: المؤسسات هم المنتجون و / أو محاور وهي الوحدة الأساسية للمؤسسة ضمن شبكة الغذاء المفتوح.
         enterprise_row:
           has_no_enterprise_fees: "لا توجد رسوم للمؤسسة"
+          has_no_payment_methods: "لا توجد طرق دفع"
+          has_no_shipping_methods: "لا توجد طرق شحن"
         products:
           active_products:
             zero: "ليس لديك أي منتجات نشطة."
@@ -3645,6 +3688,7 @@ ar:
     shipment_mailer:
       shipped_email:
         dear_customer: "عزيزي العميل،"
+        instructions: "تم شحن طلبك من %{distributor}"
         shipment_summary: "ملخص الشحن"
         subject: "إشعار الشحن"
         thanks: "شكرا لك على اعمالك."
