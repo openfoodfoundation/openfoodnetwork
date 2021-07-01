@@ -1661,6 +1661,12 @@ en:
           title: Delivery address
       submit: Next - Payment method
       cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
     errors:
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"

@@ -1,0 +1,22 @@
+%div.checkout-substep{"data": {"controller": "paymentmethod"}}
+  %div.checkout-title
+    = t("split_checkout.step2.payment_method.title")
+  - available_payment_methods.each do |payment_method| 
+    %div.checkout-input
+      = f.radio_button :payment_method_id, payment_method.id,
+        id: "payment_method_#{payment_method.id}",
+        "data-action": "paymentmethod#selectPaymentMethod",
+        "data-paymentmethod-description": "#{payment_method.description}"
+      = f.label payment_method.id, "#{payment_method.name} (#{payment_method_price(payment_method, @order)})", {for: "payment_method_" + payment_method.id.to_s }
+
+  %div
+    .panel{"data-paymentmethod-target": "panel", style: "display: none"} 
+      
+
+%div.checkout-substep
+  = t("split_checkout.step2.explaination")
+
+%div.checkout-submit
+  = f.submit t("split_checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+  %a.button.cancel{href: main_app.checkout_your_details_path}
+    = t("split_checkout.step2.cancel")
