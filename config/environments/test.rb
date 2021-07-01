@@ -32,7 +32,7 @@ Openfoodnetwork::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # Tests should fail when translations are missing.
-  config.action_view.raise_on_missing_translations = true
+  config.i18n.raise_on_missing_translations = true
 
   config.time_zone = ENV.fetch("TIMEZONE", "UTC")
 
