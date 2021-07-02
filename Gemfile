@@ -57,6 +57,10 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'pagy', '~> 5.1'
 
+gem 'omniauth'
+gem 'omniauth_openid_connect', github: 'andrewpbrett/omniauth_openid_connect', branch: "omniauth2"
+gem 'omniauth-rails_csrf_protection'
+
 gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'

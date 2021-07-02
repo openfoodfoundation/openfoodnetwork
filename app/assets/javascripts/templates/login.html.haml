@@ -41,4 +41,6 @@
           tabindex: "3",
           type: "submit",
           value: "{{'label_login' | t}}"}
-
+    .row
+      .large-12.columns
+        = ActionController::Base.helpers.link_to "Login with Les Communs", "/user/spree_user/auth/openid_connect", method: :post
