@@ -136,6 +136,22 @@ Devise.setup do |config|
   config.sign_out_via = :get
 
   config.case_insensitive_keys = [:email]
+  config.omniauth :openid_connect, {
+    name: :openid_connect,
+    issuer: "https://login.lescommuns.org",
+    scope: [:openid],
+    response_type: :code,
+    uid_field: "username",
+    client_options: {
+      port: 443,
+      scheme: "https",
+      host: "login.lescommuns.org",
+      authorization_endpoint: "/auth/realms/master/protocol/openid-connect/auth",
+      identifier: ENV["OPENID_APP_ID"],
+      secret: ENV["OPENID_APP_SECRET"],
+      redirect_uri: ENV["OPENID_REDIRECT_URI"],
+    }
+  }
 end
 
 Devise::TokenAuthenticatable.setup do |config|

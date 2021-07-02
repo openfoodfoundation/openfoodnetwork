@@ -52,6 +52,10 @@ gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
+gem 'omniauth'
+gem 'omniauth_openid_connect', github: 'andrewpbrett/omniauth_openid_connect', branch: "omniauth2"
+gem 'omniauth-rails_csrf_protection'
+
 gem 'kaminari', '~> 1.2.1'
 
 gem 'andand'
