@@ -3,8 +3,9 @@
 module Spree
   class User < ApplicationRecord
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable,
-           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true
+           :rememberable, :trackable, :validatable, :omniauthable,
+           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true,
+           :omniauth_providers => [:openid_connect]
 
     has_many :orders
     belongs_to :ship_address, class_name: 'Spree::Address'
@@ -45,6 +46,10 @@ module Spree
 
     def self.admin_created?
       User.admin.count > 0
+    end
+
+    def self.from_omniauth(auth)
+      ##
     end
 
     # Whether a user has a role or not.
