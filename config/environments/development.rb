@@ -14,7 +14,7 @@ Openfoodnetwork::Application.configure do
   if !!ENV["PROFILE"]
     config.cache_store = :redis_cache_store, {
       driver: :hiredis,
-      url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0"),
+      url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/1"),
       expires_in: 90.minutes
     }
   end

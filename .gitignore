@@ -2,6 +2,9 @@
 .rbenv-version
 .python-version
 .byebug_history
+.env.local
+.env.development.local
+.env.test.local
 .swp
 *.swo
 *.swp
