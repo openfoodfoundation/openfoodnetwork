@@ -62,6 +62,10 @@ gem 'pagy', '~> 5.1'
 gem 'rswag-api'
 gem 'rswag-ui'
 
+gem 'gitlab-omniauth-openid-connect', require: 'omniauth_openid_connect'
+gem 'openid_connect', '~> 1.3'
+gem 'omniauth-rails_csrf_protection'
+
 gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
