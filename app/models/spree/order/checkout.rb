@@ -67,12 +67,6 @@ module Spree
                 transition to: :cart, unless: :completed?
               end
 
-              if states[:payment]
-                before_transition to: :complete do |order|
-                  order.process_payments! if order.payment_required?
-                end
-              end
-
               before_transition from: :cart, do: :ensure_line_items_present
 
               before_transition to: :delivery, do: :create_proposed_shipments

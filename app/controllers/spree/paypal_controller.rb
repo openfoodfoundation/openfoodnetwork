@@ -50,6 +50,7 @@ module Spree
         amount: @order.total,
         payment_method: payment_method
       )
+      @order.process_payments!
       @order.next
       if @order.complete?
         flash.notice = Spree.t(:order_processed_successfully)

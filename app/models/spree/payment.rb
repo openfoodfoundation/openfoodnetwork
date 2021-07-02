@@ -81,10 +81,10 @@ module Spree
       event :require_authorization do
         transition from: [:checkout, :processing], to: :requires_authorization
       end
-      event :failed_authorization do
+      event :fail_authorization do
         transition from: [:requires_authorization], to: :failed
       end
-      event :completed_authorization do
+      event :complete_authorization do
         transition from: [:requires_authorization], to: :completed
       end
     end

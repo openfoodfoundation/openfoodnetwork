@@ -35,15 +35,16 @@ module Spree
             return
           end
 
-          authorize_stripe_sca_payment
-
           if @order.completed?
-            @payment.process!
+            authorize_stripe_sca_payment
+            @payment.process_offline!
             flash[:success] = flash_message_for(@payment, :successfully_created)
 
             redirect_to spree.admin_order_payments_path(@order)
           else
             OrderWorkflow.new(@order).complete!
+            authorize_stripe_sca_payment
+            @payment.process_offline!
 
             flash[:success] = Spree.t(:new_order_completed)
             redirect_to spree.edit_admin_order_url(@order)

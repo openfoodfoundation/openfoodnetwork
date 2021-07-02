@@ -140,6 +140,8 @@ class CheckoutController < ::BaseController
   end
 
   def handle_redirect_from_stripe
+    return checkout_failed unless @order.process_payments!
+
     if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
       redirect_to(order_path(@order)) && return
@@ -150,8 +152,10 @@ class CheckoutController < ::BaseController
 
   def checkout_workflow(shipping_method_id)
     while @order.state != "complete"
-      if @order.state == "payment" && redirect_to_payment_gateway
-        return
+      if @order.state == "payment"
+        return if redirect_to_payment_gateway
+
+        return action_failed unless @order.process_payments!
       end
 
       next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })

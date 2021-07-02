@@ -171,8 +171,8 @@ describe Spree::OrdersController, type: :controller do
           expect(response.status).to eq 200
           expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. error message")
           payment.reload
-          expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
-          expect(payment.state).to eq("requires_authorization")
+          expect(payment.cvv_response_message).to be nil
+          expect(payment.state).to eq("failed")
         end
       end
 
