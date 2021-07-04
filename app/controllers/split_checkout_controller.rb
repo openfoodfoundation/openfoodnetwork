@@ -1,0 +1,3 @@
+class SplitCheckoutController < CheckoutController
+
+end
