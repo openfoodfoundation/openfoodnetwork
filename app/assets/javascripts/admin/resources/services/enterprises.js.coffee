@@ -1,4 +1,4 @@
-angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource) ->
+angular.module("admin.resources").factory 'Enterprises', ($q, $filter, EnterpriseResource) ->
   new class Enterprises
     byID: {}
     pristineByID: {}
@@ -49,6 +49,17 @@ angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource
           deferred.reject(response)
         ))
         deferred.promise
+
+    findByID: (id) ->
+      @byID[id]
+
+    # For finding multiple Enterprises represented by comma delimited string
+    findByIDs: (ids) ->
+      @byID[id] for id in ids.split(",") when @byID[id]
+
+    findByTerm: (enterprises, term) ->
+      $filter('filter')(enterprises, term)
+
 
     removeLogo: performActionOnEnterpriseResource(EnterpriseResource.removeLogo)
     removePromoImage: performActionOnEnterpriseResource(EnterpriseResource.removePromoImage)

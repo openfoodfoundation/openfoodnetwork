@@ -876,6 +876,9 @@ en:
           shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
+          display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_category: "By category"
+          shopfront_sort_by_producer: "By producer"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
