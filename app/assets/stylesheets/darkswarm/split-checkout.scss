@@ -1,0 +1,111 @@
+.checkout-tab {
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  span {
+    font-size: 1.3rem;
+    @include headingFont;
+  }
+
+  &:not(.selected) {
+    background-color: $white;
+    border-bottom: 5px solid $min-accessible-grey;
+
+    span {
+      color: $min-accessible-grey;
+    }
+  }
+
+  &.selected {
+    background-color: $ofn-brand;
+
+    span {
+      color: $white;
+      text-decoration: underline;
+    }
+  }
+}
+
+.checkout-step {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3rem;
+
+  .checkout-substep {
+    margin-bottom: 1rem;
+    margin-top: 5rem;
+
+    &:first-child {
+      margin-top: 3rem;
+    }
+  }
+
+  .checkout-title {
+    font-size: 1.1rem;
+    @include headingFont;
+    font-weight: $font-weight-bold;
+    text-decoration: underline;
+    color: $darker-grey;
+    margin-bottom: 1.5rem;
+  }
+
+  .checkout-input {
+    margin-bottom: 1.5rem;
+
+    label {
+      margin-bottom: 0.3rem;
+
+      &.error {
+        font-weight: $font-weight-bold;
+        color: $red-700;
+      }
+    }
+
+    input,
+    select {
+      margin: 0;
+
+      &.error {
+        border-color: $red-700;
+      }
+    }
+
+    small.error {
+      background-color: rgba(193, 18, 43, 0.1);
+      color: $red-700;
+      font-style: normal;
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    #distributor_address.panel {
+      font-size: 0.875rem;
+      padding: 1rem;
+
+      span {
+        white-space: pre-wrap;
+      }
+    }
+  }
+
+  .checkout-submit {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .button {
+      width: 100%;
+      margin-bottom: 2rem;
+
+      &.primary {
+        background-color: $orange-500;
+      }
+
+      &.cancel {
+        background-color: $grey-100;
+        color: $black;
+      }
+    }
+  }
+}
