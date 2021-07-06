@@ -7,4 +7,5 @@
 
   %div.checkout-step.medium-6
     - if true ## test step
+      = hidden_field_tag "advance_to_state", "delivery"
       = render "split_checkout/your_details", f: f
