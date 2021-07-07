@@ -10,8 +10,8 @@ module CheckoutHelper
 
     adjustments = order.all_adjustments.eligible.to_a
 
-    # Remove empty tax adjustments and (optionally) shipping fees
-    adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
+    # Remove tax adjustments and (optionally) shipping fees
+    adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' }
     if exclude.include? :shipping
       adjustments.reject! { |a|
         a.originator_type == 'Spree::ShippingMethod'
