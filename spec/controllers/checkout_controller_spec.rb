@@ -118,7 +118,7 @@ describe CheckoutController, type: :controller do
           allow(controller).to receive(:valid_payment_intent_provided?) { true }
           order.save
           allow(order).to receive_message_chain(:payments, :completed) { [] }
-          allow(order).to receive_message_chain(:payments, :pending) { [payment] }
+          allow(order).to receive_message_chain(:payments, :incomplete) { [payment] }
         end
 
         it "cancels the payment and resets the order to cart" do
