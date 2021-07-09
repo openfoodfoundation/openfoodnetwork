@@ -1680,17 +1680,17 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@storybook/addon-controls@^6.3.3":
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.3.3.tgz#27ee912fabc6eadad5ea9510f564dc5da4577e06"
-  integrity sha512-6oSl7hLvm2nWjv83JM4iU1sIJmaBIHJvWo1rKkyxknm/CUMZNs9YTh/TBQ5LjRemgIzO+Fq4ImJkBPY9oQbSWg==
+"@storybook/addon-controls@^6.3.4":
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.3.4.tgz#7849905a0ec56fbea7608c15c08f872211b3a878"
+  integrity sha512-+MIKcWqsIF6vLoKxukK2m6ADYwyNHOmaMgnJSHKlcNKc7Qxv2w0FZJxIjjkWHXRBIC5MQXxv7/L4sY+EnPdjyg==
   dependencies:
-    "@storybook/addons" "6.3.3"
-    "@storybook/api" "6.3.3"
-    "@storybook/client-api" "6.3.3"
-    "@storybook/components" "6.3.3"
-    "@storybook/node-logger" "6.3.3"
-    "@storybook/theming" "6.3.3"
+    "@storybook/addons" "6.3.4"
+    "@storybook/api" "6.3.4"
+    "@storybook/client-api" "6.3.4"
+    "@storybook/components" "6.3.4"
+    "@storybook/node-logger" "6.3.4"
+    "@storybook/theming" "6.3.4"
     core-js "^3.8.2"
     ts-dedent "^2.0.0"
 
