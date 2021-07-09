@@ -72,7 +72,7 @@ module Spree
         transition from: [:processing, :pending, :checkout, :requires_authorization], to: :completed
       end
       event :void do
-        transition from: [:pending, :completed, :checkout], to: :void
+        transition from: [:pending, :completed, :requires_authorization, :checkout], to: :void
       end
       # when the card brand isnt supported
       event :invalidate do
