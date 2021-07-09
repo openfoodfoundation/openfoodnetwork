@@ -2,8 +2,8 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -388,7 +388,7 @@ ActiveRecord::Schema.define(version: 2021_05_27_201938) do
     t.string "state", limit: 255
     t.integer "order_id"
     t.boolean "included", default: false
-    t.integer  "tax_category_id"
+    t.integer "tax_category_id"
     t.index ["adjustable_type", "adjustable_id"], name: "index_spree_adjustments_on_adjustable_type_and_adjustable_id"
     t.index ["order_id"], name: "index_spree_adjustments_on_order_id"
     t.index ["originator_type", "originator_id"], name: "index_spree_adjustments_on_originator_type_and_originator_id"
@@ -1147,12 +1147,12 @@ ActiveRecord::Schema.define(version: 2021_05_27_201938) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "terms_of_service_files", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
+  create_table "terms_of_service_files", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "attachment_file_name"
+    t.string "attachment_content_type"
+    t.integer "attachment_file_size"
     t.datetime "attachment_updated_at"
   end
 
