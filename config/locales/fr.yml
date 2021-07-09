@@ -827,6 +827,8 @@ fr:
           display_ordering_in_shopfront: "Ordre d'affichage sur la boutique en ligne :"
           shopfront_sort_by_category: "Par catégorie"
           shopfront_sort_by_producer: "Par producteur"
+          shopfront_sort_by_category_placeholder: "Catégorie"
+          shopfront_sort_by_producer_placeholder: "Producteur"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
