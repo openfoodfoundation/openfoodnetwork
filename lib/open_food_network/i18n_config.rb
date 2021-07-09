@@ -5,6 +5,11 @@ module OpenFoodNetwork
   # Currently, language settings are read from the environment.
   # See: config/application.yml
   class I18nConfig
+    # Users don't need to select the already selected locale.
+    def self.locale_options
+      selectable_locales - [I18n.locale.to_s]
+    end
+
     # Locales that can be selected by users.
     def self.selectable_locales
       ENV["AVAILABLE_LOCALES"].andand.split(/[\s,]+/) || []
