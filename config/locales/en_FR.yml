@@ -825,6 +825,8 @@ en_FR:
           display_ordering_in_shopfront: "Display ordering in shopfront:"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
+          shopfront_sort_by_category_placeholder: "Category"
+          shopfront_sort_by_producer_placeholder: "Producer"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
