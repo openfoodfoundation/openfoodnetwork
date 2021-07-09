@@ -129,12 +129,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.selectedUnitsVariant = unitsVariant
 
   $scope.sumUnitValues = ->
-    sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
+    sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
       sum + lineItem.final_weight_volume
     , 0
 
   $scope.sumMaxUnitValues = ->
-    sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
+    sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
         sum + lineItem.max_quantity * lineItem.units_variant.unit_value
     , 0
 
