@@ -19,6 +19,7 @@
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
     "postcss": "^7",
+    "postcss-loader": "~3.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "webpack-dev-server": "^3.11.2"
   },
