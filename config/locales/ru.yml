@@ -827,6 +827,8 @@ ru:
           display_ordering_in_shopfront: "Отображение заказа на витрине:"
           shopfront_sort_by_category: "По категории"
           shopfront_sort_by_producer: "По производителю"
+          shopfront_sort_by_category_placeholder: "Категория"
+          shopfront_sort_by_producer_placeholder: "Производитель"
         social:
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"
