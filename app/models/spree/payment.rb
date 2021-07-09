@@ -49,7 +49,7 @@ module Spree
     scope :incomplete, -> { where(state: %w(checkout pending requires_authorization)) }
     scope :pending, -> { with_state('pending') }
     scope :failed, -> { with_state('failed') }
-    scope :valid, -> { where('state NOT IN (?)', %w(failed invalid)) }
+    scope :valid, -> { where.not(state: %w(failed invalid)) }
     scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
     scope :requires_authorization, -> { with_state("requires_authorization") }
     scope :with_payment_intent, ->(code) { where(response_code: code) }
