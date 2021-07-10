@@ -3,7 +3,7 @@
 # Serializer used to render a DFC CatalogItem from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class CatalogItemSerializer < ActiveModel::Serializer
+  class CatalogItemSerializer < BaseSerializer
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :references, key: 'dfc:references'
@@ -17,7 +17,7 @@ module DfcProvider
       dfc_provider_routes.api_dfc_provider_enterprise_catalog_item_url(
         enterprise_id: object.product.supplier_id,
         id: object.id,
-        host: root_url
+        host: host
       )
     end
 
@@ -28,7 +28,7 @@ module DfcProvider
     def references
       {
         '@type' => '@id',
-        '@id' => "/supplied_products/#{object.product_id}"
+        '@id' => reference_id
       }
     end
 
@@ -44,12 +44,8 @@ module DfcProvider
       dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
         enterprise_id: object.product.supplier_id,
         id: object.product_id,
-        host: root_url
+        host: host
       )
-    end
-
-    def dfc_provider_routes
-      DfcProvider::Engine.routes.url_helpers
     end
   end
 end

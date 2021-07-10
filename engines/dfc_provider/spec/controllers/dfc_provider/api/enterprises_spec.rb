@@ -9,7 +9,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
@@ -27,7 +27,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
             before { api_get :show, id: 'default' }
 
             it 'is successful' do
-              expect(response.status).to eq 200
+              expect(response).to be_successful
             end
 
             it 'renders the required content' do
@@ -44,7 +44,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
             before { api_get :show, id: 999 }
 
             it 'is not found' do
-              expect(response.status).to eq 404
+              expect(response).to be_not_found
             end
           end
         end

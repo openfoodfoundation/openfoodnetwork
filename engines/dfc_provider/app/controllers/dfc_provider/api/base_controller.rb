@@ -8,7 +8,7 @@ module DfcProvider
 
       before_action :check_authorization,
                     :check_user,
-                    :check_enterprise
+                    :set_enterprise
 
       respond_to :json
 
@@ -26,14 +26,17 @@ module DfcProvider
         head :unauthorized
       end
 
-      def check_enterprise
+      def set_enterprise
         current_enterprise
       end
 
       def current_enterprise
         @current_enterprise ||=
-          if params[enterprise_id_param_name] == 'default'
+          case params[enterprise_id_param_name]
+          when 'default'
             current_user.enterprises.first!
+          when nil
+            nil
           else
             current_user.enterprises.find(params[enterprise_id_param_name])
           end

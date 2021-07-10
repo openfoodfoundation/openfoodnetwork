@@ -3,7 +3,7 @@
 # Serializer used to render the DFC Address from an OFN User
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class AddressSerializer < ActiveModel::Serializer
+  class AddressSerializer < BaseSerializer
     attribute :type, key: '@type'
     attribute :city, key: 'dfc:city'
     attribute :country, key: 'dfc:country'

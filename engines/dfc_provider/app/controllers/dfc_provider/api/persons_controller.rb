@@ -4,7 +4,7 @@
 module DfcProvider
   module Api
     class PersonsController < DfcProvider::Api::BaseController
-      skip_before_action :check_enterprise
+      skip_before_action :set_enterprise
 
       before_action :check_user_accessibility
 

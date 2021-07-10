@@ -7,7 +7,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
 
   let!(:user) { create(:user) }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
@@ -21,13 +21,10 @@ describe DfcProvider::Api::PersonsController, type: :controller do
         end
 
         context 'given with an accessible id' do
-          before do
-            api_get :show,
-                    id: user.id
-          end
+          before { api_get :show, id: user.id }
 
           it 'is successful' do
-            expect(response.status).to eq 200
+            expect(response).to be_successful
           end
 
           it 'renders the required content' do
@@ -39,7 +36,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           before { api_get :show, id: create(:user).id }
 
           it 'is not found' do
-            expect(response.status).to eq 404
+            expect(response).to be_not_found
           end
         end
       end
