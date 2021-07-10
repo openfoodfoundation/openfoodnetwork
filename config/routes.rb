@@ -30,6 +30,7 @@ Openfoodnetwork::Application.routes.draw do
   patch "/cart", :to => "spree/orders#update", :as => :update_cart
   put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
   get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
+  get '/admin/order_cycles/:id', :to => 'admin/order_cycles#edit', :as => :order_cycles
   get '/payments/:id/authorize' => 'payments#redirect_to_authorize', as: "authorize_payment"
 
   resource :cart, controller: "cart" do
