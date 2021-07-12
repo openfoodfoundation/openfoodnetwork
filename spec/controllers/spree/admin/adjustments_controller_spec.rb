@@ -94,6 +94,42 @@ module Spree
             expect(order.included_tax_total).to eq 10
           end
         end
+
+        context "when the tax category has multiple rates for the same tax zone" do
+          let(:tax_category) { create(:tax_category) }
+          let!(:tax_rate1) {
+            create(:tax_rate, amount: 0.1, zone: zone, included_in_price: false,
+                              tax_category: tax_category )
+          }
+          let!(:tax_rate2) {
+            create(:tax_rate, amount: 0.2, zone: zone, included_in_price: false,
+                              tax_category: tax_category )
+          }
+          let(:tax_category_param) { tax_category.id.to_s }
+          let(:params) {
+            {
+              order_id: order.number,
+              adjustment: {
+                label: 'Testing multiple rates', amount: '100', tax_category_id: tax_category_param
+              }
+            }
+          }
+
+          it "applies both rates" do
+            spree_post :create, params
+            expect(response).to redirect_to spree.admin_order_adjustments_path(order)
+
+            new_adjustment = Adjustment.admin.last
+
+            expect(new_adjustment.amount).to eq(100)
+            expect(new_adjustment.tax_category).to eq tax_category
+            expect(new_adjustment.order_id).to eq(order.id)
+            expect(new_adjustment.adjustments.tax.count).to eq 2
+
+            expect(order.reload.total).to eq 130
+            expect(order.additional_tax_total).to eq 30
+          end
+        end
       end
 
       describe "updating an adjustment" do
