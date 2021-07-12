@@ -110,6 +110,9 @@ describe CheckoutController, type: :controller do
       context "after redirecting back from Stripe" do
         let(:order) { create(:order_with_totals_and_distribution) }
         let!(:payment) { create(:payment, state: "pending", amount: order.total, order: order) }
+        let!(:transaction_fee) {
+          create(:adjustment, state: "open", amount: 10, order: order, adjustable: payment)
+        }
 
         before do
           allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return(false)
@@ -119,6 +122,7 @@ describe CheckoutController, type: :controller do
           order.save
           allow(order).to receive_message_chain(:payments, :completed) { [] }
           allow(order).to receive_message_chain(:payments, :incomplete) { [payment] }
+          allow(payment).to receive(:adjustment) { transaction_fee }
         end
 
         it "cancels the payment and resets the order to cart" do
@@ -130,6 +134,9 @@ describe CheckoutController, type: :controller do
           expect(flash[:notice]).to eq I18n.t('checkout.payment_cancelled_due_to_stock')
 
           expect(order.state).to eq "cart"
+          expect(payment.state).to eq "void"
+          expect(transaction_fee.reload.eligible).to eq false
+          expect(transaction_fee.state).to eq "finalized"
         end
       end
     end

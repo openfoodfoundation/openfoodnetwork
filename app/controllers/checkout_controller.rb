@@ -118,7 +118,10 @@ class CheckoutController < ::BaseController
   def cancel_incomplete_payments
     # The checkout could not complete due to stock running out. We void any pending (incomplete)
     # Stripe payments here as the order will need to be changed and resubmitted (or abandoned).
-    @order.payments.incomplete.each(&:void!)
+    @order.payments.incomplete.each do |payment|
+      payment.void!
+      payment.adjustment&.update_columns(eligible: false, state: "finalized")
+    end
     flash[:notice] = I18n.t("checkout.payment_cancelled_due_to_stock")
   end
 
