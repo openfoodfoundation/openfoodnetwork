@@ -824,6 +824,8 @@ es:
           shopfront_category_ordering_note: "(de arriba hacia abajo)"
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
+          shopfront_sort_by_category_placeholder: "Categoría"
+          shopfront_sort_by_producer_placeholder: "Productora"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"

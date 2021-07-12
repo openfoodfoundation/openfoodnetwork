@@ -813,6 +813,8 @@ tr:
           shopfront_category_ordering_note: "(yukarıdan aşağıya)"
           open_date: "AÇILIŞ TARİHİ"
           close_date: "KAPANIŞ TARİHİ"
+          shopfront_sort_by_category_placeholder: "Kategori"
+          shopfront_sort_by_producer_placeholder: "ÜRETİCİ"
         social:
           twitter_placeholder: "Örn.  @the_usta"
           instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"
@@ -933,7 +935,6 @@ tr:
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
       edit:
-        advanced_settings: "Gelişmiş Ayarlar"
         save: "Kaydet"
         save_and_next: "Kaydet ve İlerle"
         next: "Sonrakİ"
@@ -986,6 +987,8 @@ tr:
         preferred_product_selection_from_coordinator_inventory_only_here: Yalnızca Koordinatör Stokları
         preferred_product_selection_from_coordinator_inventory_only_all: Tüm Mevcut Ürünler
         save_reload: SAYFAYI KAYDET VE YENİDEN YÜKLE
+      order_cycle_top_buttons:
+        advanced_settings: "Gelişmiş Ayarlar"
       coordinator_fees:
         add: Koordinatör ücreti ekle
       filters:

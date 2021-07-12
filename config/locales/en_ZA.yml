@@ -738,6 +738,8 @@ en_ZA:
           shopfront_category_ordering: "Shopfront Category Ordering"
           open_date: "Open Date"
           close_date: "Close Date"
+          shopfront_sort_by_category_placeholder: "Category"
+          shopfront_sort_by_producer_placeholder: "Producer"
         social:
           twitter_placeholder: "e.g. @siyastrawberries"
           instagram_placeholder: "e.g. siyastraw"
@@ -858,7 +860,6 @@ en_ZA:
         cancel: "Cancel"
         back_to_list: "Back To List"
       edit:
-        advanced_settings: "Advanced Settings"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -911,6 +912,8 @@ en_ZA:
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
+      order_cycle_top_buttons:
+        advanced_settings: "Advanced Settings"
       coordinator_fees:
         add: Add coordinator fee
       filters:

@@ -755,6 +755,8 @@ fr_BE:
           shopfront_category_ordering: "Ordre d'affichage des catégories"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
+          shopfront_sort_by_category_placeholder: "Catégorie"
+          shopfront_sort_by_producer_placeholder: "Producteur·trice"
         social:
           twitter_placeholder: "ex. @OpenFoodNet"
           instagram_placeholder: "ex: le_prof"
@@ -875,7 +877,6 @@ fr_BE:
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
       edit:
-        advanced_settings: "Paramétrages avancés"
         save: "Sauvergarder"
         save_and_next: "Sauver et suivant"
         next: "Suivant"
@@ -928,6 +929,8 @@ fr_BE:
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
+      order_cycle_top_buttons:
+        advanced_settings: "Paramétrages avancés"
       coordinator_fees:
         add: Ajouter commission coordinateur
       filters:

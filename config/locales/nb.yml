@@ -810,6 +810,8 @@ nb:
           shopfront_category_ordering_note: "(topp til bunn)"
           open_date: "Åpningsdato"
           close_date: "Stengedato"
+          shopfront_sort_by_category_placeholder: "Kategori"
+          shopfront_sort_by_producer_placeholder: "Produsent"
         social:
           twitter_placeholder: "f.eks. @the_prof"
           instagram_placeholder: "f.eks. the_prof"
@@ -930,7 +932,6 @@ nb:
         cancel: "Avbryt"
         back_to_list: "Tilbake til Listen"
       edit:
-        advanced_settings: "Avanserte Innstillinger"
         save: "Lagre"
         save_and_next: "Lagre og Neste"
         next: "Neste"
@@ -983,6 +984,8 @@ nb:
         preferred_product_selection_from_coordinator_inventory_only_here: Kun Koordinators varelager
         preferred_product_selection_from_coordinator_inventory_only_all: Alle tilgjengelige produkter
         save_reload: Lagre og last siden på nytt
+      order_cycle_top_buttons:
+        advanced_settings: "Avanserte Innstillinger"
       coordinator_fees:
         add: Legg til koordinatoravgift
       filters:

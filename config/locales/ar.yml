@@ -793,6 +793,8 @@ ar:
           shopfront_category_ordering_note: "(من اعلى لاسفل)"
           open_date: "تاريخ الفتح "
           close_date: "تاريخ الاغلاق"
+          shopfront_sort_by_category_placeholder: "الفئة"
+          shopfront_sort_by_producer_placeholder: "المنتج"
         social:
           twitter_placeholder: "على سبيل المثال. the_prof"
           instagram_placeholder: "على سبيل المثال. the_prof"
@@ -913,7 +915,6 @@ ar:
         cancel: "إلغاء"
         back_to_list: "العودة للقائمة"
       edit:
-        advanced_settings: "إعدادات متقدمة"
         save: "حفظ"
         save_and_next: "حفظ والتالي"
         next: "التالى"
@@ -966,6 +967,8 @@ ar:
         preferred_product_selection_from_coordinator_inventory_only_here: متسقين المخزون فقط
         preferred_product_selection_from_coordinator_inventory_only_all: جميع المنتجات المتاحة
         save_reload: حفظ وتحديث الصفحة
+      order_cycle_top_buttons:
+        advanced_settings: "إعدادات متقدمة"
       coordinator_fees:
         add: إضافة رسوم منسق
       filters:

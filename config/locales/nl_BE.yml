@@ -757,6 +757,8 @@ nl_BE:
           shopfront_category_ordering: "Etalage Categorie Bestelling"
           open_date: "Open Datum"
           close_date: "Sluiten Datum"
+          shopfront_sort_by_category_placeholder: "Categorie"
+          shopfront_sort_by_producer_placeholder: "Producent"
         social:
           twitter_placeholder: "bv. @de_prof"
           instagram_placeholder: "bv. de_prof"
@@ -877,7 +879,6 @@ nl_BE:
         cancel: "Annuleren"
         back_to_list: "Terug naar lijst"
       edit:
-        advanced_settings: "Geavanceerde Instellingen"
         save: "Save"
         save_and_next: "Opslaan en volgende"
         next: "Volgende"
@@ -930,6 +931,8 @@ nl_BE:
         preferred_product_selection_from_coordinator_inventory_only_here: 'Enkel Coördinator Inventaris '
         preferred_product_selection_from_coordinator_inventory_only_all: Alle Beschikbare Producten
         save_reload: Bewaar en Herlaad Webpagina
+      order_cycle_top_buttons:
+        advanced_settings: "Geavanceerde Instellingen"
       coordinator_fees:
         add: Voeg Coördinatievergoeding toe
       filters:

@@ -810,6 +810,8 @@ pt_BR:
           shopfront_category_ordering_note: "(de cima para baixo)"
           open_date: "Dia de abertura"
           close_date: "Dia de fechamento"
+          shopfront_sort_by_category_placeholder: "Categoria"
+          shopfront_sort_by_producer_placeholder: "Produtor"
         social:
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. the_prof"
@@ -930,7 +932,6 @@ pt_BR:
         cancel: "Cancelar"
         back_to_list: "Voltar Para a Lista"
       edit:
-        advanced_settings: "Configurações avançadas"
         save: "Salvar"
         save_and_next: "Salvar e Seguir"
         next: "Próximo"
@@ -983,6 +984,8 @@ pt_BR:
         preferred_product_selection_from_coordinator_inventory_only_here: Apenas inventário do coordenador
         preferred_product_selection_from_coordinator_inventory_only_all: Todos os produtos disponíveis
         save_reload: Salvar e atualizar página
+      order_cycle_top_buttons:
+        advanced_settings: "Configurações avançadas"
       coordinator_fees:
         add: Adicionar taxa de coordenador
       filters:

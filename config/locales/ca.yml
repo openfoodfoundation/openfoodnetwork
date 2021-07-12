@@ -825,6 +825,8 @@ ca:
           shopfront_category_ordering_note: "(de dalt a baix)"
           open_date: "Data d'obertura"
           close_date: "Data de tancament"
+          shopfront_sort_by_category_placeholder: "Categoria"
+          shopfront_sort_by_producer_placeholder: "Productora"
         social:
           twitter_placeholder: "p. ex: @horta_josepribes"
           instagram_placeholder: "p. ex: horta_josepribes"
@@ -945,7 +947,6 @@ ca:
         cancel: "Cancel·lar"
         back_to_list: "Tornar a la llista"
       edit:
-        advanced_settings: "Configuració avançada"
         save: "Desa"
         save_and_next: "Desa i següent"
         next: "Següent"
@@ -998,6 +999,8 @@ ca:
         preferred_product_selection_from_coordinator_inventory_only_here: Només inventari del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Tots els productes disponibles
         save_reload: Desa i recarrega la pàgina
+      order_cycle_top_buttons:
+        advanced_settings: "Configuració avançada"
       coordinator_fees:
         add: Afegeix una comissió del coordinador
       filters:
