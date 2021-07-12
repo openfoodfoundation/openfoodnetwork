@@ -165,8 +165,8 @@ end
 group :development do
   gem 'debugger-linecache'
   gem 'foreman'
-  gem 'pry'
-  gem 'pry-byebug'
+  gem 'pry', '~> 0.13.0'
+  gem 'pry-byebug', '~> 3.9.0'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'
