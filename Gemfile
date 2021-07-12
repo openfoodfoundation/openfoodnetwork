@@ -70,7 +70,7 @@ gem 'acts-as-taggable-on', '~> 8.1'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'bigdecimal', '3.0.2'
 gem 'bootsnap', require: false
-gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
+gem 'custom_error_message', github: 'andrewpbrett/custom-err-msg'
 gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
