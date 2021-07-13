@@ -1247,6 +1247,7 @@ de_DE:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
       terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
+    payment_cancelled_due_to_stock: "Zahlung storniert: Der Bestellabschluss konnte aufgrund von Problemen mit dem Lagerbestand nicht abgeschlossen werden."
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
