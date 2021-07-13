@@ -226,7 +226,9 @@ module OrderManagement
               order.total = 30
               allow(order).to receive_message_chain(:payments, :valid, :empty?) { false }
               allow(order).to receive_message_chain(:payments, :completed, :empty?) { false }
-              allow(order).to receive_message_chain(:payments, :requires_authorization, :any?) { false }
+              allow(order).to receive_message_chain(:payments, :requires_authorization, :any?) {
+                                false
+                              }
 
               expect {
                 updater.update_payment_state

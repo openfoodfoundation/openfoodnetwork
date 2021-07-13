@@ -43,7 +43,9 @@ describe PlaceProxyOrder do
     end
 
     context "when the order is already complete" do
-      let(:summarizer) { instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true) }
+      let(:summarizer) {
+        instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
+      }
 
       let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
       let(:order) { proxy_order.order }
