@@ -4,7 +4,9 @@
       %th= "#{t('spree.date')}/#{t('spree.time')}"
       %th= t(:description)
       %th= t(:amount)
-      %th= t(:included_tax)
+      %th= t(:tax_category)
+      %th= t(:tax)
+      %th= t(:total_incl_tax)
       %th.actions
   %tbody
     - @collection.each do |adjustment|
@@ -13,11 +15,20 @@
       - tr_class = cycle('odd', 'even')
       - tr_id = spree_dom_id(adjustment)
       %tr{:class => tr_class, "data-hook" => "adjustment_row", :id => tr_id}
-        %td.align-center.created_at= pretty_time(adjustment.created_at)
-        %td.align-center.label= adjustment.label
-        %td.align-center.amount= adjustment.display_amount.to_html
-        %td.align-center.included-tax= adjustment.display_included_tax.to_html
+        %td.align-center.created_at
+          = pretty_time(adjustment.created_at)
+        %td.align-center.label
+          = adjustment.label
+        %td.align-center.amount
+          = adjustment.display_amount.to_html
+        %td.align-center.tax-category
+          = adjustment.tax_category&.name || "-"
+        %td.align-center.tax
+          = display_adjustment_taxes(adjustment)
+        %td.align-center.total
+          = display_adjustment_total_with_tax(adjustment)
         - unless @order.canceled?
           %td.actions
-            = link_to_edit adjustment, no_text: true
-            = link_to_delete adjustment, no_text: true
+            - if adjustment.originator_type.nil?
+              = link_to_edit adjustment, no_text: true
+              = link_to_delete adjustment, no_text: true

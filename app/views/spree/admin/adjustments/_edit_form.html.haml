@@ -6,18 +6,14 @@
       = f.error_message_on :amount
 
   - if @adjustment.admin?
-    .four.columns
-      = f.field_container :included_tax do
-        = f.label :included_tax, t(:included_tax)
-        = f.text_field :included_tax, disabled: true, class: 'fullwidth',
-          value: number_with_precision(f.object.included_tax, precision: 2)
-        = f.error_message_on :included_tax
-
     .omega.four.columns
-      = f.field_container :tax_rate_id do
-        = f.label :tax_rate_id, t(:tax_rate)
-        = select_tag :tax_rate_id, options_from_collection_for_select(Spree::TaxRate.all, :id, :name, @tax_rate_id), prompt: t(:remove_tax), class: 'select2 fullwidth'
-        = f.error_message_on :tax_rate_id
+      = f.field_container :tax_category do
+        = f.label :tax_category, t(:tax_category)
+        = select_tag "adjustment[tax_category_id]",
+          options_from_collection_for_select(Spree::TaxCategory.all, :id, :name, @adjustment.tax_category_id),
+          prompt: t(:none),
+          class: 'select2 fullwidth'
+        = f.error_message_on :tax_category
 
 .row
   .alpha.omega.twelve.columns

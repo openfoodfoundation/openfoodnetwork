@@ -8,16 +8,13 @@ class TaxRateFinder
   def self.tax_rates_of(adjustment)
     new.tax_rates(
       adjustment.originator,
-      adjustment.adjustable,
-      adjustment.amount,
-      adjustment.included_tax
+      adjustment.adjustable
     )
   end
 
   # @return [Array<Spree::TaxRate>]
-  def tax_rates(originator, adjustable, amount, included_tax)
-    find_associated_tax_rate(originator, adjustable) ||
-      find_closest_tax_rates_from_included_tax(amount, included_tax)
+  def tax_rates(originator, adjustable)
+    find_associated_tax_rate(originator, adjustable)
   end
 
   private
@@ -47,38 +44,5 @@ class TaxRateFinder
     else
       enterprise_fee.tax_category
     end
-  end
-
-  # There are two cases in which a line item is not associated to a tax rate.
-  #
-  # 1. Shipping fees and adjustments created from the admin panel have taxes set
-  #    at creation in the included_tax field without relation to the
-  #    corresponding TaxRate.
-  # 2. Removing line items from an order doesn't always remove the associated
-  #    enterprise fees. These orphaned fees don't have a line item any more to
-  #    find the item's tax rate.
-  #
-  # In these cases we try to find the used tax rate based on the included tax.
-  # For example, if the included tax is 10% of the adjustment, we look for a tax
-  # rate of 10%. Due to rounding errors, the included tax may be 9.9% of the
-  # adjustment. That's why we call it an approximation of the tax rate and look
-  # for the closest and hopefully find the 10% tax rate.
-  #
-  # This attempt can fail.
-  #
-  # - If an admin created an adjustment with a miscalculated included tax then
-  #   we don't know which tax rate the admin intended to use.
-  # - An admin may also enter included tax that doesn't correspond to any tax
-  #   rate in the system. They may enter a fee of $1.2 with tax of $0.2, but
-  #   that doesn't mean that there is a 20% tax rate in the database.
-  # - The used tax rate may also have been deleted. Maybe the tax law changed.
-  #
-  # In either of these cases, we will find a tax rate that doesn't correspond
-  # to the included tax.
-  def find_closest_tax_rates_from_included_tax(amount, included_tax)
-    approximation = (included_tax / (amount - included_tax))
-    return [] if approximation.infinite? || approximation.zero? || approximation.nan?
-
-    [Spree::TaxRate.order(Arel.sql("ABS(amount - #{approximation})")).first]
   end
 end

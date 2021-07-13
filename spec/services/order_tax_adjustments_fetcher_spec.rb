@@ -52,8 +52,10 @@ describe OrderTaxAdjustmentsFetcher do
                               calculator: Calculator::FlatRate.new(preferred_amount: 48.0))
     end
     let(:admin_adjustment) do
-      create(:adjustment, order: order, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0),
-                          label: "Admin Adjustment")
+      create(:adjustment, order: order, amount: 50.0, tax_category: tax_category25,
+                          label: "Admin Adjustment").tap do |adjustment|
+                            Spree::TaxRate.adjust(order, [adjustment])
+                          end
     end
 
     let(:order_cycle) do

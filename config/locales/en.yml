@@ -2162,6 +2162,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
+  tax: "Tax"
+  tax_amount_included: "%{amount} (included)"
   remove_tax: "Remove tax"
   balance: "Balance"
   transaction: "Transaction"

@@ -67,8 +67,7 @@ module OrderManagement
       def update_adjustment_total
         order.adjustment_total = all_adjustments.additional.eligible.sum(:amount)
         order.additional_tax_total = all_adjustments.tax.additional.sum(:amount)
-        order.included_tax_total = all_adjustments.tax.inclusive.sum(:amount) +
-                                   adjustments.admin.sum(:included_tax)
+        order.included_tax_total = all_adjustments.tax.inclusive.sum(:amount)
       end
 
       def update_order_total

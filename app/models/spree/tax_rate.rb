@@ -117,25 +117,6 @@ module Spree
       Zone.default_tax&.contains?(order.tax_zone) || order.tax_zone == zone
     end
 
-    # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
-    # LineItems or Orders, so we mock out a line item here to fit the interface
-    # that our calculator (usually DefaultTax) expects.
-    def compute_tax(amount)
-      line_item = LineItem.new quantity: 1
-      line_item.tax_category = tax_category
-      line_item.define_singleton_method(:price) { amount }
-
-      # Tax on adjustments (represented by the included_tax field) is always inclusive of
-      # tax. However, there's nothing to stop an admin from setting one up with a tax rate
-      # that's marked as not inclusive of tax, and that would result in the DefaultTax
-      # calculator generating a slightly incorrect value. Therefore, we treat the tax
-      # rate as inclusive of tax for the calculations below, regardless of its original
-      # setting.
-      with_tax_included_in_price do
-        calculator.compute line_item
-      end
-    end
-
     private
 
     def create_label(adjustment_amount)
@@ -145,20 +126,6 @@ module Spree
       label << (show_rate_in_label? ? "#{amount * 100}%" : "")
       label << " (#{I18n.t('models.tax_rate.included_in_price')})" if included_in_price?
       label
-    end
-
-    def with_tax_included_in_price
-      old_included_in_price = included_in_price
-
-      self.included_in_price = true
-      calculator.calculable.included_in_price = true
-
-      result = yield
-    ensure
-      self.included_in_price = old_included_in_price
-      calculator.calculable.included_in_price = old_included_in_price
-
-      result
     end
   end
 end

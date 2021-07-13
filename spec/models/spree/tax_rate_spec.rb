@@ -37,45 +37,6 @@ module Spree
       end
     end
 
-    describe "ensuring that tax rate is marked as tax included_in_price" do
-      let(:tax_rate) {
-        create(:tax_rate, included_in_price: false, calculator: ::Calculator::DefaultTax.new)
-      }
-
-      it "sets included_in_price to true" do
-        tax_rate.send(:with_tax_included_in_price) do
-          expect(tax_rate.included_in_price).to be true
-        end
-      end
-
-      it "sets the included_in_price value accessible to the calculator to true" do
-        tax_rate.send(:with_tax_included_in_price) do
-          expect(tax_rate.calculator.calculable.included_in_price).to be true
-        end
-      end
-
-      it "passes through the return value of the block" do
-        expect(tax_rate.send(:with_tax_included_in_price) do
-          'asdf'
-        end).to eq('asdf')
-      end
-
-      it "restores both values to their original afterwards" do
-        tax_rate.send(:with_tax_included_in_price) {}
-        expect(tax_rate.included_in_price).to be false
-        expect(tax_rate.calculator.calculable.included_in_price).to be false
-      end
-
-      it "restores both values when an exception is raised" do
-        expect do
-          tax_rate.send(:with_tax_included_in_price) { raise StandardError, 'oops' }
-        end.to raise_error 'oops'
-
-        expect(tax_rate.included_in_price).to be false
-        expect(tax_rate.calculator.calculable.included_in_price).to be false
-      end
-    end
-
     context "original Spree::TaxRate specs" do
       context "match" do
         let(:order) { create(:order) }

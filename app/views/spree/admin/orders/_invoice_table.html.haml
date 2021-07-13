@@ -30,7 +30,7 @@
         %td{:align => "right"}
           1
         %td{:align => "right"}
-          = adjustment.included_tax > 0 ? adjustment.display_included_tax : ""
+          = display_adjustment_taxes(adjustment)
         %td{:align => "right"}
           = adjustment.display_amount
   %tfoot

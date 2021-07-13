@@ -34,12 +34,11 @@ module OrderManagement
                                                 :sum).and_return(20)
           allow(order).to receive_message_chain(:all_adjustments, :tax, :inclusive,
                                                 :sum).and_return(15)
-          allow(order).to receive_message_chain(:adjustments, :admin, :sum).and_return(2)
 
           updater.update_adjustment_total
           expect(order.adjustment_total).to eq(-5)
           expect(order.additional_tax_total).to eq(20)
-          expect(order.included_tax_total).to eq(17)
+          expect(order.included_tax_total).to eq(15)
         end
       end
 

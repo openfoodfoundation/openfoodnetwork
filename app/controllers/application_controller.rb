@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   helper 'spree/orders'
   helper 'spree/payment_methods'
   helper 'shared'
+  helper 'adjustments'
   helper 'enterprises'
   helper 'order_cycles'
   helper 'order'
