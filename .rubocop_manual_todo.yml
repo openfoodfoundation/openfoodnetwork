@@ -771,6 +771,6 @@ Lint/UselessAssignment:
   - lib/spree/core/controller_helpers/common.rb
 
 Metrics/BlockNesting:
-  Max: 4
+  Max: 3
   Exclude:
   - app/models/spree/payment/processing.rb
