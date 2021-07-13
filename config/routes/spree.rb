@@ -9,6 +9,7 @@ end
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
+             :router_name => "spree",
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',
