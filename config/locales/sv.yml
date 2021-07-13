@@ -406,6 +406,8 @@ sv:
           shopfront_category_ordering: "Sorteringsordning av kategorier i butik"
           open_date: "Öppningsdatum"
           close_date: "Stängningsdatum"
+          shopfront_sort_by_category_placeholder: "Kategori"
+          shopfront_sort_by_producer_placeholder: "Producent"
         social:
           twitter_placeholder: "t.ex. @the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -497,7 +499,6 @@ sv:
         create: "Skapa"
         cancel: "Avbryt"
       edit:
-        advanced_settings: "Avancerade inställningar"
         next: "Näst"
         cancel: "Avbryt"
         choose_products_from: "Välj produkter från:"
@@ -525,6 +526,8 @@ sv:
         preferred_product_selection_from_coordinator_inventory_only_here: Enbart koordinatorns inventarielista
         preferred_product_selection_from_coordinator_inventory_only_all: Alla tillgängliga produkter
         save_reload: Spara och ladda om sidan
+      order_cycle_top_buttons:
+        advanced_settings: "Avancerade inställningar"
       coordinator_fees:
         add: Lägg till koordinatoravgift
       form:

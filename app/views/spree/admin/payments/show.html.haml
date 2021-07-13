@@ -10,7 +10,8 @@
 - content_for :page_actions do
   %li= button_link_to Spree.t(:back_to_payments_list), spree.admin_order_payments_url(@order), icon: 'icon-arrow-left'
 
-= render partial: "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment }
+- if @payment.payment_method.present?
+  = render partial: "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment }
 
 .align-center
   %h5

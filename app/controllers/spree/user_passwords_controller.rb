@@ -13,6 +13,9 @@ module Spree
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
 
+    include I18nHelper
+    before_action :set_locale
+
     # Overridden due to bug in Devise.
     #   respond_with resource, :location => new_session_path(resource_name)
     # is generating bad url /session/new.user

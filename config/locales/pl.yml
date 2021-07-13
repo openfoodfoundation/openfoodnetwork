@@ -749,6 +749,8 @@ pl:
           shopfront_category_ordering: "Zamawianie kategorii sklepu"
           open_date: "Data otwarcia"
           close_date: "Data zamknięcia"
+          shopfront_sort_by_category_placeholder: "Kategoria"
+          shopfront_sort_by_producer_placeholder: "Producent"
         social:
           twitter_placeholder: "np. @profesor"
           instagram_placeholder: "np. @profesor"
@@ -869,7 +871,6 @@ pl:
         cancel: "Anuluj"
         back_to_list: "Powrót do listy"
       edit:
-        advanced_settings: "Zaawansowane ustawienia"
         save: "Zapisz"
         save_and_next: "Zapisz i Dalej"
         next: "Kolejny"

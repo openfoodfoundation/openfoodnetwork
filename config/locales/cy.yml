@@ -769,6 +769,8 @@ cy:
           shopfront_category_ordering_note: "(o&#39;r brig i&#39;r gwaelod)"
           open_date: "Dyddiad Agored"
           close_date: "Dyddiad Cau"
+          shopfront_sort_by_category_placeholder: "Categori"
+          shopfront_sort_by_producer_placeholder: "Cynhyrchydd"
         social:
           twitter_placeholder: "ee. @the_prof"
           instagram_placeholder: "ee. the_prof"
@@ -889,7 +891,6 @@ cy:
         cancel: "Canslo"
         back_to_list: "Yn ôl i&#39;r Rhestr"
       edit:
-        advanced_settings: "Lleoliadau uwch"
         save: "Arbedwch"
         save_and_next: "Arbed a Nesaf"
         next: "Nesaf"
@@ -942,6 +943,8 @@ cy:
         preferred_product_selection_from_coordinator_inventory_only_here: Rhestr y Cydlynydd yn Unig
         preferred_product_selection_from_coordinator_inventory_only_all: Yr holl Gynhyrchion sydd ar Gael
         save_reload: Cadw a Ail-lwytho Tudalen
+      order_cycle_top_buttons:
+        advanced_settings: "Lleoliadau uwch"
       coordinator_fees:
         add: Ychwanegu ffi cydlynydd
       filters:

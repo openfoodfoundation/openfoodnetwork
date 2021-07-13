@@ -824,6 +824,11 @@ ru:
           shopfront_category_ordering_note: "(сверху вниз)"
           open_date: "Время Открытия"
           close_date: "Время Закрытия"
+          display_ordering_in_shopfront: "Отображение заказа на витрине:"
+          shopfront_sort_by_category: "По категории"
+          shopfront_sort_by_producer: "По производителю"
+          shopfront_sort_by_category_placeholder: "Категория"
+          shopfront_sort_by_producer_placeholder: "Производитель"
         social:
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"
@@ -944,7 +949,6 @@ ru:
         cancel: "Отмена"
         back_to_list: "Назад К Списку"
       edit:
-        advanced_settings: "Расширенные Настройки"
         save: "Сохранить"
         save_and_next: "Сохранить И Далее"
         next: "Далее"
@@ -997,6 +1001,8 @@ ru:
         preferred_product_selection_from_coordinator_inventory_only_here: Только Товарная Номенклатура Координатора
         preferred_product_selection_from_coordinator_inventory_only_all: Все Доступные Товары
         save_reload: Сохранить и Обновить Страницу
+      order_cycle_top_buttons:
+        advanced_settings: "Расширенные Настройки"
       coordinator_fees:
         add: Добавить сбор координатора
       filters:

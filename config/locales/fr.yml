@@ -824,6 +824,11 @@ fr:
           shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
+          display_ordering_in_shopfront: "Ordre d'affichage sur la boutique en ligne :"
+          shopfront_sort_by_category: "Par catégorie"
+          shopfront_sort_by_producer: "Par producteur"
+          shopfront_sort_by_category_placeholder: "Catégorie"
+          shopfront_sort_by_producer_placeholder: "Producteur"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
@@ -944,7 +949,6 @@ fr:
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
       edit:
-        advanced_settings: "Paramétrages avancés"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
@@ -997,6 +1001,8 @@ fr:
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue boutique
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
+      order_cycle_top_buttons:
+        advanced_settings: "Paramétrages avancés"
       coordinator_fees:
         add: Ajouter commission coordinateur
       filters:
@@ -1283,7 +1289,7 @@ fr:
       footer_legal_text_html: "CoopCircuits utilise pour délivrer son service le logiciel libre Open Food Network, dont le code est protégé sous licence %{code_license}. Les autres productions disponibles sur ce site sont protégées sous licence %{content_license}."
       footer_data_text_with_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{privacy_policy} et %{cookies_policy}."
       footer_data_text_without_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{cookies_policy}."
-      footer_data_privacy_policy: "politique de confidentialité"
+      footer_data_privacy_policy: "politique de gestion des données"
       footer_data_cookies_policy: "politique de cookies"
   shop:
     messages:
@@ -3762,7 +3768,7 @@ fr:
       transactions:
         transaction_history: Historique des Transactions
         authorisation_required: Autorisation nécessaire
-        authorise: Autorise
+        authorise: Autoriser
       open_orders:
         order: Commander
         shop: Faire mes courses

@@ -809,6 +809,8 @@ it:
           shopfront_category_ordering_note: "(dall'alto in basso)"
           open_date: "Data apertura"
           close_date: "Data chiusura"
+          shopfront_sort_by_category_placeholder: "Categoria"
+          shopfront_sort_by_producer_placeholder: "Produttore"
         social:
           twitter_placeholder: "es. @the_prof"
           instagram_placeholder: "es. the_prof"
@@ -929,7 +931,6 @@ it:
         cancel: "Annulla"
         back_to_list: "Indietro alla lista"
       edit:
-        advanced_settings: "Impostazioni avanzate"
         save: "Salva"
         save_and_next: "Salva e continua"
         next: "Prossimo"
@@ -982,6 +983,8 @@ it:
         preferred_product_selection_from_coordinator_inventory_only_here: Solo inventario del coordinatore
         preferred_product_selection_from_coordinator_inventory_only_all: Tutti i prodotti disponibili
         save_reload: Salva e ricarica la pagina
+      order_cycle_top_buttons:
+        advanced_settings: "Impostazioni avanzate"
       coordinator_fees:
         add: Aggiungi un ricarico per il coordinamento
       filters:

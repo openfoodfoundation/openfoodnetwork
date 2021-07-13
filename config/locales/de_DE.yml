@@ -141,7 +141,7 @@ de_DE:
     order_cycle:
       cloned_order_cycle_name: "Kopie von %{order_cycle}"
     tax_rate:
-      included_in_price: "im Preis inbegriffen"
+      included_in_price: "im Preis enthalten"
   open_street_map_enabled: "Open Street Map aktivieren"
   open_street_map_default_latitude: "Open Street Map Standardbreitengrad"
   open_street_map_default_longitude: "Open Street Map Standardlängengrad"
@@ -824,6 +824,11 @@ de_DE:
           shopfront_category_ordering_note: "(von oben nach unten)"
           open_date: "Öffnungszeitpunkt"
           close_date: "Schließzeitpunkt"
+          display_ordering_in_shopfront: "Reihenfolge der Anzeige im Online-Shop:"
+          shopfront_sort_by_category: "Nach Kategorie"
+          shopfront_sort_by_producer: "Nach Produzent"
+          shopfront_sort_by_category_placeholder: "Steuerkategorie"
+          shopfront_sort_by_producer_placeholder: "Produzent"
         social:
           twitter_placeholder: "z. B. @the_prof"
           instagram_placeholder: "z. B. the_prof"
@@ -1292,10 +1297,10 @@ de_DE:
         login: "Einloggen"
         signup: "Registrieren"
         contact: "Kontakt"
-        require_customer_login: "Nur angemeldete Kunden können auf diesen Laden zugreifen."
-        require_login_html: "Wenn Sie bereits ein angemeldeter Kunde sind, fahren Sie mit %{login} oder %{signup} fort."
-        require_login_2_html: "Möchten Sie hier einkaufen? Bitte %{contact} %{enterprise} und fragen Sie nach dem Beitritt."
-        require_customer_html: "Wenn Sie hier einkaufen möchten, fragen Sie bitte %{contact} %{enterprise} nach dem Beitritt."
+        require_customer_login: "Nur manuell freigeschaltete Kunden können auf diesen Laden zugreifen."
+        require_login_html: "Wenn Sie bereits ein freigeschalteter Kunde sind, fahren Sie mit %{login} oder %{signup} fort."
+        require_login_2_html: "Sie sind noch nicht für diesen Laden freigeschaltet? Bitte nehmen Sie %{contact} mit %{enterprise} auf und fragen Sie nach dem Beitritt."
+        require_customer_html: "Wenn Sie hier einkaufen möchten, nehmen Sie bitte %{contact} mit %{enterprise} auf und fragen Sie nach dem Beitritt."
       select_oc:
         select_oc_html: "Bitte wählen Sie zunächst oben aus, <span class='highlighted'>wann Sie Ihre Bestellung erhalten möchten</span>, um die verfügbaren Produkte anzuzeigen."
     products:
@@ -1315,7 +1320,7 @@ de_DE:
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
-  tax_invoice: "Rechnungsnummer:"
+  tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
@@ -3116,7 +3121,7 @@ de_DE:
     tax_rates: "Steuersätze"
     rate: "Steuersatz"
     tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
-    included_in_price: "Im Preis inbegriffen"
+    included_in_price: "Im Preis enthalten"
     show_rate_in_label: "Steuersatz im Namen anzeigen"
     back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"

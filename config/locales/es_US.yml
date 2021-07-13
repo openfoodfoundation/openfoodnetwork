@@ -795,6 +795,8 @@ es_US:
           shopfront_category_ordering_note: "(de arriba hacia abajo)"
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
+          shopfront_sort_by_category_placeholder: "Categoría"
+          shopfront_sort_by_producer_placeholder: "Productora"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"
@@ -915,7 +917,6 @@ es_US:
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       edit:
-        advanced_settings: "Configuración Avanzada"
         save: "Guardar"
         save_and_next: "Salvar y continuar"
         next: "Siguiente"
@@ -968,6 +969,8 @@ es_US:
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
         preferred_product_selection_from_coordinator_inventory_only_all: Todos los productos disponibles
         save_reload: Guardar y recargar la página
+      order_cycle_top_buttons:
+        advanced_settings: "Configuración Avanzada"
       coordinator_fees:
         add: Añadir comisión para el coordinador
       filters:

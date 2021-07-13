@@ -46,9 +46,10 @@ module Spree
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
     scope :with_state, ->(s) { where(state: s.to_s) }
     scope :completed, -> { with_state('completed') }
+    scope :incomplete, -> { where(state: %w(checkout pending requires_authorization)) }
     scope :pending, -> { with_state('pending') }
     scope :failed, -> { with_state('failed') }
-    scope :valid, -> { where('state NOT IN (?)', %w(failed invalid)) }
+    scope :valid, -> { where.not(state: %w(failed invalid)) }
     scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
     scope :requires_authorization, -> { with_state("requires_authorization") }
     scope :with_payment_intent, ->(code) { where(response_code: code) }
@@ -72,7 +73,7 @@ module Spree
         transition from: [:processing, :pending, :checkout, :requires_authorization], to: :completed
       end
       event :void do
-        transition from: [:pending, :completed, :checkout], to: :void
+        transition from: [:pending, :completed, :requires_authorization, :checkout], to: :void
       end
       # when the card brand isnt supported
       event :invalidate do

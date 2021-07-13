@@ -9,8 +9,10 @@ class Enterprise < ApplicationRecord
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
+  preference :shopfront_producer_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
   preference :show_customer_names_to_suppliers, :boolean, default: false
+  preference :shopfront_product_sorting_method, :string, default: "by_category"
 
   # Allow hubs to restrict visible variants to only those in their inventory
   preference :product_selection_from_inventory_only, :boolean, default: false
@@ -95,6 +97,7 @@ class Enterprise < ApplicationRecord
   validates :owner, presence: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
+  validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
@@ -455,6 +458,12 @@ class Enterprise < ApplicationRecord
   def shopfront_taxons
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
       errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
+    end
+  end
+
+  def shopfront_producers
+    unless preferred_shopfront_producer_order =~ /\A((\d+,)*\d+)?\z/
+      errors.add(:shopfront_category_ordering, "must contain a list of producers.")
     end
   end
 
