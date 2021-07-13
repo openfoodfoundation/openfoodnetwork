@@ -7,10 +7,10 @@
 = content_for :page_actions do
   - if subscriptions_enabled?
     %li
-      %a.button.icon-plus#new-schedule{ "schedule-dialog" => true }
+      %a.button.icon-plus#new-schedule{ "schedule-dialog" => true, "ofn-with-tip" => t('.new_schedule_tooltip'), "powertip-location" => 's' }
         = t('admin.order_cycles.index.new_schedule')
   %li#new_order_cycle_link
-    = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link'
+    = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link', "ofn-with-tip" => t(:new_order_cycle_tooltip), "powertip-location" => 's'
 
 = admin_inject_column_preferences module: 'admin.orderCycles'
 
