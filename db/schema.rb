@@ -1147,7 +1147,7 @@ ActiveRecord::Schema.define(version: 2021_05_27_201938) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "terms_of_service_files", id: :serial, force: :cascade do |t|
+  create_table "terms_of_service_files", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "attachment_file_name"
