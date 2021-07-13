@@ -9,6 +9,7 @@ require 'spree/core/controller_helpers/common'
 require 'open_food_network/referer_parser'
 
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
   self.responder = ApplicationResponder
   respond_to :html
 

@@ -67,9 +67,7 @@ module Api
 
         @products = product_query.
           ransack(query_params_with_defaults).
-          result.
-          page(params[:page] || 1).
-          per(params[:per_page] || DEFAULT_PER_PAGE)
+          result
 
         render_paged_products @products
       end
@@ -130,11 +128,12 @@ module Api
           includes(variants: [:product, :default_price, :stock_items]).
           where(supplier_id: producer_ids).
           by_producer.by_name.
-          ransack(params[:q]).result.
-          page(params[:page]).per(params[:per_page])
+          ransack(params[:q]).result
       end
 
       def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
+        @pagy, products = pagy(products, items: params[:per_page] || DEFAULT_PER_PAGE)
+
         serialized_products = ActiveModel::ArraySerializer.new(
           products,
           each_serializer: product_serializer
@@ -142,7 +141,7 @@ module Api
 
         render json: {
           products: serialized_products,
-          pagination: pagination_data(products)
+          pagination: pagination_data
         }
       end
 

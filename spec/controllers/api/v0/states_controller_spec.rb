@@ -21,27 +21,18 @@ module Api
     end
 
     context "pagination" do
-      before do
-        expect(Spree::State).to receive(:all).and_return(@scope = double)
-        allow(@scope).to receive_message_chain(:ransack, :result, :includes,
-                                               :order).and_return(@scope)
-      end
-
       it "does not paginate states results when asked not to do so" do
-        expect(@scope).not_to receive(:page)
-        expect(@scope).not_to receive(:per)
+        expect(controller).not_to receive(:pagy)
         api_get :index
       end
 
       it "paginates when page parameter is passed through" do
-        expect(@scope).to receive(:page).with("1").and_return(@scope)
-        expect(@scope).to receive(:per).with(nil)
+        expect(controller).to receive(:pagy)
         api_get :index, page: 1
       end
 
       it "paginates when per_page parameter is passed through" do
-        expect(@scope).to receive(:page).with(nil).and_return(@scope)
-        expect(@scope).to receive(:per).with("25")
+        expect(controller).to receive(:pagy)
         api_get :index, per_page: 25
       end
     end

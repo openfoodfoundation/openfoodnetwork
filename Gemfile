@@ -52,7 +52,7 @@ gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
-gem 'kaminari', '~> 1.2.1'
+gem 'pagy', '~> 4.8'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
