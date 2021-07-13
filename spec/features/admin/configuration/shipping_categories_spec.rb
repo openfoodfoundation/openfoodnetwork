@@ -2,9 +2,8 @@
 
 require 'spec_helper'
 
-describe "Tax Categories" do
+describe "Shipping Categories" do
   include AuthenticationHelper
-  # include WebHelper
 
   context 'user adds a new shipping category with temperature control' do
     it 'user sees new shipping category with temperature control' do     
