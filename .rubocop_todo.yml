@@ -100,11 +100,6 @@ Lint/UselessMethodDefinition:
     - 'app/controllers/spree/user_registrations_controller.rb'
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 1
-# Configuration parameters: CountBlocks.
-Metrics/BlockNesting:
-  Max: 4
-
 # Offense count: 9
 Naming/AccessorMethodName:
   Exclude:
