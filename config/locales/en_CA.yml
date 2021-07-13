@@ -822,6 +822,9 @@ en_CA:
           shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
+          display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_category: "By product category"
+          shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
         social:
@@ -1242,6 +1245,7 @@ en_CA:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
+    payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2663,6 +2667,7 @@ en_CA:
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "invalid"
@@ -3619,6 +3624,7 @@ en_CA:
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorization required"
       void: void
       invalid: invalid
       authorise: authorise
