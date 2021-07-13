@@ -60,6 +60,36 @@ describe CheckoutHelper, type: :helper do
       expect(admin_fee_summary.amount).to eq 123
     end
 
+    context "tax rate adjustments" do
+      let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
+      let!(:line_item_fee_adjustment) {
+        create(:adjustment, originator: enterprise_fee, adjustable: order.line_items.first,
+                            order: order)
+      }
+      let!(:order_tax_adjustment) {
+        create(:adjustment,
+          originator: tax_rate,
+          adjustable: fee_adjustment,
+          order: order
+        )
+      }
+      let!(:line_item_fee_adjustment_tax_adjustment) {
+        create(:adjustment,
+          originator: tax_rate,
+          adjustable: line_item_fee_adjustment,
+          order: order
+        )
+      }
+
+      it "removes tax rate adjustments" do
+        expect(order.all_adjustments.tax.count).to eq(2)
+
+        adjustments = helper.checkout_adjustments_for(order)
+        tax_adjustments = adjustments.select { |a| a.originator_type == "Spree::TaxRate" }
+        expect(tax_adjustments.count).to eq(0)
+      end
+    end
+
     context "with return authorization adjustments" do
       let!(:return_adjustment) {
         create(:adjustment, originator_type: 'Spree::ReturnAuthorization', adjustable: order,
