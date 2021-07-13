@@ -18,9 +18,9 @@ describe MigrateAdminTaxAmounts do
       let!(:adjustment_without_tax) { create(:adjustment, included_tax: 0) }
 
       it "doesn't move the tax to an adjustment" do
-        expect(Spree::Adjustment).to_not receive(:create!)
-
-        subject.migrate_admin_taxes!
+        expect { subject.migrate_admin_taxes! }.to_not change {
+          Spree::Adjustment.count
+        }
       end
     end
 
