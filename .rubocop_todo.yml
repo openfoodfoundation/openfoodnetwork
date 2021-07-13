@@ -16,16 +16,6 @@ Gemspec/RequiredRubyVersion:
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'app/models/spree/stock/availability_validator.rb'
-    - 'spec/features/consumer/account/payments_spec.rb'
-    - 'spec/queries/payments_requiring_action_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -682,12 +672,6 @@ Style/OptionalBooleanParameter:
 Style/PreferredHashMethods:
   Exclude:
     - 'app/controllers/api/v0/shipments_controller.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'app/models/spree/payment/processing.rb'
 
 # Offense count: 223
 Style/Send:

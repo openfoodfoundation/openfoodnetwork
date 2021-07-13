@@ -11,10 +11,9 @@ describe PaymentsRequiringAction do
     context "payment has a cvv_response_message" do
       let(:payment) do
         create(:payment,
-          order: order,
-          cvv_response_message: "https://stripe.com/redirect",
-          state: "requires_authorization"
-        )
+               order: order,
+               cvv_response_message: "https://stripe.com/redirect",
+               state: "requires_authorization")
       end
 
       it "finds the payment" do
