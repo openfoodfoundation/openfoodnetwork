@@ -229,7 +229,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    ddtrace (0.50.0)
+    ddtrace (0.51.0)
       ffi (~> 1.0)
       msgpack
     debugger-linecache (1.2.0)
@@ -270,7 +270,7 @@ GEM
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
     ffaker (2.18.0)
-    ffi (1.15.1)
+    ffi (1.15.3)
     flipper (0.20.4)
     flipper-active_record (0.20.4)
       activerecord (>= 5.0, < 7)
