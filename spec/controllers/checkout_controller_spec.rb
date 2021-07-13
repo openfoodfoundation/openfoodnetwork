@@ -49,8 +49,7 @@ describe CheckoutController, type: :controller do
     let(:shipping_method) { distributor.shipping_methods.first }
 
     before do
-      order.line_items << create(:line_item,
-                                 variant: order_cycle.variants_distributed_by(distributor).first)
+      order.contents.add(order_cycle.variants_distributed_by(distributor).first)
 
       allow(controller).to receive(:current_distributor).and_return(distributor)
       allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
@@ -92,19 +91,54 @@ describe CheckoutController, type: :controller do
       allow(OrderCycleDistributedVariants).to receive(:new).and_return(order_cycle_distributed_variants)
     end
 
-    it "redirects when some items are out of stock" do
-      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+    context "running out of stock" do
+      it "redirects when some items are out of stock" do
+        allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
 
-      get :edit
-      expect(response).to redirect_to cart_path
-    end
+        get :edit
+        expect(response).to redirect_to cart_path
+      end
 
-    it "redirects when some items are not available" do
-      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
-      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
+      it "redirects when some items are not available" do
+        allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+        expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
 
-      get :edit
-      expect(response).to redirect_to cart_path
+        get :edit
+        expect(response).to redirect_to cart_path
+      end
+
+      context "after redirecting back from Stripe" do
+        let(:order) { create(:order_with_totals_and_distribution) }
+        let!(:payment) { create(:payment, state: "pending", amount: order.total, order: order) }
+        let!(:transaction_fee) {
+          create(:adjustment, state: "open", amount: 10, order: order, adjustable: payment)
+        }
+
+        before do
+          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return(false)
+          allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?).
+            with(order).and_return(true)
+          allow(controller).to receive(:valid_payment_intent_provided?) { true }
+          order.save
+          allow(order).to receive_message_chain(:payments, :completed) { [] }
+          allow(order).to receive_message_chain(:payments, :incomplete) { [payment] }
+          allow(payment).to receive(:adjustment) { transaction_fee }
+        end
+
+        it "cancels the payment and resets the order to cart" do
+          expect(payment).to receive(:void!).and_call_original
+
+          spree_post :edit
+
+          expect(response).to redirect_to cart_path
+          expect(flash[:notice]).to eq I18n.t('checkout.payment_cancelled_due_to_stock')
+
+          expect(order.state).to eq "cart"
+          expect(payment.state).to eq "void"
+          expect(transaction_fee.reload.eligible).to eq false
+          expect(transaction_fee.state).to eq "finalized"
+        end
+      end
     end
 
     describe "when items are available and in stock" do
