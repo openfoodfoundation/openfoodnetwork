@@ -229,7 +229,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    ddtrace (0.51.0)
+    ddtrace (0.51.1)
       ffi (~> 1.0)
       msgpack
     debugger-linecache (1.2.0)
