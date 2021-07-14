@@ -346,18 +346,6 @@ GEM
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
     jwt (2.2.3)
-    kaminari (1.2.1)
-      activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.2.1)
-      kaminari-activerecord (= 1.2.1)
-      kaminari-core (= 1.2.1)
-    kaminari-actionview (1.2.1)
-      actionview
-      kaminari-core (= 1.2.1)
-    kaminari-activerecord (1.2.1)
-      activerecord
-      kaminari-core (= 1.2.1)
-    kaminari-core (1.2.1)
     kgio (2.11.3)
     knapsack (3.1.0)
       rake
@@ -403,6 +391,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
+    pagy (4.10.1)
     paper_trail (12.0.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
@@ -750,7 +739,6 @@ DEPENDENCIES
   json
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
-  kaminari (~> 1.2.1)
   knapsack
   letter_opener (>= 1.4.1)
   mimemagic (> 0.3.5)
@@ -759,6 +747,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   ofn-qz!
   order_management!
+  pagy (~> 4.8)
   paper_trail (~> 12.0.0)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)

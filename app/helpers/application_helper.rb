@@ -2,6 +2,7 @@
 
 module ApplicationHelper
   include RawParams
+  include Pagy::Frontend
 
   def feature?(feature, user = nil)
     OpenFoodNetwork::FeatureToggle.enabled?(feature, user)

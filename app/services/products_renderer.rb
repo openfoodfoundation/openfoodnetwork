@@ -3,6 +3,8 @@
 require 'open_food_network/scope_product_to_hub'
 
 class ProductsRenderer
+  include Pagy::Backend
+  
   class NoProducts < RuntimeError; end
   DEFAULT_PER_PAGE = 10
 
@@ -50,11 +52,15 @@ class ProductsRenderer
   end
 
   def filter_and_paginate(query)
-    query.
-      ransack(args[:q]).
-      result.
-      page(args[:page] || 1).
-      per(args[:per_page] || DEFAULT_PER_PAGE)
+    results = query.ransack(args[:q]).result
+
+    _pagy, paginated_results = pagy(
+      results,
+      page: args[:page] || 1,
+      items: args[:per_page] || DEFAULT_PER_PAGE
+    )
+
+    paginated_results
   end
 
   def distributed_products

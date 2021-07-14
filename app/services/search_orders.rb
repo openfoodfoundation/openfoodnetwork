@@ -19,8 +19,6 @@ class SearchOrders
       includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
       ransack(params[:q])
 
-    return paginated_results if using_pagination?
-
     @search.result(distinct: true)
   end
 
@@ -34,15 +32,5 @@ class SearchOrders
                selected: true,
                shipping_method_id: params[:shipping_method_id]
              })
-  end
-
-  def paginated_results
-    @search.result(distinct: true)
-      .page(params[:page])
-      .per(params[:per_page])
-  end
-
-  def using_pagination?
-    params[:page]
   end
 end
