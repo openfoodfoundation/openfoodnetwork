@@ -9,14 +9,18 @@ describe DfcProvider::SuppliedProductSerializer do
   subject { described_class.new(variant) }
 
   describe '#id' do
+    let(:supplied_product_id) {
+      [
+        'http://test.host/api/dfc_provider',
+        'enterprises',
+        product.supplier_id,
+        'supplied_products',
+        product.id
+      ].join('/')
+    }
+
     it 'returns the expected value' do
-      expect(subject.id).to eq(
-        DfcProvider::Engine.routes.url_helpers.api_dfc_provider_enterprise_supplied_product_url(
-          enterprise_id: product.supplier_id,
-          id: variant.id,
-          host: 'http://test.host'
-        )
-      )
+      expect(subject.id).to eq(supplied_product_id)
     end
   end
 
