@@ -7,8 +7,7 @@ module DfcProvider
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       before_action :check_authorization,
-                    :check_user,
-                    :set_enterprise
+                    :check_user
 
       respond_to :json
 
@@ -26,8 +25,10 @@ module DfcProvider
         head :unauthorized
       end
 
-      def set_enterprise
-        current_enterprise
+      def check_enterprise
+        return if current_enterprise.present?
+
+        not_found
       end
 
       def current_enterprise
@@ -35,8 +36,6 @@ module DfcProvider
           case params[enterprise_id_param_name]
           when 'default'
             current_user.enterprises.first!
-          when nil
-            nil
           else
             current_user.enterprises.find(params[enterprise_id_param_name])
           end

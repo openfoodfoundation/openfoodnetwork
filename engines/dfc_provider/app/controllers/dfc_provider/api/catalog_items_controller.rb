@@ -5,6 +5,8 @@
 module DfcProvider
   module Api
     class CatalogItemsController < DfcProvider::Api::BaseController
+      before_action :check_enterprise
+
       def index
         # CatalogItem is nested into an entreprise which is also nested into
         # an user on the DFC specifications, as defined here:
