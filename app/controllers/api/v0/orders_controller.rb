@@ -15,10 +15,10 @@ module Api
 
         orders = SearchOrders.new(params, current_api_user).orders
 
-        @pagy, paged_orders = pagy(orders, items: params[:per_page] || default_per_page)
+        @pagy, orders = pagy(orders, items: params[:per_page] || default_per_page) if pagination_required?
 
         render json: {
-          orders: serialized_orders(paged_orders),
+          orders: serialized_orders(orders),
           pagination: pagination_data
         }
       end
