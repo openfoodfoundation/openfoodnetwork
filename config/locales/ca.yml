@@ -825,6 +825,9 @@ ca:
           shopfront_category_ordering_note: "(de dalt a baix)"
           open_date: "Data d'obertura"
           close_date: "Data de tancament"
+          display_ordering_in_shopfront: "Mostra les comandes a la botiga:"
+          shopfront_sort_by_category: "Per categoria"
+          shopfront_sort_by_producer: "Per productora"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Productora"
         social:
@@ -1245,6 +1248,7 @@ ca:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
       terms_and_conditions: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
+    payment_cancelled_due_to_stock: "Pagament cancel·lat: la comanda no s’ha pogut completar a causa de problemes d’estoc."
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"
