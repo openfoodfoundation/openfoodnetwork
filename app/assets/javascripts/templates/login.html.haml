@@ -43,4 +43,4 @@
           value: "{{'label_login' | t}}"}
     .row
       .large-12.columns
-        = ActionController::Base.helpers.link_to "Login with Les Communs", "/user/spree_user/auth/openid_connect", method: :post
+        = link_to "Login with Les Communs", Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path, method: :post
