@@ -31,7 +31,7 @@ describe DfcProvider::CatalogItemSerializer do
         'enterprises',
         product.supplier_id,
         'supplied_products',
-        product.id
+        variant.id
       ].join('/')
     }
 
