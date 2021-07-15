@@ -607,7 +607,7 @@ GEM
       activerecord (>= 5.1)
       state_machines-activemodel (>= 0.8.0)
     stringex (2.8.5)
-    stripe (5.36.0)
+    stripe (5.37.0)
     temple (0.8.2)
     test-prof (1.0.6)
     test-unit (3.4.4)
