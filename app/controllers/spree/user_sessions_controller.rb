@@ -16,6 +16,10 @@ module Spree
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
 
+    def new
+      redirect_to main_app.login_path
+    end
+
     def create
       authenticate_spree_user!
 
