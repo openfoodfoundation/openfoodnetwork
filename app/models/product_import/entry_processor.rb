@@ -170,6 +170,8 @@ module ProductImport
       )
       product.supplier_id = entry.producer_id
 
+      attach_image_from_url(entry, product)
+
       if product.save
         ensure_variant_updated(product, entry)
         @products_created += 1
@@ -185,6 +187,8 @@ module ProductImport
       variant = entry.product_object
       variant.import_date = @import_time
 
+      attach_image_from_url(entry, variant.product)
+
       if variant.valid? && variant.save
         @updated_ids.push variant.id
         true
@@ -192,6 +196,12 @@ module ProductImport
         assign_errors variant.errors.full_messages, entry.line_number
         false
       end
+    end
+
+    def attach_image_from_url(entry, product)
+      return if entry.image_url.blank? || product.images.present?
+
+      ImageImporter.new.import(entry.image_url, product)
     end
 
     def assign_errors(errors, line_number)

@@ -338,7 +338,9 @@ module ProductImport
       new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 
-      if new_product.valid?
+      validate_image_url(entry, new_product)
+
+      if new_product.errors.empty? && new_product.valid?
         entry.validates_as = 'new_product' unless entry.errors?
       else
         mark_as_invalid(entry, product_validations: new_product.errors)
@@ -352,7 +354,9 @@ module ProductImport
       )
       check_on_hand_nil(entry, existing_variant)
 
-      if existing_variant.valid?
+      validate_image_url(entry, existing_variant.product)
+
+      if existing_variant.product.errors.empty? && existing_variant.valid?
         entry.product_object = existing_variant
         entry.validates_as = 'existing_variant' unless entry.errors?
         updates_count_per_enterprise(entry.enterprise_id) unless entry.errors?
@@ -476,6 +480,14 @@ module ProductImport
       object.count_on_hand = entry.on_hand.presence
       object.on_demand = object.count_on_hand.blank? if entry.on_demand.blank?
       entry.on_hand_nil = object.count_on_hand.blank?
+    end
+
+    def validate_image_url(entry, product)
+      return if entry.image_url.blank? || product.images.present?
+
+      ImageImporter::URIValidator.validate!(entry.image_url)
+    rescue ImageImporter::URIValidator::Error => e
+      product.errors.add(:image_url, e.message)
     end
 
     def all_entries_for_product(entry)

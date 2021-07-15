@@ -187,6 +187,11 @@ en:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
 
+  image_importer:
+    uri_validator:
+      error:
+        connection_not_protected: "Connection not protected"
+        domain_not_allowed: "Domain not allowed"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"

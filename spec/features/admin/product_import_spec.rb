@@ -52,6 +52,8 @@ feature "Product Import", js: true do
   }
 
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
+  let(:image_url) { "https://recharge-images-originals.sgp1.cdn.digitaloceanspaces.com/Market/Stalls/297/img-2508.jpg" }
+  let(:image_file) { Rails.root.join("spec/fixtures/files/promo.png") }
 
   let(:file) { Tempfile.new(["test", ".csv"]) }
 
@@ -59,16 +61,22 @@ feature "Product Import", js: true do
     before do
       allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
       login_as_admin
+
+      stub_request(:get, image_url).
+        to_return(
+          status: 200,
+          body: image_file.read,
+        )
     end
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
+                "shipping_category_id", "image_url"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                shipping_category_id_str]
+                shipping_category_id_str, image_url]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
-                shipping_category_id_str]
+                shipping_category_id_str, ""]
       end
       File.write(file.path, csv_data)
 
@@ -92,6 +100,9 @@ feature "Product Import", js: true do
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       potatoes = Spree::Product.find_by(name: 'Potatoes')
+
+      expect(carrots.images.count).to eq 1
+
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
       expect(potatoes.price).to eq 6.50
@@ -110,14 +121,16 @@ feature "Product Import", js: true do
     it "displays info about invalid entries but no save button if all items are invalid" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
+                "shipping_category_id", "image_url"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                shipping_category_id_str]
+                shipping_category_id_str, ""]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "5.50", "1", "kg",
-                shipping_category_id_str]
+                shipping_category_id_str, ""]
         csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g",
-                shipping_category_id_str]
-        csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
+                shipping_category_id_str, ""]
+        csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", "", ""]
+        csv << ["Bad Beetroot", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
+                shipping_category_id_str, "https://hack.example.com"]
       end
       File.write(file.path, csv_data)
 
@@ -129,8 +142,8 @@ feature "Product Import", js: true do
 
       proceed_to_validation
 
-      expect(page).to have_selector '.item-count', text: "4"
-      expect(page).to have_selector '.invalid-count', text: "3"
+      expect(page).to have_selector '.item-count', text: "5"
+      expect(page).to have_selector '.invalid-count', text: "4"
       expect(page).to have_selector ".create-count", text: "1"
       expect(page).to have_no_selector '.update-count'
 
