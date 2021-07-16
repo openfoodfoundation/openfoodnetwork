@@ -3,7 +3,7 @@
 # Serializer used to render a DFC Enterprise from an OFN Enterprise
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class EnterpriseSerializer < ActiveModel::Serializer
+  class EnterpriseSerializer < BaseSerializer
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :vat_number, key: 'dfc:VATnumber'
@@ -18,7 +18,7 @@ module DfcProvider
     def id
       dfc_provider_routes.api_dfc_provider_enterprise_url(
         id: object.id,
-        host: root_url
+        host: host
       )
     end
 
@@ -33,21 +33,11 @@ module DfcProvider
     end
 
     def supplies
-      Spree::Variant.
-        joins(product: :supplier).
-        where('enterprises.id' => object.id)
+      DfcProvider::VariantFetcher.new(object).scope
     end
 
     def manages
-      Spree::Variant.
-        joins(product: :supplier).
-        where('enterprises.id' => object.id)
-    end
-
-    private
-
-    def dfc_provider_routes
-      DfcProvider::Engine.routes.url_helpers
+      DfcProvider::VariantFetcher.new(object).scope
     end
   end
 end

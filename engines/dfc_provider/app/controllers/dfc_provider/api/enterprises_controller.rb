@@ -4,6 +4,8 @@
 module DfcProvider
   module Api
     class EnterprisesController < DfcProvider::Api::BaseController
+      before_action :check_enterprise
+
       def show
         render json: current_enterprise, serializer: DfcProvider::EnterpriseSerializer
       end

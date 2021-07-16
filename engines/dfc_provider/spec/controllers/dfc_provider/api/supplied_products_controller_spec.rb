@@ -10,7 +10,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
 
-  describe('.show') do
+  describe '.show' do
     context 'with authorization token' do
       before do
         request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
@@ -26,26 +26,23 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
         context 'with an enterprise' do
           context 'given with an id' do
             before do
-              api_get :show,
-                      enterprise_id: 'default',
-                      id: variant.id
+              api_get :show, enterprise_id: 'default', id: variant.id
             end
 
             it 'is successful' do
-              expect(response.status).to eq 200
+              expect(response).to be_successful
             end
 
             it 'renders the required content' do
-              expect(response.body)
-                .to include(variant.name)
+              expect(response.body).to include(variant.name)
             end
           end
 
           context 'given with a wrong id' do
-            before { api_get :show, id: 999 }
+            before { api_get :show, enterprise_id: 'default', id: 999 }
 
             it 'is not found' do
-              expect(response.status).to eq 404
+              expect(response).to be_not_found
             end
           end
         end

@@ -3,7 +3,7 @@
 # Serializer used to render the DFC Person from an OFN User
 # into JSON-LD format based on DFC ontology
 module DfcProvider
-  class PersonSerializer < ActiveModel::Serializer
+  class PersonSerializer < BaseSerializer
     attribute :context, key: '@context'
     attribute :id, key: '@id'
     attribute :type, key: '@type'
@@ -28,7 +28,7 @@ module DfcProvider
     def id
       dfc_provider_routes.api_dfc_provider_person_url(
         id: object.id,
-        host: root_url
+        host: host
       )
     end
 
@@ -44,12 +44,6 @@ module DfcProvider
 
     def affiliates
       object.enterprises
-    end
-
-    private
-
-    def dfc_provider_routes
-      DfcProvider::Engine.routes.url_helpers
     end
   end
 end
