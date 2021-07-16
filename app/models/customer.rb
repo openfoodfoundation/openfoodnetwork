@@ -20,7 +20,7 @@ class Customer < ApplicationRecord
   before_validation :empty_code
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
-  validates :email, presence: true,
+  validates :email, presence: true, 'valid_email_2/email': true,
                     uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
   validates :enterprise, presence: true
 

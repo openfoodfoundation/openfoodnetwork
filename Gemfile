@@ -25,6 +25,8 @@ gem "activerecord-import"
 gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-6"
 gem "fog-aws", "~> 2.0" # db2fog does not support v3
 
+gem "valid_email2"
+
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"

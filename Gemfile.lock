@@ -633,6 +633,9 @@ GEM
       get_process_mem (~> 0)
       unicorn (>= 4, < 7)
     uniform_notifier (1.14.2)
+    valid_email2 (4.0.0)
+      activemodel (>= 3.2)
+      mail (~> 2.5)
     view_component (2.35.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
@@ -792,6 +795,7 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn-rails
   unicorn-worker-killer
+  valid_email2
   view_component
   view_component_storybook
   web!
