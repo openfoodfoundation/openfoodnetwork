@@ -201,4 +201,27 @@ describe Spree::User do
       expect(user.flipper_id).to eq "Spree::User;42"
     end
   end
+
+  describe "#from_omniauth" do
+    let(:auth) { double(:auth, provider: "openid_connect", uid: "user@email.com") }
+
+    context "a valid email address" do
+      let(:email) { "user@email.com" }
+
+      it "creates a user without errors" do
+        allow(auth).to receive_message_chain(:info, :email).and_return "user@email.com"
+        user = Spree::User.from_omniauth(auth)
+        expect(user.errors.present?).to be false
+        expect(user.confirmed?).to be true
+      end
+    end
+
+    context "an invalid email address" do
+      it "raises an error" do
+        allow(auth).to receive_message_chain(:info, :email).and_return "notanemailaddress"
+        user = Spree::User.from_omniauth(auth)
+        expect(user.errors.present?).to be true
+      end
+    end
+  end
 end
