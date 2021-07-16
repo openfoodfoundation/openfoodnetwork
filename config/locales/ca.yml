@@ -1248,7 +1248,7 @@ ca:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
       terms_and_conditions: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
-    payment_cancelled_due_to_stock: "Pagament cancel·lat: la comanda no s’ha pogut completar a causa de problemes d’estoc."
+    payment_cancelled_due_to_stock: "Pagament cancel·lat: el pagament no s’ha pogut completar a causa de problemes d’estoc."
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"
