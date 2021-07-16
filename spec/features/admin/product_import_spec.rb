@@ -53,12 +53,13 @@ feature "Product Import", js: true do
 
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
+  let(:file) { Tempfile.new(["test", ".csv"]) }
+
   describe "when importing products from uploaded file" do
     before do
       allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
       login_as_admin
     end
-    after { File.delete('/tmp/test.csv') }
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
@@ -69,12 +70,12 @@ feature "Product Import", js: true do
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -118,12 +119,12 @@ feature "Product Import", js: true do
                 shipping_category_id_str]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -143,12 +144,12 @@ feature "Product Import", js: true do
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
                 tax_category.name, shipping_category.name]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -176,12 +177,12 @@ feature "Product Import", js: true do
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -223,11 +224,11 @@ feature "Product Import", js: true do
         csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
 
       check "settings_reset_all_absent"
 
@@ -256,10 +257,10 @@ feature "Product Import", js: true do
         csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil,
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -295,11 +296,11 @@ feature "Product Import", js: true do
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50",
                 "500"]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
       select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -356,11 +357,11 @@ feature "Product Import", js: true do
                 "1", "true"]
       end
 
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
       select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -392,10 +393,10 @@ feature "Product Import", js: true do
                 "kg", "1", "true", "Bag"]
       end
 
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
       visit main_app.admin_product_import_path
       select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
       proceed_to_validation
       expect(page).to have_selector '.item-count', text: "1"
@@ -425,11 +426,11 @@ feature "Product Import", js: true do
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
                 "500", nil]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
       select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -473,12 +474,12 @@ feature "Product Import", js: true do
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "8", "oz",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -509,12 +510,12 @@ feature "Product Import", js: true do
         csv << ["Cupcake", "User Enterprise", "Cake", "5", "2.2", "1", "", "Bunch",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -548,12 +549,12 @@ feature "Product Import", js: true do
         csv << ["Heavy Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "1",
                 "stones", shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
 
       expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
@@ -568,19 +569,20 @@ feature "Product Import", js: true do
   end
 
   describe "when dealing with uploaded files" do
+    let(:wrong_file) { Tempfile.new(["test", ".txt"]) }
+
     before { login_as_admin }
 
     it "checks filetype on upload" do
-      File.write('/tmp/test.txt', "Wrong filetype!")
+      File.write(wrong_file.path, "Wrong filetype!")
 
       visit main_app.admin_product_import_path
-      attach_file 'file', '/tmp/test.txt'
+      attach_file 'file', wrong_file.path
       click_button 'Upload'
 
       expect(page).to have_content "Importer could not process file: invalid filetype"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).to have_content "Select a spreadsheet to upload"
-      File.delete('/tmp/test.txt')
     end
 
     it "returns an error if nothing was uploaded" do
@@ -592,26 +594,25 @@ feature "Product Import", js: true do
     end
 
     it "handles cases where no meaningful data can be read from the file" do
-      File.write('/tmp/test.csv', "A22££S\\\\\n**VA,,,AF..D")
+      File.write(file.path, "A22££S\\\\\n**VA,,,AF..D")
 
       visit main_app.admin_product_import_path
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       expect(page).to have_no_selector '.create-count'
       expect(page).to have_no_selector '.update-count'
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
-      File.delete('/tmp/test.csv')
     end
 
     it "handles cases where files contain malformed data" do
       csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
       csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
 
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       visit main_app.admin_product_import_path
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       expect(page).to have_no_selector '.create-count'
@@ -619,14 +620,10 @@ feature "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv',
                                             error_message: ""))
-
-      File.delete('/tmp/test.csv')
     end
   end
 
   describe "handling enterprise permissions" do
-    after { File.delete('/tmp/test.csv') }
-
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
@@ -636,12 +633,12 @@ feature "Product Import", js: true do
         csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg",
                 shipping_category_id_str]
       end
-      File.write('/tmp/test.csv', csv_data)
+      File.write(file.path, csv_data)
 
       login_as user
       visit main_app.admin_product_import_path
 
-      attach_file 'file', '/tmp/test.csv'
+      attach_file 'file', file.path
       click_button 'Upload'
 
       proceed_to_validation
