@@ -10,5 +10,5 @@
       %tr
         %td= l(payment.created_at, format: "%b %d, %Y %H:%M")
         %td.payment-method-name= payment_method_name(payment)
-        %td.payment-state.payment-state-value= t(payment.state, scope: :payment_states, default: payment.state.capitalize)
+        %td.payment-state.payment-state-value= t(payment.state, scope: [:spree, :payment_states], default: payment.state.capitalize)
         %td.amount= payment.display_amount.to_html
