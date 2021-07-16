@@ -824,6 +824,9 @@ es:
           shopfront_category_ordering_note: "(de arriba hacia abajo)"
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
+          display_ordering_in_shopfront: "Mostrar pedidos en la tienda:"
+          shopfront_sort_by_category: "Por categoria"
+          shopfront_sort_by_producer: "Por productora"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
         social:
@@ -1244,6 +1247,7 @@ es:
       message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
       terms_and_conditions: "Términos y Condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
+    payment_cancelled_due_to_stock: "Pago cancelado: no se pudo completar el pago debido a problemas de stock."
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
