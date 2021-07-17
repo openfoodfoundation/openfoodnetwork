@@ -72,6 +72,9 @@ Openfoodnetwork::Application.routes.draw do
   constraints(SplitCheckoutConstraint.new) do
     get '/checkout', to: 'split_checkout#edit', as: :checkout
     put '/checkout', to: 'split_checkout#update', as: :update_checkout
+    get '/checkout/enter-your-details', to: 'split_checkout#edit', as: :checkout_your_details
+    get '/checkout/payment-method', to: 'split_checkout#edit', as: :checkout_payment_method
+    get '/checkout/order-summary', to: 'split_checkout#edit', as: :checkout_summary
     get '/checkout/:state', to: 'split_checkout#edit', as: :checkout_state
     get '/checkout/paypal_payment/:order_id', to: 'split_checkout#paypal_payment', as: :paypal_payment
   end
