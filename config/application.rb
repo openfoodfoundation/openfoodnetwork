@@ -213,5 +213,7 @@ module Openfoodnetwork
     config.action_controller.include_all_helpers = false
 
     config.generators.template_engine = :haml
+
+    config.autoloader = :zeitwerk
   end
 end

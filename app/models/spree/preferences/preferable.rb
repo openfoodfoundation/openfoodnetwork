@@ -11,8 +11,6 @@
 # and copy all the definitions allowing the subclass to add
 # additional defintions without affecting the base
 
-require 'spree/preferences/store'
-
 module Spree
   module Preferences
     module Preferable
