@@ -51,14 +51,8 @@
 #
 #= require modernizr
 #
-#= require foundation
 #= require ./darkswarm
 #= require ./overrides
 #= require_tree ./mixins
 #= require_tree ./directives
 #= require_tree .
-
-$ ->
-  # Hacky fix for issue - http://foundation.zurb.com/forum/posts/2112-foundation-5100-syntax-error-in-js
-  Foundation.set_namespace ""
-  $(document).foundation()
