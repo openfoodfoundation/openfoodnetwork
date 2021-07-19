@@ -343,13 +343,21 @@ feature 'Customers' do
           end
 
           it "creates customers when the email provided is valid" do
-            # When an invalid email is used
+            # When an invalid email without domain is used it is checked by a regex, in the UI
             expect{
               click_link('New Customer')
-              fill_in 'email', with: "not_an_email"
+              fill_in 'email', with: "email_with_no_domain@"
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Please enter a valid email address"
+            }.to_not change{ Customer.of(managed_distributor1).count }
+
+            # When an invalid email with domain is used it is checked by the "valid_email2" gem #7886
+            expect{
+              fill_in 'email', with: "invalid_email_with_no_complete_domain@incomplete"
+              click_button 'Add Customer'
+              expect(page).to have_selector "#new-customer-dialog .error",
+                                            text: "Email is invalid"
             }.to_not change{ Customer.of(managed_distributor1).count }
 
             # When an existing email is used
