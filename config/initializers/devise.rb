@@ -142,6 +142,8 @@ Devise.setup do |config|
     scope: [:openid, :email],
     response_type: :code,
     uid_field: "email",
+    client_auth_method: :jwks,
+
     client_options: {
       port: 443,
       scheme: "https",
@@ -149,6 +151,7 @@ Devise.setup do |config|
       authorization_endpoint: "https://login.lescommuns.org/auth/realms/master/protocol/openid-connect/auth",
       token_endpoint: "https://login.lescommuns.org/auth/realms/master/protocol/openid-connect/token",
       userinfo_endpoint: "https://login.lescommuns.org/auth/realms/master/protocol/openid-connect/userinfo",
+      jwks_uri: "https://login.lescommuns.org/auth/realms/master/protocol/openid-connect/certs",
       identifier: ENV["OPENID_APP_ID"],
       secret: ENV["OPENID_APP_SECRET"],
       redirect_uri: ENV["OPENID_REDIRECT_URI"],
