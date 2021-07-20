@@ -1027,6 +1027,7 @@ ca:
         schedule: Programació
         schedules: Programacions
         new_schedule: Nova programació
+        new_schedule_tooltip: Freqüència amb què es fa una comanda de subscripció
       name_and_timing_form:
         name: Nom
         orders_open: Les comandes s'obren a
@@ -2115,6 +2116,7 @@ ca:
   price_sack: "Preu sac"
   new_order_cycles: "Nou cicle de comanda"
   new_order_cycle: "Nou cicle de comanda"
+  new_order_cycle_tooltip: "Obriu la botiga durant un període de temps determinat"
   select_a_coordinator_for_your_order_cycle: "Selecciona una coordinadora per al vostre cicle de comanda"
   notify_producers: 'Notifica les productores'
   edit_order_cycle: "Edita el cicle de comanda"
