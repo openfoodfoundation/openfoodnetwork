@@ -6,15 +6,12 @@
 class TaxRateFinder
   # @return [Array<Spree::TaxRate>]
   def self.tax_rates_of(adjustment)
-    new.tax_rates(
-      adjustment.originator,
-      adjustment.adjustable
-    )
+    new.tax_rates(adjustment.originator, adjustment.adjustable)
   end
 
   # @return [Array<Spree::TaxRate>]
   def tax_rates(originator, adjustable)
-    find_associated_tax_rate(originator, adjustable)
+    find_associated_tax_rate(originator, adjustable) || []
   end
 
   private
