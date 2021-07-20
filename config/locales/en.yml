@@ -1079,6 +1079,7 @@ en:
         schedule: Schedule
         schedules: Schedules
         new_schedule: New Schedule
+        new_schedule_tooltip: The frequency with which a subscription order is placed
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
@@ -2242,6 +2243,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   price_sack: "Price Sack"
   new_order_cycles: "New Order Cycles"
   new_order_cycle: "New Order Cycle"
+  new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
