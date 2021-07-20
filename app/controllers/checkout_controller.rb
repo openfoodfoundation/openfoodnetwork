@@ -46,7 +46,7 @@ class CheckoutController < ::BaseController
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
     return action_failed unless @order.update(params_adapter.params[:order] || {})
 
-    checkout_workflow(params_adapter.shipping_method_id, params[:advance_to_state])
+    checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
@@ -167,8 +167,8 @@ class CheckoutController < ::BaseController
     end
   end
 
-  def checkout_workflow(shipping_method_id, advance_to_state = "complete")
-    while @order.state != advance_to_state
+  def checkout_workflow(shipping_method_id)
+    while @order.state != "complete"
       if @order.state == "payment"
         return if redirect_to_payment_gateway
 
