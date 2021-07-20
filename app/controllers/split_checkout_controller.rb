@@ -19,7 +19,7 @@ class SplitCheckoutController < ::BaseController
   prepend_before_action :require_order_cycle
   prepend_before_action :require_distributor_chosen
 
-  before_action :load_order
+  before_action :load_order, :load_shipping_methods
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
@@ -89,6 +89,10 @@ class SplitCheckoutController < ::BaseController
 
   def ensure_order_not_completed
     redirect_to main_app.cart_path if @order.completed?
+  end
+
+  def load_shipping_methods
+    @shipping_methods = Spree::ShippingMethod.for_distributor(@order.distributor).order(:name)
   end
 
   def load_order
