@@ -595,7 +595,7 @@ fr:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
+        reset_absent_tip: Remettre le stock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -1026,6 +1026,7 @@ fr:
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         new_schedule: Nouveau rythme d'abonnement
+        new_schedule_tooltip: La fréquence à laquelle un abonnement est placé
       name_and_timing_form:
         name: Nom
         orders_open: Commandes à partir de
@@ -2114,6 +2115,7 @@ fr:
   price_sack: "Montant variable selon total commande"
   new_order_cycles: "Nouveau cycle de vente"
   new_order_cycle: "Nouveau Cycle de Vente"
+  new_order_cycle_tooltip: "Période d'ouverture de la boutique"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"
   notify_producers: 'Notifier les producteurs'
   edit_order_cycle: "Modifier le cycle de vente"
