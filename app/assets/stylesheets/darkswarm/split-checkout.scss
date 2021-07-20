@@ -54,30 +54,36 @@
   .checkout-input {
     margin-bottom: 1.5rem;
 
-    label {
-      margin-bottom: 0.3rem;
-
-      &.error {
+    .field_with_errors {
+      label {
         font-weight: $font-weight-bold;
         color: $red-700;
       }
+      input {
+        border-color: $red-700;
+      } 
+    }
+
+    label {
+      margin-bottom: 0.3rem;
     }
 
     input,
     select {
       margin: 0;
-
-      &.error {
-        border-color: $red-700;
-      }
     }
 
-    small.error {
+    span.formError {
       background-color: rgba(193, 18, 43, 0.1);
       color: $red-700;
       font-style: normal;
       margin: 0;
       font-size: 0.8rem;
+      display: block;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 2px;
+      padding-bottom: 2px;
     }
 
     #distributor_address.panel {
