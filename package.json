@@ -25,6 +25,7 @@
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
     "shortcut-buttons-flatpickr": "^0.3.1",
+    "stimulus": "^2.0.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   }

@@ -16,6 +16,7 @@
     %link{href: font_path("OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
 
     = stylesheet_link_tag "darkswarm/all"
+    = javascript_pack_tag "application"
     = csrf_meta_tags
 
   %body{ class: body_classes, "body-scroll" => true , ng: { app: 'Darkswarm' }}
