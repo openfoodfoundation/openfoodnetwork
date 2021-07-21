@@ -1245,6 +1245,7 @@ en_GB:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
+    payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1341,10 +1342,10 @@ en_GB:
   menu_4_url: "/groups"
   menu_5_title: "Open My Shop"
   menu_5_url: "https://about.openfoodnetwork.org.uk/open-my-shop/"
-  menu_6_title: "Contact Support"
-  menu_6_url: "https://about.openfoodnetwork.org.uk/support"
-  menu_7_title: "Support"
-  menu_7_url: "https://about.openfoodnetwork.org.uk/support"
+  menu_6_title: "Resources"
+  menu_6_url: "https://about.openfoodnetwork.org.uk/resources"
+  menu_7_title: "Contact Support"
+  menu_7_url: "https://about.openfoodnetwork.org.uk/support-2"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"

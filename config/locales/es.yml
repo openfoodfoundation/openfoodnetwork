@@ -1026,6 +1026,7 @@ es:
         schedule: Programación
         schedules: Programación
         new_schedule: Nueva programación
+        new_schedule_tooltip: La frecuencia con la que se realiza un pedido de suscripción.
       name_and_timing_form:
         name: Nombre
         orders_open: Pedidos abiertos a
@@ -2114,6 +2115,7 @@ es:
   price_sack: "Precio saco"
   new_order_cycles: "Nuevos Ciclos de Pedidos"
   new_order_cycle: "Nuevo Ciclo de Pedido"
+  new_order_cycle_tooltip: "Tienda abierta durante un período de tiempo determinado"
   select_a_coordinator_for_your_order_cycle: "Selecciona un coordinador para vuestro ciclo de pedido"
   notify_producers: 'Notificar a las productoras'
   edit_order_cycle: "Editar Ciclo de Pedido"
