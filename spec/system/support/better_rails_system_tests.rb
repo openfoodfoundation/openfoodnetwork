@@ -36,10 +36,7 @@ RSpec.configure do |config|
 
   # Make sure this hook runs before others
   config.prepend_before(:each, type: :system) do
-  # Rails sets host to `127.0.0.1` for every test by default.
-  # That won't work with a remote browser.
-  host! CAPYBARA_APP_HOST
-  # Use JS driver always
-  driven_by Capybara.javascript_driver
+    # Use JS driver always
+    driven_by Capybara.javascript_driver
   end
 end
