@@ -9,3 +9,7 @@ Pagy::VARS[:items]  = 100
 require 'pagy/extras/items'
 Pagy::VARS[:items_param] = :per_page
 Pagy::VARS[:max_items]   = 100
+
+# For handling requests for non-existant pages eg: page 35 when there are only 4 pages of results
+require 'pagy/extras/overflow'
+Pagy::VARS[:overflow] = :empty_page
