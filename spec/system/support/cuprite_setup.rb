@@ -17,7 +17,7 @@ Capybara.register_driver(:cuprite) do |app|
       # Enable debugging capabilities
       inspector: true,
       # Allow running Chrome in a headful mode by setting HEADLESS env
-      headless: false
+      headless: true
     }
   )
 end
