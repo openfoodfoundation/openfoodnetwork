@@ -13,7 +13,8 @@ Capybara.register_driver(:cuprite) do |app|
       # See additional options for Dockerized environment in the respective section of this article
       browser_options: {},
       # Increase Chrome startup wait time (required for stable CI builds)
-      process_timeout: 10,
+      process_timeout: 20,
+      timeout: 20,
       # Enable debugging capabilities
       inspector: true,
       # Allow running Chrome in a headful mode by setting HEADLESS env
