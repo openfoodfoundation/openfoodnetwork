@@ -2115,7 +2115,7 @@ de_DE:
   price_sack: "Mengenrabatt"
   new_order_cycles: "Neue Bestellzyklen"
   new_order_cycle: "Neuer Bestellzyklus"
-  new_order_cycle_tooltip: "Zeiträume, während der Ihr Online-Shop für Bestellungen geöffnet ist."
+  new_order_cycle_tooltip: "Legen Sie fest, wann Ihr Online-Shop für Bestellungen geöffnet ist."
   select_a_coordinator_for_your_order_cycle: "Wählen Sie einen Koordinator für Ihren Bestellzyklus."
   notify_producers: 'Produzenten benachrichtigen'
   edit_order_cycle: "Bestellzyklus bearbeiten"
@@ -2675,7 +2675,7 @@ de_DE:
         payment_states:
           balance_due: "Offener Betrag"
           completed: "abgeschlossen"
-          checkout: "an der Kasse"
+          checkout: "ausstehend"
           credit_owed: "Geschuldetes Guthaben"
           failed: "fehlgeschlagen"
           paid: "bezahlt"
@@ -3630,7 +3630,7 @@ de_DE:
     payment_states:
       balance_due: Offener Betrag
       completed: abgeschlossen
-      checkout: an der Kasse
+      checkout: ausstehend
       credit_owed: Geschuldetes Guthaben
       failed: fehlgeschlagen
       paid: bezahlt

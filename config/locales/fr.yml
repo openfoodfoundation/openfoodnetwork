@@ -2693,7 +2693,7 @@ fr:
         payment_states:
           balance_due: "solde dû"
           completed: "effectué"
-          checkout: "passer commande"
+          checkout: "en cours"
           credit_owed: "crédit acheteur"
           failed: "échec"
           paid: "payé"
@@ -3650,7 +3650,7 @@ fr:
     payment_states:
       balance_due: solde dû
       completed: effectué
-      checkout: passer commande
+      checkout: en cours
       credit_owed: crédit acheteur
       failed: échec
       paid: payé
