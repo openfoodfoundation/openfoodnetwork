@@ -1,22 +1,18 @@
-# spec/system/support/cuprite_setup.rb
+# frozen_string_literal: true
 
-# First, load Cuprite Capybara integration
 require "capybara/cuprite"
 
-# Then, we need to register our driver to be able to use it later
-# with #driven_by method.
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     **{
       window_size: [1200, 800],
-      # See additional options for Dockerized environment in the respective section of this article
       browser_options: {},
-      # Increase Chrome startup wait time (required for stable CI builds)
-      process_timeout: 10,
-      # Enable debugging capabilities
+      process_timeout: 20,
+      timeout: 20,
+      # Don't load scripts from external sources, like google maps or stripe
+      url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
-      # Allow running Chrome in a headful mode by setting HEADLESS env
       headless: true
     }
   )
@@ -25,20 +21,16 @@ end
 # Configure Capybara to use :cuprite driver by default
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
-module CupriteHelpers
-  # Drop #pause anywhere in a test to stop the execution.
-  # Useful when you want to checkout the contents of a web page in the middle of a test
-  # running in a headful mode.
-  def pause
-    page.driver.pause
-  end
-
-  # Drop #debug anywhere in a test to open a Chrome inspector and pause the execution
-  def debug(*args)
-    page.driver.debug(*args)
-  end
-end
-
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
+
+  config.prepend_before(:each, type: :system) { driven_by :cuprite }
+
+  # Make sure url helpers in mailers use the Capybara server host.
+  config.around(:each, type: :system) do |example|
+    original_host = Rails.application.default_url_options[:host]
+    Rails.application.default_url_options[:host] = Capybara.server_host
+    example.run
+    Rails.application.default_url_options[:host] = original_host
+  end
 end
