@@ -8,6 +8,8 @@ Capybara.register_driver(:cuprite) do |app|
       browser_options: {},
       process_timeout: 20,
       timeout: 20,
+      # Don't load scripts from external sources, like google maps or stripe
+      url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
       headless: true
     }
