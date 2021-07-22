@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "capybara/cuprite"
 
 Capybara.register_driver(:cuprite) do |app|
@@ -19,20 +21,16 @@ end
 # Configure Capybara to use :cuprite driver by default
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
-module CupriteHelpers
-  # Drop #pause anywhere in a test to stop the execution.
-  # Useful when you want to checkout the contents of a web page in the middle of a test
-  # running in a headful mode.
-  def pause
-    page.driver.pause
-  end
-
-  # Drop #debug anywhere in a test to open a Chrome inspector and pause the execution
-  def debug(*args)
-    page.driver.debug(*args)
-  end
-end
-
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
+
+  config.prepend_before(:each, type: :system) { driven_by :cuprite }
+
+  # Make sure url helpers in mailers use the Capybara server host.
+  config.around(:each, type: :system) do |example|
+    original_host = Rails.application.default_url_options[:host]
+    Rails.application.default_url_options[:host] = Capybara.server_host
+    example.run
+    Rails.application.default_url_options[:host] = original_host
+  end
 end
