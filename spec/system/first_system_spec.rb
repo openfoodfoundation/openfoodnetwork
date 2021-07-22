@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "visit admin", js: true do
+describe "Visit Admin", js: true do
   include UIComponentHelper
   include AuthenticationHelper
   include WebHelper
