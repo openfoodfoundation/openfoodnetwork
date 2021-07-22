@@ -286,6 +286,27 @@ feature '
     end
   end
 
+  context "as an Enterprise manager", js: true do
+    let(:enterprise_manager) { create(:user) }
+    let(:enterprise) { create(:enterprise, users: [:enterprise_manager]) }
+
+    before do
+      login_as enterprise_manager
+      visit admin_enterprises_path
+
+      it "allows me to edit notifications" do
+        expect(page).to have_content enterprise.name
+
+        accept_alert do
+          within(".side_menu") { click_link "Users" }
+        end
+
+        select2_select enterprise_manager.email, from: 'receives_notifications_dropdown'
+        expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
+      end
+    end
+  end
+
   context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
