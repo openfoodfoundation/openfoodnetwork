@@ -1026,6 +1026,7 @@ de_DE:
         schedule: Zeitplan
         schedules: Zeitpläne
         new_schedule: Neuer Zeitplan
+        new_schedule_tooltip: Regelmäßigkeit, mit der ein Abonnement ausgeführt wird (z. B. wöchentlich, monatlich).
       name_and_timing_form:
         name: Name des Bestellzyklus
         orders_open: Bestellzyklus öffnet
@@ -2114,6 +2115,7 @@ de_DE:
   price_sack: "Mengenrabatt"
   new_order_cycles: "Neue Bestellzyklen"
   new_order_cycle: "Neuer Bestellzyklus"
+  new_order_cycle_tooltip: "Zeiträume, während der Ihr Online-Shop für Bestellungen geöffnet ist."
   select_a_coordinator_for_your_order_cycle: "Wählen Sie einen Koordinator für Ihren Bestellzyklus."
   notify_producers: 'Produzenten benachrichtigen'
   edit_order_cycle: "Bestellzyklus bearbeiten"
