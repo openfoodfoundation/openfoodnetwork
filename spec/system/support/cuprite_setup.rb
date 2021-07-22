@@ -1,23 +1,14 @@
-# spec/system/support/cuprite_setup.rb
-
-# First, load Cuprite Capybara integration
 require "capybara/cuprite"
 
-# Then, we need to register our driver to be able to use it later
-# with #driven_by method.
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     **{
       window_size: [1200, 800],
-      # See additional options for Dockerized environment in the respective section of this article
       browser_options: {},
-      # Increase Chrome startup wait time (required for stable CI builds)
       process_timeout: 20,
       timeout: 20,
-      # Enable debugging capabilities
       inspector: true,
-      # Allow running Chrome in a headful mode by setting HEADLESS env
       headless: true
     }
   )

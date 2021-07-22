@@ -1,5 +1,3 @@
-# spec/system/support/better_rails_system_tests.rb
-
 module BetterRailsSystemTests
   # Use our `Capybara.save_path` to store screenshots with other capybara artifacts
   # (Rails screenshots path is not configurable https://github.com/rails/rails/blob/49baf092439fc74fc3377b12e3334c3dd9d0752f/actionpack/lib/action_dispatch/system_testing/test_helpers/screenshot_helper.rb#L79)
