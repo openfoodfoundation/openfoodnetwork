@@ -130,6 +130,7 @@ module Admin
     def build_resource
       enterprise = super
       enterprise.address ||= Spree::Address.new
+      enterprise.business_address ||= Spree::Address.new
       enterprise.address.country ||= DefaultCountry.country
       enterprise
     end
