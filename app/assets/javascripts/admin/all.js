@@ -6,8 +6,7 @@
 //
 
 // jquery and angular
-//= require jquery
-//= require jquery-migrate-min
+//= require jquery2
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.powertip
