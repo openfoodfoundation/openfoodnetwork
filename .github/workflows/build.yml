@@ -278,8 +278,11 @@ jobs:
       - name: Run migration tests
         run: bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"
 
+      - name: Run system tests
+        run: bundle exec rspec --profile -- spec/system
+
       - name: Run all other tests
-        run: bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib,migrations"]
+        run: bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib,migrations,system"]
 
   test-the-rest:
     runs-on: ubuntu-18.04

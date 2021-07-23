@@ -150,6 +150,7 @@ group :test, :development do
   gem 'timecop'
   gem 'unicorn-rails'
   gem 'webdrivers'
+  gem 'cuprite'
 end
 
 group :test do

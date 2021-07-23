@@ -185,6 +185,7 @@ GEM
     chronic (0.10.2)
     chunky_png (1.4.0)
     climate_control (0.2.0)
+    cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     codecov (0.5.2)
@@ -222,6 +223,9 @@ GEM
     crass (1.0.6)
     css_parser (1.9.0)
       addressable
+    cuprite (0.13)
+      capybara (>= 2.1, < 4)
+      ferrum (~> 0.11.0)
     dalli (2.7.11)
     database_cleaner (2.0.1)
       database_cleaner-active_record (~> 2.0.0)
@@ -269,6 +273,11 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
+    ferrum (0.11)
+      addressable (~> 2.5)
+      cliver (~> 0.3)
+      concurrent-ruby (~> 1.1)
+      websocket-driver (>= 0.6, < 0.8)
     ffaker (2.18.0)
     ffi (1.15.3)
     flipper (0.20.4)
@@ -706,6 +715,7 @@ DEPENDENCIES
   coffee-rails (~> 5.0.0)
   combine_pdf
   compass-rails
+  cuprite
   custom_error_message!
   dalli
   database_cleaner
