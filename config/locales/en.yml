@@ -1730,6 +1730,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_text_after: ""
   producer_mail_signoff: "Thanks and best wishes"
+  producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
 
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
