@@ -37,65 +37,6 @@ describe "Check out with Stripe", js: true do
     distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
 
-  context 'login in as user' do
-    let(:user) { create(:user) }
-
-    before do
-      login_as(user)
-    end
-
-    context "with Stripe Connect" do
-      let!(:stripe_pm) do
-        create(:stripe_connect_payment_method, distributors: [distributor])
-      end
-
-      let!(:saved_card) do
-        create(:credit_card,
-               user_id: user.id,
-               month: "01",
-               year: "2025",
-               cc_type: "visa",
-               number: "1111111111111111",
-               payment_method_id: stripe_pm.id,
-               gateway_customer_profile_id: "i_am_saved")
-      end
-
-      let!(:stripe_account) {
-        create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id')
-      }
-
-      let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000 } }
-
-      around do |example|
-        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-        example.run
-        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-      end
-
-      before do
-        stub_request(:post, "https://api.stripe.com/v1/charges")
-          .with(basic_auth: ["sk_test_12345", ""])
-          .to_return(status: 200, body: JSON.generate(response_mock))
-
-        visit checkout_path
-        fill_out_form(shipping_with_fee.name, stripe_pm.name, save_default_addresses: false)
-      end
-
-      it "allows use of a saved card" do
-        # shows the saved credit card dropdown
-        expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
-
-        # default card is selected, form element is not shown
-        expect(page).to have_no_selector "#card-element.StripeElement"
-        expect(page).to have_select 'selected_card', selected: "Visa x-1111 Exp:01/2025"
-
-        # allows checkout
-        place_order
-        expect(page).to have_content "Your order has been processed successfully"
-      end
-    end
-  end
-
   describe "using Stripe SCA" do
     let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
     let!(:stripe_sca_payment_method) {

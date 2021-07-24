@@ -192,13 +192,13 @@ describe SubscriptionConfirmJob do
       end
 
       context "Stripe Connect" do
-        let(:stripe_connect_payment_method) { create(:stripe_connect_payment_method) }
-        let(:stripe_connect_payment) {
+        let(:stripe_sca_payment_method) { create(:stripe_sca_payment_method) }
+        let(:stripe_sca_payment) {
           create(:payment, amount: 10, payment_method: stripe_connect_payment_method)
         }
 
         before do
-          allow(order).to receive(:pending_payments) { [stripe_connect_payment] }
+          allow(order).to receive(:pending_payments) { [stripe_sca_payment] }
           allow(stripe_connect_payment_method).to receive(:purchase) { true }
         end
 
