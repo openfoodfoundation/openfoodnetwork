@@ -264,11 +264,11 @@ describe EnterprisesHelper, type: :helper do
 
     context "when StripeConnect payment methods are present" do
       let!(:pm3) {
-        create(:stripe_connect_payment_method, distributors: [distributor],
+        create(:stripe_sca_payment_method, distributors: [distributor],
                                                preferred_enterprise_id: distributor.id)
       }
       let!(:pm4) {
-        create(:stripe_connect_payment_method, distributors: [distributor],
+        create(:stripe_sca_payment_method, distributors: [distributor],
                                                preferred_enterprise_id: some_other_distributor.id)
       }
       let(:available_payment_methods) { helper.available_payment_methods }
