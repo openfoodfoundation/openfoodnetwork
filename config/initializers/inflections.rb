@@ -8,3 +8,8 @@
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 # end
+Rails.autoloaders.each do |autoloader|
+  autoloader.inflector.inflect(
+    "stripe_sca" => "StripeSCA"
+  )
+end
