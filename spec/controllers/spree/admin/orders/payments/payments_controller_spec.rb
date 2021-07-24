@@ -45,7 +45,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       context "with Stripe payment where payment.process! errors out" do
-        let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
+        let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         before do
           allow_any_instance_of(Spree::Payment).
             to receive(:process_offline!).
