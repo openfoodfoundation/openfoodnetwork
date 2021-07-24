@@ -97,6 +97,17 @@ module Openfoodnetwork
     end
 
     # Register Spree calculators
+    Rails.application.reloader.to_prepare do
+      Openfoodnetwork::Application.config.spree.calculators.shipping_methods = [
+        Calculator::FlatPercentItemTotal,
+        Calculator::FlatRate,
+        Calculator::FlexiRate,
+        Calculator::PerItem,
+        Calculator::PriceSack,
+        Calculator::Weight
+      ]
+    end
+    
     initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods = [
         Calculator::FlatPercentItemTotal,
