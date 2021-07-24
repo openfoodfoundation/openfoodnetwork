@@ -2,7 +2,7 @@
 
 module Spree
   class ShippingMethod < ApplicationRecord
-    include Spree::Core::CalculatedAdjustments
+    include CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end].freeze
 
     acts_as_paranoid

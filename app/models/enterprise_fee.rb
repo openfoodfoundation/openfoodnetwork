@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EnterpriseFee < ApplicationRecord
-  include Spree::Core::CalculatedAdjustments
+  include CalculatedAdjustments
 
   acts_as_paranoid
 
