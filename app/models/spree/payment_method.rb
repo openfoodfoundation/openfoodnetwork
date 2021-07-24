@@ -93,10 +93,6 @@ module Spree
     end
 
     def init
-      unless _reflections.key?(:calculator)
-        self.class.include Spree::Core::CalculatedAdjustments
-      end
-
       self.calculator ||= ::Calculator::FlatRate.new(preferred_amount: 0)
     end
 
