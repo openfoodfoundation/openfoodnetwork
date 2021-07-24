@@ -360,9 +360,9 @@ module OrderManagement
             end
           end
 
-          context "when using the StripeConnect payment gateway" do
+          context "when using the StripeSCA payment gateway" do
             let(:payment_method) {
-              instance_double(Spree::PaymentMethod, type: "Spree::Gateway::StripeConnect")
+              instance_double(Spree::PaymentMethod, type: "Spree::Gateway::StripeSCA")
             }
             before { expect(subscription).to receive(:customer).at_least(:once) { customer } }
 
