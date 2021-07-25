@@ -33,8 +33,9 @@ class SplitCheckoutController < ::BaseController
   helper 'spree/orders'
 
   def edit
-    redirect_to_step if request.path == "/checkout"
     return handle_redirect_from_stripe if valid_payment_intent_provided?
+
+    redirect_to_step if request.path == "/checkout"
 
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
@@ -45,17 +46,28 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
-    return action_failed unless @order.update(params_adapter.params[:order] || {})
+    if params.dig(:order).dig(:email)
+      # update the order
+      redirect_to checkout_payment_method_path
+    elsif params.dig(:payment_method)
+      # update the order
+      redirect_to checkout_order_summary_path
+    elsif params.dig(:order_confirmed)
+      # complete the order
+      redirect_to order_url(@order)
+    end
 
-    checkout_workflow(params_adapter.shipping_method_id)
-  rescue Spree::Core::GatewayError => e
-    rescue_from_spree_gateway_error(e)
-  rescue StandardError => e
-    flash[:error] = I18n.t("checkout.failed")
-    action_failed(e)
-  ensure
-    @order.update_order!
+  #   params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
+  #   return action_failed unless @order.update(params_adapter.params[:order] || {})
+  #
+  #   checkout_workflow(params_adapter.shipping_method_id)
+  # rescue Spree::Core::GatewayError => e
+  #   rescue_from_spree_gateway_error(e)
+  # rescue StandardError => e
+  #   flash[:error] = I18n.t("checkout.failed")
+  #   action_failed(e)
+  # ensure
+  #   @order.update_order!
   end
 
   # Clears the cached order. Required for #current_order to return a new order
@@ -69,13 +81,13 @@ class SplitCheckoutController < ::BaseController
   private
 
   def redirect_to_step
-    if @order.state = "payment"
-      if true#@order.payment_method_id.nil?
+    if @order.state == "payment"
+      if true# order.has_no_payment_method_chosen?
         redirect_to checkout_payment_method_path
       else
         redirect_to checkout_order_summary_path
       end
-    elsif @order.state == "cart"
+    else
       redirect_to checkout_your_details_path
     end
   end
