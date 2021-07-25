@@ -173,8 +173,8 @@ class SplitCheckoutController < ::BaseController
     end
   end
 
-  def checkout_workflow(shipping_method_id, advance_to_state = "complete")
-    while @order.state != advance_to_state
+  def checkout_workflow(shipping_method_id)
+    while @order.state != "complete"
       if @order.state == "payment"
         return if redirect_to_payment_gateway
 
