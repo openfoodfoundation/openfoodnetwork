@@ -26,7 +26,7 @@
       = bill_address.text_field :phone, { placeholder: t("split_checkout.step1.your_details.phone.placeholder") }
     = f.error_message_on "bill_address.phone"
 
-%div.checkout-substep
+%div.checkout-substep{ "data-controller": "dependant-select", "data-dependant-select-options-value": @countries_with_states }
   -# BILLING ADDRESS
   %div.checkout-title
     = t("split_checkout.step1.billing_address.title")
@@ -52,8 +52,7 @@
   %div.checkout-input
     = fields_for :bill_address, @order.bill_address do |bill_address|
       = bill_address.label :state_id, t("split_checkout.step1.billing_address.state_id.label")
-      -# todo: get state // values: s.id as s.name for s in countriesById[order.bill_address.country_id].states // defaultvalue: {}
-      = bill_address.select :state_id, []
+      = bill_address.select :state_id, @countries_with_states, { }, { "data-dependant-select-target": "select" }
 
   %div.checkout-input
     = fields_for :bill_address, @order.bill_address do |bill_address|
@@ -64,51 +63,48 @@
   %div.checkout-input
     = fields_for :bill_address, @order.bill_address do |bill_address|
       = bill_address.label :country_id, t("split_checkout.step1.billing_address.country_id.label")
-      -# todo: get countries // values: c.id as c.name for c in countries // defaultvalue: order.bill_address.country_id = order.bill_address.country_id || #{DefaultCountry.id}
-      = bill_address.select :country_id, [] 
+      = bill_address.select :country_id, @countries, { selected: @order.bill_address.country_id || DefaultCountry.id }, {"data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange"}
 
   - if spree_current_user||true
     %div.checkout-input
       = f.check_box :checkout_default_bill_address
       = f.label :checkout_default_bill_address, t(:checkout_default_bill_address)
 
-  %div.checkout-substep  
+  %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
     -# DELIVERY ADDRESS
     %div.checkout-title
       = t("split_checkout.step1.delivery_address.title")
 
-    = @shipping_methods.each do |shipping_method| 
+    - @shipping_methods.each do |shipping_method| 
       %div.checkout-input
         = fields_for shipping_method do |shipping_method_form|
-          = shipping_method_form.check_box :name, {id: "shipping_method_" + shipping_method.id.to_s }, shipping_method.id, 0
-          = shipping_method_form.label :name, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
+          = shipping_method_form.radio_button :name, shipping_method.id,
+            id: "shipping_method_#{shipping_method.id}",
+            "data-description": shipping_method.description,
+            "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
+            "data-toggle-show": shipping_method.require_ship_address
+          = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
           %em.light
-            -# todo: display method price | localizeCurrency // How to retrive shipping method price?
-              = if shipping_method.price && shipping_method.price != 0
-                = method.price
-              - else
-                = t(:checkout_method_free)
+            = payment_method_price(shipping_method, @order)
 
 
-    - if true # todo: Checkout.requireShipAddress()  //   requireShipAddress: -> @shippingMethod()?.require_ship_address
-      %div.checkout-input
-        = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing" } # "ng-model": "Checkout.ship_address_same_as_billing"}s
-        = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
-        
-    - if spree_current_user || true # todo: && Checkout.requireShipAddress()  //   requireShipAddress: -> @shippingMethod()?.require_ship_address
-      %div.checkout-input
+    %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
+      = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing" }
+      = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
+      
+    - if spree_current_user
+      %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
         = f.check_box "Checkout.default_ship_address", { id: "Checkout.default_ship_address" }
         = f.label "Checkout.default_ship_address", t(:checkout_default_ship_address), { for: "Checkout.default_ship_address" }
 
-    - if true # todo: Checkout.shippingMethod().description
-      .div.checkout-input
-        #distributor_address.panel
-          %span{}{{ Checkout.shippingMethod().description }}
-          %br/
-          %br/
-          - if @order.order_cycle.pickup_time_for(@order.distributor)
-            = t :checkout_ready_for
-          = @order.order_cycle.pickup_time_for(@order.distributor)
+    %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription"}
+      #distributor_address.panel
+        %span{"data-shippingmethod-target": "shippingMethodDescriptionContent"}
+        %br/
+        %br/
+        - if @order.order_cycle.pickup_time_for(@order.distributor)
+          = t :checkout_ready_for
+        = @order.order_cycle.pickup_time_for(@order.distributor)
 
     .div.checkout-input
       = f.label :special_instructions, t(:checkout_instructions)

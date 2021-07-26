@@ -6,6 +6,7 @@ class SplitCheckoutController < ::BaseController
   layout 'darkswarm'
 
   include OrderStockCheck
+  include Spree::BaseHelper
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -19,7 +20,7 @@ class SplitCheckoutController < ::BaseController
   prepend_before_action :require_order_cycle
   prepend_before_action :require_distributor_chosen
 
-  before_action :load_order, :load_shipping_methods
+  before_action :load_order, :load_shipping_methods, :load_countries
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
@@ -93,6 +94,11 @@ class SplitCheckoutController < ::BaseController
 
   def load_shipping_methods
     @shipping_methods = Spree::ShippingMethod.for_distributor(@order.distributor).order(:name)
+  end
+
+  def load_countries
+    @countries = available_countries.map { |c| [c.name, c.id] }
+    @countries_with_states = available_countries.map { |c| [c.id, c.states.map { |s| [s.name, s.id] }] }
   end
 
   def load_order
