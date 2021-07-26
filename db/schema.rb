@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 2021_09_27_091723) do
     t.string "terms_and_conditions_content_type", limit: 255
     t.integer "terms_and_conditions_file_size"
     t.datetime "terms_and_conditions_updated_at"
+    t.integer "business_address_id"
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
