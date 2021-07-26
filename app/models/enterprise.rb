@@ -41,6 +41,7 @@ class Enterprise < ApplicationRecord
                                dependent: :destroy
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
   belongs_to :address, class_name: 'Spree::Address'
+  belongs_to :business_address, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
@@ -59,6 +60,7 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :business_address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?
