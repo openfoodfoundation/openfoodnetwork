@@ -47,3 +47,8 @@
     .pad-top
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')
+
+
+= f.fields_for :business_address, @enterprise.business_address || @enterprise.build_business_address do |bf|
+  %legend {{business_address.label}}
+  = render 'admin/enterprises/form/business_address', bf: bf

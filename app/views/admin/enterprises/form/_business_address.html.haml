@@ -1,0 +1,40 @@
+.row
+  .three.columns.alpha
+    = bf.label :company, t(:Company_legal_name)
+  .eight.columns.omega
+    = bf.text_field :company, { placeholder: t(:legal_name_placeholder) }
+
+.row
+  .three.columns.alpha
+    = bf.label :address1, t(:address)
+  .eight.columns.omega
+    = bf.text_field :address1, { placeholder: t(:address_placeholder) }
+.row
+  .alpha.three.columns
+    = bf.label :address2, t(:address2)
+  .eight.columns.omega
+    = bf.text_field :address2
+.row
+  .three.columns.alpha
+    = bf.label :city, t(:city)
+    \/
+    = bf.label :zipcode, t(:postcode)
+  .four.columns
+    = bf.text_field :city, { placeholder: t(:city_placeholder) }
+  .four.columns.omega
+    = bf.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
+.row
+  .three.columns.alpha
+    = bf.label :state_id, t(:state)
+    \/
+    = bf.label :country_id, t(:country)
+  .four.columns{ "ng-controller" => "countryCtrl" }
+    %input.ofn-select2.fullwidth#enterprise_address_attributes_state_id{ name: 'enterprise[address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.state_id' } }
+  .four.columns.omega{ "ng-controller" => "countryCtrl" }
+    %input.ofn-select2.fullwidth#enterprise_address_attributes_country_id{ name: 'enterprise[address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.country_id' } }
+
+.row
+  .three.columns.alpha
+    = bf.label :phone, t(:legal_phone_number)
+  .eight.columns.omega
+    = bf.text_field :phone, { placeholder: t(:phone_placeholder) }
