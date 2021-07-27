@@ -774,6 +774,14 @@ en:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+        business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 High St.
+          address2: Address(contd.)
+          legal_phone_number: Legal phone number
+          phone_placeholder: "98 123 4565"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum

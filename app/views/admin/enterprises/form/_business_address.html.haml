@@ -1,17 +1,17 @@
 .row
   .three.columns.alpha
-    = bf.label :company, t(:Company_legal_name)
+    = bf.label :company, t(".company_legal_name")
   .eight.columns.omega
-    = bf.text_field :company, { placeholder: t(:legal_name_placeholder) }
+    = bf.text_field :company, { placeholder: t(".company_placeholder") }
 
 .row
   .three.columns.alpha
-    = bf.label :address1, t(:address)
+    = bf.label :address1, t('.address1')
   .eight.columns.omega
-    = bf.text_field :address1, { placeholder: t(:address_placeholder) }
+    = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
 .row
   .alpha.three.columns
-    = bf.label :address2, t(:address2)
+    = bf.label :address2, t(".address2")
   .eight.columns.omega
     = bf.text_field :address2
 .row
@@ -35,6 +35,6 @@
 
 .row
   .three.columns.alpha
-    = bf.label :phone, t(:legal_phone_number)
+    = bf.label :phone, t(".legal_phone_number")
   .eight.columns.omega
-    = bf.text_field :phone, { placeholder: t(:phone_placeholder) }
+    = bf.text_field :phone, { placeholder: t(".phone_placeholder") }
