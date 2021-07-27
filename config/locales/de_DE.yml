@@ -827,7 +827,7 @@ de_DE:
           display_ordering_in_shopfront: "Reihenfolge der Anzeige im Online-Shop:"
           shopfront_sort_by_category: "Nach Kategorie"
           shopfront_sort_by_producer: "Nach Produzent"
-          shopfront_sort_by_category_placeholder: "Steuerkategorie"
+          shopfront_sort_by_category_placeholder: "Kategorie"
           shopfront_sort_by_producer_placeholder: "Produzent"
         social:
           twitter_placeholder: "z. B. @the_prof"
@@ -2037,6 +2037,8 @@ de_DE:
   fundraising_fee: "Fundraising-Gebühr"
   price_graph: "Preisdiagramm"
   included_tax: "inkl. Steuern"
+  tax: "Steuern"
+  tax_amount_included: "%{amount} (im Preis enthalten)"
   balance: "Saldo"
   transaction: "Transaktion"
   transaction_date: "Datum"
