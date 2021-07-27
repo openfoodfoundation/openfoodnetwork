@@ -5,71 +5,46 @@ require 'spec_helper'
 describe TaxRateFinder do
   describe "getting the corresponding tax rate" do
     let(:amount) { BigDecimal(120) }
-    let(:included_tax) { BigDecimal(20) }
-    let(:tax_rate) { create_rate(0.2) }
+    let(:tax_rate) {
+      create(:tax_rate, amount: 0.2, calculator: Calculator::DefaultTax.new, zone: zone)
+    }
     let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
     let(:zone) { create(:zone_with_member) }
     let(:shipment) { create(:shipment) }
+    let(:line_item) { create(:line_item) }
     let(:enterprise_fee) { create(:enterprise_fee, tax_category: tax_category) }
     let(:order) { create(:order_with_taxes, zone: zone) }
 
+    subject { TaxRateFinder.new }
+
     it "finds the tax rate of a shipping fee" do
-      rates = TaxRateFinder.new.tax_rates(
-        tax_rate,
-        shipment,
-        amount,
-        included_tax
-      )
+      rates = subject.tax_rates(tax_rate, shipment)
       expect(rates).to eq [tax_rate]
     end
 
-    it "finds a close match" do
+    it "deals with soft-deleted tax rates" do
       tax_rate.destroy
-      close_tax_rate = create_rate(tax_rate.amount + 0.05)
-      # other tax rates, not as close to the real one
-      create_rate(tax_rate.amount + 0.06)
-      create_rate(tax_rate.amount - 0.06)
-
-      rates = TaxRateFinder.new.tax_rates(
-        nil,
-        shipment,
-        amount,
-        included_tax
-      )
-
-      expect(rates).to eq [close_tax_rate]
+      rates = subject.tax_rates(tax_rate, shipment)
+      expect(rates).to eq [tax_rate]
     end
 
     it "finds the tax rate of an enterprise fee" do
-      rates = TaxRateFinder.new.tax_rates(
-        enterprise_fee,
-        order,
-        amount,
-        included_tax
-      )
+      rates = subject.tax_rates(enterprise_fee, order)
       expect(rates).to eq [tax_rate]
     end
 
-    # There is a bug that leaves orphan adjustments on an order after
-    # associated line items have been removed.
-    # https://github.com/openfoodfoundation/openfoodnetwork/issues/3127
-    it "deals with a missing line item" do
-      rates = TaxRateFinder.new.tax_rates(
-        enterprise_fee,
-        nil,
-        amount,
-        included_tax
-      )
+    it "deals with a soft-deleted line item" do
+      line_item.destroy
+      rates = subject.tax_rates(enterprise_fee, line_item)
       expect(rates).to eq [tax_rate]
     end
 
-    def create_rate(amount)
-      create(
-        :tax_rate,
-        amount: amount,
-        calculator: Calculator::DefaultTax.new,
-        zone: zone
-      )
+    context "when the given adjustment has no associated tax" do
+      let(:adjustment) { create(:adjustment) }
+
+      it "returns an empty array" do
+        expect(subject.tax_rates(adjustment.originator, adjustment.adjustable)).to eq []
+      end
     end
   end
 end

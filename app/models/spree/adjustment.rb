@@ -77,8 +77,6 @@ module Spree
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
     scope :admin,          -> { where(originator_type: nil) }
 
-    scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
-    scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
     scope :payment_fee,    -> { where(AdjustmentScopes::PAYMENT_FEE_SCOPE) }
     scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
     scope :eligible,       -> { where(AdjustmentScopes::ELIGIBLE_SCOPE) }
@@ -129,19 +127,23 @@ module Spree
       state != "open"
     end
 
-    def set_absolute_included_tax!(tax)
-      update! included_tax: tax.round(2)
-    end
-
-    def display_included_tax
-      Spree::Money.new(included_tax, currency: currency)
-    end
-
     def has_tax?
-      included_tax.positive?
+      tax_total.positive?
+    end
+
+    def included_tax_total
+      adjustments.tax.inclusive.sum(:amount)
+    end
+
+    def additional_tax_total
+      adjustments.tax.additional.sum(:amount)
     end
 
     private
+
+    def tax_total
+      adjustments.tax.sum(:amount)
+    end
 
     def update_adjustable_adjustment_total
       Spree::ItemAdjustments.new(adjustable).update if adjustable

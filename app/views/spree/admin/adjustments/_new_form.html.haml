@@ -1,15 +1,18 @@
 .row
-  .alpha.three.columns
+  .alpha.four.columns
     = f.field_container :amount do
       = f.label :amount, raw(t(:amount) + content_tag(:span, " *", :class => "required"))
       = text_field :adjustment, :amount, :class => 'fullwidth'
       = f.error_message_on :amount
 
-  .omega.three.columns
-    = f.field_container :tax_rate_id do
-      = f.label :tax_rate_id, t(:tax_rate)
-      = select_tag :tax_rate_id, options_from_collection_for_select(Spree::TaxRate.all, :id, :name), prompt: t(:none), class: 'select2 fullwidth'
-      = f.error_message_on :tax_rate_id
+  .omega.four.columns
+    = f.field_container :tax_category do
+      = f.label :tax_category, t(:tax_category)
+      = select_tag "adjustment[tax_category_id]",
+        options_from_collection_for_select(Spree::TaxCategory.all, :id, :name),
+        prompt: t(:none),
+        class: 'select2 fullwidth'
+      = f.error_message_on :tax_category
 
 .row
   .alpha.omega.twelve.columns

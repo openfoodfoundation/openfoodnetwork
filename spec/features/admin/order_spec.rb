@@ -409,15 +409,14 @@ feature '
         expect(page).to have_content test_tracking_number
       end
 
-      scenario "editing shipping fees" do
+      scenario "viewing shipping fees" do
+        shipping_fee = order.shipment_adjustments.first
+
         click_link "Adjustments"
-        shipping_adjustment_tr_selector = "tr#spree_adjustment_#{order.shipment_adjustments.first.id}"
-        page.find("#{shipping_adjustment_tr_selector} td.actions a.icon-edit").click
 
-        fill_in "Amount", with: "5"
-        click_button "Continue"
-
-        expect(page.find("#{shipping_adjustment_tr_selector} td.amount")).to have_content "5.00"
+        expect(page).to have_selector "tr#spree_adjustment_#{shipping_fee.id}"
+        expect(page).to have_selector 'td.amount', text: shipping_fee.amount.to_s
+        expect(page).to have_selector 'td.tax', text: shipping_fee.included_tax_total.to_s
       end
 
       context "when an included variant has been deleted" do

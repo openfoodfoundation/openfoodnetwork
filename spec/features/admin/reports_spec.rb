@@ -504,13 +504,13 @@ feature '
         create(:adjustment, order: order1, adjustable: adj_fee2, originator: tax_rate, amount: 3,
                             state: "closed")
       }
-      let!(:adj_manual1) {
+      let!(:adj_admin1) {
         create(:adjustment, order: order1, adjustable: order1, originator: nil,
                             label: "Manual adjustment", amount: 30)
       }
-      let!(:adj_manual2) {
+      let!(:adj_admin2) {
         create(:adjustment, order: order1, adjustable: order1, originator: nil,
-                            label: "Manual adjustment", amount: 40, included_tax: 3)
+                            label: "Manual adjustment", amount: 40, tax_category: tax_category)
       }
 
       before do
@@ -590,8 +590,8 @@ feature '
           xero_invoice_header,
           xero_invoice_li_row(line_item1),
           xero_invoice_li_row(line_item2),
-          xero_invoice_adjustment_row(adj_manual1),
-          xero_invoice_adjustment_row(adj_manual2),
+          xero_invoice_adjustment_row(adj_admin1),
+          xero_invoice_adjustment_row(adj_admin2),
           xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                    'GST Free Income', opts),
           xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
