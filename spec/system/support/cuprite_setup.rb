@@ -23,8 +23,12 @@ Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
+  config.include Devise::Test::IntegrationHelpers, type: :system
 
   config.prepend_before(:each, type: :system) { driven_by :cuprite }
+
+  # System tests use transactional fixtures instead of DatabaseCleaner
+  config.use_transactional_fixtures = true
 
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'spec_helper'
 
 describe TermsOfServiceFile do
   let(:pdf) { File.open(Rails.root.join("public/Terms-of-service.pdf")) }
