@@ -2037,6 +2037,8 @@ fr:
   fundraising_fee: "Frais recherche de financement"
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
+  tax: "Taxe"
+  tax_amount_included: "%{amount} (inclus)"
   balance: "Solde"
   transaction: "Transaction"
   transaction_date: "Date"
