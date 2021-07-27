@@ -47,7 +47,6 @@ require 'spree/money'
 require 'spree/core/delegate_belongs_to'
 require 'spree/core/permalinks'
 require 'spree/core/token_resource'
-require 'spree/core/calculated_adjustments'
 require 'spree/core/product_duplicator'
 require 'spree/core/gateway_error'
 

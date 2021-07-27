@@ -5,6 +5,7 @@ require 'spree/core/delegate_belongs_to'
 
 module Spree
   class Gateway < PaymentMethod
+    acts_as_taggable
     include PaymentMethodDistributors
 
     delegate_belongs_to :provider, :authorize, :purchase, :capture, :void, :credit

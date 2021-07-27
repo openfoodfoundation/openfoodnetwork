@@ -34,14 +34,6 @@ end
 
 module Openfoodnetwork
   class Application < Rails::Application
-
-    config.to_prepare do
-      # Load application's model / class decorators
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
-        Rails.configuration.cache_classes ? require(c) : load(c)
-      end
-    end
-
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
       Spree::Core::Engine.routes.default_url_options[:host] = 'test.host' if Rails.env == 'test'

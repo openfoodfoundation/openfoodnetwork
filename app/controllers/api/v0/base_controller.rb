@@ -41,6 +41,10 @@ module Api
 
       private
 
+      def spree_current_user
+        @spree_current_user ||= request.env['warden'].user
+      end
+
       # Use logged in user (spree_current_user) for API authentication (current_api_user)
       def authenticate_user
         return if @current_api_user = spree_current_user

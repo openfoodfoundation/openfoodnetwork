@@ -8,15 +8,6 @@
 
 require 'spree/core'
 
-# Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
-# should have inherited it from its parent PaymentMethod.
-# We have to call it before loading the PaymentMethod decorator because the
-# tagging code won't load twice within the inheritance chain.
-# https://github.com/openfoodfoundation/openfoodnetwork/issues/3121
-Spree::Gateway.class_eval do
-  acts_as_taggable
-end
-
 Spree.config do |config|
   config.site_url = ENV['SITE_URL'] if ENV['SITE_URL']
   config.site_name = ENV['SITE_NAME'] if ENV['SITE_NAME']

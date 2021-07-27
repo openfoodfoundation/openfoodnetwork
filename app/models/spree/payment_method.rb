@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require 'concerns/payment_method_distributors'
-require 'spree/core/calculated_adjustments'
 
 module Spree
   class PaymentMethod < ApplicationRecord
-    include Spree::Core::CalculatedAdjustments
+    include CalculatedAdjustments
     include PaymentMethodDistributors
 
     acts_as_taggable
@@ -94,10 +93,6 @@ module Spree
     end
 
     def init
-      unless _reflections.key?(:calculator)
-        self.class.include Spree::Core::CalculatedAdjustments
-      end
-
       self.calculator ||= ::Calculator::FlatRate.new(preferred_amount: 0)
     end
 
