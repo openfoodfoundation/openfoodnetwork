@@ -17,6 +17,8 @@ describe 'AdminOrderCycleExchangesCtrl', ->
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
     OrderCycle =
+      order_cycle:
+        coordinator_id: 4
       exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').and.returnValue('variants selected')
       exchangeDirection: jasmine.createSpy('exchangeDirection').and.returnValue('exchange direction')
       removeExchange: jasmine.createSpy('removeExchange')
@@ -48,10 +50,12 @@ describe 'AdminOrderCycleExchangesCtrl', ->
       1: {id: 1, name: 'Eaterprises'}
       2: {id: 2, name: 'Pepper Tree Place'}
       3: {id: 3, name: 'South East'}
+      4: {id: 4, name: 'coordinator'}
     OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').and.returnValue([2])
     EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ] # Pepper Tree Place has a fee
     expect(scope.enterprisesWithFees()).toEqual([
-      {id: 2, name: 'Pepper Tree Place'}
+      {id: 2, name: 'Pepper Tree Place'},
+      {id: 4, name: 'coordinator'}
       ])
 
   it 'Removes order cycle exchanges', ->
