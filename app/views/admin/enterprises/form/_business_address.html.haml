@@ -28,10 +28,11 @@
     = bf.label :state_id, t(:state)
     \/
     = bf.label :country_id, t(:country)
-  .four.columns{ "ng-controller" => "countryCtrl" }
-    %input.ofn-select2.fullwidth#enterprise_address_attributes_state_id{ name: 'enterprise[address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.state_id' } }
-  .four.columns.omega{ "ng-controller" => "countryCtrl" }
-    %input.ofn-select2.fullwidth#enterprise_address_attributes_country_id{ name: 'enterprise[address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.country_id' } }
+  %div{ "ng-controller": "countryCtrl", "ng-init": "address_type='business_address'" }
+    .four.columns
+      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_state_id{ name: 'enterprise[business_address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.state_id' } }
+    .four.columns.omega{ "ng-controller" => "countryCtrl" }
+      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_country_id{ name: 'enterprise[business_address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.country_id' } }
 
 .row
   .three.columns.alpha
