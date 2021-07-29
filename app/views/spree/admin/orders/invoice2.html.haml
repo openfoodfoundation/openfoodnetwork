@@ -12,16 +12,28 @@
           = wicked_pdf_image_tag @order.distributor.logo(:small), width: 150, height: 150
     %tr{ valign: "top" }
       %td{ :align => "left" }
-        %strong= @order.distributor.name
-        %br
-        = @order.distributor.address.address_part1
-        %br
-        = @order.distributor.address.address_part2
-        %br
-        = @order.distributor.email_address
-        - if @order.distributor.phone.present?
+        - if @order.distributor.business_address.blank?
+          %strong= @order.distributor.name
           %br
-          = @order.distributor.phone
+          = @order.distributor.address.address_part1
+          %br
+          = @order.distributor.address.address_part2
+          %br
+          = @order.distributor.email_address
+          - if @order.distributor.phone.present?
+            %br
+            = @order.distributor.phone
+        - else 
+          %strong= @order.distributor.business_address.company
+          %br
+          = @order.distributor.business_address.address_part1
+          %br
+          = @order.distributor.business_address.address_part2
+          %br
+          = @order.distributor.email_address
+          - if @order.distributor.business_address.phone.present?
+            %br
+            = @order.distributor.business_address.phone
         - if @order.distributor.abn.present?
           %br
           = "#{t :abn} #{@order.distributor.abn}"
