@@ -12,6 +12,10 @@ module Spree
     class StripeSCA < Gateway
       include FullUrlHelper
 
+      VOIDABLE_STATES = [
+        "requires_payment_method", "requires_capture", "requires_confirmation", "requires_action"
+      ]
+
       preference :enterprise_id, :integer
 
       validate :ensure_enterprise_selected
@@ -78,7 +82,13 @@ module Spree
         payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
                                                                  stripe_account: stripe_account_id)
         gateway_options[:stripe_account] = stripe_account_id
-        provider.refund(refundable_amount(payment_intent_response), response_code, gateway_options)
+
+        # If a payment has been confirmed it cannot be voided by Stripe, and must be refunded instead
+        if voidable?(payment_intent_response)
+          provider.void(response_code, gateway_options)
+        else
+          provider.refund(refundable_amount(payment_intent_response), response_code, gateway_options)
+        end
       end
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
@@ -95,6 +105,10 @@ module Spree
       end
 
       private
+
+      def voidable?(payment_intent_response)
+        VOIDABLE_STATES.include? payment_intent_response.status
+      end
 
       def refundable_amount(payment_intent_response)
         payment_intent_response.amount_received -
