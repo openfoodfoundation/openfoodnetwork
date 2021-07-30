@@ -181,7 +181,7 @@ feature '
       click_link "Manage Enterprise Fees"
       expect(page).to have_select('sets_enterprise_fee_set_collection_attributes_0_enterprise_id',
                                   selected: 'Second Distributor',
-                                  options: ['', 'First Distributor', 'Second Distributor'])
+                                  options: ['First Distributor', 'Second Distributor'])
     end
   end
 end
