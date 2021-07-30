@@ -17,7 +17,7 @@ gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails
 gem 'webpacker', '~> 5'
 
 gem 'i18n'
-gem 'i18n-js', '~> 3.8.4'
+gem 'i18n-js', '~> 3.9.0'
 gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
