@@ -70,47 +70,47 @@
       = f.check_box :checkout_default_bill_address
       = f.label :checkout_default_bill_address, t(:checkout_default_bill_address)
 
-  %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
-    -# DELIVERY ADDRESS
-    %div.checkout-title
-      = t("split_checkout.step1.delivery_address.title")
+%div.checkout-substep{ "data-controller": "toggle shippingmethod" }
+  -# DELIVERY ADDRESS
+  %div.checkout-title
+    = t("split_checkout.step1.delivery_address.title")
 
-    - @shipping_methods.each do |shipping_method| 
-      %div.checkout-input
-        = fields_for shipping_method do |shipping_method_form|
-          = shipping_method_form.radio_button :name, shipping_method.id,
-            id: "shipping_method_#{shipping_method.id}",
-            "data-description": shipping_method.description,
-            "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
-            "data-toggle-show": shipping_method.require_ship_address
-          = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
-          %em.light
-            = payment_method_price(shipping_method, @order)
+  - @shipping_methods.each do |shipping_method|
+    %div.checkout-input
+      = fields_for shipping_method do |shipping_method_form|
+        = shipping_method_form.radio_button :name, shipping_method.id,
+          id: "shipping_method_#{shipping_method.id}",
+          "data-description": shipping_method.description,
+          "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
+          "data-toggle-show": shipping_method.require_ship_address
+        = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
+        %em.light
+          = payment_method_price(shipping_method, @order)
 
 
+  %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
+    = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing" }
+    = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
+
+  - if spree_current_user
     %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
-      = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing" }
-      = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
-      
-    - if spree_current_user
-      %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
-        = f.check_box "Checkout.default_ship_address", { id: "Checkout.default_ship_address" }
-        = f.label "Checkout.default_ship_address", t(:checkout_default_ship_address), { for: "Checkout.default_ship_address" }
+      = f.check_box "Checkout.default_ship_address", { id: "Checkout.default_ship_address" }
+      = f.label "Checkout.default_ship_address", t(:checkout_default_ship_address), { for: "Checkout.default_ship_address" }
 
-    %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription"}
-      #distributor_address.panel
-        %span{"data-shippingmethod-target": "shippingMethodDescriptionContent"}
-        %br/
-        %br/
-        - if @order.order_cycle.pickup_time_for(@order.distributor)
-          = t :checkout_ready_for
-        = @order.order_cycle.pickup_time_for(@order.distributor)
+  %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription"}
+    #distributor_address.panel
+      %span{"data-shippingmethod-target": "shippingMethodDescriptionContent"}
+      %br/
+      %br/
+      - if @order.order_cycle.pickup_time_for(@order.distributor)
+        = t :checkout_ready_for
+      = @order.order_cycle.pickup_time_for(@order.distributor)
 
-    .div.checkout-input
-      = f.label :special_instructions, t(:checkout_instructions)
-      = f.text_area :special_instructions, size: "60x4"
+  .div.checkout-input
+    = f.label :special_instructions, t(:checkout_instructions)
+    = f.text_area :special_instructions, size: "60x4"
 
-  %div.checkout-submit
-    = f.submit t("split_checkout.step1.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-    %a.button.cancel{href: main_app.cart_path}
-      = t("split_checkout.step1.cancel")
+%div.checkout-submit
+  = f.submit t("split_checkout.step1.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+  %a.button.cancel{href: main_app.cart_path}
+    = t("split_checkout.step1.cancel")
