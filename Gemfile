@@ -129,6 +129,7 @@ gem "view_component", require: "view_component/engine"
 
 group :production, :staging do
   gem 'ddtrace'
+  gem 'rack-timeout'
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
 

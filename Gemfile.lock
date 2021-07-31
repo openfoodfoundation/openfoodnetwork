@@ -448,6 +448,7 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-timeout (0.6.0)
     rails (6.1.4)
       actioncable (= 6.1.4)
       actionmailbox (= 6.1.4)
@@ -763,6 +764,7 @@ DEPENDENCIES
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
+  rack-timeout
   rails (~> 6.1.4)
   rails-controller-testing
   rails-i18n
