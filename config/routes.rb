@@ -69,21 +69,19 @@ Openfoodnetwork::Application.routes.draw do
     resources :webhooks, only: [:create]
   end
 
-  constraints(SplitCheckoutConstraint.new) do
-    get '/checkout', to: 'split_checkout#edit', as: :checkout
+  constraints SplitCheckoutConstraint.new do
+    get '/checkout', to: 'split_checkout#edit'
 
     constraints step: /(details|payment|summary)/ do
       get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
       put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
     end
-
-    get '/checkout/paypal_payment/:order_id', to: 'split_checkout#paypal_payment', as: :paypal_payment
   end
 
   get '/checkout', to: 'checkout#edit'
-  put '/checkout', to: 'checkout#update'
-  get '/checkout/:state', to: 'checkout#edit'
-  get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment'
+  put '/checkout', to: 'checkout#update', as: :update_checkout
+  get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
+  get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   get 'embedded_shopfront/shopfront_session', to: 'application#shopfront_session'
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
