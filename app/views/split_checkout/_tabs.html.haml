@@ -1,10 +1,10 @@
 %div.flex
-  %div.columns.three.text-center.checkout-tab{"class": ("selected" if current_page?(checkout_your_details_path))}
+  %div.columns.three.text-center.checkout-tab{"class": ("selected" if @checkout_step == "details")}
     %span
       = t("split_checkout.your_details")
-  %div.columns.three.text-center.checkout-tab{"class": ("selected" if current_page?(checkout_payment_method_path))}
+  %div.columns.three.text-center.checkout-tab{"class": ("selected" if @checkout_step == "payment")}
     %span
       = t("split_checkout.payment_method")
-  %div.columns.three.text-center.checkout-tab{"class": ("selected" if current_page?(checkout_summary_path))}
+  %div.columns.three.text-center.checkout-tab{"class": ("selected" if @checkout_step == "summary")}
     %span
       = t("split_checkout.order_summary")      

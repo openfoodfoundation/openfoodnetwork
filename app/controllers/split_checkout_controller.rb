@@ -15,6 +15,7 @@ class SplitCheckoutController < ::BaseController
   # Otherwise we fail on duplicate indexes or end up with negative stock.
   prepend_around_action CurrentOrderLocker, only: [:edit, :update]
 
+  prepend_before_action :set_checkout_step
   prepend_before_action :check_hub_ready_for_checkout
   prepend_before_action :check_order_cycle_expiry
   prepend_before_action :require_order_cycle
@@ -35,7 +36,7 @@ class SplitCheckoutController < ::BaseController
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
 
-    redirect_to_step if request.path == "/checkout"
+    redirect_to_step unless @checkout_step
 
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
@@ -80,15 +81,19 @@ class SplitCheckoutController < ::BaseController
 
   private
 
+  def set_checkout_step
+    @checkout_step = params[:step]
+  end
+
   def redirect_to_step
     if @order.state == "payment"
       if true# order.has_no_payment_method_chosen?
-        redirect_to checkout_payment_method_path
+        redirect_to checkout_step_path(:payment)
       else
-        redirect_to checkout_order_summary_path
+        redirect_to checkout_step_path(:summary)
       end
     else
-      redirect_to checkout_your_details_path
+      redirect_to checkout_step_path(:details)
     end
   end
 

@@ -18,5 +18,5 @@
 
 %div.checkout-submit
   = f.submit t("split_checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-  %a.button.cancel{href: main_app.checkout_your_details_path}
+  %a.button.cancel{href: main_app.checkout_step_path(:details)}
     = t("split_checkout.step2.cancel")

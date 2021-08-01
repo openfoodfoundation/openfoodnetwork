@@ -2,10 +2,6 @@
   = inject_available_payment_methods
   = inject_saved_credit_cards
 
-= form_with url: update_checkout_path, model: @order, method: :put do |f|
-
-  %div.checkout-step.medium-6
-    - if current_page?(checkout_your_details_path)
-      = render 'split_checkout/your_details', f: f
-    - elsif current_page?(checkout_payment_method_path)
-      = render "split_checkout/payment_method", f: f
+%div.checkout-step.medium-6
+  = form_with url: checkout_update_path(@checkout_step), model: @order, method: :put do |f|
+    = render "split_checkout/#{@checkout_step}", f: f
