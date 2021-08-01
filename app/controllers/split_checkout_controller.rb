@@ -85,6 +85,14 @@ class SplitCheckoutController < ::BaseController
     @checkout_step = params[:step]
   end
 
+  def order_params
+    params.require(:order).permit(
+      :email, :shipping_method_id, :special_instructions,
+      bill_address_attributes: PermittedAttributes::Address.attributes,
+      ship_address_attributes: PermittedAttributes::Address.attributes
+    )
+  end
+
   def redirect_to_step
     if @order.state == "payment"
       if true# order.has_no_payment_method_chosen?
