@@ -67,11 +67,13 @@
   %div.checkout-title
     = t("split_checkout.step1.delivery_address.title")
 
+  - selected_shipping_method = @order.shipping_method&.id
   - @shipping_methods.each do |shipping_method|
     %div.checkout-input
       = fields_for shipping_method do |shipping_method_form|
         = shipping_method_form.radio_button :name, shipping_method.id,
           id: "shipping_method_#{shipping_method.id}",
+          checked: (shipping_method.id == selected_shipping_method),
           "data-description": shipping_method.description,
           "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
           "data-toggle-show": shipping_method.require_ship_address
