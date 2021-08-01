@@ -47,28 +47,19 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    if params.dig(:order).dig(:email)
-      # update the order
-      redirect_to checkout_payment_method_path
-    elsif params.dig(:payment_method)
-      # update the order
-      redirect_to checkout_order_summary_path
-    elsif params.dig(:order_confirmed)
-      # complete the order
-      redirect_to order_url(@order)
-    end
+    if @order.update(order_params)
+      OrderWorkflow.new(@order).advance_to_payment
 
-  #   params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
-  #   return action_failed unless @order.update(params_adapter.params[:order] || {})
-  #
-  #   checkout_workflow(params_adapter.shipping_method_id)
-  # rescue Spree::Core::GatewayError => e
-  #   rescue_from_spree_gateway_error(e)
-  # rescue StandardError => e
-  #   flash[:error] = I18n.t("checkout.failed")
-  #   action_failed(e)
-  # ensure
-  #   @order.update_order!
+      if @order.state == "payment"
+        redirect_to checkout_step_path(:payment)
+      else
+        render :edit
+      end
+    else
+      flash[:error] = "Saving failed, please update the highlighted fields"
+
+      render :edit
+    end
   end
 
   # Clears the cached order. Required for #current_order to return a new order
