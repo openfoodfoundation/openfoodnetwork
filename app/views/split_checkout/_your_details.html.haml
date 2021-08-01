@@ -35,8 +35,8 @@
       = f.error_message_on "bill_address.address1"
 
     %div.checkout-input
-      = f.label :address2, t("split_checkout.step1.billing_address.address2.label")
-      = f.text_field :address2, { placeholder: t("split_checkout.step1.billing_address.address2.placeholder") }
+      = bill_address.label :address2, t("split_checkout.step1.billing_address.address2.label")
+      = bill_address.text_field :address2, { placeholder: t("split_checkout.step1.billing_address.address2.placeholder") }
       = f.error_message_on "bill_address.address2"
 
     %div.checkout-input
