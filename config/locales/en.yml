@@ -3929,6 +3929,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       awaiting_return: awaiting return
       canceled: cancelled
       cart: cart
+      confirmation: "confirmation"
       complete: complete
       confirm: confirm
       delivery: delivery

@@ -20,6 +20,9 @@ module Spree
         order.update_totals
         order.payment_required?
       }
+      go_to_state :confirmation, if: ->(order) {
+        Flipper.enabled? :split_checkout, order.user
+      }
       go_to_state :complete
     end
 
