@@ -1,4 +1,4 @@
-Darkswarm.factory "Dates", ->
+angular.module('Darkswarm').factory "Dates", ->
   new class Dates
     months: [
       {key: t("january"), value: "1"},

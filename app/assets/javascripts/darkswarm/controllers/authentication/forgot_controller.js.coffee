@@ -1,4 +1,4 @@
-Darkswarm.controller "ForgotCtrl", ($scope, $http, $location, AuthenticationService) ->
+angular.module('Darkswarm').controller "ForgotCtrl", ($scope, $http, $location, AuthenticationService) ->
   $scope.path = "/forgot"
   $scope.sent = false
 

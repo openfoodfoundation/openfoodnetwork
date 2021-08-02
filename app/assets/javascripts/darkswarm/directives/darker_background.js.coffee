@@ -1,4 +1,4 @@
-Darkswarm.directive "darkerBackground", ->
+angular.module('Darkswarm').directive "darkerBackground", ->
   restrict: "A"
   link: (scope, elm, attr)->
     toggleClass = (value) ->

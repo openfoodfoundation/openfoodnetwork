@@ -1,4 +1,4 @@
-Darkswarm.factory "PaymentMethods", (paymentMethods)->
+angular.module('Darkswarm').factory "PaymentMethods", (paymentMethods)->
   new class PaymentMethods
     payment_methods: paymentMethods
     payment_methods_by_id: {}

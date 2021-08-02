@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
+angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.query = ""

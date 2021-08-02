@@ -1,4 +1,4 @@
-Darkswarm.directive "fillVertical", ($window)->
+angular.module('Darkswarm').directive "fillVertical", ($window)->
   # Makes something fill the window vertically. Used on the Google Map.
   restrict: 'A'
   link: (scope, element, attrs)->

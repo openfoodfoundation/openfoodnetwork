@@ -1,4 +1,4 @@
-Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
+angular.module('Darkswarm').directive "stripeElements", ($injector, StripeElements) ->
   restrict: 'E'
   template: "<label for='card-element'>\
              <div id='card-element'></div>\

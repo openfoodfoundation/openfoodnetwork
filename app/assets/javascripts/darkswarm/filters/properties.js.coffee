@@ -1,4 +1,4 @@
-Darkswarm.filter 'properties', ->
+angular.module('Darkswarm').filter 'properties', ->
   # Filter anything that responds to object.supplied_properties
   (objects, ids, source) ->
     objects ||= []

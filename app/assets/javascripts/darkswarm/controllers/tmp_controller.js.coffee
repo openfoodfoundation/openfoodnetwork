@@ -1,2 +1,2 @@
-Darkswarm.controller "TmpCtrl", ($scope)->
+angular.module('Darkswarm').controller "TmpCtrl", ($scope)->
   $scope.test = {foo: "bar"}

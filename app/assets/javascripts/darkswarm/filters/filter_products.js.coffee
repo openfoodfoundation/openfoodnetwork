@@ -1,4 +1,4 @@
-Darkswarm.filter 'products', (Matcher) ->
+angular.module('Darkswarm').filter 'products', (Matcher) ->
   (products, text) ->
     products ||= []
     text ?= ""

@@ -1,4 +1,4 @@
-Darkswarm.controller "CartDropdownCtrl", ($scope, Cart, BodyScroll) ->
+angular.module('Darkswarm').controller "CartDropdownCtrl", ($scope, Cart, BodyScroll) ->
   $scope.Cart = Cart
   $scope.showCartSidebar = false
 

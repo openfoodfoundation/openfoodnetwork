@@ -1,4 +1,4 @@
-Darkswarm.controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, Dates) ->
+angular.module('Darkswarm').controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, Dates) ->
   angular.extend(this, new FieldsetMixin($scope))
 
   $scope.savedCreditCards = savedCreditCards

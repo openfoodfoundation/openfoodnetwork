@@ -1,4 +1,4 @@
-Darkswarm.directive 'mapSearch', ($timeout, Search) ->
+angular.module('Darkswarm').directive 'mapSearch', ($timeout, Search) ->
   # Install a basic search field in a map
   restrict: 'E'
   require: ['^uiGmapGoogleMap', 'ngModel']

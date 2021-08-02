@@ -1,4 +1,4 @@
-Darkswarm.factory "CookiesBannerService", (Navigation, $modal, $location, Redirections, Loading)->
+angular.module('Darkswarm').factory "CookiesBannerService", (Navigation, $modal, $location, Redirections, Loading)->
 
   new class CookiesBannerService
     modalMessage: null

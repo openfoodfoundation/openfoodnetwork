@@ -1,4 +1,4 @@
-Darkswarm.controller "DetailsCtrl", ($scope, $timeout, $http, CurrentUser, AuthenticationService, SpreeUser) ->
+angular.module('Darkswarm').controller "DetailsCtrl", ($scope, $timeout, $http, CurrentUser, AuthenticationService, SpreeUser) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.name = "details"
   $scope.nextPanel = "billing"

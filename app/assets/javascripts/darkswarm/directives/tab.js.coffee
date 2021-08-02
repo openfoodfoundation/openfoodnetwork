@@ -1,4 +1,4 @@
-Darkswarm.directive "tab", ->
+angular.module('Darkswarm').directive "tab", ->
   restrict: "C"
   require: "^^tabsetCtrl"
   scope:

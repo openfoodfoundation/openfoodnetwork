@@ -1,4 +1,4 @@
-Darkswarm.factory "ShippingMethods", (shippingMethods)->
+angular.module('Darkswarm').factory "ShippingMethods", (shippingMethods)->
   new class ShippingMethods
     shipping_methods: shippingMethods
     shipping_methods_by_id: {}

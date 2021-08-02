@@ -1,7 +1,7 @@
-Darkswarm.filter "translate", ->
+angular.module('Darkswarm').filter "translate", ->
   (key, options) ->
     t(key, options)
 
-Darkswarm.filter "t", ->
+angular.module('Darkswarm').filter "t", ->
   (key, options) ->
     t(key, options)

@@ -1,4 +1,4 @@
-Darkswarm.controller "GroupTabsCtrl", ($scope, $controller, Navigation) ->
+angular.module('Darkswarm').controller "GroupTabsCtrl", ($scope, $controller, Navigation) ->
   angular.extend this, $controller('TabsCtrl', {$scope: $scope})
 
   $scope.tabs =

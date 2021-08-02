@@ -1,4 +1,4 @@
-Darkswarm.filter 'active', ()-> 
+angular.module('Darkswarm').filter 'active', ()->
   (objects, options)->
     objects ||= []
     options ?= null

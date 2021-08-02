@@ -1,4 +1,4 @@
-Darkswarm.directive 'scrollAfterLoad', ($timeout, $location, $document)->
+angular.module('Darkswarm').directive 'scrollAfterLoad', ($timeout, $location, $document)->
   # Scroll to an element on page load
   restrict: "A"
   link: (scope, element, attr) ->

@@ -3,7 +3,7 @@
 # between the tabs. It has direct access to the instance of the login modal,
 # and provides that access to other controllers as a service.
 
-Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redirections, Loading)->
+angular.module('Darkswarm').factory "AuthenticationService", (Navigation, $modal, $location, Redirections, Loading)->
 
   new class AuthenticationService
     selectedPath: "/login"

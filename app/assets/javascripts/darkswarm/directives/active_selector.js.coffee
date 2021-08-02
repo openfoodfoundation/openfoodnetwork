@@ -1,4 +1,4 @@
-Darkswarm.directive "activeSelector",  ->
+angular.module('Darkswarm').directive "activeSelector",  ->
   # A generic selector that allows an object/scope to be toggled between active and inactive
   # Used in the filters, but hypothetically useable anywhere
   restrict: 'E'

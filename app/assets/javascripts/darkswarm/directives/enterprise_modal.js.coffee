@@ -1,4 +1,4 @@
-Darkswarm.directive "enterpriseModal", (EnterpriseModal) ->
+angular.module('Darkswarm').directive "enterpriseModal", (EnterpriseModal) ->
   restrict: 'E'
   replace: true
   template: "<a ng-transclude></a>"

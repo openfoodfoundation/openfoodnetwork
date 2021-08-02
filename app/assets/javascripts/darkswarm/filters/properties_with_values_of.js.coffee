@@ -1,4 +1,4 @@
-Darkswarm.filter 'propertiesWithValuesOf', ->
+angular.module('Darkswarm').filter 'propertiesWithValuesOf', ->
   (objects)->
     propertiesWithValues = {}
     for object in objects

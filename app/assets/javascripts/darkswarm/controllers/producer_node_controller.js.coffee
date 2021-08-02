@@ -1,4 +1,4 @@
-Darkswarm.controller "ProducerNodeCtrl", ($scope, HashNavigation, $anchorScroll, $http, $timeout) ->
+angular.module('Darkswarm').controller "ProducerNodeCtrl", ($scope, HashNavigation, $anchorScroll, $http, $timeout) ->
   $scope.shopfront_loading = false
   $scope.enterprise_details = []
 

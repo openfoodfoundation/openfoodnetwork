@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnModal", ($modal)->
+angular.module('Darkswarm').directive "ofnModal", ($modal)->
   # Generic modal! Uses transclusion so designer-types can do stuff like:
   # %ofn-modal 
   #   CONTENT

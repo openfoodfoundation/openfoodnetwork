@@ -1,4 +1,4 @@
-Darkswarm.directive 'auth', (AuthenticationService) ->
+angular.module('Darkswarm').directive 'auth', (AuthenticationService) ->
   restrict: 'A'
   link: (scope, elem, attrs) ->
     elem.bind "click", ->

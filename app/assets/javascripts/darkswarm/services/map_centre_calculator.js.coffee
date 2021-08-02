@@ -1,4 +1,4 @@
-Darkswarm.factory 'MapCentreCalculator', (Enterprises, openStreetMapConfig) ->
+angular.module('Darkswarm').factory 'MapCentreCalculator', (Enterprises, openStreetMapConfig) ->
   new class MapCentreCalculator
 
     initialLatitude: =>

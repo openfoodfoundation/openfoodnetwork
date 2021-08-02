@@ -1,4 +1,4 @@
-Darkswarm.directive "loading", (Loading)->
+angular.module('Darkswarm').directive "loading", (Loading)->
   # Triggers a screen-wide "loading" thing when Ajaxy stuff is happening
   scope: {}
   restrict: 'E'

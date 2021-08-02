@@ -1,4 +1,4 @@
-Darkswarm.factory 'OrderCycleResource', ($resource) ->
+angular.module('Darkswarm').factory 'OrderCycleResource', ($resource) ->
   $resource('/api/v0/order_cycles/:id.json', {}, {
     'products':
       method: 'GET'

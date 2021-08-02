@@ -1,4 +1,4 @@
-Darkswarm.factory 'EnterpriseResource', ($resource) ->
+angular.module('Darkswarm').factory 'EnterpriseResource', ($resource) ->
   $resource('/enterprise/:id.json', {}, {
     'relatives':
       method: 'GET'

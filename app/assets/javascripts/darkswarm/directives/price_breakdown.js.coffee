@@ -1,4 +1,4 @@
-Darkswarm.directive "priceBreakdown", ($tooltip)->
+angular.module('Darkswarm').directive "priceBreakdown", ($tooltip)->
   # We use the $tooltip service from Angular foundation to give us boilerplate
   # Subsequently we patch the scope, template and restrictions
   tooltip = $tooltip 'priceBreakdown', 'priceBreakdown', 'click'
@@ -10,7 +10,7 @@ Darkswarm.directive "priceBreakdown", ($tooltip)->
   tooltip
 
 # This is automatically referenced via naming convention in $tooltip
-Darkswarm.directive 'priceBreakdownPopup', ->
+angular.module('Darkswarm').directive 'priceBreakdownPopup', ->
   restrict: 'EA'
   replace: true
   templateUrl: 'price_breakdown.html'

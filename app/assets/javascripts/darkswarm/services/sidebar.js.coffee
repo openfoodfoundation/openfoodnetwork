@@ -1,4 +1,4 @@
-Darkswarm.factory "Sidebar", ($location, Navigation)->
+angular.module('Darkswarm').factory "Sidebar", ($location, Navigation)->
   new class Sidebar
     paths: ["/login", "/signup", "/forgot", "/account"] 
 

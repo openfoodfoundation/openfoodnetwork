@@ -1,4 +1,4 @@
-Darkswarm.controller "CountryCtrl", ($scope, availableCountries) ->
+angular.module('Darkswarm').controller "CountryCtrl", ($scope, availableCountries) ->
 
   $scope.countries = availableCountries
 

@@ -1,4 +1,4 @@
-Darkswarm.controller "RegistrationFormCtrl", ($scope, RegistrationService, EnterpriseRegistrationService) ->
+angular.module('Darkswarm').controller "RegistrationFormCtrl", ($scope, RegistrationService, EnterpriseRegistrationService) ->
   $scope.submitted = false
   $scope.isDisabled = false
 

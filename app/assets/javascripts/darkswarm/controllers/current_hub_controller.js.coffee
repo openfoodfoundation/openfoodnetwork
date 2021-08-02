@@ -1,2 +1,2 @@
-Darkswarm.controller "CurrentHubCtrl", ($scope, CurrentHub) ->
+angular.module('Darkswarm').controller "CurrentHubCtrl", ($scope, CurrentHub) ->
   $scope.CurrentHub = CurrentHub

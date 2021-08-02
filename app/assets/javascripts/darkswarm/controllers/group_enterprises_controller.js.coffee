@@ -1,4 +1,4 @@
-Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsService, EnterpriseModal) ->
+angular.module('Darkswarm').controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsService, EnterpriseModal) ->
   $scope.filterSelectors = FilterSelectorsService.createSelectors()
   $scope.query = Search.search()
   $scope.openModal = EnterpriseModal.open

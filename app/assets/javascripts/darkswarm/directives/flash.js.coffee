@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
+angular.module('Darkswarm').directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
   # Our own flash class. Uses the "flash" service (third party), and a directive 
   # called RailsFlashLoader to render
   typePairings =

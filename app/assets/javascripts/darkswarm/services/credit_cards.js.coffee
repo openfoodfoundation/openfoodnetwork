@@ -1,4 +1,4 @@
-Darkswarm.factory 'CreditCards', ($http, $filter, savedCreditCards, Messages, Customers)->
+angular.module('Darkswarm').factory 'CreditCards', ($http, $filter, savedCreditCards, Messages, Customers)->
   new class CreditCard
     saved: $filter('orderBy')(savedCreditCards,'-is_default')
 

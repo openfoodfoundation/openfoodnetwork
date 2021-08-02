@@ -1,4 +1,4 @@
-Darkswarm.directive "max",  ->
+angular.module('Darkswarm').directive "max",  ->
   restrict: 'A'
   link: (scope, elem, attr)->
     elem.bind 'input', ->

@@ -1,4 +1,4 @@
-Darkswarm.directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
+angular.module('Darkswarm').directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
   restrict: 'E'
   replace: true
   scope: true

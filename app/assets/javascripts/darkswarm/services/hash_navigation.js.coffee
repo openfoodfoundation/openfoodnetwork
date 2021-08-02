@@ -1,4 +1,4 @@
-Darkswarm.factory 'HashNavigation', ($location) ->
+angular.module('Darkswarm').factory 'HashNavigation', ($location) ->
   new class HashNavigation
     hash: null
 

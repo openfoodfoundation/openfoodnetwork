@@ -1,4 +1,4 @@
-Darkswarm.filter "byProducer", ->
+angular.module('Darkswarm').filter "byProducer", ->
   (objects, id) ->
     objects ||= []
     id ?= 0

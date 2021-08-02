@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnPageAlert", ($timeout) ->
+angular.module('Darkswarm').directive "ofnPageAlert", ($timeout) ->
   restrict: 'A'
   scope: true
   link: (scope, elem, attrs) ->

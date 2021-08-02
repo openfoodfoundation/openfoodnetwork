@@ -1,4 +1,4 @@
-Darkswarm.factory 'Dereferencer', ->
+angular.module('Darkswarm').factory 'Dereferencer', ->
   new class Dereferencer
     dereference: (array, data) ->
       @dereference_from(array, array, data)

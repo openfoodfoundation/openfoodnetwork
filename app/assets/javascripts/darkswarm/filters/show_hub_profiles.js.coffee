@@ -1,4 +1,4 @@
-Darkswarm.filter 'showHubProfiles', ()->
+angular.module('Darkswarm').filter 'showHubProfiles', ()->
   # Filter hub_profile enterprises in or out.
   (enterprises, show_profiles) ->
     enterprises ||= []

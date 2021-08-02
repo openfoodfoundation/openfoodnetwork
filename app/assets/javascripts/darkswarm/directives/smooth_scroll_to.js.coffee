@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnSmoothScrollTo", ($location, $document)->
+angular.module('Darkswarm').directive "ofnSmoothScrollTo", ($location, $document)->
   # Onclick sets $location.hash to attrs.ofnScrollTo
   # Then triggers $document.scrollTo
   restrict: 'A'

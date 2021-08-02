@@ -1,2 +1,2 @@
-Darkswarm.controller "ProducersTabCtrl", ($scope, Shopfront) ->
+angular.module('Darkswarm').controller "ProducersTabCtrl", ($scope, Shopfront) ->
   $scope.shopfront = Shopfront.shopfront

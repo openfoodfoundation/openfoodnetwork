@@ -1,4 +1,4 @@
-Darkswarm.controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
+angular.module('Darkswarm').controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
   $scope.updateCart = (line_item) ->
     Cart.adjust($scope.variant.line_item)
 

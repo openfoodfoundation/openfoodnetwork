@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnInlineAlert", ->
+angular.module('Darkswarm').directive "ofnInlineAlert", ->
   restrict: 'A'
   scope: true
   link: (scope, elem, attrs) ->

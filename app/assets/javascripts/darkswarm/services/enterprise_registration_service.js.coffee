@@ -1,4 +1,4 @@
-Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, EnterpriseImageService, CurrentUser, spreeApiKey, Loading, availableCountries, enterpriseAttributes) ->
+angular.module('Darkswarm').factory "EnterpriseRegistrationService", ($http, RegistrationService, EnterpriseImageService, CurrentUser, spreeApiKey, Loading, availableCountries, enterpriseAttributes) ->
   new class EnterpriseRegistrationService
     enterprise:
       user_ids: [CurrentUser.id]

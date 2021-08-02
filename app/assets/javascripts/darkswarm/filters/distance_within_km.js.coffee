@@ -1,4 +1,4 @@
-Darkswarm.filter 'distanceWithinKm', ->
+angular.module('Darkswarm').filter 'distanceWithinKm', ->
   (enterprises, range) ->
     enterprises ||= []
     enterprises.filter (enterprise) ->

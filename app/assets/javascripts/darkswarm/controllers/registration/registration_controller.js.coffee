@@ -1,4 +1,4 @@
-Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseRegistrationService, availableCountries, GmapsGeo) ->
+angular.module('Darkswarm').controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseRegistrationService, availableCountries, GmapsGeo) ->
   $scope.currentStep = RegistrationService.currentStep
   $scope.enterprise = EnterpriseRegistrationService.enterprise
   $scope.select = RegistrationService.select

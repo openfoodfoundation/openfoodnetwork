@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnRegistrationLimitModal", (Navigation, $modal, Loading) ->
+angular.module('Darkswarm').directive "ofnRegistrationLimitModal", (Navigation, $modal, Loading) ->
   restrict: 'A'
   link: (scope, elem, attr)->
     scope.modalInstance = $modal.open

@@ -1,4 +1,4 @@
-Darkswarm.factory "EnterpriseModal", ($modal, $rootScope, $http)->
+angular.module('Darkswarm').factory "EnterpriseModal", ($modal, $rootScope, $http)->
   # Build a modal popup for an enterprise.
   new class EnterpriseModal
     open: (enterprise)->

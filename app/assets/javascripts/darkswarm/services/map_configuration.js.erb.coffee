@@ -1,4 +1,4 @@
-Darkswarm.factory "MapConfiguration", ->
+angular.module('Darkswarm').factory "MapConfiguration", ->
   new class MapConfiguration
     options:
       center:

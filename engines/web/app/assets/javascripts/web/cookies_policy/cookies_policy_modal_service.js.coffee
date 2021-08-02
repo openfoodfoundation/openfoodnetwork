@@ -1,4 +1,4 @@
-Darkswarm.factory "CookiesPolicyModalService", (Navigation, $modal, $location, CookiesBannerService)->
+angular.module('Darkswarm').factory "CookiesPolicyModalService", (Navigation, $modal, $location, CookiesBannerService)->
 
   new class CookiesPolicyModalService
     defaultPath: "/policies/cookies"

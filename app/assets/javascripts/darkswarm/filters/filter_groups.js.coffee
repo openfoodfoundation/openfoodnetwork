@@ -1,4 +1,4 @@
-Darkswarm.filter "groups", (Matcher)->
+angular.module('Darkswarm').filter "groups", (Matcher)->
   (groups, text)->
     groups ||= []
     text ?= ""

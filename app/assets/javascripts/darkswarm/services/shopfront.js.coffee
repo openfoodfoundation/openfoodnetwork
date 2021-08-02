@@ -1,4 +1,4 @@
-Darkswarm.factory 'Shopfront', (shopfront) ->
+angular.module('Darkswarm').factory 'Shopfront', (shopfront) ->
   new class Shopfront
     shopfront: shopfront
     producers_by_id: {}

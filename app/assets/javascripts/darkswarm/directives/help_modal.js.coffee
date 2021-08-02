@@ -1,4 +1,4 @@
-Darkswarm.directive "helpModal", ($modal, $compile, $templateCache)->
+angular.module('Darkswarm').directive "helpModal", ($modal, $compile, $templateCache)->
   restrict: 'A'
   scope:
     helpText: "@helpModal"

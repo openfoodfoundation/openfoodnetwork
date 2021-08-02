@@ -1,2 +1,2 @@
-Darkswarm.controller "CartFormCtrl", ($scope) ->
+angular.module('Darkswarm').controller "CartFormCtrl", ($scope) ->
 

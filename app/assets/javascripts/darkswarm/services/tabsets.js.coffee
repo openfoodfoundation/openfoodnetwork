@@ -1,4 +1,4 @@
-Darkswarm.factory 'Tabsets', ->
+angular.module('Darkswarm').factory 'Tabsets', ->
   new class Tabsets
     tabsets: []
 

@@ -1,6 +1,6 @@
 # Returns a factory with the only function `createSelectors()`.
 # That function creates objects managing a list of filter selectors.
-Darkswarm.factory "FilterSelectorsService", ->
+angular.module('Darkswarm').factory "FilterSelectorsService", ->
   # This stores all filters so we can access in-use counts etc
   class FilterSelectors
     constructor: ->
