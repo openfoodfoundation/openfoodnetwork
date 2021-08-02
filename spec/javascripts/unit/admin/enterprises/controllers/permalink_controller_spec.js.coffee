@@ -49,9 +49,11 @@ describe "permalinkCtrl", ->
 
     it "does nothing when PermalinkChecker rejects", ->
       $scope.availability = "Some Availability"
-      deferred.reject()
-      promise = deferred.promise
-      spyOn(PermalinkChecker, "check").and.returnValue promise
-      $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
+      try
+        deferred.reject()
+        promise = deferred.promise
+        spyOn(PermalinkChecker, "check").and.returnValue promise
+        $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
+
       expect($scope.availability).toEqual "Some Availability"
       expect(Enterprise.permalink).toEqual "somethingelse"
