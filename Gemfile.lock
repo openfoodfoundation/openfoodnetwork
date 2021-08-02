@@ -336,7 +336,7 @@ GEM
     hiredis (0.6.3)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    i18n-js (3.8.4)
+    i18n-js (3.9.0)
       i18n (>= 0.6.6)
     immigrant (0.3.6)
       activerecord (>= 3.0)
@@ -744,7 +744,7 @@ DEPENDENCIES
   highline (= 2.0.3)
   hiredis
   i18n
-  i18n-js (~> 3.8.4)
+  i18n-js (~> 3.9.0)
   immigrant
   jquery-migrate-rails
   jquery-rails (= 4.4.0)
