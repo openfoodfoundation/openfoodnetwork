@@ -13,15 +13,15 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
 
     create: (parent_id, child_id, permissions) ->
       permissions = (name for name, enabled of permissions when enabled)
-      $http.post('/admin/enterprise_relationships', {enterprise_relationship: {parent_id: parent_id, child_id: child_id, permissions_list: permissions}}).success (data, status) =>
-        @enterprise_relationships.unshift(data)
+      $http.post('/admin/enterprise_relationships', {enterprise_relationship: {parent_id: parent_id, child_id: child_id, permissions_list: permissions}}).then (response) =>
+        @enterprise_relationships.unshift(response.data)
         @create_errors = ""
 
-      .error (response, status) =>
-        @create_errors = response.errors
+      .catch (response) =>
+        @create_errors = response.data.errors
 
     delete: (er) ->
-      $http.delete('/admin/enterprise_relationships/' + er.id).success (data) =>
+      $http.delete('/admin/enterprise_relationships/' + er.id).then (response) =>
         @enterprise_relationships.splice @enterprise_relationships.indexOf(er), 1
 
     permission_presentation: (permission) ->

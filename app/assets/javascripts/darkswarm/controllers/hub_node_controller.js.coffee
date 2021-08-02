@@ -27,12 +27,12 @@ angular.module('Darkswarm').controller "HubNodeCtrl", ($scope, HashNavigation, C
     $scope.toggle_tab(event)
 
     $http.get("/api/v0/shops/" + $scope.hub.id)
-      .success (data) ->
+      .then (response) ->
         $scope.shopfront_loading = false
-        $scope.hub = data
+        $scope.hub = response.data
         $scope.enterprise_details[$scope.hub.id] = $scope.hub
-      .error (data) ->
-        console.error(data)
+      .catch (response) ->
+        console.error(response.data)
 
   $scope.toggle_tab = (event) ->
     HashNavigation.toggle $scope.hub.hash if event && !angular.element(event.target).inheritedData('is-link')

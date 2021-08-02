@@ -27,12 +27,12 @@ angular.module('Darkswarm').controller "ProducerNodeCtrl", ($scope, HashNavigati
     $scope.toggle_tab(event)
 
     $http.get("/api/v0/shops/" + $scope.producer.id)
-      .success (data) ->
+      .then (response) ->
         $scope.shopfront_loading = false
-        $scope.producer = data
+        $scope.producer = response.data
         $scope.enterprise_details[$scope.producer.id] = $scope.producer
-      .error (data) ->
-        console.error(data)
+      .catch (response) ->
+        console.error(response.data)
 
   $scope.toggle_tab = (event) ->
     HashNavigation.toggle $scope.producer.hash if event && !angular.element(event.target).inheritedData('is-link')

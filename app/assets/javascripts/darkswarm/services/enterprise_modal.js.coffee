@@ -5,8 +5,8 @@ angular.module('Darkswarm').factory "EnterpriseModal", ($modal, $rootScope, $htt
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
       scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
 
-      $http.get("/api/v0/shops/" + enterprise.id).success (data) ->
-        scope.enterprise = data
+      $http.get("/api/v0/shops/" + enterprise.id).then (response) ->
+        scope.enterprise = response.data
         $modal.open(templateUrl: "enterprise_modal.html", scope: scope)
-      .error (data) ->
-        console.error(data)
+      .catch (response) ->
+        console.error(response.data)

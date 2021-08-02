@@ -10,8 +10,8 @@ angular.module("ofn.admin").factory "BulkProducts", (ProductResource, dataFetche
         angular.extend(@pagination, data.pagination)
 
     cloneProduct: (product) ->
-      $http.post("/api/v0/products/" + product.id + "/clone").success (data) =>
-        dataFetcher("/api/v0/products/" + data.id + "?template=bulk_show").then (newProduct) =>
+      $http.post("/api/v0/products/" + product.id + "/clone").then (response) =>
+        dataFetcher("/api/v0/products/" + response.data.id + "?template=bulk_show").then (newProduct) =>
           @unpackProduct newProduct
           @insertProductAfter(product, newProduct)
 

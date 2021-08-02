@@ -62,14 +62,14 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     else
       StatusMessage.display 'progress', t('js.saving')
       DirtyVariantOverrides.save()
-      .success (updatedVos) ->
+      .then (updatedVos) ->
         DirtyVariantOverrides.clear()
-        VariantOverrides.updateIds updatedVos
+        VariantOverrides.updateIds updatedVos.data
         $scope.variant_overrides_form.$setPristine()
         StatusMessage.display 'success', t('js.changes_saved')
-        VariantOverrides.updateData updatedVos # Refresh page data
-      .error (data, status) ->
-        StatusMessage.display 'failure', $scope.updateError(data, status)
+        VariantOverrides.updateData updatedVos.data # Refresh page data
+      .catch (response) ->
+        StatusMessage.display 'failure', $scope.updateError(response.data, response.status)
 
 
   $scope.updateError = (data, status) ->
@@ -98,11 +98,11 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
         method: "POST"
         url: "/admin/variant_overrides/bulk_reset"
         data: { hub_id: $scope.hub_id }
-      .success (updatedVos) ->
-        VariantOverrides.updateData updatedVos
+      .then (updatedVos) ->
+        VariantOverrides.updateData updatedVos.data
         StatusMessage.display 'success', t('js.variant_overrides.stock_reset')
-      .error (data, status) ->
-        $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
+      .catch (response) ->
+        $timeout -> StatusMessage.display 'failure', $scope.updateError(response.data, response.status)
 
   # Variant override count_on_hand field placeholder logic:
   #     on_demand true  -- Show "On Demand"

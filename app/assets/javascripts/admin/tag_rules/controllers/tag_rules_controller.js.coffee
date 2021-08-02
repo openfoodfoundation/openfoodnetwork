@@ -52,7 +52,7 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, $fil
         $http
           method: "DELETE"
           url: "/admin/enterprises/#{enterprise.id}/tag_rules/#{tagRule.id}.json"
-        .success ->
+        .then ->
           tagGroup.rules.splice(index, 1)
           $scope.updateRuleCounts()
           $scope.enterprise_form.$setDirty()

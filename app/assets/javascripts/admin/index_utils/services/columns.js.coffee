@@ -35,7 +35,7 @@ angular.module("admin.indexUtils").factory 'Columns', ($rootScope, $http, $injec
         data:
           action_name: action_name
           column_preferences: (preference for column_name, preference of @columns)
-      .success (data) =>
-        for column in data
+      .then (response) =>
+        for column in response.data
           angular.extend(@columns[column.column_name], column)
           angular.extend(@savedColumns[column.column_name], column)

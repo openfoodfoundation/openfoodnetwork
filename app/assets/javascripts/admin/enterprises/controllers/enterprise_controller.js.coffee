@@ -61,11 +61,11 @@ angular.module("admin.enterprises")
       $scope.invite_errors = $scope.invite_success = null
       email = $scope.newUser
 
-      $http.post("/admin/manager_invitations", {email: email, enterprise_id: $scope.Enterprise.id}).success (data)->
-          $scope.addManager({id: data.user, email: email})
+      $http.post("/admin/manager_invitations", {email: email, enterprise_id: $scope.Enterprise.id}).then (response)->
+          $scope.addManager({id: response.data.user, email: email})
           $scope.invite_success = t('user_invited', email: email)
-        .error (data) ->
-          $scope.invite_errors = data.errors
+        .catch (response) ->
+          $scope.invite_errors = response.data.errors
 
     $scope.resetModal = ->
       $scope.newUser = $scope.invite_errors = $scope.invite_success = null

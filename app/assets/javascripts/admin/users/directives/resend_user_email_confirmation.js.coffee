@@ -9,9 +9,9 @@ angular.module("admin.users").directive "resendUserEmailConfirmation", ($http) -
     element.bind "click", ->
       return if sent
       scope.status = "sending"
-      $http.post("/user/spree_user/confirmation", {spree_user: {email: scope.email}}).success (data) ->
+      $http.post("/user/spree_user/confirmation", {spree_user: {email: scope.email}}).then (response) ->
         sent = true
         element.addClass "action--disabled"
         scope.status = "done"
-      .error (data) ->
+      .catch (response) ->
         scope.status = "failed"

@@ -10,20 +10,20 @@ angular.module('Darkswarm').controller "LoginCtrl", ($scope, $timeout, $location
 
   $scope.submit = ->
     Loading.message = t 'logging_in'
-    $http.post("/user/spree_user/sign_in", {spree_user: $scope.spree_user}).success (data)->
+    $http.post("/user/spree_user/sign_in", {spree_user: $scope.spree_user}).then (response)->
       if Redirections.after_login
         $window.location.href = $window.location.origin + Redirections.after_login
       else
         $window.location.href = $window.location.origin + $window.location.pathname  # Strips out hash fragments
-    .error (data) ->
+    .catch (response) ->
       Loading.clear()
-      $scope.errors = data.message || data.error
-      $scope.user_unconfirmed = (data.error == t('devise.failure.unconfirmed'))
+      $scope.errors = response.data.message || response.data.error
+      $scope.user_unconfirmed = (response.data.error == t('devise.failure.unconfirmed'))
 
   $scope.resend_confirmation = ->
-    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user, return_url: $location.absUrl()}).success (data)->
+    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user, return_url: $location.absUrl()}).then (response)->
       $scope.messages = t('devise.confirmations.send_instructions')
-    .error (data) ->
+    .catch (response) ->
       $scope.errors = t('devise.confirmations.failed_to_send')
 
   $timeout ->

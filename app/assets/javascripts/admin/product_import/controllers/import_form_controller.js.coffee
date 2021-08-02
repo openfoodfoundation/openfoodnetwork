@@ -84,14 +84,14 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         'end': end
         'filepath': ams_data.filepath
         'settings': ams_data.importSettings
-    ).success((data, status) ->
-      angular.merge($scope.entries, angular.fromJson(data['entries']))
-      $scope.sortUpdates(data['reset_counts'])
+    ).then((response) ->
+      angular.merge($scope.entries, angular.fromJson(response.data['entries']))
+      $scope.sortUpdates(response.data['reset_counts'])
 
       $scope.updateProgress()
-    ).error((data, status) ->
-      $scope.exception = data
-      console.error(data)
+    ).catch((response) ->
+      $scope.exception = response.data
+      console.error(response.data)
     )
 
   $scope.sortUpdates = (data) ->
@@ -110,19 +110,19 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         'end': end
         'filepath': ams_data.filepath
         'settings': ams_data.importSettings
-    ).success((data, status) ->
-      $scope.sortResults(data['results'])
+    ).then((response) ->
+      $scope.sortResults(response.data['results'])
 
-      angular.forEach data['updated_ids'], (id) ->
+      angular.forEach response.data['updated_ids'], (id) ->
         $scope.updated_ids.push(id)
 
-      angular.forEach data['errors'], (error) ->
+      angular.forEach response.data['errors'], (error) ->
         $scope.update_errors.push(error)
 
       $scope.updateProgress()
-    ).error((data, status) ->
-      $scope.exception = data
-      console.error(data)
+    ).catch((response) ->
+      $scope.exception = response.data
+      console.error(response.data)
     )
 
   $scope.sortResults = (results) ->
@@ -151,10 +151,10 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
           'reset_absent': true,
           'updated_ids': $scope.updated_ids,
           'enterprises_to_reset': enterprises_to_reset
-      ).success((data, status) ->
-        $scope.updates.products_reset = data
-      ).error((data, status) ->
-        console.error(data)
+      ).then((response) ->
+        $scope.updates.products_reset = response.data
+      ).catch((response) ->
+        console.error(response.data)
       )
 
   $scope.updateProgress = () ->
