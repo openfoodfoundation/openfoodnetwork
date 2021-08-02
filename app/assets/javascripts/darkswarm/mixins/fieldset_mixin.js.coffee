@@ -1,4 +1,4 @@
-window.FieldsetMixin = ($scope)->
+angular.module('Darkswarm').controller "FieldsetMixin", ($scope, $timeout) ->
   $scope.next = (event = false)->
     event.preventDefault() if event
     return unless $scope.nextPanel

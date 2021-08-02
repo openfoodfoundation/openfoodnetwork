@@ -1,5 +1,6 @@
-angular.module('Darkswarm').controller "BillingCtrl", ($scope, $timeout) ->
-  angular.extend(this, new FieldsetMixin($scope))
+angular.module('Darkswarm').controller "BillingCtrl", ($scope, $timeout, $controller) ->
+  angular.extend this, $controller('FieldsetMixin', {$scope: $scope})
+
   $scope.name = "billing"
   $scope.nextPanel = "shipping"
 
