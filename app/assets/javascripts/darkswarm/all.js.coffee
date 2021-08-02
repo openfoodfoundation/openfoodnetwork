@@ -28,7 +28,6 @@
 #= require angular-rails-templates
 #= require_tree ../templates
 #
-#= require angular-backstretch.js
 #= require angular-flash.min.js
 #
 #= require moment/min/moment.min.js

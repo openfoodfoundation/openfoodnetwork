@@ -3,7 +3,6 @@
 //= require angular-animate
 //= require angular-mocks
 //= require angular-cookies
-//= require angular-backstretch.js
 //= require angularjs-file-upload
 //= require lodash.underscore.js
 //= require angular-flash.min.js
