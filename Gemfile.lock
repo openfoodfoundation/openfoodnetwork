@@ -150,7 +150,7 @@ GEM
     angular_rails_csrf (4.5.0)
       railties (>= 3, < 7)
     angularjs-file-upload-rails (2.4.1)
-    angularjs-rails (1.5.5)
+    angularjs-rails (1.8.0)
     ast (2.4.2)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
@@ -689,7 +689,7 @@ DEPENDENCIES
   angular-rails-templates (>= 0.3.0)
   angular_rails_csrf
   angularjs-file-upload-rails (~> 2.4.1)
-  angularjs-rails (= 1.5.5)
+  angularjs-rails (= 1.8.0)
   awesome_nested_set
   awesome_print
   aws-sdk (= 1.67.0)
