@@ -6,5 +6,7 @@ angular.module('Darkswarm').directive "enterpriseModal", (EnterpriseModal) ->
   link: (scope, elem, attrs, ctrl) ->
     elem.on "click", (event) =>
       event.stopPropagation()
-
       scope.modalInstance = EnterpriseModal.open scope.enterprise
+
+    scope.$on "$destroy", ->
+      elem.off("click")

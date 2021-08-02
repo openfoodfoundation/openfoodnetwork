@@ -9,3 +9,6 @@ angular.module('Darkswarm').controller "OffcanvasCtrl", ($scope) ->
     $scope.setOffcanvasMenuHeight()
 
   $scope.bind()
+
+  $scope.$on "$destroy", ->
+    $(window).off("resize")

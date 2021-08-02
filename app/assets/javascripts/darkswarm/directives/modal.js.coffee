@@ -17,3 +17,6 @@ angular.module('Darkswarm').directive "ofnModal", ($modal)->
     elem.on "click", =>
       transclude scope, (clone)->
         scope.modalInstance = $modal.open(controller: ctrl, template: clone, scope: scope)
+
+    scope.$on "$destroy", ->
+      elem.off("click")

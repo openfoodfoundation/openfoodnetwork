@@ -8,5 +8,8 @@ angular.module('Darkswarm').directive "tab", ->
       scope.$apply ->
         ctrl.toggle(scope.name)
 
+    scope.$on "$destroy", ->
+      element.off("click")
+
     ctrl.registerSelectionListener (prefix, selection) ->
       element.toggleClass('selected', selection == scope.name)

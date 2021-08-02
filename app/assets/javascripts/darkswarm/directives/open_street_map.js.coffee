@@ -23,6 +23,11 @@ angular.module('Darkswarm').directive 'ofnOpenStreetMap', ($window, MapCentreCal
         EnterpriseModal.open enterprise
       marker
 
+    # Remove event handlers on $destroy
+    scope.$on "$destroy", ->
+      markers.forEach(marker_element) ->
+        marker_element.off("click")
+
     enterpriseName = (enterprise) ->
       return enterprise.name + " (" + enterprise.address.address1 + ", " + enterprise.address.city + ", " + enterprise.address.state_name + ")";
 

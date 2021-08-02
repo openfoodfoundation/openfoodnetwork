@@ -10,3 +10,5 @@ angular.module('Darkswarm').directive "disableDynamically", ->
         e.preventDefault()
       return
 
+    scope.$on "$destroy", ->
+      element.off("click")
