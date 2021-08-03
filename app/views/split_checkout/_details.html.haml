@@ -74,6 +74,7 @@
         = shipping_method_form.radio_button :name, shipping_method.id,
           id: "shipping_method_#{shipping_method.id}",
           checked: (shipping_method.id == selected_shipping_method),
+          name: "shipping_method_id",
           "data-description": shipping_method.description,
           "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
           "data-toggle-show": shipping_method.require_ship_address
