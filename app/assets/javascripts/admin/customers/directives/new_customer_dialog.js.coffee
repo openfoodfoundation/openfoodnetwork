@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $templateCache, DialogDefaults, CurrentShop, Customers) ->
+angular.module("admin.customers").directive 'newCustomerDialog', ($rootScope, $compile, $templateCache, DialogDefaults, CurrentShop, Customers) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -20,6 +20,7 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $tem
             scope.email = ""
             scope.submitted = false
             template.dialog('close')
+            $rootScope.$evalAsync()
         , (response) ->
           if response.data.errors
             scope.errors.push(error) for error in response.data.errors
@@ -37,5 +38,6 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $tem
     element.bind 'click', (e) ->
       if CurrentShop.shop.id
         template.dialog('open')
+        $rootScope.$evalAsync()
       else
         alert(t('js.customers.select_shop'))

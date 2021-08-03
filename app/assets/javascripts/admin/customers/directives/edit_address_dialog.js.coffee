@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'editAddressDialog', ($compile, $templateCache, DialogDefaults, Customers, StatusMessage, CountryStates) ->
+angular.module("admin.customers").directive 'editAddressDialog', ($rootScope, $compile, $templateCache, DialogDefaults, Customers, StatusMessage, CountryStates) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -18,6 +18,7 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
           scope.customer = data
           scope.errors = []
           template.dialog('close')
+          $rootScope.$evalAsync()
           StatusMessage.display('success', t('admin.customers.index.update_address_success'))
       else
         scope.errors.push(t('admin.customers.index.update_address_error'))
@@ -33,4 +34,4 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
       template = $compile($templateCache.get('admin/edit_address_dialog.html'))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
-      scope.$apply()
+      $rootScope.$evalAsync()

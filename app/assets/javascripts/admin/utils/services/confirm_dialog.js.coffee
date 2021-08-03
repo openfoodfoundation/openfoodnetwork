@@ -10,12 +10,15 @@ angular.module("admin.utils").factory 'ConfirmDialog', ($rootScope, $q, $compile
       template = $compile($templateCache.get('admin/confirm_dialog.html'))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
+      $rootScope.$evalAsync()
       scope.confirm = ->
         deferred.resolve()
         template.dialog('close')
+        $rootScope.$evalAsync()
         null
       scope.close = ->
         deferred.reject()
         template.dialog('close')
+        $rootScope.$evalAsync()
         null
       deferred.promise

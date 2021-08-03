@@ -15,8 +15,10 @@ angular.module("admin.utils").factory 'InfoDialog', ($rootScope, $q, $compile, $
       template = $compile($templateCache.get(templateUrl))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
+      $rootScope.$evalAsync()
       scope.close = ->
         deferred.resolve()
         template.dialog('close')
+        $rootScope.$evalAsync()
         null
       deferred.promise
