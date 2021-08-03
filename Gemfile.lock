@@ -163,7 +163,7 @@ GEM
     bcrypt (3.1.16)
     bigdecimal (3.0.2)
     bindex (0.8.1)
-    bootsnap (1.7.6)
+    bootsnap (1.7.7)
       msgpack (~> 1.0)
     bugsnag (6.21.0)
       concurrent-ruby (~> 1.0)
