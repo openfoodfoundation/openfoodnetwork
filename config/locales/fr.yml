@@ -1530,6 +1530,57 @@ fr:
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Devise du Coût"
+  split_checkout:
+    your_details: 1 - Vos coordonnées
+    payment_method: 2 - Moyen de paiement
+    order_summary: 3 - Récapitulatif de la commande
+    step1:
+      your_details:
+        title: Vos informations
+        first_name:
+          label: Prénom
+          placeholder: ex. Alex
+        last_name:
+          label: Nom
+          placeholder: ex. Dupont
+        email:
+          label: Email
+          placeholder: ex. alexdupont@email.com
+        phone:
+          label: Numéro de téléphone
+          placeholder: ex. 0798765432
+      billing_address:
+        title: Adresse de facturation
+        address1:
+          label: Adresse (Numéro et rue)
+          placeholder: ex. 17 rue de la chèvre
+        address2:
+          label: Complément d'adresse (optionnel)
+          placeholder: ex. Appartement 3
+        city:
+          label: Ville
+          placeholder: ex. Metz
+        state_id:
+          label: Statut
+        zipcode:
+          label: Code postal
+          placeholder: ex. 57000
+        country_id:
+          label: Pays
+      delivery_address:
+        title: Adresse de livraison
+      submit: Etape suivante - Moyen de Paiement
+      cancel: Retour au panier
+    step2:
+      payment_method:
+        title: Moyen de paiement
+      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
+      submit: Etape suivante - Récapitulatif de commande
+      cancel: Retour à vos coordonnées
+    errors:
+      required: Ce champ ne peut pas être vide
+      invalid_number: "Merci de renseigner un numéro de téléphone valide"
+      invalid_email: "Veuillez entrer un email valide"
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -2695,7 +2746,7 @@ fr:
         payment_states:
           balance_due: "solde dû"
           completed: "effectué"
-          checkout: "en cours"
+          checkout: "solde dû"
           credit_owed: "crédit acheteur"
           failed: "échec"
           paid: "payé"
@@ -3652,7 +3703,7 @@ fr:
     payment_states:
       balance_due: solde dû
       completed: effectué
-      checkout: en cours
+      checkout: solde dû
       credit_owed: crédit acheteur
       failed: échec
       paid: payé
