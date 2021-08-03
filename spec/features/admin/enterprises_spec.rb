@@ -424,24 +424,18 @@ feature '
 
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
 
-      # Because poltergist does not support form onchange event
-      # We need trigger the change manually
-      page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
       expect(supplier1.producer_properties.reload.count).to eq(1)
 
       # -- Destroy
-      pp = supplier1.producer_properties.first
       within(".side_menu") do
         click_link "Properties"
       end
 
-      # Bug: https://github.com/openfoodfoundation/openfoodnetwork/issues/2453
       accept_alert do
-        accept_alert do
-          within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
-        end
+        property = supplier1.producer_properties.first
+        within("#spree_producer_property_#{property.id}") { page.find('a.remove_fields').click }
       end
 
       click_button 'Update'
