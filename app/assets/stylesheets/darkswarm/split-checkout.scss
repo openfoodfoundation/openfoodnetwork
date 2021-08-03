@@ -26,6 +26,25 @@
       text-decoration: underline;
     }
   }
+
+  &.success {
+    border-bottom: 5px solid $clr-turquoise-bright;
+
+    span {
+      &:after {
+        content: '✓';
+        background-color: $clr-turquoise-bright;
+        color: $white;
+        border-radius: 50%;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        display: inline-block;
+        font-family: $base-font-family;
+        margin-left: 10px;
+      }
+    }
+  }
 }
 
 .checkout-step {
