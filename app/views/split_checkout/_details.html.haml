@@ -1,0 +1,110 @@
+= f.fields :bill_address, model: @order.bill_address do |bill_address|
+  %div.checkout-substep
+    -# YOUR DETAILS
+    %div.checkout-title
+      = t("split_checkout.step1.your_details.title")
+
+    %div.checkout-input
+      = bill_address.label :firstname, t("split_checkout.step1.your_details.first_name.label")
+      = bill_address.text_field :firstname, { placeholder: t("split_checkout.step1.your_details.first_name.placeholder") }
+      = f.error_message_on "bill_address.firstname"
+
+    %div.checkout-input
+      = bill_address.label :lastname, t("split_checkout.step1.your_details.last_name.label")
+      = bill_address.text_field :lastname, { placeholder: t("split_checkout.step1.your_details.last_name.placeholder") }
+      = f.error_message_on "bill_address.lastname"
+
+    %div.checkout-input
+      = f.label :email, t("split_checkout.step1.your_details.email.label")
+      = f.text_field :email, { placeholder: t("split_checkout.step1.your_details.email.placeholder") }
+      = f.error_message_on :email
+
+    %div.checkout-input
+      = bill_address.label :phone, t("split_checkout.step1.your_details.phone.label")
+      = bill_address.text_field :phone, { placeholder: t("split_checkout.step1.your_details.phone.placeholder") }
+      = f.error_message_on "bill_address.phone"
+
+  %div.checkout-substep{ "data-controller": "dependant-select", "data-dependant-select-options-value": @countries_with_states }
+    -# BILLING ADDRESS
+    %div.checkout-title
+      = t("split_checkout.step1.billing_address.title")
+
+    %div.checkout-input
+      = bill_address.label :address1, t("split_checkout.step1.billing_address.address1.label")
+      = bill_address.text_field :address1, { placeholder: t("split_checkout.step1.billing_address.address1.placeholder") }
+      = f.error_message_on "bill_address.address1"
+
+    %div.checkout-input
+      = bill_address.label :address2, t("split_checkout.step1.billing_address.address2.label")
+      = bill_address.text_field :address2, { placeholder: t("split_checkout.step1.billing_address.address2.placeholder") }
+      = f.error_message_on "bill_address.address2"
+
+    %div.checkout-input
+      = bill_address.label :city, t("split_checkout.step1.billing_address.city.label")
+      = bill_address.text_field :city, { placeholder: t("split_checkout.step1.billing_address.city.placeholder") }
+      = f.error_message_on "bill_address.city"
+
+    %div.checkout-input
+      = bill_address.label :state_id, t("split_checkout.step1.billing_address.state_id.label")
+      = bill_address.select :state_id, @countries_with_states, { }, { "data-dependant-select-target": "select" }
+
+    %div.checkout-input
+      = bill_address.label :zipcode, t("split_checkout.step1.billing_address.zipcode.label")
+      = bill_address.text_field :zipcode, { placeholder: t("split_checkout.step1.billing_address.zipcode.placeholder") }
+      = f.error_message_on "bill_address.zipcode"
+
+    %div.checkout-input
+      = bill_address.label :country_id, t("split_checkout.step1.billing_address.country_id.label")
+      = bill_address.select :country_id, @countries, { selected: @order.bill_address.country_id || DefaultCountry.id }, {"data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange"}
+
+    - if spree_current_user||true
+      %div.checkout-input
+        = f.check_box :checkout_default_bill_address
+        = f.label :checkout_default_bill_address, t(:checkout_default_bill_address)
+
+%div.checkout-substep{ "data-controller": "toggle shippingmethod" }
+  -# DELIVERY ADDRESS
+  %div.checkout-title
+    = t("split_checkout.step1.delivery_address.title")
+
+  - selected_shipping_method = @order.shipping_method&.id
+  - @shipping_methods.each do |shipping_method|
+    %div.checkout-input
+      = fields_for shipping_method do |shipping_method_form|
+        = shipping_method_form.radio_button :name, shipping_method.id,
+          id: "shipping_method_#{shipping_method.id}",
+          checked: (shipping_method.id == selected_shipping_method),
+          "data-description": shipping_method.description,
+          "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
+          "data-toggle-show": shipping_method.require_ship_address
+        = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
+        %em.light
+          = payment_method_price(shipping_method, @order)
+
+
+  %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
+    = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing" }
+    = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
+
+  - if spree_current_user
+    %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
+      = f.check_box "Checkout.default_ship_address", { id: "Checkout.default_ship_address" }
+      = f.label "Checkout.default_ship_address", t(:checkout_default_ship_address), { for: "Checkout.default_ship_address" }
+
+  %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription"}
+    #distributor_address.panel
+      %span{"data-shippingmethod-target": "shippingMethodDescriptionContent"}
+      %br/
+      %br/
+      - if @order.order_cycle.pickup_time_for(@order.distributor)
+        = t :checkout_ready_for
+      = @order.order_cycle.pickup_time_for(@order.distributor)
+
+  .div.checkout-input
+    = f.label :special_instructions, t(:checkout_instructions)
+    = f.text_area :special_instructions, size: "60x4"
+
+%div.checkout-submit
+  = f.submit t("split_checkout.step1.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+  %a.button.cancel{href: main_app.cart_path}
+    = t("split_checkout.step1.cancel")

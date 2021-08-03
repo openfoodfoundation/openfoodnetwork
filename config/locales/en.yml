@@ -1620,6 +1620,57 @@ en:
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
 
+  split_checkout:
+    your_details: 1 - Your details
+    payment_method: 2 - Payment method
+    order_summary: 3 - Order summary
+    step1:
+      your_details:
+        title: Your details
+        first_name:
+          label: First Name
+          placeholder: e.g. Jane
+        last_name:
+          label: Last Name
+          placeholder: e.g. Doe
+        email:
+          label: Email
+          placeholder: e.g. Janedoe@email.com
+        phone:
+          label: Phone number
+          placeholder: e.g. 07987654321
+      billing_address:
+        title: Billing address
+        address1:
+          label: Address (Street + House Number)
+          placeholder: e.g. Flat 1 Elm apartments
+        address2:
+          label: Additional address info (optional)
+          placeholder: e.g. Cavalier avenur
+        city:
+          label: City
+          placeholder: e.g. London
+        state_id:
+          label: State
+        zipcode:
+          label: Postcode
+          placeholder: e.g. SW11 3QN
+        country_id:
+          label: Country
+      delivery_address:
+          title: Delivery address
+      submit: Next - Payment method
+      cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
+    errors:
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
+      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

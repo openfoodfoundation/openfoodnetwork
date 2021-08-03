@@ -69,8 +69,17 @@ Openfoodnetwork::Application.routes.draw do
     resources :webhooks, only: [:create]
   end
 
-  get '/checkout', to: 'checkout#edit' , as: :checkout
-  put '/checkout', to: 'checkout#update' , as: :update_checkout
+  constraints SplitCheckoutConstraint.new do
+    get '/checkout', to: 'split_checkout#edit'
+
+    constraints step: /(details|payment|summary)/ do
+      get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
+      put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
+    end
+  end
+
+  get '/checkout', to: 'checkout#edit'
+  put '/checkout', to: 'checkout#update', as: :update_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 

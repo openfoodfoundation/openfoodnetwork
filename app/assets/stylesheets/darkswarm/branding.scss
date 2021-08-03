@@ -1,6 +1,7 @@
 $ofn-brand: #f27052;
 
-$distributor-header-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 8px 6px -6px rgba(0, 0, 0, 0.2);
+$distributor-header-shadow: 0 1px 0 rgba(0, 0, 0, 0.05),
+  0 8px 6px -6px rgba(0, 0, 0, 0.2);
 
 // e.g. australia, uk, norway specific color
 
@@ -36,8 +37,8 @@ $med-grey: #666;
 $med-drk-grey: #444;
 $dark-grey: #333;
 $light-grey: #ddd;
-$light-grey-transparency: rgba(0, 0, 0, .1);
-$very-light-grey-transparency: rgba(0, 0, 0, .05);
+$light-grey-transparency: rgba(0, 0, 0, 0.1);
+$very-light-grey-transparency: rgba(0, 0, 0, 0.05);
 $black: #000;
 $white: #fff;
 
@@ -75,3 +76,7 @@ $social-facebook: #3b5998;
 $social-instagram: #e1306c;
 $social-linkedin: #0e76a8;
 $social-twitter: #00acee;
+
+// Typography
+$min-accessible-grey: #666;
+$darker-grey: #222;
