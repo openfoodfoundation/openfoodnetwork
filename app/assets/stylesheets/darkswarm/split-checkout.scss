@@ -113,6 +113,11 @@
         white-space: pre-wrap;
       }
     }
+    
+    a {
+      color: $teal-400;
+      text-decoration: underline;
+    }
   }
 
   .checkout-submit {
@@ -131,6 +136,37 @@
         background-color: $grey-100;
         color: $black;
       }
+    }
+  }
+}
+
+.summary {
+  margin-bottom: 2px;
+  font-size: 0.875rem;
+
+  .summary-label {
+    font-weight: bold;
+  }
+
+  .summary-value {
+
+  }
+
+  .summary-edit {
+    color: $teal-400;
+    text-decoration: underline;
+    display: block;
+    margin-top: 5px;
+    &:after {
+      background-image: image-url("edit-with-pen.svg");
+      content: " ";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-left: 5px;
+      line-height: 1em;
+      position: relative;
+      top: 2px;
     }
   }
 }

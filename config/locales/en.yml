@@ -1667,6 +1667,25 @@ en:
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
+    step3:
+      your_details:
+        title: Your details
+        edit: Edit your details
+      billing_address:
+        title: Billing address
+      delivery_info:
+        title: Delivery info
+      payment_method:
+        title: Payment method
+        edit: Edit payment method
+      order:
+        title: Order total
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      agree: By clickin 'Complete order' you agree to your order being processed.
+      submit: Complete order
+      cancel: Back to Payment method
     errors:
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"

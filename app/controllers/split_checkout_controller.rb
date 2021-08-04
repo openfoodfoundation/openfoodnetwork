@@ -32,6 +32,7 @@ class SplitCheckoutController < ::BaseController
   before_action :enable_embedded_shopfront
 
   helper 'spree/orders'
+  helper OrderHelper
 
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
