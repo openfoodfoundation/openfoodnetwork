@@ -137,7 +137,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
   end
 
   context "StripeSCA" do
-    context "requesting a refund on a payment" do
+    context "voiding a payment" do
       let(:params) { { id: payment.id, order_id: order.number, e: :void } }
 
       # Required for the respond override in the controller decorator to work
@@ -156,59 +156,82 @@ describe Spree::Admin::PaymentsController, type: :controller do
           allow(StripeAccount).to receive(:find_by) { stripe_account }
         end
 
-        context "where the request succeeds" do
+        context "when the payment has been confirmed" do
+          context "where the request succeeds" do
+            before do
+              stub_payment_intent_get_request(response: { intent_status: "succeeded" })
+              # Issues the refund
+              stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
+                with(basic_auth: ["sk_test_12345", ""]).
+                to_return(status: 200,
+                          body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+            end
+
+            it "voids the payment" do
+              order.reload
+              expect(order.payment_total).to_not eq 0
+              expect(order.outstanding_balance.to_f).to eq 0
+              spree_put :fire, params
+              expect(payment.reload.state).to eq 'void'
+              order.reload
+              expect(order.payment_total).to eq 0
+              expect(order.outstanding_balance.to_f).to_not eq 0
+            end
+          end
+
+          context "where the request fails" do
+            before do
+              stub_payment_intent_get_request(response: { intent_status: "succeeded" })
+              stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
+                with(basic_auth: ["sk_test_12345", ""]).
+                to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
+            end
+
+            it "does not void the payment" do
+              order.reload
+              expect(order.payment_total).to_not eq 0
+              expect(order.outstanding_balance.to_f).to eq 0
+              spree_put :fire, params
+              expect(payment.reload.state).to eq 'completed'
+              order.reload
+              expect(order.payment_total).to_not eq 0
+              expect(order.outstanding_balance.to_f).to eq 0
+              expect(flash[:error]).to eq "Bup-bow!"
+            end
+          end
+
+          context "when a partial refund has already been issued" do
+            before do
+              stub_payment_intent_get_request(response: { intent_status: "succeeded", amount_refunded: 200 })
+              stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
+                with(basic_auth: ["sk_test_12345", ""]).
+                to_return(status: 200,
+                          body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+            end
+
+            it "can still void the payment" do
+              order.reload
+              expect(order.payment_total).to_not eq 0
+              expect(order.outstanding_balance.to_f).to eq 0
+              spree_put :fire, params
+              expect(payment.reload.state).to eq 'void'
+              order.reload
+              expect(order.payment_total).to eq 0
+              expect(order.outstanding_balance.to_f).to_not eq 0
+            end
+          end
+        end
+
+        context "when the payment has not been confirmed yet" do
           before do
-            stub_payment_intent_get_request
-            # Issues the refund
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
+            stub_payment_intent_get_request(response: { intent_status: "requires_action" })
+            stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/cancel").
               with(basic_auth: ["sk_test_12345", ""]).
               to_return(status: 200,
-                        body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+                        body: JSON.generate(id: 'pi_123', object: 'payment_intent', status: 'canceled') )
           end
 
           it "voids the payment" do
-            order.reload
-            expect(order.payment_total).to_not eq 0
-            expect(order.outstanding_balance.to_f).to eq 0
-            spree_put :fire, params
-            expect(payment.reload.state).to eq 'void'
-            order.reload
-            expect(order.payment_total).to eq 0
-            expect(order.outstanding_balance.to_f).to_not eq 0
-          end
-        end
-
-        context "where the request fails" do
-          before do
-            stub_payment_intent_get_request
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
-              to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
-          end
-
-          it "does not void the payment" do
-            order.reload
-            expect(order.payment_total).to_not eq 0
-            expect(order.outstanding_balance.to_f).to eq 0
-            spree_put :fire, params
-            expect(payment.reload.state).to eq 'completed'
-            order.reload
-            expect(order.payment_total).to_not eq 0
-            expect(order.outstanding_balance.to_f).to eq 0
-            expect(flash[:error]).to eq "Bup-bow!"
-          end
-        end
-
-        context "when a partial refund has already been issued" do
-          before do
-            stub_payment_intent_get_request(response: { amount_refunded: 200 })
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
-              to_return(status: 200,
-                        body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
-          end
-
-          it "can still void the payment" do
             order.reload
             expect(order.payment_total).to_not eq 0
             expect(order.outstanding_balance.to_f).to eq 0

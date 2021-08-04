@@ -126,7 +126,7 @@ describe CheckoutController, type: :controller do
         end
 
         it "cancels the payment and resets the order to cart" do
-          expect(payment).to receive(:void!).and_call_original
+          expect(payment).to receive(:void_transaction!).and_call_original
 
           spree_post :edit
 
