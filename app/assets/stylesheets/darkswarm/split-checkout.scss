@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
 
-  span {
+  span, span > a {
     font-size: 1.3rem;
     @include headingFont;
   }
@@ -13,7 +13,7 @@
     background-color: $white;
     border-bottom: 5px solid $min-accessible-grey;
 
-    span {
+    span, span > a {
       color: $min-accessible-grey;
     }
   }
@@ -21,7 +21,7 @@
   &.selected {
     background-color: $ofn-brand;
 
-    span {
+    span, span > a {
       color: $white;
       text-decoration: underline;
     }

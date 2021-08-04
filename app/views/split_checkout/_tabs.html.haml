@@ -1,10 +1,12 @@
 %div.flex
   %div.columns.three.text-center.checkout-tab{"class": [("selected" if @checkout_step == "details"), ("success" unless @checkout_step == "details")]}
     %span
-      = t("split_checkout.your_details")
+      = link_to_if (@checkout_step != "details"), t("split_checkout.your_details"), main_app.checkout_step_path(:details), {} do
+        = t("split_checkout.your_details")
   %div.columns.three.text-center.checkout-tab{"class": [("selected" if @checkout_step == "payment"), ("success" if @checkout_step == "summary")]}
     %span
-      = t("split_checkout.payment_method")
+      = link_to_if (@checkout_step != "payment"), t("split_checkout.payment_method"), main_app.checkout_step_path(:payment), {} do
+        = t("split_checkout.payment_method")
   %div.columns.three.text-center.checkout-tab{"class": ("selected" if @checkout_step == "summary")}
     %span
       = t("split_checkout.order_summary")      
