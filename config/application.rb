@@ -89,7 +89,8 @@ module Openfoodnetwork
     end
 
     # Register Spree calculators
-    initializer 'spree.register.calculators' do |app|
+    Rails.application.reloader.to_prepare do
+      app = Openfoodnetwork::Application
       app.config.spree.calculators.shipping_methods = [
         Calculator::FlatPercentItemTotal,
         Calculator::FlatRate,
@@ -100,7 +101,7 @@ module Openfoodnetwork
       ]
 
       app.config.spree.calculators.add_class('enterprise_fees')
-      config.spree.calculators.enterprise_fees = [
+      app.config.spree.calculators.enterprise_fees = [
         Calculator::FlatPercentPerItem,
         Calculator::FlatRate,
         Calculator::FlexiRate,
@@ -110,7 +111,7 @@ module Openfoodnetwork
       ]
 
       app.config.spree.calculators.add_class('payment_methods')
-      config.spree.calculators.payment_methods = [
+      app.config.spree.calculators.payment_methods = [
         Calculator::FlatPercentItemTotal,
         Calculator::FlatRate,
         Calculator::FlexiRate,
@@ -119,7 +120,7 @@ module Openfoodnetwork
       ]
 
       app.config.spree.calculators.add_class('tax_rates')
-      config.spree.calculators.tax_rates = [
+      app.config.spree.calculators.tax_rates = [
         Calculator::DefaultTax
       ]
     end
@@ -205,5 +206,7 @@ module Openfoodnetwork
     config.action_controller.include_all_helpers = false
 
     config.generators.template_engine = :haml
+
+    config.autoloader = :zeitwerk
   end
 end
