@@ -45,13 +45,14 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       context "with Stripe payment where payment.process! errors out" do
-        let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         before do
-          allow_any_instance_of(Spree::Payment).
-            to receive(:process_offline!).
-            and_raise(Spree::Core::GatewayError.new("Payment Gateway Error"))
+          allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
+            payment.update state: "pending"
+          end
+          allow_any_instance_of(Spree::Payment).to receive(:process_offline!).
+          and_raise(Spree::Core::GatewayError.new("Payment Gateway Error"))
         end
-
+        
         it "redirects to new payment page with flash error" do
           spree_post :create, payment: params, order_id: order.number
 
