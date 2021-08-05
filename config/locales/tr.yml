@@ -1528,6 +1528,32 @@ tr:
   checkout_total_price: Toplam
   checkout_back_to_cart: "Sepete geri dön"
   cost_currency: "Maliyet Para Birimi"
+  split_checkout:
+    step1:
+      your_details:
+        title: Bilgilerin
+        first_name:
+          label: Ad
+        last_name:
+          label: Soyadı
+        email:
+          label: E-posta
+        phone:
+          label: Telefon numarası
+      billing_address:
+        title: Fatura Adresi
+        city:
+          label: ŞEHİR
+        state_id:
+          label: Durum
+        zipcode:
+          label: Posta kodu
+        country_id:
+          label: Ülke
+      delivery_address:
+        title: Teslimat adresi
+    errors:
+      invalid_email: "Lütfen geçerli bir e-posta adresi girin"
   order_paid: ÖDENDİ
   order_not_paid: ÖDENMEYEN
   order_total: Sipariş toplamı

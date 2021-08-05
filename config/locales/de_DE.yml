@@ -496,7 +496,7 @@ de_DE:
         calculator: "Berechnung"
         calculator_values: "Werte zur Berechnung"
         search: "Suche"
-        name_placeholder: "z.B. Verpackungsgebühr"
+        name_placeholder: "z. B. Verpackungsgebühr"
     enterprise_groups:
       index:
         new_button: Neue Unternehmensgruppe
@@ -785,10 +785,10 @@ de_DE:
           create_one_button: "Jetzt erstellen"
           no_method_yet: "Sie haben noch keine Lieferoption angelegt. Bitte erstellen Sie eine."
         shop_preferences:
-          shopfront_requires_login: "Öffentlich sichtbarer Laden?"
-          shopfront_requires_login_tip: "Wählen Sie aus, ob sich Kunden einloggen müssen, um den Laden zu sehen oder ob er für alle sichtbar ist."
-          shopfront_requires_login_false: "Öffentlich"
-          shopfront_requires_login_true: "Nur für eingeloggte Nutzer sichtbar"
+          shopfront_requires_login: "Geöffnet für alle Nutzer?"
+          shopfront_requires_login_tip: "Wählen Sie aus, ob nur Kunden, die Sie Ihrer Kundenliste hinzugefügt haben, einkaufen können oder ob der Laden für alle Nutzer geöffnet ist."
+          shopfront_requires_login_false: "Alle Nutzer"
+          shopfront_requires_login_true: "Nur Kunden auf der Kundenliste"
           recommend_require_login: "Wenn Bestellungen nachträglich geändert werden dürfen, empfehlen wir Ihnen, den Einkauf nur für eingeloggte Nutzer zu ermöglichen."
           allow_guest_orders: "Gasteinkauf"
           allow_guest_orders_tip: "Wählen Sie aus, ob nicht eingeloggte Kunden als Gäste einkaufen dürfen oder ob nur eingeloggten Nutzern der Einkauf möglich ist."
@@ -1299,9 +1299,9 @@ de_DE:
         login: "Einloggen"
         signup: "Registrieren"
         contact: "Kontakt"
-        require_customer_login: "Nur manuell freigeschaltete Kunden können auf diesen Laden zugreifen."
-        require_login_html: "Wenn Sie bereits ein freigeschalteter Kunde sind, fahren Sie mit %{login} oder %{signup} fort."
-        require_login_2_html: "Sie sind noch nicht für diesen Laden freigeschaltet? Bitte nehmen Sie %{contact} mit %{enterprise} auf und fragen Sie nach dem Beitritt."
+        require_customer_login: "Nur manuell der Kundenliste hinzugefügte Nutzer können in diesem Laden einkaufen."
+        require_login_html: "Wenn Sie bereits auf der Kundenliste dieses Ladens stehen, fahren Sie mit %{login} oder %{signup} fort."
+        require_login_2_html: "Sie stehen noch nicht auf der Kundenliste dieses Ladens? Bitte nehmen Sie %{contact} mit %{enterprise} auf und fragen Sie nach der Aufnahme."
         require_customer_html: "Wenn Sie hier einkaufen möchten, nehmen Sie bitte %{contact} mit %{enterprise} auf und fragen Sie nach dem Beitritt."
       select_oc:
         select_oc_html: "Bitte wählen Sie zunächst oben aus, <span class='highlighted'>wann Sie Ihre Bestellung erhalten möchten</span>, um die verfügbaren Produkte anzuzeigen."
@@ -1513,7 +1513,7 @@ de_DE:
   checkout_expand: Erweitern
   checkout_headline: "Ok, jetzt zur Kasse?"
   checkout_as_guest: "Als Gast zur Kasse"
-  checkout_details: "Ihre Details"
+  checkout_details: "Ihre Daten"
   checkout_billing: "Rechnungsinformationen"
   checkout_default_bill_address: "Als Standardrechnungsadresse speichern"
   checkout_shipping: Lieferinformationen
@@ -1530,6 +1530,57 @@ de_DE:
   checkout_total_price: Summe
   checkout_back_to_cart: "Zurück zum Warenkorb"
   cost_currency: "Währung"
+  split_checkout:
+    your_details: 1 - Ihre Daten
+    payment_method: 2 - Zahlungsart
+    order_summary: 3 - Bestellübersicht
+    step1:
+      your_details:
+        title: Ihre Daten
+        first_name:
+          label: Vorname
+          placeholder: z. B. Max
+        last_name:
+          label: Nachname
+          placeholder: z. B. Mustermann
+        email:
+          label: E-Mail-Adresse
+          placeholder: z. B. Max.Mustermann@beispiel.com
+        phone:
+          label: Telefonnummer
+          placeholder: z. B. 016012345678
+      billing_address:
+        title: Rechnungsadresse
+        address1:
+          label: Straße + Hausnummer
+          placeholder: z. B. Gartenstraße 123
+        address2:
+          label: Adresszusatz (optional)
+          placeholder: z. B. c/o Familie Müller
+        city:
+          label: Ort
+          placeholder: z. B. Nordwestheim
+        state_id:
+          label: Bundesland
+        zipcode:
+          label: Postleitzahl
+          placeholder: z. B. 30701
+        country_id:
+          label: Land
+      delivery_address:
+        title: Lieferadresse
+      submit: Weiter - Zahlungsart
+      cancel: Zurück - Warenkorb
+    step2:
+      payment_method:
+        title: Zahlungsart
+      explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
+      submit: Weiter - Bestellübersicht
+      cancel: Zurück - Ihre Daten
+    errors:
+      required: Feld darf nicht leer sein.
+      invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
+      invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
@@ -1914,7 +1965,7 @@ de_DE:
         producer: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Betriebs."
         enterprise_name_field: "Name des Unternehmens:"
         producer_name_field: "Name des Betriebs:"
-        producer_name_field_placeholder: "z.B. Charlies großartige Farm"
+        producer_name_field_placeholder: "z. B. Charlies großartige Farm"
         producer_name_field_error: "Bitte wählen Sie einen eindeutigen Namen für Ihr Unternehmen."
         address1_field: "Adresse:"
         address1_field_placeholder: "z. B. Gartenstraße 123"
@@ -1924,7 +1975,7 @@ de_DE:
         suburb_field_placeholder: "z. B. Nordwestheim"
         suburb_field_error: "Bitte geben Sie einen Ort ein."
         postcode_field: "Postleitzahl:"
-        postcode_field_placeholder: "z.B. 30701"
+        postcode_field_placeholder: "z. B. 30701"
         postcode_field_error: "Bitte geben Sie eine Postleitzahl ein."
         state_field: "Bundesland:"
         state_field_error: "Bitte wählen Sie das Bundesland aus."

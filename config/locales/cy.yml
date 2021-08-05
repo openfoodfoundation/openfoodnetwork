@@ -1459,6 +1459,32 @@ cy:
   checkout_total_price: Cyfanswm
   checkout_back_to_cart: "Yn ôl i&#39;r Cart"
   cost_currency: "Arian Cyfred Cost"
+  split_checkout:
+    step1:
+      your_details:
+        title: Eich manylion
+        first_name:
+          label: Enw cyntaf
+        last_name:
+          label: Enw olaf
+        email:
+          label: E-bost
+        phone:
+          label: Rhif ffôn
+      billing_address:
+        title: Cyfeiriad bilio
+        city:
+          label: Dinas
+        state_id:
+          label: Nodwch
+        zipcode:
+          label: Cod post
+        country_id:
+          label: Gwlad
+      delivery_address:
+        title: Cyfeiriad dosbarthu
+    errors:
+      invalid_email: "Rhowch gyfeiriad e-bost dilys"
   order_paid: DALU
   order_not_paid: NID TALU
   order_total: Cyfanswm archeb

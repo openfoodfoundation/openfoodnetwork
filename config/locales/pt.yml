@@ -1415,6 +1415,32 @@ pt:
   checkout_total_price: Total
   checkout_back_to_cart: "Voltar ao Carrinho"
   cost_currency: "Moeda de Custo"
+  split_checkout:
+    step1:
+      your_details:
+        title: Os seus detalhes
+        first_name:
+          label: Primeiro Nome
+        last_name:
+          label: Último Nome
+        email:
+          label: Email
+        phone:
+          label: Número de telefone
+      billing_address:
+        title: Morada de faturação
+        city:
+          label: Cidade
+        state_id:
+          label: Estado
+        zipcode:
+          label: Código postal
+        country_id:
+          label: País
+      delivery_address:
+        title: Morada de entrega
+    errors:
+      invalid_email: "Por favor usar um endereço de email válido"
   order_paid: PAGO
   order_not_paid: NÃO PAGO
   order_total: Total da encomenda

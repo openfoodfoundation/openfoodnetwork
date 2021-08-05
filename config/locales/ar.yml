@@ -1493,6 +1493,32 @@ ar:
   checkout_total_price: مجموع
   checkout_back_to_cart: "العودة إلى السلة"
   cost_currency: "تكلفة العملة"
+  split_checkout:
+    step1:
+      your_details:
+        title: تفاصيلك
+        first_name:
+          label: الاسم الاول
+        last_name:
+          label: الكنية
+        email:
+          label: البريد الإلكتروني
+        phone:
+          label: رقم الهاتف
+      billing_address:
+        title: عنوان وصول الفواتير
+        city:
+          label: مدينة
+        state_id:
+          label: محافظة
+        zipcode:
+          label: الرمز البريدي
+        country_id:
+          label: بلد
+      delivery_address:
+        title: عنوان التسليم
+    errors:
+      invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
   order_paid: دفع
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب

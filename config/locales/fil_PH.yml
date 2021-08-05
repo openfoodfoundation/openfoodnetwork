@@ -1413,6 +1413,32 @@ fil_PH:
   checkout_total_price: kabuuan
   checkout_back_to_cart: "bumalik sa cart"
   cost_currency: "halaga ng pera"
+  split_checkout:
+    step1:
+      your_details:
+        title: ang inyong detalye
+        first_name:
+          label: Pangalan
+        last_name:
+          label: Apelyido
+        email:
+          label: Email
+        phone:
+          label: telepono
+      billing_address:
+        title: Billing address
+        city:
+          label: Lungsod
+        state_id:
+          label: province
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Bansa
+      delivery_address:
+        title: address kung saan ide-deliver
+    errors:
+      invalid_email: "maglagay ng valid na email address"
   order_paid: BAYAD NA
   order_not_paid: HINDI PA BAYAD
   order_total: kabuuang order

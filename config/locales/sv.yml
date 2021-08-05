@@ -823,6 +823,32 @@ sv:
   checkout_shipping_price: Frakt
   checkout_total_price: 'Summa '
   checkout_back_to_cart: "Tillbaka till Varukorg"
+  split_checkout:
+    step1:
+      your_details:
+        title: Dina detaljer
+        first_name:
+          label: Förnamn
+        last_name:
+          label: Efternamn
+        email:
+          label: E-post
+        phone:
+          label: Telefonnummer
+      billing_address:
+        title: 'Faktureringsadress '
+        city:
+          label: Ort
+        state_id:
+          label: Region
+        zipcode:
+          label: Postkod
+        country_id:
+          label: Land
+      delivery_address:
+        title: 'Leveransadress '
+    errors:
+      invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD
   order_not_paid: INTE BETALD
   order_total: Total order

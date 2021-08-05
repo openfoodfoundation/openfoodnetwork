@@ -1530,6 +1530,32 @@ ru:
   checkout_total_price: Всего
   checkout_back_to_cart: "Назад в корзину"
   cost_currency: "Стоимость валюты"
+  split_checkout:
+    step1:
+      your_details:
+        title: Информация о Вас
+        first_name:
+          label: Имя
+        last_name:
+          label: Фамилия
+        email:
+          label: Email
+        phone:
+          label: Номер телефона
+      billing_address:
+        title: Платежный Адрес
+        city:
+          label: Город
+        state_id:
+          label: Статус
+        zipcode:
+          label: Почтовый индекс
+        country_id:
+          label: Страна
+      delivery_address:
+        title: Адрес доставки
+    errors:
+      invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ

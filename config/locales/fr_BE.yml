@@ -1438,6 +1438,32 @@ fr_BE:
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Devise du Coût"
+  split_checkout:
+    step1:
+      your_details:
+        title: Vos informations
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom de famille
+        email:
+          label: Email
+        phone:
+          label: Numéro de téléphone
+      billing_address:
+        title: Adresse de facturation
+        city:
+          label: Ville
+        state_id:
+          label: Statut de la commande
+        zipcode:
+          label: Code postal
+        country_id:
+          label: Pays
+      delivery_address:
+        title: Adresse de livraison
+    errors:
+      invalid_email: "Veuillez entrer un email valide"
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -3037,6 +3063,8 @@ fr_BE:
           received: "Reçu"
           canceled: "Annulé"
       orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "Impossible d'ajouter un article à une commande annulée"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -3343,7 +3371,7 @@ fr_BE:
     order_mailer:
       cancel_email:
         customer_greeting: "Chère %{name}"
-        instructions_html: "Votre commande avec <strong>%{distributor}</strong> a eter annulée. Veuillez conserver cette information d'annulation pour votre dossiers."
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong> a été annulée. Veuillez conserver cette information d'annulation pour votre dossier."
         dont_cancel: "Si vous avez changer d'avis ou souhaiter annuler cette commande contacter nous %{email}"
         order_summary_canceled_html: "<strong>Résumé de la commande #%{number} [ANNULEE]"
         details: "Voici les détails que vous avez commander:"

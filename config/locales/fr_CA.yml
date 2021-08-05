@@ -1529,6 +1529,32 @@ fr_CA:
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Coût de la devise"
+  split_checkout:
+    step1:
+      your_details:
+        title: Vos informations
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+        email:
+          label: Email
+        phone:
+          label: Numéro de téléphone
+      billing_address:
+        title: Adresse de facturation
+        city:
+          label: Ville
+        state_id:
+          label: Département
+        zipcode:
+          label: Code postal
+        country_id:
+          label: Pays
+      delivery_address:
+        title: Adresse de livraison
+    errors:
+      invalid_email: "Veuillez entrer un email valide"
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande

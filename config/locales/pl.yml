@@ -1428,6 +1428,14 @@ pl:
   checkout_total_price: Razem
   checkout_back_to_cart: "Powrót do koszyka"
   cost_currency: "Waluta kosztu"
+  split_checkout:
+    step1:
+      your_details:
+        email:
+          label: E-mail
+      billing_address:
+        state_id:
+          label: Status
   order_paid: OPŁACONY
   order_not_paid: NIEZAPŁACONE
   order_total: Całkowite zamówienie

@@ -1436,6 +1436,32 @@ es_CO:
   checkout_total_price: Total
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
+  split_checkout:
+    step1:
+      your_details:
+        title: Sus detalles
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellidos
+        email:
+          label: Email
+        phone:
+          label: Número de teléfono
+      billing_address:
+        title: Dirección de cobro
+        city:
+          label: Ciudad
+        state_id:
+          label: Departamento
+        zipcode:
+          label: Código postal
+        country_id:
+          label: País
+      delivery_address:
+        title: Dirección de entrega
+    errors:
+      invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total

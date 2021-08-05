@@ -1510,6 +1510,32 @@ pt_BR:
   checkout_total_price: Total
   checkout_back_to_cart: "De volta para o Carrinho"
   cost_currency: "Custo"
+  split_checkout:
+    step1:
+      your_details:
+        title: Seus detalhes
+        first_name:
+          label: Nome
+        last_name:
+          label: Sobrenome
+        email:
+          label: E-mail
+        phone:
+          label: n
+      billing_address:
+        title: Endereço de fatura
+        city:
+          label: Cidade
+        state_id:
+          label: Estado
+        zipcode:
+          label: CEP
+        country_id:
+          label: País
+      delivery_address:
+        title: Endereço para entrega
+    errors:
+      invalid_email: "Por favor use um endereço de e-mail válido"
   order_paid: PAGO
   order_not_paid: NÃO PAGO
   order_total: Total do pedido

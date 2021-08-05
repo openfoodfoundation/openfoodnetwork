@@ -1504,6 +1504,32 @@ it:
   checkout_total_price: Totale
   checkout_back_to_cart: "Torna al carrello"
   cost_currency: "Moneta"
+  split_checkout:
+    step1:
+      your_details:
+        title: I tuoi dettagli
+        first_name:
+          label: Nome
+        last_name:
+          label: Cognome
+        email:
+          label: Email
+        phone:
+          label: Numero di telefono
+      billing_address:
+        title: Indirizzo di fatturazione
+        city:
+          label: Comune
+        state_id:
+          label: Provincia
+        zipcode:
+          label: CAP
+        country_id:
+          label: Stato
+      delivery_address:
+        title: Indirizzo di consegna
+    errors:
+      invalid_email: "Per favore inserisci un indirizzo email valido"
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Totale dell'ordine

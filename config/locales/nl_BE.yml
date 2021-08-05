@@ -1440,6 +1440,32 @@ nl_BE:
   checkout_total_price: Totaal
   checkout_back_to_cart: "Terug naar je Winkelwagentje"
   cost_currency: "Kosten in deviezen "
+  split_checkout:
+    step1:
+      your_details:
+        title: Jouw gegevens
+        first_name:
+          label: Voornaam
+        last_name:
+          label: Familienaam
+        email:
+          label: E-mail
+        phone:
+          label: Telefoonnummer
+      billing_address:
+        title: 'Facturatie-adres:'
+        city:
+          label: Stad
+        state_id:
+          label: Staat
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Land
+      delivery_address:
+        title: Leveringsadres
+    errors:
+      invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD
   order_not_paid: NIET BETAALD
   order_total: Totale bestelling
