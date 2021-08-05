@@ -219,10 +219,10 @@ feature "As a consumer I want to check out my cart", js: true do
           expect(page).to have_button("Place order now", disabled: true)
         end
 
-        check "Terms of service"
+        check "accept_terms"
         expect(page).to have_button("Place order now", disabled: false)
 
-        uncheck "Terms of service"
+        uncheck "accept_terms"
         expect(page).to have_button("Place order now", disabled: true)
       end
 
@@ -244,10 +244,10 @@ feature "As a consumer I want to check out my cart", js: true do
             expect(page).to have_button("Place order now", disabled: false)
           end
 
-          uncheck "Terms of service"
+          uncheck "accept_terms"
           expect(page).to have_button("Place order now", disabled: true)
 
-          check "Terms of service"
+          check "accept_terms"
           expect(page).to have_button("Place order now", disabled: false)
         end
       end
@@ -279,10 +279,10 @@ feature "As a consumer I want to check out my cart", js: true do
         end
 
         # Both Ts&Cs and TOS appear in the one label for the one checkbox.
-        check "Terms and Conditions"
+        check "accept_terms"
         expect(page).to have_button("Place order now", disabled: false)
 
-        uncheck "Terms of service"
+        uncheck "accept_terms"
         expect(page).to have_button("Place order now", disabled: true)
       end
     end
