@@ -14,6 +14,7 @@ module Api
       include ::ActionController::Head
       include ::ActionController::ConditionalGet
       include ActionView::Layouts
+      include RequestTimeouts
 
       layout false
 

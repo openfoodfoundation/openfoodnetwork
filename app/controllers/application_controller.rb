@@ -10,6 +10,8 @@ require 'open_food_network/referer_parser'
 
 class ApplicationController < ActionController::Base
   include Pagy::Backend
+  include RequestTimeouts
+
   self.responder = ApplicationResponder
   respond_to :html
 

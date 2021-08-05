@@ -167,12 +167,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         describe "two order cycles and more than 20 products for each" do
-          around do |example|
-            Capybara.raise_server_errors = false
-            example.run
-            Capybara.raise_server_errors = true
-          end
-
           before do
             20.times do
               product = create(:simple_product, supplier: supplier)
