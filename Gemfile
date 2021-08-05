@@ -112,7 +112,6 @@ gem 'foundation-icons-sass-rails'
 
 gem 'foundation-rails', '= 5.5.2.1'
 
-gem 'jquery-migrate-rails'
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
 gem "select2-rails", github: "openfoodfoundation/select2-rails", branch: "v349_with_thor_v1"
