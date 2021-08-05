@@ -9,6 +9,8 @@ Darkswarm.controller "ProducerNodeCtrl", ($scope, HashNavigation, $anchorScroll,
   # Toggles shopfront tabs open/closed. Fetches enterprise details from the api, diplays them and adds them
   # to $scope.enterprise_details, or simply displays the details again if previously fetched
   $scope.toggle = (event) ->
+    return if event.target.closest("a")
+
     if $scope.open()
       $scope.toggle_tab(event)
       return
