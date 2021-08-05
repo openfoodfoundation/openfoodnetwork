@@ -1024,6 +1024,7 @@ en_CA:
         schedule: Schedule
         schedules: Schedules
         new_schedule: New Schedule
+        new_schedule_tooltip: The frequency with which a standing order is placed
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
@@ -1527,6 +1528,57 @@ en_CA:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
+  split_checkout:
+    your_details: 1 - Your details
+    payment_method: 2 - Payment Method
+    order_summary: 3 - Order Summary
+    step1:
+      your_details:
+        title: Your details
+        first_name:
+          label: First Name
+          placeholder: e.g. Jane
+        last_name:
+          label: Last Name
+          placeholder: e.g. Doe
+        email:
+          label: Email
+          placeholder: e.g. Janedoe@email.com
+        phone:
+          label: Phone number
+          placeholder: e.g. 07987654321
+      billing_address:
+        title: Billing address
+        address1:
+          label: Address (Street + House Number)
+          placeholder: e.g. Flat 1 Elm Apartments
+        address2:
+          label: Additional address info (optional)
+          placeholder: e.g. Cavalier avenue
+        city:
+          label: City
+          placeholder: e.g. London
+        state_id:
+          label: State
+        zipcode:
+          label: Postal Code
+          placeholder: e.g. N0B 2L0
+        country_id:
+          label: Country
+      delivery_address:
+        title: Delivery address
+      submit: Next - Payment Method
+      cancel: Back to edit basket
+    step2:
+      payment_method:
+        title: Payment Method
+      explaination: You can review and confirm your order in the next step which includes the final costs
+      submit: Next - Order Summary
+      cancel: Back to your details
+    errors:
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
+      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2034,6 +2086,8 @@ en_CA:
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
+  tax: "Tax"
+  tax_amount_included: "%{amount} (included)"
   balance: "Balance"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2112,6 +2166,7 @@ en_CA:
   price_sack: "Price Sack"
   new_order_cycles: "New Order Cycles"
   new_order_cycle: "New Order Cycle"
+  new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
