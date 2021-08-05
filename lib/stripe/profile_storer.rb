@@ -67,11 +67,7 @@ module Stripe
     end
 
     def payment_profile_id(response)
-      if response.params['customer'] # Payment Intents API
-        response.params['id']
-      else
-        response.params['default_source'] || response.params['default_card']
-      end
+      response.params['default_source'] || response.params['default_card']
     end
   end
 end
