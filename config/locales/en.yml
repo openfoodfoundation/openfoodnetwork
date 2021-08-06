@@ -3570,6 +3570,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          include_out_of_stock_variants: "Include variants with no available stock"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
