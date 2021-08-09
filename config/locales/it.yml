@@ -4,6 +4,7 @@ it:
     attributes:
       spree/user:
         password: "Password"
+        password_confirmation: "Conferma password"
       enterprise_fee:
         fee_type: Tipo Tariffa
       spree/order:
@@ -302,6 +303,7 @@ it:
   no_pending_payments: "Nessun pagamento in sospeso"
   invalid_payment_state: "Stato pagamento non valido: %{state}"
   filter_results: Filtra i risultati
+  clear_filters: Pulisci filtri
   quantity: Quantità
   pick_up: Ritiro
   copy: Copia
@@ -319,6 +321,8 @@ it:
   height: "Altezza"
   width: "Larghezza"
   depth: "Profondità"
+  payment_could_not_process: "Il pagamento non ha potuto essere processato"
+  payment_could_not_complete: "Pagamento non completato"
   actions:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
@@ -334,6 +338,8 @@ it:
     destroy: "Eliminare"
     rename: "Rinomina"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
     begins_on: Inizia da
     bill_address: "Indirizzo di fatturazione"
@@ -399,8 +405,16 @@ it:
       enable_embedded_shopfronts: "Abilita vetrine incorporate"
       embedded_shopfronts_whitelist: "Whitelist dei domini esterni"
     terms_of_service_files:
+      create:
+        select_file: "Per favore, seleziona prima un documento"
       show:
+        title: "Documenti Termini di Servizio"
+        no_files: "Non sono ancora stati caricati Termini di Servizio"
+        using_default_terms_html: "Il sito punta attualmente al tuo vecchio %{tos_link}."
+        current_terms_html: "Visualizza l'attuale %{tos_link}. Tempo di caricamento: %{datetime}."
         terms_of_service: "Termini di Servizio"
+        delete: "Cancella documento"
+        confirm_delete: "Sei sicuro di voler cancellare l'attuale documento dei Termini di Servizio?"
     number_localization:
       number_localization_settings: "Settaggi del Numero di Localizzazione"
       enable_localized_number: "Usa la logica internazionale di separazione migliaia/decimali"
@@ -809,6 +823,9 @@ it:
           shopfront_category_ordering_note: "(dall'alto in basso)"
           open_date: "Data apertura"
           close_date: "Data chiusura"
+          display_ordering_in_shopfront: "Ordine di visualizzazione in vetrina:"
+          shopfront_sort_by_category: "Per categoria"
+          shopfront_sort_by_producer: "Per produttore"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produttore"
         social:
@@ -1008,6 +1025,7 @@ it:
         schedule: Programma
         schedules: Programma
         new_schedule: Nuovo programma
+        new_schedule_tooltip: 'La frequenza di una richiesta in abbonamento '
       name_and_timing_form:
         name: Nome
         orders_open: Richieste aperte dal
@@ -1229,6 +1247,7 @@ it:
       message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
       terms_and_conditions: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
+    payment_cancelled_due_to_stock: "Pagamento annullato: la transazione non può avvenire a causa di problemi di disponibilità."
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -1356,6 +1375,12 @@ it:
   address2: Indirizzo (continua)
   city: Comune
   city_placeholder: es. Forlimpopoli
+  latitude: Latitudine
+  latitude_placeholder: es. -37.4713077
+  latitude_longitude_tip: Latitudine e longitudine sono necessarie per visualizzare la tua azienda sulla mappa.
+  longitude: Longitudine
+  longitude_placeholder: es. 144.7851531
+  use_geocoder: Calcola latitudine e longitudine automaticamente dall'indirizzo?
   postcode: CAP
   postcode_placeholder: es. 10040
   suburb: Comune
@@ -1504,6 +1529,57 @@ it:
   checkout_total_price: Totale
   checkout_back_to_cart: "Torna al carrello"
   cost_currency: "Moneta"
+  split_checkout:
+    your_details: 1 - I tuoi dettagli
+    payment_method: 2 - Metodo di pagamento
+    order_summary: 3 - Riepilogo della richiesta
+    step1:
+      your_details:
+        title: I tuoi dettagli
+        first_name:
+          label: Nome
+          placeholder: es. Anna
+        last_name:
+          label: Cognome
+          placeholder: es. Rossi
+        email:
+          label: Email
+          placeholder: es. annarossi@email.com
+        phone:
+          label: Numero di telefono
+          placeholder: es. 328 987654
+      billing_address:
+        title: Indirizzo di fatturazione
+        address1:
+          label: Indirizzo (Via/Piazza/Contrada + numero civico)
+          placeholder: es. Scala 1
+        address2:
+          label: Indirizzo, informazioni aggiuntive (facoltativo)
+          placeholder: es. via Roma
+        city:
+          label: Comune
+          placeholder: es. Catania
+        state_id:
+          label: Provincia
+        zipcode:
+          label: CAP
+          placeholder: e.g. SW11 3QN
+        country_id:
+          label: Stato
+      delivery_address:
+        title: Indirizzo di consegna
+      submit: Prossimo - Metodo di pagamento
+      cancel: Indietro a Modifica carrello
+    step2:
+      payment_method:
+        title: Metodo di pagamento
+      explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
+      submit: Prossimo - riepilogo richiesta
+      cancel: Indietro a Tuoi dettagli
+    errors:
+      required: Il campo non può essere lasciato vuoto
+      invalid_number: "Per favore inserisci un numero di telefono valido"
+      invalid_email: "Per favore inserisci un indirizzo email valido"
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Totale dell'ordine
@@ -1558,6 +1634,7 @@ it:
   email_order_summary_includes_tax: "(include le tasse)"
   email_payment_paid: PAGATO
   email_payment_not_paid: NON PAGATO
+  email_payment_description: Descrizione pagamento alla Conferma
   email_payment_summary: Riepilogo di pagamento
   email_payment_method: "Pagamento attraverso:"
   email_so_placement_intro_html: "Hai una nuova gentile richiesta di <strong>%{distributor}</strong>"
@@ -1903,6 +1980,11 @@ it:
         state_field_error: "Provincia obbligatoria"
         country_field: "Nazione"
         country_field_error: "Seleziona una nazione"
+        map_location: "Posizione Mappa"
+        locate_address: "Posiziona indirizzo sulla mappa"
+        drag_pin: "Puoi trascinare il cursore nella posizione corretta."
+        confirm_address: "Confermo che la posizione dell'azienda indicata sulla mappa è corretta."
+        drag_map_marker: "Visto che molti produttori operano in aree rurali, l'accuratezza della mappa è sempre migliorabile. Aiutaci a capire meglio dove ti trovi interagendo con la mappa qui sopra: puoi muovere il tuo cursore tenendolo cliccato e spostandolo nella giusta posizione."
       contact:
         title: "Contatto"
         who_is_managing_enterprise: "Chi è responsabile per la gestione di %{enterprise}?"
@@ -2005,6 +2087,8 @@ it:
   fundraising_fee: "Contributo raccolta fondi"
   price_graph: "Grafico prezzo"
   included_tax: "Tasse incluse"
+  tax: "Tasse"
+  tax_amount_included: "%{amount} (incluso)"
   balance: "Bilancio"
   transaction: "Transazione"
   transaction_date: "Data"
@@ -2083,6 +2167,7 @@ it:
   price_sack: "Tariffa flessibile (per importo totale)"
   new_order_cycles: "Nuovi cicli di richieste"
   new_order_cycle: "Nuovo ciclo di richieste"
+  new_order_cycle_tooltip: "Negozio aperto per un certo periodo"
   select_a_coordinator_for_your_order_cycle: "Seleziona un coordinatore per il tuo ciclo di ordini"
   notify_producers: 'Avvisa produttori'
   edit_order_cycle: "Modifica il ciclo d'ordine"
@@ -2642,6 +2727,7 @@ it:
           failed: "fallito"
           paid: "pagato"
           pending: "in sospeso"
+          requires_authorization: "autorizzazione richiesta"
           processing: "in elaborazione"
           void: "vuoto"
           invalid: "invalido"
@@ -3598,6 +3684,7 @@ it:
       paid: pagato
       pending: in pendenza
       processing: in elaborazione
+      requires_authorization: "autorizzazione richiesta"
       void: vuoto
       invalid: invalido
       authorise: autorizza
@@ -3645,6 +3732,7 @@ it:
     shipment_mailer:
       shipped_email:
         dear_customer: "Caro Cliente,"
+        instructions: "La tua richiesta da %{distributor} è stata consegnata"
         shipment_summary: "Riepilogo della Spedizione"
         subject: "Notifica di Spedizione"
         thanks: "Grazie per il tuo lavoro."
