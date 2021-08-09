@@ -1,7 +1,7 @@
 # Allows disabling of link buttons via disabled attribute.
 # This is normally ignored, ie the link appears disabled but is still clickable.
 
-Darkswarm.directive "disableDynamically", ->
+angular.module('Darkswarm').directive "disableDynamically", ->
   restrict: 'A'
 
   link: (scope, element, attrs) ->
@@ -10,3 +10,5 @@ Darkswarm.directive "disableDynamically", ->
         e.preventDefault()
       return
 
+    scope.$on "$destroy", ->
+      element.off("click")

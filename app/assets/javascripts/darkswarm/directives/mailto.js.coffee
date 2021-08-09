@@ -1,4 +1,4 @@
-Darkswarm.directive "mailto", (Navigation)->
+angular.module('Darkswarm').directive "mailto", (Navigation)->
   restrict: 'A'
   link: (scope, element, attrs)->
     element.bind 'click', (e)->

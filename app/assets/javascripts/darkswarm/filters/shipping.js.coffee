@@ -1,4 +1,4 @@
-Darkswarm.filter 'shipping', ()->
+angular.module('Darkswarm').filter 'shipping', ()->
   (objects, options)->
     objects ||= []
 

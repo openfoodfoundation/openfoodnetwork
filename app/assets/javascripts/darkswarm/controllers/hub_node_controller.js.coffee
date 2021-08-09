@@ -1,4 +1,4 @@
-Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, CurrentHub, $http, $timeout) ->
+angular.module('Darkswarm').controller "HubNodeCtrl", ($scope, HashNavigation, CurrentHub, $http, $timeout) ->
   $scope.shopfront_loading = false
   $scope.enterprise_details = []
 

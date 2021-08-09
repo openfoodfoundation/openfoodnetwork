@@ -1,4 +1,4 @@
-Darkswarm.directive "disableEnterWithBlur", ()->
+angular.module('Darkswarm').directive "disableEnterWithBlur", ()->
   # Stops enter from doing normal enter things, and blurs the input
   restrict: 'A'
   link: (scope, element, attrs)->

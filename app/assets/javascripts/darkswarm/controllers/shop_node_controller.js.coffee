@@ -1,4 +1,4 @@
-Darkswarm.controller "ShopNodeCtrl", ($scope, HashNavigation, $anchorScroll) ->
+angular.module('Darkswarm').controller "ShopNodeCtrl", ($scope, HashNavigation, $anchorScroll) ->
   $scope.toggle = ->
     HashNavigation.toggle $scope.shop.hash
 

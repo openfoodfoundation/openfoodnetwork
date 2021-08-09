@@ -1,4 +1,4 @@
-Darkswarm.directive "tab", ->
+angular.module('Darkswarm').directive "tab", ->
   restrict: "C"
   require: "^^tabsetCtrl"
   scope:
@@ -7,6 +7,9 @@ Darkswarm.directive "tab", ->
     element.on "click", ->
       scope.$apply ->
         ctrl.toggle(scope.name)
+
+    scope.$on "$destroy", ->
+      element.off("click")
 
     ctrl.registerSelectionListener (prefix, selection) ->
       element.toggleClass('selected', selection == scope.name)

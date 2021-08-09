@@ -1,4 +1,4 @@
-window.Darkswarm = angular.module("Darkswarm", [
+angular.module("Darkswarm", [
   'ngResource',
   'mm.foundation',
   'LocalStorageModule',

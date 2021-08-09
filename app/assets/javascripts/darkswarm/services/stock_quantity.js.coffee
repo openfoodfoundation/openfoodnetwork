@@ -1,4 +1,4 @@
-Darkswarm.factory "StockQuantity", ->
+angular.module('Darkswarm').factory "StockQuantity", ->
   new class StockQuantity
     available_quantity: (on_hand, finalized_quantity) ->
       on_hand = parseInt(on_hand)

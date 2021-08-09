@@ -1,4 +1,4 @@
-Darkswarm.directive "helpModal", ($modal, $compile, $templateCache)->
+angular.module('Darkswarm').directive "helpModal", ($modal, $compile, $templateCache)->
   restrict: 'A'
   scope:
     helpText: "@helpModal"
@@ -8,3 +8,6 @@ Darkswarm.directive "helpModal", ($modal, $compile, $templateCache)->
 
     elem.on "click", =>
       $modal.open(controller: ctrl, template: compiled, scope: scope, windowClass: 'help-modal small')
+
+    scope.$on "$destroy", ->
+      elem.off("click")

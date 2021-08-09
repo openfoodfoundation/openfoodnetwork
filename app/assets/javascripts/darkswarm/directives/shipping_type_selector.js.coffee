@@ -1,4 +1,4 @@
-Darkswarm.directive "shippingTypeSelector", ->
+angular.module('Darkswarm').directive "shippingTypeSelector", ->
   # Builds selector for shipping types
   restrict: 'E'
   replace: true

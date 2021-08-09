@@ -1,3 +1,3 @@
-Darkswarm.factory 'Groups', (groups) ->
+angular.module('Darkswarm').factory 'Groups', (groups) ->
   new class Groups
     groups: groups

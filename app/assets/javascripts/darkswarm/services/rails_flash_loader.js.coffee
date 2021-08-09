@@ -1,4 +1,4 @@
-Darkswarm.factory 'RailsFlashLoader', (flash, railsFlash)->
+angular.module('Darkswarm').factory 'RailsFlashLoader', (flash, railsFlash)->
   new class RailsFlashLoader
     # The 'flash' service requires type key to
     # be one of: success, info, warn, error

@@ -1,4 +1,4 @@
-Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration) ->
+angular.module('Darkswarm').factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration) ->
   new class OfnMap
     constructor: ->
       @coordinates = {}

@@ -1,4 +1,4 @@
-Darkswarm.factory "EnterpriseListModal", ($modal, $rootScope, $http, EnterpriseModal)->
+angular.module('Darkswarm').factory "EnterpriseListModal", ($modal, $rootScope, $http, EnterpriseModal)->
   new class EnterpriseListModal
     open: (enterprises)->
       scope = $rootScope.$new(true)

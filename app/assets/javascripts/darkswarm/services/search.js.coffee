@@ -1,4 +1,4 @@
-Darkswarm.factory "Search", ($location)->
+angular.module('Darkswarm').factory "Search", ($location)->
   new class Search
     search: (query = false)->
       if query

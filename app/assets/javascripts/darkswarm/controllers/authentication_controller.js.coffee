@@ -1,4 +1,4 @@
-Darkswarm.controller "AuthenticationCtrl", ($scope, AuthenticationService, SpreeUser)->
+angular.module('Darkswarm').controller "AuthenticationCtrl", ($scope, AuthenticationService, SpreeUser)->
   $scope.open = AuthenticationService.open
   $scope.toggle = AuthenticationService.toggle
 

@@ -1,4 +1,4 @@
-Darkswarm.directive "confirmLinkClick", ($window) ->
+angular.module('Darkswarm').directive "confirmLinkClick", ($window) ->
   restrict: 'A'
   scope:
     confirmMsg: '@confirmLinkClick'

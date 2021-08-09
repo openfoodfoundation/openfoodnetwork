@@ -1,4 +1,4 @@
-Darkswarm.directive "filterSelector", ->
+angular.module('Darkswarm').directive "filterSelector", ->
   # Automatically builds activeSelectors for taxons
   # Lots of magic here
   restrict: 'E'

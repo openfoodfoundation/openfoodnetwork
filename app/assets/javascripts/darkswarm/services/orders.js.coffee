@@ -1,4 +1,4 @@
-Darkswarm.factory 'Orders', (orders, shops, currencyConfig)->
+angular.module('Darkswarm').factory 'Orders', (orders, shops, currencyConfig)->
   new class Orders
     all: orders
     changeable: []

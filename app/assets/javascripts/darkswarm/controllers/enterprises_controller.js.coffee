@@ -1,4 +1,4 @@
-Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+angular.module('Darkswarm').controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.producers_to_filter = Enterprises.producers
   $scope.filterSelectors = FilterSelectorsService.createSelectors()

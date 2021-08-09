@@ -1,4 +1,4 @@
-Darkswarm.filter 'closedShops', ->
+angular.module('Darkswarm').filter 'closedShops', ->
   (enterprises, show_closed) ->
     enterprises ||= []
     show_closed ?= false

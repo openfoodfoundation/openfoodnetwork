@@ -1,4 +1,4 @@
-Darkswarm.directive "validateStockQuantity", (StockQuantity) ->
+angular.module('Darkswarm').directive "validateStockQuantity", (StockQuantity) ->
   restrict: 'A'
   require: "ngModel"
   scope: true

@@ -1,4 +1,4 @@
-Darkswarm.directive "tabsetCtrl", (Tabsets, $location, $rootScope) ->
+angular.module('Darkswarm').directive "tabsetCtrl", (Tabsets, $location, $rootScope) ->
   restrict: "C"
   scope:
     id: "@"

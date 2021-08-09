@@ -1,4 +1,4 @@
-Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeElements, Navigation, $http, Messages)->
+angular.module('Darkswarm').factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeElements, Navigation, $http, Messages)->
   new class CreditCard
     visible: false
     errors: {}

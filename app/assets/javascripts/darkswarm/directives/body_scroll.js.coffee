@@ -1,4 +1,4 @@
-Darkswarm.directive "bodyScroll", ($rootScope, BodyScroll) ->
+angular.module('Darkswarm').directive "bodyScroll", ($rootScope, BodyScroll) ->
   restrict: 'A'
   scope: true
   link: (scope, elem, attrs) ->

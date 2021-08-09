@@ -1,4 +1,4 @@
-Darkswarm.controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, AuthenticationService, Redirections, Loading) ->
+angular.module('Darkswarm').controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, AuthenticationService, Redirections, Loading) ->
   $scope.path = "/login"
 
   $scope.modalMessage = null

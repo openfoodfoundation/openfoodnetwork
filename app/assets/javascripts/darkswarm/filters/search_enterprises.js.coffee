@@ -1,4 +1,4 @@
-Darkswarm.filter 'searchEnterprises', (Matcher)->
+angular.module('Darkswarm').filter 'searchEnterprises', (Matcher)->
   # Search multiple fields of enterprises for matching text fragment.
   (enterprises, text) ->
     enterprises ||= []

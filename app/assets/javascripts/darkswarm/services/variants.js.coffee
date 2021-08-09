@@ -1,4 +1,4 @@
-Darkswarm.factory 'Variants', ->
+angular.module('Darkswarm').factory 'Variants', ->
   new class Variants
     variants: {}
 

@@ -1,4 +1,4 @@
-Darkswarm.factory 'ShopsResource', ($resource) ->
+angular.module('Darkswarm').factory 'ShopsResource', ($resource) ->
   $resource('/api/v0/shops/:id.json', {}, {
     'closed_shops':
       method: 'GET'

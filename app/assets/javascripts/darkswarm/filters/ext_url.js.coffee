@@ -1,4 +1,4 @@
-Darkswarm.filter "ext_url", ->
+angular.module('Darkswarm').filter "ext_url", ->
   urlPattern = /^https?:\/\//
   (url, prefix) ->
     if !url || url.match(urlPattern)

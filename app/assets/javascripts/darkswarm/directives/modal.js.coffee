@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnModal", ($modal)->
+angular.module('Darkswarm').directive "ofnModal", ($modal)->
   # Generic modal! Uses transclusion so designer-types can do stuff like:
   # %ofn-modal 
   #   CONTENT
@@ -17,3 +17,6 @@ Darkswarm.directive "ofnModal", ($modal)->
     elem.on "click", =>
       transclude scope, (clone)->
         scope.modalInstance = $modal.open(controller: ctrl, template: clone, scope: scope)
+
+    scope.$on "$destroy", ->
+      elem.off("click")

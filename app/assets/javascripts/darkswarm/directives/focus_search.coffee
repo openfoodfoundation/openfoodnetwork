@@ -1,4 +1,4 @@
-Darkswarm.directive "focusSearch", ->
+angular.module('Darkswarm').directive "focusSearch", ->
   restrict: 'A'
   link: (scope, element, attr)->
     element.bind 'click', (event) ->

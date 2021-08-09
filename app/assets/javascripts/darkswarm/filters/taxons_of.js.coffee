@@ -1,4 +1,4 @@
-Darkswarm.filter 'taxonsOf', ->
+angular.module('Darkswarm').filter 'taxonsOf', ->
   (objects)->
     taxons = {}
     for object in objects

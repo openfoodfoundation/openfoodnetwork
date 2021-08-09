@@ -1,4 +1,4 @@
-Darkswarm.factory "Matcher", ->
+angular.module('Darkswarm').factory "Matcher", ->
   new class Matcher
 
     # Match text fragment in an array of strings.

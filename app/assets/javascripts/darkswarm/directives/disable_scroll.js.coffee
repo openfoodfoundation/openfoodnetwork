@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnDisableScroll", ()->
+angular.module('Darkswarm').directive "ofnDisableScroll", ()->
   # Stops scrolling from incrementing or decrementing input value
   # Useful for number inputs
   restrict: 'A'

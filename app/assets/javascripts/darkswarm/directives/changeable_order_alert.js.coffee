@@ -1,4 +1,4 @@
-Darkswarm.directive "changeableOrdersAlert", (ChangeableOrdersAlert) ->
+angular.module('Darkswarm').directive "changeableOrdersAlert", (ChangeableOrdersAlert) ->
   restrict: "C"
   scope: true
   link: (scope, element, attrs) ->

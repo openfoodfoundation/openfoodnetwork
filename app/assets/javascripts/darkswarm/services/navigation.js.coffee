@@ -1,4 +1,4 @@
-Darkswarm.factory 'Navigation', ($location, $window) ->
+angular.module('Darkswarm').factory 'Navigation', ($location, $window) ->
   new class Navigation
     path: null
 

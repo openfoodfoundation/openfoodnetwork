@@ -1,4 +1,4 @@
-Darkswarm.directive "embeddedTargetBlank", ->
+angular.module('Darkswarm').directive "embeddedTargetBlank", ->
   restrict: 'A'
   compile: (element) ->
     elems = (element.children().find("a"))

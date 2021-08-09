@@ -1,4 +1,4 @@
-Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, Messages)->
+angular.module('Darkswarm').factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, Messages)->
   new class Checkout
     errors: {}
     secrets: {}

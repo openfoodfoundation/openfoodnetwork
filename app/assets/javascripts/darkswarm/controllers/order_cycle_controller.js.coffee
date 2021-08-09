@@ -1,8 +1,8 @@
-Darkswarm.controller "OrderCycleCtrl", ($scope, $rootScope, $timeout, OrderCycle) ->
+angular.module('Darkswarm').controller "OrderCycleCtrl", ($scope, $rootScope, $timeout, OrderCycle) ->
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.OrderCycle = OrderCycle
 
-Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $rootScope, $timeout, OrderCycle, Products, Variants, Cart, ChangeableOrdersAlert) ->
+angular.module('Darkswarm').controller "OrderCycleChangeCtrl", ($scope, $rootScope, $timeout, OrderCycle, Products, Variants, Cart, ChangeableOrdersAlert) ->
   # Track previous order cycle id for use with revertOrderCycle()
   $scope.previous_order_cycle_id = OrderCycle.order_cycle.order_cycle_id
   $scope.$watch 'order_cycle.order_cycle_id', (newValue, oldValue)->

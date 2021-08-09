@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons, Dereferencer, Matcher, GmapsGeo, $rootScope) ->
+angular.module('Darkswarm').factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons, Dereferencer, Matcher, GmapsGeo, $rootScope) ->
   new class Enterprises
     enterprises: []
     enterprises_by_id: {}

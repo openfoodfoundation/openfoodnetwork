@@ -1,4 +1,4 @@
-Darkswarm.filter "localizeCurrency", (currencyConfig)->
+angular.module('Darkswarm').filter "localizeCurrency", (currencyConfig)->
   # Convert number to string currency using injected currency configuration.
   (amount) ->
     # Set country code (eg. "US").

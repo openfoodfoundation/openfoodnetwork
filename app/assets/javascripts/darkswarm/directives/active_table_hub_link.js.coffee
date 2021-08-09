@@ -1,4 +1,4 @@
-Darkswarm.directive "activeTableHubLink", (CurrentHub, CurrentOrder) ->
+angular.module('Darkswarm').directive "activeTableHubLink", (CurrentHub, CurrentOrder) ->
   # Change the text of the hub link based on CurrentHub
   # To be used with ofnEmptiesCart
   # Takes "change" and "shop" as text string attributes

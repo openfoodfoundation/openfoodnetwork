@@ -1,4 +1,4 @@
-Darkswarm.factory "EnterpriseImageService", (FileUploader, spreeApiKey) ->
+angular.module('Darkswarm').factory "EnterpriseImageService", (FileUploader, spreeApiKey) ->
   new class EnterpriseImageService
     imageSrc: null
 

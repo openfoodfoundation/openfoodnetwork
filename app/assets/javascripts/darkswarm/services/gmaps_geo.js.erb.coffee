@@ -1,4 +1,4 @@
-Darkswarm.service "GmapsGeo", ->
+angular.module('Darkswarm').service "GmapsGeo", ->
   new class GmapsGeo
     OK: google?.maps?.GeocoderStatus?.OK
 

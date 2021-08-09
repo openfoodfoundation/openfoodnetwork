@@ -1,4 +1,4 @@
-Darkswarm.factory "Properties", (properties)->
+angular.module('Darkswarm').factory "Properties", (properties)->
   new class Properties
     # Populate ProductProperties.properties from json in page.
     properties: properties

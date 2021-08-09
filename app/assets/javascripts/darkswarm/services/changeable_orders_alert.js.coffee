@@ -1,4 +1,4 @@
-Darkswarm.factory 'ChangeableOrdersAlert', ($http) ->
+angular.module('Darkswarm').factory 'ChangeableOrdersAlert', ($http) ->
   new class ChangeableOrdersAlert
     html: ''
     visible: true

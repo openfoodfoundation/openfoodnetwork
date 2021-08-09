@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService, Messages) ->
+angular.module('Darkswarm').factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService, Messages) ->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false

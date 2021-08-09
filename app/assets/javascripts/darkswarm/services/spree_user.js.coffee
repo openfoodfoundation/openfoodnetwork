@@ -1,4 +1,4 @@
-Darkswarm.factory 'SpreeUser', () ->
+angular.module('Darkswarm').factory 'SpreeUser', () ->
   # This is for storing Login/Signup/Forgot data to send to server
   # This does NOT represent our current user
   new class SpreeUser

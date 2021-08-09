@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnOnHand", (StockQuantity) ->
+angular.module('Darkswarm').directive "ofnOnHand", (StockQuantity) ->
   restrict: 'A'
   require: "ngModel"
   scope: true

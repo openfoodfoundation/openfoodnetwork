@@ -1,4 +1,4 @@
-Darkswarm.controller "AccordionCtrl", ($scope, localStorageService, $timeout, $document, CurrentHub) ->
+angular.module('Darkswarm').controller "AccordionCtrl", ($scope, localStorageService, $timeout, $document, CurrentHub) ->
   $scope.accordionSections = ["details", "billing", "shipping", "payment"]
   $scope.accordion = { details: true, billing: true, shipping: true, payment: true }
 

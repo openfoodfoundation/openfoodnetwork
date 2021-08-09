@@ -1,4 +1,4 @@
-Darkswarm.filter "truncate", ->
+angular.module('Darkswarm').filter "truncate", ->
   (text, length, end) ->
     text = text || ""
     length = 10  if isNaN(length)

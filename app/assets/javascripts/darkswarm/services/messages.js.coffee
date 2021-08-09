@@ -1,4 +1,4 @@
-Darkswarm.factory "Messages", (Loading, RailsFlashLoader)->
+angular.module('Darkswarm').factory "Messages", (Loading, RailsFlashLoader)->
   new class Messages
     loading: (message) ->
       Loading.message = message

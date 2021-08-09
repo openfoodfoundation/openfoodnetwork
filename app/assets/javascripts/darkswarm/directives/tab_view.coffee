@@ -1,4 +1,4 @@
-Darkswarm.directive "tabView", ->
+angular.module('Darkswarm').directive "tabView", ->
   restrict: "C"
   require: "^^tabsetCtrl"
   template: "<div ng-include='template'></div>"

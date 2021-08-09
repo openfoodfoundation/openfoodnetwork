@@ -1,4 +1,4 @@
-Darkswarm.directive "logoFallback", () ->
+angular.module('Darkswarm').directive "logoFallback", () ->
   restrict: "A"
   link: (scope, elm, attr)->
     elm.bind('error', ->

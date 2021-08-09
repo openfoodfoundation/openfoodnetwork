@@ -1,4 +1,4 @@
-Darkswarm.directive "renderSvg", ()->
+angular.module('Darkswarm').directive "renderSvg", ()->
   # Magical directive that'll render SVGs from URLs
   # If only there were a neater way of doing this
   restrict: 'E'

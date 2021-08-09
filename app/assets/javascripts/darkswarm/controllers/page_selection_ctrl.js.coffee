@@ -1,4 +1,4 @@
-Darkswarm.controller "PageSelectionCtrl", ($scope, $rootScope, $location) ->
+angular.module('Darkswarm').controller "PageSelectionCtrl", ($scope, $rootScope, $location) ->
   $scope.selectedPage = ->
     # The path looks like `/contact` for the URL `https://ofn.org/shop#/contact`.
     # We remove the slash at the beginning.

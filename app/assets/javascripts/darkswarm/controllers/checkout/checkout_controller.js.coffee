@@ -1,4 +1,4 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, CurrentUser, CurrentHub, AuthenticationService, SpreeUser, $http) ->
+angular.module('Darkswarm').controller "CheckoutCtrl", ($scope, localStorageService, Checkout, CurrentUser, CurrentHub, AuthenticationService, SpreeUser, $http) ->
   $scope.Checkout = Checkout
   $scope.submitted = false
 

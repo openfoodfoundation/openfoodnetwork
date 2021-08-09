@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnChangeHub", (CurrentHub, Cart) ->
+angular.module('Darkswarm').directive "ofnChangeHub", (CurrentHub, Cart) ->
   # Compares scope.hub with CurrentHub. Will trigger an confirmation if they are different,
   # and Cart isn't empty
   restrict: "A"

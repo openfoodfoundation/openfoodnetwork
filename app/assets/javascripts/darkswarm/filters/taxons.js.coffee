@@ -1,4 +1,4 @@
-Darkswarm.filter 'taxons', ()->
+angular.module('Darkswarm').filter 'taxons', ()->
   # Filter anything that responds to object.taxons, object.supplied_taxon or object.primary_taxon.
   (objects, ids) ->
     objects ||= []

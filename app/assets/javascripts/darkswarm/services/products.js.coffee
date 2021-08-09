@@ -1,4 +1,4 @@
-Darkswarm.factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants) ->
+angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()

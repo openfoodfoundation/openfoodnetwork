@@ -1,4 +1,4 @@
-Darkswarm.filter "formatBalance", (localizeCurrencyFilter, tFilter)->
+angular.module('Darkswarm').filter "formatBalance", (localizeCurrencyFilter, tFilter)->
   # Convert number to string currency using injected currency configuration.
   (balance) ->
     if balance < 0

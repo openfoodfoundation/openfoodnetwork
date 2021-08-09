@@ -1,4 +1,4 @@
-Darkswarm.directive "linkToService", ->
+angular.module('Darkswarm').directive "linkToService", ->
   restrict: 'E'
   replace: true
   scope: {

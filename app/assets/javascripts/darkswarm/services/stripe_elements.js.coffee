@@ -1,4 +1,4 @@
-Darkswarm.factory 'StripeElements', ($rootScope, Messages) ->
+angular.module('Darkswarm').factory 'StripeElements', ($rootScope, Messages) ->
   new class StripeElements
     # These are both set from the StripeElements directive
     stripe: null

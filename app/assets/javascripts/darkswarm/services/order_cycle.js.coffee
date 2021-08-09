@@ -1,4 +1,4 @@
-Darkswarm.factory 'OrderCycle', ($resource, orderCycleData) ->
+angular.module('Darkswarm').factory 'OrderCycle', ($resource, orderCycleData) ->
   class OrderCycle
     @order_cycle = orderCycleData # Object or {}
     @push_order_cycle: (callback) ->
