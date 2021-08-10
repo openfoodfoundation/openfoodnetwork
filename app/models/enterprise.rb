@@ -60,7 +60,7 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :business_address
+  accepts_nested_attributes_for :business_address, allow_destroy: true
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?

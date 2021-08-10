@@ -6,7 +6,7 @@ module PermittedAttributes
       [
         :company, :address1, :address2,
         :city, :country_id, :state_id, :zipcode,
-        :phone
+        :phone, :_destroy
       ]
     end
   end
