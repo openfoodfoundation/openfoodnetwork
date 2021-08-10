@@ -81,7 +81,8 @@ class SplitCheckoutController < ::BaseController
     params.require(:order).permit(
       :email, :shipping_method_id, :special_instructions,
       bill_address_attributes: PermittedAttributes::Address.attributes,
-      ship_address_attributes: PermittedAttributes::Address.attributes
+      ship_address_attributes: PermittedAttributes::Address.attributes,
+      payments_attributes: [:payment_method_id]
     )
   end
 
