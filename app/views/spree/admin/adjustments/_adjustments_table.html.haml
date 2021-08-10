@@ -25,9 +25,9 @@
         %td.align-center.tax-category
           = taxable.tax_category&.name || "-"
         %td.align-center.tax
-          = display_adjustment_taxes(taxable)
+          = display_taxes(taxable)
         %td.align-center.total
-          = display_adjustment_total_with_tax(taxable)
+          = display_total_with_tax(taxable)
         - unless @order.canceled?
           %td.actions
             - if adjustment.originator_type.nil?
