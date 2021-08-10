@@ -44,6 +44,8 @@ class OrderWorkflow
 
       after_transition_hook(options)
     end
+
+    order.state == target_state
   end
 
   def advance_order!(options)
