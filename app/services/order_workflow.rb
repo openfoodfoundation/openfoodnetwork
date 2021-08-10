@@ -27,6 +27,10 @@ class OrderWorkflow
     advance_to_state("payment", advance_order_options)
   end
 
+  def advance_to_confirmation
+    advance_to_state("confirmation", advance_order_options)
+  end
+
   private
 
   def advance_order_options

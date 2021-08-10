@@ -67,6 +67,10 @@ module Spree
                 transition to: :cart, unless: :completed?
               end
 
+              event :confirm do
+                transition to: :complete, from: :confirmation
+              end
+
               before_transition from: :cart, do: :ensure_line_items_present
 
               before_transition to: :delivery, do: :create_proposed_shipments
