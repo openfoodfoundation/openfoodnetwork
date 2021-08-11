@@ -16,19 +16,6 @@ describe "States" do
     allow(ENV).to receive(:[]).with("DEFAULT_COUNTRY_CODE").and_return("HU")
   end
 
-  # TODO: For whatever reason, rendering of the states page takes a non-trivial amount of time
-  # Therefore we navigate to it, and wait until what we see is visible
-  def go_to_states_page
-    visit spree.admin_country_states_path(country)
-    counter = 0
-    until page.has_css?("#new_state_link")
-      raise "Could not see new state link!" if counter >= 10
-
-      sleep(2)
-      counter += 1
-    end
-  end
-
   context "admin visiting states listing" do
     let!(:state) { Spree::State.create(name: 'Alabama', country: country) }
 
@@ -40,7 +27,7 @@ describe "States" do
 
   context "creating and editing states" do
     it "should allow an admin to edit existing states", js: true do
-      go_to_states_page
+      visit spree.admin_country_states_path(country)
       select2_select country.name, from: "country"
 
       click_link "new_state_link"
@@ -52,7 +39,7 @@ describe "States" do
     end
 
     it "should allow an admin to create states for non default countries", js: true do
-      go_to_states_page
+      visit spree.admin_country_states_path(country)
       select2_select @hungary.name, from: "country"
       # Just so the change event actually gets triggered in this spec
       # It is definitely triggered in the "real world"
@@ -68,7 +55,7 @@ describe "States" do
     end
 
     it "should show validation errors", js: true do
-      go_to_states_page
+      visit spree.admin_country_states_path(country)
       select2_select country.name, from: "country"
       click_link "new_state_link"
 
