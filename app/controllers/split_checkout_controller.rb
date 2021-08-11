@@ -47,9 +47,8 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    if @order.update(order_params)
-      OrderWorkflow.new(@order).advance_to_confirmation
-
+    if confirm_order || update_order
+      advance_order_state
       redirect_to_step
     else
       flash[:error] = "Saving failed, please update the highlighted fields"
@@ -66,6 +65,24 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  def confirm_order
+    return unless @order.confirmation? && params[:confirm_order]
+
+    @order.confirm!
+  end
+
+  def update_order
+    return unless params[:order]
+
+    @order.update(order_params)
+  end
+
+  def advance_order_state
+    return if @order.confirmation? || @order.complete?
+
+    OrderWorkflow.new(@order).advance_to_confirmation
+  end
 
   def checkout_step
     @checkout_step ||= params[:step]
