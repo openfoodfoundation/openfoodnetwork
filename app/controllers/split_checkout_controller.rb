@@ -49,16 +49,11 @@ class SplitCheckoutController < ::BaseController
 
   def update
     if @order.update(order_params)
-      OrderWorkflow.new(@order).advance_to_payment
+      OrderWorkflow.new(@order).advance_to_confirmation
 
-      if @order.state == "payment"
-        redirect_to checkout_step_path(:payment)
-      else
-        render :edit
-      end
+      redirect_to_step
     else
       flash[:error] = "Saving failed, please update the highlighted fields"
-
       render :edit
     end
   end
@@ -87,14 +82,15 @@ class SplitCheckoutController < ::BaseController
   end
 
   def redirect_to_step
-    if @order.state == "payment"
-      if true# order.has_no_payment_method_chosen?
-        redirect_to checkout_step_path(:payment)
-      else
-        redirect_to checkout_step_path(:summary)
-      end
-    else
+    case @order.state
+    when "cart", "address", "delivery"
       redirect_to checkout_step_path(:details)
+    when "payment"
+      redirect_to checkout_step_path(:payment)
+    when "confirmation"
+      redirect_to checkout_step_path(:summary)
+    else
+      redirect_to order_path(@order)
     end
   end
 
