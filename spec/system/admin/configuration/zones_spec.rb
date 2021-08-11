@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "system_helper"
 
 describe "Zones" do
   include AuthenticationHelper
@@ -11,7 +11,7 @@ describe "Zones" do
     Spree::Zone.delete_all
   end
 
-  scenario "list existing zones" do
+  it "lists existing zones" do
     visit spree.edit_admin_general_settings_path
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
@@ -27,7 +27,7 @@ describe "Zones" do
     within_row(2) { expect(page).to have_content("eastern") }
   end
 
-  scenario "create a new zone" do
+  it "creates a new zone" do
     visit spree.admin_zones_path
     click_link "admin_new_zone_link"
     expect(page).to have_content("New Zone")
@@ -39,7 +39,7 @@ describe "Zones" do
     expect(page).to have_content("successfully created!")
   end
 
-  scenario "edit existing zone" do
+  it "edits an existing zone" do
     zone = create(:zone_with_member)
     visit spree.edit_admin_zone_path(zone.id)
 
