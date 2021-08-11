@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "system_helper"
 
 describe "Tax Categories" do
   include AuthenticationHelper
