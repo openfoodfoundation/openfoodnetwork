@@ -123,7 +123,11 @@ module CheckoutHelper
     end
   end
 
+  def checkout_step
+    params[:step]
+  end
+
   def checkout_step?(step)
-    params[:step] == step.to_s
+    checkout_step == step.to_s
   end
 end
