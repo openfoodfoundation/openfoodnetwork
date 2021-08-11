@@ -1,10 +1,6 @@
 - content_for(:title) do
   = t :checkout_title
 
-- content_for :injection_data do
-  = inject_enterprise_and_relatives
-  = inject_available_countries
-
 .darkswarm.footer-pad
   - content_for :order_cycle_form do
     %closing

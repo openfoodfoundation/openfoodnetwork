@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
 
-  span {
+  span, span > a {
     font-size: 1.3rem;
     @include headingFont;
   }
@@ -13,7 +13,7 @@
     background-color: $white;
     border-bottom: 5px solid $min-accessible-grey;
 
-    span {
+    span, span > a {
       color: $min-accessible-grey;
     }
   }
@@ -21,9 +21,28 @@
   &.selected {
     background-color: $ofn-brand;
 
-    span {
+    span, span > a {
       color: $white;
       text-decoration: underline;
+    }
+  }
+
+  &.success {
+    border-bottom: 5px solid $clr-turquoise-bright;
+
+    span {
+      &:after {
+        content: '✓';
+        background-color: $clr-turquoise-bright;
+        color: $white;
+        border-radius: 50%;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        display: inline-block;
+        font-family: $base-font-family;
+        margin-left: 10px;
+      }
     }
   }
 }
@@ -43,7 +62,7 @@
   }
 
   .checkout-title {
-    font-size: 1.1rem;
+    font-size: 1.06rem;
     @include headingFont;
     font-weight: $font-weight-bold;
     text-decoration: underline;
@@ -94,6 +113,11 @@
         white-space: pre-wrap;
       }
     }
+    
+    a {
+      color: $teal-400;
+      text-decoration: underline;
+    }
   }
 
   .checkout-submit {
@@ -112,6 +136,37 @@
         background-color: $grey-100;
         color: $black;
       }
+    }
+  }
+}
+
+.summary {
+  margin-bottom: 2px;
+  font-size: 0.875rem;
+
+  .summary-label {
+    font-weight: bold;
+  }
+
+  .summary-value {
+
+  }
+
+  .summary-edit {
+    color: $teal-400;
+    text-decoration: underline;
+    display: block;
+    margin-top: 5px;
+    &:after {
+      background-image: image-url("edit-with-pen.svg");
+      content: " ";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-left: 5px;
+      line-height: 1em;
+      position: relative;
+      top: 2px;
     }
   }
 }
