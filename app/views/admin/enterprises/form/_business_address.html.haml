@@ -1,12 +1,14 @@
 .row
   .three.columns.alpha
     = bf.label :company, t(".company_legal_name")
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
   .eight.columns.omega
     = bf.text_field :company, { placeholder: t(".company_placeholder") }
 
 .row
   .three.columns.alpha
     = bf.label :address1, t('.address1')
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
   .eight.columns.omega
     = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
 .row
@@ -37,6 +39,7 @@
 .row
   .three.columns.alpha
     = bf.label :phone, t(".legal_phone_number")
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
   .eight.columns.omega
     = bf.text_field :phone, { placeholder: t(".phone_placeholder") }
 
