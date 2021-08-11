@@ -103,13 +103,13 @@
 
 %div.checkout-substep
   %div.checkout-input
-    = f.check_box :accept_terms, {id: 'accept_terms', "checked": "#{all_terms_and_conditions_already_accepted?}"}
+    = f.check_box :accept_terms, {id: 'accept_terms', name: "accept_terms", "checked": "#{all_terms_and_conditions_already_accepted?}"}
     = f.label :accept_terms, t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms), {for: "accept_terms"}
 
   %div.checkout-input
   = t("split_checkout.step3.agree")
 
 %div.checkout-submit
-  = f.submit t("split_checkout.step3.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+  = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
   %a.button.cancel{href: main_app.cart_path}
     = t("split_checkout.step3.cancel")
