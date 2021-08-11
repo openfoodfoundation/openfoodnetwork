@@ -122,4 +122,8 @@ module CheckoutHelper
       "{{ #{price} | localizeCurrency }}"
     end
   end
+
+  def checkout_step?(step)
+    params[:step] == step.to_s
+  end
 end
