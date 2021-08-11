@@ -1577,6 +1577,25 @@ de_DE:
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
+    step3:
+      your_details:
+        title: Ihre Daten
+        edit: Ihre Daten ändern
+      billing_address:
+        title: Rechnungsadresse
+      delivery_info:
+        title: Abhol-/Lieferinformationen
+      payment_method:
+        title: Zahlungsart
+        edit: Zahlungsart ändern
+      order:
+        title: Bestellübersicht
+      terms_and_conditions:
+        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
+        link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
+      agree: Durch Klicken auf "Zahlungspflichtig bestellen" stimmen Sie der Verarbeitung Ihrer Bestellung zu.
+      submit: Zahlungspflichtig bestellen
+      cancel: Zurück - Zahlungsart
     errors:
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
