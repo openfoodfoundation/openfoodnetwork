@@ -50,5 +50,6 @@
 
 
 = f.fields_for :business_address, @enterprise.business_address || @enterprise.build_business_address do |bf|
-  %legend {{business_address.label}}
-  = render 'admin/enterprises/form/business_address', bf: bf
+  %fieldset.alpha.no-border-bottom
+    %legend= t('business_address')
+    = render 'admin/enterprises/form/business_address', bf: bf
