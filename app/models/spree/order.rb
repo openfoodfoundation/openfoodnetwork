@@ -94,6 +94,7 @@ module Spree
     validates :email, presence: true,
                       format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
+    validates :payments, presence: true, if: ->(order) { order.confirmation? && payment_required? }
 
     make_permalink field: :number
 
