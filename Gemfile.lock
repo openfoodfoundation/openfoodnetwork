@@ -352,7 +352,7 @@ GEM
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
     jwt (2.2.3)
-    knapsack (3.1.0)
+    knapsack (4.0.0)
       rake
     launchy (2.5.0)
       addressable (~> 2.7)
@@ -483,7 +483,7 @@ GEM
       rake (>= 0.13)
       thor (~> 1.0)
     rainbow (3.0.0)
-    rake (13.0.3)
+    rake (13.0.6)
     ransack (2.4.2)
       activerecord (>= 5.2.4)
       activesupport (>= 5.2.4)
