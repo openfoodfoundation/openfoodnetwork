@@ -150,7 +150,6 @@ class SplitCheckoutController < ::BaseController
     redirect_to_cart_path && return unless valid_order_line_items?
 
     before_address
-    setup_for_current_state
   end
 
   def redirect_to_shop?
@@ -177,11 +176,6 @@ class SplitCheckoutController < ::BaseController
     end
   end
 
-  def setup_for_current_state
-    method_name = :"before_#{@order.state}"
-    __send__(method_name) if respond_to?(method_name, true)
-  end
-
   def before_address
     associate_user
 
@@ -189,10 +183,6 @@ class SplitCheckoutController < ::BaseController
 
     @order.bill_address = finder.bill_address
     @order.ship_address = finder.ship_address
-  end
-
-  def before_payment
-    current_order.payments.destroy_all if request.put?
   end
 
   def valid_payment_intent_provided?
