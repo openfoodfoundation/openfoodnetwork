@@ -123,6 +123,15 @@ module CheckoutHelper
     end
   end
 
+  def payment_or_shipping_price(method, order)
+    price = method.compute_amount(order)
+    if price.zero?
+      t('checkout_method_free')
+    else
+      Spree::Money.new(price, currency: order.currency)
+    end
+  end
+
   def checkout_step
     params[:step]
   end
