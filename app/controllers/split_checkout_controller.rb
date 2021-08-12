@@ -54,7 +54,7 @@ class SplitCheckoutController < ::BaseController
       advance_order_state
       redirect_to_step
     else
-      flash[:error] = "Saving failed, please update the highlighted fields"
+      flash.now[:error] = "Saving failed, please update the highlighted fields"
       render :edit
     end
   end
