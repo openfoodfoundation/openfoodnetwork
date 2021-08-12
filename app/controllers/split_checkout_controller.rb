@@ -20,14 +20,13 @@ class SplitCheckoutController < ::BaseController
   prepend_before_action :require_order_cycle
   prepend_before_action :require_distributor_chosen
 
-  before_action :load_order
+  before_action :load_order, :associate_user, :load_saved_addresses
   before_action :load_shipping_methods, :load_countries, if: -> { checkout_step == "details"}
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
   before_action :handle_insufficient_stock
 
-  before_action :associate_user
   before_action :check_authorization
   before_action :enable_embedded_shopfront
 
@@ -155,8 +154,6 @@ class SplitCheckoutController < ::BaseController
 
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     redirect_to_cart_path && return unless valid_order_line_items?
-
-    before_address
   end
 
   def redirect_to_shop?
@@ -183,9 +180,7 @@ class SplitCheckoutController < ::BaseController
     end
   end
 
-  def before_address
-    associate_user
-
+  def load_saved_addresses
     finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
 
     @order.bill_address = finder.bill_address
