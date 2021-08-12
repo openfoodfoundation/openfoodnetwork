@@ -39,6 +39,8 @@ class SplitCheckoutController < ::BaseController
 
     redirect_to_step unless checkout_step
 
+    OrderWorkflow.new(@order).next if @order.cart?
+
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
     # the #action_failed method, then we can remove this call
