@@ -2,7 +2,8 @@
   = t :producers_title
 
 - content_for :injection_data do
-  = inject_enterprises(@enterprises)
+  - cache @enterprises do
+    = inject_enterprises(@enterprises)
 
 .producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
   .row

@@ -11,7 +11,7 @@ Openfoodnetwork::Application.configure do
   config.cache_classes = !!ENV["PROFILE"]
 
   # :file_store is used by default when no cache store is specifically configured.
-  if !!ENV["PROFILE"]
+  if !!ENV["PROFILE"] || !!ENV["DEV_CACHING"]
     config.cache_store = :redis_cache_store, {
       driver: :hiredis,
       url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/1"),
@@ -23,7 +23,7 @@ Openfoodnetwork::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = !!ENV["PROFILE"]
+  config.action_controller.perform_caching = !!ENV["PROFILE"] || !!ENV["DEV_CACHING"]
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
