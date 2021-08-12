@@ -92,12 +92,21 @@ class SplitCheckoutController < ::BaseController
   end
 
   def order_params
-    params.require(:order).permit(
+    return @order_params unless @order_params.nil?
+
+    @order_params = params.require(:order).permit(
       :email, :shipping_method_id, :special_instructions,
       bill_address_attributes: PermittedAttributes::Address.attributes,
       ship_address_attributes: PermittedAttributes::Address.attributes,
       payments_attributes: [:payment_method_id]
     )
+
+    if @order_params[:payments_attributes]
+      # Set payment amount
+      @order_params[:payments_attributes].first[:amount] = @order.total
+    end
+
+    @order_params
   end
 
   def redirect_to_step
