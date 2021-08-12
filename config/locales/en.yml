@@ -2876,6 +2876,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           invalid: "invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cannot_remove_last_item: "Cannot remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

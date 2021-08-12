@@ -54,46 +54,53 @@ $(document).ready(function() {
     }
     $('a.save-item').click(handle_save_click);
 
-    handle_delete_click = function(){
-      var del = $(this);
-      var shipment_number = del.data('shipment-number');
-      var variant_id = del.data('variant-id');
+    handle_delete_click = function(e, confirmed){
+      if (confirmed) {
+        var del = $(this);
+        var shipment_number = del.data('shipment-number');
+        var variant_id = del.data('variant-id');
 
-      toggleItemEdit();
+        toggleItemEdit();
 
-      adjustItems(shipment_number, variant_id, 0);
+        adjustItems(shipment_number, variant_id, 0);
+      }
     }
-    $('a.delete-item').click(handle_delete_click);
+    $('a.delete-item').on('confirm:complete', handle_delete_click);
   }
 });
 
 adjustItems = function(shipment_number, variant_id, quantity){
-    var shipment = _.findWhere(shipments, {number: shipment_number + ''});
-    var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
+  var shipment = _.findWhere(shipments, {number: shipment_number + ''});
+  var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
-    var url = Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number;
+  if (quantity == 0 && inventory_units.length == shipment.inventory_units.length) {
+    alert(t("js.admin.orders.cannot_remove_last_item"));
+    return;
+  }
 
-    var new_quantity = 0;
-    if(inventory_units.length<quantity){
-      url += "/add"
-      new_quantity = (quantity - inventory_units.length);
-    }else if(inventory_units.length>quantity){
-      url += "/remove"
-      new_quantity = (inventory_units.length - quantity);
-    }
-    url += '.json';
+  var url = Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number;
 
-    if (new_quantity == 0) {
-      alert(t("js.admin.orders.quantity_unchanged"));
-    } else {
-      $.ajax({
-        type: "PUT",
-        url: Spree.url(url),
-        data: { variant_id: variant_id, quantity: new_quantity }
-      }).done(function( msg ) {
-        window.location.reload();
-      });
-    }
+  var new_quantity = 0;
+  if (inventory_units.length < quantity) {
+    url += "/add";
+    new_quantity = (quantity - inventory_units.length);
+  } else if (inventory_units.length > quantity) {
+    url += "/remove"
+    new_quantity = (inventory_units.length - quantity);
+  }
+  url += '.json';
+
+  if (new_quantity == 0) {
+    alert(t("js.admin.orders.quantity_unchanged"));
+  } else {
+    $.ajax({
+      type: "PUT",
+      url: Spree.url(url),
+      data: { variant_id: variant_id, quantity: new_quantity }
+    }).done(function( msg ) {
+      window.location.reload();
+    });
+  }
 }
 
 toggleTrackingEdit = function(){
