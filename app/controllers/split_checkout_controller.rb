@@ -20,7 +20,8 @@ class SplitCheckoutController < ::BaseController
   prepend_before_action :require_order_cycle
   prepend_before_action :require_distributor_chosen
 
-  before_action :load_order, :load_shipping_methods, :load_countries
+  before_action :load_order
+  before_action :load_shipping_methods, :load_countries, if: -> { checkout_step == "details"}
 
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
