@@ -51,6 +51,7 @@ class SplitCheckoutController < ::BaseController
 
   def update
     if confirm_order || update_order
+      clear_invalid_payments
       advance_order_state
       redirect_to_step
     else
@@ -68,6 +69,10 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  def clear_invalid_payments
+    @order.payments.with_state(:invalid).delete_all
+  end
 
   def confirm_order
     return unless @order.confirmation? && params[:confirm_order]
