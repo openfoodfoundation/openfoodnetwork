@@ -82,9 +82,11 @@ class SplitCheckoutController < ::BaseController
   end
 
   def advance_order_state
-    return if @order.confirmation? || @order.complete?
+    return if @order.complete?
 
-    OrderWorkflow.new(@order).advance_to_confirmation
+    workflow_options = raw_params.slice(:shipping_method_id)
+
+    OrderWorkflow.new(@order).advance_to_confirmation(workflow_options)
   end
 
   def checkout_step
