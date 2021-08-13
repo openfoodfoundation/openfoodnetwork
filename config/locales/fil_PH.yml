@@ -1437,6 +1437,11 @@ fil_PH:
           label: Bansa
       delivery_address:
         title: address kung saan ide-deliver
+    step3:
+      your_details:
+        title: ang inyong detalye
+      billing_address:
+        title: Billing address
     errors:
       invalid_email: "maglagay ng valid na email address"
   order_paid: BAYAD NA

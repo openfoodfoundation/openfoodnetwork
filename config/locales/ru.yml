@@ -1554,6 +1554,14 @@ ru:
           label: Страна
       delivery_address:
         title: Адрес доставки
+    step3:
+      your_details:
+        title: Информация о Вас
+      billing_address:
+        title: Платежный Адрес
+      terms_and_conditions:
+        message_html: "Согласен на %{terms_and_conditions_link} продавца."
+        link_text: "Условия и Положения"
     errors:
       invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
   order_paid: ОПЛАЧЕН

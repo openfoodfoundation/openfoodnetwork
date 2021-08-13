@@ -1534,6 +1534,14 @@ pt_BR:
           label: País
       delivery_address:
         title: Endereço para entrega
+    step3:
+      your_details:
+        title: Seus detalhes
+      billing_address:
+        title: Endereço de fatura
+      terms_and_conditions:
+        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
+        link_text: "Termos e Condições"
     errors:
       invalid_email: "Por favor use um endereço de e-mail válido"
   order_paid: PAGO

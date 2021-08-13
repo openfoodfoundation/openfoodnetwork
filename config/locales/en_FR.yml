@@ -1575,6 +1575,16 @@ en_FR:
       explaination: You can review and confirm your order in the next step.
       submit: Next - Order summary
       cancel: Back to Your details
+    step3:
+      your_details:
+        title: Your details
+      billing_address:
+        title: Billing address
+      payment_method:
+        title: Payment method
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
     errors:
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"

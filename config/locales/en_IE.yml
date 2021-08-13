@@ -1529,30 +1529,74 @@ en_IE:
   checkout_back_to_cart: "Back to cart"
   cost_currency: "Cost Currency"
   split_checkout:
+    your_details: 1 - Your details
+    payment_method: 2 - Payment method
+    order_summary: 3 - Order summary
     step1:
       your_details:
         title: Your details
         first_name:
           label: First Name
+          placeholder: Jo
         last_name:
           label: Last Name
+          placeholder: Bloggs
         email:
           label: Email
+          placeholder: jo.bloggs@email.com
         phone:
           label: Phone number
+          placeholder: e.g. 08X XXX XXXX
       billing_address:
         title: Billing address
+        address1:
+          label: Address (Street + House Number)
+          placeholder: e.g. 123 Main Street
+        address2:
+          label: Additional address info (optional)
+          placeholder: ' '
         city:
           label: City
+          placeholder: e.g. Dublin
         state_id:
           label: County
         zipcode:
           label: Postcode
+          placeholder: e.g. D01 XXXX
         country_id:
           label: Country
       delivery_address:
         title: Delivery address
+      submit: Next - Payment method
+      cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
+    step3:
+      your_details:
+        title: Your details
+        edit: Edit your details
+      billing_address:
+        title: Billing address
+      delivery_info:
+        title: Delivery info
+      payment_method:
+        title: Payment method
+        edit: Edit payment method
+      order:
+        title: Order total
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      agree: By clickin 'Complete order' you agree to your order being processed.
+      submit: Complete order
+      cancel: Back to Payment method
     errors:
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
@@ -2061,6 +2105,8 @@ en_IE:
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
+  tax: "Tax"
+  tax_amount_included: "%{amount} (included)"
   balance: "Balance"
   transaction: "Transaction"
   transaction_date: "Date"

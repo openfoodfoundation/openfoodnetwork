@@ -1517,6 +1517,14 @@ ar:
           label: بلد
       delivery_address:
         title: عنوان التسليم
+    step3:
+      your_details:
+        title: تفاصيلك
+      billing_address:
+        title: عنوان وصول الفواتير
+      terms_and_conditions:
+        message_html: "أوافق على %{terms_and_conditions_link} للبائع."
+        link_text: "الأحكام والشروط"
     errors:
       invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
   order_paid: دفع

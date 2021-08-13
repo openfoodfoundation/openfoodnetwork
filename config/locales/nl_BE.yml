@@ -1464,6 +1464,11 @@ nl_BE:
           label: Land
       delivery_address:
         title: Leveringsadres
+    step3:
+      your_details:
+        title: Jouw gegevens
+      billing_address:
+        title: 'Facturatie-adres:'
     errors:
       invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD

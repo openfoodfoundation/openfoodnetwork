@@ -1552,6 +1552,14 @@ tr:
           label: Ülke
       delivery_address:
         title: Teslimat adresi
+    step3:
+      your_details:
+        title: Bilgilerin
+      billing_address:
+        title: Fatura Adresi
+      terms_and_conditions:
+        message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
+        link_text: "Şartlar ve Koşullar"
     errors:
       invalid_email: "Lütfen geçerli bir e-posta adresi girin"
   order_paid: ÖDENDİ

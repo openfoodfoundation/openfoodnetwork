@@ -1529,6 +1529,14 @@ nb:
           label: Land
       delivery_address:
         title: Leveringsadresse
+    step3:
+      your_details:
+        title: Dine detaljer
+      billing_address:
+        title: Fakturaadresse
+      terms_and_conditions:
+        message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
+        link_text: "Vilkår og Betingelser"
     errors:
       invalid_email: "Vennligst oppgi en gyldig epostadresse"
   order_paid: BETALT

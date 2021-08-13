@@ -1439,6 +1439,13 @@ pt:
           label: País
       delivery_address:
         title: Morada de entrega
+    step3:
+      your_details:
+        title: Os seus detalhes
+      billing_address:
+        title: Morada de faturação
+      terms_and_conditions:
+        link_text: "Termos e Condições"
     errors:
       invalid_email: "Por favor usar um endereço de email válido"
   order_paid: PAGO

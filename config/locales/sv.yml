@@ -847,6 +847,11 @@ sv:
           label: Land
       delivery_address:
         title: 'Leveransadress '
+    step3:
+      your_details:
+        title: Dina detaljer
+      billing_address:
+        title: 'Faktureringsadress '
     errors:
       invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD

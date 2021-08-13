@@ -1483,6 +1483,14 @@ cy:
           label: Gwlad
       delivery_address:
         title: Cyfeiriad dosbarthu
+    step3:
+      your_details:
+        title: Eich manylion
+      billing_address:
+        title: Cyfeiriad bilio
+      terms_and_conditions:
+        message_html: "Rwy&#39;n cytuno i %{terms_and_conditions_link} y gwerthwr."
+        link_text: "Telerau ac Amodau"
     errors:
       invalid_email: "Rhowch gyfeiriad e-bost dilys"
   order_paid: DALU

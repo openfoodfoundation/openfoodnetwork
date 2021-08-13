@@ -1551,6 +1551,14 @@ en_GB:
           label: Country
       delivery_address:
         title: Delivery address
+    step3:
+      your_details:
+        title: Your details
+      billing_address:
+        title: Billing address
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
     errors:
       invalid_email: "Please enter a valid email address"
   order_paid: PAID

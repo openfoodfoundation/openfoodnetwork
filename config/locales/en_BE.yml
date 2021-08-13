@@ -1393,6 +1393,11 @@ en_BE:
           label: Country
       delivery_address:
         title: Delivery address
+    step3:
+      your_details:
+        title: Your details
+      billing_address:
+        title: Billing address
     errors:
       invalid_email: "Please enter a valid email address"
   order_paid: PAID

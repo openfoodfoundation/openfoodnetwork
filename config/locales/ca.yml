@@ -1555,6 +1555,14 @@ ca:
           label: País
       delivery_address:
         title: Adreça de lliurament
+    step3:
+      your_details:
+        title: Els teus detalls
+      billing_address:
+        title: Adreça de facturació
+      terms_and_conditions:
+        message_html: "Accepto el %{terms_and_conditions_link} del venedor."
+        link_text: "Termes i condicions"
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
   order_paid: PAGAT

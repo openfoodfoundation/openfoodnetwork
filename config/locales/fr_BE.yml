@@ -1462,6 +1462,11 @@ fr_BE:
           label: Pays
       delivery_address:
         title: Adresse de livraison
+    step3:
+      your_details:
+        title: Vos informations
+      billing_address:
+        title: Adresse de facturation
     errors:
       invalid_email: "Veuillez entrer un email valide"
   order_paid: RÉGLÉ

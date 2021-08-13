@@ -1437,6 +1437,11 @@ es_CR:
           label: País
       delivery_address:
         title: Dirección de entrega
+    step3:
+      your_details:
+        title: Sus detalles
+      billing_address:
+        title: Dirección de cobro
     errors:
       invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
