@@ -186,7 +186,7 @@ en_US:
       dear_customer: "Dear Customer,"
       instructions: "Your order has been shipped"
       shipment_summary: "Shipment Summary"
-      subject: "Shipment Notification"
+      subject: "Shipment/Pick Up Notification"
       thanks: "Thank you for your business."
       track_information: "Tracking Information: %{tracking}"
       track_link: "Tracking Link: %{url}"
@@ -303,6 +303,7 @@ en_US:
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -821,6 +822,9 @@ en_US:
           shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
+          display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_category: "By category"
+          shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
         social:
@@ -1020,6 +1024,7 @@ en_US:
         schedule: Schedule
         schedules: Schedules
         new_schedule: New Schedule
+        new_schedule_tooltip: The frequency with which a subscription order is placed
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
@@ -1241,6 +1246,7 @@ en_US:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
+    payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1522,6 +1528,76 @@ en_US:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to cart"
   cost_currency: "Cost Currency"
+  split_checkout:
+    your_details: 1 - Your details
+    payment_method: 2 - Payment method
+    order_summary: 3 - Order summary
+    step1:
+      your_details:
+        title: Your details
+        first_name:
+          label: First Name
+          placeholder: e.g. Jane
+        last_name:
+          label: Last Name
+          placeholder: e.g. Doe
+        email:
+          label: Email
+          placeholder: e.g. Janedoe@email.com
+        phone:
+          label: Phone number
+          placeholder: e.g. 07987654321
+      billing_address:
+        title: Billing address
+        address1:
+          label: Address (Street + House Number)
+          placeholder: e.g. Flat 1 Elm apartments
+        address2:
+          label: Additional address info (optional)
+          placeholder: e.g. Cavalier avenue
+        city:
+          label: City
+          placeholder: e.g. Cleveland
+        state_id:
+          label: State
+        zipcode:
+          label: Zipcode
+          placeholder: e.g. 92202
+        country_id:
+          label: Country
+      delivery_address:
+        title: Delivery address
+      submit: Next - Payment method
+      cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to your details
+    step3:
+      your_details:
+        title: Your details
+        edit: Edit your details
+      billing_address:
+        title: Billing address
+      delivery_info:
+        title: Delivery info
+      payment_method:
+        title: Payment method
+        edit: Edit payment method
+      order:
+        title: Order total
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      agree: By clicking 'Complete order' you agree to your order being processed.
+      submit: Complete order
+      cancel: Back to Payment method
+    errors:
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
+      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2029,6 +2105,8 @@ en_US:
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
+  tax: "Tax"
+  tax_amount_included: "%{amount} (included)"
   balance: "Balance"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2107,6 +2185,7 @@ en_US:
   price_sack: "Price Sack"
   new_order_cycles: "New Order Cycles"
   new_order_cycle: "New Order Cycle"
+  new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
@@ -2663,6 +2742,7 @@ en_US:
           failed: "failed"
           paid: "paid"
           pending: "pending"
+          requires_authorization: "authorization required"
           processing: "processing"
           void: "void"
           invalid: "Invalid"
@@ -3619,6 +3699,7 @@ en_US:
       paid: paid
       pending: pending
       processing: processing
+      requires_authorization: "authorization required"
       void: void
       invalid: Invalid
       authorise: authorize
@@ -3666,8 +3747,9 @@ en_US:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
+        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
-        subject: "Shipment Notification"
+        subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
