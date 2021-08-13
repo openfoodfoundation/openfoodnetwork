@@ -32,8 +32,8 @@
                   %br
               - if current_distributor.email_address.present?
                 %a{href: current_distributor.email_address.reverse, mailto: true}
-                  %span.email
-                    = current_distributor.email_address.reverse
+                  %span
+                    = current_distributor.email_address
 
       .small-12.large-4.columns
         - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
