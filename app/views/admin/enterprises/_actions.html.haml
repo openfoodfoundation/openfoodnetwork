@@ -9,26 +9,26 @@
 
 - if enterprise.is_primary_producer
   = link_to_with_icon 'icon-dashboard', t('.properties'), main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise)
-  (#{enterprise.producer_properties.count})
+  (#{enterprise.producer_properties_count})
   %br/
 
 - if enterprise.is_distributor
   - if can?(:admin, Spree::PaymentMethod) && can?(:manage_payment_methods, enterprise)
     = link_to_with_icon 'icon-chevron-right', t('.payment_methods'), spree.admin_payment_methods_path(enterprise_id: enterprise.id)
-    (#{enterprise.payment_methods.count})
-    - if enterprise.payment_methods.count == 0
+    (#{enterprise.payment_methods_count})
+    - if enterprise.payment_methods_count == 0
       %span.icon-exclamation-sign{"ofn-with-tip" => t('.payment_methods_tip'), style: "font-size: 16px;color: #DA5354"}
     %br/
 
   - if can?(:admin, Spree::ShippingMethod) && can?(:manage_shipping_methods, enterprise)
     = link_to_with_icon 'icon-plane', t('.shipping_methods'), spree.admin_shipping_methods_path(enterprise_id: enterprise.id)
-    (#{enterprise.shipping_methods.count})
-    - if enterprise.shipping_methods.count == 0
+    (#{enterprise.shipping_methods_count})
+    - if enterprise.shipping_methods_count == 0
       %span.icon-exclamation-sign{"ofn-with-tip" => t('.shipping_methods_tip'), style: "font-size: 16px;color: #DA5354"}
     %br/
 
 - if can?(:admin, EnterpriseFee) && can?(:manage_enterprise_fees, enterprise)
   = link_to_with_icon 'icon-money', t('.enterprise_fees'), main_app.admin_enterprise_fees_path(enterprise_id: enterprise.id)
-  (#{enterprise.enterprise_fees.count})
-  - if enterprise.enterprise_fees.count == 0
+  (#{enterprise.enterprise_fees_count})
+  - if enterprise.enterprise_fees_count == 0
     %span.icon-warning-sign{"ofn-with-tip" => t('.enterprise_fees_tip'), style: "font-size: 16px;color: orange"}

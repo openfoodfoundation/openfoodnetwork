@@ -63,6 +63,8 @@ class Enterprise < ApplicationRecord
                                               tag_rule[:preferred_customer_tags].blank?
                                             }
 
+  attr_accessor :preloaded_data
+
   has_attached_file :logo,
                     styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
                     url: '/images/enterprises/logos/:id/:style/:basename.:extension',
@@ -377,6 +379,22 @@ class Enterprise < ApplicationRecord
     abn.present?
   end
 
+  def enterprise_fees_count
+    preloaded_data_or_default.enterprise_fees_count
+  end
+
+  def payment_methods_count
+    preloaded_data_or_default.payment_methods_count
+  end
+
+  def producer_properties_count
+    preloaded_data_or_default.producer_properties_count
+  end
+
+  def shipping_methods_count
+    preloaded_data_or_default.shipping_methods_count
+  end
+
   protected
 
   def devise_mailer
@@ -398,6 +416,11 @@ class Enterprise < ApplicationRecord
     dups = dups.where('id != ?', id) unless new_record?
 
     errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email) if dups.any?
+  end
+
+  def preloaded_data_or_default
+    DataPreloader.preload_enterprise_data([self]) if preloaded_data.nil?
+    preloaded_data
   end
 
   def send_welcome_email

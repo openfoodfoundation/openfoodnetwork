@@ -143,7 +143,10 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = Sets::EnterpriseSet.new(collection) if spree_current_user.admin?
+      if spree_current_user.admin?
+        @enterprise_set = Sets::EnterpriseSet.new(collection)
+        DataPreloader.preload_enterprise_data(@enterprise_set.collection)
+      end
     end
 
     def load_countries
