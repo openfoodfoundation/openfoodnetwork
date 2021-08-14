@@ -56,5 +56,13 @@
 #= require_tree .
 
 document.addEventListener "turbo:load", ->
-  angular.bootstrap document.body, ["Darkswarm"]
+  window.injector = angular.bootstrap document.body, ["Darkswarm"]
+  true
+
+document.addEventListener "turbo:before-render", ->
+  if window.injector
+    rootscope = window.injector.get("$rootScope")
+    rootscope?.$destroy()
+    rootscope = null
+    window.injector = null
   true
