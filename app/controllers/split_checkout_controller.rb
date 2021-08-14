@@ -25,7 +25,7 @@ class SplitCheckoutController < ::BaseController
       redirect_to_step
     else
       flash.now[:error] = I18n.t('split_checkout.errors.global')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
