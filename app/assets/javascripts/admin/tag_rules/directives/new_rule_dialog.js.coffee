@@ -1,4 +1,4 @@
-angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templateCache, DialogDefaults) ->
+angular.module("admin.tagRules").directive 'newTagRuleDialog', ($rootScope, $compile, $templateCache, DialogDefaults) ->
   restrict: 'A'
   scope:
     tagGroup: '='
@@ -22,8 +22,10 @@ angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templ
     # Link opening of dialog to click event on element
     element.bind 'click', (e) ->
       template.dialog('open')
+      $rootScope.$evalAsync()
 
     scope.addRule = (tagGroup, ruleType) ->
       scope.addNewRuleTo(tagGroup, ruleType)
       template.dialog('close')
+      $rootScope.$evalAsync()
       return

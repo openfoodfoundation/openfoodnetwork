@@ -1,4 +1,4 @@
-angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compile, $injector, $templateCache, DialogDefaults, OrderCycles, Schedules) ->
+angular.module("admin.orderCycles").directive 'scheduleDialog', ($rootScope, $window, $compile, $injector, $templateCache, DialogDefaults, OrderCycles, Schedules) ->
   restrict: 'A'
   scope:
     scheduleId: '@'
@@ -22,9 +22,11 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
       scope.template.dialog(angular.extend(settings,{width: $window.innerWidth * 0.6}))
       scope.template.dialog(close: -> scope.template.remove())
       scope.template.dialog('open')
+      $rootScope.$evalAsync()
 
     scope.close = ->
       scope.template.dialog('close')
+      $rootScope.$evalAsync()
       return
 
     scope.delete = ->
@@ -55,6 +57,7 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
           if data.id
             scope.submitted = false
             scope.template.dialog('close')
+            $rootScope.$evalAsync()
         , (response) ->
           if response.data.errors
             scope.errors.push(error) for error in response.data.errors

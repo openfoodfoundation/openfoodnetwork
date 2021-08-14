@@ -10,5 +10,5 @@ angular.module('admin.enterpriseFees').controller 'enterpriseFeesCtrl', ($scope,
       url += '&' + match[0]
     url
 
-  $http.get($scope.enterpriseFeesUrl()).success (data) ->
-    $scope.enterprise_fees = data
+  $http.get($scope.enterpriseFeesUrl()).then (response) ->
+    $scope.enterprise_fees = response.data

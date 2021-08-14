@@ -41,16 +41,16 @@ angular.module('Darkswarm').factory 'Cart', (CurrentOrder, Variants, $timeout, $
     update: =>
       @update_running = true
 
-      $http.post('/cart/populate', @data()).success (data, status)=>
+      $http.post('/cart/populate', @data()).then (response)=>
         @saved()
         @update_running = false
 
-        @compareAndNotifyStockLevels data.stock_levels
+        @compareAndNotifyStockLevels response.data.stock_levels
 
         @popQueue() if @update_enqueued
 
-      .error (response, status)=>
-        Messages.flash({error: response.error})
+      .catch (response)=>
+        Messages.flash({error: response.data.error})
         @update_running = false
 
     compareAndNotifyStockLevels: (stockLevels) =>

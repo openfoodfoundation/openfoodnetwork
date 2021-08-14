@@ -148,7 +148,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       $http(
         method: "DELETE"
         url: "/api/v0/products/" + product.id
-      ).success (data) ->
+      ).then (response) ->
         $scope.products.splice $scope.products.indexOf(product), 1
         DirtyProducts.deleteProduct product.id
         $scope.displayDirtyProducts()
@@ -163,7 +163,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
           $http(
             method: "DELETE"
             url: "/api/v0/products/" + product.permalink_live + "/variants/" + variant.id
-          ).success (data) ->
+          ).then (response) ->
             $scope.removeVariant(product, variant)
     else
       alert(t("delete_product_variant"))
@@ -221,16 +221,16 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
           import_date: $scope.q.importDateFilter
         page: $scope.page
         per_page: $scope.per_page
-    ).success((data) ->
+    ).then((response) ->
       DirtyProducts.clear()
-      BulkProducts.updateVariantLists(data.products || [])
+      BulkProducts.updateVariantLists(response.data.products || [])
       $timeout -> $scope.displaySuccess()
-    ).error (data, status) ->
-      if status == 400 && data.errors?
-        errorsString = ErrorsParser.toString(data.errors, status)
+    ).catch (response) ->
+      if response.status == 400 && response.data.errors?
+        errorsString = ErrorsParser.toString(response.data.errors, response.status)
         $scope.displayFailure t("products_update_error") + "\n" + errorsString
       else
-        $scope.displayFailure t("products_update_error_data") + status
+        $scope.displayFailure t("products_update_error_data") + response.status
 
   $scope.cancel = (destination) ->
     $window.location = destination

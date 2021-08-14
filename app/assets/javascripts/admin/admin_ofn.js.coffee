@@ -10,5 +10,7 @@ angular.module("ofn.admin", [
   "admin.taxons",
   "infinite-scroll",
   "admin.orders"
-]).config ($httpProvider) ->
+]).config ($httpProvider, $locationProvider, $qProvider) ->
   $httpProvider.defaults.headers.common["Accept"] = "application/json, text/javascript, */*"
+  $locationProvider.hashPrefix('')
+  $qProvider.errorOnUnhandledRejections(false)

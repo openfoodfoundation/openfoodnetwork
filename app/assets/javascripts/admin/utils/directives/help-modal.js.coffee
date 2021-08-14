@@ -1,4 +1,4 @@
-angular.module("admin.utils").directive 'helpModal', ($compile, $templateCache, $window, DialogDefaults) ->
+angular.module("admin.utils").directive 'helpModal', ($rootScope, $compile, $templateCache, $window, DialogDefaults) ->
   restrict: 'C'
   scope:
     template: '@'
@@ -10,8 +10,11 @@ angular.module("admin.utils").directive 'helpModal', ($compile, $templateCache, 
     template.dialog(DialogDefaults)
 
     # Link opening of dialog to click event on element
-    element.bind 'click', (e) -> template.dialog('open')
+    element.bind 'click', (e) ->
+      template.dialog('open')
+      $rootScope.$evalAsync()
 
     scope.close = ->
       template.dialog('close')
+      $rootScope.$evalAsync()
       return

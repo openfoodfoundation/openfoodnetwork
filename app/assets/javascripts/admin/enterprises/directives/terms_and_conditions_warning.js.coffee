@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").directive 'termsAndConditionsWarning', ($compile, $templateCache, DialogDefaults, $timeout) ->
+angular.module("admin.enterprises").directive 'termsAndConditionsWarning', ($rootScope, $compile, $templateCache, DialogDefaults, $timeout) ->
   restrict: 'A'
   scope: true
 
@@ -10,13 +10,14 @@ angular.module("admin.enterprises").directive 'termsAndConditionsWarning', ($com
       if scope.template.dialog
         scope.template.dialog(DialogDefaults)
         scope.template.dialog('open')
-      scope.$apply()
+      $rootScope.$evalAsync()
 
     element.bind 'click', scope.hold_file_input_and_show_warning_modal
 
     # When the user presses continue in the warning modal, we open the browser file input dialog
     scope.continue = ->
       scope.template.dialog('close')
+      $rootScope.$evalAsync()
 
       # unbind warning modal handler and click file input again to open the browser file input dialog
       element.unbind('click').trigger('click')
@@ -27,4 +28,5 @@ angular.module("admin.enterprises").directive 'termsAndConditionsWarning', ($com
 
     scope.close = ->
       scope.template.dialog('close')
+      $rootScope.$evalAsync()
       return

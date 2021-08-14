@@ -5,9 +5,9 @@ angular.module("admin.paymentMethods").controller "StripeController", ($scope, $
   $scope.$watch "paymentMethod.preferred_enterprise_id", (newID, oldID) ->
     return unless newID?
     $scope.stripe_account = {}
-    $http.get("/admin/stripe_accounts/status.json?enterprise_id=#{newID}").success (data) ->
-      angular.extend($scope.stripe_account, data)
-    .error (response) ->
+    $http.get("/admin/stripe_accounts/status.json?enterprise_id=#{newID}").then (response) ->
+      angular.extend($scope.stripe_account, response.data)
+    .catch (response) ->
       $scope.stripe_account.status = "request_failed"
 
   $scope.current_enterprise_stripe_path = ->

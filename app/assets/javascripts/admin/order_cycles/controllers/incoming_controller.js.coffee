@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $controller, $location, Enterprise, OrderCycle, ExchangeProduct, ocInstance) ->
+angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $rootScope, $controller, $location, Enterprise, OrderCycle, ExchangeProduct, ocInstance) ->
   $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
   $scope.view = 'incoming'
@@ -28,4 +28,4 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
   $scope.selectAllVariants = (exchange, selected) ->
     $scope.loadAllExchangeProducts(exchange).then ->
       $scope.setExchangeVariants(exchange, $scope.suppliedVariants(exchange.enterprise_id), selected)
-      $scope.$apply()
+      $rootScope.$evalAsync()

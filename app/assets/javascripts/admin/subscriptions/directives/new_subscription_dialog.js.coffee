@@ -1,4 +1,4 @@
-angular.module("admin.subscriptions").directive 'newSubscriptionDialog', ($compile, $window, $templateCache, DialogDefaults, shops) ->
+angular.module("admin.subscriptions").directive 'newSubscriptionDialog', ($rootScope, $compile, $window, $templateCache, DialogDefaults, shops) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -26,3 +26,4 @@ angular.module("admin.subscriptions").directive 'newSubscriptionDialog', ($compi
         scope.newSubscription()
       else
         template.dialog('open')
+        $rootScope.$evalAsync()
