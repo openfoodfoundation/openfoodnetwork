@@ -11,9 +11,12 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
 
     = stylesheet_link_tag "darkswarm/all"
+    = javascript_include_tag "darkswarm/all"
+    = javascript_pack_tag "application"
+
     = csrf_meta_tags
 
-  %body.off-canvas{"ng-app" => "Darkswarm", style: "background-image: url(#{image_path('tile-wide.png')})" }
+  %body.off-canvas{ style: "background-image: url(#{image_path('tile-wide.png')})" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
@@ -27,10 +30,7 @@
           #footer
     %loading
 
-    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''}"}
-    = javascript_include_tag "darkswarm/all"
     = yield :scripts
-
     = inject_current_user
     = yield :injection_data
 
