@@ -29,6 +29,7 @@
     = render "layouts/i18n_script"
 
     = csrf_meta_tags
+    %meta{name: "turbo-cache-control", content: "no-cache"}
 
   %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     / [if lte IE 8]
