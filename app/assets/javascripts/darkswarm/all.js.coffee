@@ -66,3 +66,11 @@ document.addEventListener "turbo:before-render", ->
     rootscope = null
     window.injector = null
   true
+
+document.addEventListener "ajax:beforeSend", (event) =>
+  window.Turbo.navigator.adapter.progressBar.setValue(0)
+  window.Turbo.navigator.adapter.progressBar.show()
+
+document.addEventListener "ajax:complete", (event) =>
+  window.Turbo.navigator.adapter.progressBar.setValue(100)
+  window.Turbo.navigator.adapter.progressBar.hide()
