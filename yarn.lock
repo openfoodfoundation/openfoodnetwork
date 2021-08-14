@@ -1599,6 +1599,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@hotwired/turbo@^7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-rc.1.tgz#a5c1be86def1cc39b3011c935c5734b8632af5c3"
+  integrity sha512-niNA68ku4TZYbV3biwTPf1L5CidP50S2xfeb5rGQfodvPB9UAtkqKFFRIA0LL8y0DG4MGIZ/QFlbvlmFea5p4w==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -8787,6 +8792,11 @@ moment@^2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
+"morphdom@>=2.6.0 <3.0.0":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.6.1.tgz#e868e24f989fa3183004b159aed643e628b4306e"
+  integrity sha512-Y8YRbAEP3eKykroIBWrjcfMw7mmwJfjhqdpSvoqinu8Y702nAwikpXcNFDiIkyvfCLxLM9Wu95RZqo4a9jFBaA==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -8798,6 +8808,13 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
+
+mrujs@^0.3.7-beta.6:
+  version "0.3.7-beta.6"
+  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-0.3.7-beta.6.tgz#ee06a3d60804b9b3c29c94b171031d4a909e48be"
+  integrity sha512-BP26BPrBOVRRxxuNBRSmT/yTqoy5/PeUafz21LVNVy8wBQTnfAMrU/FDt5arLkLhOkA4+YVXnAXM8xQC65jdkQ==
+  dependencies:
+    morphdom ">=2.6.0 <3.0.0"
 
 ms@2.0.0:
   version "2.0.0"

@@ -54,3 +54,7 @@
 #= require_tree ./mixins
 #= require_tree ./directives
 #= require_tree .
+
+document.addEventListener "turbo:load", ->
+  angular.bootstrap document.body, ["Darkswarm"]
+  true
