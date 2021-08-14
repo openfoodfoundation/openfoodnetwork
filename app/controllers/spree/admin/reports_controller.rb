@@ -75,6 +75,9 @@ module Spree
         @report_types = report_types[:packing]
         @report_type = params[:report_type]
 
+        # Add distributors/suppliers distributing/supplying products I distribute/supply
+        add_appropriate_distributors_and_suppliers
+
         # -- Build Report with Order Grouper
         @report = OpenFoodNetwork::PackingReport.new spree_current_user, raw_params, render_content?
         @table = order_grouper_table
@@ -116,12 +119,8 @@ module Spree
       def orders_and_fulfillment
         raw_params[:q] ||= orders_and_fulfillment_default_filters
 
-        # -- Prepare Form Options
-        permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-        # My distributors and any distributors distributing products I supply
-        @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
-        # My suppliers and any suppliers supplying products I distribute
-        @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
+        # Add distributors/suppliers distributing/supplying products I distribute/supply
+        add_appropriate_distributors_and_suppliers
 
         @order_cycles = my_order_cycles
 
@@ -217,6 +216,15 @@ module Spree
         @header = header
         @table = table
         # Rendering HTML is the default.
+      end
+
+      def add_appropriate_distributors_and_suppliers
+        # -- Prepare Form Options
+        permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+        # My distributors and any distributors distributing products I supply
+        @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
+        # My suppliers and any suppliers supplying products I distribute
+        @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
       end
 
       def csv_report(header, table)
