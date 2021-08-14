@@ -1,7 +1,7 @@
 - content_for(:title) do
   = t :checkout_title
 
-.darkswarm.footer-pad
+.darkswarm.footer-pad{"data-turbo": "true"}
   - content_for :order_cycle_form do
     %closing
       = t :checkout_now
