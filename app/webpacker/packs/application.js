@@ -8,8 +8,13 @@ const application = Application.start()
 const context = require.context("controllers", true, /.js$/)
 application.load(definitionsFromContext(context))
 
-import mrujs from "mrujs"
+import CableReady from "cable_ready"
+import mrujs, { CableCar } from "mrujs"
 import * as Turbo from "@hotwired/turbo"
 
 window.Turbo = Turbo
-mrujs.start()
+mrujs.start({
+  plugins: [
+    new CableCar(CableReady)
+  ]
+})
