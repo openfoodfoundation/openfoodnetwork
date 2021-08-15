@@ -13,7 +13,7 @@ env:
   RAILS_ENV: test
 
 jobs:
-  run-all-tests:
+  run-all-tests-except-migrations:
     runs-on: ubuntu-18.04
     services:
       postgres:
@@ -50,5 +50,87 @@ jobs:
         run: |
           bundle exec rake db:create RAILS_ENV=test
           bundle exec rake db:schema:load RAILS_ENV=test
-      - name: Run all tests
-        run: bundle exec rspec --profile
+      - name: Run all tests except migrations
+        run: bundle exec rake ofn:specs:run:excluding_folders["migrations"]
+
+  run-migrations-tests:
+    runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.15.5'
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up application.yml
+        run: cp config/application.yml.example config/application.yml
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create RAILS_ENV=test
+          bundle exec rake db:schema:load RAILS_ENV=test
+
+      - name: Run all migrations tests
+        run: bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"
+
+  run-other-ruby-tests:
+    runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.15.5'
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up application.yml
+        run: cp config/application.yml.example config/application.yml
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create RAILS_ENV=test
+          bundle exec rake db:schema:load RAILS_ENV=test
+
+      - name: Run all other ruby tests
+        run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb"
