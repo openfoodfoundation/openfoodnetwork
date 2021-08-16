@@ -30,7 +30,7 @@
 
     = csrf_meta_tags
 
-  %body{ class: body_classes, "body-scroll": "true" }
+  %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
