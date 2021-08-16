@@ -8,7 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
-  include CableReady::Broadcaster
+  include CablecarResponses
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -35,10 +35,6 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
-
-  def partial(path, options = {})
-    { html: render_to_string(partial: path, **options) }
-  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
