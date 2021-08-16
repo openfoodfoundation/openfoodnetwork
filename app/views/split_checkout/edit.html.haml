@@ -19,10 +19,6 @@
   .sub-header.show-for-medium-down
     = render partial: "shopping_shared/order_cycles"
 
-  %checkout.row
-    .small-12.medium-12.columns
-      = render partial: "split_checkout/tabs"
-      = render partial: "split_checkout/form"
-
+  = render partial: "checkout"
 
 = render partial: "shared/footer"

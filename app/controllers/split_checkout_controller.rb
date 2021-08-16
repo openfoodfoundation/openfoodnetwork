@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include CableReady::Broadcaster
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -25,7 +26,10 @@ class SplitCheckoutController < ::BaseController
       redirect_to_step
     else
       flash.now[:error] = I18n.t('split_checkout.errors.global')
-      render :edit, status: :unprocessable_entity
+
+      render operations: cable_car.replace(
+        selector: "#checkout", html: render_to_string(partial: "split_checkout/checkout", formats: [:html])
+      ), status: :unprocessable_entity
     end
   end
 
