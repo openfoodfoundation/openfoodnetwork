@@ -259,7 +259,7 @@ class OrderCycle < ApplicationRecord
                                          distributor_id: distributor,
                                          order_cycle_id: self)
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-    items = Spree::LineItem.joins(:order).merge(orders)
+    items = Spree::LineItem.includes(:variant).joins(:order).merge(orders).to_a
     items.each { |li| scoper.scope(li.variant) }
   end
 
