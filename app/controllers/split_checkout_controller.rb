@@ -28,12 +28,16 @@ class SplitCheckoutController < ::BaseController
       flash.now[:error] = I18n.t('split_checkout.errors.global')
 
       render operations: cable_car.replace(
-        selector: "#checkout", html: render_to_string(partial: "split_checkout/checkout", formats: [:html])
+        "#checkout", partial("split_checkout/checkout")
       ), status: :unprocessable_entity
     end
   end
 
   private
+
+  def partial(path, options = {})
+    { html: render_to_string(partial: path, **options) }
+  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
