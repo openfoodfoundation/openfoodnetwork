@@ -4,6 +4,10 @@
 - content_for :injection_data do
   - cache @enterprises do
     = inject_enterprises(@enterprises)
+  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
+    = inject_taxons
+  - cache(*CacheService::FragmentCaching.ams_all_properties) do
+    = inject_properties
 
 .producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
   .row

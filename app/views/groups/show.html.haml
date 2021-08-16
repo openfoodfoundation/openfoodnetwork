@@ -9,6 +9,10 @@
   = inject_available_countries
   = inject_group_enterprises
   = inject_open_street_map_config
+  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
+    = inject_taxons
+  - cache(*CacheService::FragmentCaching.ams_all_properties) do
+    = inject_properties
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top

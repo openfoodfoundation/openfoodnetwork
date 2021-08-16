@@ -54,10 +54,6 @@
     = inject_current_hub
     = inject_current_user
     = inject_rails_flash
-    - cache(*CacheService::FragmentCaching.ams_all_taxons) do
-      = inject_taxons
-    - cache(*CacheService::FragmentCaching.ams_all_properties) do
-      = inject_properties
     = inject_current_order
     = inject_currency_config
     = yield :injection_data
