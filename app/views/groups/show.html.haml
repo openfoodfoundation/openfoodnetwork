@@ -5,6 +5,9 @@
 - content_for(:image) do
   = @group.logo.url
 
+- content_for :scripts do
+  = render partial: "shared/google_maps_js"
+
 - content_for :injection_data do
   = inject_available_countries
   = inject_group_enterprises
