@@ -20,6 +20,9 @@ module Spree
         order.update_totals
         order.payment_required?
       }
+      go_to_state :confirmation, if: ->(order) {
+        Flipper.enabled? :split_checkout, order.user
+      }
       go_to_state :complete
     end
 
@@ -78,20 +81,20 @@ module Spree
     before_validation :associate_customer, unless: :customer_id?
     before_validation :ensure_customer, unless: :customer_is_valid?
 
-    validates :customer, presence: true, if: :require_customer?
-    validate :products_available_from_new_distribution, if: lambda {
-      distributor_id_changed? || order_cycle_id_changed?
-    }
-    validate :disallow_guest_order
-
     attr_accessor :use_billing
 
     before_create :link_by_email
     after_create :create_tax_charge!
 
+    validates :customer, presence: true, if: :require_customer?
+    validate :products_available_from_new_distribution, if: lambda {
+      distributor_id_changed? || order_cycle_id_changed?
+    }
+    validate :disallow_guest_order
     validates :email, presence: true,
                       format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
+    validates :payments, presence: true, if: ->(order) { order.confirmation? && payment_required? }
 
     make_permalink field: :number
 

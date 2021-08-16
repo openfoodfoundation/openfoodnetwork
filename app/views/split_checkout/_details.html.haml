@@ -80,7 +80,7 @@
           "data-toggle-show": shipping_method.require_ship_address
         = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
         %em.light
-          = payment_method_price(shipping_method, @order)
+          = payment_or_shipping_price(shipping_method, @order)
 
 
   %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }

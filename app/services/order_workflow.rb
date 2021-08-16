@@ -27,6 +27,14 @@ class OrderWorkflow
     advance_to_state("payment", advance_order_options)
   end
 
+  def advance_to_confirmation(options = {})
+    if options[:shipping_method_id]
+      order.select_shipping_method(options[:shipping_method_id])
+    end
+
+    advance_to_state("confirmation")
+  end
+
   private
 
   def advance_order_options
@@ -34,12 +42,14 @@ class OrderWorkflow
     { shipping_method_id: shipping_method_id }
   end
 
-  def advance_to_state(target_state, options)
+  def advance_to_state(target_state, options = {})
     until order.state == target_state
       break unless order.next
 
       after_transition_hook(options)
     end
+
+    order.state == target_state
   end
 
   def advance_order!(options)
