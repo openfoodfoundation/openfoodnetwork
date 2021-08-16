@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
-feature "Uploading Terms and Conditions PDF" do
+describe "Uploading Terms and Conditions PDF" do
   include AuthenticationHelper
 
   context "as an Enterprise user", js: true do
@@ -38,7 +38,7 @@ feature "Uploading Terms and Conditions PDF" do
         FileUtils.rm_f(black_pdf_file_name)
       end
 
-      scenario "uploading terms and conditions" do
+      it "uploading terms and conditions" do
         go_to_business_details
 
         # Add PDF
