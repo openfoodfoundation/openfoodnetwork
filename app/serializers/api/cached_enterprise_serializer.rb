@@ -163,7 +163,11 @@ module Api
     private
 
     def product_properties
-      enterprise.supplied_products.flat_map(&:properties)
+      Spree::Property.joins(:product_properties).where(
+        spree_product_properties: {
+          product_id: enterprise.supplied_product_ids
+        }
+      ).select('DISTINCT spree_properties.*')
     end
 
     def producer_properties
