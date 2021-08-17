@@ -231,5 +231,7 @@ module Openfoodnetwork
     config.generators.template_engine = :haml
 
     config.autoloader = :zeitwerk
+
+    config.action_view.form_with_generates_ids = true
   end
 end
