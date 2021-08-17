@@ -12,7 +12,7 @@
   - if order.changes_allowed?
     .columns.show-for-medium-up.medium-3 &nbsp;
     .columns.small-12.medium-3
-      = link_to main_app.cancel_order_path(@order), method: :put, :class => "button secondary expand", "confirm-link-click" => t('orders_confirm_cancel') do
+      = link_to main_app.cancel_order_path(@order), method: :put, class: "button secondary expand", "data-confirm": t('orders_confirm_cancel') do
         %i.ofn-i_009-close
         = t(:cancel_order)
     .columns.small-12.medium-3
