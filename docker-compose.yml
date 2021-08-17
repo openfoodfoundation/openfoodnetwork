@@ -28,16 +28,29 @@ services:
     depends_on:
       - db
       - redis
+      - webpack
     environment:
       OFN_DB_HOST: db
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
+      WEBPACKER_DEV_SERVER_HOST: webpack
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                rm -f tmp/pids/server.pid &&
                (bundle check || bundle install)
                yarn install &&
                bundle exec rails s -p 3000 -b '0.0.0.0'"
+  webpack:
+    build: .
+    command: ./bin/webpack-dev-server
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3035:3035'
+    environment:
+      NODE_ENV: development
+      RAILS_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
   worker:
     tty: true
     stdin_open: true
