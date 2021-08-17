@@ -278,7 +278,7 @@ GEM
       cliver (~> 0.3)
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
-    ffaker (2.18.0)
+    ffaker (2.19.0)
     ffi (1.15.3)
     flipper (0.20.4)
     flipper-active_record (0.20.4)
