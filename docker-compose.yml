@@ -57,7 +57,7 @@ services:
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                (bundle check || bundle install)
-               bundle exec rake jobs:work"
+               bundle exec sidekiq -q mailers -q default"
 volumes:
   gems:
   postgres:
