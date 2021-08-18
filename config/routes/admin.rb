@@ -10,6 +10,9 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resources :bulk_line_items
+    
+    # Redirect html requests for show path to edit path
+    get '/order_cycles/:id', to: redirect('/admin/order_cycles/%{id}/edit'), constraints: { format: 'html' }
 
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
