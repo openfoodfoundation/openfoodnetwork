@@ -396,7 +396,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
-    pagy (4.10.1)
+    pagy (4.10.2)
     paper_trail (12.0.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
@@ -749,7 +749,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   ofn-qz!
   order_management!
-  pagy (~> 4.8)
+  pagy (~> 4.10)
   paper_trail (~> 12.0.0)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
