@@ -31,6 +31,8 @@ module Stripe
     end
 
     def fingerprint_for_card(card)
+      return nil unless card.gateway_payment_profile_id
+
       Stripe::PaymentMethod.retrieve(card.gateway_payment_profile_id).card.fingerprint
     end
   end
