@@ -1030,7 +1030,7 @@ it:
         name: Nome
         orders_open: Richieste aperte dal
         coordinator: Referente
-        orders_close: Gentili richieste chiuse
+        orders_close: Richieste chiudono il
       row:
         suppliers: fornitori
         distributors: distributori
@@ -1576,6 +1576,25 @@ it:
       explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
       submit: Prossimo - riepilogo richiesta
       cancel: Indietro a Tuoi dettagli
+    step3:
+      your_details:
+        title: I tuoi dettagli
+        edit: Modifica i tuoi dati
+      billing_address:
+        title: Indirizzo di fatturazione
+      delivery_info:
+        title: Informazioni sulla consegna
+      payment_method:
+        title: Metodo di pagamento
+        edit: Modifica metodo di pagamento
+      order:
+        title: Ordine totale
+      terms_and_conditions:
+        message_html: "Accetto i %{terms_and_conditions_link} del venditore."
+        link_text: "Termini e Condizioni"
+      agree: Cliccando su "Completa ordine" acconsentirai all'elaborazione dell'ordine.
+      submit: Completa ordine
+      cancel: Torna al metodo di pagamento
     errors:
       required: Il campo non può essere lasciato vuoto
       invalid_number: "Per favore inserisci un numero di telefono valido"
@@ -3749,6 +3768,7 @@ it:
       awaiting_return: restituzione attesa
       canceled: annullato
       cart: carrello
+      confirmation: "conferma"
       complete: completo
       confirm: conferma
       delivery: consegna
