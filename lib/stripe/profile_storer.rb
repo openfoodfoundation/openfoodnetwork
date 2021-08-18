@@ -55,11 +55,14 @@ module Stripe
     end
 
     def source_attrs_from(response)
-      {
-        cc_type: @payment.source.cc_type,
-        gateway_customer_profile_id: customer_profile_id(response),
-        gateway_payment_profile_id: payment_profile_id(response)
-      }
+      attrs = { cc_type: @payment.source.cc_type }
+      if customer_profile_id(response)
+        attrs.merge!({ gateway_customer_profile_id: customer_profile_id(response) })
+      end
+      if payment_profile_id(response)
+        attrs.merge!({ gateway_payment_profile_id: payment_profile_id(response) })
+      end
+      attrs
     end
 
     def customer_profile_id(response)
