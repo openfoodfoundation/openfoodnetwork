@@ -41,9 +41,11 @@ module StripeStubs
   end
 
   # Stubs the customers call to both the main stripe account and the connected account
-  def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
+  def stub_customers_post_request(email:, response: {}, stripe_account_header: false, card: "pm_123")
+    body = { email: email }
+    body.merge!({ card: card }) if card.present?
     stub = stub_request(:post, "https://api.stripe.com/v1/customers")
-      .with(body: { email: email })
+      .with(body: body)
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(customers_response_mock(response))
   end

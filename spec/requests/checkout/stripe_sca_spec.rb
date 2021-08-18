@@ -207,6 +207,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
         source_attributes[:save_requested_by_customer] = '1'
 
+        stub_customers_post_request email: order.user.email, response: customer_response_mock
+
         # Attaches the payment method to the customer
         stub_request(:post,
                      "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
@@ -215,6 +217,12 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       end
 
       context "and the customer, payment_method and payment_intent requests are successful" do
+        before do
+          stub_add_metadata_request(payment_method: "pm_123", response: {})
+          stub_payment_methods_post_request request: { customer: "cus_A123" },
+                                            response: { pm_id: "pm_123" }
+        end
+
         it "should process the payment, and store the card/customer details" do
           put update_checkout_path, params: params
 
