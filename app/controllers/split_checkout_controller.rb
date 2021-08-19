@@ -54,6 +54,7 @@ class SplitCheckoutController < ::BaseController
 
   def update_order
     return unless params[:order]
+    return if @order.state == "address" && params[:shipping_method_id].blank?
 
     @order.update(order_params)
   end
