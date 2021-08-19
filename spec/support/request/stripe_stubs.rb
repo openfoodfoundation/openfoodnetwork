@@ -3,14 +3,14 @@
 module StripeStubs
   def stub_payment_intents_post_request(order:, response: {}, stripe_account_header: true)
     stub = stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+      .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: /.*#{order.number}/)
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(payment_intent_authorize_response_mock(response))
   end
 
   def stub_payment_intents_post_request_with_redirect(order:, redirect_url:)
     stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+      .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: /.*#{order.number}/)
       .to_return(payment_intent_redirect_response_mock(redirect_url))
   end
 

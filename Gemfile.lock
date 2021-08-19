@@ -635,6 +635,7 @@ GEM
     valid_email2 (4.0.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
+    vcr (6.0.0)
     view_component (2.38.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
@@ -796,6 +797,7 @@ DEPENDENCIES
   timecop
   uglifier (>= 1.0.3)
   valid_email2
+  vcr
   view_component
   view_component_storybook
   web!

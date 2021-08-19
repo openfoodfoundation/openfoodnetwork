@@ -61,7 +61,7 @@ feature '
 
       before do
         Spree::Config.set(stripe_connect_enabled: true)
-        Stripe.api_key = "sk_test_12345"
+        Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
         stub_request(:get,
                      "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
         stub_request(:get,

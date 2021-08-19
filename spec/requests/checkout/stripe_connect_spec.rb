@@ -68,7 +68,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
     allow(OrderCycleDistributedVariants).to receive(:new) { order_cycle_distributed_variants }
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
 
-    Stripe.api_key = "sk_test_12345"
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
     set_order order
@@ -96,7 +96,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       before do
         # Charges the card
         stub_request(:post, "https://api.stripe.com/v1/charges")
-          .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
+          .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: /#{token}.*#{order.number}/)
           .to_return(charge_response_mock)
       end
 
@@ -141,7 +141,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         # Saves the card against the user
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(basic_auth: ["sk_test_12345", ""], body: { card: token, email: order.email })
+          .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: { card: token, email: order.email })
           .to_return(store_response_mock)
 
         # Requests a token from the newly saved card
@@ -152,7 +152,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         # Charges the card
         stub_request(:post, "https://api.stripe.com/v1/charges")
           .with(
-            basic_auth: ["sk_test_12345", ""],
+            basic_auth: [ENV["STRIPE_SECRET_KEY"], ""],
             body: /#{token}.*#{order.number}/
           ).to_return(charge_response_mock)
       end
@@ -255,7 +255,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
       # Charges the card
       stub_request(:post, "https://api.stripe.com/v1/charges")
-        .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
+        .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: /#{token}.*#{order.number}/)
         .to_return(charge_response_mock)
     end
 

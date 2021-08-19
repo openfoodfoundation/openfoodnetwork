@@ -74,7 +74,7 @@ feature "Check out with Stripe", js: true do
 
       before do
         stub_request(:post, "https://api.stripe.com/v1/charges")
-          .with(basic_auth: ["sk_test_12345", ""])
+          .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""])
           .to_return(status: 200, body: JSON.generate(response_mock))
 
         visit checkout_path

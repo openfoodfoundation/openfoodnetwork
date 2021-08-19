@@ -17,7 +17,7 @@ FactoryBot.define do
 
   # A card that has been added to the user's profile and can be re-used.
   factory :stored_credit_card, parent: :credit_card do
-    gateway_customer_profile_id { "cus_F2T..." }
-    gateway_payment_profile_id { "card_1EY..." }
+    gateway_customer_profile_id { "cus_Jp3pmtUJoPmbhW" }
+    gateway_payment_profile_id { "card_1JBPhVG8x19R0F04ElQj9FQ4" }
   end
 end

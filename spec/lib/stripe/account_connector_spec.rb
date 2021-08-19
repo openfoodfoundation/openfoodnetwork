@@ -15,7 +15,7 @@ module Stripe
       let(:connector) { AccountConnector.new(user, params) }
 
       before do
-        Stripe.api_key = "sk_test_12345"
+        Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
       end
 
       context "when the connection was cancelled by the user" do

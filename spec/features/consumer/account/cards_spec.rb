@@ -27,7 +27,7 @@ feature "Credit Cards", js: true do
     before do
       login_as user
 
-      Stripe.api_key = "sk_test_12345"
+      Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
       Stripe.publishable_key = "some_token"
       Spree::Config.set(stripe_connect_enabled: true)
 

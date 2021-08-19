@@ -30,8 +30,8 @@ module StripeHelper
   end
 
   def setup_stripe
-    Stripe.api_key = "sk_test_12345"
-    Stripe.publishable_key = "pk_test_12345"
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
+    Stripe.publishable_key = ENV["STRIPE_PUBLIC_KEY"]
     Spree::Config.set(stripe_connect_enabled: true)
   end
 end

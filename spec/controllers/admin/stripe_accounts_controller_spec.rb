@@ -86,7 +86,7 @@ describe Admin::StripeAccountsController, type: :controller do
     end
 
     before do
-      Stripe.api_key = "sk_test_12345"
+      Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
       Spree::Config.set(stripe_connect_enabled: false)
     end
 

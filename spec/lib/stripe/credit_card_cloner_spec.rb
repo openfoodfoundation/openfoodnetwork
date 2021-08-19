@@ -24,7 +24,7 @@ module Stripe
       }
 
       before do
-        Stripe.api_key = "sk_test_12345"
+        Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
 
         stub_customers_post_request email: credit_card.user.email,
                                     card: nil,

@@ -31,13 +31,13 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          Stripe.api_key = "sk_test_12345"
+          Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
         end
 
         context "where the request succeeds" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
@@ -57,7 +57,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request fails" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
 
@@ -90,13 +90,13 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          Stripe.api_key = "sk_test_12345"
+          Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
         end
 
         context "where the request succeeds" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
@@ -116,7 +116,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request fails" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
 
@@ -152,7 +152,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         let(:stripe_account) { create(:stripe_account, enterprise: shop) }
 
         before do
-          Stripe.api_key = "sk_test_12345"
+          Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
           allow(StripeAccount).to receive(:find_by) { stripe_account }
         end
 
@@ -162,7 +162,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
               stub_payment_intent_get_request(response: { intent_status: "succeeded" })
               # Issues the refund
               stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-                with(basic_auth: ["sk_test_12345", ""]).
+                with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
                 to_return(status: 200,
                           body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
             end
@@ -183,7 +183,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             before do
               stub_payment_intent_get_request(response: { intent_status: "succeeded" })
               stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-                with(basic_auth: ["sk_test_12345", ""]).
+                with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
                 to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
             end
 
@@ -204,7 +204,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             before do
               stub_payment_intent_get_request(response: { intent_status: "succeeded", amount_refunded: 200 })
               stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-                with(basic_auth: ["sk_test_12345", ""]).
+                with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
                 to_return(status: 200,
                           body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
             end
@@ -226,7 +226,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_payment_intent_get_request(response: { intent_status: "requires_action" })
             stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/cancel").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 'pi_123', object: 'payment_intent', status: 'canceled') )
           end
@@ -259,7 +259,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         end
 
         before do
-          Stripe.api_key = "sk_test_12345"
+          Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
 
           stub_payment_intent_get_request stripe_account_header: false
         end
@@ -267,7 +267,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request succeeds" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200,
                         body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
@@ -287,7 +287,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request fails" do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              with(basic_auth: ["sk_test_12345", ""]).
+              with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""]).
               to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
 

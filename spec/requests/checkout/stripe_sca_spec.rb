@@ -87,14 +87,14 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     allow(OrderCycleDistributedVariants).to receive(:new) { order_cycle_distributed_variants }
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
 
-    Stripe.api_key = "sk_test_12345"
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
     set_order order
 
     # Authorizes the payment
     stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-      .with(basic_auth: ["sk_test_12345", ""], body: /.*#{order.number}/)
+      .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: /.*#{order.number}/)
       .to_return(payment_intent_authorize_response_mock)
 
     # Retrieves payment intent info
@@ -104,7 +104,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
     # Captures the payment
     stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
-      .with(basic_auth: ["sk_test_12345", ""], body: { amount_to_capture: "1234" })
+      .with(basic_auth: [ENV["STRIPE_SECRET_KEY"], ""], body: { amount_to_capture: "1234" })
       .to_return(payment_intent_response_mock)
 
     stub_retrieve_payment_method_request("pm_123")

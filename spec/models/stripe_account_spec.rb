@@ -14,7 +14,7 @@ describe StripeAccount do
     }
 
     before do
-      Stripe.api_key = "sk_test_12345"
+      Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
       Stripe.client_id = client_id
     end
 

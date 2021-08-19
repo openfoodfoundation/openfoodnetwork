@@ -1,0 +1,4033 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods/card_1JBPhVG8x19R0F04ElQj9FQ4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '949'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_ldcpmI9jNquODH
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "card_1JBPhVG8x19R0F04ElQj9FQ4",
+          "object": "payment_method",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": "a b",
+            "phone": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "exp_month": 11,
+            "exp_year": 2022,
+            "fingerprint": "TW1uWB5iH0CnfxaY",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1625860169,
+          "customer": "cus_Jp3pmtUJoPmbhW",
+          "livemode": false,
+          "metadata": {
+          },
+          "type": "card"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:17 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers?email=ofn@example.com&limit=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_ldcpmI9jNquODH","request_duration_ms":314}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '42022'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7zuXaRNcRwydVi
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "cus_Jp3pmtUJoPmbhW",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1625860174,
+              "currency": null,
+              "default_source": "card_1JBPhVG8x19R0F04ElQj9FQ4",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "CC2F172A",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1JBPhVG8x19R0F04ElQj9FQ4",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "US",
+                    "customer": "cus_Jp3pmtUJoPmbhW",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TW1uWB5iH0CnfxaY",
+                    "funding": "credit",
+                    "last4": "4242",
+                    "metadata": {
+                    },
+                    "name": "a b",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_Jp3pmtUJoPmbhW/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_Jp3pmtUJoPmbhW/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_Jp3pmtUJoPmbhW/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_JNlc6wrY5SfkcW",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1619565199,
+              "currency": null,
+              "default_source": null,
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "9B38A30F",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_JNlc6wrY5SfkcW/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_JNlc6wrY5SfkcW/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_JNlc6wrY5SfkcW/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_InW32Mf3XXuE9S",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1611204225,
+              "currency": null,
+              "default_source": "card_1IBv1IG8x19R0F04fmuicboo",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "8329B746",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1IBv1IG8x19R0F04fmuicboo",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "DE",
+                    "customer": "cus_InW32Mf3XXuE9S",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "egmFT2xqBrsNFbEx",
+                    "funding": "credit",
+                    "last4": "3184",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_InW32Mf3XXuE9S/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_InW32Mf3XXuE9S/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_InW32Mf3XXuE9S/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IaezzkFEXVHcZJ",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1608239131,
+              "currency": null,
+              "default_source": "card_1HzTfDG8x19R0F04YGkFgN7w",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "4F799E39",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HzTfDG8x19R0F04YGkFgN7w",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "FR",
+                    "customer": "cus_IaezzkFEXVHcZJ",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "lq3JfmXOT76jy34m",
+                    "funding": "credit",
+                    "last4": "3155",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IaezzkFEXVHcZJ/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IaezzkFEXVHcZJ/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IaezzkFEXVHcZJ/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHZck7bxYdh8aK",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603836999,
+              "currency": null,
+              "default_source": "card_1Hh0T5G8x19R0F04wFFDXPPn",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "7EB4A941",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1Hh0T5G8x19R0F04wFFDXPPn",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "FR",
+                    "customer": "cus_IHZck7bxYdh8aK",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "lq3JfmXOT76jy34m",
+                    "funding": "credit",
+                    "last4": "3155",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHZck7bxYdh8aK/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZck7bxYdh8aK/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZck7bxYdh8aK/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHZb1svWJrPbq2",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603836937,
+              "currency": null,
+              "default_source": "card_1Hh0S4G8x19R0F04QWJXrIsl",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "615A893C",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1Hh0S4G8x19R0F04QWJXrIsl",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "FR",
+                    "customer": "cus_IHZb1svWJrPbq2",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "lq3JfmXOT76jy34m",
+                    "funding": "credit",
+                    "last4": "3155",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHZb1svWJrPbq2/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZb1svWJrPbq2/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZb1svWJrPbq2/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHZZ1C8eCT0FXJ",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603836855,
+              "currency": null,
+              "default_source": "card_1Hh0QjG8x19R0F04zn6Ilb1A",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "502BC118",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1Hh0QjG8x19R0F04zn6Ilb1A",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "FR",
+                    "customer": "cus_IHZZ1C8eCT0FXJ",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "lq3JfmXOT76jy34m",
+                    "funding": "credit",
+                    "last4": "3155",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHZZ1C8eCT0FXJ/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZZ1C8eCT0FXJ/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHZZ1C8eCT0FXJ/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHWUBvjc5AMyel",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603825343,
+              "currency": null,
+              "default_source": "card_1HgxR4G8x19R0F04DqCkrtRC",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "02E2E051",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgxR4G8x19R0F04DqCkrtRC",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHWUBvjc5AMyel",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHWUBvjc5AMyel/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHWUBvjc5AMyel/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHWUBvjc5AMyel/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHW0Oq73s6023x",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603823578,
+              "currency": null,
+              "default_source": "card_1HgwyaG8x19R0F04CrIIooN0",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "C65C86AB",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwyaG8x19R0F04CrIIooN0",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHW0Oq73s6023x",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHW0Oq73s6023x/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHW0Oq73s6023x/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHW0Oq73s6023x/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVzJYldvvPgKr",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603823512,
+              "currency": null,
+              "default_source": "card_1HgwxXG8x19R0F04yBoFinB3",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "6D9FB1F0",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwxXG8x19R0F04yBoFinB3",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVzJYldvvPgKr",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVzJYldvvPgKr/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVzJYldvvPgKr/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVzJYldvvPgKr/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVyX8N19tv5BY",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603823429,
+              "currency": null,
+              "default_source": "card_1HgwwCG8x19R0F04amrh4Jqq",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "DFEBA113",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwwCG8x19R0F04amrh4Jqq",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVyX8N19tv5BY",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVyX8N19tv5BY/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVyX8N19tv5BY/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVyX8N19tv5BY/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVVgL1hKb73cF",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603821715,
+              "currency": null,
+              "default_source": "card_1HgwUXG8x19R0F04kWqWhkiZ",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "69BC7BBC",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwUXG8x19R0F04kWqWhkiZ",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVVgL1hKb73cF",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVVgL1hKb73cF/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVVgL1hKb73cF/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVVgL1hKb73cF/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVQbtgCNdloHd",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603821424,
+              "currency": null,
+              "default_source": "card_1HgwPrG8x19R0F04RLVQPSo0",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "82B31EB4",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwPrG8x19R0F04RLVQPSo0",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVQbtgCNdloHd",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVQbtgCNdloHd/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVQbtgCNdloHd/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVQbtgCNdloHd/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVPCCLYamAzWY",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603821331,
+              "currency": null,
+              "default_source": "card_1HgwONG8x19R0F04iDHqmYiz",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "676AC198",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwONG8x19R0F04iDHqmYiz",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVPCCLYamAzWY",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVPCCLYamAzWY/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVPCCLYamAzWY/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVPCCLYamAzWY/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVOuNGzNoG3MX",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603821289,
+              "currency": null,
+              "default_source": "card_1HgwNgG8x19R0F04aGyB4aLS",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "53F2C496",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwNgG8x19R0F04aGyB4aLS",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVOuNGzNoG3MX",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVOuNGzNoG3MX/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVOuNGzNoG3MX/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVOuNGzNoG3MX/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHVOgoX24j7ko5",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603821267,
+              "currency": null,
+              "default_source": "card_1HgwNJG8x19R0F04VmTZmTVT",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "49BA81AC",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgwNJG8x19R0F04VmTZmTVT",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "IE",
+                    "customer": "cus_IHVOgoX24j7ko5",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 11,
+                    "exp_year": 2022,
+                    "fingerprint": "TkTdPfbHY37hde3Y",
+                    "funding": "credit",
+                    "last4": "3220",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHVOgoX24j7ko5/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVOgoX24j7ko5/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHVOgoX24j7ko5/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHUu70S0jA3Jxg",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603819516,
+              "currency": null,
+              "default_source": "card_1Hgvv5G8x19R0F04hmEQqwmZ",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "0B65FFAD",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1Hgvv5G8x19R0F04hmEQqwmZ",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "US",
+                    "customer": "cus_IHUu70S0jA3Jxg",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 4,
+                    "exp_year": 2024,
+                    "fingerprint": "TW1uWB5iH0CnfxaY",
+                    "funding": "credit",
+                    "last4": "4242",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHUu70S0jA3Jxg/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHUu70S0jA3Jxg/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHUu70S0jA3Jxg/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHTxnMzKeNi3Gu",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603815935,
+              "currency": null,
+              "default_source": "card_1HguzJG8x19R0F040yhgXV7z",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "32BC1DC3",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HguzJG8x19R0F040yhgXV7z",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "US",
+                    "customer": "cus_IHTxnMzKeNi3Gu",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 4,
+                    "exp_year": 2024,
+                    "fingerprint": "TW1uWB5iH0CnfxaY",
+                    "funding": "credit",
+                    "last4": "4242",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHTxnMzKeNi3Gu/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHTxnMzKeNi3Gu/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHTxnMzKeNi3Gu/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            },
+            {
+              "id": "cus_IHTlBlKwJJSAiW",
+              "object": "customer",
+              "account_balance": 0,
+              "address": null,
+              "balance": 0,
+              "created": 1603815207,
+              "currency": null,
+              "default_source": "card_1HgunaG8x19R0F04TrUzuQp6",
+              "delinquent": false,
+              "description": null,
+              "discount": null,
+              "email": "ofn@example.com",
+              "invoice_prefix": "9B481DA2",
+              "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null
+              },
+              "livemode": false,
+              "metadata": {
+              },
+              "name": null,
+              "next_invoice_sequence": 1,
+              "phone": null,
+              "preferred_locales": [
+
+              ],
+              "shipping": null,
+              "sources": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "card_1HgunaG8x19R0F04TrUzuQp6",
+                    "object": "card",
+                    "address_city": null,
+                    "address_country": null,
+                    "address_line1": null,
+                    "address_line1_check": null,
+                    "address_line2": null,
+                    "address_state": null,
+                    "address_zip": null,
+                    "address_zip_check": null,
+                    "brand": "Visa",
+                    "country": "US",
+                    "customer": "cus_IHTlBlKwJJSAiW",
+                    "cvc_check": "pass",
+                    "dynamic_last4": null,
+                    "exp_month": 4,
+                    "exp_year": 2024,
+                    "fingerprint": "TW1uWB5iH0CnfxaY",
+                    "funding": "credit",
+                    "last4": "4242",
+                    "metadata": {
+                    },
+                    "name": "a a",
+                    "tokenization_method": null
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/customers/cus_IHTlBlKwJJSAiW/sources"
+              },
+              "subscriptions": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHTlBlKwJJSAiW/subscriptions"
+              },
+              "tax_exempt": "none",
+              "tax_ids": {
+                "object": "list",
+                "data": [
+
+                ],
+                "has_more": false,
+                "total_count": 0,
+                "url": "/v1/customers/cus_IHTlBlKwJJSAiW/tax_ids"
+              },
+              "tax_info": null,
+              "tax_info_verification": null
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/customers"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:17 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_Jp3pmtUJoPmbhW&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_7zuXaRNcRwydVi","request_duration_ms":708}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_7oxwfKmxG8If0F
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1JBPhVG8x19R0F04ElQj9FQ4",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a b",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "US",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TW1uWB5iH0CnfxaY",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "4242",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1625860169,
+              "customer": "cus_Jp3pmtUJoPmbhW",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:18 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_JNlc6wrY5SfkcW&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_7oxwfKmxG8If0F","request_duration_ms":177}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1230'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_QHk2YmMfwJqMx2
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "pm_1Il05iG8x19R0F04l4hD6nCr",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": null,
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "US",
+                "exp_month": 4,
+                "exp_year": 2024,
+                "fingerprint": "TW1uWB5iH0CnfxaY",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "4242",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1619565198,
+              "customer": "cus_JNlc6wrY5SfkcW",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:18 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_InW32Mf3XXuE9S&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_QHk2YmMfwJqMx2","request_duration_ms":186}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_oEY3b8Q6n5PQ1f
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1IBv1IG8x19R0F04fmuicboo",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "DE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "egmFT2xqBrsNFbEx",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3184",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1611204224,
+              "customer": "cus_InW32Mf3XXuE9S",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:18 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IaezzkFEXVHcZJ&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_oEY3b8Q6n5PQ1f","request_duration_ms":258}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_axY0PoNWtSJf9o
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HzTfDG8x19R0F04YGkFgN7w",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "FR",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "lq3JfmXOT76jy34m",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3155",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1608239131,
+              "customer": "cus_IaezzkFEXVHcZJ",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:18 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHZck7bxYdh8aK&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_axY0PoNWtSJf9o","request_duration_ms":196}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_tEFCTig6QV3Ebq
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1Hh0T5G8x19R0F04wFFDXPPn",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "FR",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "lq3JfmXOT76jy34m",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3155",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603836999,
+              "customer": "cus_IHZck7bxYdh8aK",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:18 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHZb1svWJrPbq2&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_tEFCTig6QV3Ebq","request_duration_ms":211}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_QrMfRU9HsoWsVb
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1Hh0S4G8x19R0F04QWJXrIsl",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "FR",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "lq3JfmXOT76jy34m",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3155",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603836936,
+              "customer": "cus_IHZb1svWJrPbq2",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:19 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHZZ1C8eCT0FXJ&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_QrMfRU9HsoWsVb","request_duration_ms":187}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_p3SHMgFnTdAgSk
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1Hh0QjG8x19R0F04zn6Ilb1A",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "FR",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "lq3JfmXOT76jy34m",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3155",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603836853,
+              "customer": "cus_IHZZ1C8eCT0FXJ",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:19 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHWUBvjc5AMyel&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_p3SHMgFnTdAgSk","request_duration_ms":202}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_n5Il6bfkzQfZgK
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgxR4G8x19R0F04DqCkrtRC",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603825342,
+              "customer": "cus_IHWUBvjc5AMyel",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:19 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHW0Oq73s6023x&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_n5Il6bfkzQfZgK","request_duration_ms":211}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_77v9Nna7Vt9BKI
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwyaG8x19R0F04CrIIooN0",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603823576,
+              "customer": "cus_IHW0Oq73s6023x",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:19 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVzJYldvvPgKr&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_77v9Nna7Vt9BKI","request_duration_ms":190}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_dRtJ8T4A2NP9V6
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwxXG8x19R0F04yBoFinB3",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603823511,
+              "customer": "cus_IHVzJYldvvPgKr",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:19 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVyX8N19tv5BY&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_dRtJ8T4A2NP9V6","request_duration_ms":226}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8e08wwkBgVuv9r
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwwCG8x19R0F04amrh4Jqq",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603823428,
+              "customer": "cus_IHVyX8N19tv5BY",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVVgL1hKb73cF&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_8e08wwkBgVuv9r","request_duration_ms":218}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_JBbUYO6LQi8UwJ
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwUXG8x19R0F04kWqWhkiZ",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603821713,
+              "customer": "cus_IHVVgL1hKb73cF",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVQbtgCNdloHd&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_JBbUYO6LQi8UwJ","request_duration_ms":200}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_ccr6T6TaqGAPxd
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwPrG8x19R0F04RLVQPSo0",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603821423,
+              "customer": "cus_IHVQbtgCNdloHd",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVPCCLYamAzWY&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_ccr6T6TaqGAPxd","request_duration_ms":188}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_cb2qbIXxcQTS7h
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwONG8x19R0F04iDHqmYiz",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603821331,
+              "customer": "cus_IHVPCCLYamAzWY",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVOuNGzNoG3MX&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_cb2qbIXxcQTS7h","request_duration_ms":188}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_SUOoeEnoEBuSiU
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwNgG8x19R0F04aGyB4aLS",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603821288,
+              "customer": "cus_IHVOuNGzNoG3MX",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHVOgoX24j7ko5&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_SUOoeEnoEBuSiU","request_duration_ms":205}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1234'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_RAxCuY7YU8uMIz
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgwNJG8x19R0F04VmTZmTVT",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "IE",
+                "exp_month": 11,
+                "exp_year": 2022,
+                "fingerprint": "TkTdPfbHY37hde3Y",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "3220",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603821265,
+              "customer": "cus_IHVOgoX24j7ko5",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:21 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHUu70S0jA3Jxg&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_RAxCuY7YU8uMIz","request_duration_ms":209}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1233'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_TFMIlYAtO6XYGo
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1Hgvv5G8x19R0F04hmEQqwmZ",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "US",
+                "exp_month": 4,
+                "exp_year": 2024,
+                "fingerprint": "TW1uWB5iH0CnfxaY",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "4242",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603819515,
+              "customer": "cus_IHUu70S0jA3Jxg",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:21 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHTxnMzKeNi3Gu&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_TFMIlYAtO6XYGo","request_duration_ms":189}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1233'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_LzVEIfe9xsRJ2t
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HguzJG8x19R0F040yhgXV7z",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "US",
+                "exp_month": 4,
+                "exp_year": 2024,
+                "fingerprint": "TW1uWB5iH0CnfxaY",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "4242",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603815933,
+              "customer": "cus_IHTxnMzKeNi3Gu",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:21 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payment_methods?customer=cus_IHTlBlKwJJSAiW&limit=100&type=card
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.38.0
+      Authorization:
+      - Bearer sk_test_9x7Au91q3BRmsPi1H2l6qvIf00lpLDKToD
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_LzVEIfe9xsRJ2t","request_duration_ms":186}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.38.0","lang":"ruby","lang_version":"2.7.3 p183 (2021-04-05)","platform":"x86_64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        AndyMac.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT
+        2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64","hostname":"AndyMac.local"}'
+      Stripe-Account:
+      - acct_1DzZw1G8x19R0F04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 19 Aug 2021 22:52:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1233'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_krVtPuEyzVPKX2
+      Stripe-Version:
+      - '2018-11-08'
+      X-Stripe-C-Cost:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "card_1HgunaG8x19R0F04TrUzuQp6",
+              "object": "payment_method",
+              "billing_details": {
+                "address": {
+                  "city": null,
+                  "country": null,
+                  "line1": null,
+                  "line2": null,
+                  "postal_code": null,
+                  "state": null
+                },
+                "email": null,
+                "name": "a a",
+                "phone": null
+              },
+              "card": {
+                "brand": "visa",
+                "checks": {
+                  "address_line1_check": null,
+                  "address_postal_code_check": null,
+                  "cvc_check": "pass"
+                },
+                "country": "US",
+                "exp_month": 4,
+                "exp_year": 2024,
+                "fingerprint": "TW1uWB5iH0CnfxaY",
+                "funding": "credit",
+                "generated_from": null,
+                "last4": "4242",
+                "networks": {
+                  "available": [
+                    "visa"
+                  ],
+                  "preferred": null
+                },
+                "three_d_secure_usage": {
+                  "supported": true
+                },
+                "wallet": null
+              },
+              "created": 1603815206,
+              "customer": "cus_IHTlBlKwJJSAiW",
+              "livemode": false,
+              "metadata": {
+              },
+              "type": "card"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/payment_methods"
+        }
+  recorded_at: Thu, 19 Aug 2021 22:52:21 GMT
+recorded_with: VCR 6.0.0
