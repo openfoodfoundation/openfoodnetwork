@@ -1641,6 +1641,7 @@ en:
           placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. Flat 1 Elm apartments

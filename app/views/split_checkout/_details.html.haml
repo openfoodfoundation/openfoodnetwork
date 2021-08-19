@@ -30,31 +30,31 @@
       = t("split_checkout.step1.billing_address.title")
 
     %div.checkout-input
-      = bill_address.label :address1, t("split_checkout.step1.billing_address.address1.label")
-      = bill_address.text_field :address1, { placeholder: t("split_checkout.step1.billing_address.address1.placeholder") }
+      = bill_address.label :address1, t("split_checkout.step1.address.address1.label")
+      = bill_address.text_field :address1, { placeholder: t("split_checkout.step1.address.address1.placeholder") }
       = f.error_message_on "bill_address.address1"
 
     %div.checkout-input
-      = bill_address.label :address2, t("split_checkout.step1.billing_address.address2.label")
-      = bill_address.text_field :address2, { placeholder: t("split_checkout.step1.billing_address.address2.placeholder") }
+      = bill_address.label :address2, t("split_checkout.step1.address.address2.label")
+      = bill_address.text_field :address2, { placeholder: t("split_checkout.step1.address.address2.placeholder") }
       = f.error_message_on "bill_address.address2"
 
     %div.checkout-input
-      = bill_address.label :city, t("split_checkout.step1.billing_address.city.label")
-      = bill_address.text_field :city, { placeholder: t("split_checkout.step1.billing_address.city.placeholder") }
+      = bill_address.label :city, t("split_checkout.step1.address.city.label")
+      = bill_address.text_field :city, { placeholder: t("split_checkout.step1.address.city.placeholder") }
       = f.error_message_on "bill_address.city"
 
     %div.checkout-input
-      = bill_address.label :state_id, t("split_checkout.step1.billing_address.state_id.label")
+      = bill_address.label :state_id, t("split_checkout.step1.address.state_id.label")
       = bill_address.select :state_id, @countries_with_states, { }, { "data-dependant-select-target": "select" }
 
     %div.checkout-input
-      = bill_address.label :zipcode, t("split_checkout.step1.billing_address.zipcode.label")
-      = bill_address.text_field :zipcode, { placeholder: t("split_checkout.step1.billing_address.zipcode.placeholder") }
+      = bill_address.label :zipcode, t("split_checkout.step1.address.zipcode.label")
+      = bill_address.text_field :zipcode, { placeholder: t("split_checkout.step1.address.zipcode.placeholder") }
       = f.error_message_on "bill_address.zipcode"
 
     %div.checkout-input
-      = bill_address.label :country_id, t("split_checkout.step1.billing_address.country_id.label")
+      = bill_address.label :country_id, t("split_checkout.step1.address.country_id.label")
       = bill_address.select :country_id, @countries, { selected: @order.bill_address.country_id || DefaultCountry.id }, {"data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange"}
 
     - if spree_current_user||true
