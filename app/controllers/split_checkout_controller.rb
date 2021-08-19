@@ -30,6 +30,8 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
+    load_shipping_method
+    filter_ship_address_params
     populate_ship_address_params
 
     if confirm_order || update_order
@@ -43,6 +45,16 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  def load_shipping_method
+    @shipping_method = Spree::ShippingMethod.find(params[:shipping_method_id])
+  end
+
+  def filter_ship_address_params
+    return if @shipping_method.require_ship_address
+
+    params[:order].delete(:ship_address_attributes)
+  end
 
   def populate_ship_address_params
     return unless params[:order]["Checkout.ship_address_same_as_billing"] == "1"
