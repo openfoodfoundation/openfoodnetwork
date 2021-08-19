@@ -30,6 +30,8 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
+    populate_ship_address_params
+
     if confirm_order || update_order
       clear_invalid_payments
       advance_order_state
@@ -41,6 +43,12 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  def populate_ship_address_params
+    return unless params[:order]["Checkout.ship_address_same_as_billing"] == "1"
+
+    params[:order][:ship_address_attributes] = params[:order][:bill_address_attributes]
+  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
