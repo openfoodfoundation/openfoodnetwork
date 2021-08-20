@@ -31,7 +31,6 @@ module StripeStubs
   def stub_payment_method_attach_request
     stub_request(:post,
                  "https://api.stripe.com/v1/payment_methods/pm_123/attach")
-      .with(body: { customer: "cus_A123" })
       .to_return(hub_payment_method_response_mock({ pm_id: "pm_123" }))
   end
 
