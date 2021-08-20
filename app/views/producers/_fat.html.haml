@@ -40,7 +40,7 @@
 
       %p.word-wrap{"ng-if" => "::producer.email_address"}
         %a{"ng-href" => "{{::producer.email_address | stripUrl}}", target: "_blank", mailto: true}
-          %span.email{"ng-bind" => "::producer.email_address | stripUrl"}
+          %span.obfuscatedEmail.email{"ng-bind" => "::producer.email_address | stripUrl"}
 
       %p.word-wrap{"ng-if" => "::producer.website"}
         %a{"ng-href" => "http://{{::producer.website | stripUrl}}", target: "_blank" }
