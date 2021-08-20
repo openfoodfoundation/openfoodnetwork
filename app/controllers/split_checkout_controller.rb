@@ -30,9 +30,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    load_shipping_method
-    filter_ship_address_params
-    populate_ship_address_params
+    handle_shipping_method_selection
 
     if confirm_order || update_order
       clear_invalid_payments
@@ -46,11 +44,18 @@ class SplitCheckoutController < ::BaseController
 
   private
 
+  def handle_shipping_method_selection
+    load_shipping_method
+    filter_ship_address_params
+    populate_ship_address_params
+  end
+
   def load_shipping_method
-    @shipping_method = Spree::ShippingMethod.find(params[:shipping_method_id])
+    @shipping_method = Spree::ShippingMethod.where(id: params[:shipping_method_id]).first
   end
 
   def filter_ship_address_params
+    return unless @shipping_method
     return if @shipping_method.require_ship_address
 
     params[:order].delete(:ship_address_attributes)
