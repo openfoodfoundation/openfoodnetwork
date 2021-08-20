@@ -32,7 +32,7 @@
   %thead
     %tr
       %th
-        %input{type: 'checkbox', 'ng-click' => 'toggleAll()', 'ng-model' => 'select_all'}
+        %input{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
       %th
         = t(:products_distributor)
         %th
