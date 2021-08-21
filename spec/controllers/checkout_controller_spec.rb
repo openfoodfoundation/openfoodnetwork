@@ -218,6 +218,30 @@ describe CheckoutController, type: :controller do
             get :edit, params: { payment_intent: "pi_123" }
           }.to change { Customer.count }.by(1)
         end
+
+        context "current_order_cycle is nil" do
+          before do
+            allow(controller).to receive(:current_order_cycle) { nil }
+          end
+
+          it "still processes the payment and completes the order" do
+            get :edit, params: { payment_intent: "pi_123" }
+            expect(order.completed?).to be true
+            expect(response).to redirect_to order_path(order)
+          end
+        end
+
+        context "current_distributor is nil" do
+          before do
+            allow(controller).to receive(:current_distributor) { nil }
+          end
+
+          it "still processes the payment and completes the order" do
+            get :edit, params: { payment_intent: "pi_123" }
+            expect(order.completed?).to be true
+            expect(response).to redirect_to order_path(order)
+          end
+        end
       end
     end
   end

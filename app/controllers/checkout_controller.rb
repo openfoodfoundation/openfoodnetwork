@@ -20,7 +20,6 @@ class CheckoutController < ::BaseController
   prepend_before_action :require_distributor_chosen
 
   before_action :load_order
-
   before_action :ensure_order_not_completed
   before_action :ensure_checkout_allowed
   before_action :handle_insufficient_stock
@@ -62,6 +61,18 @@ class CheckoutController < ::BaseController
   def expire_current_order
     session[:order_id] = nil
     @current_order = nil
+  end
+
+  def require_distributor_chosen
+    return if valid_payment_intent_provided?
+
+    super
+  end
+
+  def require_order_cycle
+    return if valid_payment_intent_provided?
+
+    super
   end
 
   private
@@ -149,12 +160,14 @@ class CheckoutController < ::BaseController
 
   def valid_payment_intent_provided?
     return false unless params["payment_intent"]&.starts_with?("pi_")
-    return false unless @order.state == "payment"
 
-    @order.payments.where(
+    return false unless @payment = Spree::Payment.where(
       response_code: params["payment_intent"],
       state: "requires_authorization"
-    ).present?
+    ).first
+
+    @order ||= @payment.order
+    @order.state == "payment" && @payment.order == @order
   end
 
   def handle_redirect_from_stripe
