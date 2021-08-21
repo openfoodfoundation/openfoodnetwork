@@ -8,6 +8,10 @@
 - content_for :injection_data do
   - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
     = inject_enterprise_shopfront(@enterprise)
+  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
+    = inject_taxons
+  - cache(*CacheService::FragmentCaching.ams_all_properties) do
+    = inject_properties
 
 %shop.darkswarm
   - if @shopfront_layout == 'embedded'

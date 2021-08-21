@@ -1,0 +1,2 @@
+- if !ContentConfig.open_street_map_enabled
+  %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
