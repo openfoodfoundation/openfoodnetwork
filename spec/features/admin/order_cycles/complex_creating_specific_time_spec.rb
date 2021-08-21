@@ -10,8 +10,8 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0) }
-  let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0) }
+  let(:order_cycle_opening_time) { 1.day.from_now(Time.zone.now) }
+  let(:order_cycle_closing_time) { 2.day.from_now(Time.zone.now) }
 
   scenario "creating an order cycle with full interface", js: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
