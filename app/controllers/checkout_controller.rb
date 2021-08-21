@@ -149,11 +149,12 @@ class CheckoutController < ::BaseController
 
   def valid_payment_intent_provided?
     return false unless params["payment_intent"]&.starts_with?("pi_")
+    return false unless @order.state == "payment"
 
-    last_payment = OrderPaymentFinder.new(@order).last_payment
-    @order.state == "payment" &&
-      last_payment&.state == "requires_authorization" &&
-      last_payment&.response_code == params["payment_intent"]
+    @order.payments.where(
+      response_code: params["payment_intent"],
+      state: "requires_authorization"
+    ).present?
   end
 
   def handle_redirect_from_stripe
