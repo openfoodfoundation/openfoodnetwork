@@ -60,7 +60,11 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :business_address, allow_destroy: true
+<<<<<<< HEAD
+  accepts_nested_attributes_for :business_address, :reject_if => :empty_field, allow_destroy: true
+=======
+  accepts_nested_attributes_for :business_address, :reject_if => :business_address_empty?, allow_destroy: true
+>>>>>>> 389cfdf10 (Redo destroy)
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?
@@ -211,6 +215,31 @@ class Enterprise < ApplicationRecord
         (?)
     ", one, one, others)
   }
+
+<<<<<<< HEAD
+  def empty_field(attributes)
+    exists = attributes['business_address_id'].present?
+    empty = attributes.slice(:address1, :city, :country, :phone, :zipcode).values.all?(&:blank?)
+    attributes.merge!({:_destroy => 1}) if exists and empty 
+    return (!exists and empty) 
+=======
+  def business_address_empty?(attributes)
+    is_empty_attributes =
+      attributes[:company].blank? &&
+      attributes[:address1].blank? &&
+      attributes[:city].blank? &&
+      attributes[:phone].blank? &&
+      attributes[:zipcode].blank?
+
+    if is_empty_attributes
+      if attributes[:id].present?
+        attributes.merge!({:_destroy => 1}) && false
+      else
+        true
+      end
+    end
+>>>>>>> 389cfdf10 (Redo destroy)
+  end
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
