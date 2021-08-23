@@ -53,6 +53,8 @@ class SplitCheckoutController < ::BaseController
     load_shipping_method
     filter_ship_address_params
     populate_ship_address_params
+    @shipping_method_id = params[:shipping_method_id]
+    @ship_address_same_as_billing = params[:order]["Checkout.ship_address_same_as_billing"]
   end
 
   def load_shipping_method

@@ -8,8 +8,6 @@ export default class extends Controller {
   ];
   connect() {
     // Hide shippingMethodDescription by default
-    this.shippingMethodDescriptionTarget.style.display = "none";
-    this.shippingMethodAddressTarget.style.display = "none";
   }
 
   selectShippingMethod(event) {
