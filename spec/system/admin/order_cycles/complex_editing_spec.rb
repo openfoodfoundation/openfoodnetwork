@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -10,7 +16,11 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
+<<<<<<< HEAD
   it "editing an order cycle" do
+=======
+  scenario "editing an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     oc.suppliers.first.update_attribute :name, 'AAA'
@@ -27,7 +37,11 @@ describe '
     expect(page.find('#order_cycle_name').value).to eq(oc.name)
     expect(page.find('#order_cycle_orders_open_at').value).to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
     expect(page.find('#order_cycle_orders_close_at').value).to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
+<<<<<<< HEAD
     expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
+=======
+    expect(page).to have_content "COORDINATOR\n#{oc.coordinator.name}"
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
 
     click_button 'Next'
 

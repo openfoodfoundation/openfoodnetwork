@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
@@ -12,8 +18,13 @@ describe '
 
   let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0) }
   let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0) }
+<<<<<<< HEAD
   it "creating an order cycle with full interface", js: true do
 #page.driver.debug
+=======
+
+  scenario "creating an order cycle with full interface", js: true do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given coordinating, supplying and distributing enterprises with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')

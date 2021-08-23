@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+xfeature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
@@ -17,7 +23,11 @@ describe '
     Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z")
   }
 
+<<<<<<< HEAD
   it "updating an order cycle", js: true do
+=======
+  scenario "updating an order cycle", js: true do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by(&:id)

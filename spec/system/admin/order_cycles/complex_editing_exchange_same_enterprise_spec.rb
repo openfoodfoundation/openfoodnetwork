@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -10,7 +16,11 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
+<<<<<<< HEAD
   it "editing an order cycle with an exchange between the same enterprise" do
+=======
+  scenario "editing an order cycle with an exchange between the same enterprise" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     c = create(:distributor_enterprise, is_primary_producer: true)
 
     # Given two order cycles, one with a mono-enterprise incoming exchange...

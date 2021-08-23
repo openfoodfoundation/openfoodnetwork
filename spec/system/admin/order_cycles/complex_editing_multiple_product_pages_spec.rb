@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -28,13 +34,21 @@ describe '
       expect(page).to_not have_content new_product.name
     end
 
+<<<<<<< HEAD
     it "load all products" do
+=======
+    scenario "load all products" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
       page.find(".exchange-load-all-variants a").click
 
       expect_all_products_loaded
     end
 
+<<<<<<< HEAD
     it "select all products" do
+=======
+    scenario "select all products" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
       # replace with scroll_to method when upgrading to Capybara >= 3.13.0
       checkbox_id = "order_cycle_incoming_exchange_0_select_all_variants"
       page.execute_script("document.getElementById('#{checkbox_id}').scrollIntoView()")

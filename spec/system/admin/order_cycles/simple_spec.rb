@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to manage simple order cycles
 ', js: true do
@@ -10,7 +16,11 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
+<<<<<<< HEAD
   it "updating many order cycle opening/closing times at once", js: true do
+=======
+  scenario "updating many order cycle opening/closing times at once", js: true do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given three order cycles
     oc1 = create(:simple_order_cycle,
                  orders_open_at: Time.zone.local(2000, 12, 12, 12, 12, 0),
@@ -71,7 +81,11 @@ describe '
     expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 0]
   end
 
+<<<<<<< HEAD
   it "cloning an order cycle" do
+=======
+  scenario "cloning an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given an order cycle
     oc = create(:simple_order_cycle)
 
@@ -177,7 +191,11 @@ describe '
         login_as @new_user
       end
 
+<<<<<<< HEAD
       it "viewing a list of order cycles I am coordinating" do
+=======
+      scenario "viewing a list of order cycles I am coordinating" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         oc_user_coordinating = create(:simple_order_cycle,
                                       suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' )
         oc_for_other_user = create(:simple_order_cycle, coordinator: supplier_unmanaged,
@@ -199,7 +217,11 @@ describe '
         expect(page).to have_selector 'td.shops', text: distributor_unmanaged.name
       end
 
+<<<<<<< HEAD
       it "creating a new order cycle" do
+=======
+      scenario "creating a new order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         distributor_managed.update_attribute(:enable_subscriptions, true)
         visit admin_order_cycles_path
         click_link 'New Order Cycle'
@@ -272,7 +294,11 @@ describe '
         expect(exchange.tag_list).to eq(["wholesale"])
       end
 
+<<<<<<< HEAD
       it "editing an order cycle" do
+=======
+      scenario "editing an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         distributor_managed.update_attribute(:enable_subscriptions, true)
@@ -304,7 +330,11 @@ describe '
         expect(oc.schedules).to eq([schedule])
       end
 
+<<<<<<< HEAD
       it "cloning an order cycle" do
+=======
+      scenario "cloning an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
         visit admin_order_cycles_path
@@ -327,7 +357,11 @@ describe '
         login_to_admin_as new_user
       end
 
+<<<<<<< HEAD
       it "editing an order cycle" do
+=======
+      scenario "editing an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -403,7 +437,11 @@ describe '
         login_to_admin_as new_user
       end
 
+<<<<<<< HEAD
       it "editing an order cycle" do
+=======
+      scenario "editing an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -558,7 +596,11 @@ describe '
       expect(ex.pickup_instructions).to eq('pickup instructions')
     end
 
+<<<<<<< HEAD
     it "editing an order cycle" do
+=======
+    scenario "editing an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
       # Given an order cycle with pickup time and instructions
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
@@ -593,7 +635,11 @@ describe '
       expect(page).to have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
     end
 
+<<<<<<< HEAD
     it "updating an order cycle" do
+=======
+    scenario "updating an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
@@ -657,7 +703,11 @@ describe '
     end
   end
 
+<<<<<<< HEAD
   it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
+=======
+  scenario "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
@@ -667,7 +717,11 @@ describe '
     expect(page).to have_content "You have unsaved changes"
   end
 
+<<<<<<< HEAD
   it "deleting an order cycle" do
+=======
+  scenario "deleting an order cycle" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"

@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require "system_helper"
 
 describe '
+=======
+require 'spec_helper'
+
+feature '
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     As an administrator
     I want to list and filter order cycles
 ', js: true do
@@ -10,7 +16,11 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
+<<<<<<< HEAD
   it "listing and filtering order cycles" do
+=======
+  scenario "listing and filtering order cycles" do
+>>>>>>> 60a05d482a8d05b075b4a16241b732e51621552c
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: 'oc4',
                                       orders_open_at: 2.days.from_now, orders_close_at: 1.month.from_now)
