@@ -1660,6 +1660,8 @@ en:
           label: Country
       delivery_address:
           title: Delivery address
+          errors:
+            no_shipping_method_selected: No shipping method selected
       submit: Next - Payment method
       cancel: Back to Edit basket
     step2:

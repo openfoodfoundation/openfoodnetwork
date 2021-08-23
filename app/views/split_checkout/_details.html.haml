@@ -68,6 +68,10 @@
     = t("split_checkout.step1.delivery_address.title")
 
   - selected_shipping_method = @order.shipping_method&.id
+  - if selected_shipping_method == nil && @order.errors.messages_for(:base).include?("no_shipping_method_selected")
+    %div.checkout-input
+      %span.formError.standalone
+        = t("split_checkout.step1.delivery_address.errors.no_shipping_method_selected")
   - @shipping_methods.each do |shipping_method|
     %div.checkout-input
       = fields_for shipping_method do |shipping_method_form|
