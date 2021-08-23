@@ -52,6 +52,7 @@ class SplitCheckoutController < ::BaseController
   def handle_shipping_method_selection
     load_shipping_method
     filter_ship_address_params
+    populate_ship_address_common_params
     populate_ship_address_params
     @shipping_method_id = params[:shipping_method_id]
     @ship_address_same_as_billing = params[:order]["Checkout.ship_address_same_as_billing"]
@@ -66,6 +67,12 @@ class SplitCheckoutController < ::BaseController
     return if @shipping_method.require_ship_address
 
     params[:order].delete(:ship_address_attributes)
+  end
+
+  def populate_ship_address_common_params
+    params[:order][:ship_address_attributes][:firstname] = params[:order][:bill_address_attributes][:firstname]
+    params[:order][:ship_address_attributes][:lastname] = params[:order][:bill_address_attributes][:lastname]
+    params[:order][:ship_address_attributes][:phone] = params[:order][:bill_address_attributes][:phone]
   end
 
   def populate_ship_address_params
