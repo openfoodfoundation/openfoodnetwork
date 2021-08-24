@@ -27,6 +27,7 @@ class SplitCheckoutController < ::BaseController
     # OrderCheckoutRestart.new(@order).call
     @order.errors.clear
     @order.bill_address.errors.clear
+    @order.ship_address.errors.clear
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   end
