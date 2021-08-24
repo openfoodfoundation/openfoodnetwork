@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "Managing enterprise images" do
+describe "Managing enterprise images" do
   include WebHelper
   include AuthenticationHelper
 
@@ -28,7 +28,7 @@ feature "Managing enterprise images" do
         go_to_images
       end
 
-      scenario "editing logo" do
+      it "editing logo" do
         # Adding image
         attach_file "enterprise[logo]", Rails.root.join("app", "assets", "images", "logo-white.png")
         click_button "Update"
@@ -64,7 +64,7 @@ feature "Managing enterprise images" do
         end
       end
 
-      scenario "editing promo image" do
+      it "editing promo image" do
         # Adding image
         attach_file "enterprise[promo_image]",
                     Rails.root.join("app", "assets", "images", "logo-white.png")

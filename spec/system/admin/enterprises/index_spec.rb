@@ -2,12 +2,12 @@
 
 require "system_helper"
 
-feature 'Enterprises Index' do
+describe 'Enterprises Index' do
   include WebHelper
   include AuthenticationHelper
 
   context "as an admin user" do
-    scenario "listing enterprises" do
+    it "listing enterprises" do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise)
 
