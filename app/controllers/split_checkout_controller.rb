@@ -69,6 +69,9 @@ class SplitCheckoutController < ::BaseController
   end
 
   def populate_ship_address_params
+    return unless params[:order][:ship_address_attributes].present? &&
+                  params[:order][:bill_address_attributes].present?
+                  
     address_attrs = [
       :firstname,
       :lastname,
