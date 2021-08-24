@@ -44,7 +44,7 @@ class SplitCheckoutController < ::BaseController
       if params[:shipping_method_id].blank?
         @order.errors.add(:base, "no_shipping_method_selected")
       end
-      flash.now[:error] = "Saving failed, please update the highlighted fields"
+      flash.now[:error] = "Saving failed, please update the highlighted fields: #{@order.errors.full_messages}"
       render :edit
     end
   end
@@ -98,7 +98,10 @@ class SplitCheckoutController < ::BaseController
 
   def confirm_order
     return unless @order.confirmation? && params[:confirm_order]
-
+    if params["accept_terms"] != "1"
+      @order.errors.add(:base, "please accept terms")
+      return false
+    end
     @order.confirm!
   end
 
