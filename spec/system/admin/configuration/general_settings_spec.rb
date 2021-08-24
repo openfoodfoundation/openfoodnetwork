@@ -34,7 +34,7 @@ describe "General Settings" do
 
   context 'editing currency symbol position' do
     it 'updates its position' do
-      expect(page).to have_content('Currency Settings')
+      expect(page).to have_content("CURRENCY SETTINGS")
 
       within('.currency') do
         find("[for='currency_symbol_position_after']").click
