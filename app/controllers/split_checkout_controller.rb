@@ -113,7 +113,11 @@ class SplitCheckoutController < ::BaseController
 
     workflow_options = raw_params.slice(:shipping_method_id)
 
-    OrderWorkflow.new(@order).advance_to_confirmation(workflow_options)
+    if @order.payments.empty?
+      OrderWorkflow.new(@order).advance_to_payment
+    else
+      OrderWorkflow.new(@order).advance_to_confirmation(workflow_options)
+    end
   end
 
   def checkout_step
