@@ -18,7 +18,7 @@
     %span.summary-label
       = t("split_checkout.step1.your_details.email.label")
     %span.summary-value
-      = @order.user.email
+      = @order.user ? @order.user.email : "Change me"
   
   %div.summary
     %span.summary-label
