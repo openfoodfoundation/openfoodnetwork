@@ -32,6 +32,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
+    load_shipping_method
     handle_shipping_method_selection
 
     if confirm_order || update_order
@@ -50,35 +51,41 @@ class SplitCheckoutController < ::BaseController
   private
 
   def handle_shipping_method_selection
-    load_shipping_method
-    filter_ship_address_params
-    populate_ship_address_common_params
+    return unless @shipping_method
+
     populate_ship_address_params
-    @shipping_method_id = params[:shipping_method_id]
-    @ship_address_same_as_billing = params[:order]["Checkout.ship_address_same_as_billing"]
   end
 
   def load_shipping_method
-    @shipping_method = Spree::ShippingMethod.where(id: params[:shipping_method_id]).first
-  end
+    if params[:shipping_method_id]
+      @shipping_method = Spree::ShippingMethod.where(id: params[:shipping_method_id]).first
+      @shipping_method_id = params[:shipping_method_id]
+    else
+      @shipping_method = @order.shipping_method
+      @shipping_method_id = @shipping_method.id
+    end
 
-  def filter_ship_address_params
-    return unless @shipping_method
-    return if @shipping_method.require_ship_address
-
-    params[:order].delete(:ship_address_attributes)
-  end
-
-  def populate_ship_address_common_params
-    params[:order][:ship_address_attributes][:firstname] = params[:order][:bill_address_attributes][:firstname]
-    params[:order][:ship_address_attributes][:lastname] = params[:order][:bill_address_attributes][:lastname]
-    params[:order][:ship_address_attributes][:phone] = params[:order][:bill_address_attributes][:phone]
+    @ship_address_same_as_billing = params[:order]["Checkout.ship_address_same_as_billing"]
   end
 
   def populate_ship_address_params
-    return unless params[:order]["Checkout.ship_address_same_as_billing"] == "1"
+    address_attrs = [
+      :firstname,
+      :lastname,
+      :phone,
+      :address1,
+      :address2,
+      :city,
+      :state_id,
+      :zipcode,
+      :country_id,
+      :id
+    ]
+    address_attrs.each do |attr|
+      next if params[:order][:ship_address_attributes][attr].present?
 
-    params[:order][:ship_address_attributes] = params[:order][:bill_address_attributes]
+      params[:order][:ship_address_attributes][attr] = params[:order][:bill_address_attributes][attr]
+    end
   end
 
   def clear_invalid_payments
