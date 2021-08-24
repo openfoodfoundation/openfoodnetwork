@@ -65,13 +65,13 @@ class SplitCheckoutController < ::BaseController
       @shipping_method_id = @shipping_method.id
     end
 
-    @ship_address_same_as_billing = params[:order]["Checkout.ship_address_same_as_billing"]
+    @ship_address_same_as_billing = params.dig(:order, "Checkout.ship_address_same_as_billing")
   end
 
   def populate_ship_address_params
-    return unless params[:order][:ship_address_attributes].present? &&
-                  params[:order][:bill_address_attributes].present?
-                  
+    return unless params.dig(:order, :ship_address_attributes).present? &&
+                  params.dig(:order, :bill_address_attributes).present?
+
     address_attrs = [
       :firstname,
       :lastname,
