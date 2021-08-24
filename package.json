@@ -8,6 +8,11 @@
   "scripts": {
     "storybook": "start-storybook"
   },
+  "jest": {
+    "testRegex": [
+      "spec/javascripts/.*_test\\.js"
+    ]
+  },
   "devDependencies": {
     "@storybook/addon-controls": "^6.3.7",
     "@storybook/addon-docs": "^6.3.7",
