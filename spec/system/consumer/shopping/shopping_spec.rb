@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "system_helper"
 
 feature "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationHelper

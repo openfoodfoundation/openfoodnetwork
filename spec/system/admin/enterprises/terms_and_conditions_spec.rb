@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
 feature "Uploading Terms and Conditions PDF" do
   include AuthenticationHelper
