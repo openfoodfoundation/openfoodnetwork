@@ -1686,7 +1686,7 @@ en:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
-      agree: By clickin 'Complete order' you agree to your order being processed.
+      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
