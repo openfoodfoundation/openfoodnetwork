@@ -161,13 +161,12 @@ class CheckoutController < ::BaseController
   def valid_payment_intent_provided?
     return false unless params["payment_intent"]&.starts_with?("pi_")
 
-    return false unless @payment = Spree::Payment.where(
+    return false unless payment = Spree::Payment.where(
       response_code: params["payment_intent"],
       state: "requires_authorization"
     ).first
 
-    @order ||= @payment.order
-    @order.state == "payment" && @payment.order == @order
+    payment.order.state == "payment"
   end
 
   def handle_redirect_from_stripe
