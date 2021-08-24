@@ -128,7 +128,14 @@ module WebHelper
   end
 
   def accept_js_alert
-    page.driver.browser.switch_to.alert.accept
+    browser = Ferrum::Browser.new
+    browser.on(:dialog) do |dialog|
+      if dialog.match?
+        dialog.accept
+      else
+        dialog.dismiss
+      end
+    end 
   end
 
   def angular_http_requests_finished(controller = nil)
