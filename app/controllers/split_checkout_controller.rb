@@ -41,7 +41,7 @@ class SplitCheckoutController < ::BaseController
       advance_order_state
       redirect_to_step
     else
-      if params[:shipping_method_id].blank?
+      if @shipping_method_id.blank?
         @order.errors.add(:base, "no_shipping_method_selected")
       end
       flash.now[:error] = "Saving failed, please update the highlighted fields: #{@order.errors.full_messages}"
@@ -63,7 +63,7 @@ class SplitCheckoutController < ::BaseController
       @shipping_method_id = params[:shipping_method_id]
     else
       @shipping_method = @order.shipping_method
-      @shipping_method_id = @shipping_method.id
+      @shipping_method_id = @shipping_method&.id
     end
 
     @ship_address_same_as_billing = params.dig(:order, "Checkout.ship_address_same_as_billing")
