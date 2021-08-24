@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -10,7 +10,7 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  scenario "editing an order cycle" do
+  it "editing an order cycle" do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     oc.suppliers.first.update_attribute :name, 'AAA'

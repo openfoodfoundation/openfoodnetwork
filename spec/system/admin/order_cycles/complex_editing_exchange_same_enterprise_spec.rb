@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -10,7 +10,7 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  scenario "editing an order cycle with an exchange between the same enterprise" do
+  it "editing an order cycle with an exchange between the same enterprise" do
     c = create(:distributor_enterprise, is_primary_producer: true)
 
     # Given two order cycles, one with a mono-enterprise incoming exchange...

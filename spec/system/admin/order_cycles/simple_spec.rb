@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage simple order cycles
 ', js: true do
@@ -10,7 +10,7 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  scenario "updating many order cycle opening/closing times at once", js: true do
+  it "updating many order cycle opening/closing times at once", js: true do
     # Given three order cycles
     oc1 = create(:simple_order_cycle,
                  orders_open_at: Time.zone.local(2000, 12, 12, 12, 12, 0),
@@ -71,7 +71,7 @@ feature '
     expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 0]
   end
 
-  scenario "cloning an order cycle" do
+  it "cloning an order cycle" do
     # Given an order cycle
     oc = create(:simple_order_cycle)
 
@@ -177,7 +177,7 @@ feature '
         login_as @new_user
       end
 
-      scenario "viewing a list of order cycles I am coordinating" do
+      it "viewing a list of order cycles I am coordinating" do
         oc_user_coordinating = create(:simple_order_cycle,
                                       suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' )
         oc_for_other_user = create(:simple_order_cycle, coordinator: supplier_unmanaged,
@@ -199,7 +199,7 @@ feature '
         expect(page).to have_selector 'td.shops', text: distributor_unmanaged.name
       end
 
-      scenario "creating a new order cycle" do
+      it "creating a new order cycle" do
         distributor_managed.update_attribute(:enable_subscriptions, true)
         visit admin_order_cycles_path
         click_link 'New Order Cycle'
@@ -272,7 +272,7 @@ feature '
         expect(exchange.tag_list).to eq(["wholesale"])
       end
 
-      scenario "editing an order cycle" do
+      it "editing an order cycle" do
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         distributor_managed.update_attribute(:enable_subscriptions, true)
@@ -304,7 +304,7 @@ feature '
         expect(oc.schedules).to eq([schedule])
       end
 
-      scenario "cloning an order cycle" do
+      it "cloning an order cycle" do
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
         visit admin_order_cycles_path
@@ -327,7 +327,7 @@ feature '
         login_to_admin_as new_user
       end
 
-      scenario "editing an order cycle" do
+      it "editing an order cycle" do
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -403,7 +403,7 @@ feature '
         login_to_admin_as new_user
       end
 
-      scenario "editing an order cycle" do
+      it "editing an order cycle" do
         oc = create(:simple_order_cycle,
                     suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -558,7 +558,7 @@ feature '
       expect(ex.pickup_instructions).to eq('pickup instructions')
     end
 
-    scenario "editing an order cycle" do
+    it "editing an order cycle" do
       # Given an order cycle with pickup time and instructions
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
@@ -593,7 +593,7 @@ feature '
       expect(page).to have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
     end
 
-    scenario "updating an order cycle" do
+    it "updating an order cycle" do
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
@@ -657,7 +657,7 @@ feature '
     end
   end
 
-  scenario "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
+  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
@@ -667,7 +667,7 @@ feature '
     expect(page).to have_content "You have unsaved changes"
   end
 
-  scenario "deleting an order cycle" do
+  it "deleting an order cycle" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"

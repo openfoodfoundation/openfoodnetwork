@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
@@ -13,7 +13,7 @@ feature '
   let(:order_cycle_opening_time) { 1.day.from_now(Time.zone.now) }
   let(:order_cycle_closing_time) { 2.day.from_now(Time.zone.now) }
 
-  scenario "creating an order cycle with full interface", js: true do
+  it "creating an order cycle with full interface", js: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')

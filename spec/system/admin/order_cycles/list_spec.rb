@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to list and filter order cycles
 ', js: true do
@@ -10,7 +10,7 @@ feature '
   include AuthenticationHelper
   include WebHelper
 
-  scenario "listing and filtering order cycles" do
+  it "listing and filtering order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: 'oc4',
                                       orders_open_at: 2.days.from_now, orders_close_at: 1.month.from_now)
