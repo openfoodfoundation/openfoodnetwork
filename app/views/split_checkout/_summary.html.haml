@@ -30,43 +30,12 @@
   %div.checkout-substep
     %div.checkout-title
       = t("split_checkout.step3.billing_address.title")
-    
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.address.address1.label")
-      %span.summary-value
-        = @order.bill_address.address1
-    
-    - unless @order.bill_address.address2.blank?
-      %div.summary
-        %span.summary-label
-          = t("split_checkout.step1.address.address2.label")
-        %span.summary-value
-          = @order.bill_address.address2
+    = render "summary_address", address: @order.bill_address
 
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.address.city.label")
-      %span.summary-value
-        = @order.bill_address.city
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.address.state_id.label")
-      %span.summary-value
-        = @order.bill_address.state
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.address.zipcode.label")
-      %span.summary-value
-        = @order.bill_address.zipcode
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.billing_address.country.label")
-      %span.summary-value
-        = @order.bill_address.country
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.shipping_address.title")
+    = render "summary_address", address: @order.shipping_address
 
   %div.checkout-substep
     %div.checkout-title

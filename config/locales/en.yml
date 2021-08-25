@@ -1676,6 +1676,8 @@ en:
         edit: Edit your details
       billing_address:
         title: Billing address
+      shipping_address:
+        title: Shipping address
       delivery_info:
         title: Delivery info
       payment_method:
