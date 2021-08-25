@@ -32,32 +32,32 @@
   
   %div.summary
     %span.summary-label
-      = t("split_checkout.step1.billing_address.address1.label")
+      = t("split_checkout.step1.address.address1.label")
     %span.summary-value
       = @order.bill_address.address1
   
   - unless @order.bill_address.address2.blank?
     %div.summary
       %span.summary-label
-        = t("split_checkout.step1.billing_address.address2.label")
+        = t("split_checkout.step1.address.address2.label")
       %span.summary-value
         = @order.bill_address.address2
 
   %div.summary
     %span.summary-label
-      = t("split_checkout.step1.billing_address.city.label")
+      = t("split_checkout.step1.address.city.label")
     %span.summary-value
       = @order.bill_address.city
 
   %div.summary
     %span.summary-label
-      = t("split_checkout.step1.billing_address.state_id.label")
+      = t("split_checkout.step1.address.state_id.label")
     %span.summary-value
       = @order.bill_address.state
 
   %div.summary
     %span.summary-label
-      = t("split_checkout.step1.billing_address.zipcode.label")
+      = t("split_checkout.step1.address.zipcode.label")
     %span.summary-value
       = @order.bill_address.zipcode
 
