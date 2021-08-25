@@ -26,6 +26,19 @@ module Stripe
       end
 
       context "when called from Stripe SCA" do
+        let(:customer_response_body) {
+          JSON.generate(id: customer_id, default_card: card_id, sources: { data: [{ id: "1" }] })
+        }
+
+        it "fetches the customer id and the card id from the correct response fields" do
+          profile_storer.create_customer_from_token
+
+          expect(payment.source.gateway_customer_profile_id).to eq customer_id
+          expect(payment.source.gateway_payment_profile_id).to eq card_id
+        end
+      end
+
+      context "when called from Stripe SCA" do
         it "fetches the customer id and the card id from the correct response fields" do
           profile_storer.create_customer_from_token
 
