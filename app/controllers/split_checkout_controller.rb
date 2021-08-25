@@ -28,6 +28,7 @@ class SplitCheckoutController < ::BaseController
     @order.errors.clear
     @order.bill_address.errors.clear
     @order.ship_address.errors.clear
+    @ship_address_same_as_billing = "1" if ship_address_matches_bill_address?
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   end
@@ -51,6 +52,12 @@ class SplitCheckoutController < ::BaseController
 
   private
 
+  def ship_address_matches_bill_address?
+    attrs_to_check = %w(firstname lastname address1 address2 state_id city zipcode phone country_id)
+    ((@order.bill_address.attributes.to_a -
+      @order.ship_address.attributes.to_a).map(&:first) & attrs_to_check).blank?
+  end
+
   def handle_shipping_method_selection
     return unless @shipping_method
 
@@ -65,13 +72,16 @@ class SplitCheckoutController < ::BaseController
       @shipping_method = @order.shipping_method
       @shipping_method_id = @shipping_method&.id
     end
-
-    @ship_address_same_as_billing = params.dig(:order, "Checkout.ship_address_same_as_billing")
   end
 
   def populate_ship_address_params
     return unless params.dig(:order, :ship_address_attributes).present? &&
                   params.dig(:order, :bill_address_attributes).present?
+
+    if params.dig(:order, "Checkout.ship_address_same_as_billing") == "1"
+      params[:order][:ship_address_attributes] = params[:order][:bill_address_attributes]
+      return
+    end
 
     address_attrs = [
       :firstname,
