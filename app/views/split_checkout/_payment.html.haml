@@ -1,26 +1,27 @@
-%div.checkout-substep{"data-controller": "paymentmethod"}
-  %div.checkout-title
-    = t("split_checkout.step2.payment_method.title")
-  - selected_payment_method = @order.payments&.with_state(:checkout)&.first&.payment_method_id
-  - available_payment_methods.each do |payment_method| 
-    %div.checkout-input
-      = f.radio_button :payment_method_id, payment_method.id,
-        name: "order[payments_attributes][][payment_method_id]",
-        id: "payment_method_#{payment_method.id}",
-        name: "order[payments_attributes][][payment_method_id]",
-        checked: (payment_method.id == selected_payment_method),
-        "data-action": "paymentmethod#selectPaymentMethod",
-        "data-paymentmethod-description": "#{payment_method.description}"
-      = f.label payment_method.id, "#{payment_method.name} (#{payment_or_shipping_price(payment_method, @order)})", {for: "payment_method_" + payment_method.id.to_s }
+.medium-6
+  %div.checkout-substep{"data-controller": "paymentmethod"}
+    %div.checkout-title
+      = t("split_checkout.step2.payment_method.title")
+    - selected_payment_method = @order.payments&.with_state(:checkout)&.first&.payment_method_id
+    - available_payment_methods.each do |payment_method| 
+      %div.checkout-input
+        = f.radio_button :payment_method_id, payment_method.id,
+          name: "order[payments_attributes][][payment_method_id]",
+          id: "payment_method_#{payment_method.id}",
+          name: "order[payments_attributes][][payment_method_id]",
+          checked: (payment_method.id == selected_payment_method),
+          "data-action": "paymentmethod#selectPaymentMethod",
+          "data-paymentmethod-description": "#{payment_method.description}"
+        = f.label payment_method.id, "#{payment_method.name} (#{payment_or_shipping_price(payment_method, @order)})", {for: "payment_method_" + payment_method.id.to_s }
 
-  %div
-    .panel{"data-paymentmethod-target": "panel", style: "display: none"} 
-      
+    %div
+      .panel{"data-paymentmethod-target": "panel", style: "display: none"} 
+        
 
-%div.checkout-substep
-  = t("split_checkout.step2.explaination")
+  %div.checkout-substep
+    = t("split_checkout.step2.explaination")
 
-%div.checkout-submit
-  = f.submit t("split_checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-  %a.button.cancel{href: main_app.checkout_step_path(:details)}
-    = t("split_checkout.step2.cancel")
+  %div.checkout-submit
+    = f.submit t("split_checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+    %a.button.cancel{href: main_app.checkout_step_path(:details)}
+      = t("split_checkout.step2.cancel")
