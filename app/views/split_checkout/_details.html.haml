@@ -105,7 +105,7 @@
     = f.check_box "Checkout.ship_address_same_as_billing", { id: "Checkout.ship_address_same_as_billing", "data-action": "shippingmethod#showHideShippingAddress", "data-shippingmethod-target": "shippingAddressCheckbox", checked: @ship_address_same_as_billing == "1" }
     = f.label "Checkout.ship_address_same_as_billing", t(:checkout_address_same), { for: "Checkout.ship_address_same_as_billing" }
 
-  %div{"data-shippingmethod-target": "shippingMethodAddress", style: "display: #{@ship_address_same_as_billing == "1" ? 'none' : 'block'}" }
+  %div{"data-shippingmethod-target": "shippingMethodAddress", style: "display: #{display_ship_address == false || @ship_address_same_as_billing == "1" ? 'none' : 'block'}" }
     = f.fields :ship_address, model: @order.ship_address do |ship_address|
       %div.checkout-input
         = ship_address.label :address1, t("split_checkout.step1.address.address1.label")
