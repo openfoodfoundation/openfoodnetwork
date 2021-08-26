@@ -12,11 +12,11 @@ module SharedHelper
   end
 
   def enterprise_user?
-    spree_current_user.andand.enterprises.andand.count.to_i > 0
+    spree_current_user&.enterprises&.count.to_i > 0
   end
 
   def admin_user?
-    spree_current_user.andand.has_spree_role? 'admin'
+    spree_current_user&.has_spree_role? 'admin'
   end
 
   def current_shop_products_path

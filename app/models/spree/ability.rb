@@ -197,7 +197,7 @@ module Spree
       end
 
       can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
-        next false unless vo.hub.present? && vo.variant.andand.product.andand.supplier.present?
+        next false unless vo.hub.present? && vo.variant&.product&.supplier.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -212,7 +212,7 @@ module Spree
 
       can [:admin, :create, :update], InventoryItem do |ii|
         next false unless ii.enterprise.present? &&
-                          ii.variant.andand.product.andand.supplier.present?
+                          ii.variant&.product&.supplier.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -267,7 +267,7 @@ module Spree
           # Enterprise User can access orders that they are a distributor for
           user.enterprises.include?(order.distributor) ||
           # Enterprise User can access orders that are placed inside a OC they coordinate
-          order.order_cycle.andand.coordinated_by?(user)
+          order.order_cycle&.coordinated_by?(user)
       end
       can [:admin, :bulk_management, :managed], Spree::Order do
         user.admin? || user.enterprises.any?(&:is_distributor)
@@ -280,7 +280,7 @@ module Spree
         order = item.order
         user.admin? ||
           user.enterprises.include?(order.distributor) ||
-          order.order_cycle.andand.coordinated_by?(user)
+          order.order_cycle&.coordinated_by?(user)
       end
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
@@ -293,7 +293,7 @@ module Spree
         else
           order = adjustment.order
           user.enterprises.include?(order.distributor) ||
-            order.order_cycle.andand.coordinated_by?(user)
+            order.order_cycle&.coordinated_by?(user)
         end
       end
 

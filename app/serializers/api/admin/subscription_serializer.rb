@@ -15,31 +15,31 @@ module Api
       has_one :ship_address, serializer: Api::AddressSerializer
 
       def begins_at
-        object.begins_at.andand.strftime('%F')
+        object.begins_at&.strftime('%F')
       end
 
       def ends_at
-        object.ends_at.andand.strftime('%F')
+        object.ends_at&.strftime('%F')
       end
 
       def paused_at
-        object.paused_at.andand.strftime('%F')
+        object.paused_at&.strftime('%F')
       end
 
       def canceled_at
-        object.canceled_at.andand.strftime('%F')
+        object.canceled_at&.strftime('%F')
       end
 
       def customer_email
-        object.customer.andand.email
+        object.customer&.email
       end
 
       def customer_name
-        object.customer.andand.name
+        object.customer&.name
       end
 
       def schedule_name
-        object.schedule.andand.name
+        object.schedule&.name
       end
 
       def edit_path

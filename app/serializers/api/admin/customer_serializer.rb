@@ -10,7 +10,7 @@ module Api
       has_one :bill_address, serializer: Api::AddressSerializer
 
       def name
-        object.name.presence || object.bill_address.andand.full_name
+        object.name.presence || object.bill_address&.full_name
       end
 
       def tag_list
@@ -19,7 +19,7 @@ module Api
 
       def tags
         customer_tag_list.map do |tag|
-          tag_rule_map = options[:tag_rule_mapping].andand[tag]
+          tag_rule_map = options.dig(:tag_rule_mapping, tag)
           tag_rule_map || { text: tag, rules: nil }
         end
       end
@@ -35,7 +35,7 @@ module Api
       def customer_tag_list
         return object.tag_list unless options[:customer_tags]
 
-        options[:customer_tags].andand[object.id] || []
+        options.dig(:customer_tags, object.id) || []
       end
     end
   end

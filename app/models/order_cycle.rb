@@ -227,15 +227,15 @@ class OrderCycle < ApplicationRecord
   end
 
   def receival_instructions_for(supplier)
-    exchange_for_supplier(supplier).andand.receival_instructions
+    exchange_for_supplier(supplier)&.receival_instructions
   end
 
   def pickup_time_for(distributor)
-    exchange_for_distributor(distributor).andand.pickup_time || distributor.next_collection_at
+    exchange_for_distributor(distributor)&.pickup_time || distributor.next_collection_at
   end
 
   def pickup_instructions_for(distributor)
-    exchange_for_distributor(distributor).andand.pickup_instructions
+    exchange_for_distributor(distributor)&.pickup_instructions
   end
 
   def exchanges_carrying(variant, distributor)

@@ -137,7 +137,7 @@ module OpenFoodNetwork
     end
 
     def is_temperature_controlled?(line_item)
-      if line_item.product.shipping_category.andand.temperature_controlled
+      if line_item.product.shipping_category&.temperature_controlled
         "Yes"
       else
         "No"

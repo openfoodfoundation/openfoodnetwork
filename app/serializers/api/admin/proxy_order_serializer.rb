@@ -13,7 +13,7 @@ module Api
       end
 
       def update_issues
-        options[:order_update_issues].andand[object.order_id] || []
+        options[:order_update_issues]&.send(:[], object.order_id) || []
       end
 
       def completed_at

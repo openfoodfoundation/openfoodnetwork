@@ -5,7 +5,7 @@
     = t :order_delivery_time
     %strong #{order.order_cycle.pickup_time_for(order.distributor)}
   %p.text-small.text-skinny.pre-line
-    %em= order.shipping_method.description.andand.html_safe || ""
+    %em= order.shipping_method.description&.html_safe || ""
 .order-summary.text-small
   %strong
     = t :order_delivery_address

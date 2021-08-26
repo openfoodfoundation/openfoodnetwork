@@ -5,7 +5,7 @@ class TagRule::FilterOrderCycles < TagRule
   preference :exchange_tags, :string, default: ""
 
   def tags_match?(order_cycle)
-    exchange_tags = exchange_for(order_cycle).andand.tag_list || []
+    exchange_tags = exchange_for(order_cycle)&.tag_list || []
     preferred_tags = preferred_exchange_tags.split(",")
     ( exchange_tags & preferred_tags ).any?
   end

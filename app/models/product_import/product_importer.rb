@@ -86,7 +86,7 @@ module ProductImport
     end
 
     def enterprise_products
-      @processor.andand.enterprise_products
+      @processor&.enterprise_products
     end
 
     def total_enterprise_products

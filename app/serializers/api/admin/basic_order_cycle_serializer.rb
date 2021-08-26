@@ -15,11 +15,11 @@ module Api
       end
 
       def orders_open_at
-        object.orders_open_at.andand.strftime("%F %T %z")
+        object.orders_open_at&.strftime("%F %T %z")
       end
 
       def orders_close_at
-        object.orders_close_at.andand.strftime("%F %T %z")
+        object.orders_close_at&.strftime("%F %T %z")
       end
     end
   end

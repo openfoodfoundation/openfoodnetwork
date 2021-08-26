@@ -147,16 +147,16 @@ module OpenFoodNetwork
       return nil if amount == 0
       # rubocop:enable Style/NumericPredicate
 
-      [order.bill_address.andand.full_name,
+      [order.bill_address&.full_name,
        order.email,
-       order.bill_address.andand.address1,
-       order.bill_address.andand.address2,
+       order.bill_address&.address1,
+       order.bill_address&.address2,
        '',
        '',
-       order.bill_address.andand.city,
-       order.bill_address.andand.state,
-       order.bill_address.andand.zipcode,
-       order.bill_address.andand.country.andand.name,
+       order.bill_address&.city,
+       order.bill_address&.state,
+       order.bill_address&.zipcode,
+       order.bill_address&.country&.name,
        invoice_number,
        order.number,
        opts[:invoice_date],

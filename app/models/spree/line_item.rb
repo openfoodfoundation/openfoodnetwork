@@ -168,7 +168,7 @@ module Spree
     end
 
     def tax_rates
-      product.tax_category.andand.tax_rates || []
+      product.tax_category&.tax_rates || []
     end
 
     def price_with_adjustments
@@ -247,8 +247,8 @@ module Spree
     def calculate_final_weight_volume
       if final_weight_volume.present? && quantity_was > 0
         self.final_weight_volume = final_weight_volume * quantity / quantity_was
-      elsif variant.andand.unit_value.present?
-        self.final_weight_volume = variant.andand.unit_value * quantity
+      elsif variant&.unit_value.present?
+        self.final_weight_volume = variant&.unit_value * quantity
       end
     end
   end

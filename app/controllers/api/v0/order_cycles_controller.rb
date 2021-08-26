@@ -94,7 +94,7 @@ module Api
       end
 
       def customer
-        @current_api_user.andand.customer_of(distributor) || nil
+        @current_api_user&.customer_of(distributor) || nil
       end
 
       def distributed_products

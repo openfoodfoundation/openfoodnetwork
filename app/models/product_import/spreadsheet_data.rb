@@ -37,7 +37,7 @@ module ProductImport
     private
 
     def import_into_inventory?
-      @import_settings[:settings].andand['import_into'] == 'inventories'
+      @import_settings.dig(:settings, 'import_into') == 'inventories'
     end
 
     def create_enterprises_index

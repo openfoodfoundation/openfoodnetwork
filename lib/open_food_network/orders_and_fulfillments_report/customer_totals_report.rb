@@ -86,9 +86,9 @@ module OpenFoodNetwork
               proc { |line_items| line_items.first.order.special_instructions },
               proc { |_line_items| "" },
 
-              proc { |line_items| line_items.first.order.order_cycle.andand.name },
+              proc { |line_items| line_items.first.order.order_cycle&.name },
               proc { |line_items|
-                line_items.first.order.payments.first.andand.payment_method.andand.name
+                line_items.first.order.payments.first&.payment_method&.name
               },
               proc { |_line_items| "" },
               proc { |_line_items| "" },
@@ -123,7 +123,7 @@ module OpenFoodNetwork
       # rubocop:disable Metrics/MethodLength
       # rubocop:disable Metrics/PerceivedComplexity
       def columns
-        rsa = proc { |line_items| shipping_method(line_items).andand.delivery? }
+        rsa = proc { |line_items| shipping_method(line_items)&.delivery? }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items|
@@ -147,23 +147,23 @@ module OpenFoodNetwork
             line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no)
           },
 
-          proc { |line_items| shipping_method(line_items).andand.name },
+          proc { |line_items| shipping_method(line_items)&.name },
           proc { |line_items| rsa.call(line_items) ? I18n.t(:yes) : I18n.t(:no) },
 
           proc { |line_items|
-            line_items.first.order.ship_address.andand.address1 if rsa.call(line_items)
+            line_items.first.order.ship_address&.address1 if rsa.call(line_items)
           },
           proc { |line_items|
-            line_items.first.order.ship_address.andand.address2 if rsa.call(line_items)
+            line_items.first.order.ship_address&.address2 if rsa.call(line_items)
           },
           proc { |line_items|
-            line_items.first.order.ship_address.andand.city if rsa.call(line_items)
+            line_items.first.order.ship_address&.city if rsa.call(line_items)
           },
           proc { |line_items|
-            line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items)
+            line_items.first.order.ship_address&.zipcode if rsa.call(line_items)
           },
           proc { |line_items|
-            line_items.first.order.ship_address.andand.state if rsa.call(line_items)
+            line_items.first.order.ship_address&.state if rsa.call(line_items)
           },
 
           proc { |_line_items| "" },
@@ -173,27 +173,27 @@ module OpenFoodNetwork
             line_item.variant.sku
           end,
 
-          proc { |line_items| line_items.first.order.order_cycle.andand.name },
+          proc { |line_items| line_items.first.order.order_cycle&.name },
           proc { |line_items|
             payment = line_items.first.order.payments.first
-            payment.andand.payment_method.andand.name
+            payment&.payment_method&.name
           },
           proc { |line_items|
             distributor = line_items.first.order.distributor
             user = line_items.first.order.user
-            user.andand.customer_of(distributor).andand.code
+            user&.customer_of(distributor)&.code
           },
           proc { |line_items|
             distributor = line_items.first.order.distributor
             user = line_items.first.order.user
-            user.andand.customer_of(distributor).andand.tags.andand.join(', ')
+            user&.customer_of(distributor)&.tags&.join(', ')
           },
 
-          proc { |line_items| line_items.first.order.bill_address.andand.address1 },
-          proc { |line_items| line_items.first.order.bill_address.andand.address2 },
-          proc { |line_items| line_items.first.order.bill_address.andand.city },
-          proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
-          proc { |line_items| line_items.first.order.bill_address.andand.state },
+          proc { |line_items| line_items.first.order.bill_address&.address1 },
+          proc { |line_items| line_items.first.order.bill_address&.address2 },
+          proc { |line_items| line_items.first.order.bill_address&.city },
+          proc { |line_items| line_items.first.order.bill_address&.zipcode },
+          proc { |line_items| line_items.first.order.bill_address&.state },
           proc { |line_items| line_items.first.order.number },
           proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
         ]
@@ -212,8 +212,7 @@ module OpenFoodNetwork
       private
 
       def shipping_method(line_items)
-        shipping_rates = line_items.first.order.shipments.first.
-          andand.shipping_rates
+        shipping_rates = line_items.first.order.shipments.first&.shipping_rates
 
         return unless shipping_rates
 

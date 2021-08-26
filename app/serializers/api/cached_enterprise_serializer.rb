@@ -9,7 +9,7 @@ module Api
     cached
 
     def cache_key
-      enterprise.andand.cache_key
+      enterprise&.cache_key
     end
 
     attributes :name, :id, :description, :latitude, :longitude,
@@ -119,7 +119,7 @@ module Api
     end
 
     def active
-      @active ||= data.active_distributor_ids.andand.include? enterprise.id
+      @active ||= data.active_distributor_ids&.include? enterprise.id
     end
 
     # Map svg icons.

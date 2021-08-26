@@ -171,16 +171,16 @@ module Spree
     # changes are allowed and the user has access. Return nil if not.
     def changeable_order_from_number
       order = Spree::Order.complete.find_by(number: params[:id])
-      return nil unless order.andand.changes_allowed? && can?(:update, order)
+      return nil unless order&.changes_allowed? && can?(:update, order)
 
       order
     end
 
     def check_at_least_one_line_item
-      return unless order_to_update.andand.complete?
+      return unless order_to_update&.complete?
 
       items = params[:order][:line_items_attributes]
-        .andand.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
+        &.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
 
       if items.empty?
         flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)

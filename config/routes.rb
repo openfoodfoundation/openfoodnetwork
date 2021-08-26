@@ -23,8 +23,8 @@ Openfoodnetwork::Application.routes.draw do
   resources :locales, only: [:show]
 
   # Redirects to global website
-  get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/connect/")
-  get "/learn", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/learn/")
+  get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE']&.downcase}/connect/")
+  get "/learn", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE']&.downcase}/learn/")
 
   get "/cart", :to => "spree/orders#edit", :as => :cart
   patch "/cart", :to => "spree/orders#update", :as => :update_cart

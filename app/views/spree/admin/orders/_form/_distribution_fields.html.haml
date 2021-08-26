@@ -5,13 +5,13 @@
     .alpha.six.columns
       %p
         %b= t('.distributor')
-        = @order.distributor.andand.name || t(:none)
-        %input{type: "hidden", id: "order_distributor_id", value: @order.distributor.andand.id}
+        = @order.distributor&.name || t(:none)
+        %input{type: "hidden", id: "order_distributor_id", value: @order.distributor&.id}
     .omega.six.columns
       %p
         %b= t('.order_cycle')
-        = @order.order_cycle.andand.name || t(:none)
-        %input{type: "hidden", id: "order_order_cycle_id", value: @order.order_cycle.andand.id}
+        = @order.order_cycle&.name || t(:none)
+        %input{type: "hidden", id: "order_order_cycle_id", value: @order.order_cycle&.id}
   - else
     .alpha.six.columns
       .field

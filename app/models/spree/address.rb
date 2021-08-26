@@ -88,7 +88,7 @@ module Spree
     end
 
     def full_address
-      render_address([address1, address2, city, zipcode, state.andand.name])
+      render_address([address1, address2, city, zipcode, state&.name])
     end
 
     def address_part1
@@ -96,7 +96,7 @@ module Spree
     end
 
     def address_part2
-      render_address([city, zipcode, state.andand.name])
+      render_address([city, zipcode, state&.name])
     end
 
     private

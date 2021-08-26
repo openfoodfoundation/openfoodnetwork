@@ -142,7 +142,6 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     afm (0.2.2)
-    andand (1.3.3)
     angular-rails-templates (1.1.0)
       railties (>= 4.2, < 7)
       sprockets (>= 3.0, < 5)
@@ -685,7 +684,6 @@ DEPENDENCIES
   activerecord-session_store
   acts-as-taggable-on (~> 8.1)
   acts_as_list (= 1.0.4)
-  andand
   angular-rails-templates (>= 0.3.0)
   angular_rails_csrf
   angularjs-file-upload-rails (~> 2.4.1)

@@ -4,7 +4,7 @@ require 'open_food_network/available_payment_method_filter'
 
 module EnterprisesHelper
   def current_distributor
-    @current_distributor ||= current_order(false).andand.distributor
+    @current_distributor ||= current_order(false)&.distributor
   end
 
   def current_customer
@@ -19,7 +19,7 @@ module EnterprisesHelper
     shipping_methods = current_distributor.shipping_methods.display_on_checkout.to_a
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
-                                                        "FilterShippingMethods", current_customer.andand.tag_list)
+                                                        "FilterShippingMethods", current_customer&.tag_list)
     applicator.filter!(shipping_methods)
 
     shipping_methods.uniq
@@ -34,7 +34,7 @@ module EnterprisesHelper
     filter.filter!(payment_methods)
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
-                                                        "FilterPaymentMethods", current_customer.andand.tag_list)
+                                                        "FilterPaymentMethods", current_customer&.tag_list)
     applicator.filter!(payment_methods)
 
     payment_methods
@@ -90,7 +90,7 @@ module EnterprisesHelper
   end
 
   def order_changes_allowed?
-    current_order.andand.distributor.andand.allow_order_changes?
+    current_order&.distributor&.allow_order_changes?
   end
 
   def show_bought_items?

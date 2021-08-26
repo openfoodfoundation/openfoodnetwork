@@ -15,7 +15,7 @@
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
-        %h4= @order.order_cycle.andand.name
+        %h4= @order.order_cycle&.name
     %tr{ valign: "top" }
       %td{ align: "left", colspan: 3 }
         %strong= "#{t('.from')}: #{@order.distributor.name}"
@@ -35,14 +35,14 @@
         %br
         - if @order.bill_address
           = @order.bill_address.full_name
-        - if @order.andand.customer.andand.code.present?
+        - if @order&.customer&.code.present?
           %br
           = "#{t('.code')}: #{@order.customer.code}"
         %br
         - if @order.bill_address
           = @order.bill_address.full_address
         %br
-        - if @order.andand.customer.andand.email.present?
+        - if @order&.customer&.email.present?
           = "#{@order.customer.email},"
         - if @order.bill_address
           = "#{@order.bill_address.phone}"

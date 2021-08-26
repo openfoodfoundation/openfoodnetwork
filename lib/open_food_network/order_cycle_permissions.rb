@@ -9,7 +9,7 @@ module OpenFoodNetwork
     def initialize(user, order_cycle)
       super(user)
       @order_cycle = order_cycle
-      @coordinator = order_cycle.andand.coordinator
+      @coordinator = order_cycle&.coordinator
     end
 
     # List of any enterprises whose exchanges I should be able to see in order_cycle
@@ -242,7 +242,7 @@ module OpenFoodNetwork
     end
 
     def active_outgoing_variants(hub)
-      @active_outgoing_variants ||= @order_cycle.exchanges.outgoing.where(receiver_id: hub).first.andand.variants || []
+      @active_outgoing_variants ||= @order_cycle.exchanges.outgoing.where(receiver_id: hub).first&.variants || []
     end
 
     def user_manages_coordinator_or(enterprise)

@@ -13,7 +13,7 @@
       %div{'ofn-with-tip' => t('.owner_tip')}
         %a= t('admin.whats_this')
     .nine.columns.omega
-      - owner_email = @enterprise.andand.owner.andand.email || ""
+      - owner_email = @enterprise&.owner&.email || ""
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
 .row
   .three.columns.alpha

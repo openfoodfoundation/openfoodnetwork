@@ -11,7 +11,7 @@ module Api
     end
 
     def active
-      options[:data].active_distributor_ids.andand.include? object.id
+      options[:data].active_distributor_ids&.include? object.id
     end
   end
 end
