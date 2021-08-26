@@ -32,7 +32,7 @@
                   %br
               - if current_distributor.email_address.present?
                 %a{href: current_distributor.email_address.reverse, mailto: true}
-                  %span.email
+                  %span.obfuscatedEmail.email
                     = current_distributor.email_address.reverse
 
       .small-12.large-4.columns
