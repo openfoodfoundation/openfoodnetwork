@@ -32,8 +32,9 @@ gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
-gem 'activerecord-postgresql-adapter'
-gem 'pg', '~> 1.2.3'
+gem "activerecord-postgresql-adapter"
+gem "arel-helpers", "~> 2.12"
+gem "pg", "~> 1.2.3"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
