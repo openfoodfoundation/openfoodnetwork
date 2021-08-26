@@ -1692,6 +1692,7 @@ en:
       submit: Complete order
       cancel: Back to Payment method
     errors:
+      global: "Saving failed, please update the highlighted fields."
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"

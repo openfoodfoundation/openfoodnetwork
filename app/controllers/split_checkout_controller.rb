@@ -45,7 +45,7 @@ class SplitCheckoutController < ::BaseController
       if @shipping_method_id.blank?
         @order.errors.add(:base, "no_shipping_method_selected")
       end
-      flash.now[:error] = "Saving failed, please update the highlighted fields: #{@order.errors.full_messages}"
+      flash.now[:error] = "#{I18n.t('split_checkout.errors.global')}"
       render :edit
     end
   end
