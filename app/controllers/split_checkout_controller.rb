@@ -109,7 +109,7 @@ class SplitCheckoutController < ::BaseController
   def confirm_order
     return unless @order.confirmation? && params[:confirm_order]
     if params["accept_terms"] != "1"
-      @order.errors.add(:base, "please accept terms")
+      @order.errors.add(:base, "terms_not_accepted")
       return false
     end
     @order.confirm!

@@ -1693,6 +1693,7 @@ en:
       cancel: Back to Payment method
     errors:
       global: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
