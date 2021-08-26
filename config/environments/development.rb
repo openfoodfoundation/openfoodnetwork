@@ -72,4 +72,9 @@ Openfoodnetwork::Application.configure do
   config.log_level = :debug
 
   config.view_component_storybook.stories_path = Rails.root.join("spec/components/stories")
+
+  config.action_dispatch.default_headers = {
+    'Access-Control-Allow-Origin' => '*',
+    'Access-Control-Allow-Methods' => 'GET'
+  }
 end
