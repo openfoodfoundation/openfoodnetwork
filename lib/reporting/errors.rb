@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Reports
+module Reporting
   module Errors
     class Base < StandardError
       def i18n_error_scope

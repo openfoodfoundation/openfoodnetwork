@@ -44,7 +44,7 @@ module Admin
     def load_form_options
       return unless form_options_required?
 
-      form_options = Reports::FrontendData.new(spree_current_user)
+      form_options = Reporting::FrontendData.new(spree_current_user)
 
       @distributors = form_options.distributors.to_a
       @suppliers = form_options.suppliers.to_a

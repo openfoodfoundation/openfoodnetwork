@@ -1213,6 +1213,7 @@ en:
           variant: "Variant"
           quantity: "Quantity"
           is_temperature_controlled: "TempControlled?"
+          temp_controlled: "TempControlled?"
       rendering_options:
         generate_report: "Generate report:"
         on_screen: "On screen"

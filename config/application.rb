@@ -153,9 +153,9 @@ module Openfoodnetwork
     )
 
     initializer "ofn.reports" do |_app|
-      module ::Reports; end
+      module ::Reporting; end
       loader = Zeitwerk::Loader.new
-      loader.push_dir("#{Rails.root}/lib/reports", namespace: ::Reports)
+      loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
       loader.setup
       loader.eager_load
     end

@@ -198,7 +198,7 @@ module Spree
       end
 
       def load_associated_data
-        form_options = Reports::FrontendData.new(spree_current_user)
+        form_options = Reporting::FrontendData.new(spree_current_user)
 
         @distributors = form_options.distributors
         @suppliers = form_options.suppliers

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Reports
+module Reporting
   class FrontendData
     def initialize(current_user)
       @current_user = current_user

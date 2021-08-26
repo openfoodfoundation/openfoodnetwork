@@ -2,17 +2,19 @@
 
 require 'spec_helper'
 
-module Reports
-  module Bananas
-    class Base; end
-    class Green; end
-    class Yellow; end
+module Reporting
+  module Reports
+    module Bananas
+      class Base; end
+      class Green; end
+      class Yellow; end
+    end
   end
 end
 
-describe Reports::ReportLoader do
-  let(:service) { Reports::ReportLoader.new(*arguments) }
-  let(:report_base_class) { Reports::Bananas::Base }
+describe Reporting::ReportLoader do
+  let(:service) { Reporting::ReportLoader.new(*arguments) }
+  let(:report_base_class) { Reporting::Reports::Bananas::Base }
   let(:report_subtypes) { ["green", "yellow"] }
 
   before do
@@ -24,7 +26,7 @@ describe Reports::ReportLoader do
       let(:arguments) { ["bananas", "yellow"] }
 
       it "returns a report class when given type and subtype" do
-        expect(service.report_class).to eq Reports::Bananas::Yellow
+        expect(service.report_class).to eq Reporting::Reports::Bananas::Yellow
       end
     end
 
@@ -33,7 +35,7 @@ describe Reports::ReportLoader do
         let(:arguments) { ["bananas"] }
 
         it "returns first listed report type" do
-          expect(service.report_class).to eq Reports::Bananas::Green
+          expect(service.report_class).to eq Reporting::Reports::Bananas::Green
         end
       end
 
@@ -42,7 +44,7 @@ describe Reports::ReportLoader do
         let(:report_subtypes) { [] }
 
         it "returns base class" do
-          expect(service.report_class).to eq Reports::Bananas::Base
+          expect(service.report_class).to eq Reporting::Reports::Bananas::Base
         end
       end
 
@@ -51,7 +53,7 @@ describe Reports::ReportLoader do
         let(:report_subtypes) { [] }
 
         it "raises an error" do
-          expect{ service.report_class }.to raise_error(Reports::Errors::ReportNotFound)
+          expect{ service.report_class }.to raise_error(Reporting::Errors::ReportNotFound)
         end
       end
     end
@@ -80,7 +82,7 @@ describe Reports::ReportLoader do
       let(:report_subtypes) { [] }
 
       it "raises an error" do
-        expect{ service.report_class }.to raise_error(Reports::Errors::ReportNotFound)
+        expect{ service.report_class }.to raise_error(Reporting::Errors::ReportNotFound)
       end
     end
   end

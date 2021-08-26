@@ -10,6 +10,6 @@ module ReportsHelper
   end
 
   def report_subtypes(report)
-    Reports::ReportLoader.new(report).report_subtypes
+    Reporting::ReportLoader.new(report).report_subtypes
   end
 end

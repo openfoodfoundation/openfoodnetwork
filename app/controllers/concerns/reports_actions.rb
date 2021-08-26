@@ -16,7 +16,7 @@ module ReportsActions
   end
 
   def report_loader
-    @report_loader ||= Reports::ReportLoader.new(report_type, report_subtype)
+    @report_loader ||= ::Reporting::ReportLoader.new(report_type, report_subtype)
   end
 
   def report_type

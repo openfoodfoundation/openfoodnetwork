@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Reports
+module Reporting
   class ReportLoader
     delegate :report_subtypes, to: :base_class
 
@@ -12,7 +12,7 @@ module Reports
     def report_class
       "#{report_module}::#{report_subtype_class}".constantize
     rescue NameError
-      raise Reports::Errors::ReportNotFound
+      raise Reporting::Errors::ReportNotFound
     end
 
     def default_report_subtype
@@ -24,7 +24,7 @@ module Reports
     attr_reader :report_type, :report_subtype
 
     def report_module
-      "Reports::#{report_type.camelize}"
+      "Reporting::Reports::#{report_type.camelize}"
     end
 
     def report_subtype_class
@@ -34,7 +34,7 @@ module Reports
     def base_class
       "#{report_module}::Base".constantize
     rescue NameError
-      raise Reports::Errors::ReportNotFound
+      raise Reporting::Errors::ReportNotFound
     end
   end
 end

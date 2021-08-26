@@ -5,7 +5,7 @@ module Api
     class ReportsController < Api::V0::BaseController
       include ReportsActions
 
-      rescue_from Reports::Errors::Base, with: :render_error
+      rescue_from ::Reporting::Errors::Base, with: :render_error
 
       before_action :validate_report, :authorize_report, :validate_query
 
@@ -18,7 +18,7 @@ module Api
       private
 
       def render_report
-        render json: @report.as_hashes
+        render json: @report.as_json
       end
 
       def render_error(error)
@@ -26,12 +26,12 @@ module Api
       end
 
       def validate_report
-        raise Reports::Errors::NoReportType if report_type.blank?
-        raise Reports::Errors::ReportNotFound if report_class.blank?
+        raise ::Reporting::Errors::NoReportType if report_type.blank?
+        raise ::Reporting::Errors::ReportNotFound if report_class.blank?
       end
 
       def validate_query
-        raise Reports::Errors::MissingQueryParams if ransack_params.blank?
+        raise ::Reporting::Errors::MissingQueryParams if ransack_params.blank?
       end
     end
   end

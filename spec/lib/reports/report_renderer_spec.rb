@@ -27,9 +27,9 @@ describe Reports::ReportRenderer do
     end
   end
 
-  describe "#as_hashes" do
+  describe "#as_json" do
     it "returns the report's data as hashes" do
-      expect(service.as_hashes).to eq report_rows
+      expect(service.as_json).to eq report_rows
     end
   end
 
