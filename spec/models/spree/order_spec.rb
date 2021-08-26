@@ -195,6 +195,21 @@ describe Spree::Order do
       expect(order.updater).to receive(:before_save_hook)
       order.finalize!
     end
+
+    context "extra payments exist that require authorization" do
+      let!(:cash_payment) { build(:payment, state: "completed", amount: order.new_outstanding_balance) }
+      let!(:stripe_payment) { build(:payment, state: "requires_authorization") }
+      before do
+        order.payments << cash_payment
+        order.payments << stripe_payment
+        allow_any_instance_of(Spree::Payment).to receive(:void_transaction!) {}
+      end
+
+      it "cancels payments requiring authorization" do
+        expect_any_instance_of(Spree::Payment).to receive(:void_transaction!)
+        order.finalize!
+      end
+    end
   end
 
   context "#process_payments!" do
