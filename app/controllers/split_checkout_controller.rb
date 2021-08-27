@@ -37,9 +37,9 @@ class SplitCheckoutController < ::BaseController
     load_shipping_method
     handle_shipping_method_selection
 
-    if confirm_order || update_order
+    confirm_or_update = confirm_order || update_order
+    if confirm_or_update && advance_order_state
       clear_invalid_payments
-      advance_order_state
       redirect_to_step
     else
       if @shipping_method_id.blank?

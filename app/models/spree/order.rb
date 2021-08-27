@@ -501,7 +501,7 @@ module Spree
     def disallow_guest_order
       return unless using_guest_checkout? && registered_email?
 
-      errors.add(:base, I18n.t('devise.failure.already_registered'))
+      errors.add(:email, I18n.t('devise.failure.already_registered'))
     end
 
     # After changing line items of a completed order
