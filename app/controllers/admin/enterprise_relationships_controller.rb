@@ -8,7 +8,7 @@ module Admin
         managed_by(spree_current_user).by_name
       @all_enterprises = Enterprise.includes(:shipping_methods, :payment_methods).by_name
       @enterprise_relationships = EnterpriseRelationship.
-        includes(:parent, :child).
+        includes(:parent, :child, :permissions).
         by_name.involving_enterprises @my_enterprises
     end
 
