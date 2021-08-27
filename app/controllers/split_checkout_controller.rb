@@ -108,6 +108,7 @@ class SplitCheckoutController < ::BaseController
 
   def confirm_order
     return unless @order.confirmation? && params[:confirm_order]
+
     if params["accept_terms"] != "1"
       @order.errors.add(:base, "terms_not_accepted")
       return false
@@ -123,12 +124,12 @@ class SplitCheckoutController < ::BaseController
   end
 
   def advance_order_state
-    return if @order.complete?
+    return true if @order.complete?
 
     workflow_options = raw_params.slice(:shipping_method_id)
 
     if @order.payments.empty?
-      OrderWorkflow.new(@order).advance_to_payment
+      OrderWorkflow.new(@order).advance_to_payment(workflow_options)
     else
       OrderWorkflow.new(@order).advance_to_confirmation(workflow_options)
     end

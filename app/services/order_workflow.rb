@@ -23,7 +23,10 @@ class OrderWorkflow
     result
   end
 
-  def advance_to_payment
+  def advance_to_payment(options = {})
+    if options[:shipping_method_id]
+      order.select_shipping_method(options[:shipping_method_id])
+    end
     advance_to_state("payment", advance_order_options)
   end
 
