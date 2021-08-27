@@ -9,7 +9,7 @@ describe BatchEnterpriseEnterpriseFeesCountQuery do
   context "when querying enterprises that have no enterprise fees" do
     let(:enterprise_ids) { [enterprise1.id] }
 
-    it do
+    it "returns a hash but it won't include data for enterprises which have no enterprise fees" do
       expect(BatchEnterpriseEnterpriseFeesCountQuery.call(enterprise_ids)).to eq({})
     end
   end
@@ -23,7 +23,7 @@ describe BatchEnterpriseEnterpriseFeesCountQuery do
       create(:enterprise_fee, enterprise: enterprise2)
     end
 
-    it do
+    it "returns a hash containing the number of enterprise fees for each enterprise id" do
       expect(BatchEnterpriseEnterpriseFeesCountQuery.call(enterprise_ids)).to eq(
         {
           enterprise1.id => 1,

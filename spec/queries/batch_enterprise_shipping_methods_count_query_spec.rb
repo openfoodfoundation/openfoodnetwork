@@ -9,7 +9,7 @@ describe BatchEnterpriseShippingMethodsCountQuery do
   context "when querying enterprises that have no shipping methods" do
     let(:enterprise_ids) { [enterprise1.id] }
 
-    it do
+    it "returns a hash but it won't include data for enterprises which have no shipping methods" do
       expect(BatchEnterpriseShippingMethodsCountQuery.call(enterprise_ids)).to eq({})
     end
   end
@@ -23,7 +23,7 @@ describe BatchEnterpriseShippingMethodsCountQuery do
       create(:shipping_method, distributors: [enterprise2])
     end
 
-    it do
+    it "returns a hash containing the number of shipping methods for each enterprise id" do
       expect(BatchEnterpriseShippingMethodsCountQuery.call(enterprise_ids)).to eq(
         {
           enterprise1.id => 1,

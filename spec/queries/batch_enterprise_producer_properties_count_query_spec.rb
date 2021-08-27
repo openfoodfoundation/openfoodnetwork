@@ -9,7 +9,7 @@ describe BatchEnterpriseProducerPropertiesCountQuery do
   context "when querying enterprises that have no producer properties" do
     let(:enterprise_ids) { [enterprise1.id] }
 
-    it do
+    it "returns a hash but it won't include data for enterprises which have no producer properties" do
       expect(BatchEnterpriseProducerPropertiesCountQuery.call(enterprise_ids)).to eq({})
     end
   end
@@ -23,7 +23,7 @@ describe BatchEnterpriseProducerPropertiesCountQuery do
       create(:producer_property, producer: enterprise2, property: create(:property))
     end
 
-    it do
+    it "returns a hash containing the number of producer properties for each enterprise id" do
       expect(BatchEnterpriseProducerPropertiesCountQuery.call(enterprise_ids)).to eq(
         {
           enterprise1.id => 1,

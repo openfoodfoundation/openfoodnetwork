@@ -9,7 +9,7 @@ describe BatchEnterprisePaymentMethodsCountQuery do
   context "when querying enterprises that have no payment methods" do
     let(:enterprise_ids) { [enterprise1.id] }
 
-    it do
+    it "returns a hash but it won't include data for enterprises which have no payment methods" do
       expect(BatchEnterprisePaymentMethodsCountQuery.call(enterprise_ids)).to eq({})
     end
   end
@@ -23,7 +23,7 @@ describe BatchEnterprisePaymentMethodsCountQuery do
       create(:payment_method, distributors: [enterprise2])
     end
 
-    it do
+    it "returns a hash containing the number of payment methods for each enterprise id" do
       expect(BatchEnterprisePaymentMethodsCountQuery.call(enterprise_ids)).to eq(
         {
           enterprise1.id => 1,
