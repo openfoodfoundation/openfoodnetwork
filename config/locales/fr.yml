@@ -2776,6 +2776,7 @@ fr:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
+        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
