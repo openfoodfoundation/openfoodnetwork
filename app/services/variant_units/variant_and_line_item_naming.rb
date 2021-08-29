@@ -27,7 +27,6 @@ module VariantUnits
 
     def presentation(option_value)
       return display_as if has_attribute?(:display_as) && display_as.present?
-
       return variant.display_as if variant_display_as?
 
       option_value.presentation
@@ -66,7 +65,6 @@ module VariantUnits
 
     def unit_to_display
       return display_as if has_attribute?(:display_as) && display_as.present?
-
       return variant.display_as if variant_display_as?
 
       options_text
