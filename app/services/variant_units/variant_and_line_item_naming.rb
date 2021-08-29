@@ -45,9 +45,9 @@ module VariantUnits
 
     # Used like "product.name - full_name", preferably using product_and_full_name method above.
     # This returns, for a product with name "Bread":
-    #     Bread - 1kg                     # if display_name blank
-    #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg"
-    #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough"
+    #     Bread - 1kg                     # if display_name blank and unit_to_display is "1kg"
+    #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg" and unit_to_display is "1kg"
+    #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough" and display_name is "1kg"
     #     Bread - Spelt Sourdough (1kg)   # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
     def full_name
       return unit_to_display if display_name.blank?
