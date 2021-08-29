@@ -39,6 +39,8 @@ module Spree
     before_destroy :update_inventory_before_destroy
     after_destroy :update_order
 
+    after_commit :persist_full_description, on: [:create, :update]
+
     delegate :product, :unit_description, :display_name, to: :variant
 
     attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
@@ -250,6 +252,10 @@ module Spree
       elsif variant.andand.unit_value.present?
         self.final_weight_volume = variant.andand.unit_value * quantity
       end
+    end
+
+    def persist_full_description
+      update_columns(full_description: full_name) if full_description.blank?
     end
   end
 end
