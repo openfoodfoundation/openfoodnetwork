@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_203927) do
+ActiveRecord::Schema.define(version: 2021_08_29_190419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -496,6 +496,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_203927) do
     t.decimal "distribution_fee", precision: 10, scale: 2
     t.decimal "final_weight_volume", precision: 10, scale: 2
     t.integer "tax_category_id"
+    t.string "full_description", limit: 255
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
