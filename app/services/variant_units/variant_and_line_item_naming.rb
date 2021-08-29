@@ -26,8 +26,6 @@ module VariantUnits
     end
 
     def presentation(option_value)
-      return option_value.presentation unless option_value.option_type.name == "unit_weight"
-
       return display_as if has_attribute?(:display_as) && display_as.present?
 
       return variant.display_as if variant_display_as?
