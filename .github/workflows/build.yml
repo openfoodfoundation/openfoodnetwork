@@ -56,7 +56,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-controllers-and-serializers
           path: test-controllers-and-serializers.txt
 
       - name: Codecov
@@ -106,7 +106,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-models
           path: test-models.txt
 
       - name: Codecov
@@ -156,7 +156,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-admin-features-1
           path: test-admin-features-1.txt
 
       - name: Codecov
@@ -206,7 +206,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-admin-features-2
           path: test-admin-features-2.txt
 
       - name: Codecov
@@ -256,7 +256,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-consumer-features
           path: test-consumer-features.txt
 
       - name: Codecov
@@ -374,7 +374,7 @@ jobs:
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: upload-results
+          name: upload-test-the-rest
           path: test-the-rest.txt
 
       - name: Codecov
