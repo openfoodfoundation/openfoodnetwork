@@ -397,7 +397,7 @@ GEM
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
     pagy (4.11.0)
-    paper_trail (12.0.0)
+    paper_trail (12.1.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
     paperclip (3.4.2)
@@ -750,7 +750,7 @@ DEPENDENCIES
   ofn-qz!
   order_management!
   pagy (~> 4.11)
-  paper_trail (~> 12.0.0)
+  paper_trail (~> 12.1.0)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
