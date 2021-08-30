@@ -2756,6 +2756,7 @@ ru:
           invalid: "Недействительный"
         quantity_adjusted: "Недостаточный запас. Позиция обновлена до максимально доступного количества."
         quantity_unchanged: "Количество не изменилось по сравнению с предыдущим."
+        cannot_remove_last_item: "Невозможно удалить последний товар из заказа. Вместо этого отмените заказ."
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."
@@ -3821,6 +3822,7 @@ ru:
       awaiting_return: в ожидании возврата
       canceled: отменен
       cart: корзина
+      confirmation: "подтверждение"
       complete: завершен
       confirm: подтвержден
       delivery: доставка
