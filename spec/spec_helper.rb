@@ -79,7 +79,7 @@ RSpec.configure do |config|
   config.after(:suite) do |_nothing|
     puts "***RESULTS BEGIN***"
     results.each do |result|
-      puts "#{result},"
+      puts "#{result}*****"
     end
     puts "***RESULTS END***"
   end
