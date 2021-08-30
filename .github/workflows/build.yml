@@ -51,4 +51,10 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run all tests
-        run: bundle exec rspec --profile
+        run: echo `bundle exec rspec --profile` > duplicate-test-results.txt
+
+      - name: upload a file        
+        uses: actions/upload-artifact@v2
+        with:
+          name: duplicate-test-results
+          path: duplicate-test-results.txt
