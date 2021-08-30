@@ -71,4 +71,8 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
   config.include DownloadsHelper, type: :feature
+  config.before(:each) do |expectation|
+    expectation_identifier = [expectation.id, expectation.description] 
+    puts "***<<<...#{expectation_identifier}***>>>..."
+  end
 end
