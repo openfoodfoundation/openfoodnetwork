@@ -73,6 +73,6 @@ RSpec.configure do |config|
   config.include DownloadsHelper, type: :feature
   config.before(:each) do |expectation|
     expectation_identifier = [expectation.id, expectation.description] 
-    puts "***<<<...#{expectation_identifier}***>>>..."
+    puts "***#{expectation_identifier}***"
   end
 end
