@@ -51,4 +51,4 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run all tests
-        run: bundle exec rspec --profile
+        run: TAG_PROF=type bundle exec rspec
