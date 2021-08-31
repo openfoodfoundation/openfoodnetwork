@@ -13,7 +13,7 @@
   = t 'legal.cookies_policy.essential_cookies_desc'
 
 %table{ng: { controller:"CookiesPolicyModalCtrl"}}
-  = render_cookie_entry( "_session_id", t( "legal.cookies_policy.cookie_session_desc" ) )
+  = render_cookie_entry( "_ofn_session_id", t( "legal.cookies_policy.cookie_session_desc" ) )
   = render_cookie_entry( "cookies_consent", t( "legal.cookies_policy.cookie_consent_desc" ) )
   = render_cookie_entry( "remember_spree_user_token", t( "legal.cookies_policy.cookie_remember_me_desc" ) )
   = render_cookie_entry( "qos_token", t( "legal.cookies_policy.cookie_openstreemap_desc" ), "openstreetmap.org" )
