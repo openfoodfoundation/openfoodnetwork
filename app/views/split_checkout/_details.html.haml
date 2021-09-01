@@ -85,7 +85,7 @@
           = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
           %em.light
             = payment_or_shipping_price(shipping_method, @order)
-          - display_ship_address = display_ship_address || (shipping_method.id == selected_shipping_method.to_i && shipping_method.require_ship_address)
+          - display_ship_address = (shipping_method.id == selected_shipping_method.to_i && shipping_method.require_ship_address)
           - if shipping_method.id == selected_shipping_method.to_i
             - ship_method_description = shipping_method.description
 
@@ -104,7 +104,7 @@
       = f.check_box :ship_address_same_as_billing, { id: "ship_address_same_as_billing", name: "ship_address_same_as_billing", "data-action": "shippingmethod#showHideShippingAddress", "data-shippingmethod-target": "shippingAddressCheckbox", checked: shipping_and_billing_match?(@order) }, 1, nil
       = f.label :ship_address_same_as_billing, t(:checkout_address_same), { for: "ship_address_same_as_billing" }
 
-    %div{"data-shippingmethod-target": "shippingMethodAddress", style: "display: #{display_ship_address == false || shipping_and_billing_match?(@order) ? 'none' : 'block'}" }
+    %div{"data-shippingmethod-target": "shippingMethodAddress", style: "display: #{!display_ship_address || shipping_and_billing_match?(@order) ? 'none' : 'block'}" }
       = f.fields :ship_address, model: @order.ship_address do |ship_address|
         %div.checkout-input
           = ship_address.label :address1, t("split_checkout.step1.address.address1.label")
