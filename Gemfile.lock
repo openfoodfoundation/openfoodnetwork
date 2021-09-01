@@ -561,6 +561,7 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
+    ruby-prof (1.4.3)
     ruby-progressbar (1.11.0)
     ruby-rc4 (0.1.5)
     ruby2_keywords (0.0.4)
@@ -779,6 +780,7 @@ DEPENDENCIES
   rswag
   rubocop
   rubocop-rails
+  ruby-prof (>= 0.16.0)
   sass-rails (< 5.1.0)
   sd_notify
   select2-rails!

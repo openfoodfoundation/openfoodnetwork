@@ -163,6 +163,7 @@ group :test do
   gem 'webmock'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
+  gem 'ruby-prof', '>= 0.16.0', require: false
 end
 
 group :development do
