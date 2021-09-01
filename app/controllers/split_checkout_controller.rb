@@ -37,8 +37,7 @@ class SplitCheckoutController < ::BaseController
     load_shipping_method
     handle_shipping_method_selection
 
-    confirm_or_update = confirm_order || update_order
-    if confirm_or_update && advance_order_state
+    if confirm_order || update_order
       clear_invalid_payments
       redirect_to_step
     else
@@ -117,19 +116,13 @@ class SplitCheckoutController < ::BaseController
     return unless params[:order]
     return if @order.state == "address" && params[:shipping_method_id].blank?
 
-    @order.update(order_params)
+    @order.update(order_params) && advance_order_state
   end
 
   def advance_order_state
     return true if @order.complete?
 
-    workflow_options = raw_params.slice(:shipping_method_id)
-
-    if @order.payments.empty?
-      OrderWorkflow.new(@order).advance_to_payment(workflow_options)
-    else
-      OrderWorkflow.new(@order).advance_to_confirmation(workflow_options)
-    end
+    OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
   end
 
   def checkout_step
