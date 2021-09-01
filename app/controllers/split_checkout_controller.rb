@@ -146,12 +146,15 @@ class SplitCheckoutController < ::BaseController
       payments_attributes: [:payment_method_id]
     )
 
-    if @order_params[:payments_attributes]
-      # Set payment amount
-      @order_params[:payments_attributes].first[:amount] = @order.total
-    end
+    set_payment_amount
 
     @order_params
+  end
+
+  def set_payment_amount
+    return unless @order_params[:payments_attributes]
+
+    @order_params[:payments_attributes].first[:amount] = @order.total
   end
 
   def redirect_to_step
