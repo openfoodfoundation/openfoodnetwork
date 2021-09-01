@@ -29,6 +29,7 @@ feature "Managing enterprise images" do
       end
 
       scenario "editing logo" do
+        puts "adminfoobar"
         # Adding image
         attach_file "enterprise[logo]", Rails.root.join("app", "assets", "images", "logo-white.png")
         click_button "Update"

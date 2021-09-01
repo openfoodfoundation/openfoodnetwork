@@ -29,6 +29,7 @@ feature '
   end
 
   scenario "adding taxed adjustments to an order" do
+    puts "adminfoobar"
     # When I go to the adjustments page for the order
     login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click

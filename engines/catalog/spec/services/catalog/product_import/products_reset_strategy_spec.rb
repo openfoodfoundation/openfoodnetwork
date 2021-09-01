@@ -22,6 +22,7 @@ module Catalog
             let(:supplier_ids) { [] }
 
             it 'does not reset the variant.on_hand' do
+              puts "enginefoobar" 
               products_reset.reset(supplier_ids)
               expect(variant.reload.on_hand).to eq(2)
             end

@@ -7,6 +7,7 @@ feature "bulk coop" do
   include WebHelper
 
   scenario "generating Bulk Co-op Supplier Report" do
+    puts "enginefoobar"
     login_as_admin_and_visit new_order_management_reports_bulk_coop_path
     select "Bulk Co-op Supplier Report", from: "report_report_type"
     click_button 'Generate Report'

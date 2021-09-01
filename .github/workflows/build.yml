@@ -12,105 +12,105 @@ env:
   RSPEC_RETRY_RETRY_COUNT: 3
 
 jobs:
-  test-controllers-and-serializers:
-    runs-on: ubuntu-18.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v2
+  # test-controllers-and-serializers:
+  #   runs-on: ubuntu-18.04
+  #   services:
+  #     postgres:
+  #       image: postgres:10
+  #       ports: ["5432:5432"]
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       env:
+  #         POSTGRES_DB: open_food_network_test
+  #         POSTGRES_USER: ofn
+  #         POSTGRES_PASSWORD: f00d
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.15.5'
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14.15.5'
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
+  #     - name: Set up application.yml
+  #       run: cp config/application.yml.example config/application.yml
 
-      - name: Set up database
-        run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+  #     - name: Set up database
+  #       run: |
+  #         bundle exec rake db:create RAILS_ENV=test
+  #         bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run controller tests
-        run: echo `bundle exec rspec --profile -- spec/controllers spec/serializers` > test-controllers-and-serializers.txt
+  #     - name: Run controller tests
+  #       run: echo `bundle exec rspec --profile -- spec/controllers spec/serializers` > test-controllers-and-serializers.txt
 
-      - name: upload a file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-test-controllers-and-serializers
-          path: test-controllers-and-serializers.txt
+  #     - name: upload a file        
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: upload-test-controllers-and-serializers
+  #         path: test-controllers-and-serializers.txt
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
+  #     - name: Codecov
+  #       uses: codecov/codecov-action@v1.3.1
 
-  test-models:
-    runs-on: ubuntu-18.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v2
+  # test-models:
+  #   runs-on: ubuntu-18.04
+  #   services:
+  #     postgres:
+  #       image: postgres:10
+  #       ports: ["5432:5432"]
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       env:
+  #         POSTGRES_DB: open_food_network_test
+  #         POSTGRES_USER: ofn
+  #         POSTGRES_PASSWORD: f00d
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.15.5'
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14.15.5'
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
+  #     - name: Set up application.yml
+  #       run: cp config/application.yml.example config/application.yml
 
-      - name: Set up database
-        run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+  #     - name: Set up database
+  #       run: |
+  #         bundle exec rake db:create RAILS_ENV=test
+  #         bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run tests
-        run: echo `bundle exec rspec --profile -- spec/models` > test-models.txt
+  #     - name: Run tests
+  #       run: echo `bundle exec rspec --profile -- spec/models` > test-models.txt
 
-      - name: upload a file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-test-models
-          path: test-models.txt
+  #     - name: upload a file        
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: upload-test-models
+  #         path: test-models.txt
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
+  #     - name: Codecov
+  #       uses: codecov/codecov-action@v1.3.1
 
   test-admin-features-1:
     runs-on: ubuntu-18.04
@@ -212,55 +212,55 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v1.3.1
 
-  test-consumer-features:
-    runs-on: ubuntu-18.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v2
+  # test-consumer-features:
+  #   runs-on: ubuntu-18.04
+  #   services:
+  #     postgres:
+  #       image: postgres:10
+  #       ports: ["5432:5432"]
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       env:
+  #         POSTGRES_DB: open_food_network_test
+  #         POSTGRES_USER: ofn
+  #         POSTGRES_PASSWORD: f00d
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.15.5'
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14.15.5'
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
+  #     - name: Set up application.yml
+  #       run: cp config/application.yml.example config/application.yml
 
-      - name: Set up database
-        run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+  #     - name: Set up database
+  #       run: |
+  #         bundle exec rake db:create RAILS_ENV=test
+  #         bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run consumer feature tests
-        run: echo `bundle exec rspec --profile -- spec/features/consumer` > test-consumer-features.txt
+  #     - name: Run consumer feature tests
+  #       run: echo `bundle exec rspec --profile -- spec/features/consumer` > test-consumer-features.txt
 
-      - name: upload a file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-test-consumer-features
-          path: test-consumer-features.txt
+  #     - name: upload a file        
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: upload-test-consumer-features
+  #         path: test-consumer-features.txt
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
+  #     - name: Codecov
+  #       uses: codecov/codecov-action@v1.3.1
 
   test-engines-etc:
     runs-on: ubuntu-18.04
@@ -300,30 +300,30 @@ jobs:
           bundle exec rake db:create RAILS_ENV=test
           bundle exec rake db:schema:load RAILS_ENV=test
 
-      - name: Run JS tests
-        run: RAILS_ENV=test bundle exec rake karma:run
+      # - name: Run JS tests
+      #   run: RAILS_ENV=test bundle exec rake karma:run
 
       # Migration tests need to be run in a separate task.
       # See: https://github.com/openfoodfoundation/openfoodnetwork/pull/6924#issuecomment-813056525
-      - name: Run migration tests
-        run: echo `bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"` > migration-tests.txt
+      # - name: Run migration tests
+      #   run: echo `bundle exec rspec --pattern "spec/{migrations}/**/*_spec.rb"` > migration-tests.txt
 
-      - name: Run system tests
-        run: echo `bundle exec rspec --profile -- spec/system` > system-tests.txt
+      # - name: Run system tests
+      #   run: echo `bundle exec rspec --profile -- spec/system` > system-tests.txt
 
       - name: Run all other tests
         run: echo `bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib,migrations,system"]` > other-tests.txt
 
-      - name: upload migration tests file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-migration-tests
-          path: migration-tests.txt
-      - name: upload system tests file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-system-tests
-          path: system-tests.txt
+      # - name: upload migration tests file        
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: upload-migration-tests
+      #     path: migration-tests.txt
+      # - name: upload system tests file        
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: upload-system-tests
+      #     path: system-tests.txt
       - name: upload other tests file        
         uses: actions/upload-artifact@v2
         with:
