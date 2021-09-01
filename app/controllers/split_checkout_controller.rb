@@ -34,7 +34,6 @@ class SplitCheckoutController < ::BaseController
 
   def update
     load_shipping_method
-    handle_shipping_method_selection
 
     if confirm_order || update_order
       clear_invalid_payments
@@ -50,12 +49,6 @@ class SplitCheckoutController < ::BaseController
 
   private
 
-  def handle_shipping_method_selection
-    return unless @shipping_method
-
-    populate_ship_address_params
-  end
-
   def load_shipping_method
     if params[:shipping_method_id]
       @shipping_method = Spree::ShippingMethod.where(id: params[:shipping_method_id]).first
@@ -63,34 +56,6 @@ class SplitCheckoutController < ::BaseController
     else
       @shipping_method = @order.shipping_method
       @shipping_method_id = @shipping_method&.id
-    end
-  end
-
-  def populate_ship_address_params
-    return unless params.dig(:order, :ship_address_attributes).present? &&
-                  params.dig(:order, :bill_address_attributes).present?
-
-    if params.dig(:order, "Checkout.ship_address_same_as_billing") == "1"
-      params[:order][:ship_address_attributes] = params[:order][:bill_address_attributes]
-      return
-    end
-
-    address_attrs = [
-      :firstname,
-      :lastname,
-      :phone,
-      :address1,
-      :address2,
-      :city,
-      :state_id,
-      :zipcode,
-      :country_id,
-      :id
-    ]
-    address_attrs.each do |attr|
-      next if params[:order][:ship_address_attributes][attr].present?
-
-      params[:order][:ship_address_attributes][attr] = params[:order][:bill_address_attributes][attr]
     end
   end
 
@@ -139,9 +104,22 @@ class SplitCheckoutController < ::BaseController
       payments_attributes: [:payment_method_id]
     )
 
+    set_address_details
     set_payment_amount
 
     @order_params
+  end
+
+  def set_address_details
+    return unless @order_params[:ship_address_attributes] && @order_params[:bill_address_attributes]
+
+    if params[:ship_address_same_as_billing]
+      @order_params[:ship_address_attributes] = @order_params[:bill_address_attributes]
+    else
+      @order_params[:ship_address_attributes][:firstname] = @order_params[:bill_address_attributes][:firstname]
+      @order_params[:ship_address_attributes][:lastname] = @order_params[:bill_address_attributes][:lastname]
+      @order_params[:ship_address_attributes][:phone] = @order_params[:bill_address_attributes][:phone]
+    end
   end
 
   def set_payment_amount
