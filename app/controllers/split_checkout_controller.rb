@@ -108,11 +108,8 @@ class SplitCheckoutController < ::BaseController
 
   def confirm_order
     return unless @order.confirmation? && params[:confirm_order]
+    return unless validate_terms_and_conditions!
 
-    if params["accept_terms"] != "1"
-      @order.errors.add(:base, "terms_not_accepted")
-      return false
-    end
     @order.confirm!
   end
 
@@ -137,6 +134,13 @@ class SplitCheckoutController < ::BaseController
 
   def checkout_step
     @checkout_step ||= params[:step]
+  end
+
+  def validate_terms_and_conditions!
+    return true if params[:accept_terms]
+
+    @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
+    false
   end
 
   def order_params

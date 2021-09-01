@@ -4,14 +4,22 @@ module ApplicationHelper
   include RawParams
   include Pagy::Frontend
 
-  def error_message_on(object, method, _options = {})
+  def error_message_on(object, method, options = {})
     object = convert_to_model(object)
     obj = object.respond_to?(:errors) ? object : instance_variable_get("@#{object}")
-    if obj && obj.errors[method].present?
-      errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
-      content_tag(:span, errors, class: 'formError')
+
+    return "" unless obj && obj.errors[method].present?
+
+    errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
+
+    if options[:standalone]
+      content_tag(
+        :div,
+        content_tag(:span, errors, class: 'formError standalone'),
+        class: 'checkout-input'
+      )
     else
-      ''
+      content_tag(:span, errors, class: 'formError')
     end
   end
 
