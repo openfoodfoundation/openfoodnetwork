@@ -15,18 +15,9 @@ class SplitCheckoutController < ::BaseController
   helper OrderHelper
 
   def edit
-    return handle_redirect_from_stripe if valid_payment_intent_provided?
-
-    redirect_to_step unless checkout_step
+    redirect_to_step unless params[:step]
 
     OrderWorkflow.new(@order).next if @order.cart?
-
-    # This is only required because of spree_paypal_express. If we implement
-    # a version of paypal that uses this controller, and more specifically
-    # the #action_failed method, then we can remove this call
-    # OrderCheckoutRestart.new(@order).call
-  rescue Spree::Core::GatewayError => e
-    rescue_from_spree_gateway_error(e)
   end
 
   def update
@@ -64,10 +55,6 @@ class SplitCheckoutController < ::BaseController
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
   end
 
-  def checkout_step
-    @checkout_step ||= params[:step]
-  end
-
   def validate_terms_and_conditions!
     return true if params[:accept_terms]
 
@@ -90,34 +77,5 @@ class SplitCheckoutController < ::BaseController
     else
       redirect_to order_path(@order)
     end
-  end
-
-  def valid_payment_intent_provided?
-    return false unless params["payment_intent"]&.starts_with?("pi_")
-
-    last_payment = OrderPaymentFinder.new(@order).last_payment
-    @order.state == "payment" &&
-      last_payment&.state == "requires_authorization" &&
-      last_payment&.response_code == params["payment_intent"]
-  end
-
-  def handle_redirect_from_stripe
-    return checkout_failed unless @order.process_payments!
-
-    if OrderWorkflow.new(@order).next && order_complete?
-      checkout_succeeded
-      redirect_to(order_path(@order)) && return
-    else
-      checkout_failed
-    end
-  end
-
-  def order_complete?
-    @order.state == "complete" || @order.completed?
-  end
-
-  def rescue_from_spree_gateway_error(error)
-    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    action_failed(error)
   end
 end
