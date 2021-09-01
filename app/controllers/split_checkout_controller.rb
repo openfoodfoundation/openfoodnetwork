@@ -33,8 +33,6 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    load_shipping_method
-
     if confirm_order || update_order
       clear_invalid_payments
       redirect_to_step
@@ -48,16 +46,6 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
-
-  def load_shipping_method
-    if params[:shipping_method_id]
-      @shipping_method = Spree::ShippingMethod.where(id: params[:shipping_method_id]).first
-      @shipping_method_id = params[:shipping_method_id]
-    else
-      @shipping_method = @order.shipping_method
-      @shipping_method_id = @shipping_method&.id
-    end
-  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
