@@ -26,6 +26,7 @@ en:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -61,6 +62,8 @@ en:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+            reset_password_token:
+              invalid: is invalid
         spree/order:
           no_card: There are no authorised credit cards available to charge
         spree/credit_card:
@@ -116,6 +119,9 @@ en:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "User password cannot be blank. Please enter a password."
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
