@@ -37,10 +37,7 @@ class SplitCheckoutController < ::BaseController
       clear_invalid_payments
       redirect_to_step
     else
-      if @shipping_method_id.blank?
-        @order.errors.add(:base, "no_shipping_method_selected")
-      end
-      flash.now[:error] = "#{I18n.t('split_checkout.errors.global')}"
+      flash.now[:error] = I18n.t('split_checkout.errors.global')
       render :edit
     end
   end
@@ -60,7 +57,6 @@ class SplitCheckoutController < ::BaseController
 
   def update_order
     return unless params[:order]
-    return if @order.state == "address" && params[:shipping_method_id].blank?
 
     @order.update(order_params) && advance_order_state
   end
