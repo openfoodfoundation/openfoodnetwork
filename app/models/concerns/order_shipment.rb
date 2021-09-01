@@ -13,6 +13,8 @@ require 'active_support/concern'
 module OrderShipment
   extend ActiveSupport::Concern
 
+  attr_accessor :manual_shipping_selection
+
   def shipment
     shipments.first
   end
