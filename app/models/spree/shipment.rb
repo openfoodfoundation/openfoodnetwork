@@ -84,7 +84,9 @@ module Spree
     end
 
     def shipping_method
-      selected_shipping_rate.try(:shipping_method) || shipping_rates.first.try(:shipping_method)
+      method = selected_shipping_rate.try(:shipping_method)
+      method ||= shipping_rates.first.try(:shipping_method) unless order.manual_shipping_selection
+      method
     end
 
     def add_shipping_method(shipping_method, selected = false)
@@ -263,7 +265,7 @@ module Spree
         fee_adjustment.amount = selected_shipping_rate.cost if fee_adjustment.open?
         fee_adjustment.save!
         fee_adjustment.reload
-      elsif selected_shipping_rate_id
+      elsif shipping_method
         shipping_method.create_adjustment(adjustment_label,
                                           self,
                                           true,
