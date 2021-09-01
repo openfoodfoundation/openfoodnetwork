@@ -56,7 +56,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update_order
-    return unless params[:order]
+    return if @order.errors.any?
 
     @order.update(order_params) && advance_order_state
   end
@@ -79,37 +79,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def order_params
-    return @order_params unless @order_params.nil?
-
-    @order_params = params.require(:order).permit(
-      :email, :shipping_method_id, :special_instructions,
-      bill_address_attributes: PermittedAttributes::Address.attributes,
-      ship_address_attributes: PermittedAttributes::Address.attributes,
-      payments_attributes: [:payment_method_id]
-    )
-
-    set_address_details
-    set_payment_amount
-
-    @order_params
-  end
-
-  def set_address_details
-    return unless @order_params[:ship_address_attributes] && @order_params[:bill_address_attributes]
-
-    if params[:ship_address_same_as_billing]
-      @order_params[:ship_address_attributes] = @order_params[:bill_address_attributes]
-    else
-      @order_params[:ship_address_attributes][:firstname] = @order_params[:bill_address_attributes][:firstname]
-      @order_params[:ship_address_attributes][:lastname] = @order_params[:bill_address_attributes][:lastname]
-      @order_params[:ship_address_attributes][:phone] = @order_params[:bill_address_attributes][:phone]
-    end
-  end
-
-  def set_payment_amount
-    return unless @order_params[:payments_attributes]
-
-    @order_params[:payments_attributes].first[:amount] = @order.total
+    @order_params ||= Checkout::Params.new(@order, params).call
   end
 
   def redirect_to_step
