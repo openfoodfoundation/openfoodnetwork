@@ -25,9 +25,6 @@ class SplitCheckoutController < ::BaseController
     # a version of paypal that uses this controller, and more specifically
     # the #action_failed method, then we can remove this call
     # OrderCheckoutRestart.new(@order).call
-    @order.errors.clear
-    @order.bill_address.errors.clear
-    @order.ship_address.errors.clear
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   end
