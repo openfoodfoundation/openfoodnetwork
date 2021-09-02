@@ -71,16 +71,16 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
   config.include DownloadsHelper, type: :feature
-  results = []
-  config.before(:each) do |expectation|
-    expectation_identifier = [expectation.id, expectation.description] 
-    results << expectation_identifier
-  end
-  config.after(:suite) do |_nothing|
-    puts "***RESULTS BEGIN***"
-    results.each do |result|
-      puts "#{result}*****"
-    end
-    puts "***RESULTS END***"
-  end
+  # results = []
+  # config.before(:each) do |expectation|
+  #   expectation_identifier = [expectation.id, expectation.description] 
+  #   results << expectation_identifier
+  # end
+  # config.after(:suite) do |_nothing|
+  #   puts "***RESULTS BEGIN***"
+  #   results.each do |result|
+  #     puts "#{result}*****"
+  #   end
+  #   puts "***RESULTS END***"
+  # end
 end
