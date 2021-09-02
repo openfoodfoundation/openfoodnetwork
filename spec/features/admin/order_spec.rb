@@ -148,7 +148,7 @@ feature '
 
     expect(page).to_not have_content "Loading..."
     within("tr.stock-item", text: order.products.first.name) do
-      expect(page).to have_text("#{max_quantity} x")
+      expect(page).to have_text("#{max_quantity}")
     end
     expect(order.reload.line_items.first.quantity).to eq(max_quantity)
   end
@@ -169,7 +169,7 @@ feature '
     end
 
     within("tr.stock-item", text: order.products.first.name) do
-      expect(page).to have_text("1000 x")
+      expect(page).to have_text("1000")
     end
     expect(order.reload.line_items.first.quantity).to eq(1000)
   end
@@ -202,7 +202,7 @@ feature '
       expect(page).to have_selector("table.stock-contents")
 
       within("tr.stock-item") do
-        expect(page).to have_text("50 x")
+        expect(page).to have_text("50")
       end
 
       order = Spree::Order.last
