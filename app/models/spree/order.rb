@@ -9,9 +9,13 @@ require 'concerns/order_shipment'
 module Spree
   class Order < ApplicationRecord
     prepend OrderShipment
-
     include Checkout
     include Balance
+
+    searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
+                          :order_cycle_id, :email
+    searchable_associations :shipping_method, :bill_address
+    searchable_scopes :complete, :incomplete
 
     checkout_flow do
       go_to_state :address

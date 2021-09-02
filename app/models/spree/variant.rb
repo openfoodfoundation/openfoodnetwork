@@ -13,6 +13,10 @@ module Spree
 
     acts_as_paranoid
 
+    searchable_attributes :sku, :display_as, :display_name
+    searchable_associations :product, :option_values, :default_price
+    searchable_scopes :active, :deleted
+
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
 
     delegate_belongs_to :product, :name, :description, :permalink, :available_on,

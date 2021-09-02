@@ -30,6 +30,10 @@ module Spree
 
     acts_as_paranoid
 
+    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
+    searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
+    searchable_scopes :active
+
     has_many :product_option_types, dependent: :destroy
     # We have an after_destroy callback on Spree::ProductOptionType. However, if we
     # don't specify dependent => destroy on this association, it is not called. See:

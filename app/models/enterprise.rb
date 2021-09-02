@@ -6,6 +6,11 @@ class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 
+  searchable_attributes :sells, :is_primary_producer
+  searchable_associations :properties
+  searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
+                    :ready_for_checkout, :not_ready_for_checkout
+
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""

@@ -8,6 +8,10 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include LineItemStockChanges
 
+    searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
+    searchable_associations :order, :variant, :tax_category, :option_values
+    searchable_scopes :with_tax, :without_tax
+
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
