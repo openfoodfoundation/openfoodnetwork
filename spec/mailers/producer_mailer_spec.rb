@@ -129,7 +129,9 @@ describe ProducerMailer, type: :mailer do
   end
 
   context 'when flag preferred_show_customer_names_to_suppliers is true' do
-    let(:s1) { create(:supplier_enterprise, preferred_show_customer_names_to_suppliers: true) }
+    before do
+      order_cycle.coordinator.set_preference(:show_customer_names_to_suppliers, true)
+    end
 
     it "adds customer names table" do
       expect(body_as_html(mail).find(".order-summary.customer-order")).to_not be_nil
@@ -155,7 +157,9 @@ describe ProducerMailer, type: :mailer do
   end
 
   context 'when flag preferred_show_customer_names_to_suppliers is false' do
-    let(:s1) { create(:supplier_enterprise, preferred_show_customer_names_to_suppliers: false) }
+    before do
+      order_cycle.coordinator.set_preference(:show_customer_names_to_suppliers, false)
+    end
 
     it "does not add customer names table" do
       expect { body_as_html(mail).find(".order-summary.customer-order") }.to raise_error(Capybara::ElementNotFound)
