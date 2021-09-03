@@ -2,6 +2,8 @@
 
 module Spree
   class User < ApplicationRecord
+    searchable_attributes :email
+
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
            :rememberable, :trackable, :validatable,
            :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true

@@ -3,6 +3,8 @@
 class Customer < ApplicationRecord
   acts_as_taggable
 
+  searchable_attributes :name, :email, :code
+
   belongs_to :enterprise
   belongs_to :user, class_name: Spree.user_class.to_s
   has_many :orders, class_name: "Spree::Order"

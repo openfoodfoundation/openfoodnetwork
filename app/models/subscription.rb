@@ -5,6 +5,10 @@ class Subscription < ApplicationRecord
                                   "Spree::Gateway::StripeConnect",
                                   "Spree::Gateway::StripeSCA"].freeze
 
+  searchable_attributes :shop_id, :canceled_at, :paused_at
+  searchable_associations :shop
+  searchable_scopes :active, :not_ended, :not_paused, :not_canceled
+
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer
   belongs_to :schedule
