@@ -1308,8 +1308,8 @@ de_DE:
     products:
       summary:
         bulk: "Gruppenkauf"
-  card_could_not_be_updated: Die Karte konnte nicht aktualisiert werden.
-  card_could_not_be_saved: Die Karte konnte nicht gespeichert werden.
+  card_could_not_be_updated: Die Kreditkarte konnte nicht aktualisiert werden.
+  card_could_not_be_saved: Die Kreditkarte konnte nicht gespeichert werden.
   spree_gateway_error_flash_for_checkout: "Bei den Zahlungsinformationen ist ein Problem aufgetreten: %{error}"
   invoice_billing_address: "Rechnungsadresse:"
   invoice_column_tax: "Umsatzsteuer"
@@ -1433,7 +1433,7 @@ de_DE:
   new_credit_card: "Neue Kreditkarte"
   my_credit_cards: Meine Kreditkarten
   add_new_credit_card: Neue Kreditkarte hinzufügen
-  saved_cards: Gespeicherte Karten
+  saved_cards: Gespeicherte Kreditkarten
   add_a_card: Kreditkarte hinzufügen
   add_card: Kreditkarte hinzufügen
   you_have_no_saved_cards: Sie haben noch keine Kreditkarten gespeichert.
@@ -2553,8 +2553,8 @@ de_DE:
     choose: Bitte Auswählen ...
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} mehr"
-    default_card_updated: Die Standardkarte wurde aktualisiert.
-    default_card_voids_auth: Durch das Ändern Ihrer Standardkarte werden die vorhandenen Autorisierungen für Abbuchungen des Ladens entfernt. Sie können die Autorisierungen nach dem Aktualisieren der Standardkarte erneut erteilen. Möchten Sie die Standardkarte ändern?
+    default_card_updated: Die Standardkreditkarte wurde aktualisiert.
+    default_card_voids_auth: Durch das Ändern Ihrer Standardkreditkarte werden die vorhandenen Autorisierungen für Abbuchungen des Ladens entfernt. Sie können die Autorisierungen nach dem Aktualisieren der Standardkreditkarte erneut erteilen. Möchten Sie die Standardkreditkarte ändern?
     cart:
       add_to_cart_failed: >
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
@@ -2758,6 +2758,7 @@ de_DE:
           invalid: "ungültig"
         quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
         quantity_unchanged: "Menge wurde nicht geändert."
+        cannot_remove_last_item: "Der letzte verbleibende Artikel einer Bestellung kann nicht entfernt werden. Bitte stornieren Sie stattdessen die Bestellung."
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Wird erneut gesendet ..."
@@ -3259,7 +3260,7 @@ de_DE:
     email: E-Mail-Adresse
     account_updated: "Konto aktualisiert!"
     email_updated: "Das Konto wird aktualisiert, sobald die neue E-Mail-Adresse bestätigt wurde."
-    my_account: "Mein Konto"
+    my_account: "Ihr Konto"
     date: "Datum"
     time: "Uhrzeit"
     inventory_error_flash_for_insufficient_quantity: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
@@ -3667,16 +3668,16 @@ de_DE:
       payment:
         stripe:
           choose_one: Bitte Auswählen ...
-          enter_new_card: Geben Sie Details für eine neue Karte ein.
-          used_saved_card: "Eine gespeicherte Karte verwenden:"
-          or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
-          remember_this_card: Diese Karte speichern?
+          enter_new_card: Geben Sie Details für eine neue Kreditkarte ein.
+          used_saved_card: "Eine gespeicherte Kreditkarte verwenden:"
+          or_enter_new_card: "Oder geben Sie Details für eine neue Kreditkarte ein:"
+          remember_this_card: Diese Kreditkarte speichern?
         stripe_sca:
           choose_one: Bitte wählen Sie eine Option
-          enter_new_card: Geben Sie Details für eine neue Karte ein.
-          used_saved_card: "Eine gespeicherte Karte verwenden:"
-          or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
-          remember_this_card: Diese Karte speichern?
+          enter_new_card: Geben Sie Details für eine neue Kreditkarte ein.
+          used_saved_card: "Eine gespeicherte Kreditkarte verwenden:"
+          or_enter_new_card: "Oder geben Sie Details für eine neue Kreditkarte ein:"
+          remember_this_card: Diese Kreditkarte speichern?
     date_picker:
       flatpickr_date_format: "d.m.Y"
       flatpickr_datetime_format: "d.m.Y H:i"
@@ -3772,6 +3773,7 @@ de_DE:
       awaiting_return: wartet auf Rücksendung
       canceled: storniert
       cart: im Warenkorb
+      confirmation: "Bestätigung"
       complete: abgeschlossen
       confirm: bestätigen
       delivery: in Lieferung
@@ -3807,7 +3809,7 @@ de_DE:
         generic_error: "PayPal ist fehlgeschlagen. %{reasons}"
     users:
       form:
-        account_settings: Kontoeinstellungen
+        account_settings: E-Mail-Adresse und Passwort ändern
       show:
         tabs:
           orders: Bestellungen
@@ -3846,10 +3848,10 @@ de_DE:
       cards:
         authorised_shops: Autorisierte Läden
         authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß der Bedingungen eines Abonnements, das Sie mit diesem Laden erstellen, entgegenzunehmen.
-        saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Läden belastet werden, die Sie dazu berechtigt haben (siehe rechts).
+        saved_cards_popover: Dies ist die Liste der Kreditkarten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Läden belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"
-        allow_charges?: "Abbuchungen für die Standardkarte zulassen?"
+        allow_charges?: "Abbuchungen für die Standardkreditkarte zulassen?"
     localized_number:
       invalid_format: hat ein ungültiges Format. Bitte Ziffern eingeben.
     api:

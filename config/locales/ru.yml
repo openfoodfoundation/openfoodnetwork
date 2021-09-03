@@ -1026,6 +1026,7 @@ ru:
         schedule: Расписание
         schedules: Расписания
         new_schedule: Новое Расписание
+        new_schedule_tooltip: Частота размещения заказа по подписке
       name_and_timing_form:
         name: Имя
         orders_open: Заказ открыт в
@@ -1531,38 +1532,74 @@ ru:
   checkout_back_to_cart: "Назад в корзину"
   cost_currency: "Стоимость валюты"
   split_checkout:
+    your_details: 1 - Ваши данные
+    payment_method: 2 - Способ оплаты
+    order_summary: 3 - Сводка заказа
     step1:
       your_details:
         title: Информация о Вас
         first_name:
           label: Имя
+          placeholder: например, Иван
         last_name:
           label: Фамилия
+          placeholder: например, Иванов
         email:
           label: Email
+          placeholder: например, ivanov@email.com
         phone:
           label: Номер телефона
+          placeholder: например, 71234567890
       billing_address:
         title: Платежный Адрес
+        address1:
+          label: Адрес (Улица + Номер Дома)
+          placeholder: напр., ул. Ленина 1, кв. 12
+        address2:
+          label: Дополнительная адресная информация (необязательно)
+          placeholder: например, ул. Комсомольская
         city:
           label: Город
+          placeholder: например, Воронеж
         state_id:
           label: Статус
         zipcode:
           label: Почтовый индекс
+          placeholder: например, 123456
         country_id:
           label: Страна
       delivery_address:
         title: Адрес доставки
+      submit: Далее - Способ оплаты
+      cancel: Назад Изменить корзину
+    step2:
+      payment_method:
+        title: Способ оплаты
+      explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
+      submit: Далее - Сводка заказа
+      cancel: Назад к Вашим данным
     step3:
       your_details:
         title: Информация о Вас
+        edit: Изменить свои данные
       billing_address:
         title: Платежный Адрес
+      delivery_info:
+        title: Информация о доставке
+      payment_method:
+        title: Способ оплаты
+        edit: Изменить способ оплаты
+      order:
+        title: Весь заказ
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
         link_text: "Условия и Положения"
+      agree: Нажимая «Завершить заказ», вы соглашаетесь с тем, что ваш заказ оформляется.
+      submit: Завершить заказ
+      cancel: Вернуться к Способу оплаты
     errors:
+      required: Поле не может быть пустым
+      invalid_number: "Пожалуйста, введите действующий номер телефона"
       invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
@@ -2071,6 +2108,8 @@ ru:
   fundraising_fee: "Сбор на пожертвования"
   price_graph: "График цен"
   included_tax: "Включенный налог"
+  tax: "Налог"
+  tax_amount_included: "%{amount} (включен)"
   balance: "Баланс"
   transaction: "Операция"
   transaction_date: "Дата"
@@ -2149,6 +2188,7 @@ ru:
   price_sack: "Ценовой Пакет"
   new_order_cycles: "Новые Циклы Заказа"
   new_order_cycle: "Новый Цикл Заказа"
+  new_order_cycle_tooltip: "Открыть магазин на определенный период времени"
   select_a_coordinator_for_your_order_cycle: "Выберите координатора для вашего цикла заказа"
   notify_producers: 'Уведомить производителей'
   edit_order_cycle: "Изменить Цикл Заказа"
@@ -2716,6 +2756,7 @@ ru:
           invalid: "Недействительный"
         quantity_adjusted: "Недостаточный запас. Позиция обновлена до максимально доступного количества."
         quantity_unchanged: "Количество не изменилось по сравнению с предыдущим."
+        cannot_remove_last_item: "Невозможно удалить последний товар из заказа. Вместо этого отмените заказ."
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."
@@ -3781,6 +3822,7 @@ ru:
       awaiting_return: в ожидании возврата
       canceled: отменен
       cart: корзина
+      confirmation: "подтверждение"
       complete: завершен
       confirm: подтвержден
       delivery: доставка

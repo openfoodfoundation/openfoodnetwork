@@ -184,7 +184,7 @@ en_US:
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
+      instructions: "Your order has been delivered!"
       shipment_summary: "Shipment Summary"
       subject: "Shipment/Pick Up Notification"
       thanks: "Thank you for your business."
@@ -3747,7 +3747,7 @@ en_US:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
-        instructions: "Your order from %{distributor} has been shipped"
+        instructions: "Your order from %{distributor} is complete! Here's what the order contained:"
         shipment_summary: "Shipment Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."
@@ -3764,6 +3764,7 @@ en_US:
       awaiting_return: awaiting return
       canceled: cancelled
       cart: cart
+      confirmation: "confirmation"
       complete: complete
       confirm: confirm
       delivery: delivery
