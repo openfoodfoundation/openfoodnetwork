@@ -15,11 +15,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    plugin(function ({ addBase, theme }) {
-      addBase({
-        img: { display: "inline-block" },
-      });
-    }),
-  ],
+  corePlugins: {
+    preflight: false,
+  },
 };
