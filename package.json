@@ -16,6 +16,7 @@
   "devDependencies": {
     "@storybook/addon-controls": "^6.3.7",
     "@storybook/addon-docs": "^6.3.7",
+    "@storybook/addon-postcss": "^2.0.0",
     "@storybook/server": "^6.3.7",
     "autoprefixer": "^10.3.4",
     "jasmine-core": "~2.4.1",
