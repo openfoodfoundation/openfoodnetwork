@@ -39,7 +39,7 @@ module Openfoodnetwork
       SessionCookieUpgrader, {
         old_key: "_session_id",
         new_key: "_ofn_session_id",
-        domain: "." + ENV["SITE_URL"].delete_prefix("www.")
+        domain: ".#{ENV['SITE_URL'].gsub(/^(www\.)|^(app\.)|^(staging\.)|^(stg\.)/, '')}"
       }
     ) if Rails.env.staging? || Rails.env.production?
 
