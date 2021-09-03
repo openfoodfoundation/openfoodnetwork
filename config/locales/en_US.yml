@@ -184,7 +184,7 @@ en_US:
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
+      instructions: "Your order has been delivered!"
       shipment_summary: "Shipment Summary"
       subject: "Shipment/Pick Up Notification"
       thanks: "Thank you for your business."
@@ -2748,6 +2748,7 @@ en_US:
           invalid: "Invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cannot_remove_last_item: "Sorry, we can't remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
