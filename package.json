@@ -5,6 +5,20 @@
     "type": "git",
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "@rails/webpacker": "5.4.2",
+    "flatpickr": "^4.6.9",
+    "moment": "^2.29.1",
+    "postcss": "^8.3.6",
+    "postcss-loader": "^4.2.0",
+    "sass": "^1.39.0",
+    "shortcut-buttons-flatpickr": "^0.3.1",
+    "stimulus": "^2.0.0",
+    "tailwindcss": "^2.2.9",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
   "scripts": {
     "storybook": "start-storybook"
   },
@@ -26,19 +40,5 @@
     "karma-jasmine": "~0.3.8",
     "webpack-dev-server": "^3.11.2"
   },
-  "license": "AGPL-3.0",
-  "dependencies": {
-    "@fullhuman/postcss-purgecss": "^4.0.3",
-    "@rails/webpacker": "5.4.2",
-    "flatpickr": "^4.6.9",
-    "moment": "^2.29.1",
-    "postcss": "^8.3.6",
-    "postcss-loader": "^4.2.0",
-    "sass": "^1.39.0",
-    "shortcut-buttons-flatpickr": "^0.3.1",
-    "stimulus": "^2.0.0",
-    "tailwindcss": "^2.2.9",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
-  }
+  "license": "AGPL-3.0"
 }
