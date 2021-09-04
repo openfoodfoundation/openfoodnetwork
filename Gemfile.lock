@@ -423,7 +423,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
-    power_assert (2.0.0)
+    power_assert (2.0.1)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -618,7 +618,7 @@ GEM
     stripe (5.38.0)
     temple (0.8.2)
     test-prof (1.0.7)
-    test-unit (3.4.4)
+    test-unit (3.4.5)
       power_assert
     thor (1.1.0)
     thwait (0.2.0)
