@@ -7,6 +7,7 @@ module.exports = {
     content: [
       "./app/views/**/*.html.erb",
       "./app/views/**/*.html.haml",
+      "./app/components/**/*.html.haml",
       "./app/assets/javascript/templates/**/*.html.haml",
       "./engines/**/*.html.haml",
     ],
