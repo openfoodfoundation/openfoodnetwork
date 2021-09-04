@@ -5,8 +5,10 @@ module.exports = {
   purge: {
     enabled: true,
     content: [
+      "./app/views/**/*.html.erb",
       "./app/views/**/*.html.haml",
-      "./app/assets/javascript/templates**/*.js",
+      "./app/assets/javascript/templates/**/*.html.haml",
+      "./engines/**/*.html.haml",
     ],
   },
   darkMode: false, // or 'media' or 'class'
