@@ -22,7 +22,7 @@ if (process.env.RAILS_ENV === "production" || process.env.RAILS_ENV === "staging
           "./app/assets/javascript/templates/**/*.html.haml",
           "./engines/**/*.html.haml",
         ],
-        defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
+        defaultExtractor: content => content.match(/[^%#<>"{\.'`\s]*[^%#<>"{}\.'`\s:]/g) || []
       })
   )
 }

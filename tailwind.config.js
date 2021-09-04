@@ -10,6 +10,9 @@ module.exports = {
       "./app/assets/javascript/templates/**/*.html.haml",
       "./engines/**/*.html.haml",
     ],
+    options: {
+      defaultExtractor: content => content.match(/[^%#<>"{\.'`\s]*[^%#<>"{}\.'`\s:]/g) || []
+    }
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
