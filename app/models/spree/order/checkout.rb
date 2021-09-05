@@ -141,7 +141,7 @@ module Spree
           private
 
           def validate_shipping_method!
-            return unless user && Flipper.enabled?(:split_checkout, user)
+            return unless Flipper.enabled?(:split_checkout)
             return if shipping_method.present?
 
             errors.add :shipping_method, I18n.t('split_checkout.errors.select_a_shipping_method')
@@ -149,7 +149,7 @@ module Spree
           end
 
           def validate_payment_method!
-            return unless user && Flipper.enabled?(:split_checkout, user)
+            return unless Flipper.enabled?(:split_checkout)
             return if payments.any?
 
             errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
