@@ -12,19 +12,10 @@ describe Api::V0::ReportsController, type: :controller do
 
   before do
     allow(controller).to receive(:spree_current_user) { current_user }
+    order.finalize!
   end
 
   describe "packing report" do
-    context "as a regular user" do
-      let(:current_user) { create(:user) }
-
-      it "does not show reports" do
-        api_get :show, params
-
-        assert_unauthorized!
-      end
-    end
-
     context "as an enterprise user with full order permissions (distributor)" do
       let!(:distributor) { create(:distributor_enterprise) }
       let!(:order) { create(:completed_order_with_totals, distributor: distributor) }
@@ -78,7 +69,7 @@ describe Api::V0::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
-      "is_temperature_controlled" =>
+      "temp_controlled" =>
         line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
   end
@@ -93,23 +84,22 @@ describe Api::V0::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
-      "is_temperature_controlled" =>
+      "temp_controlled" =>
         line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
   end
 
   def summary_row(order)
     {
-      "summary_row_title" => I18n.t("summary_row.total", scope: i18n_scope),
       "hub" => "",
       "customer_code" => "",
       "first_name" => "",
       "last_name" => "",
       "supplier" => "",
-      "product" => "",
+      "product" => I18n.t("total_items", scope: i18n_scope),
       "variant" => "",
       "quantity" => order.line_items.sum(&:quantity),
-      "is_temperature_controlled" => "",
+      "temp_controlled" => "",
     }
   end
 

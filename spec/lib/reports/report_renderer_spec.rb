@@ -2,19 +2,21 @@
 
 require 'spec_helper'
 
-describe Reports::ReportRenderer do
-  let(:report_rows) {
+describe Reporting::ReportRenderer do
+  let(:data) {
     [
-      { id: 1, name: 'carrots', quantity: 3 },
-      { id: 2, name: 'onions', quantity: 6 }
+      { "id" => 1, "name" => "carrots", "quantity" => 3 },
+      { "id" => 2, "name" => "onions", "quantity" => 6 }
     ]
   }
-  let(:report) { OpenStruct.new(report_rows: report_rows) }
+  let(:report_data) { ActiveRecord::Result.new(data.first.keys, data.map(&:values)) }
+  let(:report) { OpenStruct.new(report_data: report_data)
+  }
   let(:service) { described_class.new(report) }
 
   describe "#table_headers" do
     it "returns the report's table headers" do
-      expect(service.table_headers).to eq [:id, :name, :quantity]
+      expect(service.table_headers).to eq ["id", "name", "quantity"]
     end
   end
 
@@ -29,36 +31,17 @@ describe Reports::ReportRenderer do
 
   describe "#as_json" do
     it "returns the report's data as hashes" do
-      expect(service.as_json).to eq report_rows
+      expect(service.as_json).to eq data.as_json
     end
   end
 
   describe "#as_arrays" do
     it "returns the report's data as arrays" do
       expect(service.as_arrays).to eq [
-        [:id, :name, :quantity],
+        ["id", "name", "quantity"],
         [1, "carrots", 3],
         [2, "onions", 6]
       ]
-    end
-
-    context "with summary rows" do
-      let(:report_rows) {
-        [
-          { id: 1, name: 'carrots', quantity: 3 },
-          { id: 2, name: 'onions', quantity: 6 },
-          { id: nil, name: nil, quantity: 9, summary_row_title: "TOTAL" }
-        ]
-      }
-
-      it "returns the report's data as arrays" do
-        expect(service.as_arrays).to eq [
-          [:id, :name, :quantity],
-          [1, "carrots", 3],
-          [2, "onions", 6],
-          ["TOTAL", nil, 9]
-        ]
-      end
     end
   end
 
