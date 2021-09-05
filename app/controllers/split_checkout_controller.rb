@@ -16,8 +16,6 @@ class SplitCheckoutController < ::BaseController
 
   def edit
     redirect_to_step unless params[:step]
-
-    OrderWorkflow.new(@order).next if @order.cart?
   end
 
   def update
