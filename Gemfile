@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 ruby "2.7.3"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
-git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}.git" }
 
 gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
 
@@ -58,8 +57,7 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'pagy', '~> 5.1'
 
-gem 'gitlab-omniauth-openid-connect', gitlab: 'gitlab-org/gitlab-omniauth-openid-connect', require: 'omniauth_openid_connect'
-
+gem 'gitlab-omniauth-openid-connect', require: 'omniauth_openid_connect'
 gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
