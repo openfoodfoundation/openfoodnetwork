@@ -12,7 +12,7 @@ module.exports = {
       "./engines/**/*.html.haml",
     ],
     options: {
-      defaultExtractor: content => content.match(/[^%#<>"{\.'`\s]*[^%#<>"{}\.'`\s:]/g) || []
+      defaultExtractor: content => content.match(/[^%#=<>"{\.'`\s]*[^%#=<>"{}\.'`\s:]/g) || []
     }
   },
   darkMode: false, // or 'media' or 'class'
