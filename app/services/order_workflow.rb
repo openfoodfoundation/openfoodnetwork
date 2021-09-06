@@ -28,9 +28,7 @@ class OrderWorkflow
   end
 
   def advance_checkout(options = {})
-    order.select_shipping_method(options[:shipping_method_id])
-
-    advance_to = order.address? || order.delivery? ? "payment" : "confirmation"
+    advance_to = order.state.in?(["cart", "address", "delivery"]) ? "payment" : "confirmation"
 
     advance_to_state(advance_to, advance_order_options.merge(options))
   end
