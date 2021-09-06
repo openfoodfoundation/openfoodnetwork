@@ -24,6 +24,9 @@ module Spree
       go_to_state :complete
     end
 
+    attr_accessor :use_billing
+    attr_accessor :checkout_processing
+
     token_resource
 
     belongs_to :user, class_name: Spree.user_class.to_s
@@ -78,8 +81,6 @@ module Spree
     before_validation :clone_billing_address, if: :use_billing?
     before_validation :associate_customer, unless: :customer_id?
     before_validation :ensure_customer, unless: :customer_is_valid?
-
-    attr_accessor :use_billing
 
     before_create :link_by_email
     after_create :create_tax_charge!
@@ -136,6 +137,13 @@ module Spree
     scope :incomplete, -> { where(completed_at: nil) }
     scope :by_state, lambda { |state| where(state: state) }
     scope :not_state, lambda { |state| where.not(state: state) }
+
+    def initialize(*_args)
+      @checkout_processing = nil
+      @manual_shipping_selection = nil
+
+      super
+    end
 
     # For compatiblity with Calculator::PriceSack
     def amount
@@ -625,7 +633,7 @@ module Spree
 
     # Determine if email is required (we don't want validation errors before we hit the checkout)
     def require_email
-      return true unless new_record? || (state == 'cart')
+      return true unless (new_record? || cart?) && !checkout_processing
     end
 
     def ensure_line_items_present

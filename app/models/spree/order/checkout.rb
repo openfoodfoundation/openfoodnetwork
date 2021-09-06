@@ -75,7 +75,6 @@ module Spree
 
               before_transition to: :delivery, do: :create_proposed_shipments
               before_transition to: :delivery, do: :ensure_available_shipping_rates
-              before_transition to: :payment, do: :validate_shipping_method!
               before_transition to: :payment, do: :create_tax_charge!
               before_transition to: :confirmation, do: :validate_payment_method!
 
@@ -140,16 +139,8 @@ module Spree
 
           private
 
-          def validate_shipping_method!
-            return unless Flipper.enabled?(:split_checkout)
-            return if shipping_method.present?
-
-            errors.add :shipping_method, I18n.t('split_checkout.errors.select_a_shipping_method')
-            throw :halt
-          end
-
           def validate_payment_method!
-            return unless Flipper.enabled?(:split_checkout)
+            return unless checkout_processing
             return if payments.any?
 
             errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
