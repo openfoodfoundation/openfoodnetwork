@@ -3,6 +3,13 @@ module.exports = {
   addons: [
     "@storybook/addon-docs",
     "@storybook/addon-controls",
-    "@storybook/addon-postcss",
+    {
+      name: "@storybook/addon-postcss",
+      options: {
+        postcssLoaderOptions: {
+          implementation: require("postcss"),
+        },
+      },
+    },
   ],
 };
