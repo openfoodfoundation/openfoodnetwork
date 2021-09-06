@@ -25,7 +25,7 @@ describe Api::V0::ReportsController, type: :controller do
         api_get :show, params
 
         expect(response.status).to eq 200
-        expect(json_response).to match_array report_output(order, "distributor")
+        expect(json_response[:data]).to match_array report_output(order, "distributor")
       end
     end
 
@@ -42,7 +42,7 @@ describe Api::V0::ReportsController, type: :controller do
         api_get :show, params
 
         expect(response.status).to eq 200
-        expect(json_response).to match_array report_output(order, "supplier")
+        expect(json_response[:data]).to match_array report_output(order, "supplier")
       end
     end
   end

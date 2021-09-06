@@ -18,7 +18,7 @@ module Api
       private
 
       def render_report
-        render json: @report.as_json
+        render json: { data: @report.as_json }
       end
 
       def render_error(error)
