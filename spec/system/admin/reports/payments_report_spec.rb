@@ -40,16 +40,16 @@ describe "Payments Reports" do
       select I18n.t(:report_itemised_payment), from: "report_type"
       find("[type='submit']").click
 
-      expect(page.find("#listing_orders thead tr").text).to eq([
+      expect(page.find("#listing_orders thead tr").text).to have_content([
         I18n.t(:report_header_payment_state),
         I18n.t(:report_header_distributor),
         I18n.t(:report_header_product_total_price, currency: currency_symbol),
         I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
         I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
         I18n.t(:report_header_total_price, currency: currency_symbol)
-      ].join(" "))
+      ].join(" ").upcase)
 
-      expect(page.find("#listing_orders tbody tr").text).to eq([
+      expect(page.find("#listing_orders tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
         order.item_total.to_f + other_order.item_total.to_f,
@@ -77,7 +77,7 @@ describe "Payments Reports" do
       select I18n.t(:report_payment_totals), from: "report_type"
       find("[type='submit']").click
 
-      expect(page.find("#listing_orders thead tr").text).to eq([
+      expect(page.find("#listing_orders thead tr").text).to have_content([
         I18n.t(:report_header_payment_state),
         I18n.t(:report_header_distributor),
         I18n.t(:report_header_product_total_price, currency: currency_symbol),
@@ -86,9 +86,9 @@ describe "Payments Reports" do
         I18n.t(:report_header_eft_price, currency: currency_symbol),
         I18n.t(:report_header_paypal_price, currency: currency_symbol),
         I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
-      ].join(" "))
+      ].join(" ").upcase)
 
-      expect(page.find("#listing_orders tbody tr").text).to eq([
+      expect(page.find("#listing_orders tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
         order.item_total.to_f + other_order.item_total.to_f,
