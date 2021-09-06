@@ -13,7 +13,9 @@ require 'active_support/concern'
 module OrderShipment
   extend ActiveSupport::Concern
 
-  attr_accessor :manual_shipping_selection
+  included do
+    attr_accessor :manual_shipping_selection
+  end
 
   def shipment
     shipments.first

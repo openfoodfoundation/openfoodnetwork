@@ -4,12 +4,10 @@ require 'spree/order/checkout'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
-require 'concerns/order_shipment'
 
 module Spree
   class Order < ApplicationRecord
-    prepend OrderShipment
-
+    include OrderShipment
     include Checkout
     include Balance
 
