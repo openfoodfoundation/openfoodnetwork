@@ -23,7 +23,10 @@ module Permissions
     def editable_orders
       orders = Spree::Order.
         where(managed_orders_where_values.
-          or(coordinated_orders_where_values))
+          or(coordinated_orders_where_values)).
+        joins(:line_items).
+        group(:id).
+        having("count(spree_line_items.id) > 0")
 
       filtered_orders(orders)
     end
