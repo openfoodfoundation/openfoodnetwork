@@ -43,4 +43,4 @@
           value: "{{'label_login' | t}}"}
     .row
       .large-12.columns
-        = link_to "Login with Les Communs", Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path, method: :post
+        = link_to I18n.t("login_les_communs"), Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path, method: :post
