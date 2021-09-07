@@ -1660,8 +1660,6 @@ en:
           label: Country
       delivery_address:
           title: Delivery address
-          errors:
-            no_shipping_method_selected: No shipping method selected
       submit: Next - Payment method
       cancel: Back to Edit basket
     step2:
@@ -1697,6 +1695,8 @@ en:
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

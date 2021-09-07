@@ -22,23 +22,29 @@ module OrderManagement
 
         shipping_rates.sort_by! { |r| r.cost || 0 }
 
-        unless shipping_rates.empty?
-          if frontend_only
-            shipping_rates.each do |rate|
-              if rate.shipping_method.frontend?
-                rate.selected = true
-                break
-              end
-            end
-          else
-            shipping_rates.first.selected = true
-          end
+        unless shipping_rates.empty? || order.manual_shipping_selection
+          select_first_shipping_method(shipping_rates, frontend_only)
         end
 
         shipping_rates
       end
 
       private
+
+      # Sets the first available shipping method to "selected".
+      # Note: seems like a hangover from Spree, we can probably just remove this at some point.
+      def select_first_shipping_method(shipping_rates, frontend_only)
+        if frontend_only
+          shipping_rates.each do |rate|
+            if rate.shipping_method.frontend?
+              rate.selected = true
+              break
+            end
+          end
+        else
+          shipping_rates.first.selected = true
+        end
+      end
 
       def shipping_methods(package)
         shipping_methods = package.shipping_methods
