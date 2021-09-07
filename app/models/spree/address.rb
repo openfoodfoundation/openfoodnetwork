@@ -15,7 +15,6 @@ module Spree
 
     validates :firstname, :lastname, :address1, :city, :country, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
-    validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate
 
@@ -103,10 +102,6 @@ module Spree
     end
 
     private
-
-    def require_phone?
-      true
-    end
 
     def require_zipcode?
       true

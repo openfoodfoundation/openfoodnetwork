@@ -1,115 +1,87 @@
-%div.checkout-substep
-  %div.checkout-title
-    = t("split_checkout.step3.your_details.title")
+.medium-10
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.your_details.title")
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.your_details.first_name.label")
-    %span.summary-value
-      = @order.bill_address.firstname
-
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.your_details.last_name.label")
-    %span.summary-value
-      = @order.bill_address.lastname
-
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.your_details.email.label")
-    %span.summary-value
-      = @order.user.email
-  
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.your_details.phone.label")
-    %span.summary-value
-      = @order.bill_address.phone
-
-%div.checkout-substep
-  %div.checkout-title
-    = t("split_checkout.step3.billing_address.title")
-  
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.billing_address.address1.label")
-    %span.summary-value
-      = @order.bill_address.address1
-  
-  - unless @order.bill_address.address2.blank?
     %div.summary
       %span.summary-label
-        = t("split_checkout.step1.billing_address.address2.label")
+        = t("split_checkout.step1.your_details.first_name.label")
       %span.summary-value
-        = @order.bill_address.address2
+        = @order.bill_address.firstname
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.billing_address.city.label")
-    %span.summary-value
-      = @order.bill_address.city
+    %div.summary
+      %span.summary-label
+        = t("split_checkout.step1.your_details.last_name.label")
+      %span.summary-value
+        = @order.bill_address.lastname
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.billing_address.state_id.label")
-    %span.summary-value
-      = @order.bill_address.state
+    %div.summary
+      %span.summary-label
+        = t("split_checkout.step1.your_details.email.label")
+      %span.summary-value
+        = @order.user ? @order.user.email : "Change me"
+    
+    %div.summary
+      %span.summary-label
+        = t("split_checkout.step1.your_details.phone.label")
+      %span.summary-value
+        = @order.bill_address.phone
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.billing_address.zipcode.label")
-    %span.summary-value
-      = @order.bill_address.zipcode
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.billing_address.title")
+    = render "summary_address", address: @order.bill_address
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.billing_address.country.label")
-    %span.summary-value
-      = @order.bill_address.country
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.shipping_address.title")
+    = render "summary_address", address: @order.shipping_address
 
-%div.checkout-substep
-  %div.checkout-title
-    = t("split_checkout.step3.delivery_info.title")
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.delivery_info.title")
 
-  %div.summary
-    %span.summary-label
-      = t("split_checkout.step1.delivery_address.title")
-    %span.summary-value
-      = @order.shipping_method.name
-    %div
-    = @order.shipping_method.description
-  
-    %a.summary-edit{href: main_app.checkout_step_path(:details)}
-      = t("split_checkout.step3.your_details.edit")
+    %div.summary
+      %span.summary-label
+        = t("split_checkout.step1.delivery_address.title")
+      %span.summary-value
+        = @order.shipping_method.name
+      %div
+      = @order.shipping_method.description
+    
+      %a.summary-edit{href: main_app.checkout_step_path(:details)}
+        = t("split_checkout.step3.your_details.edit")
 
-%div.checkout-substep
-  %div.checkout-title
-    = t("split_checkout.step3.payment_method.title")
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.payment_method.title")
 
-  %div.summary
-    %span.summary-value
-      = last_payment_method(@order)&.name
-      %p.text-small.text-skinny.pre-line
-        %em= last_payment_method(@order)&.description
-    %a.summary-edit{href: main_app.checkout_step_path(:payment)}
-      = t("split_checkout.step3.payment_method.edit")
+    %div.summary
+      %span.summary-value
+        = last_payment_method(@order)&.name
+        %p.text-small.text-skinny.pre-line
+          %em= last_payment_method(@order)&.description
+      %a.summary-edit{href: main_app.checkout_step_path(:payment)}
+        = t("split_checkout.step3.payment_method.edit")
 
 
-%div.checkout-substep
-  %div.checkout-title
-    = t("split_checkout.step3.order.title")
-  
-  = render 'spree/orders/summary', order: @order
+  %div.checkout-substep
+    %div.checkout-title
+      = t("split_checkout.step3.order.title")
+    
+    = render 'spree/orders/summary', order: @order
 
-%div.checkout-substep
+%div.checkout-substep.medium-6
   %div.checkout-input
-    = f.check_box :accept_terms, {id: 'accept_terms', name: "accept_terms", "checked": "#{all_terms_and_conditions_already_accepted?}"}
-    = f.label :accept_terms, t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms), {for: "accept_terms"}
+    = f.check_box :accept_terms, { id: "accept_terms", name: "accept_terms", "checked": "#{all_terms_and_conditions_already_accepted?}" }, 1, nil
+    = f.label :accept_terms, t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms), { for: "accept_terms" }
+
+  = f.error_message_on :terms_and_conditions, standalone: true
 
   %div.checkout-input
   = t("split_checkout.step3.agree")
 
-%div.checkout-submit
+%div.checkout-submit.medium-6
   = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
   %a.button.cancel{href: main_app.cart_path}
     = t("split_checkout.step3.cancel")

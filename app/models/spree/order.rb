@@ -4,11 +4,10 @@ require 'spree/order/checkout'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
-require 'concerns/order_shipment'
 
 module Spree
   class Order < ApplicationRecord
-    prepend OrderShipment
+    include OrderShipment
     include Checkout
     include Balance
 
@@ -25,10 +24,13 @@ module Spree
         order.payment_required?
       }
       go_to_state :confirmation, if: ->(order) {
-        Flipper.enabled? :split_checkout, order.user
+        Flipper.enabled? :split_checkout
       }
       go_to_state :complete
     end
+
+    attr_accessor :use_billing
+    attr_accessor :checkout_processing
 
     token_resource
 
@@ -85,8 +87,6 @@ module Spree
     before_validation :associate_customer, unless: :customer_id?
     before_validation :ensure_customer, unless: :customer_is_valid?
 
-    attr_accessor :use_billing
-
     before_create :link_by_email
     after_create :create_tax_charge!
 
@@ -98,7 +98,6 @@ module Spree
     validates :email, presence: true,
                       format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
-    validates :payments, presence: true, if: ->(order) { order.confirmation? && payment_required? }
 
     make_permalink field: :number
 
@@ -143,6 +142,13 @@ module Spree
     scope :incomplete, -> { where(completed_at: nil) }
     scope :by_state, lambda { |state| where(state: state) }
     scope :not_state, lambda { |state| where.not(state: state) }
+
+    def initialize(*_args)
+      @checkout_processing = nil
+      @manual_shipping_selection = nil
+
+      super
+    end
 
     # For compatiblity with Calculator::PriceSack
     def amount
@@ -505,7 +511,7 @@ module Spree
     def disallow_guest_order
       return unless using_guest_checkout? && registered_email?
 
-      errors.add(:base, I18n.t('devise.failure.already_registered'))
+      errors.add(:email, I18n.t('devise.failure.already_registered'))
     end
 
     # After changing line items of a completed order
@@ -632,7 +638,7 @@ module Spree
 
     # Determine if email is required (we don't want validation errors before we hit the checkout)
     def require_email
-      return true unless new_record? || (state == 'cart')
+      return true unless (new_record? || cart?) && !checkout_processing
     end
 
     def ensure_line_items_present

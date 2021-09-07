@@ -175,7 +175,7 @@ class CheckoutController < ::BaseController
         return action_failed unless @order.process_payments!
       end
 
-      next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })
+      next if OrderWorkflow.new(@order).next({ "shipping_method_id" => shipping_method_id })
 
       return action_failed
     end

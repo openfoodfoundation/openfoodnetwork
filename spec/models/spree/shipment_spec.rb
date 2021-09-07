@@ -388,6 +388,7 @@ describe Spree::Shipment do
     end
 
     it "should create adjustment when not present" do
+      allow(shipment).to receive_messages(fee_adjustment: nil)
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       expect(shipping_method).to receive(:create_adjustment).with(shipment.adjustment_label,
                                                                   shipment, true, "open")

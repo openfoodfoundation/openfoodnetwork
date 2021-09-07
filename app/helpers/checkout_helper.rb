@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module CheckoutHelper
+  def shipping_and_billing_match?(order)
+    order.ship_address == order.bill_address
+  end
+
   def guest_checkout_allowed?
     current_order.distributor.allow_guest_orders?
   end

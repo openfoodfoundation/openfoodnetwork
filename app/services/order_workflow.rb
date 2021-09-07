@@ -27,19 +27,17 @@ class OrderWorkflow
     advance_to_state("payment", advance_order_options)
   end
 
-  def advance_to_confirmation(options = {})
-    if options[:shipping_method_id]
-      order.select_shipping_method(options[:shipping_method_id])
-    end
+  def advance_checkout(options = {})
+    advance_to = order.state.in?(["cart", "address", "delivery"]) ? "payment" : "confirmation"
 
-    advance_to_state("confirmation")
+    advance_to_state(advance_to, advance_order_options.merge(options))
   end
 
   private
 
   def advance_order_options
     shipping_method_id = order.shipping_method.id if order.shipping_method.present?
-    { shipping_method_id: shipping_method_id }
+    { "shipping_method_id" => shipping_method_id }
   end
 
   def advance_to_state(target_state, options = {})
@@ -68,8 +66,8 @@ class OrderWorkflow
   end
 
   def after_transition_hook(options)
-    if order.state == "delivery" && (options[:shipping_method_id])
-      order.select_shipping_method(options[:shipping_method_id])
+    if order.state == "delivery"
+      order.select_shipping_method(options["shipping_method_id"])
     end
 
     persist_all_payments if order.state == "payment"

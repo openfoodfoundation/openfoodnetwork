@@ -48,9 +48,12 @@
 }
 
 .checkout-step {
-  margin-right: auto;
-  margin-left: auto;
   margin-top: 3rem;
+
+  .medium-6, .medium-10 {
+    margin-right: auto;
+    margin-left: auto;
+  }
 
   .checkout-substep {
     margin-bottom: 1rem;
@@ -103,6 +106,10 @@
       padding-right: 5px;
       padding-top: 2px;
       padding-bottom: 2px;
+
+      &.standalone {
+        padding: 10px;
+      }
     }
 
     #distributor_address.panel {
@@ -127,6 +134,7 @@
     .button {
       width: 100%;
       margin-bottom: 2rem;
+      border-radius: 0.5em;
 
       &.primary {
         background-color: $orange-500;

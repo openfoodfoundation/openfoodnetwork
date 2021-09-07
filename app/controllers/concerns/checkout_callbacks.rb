@@ -14,7 +14,7 @@ module CheckoutCallbacks
     prepend_before_action :require_distributor_chosen
 
     before_action :load_order, :associate_user, :load_saved_addresses
-    before_action :load_shipping_methods, :load_countries, if: -> { checkout_step == "details"}
+    before_action :load_shipping_methods, :load_countries, if: -> { params[:step] == "details"}
 
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed
@@ -27,6 +27,8 @@ module CheckoutCallbacks
 
   def load_order
     @order = current_order
+    @order.manual_shipping_selection = true
+    @order.checkout_processing = true
 
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     redirect_to_cart_path && return unless valid_order_line_items?
@@ -35,8 +37,8 @@ module CheckoutCallbacks
   def load_saved_addresses
     finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
 
-    @order.bill_address = finder.bill_address
-    @order.ship_address = finder.ship_address
+    @order.bill_address ||= finder.bill_address
+    @order.ship_address ||= finder.ship_address
   end
 
   def load_shipping_methods

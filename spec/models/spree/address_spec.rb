@@ -110,26 +110,16 @@ describe Spree::Address do
       expect(address).to be_valid
     end
 
-    it "requires phone" do
+    it "does not require phone" do
       address.phone = ""
       address.valid?
-      expect(address.errors["phone"]).to eq ["can't be blank"]
+      expect(address.errors[:phone]).to be_empty
     end
 
     it "requires zipcode" do
       address.zipcode = ""
       address.valid?
       expect(address.errors[:zipcode].first).to eq "can't be blank"
-    end
-
-    context "phone not required" do
-      before { allow(address).to receive(:require_phone?) { false } }
-
-      it "shows no errors when phone is blank" do
-        address.phone = ""
-        address.valid?
-        expect(address.errors[:phone]).to be_empty
-      end
     end
 
     context "zipcode not required" do
@@ -196,10 +186,5 @@ describe Spree::Address do
       let(:address) { build(:address, state: state) }
       specify { expect(address.state_text).to eq 'virginia' }
     end
-  end
-
-  context "defines require_phone? helper method" do
-    let(:address) { build(:address) }
-    specify { expect(address.instance_eval{ require_phone? }).to be_truthy }
   end
 end
