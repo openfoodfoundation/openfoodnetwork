@@ -1578,13 +1578,22 @@ en_FR:
     step3:
       your_details:
         title: Your details
+        edit: Edit your details
       billing_address:
         title: Billing address
+      delivery_info:
+        title: Delivery info
       payment_method:
         title: Payment method
+        edit: Edit payment method
+      order:
+        title: Order total
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      agree: By clickin 'Complete order' you agree to your order being processed.
+      submit: Complete order
+      cancel: Back to Payment method
     errors:
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -2739,6 +2748,7 @@ en_FR:
           invalid: "invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cannot_remove_last_item: "Cannot remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3755,6 +3765,7 @@ en_FR:
       awaiting_return: awaiting return
       canceled: cancelled
       cart: cart
+      confirmation: "confirmation"
       complete: complete
       confirm: confirm
       delivery: delivery

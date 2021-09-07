@@ -1580,13 +1580,22 @@ fr:
     step3:
       your_details:
         title: Vos informations
+        edit: Modifier vos coordonnées
       billing_address:
         title: Adresse de facturation
+      delivery_info:
+        title: Information concernant la livraison
       payment_method:
         title: Moyen de paiement
+        edit: Modifier la méthode de paiement
+      order:
+        title: Total commande
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
+      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
+      submit: Valider ma commande
+      cancel: Retour à la méthode de paiement
     errors:
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -2767,6 +2776,7 @@ fr:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
+        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -3785,6 +3795,7 @@ fr:
       awaiting_return: attente du retour
       canceled: annulée
       cart: panier
+      confirmation: "confirmation"
       complete: finalisée
       confirm: confirmer
       delivery: livraison

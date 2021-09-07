@@ -69,7 +69,7 @@ Openfoodnetwork::Application.configure do
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: "0.0.0.0:3000" }
 
-  config.log_level = :debug
+  config.log_level = ENV.fetch("DEV_LOG_LEVEL", :debug)
 
   config.view_component_storybook.stories_path = Rails.root.join("spec/components/stories")
 end

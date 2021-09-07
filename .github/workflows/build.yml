@@ -10,6 +10,7 @@ env:
   TIMEZONE: UTC
   COVERAGE: true
   RSPEC_RETRY_RETRY_COUNT: 3
+  RAILS_ENV: test
 
 jobs:
   test-controllers-and-serializers:
@@ -272,6 +273,9 @@ jobs:
 
       - name: Run JS tests
         run: RAILS_ENV=test bundle exec rake karma:run
+
+      - name: Run jest tests
+        run: yarn jest
 
       # Migration tests need to be run in a separate task.
       # See: https://github.com/openfoodfoundation/openfoodnetwork/pull/6924#issuecomment-813056525

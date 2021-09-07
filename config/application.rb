@@ -21,9 +21,9 @@ require "rails"
 end
 
 require_relative "../lib/open_food_network/i18n_config"
-
 require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
+require_relative "../lib/session_cookie_upgrader"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -34,6 +34,15 @@ end
 
 module Openfoodnetwork
   class Application < Rails::Application
+    config.middleware.insert_before(
+      ActionDispatch::Cookies,
+      SessionCookieUpgrader, {
+        old_key: "_session_id",
+        new_key: "_ofn_session_id",
+        domain: ".#{ENV['SITE_URL'].gsub(/^(www\.)|^(app\.)|^(staging\.)|^(stg\.)/, '')}"
+      }
+    ) if Rails.env.staging? || Rails.env.production?
+
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
       Spree::Core::Engine.routes.default_url_options[:host] = 'test.host' if Rails.env == 'test'

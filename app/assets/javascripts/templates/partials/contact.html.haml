@@ -5,7 +5,7 @@
 
     %p{"ng-if" => "::enterprise.email_address"}
       %a{"ng-href" => "{{::enterprise.email_address | stripUrl}}", target: "_blank", mailto: true}
-        %span.email{"ng-bind" => "::enterprise.email_address | stripUrl"}
+        %span.obfuscatedEmail.email{"ng-bind" => "::enterprise.email_address | stripUrl"}
 
     %p{"ng-if" => "enterprise.website"}
       %a{"ng-href" => "http://{{::enterprise.website | stripUrl}}", target: "_blank", "ng-bind" => "::enterprise.website | stripUrl"}

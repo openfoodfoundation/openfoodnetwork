@@ -79,7 +79,7 @@ feature "Cookies", js: true do
 
     scenario "shows session_id cookies description with correct instance domain" do
       visit '/#/policies/cookies'
-      expect(page).to have_content('_session_id')
+      expect(page).to have_content('_ofn_session_id')
         .and have_content('127.0.0.1')
     end
 

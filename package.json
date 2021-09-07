@@ -8,11 +8,17 @@
   "scripts": {
     "storybook": "start-storybook"
   },
+  "jest": {
+    "testRegex": [
+      "spec/javascripts/.*_test\\.js"
+    ]
+  },
   "devDependencies": {
-    "@storybook/addon-controls": "^6.3.7",
-    "@storybook/addon-docs": "^6.3.7",
-    "@storybook/server": "^6.3.7",
+    "@storybook/addon-controls": "^6.3.8",
+    "@storybook/addon-docs": "^6.3.8",
+    "@storybook/server": "^6.3.8",
     "jasmine-core": "~2.4.1",
+    "jest": "^27.1.0",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
@@ -21,7 +27,7 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
-    "@rails/webpacker": "5.4.0",
+    "@rails/webpacker": "5.4.2",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
     "shortcut-buttons-flatpickr": "^0.3.1",

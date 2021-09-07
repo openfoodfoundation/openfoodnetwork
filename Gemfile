@@ -54,7 +54,7 @@ gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
-gem 'pagy', '~> 4.10'
+gem 'pagy', '~> 4.11'
 
 gem 'andand'
 gem 'angularjs-rails', '1.8.0'
@@ -78,7 +78,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
 gem 'paperclip', '~> 3.4.1'
-gem 'paper_trail', '~> 12.0.0'
+gem 'paper_trail', '~> 12.1.0'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'

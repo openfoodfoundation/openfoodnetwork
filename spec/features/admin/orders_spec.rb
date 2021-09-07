@@ -62,6 +62,25 @@ feature '
       expect(page).to_not have_content order4.number
     end
 
+    context "select/unselect all orders" do
+      scenario "by clicking on the checkbox in the table header" do
+        order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
+        order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
+        order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
+
+        login_as_admin_and_visit spree.admin_orders_path
+        # select all orders
+        page.find("#listing_orders thead th:first-child input[type=checkbox]").click
+        expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to be_checked
+        # unselect all orders
+        page.find("#listing_orders thead th:first-child input[type=checkbox]").click
+        expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to_not be_checked
+      end
+    end
+
     context "with a capturable order" do
       before do
         order.finalize! # ensure order has a payment to capture

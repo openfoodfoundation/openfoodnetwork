@@ -1,9 +1,16 @@
 - content_for(:title) do
   = t :map_title
 
+- content_for :scripts do
+  = render partial: "shared/google_maps_js"
+
 - content_for :injection_data do
   = inject_available_countries
   = inject_enterprise_shopfront_list
   = inject_open_street_map_config
+  - cache(*CacheService::FragmentCaching.ams_all_taxons) do
+    = inject_taxons
+  - cache(*CacheService::FragmentCaching.ams_all_properties) do
+    = inject_properties
 
 = render partial: "shared/map"
