@@ -134,8 +134,9 @@ Devise.setup do |config|
   # change their passwords.
   config.reset_password_within = 6.hours
   config.sign_out_via = :get
-
   config.case_insensitive_keys = [:email]
+
+  protocol = Rails.env.development? ? "http://" : "https://"
   config.omniauth :openid_connect, {
     name: :openid_connect,
     issuer: "https://login.lescommuns.org/auth/realms/master",
@@ -154,7 +155,7 @@ Devise.setup do |config|
       jwks_uri: "https://login.lescommuns.org/auth/realms/master/protocol/openid-connect/certs",
       identifier: ENV["OPENID_APP_ID"],
       secret: ENV["OPENID_APP_SECRET"],
-      redirect_uri: ENV["OPENID_REDIRECT_URI"],
+      redirect_uri: "#{protocol}#{ActionMailer::Base.default_url_options[:host]}/user/spree_user/auth/openid_connect/callback",
     }
   }
 end
