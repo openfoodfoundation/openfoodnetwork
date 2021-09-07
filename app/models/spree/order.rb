@@ -106,6 +106,10 @@ module Spree
     before_save :update_payment_fees!, if: :complete?
 
     # -- Scopes
+    scope :not_empty, -> {
+      joins(:line_items).group(:id).having("count(spree_line_items.id) > 0")
+    }
+
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
         where(nil)

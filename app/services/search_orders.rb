@@ -23,7 +23,8 @@ class SearchOrders
   end
 
   def search_query
-    base_query = ::Permissions::Order.new(current_user).editable_orders
+    base_query = ::Permissions::Order.new(current_user).editable_orders.not_empty
+
     return base_query unless params[:shipping_method_id]
 
     base_query
