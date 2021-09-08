@@ -107,7 +107,7 @@ module Spree
 
     # -- Scopes
     scope :not_empty, -> {
-      joins(:line_items).group(:id).having("count(spree_line_items.id) > 0")
+      left_outer_joins(:line_items).where.not(spree_line_items: { id: nil })
     }
 
     scope :managed_by, lambda { |user|

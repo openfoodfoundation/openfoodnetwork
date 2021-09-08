@@ -16,7 +16,7 @@ describe SearchOrders do
     let(:service) { SearchOrders.new(params, enterprise_user) }
 
     it 'returns orders' do
-      expect(service.orders.count.length).to eq 3
+      expect(service.orders.count).to eq 3
     end
   end
 end
