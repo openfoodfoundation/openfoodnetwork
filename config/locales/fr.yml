@@ -1551,6 +1551,7 @@ fr:
           placeholder: ex. 0798765432
       billing_address:
         title: Adresse de facturation
+      address:
         address1:
           label: Adresse (Numéro et rue)
           placeholder: ex. 17 rue de la chèvre
@@ -1583,6 +1584,8 @@ fr:
         edit: Modifier vos coordonnées
       billing_address:
         title: Adresse de facturation
+      shipping_address:
+        title: Adresse de livraison
       delivery_info:
         title: Information concernant la livraison
       payment_method:
@@ -1597,9 +1600,13 @@ fr:
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
+      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionner une méthode de livraison
+      select_a_payment_method: Sélectionner une méthode de paiement
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
