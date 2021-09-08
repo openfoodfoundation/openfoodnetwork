@@ -54,9 +54,6 @@ jobs:
       - name: Run controller tests
         run: bundle exec rspec --profile -- spec/controllers spec/serializers
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
-
   test-models:
     runs-on: ubuntu-18.04
     services:
@@ -97,9 +94,6 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec --profile -- spec/models
-
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
 
   test-admin-features-1:
     runs-on: ubuntu-18.04
@@ -142,9 +136,6 @@ jobs:
       - name: Run admin feature tests
         run: bundle exec rspec --profile -- spec/features/admin/[a-o0-9]*_spec.rb
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
-
   test-admin-features-2:
     runs-on: ubuntu-18.04
     services:
@@ -186,9 +177,6 @@ jobs:
       - name: Run admin feature tests
         run: bundle exec rspec --profile -- spec/features/admin/[p-z]*_spec.rb
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
-
   test-consumer-features:
     runs-on: ubuntu-18.04
     services:
@@ -229,9 +217,6 @@ jobs:
 
       - name: Run consumer feature tests
         run: bundle exec rspec --profile -- spec/features/consumer
-
-      - name: Codecov
-        uses: codecov/codecov-action@v1.3.1
 
   test-engines-etc:
     runs-on: ubuntu-18.04
@@ -328,6 +313,3 @@ jobs:
 
       - name: Run admin feature folders, engines, lib
         run: bundle exec rspec --profile --pattern "engines/*/spec/{,/*/**}/*_spec.rb,spec/features/admin/*/*_spec.rb,spec/lib/{,/*/**}/*_spec.rb"
-
-      - name: Codecov
-        uses: codecov/codecov-action@v1.5.0
