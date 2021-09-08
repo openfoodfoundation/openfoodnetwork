@@ -1549,6 +1549,7 @@ en_FR:
           placeholder: e.g. 0798765432
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. 17 rue de la chèvre
@@ -1581,6 +1582,8 @@ en_FR:
         edit: Edit your details
       billing_address:
         title: Billing address
+      shipping_address:
+        title: Shipping address
       delivery_info:
         title: Delivery info
       payment_method:
@@ -1591,13 +1594,17 @@ en_FR:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
-      agree: By clickin 'Complete order' you agree to your order being processed.
+      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
+      global: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
