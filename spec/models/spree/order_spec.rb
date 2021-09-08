@@ -849,6 +849,16 @@ describe Spree::Order do
         expect(Spree::Order.not_state(:canceled)).not_to include o
       end
     end
+
+    describe "not_empty" do
+      let!(:order_with_line_items) { create(:order_with_line_items, line_items_count: 1) }
+      let!(:order_without_line_items) { create(:order) }
+
+      it "returns only orders which have line items" do
+        expect(Spree::Order.not_empty).to include order_with_line_items
+        expect(Spree::Order.not_empty).to_not include order_without_line_items
+      end
+    end
   end
 
   describe "sending confirmation emails" do
