@@ -1551,6 +1551,7 @@ de_DE:
           placeholder: z. B. 016012345678
       billing_address:
         title: Rechnungsadresse
+      address:
         address1:
           label: Straße + Hausnummer
           placeholder: z. B. Gartenstraße 123
@@ -1583,6 +1584,8 @@ de_DE:
         edit: Ihre Daten ändern
       billing_address:
         title: Rechnungsadresse
+      shipping_address:
+        title: Lieferadresse
       delivery_info:
         title: Abhol-/Lieferinformationen
       payment_method:
@@ -1597,9 +1600,13 @@ de_DE:
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
+      global: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
+      terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
       invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+      select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
+      select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
