@@ -51,6 +51,10 @@ describe 'api/v0/orders', type: :request do
           }
           let!(:li4) { create(:line_item_with_shipment, order: order_dist_1_credit_owed) }
 
+          let!(:order_empty) {
+            create(:order_with_line_items, line_items_count: 0)
+          }
+
           let(:user) { order_dist_1.distributor.owner }
           let(:'X-Spree-Token') do
             user.generate_spree_api_key!

@@ -7,6 +7,7 @@ describe SearchOrders do
   let!(:order1) { create(:order_with_line_items, distributor: distributor, line_items_count: 3) }
   let!(:order2) { create(:order_with_line_items, distributor: distributor, line_items_count: 2) }
   let!(:order3) { create(:order_with_line_items, distributor: distributor, line_items_count: 1) }
+  let!(:order_empty) { create(:order, distributor: distributor) }
 
   let(:enterprise_user) { distributor.owner }
 

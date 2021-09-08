@@ -144,15 +144,18 @@ feature '
         completed_at: 1.day.ago,
         line_items_count: 1
       )
+      empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
       login_as_admin_and_visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_no_content incomplete_order.number
+      expect(page).to have_no_content empty_order.number
 
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 
       expect(page).to have_content complete_order.number
       expect(page).to have_content incomplete_order.number
+      expect(page).to have_no_content empty_order.number
     end
   end
 
