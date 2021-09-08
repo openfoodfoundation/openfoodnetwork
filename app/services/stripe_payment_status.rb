@@ -13,7 +13,7 @@ class StripePaymentStatus
   def stripe_status
     return if payment.response_code.blank?
 
-    Stripe::PaymentIntentValidator.new(self).call.status
+    Stripe::PaymentIntentValidator.new(payment).call.status
   rescue Stripe::StripeError
     # Stripe::PaymentIntentValidator will raise an error if the response from the Stripe API
     # call indicates the last attempted action on the payment intent failed.
