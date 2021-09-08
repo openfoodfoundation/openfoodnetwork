@@ -49,6 +49,7 @@ gem 'paypal-sdk-merchant', '1.117.2'
 gem 'stripe'
 
 gem 'devise'
+gem 'devise-i18n'
 gem 'devise-encryptable'
 gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.2'

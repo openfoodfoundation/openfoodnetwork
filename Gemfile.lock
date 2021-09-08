@@ -245,6 +245,8 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
+    devise-i18n (1.10.0)
+      devise (>= 4.8.0)
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
     diff-lcs (1.4.4)
@@ -714,6 +716,7 @@ DEPENDENCIES
   debugger-linecache
   devise
   devise-encryptable
+  devise-i18n
   devise-token_authenticatable
   dfc_provider!
   dotenv-rails
