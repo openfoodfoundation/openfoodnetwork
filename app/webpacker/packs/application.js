@@ -9,7 +9,8 @@ const context = require.context("controllers", true, /.js$/)
 application.load(definitionsFromContext(context))
 
 import CableReady from "cable_ready"
-import mrujs, { CableCar } from "mrujs"
+import mrujs from "mrujs"
+import { CableCar } from "mrujs/plugins"
 import * as Turbo from "@hotwired/turbo"
 
 window.Turbo = Turbo
