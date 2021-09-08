@@ -69,16 +69,6 @@ class ProcessPaymentIntent
   end
 
   def payment_intent_status
-    @payment_intent_status ||= Stripe::PaymentIntentValidator.new.
-      call(payment_intent, stripe_account_id).
-      status
-  end
-
-  def stripe_account_id
-    StripeAccount.find_by(enterprise_id: preferred_enterprise_id).stripe_user_id
-  end
-
-  def preferred_enterprise_id
-    payment.payment_method.preferred_enterprise_id
+    @payment_intent_status ||= Stripe::PaymentIntentValidator.new(payment).call.status
   end
 end

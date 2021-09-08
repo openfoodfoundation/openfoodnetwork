@@ -113,9 +113,8 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent_response) { double(id: "pi_123", status: "requires_capture") }
 
         before do
-          allow_any_instance_of(Stripe::PaymentIntentValidator)
-            .to receive(:call)
-            .with(payment_intent, kind_of(String))
+          allow(Stripe::PaymentIntentValidator)
+            .to receive_message_chain(:new, :call)
             .and_return(payment_intent_response)
 
           allow(Spree::Order).to receive(:find_by!) { order }
@@ -159,9 +158,8 @@ describe Spree::OrdersController, type: :controller do
         let(:payment_intent) { "pi_123" }
 
         before do
-          allow_any_instance_of(Stripe::PaymentIntentValidator)
-            .to receive(:call)
-            .with(payment_intent, kind_of(String))
+          allow(Stripe::PaymentIntentValidator)
+            .to receive_message_chain(:new, :call)
             .and_raise(Stripe::StripeError, "error message")
         end
 
@@ -183,9 +181,8 @@ describe Spree::OrdersController, type: :controller do
         before do
           allow(payment).to receive(:response_code).and_return("invalid")
           allow(OrderPaymentFinder).to receive(:new).with(order).and_return(finder)
-          allow_any_instance_of(Stripe::PaymentIntentValidator)
-            .to receive(:call)
-            .with(payment_intent, kind_of(String))
+          allow(Stripe::PaymentIntentValidator)
+            .to receive_message_chain(:new, :call)
             .and_return(payment_intent)
           stub_payment_intent_get_request(payment_intent_id: "valid")
         end

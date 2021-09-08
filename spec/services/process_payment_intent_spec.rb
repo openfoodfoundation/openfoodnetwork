@@ -51,9 +51,8 @@ describe ProcessPaymentIntent do
 
       context "where the stripe payment intent validation responds with errors" do
         before do
-          allow(validator)
-            .to receive(:call).with(intent, anything).and_raise(Stripe::StripeError,
-                                                                "error message")
+          allow(validator).to receive(:call).
+            and_raise(Stripe::StripeError, "error message")
         end
 
         it "returns returns the error message" do
@@ -77,7 +76,7 @@ describe ProcessPaymentIntent do
 
       before do
         allow(order).to receive(:deliver_order_confirmation_email)
-        allow(validator).to receive(:call).with(intent, anything).and_return(intent_response)
+        allow(validator).to receive(:call).and_return(intent_response)
       end
 
       it "validates the intent" do
@@ -143,7 +142,7 @@ describe ProcessPaymentIntent do
 
       before do
         payment.update_attribute(:state, "failed")
-        allow(validator).to receive(:call).with(intent, anything).and_return(intent)
+        allow(validator).to receive(:call).and_return(intent)
       end
 
       it "does not return any error message" do
@@ -166,7 +165,7 @@ describe ProcessPaymentIntent do
 
       before do
         allow(order).to receive(:process_payments!) { nil }
-        allow(validator).to receive(:call).with(intent, anything).and_return(intent_response)
+        allow(validator).to receive(:call).and_return(intent_response)
       end
 
       it "returns a failed result" do
