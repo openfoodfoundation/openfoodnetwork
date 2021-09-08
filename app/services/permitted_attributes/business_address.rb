@@ -11,4 +11,3 @@ module PermittedAttributes
     end
   end
 end
-  
