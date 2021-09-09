@@ -5,6 +5,7 @@ fr:
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
+        reset_password_token: La demande de réinitialisation du mot de passe
       enterprise_fee:
         fee_type: Type de marge
       spree/order:
@@ -40,6 +41,8 @@ fr:
           attributes:
             email:
               taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
+            reset_password_token:
+              invalid: est invalide
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
         spree/credit_card:
@@ -94,6 +97,9 @@ fr:
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Le champ mot de passe ne peut pas être vide. Veuillez renseigner un mot de passe."
     confirmations:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
