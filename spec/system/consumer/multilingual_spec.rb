@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature 'Multilingual', js: true do
+describe 'Multilingual', js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -22,7 +22,7 @@ feature 'Multilingual', js: true do
   end
 
   context 'can switch language by params' do
-    scenario 'in root path' do
+    it 'in root path' do
       visit root_path
       expect(get_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
@@ -54,14 +54,14 @@ feature 'Multilingual', js: true do
         add_product_to_cart order, product, quantity: 1
       end
 
-      scenario "in the cart page" do
+      it "in the cart page" do
         visit main_app.cart_path(locale: 'es')
 
         expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
       end
 
-      scenario "in the checkout page" do
+      it "in the checkout page" do
         visit checkout_path(locale: 'es')
 
         expect_menu_and_cookie_in_es

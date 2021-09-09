@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "Confirm invitation as manager" do
+describe "Confirm invitation as manager" do
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 

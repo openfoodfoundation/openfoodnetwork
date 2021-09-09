@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As a consumer
     I want to view my order history with each hub
     and view any outstanding balance.

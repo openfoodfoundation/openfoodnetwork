@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "Credit Cards", js: true do
+describe "Credit Cards", js: true do
   include AuthenticationHelper
   include StripeHelper
   include StripeStubs

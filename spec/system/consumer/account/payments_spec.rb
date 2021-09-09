@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "Payments requiring action", js: true do
+describe "Payments requiring action", js: true do
   include AuthenticationHelper
 
   describe "as a logged in user" do

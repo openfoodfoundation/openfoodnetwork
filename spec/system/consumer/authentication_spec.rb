@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature "Authentication", js: true do
+describe "Authentication", js: true do
   include AuthenticationHelper
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
@@ -11,7 +11,7 @@ feature "Authentication", js: true do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
     describe "With redirects" do
-      scenario "logging in with a redirect set" do
+      it "logging in with a redirect set" do
         visit groups_path(anchor: "login?after_login=#{producers_path}")
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
@@ -31,17 +31,17 @@ feature "Authentication", js: true do
           open_login_modal
         end
 
-        scenario "showing login" do
+        it "showing login" do
           expect(page).to have_login_modal
         end
 
-        scenario "failing to login" do
+        it "failing to login" do
           fill_in "Email", with: user.email
           click_login_button
           expect(page).to have_content "Invalid email or password"
         end
 
-        scenario "logging in successfully" do
+        it "logging in successfully" do
           fill_in "Email", with: user.email
           fill_in "Password", with: user.password
           click_login_button
@@ -53,28 +53,28 @@ feature "Authentication", js: true do
             select_login_tab "Sign up"
           end
 
-          scenario "Failing to sign up because password is too short" do
+          it "Failing to sign up because password is too short" do
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "short"
             click_signup_button
             expect(page).to have_content "too short"
           end
 
-          scenario "Failing to sign up because email is already registered" do
+          it "Failing to sign up because email is already registered" do
             fill_in "Email", with: user.email
             fill_in "Choose a password", with: "foobarino"
             click_signup_button
             expect(page).to have_content "There's already an account for this email."
           end
 
-          scenario "Failing to sign up because password confirmation doesn't match or is blank" do
+          it "Failing to sign up because password confirmation doesn't match or is blank" do
             fill_in "Email", with: user.email
             fill_in "Choose a password", with: "ForgotToRetype"
             click_signup_button
             expect(page).to have_content "doesn't match"
           end
 
-          scenario "Signing up successfully" do
+          it "Signing up successfully" do
             performing_deliveries do
               setup_email
               fill_in "Email", with: "test@foo.com"
@@ -95,13 +95,13 @@ feature "Authentication", js: true do
             select_login_tab "Forgot Password?"
           end
 
-          scenario "failing to reset password" do
+          it "failing to reset password" do
             fill_in "Your email", with: "notanemail@myemail.com"
             click_reset_password_button
             expect(page).to have_content "Email address not found"
           end
 
-          scenario "resetting password" do
+          it "resetting password" do
             fill_in "Your email", with: user.email
             expect do
               click_reset_password_button
@@ -117,7 +117,7 @@ feature "Authentication", js: true do
               Spree::User.create(email: email, unconfirmed_email: email, password: "secret")
             }
 
-            scenario "cannot reset password before confirming email" do
+            it "cannot reset password before confirming email" do
               fill_in "Your email", with: email
               click_reset_password_button
               expect(page).to have_content I18n.t('email_unconfirmed')
@@ -144,7 +144,7 @@ feature "Authentication", js: true do
         after do
           browse_as_large
         end
-        scenario "showing login" do
+        it "showing login" do
           open_off_canvas
           open_login_modal
           expect(page).to have_login_modal
@@ -153,14 +153,14 @@ feature "Authentication", js: true do
     end
 
     describe "after following email confirmation link" do
-      scenario "shows confirmed message in modal" do
+      it "shows confirmed message in modal" do
         visit '/#/login?validation=confirmed'
         expect(page).to have_login_modal
         expect(page).to have_content I18n.t('devise.confirmations.confirmed')
       end
     end
 
-    scenario "Loggin by typing login/ redirects to /#/login" do
+    it "Loggin by typing login/ redirects to /#/login" do
       visit "/login"
       uri = URI.parse(current_url)
       expect(uri.path + "#" + uri.fragment).to eq('/#/login')
