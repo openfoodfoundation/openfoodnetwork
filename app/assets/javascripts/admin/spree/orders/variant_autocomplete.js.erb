@@ -45,7 +45,7 @@ $(document).ready(function() {
       if (quantity > maxQuantity) {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
-        alert(t("js.admin.orders.quantity_adjusted"));
+        showAlert(t("js.admin.orders.quantity_adjusted"));
       }
       toggleItemEdit();
 
@@ -54,18 +54,21 @@ $(document).ready(function() {
     }
     $('a.save-item').click(handle_save_click);
 
-    handle_delete_click = function(e, confirmed){
-      if (confirmed) {
-        var del = $(this);
-        var shipment_number = del.data('shipment-number');
-        var variant_id = del.data('variant-id');
+    handle_delete_click = function(e){
+      var del = $(this).parent().parent().parent();
+      del.hide()
+      var shipment_number = del.data('shipment-number');
+      var variant_id = del.data('variant-id');
 
-        toggleItemEdit();
+      toggleItemEdit();
 
-        adjustItems(shipment_number, variant_id, 0);
-      }
+      adjustItems(shipment_number, variant_id, 0);
     }
-    $('a.delete-item').on('confirm:complete', handle_delete_click);
+
+    $('a.delete-item').click((event) => {
+      showConfirm(handle_delete_click);
+    });
+
   }
 });
 
@@ -74,7 +77,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   if (quantity == 0 && inventory_units.length == shipment.inventory_units.length) {
-    alert(t("js.admin.orders.cannot_remove_last_item"));
+    showAlert(t("js.admin.orders.cannot_remove_last_item"));
     return;
   }
 
@@ -91,7 +94,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   url += '.json';
 
   if (new_quantity == 0) {
-    alert(t("js.admin.orders.quantity_unchanged"));
+    showAlert(t("js.admin.orders.quantity_unchanged"));
   } else {
     $.ajax({
       type: "PUT",
@@ -153,4 +156,21 @@ addVariantFromStockLocation = function() {
     adjustItems(shipment.number, variant_id, quantity);
   }
   return 1
+}
+
+showAlert = function(message) {
+  $('#custom-alert .message').text(message)
+  $('#custom-alert .confirm').click(function(e) {
+    $('#custom-alert').hide()
+  })
+  $('#custom-alert').show()
+}
+
+showConfirm = function(callback) {
+  $('#custom-confirm').data($(event.target).data());
+  $('#custom-confirm').show();
+  $('#custom-confirm button.confirm').click(callback);
+  $('#custom-confirm button.cancel').click((event) => {
+    $('#custom-confirm').hide()
+  });
 }
