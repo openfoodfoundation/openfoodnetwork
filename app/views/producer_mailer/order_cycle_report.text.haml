@@ -20,6 +20,13 @@ Orders summary
 \
 #{t :total}: #{@total}
 \
+- if @customer_grouped_line_items
+  = t :producer_mail_order_customer_text
+  \
+  - @customer_line_items.each do |line_item|
+    #{line_item[:sku]} - #{raw(line_item[:supplier_name])} - #{raw(line_item[:product_and_full_name])} (QTY: #{line_item[:quantity]})  - #{raw(line_item[:first_name])} #{raw(line_item[:last_name])}
+\
+\
 = t :producer_mail_text_after
 
 #{t :producer_mail_signoff},

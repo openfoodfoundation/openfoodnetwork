@@ -59,6 +59,39 @@
           #{@total}
         %td.text-right
           #{@tax_total}
+- if @customer_line_items
+  %p
+    = t :producer_mail_order_customer_text
+  %table.order-summary.customer-order
+    %thead
+      %tr
+        %th
+          = t :sku
+        %th
+          = t :supplier
+        %th
+          = t :product
+        %th.text-right
+          = t :quantity
+        %th.text-right
+          = t :first_name
+        %th.text-right
+          = t :last_name
+    %tbody
+      - @customer_line_items.each do |line_item|
+        %tr
+          %td
+            #{line_item[:sku]}
+          %td
+            #{raw(line_item[:supplier_name])}
+          %td
+            #{raw(line_item[:product_and_full_name])}
+          %td.text-right
+            #{line_item[:quantity]}
+          %td
+            #{raw(line_item[:first_name])}
+          %td
+            #{raw(line_item[:last_name])}
 %p
   = t :producer_mail_text_after
 %p
