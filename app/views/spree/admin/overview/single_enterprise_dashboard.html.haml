@@ -40,7 +40,7 @@
         %span.icon-user
         = t "your_profil_live"
     .list
-      %a.button.bottom{href: enterprise_url(@enterprise), target: '_blank'}
+      %a.button.bottom{href: enterprise_url_selector(@enterprise), target: '_blank'}
         = t "see"
         = @enterprise.name
         = t "live"
