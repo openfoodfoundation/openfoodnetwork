@@ -40,18 +40,11 @@
         %span.icon-user
         = t "your_profil_live"
     .list
-      - if @enterprise.sells == "none"
-        %a.button.bottom{href: main_app.producers_url, target: '_blank'}
-          = t "see"
-          = @enterprise.name
-          = t "live"
-          %span.icon-arrow-right
-      - else
-        %a.button.bottom{href: main_app.enterprise_shop_url(@enterprise), target: '_blank'}
-          = t "see"
-          = @enterprise.name
-          = t "live"
-          %span.icon-arrow-right
+      %a.button.bottom{href: enterprise_url(@enterprise), target: '_blank'}
+        = t "see"
+        = @enterprise.name
+        = t "live"
+        %span.icon-arrow-right
 
   .eight.columns.omega.dashboard_item.single-ent#edit
     .header
