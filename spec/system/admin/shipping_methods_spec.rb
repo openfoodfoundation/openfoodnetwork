@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature 'shipping methods' do
+describe 'shipping methods' do
   include WebHelper
   include AuthenticationHelper
 
@@ -15,7 +15,7 @@ feature 'shipping methods' do
       login_as_admin
     end
 
-    scenario "creating a shipping method owned by some distributors" do
+    it "creating a shipping method owned by some distributors" do
       # Given some distributors
       distributor1 = create(:distributor_enterprise, name: 'Alice Farm Hub')
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Shop')
@@ -45,14 +45,14 @@ feature 'shipping methods' do
       expect(sm.distributors).to match_array [distributor1, distributor2]
     end
 
-    scenario "deleting a shipping method" do
+    it "deleting a shipping method" do
       visit_delete spree.admin_shipping_method_path(@shipping_method)
 
       expect(flash_message).to eq "Successfully Removed"
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
     end
 
-    scenario "deleting a shipping method referenced by an order" do
+    it "deleting a shipping method referenced by an order" do
       order = create(:order)
       shipment = create(:shipment)
       shipment.add_shipping_method(@shipping_method, true)
@@ -65,14 +65,14 @@ feature 'shipping methods' do
       expect(Spree::ShippingMethod.find(@shipping_method.id)).not_to be_nil
     end
 
-    scenario "checking a single distributor is checked by default" do
+    it "checking a single distributor is checked by default" do
       first_distributor = Enterprise.first
       visit spree.new_admin_shipping_method_path
       expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}",
                                  checked: true
     end
 
-    scenario "checking more than a distributor displays no default choice" do
+    it "checking more than a distributor displays no default choice" do
       distributor1 = create(:distributor_enterprise, name: 'Alice Farm Shop')
       distributor2 = create(:distributor_enterprise, name: 'Bob Farm Hub')
       visit spree.new_admin_shipping_method_path

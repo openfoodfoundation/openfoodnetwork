@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
   As an Administrator
   I want to be able to manage orders in bulk
 ', js: true do

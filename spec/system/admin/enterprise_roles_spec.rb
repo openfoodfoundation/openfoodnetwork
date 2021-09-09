@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
   As an Administrator
   I want to manage relationships between users and enterprises
 ', js: true do
@@ -13,7 +13,7 @@ feature '
   context "as a site administrator" do
     before { login_to_admin_section }
 
-    scenario "listing relationships" do
+    it "listing relationships" do
       # Given some users and enterprises with relationships
       u1, u2 = create(:user), create(:user)
       e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise),
@@ -36,7 +36,7 @@ create(:enterprise)
       end
     end
 
-    scenario "creating a relationship" do
+    it "creating a relationship" do
       u = create(:user, email: 'u@example.com')
       e = create(:enterprise, name: 'One')
 
@@ -51,7 +51,7 @@ create(:enterprise)
       expect(EnterpriseRole.where(user_id: u, enterprise_id: e)).to be_present
     end
 
-    scenario "attempting to create a relationship with invalid data" do
+    it "attempting to create a relationship with invalid data" do
       u = create(:user, email: 'u@example.com')
       e = create(:enterprise, name: 'One')
       create(:enterprise_role, user: u, enterprise: e)
@@ -68,7 +68,7 @@ create(:enterprise)
       end.to change(EnterpriseRole, :count).by(0)
     end
 
-    scenario "deleting a relationship" do
+    it "deleting a relationship" do
       u = create(:user, email: 'u@example.com')
       e = create(:enterprise, name: 'One')
       er = create(:enterprise_role, user: u, enterprise: e)

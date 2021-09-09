@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
   As an Administrator
   I want to manage relationships between enterprises
 ', js: true do
@@ -12,7 +12,7 @@ feature '
   context "as a site administrator" do
     before { login_as_admin }
 
-    scenario "listing relationships" do
+    it "listing relationships" do
       # Given some enterprises with relationships
       e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise),
 create(:enterprise)
@@ -35,7 +35,7 @@ create(:enterprise)
       end
     end
 
-    scenario "creating a relationship" do
+    it "creating a relationship" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
 
@@ -60,7 +60,7 @@ create(:enterprise)
                                                          'create_variant_overrides']
     end
 
-    scenario "attempting to create a relationship with invalid data" do
+    it "attempting to create a relationship with invalid data" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
       create(:enterprise_relationship, parent: e1, child: e2)
@@ -77,7 +77,7 @@ create(:enterprise)
       end.to change(EnterpriseRelationship, :count).by(0)
     end
 
-    scenario "deleting a relationship" do
+    it "deleting a relationship" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
       er = create(:enterprise_relationship, parent: e1, child: e2,
@@ -107,7 +107,7 @@ create(:enterprise)
 
     before { login_as enterprise_user }
 
-    scenario "enterprise user can only see relationships involving their enterprises" do
+    it "enterprise user can only see relationships involving their enterprises" do
       visit admin_enterprise_relationships_path
 
       expect(page).to     have_relationship d1, d2
@@ -115,7 +115,7 @@ create(:enterprise)
       expect(page).not_to have_relationship d2, d3
     end
 
-    scenario "enterprise user can only add their own enterprises as parent" do
+    it "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
       expect(page).to have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
       expect(page).to have_select2 'enterprise_relationship_child_id',

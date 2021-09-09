@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an admin
     I want to check the unit price of my products/variants
 ', js: true do

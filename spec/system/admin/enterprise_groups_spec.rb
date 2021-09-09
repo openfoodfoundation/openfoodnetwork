@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage enterprise groups
 ' do
@@ -13,7 +13,7 @@ feature '
     login_to_admin_section
   end
 
-  scenario "listing enterprise groups" do
+  it "listing enterprise groups" do
     e = create(:enterprise)
     group = create(:enterprise_group, enterprises: [e], on_front_page: true)
 
@@ -24,7 +24,7 @@ feature '
     expect(page).to have_selector 'td', text: e.name
   end
 
-  scenario "creating a new enterprise group", js: true do
+  it "creating a new enterprise group", js: true do
     e1 = create(:enterprise)
     e2 = create(:enterprise)
     e3 = create(:enterprise)
@@ -55,7 +55,7 @@ feature '
     expect(eg.enterprises).to match_array [e1, e2]
   end
 
-  scenario "editing an enterprise group" do
+  it "editing an enterprise group" do
     e1 = create(:enterprise)
     e2 = create(:enterprise)
     eg = create(:enterprise_group, name: 'EGEGEG', on_front_page: true, enterprises: [e1, e2])
@@ -82,7 +82,7 @@ feature '
     expect(eg.enterprises).to eq([e2])
   end
 
-  scenario "re-ordering enterprise groups" do
+  it "re-ordering enterprise groups" do
     eg1 = create(:enterprise_group, name: 'A')
     eg2 = create(:enterprise_group, name: 'B')
 
@@ -95,7 +95,7 @@ feature '
     expect(page.all('td.name').map(&:text)).to eq(['A', 'B'])
   end
 
-  scenario "deleting an enterprise group", js: true do
+  it "deleting an enterprise group", js: true do
     eg = create(:enterprise_group, name: 'EGEGEG')
 
     click_link 'Groups'

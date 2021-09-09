@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
   As an Administrator
   I want to be able to manage products in bulk
 ', js: true do
@@ -200,7 +200,7 @@ feature '
     end
   end
 
-  scenario "creating a new product" do
+  it "creating a new product" do
     create(:stock_location, backorderable_default: false)
 
     supplier = create(:supplier_enterprise)
@@ -227,7 +227,7 @@ feature '
     expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
   end
 
-  scenario "creating new variants" do
+  it "creating new variants" do
     # Given a product without variants or a unit
     p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
     login_as_admin
@@ -274,7 +274,7 @@ feature '
     expect(page).to have_selector "a.edit-variant", visible: true
   end
 
-  scenario "updating product attributes" do
+  it "updating product attributes" do
     s1 = FactoryBot.create(:supplier_enterprise)
     s2 = FactoryBot.create(:supplier_enterprise)
     t1 = FactoryBot.create(:taxon)
@@ -319,7 +319,7 @@ feature '
     expect(p.sku).to eq "NEW SKU"
   end
 
-  scenario "updating a product with a variant unit of 'items'" do
+  it "updating a product with a variant unit of 'items'" do
     p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
     login_as_admin
@@ -339,7 +339,7 @@ feature '
     expect(p.variant_unit_name).to eq "loaf"
   end
 
-  scenario "updating a product with variants" do
+  it "updating a product with variants" do
     s1 = FactoryBot.create(:supplier_enterprise)
     s2 = FactoryBot.create(:supplier_enterprise)
     p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
@@ -381,7 +381,7 @@ feature '
     expect(v.unit_description).to eq "(8x250 mL bottles)"
   end
 
-  scenario "updating delegated attributes of variants in isolation" do
+  it "updating delegated attributes of variants in isolation" do
     p = FactoryBot.create(:product)
     v = FactoryBot.create(:variant, product: p, price: 3.0)
 
@@ -406,7 +406,7 @@ feature '
     expect(v.price).to eq 10.0
   end
 
-  scenario "updating a product mutiple times without refresh" do
+  it "updating a product mutiple times without refresh" do
     p = FactoryBot.create(:product, name: 'original name')
     login_as_admin
 
@@ -439,7 +439,7 @@ feature '
     expect(p.name).to eq "original name"
   end
 
-  scenario "updating a product after cloning a product" do
+  it "updating a product after cloning a product" do
     p = FactoryBot.create(:product, name: "product 1")
     login_as_admin
 
@@ -462,7 +462,7 @@ feature '
     expect(p.name).to eq "new product name"
   end
 
-  scenario "updating when a filter has been applied" do
+  it "updating when a filter has been applied" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
     p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)

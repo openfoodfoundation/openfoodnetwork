@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an admin
     I want to set a supplier and distributor(s) for a product
 ' do
@@ -28,7 +28,7 @@ feature '
   describe "creating a product" do
     let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
 
-    scenario "assigning important attributes", js: true do
+    it "assigning important attributes", js: true do
       login_to_admin_section
 
       click_link 'Products'
@@ -68,7 +68,7 @@ feature '
       expect(product.master.options_text).to eq("5kg")
     end
 
-    scenario "creating an on-demand product", js: true do
+    it "creating an on-demand product", js: true do
       login_as_admin_and_visit spree.admin_products_path
 
       click_link 'New Product'
@@ -93,7 +93,7 @@ feature '
       expect(variant.on_demand).to be true
     end
 
-    scenario "creating product with empty unit value", js: true do
+    it "creating product with empty unit value", js: true do
       login_as_admin_and_visit spree.admin_products_path
 
       click_link 'New Product'
@@ -198,7 +198,7 @@ feature '
     end
 
     context "products do not require a tax category" do
-      scenario "creating a new product", js: true do
+      it "creating a new product", js: true do
         with_products_require_tax_category(false) do
           visit spree.admin_products_path
           click_link 'New Product'
@@ -228,7 +228,7 @@ feature '
       end
     end
 
-    scenario "editing a product" do
+    it "editing a product" do
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
       visit spree.edit_admin_product_path product
@@ -242,7 +242,7 @@ feature '
       expect(product.tax_category).to eq(tax_category)
     end
 
-    scenario "editing a product comming from the bulk product update page with filter" do
+    it "editing a product comming from the bulk product update page with filter" do
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
       visit spree.edit_admin_product_path(product, filter)
@@ -296,7 +296,7 @@ feature '
       expect(page).to have_link(I18n.t(:search), href: expected_product_seo_url)
     end
 
-    scenario "editing product group buy options" do
+    it "editing product group buy options" do
       product = product = create(:simple_product, supplier: @supplier2)
 
       visit spree.edit_admin_product_path product
@@ -312,7 +312,7 @@ feature '
       expect(product.group_buy_unit_size).to eq(10.0)
     end
 
-    scenario "loading editing product group buy options with url filters" do
+    it "loading editing product group buy options with url filters" do
       product = product = create(:simple_product, supplier: @supplier2)
 
       visit spree.group_buy_options_admin_product_path(product, filter)
@@ -322,7 +322,7 @@ feature '
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
-    scenario "editing product group buy options with url filter" do
+    it "editing product group buy options with url filter" do
       product = product = create(:simple_product, supplier: @supplier2)
 
       visit spree.group_buy_options_admin_product_path(product, filter)
@@ -335,7 +335,7 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
     end
 
-    scenario "editing product Search" do
+    it "editing product Search" do
       product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
@@ -348,7 +348,7 @@ feature '
       expect(product.meta_keywords).to eq('Product Search Keywords')
     end
 
-    scenario "loading editing product Search with url filters" do
+    it "loading editing product Search with url filters" do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.seo_admin_product_path(product, filter)
@@ -358,7 +358,7 @@ feature '
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
-    scenario "editing product Search with url filter" do
+    it "editing product Search with url filter" do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.seo_admin_product_path(product, filter)
@@ -372,7 +372,7 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
     end
 
-    scenario "loading product properties page including url filters", js: true do
+    it "loading product properties page including url filters", js: true do
       product = create(:simple_product, supplier: @supplier2)
       visit spree.admin_product_product_properties_path(product, filter)
 
@@ -387,7 +387,7 @@ feature '
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
-    scenario "deleting product properties", js: true do
+    it "deleting product properties", js: true do
       # Given a product with a property
       product = create(:simple_product, supplier: @supplier2)
       product.set_property('fooprop', 'fooval')
@@ -411,7 +411,7 @@ feature '
       expect(product.reload.property('fooprop')).to be_nil
     end
 
-    scenario "deleting product properties including url filters", js: true do
+    it "deleting product properties including url filters", js: true do
       # Given a product with a property
       product = create(:simple_product, supplier: @supplier2)
       product.set_property('fooprop', 'fooval')
@@ -429,7 +429,7 @@ feature '
                                                                                            filter)
     end
 
-    scenario "adding product properties including url filters", js: true do
+    it "adding product properties including url filters", js: true do
       # Given a product
       product = create(:simple_product, supplier: @supplier2)
       product.set_property('fooprop', 'fooval')
@@ -447,7 +447,7 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
     end
 
-    scenario "loading new product image page", js: true do
+    it "loading new product image page", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product)
@@ -457,7 +457,7 @@ feature '
       expect(page).to have_selector "#image_attachment"
     end
 
-    scenario "loading new product image page including url filters", js: true do
+    it "loading new product image page including url filters", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product, filter)
@@ -473,7 +473,7 @@ feature '
       expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
     end
 
-    scenario "upload a new product image including url filters", js: true do
+    it "upload a new product image including url filters", js: true do
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
       product = create(:simple_product, supplier: @supplier2)
 
@@ -488,7 +488,7 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
     end
 
-    scenario "loading image page including url filter", js: true do
+    it "loading image page including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product, filter)
@@ -499,7 +499,7 @@ feature '
       expect(page).to have_link(I18n.t('spree.new_image'), href: expected_new_image_link)
     end
 
-    scenario "loading edit product image page including url filter", js: true do
+    it "loading edit product image page including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       image_object = Spree::Image.create(viewable_id: product.master.id,
@@ -519,7 +519,7 @@ feature '
       expect(page).to have_link("Back To Images List", href: expected_cancel_link)
     end
 
-    scenario "updating a product image including url filter", js: true do
+    it "updating a product image including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       image_object = Spree::Image.create(viewable_id: product.master.id,
@@ -538,7 +538,7 @@ feature '
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
     end
 
-    scenario "deleting product images", js: true do
+    it "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
@@ -556,7 +556,7 @@ feature '
       expect(product.reload.images.count).to eq 0
     end
 
-    scenario "deleting product image including url filter", js: true do
+    it "deleting product image including url filter", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',

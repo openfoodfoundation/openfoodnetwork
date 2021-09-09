@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature '
+describe '
     As an admin
     I want to manage product variants
 ' do
@@ -10,7 +10,7 @@ feature '
   include WebHelper
 
   describe "new variant", js: true do
-    scenario "creating a new variant" do
+    it "creating a new variant" do
       # Given a product with a unit-related option type
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
 
@@ -26,7 +26,7 @@ feature '
       expect(page).to have_content "Variant \"#{product.name}\" has been successfully created!"
     end
 
-    scenario "creating a new variant from product variant page with filter" do
+    it "creating a new variant from product variant page with filter" do
       # Given a product with a unit-related option type
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       filter = { producerFilter: 2 }
@@ -48,7 +48,7 @@ feature '
   end
 
   describe "viewing product variant" do
-    scenario "when the product page has a product filter" do
+    it "when the product page has a product filter" do
       # Given a product with a unit-related option type
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       filter = { producerFilter: 2 }
@@ -84,7 +84,7 @@ feature '
   end
 
   describe "editing unit value and description for a variant", js: true do
-    scenario "when the product variant page has product filter" do
+    it "when the product variant page has product filter" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       filter = { producerFilter: 2 }
 
@@ -99,7 +99,7 @@ feature '
       expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
     end
 
-    scenario "when variant_unit is weight" do
+    it "when variant_unit is weight" do
       # Given a product with unit-related option types, with a variant
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       variant = product.variants.first
@@ -130,7 +130,7 @@ feature '
       expect(variant.unit_description).to eq('bar')
     end
 
-    scenario "can update unit_description when variant_unit is items" do
+    it "can update unit_description when variant_unit is items" do
       product = create(:simple_product, variant_unit: "items", variant_unit_name: "bunches")
       variant = product.variants.first
       variant.update(unit_description: 'foo')
@@ -204,7 +204,7 @@ feature '
     expect(variant.reload.deleted_at).not_to be_nil
   end
 
-  scenario "editing display name for a variant", js: true do
+  it "editing display name for a variant", js: true do
     product = create(:simple_product)
     variant = product.variants.first
 

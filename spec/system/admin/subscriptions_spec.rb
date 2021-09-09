@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-feature 'Subscriptions' do
+describe 'Subscriptions' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
