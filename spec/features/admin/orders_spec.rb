@@ -119,7 +119,7 @@ feature '
 
   context "with incomplete order" do
     scenario "can edit order" do
-      incomplete_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+      incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
 
       login_as_admin_and_visit spree.admin_orders_path
       uncheck 'Only show complete orders'
@@ -133,25 +133,29 @@ feature '
 
   context "test the 'Only show the complete orders' checkbox" do
     scenario "display or not incomplete order" do
-      incomplete_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+      incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
       complete_order = create(
-        :order,
+        :order_with_line_items,
         distributor: distributor,
         order_cycle: order_cycle,
         user: user,
         state: 'complete',
         payment_state: 'balance_due',
-        completed_at: 1.day.ago
+        completed_at: 1.day.ago,
+        line_items_count: 1
       )
+      empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
       login_as_admin_and_visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_no_content incomplete_order.number
+      expect(page).to have_no_content empty_order.number
 
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 
       expect(page).to have_content complete_order.number
       expect(page).to have_content incomplete_order.number
+      expect(page).to have_no_content empty_order.number
     end
   end
 

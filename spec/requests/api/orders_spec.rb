@@ -38,14 +38,21 @@ describe 'api/v0/orders', type: :request do
           let!(:order_dist_1) {
             create(:order_with_distributor, email: "specific_name@example.com")
           }
+          let!(:li1) { create(:line_item, order: order_dist_1) }
           let!(:order_dist_2) { create(:order_with_totals_and_distribution) }
+          let!(:li2) { create(:line_item, order: order_dist_2) }
           let!(:order_dist_1_complete) {
-            create(:order, distributor: order_dist_1.distributor, state: 'complete',
-                           completed_at: Time.zone.today - 7.days)
+            create(:completed_order_with_totals,  distributor: order_dist_1.distributor, state: 'complete',
+                                                  completed_at: Time.zone.today - 7.days, line_items_count: 1)
           }
           let!(:order_dist_1_credit_owed) {
             create(:order, distributor: order_dist_1.distributor, payment_state: 'credit_owed',
                            completed_at: Time.zone.today)
+          }
+          let!(:li4) { create(:line_item_with_shipment, order: order_dist_1_credit_owed) }
+
+          let!(:order_empty) {
+            create(:order_with_line_items, line_items_count: 0)
           }
 
           let(:user) { order_dist_1.distributor.owner }
