@@ -23,3 +23,6 @@
           = link_to '', '#', :class => 'cancel-item icon_link icon-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => t('actions.cancel'), :style => 'display: none'
           = link_to '', '#', :class => 'edit-item icon_link icon-edit no-text with-tip', :data => {:action => 'edit'}, :title => t('actions.edit')
           = link_to '', '#', :class => 'delete-item icon-trash no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'remove'}, :title => t('actions.delete')
+
+= render 'spree/admin/shared/custom-alert'
+= render 'spree/admin/shared/custom-confirm'
