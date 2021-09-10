@@ -675,7 +675,7 @@ module Spree
     end
 
     def skip_payment_for_subscription?
-      subscription.present? && order_cycle.orders_close_at&.send(:>, Time.zone.now)
+      subscription.present? && order_cycle.orders_close_at&.>(Time.zone.now)
     end
 
     def require_customer?
