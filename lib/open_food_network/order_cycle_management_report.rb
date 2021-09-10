@@ -87,15 +87,15 @@ module OpenFoodNetwork
 
     def payment_method_row(order)
       ba = order.billing_address
-      [ba.andand.firstname,
-       ba.andand.lastname,
-       order.distributor.andand.name,
+      [ba&.firstname,
+       ba&.lastname,
+       order.distributor&.name,
        customer_code(order.email),
        order.email,
-       ba.andand.phone,
-       order.shipping_method.andand.name,
-       order.payments.first.andand.payment_method.andand.name,
-       order.payments.first.andand.amount,
+       ba&.phone,
+       order.shipping_method&.name,
+       order.payments.first&.payment_method&.name,
+       order.payments.first&.amount,
        balance(order)]
     end
 
@@ -103,14 +103,14 @@ module OpenFoodNetwork
       sa = order.shipping_address
       [sa.firstname,
        sa.lastname,
-       order.distributor.andand.name,
+       order.distributor&.name,
        customer_code(order.email),
        "#{sa.address1} #{sa.address2} #{sa.city}",
        sa.zipcode,
        sa.phone,
-       order.shipping_method.andand.name,
-       order.payments.first.andand.payment_method.andand.name,
-       order.payments.first.andand.amount,
+       order.shipping_method&.name,
+       order.payments.first&.payment_method&.name,
+       order.payments.first&.amount,
        balance(order),
        has_temperature_controlled_items?(order),
        order.special_instructions]
@@ -142,7 +142,7 @@ module OpenFoodNetwork
 
     def has_temperature_controlled_items?(order)
       order.line_items.any? { |line_item|
-        line_item.product.shipping_category.andand.temperature_controlled
+        line_item.product.shipping_category&.temperature_controlled
       }
     end
 

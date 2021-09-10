@@ -110,6 +110,6 @@ class ProductTagRulesFilterer
   end
 
   def customer_tag_list
-    customer.andand.tag_list || []
+    customer&.tag_list || []
   end
 end

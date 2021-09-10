@@ -1,5 +1,5 @@
-- owner_email = @enterprise.andand.owner.andand.email || ""
-- full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise.andand.owner)
+- owner_email = @enterprise&.owner&.email || ""
+- full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise&.owner)
 
 .row
   .three.columns.alpha

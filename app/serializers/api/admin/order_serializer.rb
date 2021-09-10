@@ -17,7 +17,7 @@ module Api
       end
 
       def distributor_name
-        object.distributor.andand.name
+        object.distributor&.name
       end
 
       def display_outstanding_balance

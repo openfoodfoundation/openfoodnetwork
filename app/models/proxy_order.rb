@@ -33,7 +33,7 @@ class ProxyOrder < ApplicationRecord
   end
 
   def cancel
-    return false unless order_cycle.orders_close_at.andand > Time.zone.now
+    return false unless order_cycle.orders_close_at&.>(Time.zone.now)
 
     transaction do
       update_column(:canceled_at, Time.zone.now)
@@ -43,7 +43,7 @@ class ProxyOrder < ApplicationRecord
   end
 
   def resume
-    return false unless order_cycle.orders_close_at.andand > Time.zone.now
+    return false unless order_cycle.orders_close_at&.>(Time.zone.now)
 
     transaction do
       update_column(:canceled_at, nil)
@@ -72,7 +72,7 @@ class ProxyOrder < ApplicationRecord
   end
 
   def cart?
-    order.andand.state == 'complete' &&
+    order&.state == 'complete' &&
       order_cycle.orders_close_at > Time.zone.now
   end
 

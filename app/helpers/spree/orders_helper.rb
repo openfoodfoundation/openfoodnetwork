@@ -12,7 +12,7 @@ module Spree
     end
 
     def cart_count
-      current_order.andand.line_items.andand.count || 0
+      current_order&.line_items&.count || 0
     end
 
     def changeable_orders

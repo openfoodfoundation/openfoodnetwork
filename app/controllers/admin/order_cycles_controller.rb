@@ -73,7 +73,7 @@ module Admin
     end
 
     def bulk_update
-      if order_cycle_set.andand.save
+      if order_cycle_set&.save
         render_as_json @order_cycles,
                        ams_prefix: 'index',
                        current_user: spree_current_user,
@@ -155,7 +155,7 @@ module Admin
       if json_request?
         # Split ransack params into all those that currently exist and new ones
         #   to limit returned ocs to recent or undated
-        orders_close_at_gt = raw_params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
+        orders_close_at_gt = raw_params[:q]&.delete(:orders_close_at_gt) || 31.days.ago
         raw_params[:q] = {
           g: [raw_params.delete(:q) || {}, { m: 'or',
                                              orders_close_at_gt: orders_close_at_gt,
@@ -217,7 +217,7 @@ module Admin
 
       (order_cycle_bulk_params[:collection_attributes] || []).keep_if do |_index, hash|
         order_cycle = OrderCycle.find(hash[:id])
-        managed_ids.include?(order_cycle.andand.coordinator_id)
+        managed_ids.include?(order_cycle&.coordinator_id)
       end
     end
 

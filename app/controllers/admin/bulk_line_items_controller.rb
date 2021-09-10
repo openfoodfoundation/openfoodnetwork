@@ -6,7 +6,7 @@ module Admin
     # GET /admin/bulk_line_items.json
     #
     def index
-      order_params = params[:q].andand.delete :order
+      order_params = params[:q]&.delete :order
       orders = order_permissions.editable_orders.ransack(order_params).result
 
       @line_items = order_permissions.

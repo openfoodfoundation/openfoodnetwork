@@ -13,7 +13,7 @@
               placeholder: t(".enterprise_select_placeholder"),
               data: 'shops', ng: { model: 'paymentMethod.preferred_enterprise_id' } }
           - else
-            %strong= Enterprise.find_by(id: @payment_method).andand.name
+            %strong= Enterprise.find_by(id: @payment_method)&.name
 
     #stripe-account-status{ ng: { show: "paymentMethod.preferred_enterprise_id" } }
       .alert-box.warning{ ng: { hide: "stripe_account.status" } }

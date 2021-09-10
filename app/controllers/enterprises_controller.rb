@@ -31,7 +31,7 @@ class EnterprisesController < BaseController
 
     respond_to do |format|
       format.json do
-        enterprises = @enterprise.andand.relatives.andand.activated
+        enterprises = @enterprise&.relatives&.activated
         render(json: enterprises,
                each_serializer: Api::EnterpriseSerializer,
                data: OpenFoodNetwork::EnterpriseInjectionData.new)

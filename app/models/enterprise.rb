@@ -410,7 +410,7 @@ class Enterprise < ApplicationRecord
   end
 
   def strip_url(url)
-    url.andand.sub(%r{(https?://)?}, '')
+    url&.sub(%r{(https?://)?}, '')
   end
 
   def set_unused_address_fields

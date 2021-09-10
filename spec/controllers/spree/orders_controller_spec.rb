@@ -601,6 +601,6 @@ describe Spree::OrdersController, type: :controller do
   private
 
   def num_items_in_cart
-    Spree::Order.last.andand.line_items.andand.count || 0
+    Spree::Order.last&.line_items&.count || 0
   end
 end

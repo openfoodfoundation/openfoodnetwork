@@ -17,6 +17,6 @@ module GroupsHelper
   end
 
   def strip_url(url)
-    url.andand.sub(%r{^https?://}i, '')
+    url&.sub(%r{^https?://}i, '')
   end
 end

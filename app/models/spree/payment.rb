@@ -110,7 +110,7 @@ module Spree
 
     def build_source
       return if source_attributes.nil?
-      return unless payment_method.andand.payment_source_class
+      return unless payment_method&.payment_source_class
 
       self.source = payment_method.payment_source_class.new(source_attributes)
       source.payment_method_id = payment_method.id

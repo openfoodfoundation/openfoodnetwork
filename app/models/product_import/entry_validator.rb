@@ -424,7 +424,7 @@ module ProductImport
     end
 
     def import_into_inventory?
-      @import_settings[:settings].andand['import_into'] == 'inventories'
+      @import_settings.dig(:settings, 'import_into') == 'inventories'
     end
 
     def validate_inventory_item(entry, variant_override)

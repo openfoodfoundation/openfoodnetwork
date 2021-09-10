@@ -10,6 +10,6 @@
     - if spree_current_user.admin?
       = f.hidden_field :owner_id,
         class: "select2 fullwidth",
-        'user-select' => "{id:'#{@enterprise_group.owner.andand.id}', email:'#{@enterprise_group.owner.andand.email}'}"
+        'user-select' => "{id:'#{@enterprise_group.owner&.id}', email:'#{@enterprise_group.owner&.email}'}"
     - else
-      = @enterprise_group.owner.andand.email
+      = @enterprise_group.owner&.email

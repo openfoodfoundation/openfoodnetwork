@@ -10,7 +10,7 @@ class TagRule
     end
 
     def tags_match?(variant)
-      variant_tags = variant.andand["tag_list"] || []
+      variant_tags = variant&.[]("tag_list") || []
       preferred_tags = preferred_variant_tags.split(",")
       (variant_tags & preferred_tags).any?
     end

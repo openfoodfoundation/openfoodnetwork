@@ -136,7 +136,7 @@ module Spree
       def restrict_stripe_account_change
         return unless @payment_method
         return unless stripe_payment_method?
-        return unless @payment_method.preferred_enterprise_id.andand > 0
+        return unless @payment_method.preferred_enterprise_id&.positive?
 
         @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
         return if spree_current_user.enterprises.include? @stripe_account_holder

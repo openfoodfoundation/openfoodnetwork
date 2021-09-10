@@ -1,4 +1,4 @@
-- if (@order.andand.distributor || current_distributor) == current_distributor
+- if (@order&.distributor || current_distributor) == current_distributor
 
   - shop_tabs.each do |tab|
     = render "shopping_shared/tabs/#{tab[:name]}"

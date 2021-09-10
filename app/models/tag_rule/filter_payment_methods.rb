@@ -5,7 +5,7 @@ class TagRule::FilterPaymentMethods < TagRule
   preference :payment_method_tags, :string, default: ""
 
   def tags_match?(payment_method)
-    payment_method_tags = payment_method.andand.tag_list || []
+    payment_method_tags = payment_method&.tag_list || []
     preferred_tags = preferred_payment_method_tags.split(",")
     ( payment_method_tags & preferred_tags ).any?
   end

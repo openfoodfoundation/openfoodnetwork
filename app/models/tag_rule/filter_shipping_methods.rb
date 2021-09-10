@@ -9,7 +9,7 @@ class TagRule::FilterShippingMethods < TagRule
   end
 
   def tags_match?(shipping_method)
-    shipping_method_tags = shipping_method.andand.tag_list || []
+    shipping_method_tags = shipping_method&.tag_list || []
     preferred_tags = preferred_shipping_method_tags.split(",")
     ( shipping_method_tags & preferred_tags ).any?
   end

@@ -29,7 +29,7 @@
         = order.bill_address.phone
 
   .columns.large-6
-    - if order.shipping_method.andand.require_ship_address
+    - if order.shipping_method&.require_ship_address
       = render 'spree/shared/shipment_delivery_details', order: order
     - else
       = render 'spree/shared/shipment_pickup_details', order: order

@@ -33,7 +33,7 @@ module Spree
       end
 
       def stripe_account_id
-        StripeAccount.find_by(enterprise_id: preferred_enterprise_id).andand.stripe_user_id
+        StripeAccount.find_by(enterprise_id: preferred_enterprise_id)&.stripe_user_id
       end
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
@@ -169,7 +169,7 @@ module Spree
       end
 
       def ensure_enterprise_selected
-        return if preferred_enterprise_id.andand.positive?
+        return if preferred_enterprise_id&.positive?
 
         errors.add(:stripe_account_owner, I18n.t(:error_required))
       end

@@ -16,7 +16,7 @@ module Api
     has_many :distributed_properties, serializer: Api::PropertySerializer
 
     def orders_close_at
-      OrderCycle.with_distributor(enterprise).soonest_closing.first.andand.orders_close_at
+      OrderCycle.with_distributor(enterprise).soonest_closing.first&.orders_close_at
     end
 
     def active

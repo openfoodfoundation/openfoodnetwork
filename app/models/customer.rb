@@ -35,7 +35,7 @@ class Customer < ApplicationRecord
   private
 
   def downcase_email
-    email.andand.downcase!
+    email&.downcase!
   end
 
   def empty_code

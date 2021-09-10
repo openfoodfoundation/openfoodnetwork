@@ -62,7 +62,7 @@ module OpenFoodNetwork
 
           [order.number, order.completed_at.strftime("%F %T"), totals[:items], totals[:items_total],
            totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
-           order.bill_address.full_name, order.distributor.andand.name]
+           order.bill_address.full_name, order.distributor&.name]
         end
       end
     end

@@ -28,7 +28,7 @@ module Admin
     def load_build_context
       @shop = Enterprise.managed_by(spree_current_user).find_by(id: params[:shop_id])
       @schedule = permissions.editable_schedules.find_by(id: params[:schedule_id])
-      @order_cycle = @schedule.andand.current_or_next_order_cycle
+      @order_cycle = @schedule&.current_or_next_order_cycle
       @variant = variant_if_eligible(subscription_line_item_params[:variant_id]) if @shop.present?
     end
 

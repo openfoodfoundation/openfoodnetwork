@@ -27,13 +27,13 @@ class UserDefaultAddressSetter
 
   def set_bill_address_attributes(object, new_address)
     object.update(
-      bill_address_attributes: new_address.merge('id' => object.bill_address.andand.id)
+      bill_address_attributes: new_address.merge('id' => object.bill_address&.id)
     )
   end
 
   def set_ship_address_attributes(object, new_address)
     object.update(
-      ship_address_attributes: new_address.merge('id' => object.ship_address.andand.id)
+      ship_address_attributes: new_address.merge('id' => object.ship_address&.id)
     )
   end
 end

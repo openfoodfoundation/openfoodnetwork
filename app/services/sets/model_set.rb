@@ -28,7 +28,7 @@ module Sets
         end
 
         if found_element.nil?
-          @collection << @klass.new(attributes) unless @reject_if.andand.call(attributes)
+          @collection << @klass.new(attributes) unless @reject_if&.call(attributes)
         else
           process(found_element, attributes)
         end
@@ -64,12 +64,12 @@ module Sets
       # Allows us to render @model_set.collection without deleted elements
       deleted = []
       @collection = collection.to_a
-      collection.delete_if { |e| deleted << e if @delete_if.andand.call(e.attributes) }
+      collection.delete_if { |e| deleted << e if @delete_if&.call(e.attributes) }
       deleted
     end
 
     def collection_to_keep
-      collection.reject { |e| @delete_if.andand.call(e.attributes) }
+      collection.reject { |e| @delete_if&.call(e.attributes) }
     end
 
     def persisted?

@@ -11,7 +11,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   delegate :price, to: :object
 
   def fees
-    options[:enterprise_fee_calculator].andand.indexed_fees_by_type_for(object) ||
+    options[:enterprise_fee_calculator]&.indexed_fees_by_type_for(object) ||
       object.fees_by_type_for(options[:current_distributor], options[:current_order_cycle])
   end
 

@@ -15,7 +15,7 @@ module OpenFoodNetwork
 
     module ScopeVariantToHub
       def price
-        @variant_override.andand.price || super
+        @variant_override&.price || super
       end
 
       def price_in(currency)
@@ -46,9 +46,9 @@ module OpenFoodNetwork
       # If it is a variant override with on_demand:
       #   - don't change stock or call super (super would change the variant's stock)
       def move(quantity, originator = nil)
-        return if @variant_override.andand.on_demand
+        return if @variant_override&.on_demand
 
-        if @variant_override.andand.stock_overridden?
+        if @variant_override&.stock_overridden?
           @variant_override.move_stock! quantity
         else
           super
@@ -56,11 +56,11 @@ module OpenFoodNetwork
       end
 
       def sku
-        @variant_override.andand.sku || super
+        @variant_override&.sku || super
       end
 
       def tag_list
-        @variant_override.andand.tag_list || []
+        @variant_override&.tag_list || []
       end
     end
   end

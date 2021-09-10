@@ -87,7 +87,7 @@ module OrderManagement
         return unless customer && payment_method
         return unless stripe_payment_method?(payment_method)
         return errors.add(:payment_method, :charges_not_allowed) unless customer.allow_charges
-        return if customer.user.andand.default_card.present?
+        return if customer.user&.default_card.present?
 
         errors.add(:payment_method, :no_default_card)
       end

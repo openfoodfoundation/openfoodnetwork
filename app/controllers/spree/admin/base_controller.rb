@@ -106,7 +106,7 @@ module Spree
           raise "Suffix '#{ams_prefix}' not found in ams_prefix_whitelist for #{self.class.name}."
         end
 
-        prefix = ams_prefix.andand.classify || ""
+        prefix = ams_prefix&.classify || ""
         name = controller_name.classify
         "::Api::Admin::#{prefix}#{name}Serializer".constantize
       end

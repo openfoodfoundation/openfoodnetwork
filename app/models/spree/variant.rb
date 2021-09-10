@@ -60,13 +60,13 @@ module Spree
                       if: proc { Spree::Config[:require_master_price] }
 
     validates :unit_value, presence: true, if: ->(variant) {
-      %w(weight volume).include?(variant.product.andand.variant_unit)
+      %w(weight volume).include?(variant.product&.variant_unit)
     }
 
     validates :unit_value, numericality: { greater_than: 0 }
 
     validates :unit_description, presence: true, if: ->(variant) {
-      variant.product.andand.variant_unit.present? && variant.unit_value.nil?
+      variant.product&.variant_unit.present? && variant.unit_value.nil?
     }
 
     before_validation :set_cost_currency

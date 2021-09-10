@@ -192,7 +192,7 @@ module Spree
     end
 
     def changes_allowed?
-      complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
+      complete? && distributor&.allow_order_changes? && order_cycle&.open?
     end
 
     # Is this a free order in which case the payment step should be skipped
@@ -569,7 +569,7 @@ module Spree
 
     def set_distributor!(distributor)
       self.distributor = distributor
-      self.order_cycle = nil unless order_cycle.andand.has_distributor? distributor
+      self.order_cycle = nil unless order_cycle&.has_distributor? distributor
       save!
     end
 
@@ -677,7 +677,7 @@ module Spree
     end
 
     def using_guest_checkout?
-      require_email && !user.andand.id
+      require_email && !user&.id
     end
 
     def registered_email?
@@ -689,7 +689,7 @@ module Spree
     end
 
     def skip_payment_for_subscription?
-      subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
+      subscription.present? && order_cycle.orders_close_at&.>(Time.zone.now)
     end
 
     def require_customer?
@@ -705,7 +705,7 @@ module Spree
     end
 
     def email_for_customer
-      (user.andand.email || email).andand.downcase
+      (user&.email || email)&.downcase
     end
 
     def associate_customer
@@ -721,9 +721,9 @@ module Spree
         enterprise: distributor,
         email: email_for_customer,
         user: user,
-        name: bill_address.andand.full_name,
-        bill_address: bill_address.andand.clone,
-        ship_address: ship_address.andand.clone
+        name: bill_address&.full_name,
+        bill_address: bill_address&.clone,
+        ship_address: ship_address&.clone
       )
       customer.save
 

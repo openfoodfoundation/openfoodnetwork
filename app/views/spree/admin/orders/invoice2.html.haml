@@ -46,7 +46,7 @@
         %br
         - if @order.bill_address
           %strong= @order.bill_address.full_name
-        - if @order.andand.customer.andand.code.present?
+        - if @order&.customer&.code.present?
           %br
           = "Code: #{@order.customer.code}"
         %br

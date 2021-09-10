@@ -12,7 +12,7 @@ module OpenFoodNetwork
 
     # Locales that can be selected by users.
     def self.selectable_locales
-      ENV["AVAILABLE_LOCALES"].andand.split(/[\s,]+/) || []
+      ENV["AVAILABLE_LOCALES"]&.split(/[\s,]+/) || []
     end
 
     # All locales that can be accessed by the application, including fallbacks.

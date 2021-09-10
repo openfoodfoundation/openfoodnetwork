@@ -22,7 +22,7 @@ module Shop
     def apply_tag_rules!(order_cycles)
       applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
                                                           "FilterOrderCycles",
-                                                          @customer.andand.tag_list)
+                                                          @customer&.tag_list)
       applicator.filter!(order_cycles)
 
       order_cycles

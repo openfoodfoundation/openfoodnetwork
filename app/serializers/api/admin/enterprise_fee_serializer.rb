@@ -7,11 +7,11 @@ module Api
                  :calculator_type, :enterprise_name, :calculator_description, :calculator_settings
 
       def enterprise_name
-        object.enterprise.andand.name
+        object.enterprise&.name
       end
 
       def calculator_description
-        object.calculator.andand.description
+        object.calculator&.description
       end
 
       def calculator_settings
