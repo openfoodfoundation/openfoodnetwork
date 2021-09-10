@@ -1712,6 +1712,7 @@ fr:
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
+  producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
   shopping_oc_closed: La boutique est actuellement fermée
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -2193,6 +2194,7 @@ fr:
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
   calculator_preferred_unit_error: "doit être kg ou lb"
+  calculator_preferred_amount_error: "La valeur renseignée n'est pas valide. Veuillez utiliser des nombres uniquement. Par exemple : 10, 5.5, -20"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe par article"
   flat_rate_per_order: "Montant fixe par commande"
