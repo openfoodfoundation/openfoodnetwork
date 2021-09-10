@@ -4,6 +4,7 @@ nl_BE:
     attributes:
       spree/user:
         password: "Wachtwoord"
+        reset_password_token: Reset wachtwoord token
       enterprise_fee:
         fee_type: Soort commissie
       spree/order:
@@ -1454,6 +1455,7 @@ nl_BE:
           label: Telefoonnummer
       billing_address:
         title: 'Facturatie-adres:'
+      address:
         city:
           label: Stad
         state_id:

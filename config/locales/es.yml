@@ -5,6 +5,7 @@ es:
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
+        reset_password_token: token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
       spree/order:
@@ -1544,6 +1545,7 @@ es:
           label: Número de teléfono
       billing_address:
         title: Dirección de cobro
+      address:
         city:
           label: Ciudad
         state_id:

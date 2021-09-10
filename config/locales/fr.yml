@@ -5,6 +5,7 @@ fr:
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
+        reset_password_token: La demande de réinitialisation du mot de passe
       enterprise_fee:
         fee_type: Type de marge
       spree/order:
@@ -40,6 +41,8 @@ fr:
           attributes:
             email:
               taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
+            reset_password_token:
+              invalid: est invalide
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
         spree/credit_card:
@@ -94,6 +97,9 @@ fr:
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Le champ mot de passe ne peut pas être vide. Veuillez renseigner un mot de passe."
     confirmations:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
@@ -1551,6 +1557,7 @@ fr:
           placeholder: ex. 0798765432
       billing_address:
         title: Adresse de facturation
+      address:
         address1:
           label: Adresse (Numéro et rue)
           placeholder: ex. 17 rue de la chèvre
@@ -1583,6 +1590,8 @@ fr:
         edit: Modifier vos coordonnées
       billing_address:
         title: Adresse de facturation
+      shipping_address:
+        title: Adresse de livraison
       delivery_info:
         title: Information concernant la livraison
       payment_method:
@@ -1597,9 +1606,13 @@ fr:
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
+      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionner une méthode de livraison
+      select_a_payment_method: Sélectionner une méthode de paiement
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande

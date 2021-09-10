@@ -4,6 +4,7 @@ fil_PH:
     attributes:
       spree/user:
         password: "Password"
+        reset_password_token: i-reset ang password token
       enterprise_fee:
         fee_type: Uri ng Bayarin
       spree/order:
@@ -1427,6 +1428,7 @@ fil_PH:
           label: telepono
       billing_address:
         title: Billing address
+      address:
         city:
           label: Lungsod
         state_id:

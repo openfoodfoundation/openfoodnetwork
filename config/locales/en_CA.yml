@@ -5,6 +5,7 @@ en_CA:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -1549,6 +1550,7 @@ en_CA:
           placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. Flat 1 Elm Apartments

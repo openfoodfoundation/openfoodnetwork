@@ -2,6 +2,8 @@ pl:
   language_name: "Polski"
   activerecord:
     attributes:
+      spree/user:
+        reset_password_token: Token resetowania hasła
       enterprise_fee:
         fee_type: Typ opłaty
       spree/order:
@@ -1433,7 +1435,7 @@ pl:
       your_details:
         email:
           label: E-mail
-      billing_address:
+      address:
         state_id:
           label: Status
   order_paid: OPŁACONY

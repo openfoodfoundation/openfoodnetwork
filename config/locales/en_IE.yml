@@ -5,6 +5,7 @@ en_IE:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -1549,6 +1550,7 @@ en_IE:
           placeholder: e.g. 08X XXX XXXX
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. 123 Main Street
@@ -1591,7 +1593,6 @@ en_IE:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
-      agree: By clickin 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:

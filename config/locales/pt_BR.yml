@@ -5,6 +5,7 @@ pt_BR:
       spree/user:
         password: "Senha"
         password_confirmation: "Confirmação de senha"
+        reset_password_token: Redefinir chave de senha
       enterprise_fee:
         fee_type: Tipo de taxa
       spree/order:
@@ -1524,6 +1525,7 @@ pt_BR:
           label: n
       billing_address:
         title: Endereço de fatura
+      address:
         city:
           label: Cidade
         state_id:

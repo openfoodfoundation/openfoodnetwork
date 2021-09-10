@@ -5,6 +5,7 @@ en_GB:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -1541,6 +1542,7 @@ en_GB:
           label: Phone number
       billing_address:
         title: Billing address
+      address:
         city:
           label: City
         state_id:

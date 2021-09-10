@@ -5,6 +5,7 @@ ar:
       spree/user:
         password: "كلمه السر"
         password_confirmation: "تأكيد كلمة المرور"
+        reset_password_token: إعادة تعيين رمز كلمة المرور
       enterprise_fee:
         fee_type: نوع الرسوم
       spree/order:
@@ -1507,6 +1508,7 @@ ar:
           label: رقم الهاتف
       billing_address:
         title: عنوان وصول الفواتير
+      address:
         city:
           label: مدينة
         state_id:

@@ -5,6 +5,7 @@ en_US:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -173,7 +174,7 @@ en_US:
       userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
-      email_community_html: "We'll be in touch, not too frequently, by email. Please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter. You will find that OFN is more than just software to help you meet the unique challenges of running a food enterprise - it's a community, and you are invited to join in when you can. We are constantly evolving and your input will help shape what happens next. Please contact support@openfoodnetwork.net with any technical questions or questions about your financial contribution to OFN, to learn about volunteer opportunities, or to discover the many ways there are to learn about the Open Food Network from folks around the world. If you're interested in peeking under the hood, you are welcome to visit %{link} and get to know the folks who are co-creating OFN. We're glad you are here!"
+      email_community_html: "We'll leave you to explore the platform and our community  (%{link}) for now and will check back in tomorrow with more information and resources!   In the meantime, please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   Once again, welcome to our community, we're glad you are here!"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
@@ -1549,6 +1550,7 @@ en_US:
           placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. Flat 1 Elm apartments
@@ -1591,7 +1593,6 @@ en_US:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
@@ -2748,6 +2749,7 @@ en_US:
           invalid: "Invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cannot_remove_last_item: "Sorry, we can't remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

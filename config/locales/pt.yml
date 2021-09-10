@@ -4,6 +4,7 @@ pt:
     attributes:
       spree/user:
         password: "Palavra-passe"
+        reset_password_token: Redefinir palavra-passe
       enterprise_fee:
         fee_type: Tipo de Taxa
       spree/order:
@@ -1429,6 +1430,7 @@ pt:
           label: Número de telefone
       billing_address:
         title: Morada de faturação
+      address:
         city:
           label: Cidade
         state_id:

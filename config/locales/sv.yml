@@ -837,6 +837,7 @@ sv:
           label: Telefonnummer
       billing_address:
         title: 'Faktureringsadress '
+      address:
         city:
           label: Ort
         state_id:

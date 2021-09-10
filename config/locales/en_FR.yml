@@ -5,6 +5,7 @@ en_FR:
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
+        reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -40,6 +41,8 @@ en_FR:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+            reset_password_token:
+              invalid: is invalid
         spree/order:
           no_card: There are no authorised credit cards available to charge
         spree/credit_card:
@@ -94,6 +97,9 @@ en_FR:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "User password cannot be blank. Please enter a password."
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
@@ -1549,6 +1555,7 @@ en_FR:
           placeholder: e.g. 0798765432
       billing_address:
         title: Billing address
+      address:
         address1:
           label: Address (Street + House Number)
           placeholder: e.g. 17 rue de la chèvre
@@ -1581,6 +1588,8 @@ en_FR:
         edit: Edit your details
       billing_address:
         title: Billing address
+      shipping_address:
+        title: Shipping address
       delivery_info:
         title: Delivery info
       payment_method:
@@ -1591,13 +1600,17 @@ en_FR:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
-      agree: By clickin 'Complete order' you agree to your order being processed.
+      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
+      global: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

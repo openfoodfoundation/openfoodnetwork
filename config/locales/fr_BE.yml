@@ -4,6 +4,7 @@ fr_BE:
     attributes:
       spree/user:
         password: "Mot de passe"
+        reset_password_token: Réinitialisation du mot de passe
       enterprise_fee:
         fee_type: Type de marge
       spree/order:
@@ -1452,6 +1453,7 @@ fr_BE:
           label: Numéro de téléphone
       billing_address:
         title: Adresse de facturation
+      address:
         city:
           label: Ville
         state_id:

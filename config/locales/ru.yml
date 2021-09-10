@@ -5,6 +5,7 @@ ru:
       spree/user:
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
+        reset_password_token: Сброс пароля токена
       enterprise_fee:
         fee_type: Способ Оплаты
       spree/order:
@@ -1552,6 +1553,7 @@ ru:
           placeholder: например, 71234567890
       billing_address:
         title: Платежный Адрес
+      address:
         address1:
           label: Адрес (Улица + Номер Дома)
           placeholder: напр., ул. Ленина 1, кв. 12
@@ -1594,7 +1596,6 @@ ru:
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
         link_text: "Условия и Положения"
-      agree: Нажимая «Завершить заказ», вы соглашаетесь с тем, что ваш заказ оформляется.
       submit: Завершить заказ
       cancel: Вернуться к Способу оплаты
     errors:

@@ -5,6 +5,7 @@ tr:
       spree/user:
         password: "Parola"
         password_confirmation: "Parola onayı"
+        reset_password_token: Şifre kodunu sıfırla
       enterprise_fee:
         fee_type: Ücret Türü
       spree/order:
@@ -150,7 +151,7 @@ tr:
   producer_signup_case_studies_html: "Üretici kaydı örnek olay incelemeleri HTML"
   producer_signup_detail_html: "Üretici kayıt detay HTML"
   producer_signup_pricing_table_html: "Üretici kaydı fiyatlandırma tablosu HTML"
-  producers_social: "Üreticiler sosyal"
+  producers_social: "Üretici sosyal medya"
   resume_order: "Siparişe devam et"
   sku: "Stok Kodu"
   subtotal: "Alttoplam"
@@ -1529,21 +1530,36 @@ tr:
   checkout_back_to_cart: "Sepete geri dön"
   cost_currency: "Maliyet Para Birimi"
   split_checkout:
+    your_details: 1 - Bilgileriniz
+    payment_method: 2 - Ödeme yöntemi
+    order_summary: 3 - Sipariş özeti
     step1:
       your_details:
         title: Bilgilerin
         first_name:
           label: Ad
+          placeholder: örn. Leyla
         last_name:
-          label: Soyadı
+          label: Soyad
+          placeholder: örn. Durak
         email:
           label: E-posta
+          placeholder: örn. leyla@email.com
         phone:
-          label: Telefon numarası
+          label: Tel. no
+          placeholder: örn. 05321100708
       billing_address:
         title: Fatura Adresi
+      address:
+        address1:
+          label: Adres (Sokak + Ev Numarası)
+          placeholder: örn. Küme Sk. No:7 Uğur Apt.
+        address2:
+          label: Ek adres bilgisi (isteğe bağlı)
+          placeholder: örn. şairler parkı yanı
         city:
           label: ŞEHİR
+          placeholder: örn. İstanbul
         state_id:
           label: Durum
         zipcode:
@@ -1552,15 +1568,35 @@ tr:
           label: Ülke
       delivery_address:
         title: Teslimat adresi
+      submit: Sonraki - Ödeme yöntemi
+      cancel: Sepeti düzenlemeye geri dön
+    step2:
+      payment_method:
+        title: Ödeme yöntemi
+      explaination: Nihai maliyetleri içeren bir sonraki adımda siparişinizi inceleyebilir ve onaylayabilirsiniz.
+      submit: Sonraki - Sipariş özeti
+      cancel: Bilgilerinize geri dönün
     step3:
       your_details:
         title: Bilgilerin
+        edit: Bilgilerinizi düzenleyin
       billing_address:
-        title: Fatura Adresi
+        title: Fatura adresi
+      delivery_info:
+        title: Teslimat bilgileri
+      payment_method:
+        title: Ödeme yöntemi
+        edit: Ödeme yöntemini düzenle
+      order:
+        title: Sipariş toplamı
       terms_and_conditions:
         message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
         link_text: "Şartlar ve Koşullar"
+      submit: Siparişi tamamla
+      cancel: Ödeme yöntemine geri dön
     errors:
+      required: Alan boş olamaz
+      invalid_number: "Geçerli bir telefon numarası giriniz"
       invalid_email: "Lütfen geçerli bir e-posta adresi girin"
   order_paid: ÖDENDİ
   order_not_paid: ÖDENMEYEN
@@ -1657,7 +1693,7 @@ tr:
     set_a_password: "Daha sonra, işletmeyi yönetebilmeniz için önce bir parola ayarlamanız istenecek."
     mistakenly_sent: "Bu e-postayı neden aldığınızdan emin değil misiniz? Daha fazla bilgi için lütfen %{owner_email} ile iletişime geçin."
   producer_mail_greeting: "Sevgili"
-  producer_mail_text_before: "Aşağıda sipariş dönemine dair güncellemeyi bulabilirsiniz. Şunun için hazır: "
+  producer_mail_text_before: "Aşağıdaki tarihte hazır olacak sipariş dönemine dair güncelleme: "
   producer_mail_order_text: "İşte ürünleriniz gelen için siparişlerin bir özeti:"
   producer_mail_delivery_instructions: "Stok teslimat/gönderim talimatları:"
   producer_mail_signoff: "En iyi dileklerimle"
@@ -2069,6 +2105,8 @@ tr:
   fundraising_fee: "Finans Ücreti"
   price_graph: "Fiyat grafiği"
   included_tax: "Vergi Dahil"
+  tax: "Vergi"
+  tax_amount_included: "%{amount} (dahil)"
   balance: "Bakiye"
   transaction: "işlem"
   transaction_date: "tarih"
@@ -2712,6 +2750,7 @@ tr:
           invalid: "geçersiz"
         quantity_adjusted: "Yetersiz stok. Satır kullanılabilir maksimum miktara güncellendi."
         quantity_unchanged: "Miktar değişmedi."
+        cannot_remove_last_item: "Son ürün siparişten kaldırılamıyor. Lütfen bunun yerine siparişi iptal edin."
       resend_user_email_confirmation:
         resend: "Yeniden gönder"
         sending: "Yeniden gönder..."
@@ -3725,6 +3764,7 @@ tr:
       awaiting_return: iade bekleniyor
       canceled: iptal edildi
       cart: sepet
+      confirmation: "onay"
       complete: tamam
       confirm: onayla
       delivery: Eve Teslim
@@ -3828,6 +3868,18 @@ tr:
           other: 'Ödemeler '
   datetime:
     distance_in_words:
+      about_x_hours:
+        one: 1 saat civarında
+        other: '%{count} saat '
+      about_x_months:
+        one: yaklaşık 1 ay
+        other: '%{count} ay '
+      about_x_years:
+        one: yaklaşık 1 yıl
+        other: '%{count} yıl '
+      almost_x_years:
+        one: neredeyse 1 yıl
+        other: neredeyse %{count} yıl
       half_a_minute: yarım dakika
       less_than_x_seconds:
         one: 1 saniyeden az

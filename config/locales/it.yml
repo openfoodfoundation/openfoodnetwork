@@ -5,6 +5,7 @@ it:
       spree/user:
         password: "Password"
         password_confirmation: "Conferma password"
+        reset_password_token: Token per il reset della password
       enterprise_fee:
         fee_type: Tipo Tariffa
       spree/order:
@@ -1550,6 +1551,7 @@ it:
           placeholder: es. 328 987654
       billing_address:
         title: Indirizzo di fatturazione
+      address:
         address1:
           label: Indirizzo (Via/Piazza/Contrada + numero civico)
           placeholder: es. Scala 1
@@ -1592,7 +1594,6 @@ it:
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
         link_text: "Termini e Condizioni"
-      agree: Cliccando su "Completa ordine" acconsentirai all'elaborazione dell'ordine.
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
     errors:

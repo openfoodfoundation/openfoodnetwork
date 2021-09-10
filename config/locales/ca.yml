@@ -5,6 +5,7 @@ ca:
       spree/user:
         password: "Contrasenya"
         password_confirmation: "confirmació de la contrasenya"
+        reset_password_token: Reinicia el token de contrasenya
       enterprise_fee:
         fee_type: Tipus de comissió
       spree/order:
@@ -1545,6 +1546,7 @@ ca:
           label: 'Número de telèfon '
       billing_address:
         title: Adreça de facturació
+      address:
         city:
           label: Municipi
         state_id:

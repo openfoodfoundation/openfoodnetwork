@@ -4,6 +4,7 @@ cy:
     attributes:
       spree/user:
         password: "Cyfrinair"
+        reset_password_token: Ailosod tocyn cyfrinair
       enterprise_fee:
         fee_type: Math o Ffi
       spree/order:
@@ -1473,6 +1474,7 @@ cy:
           label: Rhif ffôn
       billing_address:
         title: Cyfeiriad bilio
+      address:
         city:
           label: Dinas
         state_id:

@@ -4,6 +4,7 @@ en_PH:
     attributes:
       spree/user:
         password: "Password"
+        reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
       spree/order:
@@ -1424,6 +1425,7 @@ en_PH:
           label: Phone number
       billing_address:
         title: Billing address
+      address:
         city:
           label: City
         state_id:

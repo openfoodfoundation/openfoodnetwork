@@ -4,6 +4,7 @@ es_CO:
     attributes:
       spree/user:
         password: "Contraseña"
+        reset_password_token: Token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
       spree/order:
@@ -1450,6 +1451,7 @@ es_CO:
           label: Número de teléfono
       billing_address:
         title: Dirección de cobro
+      address:
         city:
           label: Ciudad
         state_id:

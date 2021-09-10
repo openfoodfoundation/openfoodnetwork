@@ -4,6 +4,7 @@ nb:
     attributes:
       spree/user:
         password: "Passord"
+        reset_password_token: Tilbakestill passordtoken
       enterprise_fee:
         fee_type: Avfgiftstype
       spree/order:
@@ -1519,6 +1520,7 @@ nb:
           label: Telefonnummer
       billing_address:
         title: Fakturaadresse
+      address:
         city:
           label: By
         state_id:

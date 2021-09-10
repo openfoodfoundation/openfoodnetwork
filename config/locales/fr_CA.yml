@@ -5,6 +5,7 @@ fr_CA:
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
+        reset_password_token: La demande de réinitialisation du mot de passe
       enterprise_fee:
         fee_type: Type de commissions
       spree/order:
@@ -1543,6 +1544,7 @@ fr_CA:
           label: Numéro de téléphone
       billing_address:
         title: Adresse de facturation
+      address:
         city:
           label: Ville
         state_id:
