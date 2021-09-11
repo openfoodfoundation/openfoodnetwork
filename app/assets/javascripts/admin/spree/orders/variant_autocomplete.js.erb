@@ -54,8 +54,8 @@ $(document).ready(function() {
     }
     $('a.save-item').click(handle_save_click);
 
-    handle_delete_click = function(e){
-      var del = $(this).parent().parent().parent();
+    handle_delete_click = function(elementSelector){
+      var del = $(elementSelector);
       del.hide()
       var shipment_number = del.data('shipment-number');
       var variant_id = del.data('variant-id');
@@ -66,7 +66,9 @@ $(document).ready(function() {
     }
 
     $('a.delete-item').click((event) => {
-      showConfirm(handle_delete_click);
+      showConfirm(() => {
+        handle_delete_click('#custom-confirm');
+      });
     });
 
   }
