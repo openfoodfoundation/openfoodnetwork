@@ -2,6 +2,9 @@
 
 $(document).ready(function() {
 
+  initAlert()
+  initConfirm()
+
   if ($('#variant_autocomplete_template').length > 0) {
     window.variantTemplate = Handlebars.compile($('#variant_autocomplete_template').text());
     window.variantStockTemplate = Handlebars.compile($('#variant_autocomplete_stock_template').text());
@@ -45,7 +48,7 @@ $(document).ready(function() {
       if (quantity > maxQuantity) {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
-        showAlert(t("js.admin.orders.quantity_adjusted"));
+        ofnAlert(t("js.admin.orders.quantity_adjusted"));
       }
       toggleItemEdit();
 
@@ -66,7 +69,7 @@ $(document).ready(function() {
     }
 
     $('a.delete-item').click((event) => {
-      showConfirm(() => {
+      ofnConfirm(() => {
         handle_delete_click('#custom-confirm');
       });
     });
@@ -79,7 +82,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   if (quantity == 0 && inventory_units.length == shipment.inventory_units.length) {
-    showAlert(t("js.admin.orders.cannot_remove_last_item"));
+    ofnAlert(t("js.admin.orders.cannot_remove_last_item"));
     return;
   }
 
@@ -96,7 +99,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   url += '.json';
 
   if (new_quantity == 0) {
-    showAlert(t("js.admin.orders.quantity_unchanged"));
+    ofnAlert(t("js.admin.orders.quantity_unchanged"));
   } else {
     $.ajax({
       type: "PUT",
@@ -160,19 +163,26 @@ addVariantFromStockLocation = function() {
   return 1
 }
 
-showAlert = function(message) {
-  $('#custom-alert .message').text(message)
+initAlert = function() {
   $('#custom-alert .confirm').click(function(e) {
-    $('#custom-alert').hide()
+    $('#custom-alert').hide();
   })
-  $('#custom-alert').show()
 }
 
-showConfirm = function(callback) {
-  $('#custom-confirm').data($(event.target).data());
-  $('#custom-confirm').show();
-  $('#custom-confirm button.confirm').click(callback);
-  $('#custom-confirm button.cancel').click((event) => {
-    $('#custom-confirm').hide()
+initConfirm = function() {
+  $('#custom-confirm button.cancel').click(function(e) {
+    $('#custom-confirm').hide();
   });
+}
+
+
+ofnAlert = function(message) {
+  $('#custom-alert .message').text(message);
+  $('#custom-alert').show();
+}
+
+ofnConfirm = function(callback) {
+  $('#custom-confirm').data($(event.target).data());
+  $('#custom-confirm button.confirm').click(callback);
+  $('#custom-confirm').show();
 }
