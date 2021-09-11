@@ -71,4 +71,14 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
   config.include DownloadsHelper, type: :feature
+  
+  current_file_path = ''
+  config.around(:each) do |example|
+    if example.file_path == current_file_path
+      example.skip
+    else
+      current_file_path = example.file_path
+      example.run
+    end 
+  end  
 end
