@@ -854,7 +854,6 @@ describe Spree::Order do
       let!(:order_with_line_items) { create(:order_with_line_items, line_items_count: 1) }
       let!(:order_without_line_items) { create(:order) }
       it "returns only orders which have line items" do
-pry
         expect(Spree::Order.not_empty).to include order_with_line_items
         expect(Spree::Order.not_empty).to_not include order_without_line_items
       end
