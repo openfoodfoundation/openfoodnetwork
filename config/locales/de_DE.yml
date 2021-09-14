@@ -5,6 +5,7 @@ de_DE:
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
+        reset_password_token: Passwort-Token zurücksetzen
       enterprise_fee:
         fee_type: Art der Gebühr
       spree/order:
@@ -40,6 +41,8 @@ de_DE:
           attributes:
             email:
               taken: "Es gibt bereits ein Konto für diese E-Mail-Adresse. Bitte versuchen Sie sich einzuloggen oder setzen Sie Ihr Passwort zurück."
+            reset_password_token:
+              invalid: ist ungültig
         spree/order:
           no_card: Es ist keine autorisierte Kreditkarte verfügbar.
         spree/credit_card:
@@ -94,6 +97,9 @@ de_DE:
   community_forum_url: "URL des Community-Forums"
   customer_instructions: "Informationen für Kunden"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Passwort darf nicht leer sein. Bitte wählen Sie ein Passwort."
     confirmations:
       send_instructions: "Sie erhalten in Kürze eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
       failed_to_send: "Beim Senden der E-Mail-Bestätigung ist ein Fehler aufgetreten."
@@ -1706,6 +1712,7 @@ de_DE:
   producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
   producer_mail_signoff: "Viele Grüße,"
+  producer_mail_order_customer_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen, gruppiert nach Kunden:"
   shopping_oc_closed: Bestellzyklen sind derzeit geschlossen!
   shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Bestellzyklus öffnet (oder kontaktieren Sie uns direkt, um zu erfahren, ob wir verspätete Bestellungen annehmen können)."
   shopping_oc_last_closed: "Der letzte Bestellzyklus wurde vor %{distance_of_time} geschlossen."
@@ -2187,6 +2194,7 @@ de_DE:
   calculator_values: "Werte zur Berechnung"
   calculator_settings_warning: "Wenn Sie den Gebührentyp ändern, müssen Sie zuerst speichern, bevor Sie die Gebühreneinstellungen bearbeiten können."
   calculator_preferred_unit_error: "muss kg oder lb sein"
+  calculator_preferred_amount_error: "Ungültige Eingabe. Bitte nur Zahlen verwenden, z. B. 10, 5.5, -20"
   flat_percent_per_item: "Fester Prozentsatz (pro Artikel)"
   flat_rate_per_item: "Pauschale (pro Artikel)"
   flat_rate_per_order: "Pauschale (pro Bestellung)"
