@@ -2,6 +2,9 @@
 
 $(document).ready(function() {
 
+  initAlert()
+  initConfirm()
+
   if ($('#variant_autocomplete_template').length > 0) {
     window.variantTemplate = Handlebars.compile($('#variant_autocomplete_template').text());
     window.variantStockTemplate = Handlebars.compile($('#variant_autocomplete_stock_template').text());
@@ -45,7 +48,7 @@ $(document).ready(function() {
       if (quantity > maxQuantity) {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
-        alert(t("js.admin.orders.quantity_adjusted"));
+        ofnAlert(t("js.admin.orders.quantity_adjusted"));
       }
       toggleItemEdit();
 
@@ -54,18 +57,23 @@ $(document).ready(function() {
     }
     $('a.save-item').click(handle_save_click);
 
-    handle_delete_click = function(e, confirmed){
-      if (confirmed) {
-        var del = $(this);
-        var shipment_number = del.data('shipment-number');
-        var variant_id = del.data('variant-id');
+    handle_delete_click = function(elementSelector){
+      var del = $(elementSelector);
+      del.hide()
+      var shipment_number = del.data('shipment-number');
+      var variant_id = del.data('variant-id');
 
-        toggleItemEdit();
+      toggleItemEdit();
 
-        adjustItems(shipment_number, variant_id, 0);
-      }
+      adjustItems(shipment_number, variant_id, 0);
     }
-    $('a.delete-item').on('confirm:complete', handle_delete_click);
+
+    $('a.delete-item').click((event) => {
+      ofnConfirm(() => {
+        handle_delete_click('#custom-confirm');
+      });
+    });
+
   }
 });
 
@@ -74,7 +82,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   if (quantity == 0 && inventory_units.length == shipment.inventory_units.length) {
-    alert(t("js.admin.orders.cannot_remove_last_item"));
+    ofnAlert(t("js.admin.orders.cannot_remove_last_item"));
     return;
   }
 
@@ -91,7 +99,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
   url += '.json';
 
   if (new_quantity == 0) {
-    alert(t("js.admin.orders.quantity_unchanged"));
+    ofnAlert(t("js.admin.orders.quantity_unchanged"));
   } else {
     $.ajax({
       type: "PUT",
@@ -153,4 +161,28 @@ addVariantFromStockLocation = function() {
     adjustItems(shipment.number, variant_id, quantity);
   }
   return 1
+}
+
+initAlert = function() {
+  $('#custom-alert .confirm').click(function(e) {
+    $('#custom-alert').hide();
+  })
+}
+
+initConfirm = function() {
+  $('#custom-confirm button.cancel').click(function(e) {
+    $('#custom-confirm').hide();
+  });
+}
+
+
+ofnAlert = function(message) {
+  $('#custom-alert .message').text(message);
+  $('#custom-alert').show();
+}
+
+ofnConfirm = function(callback) {
+  $('#custom-confirm').data($(event.target).data());
+  $('#custom-confirm button.confirm').click(callback);
+  $('#custom-confirm').show();
 }
