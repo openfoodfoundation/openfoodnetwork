@@ -315,6 +315,16 @@ feature "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
       end
+
+      context "with a single editable order" do # Regression test for #8191
+        before do
+          prev_order2.destroy
+        end
+
+        it "doesn't throw an error" do
+          expect{ visit main_app.cart_path }.to_not raise_error
+        end
+      end
     end
   end
 end
