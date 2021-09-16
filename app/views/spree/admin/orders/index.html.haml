@@ -49,7 +49,7 @@
   %tbody
     %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "{'state-{{order.state}}': true, 'row-loading': rowStatus[order.id] == 'loading'}"}
       %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)', 'ng-hide' => 'order.state != "complete"'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
