@@ -157,11 +157,14 @@ module Spree
           call.to_h.with_indifferent_access
       end
 
+      def gateway_params
+        raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
+      end
+
       # Merge payment method params with gateway params like :gateway_stripe_connect
       # Also, remove password if present and blank
       def update_params
         @update_params ||= begin
-          gateway_params = raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
           params_for_update = base_params.merge(gateway_params)
 
           params_for_update.each do |key, value|
