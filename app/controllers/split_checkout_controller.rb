@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include CablecarResponses
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -25,7 +26,11 @@ class SplitCheckoutController < ::BaseController
       redirect_to_step
     else
       flash.now[:error] = I18n.t('split_checkout.errors.global')
-      render :edit
+
+      render operations: cable_car.
+        replace("#checkout", partial("split_checkout/checkout")).
+        replace("#flashes", partial("shared/flashes", locals: { flashes: flash })),
+        status: :unprocessable_entity
     end
   end
 

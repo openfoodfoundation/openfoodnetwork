@@ -2,5 +2,7 @@
   = inject_saved_credit_cards
 
 %div.checkout-step
-  = form_with url: checkout_update_path(checkout_step), model: @order, method: :put do |f|
-    = render "split_checkout/#{checkout_step}", f: f
+  = form_with url: checkout_update_path(checkout_step), model: @order, method: :put,
+    data: { remote: "true" } do |form|
+
+    = render "split_checkout/#{checkout_step}", f: form
