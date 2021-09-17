@@ -110,10 +110,10 @@ describe Spree::Address do
       expect(address).to be_valid
     end
 
-    it "does not require phone" do
+    it "requires phone" do
       address.phone = ""
       address.valid?
-      expect(address.errors[:phone]).to be_empty
+      expect(address.errors[:phone].first).to eq "can't be blank"
     end
 
     it "requires zipcode" do

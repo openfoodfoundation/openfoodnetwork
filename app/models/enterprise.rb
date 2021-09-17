@@ -5,7 +5,6 @@ require 'spree/core/s3_support'
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
-
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
@@ -60,11 +59,7 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-<<<<<<< HEAD
-  accepts_nested_attributes_for :business_address, :reject_if => :empty_field, allow_destroy: true
-=======
   accepts_nested_attributes_for :business_address, :reject_if => :business_address_empty?, allow_destroy: true
->>>>>>> 389cfdf10 (Redo destroy)
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?
@@ -216,13 +211,6 @@ class Enterprise < ApplicationRecord
     ", one, one, others)
   }
 
-<<<<<<< HEAD
-  def empty_field(attributes)
-    exists = attributes['business_address_id'].present?
-    empty = attributes.slice(:address1, :city, :country, :phone, :zipcode).values.all?(&:blank?)
-    attributes.merge!({:_destroy => 1}) if exists and empty 
-    return (!exists and empty) 
-=======
   def business_address_empty?(attributes)
     is_empty_attributes =
       attributes[:company].blank? &&
@@ -238,7 +226,6 @@ class Enterprise < ApplicationRecord
         true
       end
     end
->>>>>>> 389cfdf10 (Redo destroy)
   end
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
@@ -445,7 +432,8 @@ class Enterprise < ApplicationRecord
   end
 
   def set_unused_address_fields
-    address.firstname = address.lastname = address.phone = 'unused' if address.present?
+    address.firstname = address.lastname = address.phone = address.company = 'unused' if address.present?
+    business_address.first_name = business_address.last_name = 'unused' if business_address.present?
   end
 
   def ensure_owner_is_manager
