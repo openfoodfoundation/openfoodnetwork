@@ -7,7 +7,7 @@ module Spree
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
       before_action :load_hubs, only: [:new, :edit, :update]
-      before_action :validate_calculator_preferred_amount, only: [:update]
+      before_action :validate_calculator_preferred_value, only: [:update]
 
       respond_to :html
 
@@ -177,13 +177,9 @@ module Spree
         end
       end
 
-      def validate_calculator_preferred_amount
-        preferred_amount = params.dig(:payment_method_check, :calculator_attributes,
-                                      :preferred_amount)
-        return if preferred_amount.nil? || Float(preferred_amount,
-                                                 exception: false)
+      def validate_calculator_preferred_value
 
-        flash[:error] = I18n.t(:calculator_preferred_amount_error)
+        flash[:error] = I18n.t(:calculator_preferred_value_error)
         redirect_to spree.edit_admin_payment_method_path(@payment_method)
       end
     end
