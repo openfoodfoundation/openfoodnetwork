@@ -178,9 +178,28 @@ module Spree
       end
 
       def validate_calculator_preferred_value
+        return if calculator_preferred_values.all? do |value|
+          preferred_value_from_params = gateway_params.dig(:calculator_attributes, value)
+          preferred_value_from_params.nil? || Float(preferred_value_from_params,
+                                                    exception: false)
+        end
 
         flash[:error] = I18n.t(:calculator_preferred_value_error)
         redirect_to spree.edit_admin_payment_method_path(@payment_method)
+      end
+
+      def calculator_preferred_values
+        [
+          :preferred_amount,
+          :preferred_flat_percent,
+          :preferred_flat_percent,
+          :preferred_first_item,
+          :preferred_additional_item,
+          :preferred_max_items,
+          :preferred_normal_amount,
+          :preferred_discount_amount,
+          :preferred_minimal_amount
+        ]
       end
     end
   end
