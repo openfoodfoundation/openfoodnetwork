@@ -32,7 +32,7 @@
     "cable_ready": "^5.0.0-pre2",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
-    "mrujs": "^0.4.13",
+    "mrujs": "^0.4.21",
     "shortcut-buttons-flatpickr": "^0.3.1",
     "stimulus": "^2.0.0",
     "webpack": "^4.46.0",
