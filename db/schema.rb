@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_100257) do
+ActiveRecord::Schema.define(version: 2021_09_18_011908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -563,6 +563,7 @@ ActiveRecord::Schema.define(version: 2021_08_17_100257) do
     t.integer "created_by_id"
     t.decimal "included_tax_total", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "additional_tax_total", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "gateway_checkout_session_id"
     t.index ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx"
     t.index ["customer_id"], name: "index_spree_orders_on_customer_id"
     t.index ["distributor_id"], name: "index_spree_orders_on_distributor_id"
