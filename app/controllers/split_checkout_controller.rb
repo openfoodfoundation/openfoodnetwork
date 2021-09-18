@@ -16,10 +16,22 @@ class SplitCheckoutController < ::BaseController
   helper OrderHelper
 
   def edit
+    load_gateway_checkout_session
+    if @checkout_session&.session&.payment_status == "paid"
+      @checkout_session.payment.complete!
+      @checkout_session.save_card      
+      @order.confirm!
+      redirect_to order_path(@order) and return
+    end
     redirect_to_step unless params[:step]
   end
 
   def update
+    load_gateway_checkout_session
+    if ready_to_confirm? && redirect_url = @checkout_session&.session&.url
+      render js: "window.location='#{redirect_url}'" and return
+    end
+
     if confirm_order || update_order
       clear_invalid_payments
       advance_order_state
@@ -35,6 +47,22 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  # Here we're assuming there's only one Stripe payment associated with the Order
+  def stripe_payment?
+    @stripe_payment ||=
+      @order.payments.select { |p| p.payment_method.type == "Spree::Gateway::StripeSCA" }.first
+  end
+
+  def load_gateway_checkout_session
+    return unless stripe_payment?
+
+    @checkout_session = Checkout::GatewayCheckoutSession.new(
+      stripe_payment?,
+      main_app.checkout_url,
+      main_app.checkout_url
+    )
+  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
