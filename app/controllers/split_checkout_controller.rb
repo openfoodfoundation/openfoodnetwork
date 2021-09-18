@@ -41,10 +41,14 @@ class SplitCheckoutController < ::BaseController
   end
 
   def confirm_order
-    return unless @order.confirmation? && params[:confirm_order]
+    return unless ready_to_confirm?
     return unless validate_summary! && @order.errors.empty?
 
     @order.confirm!
+  end
+
+  def ready_to_confirm?
+    @order.confirmation? && params[:confirm_order]
   end
 
   def update_order
