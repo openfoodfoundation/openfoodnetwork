@@ -28,11 +28,11 @@ module StripeStubs
   end
 
   # Attaches the payment method to the customer in the hub's stripe account
-  def stub_payment_method_attach_request(payment_method: "pm_123", customer: "cus_A123")
+  def stub_payment_method_attach_request
     stub_request(:post,
-                 "https://api.stripe.com/v1/payment_methods/#{payment_method}/attach")
-      .with(body: { customer: customer })
-      .to_return(hub_payment_method_response_mock({ pm_id: payment_method }))
+                 "https://api.stripe.com/v1/payment_methods/pm_123/attach")
+      .with(body: { customer: "cus_A123" })
+      .to_return(hub_payment_method_response_mock({ pm_id: "pm_123" }))
   end
 
   def stub_retrieve_payment_method_request(payment_method_id = "pm_1234")
