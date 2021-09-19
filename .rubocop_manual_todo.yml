@@ -203,6 +203,7 @@ Layout/LineLength:
   - spec/models/spree/address_spec.rb
   - spec/models/spree/adjustment_spec.rb
   - spec/models/spree/classification_spec.rb
+  - spec/models/spree/gateway/stripe_connect_spec.rb
   - spec/models/spree/inventory_unit_spec.rb
   - spec/models/spree/line_item_spec.rb
   - spec/models/spree/order/checkout_spec.rb
