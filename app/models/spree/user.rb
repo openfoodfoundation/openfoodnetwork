@@ -20,7 +20,8 @@ module Spree
 
     before_validation :set_login
     before_destroy :check_completed_orders
-
+    before_validation :set_unused_address_fields
+    
     roles_table_name = Role.table_name
 
     scope :admin, lambda { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
@@ -149,6 +150,11 @@ module Spree
     end
 
     private
+
+    def set_unused_address_fields
+      ship_address.company = 'Company' if ship_address.present?
+      bill_address.company = 'Company' if bill_address.present?
+    end
 
     def check_completed_orders
       raise DestroyWithOrdersError if orders.complete.present?

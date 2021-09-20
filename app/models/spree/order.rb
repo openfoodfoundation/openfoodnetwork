@@ -86,6 +86,7 @@ module Spree
     before_validation :clone_billing_address, if: :use_billing?
     before_validation :associate_customer, unless: :customer_id?
     before_validation :ensure_customer, unless: :customer_is_valid?
+    before_validation :set_unused_address_fields
 
     before_create :link_by_email
     after_create :create_tax_charge!
@@ -610,6 +611,11 @@ module Spree
     end
 
     private
+
+    def set_unused_address_fields
+      ship_address.company = 'Company' if ship_address.present?
+      bill_address.company = 'Company' if bill_address.present?
+    end
 
     def fee_handler
       @fee_handler ||= OrderFeesHandler.new(self)

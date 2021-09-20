@@ -27,6 +27,8 @@ class Subscription < ApplicationRecord
   accepts_nested_attributes_for :subscription_line_items, allow_destroy: true
   accepts_nested_attributes_for :bill_address, :ship_address
 
+  before_validation :set_unused_address_fields
+  
   scope :not_ended, -> {
                       where('subscriptions.ends_at > (?) OR subscriptions.ends_at IS NULL', Time.zone.now)
                     }
@@ -74,6 +76,11 @@ class Subscription < ApplicationRecord
   end
 
   private
+
+  def set_unused_address_fields
+    ship_address.company = 'Company' if ship_address.present?
+    bill_address.company = 'Company' if bill_address.present?
+  end
 
   def pending?
     return true unless begins_at
