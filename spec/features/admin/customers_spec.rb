@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Customers' do
+describe 'Customers' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

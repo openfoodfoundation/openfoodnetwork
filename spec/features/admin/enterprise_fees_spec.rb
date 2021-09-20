@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an administrator
     I want to manage enterprise fees
 ', js: true do
@@ -11,7 +11,7 @@ feature '
 
   let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
 
-  scenario "listing enterprise fees" do
+  it "listing enterprise fees" do
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing',
                                   tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
@@ -30,7 +30,7 @@ feature '
     expect(page).to have_selector "input[value='#{amount}']"
   end
 
-  scenario "creating an enterprise fee" do
+  it "creating an enterprise fee" do
     # Given an enterprise
     e = create(:supplier_enterprise, name: 'Feedme')
 
@@ -58,7 +58,7 @@ feature '
     expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
   end
 
-  scenario "editing an enterprise fee" do
+  it "editing an enterprise fee" do
     # Given an enterprise fee
     fee = create(:enterprise_fee)
     enterprise = create(:enterprise, name: 'Foo')
@@ -96,7 +96,7 @@ feature '
     expect(fee.inherits_tax_category).to eq(true)
   end
 
-  scenario "deleting an enterprise fee" do
+  it "deleting an enterprise fee" do
     # Given an enterprise fee
     fee = create(:enterprise_fee)
 

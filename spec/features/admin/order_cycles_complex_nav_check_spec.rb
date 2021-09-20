@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an administrator
     I want to be alerted when I navigate away from a dirty order cycle form
 ', js: true do
   include AuthenticationHelper
 
-  scenario "alert when navigating away from dirty form" do
+  it "alert when navigating away from dirty form" do
     # Given a 'complex' order cycle form
     oc = create(:order_cycle)
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Multilingual', js: true do
+describe 'Multilingual', js: true do
   include AuthenticationHelper
   include WebHelper
   let(:admin_role) { Spree::Role.find_or_create_by!(name: 'admin') }

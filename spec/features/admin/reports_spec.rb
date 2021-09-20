@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature '
+describe '
     As an administrator
     I want numbers, all the numbers!
 ' do
@@ -36,7 +36,7 @@ feature '
       login_as_admin_and_visit spree.admin_reports_path
     end
 
-    scenario "customers report" do
+    it "customers report" do
       click_link "Mailing List"
       expect(page).to have_select('report_type', selected: 'Mailing List')
       expect(page).to have_content "click on GO"
@@ -49,7 +49,7 @@ feature '
       ].sort)
     end
 
-    scenario "customers report" do
+    it "customers report" do
       click_link "Addresses"
       expect(page).to have_select('report_type', selected: 'Addresses')
 
@@ -68,7 +68,7 @@ feature '
       login_as_admin_and_visit spree.admin_reports_path
     end
 
-    scenario "payment method report" do
+    it "payment method report" do
       click_link "Payment Methods Report"
       click_button "Search"
       rows = find("table#listing_ocm_orders").all("thead tr")
@@ -79,7 +79,7 @@ feature '
       ].sort)
     end
 
-    scenario "delivery report" do
+    it "delivery report" do
       click_link "Delivery Report"
       click_button "Search"
       rows = find("table#listing_ocm_orders").all("thead tr")
@@ -119,7 +119,7 @@ feature '
       create(:line_item_with_shipment, variant: product_2.master, quantity: 3, order: order2)
     end
 
-    scenario "Pack By Customer" do
+    it "Pack By Customer" do
       click_link "Pack By Customer"
       fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
       fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
@@ -135,7 +135,7 @@ feature '
       expect(page).to have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
     end
 
-    scenario "Alphabetically Sorted Pack by Customer" do
+    it "Alphabetically Sorted Pack by Customer" do
       click_link "Pack By Customer"
       click_button 'Search'
 
@@ -151,7 +151,7 @@ feature '
                           ])
     end
 
-    scenario "Pack By Supplier" do
+    it "Pack By Supplier" do
       click_link "Pack By Supplier"
       fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
       fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
@@ -168,7 +168,7 @@ feature '
     end
   end
 
-  scenario "orders and distributors report" do
+  it "orders and distributors report" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Search'
@@ -176,7 +176,7 @@ feature '
     expect(page).to have_content 'Order date'
   end
 
-  scenario "payments reports" do
+  it "payments reports" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Payment Reports'
     click_button 'Search'

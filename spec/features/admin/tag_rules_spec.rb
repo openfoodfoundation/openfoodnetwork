@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Tag Rules', js: true do
+describe 'Tag Rules', js: true do
   include AuthenticationHelper
   include WebHelper
 

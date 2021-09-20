@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature '
+describe '
     As an administrator
     I want to create and edit orders
 ', js: true do
@@ -39,7 +39,7 @@ feature '
     click_button 'Next'
   end
 
-  scenario "creating an order with distributor and order cycle" do
+  it "creating an order with distributor and order cycle" do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
@@ -84,7 +84,7 @@ feature '
     expect(o.order_cycle).to eq(order_cycle)
   end
 
-  scenario "can add a product to an existing order" do
+  it "can add a product to an existing order" do
     login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     select2_select product.name, from: 'add_variant_id', search: true
@@ -95,7 +95,7 @@ feature '
     expect(order.line_items.reload.map(&:product)).to include product
   end
 
-  scenario "displays error when incorrect distribution for products is chosen" do
+  it "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
 
@@ -118,7 +118,7 @@ feature '
                                  "cannot supply the products in your cart"
   end
 
-  scenario "can't add products to an order outside the order's hub and order cycle" do
+  it "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
     login_as_admin_and_visit spree.edit_admin_order_path(order)
@@ -126,7 +126,7 @@ feature '
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
-  scenario "can't add more items than are available" do
+  it "can't add more items than are available" do
     # Move the order back to the cart state
     order.state = 'cart'
     order.completed_at = nil
@@ -153,7 +153,7 @@ feature '
     expect(order.reload.line_items.first.quantity).to eq(max_quantity)
   end
 
-  scenario "there are infinite items available (variant is on demand)" do
+  it "there are infinite items available (variant is on demand)" do
     # Move the order back to the cart state
     order.state = 'cart'
     order.completed_at = nil
@@ -233,7 +233,7 @@ feature '
     end
   end
 
-  scenario "can't change distributor or order cycle once order has been finalized" do
+  it "can't change distributor or order cycle once order has been finalized" do
     login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
@@ -243,7 +243,7 @@ feature '
     expect(page).to have_selector 'p', text: "Order cycle: #{order.order_cycle.name}"
   end
 
-  scenario "filling customer details" do
+  it "filling customer details" do
     # Given a customer with an order, which includes their shipping and billing address
 
     # We change the 1st order's address details, this way
@@ -303,7 +303,7 @@ feature '
       login_as @enterprise_user
     end
 
-    feature "viewing the edit page" do
+    describe "viewing the edit page" do
       let!(:shipping_method_for_distributor1) do
         create(:shipping_method, name: "Normal", distributors: [distributor1])
       end
@@ -322,7 +322,7 @@ feature '
         visit spree.edit_admin_order_path(order)
       end
 
-      scenario "verifying page contents" do
+      it "verifying page contents" do
         # shows a list of line_items
         within('table.index tbody', match: :first) do
           order.line_items.each do |item|
@@ -365,7 +365,7 @@ feature '
         end
       end
 
-      scenario "cannot split the order in different stock locations" do
+      it "cannot split the order in different stock locations" do
         # There's only 1 stock location in OFN,
         #   so the split functionality that comes with spree should be hidden
         expect(page).to_not have_selector '.split-item'
@@ -379,7 +379,7 @@ feature '
           create(:shipping_method, name: "Other", distributors: [distributor2])
         end
 
-        scenario "can edit shipping method" do
+        it "can edit shipping method" do
           visit spree.edit_admin_order_path(order)
 
           expect(page).to_not have_content different_shipping_method_for_distributor1.name
@@ -398,7 +398,7 @@ feature '
         end
       end
 
-      scenario "can edit tracking number" do
+      it "can edit tracking number" do
         test_tracking_number = "ABCCBA"
         expect(page).to_not have_content test_tracking_number
 
@@ -409,7 +409,7 @@ feature '
         expect(page).to have_content test_tracking_number
       end
 
-      scenario "viewing shipping fees" do
+      it "viewing shipping fees" do
         shipping_fee = order.shipment_adjustments.first
 
         click_link "Adjustments"
@@ -442,7 +442,7 @@ feature '
       end
     end
 
-    scenario "creating an order with distributor and order cycle" do
+    it "creating an order with distributor and order cycle" do
       new_order_with_distribution(distributor1, order_cycle1)
 
       expect(page).to have_content 'ADD PRODUCT'

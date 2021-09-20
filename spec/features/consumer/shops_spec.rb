@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Shops', js: true do
+describe 'Shops', js: true do
   include AuthenticationHelper
   include UIComponentHelper
   include WebHelper

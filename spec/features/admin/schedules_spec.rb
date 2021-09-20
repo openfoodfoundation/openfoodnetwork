@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Schedules', js: true do
+describe 'Schedules', js: true do
   include AuthenticationHelper
   include WebHelper
 

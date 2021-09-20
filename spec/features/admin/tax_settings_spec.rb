@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Account and Billing Settings' do
+describe 'Account and Billing Settings' do
   include AuthenticationHelper
   include WebHelper
 

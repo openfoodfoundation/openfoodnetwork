@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an administrator
     I want to manage complex order cycles
 ', js: true do
@@ -28,13 +28,13 @@ feature '
       expect(page).to_not have_content new_product.name
     end
 
-    scenario "load all products" do
+    it "load all products" do
       page.find(".exchange-load-all-variants a").click
 
       expect_all_products_loaded
     end
 
-    scenario "select all products" do
+    it "select all products" do
       # replace with scroll_to method when upgrading to Capybara >= 3.13.0
       checkbox_id = "order_cycle_incoming_exchange_0_select_all_variants"
       page.execute_script("document.getElementById('#{checkbox_id}').scrollIntoView()")

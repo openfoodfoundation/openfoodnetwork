@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-xfeature '
+xdescribe '
     As an administrator
     I want to create/update complex order cycles with a specific time
 ', js: true do
@@ -17,7 +17,7 @@ xfeature '
     Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z")
   }
 
-  scenario "updating an order cycle", js: true do
+  it "updating an order cycle", js: true do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by(&:id)

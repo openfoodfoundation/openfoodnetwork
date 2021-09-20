@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature "As a consumer I want to shop with a distributor", js: true do
+describe "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

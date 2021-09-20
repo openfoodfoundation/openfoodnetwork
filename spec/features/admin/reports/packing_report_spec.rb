@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature "Packing Reports", js: true do
+describe "Packing Reports", js: true do
   include AuthenticationHelper
   include WebHelper
 

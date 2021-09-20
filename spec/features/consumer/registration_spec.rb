@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature "Registration", js: true do
+describe "Registration", js: true do
   include AuthenticationHelper
   include WebHelper
 

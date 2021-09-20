@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage adjustments on orders
 ', js: true do
@@ -28,7 +28,7 @@ feature '
     create(:check_payment, order: order, amount: order.total)
   end
 
-  scenario "adding taxed adjustments to an order" do
+  it "adding taxed adjustments to an order" do
     # When I go to the adjustments page for the order
     login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
@@ -47,7 +47,7 @@ feature '
     expect(page).to have_selector 'td.tax', text: '10.00'
   end
 
-  scenario "modifying taxed adjustments on an order" do
+  it "modifying taxed adjustments on an order" do
     # Given a taxed adjustment
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
                                      amount: 110, tax_category: tax_category, order: order)
@@ -69,7 +69,7 @@ feature '
     expect(page).to have_selector 'td.tax', text: '0.00'
   end
 
-  scenario "modifying an untaxed adjustment on an order" do
+  it "modifying an untaxed adjustment on an order" do
     # Given an untaxed adjustment
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
                                      amount: 110, tax_category: nil, order: order)
@@ -91,7 +91,7 @@ feature '
     expect(page).to have_selector 'td.tax', text: '10.00'
   end
 
-  scenario "viewing adjustments on a canceled order" do
+  it "viewing adjustments on a canceled order" do
     # Given a taxed adjustment
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
                                      amount: 110, tax_category: tax_category, order: order)

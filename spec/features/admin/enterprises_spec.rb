@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-feature '
+describe '
     As an administrator
     I want to manage enterprises
 ' do
   include WebHelper
   include AuthenticationHelper
 
-  scenario "viewing an enterprise" do
+  it "viewing an enterprise" do
     e = create(:enterprise)
 
     login_to_admin_section
@@ -19,7 +19,7 @@ feature '
     expect(page).to have_content e.name
   end
 
-  scenario "creating a new enterprise", js: true do
+  it "creating a new enterprise", js: true do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -60,7 +60,7 @@ feature '
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
   end
 
-  scenario "editing an existing enterprise", js: true do
+  it "editing an existing enterprise", js: true do
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -339,7 +339,7 @@ feature '
         select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
       end
 
-      scenario "without violating rules" do
+      it "without violating rules" do
         click_button 'Create'
 
         # Then it should be created
@@ -367,7 +367,7 @@ feature '
       end
     end
 
-    scenario "editing enterprises I manage" do
+    it "editing enterprises I manage" do
       visit admin_enterprises_path
       within("tbody#e_#{distributor1.id}") { click_link 'Settings' }
 
@@ -410,7 +410,7 @@ feature '
       end
     end
 
-    scenario "managing producer properties" do
+    it "managing producer properties" do
       create(:property, name: "Certified Organic")
       visit admin_enterprises_path
       within("#e_#{supplier1.id}") { click_link 'Settings' }

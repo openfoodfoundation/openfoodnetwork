@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
 ', js: true do

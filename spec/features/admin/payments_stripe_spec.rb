@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an hub manager
     I want to make Stripe payments
 ' do
