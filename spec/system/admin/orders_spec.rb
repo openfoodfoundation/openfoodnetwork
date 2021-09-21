@@ -23,11 +23,19 @@ describe '
                                                   order_cycle: order_cycle,
                                                   state: 'complete', payment_state: 'balance_due')
     end
+        
+    let!(:order_cycle2) { create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now) }
+    let!(:order_cycle3) { create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now) }
+    let!(:order_cycle4) { create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now) }  
+
+    let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle2) }
+    let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle3) }
+    let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle4) }
 
     it "order cycles appear in descending order by close date on orders page" do
-      create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
-      create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
-      create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
 
       login_as_admin_and_visit 'admin/orders'
 
@@ -38,16 +46,6 @@ describe '
     end
 
     it "filter by multiple order cycles" do
-      order_cycle2 = create(:simple_order_cycle, name: 'Two')
-      order_cycle3 = create(:simple_order_cycle, name: 'Three')
-      order_cycle4 = create(:simple_order_cycle, name: 'Four')
-
-      order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle2)
-      order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle3)
-      order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle4)
 
       login_as_admin_and_visit 'admin/orders'
 
@@ -64,12 +62,6 @@ describe '
 
     context "select/unselect all orders" do
       it "by clicking on the checkbox in the table header" do
-        order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                  order_cycle: order_cycle)
-        order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                  order_cycle: order_cycle)
-        order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                  order_cycle: order_cycle)
 
         login_as_admin_and_visit spree.admin_orders_path
         # select all orders
