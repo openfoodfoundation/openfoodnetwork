@@ -18,6 +18,8 @@
 = render "spree/admin/shared/translations"
 = render "spree/admin/shared/routes"
 
+= javascript_pack_tag "admin", "data-turbo-track": "reload"
+
 %script
   = raw "var AUTH_TOKEN = \"#{form_authenticity_token}\";"
 
