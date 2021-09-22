@@ -97,6 +97,13 @@ describe "Option Value Namer", ->
           p.variant_unit_scale = scale
           v.unit_value = 100 * scale
           expect(namer.option_value_value_unit()).toEqual [100, unit]
+      
+      it "generates right values for volume with rounded values", ->
+        unit = 'L'
+        p.variant_unit = 'volume'
+        p.variant_unit_scale = 1.0
+        v.unit_value = 0.7
+        expect(namer.option_value_value_unit()).toEqual [700, 'mL']
 
       it "chooses the correct scale when value is very small", ->
         p.variant_unit = 'volume'
