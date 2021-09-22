@@ -28,7 +28,7 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@hotwired/turbo": "^7.0.0-rc.4",
-    "@rails/webpacker": "5.4.2",
+    "@rails/webpacker": "5.4.3",
     "cable_ready": "^5.0.0-pre2",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
