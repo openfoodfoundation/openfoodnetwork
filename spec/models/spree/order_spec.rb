@@ -205,7 +205,8 @@ describe Spree::Order do
       end
 
       it "cancels payments requiring authorization" do
-        expect_any_instance_of(Spree::Payment).to receive(:void_transaction!)
+        expect(stripe_payment).to receive(:void_transaction!)
+        expect(cash_payment).to_not receive(:void_transaction!)
         order.finalize!
       end
     end
