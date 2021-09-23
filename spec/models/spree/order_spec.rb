@@ -202,7 +202,6 @@ describe Spree::Order do
       before do
         order.payments << cash_payment
         order.payments << stripe_payment
-        allow_any_instance_of(Spree::Payment).to receive(:void_transaction!) {}
       end
 
       it "cancels payments requiring authorization" do
