@@ -615,7 +615,7 @@ module Spree
     def cancel_payments_requiring_auth
       return unless payment_state == "paid"
 
-      payments.requires_authorization.each(&:void_transaction!)
+      payments.to_a.select(&:requires_authorization?).each(&:void_transaction!)
     end
 
     def fee_handler
