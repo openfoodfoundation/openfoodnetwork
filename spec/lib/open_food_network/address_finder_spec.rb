@@ -59,7 +59,7 @@ module OpenFoodNetwork
         before { allow(finder).to receive(:last_used_bill_address) { nil } }
 
         it "returns a new empty address" do
-          expect(finder.send(:fallback_bill_address)).to eq Spree::Address.default
+          expect(finder.send(:fallback_bill_address)).to eq nil
         end
       end
     end
@@ -79,8 +79,8 @@ module OpenFoodNetwork
       context "when no last_used_ship_address is found" do
         before { allow(finder).to receive(:last_used_ship_address) { nil } }
 
-        it "returns a new empty address" do
-          expect(finder.send(:fallback_ship_address)).to eq Spree::Address.default
+        it "returns nil" do
+          expect(finder.send(:fallback_ship_address)).to eq nil
         end
       end
     end

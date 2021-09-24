@@ -66,11 +66,11 @@ module OpenFoodNetwork
     end
 
     def fallback_bill_address
-      last_used_bill_address&.clone || Spree::Address.default
+      last_used_bill_address&.clone
     end
 
     def fallback_ship_address
-      last_used_ship_address&.clone || Spree::Address.default
+      last_used_ship_address&.clone
     end
 
     def last_used_bill_address
