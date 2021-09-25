@@ -52,10 +52,10 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run all tests
-        run: TEST_RUBY_PROF=1 bundle exec rspec --tag type:feature
+        run: FPROF=flamegraph bundle exec rspec
 
       - name: upload a file        
         uses: actions/upload-artifact@v2
         with:
-          name: run-all-tests
-          path: tmp/test_prof/ruby-prof-report-flat-wall-total.txt
+          name: run-all-tests-with-flamegraph
+          path: tmp/test_prof/factory-flame.html
