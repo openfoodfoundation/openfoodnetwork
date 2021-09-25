@@ -52,10 +52,4 @@ jobs:
           bundle exec rake db:schema:load RAILS_ENV=test
 
       - name: Run all tests
-        run: TEST_RUBY_PROF=1 bundle exec rspec --tag type:feature
-
-      - name: upload a file        
-        uses: actions/upload-artifact@v2
-        with:
-          name: run-all-tests
-          path: tmp/test_prof/ruby-prof-report-flat-wall-total.txt
+        run: EVENT_PROF="factory.create" bundle exec rspec
