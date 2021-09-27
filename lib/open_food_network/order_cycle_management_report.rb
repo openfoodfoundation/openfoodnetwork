@@ -95,7 +95,7 @@ module OpenFoodNetwork
        ba&.phone,
        order.shipping_method&.name,
        order.payments.first&.payment_method&.name,
-       order.total,
+       order.payments.first&.amount,
        balance(order)]
     end
 
@@ -110,7 +110,7 @@ module OpenFoodNetwork
        sa.phone,
        order.shipping_method&.name,
        order.payments.first&.payment_method&.name,
-       order.total,
+       order.payments.first&.amount,
        balance(order),
        has_temperature_controlled_items?(order),
        order.special_instructions]

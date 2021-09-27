@@ -8,7 +8,7 @@ require "rails"
   "action_view/railtie",
   "action_mailer/railtie",
   "active_job/railtie",
-  "action_cable/engine",
+  #"action_cable/engine", # Enable this when installing StimulusReflex
   #"action_mailbox/engine",
   #"action_text/engine",
   "rails/test_unit/railtie",
@@ -136,7 +136,6 @@ module Openfoodnetwork
 
     # Register Spree payment methods
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Spree::Gateway::StripeConnect
       app.config.spree.payment_methods << Spree::Gateway::StripeSCA
       app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
     end

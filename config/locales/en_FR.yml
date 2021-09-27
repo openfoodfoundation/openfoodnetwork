@@ -1710,7 +1710,6 @@ en_FR:
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
-  producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -2192,7 +2191,6 @@ en_FR:
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   calculator_preferred_unit_error: "must be kg or lb"
-  calculator_preferred_amount_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"

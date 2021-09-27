@@ -1,7 +1,0 @@
-#flashes
-  - if defined? flashes
-    - flashes.each do |type, msg|
-      %alert.animate-show{"data-controller": "flash"}
-        %div{type: "#{type}", class: "alert-box #{type == 'error' ? 'alert' : type}"}
-          %span= msg
-          %a.small.close{"data-action": "click->flash#close"} ×

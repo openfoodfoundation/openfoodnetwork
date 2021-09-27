@@ -173,7 +173,7 @@ module OpenFoodNetwork
                                                 order.billing_address.phone,
                                                 order.shipment.shipping_method.name,
                                                 nil,
-                                                order.total,
+                                                nil,
                                                 -order.total
                                               ]])
           end
@@ -200,7 +200,7 @@ module OpenFoodNetwork
                                                 order.ship_address.phone,
                                                 order.shipment.shipping_method.name,
                                                 nil,
-                                                order.total,
+                                                nil,
                                                 -order.total,
                                                 false,
                                                 order.special_instructions

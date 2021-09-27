@@ -191,20 +191,26 @@ describe SubscriptionConfirmJob do
         end
       end
 
-      context "Stripe Connect" do
-        let(:stripe_connect_payment_method) { create(:stripe_connect_payment_method) }
-        let(:stripe_connect_payment) {
-          create(:payment, amount: 10, payment_method: stripe_connect_payment_method)
+      context "Stripe SCA" do
+        let(:stripe_sca_payment_method) { create(:stripe_sca_payment_method) }
+        let(:stripe_sca_payment) {
+          create(:payment, amount: 10, payment_method: stripe_sca_payment_method)
         }
+        let(:provider) { double }
 
         before do
-          allow(order).to receive(:pending_payments) { [stripe_connect_payment] }
-          allow(stripe_connect_payment_method).to receive(:purchase) { true }
+          allow_any_instance_of(Stripe::CreditCardCloner).to receive(:find_or_clone) {
+                                                               ["cus_123", "pm_1234"]
+                                                             }
+          allow(order).to receive(:pending_payments) { [stripe_sca_payment] }
+          allow(stripe_sca_payment_method).to receive(:provider) { provider }
+          allow(stripe_sca_payment_method.provider).to receive(:purchase) { true }
+          allow(stripe_sca_payment_method.provider).to receive(:capture) { true }
         end
 
         it "runs the charges in offline mode" do
           job.send(:confirm_order!, order)
-          expect(stripe_connect_payment_method).to have_received(:purchase)
+          expect(stripe_sca_payment_method.provider).to have_received(:purchase)
         end
       end
     end

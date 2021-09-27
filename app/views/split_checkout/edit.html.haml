@@ -1,7 +1,7 @@
 - content_for(:title) do
   = t :checkout_title
 
-.darkswarm.footer-pad{"data-turbo": "true"}
+.darkswarm.footer-pad
   - content_for :order_cycle_form do
     %closing
       = t :checkout_now
@@ -19,6 +19,10 @@
   .sub-header.show-for-medium-down
     = render partial: "shopping_shared/order_cycles"
 
-  = render partial: "checkout"
+  %checkout.row
+    .small-12.medium-12.columns
+      = render partial: "split_checkout/tabs"
+      = render partial: "split_checkout/form"
+
 
 = render partial: "shared/footer"

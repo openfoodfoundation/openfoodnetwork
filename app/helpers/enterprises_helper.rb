@@ -100,12 +100,4 @@ module EnterprisesHelper
   def subscriptions_enabled?
     spree_current_user.admin? || spree_current_user.enterprises.where(enable_subscriptions: true).any?
   end
-
-  def enterprise_url_selector(enterprise)
-    if enterprise.is_distributor
-      main_app.enterprise_shop_url(enterprise)
-    else
-      main_app.producers_url
-    end
-  end
 end

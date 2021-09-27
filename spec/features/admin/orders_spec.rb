@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "system_helper"
+require "spec_helper"
 
-describe '
+feature '
     As an administrator
     I want to manage orders
 ', js: true do
@@ -23,19 +23,11 @@ describe '
                                                   order_cycle: order_cycle,
                                                   state: 'complete', payment_state: 'balance_due')
     end
-        
-    let!(:order_cycle2) { create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now) }
-    let!(:order_cycle3) { create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now) }
-    let!(:order_cycle4) { create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now) }  
 
-    let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle2) }
-    let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle3) }
-    let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle4) }
-
-    it "order cycles appear in descending order by close date on orders page" do
+    scenario "order cycles appear in descending order by close date on orders page" do
+      create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
+      create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
+      create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
 
       login_as_admin_and_visit 'admin/orders'
 
@@ -45,7 +37,17 @@ describe '
                   visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two/m)
     end
 
-    it "filter by multiple order cycles" do
+    scenario "filter by multiple order cycles" do
+      order_cycle2 = create(:simple_order_cycle, name: 'Two')
+      order_cycle3 = create(:simple_order_cycle, name: 'Three')
+      order_cycle4 = create(:simple_order_cycle, name: 'Four')
+
+      order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle2)
+      order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle3)
+      order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle4)
 
       login_as_admin_and_visit 'admin/orders'
 
@@ -61,7 +63,13 @@ describe '
     end
 
     context "select/unselect all orders" do
-      it "by clicking on the checkbox in the table header" do
+      scenario "by clicking on the checkbox in the table header" do
+        order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
+        order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
+        order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                  order_cycle: order_cycle)
 
         login_as_admin_and_visit spree.admin_orders_path
         # select all orders
@@ -79,7 +87,7 @@ describe '
         order.payments << create(:check_payment, order: order, amount: order.total)
       end
 
-      it "capture payment" do
+      scenario "capture payment" do
         login_as_admin_and_visit spree.admin_orders_path
         expect(page).to have_current_path spree.admin_orders_path
 
@@ -96,7 +104,7 @@ describe '
         expect(page).to have_current_path spree.admin_orders_path
       end
 
-      it "ship order from the orders index page" do
+      scenario "ship order from the orders index page" do
         order.payments.first.capture!
         login_as_admin_and_visit spree.admin_orders_path
 
@@ -110,7 +118,7 @@ describe '
   end
 
   context "with incomplete order" do
-    it "can edit order" do
+    scenario "can edit order" do
       incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
 
       login_as_admin_and_visit spree.admin_orders_path
@@ -124,7 +132,7 @@ describe '
   end
 
   context "test the 'Only show the complete orders' checkbox" do
-    it "display or not incomplete order" do
+    scenario "display or not incomplete order" do
       incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
       complete_order = create(
         :order_with_line_items,
@@ -187,7 +195,7 @@ describe '
       page.find('a.icon-search').click
     end
 
-    it "when reloading the page" do
+    scenario "when reloading the page" do
       page.driver.refresh
 
       # Check every filters to be equal
@@ -204,7 +212,7 @@ describe '
       expect(find("#q_completed_at_lteq").value).to eq Time.zone.now.strftime("%Y-%m-%d")
     end
 
-    it "and clear filters" do
+    scenario "and clear filters" do
       find("a#clear_filters_button").click
       expect(find_field("Only show complete orders")).to be_checked
       expect(find_field("Invoice number").value).to eq ""
