@@ -108,12 +108,12 @@ module Spree
         end
       end
 
-      context "on a StripeSCA payment method" do
+      context "on a StripeConnect payment method" do
         let!(:user) { create(:user, enterprise_limit: 2) }
         let!(:enterprise1) { create(:distributor_enterprise, owner: user) }
         let!(:enterprise2) { create(:distributor_enterprise, owner: create(:user)) }
         let!(:payment_method) {
-          create(:stripe_sca_payment_method, distributor_ids: [enterprise1.id, enterprise2.id],
+          create(:stripe_connect_payment_method, distributor_ids: [enterprise1.id, enterprise2.id],
                                                  preferred_enterprise_id: enterprise2.id)
         }
 
@@ -124,7 +124,7 @@ module Spree
             {
               id: payment_method.id,
               payment_method: {
-                type: "Spree::Gateway::StripeSCA",
+                type: "Spree::Gateway::StripeConnect",
                 preferred_enterprise_id: enterprise1.id
               }
             }

@@ -1,4 +1,6 @@
 - case @payment_method
+- when Spree::Gateway::StripeConnect
+  = render 'stripe_connect'
 - when Spree::Gateway::StripeSCA
   = render 'stripe_connect'
 - else

@@ -34,7 +34,7 @@ module OrderManagement
           end
 
           context "when the payment method is a stripe payment method" do
-            let(:payment_method) { create(:stripe_sca_payment_method) }
+            let(:payment_method) { create(:stripe_connect_payment_method) }
 
             context "and the card is already set (the payment source is a credit card)" do
               it "returns the pending payment with no change" do

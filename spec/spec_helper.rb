@@ -55,6 +55,12 @@ RSpec.configure do |config|
     Capybara.reset_sessions!
   end
 
+  # Precompile Webpacker assets (once) when starting the suite. The default setup can result
+  # in the assets getting compiled many times throughout the build, slowing it down.
+  config.before :suite do
+    Webpacker.compile
+  end
+
   # Fix encoding issue in Rails 5.0; allows passing empty arrays or hashes as params.
   config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
 

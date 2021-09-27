@@ -15,16 +15,26 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
     %link{href: font_path("OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
 
-    = stylesheet_link_tag "darkswarm/all"
-    = javascript_pack_tag "application"
-    = csrf_meta_tags
+    = stylesheet_link_tag "darkswarm/all", "data-turbo-track": "reload"
+    = javascript_pack_tag "application", "data-turbo-track": "reload"
 
-  %body{ class: body_classes, "body-scroll" => true , ng: { app: 'Darkswarm' }}
+    = render "layouts/shopfront_script" if @shopfront_layout
+    = render "layouts/bugsnag_js"
+
+    - if Spree::Config.stripe_connect_enabled
+      = render "shared/stripe_js"
+
+    = javascript_include_tag "darkswarm/all", "data-turbo-track": "reload"
+    = javascript_include_tag "web/all", "data-turbo-track": "reload"
+    = render "layouts/i18n_script"
+
+    = csrf_meta_tags
+    %meta{name: "turbo-cache-control", content: "no-cache"}
+
+  %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
-
-    = render "layouts/shopfront_script" if @shopfront_layout
 
     .off-canvas-wrap{ offcanvas: true }
       .fixed.off-canvas-fixed
@@ -38,16 +48,7 @@
           #footer
     %loading
 
-    = render "layouts/bugsnag_js"
-
-    - if Spree::Config.stripe_connect_enabled
-      = render "shared/stripe_js"
-    = javascript_include_tag "darkswarm/all"
-    = javascript_include_tag "web/all"
-    = render "layouts/i18n_script"
-
     = yield :scripts
-
     = inject_current_hub
     = inject_current_user
     = inject_rails_flash

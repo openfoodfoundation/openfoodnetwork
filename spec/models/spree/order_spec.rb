@@ -1213,7 +1213,7 @@ describe Spree::Order do
     let!(:enterprise) { create(:enterprise) }
     let!(:order) { create(:order, distributor: enterprise) }
     let!(:payment_method) {
-      create(:stripe_sca_payment_method, distributor_ids: [enterprise.id])
+      create(:stripe_connect_payment_method, distributor_ids: [enterprise.id])
     }
     let!(:payment) { create(:payment, order: order, payment_method: payment_method) }
 

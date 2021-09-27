@@ -144,7 +144,7 @@ feature '
       fill_in(:quantity, with: max_quantity + 1)
       find("a.save-item").click
     end
-    accept_js_alert
+    click_button("OK")
 
     expect(page).to_not have_content "Loading..."
     within("tr.stock-item", text: order.products.first.name) do
