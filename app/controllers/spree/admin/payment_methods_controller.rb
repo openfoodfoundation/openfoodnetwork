@@ -7,7 +7,7 @@ module Spree
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
       before_action :load_hubs, only: [:new, :edit, :update]
-      before_action :validate_calculator_preferred_amount, only: [:update]
+      before_action :validate_calculator_preferred_value, only: [:update]
 
       respond_to :html
 
@@ -158,11 +158,14 @@ module Spree
           call.to_h.with_indifferent_access
       end
 
+      def gateway_params
+        raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
+      end
+
       # Merge payment method params with gateway params like :gateway_stripe_connect
       # Also, remove password if present and blank
       def update_params
         @update_params ||= begin
-          gateway_params = raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
           params_for_update = base_params.merge(gateway_params)
 
           params_for_update.each do |key, value|
@@ -175,14 +178,29 @@ module Spree
         end
       end
 
-      def validate_calculator_preferred_amount
-        preferred_amount = params.dig(:payment_method_check, :calculator_attributes,
-                                      :preferred_amount)
-        return if preferred_amount.nil? || Float(preferred_amount,
-                                                 exception: false)
+      def validate_calculator_preferred_value
+        return if calculator_preferred_values.all? do |value|
+          preferred_value_from_params = gateway_params.dig(:calculator_attributes, value)
+          preferred_value_from_params.nil? || Float(preferred_value_from_params,
+                                                    exception: false)
+        end
 
-        flash[:error] = I18n.t(:calculator_preferred_amount_error)
+        flash[:error] = I18n.t(:calculator_preferred_value_error)
         redirect_to spree.edit_admin_payment_method_path(@payment_method)
+      end
+
+      def calculator_preferred_values
+        [
+          :preferred_amount,
+          :preferred_flat_percent,
+          :preferred_flat_percent,
+          :preferred_first_item,
+          :preferred_additional_item,
+          :preferred_max_items,
+          :preferred_normal_amount,
+          :preferred_discount_amount,
+          :preferred_minimal_amount
+        ]
       end
     end
   end
