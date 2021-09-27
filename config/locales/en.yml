@@ -2708,6 +2708,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         Perhaps it has become unavailable or the shop is closing.
     admin:
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ as it is includes taxes & fees."
+      print_invoice_tooltip: "Choose 'ONLY SHOW COMPLETE ORDERS' to enable bulk printing of invoices"
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: "Got it"

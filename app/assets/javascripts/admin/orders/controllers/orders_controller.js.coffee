@@ -84,8 +84,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     $scope.selected_orders.length = 0
     $scope.orders.forEach (order) ->
       $scope.checkboxes[order.id] = $scope.select_all
-      if $scope.select_all && order.state == "complete"
-        $scope.selected_orders.push order.id
+      $scope.selected_orders.push order.id if $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
     return unless sort && sort.predicate != ""

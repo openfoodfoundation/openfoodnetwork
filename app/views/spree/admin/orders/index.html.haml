@@ -23,8 +23,14 @@
   = render partial: 'per_page_controls'
 
   - if Spree::Config[:enable_invoices?]
-    %button.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0'}
+    %button.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0 || !q.completed_at_not_null'}
       = t('.print_invoices')
+      %question-mark-with-tooltip{"question-mark-with-tooltip": "_",
+      "question-mark-with-tooltip-append-to-body": "true",
+      "question-mark-with-tooltip-placement": "top",
+      "question-mark-with-tooltip-animation": true,
+      style: "margin-left: 5px",
+      key: "'js.admin.print_invoice_tooltip'"}
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
@@ -49,7 +55,7 @@
   %tbody
     %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "{'state-{{order.state}}': true, 'row-loading': rowStatus[order.id] == 'loading'}"}
       %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)', 'ng-hide' => 'order.state != "complete"'}
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
