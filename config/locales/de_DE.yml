@@ -2194,7 +2194,7 @@ de_DE:
   calculator_values: "Werte zur Berechnung"
   calculator_settings_warning: "Wenn Sie den Gebührentyp ändern, müssen Sie zuerst speichern, bevor Sie die Gebühreneinstellungen bearbeiten können."
   calculator_preferred_unit_error: "muss kg oder lb sein"
-  calculator_preferred_amount_error: "Ungültige Eingabe. Bitte nur Zahlen verwenden, z. B. 10, 5.5, -20"
+  calculator_preferred_value_error: "Ungültige Eingabe. Bitte nur Zahlen verwenden, z. B. 10, 5.5, -20"
   flat_percent_per_item: "Fester Prozentsatz (pro Artikel)"
   flat_rate_per_item: "Pauschale (pro Artikel)"
   flat_rate_per_order: "Pauschale (pro Bestellung)"

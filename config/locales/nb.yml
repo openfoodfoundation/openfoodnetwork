@@ -2192,7 +2192,7 @@ nb:
   calculator_values: "Kalkulatorverdier"
   calculator_settings_warning: "Hvis du endrer kalkulatortypen, må du lagre først før du kan redigere kalkulatorinnstillingene"
   calculator_preferred_unit_error: "må være kg eller lb."
-  calculator_preferred_amount_error: "Ugyldig input. Vennligst bruk kun tall. For eksempel: 10, 5.5, -20"
+  calculator_preferred_value_error: "Ugyldig input. Vennligst bruk kun tall. For eksempel: 10, 5.5, -20"
   flat_percent_per_item: "Flat prosent (per stk)"
   flat_rate_per_item: "Flat rate (per vare)"
   flat_rate_per_order: "Flat Rate (per bestilling)"
