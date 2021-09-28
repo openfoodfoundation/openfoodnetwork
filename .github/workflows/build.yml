@@ -62,8 +62,8 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
       - name: Run controller tests
         run: bundle exec rspec --profile -- ${{ matrix.specs }}
@@ -103,11 +103,11 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create RAILS_ENV=test
-          bundle exec rake db:schema:load RAILS_ENV=test
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
       - name: Run JS tests
-        run: RAILS_ENV=test bundle exec rake karma:run
+        run: bundle exec rake karma:run
 
       - name: Run jest tests
         run: yarn jest
