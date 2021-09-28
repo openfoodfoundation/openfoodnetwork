@@ -316,7 +316,7 @@ describe '
                                   end
       end
 
-      background do
+      before do
         distributor1.update_attribute(:abn, '12345678')
 
         visit spree.edit_admin_order_path(order)

@@ -13,7 +13,7 @@ describe '
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
   let!(:shipping_category) { DefaultShippingCategory.find_or_create }
 
-  background do
+  before do
     @supplier = create(:supplier_enterprise, name: 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
@@ -167,7 +167,9 @@ describe '
     }
 
     context 'products', js: true do
-      before { login_as_admin_and_visit spree.admin_products_path }
+      before do
+        login_as_admin_and_visit spree.admin_products_path
+      end
 
       it 'creates a copy of the product' do
         within "#p_#{product1.id}" do

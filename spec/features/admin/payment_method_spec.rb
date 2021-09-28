@@ -9,7 +9,7 @@ describe '
   include WebHelper
   include AuthenticationHelper
 
-  background do
+  before do
     @distributors = (1..3).map { create(:distributor_enterprise) }
   end
 
