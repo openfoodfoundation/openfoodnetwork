@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_food_network/order_cycle_permissions'
+
 module Admin
   class EnterpriseFeesController < Admin::ResourceController
     before_action :load_enterprise_fee_set, only: :index
