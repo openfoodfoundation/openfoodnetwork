@@ -431,7 +431,10 @@ describe '
         expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
         expect(page).to have_selector 'tr.distributor', count: 1
 
-        visit admin_order_cycle_incoming_path(oc)
+        # There's an unnecessary confirm modal which we should probably avoid.
+        page.driver.accept_modal :confirm do
+          click_link "Incoming Products"
+        end
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 

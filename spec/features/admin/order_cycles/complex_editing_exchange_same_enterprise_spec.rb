@@ -28,7 +28,11 @@ describe '
     # And when I edit the second order cycle, the exchange should appear as outgoing
     visit admin_order_cycle_outgoing_path(oc_outgoing)
     expect(page).to have_selector 'table.exchanges tr.distributor'
-    visit admin_order_cycle_incoming_path(oc_outgoing)
+
+    # There's an unnecessary confirm modal which we should probably avoid.
+    page.driver.accept_modal :confirm do
+      click_link "Incoming Products"
+    end
     expect(page).not_to have_selector 'table.exchanges tr.supplier'
   end
 end
