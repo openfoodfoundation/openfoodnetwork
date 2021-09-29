@@ -41,6 +41,8 @@ ru:
           attributes:
             email:
               taken: "Уже зарегистрирован аккаунт с этим email. Пожалуйста, войдите, чтобы сбросить пароль."
+            reset_password_token:
+              invalid: недействительный
         spree/order:
           no_card: Нет доступных проверенных кредитных карт для оплаты
         spree/credit_card:
@@ -95,6 +97,9 @@ ru:
   community_forum_url: "URL форума сообщества"
   customer_instructions: "Инструкции для Клиента"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Пароль не может быть пустым. Пожалуйста, введите пароль."
     confirmations:
       send_instructions: "В течение нескольких минут Вы получите электронное письмо с инструкциями о том, как подтвердить свой аккаунт."
       failed_to_send: "Произошла ошибка при отправке Вашего подтверждения по электронной почте."
@@ -1586,6 +1591,8 @@ ru:
         edit: Изменить свои данные
       billing_address:
         title: Платежный Адрес
+      shipping_address:
+        title: Адрес доставки
       delivery_info:
         title: Информация о доставке
       payment_method:
@@ -1596,12 +1603,17 @@ ru:
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
         link_text: "Условия и Положения"
+      agree: Нажимая «Завершить заказ», вы соглашаетесь с тем, что заказ отправится на обработку.
       submit: Завершить заказ
       cancel: Вернуться к Способу оплаты
     errors:
+      global: "Ошибка сохранения, обновите выделенные поля."
+      terms_not_accepted: Пожалуйста, примите Условия использования
       required: Поле не может быть пустым
       invalid_number: "Пожалуйста, введите действующий номер телефона"
       invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
+      select_a_shipping_method: Выберите способ доставки
+      select_a_payment_method: Выберите способ оплаты
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ
@@ -1701,6 +1713,7 @@ ru:
   producer_mail_order_text: "Вот сводка заказов на ваши товары:"
   producer_mail_delivery_instructions: "Инструкция по вывозу/доставке:"
   producer_mail_signoff: "Спасибо и с наилучшими пожеланиями"
+  producer_mail_order_customer_text: "Вот сводка заказов, сгруппированных по клиентам"
   shopping_oc_closed: Закрыто для заказов
   shopping_oc_closed_description: "Пожалуйста подождите пока откроется следующий цикл (или свяжитесь с нами напрямую, сможем ли мы принять какие-либо поздние заказы)"
   shopping_oc_last_closed: "Последний цикл закрылся %{distance_of_time} назад"
@@ -2182,6 +2195,7 @@ ru:
   calculator_values: "Значения"
   calculator_settings_warning: "Если Вы меняете тип калькулятора, то должны сначала сохранить его, прежде чем редактировать настройки калькулятора."
   calculator_preferred_unit_error: "должно быть кг или фунт"
+  calculator_preferred_value_error: "Некорректный ввод. Пожалуйста, используйте только цифры. Например: 10, 5.5, -20."
   flat_percent_per_item: "Процент (с единицы товара)"
   flat_rate_per_item: "Ставка (с единицы товара)"
   flat_rate_per_order: "Ставка (с заказа)"
