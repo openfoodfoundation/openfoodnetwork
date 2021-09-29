@@ -34,7 +34,7 @@ angular.module("admin.enterprises").factory 'PermalinkChecker', ($q, $http) ->
           deferredRequest.reject()
 
       deferredRequest.promise.finally ->
-        request = deferredRequest.promise = null;
+        request = deferredRequest.promise = null
 
       deferredRequest.promise
 
