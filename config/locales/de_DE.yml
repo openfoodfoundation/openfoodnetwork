@@ -1708,7 +1708,7 @@ de_DE:
     set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
     mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen."
   producer_mail_greeting: "Liebe/r"
-  producer_mail_text_before: "Nachfolgend senden wir Ihnen eine Aktualisierung des Bestellzyklus, bereit am:"
+  producer_mail_text_before: "wir informieren über den Stand des Bestellzyklus, bereit am:"
   producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
   producer_mail_signoff: "Viele Grüße,"
