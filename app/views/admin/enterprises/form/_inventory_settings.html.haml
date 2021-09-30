@@ -12,8 +12,8 @@
 .row
   .alpha.eleven.columns
     .five.columns.alpha
-      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "0", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
+      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, false
       = label :enterprise, :preferred_product_selection_from_inventory_only, t('.preferred_product_selection_from_inventory_only_yes')
     .six.columns.omega
-      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "1", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
+      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, true
       = label :enterprise, :preferred_product_selection_from_inventory_only, t('.preferred_product_selection_from_inventory_only_no')

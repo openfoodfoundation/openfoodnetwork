@@ -183,6 +183,11 @@ feature '
     choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     choose "enterprise_enable_subscriptions_true"
 
+    accept_alert do
+      click_link "Inventory Settings"
+    end
+    expect(page).to have_checked_field "enterprise_preferred_product_selection_from_inventory_only_false"
+
     click_button 'Update'
 
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
