@@ -143,9 +143,23 @@ describe '
         completed_at: 1.day.ago,
         line_items_count: 1
       )
+
+      empty_complete_order = create(
+        :order_with_line_items,
+        distributor: distributor,
+        order_cycle: order_cycle,
+        user: user,
+        state: 'complete',
+        payment_state: 'balance_due',
+        completed_at: 1.day.ago,
+        line_items_count: 0
+      )
+
       empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+
       login_as_admin_and_visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
+      expect(page).to have_content empty_complete_order.number
       expect(page).to have_no_content incomplete_order.number
       expect(page).to have_no_content empty_order.number
 
