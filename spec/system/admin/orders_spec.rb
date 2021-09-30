@@ -61,15 +61,22 @@ describe '
     end
 
     context "select/unselect all orders" do
-      it "by clicking on the checkbox in the table header" do
-
+        
+      before do
         login_as_admin_and_visit spree.admin_orders_path
+      end
+      
+      it "by clicking on the checkbox in the table header" do
         # select all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to be_checked
+        # enables print invoices button
+        expect(page).to have_button('Print Invoices', disabled: false)
         # unselect all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to_not be_checked
+        # disables print invoices button
+        expect(page).to have_button('Print Invoices', disabled: true)
       end
     end
 
@@ -179,6 +186,7 @@ describe '
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"
+byebug
       find('#q_completed_at_gteq').click
       select_date_from_datepicker Time.zone.at(1.week.ago)
       find('#q_completed_at_lteq').click
