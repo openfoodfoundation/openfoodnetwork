@@ -186,7 +186,6 @@ describe '
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"
-byebug
       find('#q_completed_at_gteq').click
       select_date_from_datepicker Time.zone.at(1.week.ago)
       find('#q_completed_at_lteq').click
