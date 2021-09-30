@@ -32,7 +32,7 @@ describe '
     let!(:order_cycle4) { create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now) }  
 
     let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor2,
-                                                  order_cycle: order_cycle2) }
+                                                  order_cycle: order_cycle2, completed_at: 2.day.ago) }
     let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor3,
                                                   order_cycle: order_cycle3) }
     let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor4,
@@ -72,9 +72,28 @@ describe '
       
       page.find('.filter-actions .button.icon-search').click
 
-      # Order 2 and 3 should show, but not 4
+      # Order 2 and 4 should show, but not 3
       expect(page).to have_content order2.number
       expect(page).to_not have_content order3.number
+      expect(page).to have_content order4.number
+    end
+
+    it "filter by complete date" do
+
+      login_as_admin_and_visit 'admin/orders'
+
+
+      find('#q_completed_at_gteq').click
+      select_date_from_datepicker order3.completed_at.yesterday
+      find('#q_completed_at_lteq').click
+      select_date_from_datepicker order4.completed_at.tomorrow
+
+      page.find('.filter-actions .button.icon-search').click
+
+
+      # Order 3 and 4 should show, but not 2
+      expect(page).to_not have_content order2.number
+      expect(page).to have_content order3.number
       expect(page).to have_content order4.number
     end
 
