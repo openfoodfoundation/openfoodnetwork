@@ -373,6 +373,9 @@ GEM
     letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8-node (15.14.0.1)
+    listen (3.7.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -768,6 +771,7 @@ DEPENDENCIES
   jwt (~> 2.3)
   knapsack
   letter_opener (>= 1.4.1)
+  listen
   mimemagic (> 0.3.5)
   mini_racer (= 0.4.0)
   monetize (~> 1.11)
