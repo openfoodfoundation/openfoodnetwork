@@ -21,18 +21,18 @@ module Api
       let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
       let!(:order1) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address) )
+                       distributor: distributor, billing_address: create(:address), total: 5.0)
       end
       let!(:order2) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor2, billing_address: create(:address) )
+                       distributor: distributor2, billing_address: create(:address), total: 10.0)
       end
       let!(:order3) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address) )
+                       distributor: distributor, billing_address: create(:address), total: 1.0 )
       end
       let!(:order4) do
-        create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2)
+        create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2, total: 15.0)
       end
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
@@ -120,6 +120,19 @@ module Api
                       as: :json
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
+        end
+      end
+
+      context 'sorting' do
+        before do
+          allow(controller).to receive(:spree_current_user) { admin_user }
+        end
+
+        it 'can sort orders by total' do
+          get :index, params: { q: { completed_at_not_null: true, s: 'total desc' } },
+              as: :json
+
+          expect(json_response['orders']).to eq serialized_orders([order4, order2, order1, order3])
         end
       end
 
