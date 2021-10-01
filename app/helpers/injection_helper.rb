@@ -62,7 +62,7 @@ module InjectionHelper
   def inject_group_enterprises
     inject_json_array(
       "enterprises",
-      @group.enterprises.activated.all,
+      @group.enterprises.activated.visible.all,
       Api::EnterpriseSerializer,
       enterprise_injection_data
     )
