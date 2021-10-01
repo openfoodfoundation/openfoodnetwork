@@ -12,7 +12,7 @@ module Spree
     include Balance
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
-                          :order_cycle_id, :email
+                          :order_cycle_id, :email, :total
     searchable_associations :shipping_method, :bill_address
     searchable_scopes :complete, :incomplete
 
