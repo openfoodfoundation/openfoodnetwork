@@ -89,7 +89,7 @@ gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.0.pre2"
+gem "cable_ready", "5.0.0.pre4"
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
