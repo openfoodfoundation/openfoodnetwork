@@ -56,4 +56,4 @@
 
   .row{"data-controller": "updateinput"}
     = bf.hidden_field :_destroy, {"data-updateinput-target": "input"}
-    = f.submit "Reset form", {class: 'secondary', "data-action": "click->updateinput#update", "data-updateinput-value": "true"}
+    = f.submit t(".reset_form"), {class: 'secondary', "data-action": "click->updateinput#update", "data-updateinput-value": "true"}

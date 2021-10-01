@@ -775,6 +775,7 @@ en:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
