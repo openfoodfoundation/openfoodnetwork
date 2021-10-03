@@ -9,5 +9,9 @@ module Admin
         {}
       end
     end
+
+    def select_only_item(size)
+      size == 1 ? 1 : nil
+    end
   end
 end

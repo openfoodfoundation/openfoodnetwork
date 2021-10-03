@@ -11,7 +11,7 @@
           = f.field_container :supplier do
             = f.label :supplier_id, t(".supplier")
             %span.required *
-            = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+            = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true, :selected => select_only_item(@producers.size)}, {:class => "select2 fullwidth"})
             = f.error_message_on :supplier
         .eight.columns.omega
           = f.field_container :name do
