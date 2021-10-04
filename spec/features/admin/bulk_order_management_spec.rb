@@ -9,6 +9,7 @@ describe '
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
+  include Features::BrowserHelper
 
   context "listing orders" do
     before :each do
@@ -214,6 +215,7 @@ describe '
           expect(page).to have_selector "#save-bar", text: "Fields with red borders contain errors."
           expect(page).to have_selector "input[name='quantity'].ng-dirty.update-error"
           expect(page).to have_content "is out of stock"
+          expect_browser_console_errors
         end
       end
     end
