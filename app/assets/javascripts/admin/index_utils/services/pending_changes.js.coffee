@@ -31,6 +31,8 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
           form.$setPristine() if form?
         else
           StatusMessage.display('failure', t('js.oh_no'))
+      .catch ->
+        StatusMessage.display('failure', t('js.oh_no'))
       all
 
     submit: (change) ->
