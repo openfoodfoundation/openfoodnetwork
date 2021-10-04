@@ -6,6 +6,7 @@ describe 'Customers' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
+  include Features::BrowserHelper
 
   context "as an enterprise user" do
     let(:user) { create(:user, enterprise_limit: 10) }
@@ -90,6 +91,7 @@ describe 'Customers' do
                                         text: I18n.t('admin.customers.destroy.has_associated_orders')
           click_button "OK"
         }.to_not change{ Customer.count }
+        expect_browser_console_errors
 
         expect{
           within "tr#c_#{customer2.id}" do
