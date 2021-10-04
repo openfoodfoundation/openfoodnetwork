@@ -361,6 +361,7 @@ describe 'Customers' do
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Email is invalid"
             }.to_not change{ Customer.of(managed_distributor1).count }
+            expect_browser_console_errors(2)
 
             # When an existing email is used
             expect{
@@ -369,6 +370,7 @@ describe 'Customers' do
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Email is associated with an existing customer"
             }.to_not change{ Customer.of(managed_distributor1).count }
+            expect_browser_console_errors(2)
 
             # When a new valid email is used
             expect{
