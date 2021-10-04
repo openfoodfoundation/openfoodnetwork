@@ -52,7 +52,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'devise-encryptable'
 gem 'devise-token_authenticatable'
-gem 'jwt', '~> 2.2'
+gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'pagy', '~> 4.11'

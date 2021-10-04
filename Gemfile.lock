@@ -355,7 +355,7 @@ GEM
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    jwt (2.2.3)
+    jwt (2.3.0)
     knapsack (4.0.0)
       rake
     launchy (2.5.0)
@@ -746,7 +746,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2)
   json
   json_spec (~> 1.1.4)
-  jwt (~> 2.2)
+  jwt (~> 2.3)
   knapsack
   letter_opener (>= 1.4.1)
   mimemagic (> 0.3.5)
