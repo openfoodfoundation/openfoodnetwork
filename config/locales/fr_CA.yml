@@ -41,6 +41,8 @@ fr_CA:
           attributes:
             email:
               taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
+            reset_password_token:
+              invalid: est invalide
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
         spree/credit_card:
@@ -95,6 +97,9 @@ fr_CA:
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Le champ mot de passe ne peut pas être vide. Veuillez renseigner un mot de passe."
     confirmations:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
@@ -1028,6 +1033,7 @@ fr_CA:
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         new_schedule: Nouveau rythme d'abonnement
+        new_schedule_tooltip: La fréquence à laquelle un abonnement est placé
       name_and_timing_form:
         name: Nom
         orders_open: Commandes à partir de
@@ -1531,40 +1537,82 @@ fr_CA:
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Coût de la devise"
   split_checkout:
+    your_details: 1 - Vos coordonnées
+    payment_method: 2 - Moyen de paiement
+    order_summary: 3 - Récapitulatif de la commande
     step1:
       your_details:
         title: Vos informations
         first_name:
           label: Prénom
+          placeholder: ex. Alex
         last_name:
           label: Nom
+          placeholder: ex. Dupont
         email:
           label: Email
+          placeholder: ex. alexdupont@email.com
         phone:
           label: Numéro de téléphone
+          placeholder: ex. 0798765432
       billing_address:
         title: Adresse de facturation
       address:
+        address1:
+          label: Adresse (Numéro et rue)
+          placeholder: ex. 17 rue de la chèvre
+        address2:
+          label: Complément d'adresse (optionnel)
+          placeholder: ex. Appartement 3
         city:
           label: Ville
+          placeholder: ex. Metz
         state_id:
           label: Département
         zipcode:
           label: Code postal
+          placeholder: ex. N0B2L0
         country_id:
           label: Pays
       delivery_address:
         title: Adresse de livraison
+      submit: Etape suivante - Moyen de Paiement
+      cancel: Retour au panier
+    step2:
+      payment_method:
+        title: Méthode de paiement
+      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
+      submit: Etape suivante - Récapitulatif de commande
+      cancel: Retour à vos coordonnées
     step3:
       your_details:
         title: Vos informations
+        edit: Modifier vos coordonnées
       billing_address:
         title: Adresse de facturation
+      shipping_address:
+        title: Adresse de livraison
+      delivery_info:
+        title: Information concernant la livraison
+      payment_method:
+        title: Méthode de paiement
+        edit: Modifier la méthode de paiement
+      order:
+        title: Total commande
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}"
         link_text: "CGU & CGV"
+      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
+      submit: Valider ma commande
+      cancel: Retour à la méthode de paiement
     errors:
+      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      terms_not_accepted: Merci d'accepter les CGU & CGV.
+      required: Ce champ ne peut pas être vide
+      invalid_number: "Merci de renseigner un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionner une méthode de livraison
+      select_a_payment_method: Sélectionner une méthode de paiement
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -1664,6 +1712,7 @@ fr_CA:
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
+  producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
   shopping_oc_closed: La boutique est actuellement fermée
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -2072,6 +2121,8 @@ fr_CA:
   fundraising_fee: "Frais recherche de financement"
   price_graph: "Détail du prix"
   included_tax: "Inclut Taxe"
+  tax: "Taxe"
+  tax_amount_included: "%{amount}(inclus)"
   balance: "Solde"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2143,6 +2194,7 @@ fr_CA:
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous modifiez le type de calculateur, vous devez sauvegarder avant de modifier les paramètres du calculateur."
   calculator_preferred_unit_error: "doit être kg ou lb"
+  calculator_preferred_value_error: "La valeur renseignée n'est pas valide. Veuillez utiliser des nombres uniquement. Par exemple : 10, 5.5, -20"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Taux forfaitaire par article"
   flat_rate_per_order: "Montant fixe par commande"
@@ -2150,6 +2202,7 @@ fr_CA:
   price_sack: "Montant variable selon total commande"
   new_order_cycles: "Nouveaux cycles de vente"
   new_order_cycle: "Nouveau Cycle de Vente"
+  new_order_cycle_tooltip: "Période d'ouverture de la boutique"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"
   notify_producers: 'Notifier les producteurs'
   edit_order_cycle: "Modifier le cycle de vente"
@@ -2722,6 +2775,7 @@ fr_CA:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
+        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoyer"
@@ -3740,6 +3794,7 @@ fr_CA:
       awaiting_return: attente du retour
       canceled: annulé
       cart: panier
+      confirmation: "Sélectionner une méthode de paiement"
       complete: terminer
       confirm: confirmer
       delivery: livraison
