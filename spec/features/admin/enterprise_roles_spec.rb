@@ -8,6 +8,7 @@ describe '
 ', js: true do
   include AuthenticationHelper
   include WebHelper
+  include Features::BrowserHelper
   include OpenFoodNetwork::EmailHelper
 
   context "as a site administrator" do
@@ -65,6 +66,7 @@ create(:enterprise)
 
         # Then I should see an error message
         expect(page).to have_content "That role is already present."
+        expect_browser_console_errors
       end.to change(EnterpriseRole, :count).by(0)
     end
 
