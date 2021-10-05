@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe 'Customers' do
   include AdminHelper
@@ -31,11 +31,11 @@ describe 'Customers' do
 
         select2_select managed_distributor2.name, from: "shop_id"
 
-        # Loads the right customers
+        # Loads the right customers; positive assertion first, so DOM content is loaded
+        expect(page).to have_selector "tr#c_#{customer4.id}"
         expect(page).to have_no_selector "tr#c_#{customer1.id}"
         expect(page).to have_no_selector "tr#c_#{customer2.id}"
         expect(page).to have_no_selector "tr#c_#{customer3.id}"
-        expect(page).to have_selector "tr#c_#{customer4.id}"
 
         # Changing Shops
         select2_select managed_distributor1.name, from: "shop_id"
