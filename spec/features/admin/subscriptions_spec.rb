@@ -6,6 +6,7 @@ describe 'Subscriptions' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
+  include Features::BrowserHelper
 
   context "as an enterprise user", js: true do
     let!(:user) { create(:user) }
@@ -303,6 +304,7 @@ describe 'Subscriptions' do
         expect{
           click_button('Create Subscription')
           expect(page).to have_content 'Please add at least one product'
+          expect_browser_console_errors
         }.to_not change(Subscription, :count)
 
         click_button('edit-products')
