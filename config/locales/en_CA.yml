@@ -41,6 +41,8 @@ en_CA:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+            reset_password_token:
+              invalid: is invalid
         spree/order:
           no_card: There are no authorised credit cards available to charge
         spree/credit_card:
@@ -95,6 +97,9 @@ en_CA:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "User password cannot be blank. Please enter a password."
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
@@ -1580,17 +1585,32 @@ en_CA:
     step3:
       your_details:
         title: Your details
+        edit: Edit your details
       billing_address:
         title: Billing address
+      shipping_address:
+        title: Shipping address
+      delivery_info:
+        title: Delivery info
       payment_method:
         title: Payment Method
+        edit: Edit payment method
+      order:
+        title: Order total
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      agree: By clicking 'Complete order' you agree to your order being processed.
+      submit: Complete order
+      cancel: Back to Payment method
     errors:
+      global: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1690,6 +1710,7 @@ en_CA:
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
+  producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -2171,6 +2192,7 @@ en_CA:
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   calculator_preferred_unit_error: "must be kg or lb"
+  calculator_preferred_value_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2740,6 +2762,7 @@ en_CA:
           invalid: "invalid"
         quantity_adjusted: "Insufficient stock available. Your item updated to the maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cannot_remove_last_item: "Cannot remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3756,6 +3779,7 @@ en_CA:
       awaiting_return: awaiting return
       canceled: cancelled
       cart: cart
+      confirmation: "confirmation"
       complete: complete
       confirm: confirm
       delivery: delivery
