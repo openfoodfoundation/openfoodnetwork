@@ -21,10 +21,11 @@ module Spree
     context "#update_adjustment!" do
       context "when originator present" do
         let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
+        let(:adjustable) { instance_double(LineItem) }
 
         before do
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment',
-                                                amount: 0
+                                                adjustable: adjustable, amount: 0
         end
 
         it "should do nothing when closed" do
