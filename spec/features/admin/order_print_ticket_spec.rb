@@ -9,6 +9,7 @@ describe '
   include CheckoutHelper
   include AuthenticationHelper
   include ActionView::Helpers::NumberHelper
+  include Features::BrowserHelper
 
   context "as an enterprise manager" do
     let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
@@ -61,6 +62,9 @@ describe '
             expect(print_data.join).to include(*elements_in_print_data.flatten)
           end
         end
+
+        # The QZ code tries load resources which are not available in specs.
+        expect_browser_console_errors(8)
       end
 
       def line_items_in_print_data
