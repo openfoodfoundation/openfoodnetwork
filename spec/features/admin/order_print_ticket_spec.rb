@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature '
+describe '
     As an administrator
     I want to print a ticket for an order
 ', js: true do
@@ -32,8 +32,8 @@ feature '
       Spree::Config[:enable_receipt_printing?] = true
     end
 
-    feature "viewing the edit page" do
-      scenario "can print an order's ticket" do
+    describe "viewing the edit page" do
+      it "can print an order's ticket" do
         visit spree.edit_admin_order_path(order)
 
         find("#links-dropdown .ofn-drop-down").click

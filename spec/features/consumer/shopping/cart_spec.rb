@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature "full-page cart", js: true do
+describe "full-page cart", js: true do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

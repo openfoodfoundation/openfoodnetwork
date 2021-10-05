@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature "Managing users" do
+describe "Managing users" do
   include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 

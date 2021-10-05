@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-feature "Product Import", js: true do
+describe "Product Import", js: true do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

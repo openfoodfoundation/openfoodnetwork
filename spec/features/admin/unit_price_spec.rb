@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an admin
     I want to check the unit price of my products/variants
 ', js: true do
@@ -12,7 +12,7 @@ feature '
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
 
   describe "product" do
-    scenario "creating a new product" do
+    it "creating a new product" do
       login_as_admin_and_visit spree.admin_products_path
       click_link 'New Product'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -24,7 +24,7 @@ feature '
   end
 
   describe "variant" do
-    scenario "creating a new variant" do
+    it "creating a new variant" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       login_as_admin_and_visit spree.admin_product_variants_path product
       click_link 'New Variant'
@@ -34,7 +34,7 @@ feature '
       expect(find_field("Unit Price", disabled: true).value).to eq '$1,000.00 / kg'
     end
 
-    scenario "editing a variant" do
+    it "editing a variant" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       variant = product.variants.first
       variant.update(price: 1.0)
@@ -45,7 +45,7 @@ feature '
   end
 
   describe "when admin use es as default language (and comma as decimal separator)", :debug do
-    scenario "creating a new product with a comma separated decimal price" do
+    it "creating a new product with a comma separated decimal price" do
       login_as_admin_and_visit spree.admin_dashboard_path(locale: 'es')
       visit spree.admin_products_path
       click_link 'Nuevo producto'
@@ -56,7 +56,7 @@ feature '
       expect(find_field("Precio por unidad", disabled: true).value).to eq "1,50 $ / kg"
     end
 
-    scenario "creating a new variant with a comma separated decimal price" do
+    it "creating a new variant with a comma separated decimal price" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       login_as_admin_and_visit spree.admin_dashboard_path(locale: 'es')
       visit spree.admin_product_variants_path product
@@ -67,7 +67,7 @@ feature '
       expect(find_field("Precio por unidad", disabled: true).value).to eq '1.500,00 $ / kg'
     end
 
-    scenario "editing a variant with a comma separated decimal price" do
+    it "editing a variant with a comma separated decimal price" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       variant = product.variants.first
       variant.update(price: 1.5)

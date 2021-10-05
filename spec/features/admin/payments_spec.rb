@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature '
+describe '
     As an admin
     I want to manage payments
 ' do
