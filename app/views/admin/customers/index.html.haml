@@ -71,9 +71,6 @@
             %th.bill_address{ 'ng-show' => 'columns.bill_address.visible' }=t('admin.customers.index.bill_address')
             %th.ship_address{ 'ng-show' => 'columns.ship_address.visible' }=t('admin.customers.index.ship_address')
             %th.balance{ 'ng-show' => 'columns.balance.visible' }=t('admin.customers.index.balance')
-            %th.actions
-              Ask?&nbsp;
-              %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
         %tbody
           %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy: sorting.predicate:sorting.reverse ) | limitTo:customerLimit track by customer.id", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
             -# %td.bulk

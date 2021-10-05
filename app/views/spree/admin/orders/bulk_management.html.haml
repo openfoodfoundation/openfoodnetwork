@@ -154,9 +154,6 @@
             %th.price{ 'ng-show' => 'columns.price.visible' }
               = "#{t('admin.price')} (#{Spree::Money.currency_symbol})"
             %th.actions
-            %th.actions
-              = t("admin.orders.bulk_management.ask")
-              %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
 
         %tr.line_item{ ng: { repeat: "line_item in filteredLineItems = ( line_items | filter:quickSearch | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:sorting.predicate:sorting.reverse )", 'class-even' => "'even'", 'class-odd' => "'odd'", attr: { id: "li_{{line_item.id}}" } } }
           %td.bulk
