@@ -8,6 +8,7 @@ describe '
 ', js: true do
   include WebHelper
   include AuthenticationHelper
+  include Features::BrowserHelper
 
   context "as a site administrator" do
     before { login_as_admin }
@@ -74,6 +75,7 @@ create(:enterprise)
 
         # Then I should see an error message
         expect(page).to have_content "That relationship is already established."
+        expect_browser_console_errors
       end.to change(EnterpriseRelationship, :count).by(0)
     end
 
