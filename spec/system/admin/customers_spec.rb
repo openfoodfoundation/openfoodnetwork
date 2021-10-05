@@ -253,6 +253,7 @@ describe 'Customers' do
         end
 
         expect(page).to have_content "Oh no! I was unable to save your changes"
+        expect_browser_console_errors
 
         expect(customer1.reload.code).to eq "new-customer-code"
         expect(customer2.reload.code).to be nil
