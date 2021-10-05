@@ -12,8 +12,11 @@ describe '
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
   let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor2) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor3) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor4) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
   let(:order_cycle) do
-    create(:simple_order_cycle, name: 'One', distributors: [distributor],
+    create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2, distributor3, distributor4],
                                 variants: [product.variants.first])
   end
 
@@ -28,11 +31,11 @@ describe '
     let!(:order_cycle3) { create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now) }
     let!(:order_cycle4) { create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now) }  
 
-    let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle2) }
-    let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor,
+    let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor2,
+                                                  order_cycle: order_cycle2, completed_at: 2.day.ago) }
+    let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor3,
                                                   order_cycle: order_cycle3) }
-    let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor,
+    let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor4,
                                                   order_cycle: order_cycle4) }
 
     it "order cycles appear in descending order by close date on orders page" do
@@ -60,16 +63,57 @@ describe '
       expect(page).to_not have_content order4.number
     end
 
-    context "select/unselect all orders" do
-      it "by clicking on the checkbox in the table header" do
+    it "filter by distributors" do
 
+      login_as_admin_and_visit 'admin/orders'
+
+      select2_select "#{distributor2.name}", from: 'q_distributor_id_in'
+      select2_select "#{distributor4.name}", from: 'q_distributor_id_in'
+      
+      page.find('.filter-actions .button.icon-search').click
+
+      # Order 2 and 4 should show, but not 3
+      expect(page).to have_content order2.number
+      expect(page).to_not have_content order3.number
+      expect(page).to have_content order4.number
+    end
+
+    it "filter by complete date" do
+
+      login_as_admin_and_visit 'admin/orders'
+
+
+      find('#q_completed_at_gteq').click
+      select_date_from_datepicker order3.completed_at.yesterday
+      find('#q_completed_at_lteq').click
+      select_date_from_datepicker order4.completed_at.tomorrow
+
+      page.find('.filter-actions .button.icon-search').click
+
+
+      # Order 3 and 4 should show, but not 2
+      expect(page).to_not have_content order2.number
+      expect(page).to have_content order3.number
+      expect(page).to have_content order4.number
+    end
+
+    context "select/unselect all orders" do
+        
+      before do
         login_as_admin_and_visit spree.admin_orders_path
+      end
+      
+      it "by clicking on the checkbox in the table header" do
         # select all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to be_checked
+        # enables print invoices button
+        expect(page).to have_button('Print Invoices', disabled: false)
         # unselect all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to_not be_checked
+        # disables print invoices button
+        expect(page).to have_button('Print Invoices', disabled: true)
       end
     end
 
@@ -136,9 +180,23 @@ describe '
         completed_at: 1.day.ago,
         line_items_count: 1
       )
+
+      empty_complete_order = create(
+        :order_with_line_items,
+        distributor: distributor,
+        order_cycle: order_cycle,
+        user: user,
+        state: 'complete',
+        payment_state: 'balance_due',
+        completed_at: 1.day.ago,
+        line_items_count: 0
+      )
+
       empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+
       login_as_admin_and_visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
+      expect(page).to have_content empty_complete_order.number
       expect(page).to have_no_content incomplete_order.number
       expect(page).to have_no_content empty_order.number
 
@@ -182,7 +240,7 @@ describe '
       find('#q_completed_at_gteq').click
       select_date_from_datepicker Time.zone.at(1.week.ago)
       find('#q_completed_at_lteq').click
-      select_date_from_datepicker Time.zone.now
+      select_date_from_datepicker Time.zone.now.tomorrow
 
       page.find('a.icon-search').click
     end
@@ -201,7 +259,7 @@ describe '
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
       expect(find("#q_completed_at_gteq").value).to eq 1.week.ago.strftime("%Y-%m-%d")
-      expect(find("#q_completed_at_lteq").value).to eq Time.zone.now.strftime("%Y-%m-%d")
+      expect(find("#q_completed_at_lteq").value).to eq Time.zone.now.tomorrow.strftime("%Y-%m-%d")
     end
 
     it "and clear filters" do
