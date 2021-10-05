@@ -28,3 +28,12 @@ if Paperclip::VERSION.to_f < 3.5
 else
   Rails.logger.warn "The Paperclip::GeometryDetector patch can now be removed."
 end
+
+module UpdatedUrlGenerator
+  def escape_url(url)
+    (url.respond_to?(:escape) ? url.escape : URI::Parser.new.escape(url)).
+      gsub(/(\/.+)\?(.+\.)/, '\1%3F\2')
+  end
+end
+
+Paperclip::UrlGenerator.prepend(UpdatedUrlGenerator)
