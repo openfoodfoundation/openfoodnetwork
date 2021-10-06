@@ -100,6 +100,11 @@ module Spree
     def update_adjustment!(calculable = nil, force: false)
       return amount if immutable? && !force
 
+      if calculable.nil? && adjustable.nil?
+        self.delete
+        return 0.0
+      end
+
       if originator.present?
         amount = originator.compute_amount(calculable || adjustable)
         update_columns(

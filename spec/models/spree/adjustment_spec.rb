@@ -21,10 +21,11 @@ module Spree
     context "#update_adjustment!" do
       context "when originator present" do
         let(:originator) { instance_double(EnterpriseFee, compute_amount: 10.0) }
+        let(:adjustable) { instance_double(LineItem) }
 
         before do
           allow(adjustment).to receive_messages originator: originator, label: 'adjustment',
-                                                amount: 0
+                                                adjustable: adjustable, amount: 0
         end
 
         it "should do nothing when closed" do
@@ -63,6 +64,23 @@ module Spree
         allow(adjustment).to receive_messages originator: nil
         expect(adjustment).not_to receive(:update_columns)
         adjustment.update_adjustment!
+      end
+
+      context "where the adjustable has been deleted" do
+        let(:line_item) { create(:line_item, price: 10) }
+        let!(:adjustment) { create(:adjustment, adjustable: line_item) }
+
+        it "returns zero" do
+          line_item.delete
+          expect(adjustment.reload.update_adjustment!).to eq 0.0
+        end
+
+        it "removes orphaned adjustments" do
+          expect {
+            line_item.delete
+            adjustment.reload.update_adjustment!
+          }.to change{ Spree::Adjustment.count }.by -1
+        end
       end
     end
 
