@@ -44,6 +44,9 @@ describe "LineItemsCtrl", ->
     LineItems =
       index: jasmine.createSpy('index').and.returnValue(lineItem)
       all: [lineItem]
+      delete: (lineItem, callback=null) ->
+        callback() if callback
+        return Promise.resolve()
 
     httpBackend.expectGET("/api/v0/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bdistributor_id_eq%5D=&q%5Border_cycle_id_eq%5D=&q%5Bshipment_state_not_eq%5D=shipped&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
@@ -98,23 +101,102 @@ describe "LineItemsCtrl", ->
       it "resets the form state to pristine", ->
         expect(scope.bulk_order_form.$setPristine.calls.count()).toBe 1
 
-    describe "deleting 'checked' line items", ->
-      line_item1 = line_item2 = line_item3 = line_item4 = null
+    describe "deleting a line item", ->
+      line_item1 = line_item2 = null
+      order1 = order2 = null
 
       beforeEach ->
-        line_item1 = { name: "line item 1", checked: false }
-        line_item2 = { name: "line item 2", checked: true }
-        line_item3 = { name: "line item 3", checked: false }
-        line_item4 = { name: "line item 4", checked: true }
+        order1 = { id: 1, item_count: 1 }
+        order2 = { id: 2, item_count: 2 }
+
+        line_item1 = {
+          name: "line item 1",
+          order: order1
+        }
+        line_item2 = {
+          name: "line item 2",
+          order: order2
+        }
+        scope.line_items = [ line_item1, line_item2 ]
+
+      it "shows a different message if order will be canceled", ->
+        spyOn(window, "confirm")
+        scope.deleteLineItem(line_item2)
+        expect(confirm).not.toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
+        scope.deleteLineItem(line_item1)
+        expect(confirm).toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
+
+      it "deletes the line item", ->
+        spyOn(window, "confirm").and.callFake(-> return true)
+        spyOn(LineItems, "delete")
+        scope.deleteLineItem(line_item2)
+        expect(LineItems.delete).toHaveBeenCalledWith(line_item2, jasmine.anything())
+
+      it "cancels empty order", ->
+        spyOn(window, "confirm").and.callFake(-> return true)
+        spyOn(scope, "cancelOrder").and.callFake(-> return Promise.resolve())
+        scope.deleteLineItem(line_item1)
+        expect(scope.cancelOrder).toHaveBeenCalledWith(order1)
+    
+    describe "deleting 'checked' line items", ->
+      line_item1 = line_item2 = line_item3 = line_item4 = null
+      order1 = order2 = order3 = null
+
+      beforeEach ->
+        order1 = { id: 1, item_count: 1 }
+        order2 = { id: 2, item_count: 1 }
+        order3 = { id: 3, item_count: 2 }
+        line_item1 = {
+          name: "line item 1",
+          order: order1
+          checked: false
+        }
+        line_item2 = {
+          name: "line item 2",
+          order: order2,
+          checked: false
+        }
+        line_item3 = {
+          name: "line item 3",
+          order: order3,
+          checked: false
+        }
+        line_item4 = {
+          name: "line item 4",
+          order: order3,
+          checked: false
+        }
         scope.line_items = [ line_item1, line_item2, line_item3, line_item4 ]
 
-      it "calls deletedLineItem for each 'checked' line item", ->
-        spyOn(scope, "deleteLineItem")
+      it "asks for confirmation only if orders will be canceled", ->
+        spyOn(window, "confirm")
+        line_item3.checked = true
         scope.deleteLineItems(scope.line_items)
-        expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
-        expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
-        expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)
-        expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item3)
+        expect(confirm).not.toHaveBeenCalled()
+        line_item1.checked = true
+        scope.deleteLineItems(scope.line_items)
+        expect(confirm).toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
+
+
+      it "deletes checked line items for non-empty orders", ->
+        line_item1.checked = true
+        line_item3.checked = true
+        spyOn(window, "confirm").and.callFake(-> return true)
+        spyOn(LineItems, "delete")
+        scope.deleteLineItems(scope.line_items)
+        expect(LineItems.delete).toHaveBeenCalledWith(line_item3)
+        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item1)
+        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item2)
+        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item4)
+
+      it "cancels all empty orders", ->
+        line_item1.checked = true
+        line_item3.checked = true
+        spyOn(window, "confirm").and.callFake(-> return true)
+        spyOn(scope, "cancelOrder").and.callFake(-> return Promise.resolve())
+        scope.deleteLineItems(scope.line_items)
+        expect(scope.cancelOrder).toHaveBeenCalledWith(order1)
+        expect(scope.cancelOrder).not.toHaveBeenCalledWith(order3)
 
     describe "check boxes for line items", ->
       line_item1 = line_item2 = null

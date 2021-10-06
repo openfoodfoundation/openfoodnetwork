@@ -670,8 +670,10 @@ describe '
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+          page.driver.accept_modal :confirm do
+            find("div#bulk-actions-dropdown").click   
+            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+          end
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
@@ -693,8 +695,10 @@ describe '
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+          page.driver.accept_modal :confirm do
+            find("div#bulk-actions-dropdown").click
+            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+          end
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "#quick_search"
           fill_in "quick_search", with: ''

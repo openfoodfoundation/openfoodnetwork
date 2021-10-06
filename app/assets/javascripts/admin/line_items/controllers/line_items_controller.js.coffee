@@ -104,15 +104,38 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     else
       StatusMessage.display 'failure', t "unsaved_changes_error"
 
+  $scope.cancelOrder = (order) ->
+    return $http(
+      method: 'GET'
+      url: "/admin/orders/#{order.number}/fire?e=cancel")
+  
   $scope.deleteLineItem = (lineItem) ->
-    if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete
-      LineItems.delete lineItem
+    if lineItem.order.item_count == 1
+      if confirm(t('js.admin.deleting_item_will_cancel_order'))
+        $scope.cancelOrder(lineItem.order).then(-> $scope.refreshData())
+    else if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete
+      LineItems.delete(lineItem, () -> $scope.refreshData())
 
-  $scope.deleteLineItems = (lineItemsToDelete) ->
-    existingState = $scope.confirmDelete
-    $scope.confirmDelete = false
-    $scope.deleteLineItem lineItem for lineItem in lineItemsToDelete when lineItem.checked
-    $scope.confirmDelete = existingState
+  $scope.deleteLineItems = (lineItems) ->
+    lineItemsToDelete = lineItems.filter (item) -> item.checked
+    willCancelOrders = false
+    itemsPerOrder = new Map()
+    for item in lineItemsToDelete
+      { order } = item
+      if itemsPerOrder.has(order)
+        itemsPerOrder.get(order).push(item)
+      else
+        itemsPerOrder.set(order, [item])
+      willCancelOrders = true if (order.item_count == itemsPerOrder.get(order).length)
+
+    if willCancelOrders
+      return unless confirm(t("js.admin.deleting_item_will_cancel_order"))
+
+    itemsPerOrder.forEach (items, order) =>
+      if order.item_count == items.length
+        $scope.cancelOrder(order).then(-> $scope.refreshData())
+      else
+        Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
 
   $scope.allBoxesChecked = ->
     checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->
