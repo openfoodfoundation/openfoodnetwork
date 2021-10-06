@@ -28,7 +28,7 @@ module OrderManagement
       end
 
       def stripe_payment_method?
-        [Spree::Gateway::StripeSCA].include? @payment.payment_method.class
+        @payment.payment_method.is_a?(Spree::Gateway::StripeSCA)
       end
 
       def card_set?
