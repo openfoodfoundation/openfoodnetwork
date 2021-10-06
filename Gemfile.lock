@@ -351,7 +351,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (1.8.6)
+    json (2.5.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
     json_spec (1.1.5)
