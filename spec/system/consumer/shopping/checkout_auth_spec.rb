@@ -53,6 +53,8 @@ describe "As a consumer I want to check out my cart", js: true do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
       within(".login-modal") { click_button 'Login' }
+
+      expect(page).to have_content "Your details"
       toggle_details
 
       expect(page).to have_field 'First Name', with: 'Foo'
