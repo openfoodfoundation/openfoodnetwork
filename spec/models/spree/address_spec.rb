@@ -14,7 +14,7 @@ describe Spree::Address do
                                country: state.country,
                                firstname: 'firstname',
                                lastname: 'lastname',
-                               company: 'company',
+                               company: 'unused',
                                phone: 'phone',
                                state_id: state.id,
                                state_name: state.name,

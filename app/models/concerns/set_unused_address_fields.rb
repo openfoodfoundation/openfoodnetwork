@@ -8,7 +8,7 @@ module SetUnusedAddressFields
   end
 
   def set_unused_address_fields
-    ship_address.company = 'Company' if ship_address.present?
-    bill_address.company = 'Company' if bill_address.present?
+    ship_address.company = 'unused' if ship_address.present?
+    bill_address.company = 'unused' if bill_address.present?
   end
 end

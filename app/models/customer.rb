@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Customer < ApplicationRecord
+  include SetUnusedAddressFields
+  
   acts_as_taggable
 
   searchable_attributes :name, :email, :code
@@ -20,7 +22,6 @@ class Customer < ApplicationRecord
 
   before_validation :downcase_email
   before_validation :empty_code
-  before_validation :set_unused_address_fields
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
@@ -52,10 +53,5 @@ class Customer < ApplicationRecord
 
     errors.add(:base, I18n.t('admin.customers.destroy.has_associated_orders'))
     throw :abort
-  end
-
-  def set_unused_address_fields
-    ship_address.company = 'Company' if ship_address.present?
-    bill_address.company = 'Company' if bill_address.present?
   end
 end
