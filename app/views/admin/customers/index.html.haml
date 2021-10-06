@@ -46,7 +46,7 @@
   .row.margin-bottom-50{ ng: { show: "!RequestMonitor.loading && filteredCustomers.length > 0" } }
     %form{ name: "customers_form" }
       %save-bar{ dirty: "customers_form.$dirty", persist: "false" }
-        %input.red{ type: "button", value: "Save Changes", ng: { click: "submitAll(customers_form)" } }
+        %input.red{ type: "button", value: t(:save_changes), ng: { click: "submitAll(customers_form)" } }
 
       %table.index#customers
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
