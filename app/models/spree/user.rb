@@ -22,7 +22,7 @@ module Spree
 
     before_validation :set_login
     before_destroy :check_completed_orders
-    
+
     roles_table_name = Role.table_name
 
     scope :admin, lambda { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }

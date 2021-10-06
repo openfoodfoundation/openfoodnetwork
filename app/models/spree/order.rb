@@ -88,7 +88,6 @@ module Spree
     before_validation :associate_customer, unless: :customer_id?
     before_validation :ensure_customer, unless: :customer_is_valid?
 
-
     before_create :link_by_email
     after_create :create_tax_charge!
 
