@@ -2003,17 +2003,17 @@
   resolved "https://registry.yarnpkg.com/@stimulus/webpack-helpers/-/webpack-helpers-2.0.0.tgz#54296d2a2dffd4f962d2e802d99a3fdd84b8845f"
   integrity sha512-D6tJWsAC024MwGEIKlUVYU8Ln87mlrmiwHvYAjipg+s8H4eLxUMQ3PZkWyPevfipH+oR3leuHsjYsK1gN5ViQA==
 
-"@storybook/addon-controls@^6.3.9":
-  version "6.3.9"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.3.9.tgz#b7645c097c476d800c896f700bc028c66260f359"
-  integrity sha512-B++fteuGzv1DUD3hKW3wTXtN4CBWpv4HzpLqng6L/xLfTZeOd39F73ooi/NmsoVO4vUl4ywrq0/QiHiXnp1kIQ==
+"@storybook/addon-controls@^6.3.10":
+  version "6.3.10"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.3.10.tgz#826263e5b4f407982c852c68837f13f14da98625"
+  integrity sha512-sOw4gPRU70sRmBuKrCrjyUPGFauopgrY9QmuFh1ok3jza9QLY8k4ihEBO9X699PiIKtr8XAoqkwh4kw0xfawJA==
   dependencies:
-    "@storybook/addons" "6.3.9"
-    "@storybook/api" "6.3.9"
-    "@storybook/client-api" "6.3.9"
-    "@storybook/components" "6.3.9"
-    "@storybook/node-logger" "6.3.9"
-    "@storybook/theming" "6.3.9"
+    "@storybook/addons" "6.3.10"
+    "@storybook/api" "6.3.10"
+    "@storybook/client-api" "6.3.10"
+    "@storybook/components" "6.3.10"
+    "@storybook/node-logger" "6.3.10"
+    "@storybook/theming" "6.3.10"
     core-js "^3.8.2"
     ts-dedent "^2.0.0"
 
