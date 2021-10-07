@@ -238,6 +238,7 @@ en_FR:
   search_by_name: Search by name or suburb...
   producers_join: Producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
+  business_address: "Business Address"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -717,6 +718,15 @@ en_FR:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
+        business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 High St.
+          address2: Address(contd.)
+          legal_phone_number: Legal phone number
+          phone_placeholder: "98 123 4565"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -2606,6 +2616,8 @@ en_FR:
           title: "Uploading Terms and Conditions"
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
+        business_address_info:
+          message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
       panels:
         save: SAVE
         saved: SAVED
