@@ -238,6 +238,7 @@ fr:
   search_by_name: Recherche par nom ou département...
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
+  business_address: "Adresse du siège social"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -717,6 +718,15 @@ fr:
           terms_and_conditions: "CGU & CGV"
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
+          reset_form: "Vider les champs"
+        business_address:
+          company_legal_name: Raison sociale
+          company_placeholder: Indiquez ici le nom légal de votre entreprise
+          address1: Adresse du siège social
+          address1_placeholder: 123, rue de la Chèvre
+          address2: Complément d'adresse
+          legal_phone_number: Numéro de téléphone
+          phone_placeholder: "09 00 00 00 00"
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -2610,6 +2620,8 @@ fr:
           title: "Mise à jour des CGU & CGV"
           message_1: "Vos acheteurs devront valider vos CGV lors de leur commande."
           message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
+        business_address_info:
+          message: "Ces informations légales seront utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
       panels:
         save: Enregistrer
         saved: Enregistré
