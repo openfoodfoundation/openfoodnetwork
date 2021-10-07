@@ -236,7 +236,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    ddtrace (0.52.0)
+    ddtrace (0.53.0)
       ffi (~> 1.0)
       msgpack
     debugger-linecache (1.2.0)
@@ -284,7 +284,7 @@ GEM
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
     ffaker (2.20.0)
-    ffi (1.15.3)
+    ffi (1.15.4)
     flipper (0.20.4)
     flipper-active_record (0.20.4)
       activerecord (>= 5.0, < 7)
