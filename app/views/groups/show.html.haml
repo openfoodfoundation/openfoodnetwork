@@ -94,7 +94,7 @@
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | properties:activeProperties:'distributed_properties' | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | properties:activeProperties:'distributed_properties' | orderBy:['+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "HubNodeCtrl"}
                         .small-12.columns
