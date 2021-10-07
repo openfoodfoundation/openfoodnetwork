@@ -36,6 +36,6 @@
     "shortcut-buttons-flatpickr": "^0.3.1",
     "stimulus": "^3.0.1",
     "webpack": "~4",
-    "webpack-cli": "~4"
+    "webpack-cli": "~3"
   }
 }
