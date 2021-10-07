@@ -10,6 +10,12 @@ input[type='button'], input[type='submit'] {
     background-color: $disabled-background;
     color: #ffffff;
   }
+
+  &.secondary:disabled {
+    background-color: #ebf3fb;
+    border: 1px solid #ebf3fb;
+    color: #AFCFEF;
+  }
 }
 
 .select2-container-disabled {

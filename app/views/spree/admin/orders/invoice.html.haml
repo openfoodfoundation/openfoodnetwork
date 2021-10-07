@@ -18,12 +18,18 @@
         %h4= @order.order_cycle&.name
     %tr{ valign: "top" }
       %td{ align: "left", colspan: 3 }
-        %strong= "#{t('.from')}: #{@order.distributor.name}"
+        - if @order.distributor.business_address.blank?
+          %strong= "#{t('.from')}: #{@order.distributor.name}"
+        - else 
+          %strong= "#{t('.from')}: #{@order.distributor.business_address.company}"
         - if @order.distributor.abn.present?
           %br
           = "#{t(:abn)} #{@order.distributor.abn}"
         %br
-        = @order.distributor.address.full_address
+        - if @order.distributor.business_address.blank?
+          = @order.distributor.address.full_address
+        - else
+          = @order.distributor.business_address.full_address
         %br
         = @order.distributor.contact.email
     %tr{ valign: "top" }

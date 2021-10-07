@@ -17,6 +17,7 @@ module PermittedAttributes
         group_ids: [], user_ids: [],
         shipping_method_ids: [], payment_method_ids: [],
         address_attributes: PermittedAttributes::Address.attributes,
+        business_address_attributes: PermittedAttributes::BusinessAddress.attributes,
         producer_properties_attributes: [:id, :property_name, :value, :_destroy]
       ]
     end

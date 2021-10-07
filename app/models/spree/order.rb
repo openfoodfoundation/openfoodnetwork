@@ -10,6 +10,7 @@ module Spree
     include OrderShipment
     include Checkout
     include Balance
+    include SetUnusedAddressFields
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total

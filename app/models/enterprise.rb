@@ -5,7 +5,6 @@ require 'spree/core/s3_support'
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
-
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
@@ -41,6 +40,7 @@ class Enterprise < ApplicationRecord
                                dependent: :destroy
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
   belongs_to :address, class_name: 'Spree::Address'
+  belongs_to :business_address, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
@@ -59,6 +59,7 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :business_address, reject_if: :business_address_empty?, allow_destroy: true
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?
@@ -209,6 +210,13 @@ class Enterprise < ApplicationRecord
         (?)
     ", one, one, others)
   }
+
+  def business_address_empty?(attributes)
+    attributes_exists = attributes['id'].present?
+    attributes_empty = attributes.slice(:company, :address1, :city, :phone, :zipcode).values.all?(&:blank?)
+    attributes.merge!(_destroy: 1) if attributes_exists and attributes_empty 
+    !attributes_exists && attributes_empty
+  end
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
@@ -414,7 +422,8 @@ class Enterprise < ApplicationRecord
   end
 
   def set_unused_address_fields
-    address.firstname = address.lastname = address.phone = 'unused' if address.present?
+    address.firstname = address.lastname = address.phone = address.company = 'unused' if address.present?
+    business_address.first_name = business_address.last_name = 'unused' if business_address.present?
   end
 
   def ensure_owner_is_manager

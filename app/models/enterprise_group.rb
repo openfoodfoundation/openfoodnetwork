@@ -54,7 +54,7 @@ class EnterpriseGroup < ApplicationRecord
   }
 
   def set_unused_address_fields
-    address.firstname = address.lastname = I18n.t(:unused)
+    address.firstname = address.lastname = address.company = I18n.t(:unused)
   end
 
   def set_undefined_address_fields

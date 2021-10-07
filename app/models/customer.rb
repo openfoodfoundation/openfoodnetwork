@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Customer < ApplicationRecord
+  include SetUnusedAddressFields
+  
   acts_as_taggable
 
   searchable_attributes :name, :email, :code

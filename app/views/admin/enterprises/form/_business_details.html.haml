@@ -47,3 +47,13 @@
     .pad-top
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')
+
+
+= f.fields_for :business_address, @enterprise.business_address || @enterprise.build_business_address do |bf|
+  %fieldset.alpha.no-border-bottom
+    %legend= t('business_address')
+    = render 'admin/enterprises/form/business_address', bf: bf
+
+  .row{"data-controller": "updateinput"}
+    = bf.hidden_field :_destroy, {"data-updateinput-target": "input"}
+    = f.submit t(".reset_form"), {class: 'secondary', "data-action": "click->updateinput#update", "data-updateinput-value": "true"}

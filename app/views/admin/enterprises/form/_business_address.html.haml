@@ -1,0 +1,46 @@
+.row
+  .three.columns.alpha
+    = bf.label :company, t(".company_legal_name")
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
+  .eight.columns.omega
+    = bf.text_field :company, { placeholder: t(".company_placeholder") }
+
+.row
+  .three.columns.alpha
+    = bf.label :address1, t('.address1')
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
+  .eight.columns.omega
+    = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
+.row
+  .alpha.three.columns
+    = bf.label :address2, t(".address2")
+  .eight.columns.omega
+    = bf.text_field :address2
+.row
+  .three.columns.alpha
+    = bf.label :city, t(:city)
+    \/
+    = bf.label :zipcode, t(:postcode)
+  .four.columns
+    = bf.text_field :city, { placeholder: t(:city_placeholder) }
+  .four.columns.omega
+    = bf.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
+.row
+  .three.columns.alpha
+    = bf.label :country_id, t(:country)
+    \/
+    = bf.label :state_id, t(:state)
+  %div{ "ng-controller": "countryCtrl", "ng-init": "address_type='business_address'" }
+    .four.columns
+      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_country_id{ name: 'enterprise[business_address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.country_id' } }
+    .four.columns.omega
+      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_state_id{ name: 'enterprise[business_address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.state_id' } }
+
+
+.row
+  .three.columns.alpha
+    = bf.label :phone, t(".legal_phone_number")
+    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
+  .eight.columns.omega
+    = bf.text_field :phone, { placeholder: t(".phone_placeholder") }
+

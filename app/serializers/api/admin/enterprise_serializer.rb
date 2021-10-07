@@ -17,6 +17,7 @@ module Api
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer
       has_one :address, serializer: Api::AddressSerializer
+      has_one :business_address, serializer: Api::AddressSerializer
 
       def logo
         attachment_urls(object.logo, [:thumb, :small, :medium])
