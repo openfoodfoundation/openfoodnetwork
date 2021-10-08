@@ -13,7 +13,8 @@ Capybara.register_driver(:cuprite) do |app|
       # Don't load scripts from external sources, like google maps or stripe
       url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
-      headless: true
+      headless: true,
+      js_errors: true,
     }
   )
 end
