@@ -14,7 +14,7 @@ Capybara.register_driver(:cuprite) do |app|
       url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
       headless: true,
-      js_errors: false,
+      js_errors: true,
     }
   )
 end
