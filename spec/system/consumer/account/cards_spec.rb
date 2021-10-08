@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "Credit Cards", js: true do
   include AuthenticationHelper
@@ -64,7 +64,6 @@ describe "Credit Cards", js: true do
       # Allows switching of default card
       within(".card#card#{non_default_card.id}") do
         find_field('default_card').click
-        accept_alert
         expect(find_field('default_card')).to be_checked
       end
 
