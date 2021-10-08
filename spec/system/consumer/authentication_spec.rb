@@ -205,7 +205,7 @@ describe "Authentication", js: true do
         end
 
         it "logs in successfully and uses the locale from cookies" do
-          page.driver.browser.manage.add_cookie(name: 'locale', value: 'es')
+          page.driver.set_cookie("locale", "es")
 
           fill_in_and_submit_login_form(user)
           expect_logged_in
@@ -213,7 +213,7 @@ describe "Authentication", js: true do
           expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
           expect(user.reload.locale).to eq "es"
 
-          page.driver.browser.manage.delete_cookie('locale')
+          page.driver.remove_cookie("locale")
         end
       end
     end
