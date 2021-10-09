@@ -32,6 +32,13 @@ RSpec.configure do |config|
           }
         }
       ]
+    },
+    'v0/swagger.yaml' => {
+      openapi: '3.0.1',
+      info: {
+        title: 'API V0',
+        version: 'v0'
+      }
     }
   }
 
