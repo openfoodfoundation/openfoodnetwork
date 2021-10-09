@@ -1,74 +1,10 @@
 ---
 openapi: 3.0.1
 info:
-  title: The Open Food Network
-  description: |-
-    This spec is auto generated using the rswag gem. It is incomplete and not yet valid for openapi 3.0.1. Do not publish this. \
-    Some endpoints are public and require no authorization; others require authorization. Talk to us to get your credentials set up. \
-    Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork
-  version: '0.1'
-components:
-  securitySchemes:
-    api_key:
-      type: apiKey
-      name: X-Spree-Token
-      in: header
-  schemas:
-    Order_Concise:
-      type: object
-      properties:
-        id:
-          type: integer
-        number:
-          type: string
-        full_name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        completed_at:
-          type: string
-        display_total:
-          type: string
-        show_path:
-          type: string
-        edit_path:
-          type: string
-        state:
-          type: string
-        payment_state:
-          type: string
-        shipment_state:
-          type: string
-        payments_path:
-          type: string
-        shipments_path:
-          type: string
-        ship_path:
-          type: string
-        ready_to_ship:
-          type: string
-        created_at:
-          type: string
-        distributor_name:
-          type: string
-        special_instructions:
-          type: string
-        payment_capture_path:
-          type: string
-        distributor:
-          type: object
-          properties:
-            id:
-              type: integer
-        order_cycle:
-          type: object
-          properties:
-            id:
-              type: integer
+  title: API V1
+  version: v1
 paths:
-  "/api/orders":
+  "/api/v0/orders":
     get:
       summary: list orders
       tags:
@@ -128,5 +64,67 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Order_Concise"
+  "/api/v1/customers/{id}":
+    get:
+      summary: Show customer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customer found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                            nullable: true
+                          code:
+                            type: string
+                          email:
+                            type: string
+                        required:
+                        - id
+                        - name
+                        - code
+                        - email
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    - relationships
+                    relationships:
+                    - enterprise
+                required:
+                - data
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 servers:
-- url: https://staging.katuma.org/api
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
