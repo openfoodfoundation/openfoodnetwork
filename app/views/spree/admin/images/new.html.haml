@@ -5,7 +5,7 @@
     %legend{ align: "center" }= t('spree.new_image')
     = render partial: 'form', locals: { f: f }
     .form-buttons.filter-actions.actions
-      = button t('spree.actions.update'), 'icon-refresh'
+      = button t('actions.create'), 'icon-ok'
       %span.or= t('spree.or')
       = link_to_with_icon 'icon-remove', t('spree.actions.cancel'), admin_product_images_url(@product, @url_filters), id: 'cancel_link', class: 'button'
 

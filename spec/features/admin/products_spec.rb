@@ -484,7 +484,7 @@ describe '
       page.find('a#new_image_link').click
 
       attach_file('image_attachment', file_path)
-      click_button "Update"
+      click_button "Create"
 
       uri = URI.parse(current_url)
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
