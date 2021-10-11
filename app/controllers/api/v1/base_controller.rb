@@ -35,13 +35,6 @@ module Api
         invalid_api_key
       end
 
-      def error_during_processing(exception)
-        Bugsnag.notify(exception)
-
-        render json: { exception: exception.message },
-               status: :unprocessable_entity
-      end
-
       def current_ability
         Spree::Ability.new(current_api_user)
       end
@@ -49,27 +42,49 @@ module Api
       def api_key
         request.headers["X-Spree-Token"] || params[:token]
       end
-      helper_method :api_key
 
-      def invalid_resource!(resource)
-        render json: { error: I18n.t(:invalid_resource, scope: "spree.api"),
-                       errors: resource.errors },
-               status: :unprocessable_entity
+      def error_during_processing(exception)
+        Bugsnag.notify(exception)
+
+        render status: :unprocessable_entity,
+               json: json_api_error(exception.message, backtrace: exception.backtrace)
+      end
+
+      def invalid_resource!(resource = nil)
+        render status: :unprocessable_entity,
+               json: json_api_invalid(
+                 I18n.t(:invalid_resource, scope: "api"),
+                 resource&.errors
+               )
       end
 
       def invalid_api_key
-        render json: { error: I18n.t(:invalid_api_key, key: api_key, scope: "spree.api") },
-               status: :unauthorized
+        render status: :unauthorized,
+               json: json_api_error(I18n.t(:invalid_api_key, key: api_key, scope: "api"))
       end
 
       def unauthorized
-        render json: { error: I18n.t(:unauthorized, scope: "spree.api") },
-               status: :unauthorized
+        render status: :unauthorized,
+               json: json_api_error(I18n.t(:unauthorized, scope: "api"))
       end
 
       def not_found
-        render json: { error: I18n.t(:resource_not_found, scope: "spree.api") },
-               status: :not_found
+        render status: :not_found,
+               json: json_api_error(I18n.t(:resource_not_found, scope: "api"))
+      end
+
+      def json_api_error(message, **options)
+        error_response = { errors: [{ detail: message }] }
+        if options[:backtrace] && (Rails.env.development? || Rails.env.test?)
+          error_response.merge!(meta: [options[:backtrace]])
+        end
+        error_response
+      end
+
+      def json_api_invalid(message, errors)
+        error_response = { errors: [{ detail: message }] }
+        error_response.merge!(meta: { validation_errors: errors.to_a }) if errors.any?
+        error_response
       end
     end
   end
