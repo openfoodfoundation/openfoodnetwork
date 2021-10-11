@@ -23,14 +23,7 @@ RSpec.configure do |config|
       },
       paths: {},
       servers: [
-        {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
-            }
-          }
-        }
+        { url: "/" }
       ]
     },
     'v0/swagger.yaml' => {
