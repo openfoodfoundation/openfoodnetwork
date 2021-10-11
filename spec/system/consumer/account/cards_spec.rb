@@ -65,7 +65,7 @@ describe "Credit Cards", js: true do
       alert_text = <<~TEXT.strip
         Changing your default card will remove shops' existing authorizations \
         to charge it. You can re-authorize shops after updating the default \
-        card. Do you wish to change the default card?"
+        card. Do you wish to change the default card?
       TEXT
       within(".card#card#{non_default_card.id}") do
         accept_alert(alert_text) do
