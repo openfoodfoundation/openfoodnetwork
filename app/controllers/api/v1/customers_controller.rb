@@ -11,9 +11,9 @@ module Api
       before_action :authorize_action, only: [:show, :update, :destroy]
 
       def index
-        customers = search_customers
+        @pagy, customers = pagy(search_customers, pagy_options)
 
-        render json: Api::V1::CustomerSerializer.new(customers, is_collection: true)
+        render json: Api::V1::CustomerSerializer.new(customers, pagination_options)
       end
 
       def show

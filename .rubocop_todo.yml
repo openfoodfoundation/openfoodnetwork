@@ -582,6 +582,7 @@ Metrics/MethodLength:
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/checkout_helper.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
+    - "app/json_schemas/json_api_schema.rb"
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/gateway/pay_pal_express.rb'
     - 'app/models/spree/order/checkout.rb'

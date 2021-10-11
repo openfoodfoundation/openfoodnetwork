@@ -5,6 +5,8 @@ module Api
     class BaseController < ActionController::API
       include CanCan::ControllerAdditions
       include RequestTimeouts
+      include Pagy::Backend
+      include JsonApiPagination
 
       check_authorization
 
