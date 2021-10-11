@@ -110,6 +110,20 @@ describe "Customers", type: :request do
           expect(json_error_detail).to eq "The resource you were looking for could not be found."
         end
       end
+
+      describe "related records" do
+        it "serializes the enterprise relationship" do
+          expected_enterprise_data = {
+            "data" => {
+              "id" => customer1.enterprise_id.to_s,
+              "type" => "enterprise"
+            }
+          }
+
+          get "/api/v1/customers/#{customer1.id}"
+          expect(json_response[:data][:relationships][:enterprise]).to eq(expected_enterprise_data)
+        end
+      end
     end
 
     put "Update customer" do
