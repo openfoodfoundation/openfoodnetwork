@@ -4,6 +4,8 @@ module Api
   module V1
     class BaseController < ActionController::API
       include CanCan::ControllerAdditions
+      include RequestTimeouts
+
       check_authorization
 
       attr_accessor :current_api_user
