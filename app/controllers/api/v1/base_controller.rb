@@ -5,6 +5,10 @@ module Api
     class BaseController < ActionController::API
       include CanCan::ControllerAdditions
       include RequestTimeouts
+      include Pagy::Backend
+      include JsonApiPagination
+
+      RESULTS_PER_PAGE = 50
 
       check_authorization
 
