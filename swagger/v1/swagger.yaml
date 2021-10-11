@@ -3,79 +3,135 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+components:
+  schemas:
+    error_response:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              detail:
+                type: string
+              source:
+                type: object
+            required:
+            - detail
+      required:
+      - errors
+    customer:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '1'
+            type:
+              type: string
+              example: customer
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                enterprise_id:
+                  type: integer
+                  example: 2
+                name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                code:
+                  type: string
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+              required:
+              - enterprise_id
+              - email
+            relationships:
+              type: object
+        meta:
+          type: object
+      required:
+      - data
 paths:
-  "/api/v0/orders":
+  "/api/v1/customers":
     get:
-      summary: list orders
+      summary: List customers
       tags:
-      - Orders
+      - Customers
       parameters:
-      - name: X-Spree-Token
-        in: header
-        schema:
-          type: string
-      - name: q[distributor_id_eq]
+      - name: enterprise_id
         in: query
-        required: false
-        description: Query orders for a specific distributor id.
-        schema:
-          type: string
-      - name: q[completed_at_gt]
-        in: query
-        required: false
-        description: Query orders completed after a date.
-        schema:
-          type: string
-      - name: q[completed_at_lt]
-        in: query
-        required: false
-        description: Query orders completed before a date.
-        schema:
-          type: string
-      - name: q[state_eq]
-        in: query
-        required: false
-        description: Query orders by order state, eg 'cart', 'complete'.
-        schema:
-          type: string
-      - name: q[payment_state_eq]
-        in: query
-        required: false
-        description: Query orders by order payment_state, eg 'balance_due', 'paid',
-          'failed'.
-        schema:
-          type: string
-      - name: q[email_cont]
-        in: query
-        required: false
-        description: Query orders where the order email contains a string.
-        schema:
-          type: string
-      - name: q[order_cycle_id_eq]
-        in: query
-        required: false
-        description: Query orders for a specific order_cycle id.
         schema:
           type: string
       responses:
         '200':
-          description: get orders
+          description: Customers list
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Order_Concise"
-  "/api/v1/customers/{id}":
-    get:
-      summary: Show customer
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: '1'
+                        type:
+                          type: string
+                          example: customer
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            enterprise_id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              nullable: true
+                              example: Alice
+                            code:
+                              type: string
+                              example: BUYER1
+                            email:
+                              type: string
+                              example: alice@example.com
+                          required:
+                          - id
+                          - enterprise_id
+                          - name
+                          - code
+                          - email
+                        relationships:
+                          type: object
+                  meta:
+                    type: object
+                required:
+                - data
+    post:
+      summary: Create customer
+      tags:
+      - Customers
+      parameters: []
       responses:
-        '200':
-          description: customer found
+        '201':
+          description: Customer created
           content:
             application/json:
               schema:
@@ -86,45 +142,390 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: '1'
                       type:
                         type: string
+                        example: customer
                       attributes:
                         type: object
                         properties:
                           id:
                             type: integer
+                            example: 1
+                          enterprise_id:
+                            type: integer
+                            example: 2
                           name:
                             type: string
                             nullable: true
+                            example: Alice
                           code:
                             type: string
+                            example: BUYER1
                           email:
                             type: string
+                            example: alice@example.com
                         required:
                         - id
+                        - enterprise_id
                         - name
                         - code
                         - email
-                    required:
-                    - id
-                    - type
-                    - attributes
-                    - relationships
-                    relationships:
-                    - enterprise
+                      relationships:
+                        type: object
+                  meta:
+                    type: object
                 required:
                 - data
-        '404':
-          description: not found
+        '422':
+          description: Unprocessable entity
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  error:
-                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        detail:
+                          type: string
+                        source:
+                          type: object
+                      required:
+                      - detail
+                required:
+                - errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enterprise_id:
+                  type: integer
+                  example: 2
+                name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                code:
+                  type: string
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+              required:
+              - enterprise_id
+              - email
+  "/api/v1/customers/{id}":
+    get:
+      summary: Show customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '1'
+                      type:
+                        type: string
+                        example: customer
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          enterprise_id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            nullable: true
+                            example: Alice
+                          code:
+                            type: string
+                            example: BUYER1
+                          email:
+                            type: string
+                            example: alice@example.com
+                        required:
+                        - id
+                        - enterprise_id
+                        - name
+                        - code
+                        - email
+                      relationships:
+                        type: object
+                  meta:
+                    type: object
+                required:
+                - data
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        detail:
+                          type: string
+                        source:
+                          type: object
+                      required:
+                      - detail
+                required:
+                - errors
+    put:
+      summary: Update customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '1'
+                      type:
+                        type: string
+                        example: customer
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          enterprise_id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            nullable: true
+                            example: Alice
+                          code:
+                            type: string
+                            example: BUYER1
+                          email:
+                            type: string
+                            example: alice@example.com
+                        required:
+                        - id
+                        - enterprise_id
+                        - name
+                        - code
+                        - email
+                      relationships:
+                        type: object
+                  meta:
+                    type: object
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        detail:
+                          type: string
+                        source:
+                          type: object
+                      required:
+                      - detail
+                required:
+                - errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                enterprise_id:
+                  type: integer
+                  example: 2
+                name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                code:
+                  type: string
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+              required:
+              - enterprise_id
+              - email
+    delete:
+      summary: Delete customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '1'
+                      type:
+                        type: string
+                        example: customer
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          enterprise_id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            nullable: true
+                            example: Alice
+                          code:
+                            type: string
+                            example: BUYER1
+                          email:
+                            type: string
+                            example: alice@example.com
+                        required:
+                        - id
+                        - enterprise_id
+                        - name
+                        - code
+                        - email
+                      relationships:
+                        type: object
+                  meta:
+                    type: object
+                required:
+                - data
+  "/api/v1/enterprises/{enterprise_id}/customers":
+    get:
+      summary: List customers of an enterprise
+      tags:
+      - Customers
+      - Enterprises
+      parameters:
+      - name: enterprise_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customers list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: '1'
+                        type:
+                          type: string
+                          example: customer
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            enterprise_id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              nullable: true
+                              example: Alice
+                            code:
+                              type: string
+                              example: BUYER1
+                            email:
+                              type: string
+                              example: alice@example.com
+                          required:
+                          - id
+                          - enterprise_id
+                          - name
+                          - code
+                          - email
+                        relationships:
+                          type: object
+                  meta:
+                    type: object
+                required:
+                - data
 servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
+- url: "/"

@@ -64,8 +64,3 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Order_Concise"
-servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
