@@ -43,6 +43,16 @@ describe "Customers", type: :request do
           expect(json_response_ids).to eq [customer3.id.to_s]
         end
       end
+
+      context "with ransack params searching for specific customers" do
+        before { login_as enterprise2.owner }
+
+        it "does not show results the user doesn't have permissions to view" do
+          get "/api/v1/customers", params: { q: { id_eq: customer2.id } }
+
+          expect(json_response_ids).to eq []
+        end
+      end
     end
 
     post "Create customer" do
