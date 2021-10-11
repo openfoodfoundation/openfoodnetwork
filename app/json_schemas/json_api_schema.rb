@@ -22,7 +22,8 @@ class JsonApiSchema
             type: :object,
             properties: self.data_properties(options)
           },
-          meta: { type: :object }
+          meta: { type: :object },
+          links: { type: :object }
         },
         required: [:data]
       }
@@ -39,9 +40,33 @@ class JsonApiSchema
               properties: self.data_properties(options)
             }
           },
-          meta: { type: :object }
+          meta: {
+            type: :object,
+            properties: {
+              pagination: {
+                type: :object,
+                properties: {
+                  results: { type: :integer, example: 250 },
+                  pages: { type: :integer, example: 5 },
+                  page: { type: :integer, example: 2 },
+                  per_page: { type: :integer, example: 50 },
+                }
+              }
+            },
+            required: [:pagination]
+          },
+          links: {
+            type: :object,
+            properties: {
+              self: { type: :string },
+              first: { type: :string },
+              prev: { type: :string, nullable: true },
+              next: { type: :string, nullable: true },
+              last: { type: :string }
+            }
+          }
         },
-        required: [:data]
+        required: [:data, :meta, :links]
       }
     end
 
