@@ -3,6 +3,9 @@
 require 'spec_helper'
 
 RSpec.configure do |config|
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include OpenFoodNetwork::ApiHelper, type: :request
+
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
@@ -20,6 +23,12 @@ RSpec.configure do |config|
       info: {
         title: 'API V1',
         version: 'v1'
+      },
+      components: {
+        schemas: {
+          error_response: ErrorsSchema.schema,
+          customer: CustomerSchema.schema
+        }
       },
       paths: {},
       servers: [
@@ -41,3 +50,10 @@ RSpec.configure do |config|
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.swagger_format = :yaml
 end
+
+module RswagExtension
+  def param(args, &block)
+    public_send(:let, args) { instance_eval(&block) }
+  end
+end
+Rswag::Specs::ExampleGroupHelpers.prepend RswagExtension

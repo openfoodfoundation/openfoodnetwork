@@ -5,7 +5,7 @@ module Api
     class CustomerSerializer
       include JSONAPI::Serializer
 
-      attributes :id, :enterprise_id, :name, :code, :email
+      attributes :id, :enterprise_id, :first_name, :last_name, :code, :email
 
       belongs_to :enterprise, record_type: :enterprise, serializer: :id
     end

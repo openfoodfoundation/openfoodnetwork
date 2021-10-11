@@ -466,6 +466,7 @@ Metrics/BlockLength:
     - 'spec/lib/open_food_network/group_buy_report_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
     - 'spec/spec_helper.rb'
+    - 'spec/swagger_helper.rb'
     - 'spec/support/cancan_helper.rb'
     - 'spec/support/matchers/select2_matchers.rb'
     - 'spec/support/matchers/table_matchers.rb'
