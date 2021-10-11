@@ -28,6 +28,26 @@ RSpec.configure do |config|
         schemas: {
           error_response: ErrorsSchema.schema,
           customer: CustomerSchema.schema
+        },
+        securitySchemas: {
+          api_key_header: {
+            type: :apiKey,
+            name: 'X-Api-Token',
+            in: :header,
+            description: "Authenticates via API key passed in specified header"
+          },
+          api_key_param: {
+            type: :apiKey,
+            name: 'token',
+            in: :query,
+            description: "Authenticates via API key passed in specified query param"
+          },
+          session: {
+            type: :http,
+            name: '_ofn_session',
+            in: :cookie,
+            description: "Authenticates using the current user's session if logged in"
+          },
         }
       },
       paths: {},
