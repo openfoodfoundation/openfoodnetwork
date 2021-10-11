@@ -24,6 +24,12 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
+      components: {
+        schemas: {
+          error_response: ErrorsSchema.schema,
+          customer: CustomerSchema.schema
+        }
+      },
       paths: {},
       servers: [
         { url: "/" }
@@ -44,3 +50,10 @@ RSpec.configure do |config|
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.swagger_format = :yaml
 end
+
+module RswagExtension
+  def param(args, &block)
+    send(:let, args) { instance_eval(&block) }
+  end
+end
+Rswag::Specs::ExampleGroupHelpers.prepend RswagExtension
