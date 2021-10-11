@@ -532,10 +532,6 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.10.2)
-    rswag (2.4.0)
-      rswag-api (= 2.4.0)
-      rswag-specs (= 2.4.0)
-      rswag-ui (= 2.4.0)
     rswag-api (2.4.0)
       railties (>= 3.1, < 7.0)
     rswag-specs (2.4.0)
@@ -780,7 +776,9 @@ DEPENDENCIES
   roo!
   rspec-rails (>= 3.5.2)
   rspec-retry
-  rswag
+  rswag-api
+  rswag-specs
+  rswag-ui
   rubocop
   rubocop-rails
   sd_notify
