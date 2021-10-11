@@ -109,6 +109,19 @@ describe "Customers", type: :request do
         end
       end
 
+      context "without authentication" do
+        before { logout }
+
+        response "401", "Unauthorized" do
+          param(:id) { customer1.id }
+          schema ErrorsSchema.schema
+
+          run_test! do
+            expect(json_error_detail).to eq "You are not authorized to perform that action."
+          end
+        end
+      end
+
       describe "related records" do
         it "serializes the enterprise relationship" do
           expected_enterprise_data = {

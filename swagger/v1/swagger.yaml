@@ -346,6 +346,28 @@ paths:
                       - detail
                 required:
                 - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        detail:
+                          type: string
+                        source:
+                          type: object
+                      required:
+                      - detail
+                required:
+                - errors
     put:
       summary: Update customer
       tags:
