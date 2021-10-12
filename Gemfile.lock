@@ -323,7 +323,7 @@ GEM
     fuubar (2.5.1)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
-    geocoder (1.6.7)
+    geocoder (1.7.0)
     globalid (0.5.2)
       activesupport (>= 5.0)
     gmaps4rails (2.1.2)
