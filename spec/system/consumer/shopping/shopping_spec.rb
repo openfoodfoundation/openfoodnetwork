@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationHelper
@@ -620,7 +620,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
   def expect_out_of_stock_behavior
     # Shows an "out of stock" modal, with helpful user feedback
     within(".out-of-stock-modal") do
-      expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text')
+      expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text').strip
     end
 
     # Removes the item from the client-side cart and marks the variant as unavailable

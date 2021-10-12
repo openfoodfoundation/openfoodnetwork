@@ -6,14 +6,8 @@
       %p
       - if spree_current_user.nil?
         %p
-          = t '.require_login_html',
-            {login: ('<a auth="login">' + t('.login') + '</a>').html_safe,
-             signup: ('<a auth="signup">' + t('.signup') + '</a>').html_safe}
+          = t('.require_login_html', login: ('<a auth="login">' + t('.login') + '</a>').html_safe, signup: ('<a auth="signup">' + t('.signup') + '</a>').html_safe)
         %p
-          = t '.require_login_2_html',
-            {contact: link_to(t('.contact'), '#contact'),
-             enterprise: current_distributor.name}
+          = t('.require_login_2_html', contact: link_to(t('.contact'), '#contact'), enterprise: current_distributor.name)
       - else
-        = t '.require_customer_html',
-          {contact: link_to(t('.contact'), '#contact'),
-           enterprise: current_distributor.name}
+        = t('.require_customer_html', contact: link_to(t('.contact'), '#contact'), enterprise: current_distributor.name)
