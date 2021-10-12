@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
 describe "Managing enterprise images" do
   include WebHelper
@@ -53,8 +53,12 @@ describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__logo-field-group" do
-          click_on "Remove Image"
-          accept_js_alert
+          alert_text = <<~TEXT.strip
+          The logo will be removed immediately after you confirm.
+          TEXT
+          accept_alert(alert_text) do
+            click_on "Remove Image"
+          end
         end
 
         expect(page).to have_content("Logo removed successfully")
@@ -91,8 +95,12 @@ describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          click_on "Remove Image"
-          accept_js_alert
+          alert_text = <<~TEXT.strip
+          The promo image will be removed immediately after you confirm.
+          TEXT
+          accept_alert(alert_text) do
+            click_on "Remove Image"
+          end
         end
 
         expect(page).to have_content("Promo image removed successfully")
