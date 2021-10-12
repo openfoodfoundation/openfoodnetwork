@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "Credit Cards", js: true do
   include AuthenticationHelper
@@ -62,9 +62,15 @@ describe "Credit Cards", js: true do
       end
 
       # Allows switching of default card
+      alert_text = <<~TEXT.strip
+        Changing your default card will remove shops' existing authorizations \
+        to charge it. You can re-authorize shops after updating the default \
+        card. Do you wish to change the default card?
+      TEXT
       within(".card#card#{non_default_card.id}") do
-        find_field('default_card').click
-        accept_alert
+        accept_alert(alert_text) do
+          find_field('default_card').click
+        end
         expect(find_field('default_card')).to be_checked
       end
 
