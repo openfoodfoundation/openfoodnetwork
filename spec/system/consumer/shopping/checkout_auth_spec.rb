@@ -55,7 +55,7 @@ describe "As a consumer I want to check out my cart", js: true do
       within(".login-modal") { click_button 'Login' }
 
       expect(page).to have_content "Your details"
-      toggle_details
+      page.find(:css, "i.ofn-i_052-point-down").click
 
       expect(page).to have_field 'First Name', with: 'Foo'
       expect(page).to have_field 'Last Name', with: 'Bar'
