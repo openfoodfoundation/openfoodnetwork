@@ -17,7 +17,7 @@
     "@storybook/addon-controls": "^6.3.10",
     "@storybook/addon-docs": "^6.3.10",
     "@storybook/server": "^6.3.10",
-    "jasmine-core": "~2.4.1",
+    "jasmine-core": "~3.10.0",
     "jest": "^27.2.5",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
