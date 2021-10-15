@@ -27,8 +27,9 @@ describe "Credit Cards", js: true do
     before do
       login_as user
 
-      Stripe.api_key = "sk_test_12345"
-      Stripe.publishable_key = "some_token"
+      allow(Stripe).to receive(:api_key).and_return("sk_test_12345")
+      allow(Stripe.config).to receive(:api_key).and_return("sk_test_12345")
+      allow(Stripe).to receive(:publishable_key).and_return("some_token")
       Spree::Config.set(stripe_connect_enabled: true)
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").
