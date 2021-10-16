@@ -104,6 +104,20 @@ module Admin
       end
     end
 
+    describe "show" do
+      context 'a distributor manages an order cycle' do
+        let(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
+        let(:oc) { create(:simple_order_cycle, coordinator: distributor) }
+
+        context "distributor navigates to order cycle show page" do
+          it 'redirects to edit page' do
+            get :show, params: { id: oc.id }
+            expect(response).to redirect_to edit_admin_order_cycle_path(oc.id)
+          end
+        end
+      end
+    end
+
     describe "create" do
       let(:shop) { create(:distributor_enterprise) }
 
