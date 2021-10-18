@@ -402,7 +402,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
-    pagy (4.11.0)
+    pagy (5.0.1)
     paper_trail (12.1.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
@@ -624,7 +624,7 @@ GEM
     stripe (5.38.0)
     temple (0.8.2)
     test-prof (1.0.7)
-    test-unit (3.4.8)
+    test-unit (3.5.0)
       power_assert
     thor (1.1.0)
     thread-local (1.1.0)
@@ -757,7 +757,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   ofn-qz!
   order_management!
-  pagy (~> 4.11)
+  pagy (~> 5.0)
   paper_trail (~> 12.1.0)
   paperclip (~> 3.4.1)
   paranoia (~> 2.4)
@@ -800,7 +800,7 @@ DEPENDENCIES
   stringex (~> 2.8.5)
   stripe
   test-prof
-  test-unit (~> 3.4)
+  test-unit (~> 3.5)
   timecop
   uglifier (>= 1.0.3)
   valid_email2
