@@ -174,7 +174,7 @@ en_US:
       userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
-      email_community_html: "We'll leave you to explore the platform and our community  (%{link}) for now and will check back in tomorrow with more information and resources!   In the meantime, please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   Once again, welcome to our community, we're glad you are here!"
+      email_community_html: "We'll leave you to explore the platform and our community for now and will check back in soon with more information and resources!   In the meantime, please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community, we're glad you are here!"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
