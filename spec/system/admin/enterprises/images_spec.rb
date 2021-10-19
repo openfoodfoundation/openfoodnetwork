@@ -18,6 +18,10 @@ describe "Managing enterprise images" do
     end
 
     describe "images for an enterprise" do
+      
+      let(:alert_text_logo) {'The logo will be removed immediately after you confirm'.strip}
+      let(:alert_text_promo) {'The promo image will be removed immediately after you confirm.'.strip}
+
       def go_to_images
         within(".side_menu") do
           click_link "Images"
@@ -53,10 +57,7 @@ describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__logo-field-group" do
-          alert_text = <<~TEXT.strip
-          The logo will be removed immediately after you confirm.
-          TEXT
-          accept_alert(alert_text) do
+          accept_alert(alert_text_logo) do
             click_on "Remove Image"
           end
         end
@@ -95,10 +96,7 @@ describe "Managing enterprise images" do
 
         # Removing image
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          alert_text = <<~TEXT.strip
-          The promo image will be removed immediately after you confirm.
-          TEXT
-          accept_alert(alert_text) do
+          accept_alert(alert_text_promo) do
             click_on "Remove Image"
           end
         end
