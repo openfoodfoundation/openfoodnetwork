@@ -1,4 +1,4 @@
-require "spec_helper"
+require "system_helper"
 
 describe "Business Address" do
   include WebHelper
