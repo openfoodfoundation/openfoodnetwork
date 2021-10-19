@@ -313,8 +313,10 @@ describe "As a consumer I want to check out my cart", js: true do
 
       it "checks out successfully" do
         visit checkout_path
-        choose shipping_with_fee.name
-        choose check_without_fee.name
+        expect(page).to have_content "Shipping info"
+        find("input[value='#{shipping_with_fee.id}'").click
+        expect(page).to have_content "Payment"
+        find("input[value='#{check_without_fee.id}'").click
 
         perform_enqueued_jobs do
           place_order
