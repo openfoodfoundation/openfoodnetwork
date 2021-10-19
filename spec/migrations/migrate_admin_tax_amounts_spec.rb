@@ -31,6 +31,7 @@ describe MigrateAdminTaxAmounts do
       end
 
       it "moves the tax to an adjustment" do
+        puts "this is a migration spec"
         expect(Spree::Adjustment).to receive(:create!).at_least(:once).and_call_original
 
         subject.migrate_admin_taxes!

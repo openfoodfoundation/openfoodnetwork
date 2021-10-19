@@ -27,6 +27,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
             before { api_get :show, id: 'default' }
 
             it 'is successful' do
+              puts "This is an engine spec"
               expect(response).to be_successful
             end
 
