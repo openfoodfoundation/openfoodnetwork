@@ -313,8 +313,11 @@ describe "As a consumer I want to check out my cart", js: true do
 
       it "checks out successfully" do
         visit checkout_path
+        
         expect(page).to have_content "Shipping info"
+        find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
         find("input[value='#{shipping_with_fee.id}'").click
+        click_button "Next"
         expect(page).to have_content "Payment"
         find("input[value='#{check_without_fee.id}'").click
 

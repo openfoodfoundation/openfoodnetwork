@@ -53,6 +53,7 @@ module CheckoutRequestsHelper
     return unless save_default_addresses
 
     within "#shipping" do
+      find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
       check "Shipping address same as billing address?"
       check "Save as default shipping address"
     end
