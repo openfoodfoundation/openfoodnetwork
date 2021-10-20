@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "Terms of Service files" do
   include AuthenticationHelper

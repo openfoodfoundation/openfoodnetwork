@@ -7,6 +7,17 @@
   span, span > a {
     font-size: 1.3rem;
     @include headingFont;
+  } 
+
+  @media screen and (max-width: 700px) {
+    
+    span, span > a {
+      font-size: 1.1rem;
+    }
+    
+    span.checkout-tab-number {
+      display: none;
+    }
   }
 
   &:not(.selected) {
@@ -30,7 +41,7 @@
   &.success {
     border-bottom: 5px solid $clr-turquoise-bright;
 
-    span {
+    span.checkout-tab-label {
       &:after {
         content: '✓';
         background-color: $clr-turquoise-bright;
