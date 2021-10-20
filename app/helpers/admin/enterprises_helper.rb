@@ -9,5 +9,9 @@ module Admin
         {}
       end
     end
+
+    def select_only_item(producers)
+      producers.size == 1 ? producers.first.id : nil
+    end
   end
 end

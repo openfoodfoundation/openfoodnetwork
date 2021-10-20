@@ -28,6 +28,7 @@ end
 
 Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = 30
+Capybara.disable_animation = true
 
 RSpec.configure do |config|
   # DatabaseCleaner

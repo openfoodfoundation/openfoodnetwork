@@ -13,14 +13,6 @@ module CheckoutRequestsHelper
     find("button", text: "Place order now").click
   end
 
-  def toggle_accordion(id)
-    find("##{id} dd a").click
-  end
-
-  def toggle_details
-    toggle_accordion :details
-  end
-
   def fill_out_details
     within "#details" do
       fill_in "First Name", with: "Will"

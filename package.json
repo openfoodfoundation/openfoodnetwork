@@ -14,11 +14,11 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-controls": "^6.3.10",
-    "@storybook/addon-docs": "^6.3.10",
+    "@storybook/addon-controls": "^6.3.12",
+    "@storybook/addon-docs": "^6.3.12",
     "@storybook/server": "^6.3.12",
     "jasmine-core": "~2.4.1",
-    "jest": "^27.2.5",
+    "jest": "^27.3.0",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
@@ -32,7 +32,7 @@
     "cable_ready": "^5.0.0-pre2",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
-    "mrujs": "^0.5.5",
+    "mrujs": "^0.5.9",
     "shortcut-buttons-flatpickr": "^0.3.1",
     "stimulus": "^2.0.0",
     "webpack": "~4",

@@ -55,7 +55,7 @@ gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
-gem 'pagy', '~> 4.11'
+gem 'pagy', '~> 5.0'
 
 gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '2.2.0'
@@ -100,7 +100,7 @@ gem 'roo', '~> 2.8.3'
 
 gem 'whenever', require: false
 
-gem 'test-unit', '~> 3.4'
+gem 'test-unit', '~> 3.5'
 
 gem 'coffee-rails', '~> 5.0.0'
 gem 'compass-rails'
