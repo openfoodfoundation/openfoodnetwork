@@ -9,6 +9,10 @@ angular.module("admin.enterprises")
     $scope.checking = false
 
     $scope.$watch "Enterprise.permalink", (newValue, oldValue) ->
+      if newValue == initialPermalink
+        $scope.availability = ""
+        return
+
       $scope.checking = true
       pendingRequest = PermalinkChecker.check(newValue)
 
