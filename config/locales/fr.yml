@@ -1547,9 +1547,9 @@ fr:
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Devise du Coût"
   split_checkout:
-    your_details: 1 - Vos coordonnées
-    payment_method: 2 - Moyen de paiement
-    order_summary: 3 - Récapitulatif de la commande
+    your_details_without_number: Vos informations
+    payment_method_without_number: Moyen de paiement
+    order_summary_without_number: Récapitulatif de la commande
     step1:
       your_details:
         title: Vos informations
@@ -2581,7 +2581,7 @@ fr:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
-    default_card_voids_auth: Modifier votre carte de paiement par défaut va supprimer les autorisations attribuées à certaines boutiques. vous pouvez les remettre en place dans les paramètres de votre compte. Souhaitez-vous modifier la carte par défaut ?
+    default_card_voids_auth: Modifier votre carte de paiement par défaut va supprimer les autorisations attribuées à certaines boutiques. Vous pouvez les remettre en place dans les paramètres de votre compte, une fois la carte par défaut modifiée. Souhaitez-vous modifier la carte par défaut ?
     cart:
       add_to_cart_failed: >
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être

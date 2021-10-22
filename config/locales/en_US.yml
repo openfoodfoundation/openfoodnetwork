@@ -41,6 +41,8 @@ en_US:
           attributes:
             email:
               taken: "There's already an account registered for this email. Please login or reset your password."
+            reset_password_token:
+              invalid: is invalid
         spree/order:
           no_card: There are no authorized credit cards available to charge
         spree/credit_card:
@@ -95,6 +97,9 @@ en_US:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "User password cannot be blank. Please enter a password."
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred while sending your confirmation email."
@@ -233,6 +238,7 @@ en_US:
   search_by_name: Search by name or city...
   producers_join: US producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges Sales Tax?
+  business_address: "Business Address"
   print_invoice: "Invoice"
   print_ticket: "Print invoice"
   select_ticket_printer: "Select printer for invoices"
@@ -712,6 +718,15 @@ en_US:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
+        business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 High St.
+          address2: Address (contd.)
+          legal_phone_number: Business phone number
+          phone_placeholder: "777 555-1212"
         contact:
           name: Name
           name_placeholder: eg. Justin Jones
@@ -1344,8 +1359,8 @@ en_US:
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.net/"
-  menu_6_title: "Connect"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_title: "Donate"
+  menu_6_url: "https://donate.openfoodnetwork.net"
   menu_7_title: "Learn"
   menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
@@ -1583,6 +1598,8 @@ en_US:
         edit: Edit your details
       billing_address:
         title: Billing address
+      shipping_address:
+        title: Shipping address
       delivery_info:
         title: Delivery info
       payment_method:
@@ -1593,12 +1610,17 @@ en_US:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
+      global: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1698,6 +1720,7 @@ en_US:
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
+  producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -2179,6 +2202,7 @@ en_US:
   calculator_values: "Calculator values"
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   calculator_preferred_unit_error: "must be kg or lb"
+  calculator_preferred_value_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2592,6 +2616,8 @@ en_US:
           title: "Uploading Terms and Conditions"
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
+        business_address_info:
+          message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
       panels:
         save: SAVE
         saved: SAVED
