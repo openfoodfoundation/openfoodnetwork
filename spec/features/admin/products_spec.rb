@@ -484,7 +484,7 @@ describe '
       page.find('a#new_image_link').click
 
       attach_file('image_attachment', file_path)
-      click_button "Update"
+      click_button "Create"
 
       uri = URI.parse(current_url)
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
@@ -538,6 +538,23 @@ describe '
 
       uri = URI.parse(current_url)
       expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
+    end
+
+    it "checks error when creating product image with unsupported format", js: true do
+      unsupported_image_file_path = Rails.root + "README.md"
+      product = create(:simple_product, supplier: @supplier2)
+
+      image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
+      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+                          alt: "position 1", attachment: image, position: 1)
+
+      visit spree.admin_product_images_path(product)
+      page.find('a#new_image_link').click
+      attach_file('image_attachment', unsupported_image_file_path)
+      click_button "Create"
+
+      expect(page).to have_text "The product image was not recognised."
+      expect(page).to have_text "Please upload an image in PNG or JPG format."
     end
 
     it "deleting product images", js: true do
