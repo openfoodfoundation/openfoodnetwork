@@ -1531,9 +1531,8 @@ it:
   checkout_back_to_cart: "Torna al carrello"
   cost_currency: "Moneta"
   split_checkout:
-    your_details: 1 - I tuoi dettagli
-    payment_method: 2 - Metodo di pagamento
-    order_summary: 3 - Riepilogo della richiesta
+    your_details_without_number: I tuoi dettagli
+    payment_method_without_number: Metodo di pagamento
     step1:
       your_details:
         title: I tuoi dettagli
@@ -2554,7 +2553,6 @@ it:
     resolve_errors: 'Per favore risolvi i seguenti errori:'
     more_items: "+ %{count} ancora"
     default_card_updated: Carta predefinita aggiornata
-    default_card_voids_auth: La modifica della carta predefinita rimuoverà le autorizzazioni esistenti dei negozi per l'addebito. Puoi autorizzare nuovamente i negozi dopo aver aggiornato la carta predefinita. Vuoi cambiare la carta predefinita? "
     cart:
       add_to_cart_failed: >
           C'è stato un problema nell'aggiungere questo prodotto al carrello. Forse

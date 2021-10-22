@@ -824,6 +824,7 @@ sv:
   checkout_total_price: 'Summa '
   checkout_back_to_cart: "Tillbaka till Varukorg"
   split_checkout:
+    your_details_without_number: Dina detaljer
     step1:
       your_details:
         title: Dina detaljer

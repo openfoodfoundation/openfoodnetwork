@@ -1495,6 +1495,7 @@ ar:
   checkout_back_to_cart: "العودة إلى السلة"
   cost_currency: "تكلفة العملة"
   split_checkout:
+    your_details_without_number: تفاصيلك
     step1:
       your_details:
         title: تفاصيلك
@@ -2478,7 +2479,6 @@ ar:
     resolve_errors: يرجى حل الأخطاء التالية
     more_items: "+ %{count} ايضا"
     default_card_updated: تم تحديث البطاقة الافتراضية
-    default_card_voids_auth: سيؤدي تغيير بطاقتك الافتراضية إلى إزالة تفويضات المتاجر الحالية لشحنها. يمكنك إعادة تفويض المحلات التجارية بعد تحديث البطاقة الافتراضية. هل ترغب في تغيير البطاقة الافتراضية؟"
     cart:
       add_to_cart_failed: >
           حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو

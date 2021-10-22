@@ -1440,6 +1440,7 @@ fr_BE:
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Devise du Coût"
   split_checkout:
+    your_details_without_number: Vos informations
     step1:
       your_details:
         title: Vos informations

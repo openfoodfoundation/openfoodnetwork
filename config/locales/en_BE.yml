@@ -1371,6 +1371,7 @@ en_BE:
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
   split_checkout:
+    your_details_without_number: Your details
     step1:
       your_details:
         title: Your details

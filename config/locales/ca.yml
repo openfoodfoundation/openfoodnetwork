@@ -1533,6 +1533,7 @@ ca:
   checkout_back_to_cart: "Tornar a la cistella"
   cost_currency: "Moneda del cost"
   split_checkout:
+    your_details_without_number: Els teus detalls
     step1:
       your_details:
         title: Els teus detalls
@@ -2519,7 +2520,6 @@ ca:
     resolve_errors: Si us plau, resol els errors següents
     more_items: "+ %{count} Més"
     default_card_updated: Targeta predeterminada actualitzada
-    default_card_voids_auth: Si canvieu la targeta predeterminada, s’eliminaran les autoritzacions existents de les botigues per cobrar-la. Podeu tornar a autoritzar les botigues després d'actualitzar la targeta predeterminada. Voleu canviar la targeta predeterminada?
     cart:
       add_to_cart_failed: >
           S'ha produït un problema en afegir aquest producte a la cistella. Potser

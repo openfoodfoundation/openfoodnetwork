@@ -1535,9 +1535,8 @@ nb:
   checkout_back_to_cart: "Tilbake til Handlekurv"
   cost_currency: "Kostnadsvaluta"
   split_checkout:
-    your_details: 1 - Dine detaljer
-    payment_method: 2 - Betalingsmåte
-    order_summary: 3 - Ordresammendrag
+    your_details_without_number: Dine detaljer
+    payment_method_without_number: Betalingsmetode
     step1:
       your_details:
         title: Dine detaljer
@@ -2567,7 +2566,6 @@ nb:
     resolve_errors: Vennligst løse følgende feil
     more_items: "+ %{count} Flere"
     default_card_updated: Standardkort oppdatert
-    default_card_voids_auth: Hvis du endrer standardkortet ditt, fjernes butikkens eksisterende autorisasjoner til å belaste det. Du kan autorisere butikker på nytt etter oppdatering av standardkortet. Ønsker du å endre standardkortet?
     cart:
       add_to_cart_failed: >
           Det oppsto et problem med å legge dette produktet til handlekurven. Kanskje

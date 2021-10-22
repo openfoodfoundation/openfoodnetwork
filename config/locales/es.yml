@@ -1532,6 +1532,7 @@ es:
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
   split_checkout:
+    your_details_without_number: Sus detalles
     step1:
       your_details:
         title: Sus detalles
@@ -2518,7 +2519,6 @@ es:
     resolve_errors: Resuelve los siguientes errores
     more_items: "+ %{count} Más"
     default_card_updated: Tarjeta predeterminada actualizada
-    default_card_voids_auth: Cambiar su tarjeta predeterminada eliminará las autorizaciones existentes de las tiendas para cargarla. Puede volver a autorizar las tiendas después de actualizar la tarjeta predeterminada. ¿Desea cambiar la tarjeta predeterminada?
     cart:
       add_to_cart_failed: >
           Ha habido un problema al añadir este producto en el carrito. Puede que haya

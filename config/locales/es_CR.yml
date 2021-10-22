@@ -1415,6 +1415,7 @@ es_CR:
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
   split_checkout:
+    your_details_without_number: Sus detalles
     step1:
       your_details:
         title: Sus detalles

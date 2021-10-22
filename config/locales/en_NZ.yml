@@ -1470,6 +1470,7 @@ en_NZ:
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
   split_checkout:
+    your_details_without_number: Your details
     step1:
       your_details:
         title: Your details
@@ -2448,7 +2449,6 @@ en_NZ:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
-    default_card_voids_auth: Changing your default card will remove shops' existing authorizations to charge it. You can re-authorize shops after updating the default card. Do you wish to change the default card?"
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to the cart. Perhaps it has become

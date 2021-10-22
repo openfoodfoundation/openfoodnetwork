@@ -1461,6 +1461,7 @@ cy:
   checkout_back_to_cart: "Yn ôl i&#39;r Cart"
   cost_currency: "Arian Cyfred Cost"
   split_checkout:
+    your_details_without_number: Eich manylion
     step1:
       your_details:
         title: Eich manylion

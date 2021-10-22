@@ -1512,6 +1512,7 @@ pt_BR:
   checkout_back_to_cart: "De volta para o Carrinho"
   cost_currency: "Custo"
   split_checkout:
+    your_details_without_number: Seus detalhes
     step1:
       your_details:
         title: Seus detalhes
@@ -2497,7 +2498,6 @@ pt_BR:
     resolve_errors: Por favor resolva os seguintes erros
     more_items: "+ %{count} Mais"
     default_card_updated: Cartão padrão atualizado
-    default_card_voids_auth: Ao atualizar seu cartão, você automaticamente remove as autorizações existentes para que uma loja possa cobrá-lo. Você conceder novamente as autorizações após atualizar o cartão. Você deseja atualizar o seu cartão?
     cart:
       add_to_cart_failed: >
           Houve um problema ao adicionar este produto ao carrinho. Talvez ele tenha

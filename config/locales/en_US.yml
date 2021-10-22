@@ -1361,8 +1361,8 @@ en_US:
   menu_5_url: "https://about.openfoodnetwork.net/"
   menu_6_title: "Donate"
   menu_6_url: "https://donate.openfoodnetwork.net"
-  menu_7_title: "Learn"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_7_title: "Help"
+  menu_7_url: "https://help.openfoodnetwork.net/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1545,9 +1545,8 @@ en_US:
   checkout_back_to_cart: "Back to cart"
   cost_currency: "Cost Currency"
   split_checkout:
-    your_details: 1 - Your details
-    payment_method: 2 - Payment method
-    order_summary: 3 - Order summary
+    your_details_without_number: Your details
+    payment_method_without_number: Payment method
     step1:
       your_details:
         title: Your details
@@ -2577,7 +2576,6 @@ en_US:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
-    default_card_voids_auth: Changing your default card will remove shops' existing authorizations to charge it. You can re-authorize shops after updating the default card. Do you wish to change the default card?"
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to the cart. Perhaps it has become

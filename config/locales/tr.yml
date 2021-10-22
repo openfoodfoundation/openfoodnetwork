@@ -1530,9 +1530,8 @@ tr:
   checkout_back_to_cart: "Sepete geri dön"
   cost_currency: "Maliyet Para Birimi"
   split_checkout:
-    your_details: 1 - Bilgileriniz
-    payment_method: 2 - Ödeme yöntemi
-    order_summary: 3 - Sipariş özeti
+    your_details_without_number: Bilgilerin
+    payment_method_without_number: Ödeme yöntemi
     step1:
       your_details:
         title: Bilgilerin
@@ -2552,7 +2551,6 @@ tr:
     resolve_errors: Lütfen aşağıdaki hataları düzeltin
     more_items: "+ %{count} Daha "
     default_card_updated: Varsayılan Kart Güncellendi
-    default_card_voids_auth: Varsayılan kartınızı değiştirmeniz mevcut üyelik hakkı verdiğiniz satıcıların izinlerini sıfırlar. Kartınızı güncelledikten sonra tekrar izin vermeniz gerekmektedir. Varsayılan kartınızı değiştirmek istiyor musunuz?
     cart:
       add_to_cart_failed: >
           Bu ürünü sepete eklerken bir hata oluştu. Ürün stokları bitmiş veya dükkan

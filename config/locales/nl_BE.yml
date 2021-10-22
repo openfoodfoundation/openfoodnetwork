@@ -1442,6 +1442,7 @@ nl_BE:
   checkout_back_to_cart: "Terug naar je Winkelwagentje"
   cost_currency: "Kosten in deviezen "
   split_checkout:
+    your_details_without_number: Jouw gegevens
     step1:
       your_details:
         title: Jouw gegevens

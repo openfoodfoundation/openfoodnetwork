@@ -1537,9 +1537,8 @@ de_DE:
   checkout_back_to_cart: "Zurück zum Warenkorb"
   cost_currency: "Währung"
   split_checkout:
-    your_details: 1 - Ihre Daten
-    payment_method: 2 - Zahlungsart
-    order_summary: 3 - Bestellübersicht
+    your_details_without_number: Ihre Daten
+    payment_method_without_number: Zahlungsart
     step1:
       your_details:
         title: Ihre Daten
@@ -2569,7 +2568,6 @@ de_DE:
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} mehr"
     default_card_updated: Die Standardkreditkarte wurde aktualisiert.
-    default_card_voids_auth: Durch das Ändern Ihrer Standardkreditkarte werden die vorhandenen Autorisierungen für Abbuchungen des Ladens entfernt. Sie können die Autorisierungen nach dem Aktualisieren der Standardkreditkarte erneut erteilen. Möchten Sie die Standardkreditkarte ändern?
     cart:
       add_to_cart_failed: >
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.

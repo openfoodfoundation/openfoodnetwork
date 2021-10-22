@@ -1538,9 +1538,8 @@ ru:
   checkout_back_to_cart: "Назад в корзину"
   cost_currency: "Стоимость валюты"
   split_checkout:
-    your_details: 1 - Ваши данные
-    payment_method: 2 - Способ оплаты
-    order_summary: 3 - Сводка заказа
+    your_details_without_number: Информация о Вас
+    payment_method_without_number: Способ оплаты
     step1:
       your_details:
         title: Информация о Вас
@@ -2570,7 +2569,6 @@ ru:
     resolve_errors: Пожалуйста исправьте следующие ошибки
     more_items: "+ %{count} Больше"
     default_card_updated: Карта По Умолчанию Обновлена
-    default_card_voids_auth: Смена карты по умолчанию приведет к удалению существующих разрешений магазинов на снятие с нее средств. Вы можете повторно авторизовать магазины после обновления карты по умолчанию. Вы хотите изменить карту по умолчанию? &quot;
     cart:
       add_to_cart_failed: >
           При добавлении этого товара в корзину возникла проблема. Возможно, он стал

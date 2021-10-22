@@ -1415,6 +1415,7 @@ fil_PH:
   checkout_back_to_cart: "bumalik sa cart"
   cost_currency: "halaga ng pera"
   split_checkout:
+    your_details_without_number: ang inyong detalye
     step1:
       your_details:
         title: ang inyong detalye

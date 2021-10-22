@@ -1529,6 +1529,7 @@ en_GB:
   checkout_back_to_cart: "Back to cart"
   cost_currency: "Cost Currency"
   split_checkout:
+    your_details_without_number: Your details
     step1:
       your_details:
         title: Your details
@@ -2514,7 +2515,6 @@ en_GB:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
-    default_card_voids_auth: Changing your default card will remove shops' existing authorisations to charge it. You can re-authorise shops after updating the default card. Do you wish to change the default card?"
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to your basket. Perhaps it has become
