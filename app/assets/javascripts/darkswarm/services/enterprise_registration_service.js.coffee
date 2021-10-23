@@ -61,7 +61,9 @@ angular.module('Darkswarm').factory "EnterpriseRegistrationService", ($http, Reg
       enterprise = {}
       excluded = [ 'address', 'country', 'id' ]
       for key, value of @enterprise when key not in excluded
-        enterprise[key] = value
+        if (key == 'long_description')
+          enterprise[key] = value.replace(/(?:\r\n|\r|\n)/g, '<br>')
+        else enterprise[key] = value
       enterprise.address_attributes = @enterprise.address if @enterprise.address?
       enterprise.address_attributes.country_id = @enterprise.country.id if @enterprise.country?
       enterprise
