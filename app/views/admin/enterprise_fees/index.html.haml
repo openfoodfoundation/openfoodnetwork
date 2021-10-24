@@ -1,3 +1,6 @@
+- if spree_current_user.admin?
+  = render 'spree/admin/shared/configuration_menu'
+
 = content_for :page_title do
   = t('.title')
 
@@ -29,7 +32,7 @@
         %tr{ ng: { repeat: 'enterprise_fee in enterprise_fees | filter:query' } }
           %td
             = f.ng_hidden_field :id
-            %ofn-select{ :id => angular_id(:enterprise_id), data: 'enterprises', ng: { model: 'enterprise_fee.enterprise_id' } }
+            %ofn-select{ :id => angular_id(:enterprise_id), data: 'enterprises', ng: { model: 'enterprise_fee.enterprise_id' }, style: "width: 90%" }
             %input{ type: "hidden", name: angular_name(:enterprise_id), ng: { value: "enterprise_fee.enterprise_id" } }
           %td= f.ng_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.ng_text_field :name, { placeholder: t('.name_placeholder') }
