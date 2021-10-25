@@ -260,7 +260,7 @@ module Spree
 
       def gateway_error(error)
         text = if error.is_a? ActiveMerchant::Billing::Response
-                 error.params['message'] || error.params['response_reason_text'] || error.message
+                 error_text(error)
                elsif error.is_a? ActiveMerchant::ConnectionError
                  Spree.t(:unable_to_connect_to_gateway)
                else
@@ -269,6 +269,14 @@ module Spree
         logger.error(Spree.t(:gateway_error))
         logger.error("  #{error.to_yaml}")
         raise Core::GatewayError, text
+      end
+
+      def error_text(error)
+        if (code = error.params.dig('error', 'code')) && I18n.exists?("stripe.error_code.#{code}")
+          I18n.t("stripe.error_code.#{code}")
+        else
+          error.params['message'] || error.params['response_reason_text'] || error.message
+        end
       end
 
       # Saftey check to make sure we're not accidentally performing operations on a live gateway.
