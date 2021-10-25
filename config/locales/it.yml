@@ -41,6 +41,8 @@ it:
           attributes:
             email:
               taken: "Esiste già un account con questa email. Ti preghiamo di accedere o impostare una nuova password."
+            reset_password_token:
+              invalid: non è valido
         spree/order:
           no_card: Non ci sono carte di credito autorizzate disponibili per l'addebito
         spree/credit_card:
@@ -95,6 +97,9 @@ it:
   community_forum_url: "URL Forum Community"
   customer_instructions: "Istruzioni per i consumatori"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "La password non può essere vuota. Per favore digita una password"
     confirmations:
       send_instructions: "A breve riceverai una email con le istruzioni per la conferma del tuo account."
       failed_to_send: "C'è stato un errore nell'invio dell'email di conferma."
@@ -233,6 +238,7 @@ it:
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
   charges_sales_tax: Addebiti l'IVA?
+  business_address: "Indirizzo azienda"
   print_invoice: "Stampa fattura"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
@@ -712,6 +718,15 @@ it:
           terms_and_conditions: "Termini e Condizioni"
           remove_terms_and_conditions: "Rimuovi File"
           uploaded_on: "caricato il"
+          reset_form: "Cancella"
+        business_address:
+          company_legal_name: Ragione Sociale
+          company_placeholder: Esempio
+          address1: Indirizzo sede legale
+          address1_placeholder: via Roma 123
+          address2: Indirizzo
+          legal_phone_number: Numero di telefono del rappresentante legale
+          phone_placeholder: "333 123123"
         contact:
           name: Nome
           name_placeholder: es. Gustav Plum
@@ -1533,6 +1548,7 @@ it:
   split_checkout:
     your_details_without_number: I tuoi dettagli
     payment_method_without_number: Metodo di pagamento
+    order_summary_without_number: Riepilogo ordine
     step1:
       your_details:
         title: I tuoi dettagli
@@ -1583,6 +1599,8 @@ it:
         edit: Modifica i tuoi dati
       billing_address:
         title: Indirizzo di fatturazione
+      shipping_address:
+        title: Indirizzo consegna
       delivery_info:
         title: Informazioni sulla consegna
       payment_method:
@@ -1593,12 +1611,17 @@ it:
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
         link_text: "Termini e Condizioni"
+      agree: Cliccando su "Conferma" accetti che la tua gentile richiesta sia processata.
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
     errors:
+      global: "Salvataggio non riuscito. Per favore compila i campi evidenziati."
+      terms_not_accepted: Per favore accetta i Termini e Condizioni
       required: Il campo non può essere lasciato vuoto
       invalid_number: "Per favore inserisci un numero di telefono valido"
       invalid_email: "Per favore inserisci un indirizzo email valido"
+      select_a_shipping_method: Seleziona un metodo di consegna
+      select_a_payment_method: Seleziona un metodo di pagamento
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Totale dell'ordine
@@ -1694,10 +1717,11 @@ it:
     set_a_password: "Ti sarà richiesto di impostare una password prima di poter gestire la pagina dell'azienda."
     mistakenly_sent: "Non sai perché hai ricevuto questa mail? Per favore contatta %{owner_email} per maggiori informazioni."
   producer_mail_greeting: "Cara/o"
-  producer_mail_text_before: "Per favore cerca qui sotto l'aggiornamento riguardo il ciclo d'ordine pronto per:"
+  producer_mail_text_before: "Qui sotto trovi il resoconto delle gentili richieste per il ciclo: "
   producer_mail_order_text: "Ecco il sommario degli ordini per i tuoi prodotti:"
   producer_mail_delivery_instructions: "Istruzioni per la consegna o il ritiro in magazzino:"
   producer_mail_signoff: "Grazie e sinceri saluti"
+  producer_mail_order_customer_text: "Qui trovi un resoconto delle gentili richieste raggruppate per consumatore."
   shopping_oc_closed: Gli ordini sono chiusi
   shopping_oc_closed_description: "Per favore aspetta l'apertura del prossimo ciclo (o contattaci direttamente per sapere se possiamo accettare ordini fuori tempo)"
   shopping_oc_last_closed: "L'ultimo ciclo è chiuso %{distance_of_time} fa"
@@ -2179,6 +2203,7 @@ it:
   calculator_values: "Valori del calcolatore"
   calculator_settings_warning: "Se stai modificando il tipo di calcolatore, devi prima salvare prima di editare i setting del calcolatore"
   calculator_preferred_unit_error: "deve essere kg"
+  calculator_preferred_value_error: "Input non valido. Per favore usa solo numeri. Per esempio, 10; 5,5; -20"
   flat_percent_per_item: "Percentuale (per prodotto)"
   flat_rate_per_item: "Tariffa fissa (per pezzo)"
   flat_rate_per_order: "Tariffa fissa (per gentile richiesta)"
@@ -2553,6 +2578,7 @@ it:
     resolve_errors: 'Per favore risolvi i seguenti errori:'
     more_items: "+ %{count} ancora"
     default_card_updated: Carta predefinita aggiornata
+    default_card_voids_auth: Cambiare la tua carta predefinita rimuove le autorizzazioni esistenti al negozio di caricarla. Potrai ri-autorizzare i negozi dopo aver aggiornato la carta predefinita. Desideri cambiare la tua carta predefinita?
     cart:
       add_to_cart_failed: >
           C'è stato un problema nell'aggiungere questo prodotto al carrello. Forse
@@ -2591,6 +2617,8 @@ it:
           title: "Caricamento dei Termini e Condizioni"
           message_1: "Tutti i tuoi clienti dovranno accettarli alla conferma delle loro gentili richieste. Se aggiorni il documento, tutti i tuoi clienti dovranno accettarli nuovamente alla prossima conferma di richiesta."
           message_2: "Per i clienti in abbonamento, per ora è necessario mandare loro una mail con i Termini e le Condizioni (o con le modifiche ad essi). Non è al momento prevista alcuna notifica automatica."
+        business_address_info:
+          message: "La ragione sociale, l'indirizzo ed il telefono della sede legale sono usati per aziende che fatturano da un'entità legale registrata con dettagli diversi rispetto alle informazioni commerciali pubbliche. Questi dettagli saranno utilizzati SOLO per le fatture. Se non inserisci queste informazioni, nelle fatture saranno utilizzati Nome, Indirizzo e Numero di telefono pubblicati."
       panels:
         save: SALVA
         saved: SALVATO
@@ -2751,6 +2779,7 @@ it:
           invalid: "invalido"
         quantity_adjusted: "Disponibilità insufficiente.  Quantità aggiornata alla massima quantità disponibile."
         quantity_unchanged: "Quantità non modificata rispetto a quantità precedente."
+        cannot_remove_last_item: "Non è possibile rimuovere l'ultimo articolo dalla gentile richiesta. Per favore cancella l'ordine piuttosto."
       resend_user_email_confirmation:
         resend: "Invia nuovamente"
         sending: "Invia di nuovo..."
@@ -3536,6 +3565,7 @@ it:
             no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
         image_upload_error: "L'immagine del prodotto non è stata riconosciuta. Carica un'immagine in formato PNG o JPG."
+        paperclip_image_error: "Paperclip riporta errori  per il file '%{attachment_file_name}' - controlla l'istallazione di ImageMagick o la fonte del file immagine."
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
