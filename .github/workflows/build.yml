@@ -35,7 +35,6 @@ jobs:
           - "spec/models"
           - "spec/features/admin/[a-o0-9]*_spec.rb"
           - "spec/features/admin/[p-z]*_spec.rb"
-          - "spec/features/admin/*/*_spec.rb"
           - "spec/features/consumer"
           - "spec/lib"
           - "spec/migrations"
