@@ -129,8 +129,8 @@ describe '
       I18n.locale = :en
     end
 
-    context 'using datepickers' do
-      it "correctly opens the datepicker and changes the date field" do
+    context 'using datetimepickers' do
+      it "correctly opens the datetimepicker and changes the date field" do
         login_as_admin_and_visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
@@ -146,6 +146,26 @@ describe '
         within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00'
         end
+      end
+
+      it "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
+        login_as_admin_and_visit admin_order_cycles_path
+
+        # Opens a datetimepicker
+        within("tr.order-cycle-#{oc_pt.id}") do
+          find('input.datetimepicker', match: :first).click
+        end
+
+        # Looks for the close button and click it
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          fp_buttons_count = find_all('.shortcut-buttons-flatpickr-button').count
+          find(".shortcut-buttons-flatpickr-buttons > button:nth-child(#{fp_buttons_count})").click
+        end
+
+        # Should no more have opened flatpickr
+        expect(page).not_to have_selector '.flatpickr-calendar.open'
+
       end
     end
   end
