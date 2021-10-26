@@ -24,9 +24,14 @@ $(document).ready(function() {
     locale: I18n.base_locale,
     plugins: [
         ShortcutButtonsPlugin({
-          button: [{
-            label: Spree.translations.today
-          }],
+          button: [
+            {
+              label: Spree.translations.today
+            },
+            {
+              label: "CLOSE"
+            }
+          ],
           label: "or",
           onClick: onClickButtons
         }),
