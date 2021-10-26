@@ -58,7 +58,7 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 gem 'pagy', '~> 5.1'
 
 gem 'angularjs-rails', '1.8.0'
-gem 'aws-sdk', '2.2.0'
+gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
 gem 'haml'
 gem 'redcarpet'
