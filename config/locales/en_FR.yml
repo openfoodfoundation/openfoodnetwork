@@ -3561,6 +3561,7 @@ en_FR:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        paperclip_image_error: "Paperclip returned errors for file '%{attachment_file_name}' - check ImageMagick installation or image source file."
         new:
           title: "New Product"
           new_product: "New Product"

@@ -3590,6 +3590,7 @@ fr:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
+        paperclip_image_error: "Erreur pour le ficher '%{attachment_file_name}' - veuillez vérifier la source du fichier."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"

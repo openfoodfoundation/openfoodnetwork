@@ -238,6 +238,7 @@ en_IE:
   search_by_name: Search by name, town, county or eircode...
   producers_join: Producers are now welcome to join Open Food Network Ireland.
   charges_sales_tax: Charges VAT?
+  business_address: "Business Address"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -717,6 +718,15 @@ en_IE:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
+        business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 Main Street
+          address2: Address(contd.)
+          legal_phone_number: Legal phone number
+          phone_placeholder: "08x 123 4567"
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
@@ -1537,6 +1547,7 @@ en_IE:
   split_checkout:
     your_details_without_number: Your details
     payment_method_without_number: Payment method
+    order_summary_without_number: Order summary
     step1:
       your_details:
         title: Your details
@@ -2566,6 +2577,7 @@ en_IE:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    default_card_voids_auth: Changing your default card will remove shops' existing authorisations to charge it. You can re-authorise shops after updating the default card. Do you wish to change the default card?
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to the cart. Perhaps it has become
@@ -2604,6 +2616,8 @@ en_IE:
           title: "Uploading Terms and Conditions"
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
+        business_address_info:
+          message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
       panels:
         save: SAVE
         saved: SAVED
@@ -3553,6 +3567,7 @@ en_IE:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        paperclip_image_error: "Paperclip returned errors for file '%{attachment_file_name}' - check ImageMagick installation or image source file."
         new:
           title: "New Product"
           new_product: "New Product"
