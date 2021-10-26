@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "system_helper"
 
 describe "Business Address" do
@@ -21,7 +23,7 @@ describe "Business Address" do
           click_link "Business Details"
         end
       end
-    
+
       before do
         go_to_business_details
       end
@@ -109,7 +111,7 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
-        
+
         go_to_business_details
 
         click_button "Reset Form"
@@ -126,9 +128,9 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
-        
+
         go_to_business_details
-        
+
         fill_in 'enterprise_business_address_attributes_company', with: ''
         fill_in 'enterprise_business_address_attributes_address1', with: ''
         fill_in 'enterprise_business_address_attributes_city', with: ''

@@ -33,19 +33,18 @@ module CheckoutRequestsHelper
   end
 
   def fill_out_form(shipping_method_name, payment_method_name, save_default_addresses: true)
-    
     within "#shipping" do
       choose shipping_method_name
     end
-    
+
     within "#payment" do
       choose payment_method_name
     end
 
     fill_out_details
-    
+
     within "#billing" do
-     check "Save as default billing address" if save_default_addresses
+      check "Save as default billing address" if save_default_addresses
     end
 
     fill_out_billing_address

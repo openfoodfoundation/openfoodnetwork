@@ -148,7 +148,7 @@ describe '
 
     expect(page).to_not have_content "Loading..."
     within("tr.stock-item", text: order.products.first.name) do
-      expect(page).to have_text("#{max_quantity}")
+      expect(page).to have_text(max_quantity.to_s)
     end
     expect(order.reload.line_items.first.quantity).to eq(max_quantity)
   end

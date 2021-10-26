@@ -4,7 +4,7 @@ require 'open_food_network/scope_product_to_hub'
 
 class ProductsRenderer
   include Pagy::Backend
-  
+
   class NoProducts < RuntimeError; end
   DEFAULT_PER_PAGE = 10
 

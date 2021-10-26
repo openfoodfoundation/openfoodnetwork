@@ -59,7 +59,8 @@ class Enterprise < ApplicationRecord
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :business_address, reject_if: :business_address_empty?, allow_destroy: true
+  accepts_nested_attributes_for :business_address, reject_if: :business_address_empty?,
+                                                   allow_destroy: true
   accepts_nested_attributes_for :producer_properties, allow_destroy: true,
                                                       reject_if: lambda { |pp|
                                                         pp[:property_name].blank?
@@ -213,8 +214,9 @@ class Enterprise < ApplicationRecord
 
   def business_address_empty?(attributes)
     attributes_exists = attributes['id'].present?
-    attributes_empty = attributes.slice(:company, :address1, :city, :phone, :zipcode).values.all?(&:blank?)
-    attributes.merge!(_destroy: 1) if attributes_exists and attributes_empty 
+    attributes_empty = attributes.slice(:company, :address1, :city, :phone,
+                                        :zipcode).values.all?(&:blank?)
+    attributes.merge!(_destroy: 1) if attributes_exists && attributes_empty
     !attributes_exists && attributes_empty
   end
 

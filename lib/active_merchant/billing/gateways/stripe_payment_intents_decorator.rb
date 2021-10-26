@@ -2,7 +2,7 @@
 
 ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
   CREATE_INTENT_ATTRIBUTES =
-        %i[description statement_descriptor receipt_email save_payment_method].freeze
+    %i[description statement_descriptor receipt_email save_payment_method].freeze
 
   def create_intent(money, payment_method, options = {})
     post = {}
@@ -33,7 +33,7 @@ ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
 
   def refund(money, intent_id, options = {})
     intent = commit(:get, "payment_intents/#{intent_id}", nil, options)
-    charge_id = intent.params.dig('charges', 'data')[0].dig('id')
+    charge_id = intent.params.dig('charges', 'data')[0]['id']
     super(money, charge_id, options)
   end
 

@@ -14,7 +14,7 @@ describe "Visit Admin", js: true do
 
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
- 
+
     click_login_button
     expect(page).to have_content "DASHBOARD"
     expect(page).to have_current_path spree.admin_dashboard_path

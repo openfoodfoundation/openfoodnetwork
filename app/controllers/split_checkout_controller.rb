@@ -30,7 +30,7 @@ class SplitCheckoutController < ::BaseController
       render operations: cable_car.
         replace("#checkout", partial("split_checkout/checkout")).
         replace("#flashes", partial("shared/flashes", locals: { flashes: flash })),
-        status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 

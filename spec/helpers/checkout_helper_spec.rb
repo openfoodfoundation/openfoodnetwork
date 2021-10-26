@@ -68,17 +68,15 @@ describe CheckoutHelper, type: :helper do
       }
       let!(:order_tax_adjustment) {
         create(:adjustment,
-          originator: tax_rate,
-          adjustable: fee_adjustment,
-          order: order
-        )
+               originator: tax_rate,
+               adjustable: fee_adjustment,
+               order: order)
       }
       let!(:line_item_fee_adjustment_tax_adjustment) {
         create(:adjustment,
-          originator: tax_rate,
-          adjustable: line_item_fee_adjustment,
-          order: order
-        )
+               originator: tax_rate,
+               adjustable: line_item_fee_adjustment,
+               order: order)
       }
 
       it "removes tax rate adjustments" do

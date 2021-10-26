@@ -507,11 +507,11 @@ describe '
 
       # If I fill in the basic fields
       find('#order_cycle_orders_open_at').click
-      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
+      select_datetime_from_datepicker Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
       # hide the datetimepicker
       find("body").send_keys(:escape)
       find('#order_cycle_orders_close_at').click
-      select_datetime_from_datepicker Time.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
+      select_datetime_from_datepicker Time.zone.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
       # hide the datetimepicker
       find("body").send_keys(:escape)
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
@@ -661,7 +661,7 @@ describe '
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
-    datetime = Time.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
+    datetime = Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
     input = find(".flatpickr-calendar.open .flatpickr-minute")
     input.send_keys datetime.strftime("%M").to_s.strip
     expect(page).to have_content "You have unsaved changes"

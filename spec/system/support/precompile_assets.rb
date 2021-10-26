@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   # Skip assets precompilcation if we exclude system specs.
   # For example, you can run all non-system tests via the following command:
@@ -19,5 +21,3 @@ RSpec.configure do |config|
     end
   end
 end
-
-

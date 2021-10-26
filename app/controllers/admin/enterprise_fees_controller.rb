@@ -36,12 +36,12 @@ module Admin
 
     def bulk_update
       @flat_percent_value = enterprise_fee_bulk_params.dig('collection_attributes', '0', 'calculator_attributes', 'preferred_flat_percent')
-      
-      unless @flat_percent_value.nil? || Float(@flat_percent_value, exception: false) 
-        flash[:error] = I18n.t(:calculator_preferred_value_error) 
-        return redirect_to redirect_path      
+
+      unless @flat_percent_value.nil? || Float(@flat_percent_value, exception: false)
+        flash[:error] = I18n.t(:calculator_preferred_value_error)
+        return redirect_to redirect_path
       end
-      
+
       @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
 
       if @enterprise_fee_set.save

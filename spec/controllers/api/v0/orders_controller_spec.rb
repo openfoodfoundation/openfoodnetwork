@@ -130,7 +130,7 @@ module Api
 
         it 'can sort orders by total' do
           get :index, params: { q: { completed_at_not_null: true, s: 'total desc' } },
-              as: :json
+                      as: :json
 
           expect(json_response['orders']).to eq serialized_orders([order4, order2, order1, order3])
         end

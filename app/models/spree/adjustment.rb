@@ -101,7 +101,7 @@ module Spree
       return amount if immutable? && !force
 
       if calculable.nil? && adjustable.nil?
-        self.delete
+        delete
         return 0.0
       end
 

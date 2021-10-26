@@ -4,7 +4,10 @@ module RequestTimeouts
   extend ActiveSupport::Concern
 
   included do
-    rescue_from Rack::Timeout::RequestTimeoutException, with: :timeout_response if defined? Rack::Timeout
+    if defined? Rack::Timeout
+      rescue_from Rack::Timeout::RequestTimeoutException,
+                  with: :timeout_response
+    end
   end
 
   private
