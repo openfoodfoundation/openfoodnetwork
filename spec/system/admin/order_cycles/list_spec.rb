@@ -150,21 +150,27 @@ describe '
 
       it "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
         login_as_admin_and_visit admin_order_cycles_path
+        test_value = Time.parse("2022-12-22 00:00")
 
         # Opens a datetimepicker
         within("tr.order-cycle-#{oc_pt.id}") do
           find('input.datetimepicker', match: :first).click
         end
 
-        # Looks for the close button and click it
+        # Sets the value to test_value then looks for the close button and click it
         within(".flatpickr-calendar.open") do
           expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          fp_buttons_count = find_all('.shortcut-buttons-flatpickr-button').count
-          find(".shortcut-buttons-flatpickr-buttons > button:nth-child(#{fp_buttons_count})").click
+          select_datetime_from_datepicker test_value
+          find(".shortcut-buttons-flatpickr-buttons > button:nth-last-child(1)").click
         end
 
         # Should no more have opened flatpickr
         expect(page).not_to have_selector '.flatpickr-calendar.open'
+
+        # Check the value is correct
+        within("tr.order-cycle-#{oc_pt.id}") do
+          expect(find('input.datetimepicker', match: :first).value).to eq test_value.to_datetime.strftime("%Y-%m-%d %H:%M")
+        end
 
       end
     end
