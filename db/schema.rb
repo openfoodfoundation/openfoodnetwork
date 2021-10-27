@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_174211) do
     t.integer "terms_and_conditions_file_size"
     t.datetime "terms_and_conditions_updated_at"
     t.integer "business_address_id"
+    t.boolean "show_customer_names_to_suppliers", default: false, null: false
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
