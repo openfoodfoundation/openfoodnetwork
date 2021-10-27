@@ -228,7 +228,6 @@ GEM
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
-    dalli (3.0.2)
     database_cleaner (2.0.1)
       database_cleaner-active_record (~> 2.0.0)
     database_cleaner-active_record (2.0.0)
@@ -713,7 +712,6 @@ DEPENDENCIES
   compass-rails
   cuprite
   custom_error_message!
-  dalli
   database_cleaner
   db2fog!
   ddtrace
