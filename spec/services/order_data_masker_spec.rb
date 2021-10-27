@@ -8,7 +8,7 @@ describe OrderDataMasker do
     let(:order) { create(:order, distributor: distributor, ship_address: create(:address)) }
 
     context 'when displaying customer names is allowed' do
-      before { distributor.preferences[:show_customer_names_to_suppliers] = true }
+      before { distributor.show_customer_names_to_suppliers = true }
 
       it 'masks personal addresses and email' do
         described_class.new(order).call
@@ -49,7 +49,7 @@ describe OrderDataMasker do
     end
 
     context 'when displaying customer names is not allowed' do
-      before { distributor.preferences[:show_customer_names_to_suppliers] = false }
+      before { distributor.show_customer_names_to_suppliers = false }
 
       it 'masks personal addresses and email' do
         described_class.new(order).call

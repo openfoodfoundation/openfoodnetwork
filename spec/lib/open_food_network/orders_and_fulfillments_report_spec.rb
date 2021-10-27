@@ -82,7 +82,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
         context "where the distributor allows suppliers to see customer names" do
           before do
-            distributor.preferred_show_customer_names_to_suppliers = true
+            distributor.update_columns show_customer_names_to_suppliers: true
           end
 
           it "shows line items supplied by my producers, with names shown" do
@@ -117,7 +117,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
         context "where the distributor allows suppliers to see customer names" do
           before do
-            distributor.preferred_show_customer_names_to_suppliers = true
+            distributor.show_customer_names_to_suppliers = true
           end
 
           it "does not show line items supplied by my producers" do
