@@ -16,7 +16,7 @@ class MigrateCustomerNames < ActiveRecord::Migration[6.1]
 
   def migrate_customer_names_preferences!
     Enterprise.where(sells: ["own", "any"]).find_each do |enterprise|
-      return unless Spree::Preference.where(
+      next unless Spree::Preference.where(
         value: true, key: "/enterprise/show_customer_names_to_suppliers/#{enterprise.id}"
       ).exists?
 
