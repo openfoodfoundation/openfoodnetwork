@@ -23,8 +23,6 @@ class Enterprise < ApplicationRecord
 
   has_paper_trail only: [:owner_id, :sells], on: [:update]
 
-  self.inheritance_column = nil
-
   has_many :relationships_as_parent, class_name: 'EnterpriseRelationship',
                                      foreign_key: 'parent_id',
                                      dependent: :destroy
