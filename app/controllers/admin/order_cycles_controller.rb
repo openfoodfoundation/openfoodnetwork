@@ -26,7 +26,9 @@ module Admin
 
     def show
       respond_to do |format|
-        format.html
+        format.html do
+          redirect_to edit_admin_order_cycle_path(@order_cycle)
+        end
         format.json do
           render_as_json @order_cycle, current_user: spree_current_user
         end
