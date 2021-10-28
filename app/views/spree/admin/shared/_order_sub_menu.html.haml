@@ -1,6 +1,6 @@
 - content_for :sub_menu do
   %ul#sub_nav.inline-menu
-    = tab :orders, :match_path => '/orders'
+    = tab :orders, match_path: '/orders', except_paths: ['/orders/bulk_management']
     = tab :bulk_order_management, :match_path => '/orders/bulk_management'
     - if subscriptions_enabled?
       = tab :subscriptions, :match_path => '/subscriptions', url: main_app.admin_subscriptions_path

@@ -9,6 +9,8 @@ module Spree
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active,
       #       /products would match /admin/products, /admin/products/5/variants etc.
+      #   * :except_paths to reject subpaths that have their own menu,
+      #       e.g. match_path = '/admin/orders', except_paths = ['/admin/orders/bulk_management']
       def tab(*args)
         options = { label: args.first.to_s }
         if args.last.is_a?(Hash)
@@ -36,9 +38,9 @@ module Spree
         end
 
         selected = if options[:match_path]
-                     request.
-                       fullpath.
-                       starts_with?("#{main_app.root_path}admin#{options[:match_path]}")
+                     PathChecker
+                       .new(request.fullpath, self)
+                       .active_path?(options[:match_path], options[:except_paths])
                    else
                      args.include?(controller.controller_name.to_sym)
                    end
