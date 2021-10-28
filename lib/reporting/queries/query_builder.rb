@@ -73,7 +73,8 @@ module Reporting
       private
 
       def default_mask_rule
-        line_item_table[:order_id].in(raw("#{managed_orders_alias.name}.id"))
+        line_item_table[:order_id].in(raw("#{managed_orders_alias.name}.id")).
+          or(distributor_alias[:show_customer_names_to_suppliers].eq(true))
       end
 
       def summary_row_title
