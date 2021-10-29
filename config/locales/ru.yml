@@ -3617,7 +3617,7 @@ ru:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
         image_upload_error: "Изображение товара не было распознано. Пожалуйста, загрузите изображение в формате PNG или JPG."
-        paperclip_image_error: "Скрепка вернула ошибки для файла &#39;%{attachment_file_name}&#39; - проверьте установку ImageMagick или исходный файл изображения."
+        paperclip_image_error: "Скрепка вернула ошибки для файла '%{attachment_file_name}' - проверьте установку ImageMagick или исходный файл изображения."
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"

@@ -621,6 +621,8 @@ en_DE:
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
+        business_address:
+          address2: Address (contd.)
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum

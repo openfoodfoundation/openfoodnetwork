@@ -238,6 +238,7 @@ de_DE:
   search_by_name: Suche nach Ort oder Name des Ladens/Produzents ...
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
+  business_address: "Unternehmensadresse"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -717,6 +718,15 @@ de_DE:
           terms_and_conditions: "Allgemeine Geschäftsbedingungen"
           remove_terms_and_conditions: "Datei löschen"
           uploaded_on: "hochgeladen am"
+          reset_form: "zurücksetzen"
+        business_address:
+          company_legal_name: Unternehmensname
+          company_placeholder: z. B. Charlies großartige Farm
+          address1: Straße + Hausnummer
+          address1_placeholder: z. B. Gartenstraße 123
+          address2: Adresszusatz (optional)
+          legal_phone_number: Telefonnummer
+          phone_placeholder: "z. B. +49 40 123 456"
         contact:
           name: Name
           name_placeholder: z. B. Gustav Pflaume
@@ -724,7 +734,7 @@ de_DE:
           email_address_placeholder: z. B. anfragen@fresh-food.com
           email_address_tip: "Diese E-Mail-Adresse wird in Ihrem öffentlichen Profil angezeigt."
           phone: Telefonnummer
-          phone_placeholder: z. B. 98 7654 3210
+          phone_placeholder: z. B. +49 40 123 456
           website: Homepage
           website_placeholder: z. B. www.truffles.com
         enterprise_fees:
@@ -1539,6 +1549,7 @@ de_DE:
   split_checkout:
     your_details_without_number: Ihre Daten
     payment_method_without_number: Zahlungsart
+    order_summary_without_number: Bestellübersicht
     step1:
       your_details:
         title: Ihre Daten
@@ -1553,7 +1564,7 @@ de_DE:
           placeholder: z. B. Max.Mustermann@beispiel.com
         phone:
           label: Telefonnummer
-          placeholder: z. B. 016012345678
+          placeholder: z. B. +49 40 123 456
       billing_address:
         title: Rechnungsadresse
       address:
@@ -1995,13 +2006,13 @@ de_DE:
         headline: "Ihr Unternehmen"
         enterprise: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Unternehmens."
         producer: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Betriebs."
-        enterprise_name_field: "Name des Unternehmens:"
+        enterprise_name_field: "Unternehmensname:"
         producer_name_field: "Name des Betriebs:"
         producer_name_field_placeholder: "z. B. Charlies großartige Farm"
         producer_name_field_error: "Bitte wählen Sie einen eindeutigen Namen für Ihr Unternehmen."
-        address1_field: "Adresse:"
+        address1_field: "Straße + Hausnummer:"
         address1_field_placeholder: "z. B. Gartenstraße 123"
-        address1_field_error: "Bitte geben Sie eine Adresse ein."
+        address1_field_error: "Bitte geben Sie eine Straße und Hausnummer ein."
         address2_field: "Adresszusatz (optional):"
         suburb_field: "Ort:"
         suburb_field_placeholder: "z. B. Nordwestheim"
@@ -2025,7 +2036,7 @@ de_DE:
         contact_field_placeholder: "Vorname Nachname"
         contact_field_required: "Bitte geben Sie einen Hauptansprechpartner ein."
         phone_field: "Telefonnummer (optional)"
-        phone_field_placeholder: "z. B. 030 1234 5678"
+        phone_field_placeholder: "z. B. +49 40 123 456"
       type:
         title: "Art des Profils"
         headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
@@ -2156,7 +2167,7 @@ de_DE:
   admin_enterprise_groups_data_powertip_logo: "Dies ist das Logo für die Gruppe."
   admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt."
   admin_enterprise_groups_contact: "Kontakt"
-  admin_enterprise_groups_contact_phone_placeholder: "z. B. 98 7654 3210"
+  admin_enterprise_groups_contact_phone_placeholder: "z. B. +40 40 123456"
   admin_enterprise_groups_contact_address1_placeholder: "z. B. Gartenstraße 123"
   admin_enterprise_groups_contact_city: "Ort"
   admin_enterprise_groups_contact_city_placeholder: "z. B. Nordwestheim"
@@ -2607,6 +2618,8 @@ de_DE:
           title: "Allgemeine Geschäftsbedingungen hochladen"
           message_1: "Alle Ihre Käufer müssen ihnen einmal an der Kasse zustimmen. Wenn Sie die Datei aktualisieren, müssen alle Ihre Käufer an der Kasse erneut zustimmen."
           message_2: "Zu beachten bei Abonnements: Bitte senden Sie Käufern von Abonnements vorerst die Allgemeinen Geschäftsbedingungen (oder die Änderungen dieser) direkt per E-Mail zu. Sie werden nicht automatisch über diese Änderungen informiert."
+        business_address_info:
+          message: "Möchten Sie auf Rechnungen Ihren Unternehmensnamen sowie die zugehörige Adresse und Telefonnummer abweichend von den bei Ihrer Registrierung hinterlegten Daten angeben, tragen Sie diese hier ein. Diese Daten werden NUR auf Rechnungen verwendet. Wenn diese Felder leer sind, werden Ihre unter \"Adresse\" und \"Kontakt\" angegebenen Daten zu Name, Adresse und Telefonnummer verwendet."
       panels:
         save: SPEICHERN
         saved: GESPEICHERT
@@ -3046,7 +3059,7 @@ de_DE:
   shipment: "Lieferung"
   shipment_inc_vat: "Liefergebühr inkl. Mehrwertsteuer"
   shipping_tax_rate: "Steuersatz der Liefergebühr"
-  category: "Produktkategorie"
+  category: "Kategorie"
   import_date: "Importdatum"
   delivery: "Lieferung"
   temperature_controlled: "Temperaturüberwacht"
@@ -3483,12 +3496,12 @@ de_DE:
           new: "Neu"
           back_to_shipping_methods_list: "Zurück zur Liste der Lieferoptionen"
         form:
-          categories: "Kategorien"
+          categories: "Lieferkategorien"
           tax_category: "Steuerkategorie"
           zones: "Zonen"
           both: "Sowohl an der Kasse als auch im Backoffice"
           back_end: "Nur im Backoffice"
-          deactivation_warning: "Durch Deaktivieren einer Lieferoption wird die Lieferoption Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Lieferoption an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
+          deactivation_warning: "Durch Deaktivieren einer Lieferoption wird die Lieferoption Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Lieferoption an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur im Backoffice\" setzen."
       payment_methods:
         index:
           payment_methods: "Zahlungsarten"
@@ -3537,7 +3550,7 @@ de_DE:
           front_end: "Nur an der Kasse"
           back_end: "Nur im Backoffice"
           tags: "Stichwörter"
-          deactivation_warning: "Durch Deaktivieren einer Zahlungsart wird die Zahlungsart Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Zahlungsart an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur Backoffice\" setzen."
+          deactivation_warning: "Durch Deaktivieren einer Zahlungsart wird die Zahlungsart Ihren Kunden nicht mehr zur Verfügung stehen. Alternativ können Sie eine Zahlungsart an der Kasse ausblenden, indem Sie die Option \"Anzeige\" auf \"Nur im Backoffice\" setzen."
         providers:
           provider: "Anbieter"
           check: "Bargeld, EC etc. (Zahlungen, für die keine automatische Validierung erforderlich ist)"
