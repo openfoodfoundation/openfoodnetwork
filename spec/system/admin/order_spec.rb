@@ -448,6 +448,27 @@ describe '
           end
         end
       end
+
+      context "when an incomplete order has some line items with insufficient stock" do
+        let(:incomplete_order) do
+          create(:order_with_line_items, user: user, distributor: distributor,
+                                         order_cycle: order_cycle)
+        end
+
+        it "displays the out of stock line items and they can be deleted from the order" do
+          incomplete_order.line_items.first.variant.update!(on_demand: false, on_hand: 0)
+
+          visit spree.edit_admin_order_path(incomplete_order)
+
+          within ".insufficient-stock-items" do
+            expect(page).to have_content incomplete_order.products.first.name
+            accept_alert 'Are you sure?' do
+              find("a.delete-resource").click
+            end
+            expect(page).to_not have_content incomplete_order.products.first.name
+          end
+        end
+      end
     end
 
     it "creating an order with distributor and order cycle" do

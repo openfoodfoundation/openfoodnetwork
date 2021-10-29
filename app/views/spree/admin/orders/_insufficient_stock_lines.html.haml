@@ -1,0 +1,39 @@
+%div.insufficient-stock-items
+  %fieldset.no-border-bottom
+    %legend
+      = t("spree.orders.line_item.out_of_stock")
+
+  %table
+    %colgroup
+      %col{ :style => "width: 10%;" }
+      %col{ :style => "width: 30%;" }
+      %col{ :style => "width: 15%;" }
+      %col{ :style => "width: 15%;" }
+      %col{ :style => "width: 15%;" }
+      %col{ :style => "width: 15%;" }
+
+    %thead
+      %th{ :colspan => "2" }
+        = Spree.t(:item_description)
+      %th
+        = Spree.t(:price)
+      %th
+        = Spree.t(:quantity)
+      %th
+        = Spree.t(:total)
+      %th.orders-actions.actions
+
+    - insufficient_stock_lines.each do |line_item|
+      %tr.insufficient-stock-item
+        %td
+          = render 'spree/shared/variant_thumbnail', variant: line_item.variant
+        %td
+          = line_item.variant.product_and_full_name
+        %td.align-center
+          = line_item.single_money.to_html
+        %td.align-center
+          = line_item.quantity
+        %td.align-center
+          = line_item.money.to_html
+        %td.actions
+          = link_to_delete line_item, { url: main_app.admin_bulk_line_item_path(line_item), no_text: true }
