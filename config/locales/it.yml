@@ -724,7 +724,7 @@ it:
           company_placeholder: Esempio
           address1: Indirizzo sede legale
           address1_placeholder: via Roma 123
-          address2: Indirizzo
+          address2: Indirizzo (continua)
           legal_phone_number: Numero di telefono del rappresentante legale
           phone_placeholder: "333 123123"
         contact:
