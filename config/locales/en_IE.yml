@@ -724,7 +724,7 @@ en_IE:
           company_placeholder: Example Inc.
           address1: Legal address
           address1_placeholder: 123 Main Street
-          address2: Address(contd.)
+          address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "08x 123 4567"
         contact:
