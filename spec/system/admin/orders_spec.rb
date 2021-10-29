@@ -26,20 +26,31 @@ describe '
                                                   order_cycle: order_cycle,
                                                   state: 'complete', payment_state: 'balance_due')
     end
-        
-    let!(:order_cycle2) { create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now) }
-    let!(:order_cycle3) { create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now) }
-    let!(:order_cycle4) { create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now) }  
 
-    let!(:order2) { create(:order_with_credit_payment, user: user, distributor: distributor2,
-                                                  order_cycle: order_cycle2, completed_at: 2.day.ago) }
-    let!(:order3) { create(:order_with_credit_payment, user: user, distributor: distributor3,
-                                                  order_cycle: order_cycle3) }
-    let!(:order4) { create(:order_with_credit_payment, user: user, distributor: distributor4,
-                                                  order_cycle: order_cycle4) }
+    let!(:order_cycle2) {
+      create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
+    }
+    let!(:order_cycle3) {
+      create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
+    }
+    let!(:order_cycle4) {
+      create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
+    }
+
+    let!(:order2) {
+      create(:order_with_credit_payment, user: user, distributor: distributor2,
+                                         order_cycle: order_cycle2, completed_at: 2.days.ago)
+    }
+    let!(:order3) {
+      create(:order_with_credit_payment, user: user, distributor: distributor3,
+                                         order_cycle: order_cycle3)
+    }
+    let!(:order4) {
+      create(:order_with_credit_payment, user: user, distributor: distributor4,
+                                         order_cycle: order_cycle4)
+    }
 
     it "order cycles appear in descending order by close date on orders page" do
-
       login_as_admin_and_visit 'admin/orders'
 
       open_select2('#s2id_q_order_cycle_id_in')
@@ -49,7 +60,6 @@ describe '
     end
 
     it "filter by multiple order cycles" do
-
       login_as_admin_and_visit 'admin/orders'
 
       select2_select 'Two', from: 'q_order_cycle_id_in'
@@ -64,12 +74,11 @@ describe '
     end
 
     it "filter by distributors" do
-
       login_as_admin_and_visit 'admin/orders'
 
-      select2_select "#{distributor2.name}", from: 'q_distributor_id_in'
-      select2_select "#{distributor4.name}", from: 'q_distributor_id_in'
-      
+      select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
+      select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
+
       page.find('.filter-actions .button.icon-search').click
 
       # Order 2 and 4 should show, but not 3
@@ -79,9 +88,7 @@ describe '
     end
 
     it "filter by complete date" do
-
       login_as_admin_and_visit 'admin/orders'
-
 
       find('#q_completed_at_gteq').click
       select_date_from_datepicker order3.completed_at.yesterday
@@ -90,7 +97,6 @@ describe '
 
       page.find('.filter-actions .button.icon-search').click
 
-
       # Order 3 and 4 should show, but not 2
       expect(page).to_not have_content order2.number
       expect(page).to have_content order3.number
@@ -98,11 +104,10 @@ describe '
     end
 
     context "select/unselect all orders" do
-        
       before do
         login_as_admin_and_visit spree.admin_orders_path
       end
-      
+
       it "by clicking on the checkbox in the table header" do
         # select all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
@@ -155,7 +160,8 @@ describe '
 
   context "with incomplete order" do
     it "can edit order" do
-      incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
+      incomplete_order = create(:order_with_line_items, distributor: distributor,
+                                                        order_cycle: order_cycle, line_items_count: 1)
 
       login_as_admin_and_visit spree.admin_orders_path
       uncheck 'Only show complete orders'
@@ -169,7 +175,8 @@ describe '
 
   context "test the 'Only show the complete orders' checkbox" do
     it "display or not incomplete order" do
-      incomplete_order = create(:order_with_line_items, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
+      incomplete_order = create(:order_with_line_items, distributor: distributor,
+                                                        order_cycle: order_cycle, line_items_count: 1)
       complete_order = create(
         :order_with_line_items,
         distributor: distributor,

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 
-module SetUnusedAddressFields 
+module SetUnusedAddressFields
   extend ActiveSupport::Concern
 
   included do
-    self.before_validation :set_unused_address_fields
+    before_validation :set_unused_address_fields
   end
 
   def set_unused_address_fields

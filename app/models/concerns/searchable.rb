@@ -25,15 +25,15 @@ module Searchable
 
   class_methods do
     def ransackable_associations(*_args)
-      self.whitelisted_search_associations.map(&:to_s)
+      whitelisted_search_associations.map(&:to_s)
     end
 
     def ransackable_attributes(*_args)
-      (DEFAULT_SEARCHABLE_ATTRIBUTES | self.whitelisted_search_attributes).map(&:to_s)
+      (DEFAULT_SEARCHABLE_ATTRIBUTES | whitelisted_search_attributes).map(&:to_s)
     end
 
     def ransackable_scopes(*_args)
-      self.whitelisted_search_scopes.map(&:to_s)
+      whitelisted_search_scopes.map(&:to_s)
     end
 
     private

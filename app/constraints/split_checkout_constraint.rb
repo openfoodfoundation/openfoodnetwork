@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SplitCheckoutConstraint
   def matches?(request)
     Flipper.enabled? :split_checkout, current_user(request)

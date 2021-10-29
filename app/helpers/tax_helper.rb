@@ -7,8 +7,8 @@ module TaxHelper
       I18n.t(:tax_amount_included, amount: amount)
     elsif !taxable.additional_tax_total.zero?
       Spree::Money.new(taxable.additional_tax_total, currency: taxable.currency)
-    else
-      Spree::Money.new(0.00, currency: taxable.currency) if display_zero
+    elsif display_zero
+      Spree::Money.new(0.00, currency: taxable.currency)
     end
   end
 

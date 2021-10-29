@@ -14,7 +14,7 @@ module CheckoutCallbacks
     prepend_before_action :require_distributor_chosen
 
     before_action :load_order, :associate_user, :load_saved_addresses
-    before_action :load_shipping_methods, :load_countries, if: -> { params[:step] == "details"}
+    before_action :load_shipping_methods, :load_countries, if: -> { params[:step] == "details" }
 
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed
@@ -47,7 +47,11 @@ module CheckoutCallbacks
 
   def load_countries
     @countries = available_countries.map { |c| [c.name, c.id] }
-    @countries_with_states = available_countries.map { |c| [c.id, c.states.map { |s| [s.name, s.id] }] }
+    @countries_with_states = available_countries.map { |c|
+      [c.id, c.states.map { |s|
+               [s.name, s.id]
+             }]
+    }
   end
 
   def redirect_to_shop?

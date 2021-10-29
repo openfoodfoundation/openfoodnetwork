@@ -14,7 +14,7 @@ module Spree
     has_many :shipments
 
     validates :address1, :city, :country, :phone, presence: true
-    validates :company, presence: true, unless: -> { first_name.blank? || last_name.blank?}
+    validates :company, presence: true, unless: -> { first_name.blank? || last_name.blank? }
     validates :firstname, :lastname, presence: true, unless: -> { company.present? }
     validates :zipcode, presence: true, if: :require_zipcode?
 

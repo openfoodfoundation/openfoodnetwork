@@ -24,14 +24,13 @@ module Spree
         order.update_totals
         order.payment_required?
       }
-      go_to_state :confirmation, if: ->(order) {
+      go_to_state :confirmation, if: ->(_order) {
         Flipper.enabled? :split_checkout
       }
       go_to_state :complete
     end
 
-    attr_accessor :use_billing
-    attr_accessor :checkout_processing
+    attr_accessor :use_billing, :checkout_processing
 
     token_resource
 

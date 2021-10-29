@@ -56,7 +56,8 @@ module Checkout
 
     def set_basic_details
       [:firstname, :lastname, :phone].each do |attr|
-        @order_params[:ship_address_attributes][attr] = @order_params[:bill_address_attributes][attr]
+        @order_params[:ship_address_attributes][attr] =
+          @order_params[:bill_address_attributes][attr]
       end
     end
   end

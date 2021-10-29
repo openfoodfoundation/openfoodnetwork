@@ -56,7 +56,7 @@ module Spree
     def no_attachment_errors
       return if attachment.errors.empty?
 
-      if errors.all? {|e| e.type == "Paperclip::Errors::NotIdentifiedByImageMagickError"}
+      if errors.all? { |e| e.type == "Paperclip::Errors::NotIdentifiedByImageMagickError" }
         attachment.errors.clear
         errors.add :base, I18n.t('spree.admin.products.image_upload_error')
       else

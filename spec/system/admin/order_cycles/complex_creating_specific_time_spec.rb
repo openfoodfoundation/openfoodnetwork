@@ -11,7 +11,7 @@ describe '
   include WebHelper
 
   let(:order_cycle_opening_time) { 1.day.from_now(Time.zone.now) }
-  let(:order_cycle_closing_time) { 2.day.from_now(Time.zone.now) }
+  let(:order_cycle_closing_time) { 2.days.from_now(Time.zone.now) }
 
   it "creating an order cycle with full interface", js: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
@@ -54,7 +54,7 @@ describe '
     # If I fill in the basic fields
     find('#order_cycle_orders_open_at').click
     # select date
-    select_date_from_datepicker Time.at(order_cycle_opening_time)
+    select_date_from_datepicker Time.zone.at(order_cycle_opening_time)
     # select time
     within(".flatpickr-calendar.open .flatpickr-time") do
       find('.flatpickr-hour').set('%02d' % order_cycle_opening_time.hour)
@@ -65,7 +65,7 @@ describe '
 
     find('#order_cycle_orders_close_at').click
     # select date
-    select_date_from_datepicker Time.at(order_cycle_closing_time)
+    select_date_from_datepicker Time.zone.at(order_cycle_closing_time)
     # select time
     within(".flatpickr-calendar.open .flatpickr-time") do
       find('.flatpickr-hour').set('%02d' % order_cycle_closing_time.hour)
@@ -136,9 +136,9 @@ describe '
 
     expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
     expect(page).to have_input "oc#{oc.id}[orders_open_at]",
-                               value: Time.at(order_cycle_opening_time), visible: false
+                               value: Time.zone.at(order_cycle_opening_time), visible: false
     expect(page).to have_input "oc#{oc.id}[orders_close_at]",
-                               value: Time.at(order_cycle_closing_time), visible: false
+                               value: Time.zone.at(order_cycle_closing_time), visible: false
     expect(page).to have_content "My coordinator"
 
     expect(page).to have_selector 'td.producers', text: 'My supplier'

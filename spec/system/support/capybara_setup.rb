@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Usually, especially when using Selenium, developers tend to increase the max wait time.
 # With Cuprite, there is no need for that.
 # We use a Capybara default value here explicitly.

@@ -78,6 +78,7 @@ class ProducerMailer < Spree::BaseMailer
 
   def set_customer_data(line_items)
     return unless @coordinator.preferred_show_customer_names_to_suppliers
+
     line_items.map do |line_item|
       {
         sku: line_item.variant.sku,

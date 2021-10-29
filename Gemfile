@@ -49,8 +49,8 @@ gem 'paypal-sdk-merchant', '1.117.2'
 gem 'stripe'
 
 gem 'devise'
-gem 'devise-i18n'
 gem 'devise-encryptable'
+gem 'devise-i18n'
 gem 'devise-token_authenticatable'
 gem 'jwt', '~> 2.3'
 gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
@@ -82,8 +82,8 @@ gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
-gem 'puma'
 gem 'hiredis'
+gem 'puma'
 gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
@@ -138,6 +138,7 @@ group :test, :development do
   gem 'awesome_print'
   gem 'bullet'
   gem 'capybara'
+  gem 'cuprite'
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
@@ -151,7 +152,6 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'webdrivers'
-  gem 'cuprite'
 end
 
 group :test do

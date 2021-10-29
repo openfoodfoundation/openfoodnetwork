@@ -67,8 +67,6 @@ module CalculatedAdjustments
     calculator.compute(calculable)
   end
 
-  private
-
   def order_object_for(target)
     # Temporary method for adjustments transition.
     if target.is_a? Spree::Order

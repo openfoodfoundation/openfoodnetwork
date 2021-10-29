@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImageImporter
   def import(url, product)
     attach(download(url), product)

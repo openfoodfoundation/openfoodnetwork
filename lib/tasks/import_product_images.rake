@@ -4,7 +4,7 @@ namespace :ofn do
   namespace :import do
     desc "Importing images for products from CSV"
     task :product_images, [:filename] => [:environment] do |_task, args|
-      COLUMNS = [:producer, :name, :image_url]
+      COLUMNS = [:producer, :name, :image_url].freeze
 
       puts "Warning: use only with trusted URLs. This script will download whatever it can, including local secrets, and expose the file as an image file."
 
@@ -15,7 +15,7 @@ namespace :ofn do
 
       csv.each.with_index do |entry, index|
         puts "#{index} #{entry[:producer]}, #{entry[:name]}"
-        enterprise = Enterprise.find_by_name! entry[:producer]
+        enterprise = Enterprise.find_by! name: entry[:producer]
 
         product = Spree::Product.where(supplier: enterprise,
                                        name: entry[:name],

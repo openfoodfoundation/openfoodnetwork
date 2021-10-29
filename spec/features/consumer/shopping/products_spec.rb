@@ -49,13 +49,13 @@ describe "As a consumer I want to view products", js: true do
         login_as_admin_and_visit spree.edit_admin_product_path(product)
         expect(page.find("div[id^='taTextElement']")['innerHTML']).to include('<a href="http://google.fr" target="_blank">external site</a>')
 
-        fill_in 'product_name', with: product.name + "_update"
+        fill_in 'product_name', with: "#{product.name}_update"
         click_button 'Update'
 
         # -- check back consumer product view
         visit shop_path
-        expect(page).to have_content(product.name + "_update")
-        click_link(product.name + "_update")
+        expect(page).to have_content("#{product.name}_update")
+        click_link("#{product.name}_update")
 
         expect(page).to have_selector '.reveal-modal'
         modal_should_be_open_for product

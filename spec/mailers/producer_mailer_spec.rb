@@ -140,18 +140,22 @@ describe ProducerMailer, type: :mailer do
     it "displays last name for each order" do
       product_name = order.line_items.first.product.name
       last_name = order.billing_address.lastname
-      expect(body_as_html(mail).find("table.order-summary.customer-order tr", text: product_name)).to have_selector("td", text: last_name)
+      expect(body_as_html(mail).find("table.order-summary.customer-order tr",
+                                     text: product_name)).to have_selector("td", text: last_name)
     end
 
     it "displays first name for each order" do
       product_name = order.line_items.first.product.name
       first_name = order.billing_address.firstname
-      expect(body_as_html(mail).find("table.order-summary.customer-order tr", text: product_name)).to have_selector("td", text: first_name)
+      expect(body_as_html(mail).find("table.order-summary.customer-order tr",
+                                     text: product_name)).to have_selector("td", text: first_name)
     end
 
     it "it orders list via last name" do
-      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete', bill_address: FactoryBot.create(:address, last_name: "Abby"))
-      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete', bill_address: FactoryBot.create(:address, last_name: "maggie"))
+      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
+                                      bill_address: FactoryBot.create(:address, last_name: "Abby"))
+      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
+                                      bill_address: FactoryBot.create(:address, last_name: "maggie"))
       expect(mail.body.encoded).to match(/.*Abby.*Doe.*maggie/m)
     end
   end
@@ -162,7 +166,9 @@ describe ProducerMailer, type: :mailer do
     end
 
     it "does not add customer names table" do
-      expect { body_as_html(mail).find(".order-summary.customer-order") }.to raise_error(Capybara::ElementNotFound)
+      expect {
+        body_as_html(mail).find(".order-summary.customer-order")
+      }.to raise_error(Capybara::ElementNotFound)
     end
   end
 

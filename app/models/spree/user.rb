@@ -3,7 +3,7 @@
 module Spree
   class User < ApplicationRecord
     include SetUnusedAddressFields
-    
+
     searchable_attributes :email
 
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,

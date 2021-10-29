@@ -163,7 +163,7 @@ describe "Authentication", js: true do
     it "Loggin by typing login/ redirects to /#/login" do
       visit "/login"
       uri = URI.parse(current_url)
-      expect(uri.path + "#" + uri.fragment).to eq('/#/login')
+      expect("#{uri.path}##{uri.fragment}").to eq('/#/login')
     end
 
     describe "with user locales" do

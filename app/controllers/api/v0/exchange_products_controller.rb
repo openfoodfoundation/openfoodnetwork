@@ -75,7 +75,10 @@ module Api
       def render_paginated_products
         results = products
 
-        @pagy, results = pagy(results, items: params[:per_page] || DEFAULT_PER_PAGE) if pagination_required?
+        if pagination_required?
+          @pagy, results = pagy(results,
+                                items: params[:per_page] || DEFAULT_PER_PAGE)
+        end
 
         serialized_products = ActiveModel::ArraySerializer.new(
           results,

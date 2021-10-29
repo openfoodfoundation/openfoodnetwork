@@ -14,7 +14,7 @@ module Spree
 
       VOIDABLE_STATES = [
         "requires_payment_method", "requires_capture", "requires_confirmation", "requires_action"
-      ]
+      ].freeze
 
       preference :enterprise_id, :integer
 
@@ -87,7 +87,8 @@ module Spree
         if voidable?(payment_intent_response)
           provider.void(response_code, gateway_options)
         else
-          provider.refund(refundable_amount(payment_intent_response), response_code, gateway_options)
+          provider.refund(refundable_amount(payment_intent_response), response_code,
+                          gateway_options)
         end
       end
 

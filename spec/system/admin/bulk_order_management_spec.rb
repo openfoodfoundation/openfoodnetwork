@@ -99,7 +99,7 @@ describe '
         expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT", visible: true
         expect(page).to have_selector "td.variant", text: li1.product.name, visible: true
         expect(page).to have_selector "td.variant",
-                                      text: (li2.product.name + ": " + li2.variant.options_text), visible: true
+                                      text: "#{li2.product.name}: #{li2.variant.options_text}", visible: true
       end
 
       it "displays a field for quantity" do
@@ -808,7 +808,7 @@ describe '
       before :each do
         visit_bulk_order_management
         within "tr#li_#{li3.id}" do
-          find("a", text: li3.product.name + ": " + li3.variant.options_text).click
+          find("a", text: "#{li3.product.name}: #{li3.variant.options_text}").click
         end
       end
 

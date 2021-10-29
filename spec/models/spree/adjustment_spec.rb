@@ -79,7 +79,7 @@ module Spree
           expect {
             line_item.delete
             adjustment.reload.update_adjustment!
-          }.to change{ Spree::Adjustment.count }.by -1
+          }.to change{ Spree::Adjustment.count }.by(-1)
         end
       end
     end
