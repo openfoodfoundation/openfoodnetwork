@@ -39,7 +39,8 @@ jobs:
           - "spec/lib"
           - "spec/migrations"
           - "spec/serializers"
-          - "spec/system"
+          - "spec/system/admin"
+          - "spec/system/consumer"
           - "engines/*/spec"
       fail-fast: false
     steps:
@@ -65,7 +66,7 @@ jobs:
           bundle exec rake db:create
           bundle exec rake db:schema:load
 
-      - name: Run controller tests
+      - name: Run tests
         run: bundle exec rspec --profile -- ${{ matrix.specs }}
 
       - name: Archive failed tests screenshots
