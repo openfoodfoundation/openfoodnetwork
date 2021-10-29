@@ -7,6 +7,7 @@ module Spree
       before_action :set_shipping_category, only: [:create, :update]
       before_action :set_zones, only: [:create, :update]
       before_action :load_hubs, only: [:new, :edit, :create, :update]
+      before_action :check_shipping_fee_input, only: [:update]
 
       # Sort shipping methods by distributor name
       def collection
@@ -91,6 +92,15 @@ module Spree
           :tax_category_id, distributor_ids: [],
                             calculator_attributes: PermittedAttributes::Calculator.attributes
         )
+      end
+
+      def check_shipping_fee_input
+        shipping_amount = permitted_resource_params.dig('calculator_attributes', 'preferred_amount')
+
+        unless shipping_amount.nil? || Float(shipping_amount, exception: false) 
+          flash[:error] = I18n.t(:calculator_preferred_value_error) 
+          return redirect_to location_after_save      
+        end
       end
     end
   end
