@@ -6,6 +6,7 @@ describe "spree/admin/payment_methods/index.html.haml" do
   include AuthenticationHelper
   helper Spree::Admin::NavigationHelper
   helper Spree::Admin::BaseHelper
+  helper Spree::Core::Engine.routes.url_helpers
 
   before do
     ActionView::Base.class_eval do
@@ -20,6 +21,7 @@ describe "spree/admin/payment_methods/index.html.haml" do
              create(:payment_method),
              create(:payment_method)
            ])
+    allow(controller).to receive(:controller_name).and_return("tests")
   end
 
   describe "payment methods index page" do
