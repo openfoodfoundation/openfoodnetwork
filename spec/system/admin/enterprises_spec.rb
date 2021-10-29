@@ -88,7 +88,7 @@ describe '
     end
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
-    choose "Visible to registered customers only"
+    find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
     expect(page).to have_no_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
