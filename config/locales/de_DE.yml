@@ -2579,6 +2579,7 @@ de_DE:
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} mehr"
     default_card_updated: Die Standardkreditkarte wurde aktualisiert.
+    default_card_voids_auth: Wenn Sie Ihre Standardkreditkarte ändern, werden die bestehenden Autorisierungen der Läden Ihre Karte zu belasten entfernt. Sie können den Läden nach der Aktualisierung der Standardkreditkarte erneut eine Autorisierung erteilen. Möchten Sie die Standardkarte ändern?
     cart:
       add_to_cart_failed: >
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
@@ -3113,7 +3114,7 @@ de_DE:
     or: "oder"
     order_processed_successfully: "Ihre Bestellung wurde erfolgreich verarbeitet."
     payment_method_not_supported: "Zahlungsart wird nicht unterstützt"
-    resend_authorization_email: "Autorisierungs-E-Mail erneut senden"
+    resend_authorization_email: "Bestätigungs-E-Mail erneut senden"
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
@@ -3569,6 +3570,7 @@ de_DE:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
         image_upload_error: "Das Produktbild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG- oder JPG-Format hoch."
+        paperclip_image_error: "Paperclip meldet einen Fehler für die Datei \"%{attachment_file_name}\". Überprüfen Sie die Bilddatei und die ImageMagick-Installation."
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
