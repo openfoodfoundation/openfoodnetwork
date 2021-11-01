@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
+require 'system_helper'
 require 'open_food_network/permissions'
 
 describe "Product Import", js: true do
