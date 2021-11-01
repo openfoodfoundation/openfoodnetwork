@@ -661,7 +661,7 @@ describe "Product Import", js: true do
     let!(:tax_category) { create(:tax_category, name: "Tax Category Name") }
     let!(:shipping_category) { create(:shipping_category, name: "Shipping Category Name") }
 
-    let!(:csv_file) { file_fixture('sample_file_120_products.csv') }
+    let!(:csv_file) { Rails.root.join('spec/fixtures/files/sample_file_120_products.csv') }
 
     before do
       login_as admin
