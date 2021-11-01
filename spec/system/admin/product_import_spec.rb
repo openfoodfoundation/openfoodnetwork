@@ -715,7 +715,7 @@ describe "Product Import", js: true do
 
   def expect_progress_percentages(*percentages)
     percentages.each do |percentage|
-      expect(page).to have_selector ".progress-interface", text: percentage
+      page.has_selector? ".progress-interface", text: percentage # Waits for progress bar
     end
   end
 
