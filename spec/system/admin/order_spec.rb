@@ -90,7 +90,7 @@ describe '
     select2_select product.name, from: 'add_variant_id', search: true
 
     find('button.add_variant').click
-
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS    
     expect(page).to have_selector 'td', text: product.name
     expect(order.line_items.reload.map(&:product)).to include product
   end
