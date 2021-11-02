@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
+require 'system_helper'
 require 'open_food_network/permissions'
 
 describe "Product Import", js: true do
@@ -661,7 +661,7 @@ describe "Product Import", js: true do
     let!(:tax_category) { create(:tax_category, name: "Tax Category Name") }
     let!(:shipping_category) { create(:shipping_category, name: "Shipping Category Name") }
 
-    let!(:csv_file) { file_fixture('sample_file_120_products.csv') }
+    let!(:csv_file) { Rails.root.join('spec/fixtures/files/sample_file_120_products.csv') }
 
     before do
       login_as admin
@@ -715,7 +715,7 @@ describe "Product Import", js: true do
 
   def expect_progress_percentages(*percentages)
     percentages.each do |percentage|
-      expect(page).to have_selector ".progress-interface", text: percentage
+      page.has_selector? ".progress-interface", text: percentage # Waits for progress bar
     end
   end
 

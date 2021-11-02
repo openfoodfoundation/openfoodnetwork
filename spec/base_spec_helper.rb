@@ -7,6 +7,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'simplecov' if ENV["COVERAGE"]
 require 'rubygems'
 require 'pry' unless ENV['CI']
+require 'view_component/test_helpers'
 
 require_relative "../config/environment"
 require 'rspec/rails'
