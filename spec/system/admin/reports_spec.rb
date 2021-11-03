@@ -218,8 +218,8 @@ describe '
       }
 
       before do
-        Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
-        Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
+        Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
+        Timecop.travel(Time.zone.local(2021, 4, 25, 16, 0, 0)) { order2.finalize! }
 
         create(:line_item_with_shipment, product: product, order: order1)
         create(:line_item_with_shipment, product: product, order: order2)
@@ -229,14 +229,20 @@ describe '
         # When I generate a customer report with a timeframe that includes one order but not the other
         login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
-        fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
-        fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
+        # If I fill in the basic fields
+        find('#q_completed_at_gt').click
+        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 04, 24, 13, 0, 0))
+        # hide the datetimepicker
+        find("body").send_keys(:escape)
+        find('#q_completed_at_lt').click
+        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 04, 26, 14 ,0 ,0))
+        # hide the datetimepicker
+        find("body").send_keys(:escape)
 
         select 'Order Cycle Customer Totals', from: 'report_type'
         click_button 'Search'
-
         # Then I should see the rows for the first order but not the second
-        expect(all('table#listing_orders tbody tr').count).to eq(2) # Two rows per order
+        expect(all('table#listing_orders tbody tr').count).to eq(4) # Two rows per order
       end
     end
 
