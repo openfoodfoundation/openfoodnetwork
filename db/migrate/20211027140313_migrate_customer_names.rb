@@ -1,12 +1,14 @@
 class MigrateCustomerNames < ActiveRecord::Migration[6.1]
-  class ApplicationRecord < ActiveRecord::Base
-    self.abstract_class = true
-  end
-  class Enterprise < ApplicationRecord; end
-  module Spree
-    class Preference < ApplicationRecord
-      self.table_name = "spree_preferences"
-      serialize :value
+  class Enterprise < ActiveRecord::Base
+    scope :showing_customer_names, -> do
+      joins(
+        <<-SQL
+          JOIN spree_preferences ON (
+            value LIKE '--- true\n%'
+            AND spree_preferences.key = CONCAT('/enterprise/show_customer_names_to_suppliers/', enterprises.id)
+          )
+        SQL
+      )
     end
   end
 
@@ -15,14 +17,6 @@ class MigrateCustomerNames < ActiveRecord::Migration[6.1]
   end
 
   def migrate_customer_names_preferences!
-    Enterprise.where(sells: ["own", "any"]).find_each do |enterprise|
-      next unless Spree::Preference.where(
-        value: true, key: "/enterprise/show_customer_names_to_suppliers/#{enterprise.id}"
-      ).exists?
-
-      enterprise.update_columns(
-        show_customer_names_to_suppliers: true
-      )
-    end
+    Enterprise.showing_customer_names.update_all(show_customer_names_to_suppliers: true)
   end
 end
