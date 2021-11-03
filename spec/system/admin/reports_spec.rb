@@ -447,7 +447,7 @@ describe '
         order1.update_order!
         order1.update_attribute :email, 'customer@email.com'
         order1.shipment.update_columns(included_tax_total: 10.06)
-        Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
+        Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
         order1.reload
         order1.create_tax_charge!
 
@@ -456,7 +456,7 @@ describe '
       end
 
       around do |example|
-        Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
+        Timecop.travel(Time.zone.local(2021, 4, 26, 14, 0, 0)) do
           example.run
         end
       end
@@ -483,12 +483,19 @@ describe '
 
       it "can customise a number of fields" do
         fill_in 'initial_invoice_number', with: '5'
-        fill_in 'invoice_date', with: '2015-02-12'
-        fill_in 'due_date', with: '2015-03-12'
+        find('#invoice_date').click
+        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 02, 12))
+        # hide the datetimepicker
+        find("body").send_keys(:escape)
+        find('#due_date').click
+        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 03, 12))
+        # hide the datetimepicker
+        find("body").send_keys(:escape)
+
         fill_in 'account_code', with: 'abc123'
         click_button 'Search'
 
-        opts = { invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12',
+        opts = { invoice_number: '5', invoice_date: '2021-02-12 00:00', due_date: '2021-03-12 00:00',
                  account_code: 'abc123' }
 
         expect(xero_invoice_table).to match_table [
@@ -560,7 +567,7 @@ describe '
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts = {})
       opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1',
-                          city: 'customer city', state: 'Victoria', zipcode: '1234', country: 'Australia', invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales')
+                          city: 'customer city', state: 'Victoria', zipcode: '1234', country: 'Australia', invoice_number: order1.number, order_number: order1.number, invoice_date: '2021-04-26', due_date: '2021-05-26', account_code: 'food sales')
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
 
