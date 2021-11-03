@@ -161,7 +161,7 @@ describe '
         within(".flatpickr-calendar.open") do
           expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
           select_datetime_from_datepicker test_value
-          find(".shortcut-buttons-flatpickr-buttons > button:nth-last-child(1)").click
+          find("button", text: "CLOSE").click
         end
 
         # Should no more have opened flatpickr

@@ -4,8 +4,7 @@ module Features
   module DatepickerHelper
     def choose_today_from_datepicker
       within(".flatpickr-calendar.open") do
-        # Now that we have added the Close button, find the first button to avoid any ambiguous match
-        find('.shortcut-buttons-flatpickr-buttons > button:nth-child(1)').click
+        find("button", text: "TODAY").click
       end
     end
 
