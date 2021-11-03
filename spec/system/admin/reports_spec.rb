@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+    # frozen_string_literal: true
 
 require "system_helper"
 
@@ -45,7 +45,7 @@ describe '
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["Email", "First Name", "Last Name", "Suburb"]
+        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
       ].sort)
     end
 
@@ -58,7 +58,7 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-         "Shipping Method"]
+         "Shipping Method"].map(&:upcase)
       ].sort)
     end
   end
@@ -75,7 +75,7 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method",
-         "Payment Method", "Amount", "Balance"]
+         "Payment Method", "Amount", "Balance"].map(&:upcase)
       ].sort)
     end
 
@@ -86,17 +86,17 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode",
-         "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
+         "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"].map(&:upcase)
       ].sort)
     end
   end
-
+  
   it "orders and distributors report" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Search'
 
-    expect(page).to have_content 'Order date'
+    expect(page).to have_content 'ORDER DATE'
   end
 
   it "payments reports" do
@@ -104,7 +104,7 @@ describe '
     click_link 'Payment Reports'
     click_button 'Search'
 
-    expect(page).to have_content 'Payment State'
+    expect(page).to have_content 'PAYMENT STATE'
   end
 
   describe "sales tax report" do
@@ -231,6 +231,7 @@ describe '
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
+
         select 'Order Cycle Customer Totals', from: 'report_type'
         click_button 'Search'
 
@@ -331,7 +332,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"],
+        ["User", "Relationship", "Enterprise"].map(&:upcase),
         [enterprise1.owner.email, "owns", enterprise1.name],
         [enterprise1.owner.email, "manages", enterprise1.name],
         [enterprise2.owner.email, "owns", enterprise2.name],
@@ -352,7 +353,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"],
+        ["User", "Relationship", "Enterprise"].map(&:upcase),
         [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
     end
