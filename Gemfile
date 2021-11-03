@@ -156,7 +156,6 @@ end
 
 group :test do
   gem 'byebug'
-  gem 'codecov', require: false
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false

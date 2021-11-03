@@ -15,8 +15,3 @@ SimpleCov.start 'rails' do
   add_filter '/db'
   add_filter '/lib/tasks/sample_data/'
 end
-
-if ENV['CI']
-  require 'codecov'
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
