@@ -8,7 +8,7 @@ module Api
                  :long_description, :preferred_product_selection_from_inventory_only,
                  :preferred_shopfront_message, :preferred_shopfront_closed_message,
                  :preferred_shopfront_taxon_order, :preferred_shopfront_producer_order,
-                 :preferred_shopfront_order_cycle_order, :preferred_show_customer_names_to_suppliers,
+                 :preferred_shopfront_order_cycle_order, :show_customer_names_to_suppliers,
                  :preferred_shopfront_product_sorting_method, :owner, :contact, :users, :tag_groups,
                  :default_tag_group, :require_login, :allow_guest_orders, :allow_order_changes,
                  :logo, :promo_image, :terms_and_conditions,

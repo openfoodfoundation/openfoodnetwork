@@ -32,7 +32,7 @@ module PermittedAttributes
         :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,
         :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
         :preferred_shopfront_producer_order, :preferred_shopfront_order_cycle_order,
-        :preferred_show_customer_names_to_suppliers, :preferred_shopfront_product_sorting_method,
+        :show_customer_names_to_suppliers, :preferred_shopfront_product_sorting_method,
       ]
     end
   end

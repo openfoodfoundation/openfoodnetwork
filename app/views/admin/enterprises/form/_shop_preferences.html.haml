@@ -103,8 +103,8 @@
     %div{'ofn-with-tip' => t('.customer_names_tip')}
       %a= t 'admin.whats_this'
   .three.columns
-    = radio_button :enterprise, :preferred_show_customer_names_to_suppliers, true
-    = label :enterprise_preferred_show_customer_names_to_suppliers, t('.customer_names_true'), value: :true
+    = radio_button :enterprise, :show_customer_names_to_suppliers, true
+    = label :enterprise_show_customer_names_to_suppliers, t('.customer_names_true'), value: :true
   .five.columns.omega
-    = radio_button :enterprise, :preferred_show_customer_names_to_suppliers, false
-    = label :enterprise_preferred_show_customer_names_to_suppliers, t('.customer_names_false'), value: :false
+    = radio_button :enterprise, :show_customer_names_to_suppliers, false
+    = label :enterprise_show_customer_names_to_suppliers, t('.customer_names_false'), value: :false

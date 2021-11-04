@@ -128,9 +128,9 @@ describe ProducerMailer, type: :mailer do
     expect(mail.body.encoded).to include(p1.name)
   end
 
-  context 'when flag preferred_show_customer_names_to_suppliers is true' do
+  context 'when flag show_customer_names_to_suppliers is true' do
     before do
-      order_cycle.coordinator.set_preference(:show_customer_names_to_suppliers, true)
+      order_cycle.coordinator.show_customer_names_to_suppliers = true
     end
 
     it "adds customer names table" do
@@ -160,9 +160,9 @@ describe ProducerMailer, type: :mailer do
     end
   end
 
-  context 'when flag preferred_show_customer_names_to_suppliers is false' do
+  context 'when flag show_customer_names_to_suppliers is false' do
     before do
-      order_cycle.coordinator.set_preference(:show_customer_names_to_suppliers, false)
+      order_cycle.coordinator.show_customer_names_to_suppliers = false
     end
 
     it "does not add customer names table" do

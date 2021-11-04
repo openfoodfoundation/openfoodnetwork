@@ -15,7 +15,7 @@ class OrderDataMasker
   attr_accessor :order
 
   def customer_names_allowed?
-    order.distributor.preferences[:show_customer_names_to_suppliers]
+    order.distributor.show_customer_names_to_suppliers
   end
 
   def mask_customer_names
