@@ -38,7 +38,7 @@ module Reporting
               sql_grouping(grouping_fields),
               Arel.sql("product"),
               Arel.sql("variant"),
-              Arel.sql("supplier"),
+              Arel.sql("last_name")
             ]
           end
         end
