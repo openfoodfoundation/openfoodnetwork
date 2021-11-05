@@ -258,7 +258,7 @@ it:
   ongoing: Attivo
   bill_address: Indirizzo Fatturazione
   ship_address: Indirizzo Consegna
-  sort_order_cycles_on_shopfront_by: "Ordina Cicli Ordine in Vetrina per"
+  sort_order_cycles_on_shopfront_by: "Ordina Cicli di richieste in Vetrina per"
   required_fields: I campi obbligatori sono contrassegnati con un asterisco
   select_continue: Seleziona e Continua
   remove: Rimuovi
@@ -3706,6 +3706,7 @@ it:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Oggi"
       now: "Adesso"
+      close: "Chiuso"
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:
