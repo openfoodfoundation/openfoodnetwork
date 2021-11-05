@@ -77,6 +77,9 @@ Openfoodnetwork::Application.routes.draw do
           end
         end
       end
+
+      get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
+          constraints: lambda { |_| Flipper.enabled?(:api_reports) }
     end
 
     match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v[0-9]).+/ }

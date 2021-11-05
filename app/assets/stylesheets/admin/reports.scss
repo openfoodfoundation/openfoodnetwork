@@ -15,3 +15,17 @@
 .customer-names-tip {
   margin-top: 1em;
 }
+
+.rendering-options {
+  select {
+    display: block;
+    float: left;
+  }
+
+  .inline-checkbox {
+    line-height: 2.5em;
+    margin-left: 1em;
+    display: block;
+    float: left;
+  }
+}

@@ -1,4 +1,5 @@
 %ul{style: "margin-left: 12pt"}
-  - report_types.each do |report_type|
+  - report_subtypes("packing").each do |report_subtype|
     %li
-      = link_to report_type[0], "#{packing_admin_reports_url}?report_type=#{report_type[1]}"
+      = link_to t("admin.reports.packing.#{report_subtype}_report"),
+        main_app.admin_reports_url(report_type: 'packing', report_subtype: report_subtype)

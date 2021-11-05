@@ -1,0 +1,8 @@
+.row.rendering-options
+  = label_tag :report_format, t(".generate_report")
+  %br
+  = select_tag :report_format, options_for_select({t('.on_screen') => '', t('.csv_spreadsheet') => 'csv', t('.excel_spreadsheet') => 'xlsx', t('.openoffice_spreadsheet') => 'ods'})
+
+  -#.inline-checkbox
+  -#  = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
+  -#  = label_tag t(".hide_summary_rows")

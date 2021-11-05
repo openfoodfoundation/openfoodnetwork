@@ -32,8 +32,9 @@ gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
-gem 'activerecord-postgresql-adapter'
-gem 'pg', '~> 1.2.3'
+gem "activerecord-postgresql-adapter"
+gem "arel-helpers", "~> 2.12"
+gem "pg", "~> 1.2.3"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
@@ -96,6 +97,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
 gem 'roo', '~> 2.8.3'
+gem 'spreadsheet_architect'
 
 gem 'whenever', require: false
 
@@ -168,6 +170,7 @@ end
 group :development do
   gem 'debugger-linecache'
   gem 'foreman'
+  gem 'listen'
   gem 'pry', '~> 0.13.0'
   gem 'pry-byebug', '~> 3.9.0'
   gem 'rubocop'

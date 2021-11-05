@@ -114,5 +114,7 @@ Openfoodnetwork::Application.routes.draw do
       put :cancel, on: :member, format: :json
       put :resume, on: :member, format: :json
     end
+
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: [:get, :post], as: :reports
   end
 end
