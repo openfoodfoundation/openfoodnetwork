@@ -60,3 +60,9 @@ $background-blue: #5498da;
 }
 
 // scss-lint:enable SelectorFormat
+
+// customization for shortcut-buttons
+.shortcut-buttons-flatpickr-wrapper > .shortcut-buttons-flatpickr-buttons {
+  justify-content: space-between;
+  flex-grow: 1;
+}

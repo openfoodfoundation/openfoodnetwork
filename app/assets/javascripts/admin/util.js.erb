@@ -1,12 +1,21 @@
 $(document).ready(function() {
   var onClickButtons = function(index, fp) {
     var date;
+    // Memorize index used for the 'Close' button
+    // (currently it has index of 1)  
+    var closeButtonIndex = 1; 
     switch (index) {
       case 0:
         date = new Date();
         break;
+      case closeButtonIndex:
+        fp.close();
+        break;
     }
-    fp.setDate(date, true);
+    // Set the date unless clicked button was the 'Close' one
+    if (index != closeButtonIndex) {
+      fp.setDate(date, true);
+    }
   }
   window.FLATPICKR_DATE_DEFAULT = {
     altInput: true,
@@ -15,9 +24,14 @@ $(document).ready(function() {
     locale: I18n.base_locale,
     plugins: [
         ShortcutButtonsPlugin({
-          button: [{
-            label: Spree.translations.today
-          }],
+          button: [
+            {
+              label: Spree.translations.today
+            },
+            {
+              label: Spree.translations.close
+            }
+          ],
           label: "or",
           onClick: onClickButtons
         }),
@@ -35,9 +49,14 @@ $(document).ready(function() {
       time_24hr: true,
       plugins: [
         ShortcutButtonsPlugin({
-          button: [{
-            label: Spree.translations.now
-          }],
+          button: [
+            {
+              label: Spree.translations.now
+            },
+            {
+              label: Spree.translations.close
+            }
+          ],
           label: "or",
           onClick: onClickButtons
         }),
