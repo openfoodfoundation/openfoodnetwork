@@ -664,6 +664,8 @@ en_NZ:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+        business_address:
+          address2: Address (contd.)
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -1066,11 +1068,28 @@ en_NZ:
       xero_invoices:
         name: Xero Invoices
         description: Invoices for import into Xero
-      packing:
-        name: Packing Reports
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Select filters and click on %{option} to access your data."
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "First Name"
+          last_name: "Last Name"
+          supplier: "Supplier"
+          product: "Product"
+          variant: "Variant"
+          quantity: "Quantity"
+          is_temperature_controlled: "TempControlled?"
+          temp_controlled: "TempControlled?"
+      packing:
+        name: "Packing Reports"
+        customer_report: "Pack By Customer"
+        supplier_report: "Pack By Supplier"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -3504,6 +3523,7 @@ en_NZ:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Today"
       now: "Now"
+      close: "Close"
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:

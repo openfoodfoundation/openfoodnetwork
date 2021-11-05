@@ -712,6 +712,8 @@ ca:
           terms_and_conditions: "Termes i condicions"
           remove_terms_and_conditions: "Elimina el fitxer"
           uploaded_on: "carregat el"
+        business_address:
+          address2: Adreça (continua)
         contact:
           name: Nom
           name_placeholder: 'p. ex: Josep Ribes'
@@ -1121,11 +1123,28 @@ ca:
       xero_invoices:
         name: Factures Xero
         description: Factures per a la importació a Xero
-      packing:
-        name: Informes d'embalatge
       enterprise_fee_summary:
         name: "Resum de les comissions de l'organització"
         description: "Resum de les comissions de l'organització recollides"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Seleccioneu els filtres i feu clic a %{option} per accedir a les vostres dades."
+        headings:
+          hub: "Grup"
+          customer_code: "Codi"
+          first_name: "Nom"
+          last_name: "Cognoms"
+          supplier: "Proveïdora"
+          product: "Producte"
+          variant: "Variant"
+          quantity: "Quantitat"
+          is_temperature_controlled: "Control de temperatura?"
+          temp_controlled: "Control de temperatura?"
+      packing:
+        name: "Informes d'embalatge"
+        customer_report: "Paquets per consumidora"
+        supplier_report: "Paquets per proveïdora"
     subscriptions:
       index:
         title: "Subscripcions"
@@ -3641,6 +3660,7 @@ ca:
       flatpickr_datetime_format: "d-m-Y H:i"
       today: "Avui"
       now: "Ara"
+      close: "Tanca"
     orders:
       error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."
       edit:

@@ -1135,11 +1135,28 @@ de_DE:
       xero_invoices:
         name: Xero Rechnungen
         description: Rechnungen für den Import in Xero
-      packing:
-        name: Packlisten
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
+      summary_row:
+        total: "SUMME"
+      table:
+        select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "Vorname"
+          last_name: "Nachname"
+          supplier: "Lieferant"
+          product: "Produkt"
+          variant: "Variante"
+          quantity: "Menge"
+          is_temperature_controlled: "Temperaturüberwachte Artikel?"
+          temp_controlled: "Temperaturüberwachte Artikel?"
+      packing:
+        name: "Packlisten"
+        customer_report: "Packliste nach Kunden"
+        supplier_report: "Packliste nach Lieferanten"
     subscriptions:
       index:
         title: "Abonnements"

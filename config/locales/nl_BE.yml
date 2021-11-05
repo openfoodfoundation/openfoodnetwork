@@ -645,6 +645,8 @@ nl_BE:
           acn_placeholder: bv. 123 456 789
           display_invoice_logo: Beeld logo op de factuur af
           invoice_text: Voeg aangepaste tekst toe op het einde van de factuur
+        business_address:
+          address2: Adres (vervolg)
         contact:
           name: Naam
           name_placeholder: bv. Jan Janssens
@@ -1049,11 +1051,28 @@ nl_BE:
       xero_invoices:
         name: Xero facturen
         description: Facturen voor invoer in Xero
-      packing:
-        name: Verpakkingsrapporten
       enterprise_fee_summary:
         name: "Samenvatting van de honoraria voor ondernemingen"
         description: "Overzicht van de geïnde ondernemingsvergoedingen"
+      summary_row:
+        total: "Totaal"
+      table:
+        select_and_search: "Selecteer de filters en klik op 1%{option} om uw gegevens tebereiken"
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "Voornaam"
+          last_name: "Familienaam"
+          supplier: "Leverancier"
+          product: "Product"
+          variant: "Variant"
+          quantity: "Kwantiteit"
+          is_temperature_controlled: "Onder gecontroleerde temperatuur ?"
+          temp_controlled: "Onder gecontroleerde temperatuur ?"
+      packing:
+        name: "Verpakkingsrapporten"
+        customer_report: "Verpakking per klant"
+        supplier_report: "Verpakking per leverancier"
     subscriptions:
       index:
         title: "Abonnementen"
@@ -3342,6 +3361,8 @@ nl_BE:
           used_saved_card: "Gebruik een opgeslaan kaart : "
           or_enter_new_card: "Of, voer de gegevens in voor een nieuwe kaart : "
           remember_this_card: 'Deze kaart onthouden? '
+    date_picker:
+      close: "Sluit"
     orders:
       error_flash_for_unavailable_items: "Een item in u winkelkar is niet meer beschikbaar. Vernieuwd de geselecteerde hoeveelheid."
       edit:

@@ -637,6 +637,8 @@ en_IN:
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
+        business_address:
+          address2: Address (contd.)
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
@@ -1036,11 +1038,28 @@ en_IN:
       xero_invoices:
         name: Xero Invoices
         description: Invoices for import into Xero
-      packing:
-        name: Packing Reports
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Select filters and click on %{option} to access your data."
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "First Name"
+          last_name: "Last Name"
+          supplier: "Supplier"
+          product: "Product"
+          variant: "Variant"
+          quantity: "Quantity"
+          is_temperature_controlled: "TempControlled?"
+          temp_controlled: "TempControlled?"
+      packing:
+        name: "Packing Reports"
+        customer_report: "Pack By Customer"
+        supplier_report: "Pack By Supplier"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -3396,6 +3415,8 @@ en_IN:
           used_saved_card: "Use a saved card:"
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
+    date_picker:
+      close: "Close"
     orders:
       error_flash_for_unavailable_items: "An item in your basket has become unavailable. Please update the selected quantities."
       edit:

@@ -683,6 +683,8 @@ es_US:
           terms_and_conditions: "Términos y Condiciones"
           remove_terms_and_conditions: "Eliminar archivo"
           uploaded_on: "Subido en"
+        business_address:
+          address2: Dirección (cont.)
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -1087,11 +1089,28 @@ es_US:
       xero_invoices:
         name: Facturas Xero
         description: Facturas para la importación en Xero
-      packing:
-        name: Informes de empaquetado
       enterprise_fee_summary:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
+        headings:
+          hub: "Grupo"
+          customer_code: "Código"
+          first_name: "Nombre"
+          last_name: "Apellido"
+          supplier: "Proveedor"
+          product: "Producto"
+          variant: "Variedad"
+          quantity: "Cantidad"
+          is_temperature_controlled: "¿Control de Temperatura?"
+          temp_controlled: "¿Control de Temperatura?"
+      packing:
+        name: "Informes de empaquetado"
+        customer_report: "Pack por Consumidor"
+        supplier_report: "Pack por proveedor"
     subscriptions:
       index:
         title: "Suscripciones"
@@ -3578,6 +3597,7 @@ es_US:
       flatpickr_datetime_format: "d-m-Y H:i"
       today: "Hoy"
       now: "Ahora"
+      close: "Cerrar"
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:

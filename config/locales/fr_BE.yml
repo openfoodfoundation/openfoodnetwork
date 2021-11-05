@@ -644,6 +644,8 @@ fr_BE:
           acn_placeholder: 'ex: 000 000 000'
           display_invoice_logo: Afficher le logo sur la facture
           invoice_text: Ajouter une mention spécifique en bas des factures
+        business_address:
+          address2: Adresse (suite)
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Dupont'
@@ -1047,11 +1049,28 @@ fr_BE:
       xero_invoices:
         name: Facture Xero
         description: Factures pour import dans Xero
-      packing:
-        name: Rapports de préparation des paniers
       enterprise_fee_summary:
         name: "Récapitulatif de la commission d'entreprise "
         description: "Récapitulatif des commissions d'entreprise perçues"
+      summary_row:
+        total: "Total"
+      table:
+        select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
+        headings:
+          hub: "Comptoir"
+          customer_code: "Code"
+          first_name: "Prénom"
+          last_name: "Nom de famille"
+          supplier: "Disitributeur·trice"
+          product: "Produit"
+          variant: "Variante"
+          quantity: "Nb commandé"
+          is_temperature_controlled: "Temp Contrôlée ?"
+          temp_controlled: "Temp Contrôlée ?"
+      packing:
+        name: "Rapports de préparation des paniers"
+        customer_report: "Préparation des commandes par Acheteur·euse"
+        supplier_report: "Préparation des commandes par Producteur·trice"
     subscriptions:
       index:
         title: "commandes récurrantes"
@@ -3349,6 +3368,8 @@ fr_BE:
           used_saved_card: "Utiliser une carte sauvegardée :"
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
+    date_picker:
+      close: "Ferme"
     orders:
       error_flash_for_unavailable_items: "Un produit dans votre panier n'est plus disponible. Veuillez changer le montant des quantité. "
       edit:

@@ -41,6 +41,8 @@ tr:
           attributes:
             email:
               taken: "Bu e-posta adına kayıtlı bir hesap var. Lütfen giriş yapın veya şifrenizi sıfırlayın."
+            reset_password_token:
+              invalid: geçersizdir
         spree/order:
           no_card: Ödeme alınabilecek kayıtlı bir kredi kartı bulunmamaktadır.
         spree/credit_card:
@@ -712,6 +714,8 @@ tr:
           terms_and_conditions: "Şartlar ve Koşullar"
           remove_terms_and_conditions: "Dosyayı Kaldır"
           uploaded_on: "yüklendi"
+        business_address:
+          address2: Adres (devam)
         contact:
           name: Ad
           name_placeholder: Örn. Toprak Güneş
@@ -1118,11 +1122,28 @@ tr:
       xero_invoices:
         name: Xero Faturalar
         description: Xero'ya aktarım faturaları
-      packing:
-        name: Paketleme Raporları
       enterprise_fee_summary:
         name: "İşletme Ücreti Özeti"
         description: "Toplanan İşletme Ücretlerinin Özeti"
+      summary_row:
+        total: "TOPLAM"
+      table:
+        select_and_search: "Filtreleri seçin ve verilerinize erişmek için %{option} üzerine tıklayın."
+        headings:
+          hub: "Pazar"
+          customer_code: "Kod"
+          first_name: "Ad"
+          last_name: "Soyad"
+          supplier: "TEDARİKÇİ"
+          product: "Ürün"
+          variant: "Çeşit"
+          quantity: "Miktar"
+          is_temperature_controlled: "SoğukSevkiyat?"
+          temp_controlled: "SoğukSevkiyat?"
+      packing:
+        name: "Paketleme Raporları"
+        customer_report: "Müşteriye göre Paketle"
+        supplier_report: "Tedarikçiye Göre Paketle"
     subscriptions:
       index:
         title: "Üyelikler"
@@ -1703,7 +1724,7 @@ tr:
   shopping_oc_select: "Seçin..."
   shopping_tabs_home: "Ana sayfa"
   shopping_tabs_shop: "ALIŞVERİŞ YAP"
-  shopping_tabs_about: "Hakkında"
+  shopping_tabs_about: "HAKKINDA"
   shopping_tabs_producers: "ÜRETİCİLER"
   shopping_tabs_contact: "İLETİŞİM"
   shopping_tabs_groups: "AĞLAR"
@@ -3671,6 +3692,7 @@ tr:
       flatpickr_datetime_format: "Y/A/G "
       today: "Bugün"
       now: "Şimdi"
+      close: "Kapat"
     orders:
       error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:

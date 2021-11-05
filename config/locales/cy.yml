@@ -659,6 +659,8 @@ cy:
           terms_and_conditions: "Telerau ac Amodau"
           remove_terms_and_conditions: "Tynnu Ffeil"
           uploaded_on: "uwchlwytho ar"
+        business_address:
+          address2: Cyfeiriad (parhad.)
         contact:
           name: Enw
           name_placeholder: ee. Eirin Gustav
@@ -1061,11 +1063,28 @@ cy:
       xero_invoices:
         name: Anfonebau Xero
         description: Anfonebau i&#39;w mewnforio i Xero
-      packing:
-        name: Adroddiadau Pacio
       enterprise_fee_summary:
         name: "Crynodeb Ffi Menter"
         description: "Crynodeb o&#39;r Ffioedd Menter a gasglwyd"
+      summary_row:
+        total: "CYFANSWM"
+      table:
+        select_and_search: "Dewiswch hidlwyr a chlicio ar %{option} i gael mynediad i&#39;ch data."
+        headings:
+          hub: "Hwb"
+          customer_code: "Côd"
+          first_name: "Enw cyntaf"
+          last_name: "Enw olaf"
+          supplier: "Cyflenwr"
+          product: "Cynnyrch"
+          variant: "Amrywiol"
+          quantity: "Nifer"
+          is_temperature_controlled: "TempControlled?"
+          temp_controlled: "TempControlled?"
+      packing:
+        name: "Adroddiadau Pacio"
+        customer_report: "Pecyn Gan Gwsmer"
+        supplier_report: "Pecyn Gan Gyflenwr"
     subscriptions:
       index:
         title: "Tanysgrifiadau"
@@ -3517,6 +3536,7 @@ cy:
           remember_this_card: Ydych chi&#39;n cofio&#39;r cerdyn hwn?
     date_picker:
       now: "Nawr"
+      close: "Caewch"
     orders:
       error_flash_for_unavailable_items: "Nid yw eitem yn eich trol ar gael. Diweddarwch y meintiau a ddewiswyd."
       edit:

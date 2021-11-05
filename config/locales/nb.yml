@@ -717,6 +717,8 @@ nb:
           terms_and_conditions: "Vilkår og Betingelser"
           remove_terms_and_conditions: "Fjern Fil"
           uploaded_on: "lastet opp den"
+        business_address:
+          address2: Adresse (forts.)
         contact:
           name: Navn
           name_placeholder: f.eks. Gustav Plum
@@ -1123,11 +1125,28 @@ nb:
       xero_invoices:
         name: Xero-fakturaer
         description: Fakturaer for import til Xero
-      packing:
-        name: Pakkerapporter
       enterprise_fee_summary:
         name: "Sammendrag Bedriftsavgift"
         description: "Sammendrag av bedriftsavgifter innsamlet"
+      summary_row:
+        total: "SUM"
+      table:
+        select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
+        headings:
+          hub: "Hub"
+          customer_code: "Kode"
+          first_name: "Fornavn"
+          last_name: "Etternavn"
+          supplier: "Leverandør"
+          product: "Produkt"
+          variant: "Variant"
+          quantity: "Mengde"
+          is_temperature_controlled: "Temperaturkontrollert?"
+          temp_controlled: "Temperaturkontrollert?"
+      packing:
+        name: "Pakkerapporter"
+        customer_report: "Pakk etter Kunde"
+        supplier_report: "Pakk etter Leverandør"
     subscriptions:
       index:
         title: "Abonnement"
@@ -3684,6 +3703,7 @@ nb:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "I dag"
       now: "Nå"
+      close: "Lukk"
     orders:
       error_flash_for_unavailable_items: "En vare i handlekurven din er blitt utilgjengelig. Oppdater valgte mengder."
       edit:

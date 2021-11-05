@@ -1135,11 +1135,28 @@ ru:
       xero_invoices:
         name: Xero Счета
         description: Счета для импорта в Xero
-      packing:
-        name: Выборочные Отчёты
       enterprise_fee_summary:
         name: "Сводка Сборов Предприятия"
         description: "Сводная Информация о Сборах с Предприятия"
+      summary_row:
+        total: "ВСЕГО"
+      table:
+        select_and_search: "Для получения данных, выберите фильры и нажмите на %{option}."
+        headings:
+          hub: "Центр"
+          customer_code: "Код"
+          first_name: "Имя"
+          last_name: "Фамилия"
+          supplier: "Поставщик"
+          product: "Товар"
+          variant: "Вариант"
+          quantity: "Количество"
+          is_temperature_controlled: "Контроль Температуры?"
+          temp_controlled: "Контроль Температуры?"
+      packing:
+        name: "Выборочные Отчёты"
+        customer_report: "Выборка по Клиенту"
+        supplier_report: "Выборка по Поставщику"
     subscriptions:
       index:
         title: "Подписки"

@@ -1134,11 +1134,28 @@ it:
       xero_invoices:
         name: Fatture Xero
         description: Fatture per importazione in Xero
-      packing:
-        name: Resoconti smistamento/imballaggio
       enterprise_fee_summary:
         name: "Riepilogo tariffe dell'azienda"
         description: "Riepilogo delle Tariffe applicate dall'azienda"
+      summary_row:
+        total: "TOTALE"
+      table:
+        select_and_search: "Seleziona filtri e clicca su %{option} per accedere al tuo dato"
+        headings:
+          hub: "Hub"
+          customer_code: "Codice"
+          first_name: "Nome"
+          last_name: "Cognome"
+          supplier: "Fornitore"
+          product: "Prodotto"
+          variant: "Variante"
+          quantity: "Quantità"
+          is_temperature_controlled: "Controllo Temperatura?"
+          temp_controlled: "Controllo Temperatura?"
+      packing:
+        name: "Resoconti smistamento/imballaggio"
+        customer_report: "Imballato dal Cliente"
+        supplier_report: "Smistato dai fornitori"
     subscriptions:
       index:
         title: "Abbonamenti"

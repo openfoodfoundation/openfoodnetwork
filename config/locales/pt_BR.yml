@@ -701,6 +701,8 @@ pt_BR:
           terms_and_conditions: "Termos e Condições"
           remove_terms_and_conditions: "Remover Arquivo"
           uploaded_on: "upload feito em"
+        business_address:
+          address2: Complemento
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -1102,11 +1104,27 @@ pt_BR:
       xero_invoices:
         name: Faturas Xero
         description: Faturas para importar em Xero
-      packing:
-        name: Relatórios de pacotes
       enterprise_fee_summary:
         name: "Resumo das taxas da empresa"
         description: "Resumo das taxas corporativas coletadas"
+      summary_row:
+        total: "TOTAL"
+      table:
+        headings:
+          hub: "Central"
+          customer_code: "Código"
+          first_name: "Nome"
+          last_name: "Sobrenome"
+          supplier: "Fornecedor"
+          product: "Produto"
+          variant: "Variante"
+          quantity: "Quantidade"
+          is_temperature_controlled: "Temperatura controlada?"
+          temp_controlled: "Temperatura controlada?"
+      packing:
+        name: "Relatórios de pacotes"
+        customer_report: "Pacote por cliente"
+        supplier_report: "Pacote por fornecedor"
     subscriptions:
       index:
         title: "Assinaturas"
@@ -3614,6 +3632,7 @@ pt_BR:
       flatpickr_datetime_format: "d-m-Y H:i"
       today: "Hoje"
       now: "Agora"
+      close: "Fechado"
     orders:
       error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível. Por favor atualize as quantidades selecionadas. "
       edit:

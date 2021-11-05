@@ -718,6 +718,8 @@ fr_CA:
           terms_and_conditions: "CGU & CGV"
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
+        business_address:
+          address2: Adresse (suite)
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -1126,11 +1128,28 @@ fr_CA:
       xero_invoices:
         name: Facture Xero
         description: Factures pour import dans Xero
-      packing:
-        name: Rapports de préparation des paniers
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      summary_row:
+        total: "Total"
+      table:
+        select_and_search: "Sélectionner les filtres et cliquez sur %{option}pour accéder aux données."
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "Prénom"
+          last_name: "Nom"
+          supplier: "Fournisseur"
+          product: "Produit"
+          variant: "Variante"
+          quantity: "Quantité"
+          is_temperature_controlled: "Temp Contrôlée ?"
+          temp_controlled: "Temp Contrôlée ?"
+      packing:
+        name: "Rapports de préparation des paniers"
+        customer_report: "Préparation des commandes par Acheteur"
+        supplier_report: "Préparation des commandes par Producteur"
     subscriptions:
       index:
         title: "Abonnements"
@@ -3700,6 +3719,7 @@ fr_CA:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Aujourd'hui"
       now: "Mtnt"
+      close: "Ferme"
     orders:
       error_flash_for_unavailable_items: "Un élément de votre panier est épuisé. Veuillez mettre à jour les quantités sélectionnées."
       edit:

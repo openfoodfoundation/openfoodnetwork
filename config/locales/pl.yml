@@ -1040,11 +1040,21 @@ pl:
       xero_invoices:
         name: Faktury Xero
         description: Faktury do importu do Xero
-      packing:
-        name: Raporty pakowania
       enterprise_fee_summary:
         name: "Podsumowanie opłat dla podmiotów"
         description: "Podsumowanie pobranych opłat dla podmiotów"
+      summary_row:
+        total: "RAZEM"
+      table:
+        headings:
+          hub: "Hub"
+          customer_code: "Kod"
+          supplier: "Dostawca"
+          product: "Produkt"
+          variant: "Wariant"
+          quantity: "Ilość"
+      packing:
+        name: "Raporty pakowania"
     subscriptions:
       index:
         title: "Subskrypcje"
@@ -3405,6 +3415,7 @@ pl:
           remember_this_card: Pamiętasz tę kartę?
     date_picker:
       now: "Teraz"
+      close: "Zamknij"
     orders:
       error_flash_for_unavailable_items: "Produkt w Twoim koszyku stał się niedostępny. Zaktualizuj wybrane ilości."
       edit:

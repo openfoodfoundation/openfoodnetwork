@@ -659,6 +659,8 @@ pt:
           terms_and_conditions: "Termos e Condições"
           remove_terms_and_conditions: "Remover ficheiro"
           uploaded_on: "actualizado em"
+        business_address:
+          address2: Morada (cont.)
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -1046,11 +1048,28 @@ pt:
       xero_invoices:
         name: Facturas Xero
         description: Facturas para importar para o Xero
-      packing:
-        name: Relatórios de Embalamento
       enterprise_fee_summary:
         name: "Sumário das Taxas de Organização"
         description: "Sumário das Taxas de Organização cobradas"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Selecione os filtros e carregue em %{option} para ver os seus dados."
+        headings:
+          hub: "Central"
+          customer_code: "Código"
+          first_name: "Primeiro Nome"
+          last_name: "Último Nome"
+          supplier: "Fornecedor"
+          product: "Produto"
+          variant: "Variante"
+          quantity: "Quantidade"
+          is_temperature_controlled: "TempControlada?"
+          temp_controlled: "TempControlada?"
+      packing:
+        name: "Relatórios de Embalamento"
+        customer_report: "Embalar por Consumidor"
+        supplier_report: "Embalar por Fornecedor"
     subscriptions:
       index:
         title: "Subscrições"
@@ -3255,6 +3274,7 @@ pt:
           remember_this_card: Lembra-se deste cartão?
     date_picker:
       now: "Agora"
+      close: "Fechar"
     orders:
       error_flash_for_unavailable_items: "Um item do seu carrinho ficou indisponível. Por favor actualize as quantidades."
       edit:

@@ -684,6 +684,8 @@ ar:
           terms_and_conditions: "الأحكام والشروط"
           remove_terms_and_conditions: "إزالة الملف"
           uploaded_on: "تم الرفع في"
+        business_address:
+          address2: العنوان (تابع)
         contact:
           name: اسم
           name_placeholder: على سبيل المثال. برقوق غوستاف
@@ -1085,11 +1087,28 @@ ar:
       xero_invoices:
         name: فواتير زيروكس
         description: فواتير للاستيراد إلى زيروكس
-      packing:
-        name: تقارير التعبئة
       enterprise_fee_summary:
         name: "ملخص رسوم الشركات"
         description: "ملخص رسوم الشركات التي تم جمعها"
+      summary_row:
+        total: "مجموع"
+      table:
+        select_and_search: "حدد المرشحات وانقر على %{option} للوصول إلى البيانات الخاصة بك."
+        headings:
+          hub: "مركز بيع"
+          customer_code: "الشفرة"
+          first_name: "الاسم الاول"
+          last_name: "الكنية"
+          supplier: "المورد"
+          product: "المنتج"
+          variant: "النوع"
+          quantity: "الكمية"
+          is_temperature_controlled: "التحكم المؤقت؟"
+          temp_controlled: "التحكم المؤقت؟"
+      packing:
+        name: "تقارير التعبئة"
+        customer_report: "تم التعبئة من العملاء"
+        supplier_report: "تم التعبئة من  المورد"
     subscriptions:
       index:
         title: "الاشتراكات"
@@ -3654,6 +3673,7 @@ ar:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Today"
       now: "الآن"
+      close: "إغلاق"
     orders:
       error_flash_for_unavailable_items: "عنصر في سلة التسوق الخاصة بك أصبح غير متوفر. يرجى تحديث الكميات المحددة."
       edit:

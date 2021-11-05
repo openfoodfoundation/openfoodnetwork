@@ -642,6 +642,8 @@ es_CO:
           acn_placeholder: ej. 123 456 789
           display_invoice_logo: Mostrar logo en facturas
           invoice_text: Añadir texto personalizado al final de las facturas
+        business_address:
+          address2: Dirección (continuación)
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -1045,11 +1047,28 @@ es_CO:
       xero_invoices:
         name: Facturas Xero
         description: Facturas para la importación en Xero
-      packing:
-        name: Reportes de empaquetado
       enterprise_fee_summary:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
+      summary_row:
+        total: "TOTAL"
+      table:
+        select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
+        headings:
+          hub: "Nodo"
+          customer_code: "Código"
+          first_name: "Nombre"
+          last_name: "Apellidos"
+          supplier: "Proveedora"
+          product: "Producto"
+          variant: "Variante"
+          quantity: "Cantidad"
+          is_temperature_controlled: "¿Control de Temperatura?"
+          temp_controlled: "¿Control de Temperatura?"
+      packing:
+        name: "Reportes de empaquetado"
+        customer_report: "Paquete por cliente"
+        supplier_report: "Pack por proveedor"
     subscriptions:
       index:
         title: "Suscripciones"
@@ -3413,6 +3432,8 @@ es_CO:
           used_saved_card: "Usa una tarjeta guardada:"
           or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
           remember_this_card: ¿Recordar esta tarjeta?
+    date_picker:
+      close: "Cerrar"
     orders:
       error_flash_for_unavailable_items: "Un artículo de tu carrito ya no está disponible. Actualiza las cantidades seleccionadas."
       edit:

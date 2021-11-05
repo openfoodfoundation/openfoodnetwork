@@ -724,7 +724,7 @@ fr:
           company_placeholder: Indiquez ici le nom légal de votre entreprise
           address1: Adresse du siège social
           address1_placeholder: 123, rue de la Chèvre
-          address2: Complément d'adresse
+          address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "09 00 00 00 00"
         contact:
@@ -1135,11 +1135,28 @@ fr:
       xero_invoices:
         name: Facture Xero
         description: Factures pour import dans Xero
-      packing:
-        name: Rapports de préparation des paniers
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      summary_row:
+        total: "Total"
+      table:
+        select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
+        headings:
+          hub: "Boutique"
+          customer_code: "Code"
+          first_name: "Prénom"
+          last_name: "Nom"
+          supplier: "Fournisseur"
+          product: "Produit"
+          variant: "Variante"
+          quantity: "Quantité"
+          is_temperature_controlled: "Temp Contrôlée ?"
+          temp_controlled: "Temp Contrôlée ?"
+      packing:
+        name: "Rapports de préparation des paniers"
+        customer_report: "Préparation des commandes par Acheteur"
+        supplier_report: "Préparation des commandes par Producteur"
     subscriptions:
       index:
         title: "Abonnements"
@@ -3731,6 +3748,7 @@ fr:
       flatpickr_datetime_format: "d-m-Y H:i"
       today: "Aujourd'hui"
       now: "Maintenant"
+      close: "Fermer"
     orders:
       error_flash_for_unavailable_items: "Un élément de votre panier est épuisé. Veuillez mettre à jour les quantités sélectionnées."
       edit:
