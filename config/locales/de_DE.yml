@@ -238,7 +238,7 @@ de_DE:
   search_by_name: Suche nach Ort oder Name des Ladens/Produzents ...
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
-  business_address: "Unternehmensadresse"
+  business_address: "Unternehmensdaten"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -2779,7 +2779,7 @@ de_DE:
           failed: "fehlgeschlagen"
           paid: "bezahlt"
           pending: "ausstehend"
-          requires_authorization: "Bestätigung erforderlich"
+          requires_authorization: "Autorisierung erforderlich"
           processing: "in Verarbeitung"
           void: "keine Angabe"
           invalid: "ungültig"
@@ -3114,7 +3114,7 @@ de_DE:
     or: "oder"
     order_processed_successfully: "Ihre Bestellung wurde erfolgreich verarbeitet."
     payment_method_not_supported: "Zahlungsart wird nicht unterstützt"
-    resend_authorization_email: "Bestätigungs-E-Mail erneut senden"
+    resend_authorization_email: "Autorisierungs-E-Mail erneut senden"
     rma_credit: "Gutschrift aus Retour"
     refund: "Rückerstattung"
     server_error: "Serverfehler"
@@ -3314,10 +3314,10 @@ de_DE:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "1 Fehler hat das Speichern dieses Datensatzes verhindert:"
-          few: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
-          many: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
-          other: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert:"
+          one: "Ein Fehler hat das Speichern dieses Datensatzes verhindert."
+          few: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert."
+          many: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert."
+          other: "%{count} Fehler haben das Speichern dieses Datensatzes verhindert."
         there_were_problems_with_the_following_fields: "Es gab Probleme mit folgenden Feldern"
       payments_list:
         date_time: "Datum/Uhrzeit"
@@ -3408,7 +3408,7 @@ de_DE:
           reason: "Grund"
           stock_location: "Lagerort"
         states:
-          authorized: "Genehmigt"
+          authorized: "Autorisiert"
           received: "Empfangen"
           canceled: "abgebrochen"
       orders:
@@ -3711,6 +3711,7 @@ de_DE:
       flatpickr_datetime_format: "d.m.Y H:i"
       today: "heute"
       now: "Jetzt"
+      close: "Schließen"
     orders:
       error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar. Bitte passen Sie die ausgewählten Mengen an."
       edit:
@@ -3737,7 +3738,7 @@ de_DE:
       paid: bezahlt
       pending: ausstehend
       processing: in Verarbeitung
-      requires_authorization: "Bestätigung erforderlich"
+      requires_authorization: "Autorisierung erforderlich"
       void: keine Angabe
       invalid: ungültig
       authorise: zu bestätigen
@@ -3776,11 +3777,11 @@ de_DE:
         subject: "Bitte bestätigen Sie Ihre Registrierung im Open Food Network"
     payment_mailer:
       authorize_payment:
-        subject: "Bitte bestätigen Sie Ihre Zahlung an %{distributor} im Open Food Network"
-        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Bestätigung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
+        subject: "Bitte autorisieren Sie Ihre Zahlung an %{distributor} im Open Food Network"
+        instructions: "Ihre Zahlung in Höhe von %{amount} an %{distributor} erfordert Ihre zusätzliche Autorisierung. Bitte klicken Sie auf den folgenden Link, um Ihre Zahlung zu bestätigen:"
       authorization_required:
-        subject: "Eine Zahlung muss durch den Kunden bestätigt werden"
-        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Bestätigung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
+        subject: "Eine Zahlung muss durch den Kunden autorisiert werden"
+        message: "Die Zahlung der Bestellung %{order_number} erfordert eine zusätzliche Autorisierung durch den Kunden. Der Kunde wurde per E-Mail benachrichtigt und die Zahlung wird bis zur Bestätigung als ausstehend angezeigt."
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
@@ -3851,7 +3852,7 @@ de_DE:
       transactions:
         transaction_history: Transaktionsverlauf
         authorisation_required: Bestätigung erforderlich
-        authorise: Bestätigen
+        authorise: Autorisieren
       open_orders:
         order: Bestellung
         shop: Laden
