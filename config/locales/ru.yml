@@ -3758,6 +3758,7 @@ ru:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Сегодня"
       now: "Сейчас"
+      close: "Закрыть"
     orders:
       error_flash_for_unavailable_items: "Товар в Вашей корзине стал недоступен."
       edit:
