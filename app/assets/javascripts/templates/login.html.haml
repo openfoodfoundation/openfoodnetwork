@@ -41,4 +41,7 @@
           tabindex: "3",
           type: "submit",
           value: "{{'label_login' | t}}"}
-
+:javascript
+  if (window._paq) {
+    window._paq.push(['trackEvent', 'Signin/Signup', 'Login Modal View', window.location.href]);
+  }
