@@ -1138,6 +1138,11 @@ fr:
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      errors:
+        no_report_type: "Merci de sélectionner un type de rapport"
+        report_not_found: "Le rapport n'a pas été trouvé"
+        missing_ransack_params: "Veuillez renseigner un filtre ou une sélection de dates"
+      hidden_field: "< Masqué >"
       summary_row:
         total: "Total"
       table:
@@ -1153,6 +1158,13 @@ fr:
           quantity: "Quantité"
           is_temperature_controlled: "Temp Contrôlée ?"
           temp_controlled: "Temp Contrôlée ?"
+      rendering_options:
+        generate_report: "Générer le rapport :"
+        on_screen: "A l'écran"
+        csv_spreadsheet: "CSV"
+        excel_spreadsheet: "Excel"
+        openoffice_spreadsheet: "OpenOffice"
+        hide_summary_rows: "Masquer les lignes de totaux"
       packing:
         name: "Rapports de préparation des paniers"
         customer_report: "Préparation des commandes par Acheteur"
