@@ -10,10 +10,10 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
         element.select2
           placeholder: t('admin.orders.select_variant')
           minimumInputLength: 3
-          quietMillis: 300
           ajax:
             url: Spree.routes.variants_search
             datatype: "json"
+            quietMillis: 500 # debounce
             data: (term, page) ->
               q: term
               distributor_id: scope.distributor_id
