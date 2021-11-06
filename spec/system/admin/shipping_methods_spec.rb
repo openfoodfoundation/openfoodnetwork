@@ -55,19 +55,6 @@ describe 'shipping methods' do
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
     end
 
-    it "deleting a shipping method referenced by an order" do
-      order = create(:order)
-      shipment = create(:shipment)
-      shipment.add_shipping_method(@shipping_method, true)
-      order.shipments << shipment
-      order.save!
-
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
-
-      expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{order.number}."
-      expect(Spree::ShippingMethod.find(@shipping_method.id)).not_to be_nil
-    end
-
     it "checking a single distributor is checked by default" do
       first_distributor = Enterprise.first
       visit spree.new_admin_shipping_method_path
