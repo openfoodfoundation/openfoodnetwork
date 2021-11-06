@@ -46,9 +46,12 @@ describe 'shipping methods' do
     end
 
     it "deleting a shipping method" do
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
-
-      expect(flash_message).to eq "Successfully Removed"
+      visit spree.admin_shipping_methods_path
+        
+      accept_alert 'Are you sure?' do
+        page.find('a.delete-resource').click
+      end
+      expect(page).not_to have_content(@shipping_method)
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
     end
 
