@@ -65,6 +65,10 @@ RSpec.configure do |config|
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
 
+  # Configures specs to run random but deterministic order
+  config.order = :random
+  Kernel.srand config.seed
+
   # Force use of expect (over should)
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
