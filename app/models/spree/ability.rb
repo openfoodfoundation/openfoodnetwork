@@ -342,7 +342,8 @@ module Spree
     def add_relationship_management_abilities(user)
       can [:admin, :index, :create], EnterpriseRelationship
       can [:destroy], EnterpriseRelationship do |enterprise_relationship|
-        user.enterprises.include? enterprise_relationship.parent
+        user.enterprises.include?(enterprise_relationship.parent) ||
+          user.enterprises.include?(enterprise_relationship.child)
       end
     end
 
