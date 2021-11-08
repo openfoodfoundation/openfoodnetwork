@@ -1136,6 +1136,11 @@ en_GB:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      errors:
+        no_report_type: "Please specify a report type"
+        report_not_found: "Report not found"
+        missing_ransack_params: "Please supply Ransack search params in the request"
+      hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1151,6 +1156,13 @@ en_GB:
           quantity: "Quantity"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+      rendering_options:
+        generate_report: "Generate report:"
+        on_screen: "On screen"
+        csv_spreadsheet: "CSV Spreadsheet"
+        excel_spreadsheet: "Excel Spreadsheet"
+        openoffice_spreadsheet: "Open Office Spreadsheet"
+        hide_summary_rows: "Hide Summary Rows"
       packing:
         name: "Packing Reports"
         customer_report: "Pack By Customer"
@@ -3584,6 +3596,7 @@ en_GB:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        paperclip_image_error: "Paperclip returned errors for file '%{attachment_file_name}' - check ImageMagick installation or image source file."
         new:
           title: "New Product"
           new_product: "New Product"
