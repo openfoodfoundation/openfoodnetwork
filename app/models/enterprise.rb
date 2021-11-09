@@ -290,6 +290,14 @@ class Enterprise < ApplicationRecord
     strip_url self[:linkedin]
   end
 
+  def twitter
+    correct_social_url self[:twitter]
+  end
+
+  def instagram
+    correct_social_url self[:instagram]
+  end
+
   def inventory_variants
     if prefers_product_selection_from_inventory_only?
       Spree::Variant.visible_for(self)
@@ -418,6 +426,10 @@ class Enterprise < ApplicationRecord
 
   def strip_url(url)
     url&.sub(%r{(https?://)?}, '')
+  end
+
+  def correct_social_url(url)
+    url&.include?("@") ? url.delete!("@") : url
   end
 
   def set_unused_address_fields
