@@ -125,8 +125,8 @@ describe "Registration", js: true do
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
-      fill_in 'enterprise_twitter', with: '@TwItTeR'
-      fill_in 'enterprise_instagram', with: '@InStAgRaM'
+      fill_in 'enterprise_twitter', with: 'TwItTeR'
+      fill_in 'enterprise_instagram', with: 'InStAgRaM'
       click_button "Continue"
       expect(page).to have_content 'Finished!'
 
@@ -135,8 +135,8 @@ describe "Registration", js: true do
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
-      expect(e.twitter).to eq "@TwItTeR"
-      expect(e.instagram).to eq "@InStAgRaM"
+      expect(e.twitter).to eq "TwItTeR"
+      expect(e.instagram).to eq "InStAgRaM"
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
