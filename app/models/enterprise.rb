@@ -429,7 +429,7 @@ class Enterprise < ApplicationRecord
   end
 
   def correct_social_url(url)
-    url&.include?("@") ? url.delete!("@") : url
+    url&.delete("@")
   end
 
   def set_unused_address_fields
