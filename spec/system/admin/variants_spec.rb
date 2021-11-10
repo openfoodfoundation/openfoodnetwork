@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe '
     As an admin
@@ -74,12 +74,12 @@ describe '
       expected_edit_url = Regexp.new(
         Regexp.escape(spree.edit_admin_product_variant_path(product, variant, filter))
       )
-      expect(page).to have_link(I18n.t(:edit), href: expected_edit_url)
+      expect(page).to have_link(class: 'icon-edit', href: expected_edit_url)
 
       expected_delete_url = Regexp.new(
         Regexp.escape(spree.admin_product_variant_path(product, variant, filter))
       )
-      expect(page).to have_link(I18n.t(:delete), href: expected_delete_url)
+      expect(page).to have_link(class: 'icon-trash', href: expected_delete_url)
     end
   end
 
