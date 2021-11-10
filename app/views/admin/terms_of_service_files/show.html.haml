@@ -5,7 +5,7 @@
 
 .admin-current-terms-of-service
   - if @current_file
-    %p= t(".current_terms_html", tos_link: link_to(t(".terms_of_service"), @current_file.attachment.url), datetime: @current_file.updated_at)
+    %p= t(".current_terms_html", tos_link: link_to(t(".terms_of_service"), url_for(@current_file.attachment)), datetime: @current_file.updated_at)
     %p= link_to t(".delete"), main_app.admin_terms_of_service_files_path, method: "delete", data: { confirm: t(".confirm_delete") }
   - else
     %p

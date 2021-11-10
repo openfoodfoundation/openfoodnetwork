@@ -86,7 +86,7 @@ module Api
         return unless attachment.file?
 
         versions.each_with_object({}) do |version, urls|
-          urls[version] = attachment.url(version)
+          urls[version] = url_for(attachment)
         end
       end
     end

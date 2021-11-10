@@ -30,7 +30,7 @@ module Spree
 
     # used by admin products autocomplete
     def mini_url
-      attachment.url(:mini, false)
+      url_for(attachment.variant(resize: "48x48#"))
     end
 
     def find_dimensions

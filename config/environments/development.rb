@@ -57,6 +57,8 @@ Openfoodnetwork::Application.configure do
   #   $ bundle exec rake assets:clean
   config.assets.debug = !!ENV["DEBUG_ASSETS"]
 
+  config.active_storage.service = :amazondev
+
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
   #

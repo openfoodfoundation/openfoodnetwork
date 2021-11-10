@@ -48,6 +48,8 @@ Openfoodnetwork::Application.configure do
     reconnect_attempts: 1
   }
 
+  config.active_storage.service = :amazon
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 

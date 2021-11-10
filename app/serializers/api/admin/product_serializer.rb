@@ -14,7 +14,7 @@ module Api
 
       def image_url
         if object.images.present?
-          object.images.first.attachment.url(:product)
+          url_for(object.images.first.attachment.variant(resize: '240x240>'))
         else
           "/noimage/product.png"
         end
@@ -22,7 +22,7 @@ module Api
 
       def thumb_url
         if object.images.present?
-          object.images.first.attachment.url(:mini)
+          url_for(object.images.first.attachment.variant(resize: '48x48#'))
         else
           "/noimage/mini.png"
         end

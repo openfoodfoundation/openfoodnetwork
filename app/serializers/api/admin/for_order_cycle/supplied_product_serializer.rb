@@ -11,7 +11,7 @@ module Api
         end
 
         def image_url
-          object.images.present? ? object.images.first.attachment.url(:mini) : nil
+          object.images.present? ? url_for(object.images.first.attachment.variant(resize: '48x48#')) : nil
         end
 
         def master_id

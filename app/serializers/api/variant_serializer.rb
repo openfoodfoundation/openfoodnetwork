@@ -36,7 +36,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
 
   def thumb_url
     if object.product.images.present?
-      object.product.images.first.attachment.url(:mini)
+      url_for(object.product.images.first.attachment.variant(resize: "48x48#"))
     else
       "/noimage/mini.png"
     end
