@@ -26,27 +26,17 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
   let(:free_shipping) {
-    create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow",
+    create(:shipping_method, require_ship_address: true, name: "Free Shipping", description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
   let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
   let(:shipping_with_fee) {
     create(:shipping_method, require_ship_address: false, tax_category: shipping_tax_category,
-                             name: "Donkeys", description: "blue",
+                             name: "Shipping with Fee", description: "blue",
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
   }
-  let(:tagged_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local")
-  }
-  let!(:paypal) do
-    Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test',
-                                          distributor_ids: [distributor.id]).tap do |pm|
-      pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
-      pm.preferred_password = '1406163716'
-      pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'
-    end
-  end
+  let!(:payment_method) { create(:payment_method, distributors: [distributor]) }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -58,7 +48,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
-    distributor.shipping_methods << tagged_shipping
   end
 
   context "guest checkout" do
@@ -91,6 +80,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       fill_in "City", with: "London"
       fill_in "Postcode", with: "SW1A 1AA"
       choose free_shipping.name
+
       click_button "Next - Payment method"
       expect(page).to have_current_path("/checkout/payment")
     end
