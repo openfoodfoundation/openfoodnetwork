@@ -10,7 +10,9 @@ module Permissions
       @search_params = search_params
     end
 
-    # Find orders that the user can see
+    # Find orders that the user can see. This includes any order where the producer has permissions
+    # and has at least *one* of their supplied products in the order. Additional scoping may be
+    # needed for queries showing line items per producer.
     def visible_orders
       orders = Spree::Order.
         with_line_items_variants_and_products_outer.

@@ -48,20 +48,25 @@ describe "Packing Reports" do
 
     context "as a manager of a supplier" do
       let!(:user) { create(:user) }
-      let(:supplier) { create(:supplier_enterprise) }
+      let(:supplier1) { create(:supplier_enterprise) }
+      let(:supplier2) { create(:supplier_enterprise) }
       let(:order2) {
         create(:completed_order_with_totals, distributor: distributor,
                                              bill_address: create(:address),
                                              ship_address: create(:address))
       }
       let(:line_item2) {
-        build(:line_item_with_shipment, product: create(:simple_product, supplier: supplier))
+        build(:line_item_with_shipment, product: create(:simple_product, name: "visible", supplier: supplier1))
+      }
+      let(:line_item3) {
+        build(:line_item_with_shipment, product: create(:simple_product, name: "not visible", supplier: supplier2))
       }
 
       before do
         order2.line_items << line_item2
+        order2.line_items << line_item3
         order2.finalize!
-        supplier.enterprise_roles.create!(user: user)
+        supplier1.enterprise_roles.create!(user: user)
       end
 
       context "which has not granted P-OC to the distributor" do
@@ -72,7 +77,7 @@ describe "Packing Reports" do
 
       context "which has granted P-OC to the distributor" do
         before do
-          create(:enterprise_relationship, parent: supplier, child: distributor,
+          create(:enterprise_relationship, parent: supplier1, child: distributor,
                                            permissions_list: [:add_to_order_cycle])
         end
 
@@ -90,6 +95,13 @@ describe "Packing Reports" do
 
           it "shows line items supplied by my producers, with names shown" do
             expect(report_data.first["first_name"]).to eq(order2.bill_address.firstname)
+          end
+        end
+
+        context "where an order contains items from multiple suppliers" do
+          it "only shows line items the current user supplies" do
+            expect(report_contents).to include line_item2.product.name
+            expect(report_contents).to_not include line_item3.product.name
           end
         end
       end

@@ -41,6 +41,12 @@ module Reporting
         select(:id).distinct
     end
 
+    def visible_line_items_relation
+      ::Permissions::Order.new(current_user).
+        visible_line_items.
+        select(:id).distinct
+    end
+
     def managed_orders_relation
       ::Enterprise.managed_by(current_user).select(:id).distinct
     end
