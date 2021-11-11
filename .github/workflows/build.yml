@@ -39,7 +39,8 @@ jobs:
           - "spec/lib"
           - "spec/migrations"
           - "spec/serializers"
-          - "spec/system/admin"
+          - "spec/system/admin/[a-o0-9]*_spec.rb"
+          - "spec/system/admin/[p-z]*_spec.rb"
           - "spec/system/consumer"
           - "engines/*/spec"
       fail-fast: false
