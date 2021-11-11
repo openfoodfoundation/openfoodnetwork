@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe 'shipping methods' do
   include WebHelper
@@ -46,23 +46,13 @@ describe 'shipping methods' do
     end
 
     it "deleting a shipping method" do
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
-
-      expect(flash_message).to eq "Successfully Removed"
+      visit spree.admin_shipping_methods_path
+        
+      accept_alert 'Are you sure?' do
+        page.find('a.delete-resource').click
+      end
+      expect(page).not_to have_content(@shipping_method)
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
-    end
-
-    it "deleting a shipping method referenced by an order" do
-      order = create(:order)
-      shipment = create(:shipment)
-      shipment.add_shipping_method(@shipping_method, true)
-      order.shipments << shipment
-      order.save!
-
-      visit_delete spree.admin_shipping_method_path(@shipping_method)
-
-      expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{order.number}."
-      expect(Spree::ShippingMethod.find(@shipping_method.id)).not_to be_nil
     end
 
     it "checking a single distributor is checked by default" do
