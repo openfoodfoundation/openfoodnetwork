@@ -617,18 +617,26 @@ module Spree
         let(:enterprise) { create(:distributor_enterprise) }
         let!(:new_variant) { create(:variant) }
         let!(:hidden_variant) { create(:variant) }
-        let!(:visible_variant) { create(:variant) }
+
+        let!(:product) { create(:product) }
+        let!(:visible_variant1) { create(:variant, product: product) }
+        let!(:visible_variant2) { create(:variant, product: product) }
+
         let!(:hidden_inventory_item) {
           create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false )
         }
-        let!(:visible_inventory_item) {
-          create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true )
+        let!(:visible_inventory_item1) {
+          create(:inventory_item, enterprise: enterprise, variant: visible_variant1, visible: true )
+        }
+        let!(:visible_inventory_item2) {
+          create(:inventory_item, enterprise: enterprise, variant: visible_variant2, visible: true )
         }
 
         let!(:products) { Spree::Product.visible_for(enterprise) }
 
         it "lists any products with variants that are listed as visible=true" do
-          expect(products).to include visible_variant.product
+          expect(products.length).to eq(1)
+          expect(products).to include product
           expect(products).to_not include new_variant.product, hidden_variant.product
         end
       end
