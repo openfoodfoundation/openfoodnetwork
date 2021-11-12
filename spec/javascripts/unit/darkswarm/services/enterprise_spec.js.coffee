@@ -25,6 +25,7 @@ describe "Enterprises service", ->
     {id: 6, visible: true, name: 'f', category: "producer_shop", hubs: [{id: 2}]},
     {id: 7, visible: true, name: 'g', category: "producer", hubs: [{id: 2}]}
     {id: 8, visible: true, name: 'h', category: "producer", hubs: [{id: 2}], latitude: 76.26, longitude: -42.66 }
+    {id: 9, visible: true, name: 'i', category: "hub", address: {state_name: "state", city: "city"}}
   ]
   H1: 0
   beforeEach ->
@@ -77,19 +78,22 @@ describe "Enterprises service", ->
     expect(Enterprises.producers).toContain Enterprises.enterprises[5]
     expect(Enterprises.producers).toContain Enterprises.enterprises[6]
 
-  describe "flagging enterprises with names matching a query", ->
+  describe "flagging enterprises with names, city or state matching a query", ->
     it "flags enterprises when a query is provided", ->
       Enterprises.flagMatching 'c'
-      expect(e.matches_name_query).toBe true for e in enterprises when e.name == 'c'
-      expect(e.matches_name_query).toBe false for e in enterprises when e.name != 'c'
+      expect(e.matches_query).toBe true for e in enterprises when e.name == 'c' || e.address?.city == 'city'
+      expect(e.matches_query).toBe false for e in enterprises when e.name != 'c' && e.address?.city != 'city'
+      Enterprises.flagMatching 'state'
+      expect(e.matches_query).toBe true for e in enterprises when e.address?.state_name == "state"
+      expect(e.matches_query).toBe false for e in enterprises when e.address?.state_name != "state"
 
     it "clears flags when query is null", ->
       Enterprises.flagMatching null
-      expect(e.matches_name_query).toBe false for e in enterprises
+      expect(e.matches_query).toBe false for e in enterprises
 
     it "clears flags when query is blank", ->
       Enterprises.flagMatching ''
-      expect(e.matches_name_query).toBe false for e in enterprises
+      expect(e.matches_query).toBe false for e in enterprises
 
   describe "calculating the distance of enterprises from a location", ->
     describe "when a query is provided", ->
