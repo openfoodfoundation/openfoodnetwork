@@ -40,7 +40,7 @@ de_DE:
         spree/user:
           attributes:
             email:
-              taken: "Es gibt bereits ein Konto für diese E-Mail-Adresse. Bitte versuchen Sie sich einzuloggen oder setzen Sie Ihr Passwort zurück."
+              taken: "Es gibt bereits ein Konto für diese E-Mail-Adresse. Bitte versuchen Sie sich einzuloggen oder setzen Sie Ihr Passwort zurück indem Sie oben auf \"Passwort vergessen?\" klicken."
             reset_password_token:
               invalid: ist ungültig
         spree/order:
@@ -118,7 +118,7 @@ de_DE:
     failure:
       invalid: |
           Ungültige E-Mail-Adresse oder falsches Passwort.
-          Falls Sie als Gast bestellt haben, erstellen Sie bitte ein Konto. Falls Sie ihr Passwort vergessen haben, setzen sie dieses zurück.
+          Falls Sie zuvor als Gast bestellt haben, erstellen Sie bitte ein Konto. Falls Sie ihr Passwort vergessen haben, setzen sie dieses zurück indem Sie oben auf "Passwort vergessen?" klicken.
       unconfirmed: "Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren."
       already_registered: "Diese E-Mail-Adresse ist bereits registriert. Bitte loggen Sie sich ein oder verwenden Sie eine andere E-Mail-Adresse."
     success:

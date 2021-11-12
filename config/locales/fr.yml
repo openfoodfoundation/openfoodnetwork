@@ -3674,7 +3674,7 @@ fr:
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
         customer_names_message:
-          customer_names_tip: "Si les noms des acheteurs sont masqué, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
+          customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
       users:
         index:
           listing_users: "Liste des utilisateurs"

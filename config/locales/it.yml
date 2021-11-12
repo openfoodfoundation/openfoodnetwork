@@ -237,7 +237,7 @@ it:
   site_meta_description: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano..."
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
-  charges_sales_tax: Addebiti l'IVA?
+  charges_sales_tax: Vuoi calcolare gli importi IVA delle tue vendite?
   business_address: "Indirizzo azienda"
   print_invoice: "Stampa fattura"
   print_ticket: "Stampa Biglietto"
@@ -273,7 +273,7 @@ it:
   edit: Modifica
   clone: Duplica
   distributors: Distributori
-  bulk_order_management: Gestione Ordini Massivi
+  bulk_order_management: Gentili richieste - vista a tabella
   enterprises: Aziende
   enterprise_groups: Reti
   reports: Resoconti
@@ -679,7 +679,7 @@ it:
         product_unit: "Prodotto: Unità"
         weight_volume: "Peso/Volume (g)"
         ask: "Chiedi?"
-        page_title: "Gestione di ordine all'ingrosso"
+        page_title: "Gentili richieste - vista a tabella"
         actions_delete: "Cancella i selezionati"
         loading: "Caricamento ordini"
         no_results: "Nessun ordine trovato."
@@ -1106,7 +1106,7 @@ it:
       payment_methods: Rapporto Metodi di pagamento
       delivery: Rapporto Consegne
       tax_types: Tipologia tariffe
-      tax_rates: Aliquote d'imposta
+      tax_rates: Aliquote IVA
       pack_by_customer: Imballato dal Cliente
       pack_by_supplier: Smistato dai fornitori
       orders_and_distributors:
@@ -1114,7 +1114,7 @@ it:
         description: Gentili richieste con i dettagli del distributore
       bulk_coop:
         name: Bulk Co-Op
-        description: Rapporti degli ordini per Bulk Co-Op
+        description: Resoconto Gentili Richieste vista tabella
       payments:
         name: Resoconti Pagamenti
         description: Rapporto per i pagamenti
@@ -1130,7 +1130,7 @@ it:
       order_cycle_management:
         name: Gestione Ciclo di Richieste
       sales_tax:
-        name: Imposta di vendita
+        name: Tariffe ed aliquote IVA
       xero_invoices:
         name: Fatture Xero
         description: Fatture per importazione in Xero
@@ -1336,7 +1336,7 @@ it:
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
-        select_oc_html: "Per favore <span class='highlighted'>scegli quando vuoi il tuo ordine </span>, per vedere quali prodotti sono disponibili."
+        select_oc_html: "Per favore <span class='highlighted'>scegli la data di consegna </span>, per vedere quali prodotti sono disponibili."
     products:
       summary:
         bulk: "Volume"
@@ -1354,7 +1354,7 @@ it:
   invoice_column_price_without_taxes: "Prezzo totale (escl. tasse)"
   invoice_column_tax_rate: "% tasse"
   invoice_tax_total: "IVA totale"
-  tax_invoice: "FATTURA DELLE TASSE"
+  tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
   tax_total: "Totale tasse (%{rate}):"
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
@@ -1652,7 +1652,7 @@ it:
   order_pickup_instructions: Istruzioni per la Distribuzione
   order_produce: Produrre
   order_total_price: Totale
-  order_includes_tax: (include le tasse)
+  order_includes_tax: (importo IVA incluso nel totale)
   order_payment_paypal_successful: Il tuo pagamento con PayPal è stato elaborato con successo.
   order_hub_info: Info Hub
   order_back_to_store: Torna al negozio
@@ -1690,7 +1690,7 @@ it:
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
   email_order_summary_total: "Totale:"
-  email_order_summary_includes_tax: "(include le tasse)"
+  email_order_summary_includes_tax: "(importo IVA incluso nel totale)"
   email_payment_paid: PAGATO
   email_payment_not_paid: NON PAGATO
   email_payment_description: Descrizione pagamento alla Conferma
@@ -1758,7 +1758,7 @@ it:
   enterprises_next_closing: "Prossimo ordine in chiusura"
   enterprises_currently_open: "Le gentili richieste sono attualmente aperte"
   enterprises_ready_for: "Pronto per"
-  enterprises_choose: "Scegli quando vuoi il tuo ordine:"
+  enterprises_choose: "Scegli la data di consegna:"
   maps_open: "Aperto"
   maps_closed: "Chiuso"
   map_title: "Mappa"
@@ -2312,7 +2312,7 @@ it:
   enterprise_tos_message: "Abbiamo bisogno di lavorare con persone che condividono i nostri scopi e i nostri valori. Per questo chiediamo alle nuove aziende di sottoscrivere i nostri"
   enterprise_tos_agree: "Accetto i Termini di Servizio"
   tax_settings: "Impostazione contributi"
-  products_require_tax_category: "i prodotto richiedono la categoria di tassa"
+  products_require_tax_category: "i prodotti richiedono la categoria di tassa"
   admin_shared_address_1: "Indirizzo"
   admin_shared_address_2: "Indirizzo (segue)"
   admin_share_city: "Comune"
@@ -2507,7 +2507,7 @@ it:
   adrdress: "Indirizzo"
   contact: "Contatta"
   social: "Social"
-  business_details: "Dettagli aziendali"
+  business_details: "Dettagli fiscali"
   properties: "Proprietà"
   shipping: "Spedizione"
   shipping_methods: "Metodi di Spedizione"
@@ -3230,10 +3230,10 @@ it:
     tax_categories: "Categorie imposte"
     listing_tax_categories: "Elenco delle categorie fiscali"
     back_to_tax_categories_list: "Torna all'elenco delle categorie fiscali"
-    tax rate: "Aliquote d'imposta"
+    tax rate: "Aliquote IVA"
     new_tax_rate: "Nuova tariffa"
     tax_category: "Categoria d'imposta"
-    tax_rates: "Aliquote d'imposta"
+    tax_rates: "Aliquote IVA"
     rate: "Tariffa"
     tax_rate_amount_explanation: "Le tariffe sono un importo decimale da utilizzare nei calcoli (ad esempio, se l'aliquota fiscale è del 5%, inserire 0,05)"
     included_in_price: "Incluso nel prezzo"
@@ -3359,7 +3359,7 @@ it:
       tab:
         dashboard: "Pannello di controllo"
         orders: "Gentili richieste"
-        bulk_order_management: "Gestione richieste all'ingrosso"
+        bulk_order_management: "Gentili richieste - vista a tabella"
         subscriptions: "Abbonamenti"
         products: "Prodotti"
         option_types: "Tipi di opzioni"
@@ -3452,7 +3452,7 @@ it:
           email: "E-mail Cliente"
         invoice:
           issued_on: "Emesso il"
-          tax_invoice: "FATTURA DELLE TASSE"
+          tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
           code: "Codice"
           from: "Da"
           to: "Pagamento a"
