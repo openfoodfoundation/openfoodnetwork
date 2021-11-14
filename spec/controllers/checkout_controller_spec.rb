@@ -210,6 +210,12 @@ describe CheckoutController, type: :controller do
           expect(response).to redirect_to order_path(order)
         end
 
+        it "does not attempt to load different addresses" do
+          expect(OpenFoodNetwork::AddressFinder).to_not receive(:new)
+
+          get :edit, params: { payment_intent: "pi_123" }
+        end
+
         it "creates a customer record" do
           order.update_columns(customer_id: nil)
           Customer.delete_all

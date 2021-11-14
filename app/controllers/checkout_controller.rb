@@ -84,6 +84,8 @@ class CheckoutController < ::BaseController
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     handle_invalid_stock && return unless valid_order_line_items?
 
+    return if valid_payment_intent_provided?
+
     before_address
     setup_for_current_state
   end
