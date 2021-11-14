@@ -89,9 +89,7 @@ class CheckoutController < ::BaseController
   end
 
   def order_invalid_for_checkout?
-    !@order ||
-      !@order.checkout_allowed? ||
-      @order.completed?
+    !@order || @order.completed? || !@order.checkout_allowed?
   end
 
   def valid_order_line_items?
