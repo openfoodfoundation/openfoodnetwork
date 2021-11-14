@@ -34,11 +34,6 @@ module Spree
     def create
       @user = Spree::User.new(user_params)
       if @user.save
-
-        if current_order
-          session[:guest_token] = nil
-        end
-
         redirect_back_or_default(main_app.root_url)
       else
         render :new
