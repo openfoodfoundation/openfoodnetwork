@@ -153,9 +153,11 @@ class ApplicationController < ActionController::Base
 
   def check_order_cycle_expiry
     if current_order_cycle&.closed?
+      Bugsnag.notify("Notice: order cycle closed during checkout completion", order: current_order)
       current_order.empty!
       current_order.set_order_cycle! nil
       flash[:info] = I18n.t('order_cycle_closed')
+
       redirect_to main_app.shop_path
     end
   end
