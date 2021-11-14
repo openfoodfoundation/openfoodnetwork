@@ -241,7 +241,7 @@ class CheckoutController < ::BaseController
   end
 
   def checkout_failed(error = RuntimeError.new(order_error))
-    Bugsnag.notify(error)
+    Bugsnag.notify(error, order: @order)
     flash[:error] = order_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end
