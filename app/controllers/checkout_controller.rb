@@ -81,14 +81,14 @@ class CheckoutController < ::BaseController
   def load_order
     @order = current_order
 
-    redirect_to(main_app.shop_path) && return if redirect_to_shop?
+    redirect_to(main_app.shop_path) && return if order_invalid_for_checkout?
     handle_invalid_stock && return unless valid_order_line_items?
 
     before_address
     setup_for_current_state
   end
 
-  def redirect_to_shop?
+  def order_invalid_for_checkout?
     !@order ||
       !@order.checkout_allowed? ||
       @order.completed?
