@@ -360,6 +360,22 @@ module OrderManagement
           end
         end
       end
+
+      context "when unused payments records exist which require authorization, but the order is fully paid" do
+        let!(:cash_payment) { build(:payment, state: "completed", amount: order.new_outstanding_balance) }
+        let!(:stripe_payment) { build(:payment, state: "requires_authorization") }
+        before do
+          order.payments << cash_payment
+          order.payments << stripe_payment
+        end
+
+        it "cancels unused payments requiring authorization" do
+          expect(stripe_payment).to receive(:void_transaction!)
+          expect(cash_payment).to_not receive(:void_transaction!)
+
+          order.updater.update_payment_state
+        end
+      end
     end
   end
 end

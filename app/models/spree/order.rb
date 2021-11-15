@@ -344,7 +344,6 @@ module Spree
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state
-      cancel_payments_requiring_auth
       shipments.each do |shipment|
         shipment.update!(self)
         shipment.finalize!
@@ -611,12 +610,6 @@ module Spree
     end
 
     private
-
-    def cancel_payments_requiring_auth
-      return unless payment_state == "paid"
-
-      payments.to_a.select(&:requires_authorization?).each(&:void_transaction!)
-    end
 
     def fee_handler
       @fee_handler ||= OrderFeesHandler.new(self)
