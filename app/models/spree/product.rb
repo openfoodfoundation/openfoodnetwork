@@ -159,7 +159,8 @@ module Spree
         joins('
           LEFT OUTER JOIN inventory_items AS o_inventory_items
             ON (o_spree_variants.id = o_inventory_items.variant_id)').
-        where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true)
+        where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true).
+        distinct
     }
 
     # -- Scopes
