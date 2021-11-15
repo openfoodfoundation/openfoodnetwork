@@ -2,7 +2,7 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
   restrict: 'E'
   template: "<label for='card-element'>\
              <div id='card-element' class='card-element'></div>\
-             <div id='card-errors' class='error'></div>\
+             <div class='error card-errors'></div>\
              </label>"
 
   link: (scope, elem, attr)->
@@ -24,7 +24,7 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
       # catch mistakes, you should listen to change events on the card Element
       # and display any errors:
       card.addEventListener 'change', (event) ->
-        displayError = document.getElementById('card-errors')
+        displayError = elem.find('.card-errors').get(0)
         if event.error
           displayError.textContent = event.error.message
         else
