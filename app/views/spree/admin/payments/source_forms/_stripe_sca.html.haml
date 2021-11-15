@@ -1,5 +1,6 @@
 .stripe
-  = render "shared/stripe_js"
+  - content_for :stripe_js, flush: true do
+    = render "shared/stripe_js"
 
   - if Stripe.publishable_key
     :javascript
