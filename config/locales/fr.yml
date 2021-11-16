@@ -58,6 +58,20 @@ fr:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+  stripe:
+    error_code:
+      incorrect_number: "Le numéro de carte bancaire est incorrect."
+      invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      invalid_expiry_month: "Le mois d'expiration de la carte bancaire est erroné."
+      invalid_expiry_year: "L'année d'expiration de la carte bancaire est erronée."
+      invalid_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      expired_card: "La carte bancaire a expiré."
+      incorrect_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      incorrect_zip: "Le code postal de la carte bancaire est erroné."
+      card_declined: "La carte bancaire a été refusée."
+      missing: "Il n'y a pas de carte bancaire liée à cet acheteur."
+      processing_error: "Une erreur est survenue durant le traitement du paiement."
+      rate_limit: "Une erreur est survenue suite à un grand nombre de requête quasi-simultanée sur notre API. Veuillez contacter notre support si vous observez cette erreur trop souvent."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
