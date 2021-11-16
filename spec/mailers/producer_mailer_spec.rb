@@ -111,7 +111,7 @@ describe ProducerMailer, type: :mailer do
       order.finalize!
       order.cancel
       order.resume
-      order.save
+      order.save!
       order
     end
 
