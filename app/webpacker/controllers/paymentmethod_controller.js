@@ -3,23 +3,40 @@ export default class extends Controller {
   static targets = ["paymentMethod"];
 
   connect() {
-    this.hideAll();
+    this.selectPaymentMethod();
   }
 
-  selectPaymentMethod(event) {
-    this.hideAll();
-    const paymentMethodContainerId = event.target.dataset.paymentmethodId;
-    const paymentMethodContainer = document.getElementById(
-      paymentMethodContainerId
-    );
-    paymentMethodContainer.style.display = "block";
-  }
-
-  hideAll() {
+  selectPaymentMethod(event = null) {
+    const paymentMethodContainerId = event
+      ? event.target.dataset.paymentmethodId
+      : null;
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((e) => {
-      e.style.display = "none";
+      if (e.id === paymentMethodContainerId) {
+        e.style.display = "block";
+        this.addRequiredAttributeOnInputIfNeeded(e);
+      } else {
+        e.style.display = "none";
+        this.removeRequiredAttributeOnInput(e);
+      }
+    });
+  }
+
+  removeRequiredAttributeOnInput(container) {
+    Array.from(container.getElementsByTagName("input")).forEach((i) => {
+      if (i.required) {
+        i.dataset.required = i.required;
+        i.required = false;
+      }
+    });
+  }
+
+  addRequiredAttributeOnInputIfNeeded(container) {
+    Array.from(container.getElementsByTagName("input")).forEach((i) => {
+      if (i.dataset.required === "true") {
+        i.required = true;
+      }
     });
   }
 }
