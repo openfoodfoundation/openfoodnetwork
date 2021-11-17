@@ -72,7 +72,7 @@ module DelegateBelongsTo
         raise 'Illegal or unimplemented association type.'
       end
 
-      __send__(type, association, opts) if reflect_on_association(association).nil?
+      __send__(type, association, **opts) if reflect_on_association(association).nil?
     end
 
     private
