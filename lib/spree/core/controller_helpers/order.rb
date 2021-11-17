@@ -59,11 +59,9 @@ module Spree
 
         def associate_user
           @order ||= current_order
-          if spree_current_user && @order && (@order.user.blank? || @order.email.blank?)
-            @order.associate_user!(spree_current_user)
-          end
+          return unless spree_current_user && @order && (@order.user.blank? || @order.email.blank?)
 
-          session[:guest_token] = nil
+          @order.associate_user!(spree_current_user)
         end
 
         # Recover incomplete orders from other sessions after logging in.
