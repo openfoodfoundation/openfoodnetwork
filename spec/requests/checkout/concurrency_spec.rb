@@ -9,7 +9,10 @@ require 'spec_helper'
 #
 # The concurrency flag enables multiple threads to see the same database
 # without isolated transactions.
-describe CheckoutController, concurrency: true, type: :controller do
+describe "Concurrent checkouts", concurrency: true, type: :request do
+  include AuthenticationHelper
+  include ShopWorkflow
+
   let(:order_cycle) { create(:order_cycle) }
   let(:distributor) { order_cycle.distributors.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
@@ -30,6 +33,7 @@ describe CheckoutController, concurrency: true, type: :controller do
       "ship_address_attributes" => address_params,
     }
   }
+  let(:params) { { format: :json, order: order_params } }
 
   before do
     # Create a valid order ready for checkout:
@@ -37,25 +41,25 @@ describe CheckoutController, concurrency: true, type: :controller do
     variant = order_cycle.variants_distributed_by(distributor).first
     order.line_items << create(:line_item, variant: variant)
 
-    # Set up controller environment:
-    session[:order_id] = order.id
-    allow(controller).to receive(:spree_current_user).and_return(order.user)
-    allow(controller).to receive(:current_distributor).and_return(order.distributor)
-    allow(controller).to receive(:current_order_cycle).and_return(order.order_cycle)
-
-    # Avoid setting headers as Rails 5 is not thread-safe here:
-    allow(controller).to receive(:restrict_iframes)
+    set_order(order)
+    login_as(order.user)
   end
 
   it "handles two concurrent orders successfully" do
-    # New threads start running straight away. The breakpoint is after loading
-    # the order and before advancing the order's state and making payments.
     breakpoint.lock
+    breakpoint_reached_counter = 0
 
-    checkout_workflow_original = controller.method(:checkout_workflow)
-    expect(controller).to receive(:checkout_workflow) do |shipping_method_id|
+    # Set a breakpoint after loading the order and before advancing the order's
+    # state and making payments. If two requests reach this breakpoint at the
+    # same time, they are in a race condition and bad things can happen.
+    # Examples are processing payments twice or selling more than we have.
+    allow_any_instance_of(CheckoutController).
+      to receive(:checkout_workflow).
+      and_wrap_original do |method, *args|
+
+      breakpoint_reached_counter += 1
       breakpoint.synchronize {}
-      checkout_workflow_original.call(shipping_method_id)
+      method.call(*args)
     end
 
     # Starting two checkout threads. The controller code will determine if
@@ -66,33 +70,30 @@ describe CheckoutController, concurrency: true, type: :controller do
     #    breakpoint. The second thread waits for the first one.
     # 2. If the controller fails to prevent the race condition:
     #    Both threads load required resources and wait at the breakpoint to do
-    #    the same checkout action. This will lead to (random) errors.
-    #
-    #    I observed:
-    #    ActiveRecord::RecordNotUnique: duplicate key value violates unique
-    #    constraint "index_spree_shipments_on_order_id"
-    #    on `INSERT INTO "spree_shipments" ...`.
-    #
-    #    Or:
-    #    ActiveRecord::InvalidForeignKey: insert or update on table
-    #    "spree_orders" violates foreign key constraint
-    #    "spree_orders_customer_id_fk"
+    #    the same checkout action.
     threads = [
-      Thread.new { spree_post :update, format: :json, order: order_params },
-      Thread.new { spree_post :update, format: :json, order: order_params },
+      Thread.new { put update_checkout_path, params: params },
+      Thread.new { put update_checkout_path, params: params },
     ]
-    # Let the threads run again. They should not be in a race condition.
-    breakpoint.unlock
-    # Wait for both threads to finish.
-    threads.each(&:join)
-    order.reload
 
-    # When the spec passes, both threads have the same result. The user should
-    # see the order page. This is basically verifying a "double click"
-    # scenario.
-    expect(response.status).to eq(200)
-    expect(response.body).to eq({ path: order_path(order) }.to_json)
-    expect(order.payments.count).to eq 1
+    # Wait for the first thread to reach the breakpoint:
+    Timeout.timeout(1) do
+      sleep 0.1 while breakpoint_reached_counter < 1
+    end
+
+    # Give the second thread a chance to reach the breakpoint, too.
+    # But we hope that it waits for the first thread earlier and doesn't
+    # reach the breakpoint yet.
+    sleep 1
+    expect(breakpoint_reached_counter).to eq 1
+
+    # Let the requests continue and finish.
+    breakpoint.unlock
+    threads.each(&:join)
+
+    # Verify that the checkout happened once.
+    order.reload
     expect(order.completed?).to be true
+    expect(order.payments.count).to eq 1
   end
 end
