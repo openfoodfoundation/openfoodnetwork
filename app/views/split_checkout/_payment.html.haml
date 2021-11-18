@@ -17,7 +17,7 @@
     = f.error_message_on :payment_method, standalone: true
 
     - available_payment_methods.each do |payment_method|
-      .paymentmethod-container{id: "paymentmethod#{payment_method.id}"}
+      .paymentmethod-container{id: "paymentmethod#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
         - if payment_method.description && !payment_method.description.empty?
           .paymentmethod-description.panel
             #{payment_method.description}
