@@ -26,6 +26,7 @@ describe ProducerMailer, type: :mailer do
   let(:p3) { create(:product, name: "Banana", price: 34.56, supplier: s1) }
   let(:p4) { create(:product, name: "coffee", price: 45.67, supplier: s1) }
   let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier: s1) }
+  let(:p6) { create(:product, name: "Eggs", price: 67.89, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) {
     order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true,
@@ -101,6 +102,22 @@ describe ProducerMailer, type: :mailer do
 
   it "does not include canceled orders" do
     expect(mail.body.encoded).not_to include p5.name
+  end
+
+  context "when a cancelled order has been resumed" do
+    let!(:order_resumed) do
+      order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
+      order.line_items << create(:line_item, variant: p6.variants.first)
+      order.finalize!
+      order.cancel
+      order.resume
+      order.save!
+      order
+    end
+
+    it "includes items from resumed orders" do
+      expect(mail.body.encoded).to include p6.name
+    end
   end
 
   it "includes the total" do
