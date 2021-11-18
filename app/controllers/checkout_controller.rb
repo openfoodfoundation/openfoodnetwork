@@ -84,6 +84,8 @@ class CheckoutController < ::BaseController
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     handle_invalid_stock && return unless valid_order_line_items?
 
+    return if valid_payment_intent_provided?
+
     before_address
     setup_for_current_state
   end
@@ -148,12 +150,14 @@ class CheckoutController < ::BaseController
   end
 
   def valid_payment_intent_provided?
-    return false unless params["payment_intent"]&.starts_with?("pi_")
+    @valid_payment_intent_provided ||= begin
+      return false unless params["payment_intent"]&.starts_with?("pi_")
 
-    last_payment = OrderPaymentFinder.new(@order).last_payment
-    @order.state == "payment" &&
-      last_payment&.state == "requires_authorization" &&
-      last_payment&.response_code == params["payment_intent"]
+      last_payment = OrderPaymentFinder.new(@order).last_payment
+      @order.state == "payment" &&
+        last_payment&.state == "requires_authorization" &&
+        last_payment&.response_code == params["payment_intent"]
+    end
   end
 
   def handle_redirect_from_stripe
