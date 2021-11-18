@@ -13,9 +13,9 @@ describe("PaymentmethodController", () => {
          <span id="paymentmethod_2" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod2" />
          <span id="paymentmethod_3" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod3" />
          
-         <div class="paymentmethod-container" id="paymentmethod1"><input type="number" required id="input1" /></div>
-         <div class="paymentmethod-container" id="paymentmethod2"><input type="number" required="true" id="input2" /></div>
-         <div class="paymentmethod-container" id="paymentmethod3"><input type="number" id="input3" /></div>
+         <div class="paymentmethod-container" style="display: none;" id="paymentmethod1"><input type="number" required id="input1" /></div>
+         <div class="paymentmethod-container" style="display: block;" id="paymentmethod2"><input type="number" required="true" id="input2" /></div>
+         <div class="paymentmethod-container" style="display: none;" id="paymentmethod3"><input type="number" id="input3" /></div>
        </div>`;
 
       const application = Application.start();
@@ -32,7 +32,7 @@ describe("PaymentmethodController", () => {
       const paymentMethod3Container = document.getElementById("paymentmethod3");
 
       expect(paymentMethod1Container.style.display).toBe("none");
-      expect(paymentMethod2Container.style.display).toBe("none");
+      expect(paymentMethod2Container.style.display).toBe("block");
       expect(paymentMethod3Container.style.display).toBe("none");
 
       paymentMethod1.click();

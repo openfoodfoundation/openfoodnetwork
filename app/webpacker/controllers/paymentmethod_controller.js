@@ -2,14 +2,8 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["paymentMethod"];
 
-  connect() {
-    this.selectPaymentMethod();
-  }
-
-  selectPaymentMethod(event = null) {
-    const paymentMethodContainerId = event
-      ? event.target.dataset.paymentmethodId
-      : null;
+  selectPaymentMethod(event) {
+    const paymentMethodContainerId = event.target.dataset.paymentmethodId;
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((e) => {
