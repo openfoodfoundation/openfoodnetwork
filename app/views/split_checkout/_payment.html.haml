@@ -22,7 +22,10 @@
           .paymentmethod-description.panel
             #{payment_method.description}
         .paymentmethod-form
-          = render partial: "spree/checkout/payment/#{payment_method.method_type}", :locals => { :payment_method => payment_method }
+          - if payment_method.method_type == "gateway"
+            = render partial: "split_checkout/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
+          - else 
+            = render partial: "spree/checkout/payment/#{payment_method.method_type}", :locals => { payment_method: payment_method }
 
   %div.checkout-substep
     = t("split_checkout.step2.explaination")

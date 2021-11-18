@@ -1724,6 +1724,19 @@ en:
     step2:
       payment_method:
         title: Payment method
+      form: 
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+          placeholder: 123
+        card_month:
+          label: Month
+          placeholder: 01
+        card_year:
+          label: Year
+          placeholder: 2020
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
