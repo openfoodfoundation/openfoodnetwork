@@ -46,7 +46,7 @@ module DfcProvider
       end
 
       def current_user
-        @current_user ||= authorization_control.process
+        @current_user ||= authorization_control.safe_process
       end
 
       def access_token
