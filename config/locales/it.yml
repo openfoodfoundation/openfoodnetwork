@@ -1137,6 +1137,10 @@ it:
       enterprise_fee_summary:
         name: "Riepilogo tariffe dell'azienda"
         description: "Riepilogo delle Tariffe applicate dall'azienda"
+      errors:
+        no_report_type: "Per favore specifica un tipo di resoconto"
+        report_not_found: "Resoconto non trovato"
+      hidden_field: "< Nascosto >"
       summary_row:
         total: "TOTALE"
       table:
@@ -1152,6 +1156,13 @@ it:
           quantity: "Quantità"
           is_temperature_controlled: "Controllo Temperatura?"
           temp_controlled: "Controllo Temperatura?"
+      rendering_options:
+        generate_report: "Genera resoconto:"
+        on_screen: "Sullo schermo"
+        csv_spreadsheet: "Foglio CSV"
+        excel_spreadsheet: "Foglio Excel"
+        openoffice_spreadsheet: "Foglio OpenOffice"
+        hide_summary_rows: "Nascondi righe totali"
       packing:
         name: "Resoconti smistamento/imballaggio"
         customer_report: "Imballato dal Cliente"
@@ -1354,7 +1365,7 @@ it:
   invoice_column_price_without_taxes: "Prezzo totale (escl. tasse)"
   invoice_column_tax_rate: "% tasse"
   invoice_tax_total: "IVA totale"
-  tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
+  tax_invoice: "FATTURA PROFORMA (non ha valore fiscale)"
   tax_total: "Totale tasse (%{rate}):"
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
@@ -2132,7 +2143,7 @@ it:
   enterprise_limit: Limite azienda
   shipping_method_destroy_error: "Questo metodo di consegna non può essere annullato perchè è collegato ad una gentile richiesta: %{number}."
   fees: "Commissioni"
-  item_cost: "Costo dell'articolo"
+  item_cost: "Prezzo al produttore"
   bulk: "Volume"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
@@ -3452,7 +3463,7 @@ it:
           email: "E-mail Cliente"
         invoice:
           issued_on: "Emesso il"
-          tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
+          tax_invoice: "FATTURA PROFORMA (non ha valore fiscale)"
           code: "Codice"
           from: "Da"
           to: "Pagamento a"
