@@ -8,11 +8,19 @@ module DfcProvider
       @access_token = access_token
     end
 
+    def safe_process
+      process
+    rescue JWT::ExpiredSignature, JWT::ImmatureSignature
+      nil
+    end
+
     def process
       decode_token
       control_payload
       find_ofn_user
     end
+
+    private
 
     def decode_token
       data = JWT.decode(
@@ -25,8 +33,6 @@ module DfcProvider
       @header = data.last
       @payload = data.first
     end
-
-    private
 
     def find_ofn_user
       Spree::User.where(email: @payload['email']).first
