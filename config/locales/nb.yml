@@ -58,6 +58,20 @@ nb:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
             on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
+  stripe:
+    error_code:
+      incorrect_number: "Kortnummeret er feil."
+      invalid_number: "Kortnummeret er ikke et gyldig kredittkortnummer."
+      invalid_expiry_month: "Kortets utløpsmåned er ugyldig."
+      invalid_expiry_year: "Kortets utløpsår er ugyldig."
+      invalid_cvc: "Kortets sikkerhetskode er ugyldig."
+      expired_card: "Kortet er utløpt."
+      incorrect_cvc: "Kortets sikkerhetskode er feil."
+      incorrect_zip: "Kortets postnummer kunne ikke valideres."
+      card_declined: "Kortet ble avvist."
+      missing: "Det er ikke noe kort på en kunde som blir belastet."
+      processing_error: "Det oppstod en feil under behandling av kortet."
+      rate_limit: "Det oppstod en feil på grunn av forespørsler som traff API-en for raskt. Gi oss beskjed hvis du stadig opplever denne feilen."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -238,6 +252,7 @@ nb:
   search_by_name: Søk på navn eller sted...
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
+  business_address: "Forretningsadresse"
   print_invoice: "Skriv ut Faktura"
   print_ticket: "Skriv ut kvittering"
   select_ticket_printer: "Velg skriver for kvitteringer"
@@ -717,8 +732,15 @@ nb:
           terms_and_conditions: "Vilkår og Betingelser"
           remove_terms_and_conditions: "Fjern Fil"
           uploaded_on: "lastet opp den"
+          reset_form: "Tilbakestill skjema"
         business_address:
+          company_legal_name: Selskapets juridiske navn
+          company_placeholder: Eksempel AS
+          address1: Juridisk adresse
+          address1_placeholder: 123 High St.
           address2: Adresse (forts.)
+          legal_phone_number: Juridisk telefonnummer
+          phone_placeholder: "98 123 4565"
         contact:
           name: Navn
           name_placeholder: f.eks. Gustav Plum
@@ -1128,6 +1150,11 @@ nb:
       enterprise_fee_summary:
         name: "Sammendrag Bedriftsavgift"
         description: "Sammendrag av bedriftsavgifter innsamlet"
+      errors:
+        no_report_type: "Vennligst spesifiser en rapporttype"
+        report_not_found: "Rapporten ble ikke funnet"
+        missing_ransack_params: "Vennligst oppgi Ransack søkeparametere i forespørselen"
+      hidden_field: "&lt; Skjult &gt;"
       summary_row:
         total: "SUM"
       table:
@@ -1143,6 +1170,13 @@ nb:
           quantity: "Mengde"
           is_temperature_controlled: "Temperaturkontrollert?"
           temp_controlled: "Temperaturkontrollert?"
+      rendering_options:
+        generate_report: "Generer rapport:"
+        on_screen: "På skjermen"
+        csv_spreadsheet: "CSV-regneark"
+        excel_spreadsheet: "Excel regneark"
+        openoffice_spreadsheet: "OpenOffice-regneark"
+        hide_summary_rows: "Skjul sammendragsrader"
       packing:
         name: "Pakkerapporter"
         customer_report: "Pakk etter Kunde"
@@ -1556,6 +1590,7 @@ nb:
   split_checkout:
     your_details_without_number: Dine detaljer
     payment_method_without_number: Betalingsmetode
+    order_summary_without_number: Sammendrag Bestilling
     step1:
       your_details:
         title: Dine detaljer
@@ -2585,6 +2620,7 @@ nb:
     resolve_errors: Vennligst løse følgende feil
     more_items: "+ %{count} Flere"
     default_card_updated: Standardkort oppdatert
+    default_card_voids_auth: Hvis du endrer standardkortet ditt, fjernes butikkenes eksisterende autorisasjoner til å belaste det. Du kan autorisere butikker på nytt etter å ha oppdatert standardkortet. Ønsker du å endre standardkortet?
     cart:
       add_to_cart_failed: >
           Det oppsto et problem med å legge dette produktet til handlekurven. Kanskje
@@ -2623,6 +2659,8 @@ nb:
           title: "Laster opp vilkår og betingelser"
           message_1: "Alle kundene dine må godta dem én gang i kassen. Hvis du oppdaterer filen, må alle dine kunder godta dem igjen i kassen."
           message_2: "For kunder med abonnement, må du sende dem en epost med vilkårene (eller endringene) for nå, ingenting vil varsle dem om disse nye vilkårene."
+        business_address_info:
+          message: "Selskapets juridiske navn, juridiske adresse og juridiske telefonnummer brukes for virksomheter som fakturerer fra en juridisk enhet som er registrert med andre detaljer enn deres offentlige handelsinformasjon. Disse opplysningene vil KUN bli brukt på fakturaer. Hvis disse opplysningene er tomme, vil ditt offentlige navn, adresse og telefonnummer bli brukt på fakturaer."
       panels:
         save: LAGRE
         saved: LAGRET
@@ -3563,6 +3601,7 @@ nb:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
         image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
+        paperclip_image_error: "Paperclip returnerte feil for filen &#39;%{attachment_file_name}&#39; - sjekk ImageMagick-installasjonen eller kildefilen til bildet."
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
