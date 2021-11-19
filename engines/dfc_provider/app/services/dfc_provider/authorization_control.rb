@@ -10,6 +10,7 @@ module DfcProvider
 
     def process
       decode_token
+      control_payload
       find_ofn_user
     end
 
@@ -17,15 +18,36 @@ module DfcProvider
       data = JWT.decode(
         @access_token,
         nil,
-        false
+        true,
+        { algorithms: ['RS256'], jwks: jwks_hash }
       )
 
       @header = data.last
       @payload = data.first
     end
 
+    private
+
     def find_ofn_user
       Spree::User.where(email: @payload['email']).first
+    end
+
+    def control_payload
+      raise 'Email Not Found' if @payload['email'].blank?
+    end
+
+    def client_secret
+      Devise.omniauth_configs[:openid_connect].options[:client_options][:secret]
+    end
+
+    def jwks_uri
+      Devise.omniauth_configs[:openid_connect].options[:client_options][:jwks_uri]
+    end
+
+    def jwks_hash
+      jwks_raw = Net::HTTP.get URI(jwks_uri)
+
+      JSON.parse(jwks_raw)
     end
   end
 end

@@ -149,7 +149,8 @@ Devise.setup do |config|
     client_options: {
       identifier: ENV["OPENID_APP_ID"],
       secret: ENV["OPENID_APP_SECRET"],
-      redirect_uri: "#{protocol}#{ActionMailer::Base.default_url_options[:host]}/user/spree_user/auth/openid_connect/callback"
+      redirect_uri: "#{protocol}#{ActionMailer::Base.default_url_options[:host]}/user/spree_user/auth/openid_connect/callback",
+      jwks_uri: "https://login.lescommuns.org/auth/realms/data-food-consortium/protocol/openid-connect/certs"
     }
   }
 end
