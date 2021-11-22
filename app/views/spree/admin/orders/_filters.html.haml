@@ -1,13 +1,10 @@
 %div{"data-hook" => "admin_orders_index_search"}
   = form_tag spree.admin_orders_url, {name: "orders_form", "ng-submit" => "fetchResults()"} do
     .field-block.alpha.four.columns
-      .date-range-filter.field
+      .field
         = label_tag nil, t(:date_range)
         .date-range-fields
-          = text_field_tag "q[completed_at_gteq]", nil, class: 'datepicker', datepicker: 'q.completed_at_gteq', 'ng-model' => 'q.completed_at_gteq', :placeholder => t(:start)
-          %span.range-divider
-            %i.icon-arrow-right
-          = text_field_tag "q[completed_at_lteq]", nil, class: 'datepicker', datepicker: 'q.completed_at_lteq', 'ng-model' => 'q.completed_at_lteq', :placeholder => t(:stop)
+          = text_field_tag "q[ranged_from_to]", nil, size: 25, class: 'datepicker', datepicker: 'q.ranged_from_to', 'ng-model' => 'q.ranged_from_to'
       .field
         = label_tag nil, t(:status)
         %select2-watch-ng-model{'ng-model': 'q.state_eq'}

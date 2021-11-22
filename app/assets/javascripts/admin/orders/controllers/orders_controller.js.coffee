@@ -36,13 +36,17 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
-    startDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_gteq, ' 00:00:00')
-    endDateWithTime = $scope.appendStringIfNotEmpty($scope.q?.completed_at_lteq, ' 23:59:59')
+    rangeFromTo = new String($scope.q?.ranged_from_to)
+    dates = rangeFromTo.split(' to ')
+    startDateWithTime = $scope.appendStringIfNotEmpty(dates[0], ' 00:00:00')
+    endDateWithTime = $scope.appendStringIfNotEmpty(dates[1], ' 23:59:59')
+    rangeDateWithTime = startDateWithTime + ' to ' + endDateWithTime
 
     $scope.resetSelected()
     params = {
       'q[completed_at_gteq]': startDateWithTime,
       'q[completed_at_lteq]': endDateWithTime,
+      'q[ranged_from_to]': rangeDateWithTime,
       'q[state_eq]': $scope.q?.state_eq,
       'q[number_cont]': $scope.q?.number_cont,
       'q[email_cont]': $scope.q?.email_cont,
