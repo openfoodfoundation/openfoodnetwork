@@ -562,8 +562,8 @@ describe Enterprise do
                     website: "http://www.google.com",
                     facebook: "www.facebook.com/roger",
                     linkedin: "https://linkedin.com",
-                    instagram: "@insgram_user",
-                    twitter: "@twitter_user")
+                    instagram: "https://www.instagram.com/@insgram_user",
+                    twitter: "www.twitter.com/@twitter_user")
     }
 
     it "strips http from url fields" do
@@ -572,7 +572,7 @@ describe Enterprise do
       expect(distributor.linkedin).to eq("linkedin.com")
     end
 
-    it "strips @ from url fields" do
+    it "strips @, http and domain address from url fields" do
       expect(distributor.instagram).to eq("insgram_user")
       expect(distributor.twitter).to eq("twitter_user")
     end

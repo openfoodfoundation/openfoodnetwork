@@ -291,11 +291,11 @@ class Enterprise < ApplicationRecord
   end
 
   def twitter
-    correct_social_url self[:twitter]
+    correct_twitter_url self[:twitter]
   end
 
   def instagram
-    correct_social_url self[:instagram]
+    correct_instagram_url self[:instagram]
   end
 
   def inventory_variants
@@ -428,8 +428,12 @@ class Enterprise < ApplicationRecord
     url&.sub(%r{(https?://)?}, '')
   end
 
-  def correct_social_url(url)
-    url&.delete("@")
+  def correct_instagram_url(url)
+    url && strip_url(url).sub(%r{www.instagram.com/}, '').delete("@")
+  end
+
+  def correct_twitter_url(url)
+    url && strip_url(url).sub(%r{www.twitter.com/}, '').delete("@")
   end
 
   def set_unused_address_fields

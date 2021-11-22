@@ -125,8 +125,8 @@ describe "Registration", js: true do
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
-      fill_in 'enterprise_twitter', with: 'TwItTeR'
-      fill_in 'enterprise_instagram', with: 'InStAgRaM'
+      fill_in 'enterprise_twitter', with: 'https://www.twitter.com/@TwItTeR'
+      fill_in 'enterprise_instagram', with: 'www.instagram.com/InStAgRaM'
       click_button "Continue"
       expect(page).to have_content 'Finished!'
 
