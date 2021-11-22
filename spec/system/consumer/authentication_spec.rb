@@ -48,6 +48,13 @@ describe "Authentication", js: true do
           expect(page).to be_logged_in_as user
         end
 
+        context "using keyboard" do
+          it "logging in successfully" do
+            fill_in_using_keyboard
+            expect(page).to be_logged_in_as user
+          end
+        end
+
         describe "signing up" do
           before do
             select_login_tab "Sign up"

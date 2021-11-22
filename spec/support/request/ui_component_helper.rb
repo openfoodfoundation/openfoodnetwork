@@ -109,4 +109,10 @@ module UIComponentHelper
     expand_active_table_node(name)
     page.find(".active_table_node a", text: name.to_s).click
   end
+
+  def fill_in_using_keyboard
+    page.find('#email').send_keys(user.email, :tab, user.password, :tab, :space)
+    expect(page.find('#remember_me')).to be_checked
+    page.find('#remember_me').send_keys(:tab, :enter)
+  end
 end
