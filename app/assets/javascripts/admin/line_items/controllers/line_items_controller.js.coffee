@@ -5,6 +5,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmDelete = true
   $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
   $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
+  $scope.rangeDate = $scope.startDate + ' to ' + $scope.endDate
   $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {}
   $scope.selectedUnitsVariant = {}
@@ -29,8 +30,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
       $scope.setOrderCycleDateRange()
 
-    $scope.formattedStartDate = moment($scope.startDate).format()
-    $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
+    rangeFromTo = $scope.rangeDate
+    dates = new String(rangeFromTo) if rangeFromTo
+    split_dates = dates?.split(' to ')
+    $scope.formattedStartDate = moment(split_dates[0]).format()
+    $scope.formattedEndDate = moment(split_dates[1]).add(1,'day').format()
+    $scope.formattedRangeDate = $scope.formattedStartDate + ' to ' + $scope.formattedEndDate
 
     return unless moment($scope.formattedStartDate).isValid() and moment($scope.formattedEndDate).isValid()
 
