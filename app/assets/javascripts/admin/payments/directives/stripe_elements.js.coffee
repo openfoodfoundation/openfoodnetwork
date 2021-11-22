@@ -4,7 +4,9 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
              <div id='card-element' class='card-element'></div>\
              <div class='error card-errors'></div>\
              </label>"
-
+  scope:
+    selected: "="
+  
   link: (scope, elem, attr)->
     if $injector.has('stripeObject')
       stripe = $injector.get('stripeObject')
@@ -32,5 +34,7 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
 
         return
 
-      AdminStripeElements.stripe = stripe
-      AdminStripeElements.card = card
+      scope.$watch "selected", (value) ->
+        if (value)
+          AdminStripeElements.stripe = stripe
+          AdminStripeElements.card = card 

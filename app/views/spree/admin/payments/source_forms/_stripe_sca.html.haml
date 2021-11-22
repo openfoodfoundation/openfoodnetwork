@@ -15,4 +15,4 @@
     .three.columns
       = label_tag :card_details, t(:card_details)
     .nine.columns
-      %stripe-elements
+      %stripe-elements{selected: "isSelected(#{payment_method.id})"}
