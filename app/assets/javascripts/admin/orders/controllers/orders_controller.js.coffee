@@ -36,10 +36,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
-    rangeFromTo = new String($scope.q?.ranged_from_to)
-    dates = rangeFromTo.split(' to ')
-    startDateWithTime = $scope.appendStringIfNotEmpty(dates[0], ' 00:00:00')
-    endDateWithTime = $scope.appendStringIfNotEmpty(dates[1], ' 23:59:59')
+    rangeFromTo = $scope.q?.ranged_from_to
+    dates = new String(rangeFromTo) if rangeFromTo
+    split_dates = dates?.split(' to ')
+    startDateWithTime = $scope.appendStringIfNotEmpty(split_dates?[0], ' 00:00:00')
+    endDateWithTime = $scope.appendStringIfNotEmpty(split_dates?[1], ' 23:59:59')
     rangeDateWithTime = startDateWithTime + ' to ' + endDateWithTime
 
     $scope.resetSelected()
@@ -61,6 +62,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       per_page: $scope.per_page,
       page: page
     }
+    console.log(params)
     KeyValueMapStore.setStoredValues($scope)
     RequestMonitor.load(Orders.index(params).$promise)
 
