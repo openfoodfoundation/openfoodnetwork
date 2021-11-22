@@ -1,4 +1,4 @@
-angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, StatusMessage) ->
+angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, StatusMessage, $timeout) ->
   new class AdminStripeElements
 
     # These are both set from the AdminStripeElements directive
@@ -13,7 +13,7 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          StatusMessage.display 'error', response.error.message
+          $timeout -> StatusMessage.display 'error', response.error.message
           console.error(JSON.stringify(response.error))
         else
           secrets.token = response.token.id
@@ -29,7 +29,7 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
 
       @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
-          StatusMessage.display 'error', response.error.message
+          $timeout -> StatusMessage.display 'error', response.error.message
           console.error(JSON.stringify(response.error))
         else
           secrets.token = response.paymentMethod.id
