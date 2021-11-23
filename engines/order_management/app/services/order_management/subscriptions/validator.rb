@@ -93,8 +93,7 @@ module OrderManagement
       end
 
       def stripe_payment_method?(payment_method)
-        payment_method.type == "Spree::Gateway::StripeConnect" ||
-          payment_method.type == "Spree::Gateway::StripeSCA"
+        payment_method.type == "Spree::Gateway::StripeSCA"
       end
 
       def subscription_line_items_present?
