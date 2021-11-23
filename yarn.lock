@@ -8816,10 +8816,10 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
-mrujs@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-0.6.0.tgz#4658a86ede21edca39ccb31f811f75a2bee43322"
-  integrity sha512-LjSOdTeVXq7FKhX9CO5iP6a5jg2nGYwLh+1z7/wG79pOLCr8L3uYPP48LWBbhSZmvBsn7VsL3czFlZXzNnU54Q==
+mrujs@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-0.7.0.tgz#d5679654ad67788a3468a0dad8e829c2f2ff6899"
+  integrity sha512-KS39YCebZDc22A1v4BJ+bb6AP1QrSMf/2sNcfMwkxIcx9zTCGw2oxrsnM3lZ92X8YJpojs4KlRw+F6KTw7TCDw==
   dependencies:
     morphdom ">=2.6.0 <3.0.0"
 
