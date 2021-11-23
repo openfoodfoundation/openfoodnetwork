@@ -106,23 +106,6 @@
       margin: 0;
     }
 
-    span.formError {
-      background-color: rgba(193, 18, 43, 0.1);
-      color: $red-700;
-      font-style: normal;
-      margin: 0;
-      font-size: 0.8rem;
-      display: block;
-      padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-
-      &.standalone {
-        padding: 10px;
-      }
-    }
-
     #distributor_address.panel {
       font-size: 0.875rem;
       padding: 1rem;
@@ -135,6 +118,29 @@
     a {
       color: $teal-400;
       text-decoration: underline;
+    }
+  }
+
+  .checkout-input span.formError, div.error.card-errors {
+    background-color: rgba(193, 18, 43, 0.1);
+    color: $red-700;
+    font-style: normal;
+    margin: 0;
+    font-size: 0.8rem;
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    &.standalone {
+      padding: 10px;
+    }
+  }
+
+  div.error.card-errors {
+    &:empty {
+      display: none;
     }
   }
 
