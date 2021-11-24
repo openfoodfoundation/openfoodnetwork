@@ -217,9 +217,14 @@ describe '
                        special_instructions: shipping_instructions)
       }
 
+      let(:completed_at_1) {Time.zone.now - 500.hours} # 500 hours in the past
+      let(:completed_at_2) {Time.zone.now - 510.hours} # 510 hours in the past
+      let(:datetime_start) {Time.zone.now - 600.hours} # 600 hours in the past
+      let(:datetime_end) {Time.zone.now - 400.hours} # 400 hours in the past
+
       before do
-        Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
-        Timecop.travel(Time.zone.local(2021, 4, 25, 16, 0, 0)) { order2.finalize! }
+        Timecop.travel(completed_at_1) { order1.finalize! }
+        Timecop.travel(completed_at_2) { order2.finalize! }
 
         create(:line_item_with_shipment, product: product, order: order1)
         create(:line_item_with_shipment, product: product, order: order2)
@@ -231,11 +236,11 @@ describe '
 
         # If I fill in the basic fields
         find('#q_completed_at_gt').click
-        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 04, 24, 13, 0, 0))
+        select_datetime_from_datepicker datetime_start
         # hide the datetimepicker
         find("body").send_keys(:escape)
         find('#q_completed_at_lt').click
-        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 04, 26, 14 ,0 ,0))
+        select_datetime_from_datepicker datetime_end
         # hide the datetimepicker
         find("body").send_keys(:escape)
 
