@@ -47,5 +47,17 @@ module Features
       year = find(".flatpickr-calendar.open .flatpickr-current-month .numInputWrapper .cur-year").value
       month.to_s + " " + year.to_s
     end
+
+    def pick_date(calendar_selector, date_selector)
+      find(calendar_selector).click
+      select_datetime_from_datepicker date_selector
+      find("body").send_keys(:escape)
+    end
+
+    def pick_datetime(calendar_selector, datetime_selector)
+      find(calendar_selector).click
+      select_datetime_from_datepicker datetime_selector
+      find("body").send_keys(:escape)
+    end
   end
 end
