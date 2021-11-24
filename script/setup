@@ -34,12 +34,6 @@ fi
 bundle check || bundle install
 yarn install
 
-# Set up configurable environment variables
-if [ ! -f config/application.yml ]; then
-  cp config/application.yml.example config/application.yml
-  printf "${YELLOW}Copied config/application.yml Make sure to fill it with the appropriate configuration values.\n\n${NO_COLOR}"
-fi
-
 # Set up the database for both development and test
 # Confirming the default user and password
 printf '\n\n' | bundle exec rake db:setup db:test:prepare
