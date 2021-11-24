@@ -1,4 +1,4 @@
-    # frozen_string_literal: true
+# frozen_string_literal: true
 
 require "system_helper"
 
@@ -234,15 +234,8 @@ describe '
         # When I generate a customer report with a timeframe that includes one order but not the other
         login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
-        # If I fill in the basic fields
-        find('#q_completed_at_gt').click
-        select_datetime_from_datepicker datetime_start
-        # hide the datetimepicker
-        find("body").send_keys(:escape)
-        find('#q_completed_at_lt').click
-        select_datetime_from_datepicker datetime_end
-        # hide the datetimepicker
-        find("body").send_keys(:escape)
+        pick_datetime "#q_completed_at_gt", datetime_start
+        pick_datetime "#q_completed_at_lt", datetime_end
 
         select 'Order Cycle Customer Totals', from: 'report_type'
         click_button 'Search'
@@ -488,14 +481,9 @@ describe '
 
       it "can customise a number of fields" do
         fill_in 'initial_invoice_number', with: '5'
-        find('#invoice_date').click
-        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 02, 12))
-        # hide the datetimepicker
-        find("body").send_keys(:escape)
-        find('#due_date').click
-        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2021, 03, 12))
-        # hide the datetimepicker
-        find("body").send_keys(:escape)
+        
+        pick_datetime '#invoice_date', Date.new(2021, 2, 12)
+        pick_datetime '#due_date', Date.new(2021, 3, 12)
 
         fill_in 'account_code', with: 'abc123'
         click_button 'Search'
