@@ -594,6 +594,13 @@ module Spree
           expect(v.unit_to_display).to eq("ponies")
           expect(v1.unit_to_display).to eq("ponies")
         end
+
+        it "displays variant unit name if no unit scale" do
+          p = create(:simple_product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'items_unit')
+          v = build_stubbed(:variant, product: p)
+
+          expect(v.unit_to_display).to eq("items_unit")
+        end
       end
 
       describe "setting the variant's weight from the unit value" do
