@@ -23,7 +23,7 @@
             #{payment_method.description}
         .paymentmethod-form
           - if payment_method.method_type == "gateway"
-            = render partial: "split_checkout/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
+            = render partial: "split_checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
           - else 
             = render partial: "spree/checkout/payment/#{payment_method.method_type}", :locals => { payment_method: payment_method }
 
