@@ -58,6 +58,9 @@ it:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
             on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
             limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
+  stripe:
+    error_code:
+      incorrect_number: "Il numero di carta non è corretto"
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
