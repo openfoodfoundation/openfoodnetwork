@@ -1,0 +1,23 @@
+- content_for :injection_data do
+  - if Stripe.publishable_key
+    :javascript
+      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
+
+- if @saved_credit_cards.length > 0
+  .checkout-input
+    %label
+      = t('split_checkout.step2.form.stripe.use_saved_card')
+    = select_tag :card, options_for_select(@saved_credit_cards.map {|cc| [ cc.id, "#{cc.brand}  #{cc.number}" ] }, @selected_card)
+
+.checkout-input
+  - if @saved_credit_cards.length > 0
+    %label
+      = t('split_checkout.step2.form.stripe.use_new_card')
+  %stripe-elements
+
+
+- if spree_current_user
+  .checkout-input
+    = check_box_tag :save_card, {id: "save_card", name: "save_card", checked: false, value: "1"}
+    = label :save_card, t('split_checkout.step2.form.stripe.save_card'), { for: "save_card" }
+    

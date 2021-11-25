@@ -1737,6 +1737,10 @@ en:
         card_year:
           label: Year
           placeholder: 2020
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: or use a new card
+          save_card: Save card for future use
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
