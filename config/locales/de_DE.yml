@@ -58,6 +58,20 @@ de_DE:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
             on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
+  stripe:
+    error_code:
+      incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
+      invalid_number: "Der Wert ist keine gültige Kreditkartennummer."
+      invalid_expiry_month: "Der Monat des Ablaufdatums der Kreditkarte ist ungültig."
+      invalid_expiry_year: "Das Jahr des Ablaufdatums der Kreditkarte ist ungültig."
+      invalid_cvc: "Die Kartenprüfnummer der Kreditkarte ist ungültig."
+      expired_card: "Die Kreditkarte ist abgelaufen."
+      incorrect_cvc: "Die Kartenprüfnummer der Kreditkarte ist fehlerhaft."
+      incorrect_zip: "Die Prüfung der Postleitzahl der Kreditkarte ist fehlgeschlagen."
+      card_declined: "Die Kreditkarte wurde abgelehnt."
+      missing: "Für die Zahlung eines Kundens ist keine Kreditkarte verfügbar."
+      processing_error: "Bei der Verarbeitung der Kreditkartenzahlung ist ein Fehler aufgetreten."
+      rate_limit: "Ein Fehler ist aufgetreten, weil Anfragen zu schnell an die API gesendet wurden. Bitte teilen Sie es uns mit, wenn dieser Fehler häufiger auftritt."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -224,13 +238,13 @@ de_DE:
         explainer: Diese Bestellungen wurden bereits als vollständig markiert und daher nicht verändert.
       processing:
         title: Fehler aufgetreten (%{count} Bestellungen)
-        explainer: Die automatische Verarbeitung dieser Bestellungen ist aufgrund eines Fehlers fehlgeschlagen. Der Fehler wurde soweit möglich aufgelistet.
+        explainer: Die automatische Verarbeitung dieser Bestellungen ist aufgrund eines Fehlers gescheitert. Soweit möglich wurde der Fehler aufgelistet.
       failed_payment:
         title: Fehlgeschlagene Zahlung (%{count} Bestellungen)
         explainer: Die automatische Zahlungsabwicklung für diese Bestellungen ist aufgrund eines Fehlers gescheitert. Soweit möglich wurde der Fehler aufgelistet.
       other:
         title: Andere Fehler (%{count} Bestellungen)
-        explainer: Die automatische Verarbeitung dieser Bestellungen ist aus einem unbekannten Grund fehlgeschlagen. Dies sollte nicht geschehen, bitte kontaktieren Sie uns, wenn Sie dies sehen.
+        explainer: Die automatische Verarbeitung dieser Bestellungen ist aus einem unbekannten Grund gescheitert. Dies sollte nicht geschehen, Bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Regionale Lebensmittel online bestellen im"
@@ -576,7 +590,7 @@ de_DE:
         inventories: Katalog
         import: Importieren
         upload: Hochladen
-        csv_templates: Vorlagen (.csv-Dateien)
+        csv_templates: Vorlagen (csv-Dateien)
         product_list_template: Produktlistenvorlage herunterladen
         inventory_template: Katalogvorlage herunterladen
         category_values: Verfügbare Kategorien
@@ -1138,6 +1152,11 @@ de_DE:
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
+      errors:
+        no_report_type: "Bitte wählen Sie eine Berichtsart aus."
+        report_not_found: "Bericht wurde nicht gefunden."
+        missing_ransack_params: "Bitte geben Sie die Suchparameter von Ransack in der Anfrage an."
+      hidden_field: "< verborgen >"
       summary_row:
         total: "SUMME"
       table:
@@ -1153,6 +1172,13 @@ de_DE:
           quantity: "Menge"
           is_temperature_controlled: "Temperaturüberwachte Artikel?"
           temp_controlled: "Temperaturüberwachte Artikel?"
+      rendering_options:
+        generate_report: "Bericht erstellen:"
+        on_screen: "Auf dem Bildschirm"
+        csv_spreadsheet: "csv-Datei"
+        excel_spreadsheet: "Excel-Datei"
+        openoffice_spreadsheet: "OpenOffice-Tabelle"
+        hide_summary_rows: "Zusammenfassungszeilen ausblenden"
       packing:
         name: "Packlisten"
         customer_report: "Packliste nach Kunden"

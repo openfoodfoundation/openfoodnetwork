@@ -58,6 +58,20 @@ ru:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
+  stripe:
+    error_code:
+      incorrect_number: "Номер карты неверный."
+      invalid_number: "Номер карты не является действительным номером кредитной карты."
+      invalid_expiry_month: "Месяц истечения срока действия карты недействителен."
+      invalid_expiry_year: "Год истечения срока действия карты недействителен."
+      invalid_cvc: "Код безопасности карты недействителен."
+      expired_card: "Срок действия карты истек."
+      incorrect_cvc: "Код безопасности карты неверен."
+      incorrect_zip: "Почтовый индекс карты не прошел проверку."
+      card_declined: "Карта была отклонена."
+      missing: "У клиента нет карты, с которой начисляется оплата."
+      processing_error: "Произошла ошибка при обработке карты."
+      rate_limit: "Произошла ошибка из-за того, что запросы попали в API слишком быстро. Сообщите нам, если вы постоянно сталкиваетесь с этой ошибкой."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -1138,6 +1152,11 @@ ru:
       enterprise_fee_summary:
         name: "Сводка Сборов Предприятия"
         description: "Сводная Информация о Сборах с Предприятия"
+      errors:
+        no_report_type: "Укажите тип отчета"
+        report_not_found: "Отчет не найден"
+        missing_ransack_params: "Пожалуйста, укажите параметры поиска Ransack в запросе"
+      hidden_field: "&lt;Скрытый&gt;"
       summary_row:
         total: "ВСЕГО"
       table:
@@ -1153,6 +1172,13 @@ ru:
           quantity: "Количество"
           is_temperature_controlled: "Контроль Температуры?"
           temp_controlled: "Контроль Температуры?"
+      rendering_options:
+        generate_report: "Создать отчет:"
+        on_screen: "На экране"
+        csv_spreadsheet: "Таблица CSV"
+        excel_spreadsheet: "Таблица Excel"
+        openoffice_spreadsheet: "Таблица OpenOffice"
+        hide_summary_rows: "Скрыть сводные Строки"
       packing:
         name: "Выборочные Отчёты"
         customer_report: "Выборка по Клиенту"
