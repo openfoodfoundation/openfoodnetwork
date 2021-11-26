@@ -45,9 +45,9 @@ module Spree
       it_behaves_like "taggable", "Spree::PaymentMethod"
     end
 
-    describe Gateway::StripeConnect do
+    describe Gateway::StripeSCA do
       subject do
-        # StripeConnect needs an owner to be valid.
+        # StripeSCA needs an owner to be valid.
         valid_subject.tap { |m| m.preferred_enterprise_id = shop.id }
       end
 
