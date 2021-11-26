@@ -138,7 +138,7 @@ module Spree
     end
 
     def ensure_correct_adjustment
-      revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
+      revoke_adjustment_eligibility if ['failed', 'invalid', 'void'].include?(state)
       return if adjustment.try(:finalized?)
 
       if adjustment
