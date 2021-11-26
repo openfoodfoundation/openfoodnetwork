@@ -17,8 +17,11 @@ export default class extends Controller {
     });
   }
 
+  getFormElementsArray(container) {
+    return Array.from(container.querySelectorAll("input, select, textarea"));
+  }
   removeRequiredAttributeOnInput(container) {
-    Array.from(container.getElementsByTagName("input")).forEach((i) => {
+    this.getFormElementsArray(container).forEach((i) => {
       if (i.required) {
         i.dataset.required = i.required;
         i.required = false;
@@ -27,7 +30,7 @@ export default class extends Controller {
   }
 
   addRequiredAttributeOnInputIfNeeded(container) {
-    Array.from(container.getElementsByTagName("input")).forEach((i) => {
+    this.getFormElementsArray(container).forEach((i) => {
       if (i.dataset.required === "true") {
         i.required = true;
       }
