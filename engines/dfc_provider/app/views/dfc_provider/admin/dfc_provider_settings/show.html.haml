@@ -1,0 +1,19 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = 'DFC Provider Settings'
+
+%div
+  %h2 Les Communs Open ID Connect Account
+  - if spree_current_user.provider == 'openid_connect' && spree_current_user.uid.present?
+    Your account is already linked to this DFC authorization account:
+    = spree_current_user.uid
+    \.
+    %br
+    Check it at
+    = link_to 'Les Communs Open ID server', "#{ Devise.omniauth_configs[:openid_connect].options[:issuer] }/account"
+    \.
+  - else
+    You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect).
+    %br
+    = button_to 'Link your Les Communs OIDC Account', Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path, method: :post, data: { turbo: 'false' }
