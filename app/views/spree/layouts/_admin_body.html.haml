@@ -2,12 +2,13 @@
 = render "layouts/i18n_script"
 
 #wrapper{ data: { hook: '' } }
-  - if flash[:error]
-    .flash.error= flash[:error]
-  - if notice
-    .flash.notice= notice
-  - if flash[:success]
-    .flash.success= flash[:success]
+  .flash-container
+    - if flash[:error]
+      .flash.error= flash[:error]
+    - if notice
+      .flash.notice= notice
+    - if flash[:success]
+      .flash.success= flash[:success]
 
   = render partial: "spree/layouts/admin/progress_spinner"
 
