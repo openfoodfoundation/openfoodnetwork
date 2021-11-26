@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 describe DfcProvider::AuthorizationControl do
-  let!(:user) { create :user, email: 'testoidc@test.com' }
+  let!(:user) do
+    create :user, email: 'testoidc@test.com',
+                  provider: 'openid_connect',
+                  uid: 'testoidc@test.com'
+  end
 
   let(:jwk) do
     JWT::JWK.new(OpenSSL::PKey::RSA.new(2048), 'optional-kid')
