@@ -52,12 +52,8 @@ module Spree
       User.admin.count > 0
     end
 
-    def self.from_omniauth(auth)
-      where(provider: auth.provider, uid: auth.uid).first_or_create(
-        email: auth.info.email,
-        password: Devise.friendly_token[0,20],
-        confirmed_at: Time.now
-      )
+    def link_from_omniauth(auth)
+      update!(provider: auth.provider, uid: auth.uid)
     end
 
     # Whether a user has a role or not.
