@@ -20,7 +20,7 @@
 
   %div.checkout-input{style: "flex: 0 1 70px;"}
     = f.label :card_month, t("split_checkout.step2.form.card_month.label")
-    = f.number_field :card_month, { placeholder: t("split_checkout.step2.form.card_month.placeholder"), min: Time.now.month, max: 12 }
+    = f.number_field :card_month, { placeholder: t("split_checkout.step2.form.card_month.placeholder"), max: 12 }
 
   %div.checkout-input{style: "flex: 0 1 70px;"}
     = f.label :card_year, t("split_checkout.step2.form.card_year.label")
