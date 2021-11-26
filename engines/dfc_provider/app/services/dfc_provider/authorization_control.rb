@@ -35,7 +35,7 @@ module DfcProvider
     end
 
     def find_ofn_user
-      Spree::User.where(email: @payload['email']).first
+      Spree::User.where(provider: 'openid_connect', uid: @payload['email']).first
     end
 
     def control_payload
