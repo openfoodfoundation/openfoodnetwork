@@ -3,21 +3,22 @@
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
-- if @saved_credit_cards.length > 0
-  .checkout-input
-    %label
-      = t('split_checkout.step2.form.stripe.use_saved_card')
-    = select_tag :card, options_for_select(@saved_credit_cards.map {|cc| [ "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id ] }, @selected_card)
-
-.checkout-input
+%div{"data-controller": "stripe"}
   - if @saved_credit_cards.length > 0
-    %label
-      = t('split_checkout.step2.form.stripe.use_new_card')
-  %stripe-elements
+    .checkout-input
+      %label
+        = t('split_checkout.step2.form.stripe.use_saved_card')
+      = select_tag :card, options_for_select(@saved_credit_cards.map {|cc| [ "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id ] } + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], @selected_card), { "data-action": "change->stripe#onSelectCard", "data-stripe-target": "select" } 
+
+  .checkout-input{"data-stripe-target": "stripeelements"}
+    - if @saved_credit_cards.length == 0
+      %label
+        = t('split_checkout.step2.form.stripe.use_new_card')
+    %stripe-elements
 
 
-- if spree_current_user
-  .checkout-input
-    = check_box_tag :save_card, {id: "save_card", name: "save_card", checked: false, value: "1"}
-    = label :save_card, t('split_checkout.step2.form.stripe.save_card'), { for: "save_card" }
+  - if spree_current_user
+    .checkout-input
+      = check_box_tag :save_card, {id: "save_card", name: "save_card", checked: false, value: "1"}
+      = label :save_card, t('split_checkout.step2.form.stripe.save_card'), { for: "save_card" }
     
