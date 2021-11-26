@@ -10,9 +10,11 @@ export default class extends Controller {
       if (e.id === paymentMethodContainerId) {
         e.style.display = "block";
         this.addRequiredAttributeOnInputIfNeeded(e);
+        this.removeDisabledAttributeOnInput(e);
       } else {
         e.style.display = "none";
         this.removeRequiredAttributeOnInput(e);
+        this.addDisabledAttributeOnInput(e);
       }
     });
   }
@@ -20,6 +22,19 @@ export default class extends Controller {
   getFormElementsArray(container) {
     return Array.from(container.querySelectorAll("input, select, textarea"));
   }
+
+  addDisabledAttributeOnInput(container) {
+    this.getFormElementsArray(container).forEach((i) => {
+      i.disabled = true;
+    });
+  }
+
+  removeDisabledAttributeOnInput(container) {
+    this.getFormElementsArray(container).forEach((i) => {
+      i.disabled = false;
+    });
+  }
+
   removeRequiredAttributeOnInput(container) {
     this.getFormElementsArray(container).forEach((i) => {
       if (i.required) {

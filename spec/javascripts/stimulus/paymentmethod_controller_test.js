@@ -13,9 +13,24 @@ describe("PaymentmethodController", () => {
          <span id="paymentmethod_2" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod2" />
          <span id="paymentmethod_3" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod3" />
          
-         <div class="paymentmethod-container" style="display: none;" id="paymentmethod1"><input type="number" required id="input1" /></div>
-         <div class="paymentmethod-container" style="display: block;" id="paymentmethod2"><input type="number" required="true" id="input2" /></div>
-         <div class="paymentmethod-container" style="display: none;" id="paymentmethod3"><input type="number" id="input3" /></div>
+         <div class="paymentmethod-container" style="display: none;" id="paymentmethod1">
+          <input type="number" required id="input1" />
+          <select id="select1" >
+            <option value="1">1</option>
+          </select>
+         </div>
+         <div class="paymentmethod-container" style="display: block;" id="paymentmethod2">
+          <input type="number" required="true" id="input2" />
+          <select id="select2" >
+            <option value="1">1</option>
+          </select>
+         </div>
+         <div class="paymentmethod-container" style="display: none;" id="paymentmethod3">
+          <input type="number" id="input3" />
+          <select id="select3" >
+            <option value="1">1</option>
+          </select>
+         </div>
        </div>`;
 
       const application = Application.start();
@@ -77,6 +92,46 @@ describe("PaymentmethodController", () => {
       expect(input2.dataset.required).toBe("true");
       expect(input2.required).toBe(false);
       expect(input3.required).toBe(false);
+    });
+
+    it("handle well the add/remove 'disabled='disabled'' attribute on each input/select", () => {
+      const paymentMethod1 = document.getElementById("paymentmethod_1");
+      const paymentMethod2 = document.getElementById("paymentmethod_2");
+      const paymentMethod3 = document.getElementById("paymentmethod_3");
+
+      const input1 = document.getElementById("input1");
+      const input2 = document.getElementById("input2");
+      const input3 = document.getElementById("input3");
+      const select1 = document.getElementById("select1");
+      const select2 = document.getElementById("select2");
+      const select3 = document.getElementById("select3");
+
+      paymentMethod1.click();
+      expect(input1.disabled).toBe(false);
+      expect(select1.disabled).toBe(false);
+
+      expect(input2.disabled).toBe(true);
+      expect(select2.disabled).toBe(true);
+      expect(input3.disabled).toBe(true);
+      expect(select3.disabled).toBe(true);
+
+      paymentMethod2.click();
+      expect(input2.disabled).toBe(false);
+      expect(select2.disabled).toBe(false);
+
+      expect(input1.disabled).toBe(true);
+      expect(select1.disabled).toBe(true);
+      expect(input3.disabled).toBe(true);
+      expect(select3.disabled).toBe(true);
+
+      paymentMethod3.click();
+      expect(input3.disabled).toBe(false);
+      expect(select3.disabled).toBe(false);
+
+      expect(input1.disabled).toBe(true);
+      expect(select1.disabled).toBe(true);
+      expect(input2.disabled).toBe(true);
+      expect(select2.disabled).toBe(true);
     });
   });
 });
