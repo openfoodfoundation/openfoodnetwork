@@ -86,9 +86,6 @@ production: &production
   # Production depends on precompilation of packs prior to booting for performance.
   compile: false
 
-  # Extract and emit a css file
-  extract_css: true
-
   # Cache manifest.json for performance
   cache_manifest: true
 
