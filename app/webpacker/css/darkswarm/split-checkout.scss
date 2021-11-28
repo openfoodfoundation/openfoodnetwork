@@ -195,7 +195,7 @@
     display: block;
     margin-top: 5px;
     &:after {
-      background-image: image-url("edit-with-pen.svg");
+      background-image: url("../images/edit-with-pen.svg");
       content: " ";
       display: inline-block;
       width: 1em;
