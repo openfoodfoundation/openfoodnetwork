@@ -16,7 +16,7 @@ module DfcProvider
              serializer: DfcProvider::CatalogItemSerializer
 
     def id
-      dfc_provider_routes.api_dfc_provider_enterprise_url(
+      dfc_provider_routes.api_v0_dfc_provider_enterprise_url(
         id: object.id,
         host: host
       )

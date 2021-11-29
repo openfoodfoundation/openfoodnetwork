@@ -11,7 +11,7 @@ describe DfcProvider::CatalogItemSerializer do
   describe '#id' do
     let(:catalog_item_id) {
       [
-        'http://test.host/api/dfc_provider',
+        'http://test.host/api/v0/dfc_provider',
         'enterprises',
         product.supplier_id,
         'catalog_items',
@@ -27,7 +27,7 @@ describe DfcProvider::CatalogItemSerializer do
   describe '#references' do
     let(:supplied_product_id) {
       [
-        'http://test.host/api/dfc_provider',
+        'http://test.host/api/v0/dfc_provider',
         'enterprises',
         product.supplier_id,
         'supplied_products',
