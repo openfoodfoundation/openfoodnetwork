@@ -2,12 +2,13 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::EnterprisesController, type: :controller do
+describe DfcProvider::Api::V0::SuppliedProductsController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
+  let!(:variant) { product.variants.first }
 
   describe '.show' do
     context 'with authorization token' do
@@ -24,24 +25,21 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
 
         context 'with an enterprise' do
           context 'given with an id' do
-            before { api_get :show, id: 'default' }
+            before do
+              api_get :show, enterprise_id: 'default', id: variant.id
+            end
 
             it 'is successful' do
               expect(response).to be_successful
             end
 
             it 'renders the required content' do
-              expect(response.body)
-                .to include(product.name)
-              expect(response.body)
-                .to include(product.sku)
-              expect(response.body)
-                .to include("offers/#{product.variants.first.id}")
+              expect(response.body).to include(variant.name)
             end
           end
 
           context 'given with a wrong id' do
-            before { api_get :show, id: 999 }
+            before { api_get :show, enterprise_id: 'default', id: 999 }
 
             it 'is not found' do
               expect(response).to be_not_found
