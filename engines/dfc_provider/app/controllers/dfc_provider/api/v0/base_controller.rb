@@ -4,7 +4,9 @@
 module DfcProvider
   module Api
     module V0
-      class BaseController < ActionController::Base
+      class BaseController < ::Api::V0::BaseController
+        skip_authorization_check
+
         rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
         before_action :check_authorization,
