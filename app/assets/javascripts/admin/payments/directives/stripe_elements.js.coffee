@@ -1,9 +1,9 @@
 angular.module('admin.payments').directive "stripeElements", ($injector, AdminStripeElements) ->
   restrict: 'E'
-  template: "<label for='card-element'>\
-             <div id='card-element' class='card-element'></div>\
+  template: "<div >\
+             <div class='card-element'></div>\
              <div class='error card-errors'></div>\
-             </label>"
+             </div>"
   scope:
     selected: "="
   
