@@ -52,6 +52,7 @@ class OrderCycle < ApplicationRecord
     where('order_cycles.orders_close_at < ?',
           Time.zone.now).order("order_cycles.orders_close_at DESC")
   }
+  scope :unprocessed, -> { where(processed_at: nil) }
   scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
   scope :dated, -> { where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL') }
 
