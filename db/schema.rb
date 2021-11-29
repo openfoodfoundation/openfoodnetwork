@@ -293,6 +293,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_094141) do
     t.integer "coordinator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "processed_at"
   end
 
   create_table "producer_properties", force: :cascade do |t|
