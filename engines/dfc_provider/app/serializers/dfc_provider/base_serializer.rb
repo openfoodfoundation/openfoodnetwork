@@ -6,17 +6,11 @@ module DfcProvider
   class BaseSerializer < ActiveModel::Serializer
     include DfcProvider::Engine.routes.url_helpers
 
-    class << self
-      def default_url_options
-        Rails.application.config.action_mailer.default_url_options
-      end
-    end
-
-    def base_url
-      [
-        self.class.default_url_options[:protocol] || 'https',
-        self.class.default_url_options[:host]
-      ].join('://')
+    def context
+      {
+        'dfc' => 'https://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#',
+        '@base' => "#{api_v0_dfc_provider_base_url}/"
+      }
     end
   end
 end

@@ -12,6 +12,8 @@ module DfcProvider
 
         respond_to :json
 
+        def show; end
+
         private
 
         def check_authorization
