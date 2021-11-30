@@ -4,7 +4,7 @@
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
 %div{"data-controller": "stripe-cards"}
-  - if @saved_credit_cards.length > 0
+  - if @saved_credit_cards.any?
     .checkout-input
       %label
         = t('split_checkout.step2.form.stripe.use_saved_card')
@@ -13,7 +13,7 @@
         { "data-action": "change->stripe-cards#onSelectCard", "data-stripe-cards-target": "select" }
 
   .checkout-input{"data-stripe-cards-target": "stripeelements"}
-    - if @saved_credit_cards.length == 0
+    - if @saved_credit_cards.none?
       %label
         = t('split_checkout.step2.form.stripe.use_new_card')
     %stripe-elements
