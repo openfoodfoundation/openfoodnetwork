@@ -9,7 +9,7 @@
       %label
         = t('split_checkout.step2.form.stripe.use_saved_card')
       = select_tag :card,
-        options_for_select(@saved_credit_cards.map {|cc| [ "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id ] } + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], @selected_card),
+        options_for_select(stripe_card_options(@saved_credit_cards) + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], @selected_card),
         { "data-action": "change->stripe-cards#onSelectCard", "data-stripe-cards-target": "select" }
 
   .checkout-input{"data-stripe-cards-target": "stripeelements"}
