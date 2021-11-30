@@ -356,6 +356,22 @@ describe Spree::Payment do
             payment.void_transaction!
           end
         end
+
+        context "if payment has any adjustment" do
+          let!(:order) { create(:order) }
+          let!(:payment_method) { create(:payment_method, calculator: ::Calculator::FlatRate.new(preferred_amount: 10)) }
+
+          it "should create another adjustment and revoke the previous one" do
+            payment = create(:payment, order: order, payment_method: payment_method)
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
+
+            payment.void_transaction!
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(0)
+
+            payment = create(:payment, order: order, payment_method: payment_method)
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
+          end
+        end
       end
 
       context "#credit" do
