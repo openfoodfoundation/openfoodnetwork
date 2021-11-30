@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 
+// Handles form elements for selecting previously saved Stripe cards from a list of cards
+
 export default class extends Controller {
   static targets = ["stripeelements", "select"];
 

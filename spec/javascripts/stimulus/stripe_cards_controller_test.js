@@ -3,21 +3,21 @@
  */
 
 import { Application } from "stimulus";
-import stripe_controller from "../../../app/webpacker/controllers/stripe_controller";
+import stripe_cards_controller from "../../../app/webpacker/controllers/stripe_cards_controller";
 
-describe("StripeController", () => {
+describe("StripeCardsController", () => {
   beforeEach(() => {
-    document.body.innerHTML = `<div data-controller="stripe">
-       <select data-action="change->stripe#onSelectCard" id="select">
+    document.body.innerHTML = `<div data-controller="stripe-cards">
+       <select data-action="change->stripe-cards#onSelectCard" id="select">
         <option value="">Blank</option>
         <option value="1">Card #1</option>
         <option value="2">Card #2</option>
        </select>
-       <div data-stripe-target="stripeelements" id="stripeelements" />
+       <div data-stripe-cards-target="stripeelements" id="stripeelements" />
       </div>`;
 
     const application = Application.start();
-    application.register("stripe", stripe_controller);
+    application.register("stripe-cards", stripe_cards_controller);
   });
   describe("#connect", () => {
     it("initialize with the right display state", () => {
