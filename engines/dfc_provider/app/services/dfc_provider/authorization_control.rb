@@ -10,7 +10,10 @@ module DfcProvider
 
     def safe_process
       process
-    rescue JWT::ExpiredSignature, JWT::ImmatureSignature
+    rescue JWT::VerificationError, JWT::ExpiredSignature, JWT::ImmatureSignature => e
+      # To help development debugging
+      raise e if Rails.env.development?
+
       nil
     end
 
