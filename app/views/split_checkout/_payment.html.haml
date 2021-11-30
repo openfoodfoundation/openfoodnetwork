@@ -21,12 +21,9 @@
         - if payment_method.description && !payment_method.description.empty?
           .paymentmethod-description.panel
             #{payment_method.description}
+
         .paymentmethod-form
-          - if payment_method.method_type == "stripe_sca"
-            - method = "stripe"
-          -else 
-            - method = payment_method.method_type
-          = render partial: "split_checkout/payment/#{method}", locals: { payment_method: payment_method, f: f }
+          = render partial: "split_checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
           
   %div.checkout-substep
     = t("split_checkout.step2.explaination")
