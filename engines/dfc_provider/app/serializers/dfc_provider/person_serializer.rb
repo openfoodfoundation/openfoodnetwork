@@ -21,14 +21,13 @@ module DfcProvider
     def context
       {
         'dfc' => 'http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#',
-        '@base' => "#{root_url}api/dfc_provider"
+        '@base' => "#{base_url}api/dfc_provider"
       }
     end
 
     def id
-      dfc_provider_routes.api_v0_dfc_provider_person_url(
-        id: object.id,
-        host: host
+      api_v0_dfc_provider_person_url(
+        id: object.id
       )
     end
 

@@ -4,14 +4,19 @@
 # into JSON-LD format based on DFC ontology
 module DfcProvider
   class BaseSerializer < ActiveModel::Serializer
-    private
+    include DfcProvider::Engine.routes.url_helpers
 
-    def host
-      Rails.application.routes.default_url_options[:host]
+    class << self
+      def default_url_options
+        Rails.application.config.action_mailer.default_url_options
+      end
     end
 
-    def dfc_provider_routes
-      DfcProvider::Engine.routes.url_helpers
+    def base_url
+      [
+        self.class.default_url_options[:protocol] || 'https',
+        self.class.default_url_options[:host]
+      ].join('://')
     end
   end
 end
