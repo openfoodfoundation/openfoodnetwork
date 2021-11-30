@@ -17,7 +17,7 @@ module DfcProvider
     has_many :physical_characteristics, key: 'dfc:physicalCharacterisctics'
 
     def id
-      api_v0_dfc_provider_enterprise_supplied_product_url(
+      api_v0_dfc_provider_enterprise_supplied_product_path(
         enterprise_id: object.product.supplier_id,
         id: object.id
       )

@@ -11,7 +11,7 @@ describe DfcProvider::SuppliedProductSerializer do
   describe '#id' do
     let(:supplied_product_id) {
       [
-        'http://test.host/api/v0/dfc_provider',
+        '/api/v0/dfc_provider',
         'enterprises',
         product.supplier_id,
         'supplied_products',

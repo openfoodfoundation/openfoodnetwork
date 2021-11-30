@@ -14,7 +14,7 @@ module DfcProvider
              key: 'dfc:offeredThrough'
 
     def id
-      api_v0_dfc_provider_enterprise_catalog_item_url(
+      api_v0_dfc_provider_enterprise_catalog_item_path(
         enterprise_id: object.product.supplier_id,
         id: object.id
       )
@@ -40,7 +40,7 @@ module DfcProvider
     private
 
     def reference_id
-      api_v0_dfc_provider_enterprise_supplied_product_url(
+      api_v0_dfc_provider_enterprise_supplied_product_path(
         enterprise_id: object.product.supplier_id,
         id: object.id
       )
