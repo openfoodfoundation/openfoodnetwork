@@ -133,7 +133,8 @@ module Spree
         end
 
         # This method is deprecated and will be removed soon:
-        unless @payment_method&.type == "Spree::Gateway::StripeConnect"
+        unless @payment_method&.type == "Spree::Gateway::StripeConnect" ||
+               OpenFoodNetwork::FeatureToggle.enabled?("StripeConnect")
           providers.reject! { |provider| provider.name.ends_with?("StripeConnect") }
         end
 
