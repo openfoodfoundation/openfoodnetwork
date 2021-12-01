@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Controller used to provide the CatalogItem API for the DFC application
+# Controller used to provide the Enterprises API for the DFC application
 module DfcProvider
   module Api
     module V0
