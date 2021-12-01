@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-# Controller used to provide the API products for the DFC application
+# Abstract controller used to provide common logic to DFC APIs
 module DfcProvider
   module Api
     module V0
       class BaseController < ::Api::V0::BaseController
-        # Skip the authorization check from the main app
+        # Skip the authorization check from the main OFN app
         skip_authorization_check
 
         before_action :check_authorization_with_access_token
 
         respond_to :json
-
-        def show; end
 
         private
 

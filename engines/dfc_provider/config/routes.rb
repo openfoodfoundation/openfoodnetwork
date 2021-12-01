@@ -9,7 +9,8 @@ DfcProvider::Engine.routes.draw do
     namespace :api do
       namespace :v0 do
         scope :dfc_provider, as: :dfc_provider, path: '/dfc_provider' do
-          get '/', to: 'base#show', as: :base
+          # Just used for the JSON-LD context base url generation
+          get '/', to: redirect('/'), as: :base
 
           resources :enterprises, only: [:show] do
             resources :catalog_items, only: [:index, :show]
