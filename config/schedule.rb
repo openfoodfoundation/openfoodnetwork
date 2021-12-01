@@ -1,3 +1,6 @@
+# Force manual loading of rails application to get all env variables from dotenv-rails when running whenever cmd
+require File.expand_path('../environment',  __FILE__)
+
 require 'whenever'
 require 'yaml'
 
