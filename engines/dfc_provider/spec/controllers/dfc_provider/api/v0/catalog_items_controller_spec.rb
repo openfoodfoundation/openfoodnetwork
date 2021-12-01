@@ -87,15 +87,15 @@ describe DfcProvider::Api::V0::CatalogItemsController, type: :controller do
             .and_return(nil)
 
           api_get :index, enterprise_id: 'default'
-          expect(response.response_code).to eq(401)
+          expect(response).to be_unauthorized
         end
       end
     end
 
     context 'without an authorization token' do
-      it 'returns unprocessable_entity head' do
+      it 'returns unauthorized head' do
         api_get :index, enterprise_id: enterprise.id
-        expect(response).to be_unprocessable
+        expect(response).to be_unauthorized
       end
     end
   end

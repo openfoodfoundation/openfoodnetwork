@@ -5,10 +5,10 @@ module DfcProvider
   module Api
     module V0
       class BaseController < ::Api::V0::BaseController
+        # Skip the authorization check from the main app
         skip_authorization_check
 
-        before_action :check_authorization,
-                      :check_user
+        before_action :check_authorization_with_access_token
 
         respond_to :json
 
@@ -16,16 +16,10 @@ module DfcProvider
 
         private
 
-        def check_authorization
-          return if access_token.present?
+        def check_authorization_with_access_token
+          return if access_token.present? && current_user.present?
 
-          head :unprocessable_entity
-        end
-
-        def check_user
-          return if current_user.present?
-
-          head :unauthorized
+          unauthorized
         end
 
         def check_enterprise
@@ -58,10 +52,6 @@ module DfcProvider
 
         def authorization_control
           DfcProvider::AuthorizationControl.new(access_token)
-        end
-
-        def not_found
-          head :not_found
         end
       end
     end
