@@ -85,7 +85,7 @@ The tests of all custom engines can be run with:
 
 Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop.
 
-Note: The time zone on your machine should match the one defined in `config/application.yml`.
+Note: The time zone on your machine should match the one defined in the `.env[.*]` file.
 
 Once [npm dependencies are installed][karma], AngularJS tests can be run with:
 

@@ -59,9 +59,6 @@ jobs:
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
-
       - name: Set up database
         run: |
           bundle exec rake db:create
@@ -108,9 +105,6 @@ jobs:
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
 
       - name: Set up database
         run: |
