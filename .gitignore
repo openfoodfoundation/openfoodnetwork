@@ -6,6 +6,7 @@
 .env.development.local
 .env.test.local
 .swp
+.vscode
 *.swo
 *.swp
 .sass-cache
