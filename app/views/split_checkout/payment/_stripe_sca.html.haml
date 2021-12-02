@@ -8,7 +8,7 @@
     .checkout-input
       %label
         = t('split_checkout.step2.form.stripe.use_saved_card')
-      = select_tag :card,
+      = select_tag :existing_card,
         options_for_select(stripe_card_options(@saved_credit_cards) + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], @selected_card),
         { "data-action": "change->stripe-cards#onSelectCard", "data-stripe-cards-target": "select" }
 
