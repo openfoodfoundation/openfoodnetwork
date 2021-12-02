@@ -34,7 +34,7 @@ describe 'StripeElements Service', ->
         StripeElements.requestToken(secrets, submit)
         $rootScope.$digest() # required for #then to by called
         expect(secrets.token).toEqual "token"
-        expect(secrets.cc_type).toEqual "master"
+        expect(secrets.cc_type).toEqual "MasterCard"
         expect(submit).toHaveBeenCalled()
 
     describe "with unsatifactory data", ->
@@ -52,19 +52,3 @@ describe 'StripeElements Service', ->
           expect(Loading.clear).toHaveBeenCalled()
           expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})
           expect(Bugsnag.notify).toHaveBeenCalled()
-
-  describe 'mapTokenApiCardBrand', ->
-    it "maps the brand returned by Stripe's tokenAPI to that required by activemerchant", ->
-      expect(StripeElements.mapTokenApiCardBrand('MasterCard')).toEqual "master"
-      expect(StripeElements.mapTokenApiCardBrand('Visa')).toEqual "visa"
-      expect(StripeElements.mapTokenApiCardBrand('American Express')).toEqual "american_express"
-      expect(StripeElements.mapTokenApiCardBrand('Discover')).toEqual "discover"
-      expect(StripeElements.mapTokenApiCardBrand('JCB')).toEqual "jcb"
-      expect(StripeElements.mapTokenApiCardBrand('Diners Club')).toEqual "diners_club"
-
-  describe 'mapPaymentMethodsApiCardBrand', ->
-    it "maps the brand returned by Stripe's paymentMethodsAPI to that required by activemerchant", ->
-      expect(StripeElements.mapPaymentMethodsApiCardBrand('mastercard')).toEqual "master"
-      expect(StripeElements.mapPaymentMethodsApiCardBrand('amex')).toEqual "american_express"
-      expect(StripeElements.mapPaymentMethodsApiCardBrand('diners')).toEqual "diners_club"
-      expect(StripeElements.mapPaymentMethodsApiCardBrand('visa')).toEqual "visa"
