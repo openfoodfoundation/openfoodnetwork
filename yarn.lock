@@ -1606,10 +1606,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@hotwired/turbo@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.1.tgz#2a8c6ab2f24914d1d47f3a7a7779e2881e8c61a0"
-  integrity sha512-awqraytYXbHV2NT0WAOnDDDGJeHHnFtnztdXvRuIqgsStUtPKM8B9H7ISm77SwbHemEjxEOB8Ku4RfNbEEXsPQ==
+"@hotwired/turbo@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.1.0.tgz#27e44e0e3dc5bd1d4bda0766d579cf5a14091cd7"
+  integrity sha512-Q8kGjqwPqER+CtpQudbH+3Zgs2X4zb6pBAlr6NsKTXadg45pAOvxI9i4QpuHbwSzR2+x87HUm+rot9F/Pe8rxA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
