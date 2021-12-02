@@ -1,8 +1,3 @@
-- content_for :injection_data do
-  - if Stripe.publishable_key
-    :javascript
-      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
-
 %div{"data-controller": "stripe-cards"}
   - if @saved_credit_cards.any?
     .checkout-input
@@ -16,8 +11,12 @@
     - if @saved_credit_cards.none?
       %label
         = t('split_checkout.step2.form.stripe.use_new_card')
-    %stripe-elements
 
+    %div{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}" }
+      = f.hidden_field :token, { "data-target": "stripe.responseToken" }
+
+      %div.card-element{ "data-target": "stripe.cardElement" }
+      %div.card-errors{ "data-target": "stripe.cardErrors" }
 
   - if spree_current_user
     .checkout-input
