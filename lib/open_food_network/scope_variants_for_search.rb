@@ -34,7 +34,9 @@ module OpenFoodNetwork
     def query_scope
       Spree::Variant.where(is_master: false).
         includes(option_values: :option_type).
-        ransack(search_params.merge(m: 'or')).result
+        ransack(search_params.merge(m: 'or')).
+        result.
+        order("display_name")
     end
 
     def distributor
