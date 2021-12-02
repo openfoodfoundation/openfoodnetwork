@@ -132,7 +132,7 @@ de_DE:
     failure:
       invalid: |
           Ungültige E-Mail-Adresse oder falsches Passwort.
-          Falls Sie zuvor als Gast bestellt haben, erstellen Sie bitte ein Konto. Falls Sie ihr Passwort vergessen haben, setzen sie dieses zurück indem Sie oben auf "Passwort vergessen?" klicken.
+          Falls Sie zuvor als Gast bestellt haben, registrieren Sie sich bitte. Falls Sie ihr Passwort vergessen haben, setzen Sie dieses zurück. Klicken Sie dazu oben auf "Registrieren" bzw. "Passwort vergessen?".
       unconfirmed: "Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren."
       already_registered: "Diese E-Mail-Adresse ist bereits registriert. Bitte loggen Sie sich ein oder verwenden Sie eine andere E-Mail-Adresse."
     success:

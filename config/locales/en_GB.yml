@@ -2481,7 +2481,7 @@ en_GB:
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: 20%
-  report_header_gst_free_income: No VAT 0% and excluded from the VAT return
+  report_header_gst_free_income: Zero rated income
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
