@@ -21,6 +21,10 @@ describe "VariantUnitManager", ->
       expect(VariantUnitManager.getScale(0.4,"weight")).toEqual 1
       expect(VariantUnitManager.getScale(0.0004,"volume")).toEqual 0.001
 
+    it "returns the right unit when using imperial units", ->
+      expect(VariantUnitManager.getScale(453.6, "weight")).toEqual 453.6
+      expect(VariantUnitManager.getScale(28.35, "weight")).toEqual 28.35
+
   describe "getUnitName", ->
     it "returns the unit name based on the scale and unit type (weight/volume) provided", ->
       expect(VariantUnitManager.getUnitName(1, "weight")).toEqual "g"
