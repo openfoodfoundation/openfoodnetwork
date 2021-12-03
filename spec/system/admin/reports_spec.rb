@@ -90,7 +90,7 @@ describe '
       ].sort)
     end
   end
-  
+
   it "orders and distributors report" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
