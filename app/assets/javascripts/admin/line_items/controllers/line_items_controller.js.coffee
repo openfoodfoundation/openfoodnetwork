@@ -128,14 +128,20 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.selectedUnitsProduct = unitsProduct
     $scope.selectedUnitsVariant = unitsVariant
 
+  $scope.getScale = (lineItem) ->
+    if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
+      VariantUnitManager.getScale(lineItem.units_variant.unit_value, lineItem.units_product.variant_unit)
+    else
+      1
+
   $scope.sumUnitValues = ->
-    sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-      sum + lineItem.final_weight_volume
+    sum = $scope.filteredLineItems?.reduce (sum, lineItem) ->
+      sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getScale(lineItem))
     , 0
 
   $scope.sumMaxUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-        sum + lineItem.max_quantity * lineItem.units_variant.unit_value
+      sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getScale(lineItem))
     , 0
 
   $scope.roundToThreeDecimals = (value) ->

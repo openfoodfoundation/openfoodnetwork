@@ -213,6 +213,15 @@ describe "LineItemsCtrl", ->
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
+        it "returns the sum of the final_weight_volumes for line_items with both metric and imperial units", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 907.2, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 453.6 } }
+            { final_weight_volume: 2000, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 1000 } }
+            { final_weight_volume: 56.7, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 28.35 } }
+            { final_weight_volume: 2, units_product: { variant_unit: "volume" }, units_variant: { unit_value: 1.0 } }
+          ]
+          expect(scope.sumUnitValues()).toEqual 8
+
       describe "sumMaxUnitValues()", ->
         it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
           scope.filteredLineItems = [
