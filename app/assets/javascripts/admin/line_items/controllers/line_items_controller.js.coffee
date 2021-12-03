@@ -138,6 +138,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
         sum + lineItem.max_quantity * lineItem.units_variant.unit_value
     , 0
 
+  $scope.roundToThreeDecimals = (value) ->
+    Math.round(value * 1000) / 1000
+
   $scope.allFinalWeightVolumesPresent = ->
     for i,lineItem of $scope.filteredLineItems
       return false if !lineItem.hasOwnProperty('final_weight_volume') || !(lineItem.final_weight_volume > 0)
@@ -150,7 +153,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
       scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
       unit_name = VariantUnitManager.getUnitName(unitsVariant.unit_value, unitsProduct.variant_unit)
-      Math.round(value/scale * 1000)/1000 + " " + unit_name
+      $scope.roundToThreeDecimals(value/scale) + " " + unit_name
     else
       ''
 
@@ -159,7 +162,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
       $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
       ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        Math.round( sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * 1000)/1000
+        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size)
     else
       ''
 
