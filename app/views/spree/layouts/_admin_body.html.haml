@@ -1,5 +1,6 @@
 = admin_inject_currency_config
 = render "layouts/i18n_script"
+= yield :stripe_js
 
 #wrapper{ data: { hook: '' } }
   - if flash[:error]

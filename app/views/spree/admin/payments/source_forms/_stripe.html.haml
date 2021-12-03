@@ -1,6 +1,7 @@
 -# = render "spree/admin/payments/source_forms/gateway", payment_method: payment_method
 .stripe
-  = render "shared/stripe_js"
+  - content_for :stripe_js, flush: true do
+    = render "shared/stripe_js"
 
   - if Stripe.publishable_key
     :javascript
@@ -15,4 +16,4 @@
     .three.columns
       = label_tag :card_details, t(:card_details)
     .nine.columns
-      %stripe-elements
+      %stripe-elements{selected: "isSelected(#{payment_method.id})"}
