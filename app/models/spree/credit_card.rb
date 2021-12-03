@@ -7,7 +7,6 @@ module Spree
 
     has_many :payments, as: :source
 
-    before_validation :reformat_card_type!
     before_save :set_last_digits
 
     attr_accessor :verification_value
@@ -118,8 +117,8 @@ module Spree
 
     private
 
-    def reformat_card_type!(type = nil)
-      self[:cc_type] = active_merchant_card_type(type || cc_type)
+    def reformat_card_type!(type)
+      self[:cc_type] = active_merchant_card_type(type)
     end
 
     # ActiveMerchant requires certain credit card brand names to be stored in a specific format.
