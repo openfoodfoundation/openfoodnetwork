@@ -228,34 +228,35 @@ describe "LineItemsCtrl", ->
 
         beforeEach ->
           spyOn(Math,"round").and.callThrough()
+        unitsVariant = { unit_value: "1" }
 
         it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
 
         it "returns '', and does not call Math.round if variant_unit is 'items'", ->
-          unitsVariant = { variant_unit: "items" }
-          expect(scope.formattedValueWithUnitName(1,unitsVariant)).toEqual ''
+          unitsProduct = { variant_unit: "items" }
+          expect(scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)).toEqual ''
           expect(Math.round).not.toHaveBeenCalled()
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-          unitsVariant = { variant_unit: "weight" }
-          scope.formattedValueWithUnitName(1,unitsVariant)
+          unitsProduct = { variant_unit: "weight" }
+          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
           scope.selectedUnitsVariant = { variant_unit: "volume" }
-          scope.formattedValueWithUnitName(1,unitsVariant)
+          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
 
         it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
-          unitsVariant = { variant_unit: "weight" }
+          unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 5
-          scope.formattedValueWithUnitName(10, unitsVariant)
+          scope.formattedValueWithUnitName(10, unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
-          unitsVariant = { variant_unit: "weight" }
+          unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 1000
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
-          expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
+          expect(scope.formattedValueWithUnitName(2000,unitsProduct,unitsVariant)).toEqual "2 kg"
 
       describe "updating the price upon updating the weight of a line item", ->
         beforeEach ->

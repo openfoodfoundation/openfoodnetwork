@@ -149,7 +149,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     # A Units Variant is an API object which holds unit properies of a variant
     if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
       scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
-      Math.round(value/scale * 1000)/1000 + " " + VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
+      unit_name = VariantUnitManager.getUnitName(unitsVariant.unit_value, unitsProduct.variant_unit)
+      Math.round(value/scale * 1000)/1000 + " " + unit_name
     else
       ''
 
