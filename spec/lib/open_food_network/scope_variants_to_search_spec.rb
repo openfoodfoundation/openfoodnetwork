@@ -65,15 +65,16 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
     context "searching products starting with the same 3 caracters" do
       let(:params) { { q: "pro" } }
       it "returns variants ordered by display_name" do
-        v1.display_name = "Product 1 - b"
-        v2.display_name = "Product 1 - a"
-        v3.display_name = "Product 1 - c"
-        v4.display_name = "Product 1"
-        v1.save!
-        v2.save!
-        v3.save!
-        v4.save!
-        expect(result.map(&:display_name)).to eq ["Product 1", "Product 1 - a", "Product 1 - b", "Product 1 - c"]
+        p1.name = "Product b"
+        p2.name = "Product a"
+        p3.name = "Product c"
+        p4.name = "Product 1"
+        p1.save!
+        p2.save!
+        p3.save!
+        p4.save!
+        expect(result.map(&:name)).
+          to eq(["Product 1", "Product a", "Product b", "Product c"])
       end
     end
   end

@@ -36,7 +36,8 @@ module OpenFoodNetwork
         includes(option_values: :option_type).
         ransack(search_params.merge(m: 'or')).
         result.
-        order("display_name")
+        includes(:product).
+        order("products_spree_variants.name, display_name, display_as, products_spree_variants.variant_unit_name")
     end
 
     def distributor
