@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = [ "cardElement", "cardErrors", "responseToken" ];
+  static targets = [ "cardElement", "cardErrors", "expMonth", "expYear", "brand", "last4", "pmId" ];
   static styles = {
     base: {
       fontFamily: "Roboto, Arial, sans-serif",
@@ -16,9 +16,13 @@ export default class extends Controller {
   connect() {
     const stripe = Stripe(this.data.get("key"));
     const elements = stripe.elements();
-    const form = this.responseTokenTarget.form;
+    const form = this.pmIdTarget.form;
     const error_container = this.cardErrorsTarget;
-    const token_field = this.responseTokenTarget;
+    const exp_month_field = this.expMonthTarget;
+    const exp_year_field = this.expYearTarget;
+    const brand_field = this.brandTarget;
+    const last4_field = this.last4Target;
+    const pm_id_field = this.pmIdTarget;
 
     const stripe_element = elements.create("card", {
       style: this.constructor.styles,
@@ -27,7 +31,7 @@ export default class extends Controller {
 
     // Mount Stripe Elements JS to the field and add form validations
     stripe_element.mount(this.cardElementTarget);
-    stripe_element.addEventListener("change", function (event) {
+    stripe_element.addEventListener("change", event => {
       if (event.error) {
         error_container.textContent = event.error.message;
       } else {
@@ -37,14 +41,20 @@ export default class extends Controller {
 
     // Before the form is submitted we send the card details directly to Stripe (via StripeJS),
     // and receive a token which represents the card object, and add that token into the form.
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", event => {
       event.preventDefault();
+      event.stopPropagation();
 
-      stripe.createPaymentMethod({type: "card", card: stripe_element}).then(function (response) {
+      stripe.createPaymentMethod({type: "card", card: stripe_element}).then(response => {
         if (response.error) {
           error_container.textContent = response.error.message;
         } else {
-          token_field.setAttribute("value", response.paymentMethod.id);
+          pm_id_field.setAttribute("value", response.paymentMethod.id);
+          exp_month_field.setAttribute("value", response.paymentMethod.card.exp_month);
+          exp_year_field.setAttribute("value", response.paymentMethod.card.exp_year);
+          brand_field.setAttribute("value", response.paymentMethod.card.brand);
+          last4_field.setAttribute("value", response.paymentMethod.card.last4);
+
           form.submit();
         }
       });

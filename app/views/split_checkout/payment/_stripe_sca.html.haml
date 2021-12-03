@@ -13,13 +13,17 @@
         = t('split_checkout.step2.form.stripe.use_new_card')
 
     %div{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}" }
-      = f.hidden_field :token, { "data-target": "stripe.responseToken" }
+      = hidden_field_tag "order[payments_attributes][][source_attributes][month]", nil, { "data-stripe-target": "expMonth" }
+      = hidden_field_tag "order[payments_attributes][][source_attributes][year]", nil, { "data-stripe-target": "expYear" }
+      = hidden_field_tag "order[payments_attributes][][source_attributes][cc_type]", nil, { "data-stripe-target": "brand" }
+      = hidden_field_tag "order[payments_attributes][][source_attributes][last_digits]", nil, { "data-stripe-target": "last4" }
+      = hidden_field_tag "order[payments_attributes][][source_attributes][gateway_payment_profile_id]", nil, { "data-stripe-target": "pmId" }
 
-      %div.card-element{ "data-target": "stripe.cardElement" }
-      %div.card-errors{ "data-target": "stripe.cardErrors" }
+      %div.card-element{ "data-stripe-target": "cardElement" }
+      %div.card-errors{ "data-stripe-target": "cardErrors" }
 
   - if spree_current_user
     .checkout-input
-      = check_box_tag :save_card, {id: "save_card", name: "save_card", checked: false, value: "1"}
-      = label :save_card, t('split_checkout.step2.form.stripe.save_card'), { for: "save_card" }
+      = check_box_tag "order[payments_attributes][][source_attributes][save_requested_by_customer]", 1, false
+      = label :save_requested_by_customer, t('split_checkout.step2.form.stripe.save_card'), { for: "save_requested_by_customer" }
     
