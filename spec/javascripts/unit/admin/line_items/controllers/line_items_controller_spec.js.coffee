@@ -258,6 +258,14 @@ describe "LineItemsCtrl", ->
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
           expect(scope.formattedValueWithUnitName(2000,unitsProduct,unitsVariant)).toEqual "2 kg"
 
+        it "handle correclty the imperial units", ->
+          unitsProduct = { variant_unit: "weight" }
+          unitsVariant = { unit_value: "453.6" }
+          spyOn(VariantUnitManager, "getScale").and.returnValue 1000
+          spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
+          expect(scope.formattedValueWithUnitName(2000, unitsProduct, unitsVariant)).toEqual "2 lb"
+
+
       describe "updating the price upon updating the weight of a line item", ->
         beforeEach ->
           LineItems.pristineByID = { 1: { price: 2.00, quantity: 1, final_weight_volume: 2000 } }
