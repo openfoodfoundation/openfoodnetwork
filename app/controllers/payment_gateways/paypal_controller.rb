@@ -80,10 +80,10 @@ module PaymentGateways
         SetExpressCheckoutRequestDetails: {
           InvoiceID: order.number,
           BuyerEmail: order.email,
-          ReturnURL: spree.confirm_paypal_url(
+          ReturnURL: payment_gateways_confirm_paypal_url(
             payment_method_id: params[:payment_method_id], utm_nooverride: 1
           ),
-          CancelURL: spree.cancel_paypal_url,
+          CancelURL: payment_gateways_cancel_paypal_url,
           SolutionType: payment_method.preferred_solution.presence || "Mark",
           LandingPage: payment_method.preferred_landing_page.presence || "Billing",
           cppheaderimage: payment_method.preferred_logourl.presence || "",
