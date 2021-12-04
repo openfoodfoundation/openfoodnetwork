@@ -3,6 +3,8 @@
 # Provides the redirect path if a redirect to the payment gateway is needed
 module Checkout
   class PaypalRedirect
+    include Rails.application.routes.url_helpers
+
     def initialize(params)
       @params = params
     end
@@ -15,13 +17,7 @@ module Checkout
       payment_method = Spree::PaymentMethod.find(payment_method_id)
       return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
 
-      spree_routes_helper.paypal_express_path(payment_method_id: payment_method.id)
-    end
-
-    private
-
-    def spree_routes_helper
-      Spree::Core::Engine.routes.url_helpers
+      payment_gateways_paypal_express_path(payment_method_id: payment_method.id)
     end
   end
 end
