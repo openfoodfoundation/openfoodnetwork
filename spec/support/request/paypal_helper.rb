@@ -10,7 +10,7 @@ module PaypalHelper
       set_express_checkout: paypal_response,
       express_checkout_url: options[:redirect]
     )
-    allow_any_instance_of(Spree::PaypalController).to receive(:provider).
+    allow_any_instance_of(PaymentGateways::PaypalController).to receive(:provider).
       and_return(paypal_provider)
   end
 
