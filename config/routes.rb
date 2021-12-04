@@ -68,6 +68,13 @@ Openfoodnetwork::Application.routes.draw do
     resources :callbacks, only: [:index]
     resources :webhooks, only: [:create]
   end
+  
+  namespace :payment_gateways do
+    get "/paypal", to: "paypal#express", as: :paypal_express
+    get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
+    get "/paypal/cancel", to: "paypal#cancel", as: :cancel_paypal
+    get "/paypal/notify", to: "paypal#notify", as: :notify_paypal
+  end
 
   constraints SplitCheckoutConstraint.new do
     get '/checkout', to: 'split_checkout#edit'
