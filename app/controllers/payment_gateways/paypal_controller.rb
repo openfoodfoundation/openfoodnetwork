@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module PaymentGateways
   class PaypalController < ::BaseController
     include OrderStockCheck
 
