@@ -55,8 +55,7 @@ module PaymentGateways
       @order.process_payments!
       @order.next
       if @order.complete?
-        flash.notice = t(:order_processed_successfully)
-        session[:order_id] = nil
+        order_completion_reset(@order)
         redirect_to completion_route(@order)
       else
         redirect_to main_app.checkout_state_path(@order.state)
