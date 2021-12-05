@@ -32,11 +32,6 @@ class CheckoutController < ::BaseController
 
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
-
-    # This is only required because of spree_paypal_express. If we implement
-    # a version of paypal that uses this controller, and more specifically
-    # the #action_failed method, then we can remove this call
-    reset_order_to_cart
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   end
