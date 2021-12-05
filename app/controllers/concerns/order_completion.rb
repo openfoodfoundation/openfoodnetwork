@@ -66,4 +66,8 @@ module OrderCompletion
 
     @order.errors.full_messages.to_sentence
   end
+
+  def gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+  end
 end

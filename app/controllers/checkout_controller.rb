@@ -33,7 +33,8 @@ class CheckoutController < ::BaseController
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
   rescue Spree::Core::GatewayError => e
-    rescue_from_spree_gateway_error(e)
+    gateway_error(e)
+    action_failed(e)
   end
 
   def update
@@ -42,7 +43,8 @@ class CheckoutController < ::BaseController
 
     checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
-    rescue_from_spree_gateway_error(e)
+    gateway_error(e)
+    action_failed(e)
   rescue StandardError => e
     flash[:error] = I18n.t("checkout.failed")
     action_failed(e)
@@ -202,11 +204,6 @@ class CheckoutController < ::BaseController
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
-  end
-
-  def rescue_from_spree_gateway_error(error)
-    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    action_failed(error)
   end
 
   def permitted_params
