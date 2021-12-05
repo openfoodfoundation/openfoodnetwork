@@ -99,10 +99,6 @@ class CheckoutController < ::BaseController
     flash[:notice] = I18n.t("checkout.payment_cancelled_due_to_stock")
   end
 
-  def reset_order_to_cart
-    OrderCheckoutRestart.new(@order).call
-  end
-
   def setup_for_current_state
     method_name = :"before_#{@order.state}"
     __send__(method_name) if respond_to?(method_name, true)

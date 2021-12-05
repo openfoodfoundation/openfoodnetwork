@@ -8,6 +8,7 @@ module PaymentGateways
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
     before_action :load_order, only: [:express, :confirm]
+    before_action :handle_insufficient_stock, only: [:express, :confirm]
     before_action :permit_parameters!
 
     after_action :reset_order_when_complete, only: :confirm
@@ -39,7 +40,6 @@ module PaymentGateways
     def confirm
       # At this point the user has come back from the Paypal form, and we get one
       # last chance to interact with the payment process before the money moves...
-      return reset_to_cart unless sufficient_stock?
 
       @order.payments.create!(
         source: Spree::PaypalExpressCheckout.create(
@@ -102,11 +102,6 @@ module PaymentGateways
       return unless current_order.complete?
 
       order_completion_reset(current_order)
-    end
-
-    def reset_to_cart
-      OrderCheckoutRestart.new(@order).call
-      handle_insufficient_stock
     end
 
     # See #1074 and #1837 for more detail on why we need this
