@@ -9,6 +9,9 @@ module OrderCompletion
 
     expire_current_order
     build_new_order(distributor, token)
+
+    session[:access_token] = current_order.token
+    flash[:notice] = t(:order_processed_successfully)
   end
 
   private

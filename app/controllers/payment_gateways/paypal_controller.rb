@@ -100,8 +100,6 @@ module PaymentGateways
       return unless current_order.complete?
 
       order_completion_reset(current_order)
-      flash[:notice] = t(:order_processed_successfully)
-      session[:access_token] = current_order.token
     end
 
     def reset_to_cart
