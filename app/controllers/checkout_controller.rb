@@ -6,6 +6,7 @@ class CheckoutController < ::BaseController
   layout 'darkswarm'
 
   include OrderStockCheck
+  include OrderCompletion
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -54,14 +55,6 @@ class CheckoutController < ::BaseController
     action_failed(e)
   ensure
     @order.update_order!
-  end
-
-  # Clears the cached order. Required for #current_order to return a new order
-  # to serve as cart. See https://github.com/spree/spree/blob/1-3-stable/core/lib/spree/core/controller_helpers/order.rb#L14
-  # for details.
-  def expire_current_order
-    session[:order_id] = nil
-    @current_order = nil
   end
 
   private
@@ -221,8 +214,8 @@ class CheckoutController < ::BaseController
 
   def checkout_succeeded
     Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
-    OrderCompletionReset.new(self, @order).call
 
+    order_completion_reset(@order)
     session[:access_token] = current_order.token
     flash[:notice] = t(:order_processed_successfully)
   end

@@ -3,6 +3,7 @@
 module PaymentGateways
   class PaypalController < ::BaseController
     include OrderStockCheck
+    include OrderCompletion
 
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
@@ -67,12 +68,6 @@ module PaymentGateways
       redirect_to main_app.checkout_path
     end
 
-    # Clears the cached order. Required for #current_order to return a new order to serve as cart.
-    def expire_current_order
-      session[:order_id] = nil
-      @current_order = nil
-    end
-
     private
 
     def express_checkout_request_details(order)
@@ -104,8 +99,8 @@ module PaymentGateways
     def reset_order_when_complete
       return unless current_order.complete?
 
+      order_completion_reset(current_order)
       flash[:notice] = t(:order_processed_successfully)
-      OrderCompletionReset.new(self, current_order).call
       session[:access_token] = current_order.token
     end
 
