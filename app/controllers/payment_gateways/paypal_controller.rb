@@ -56,7 +56,7 @@ module PaymentGateways
       @order.next
       if @order.complete?
         order_completion_reset(@order)
-        redirect_to completion_route(@order)
+        redirect_to order_completion_route(@order)
       else
         redirect_to main_app.checkout_state_path(@order.state)
       end
@@ -181,10 +181,6 @@ module PaymentGateways
         Country: current_order.bill_address.country.iso,
         PostalCode: current_order.bill_address.zipcode
       }
-    end
-
-    def completion_route(order)
-      main_app.order_path(order, order_token: order.token)
     end
 
     def address_required?

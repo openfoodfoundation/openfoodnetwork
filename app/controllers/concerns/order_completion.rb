@@ -30,4 +30,8 @@ module OrderCompletion
     new_order.tokenized_permission.token = token
     new_order.tokenized_permission.save!
   end
+
+  def order_completion_route(order)
+    main_app.order_path(order, order_token: order.token)
+  end
 end
