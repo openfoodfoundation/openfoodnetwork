@@ -128,7 +128,7 @@ class CheckoutController < ::BaseController
 
     if OrderWorkflow.new(@order).next && order_complete?
       processing_succeeded
-      redirect_to order_completion_route(@order)
+      redirect_to order_completion_route
     else
       processing_failed
     end
@@ -181,10 +181,10 @@ class CheckoutController < ::BaseController
   def update_succeeded_response
     respond_to do |format|
       format.html do
-        respond_with(@order, location: order_completion_route(@order))
+        respond_with(@order, location: order_completion_route)
       end
       format.json do
-        render json: { path: order_completion_route(@order) }, status: :ok
+        render json: { path: order_completion_route }, status: :ok
       end
     end
   end
