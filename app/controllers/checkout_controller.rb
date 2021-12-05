@@ -161,7 +161,7 @@ class CheckoutController < ::BaseController
 
     if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
-      redirect_to(order_path(@order)) && return
+      redirect_to order_path(@order)
     else
       checkout_failed
     end
