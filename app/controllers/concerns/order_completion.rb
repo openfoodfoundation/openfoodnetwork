@@ -51,6 +51,12 @@ module OrderCompletion
     order_completion_reset(@order)
   end
 
+  def processing_failed(error = RuntimeError.new(order_processing_error))
+    Bugsnag.notify(error, order: @order)
+    flash[:error] = order_processing_error if flash.blank?
+    Checkout::PostCheckoutActions.new(@order).failure
+  end
+
   def order_processing_error
     return t(:payment_processing_failed) if @order.errors.blank?
 

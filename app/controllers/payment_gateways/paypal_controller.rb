@@ -56,6 +56,7 @@ module PaymentGateways
         processing_succeeded
         redirect_to order_completion_route(@order)
       else
+        processing_failed
         redirect_to main_app.checkout_state_path(@order.state)
       end
     end

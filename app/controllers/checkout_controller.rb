@@ -129,13 +129,13 @@ class CheckoutController < ::BaseController
   end
 
   def handle_redirect_from_stripe
-    return checkout_failed unless @order.process_payments!
+    return processing_failed unless @order.process_payments!
 
     if OrderWorkflow.new(@order).next && order_complete?
       processing_succeeded
       redirect_to order_completion_route(@order)
     else
-      checkout_failed
+      processing_failed
     end
   end
 
@@ -195,14 +195,8 @@ class CheckoutController < ::BaseController
   end
 
   def action_failed(error = RuntimeError.new(order_processing_error))
-    checkout_failed(error)
+    processing_failed(error)
     action_failed_response
-  end
-
-  def checkout_failed(error = RuntimeError.new(order_processing_error))
-    Bugsnag.notify(error, order: @order)
-    flash[:error] = order_processing_error if flash.blank?
-    Checkout::PostCheckoutActions.new(@order).failure
   end
 
   def action_failed_response
