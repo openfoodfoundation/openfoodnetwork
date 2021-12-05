@@ -30,12 +30,7 @@ class CheckoutController < ::BaseController
 
   helper 'spree/orders'
 
-  def edit
-    return handle_redirect_from_stripe if valid_payment_intent_provided?
-  rescue Spree::Core::GatewayError => e
-    gateway_error(e)
-    action_failed(e)
-  end
+  def edit; end
 
   def update
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
@@ -63,14 +58,12 @@ class CheckoutController < ::BaseController
 
     return order_invalid! if order_invalid_for_checkout?
     return handle_invalid_stock unless valid_order_line_items?
-    return if valid_payment_intent_provided?
 
     before_address
     setup_for_current_state
   end
 
   def handle_invalid_stock
-    cancel_incomplete_payments if valid_payment_intent_provided?
     reset_order_to_cart
 
     respond_to do |format|
@@ -82,16 +75,6 @@ class CheckoutController < ::BaseController
         render json: { path: main_app.cart_path }, status: :bad_request
       end
     end
-  end
-
-  def cancel_incomplete_payments
-    # The checkout could not complete due to stock running out. We void any pending (incomplete)
-    # Stripe payments here as the order will need to be changed and resubmitted (or abandoned).
-    @order.payments.incomplete.each do |payment|
-      payment.void_transaction!
-      payment.adjustment&.update_columns(eligible: false, state: "finalized")
-    end
-    flash[:notice] = I18n.t("checkout.payment_cancelled_due_to_stock")
   end
 
   def setup_for_current_state
@@ -110,28 +93,6 @@ class CheckoutController < ::BaseController
 
   def before_payment
     current_order.payments.destroy_all if request.put?
-  end
-
-  def valid_payment_intent_provided?
-    @valid_payment_intent_provided ||= begin
-      return false unless params["payment_intent"]&.starts_with?("pi_")
-
-      last_payment = OrderPaymentFinder.new(@order).last_payment
-      @order.state == "payment" &&
-        last_payment&.state == "requires_authorization" &&
-        last_payment&.response_code == params["payment_intent"]
-    end
-  end
-
-  def handle_redirect_from_stripe
-    return processing_failed unless @order.process_payments!
-
-    if OrderWorkflow.new(@order).next && order_complete?
-      processing_succeeded
-      redirect_to order_completion_route
-    else
-      processing_failed
-    end
   end
 
   def checkout_workflow(shipping_method_id)
