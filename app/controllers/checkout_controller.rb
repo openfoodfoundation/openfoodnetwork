@@ -22,8 +22,6 @@ class CheckoutController < ::BaseController
 
   before_action :load_order
 
-  before_action :ensure_order_not_completed
-  before_action :ensure_checkout_allowed
   before_action :handle_insufficient_stock
 
   before_action :associate_user
@@ -63,20 +61,12 @@ class CheckoutController < ::BaseController
     authorize!(:edit, current_order, session[:access_token])
   end
 
-  def ensure_checkout_allowed
-    redirect_to main_app.cart_path unless @order.checkout_allowed?
-  end
-
-  def ensure_order_not_completed
-    redirect_to main_app.cart_path if @order.completed?
-  end
-
   def load_order
     @order = current_order
 
     if order_invalid_for_checkout?
       Bugsnag.notify("Notice: invalid order loaded during Stripe processing", order: @order) if valid_payment_intent_provided?
-      redirect_to(main_app.shop_path) && return
+      return redirect_to(main_app.shop_path)
     end
 
     handle_invalid_stock && return unless valid_order_line_items?
