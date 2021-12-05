@@ -7,8 +7,9 @@ module PaymentGateways
 
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
-    after_action :reset_order_when_complete, only: :confirm
     before_action :permit_parameters!
+
+    after_action :reset_order_when_complete, only: :confirm
 
     def express
       order = current_order || raise(ActiveRecord::RecordNotFound)
