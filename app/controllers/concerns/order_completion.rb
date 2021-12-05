@@ -34,4 +34,15 @@ module OrderCompletion
   def order_completion_route(order)
     main_app.order_path(order, order_token: order.token)
   end
+
+  def order_invalid_for_checkout?
+    !@order || @order.completed? || !@order.checkout_allowed?
+  end
+
+  def order_invalid!
+    Bugsnag.notify("Notice: invalid order loaded during checkout", order: @order)
+
+    flash[:error] = t('checkout.order_not_loaded')
+    redirect_to main_app.shop_path
+  end
 end

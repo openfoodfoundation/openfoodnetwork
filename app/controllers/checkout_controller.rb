@@ -64,10 +64,7 @@ class CheckoutController < ::BaseController
   def load_order
     @order = current_order
 
-    if order_invalid_for_checkout?
-      Bugsnag.notify("Notice: invalid order loaded during Stripe processing", order: @order) if valid_payment_intent_provided?
-      return redirect_to(main_app.shop_path)
-    end
+    return order_invalid! if order_invalid_for_checkout?
 
     handle_invalid_stock && return unless valid_order_line_items?
 
@@ -75,10 +72,6 @@ class CheckoutController < ::BaseController
 
     before_address
     setup_for_current_state
-  end
-
-  def order_invalid_for_checkout?
-    !@order || @order.completed? || !@order.checkout_allowed?
   end
 
   def handle_invalid_stock

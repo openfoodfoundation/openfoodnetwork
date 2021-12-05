@@ -7,15 +7,14 @@ module PaymentGateways
 
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
+    before_action :load_order, only: [:express, :confirm]
     before_action :permit_parameters!
 
     after_action :reset_order_when_complete, only: :confirm
 
     def express
-      order = current_order || raise(ActiveRecord::RecordNotFound)
-
       pp_request = provider.build_set_express_checkout(
-        express_checkout_request_details(order)
+        express_checkout_request_details(@order)
       )
 
       begin
@@ -38,8 +37,6 @@ module PaymentGateways
     end
 
     def confirm
-      @order = current_order || raise(ActiveRecord::RecordNotFound)
-
       # At this point the user has come back from the Paypal form, and we get one
       # last chance to interact with the payment process before the money moves...
       return reset_to_cart unless sufficient_stock?
@@ -68,6 +65,12 @@ module PaymentGateways
     end
 
     private
+
+    def load_order
+      @order = current_order
+
+      order_invalid! if order_invalid_for_checkout?
+    end
 
     def express_checkout_request_details(order)
       {
