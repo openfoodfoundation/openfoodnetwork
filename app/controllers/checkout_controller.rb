@@ -98,12 +98,6 @@ class CheckoutController < ::BaseController
     !@order || @order.completed? || !@order.checkout_allowed?
   end
 
-  def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? &&
-      OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).
-        distributes_order_variants?(@order)
-  end
-
   def handle_invalid_stock
     cancel_incomplete_payments if valid_payment_intent_provided?
     reset_order_to_cart
