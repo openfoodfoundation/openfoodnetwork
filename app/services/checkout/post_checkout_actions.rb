@@ -7,10 +7,9 @@ module Checkout
       @order = order
     end
 
-    def success(controller, params, current_user)
+    def success(params, current_user)
       set_customer_terms_and_conditions_accepted_at(params)
       save_order_addresses_as_user_default(params, current_user)
-      OrderCompletionReset.new(controller, @order).call
     end
 
     def failure

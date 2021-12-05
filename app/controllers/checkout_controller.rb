@@ -220,7 +220,8 @@ class CheckoutController < ::BaseController
   end
 
   def checkout_succeeded
-    Checkout::PostCheckoutActions.new(@order).success(self, params, spree_current_user)
+    Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
+    OrderCompletionReset.new(self, @order).call
 
     session[:access_token] = current_order.token
     flash[:notice] = t(:order_processed_successfully)
