@@ -51,8 +51,9 @@ module PaymentGateways
       )
       @order.process_payments!
       @order.next
+
       if @order.complete?
-        order_completion_reset(@order)
+        processing_succeeded
         redirect_to order_completion_route(@order)
       else
         redirect_to main_app.checkout_state_path(@order.state)

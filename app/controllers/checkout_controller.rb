@@ -132,7 +132,7 @@ class CheckoutController < ::BaseController
     return checkout_failed unless @order.process_payments!
 
     if OrderWorkflow.new(@order).next && order_complete?
-      checkout_succeeded
+      processing_succeeded
       redirect_to order_completion_route(@order)
     else
       checkout_failed
@@ -180,7 +180,7 @@ class CheckoutController < ::BaseController
 
   def update_response
     if order_complete?
-      checkout_succeeded
+      processing_succeeded
       update_succeeded_response
     else
       action_failed(RuntimeError.new("Order not complete after the checkout workflow"))
@@ -189,12 +189,6 @@ class CheckoutController < ::BaseController
 
   def order_complete?
     @order.state == "complete" || @order.completed?
-  end
-
-  def checkout_succeeded
-    Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
-
-    order_completion_reset(@order)
   end
 
   def update_succeeded_response

@@ -45,4 +45,9 @@ module OrderCompletion
     flash[:error] = t('checkout.order_not_loaded')
     redirect_to main_app.shop_path
   end
+
+  def processing_succeeded
+    Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
+    order_completion_reset(@order)
+  end
 end
