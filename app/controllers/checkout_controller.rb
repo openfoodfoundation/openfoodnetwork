@@ -60,9 +60,7 @@ class CheckoutController < ::BaseController
     @order = current_order
 
     return order_invalid! if order_invalid_for_checkout?
-
-    handle_invalid_stock && return unless valid_order_line_items?
-
+    return handle_invalid_stock unless valid_order_line_items?
     return if valid_payment_intent_provided?
 
     before_address
