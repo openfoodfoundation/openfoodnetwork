@@ -50,4 +50,10 @@ module OrderCompletion
     Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
     order_completion_reset(@order)
   end
+
+  def order_processing_error
+    return t(:payment_processing_failed) if @order.errors.blank?
+
+    @order.errors.full_messages.to_sentence
+  end
 end

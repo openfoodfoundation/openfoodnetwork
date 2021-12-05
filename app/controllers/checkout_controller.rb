@@ -170,14 +170,6 @@ class CheckoutController < ::BaseController
     )
   end
 
-  def order_error
-    if @order.errors.present?
-      @order.errors.full_messages.to_sentence
-    else
-      t(:payment_processing_failed)
-    end
-  end
-
   def update_response
     if order_complete?
       processing_succeeded
@@ -202,14 +194,14 @@ class CheckoutController < ::BaseController
     end
   end
 
-  def action_failed(error = RuntimeError.new(order_error))
+  def action_failed(error = RuntimeError.new(order_processing_error))
     checkout_failed(error)
     action_failed_response
   end
 
-  def checkout_failed(error = RuntimeError.new(order_error))
+  def checkout_failed(error = RuntimeError.new(order_processing_error))
     Bugsnag.notify(error, order: @order)
-    flash[:error] = order_error if flash.blank?
+    flash[:error] = order_processing_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end
 
