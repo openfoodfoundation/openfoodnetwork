@@ -35,6 +35,10 @@ module OrderCompletion
     main_app.order_path(@order, order_token: @order.token)
   end
 
+  def order_failed_route
+    main_app.checkout_path
+  end
+
   def order_invalid_for_checkout?
     !@order || @order.completed? || !@order.checkout_allowed?
   end
