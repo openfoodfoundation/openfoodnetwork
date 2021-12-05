@@ -25,6 +25,8 @@ module OrderStockCheck
   end
 
   def reset_order_to_cart
+    return if Flipper.enabled? :split_checkout
+
     OrderCheckoutRestart.new(@order).call
   end
 end
