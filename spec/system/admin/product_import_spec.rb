@@ -685,8 +685,6 @@ describe "Product Import", js: true do
         # Save file.
         proceed_with_save
 
-        # Be extra patient.
-        expect_progress_percentages "33%", "67%", "100%"
         expect_import_completed
 
         # Check that all rows are saved.
@@ -711,12 +709,6 @@ describe "Product Import", js: true do
     proceed_with_save
     expect(page).to have_selector 'div.save-results', visible: true
     expect_import_completed
-  end
-
-  def expect_progress_percentages(*percentages)
-    percentages.each do |percentage|
-      page.has_selector? ".progress-interface", text: percentage # Waits for progress bar
-    end
   end
 
   def proceed_with_save
