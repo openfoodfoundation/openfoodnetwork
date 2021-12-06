@@ -5,30 +5,30 @@ require 'spec_helper'
 describe Spree::Gateway::StripeSCA, type: :model do
   before { Stripe.api_key = "sk_test_12345" }
 
-  describe "#purchase" do
-    let(:order) { create(:order_with_totals_and_distribution) }
-    let(:credit_card) { create(:credit_card) }
-    let(:payment) {
-      create(
-        :payment,
-        state: "checkout",
-        order: order,
-        amount: order.total,
-        payment_method: subject,
-        source: credit_card,
-        response_code: "12345"
-      )
-    }
-    let(:gateway_options) {
-      { order_id: order.number }
-    }
-    let(:payment_authorised) {
-      payment_intent(payment.amount, "requires_capture")
-    }
-    let(:capture_successful) {
-      payment_intent(payment.amount, "succeeded")
-    }
+  let(:order) { create(:order_with_totals_and_distribution) }
+  let(:credit_card) { create(:credit_card) }
+  let(:payment) {
+    create(
+      :payment,
+      state: "checkout",
+      order: order,
+      amount: order.total,
+      payment_method: subject,
+      source: credit_card,
+      response_code: "12345"
+    )
+  }
+  let(:gateway_options) {
+    { order_id: order.number }
+  }
+  let(:payment_authorised) {
+    payment_intent(payment.amount, "requires_capture")
+  }
+  let(:capture_successful) {
+    payment_intent(payment.amount, "succeeded")
+  }
 
+  describe "#purchase" do
     it "captures the payment" do
       stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
         to_return(status: 200, body: payment_authorised)
@@ -80,6 +80,23 @@ describe Spree::Gateway::StripeSCA, type: :model do
       end
     end
   end
+
+  describe "#external_payment_url" do
+    let(:redirect_double) { instance_double(Checkout::StripeRedirect) }
+
+    it "returns nil when an order is not supplied" do
+      expect(subject.external_payment_url({})).to eq nil
+    end
+
+    it "calls Checkout::StripeRedirect" do
+      expect(Checkout::StripeRedirect).to receive(:new).with(subject, order) { redirect_double }
+      expect(redirect_double).to receive(:path).and_return("http://stripe-test.org")
+
+      expect(subject.external_payment_url(order: order)).to eq "http://stripe-test.org"
+    end
+  end
+
+  private
 
   def payment_intent(amount, status)
     JSON.generate(
