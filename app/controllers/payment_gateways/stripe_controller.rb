@@ -4,23 +4,17 @@ class StripeController < BaseController
   include OrderStockCheck
   include OrderCompletion
 
-  before_action :load_order, only: :confirm
+  before_action :load_checkout_order, only: :confirm
 
   def confirm
     return processing_failed unless valid_payment_intent?
+
+    cancel_incomplete_payments && handle_insufficient_stock unless sufficient_stock?
 
     process_payment_completion!
   end
 
   private
-
-  def load_order
-    @order = current_order
-
-    return order_invalid! if order_invalid_for_checkout?
-
-    (cancel_incomplete_payments && handle_insufficient_stock) unless sufficient_stock?
-  end
 
   def valid_payment_intent?
     @valid_payment_intent ||= begin

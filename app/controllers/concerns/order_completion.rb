@@ -31,6 +31,12 @@ module OrderCompletion
     new_order.tokenized_permission.save!
   end
 
+  def load_checkout_order
+    @order = current_order
+
+    order_invalid! if order_invalid_for_checkout?
+  end
+
   def order_completion_route
     main_app.order_path(@order, order_token: @order.token)
   end

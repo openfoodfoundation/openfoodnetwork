@@ -54,9 +54,8 @@ class CheckoutController < ::BaseController
   end
 
   def load_order
-    @order = current_order
+    load_checkout_order
 
-    return order_invalid! if order_invalid_for_checkout?
     return handle_invalid_stock unless valid_order_line_items?
 
     before_address

@@ -7,7 +7,7 @@ module PaymentGateways
 
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
-    before_action :load_order, only: [:express, :confirm]
+    before_action :load_checkout_order, only: [:express, :confirm]
     before_action :handle_insufficient_stock, only: [:express, :confirm]
     before_action :permit_parameters!
 
@@ -59,12 +59,6 @@ module PaymentGateways
     end
 
     private
-
-    def load_order
-      @order = current_order
-
-      order_invalid! if order_invalid_for_checkout?
-    end
 
     def express_checkout_request_details(order)
       {
