@@ -66,7 +66,7 @@ module Spree
           #   The layout to render can be set inside Spree configuration with the +:layout+ option.
           # Default layout is: +app/views/spree/layouts/spree_application+
           def get_layout
-            layout ||= Spree::Config[:layout]
+            Spree::Config[:layout]
           end
         end
       end
