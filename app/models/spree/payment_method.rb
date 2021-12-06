@@ -61,6 +61,16 @@ module Spree
       raise 'You must implement provider_class method for this gateway.'
     end
 
+    # Does the PaymentMethod require redirecting to an external gateway?
+    def external_gateway?
+      false
+    end
+
+    # Inheriting PaymentMethods can implement this method if needed
+    def external_payment_url(options)
+      nil
+    end
+
     # The class that will process payments for this payment type, used for @payment.source
     # e.g. CreditCard in the case of a the Gateway payment type
     # nil means the payment method doesn't require a source e.g. check

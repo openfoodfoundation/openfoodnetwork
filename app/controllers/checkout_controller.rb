@@ -190,11 +190,14 @@ class CheckoutController < ::BaseController
   end
 
   def redirect_to_payment_gateway
-    redirect_path = Checkout::PaypalRedirect.new(params).path
-    redirect_path = Checkout::StripeRedirect.new(params, @order).path if redirect_path.blank?
-    return if redirect_path.blank?
+    payment_method_id = params.dig(:order, :payments_attributes, 0, :payment_method_id)
+    payment_method = Spree::PaymentMethod.find(payment_method_id)
 
-    render json: { path: redirect_path }, status: :ok
+    redirect_url = payment_method&.external_payment_url(order: @order)
+
+    return if redirect_url.blank?
+
+    render json: { path: redirect_url }, status: :ok
     true
   end
 
