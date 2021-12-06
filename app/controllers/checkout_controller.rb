@@ -178,6 +178,7 @@ class CheckoutController < ::BaseController
       if @order.state == "payment"
         return if redirect_to_payment_gateway
 
+        return action_failed if @order.errors.any?
         return action_failed unless @order.process_payments!
       end
 

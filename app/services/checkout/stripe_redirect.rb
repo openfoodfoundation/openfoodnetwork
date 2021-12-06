@@ -16,7 +16,7 @@ module Checkout
 
       payment = payment_authorizer.call!(return_url)
 
-      raise if order.errors.any?
+      return if order.errors.any?
 
       stripe_payment_url(payment)
     end
