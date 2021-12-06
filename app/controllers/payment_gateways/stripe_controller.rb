@@ -9,7 +9,7 @@ class StripeController < BaseController
   def confirm
     return processing_failed unless valid_payment_intent?
 
-    process_payment_completion
+    process_payment_completion!
   end
 
   private
@@ -32,21 +32,6 @@ class StripeController < BaseController
         last_payment&.state == "requires_authorization" &&
         last_payment&.response_code == params["payment_intent"]
     end
-  end
-
-  def process_payment_completion
-    return processing_failed unless @order.process_payments!
-
-    if OrderWorkflow.new(@order).next && @order.complete?
-      processing_succeeded
-      redirect_to order_completion_route
-    else
-      processing_failed
-      redirect_to order_failed_route
-    end
-  rescue Spree::Core::GatewayError => e
-    gateway_error(e)
-    processing_failed
   end
 
   def cancel_incomplete_payments

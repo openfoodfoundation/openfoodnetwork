@@ -50,6 +50,21 @@ module OrderCompletion
     redirect_to main_app.shop_path
   end
 
+  def process_payment_completion!
+    return processing_failed unless @order.process_payments!
+
+    if OrderWorkflow.new(@order).next && @order.complete?
+      processing_succeeded
+      redirect_to order_completion_route
+    else
+      processing_failed
+      redirect_to order_failed_route
+    end
+  rescue Spree::Core::GatewayError => e
+    gateway_error(e)
+    processing_failed
+  end
+
   def processing_succeeded
     Checkout::PostCheckoutActions.new(@order).success(params, spree_current_user)
     order_completion_reset(@order)

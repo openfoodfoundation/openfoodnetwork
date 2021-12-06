@@ -49,16 +49,8 @@ module PaymentGateways
         amount: @order.total,
         payment_method: payment_method
       )
-      @order.process_payments!
-      @order.next
 
-      if @order.complete?
-        processing_succeeded
-        redirect_to order_completion_route
-      else
-        processing_failed
-        redirect_to order_failed_route
-      end
+      process_payment_completion!
     end
 
     def cancel
