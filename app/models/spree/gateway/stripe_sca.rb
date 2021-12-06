@@ -20,6 +20,16 @@ module Spree
 
       validate :ensure_enterprise_selected
 
+      def external_gateway?
+        true
+      end
+
+      def external_payment_url(options)
+        return if options[:order].blank?
+
+        Checkout::StripeRedirect.new(self, options[:order]).path
+      end
+
       def method_type
         'stripe_sca'
       end

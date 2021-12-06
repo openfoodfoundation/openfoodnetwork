@@ -5,35 +5,41 @@ module Checkout
   class StripeRedirect
     include FullUrlHelper
 
-    def initialize(params, order)
-      @params = params
+    def initialize(payment_method, order)
+      @payment_method = payment_method
       @order = order
     end
 
-    # Returns the path to the authentication form if a redirect is needed
+    # Starts the payment process and returns the external URL if a redirect is needed
     def path
       return unless stripe_payment_method?
 
-      payment = OrderManagement::Order::StripeScaPaymentAuthorize.new(@order).
-        call!(full_checkout_path)
-      raise if @order.errors.any?
+      payment = payment_authorizer.call!(return_url)
 
-      field_with_url(payment)
+      raise if order.errors.any?
+
+      stripe_payment_url(payment)
     end
 
     private
 
-    def stripe_payment_method?
-      return unless @params[:order][:payments_attributes]
+    attr_accessor :payment_method, :order
 
-      payment_method_id = @params[:order][:payments_attributes].first[:payment_method_id]
-      payment_method = Spree::PaymentMethod.find(payment_method_id)
+    def stripe_payment_method?
       payment_method.is_a?(Spree::Gateway::StripeSCA)
+    end
+
+    def payment_authorizer
+      OrderManagement::Order::StripeScaPaymentAuthorize.new(order)
+    end
+
+    def return_url
+      full_checkout_path
     end
 
     # Stripe::AuthorizeResponsePatcher patches the Stripe authorization response
     #   so that this field stores the redirect URL. It also verifies that it is a Stripe URL.
-    def field_with_url(payment)
+    def stripe_payment_url(payment)
       payment.cvv_response_message
     end
   end
