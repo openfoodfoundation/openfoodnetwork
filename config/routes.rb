@@ -86,6 +86,10 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  # Temporary re-routing for any pending Stripe payments still using the old return URL
+  match '/checkout', via: :get, controller: "payment_gateways/stripe", action: "confirm",
+        constraints: ->(request) { request["payment_intent"]&.start_with?("pm_") }
+
   get '/checkout', to: 'checkout#edit'
   put '/checkout', to: 'checkout#update', as: :update_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
