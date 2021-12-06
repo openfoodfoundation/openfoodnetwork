@@ -595,11 +595,13 @@ module Spree
           expect(v1.unit_to_display).to eq("ponies")
         end
 
-        it "displays variant unit name if no unit scale" do
+        it "displays variant unit name and unit value if no unit scale" do
           p = create(:simple_product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'items_unit')
-          v = build_stubbed(:variant, product: p)
+          v = build_stubbed(:variant, product: p, unit_value: 5)
+          v1 = build_stubbed(:variant, product: p, unit_value: 10)
 
-          expect(v.unit_to_display).to eq("items_unit")
+          expect(v.unit_to_display).to eq("5 items_unit")
+          expect(v1.unit_to_display).to eq("10 items_unit")
         end
       end
 

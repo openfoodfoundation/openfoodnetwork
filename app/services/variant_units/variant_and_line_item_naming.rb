@@ -71,7 +71,7 @@ module VariantUnits
 
       return variant.display_as if variant_display_as?
 
-      return product.variant_unit_name if product.variant_unit_scale.nil? 
+      return option_value_name if product.variant_unit_scale.nil?
 
       options_text
     end
