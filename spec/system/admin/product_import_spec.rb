@@ -724,6 +724,12 @@ describe "Product Import", js: true do
   end
 
   def expect_import_completed
-    expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
+    # The step pages are hidden and shown by AngularJS and we get a false
+    # positive when querying for the content of a hidden step.
+    #
+    #   expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
+    #
+    # Being more explicit seems to work:
+    expect(page).to have_selector("h5", text: "Import final results")
   end
 end
