@@ -284,11 +284,11 @@ describe '
       product1.taxons = [taxon]
       product2.taxons = [taxon]
       variant1.on_hand = 10
-      variant1.update_attribute(:sku, "sku1")
+      variant1.update!(sku: "sku1")
       variant2.on_hand = 20
-      variant2.update_attribute(:sku, "sku2")
+      variant2.update!(sku: "sku2")
       variant3.on_hand = 9
-      variant3.update_attribute(:sku, "")
+      variant3.update!(sku: "")
       variant1.option_values = [create(:option_value, presentation: "Test")]
       variant2.option_values = [create(:option_value, presentation: "Something")]
     end
@@ -464,7 +464,7 @@ describe '
 
       before do
         order1.update_order!
-        order1.update_attribute(:email, 'customer@email.com')
+        order1.update!(email: 'customer@email.com')
         order1.shipment.update(included_tax_total: 10.06)
         Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
         order1.reload
