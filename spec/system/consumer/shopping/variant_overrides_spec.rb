@@ -91,7 +91,6 @@ describe "shopping with variant overrides defined", js: true do
 
     it "calculates fees correctly" do
       page.find("#variant-#{product1_variant1.id} .graph-button").click
-      byebug
       expect(page).to have_selector 'li', text: "#{with_currency(55.55)} Item cost"
       expect(page).to have_selector 'li', text: "#{with_currency(5.56)} Packing fee"
       expect(page).to have_selector 'li', text: "= #{with_currency(61.11)}"
