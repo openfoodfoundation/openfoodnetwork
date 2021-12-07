@@ -685,8 +685,6 @@ describe "Product Import", js: true do
         # Save file.
         proceed_with_save
 
-        # Be extra patient.
-        expect_progress_percentages "33%", "67%", "100%"
         expect_import_completed
 
         # Check that all rows are saved.
@@ -713,17 +711,19 @@ describe "Product Import", js: true do
     expect_import_completed
   end
 
-  def expect_progress_percentages(*percentages)
-    percentages.each do |percentage|
-      page.has_selector? ".progress-interface", text: percentage # Waits for progress bar
-    end
-  end
-
   def proceed_with_save
     click_link I18n.t("admin.product_import.import.save")
   end
 
   def expect_import_completed
-    expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
+    # The step pages are hidden and shown by AngularJS and we get a false
+    # positive when querying for the content of a hidden step.
+    #
+    #   expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
+    #
+    # Being more explicit seems to work:
+    using_wait_time 60 do
+      expect(page).to have_selector("h5", text: "Import final results")
+    end
   end
 end
