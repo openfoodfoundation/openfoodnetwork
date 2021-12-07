@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "shopping with variant overrides defined", js: true do
   include AuthenticationHelper
@@ -91,6 +91,7 @@ describe "shopping with variant overrides defined", js: true do
 
     it "calculates fees correctly" do
       page.find("#variant-#{product1_variant1.id} .graph-button").click
+      byebug
       expect(page).to have_selector 'li', text: "#{with_currency(55.55)}\nItem cost"
       expect(page).to have_selector 'li', text: "#{with_currency(5.56)}\nPacking fee"
       expect(page).to have_selector 'li', text: "= #{with_currency(61.11)}"
