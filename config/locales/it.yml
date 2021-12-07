@@ -61,6 +61,17 @@ it:
   stripe:
     error_code:
       incorrect_number: "Il numero di carta non è corretto"
+      invalid_number: "Il numero carta non è valido"
+      invalid_expiry_month: "Il mese di scadenza della carta non è valido"
+      invalid_expiry_year: "L'anno di scadenza della carta non è valido."
+      invalid_cvc: "Il codice di sicurezza della carta non è valido"
+      expired_card: "La carta è scaduta"
+      incorrect_cvc: "Il codice di sicurezza della carta non è corretto."
+      incorrect_zip: "Errore validazione codice carta."
+      card_declined: "La carta non è stata accettata."
+      missing: "Non è stata caricata nessuna carta sul consumatore."
+      processing_error: "C'è stato un errore nel processare la carta"
+      rate_limit: "C'è stato un errore per una richiesta troppo rapida alle API. Per favore comunicaci se incontri spesso questo errore."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -1143,6 +1154,7 @@ it:
       errors:
         no_report_type: "Per favore specifica un tipo di resoconto"
         report_not_found: "Resoconto non trovato"
+        missing_ransack_params: "Per favore fornisci i parametri di ricerca Ransack nella richiesta."
       hidden_field: "< Nascosto >"
       summary_row:
         total: "TOTALE"
@@ -2532,7 +2544,7 @@ it:
   payment_updated: "Pagamento aggiornato"
   cannot_perform_operation: "Non è possibile aggiornare il pagamento"
   action_required: "Azione richiesta"
-  inventory_settings: "Impostazioni dell'inventario"
+  inventory_settings: "Impostazioni Inventario"
   tag_rules: "Regole dei tag"
   shop_preferences: "Preferenze di acquisto"
   enterprise_fee_whole_order: Ordine intero
