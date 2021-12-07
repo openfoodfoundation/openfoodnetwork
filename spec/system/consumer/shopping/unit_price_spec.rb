@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "As a consumer, I want to check unit price information for a product", js: true do
   include AuthenticationHelper
