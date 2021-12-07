@@ -168,7 +168,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
       $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
       ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size)
+        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * $scope.selectedUnitsVariant.unit_value)
     else
       ''
 

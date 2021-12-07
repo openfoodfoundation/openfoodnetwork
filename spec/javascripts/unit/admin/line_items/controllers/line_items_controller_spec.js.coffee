@@ -171,7 +171,13 @@ describe "LineItemsCtrl", ->
 
         it "returns the quantity of fulfilled group buy units", ->
           scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
+          scope.selectedUnitsVariant = { unit_value: 1 }
           expect(scope.fulfilled(1500)).toEqual 1.5
+
+        it "returns the quantity of fulfilled group buy units by volume", ->
+          scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 5000 }
+          scope.selectedUnitsVariant = { unit_value: 1000 }
+          expect(scope.fulfilled(5)).toEqual 1
 
       describe "allFinalWeightVolumesPresent()", ->
         it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
