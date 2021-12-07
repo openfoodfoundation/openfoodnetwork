@@ -172,7 +172,7 @@ it:
   producer_signup_pricing_table_html: "HTML tabella prezzi iscrizione produttore"
   producers_social: "Social dei produttori"
   resume_order: "Riepilogo richieste"
-  sku: "SKU"
+  sku: "Codice ID"
   subtotal: "Subtotale"
   tax_rate: "% tasse"
   validators:
@@ -1226,7 +1226,7 @@ it:
             Se cambi i prezzi o le tariffe, le gentili richieste saranno aggiornate, ma l'abbonamento visualizzerà ancora i valori precedenti
         not_in_open_and_upcoming_order_cycles_warning: "Non ci sono cicli di richieste aperte o in apertura per questo prodotto."
       autocomplete:
-        name_or_sku: "NOME O SKU"
+        name_or_sku: "NOME O CODICE ID"
         quantity: "Quantità"
         add: "Aggiungi"
       details:
@@ -1712,7 +1712,7 @@ it:
   email_confirm_shop_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà"
-  email_order_summary_sku: "SKU"
+  email_order_summary_sku: "Codice ID"
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
   email_order_summary_total: "Totale:"
@@ -1900,7 +1900,7 @@ it:
   products_available: Disponibile?
   products_producer: "Produttore"
   products_price: "Prezzo"
-  name_or_sku: "NOME O SKU"
+  name_or_sku: "NOME O Codice ID"
   register_title: Registra
   sell_title: "Registrati"
   sell_headline: "Entra nella rete OFN Italia!"
@@ -2482,7 +2482,7 @@ it:
   report_header_outstanding_balance_price: "Saldo in sospeso (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
-  report_header_sku: SKU
+  report_header_sku: Codice ID
   report_header_amount: Quantità
   report_header_balance: Saldo
   report_header_total_cost: "Costi totali"
@@ -2888,7 +2888,7 @@ it:
         use_producer_settings: "Usa le impostazioni dello stock del produttore"
         'yes': "Sì"
         'no': "No"
-      inventory_products: "Inventario Prodotti"
+      inventory_products: "Prodotti in Inventario"
       hidden_products: "Prodotti Nascosti"
       new_products: "Nuovi Prodotti"
       reset_stock_levels: Resetta le quantità disponibili alla quantità predefinita
@@ -3167,7 +3167,7 @@ it:
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
     add_product: "Aggiungi prodotto"
-    name_or_sku: "Nome o SKU (inserisci almeno i primi 4 caratteri del nome del prodotto)"
+    name_or_sku: "Nome o Codice ID (inserisci almeno i primi 4 caratteri del nome del prodotto)"
     resend: "Invia di nuovo"
     back_to_orders_list: "Torna alla lista delle richieste"
     back_to_payments_list: "Torna Alla Lista Pagamenti"
@@ -3342,7 +3342,7 @@ it:
     payment_method: "Metodo di pagamento"
     payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     not_available: "N/A"
-    sku: "SKU"
+    sku: "Codice ID"
     there_are_no_items_for_this_order: "Non ci sono articoli per questa richiesta"
     order_populator:
       out_of_stock: '%{item} non è al momento disponibile.'
@@ -3686,7 +3686,7 @@ it:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
         index:
-          sku: "SKU"
+          sku: "Codice ID"
           price: "Prezzo"
           options: "Opzioni"
           no_results: "Nessun risultato"
@@ -3699,7 +3699,7 @@ it:
         new:
           new_variant: "Nuova variante"
         form:
-          sku: "SKU"
+          sku: "Codice ID"
           price: "Prezzo"
           unit_price: "Prezzo unitario"
           display_as: "Visualizza come"
