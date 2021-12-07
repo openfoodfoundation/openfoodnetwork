@@ -315,11 +315,11 @@ describe CheckoutController, type: :controller do
   describe '#expire_current_order' do
     it 'empties the order_id of the session' do
       expect(session).to receive(:[]=).with(:order_id, nil)
-      controller.expire_current_order
+      controller.send(:expire_current_order)
     end
 
     it 'resets the @current_order ivar' do
-      controller.expire_current_order
+      controller.send(:expire_current_order)
       expect(controller.instance_variable_get(:@current_order)).to be_nil
     end
   end
