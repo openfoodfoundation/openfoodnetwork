@@ -722,6 +722,8 @@ describe "Product Import", js: true do
     #   expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
     #
     # Being more explicit seems to work:
-    expect(page).to have_selector("h5", text: "Import final results")
+    using_wait_time 60 do
+      expect(page).to have_selector("h5", text: "Import final results")
+    end
   end
 end
