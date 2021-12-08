@@ -16,6 +16,14 @@
       = f.label :preferred_product_selection_from_coordinator_inventory_only, t('.preferred_product_selection_from_coordinator_inventory_only_all')
 
   .row
+    .alpha.three.columns
+      = f.label :automatic_notifications, t('.automatic_notifications')
+      .with-tip{ 'data-powertip' => t('.automatic_notifications_tip') }
+        %a= t('admin.whats_this')
+    .omega.eight.columns
+      = f.check_box :automatic_notifications
+
+  .row
     .sixteen.columns.alpha.omega.text-center
       %input{ type: 'submit', value: t('.save_reload') }
       = t(:or)
