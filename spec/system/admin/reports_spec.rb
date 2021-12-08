@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
 describe '
     As an administrator
@@ -45,7 +45,7 @@ describe '
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["Email", "First Name", "Last Name", "Suburb"]
+        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
       ].sort)
     end
 
@@ -58,7 +58,7 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-         "Shipping Method"]
+         "Shipping Method"].map(&:upcase)
       ].sort)
     end
   end
@@ -75,7 +75,7 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method",
-         "Payment Method", "Amount", "Balance"]
+         "Payment Method", "Amount", "Balance"].map(&:upcase)
       ].sort)
     end
 
@@ -86,7 +86,8 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode",
-         "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
+         "Phone", "Shipping Method", "Payment Method", "Amount", "Balance",
+         "Temp Controlled Items?", "Special Instructions"].map(&:upcase)
       ].sort)
     end
   end
@@ -96,7 +97,7 @@ describe '
     click_link 'Orders And Distributors'
     click_button 'Search'
 
-    expect(page).to have_content 'Order date'
+    expect(page).to have_content 'ORDER DATE'
   end
 
   it "payments reports" do
@@ -104,7 +105,7 @@ describe '
     click_link 'Payment Reports'
     click_button 'Search'
 
-    expect(page).to have_content 'Payment State'
+    expect(page).to have_content 'PAYMENT STATE'
   end
 
   describe "sales tax report" do
@@ -123,12 +124,14 @@ describe '
                                                      tax_category: shipping_tax_category)
     }
     let(:enterprise_fee) {
-      create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category,
+      create(:enterprise_fee, enterprise: user1.enterprises.first,
+                              tax_category: product2.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
     }
     let(:order_cycle) {
-      create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee],
-                                  distributors: [distributor1], variants: [product1.variants.first, product2.variants.first])
+      create(:simple_order_cycle, coordinator: distributor1,
+                                  coordinator_fees: [enterprise_fee], distributors: [distributor1],
+                                  variants: [product1.variants.first, product2.variants.first])
     }
 
     let!(:zone) { create(:zone_with_member) }
@@ -151,9 +154,11 @@ describe '
     before do
       order1.reload
       break unless order1.next! until order1.delivery?
+
       order1.select_shipping_method(shipping_method.id)
       order1.recreate_all_fees!
       break unless order1.next! until order1.payment?
+
       create(:payment, state: "checkout", order: order1, amount: order1.reload.total,
                        payment_method: create(:payment_method, distributors: [distributor1]))
       break unless order1.next! until order1.complete?
@@ -217,25 +222,31 @@ describe '
                        special_instructions: shipping_instructions)
       }
 
+      let(:completed_at1) { Time.zone.now - 500.hours } # 500 hours in the past
+      let(:completed_at2) { Time.zone.now - 510.hours } # 510 hours in the past
+      let(:datetime_start) { Time.zone.now - 600.hours } # 600 hours in the past
+      let(:datetime_end) { Time.zone.now - 400.hours } # 400 hours in the past
+
       before do
-        Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
-        Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
+        Timecop.travel(completed_at1) { order1.finalize! }
+        Timecop.travel(completed_at2) { order2.finalize! }
 
         create(:line_item_with_shipment, product: product, order: order1)
         create(:line_item_with_shipment, product: product, order: order2)
       end
 
       it "is precise to time of day, not just date" do
-        # When I generate a customer report with a timeframe that includes one order but not the other
+        # When I generate a customer report
+        # with a timeframe that includes one order but not the other
         login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
-        fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
-        fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
+        pick_datetime "#q_completed_at_gt", datetime_start
+        pick_datetime "#q_completed_at_lt", datetime_end
+
         select 'Order Cycle Customer Totals', from: 'report_type'
         click_button 'Search'
-
         # Then I should see the rows for the first order but not the second
-        expect(all('table#listing_orders tbody tr').count).to eq(2) # Two rows per order
+        expect(all('table#listing_orders tbody tr').count).to eq(4) # Two rows per order
       end
     end
 
@@ -260,7 +271,8 @@ describe '
     }
     let(:product2) {
       create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight',
-                              variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon, sku: "product_sku")
+                              variant_unit_scale: 1, unit_value: '100', supplier: supplier,
+                              primary_taxon: taxon, sku: "product_sku")
     }
     let(:variant1) { product1.variants.first }
     let(:variant2) { create(:variant, product: product1, price: 80.0) }
@@ -272,11 +284,11 @@ describe '
       product1.taxons = [taxon]
       product2.taxons = [taxon]
       variant1.on_hand = 10
-      variant1.update_column(:sku, "sku1")
+      variant1.update!(sku: "sku1")
       variant2.on_hand = 20
-      variant2.update_column(:sku, "sku2")
+      variant2.update!(sku: "sku2")
       variant3.on_hand = 9
-      variant3.update_column(:sku, "")
+      variant3.update!(sku: "")
       variant1.option_values = [create(:option_value, presentation: "Test")]
       variant2.option_values = [create(:option_value, presentation: "Something")]
     end
@@ -290,13 +302,23 @@ describe '
       click_button "Go"
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
-                                      "Product Properties", "Taxons", "Variant Value", "Price", "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
+                                      "Product Properties", "Taxons", "Variant Value", "Price",
+                                      "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
-                                      "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
+                                      "Product Name",
+                                      product1.properties.map(&:presentation).join(", "),
+                                      product1.primary_taxon.name, "Test", "100.0",
+                                      product1.group_buy_unit_size.to_s, "", "sku1"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
-                                      "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
+                                      "Product Name",
+                                      product1.properties.map(&:presentation).join(", "),
+                                      product1.primary_taxon.name, "Something", "80.0",
+                                      product1.group_buy_unit_size.to_s, "", "sku2"]
       expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
-                                      "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
+                                      "Product 2",
+                                      product1.properties.map(&:presentation).join(", "),
+                                      product2.primary_taxon.name, "100g", "99.0",
+                                      product1.group_buy_unit_size.to_s, "", "product_sku"]
     end
 
     it "shows the LettuceShare report" do
@@ -305,7 +327,8 @@ describe '
       click_button "Go"
 
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit',
-                                      'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
+                                      'Unit Price', 'Total', 'GST incl.',
+                                      'Grower and growing method', 'Taxon'].map(&:upcase)
       expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0',
                                       'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
@@ -331,7 +354,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"],
+        ["User", "Relationship", "Enterprise"].map(&:upcase),
         [enterprise1.owner.email, "owns", enterprise1.name],
         [enterprise1.owner.email, "manages", enterprise1.name],
         [enterprise2.owner.email, "owns", enterprise2.name],
@@ -352,7 +375,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"],
+        ["User", "Relationship", "Enterprise"].map(&:upcase),
         [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
     end
@@ -371,16 +394,19 @@ describe '
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
     let(:enterprise_fee1) {
-      create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category,
+      create(:enterprise_fee, enterprise: user1.enterprises.first,
+                              tax_category: product2.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 10))
     }
     let(:enterprise_fee2) {
-      create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category,
+      create(:enterprise_fee, enterprise: user1.enterprises.first,
+                              tax_category: product2.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 20))
     }
     let(:order_cycle) {
       create(:simple_order_cycle, coordinator: distributor1,
-                                  coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master])
+                                  coordinator_fees: [enterprise_fee1, enterprise_fee2],
+                                  distributors: [distributor1], variants: [product1.master])
     }
 
     let!(:zone) { create(:zone_with_member) }
@@ -438,9 +464,9 @@ describe '
 
       before do
         order1.update_order!
-        order1.update_attribute :email, 'customer@email.com'
-        order1.shipment.update_columns(included_tax_total: 10.06)
-        Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
+        order1.update!(email: 'customer@email.com')
+        order1.shipment.update(included_tax_total: 10.06)
+        Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
         order1.reload
         order1.create_tax_charge!
 
@@ -449,7 +475,7 @@ describe '
       end
 
       around do |example|
-        Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
+        Timecop.travel(Time.zone.local(2021, 4, 26, 14, 0, 0)) do
           example.run
         end
       end
@@ -476,13 +502,15 @@ describe '
 
       it "can customise a number of fields" do
         fill_in 'initial_invoice_number', with: '5'
-        fill_in 'invoice_date', with: '2015-02-12'
-        fill_in 'due_date', with: '2015-03-12'
+
+        pick_datetime '#invoice_date', Date.new(2021, 2, 12)
+        pick_datetime '#due_date', Date.new(2021, 3, 12)
+
         fill_in 'account_code', with: 'abc123'
         click_button 'Search'
 
-        opts = { invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12',
-                 account_code: 'abc123' }
+        opts = { invoice_number: '5', invoice_date: '2021-02-12 00:00',
+                 due_date: '2021-03-12 00:00', account_code: 'abc123' }
 
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,
@@ -533,7 +561,10 @@ describe '
 
     def xero_invoice_header
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4
-         POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
+         POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate
+         *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode
+         *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme
+         Paid?).map(&:upcase)
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts = {})
@@ -553,14 +584,20 @@ describe '
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts = {})
       opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1',
-                          city: 'customer city', state: 'Victoria', zipcode: '1234', country: 'Australia', invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales')
+                          city: 'customer city', state: 'Victoria', zipcode: '1234',
+                          country: 'Australia', invoice_number: order1.number,
+                          order_number: order1.number, invoice_date: '2021-04-26',
+                          due_date: '2021-05-26', account_code: 'food sales')
 
-      [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
+      [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '',
+       opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number],
+       opts[:order_number], opts[:invoice_date], opts[:due_date],
 
        sku,
        description,
        quantity,
-       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '', 'N']
+       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
+       '', 'N']
     end
   end
 end
