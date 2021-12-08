@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
 describe "Using embedded shopfront functionality", js: true do
   include OpenFoodNetwork::EmbeddedPagesHelper
