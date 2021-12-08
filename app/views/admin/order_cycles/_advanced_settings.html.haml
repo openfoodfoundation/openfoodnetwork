@@ -1,17 +1,16 @@
 .row
-  .alpha.omega.sixteen.columns
-    %h3= t('.title')
+  %h3= t('.title')
 
 = form_for [main_app, :admin, @order_cycle] do |f|
   .row
-    .six.columns.alpha
+    .three.columns.alpha
       = f.label "enterprise_preferred_product_selection_from_coordinator_inventory_only", t('admin.order_cycles.edit.choose_products_from')
-      .with-tip{'data-powertip' => t('.choose_product_tip', inventory: @order_cycle.coordinator.name)}
+      .with-tip{ 'data-powertip' => t('.choose_product_tip', inventory: @order_cycle.coordinator.name) }
         %a= t('admin.whats_this')
     .four.columns
       = f.radio_button :preferred_product_selection_from_coordinator_inventory_only, true
       = f.label :preferred_product_selection_from_coordinator_inventory_only, t('.preferred_product_selection_from_coordinator_inventory_only_here')
-    .six.columns.omega
+    .four.columns.omega
       = f.radio_button :preferred_product_selection_from_coordinator_inventory_only, false
       = f.label :preferred_product_selection_from_coordinator_inventory_only, t('.preferred_product_selection_from_coordinator_inventory_only_all')
 
