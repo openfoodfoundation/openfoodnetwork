@@ -203,10 +203,6 @@ module Spree
       total.to_f > 0.0 && !skip_payment_for_subscription?
     end
 
-    def backordered?
-      shipments.any?(&:backordered?)
-    end
-
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone

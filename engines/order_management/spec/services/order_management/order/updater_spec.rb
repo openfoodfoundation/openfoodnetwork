@@ -8,8 +8,6 @@ module OrderManagement
       let(:order) { create(:order) }
       let(:updater) { OrderManagement::Order::Updater.new(order) }
 
-      before { allow(order).to receive(:backordered?) { false } }
-
       context "updating order totals" do
         before do
           2.times { create(:line_item, order: order, price: 10) }
