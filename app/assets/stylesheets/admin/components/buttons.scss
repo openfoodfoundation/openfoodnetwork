@@ -1,0 +1,47 @@
+input[type="submit"], input[type="button"], button, .button {
+  position: relative;
+  cursor: pointer;
+  font-size: 85%;
+  @include border-radius($border-radius);
+  display: inline-block;
+  padding: 8px 15px;
+  border: none;
+  background-color: $color-btn-bg;
+  color: $color-btn-text;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+
+  &:before {
+    font-weight: normal !important;
+  }
+
+  &:visited, &:active, &:focus { color: $color-btn-text }
+
+  &:hover {
+    background-color: $color-btn-hover-bg;
+    color: $color-btn-hover-text;
+  }
+
+  &:active:focus {
+    box-shadow: 0 0 8px 0 darken($color-btn-hover-bg, 5) inset;
+  }
+
+  &.fullwidth {
+    width: 100%;
+    text-align: center;
+  }
+
+  &.secondary {
+    background-color: transparent;
+    border: 1px solid $color-btn-bg;
+    color: $color-btn-bg;
+
+    &:hover, &:active, &:focus {
+      background-color: #ebf3fb;
+    }
+
+    &:active:focus {
+      box-shadow: none;
+    }
+  }
+}
