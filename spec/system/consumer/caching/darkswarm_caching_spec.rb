@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
 describe "Darkswarm data caching", js: true, caching: true do
   let!(:taxon) { create(:taxon, name: "Cached Taxon") }
