@@ -1741,7 +1741,7 @@ en:
           use_saved_card: Use saved card
           use_new_card: Enter your card identifiers
           save_card: Save card for future use
-          create_new_card: or create new card below
+          create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
