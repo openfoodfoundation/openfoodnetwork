@@ -71,5 +71,7 @@ Openfoodnetwork::Application.configure do
 
   config.log_level = ENV.fetch("DEV_LOG_LEVEL", :debug)
 
+  config.active_storage.service = :local
+
   config.view_component_storybook.stories_path = Rails.root.join("spec/components/stories")
 end
