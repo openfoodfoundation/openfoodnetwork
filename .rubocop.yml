@@ -16,6 +16,3 @@ inherit_from:
   #     bundle exec rubocop -c .rubocop_styleguide.yml
   #
   - .rubocop_styleguide.yml
-
-  # A manually compiled todo list to ignore metrics violations on a file-by-file basis.
-  - .rubocop_manual_todo.yml
