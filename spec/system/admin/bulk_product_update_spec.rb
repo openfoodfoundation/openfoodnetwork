@@ -852,10 +852,10 @@ describe '
         attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
 
         # Shows spinner whilst loading
-        expect(page).to have_css "img.spinner", visible: true
+        expect(page).to have_css ".spinner", visible: true
       end
 
-      expect(page).to have_no_css "img.spinner", visible: true
+      expect(page).to have_no_css ".spinner", visible: true
       expect(page).to have_no_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do

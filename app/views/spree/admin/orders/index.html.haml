@@ -92,13 +92,10 @@
         %div{'ng-if' => 'order.ready_to_capture'}
           %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
 
-.orders-loading{'ng-show' => 'RequestMonitor.loading'}
-  .row
-    .small-12.columns.fullwidth.text-center
-      = render partial: "components/spinner"
-  .row
-    .small-12.columns.fullwidth.text-center
-      %span= t('.loading')
+.sixteen.columns.alpha#loading{ 'ng-show' => 'RequestMonitor.loading' }
+  = render partial: "components/admin_spinner"
+  %h1
+    = t('.loading')
 
 %div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   = render partial: 'admin/shared/angular_pagination'
