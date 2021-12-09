@@ -94,5 +94,4 @@ module CheckoutCallbacks
   def check_authorization
     authorize!(:edit, current_order, session[:access_token])
   end
-
 end
