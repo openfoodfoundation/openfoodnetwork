@@ -42,8 +42,7 @@ module CheckoutCallbacks
   end
 
   def load_saved_credit_cards
-    @saved_credit_cards = [] if !spree_current_user
-    @saved_credit_cards = spree_current_user.credit_cards.with_payment_profile.all if spree_current_user
+    @saved_credit_cards = spree_current_user&.credit_cards&.with_payment_profile.to_a
     @selected_card = nil
   end
 
