@@ -34,8 +34,8 @@ module Spree
 
     token_resource
 
-    belongs_to :user, class_name: Spree.user_class.to_s
-    belongs_to :created_by, class_name: Spree.user_class.to_s
+    belongs_to :user, class_name: "Spree::User"
+    belongs_to :created_by, class_name: "Spree::User"
 
     belongs_to :bill_address, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
@@ -677,7 +677,7 @@ module Spree
     end
 
     def registered_email?
-      Spree.user_class.exists?(email: email)
+      Spree::User.exists?(email: email)
     end
 
     def adjustments_fetcher

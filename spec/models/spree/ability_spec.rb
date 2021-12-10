@@ -40,9 +40,9 @@ describe Spree::Ability do
     let(:resource) { Object.new }
     let(:resource_shipment) { Spree::Shipment.new }
     let(:resource_product) { Spree::Product.new }
-    let(:resource_user) { Spree.user_class.new }
+    let(:resource_user) { Spree::User.new }
     let(:resource_order) { Spree::Order.new }
-    let(:fakedispatch_user) { Spree.user_class.new }
+    let(:fakedispatch_user) { Spree::User.new }
     let(:fakedispatch_ability) { Spree::Ability.new(fakedispatch_user) }
 
     context 'with admin user' do
@@ -97,7 +97,7 @@ describe Spree::Ability do
       end
 
       context 'requested by other user' do
-        before(:each) { resource.user = Spree.user_class.new }
+        before(:each) { resource.user = Spree::User.new }
         it_should_behave_like 'create only'
       end
 
@@ -185,7 +185,7 @@ describe Spree::Ability do
         it_should_behave_like 'no index allowed'
       end
       context 'requested by other user' do
-        let(:resource) { Spree.user_class.new }
+        let(:resource) { Spree::User.new }
         it_should_behave_like 'create only'
       end
     end

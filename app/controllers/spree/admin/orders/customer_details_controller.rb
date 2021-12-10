@@ -20,7 +20,7 @@ module Spree
         def update
           if @order.update(order_params)
             if params[:guest_checkout] == "false"
-              @order.associate_user!(Spree.user_class.find_by(email: @order.email))
+              @order.associate_user!(Spree::User.find_by(email: @order.email))
             end
 
             refresh_shipment_rates

@@ -27,7 +27,7 @@ module Spree
 
     # Endpoint for queries to check if a user is already registered
     def registered_email
-      user = Spree.user_class.find_by email: params[:email]
+      user = Spree::User.find_by email: params[:email]
       render json: { registered: user.present? }
     end
 

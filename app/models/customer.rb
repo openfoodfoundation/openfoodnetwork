@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
   searchable_attributes :name, :email, :code
 
   belongs_to :enterprise
-  belongs_to :user, class_name: Spree.user_class.to_s
+  belongs_to :user, class_name: "Spree::User"
   has_many :orders, class_name: "Spree::Order"
   before_destroy :check_for_orders
 
