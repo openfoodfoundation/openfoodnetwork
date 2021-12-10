@@ -29,6 +29,7 @@
   "dependencies": {
     "@hotwired/turbo": "^7.1.0",
     "@rails/webpacker": "5.4.3",
+    "babel-loader": "^8.2.3",
     "cable_ready": "^5.0.0-pre2",
     "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
