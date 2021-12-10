@@ -280,6 +280,8 @@ class OrderCycle < ApplicationRecord
   end
 
   def reset_processed_at
+    return unless orders_close_at.present? && orders_close_at_was.present?
+
     self.processed_at = nil if orders_close_at > orders_close_at_was
   end
 end
