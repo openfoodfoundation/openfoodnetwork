@@ -69,5 +69,5 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [semaphore]: https://semaphoreci.com/
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
 [ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
-[i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
-[welcome-dev]: https://github.com/openfoodfoundation/openfoodnetwork/projects/27
+[i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29
+[welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/2
