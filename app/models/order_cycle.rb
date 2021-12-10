@@ -28,6 +28,8 @@ class OrderCycle < ApplicationRecord
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
+  before_update :reset_processed_at, if: :will_save_change_to_orders_close_at?
+
   validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
 
@@ -275,5 +277,9 @@ class OrderCycle < ApplicationRecord
     return if orders_close_at > orders_open_at
 
     errors.add(:orders_close_at, :after_orders_open_at)
+  end
+
+  def reset_processed_at
+    self.processed_at = nil if orders_close_at > orders_close_at_was
   end
 end
