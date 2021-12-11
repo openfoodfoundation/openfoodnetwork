@@ -141,6 +141,6 @@ describe 'Multilingual', js: true do
 end
 
 def expect_menu_and_cookie_in_es
-  expect(cookie_named('locale')[:value]).to eq 'es'
+  expect(cookies_name['locale']).to have_attributes(:value=>"es")
   expect(page).to have_content 'TIENDAS'
 end
