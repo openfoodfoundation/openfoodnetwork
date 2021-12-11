@@ -558,7 +558,7 @@ describe OrderCycle do
 
     it "it does not reset processed_at if close date change in the past" do
       expect(oc.processed_at).to_not be_nil
-      oc.update!(orders_close_at: 2.day.ago)
+      oc.update!(orders_close_at: 2.days.ago)
       expect(oc.processed_at).to_not be_nil
     end
 
