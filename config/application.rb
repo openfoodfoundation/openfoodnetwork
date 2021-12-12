@@ -230,6 +230,8 @@ module Openfoodnetwork
 
     config.generators.template_engine = :haml
 
+    Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
+
     config.autoloader = :zeitwerk
 
     config.action_view.form_with_generates_ids = true
