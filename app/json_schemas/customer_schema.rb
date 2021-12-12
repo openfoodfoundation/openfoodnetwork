@@ -19,4 +19,8 @@ class CustomerSchema < JsonApiSchema
   def self.required_attributes
     [:enterprise_id, :email]
   end
+
+  def self.relationships
+    [:enterprise]
+  end
 end
