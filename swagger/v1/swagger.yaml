@@ -71,7 +71,21 @@ components:
                 type: object
                 properties:
                   enterprise:
-                    "$ref": "#/components/schemas/relationship"
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          type:
+                            type: string
+                            example: enterprise
+                      links:
+                        type: object
+                        properties:
+                          related:
+                            type: string
           meta:
             type: object
           links:
@@ -127,7 +141,21 @@ components:
                   type: object
                   properties:
                     enterprise:
-                      "$ref": "#/components/schemas/relationship"
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                              example: enterprise
+                        links:
+                          type: object
+                          properties:
+                            related:
+                              type: string
           meta:
             type: object
             properties:

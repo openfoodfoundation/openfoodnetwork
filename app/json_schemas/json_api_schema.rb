@@ -90,10 +90,25 @@ class JsonApiSchema
         relationships: {
           type: :object,
           properties: relationships.to_h do |name|
-            [name, { "$ref" => "#/components/schemas/relationship" }]
+            [
+              name,
+              relationship_schema(name)
+            ]
           end
         }
       }
+    end
+
+    def relationship_schema(name)
+      if is_singular?(name)
+        RelationshipSchema.schema(name)
+      else
+        RelationshipSchema.collection(name)
+      end
+    end
+
+    def is_singular?(name)
+      name.to_s.singularize == name.to_s
     end
   end
 end
