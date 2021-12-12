@@ -2,12 +2,14 @@
 
 module Api
   module V1
-    class CustomerSerializer
-      include JSONAPI::Serializer
-
+    class CustomerSerializer < BaseSerializer
       attributes :id, :enterprise_id, :first_name, :last_name, :code, :email
 
-      belongs_to :enterprise, record_type: :enterprise, serializer: :id
+      belongs_to :enterprise, links: {
+        related: ->(object) {
+          url_helpers.api_v1_enterprise_url(id: object.enterprise_id)
+        }
+      }
     end
   end
 end
