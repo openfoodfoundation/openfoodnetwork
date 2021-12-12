@@ -10,6 +10,10 @@ class JsonApiSchema
       []
     end
 
+    def relationships
+      []
+    end
+
     def all_attributes
       self.attributes.keys
     end
@@ -72,7 +76,7 @@ class JsonApiSchema
 
     private
 
-    def data_properties(require_all: false, relationships: nil)
+    def data_properties(require_all: false)
       required = require_all ? self.all_attributes : self.required_attributes
 
       {
@@ -83,7 +87,12 @@ class JsonApiSchema
           properties: self.attributes,
           required: required
         },
-        relationships: { type: :object }
+        relationships: {
+          type: :object,
+          properties: self.relationships.to_h do |name|
+            [name, { "$ref" => "#/components/schemas/relationship" }]
+          end
+        }
       }
     end
   end
