@@ -19,7 +19,7 @@ describe "Customers", type: :request do
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
-        schema CustomerSchema.collection(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customers_collection"
 
         run_test!
       end
@@ -75,14 +75,14 @@ describe "Customers", type: :request do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema CustomerSchema.schema(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customer"
 
         run_test!
       end
 
       response "422", "Unprocessable entity" do
         param(:customer) { {} }
-        schema ErrorsSchema.schema
+        schema "$ref": "#/components/schemas/error_response"
 
         run_test!
       end
@@ -97,14 +97,14 @@ describe "Customers", type: :request do
 
       response "200", "Customer" do
         param(:id) { customer1.id }
-        schema CustomerSchema.schema(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customer"
 
         run_test!
       end
 
       response "404", "Not found" do
         param(:id) { 0 }
-        schema ErrorsSchema.schema
+        schema "$ref": "#/components/schemas/error_response"
 
         run_test! do
           expect(json_error_detail).to eq "The resource you were looking for could not be found."
@@ -116,7 +116,7 @@ describe "Customers", type: :request do
 
         response "401", "Unauthorized" do
           param(:id) { customer1.id }
-          schema ErrorsSchema.schema
+          schema "$ref": "#/components/schemas/error_response"
 
           run_test! do
             expect(json_error_detail).to eq "You are not authorized to perform that action."
@@ -165,7 +165,7 @@ describe "Customers", type: :request do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema CustomerSchema.schema(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customer"
 
         run_test!
       end
@@ -173,7 +173,7 @@ describe "Customers", type: :request do
       response "422", "Unprocessable entity" do
         param(:id) { customer1.id }
         param(:customer) { {} }
-        schema ErrorsSchema.schema
+        schema "$ref": "#/components/schemas/error_response"
 
         run_test!
       end
@@ -186,7 +186,7 @@ describe "Customers", type: :request do
 
       response "200", "Customer deleted" do
         param(:id) { customer1.id }
-        schema CustomerSchema.schema(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customer"
 
         run_test!
       end
@@ -201,7 +201,7 @@ describe "Customers", type: :request do
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
-        schema CustomerSchema.collection(require_all: true)
+        schema "$ref": "#/components/schemas/resources/customers_collection"
 
         run_test!
       end
