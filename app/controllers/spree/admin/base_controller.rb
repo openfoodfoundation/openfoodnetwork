@@ -65,6 +65,14 @@ module Spree
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
         Spree.t(event_sym, resource: resource_desc)
       end
+      
+      #8459 translation missing fix
+      def flash_message_for_with_resource(resource_name, object, event_sym)
+        resource_desc  = resource_name
+        resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
+        Spree.t(event_sym, resource: resource_desc)
+      end
+
 
       # Index request for JSON needs to pass a CSRF token in order to prevent JSON Hijacking
       def check_json_authenticity
