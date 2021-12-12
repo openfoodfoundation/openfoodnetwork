@@ -27,7 +27,10 @@ RSpec.configure do |config|
       components: {
         schemas: {
           error_response: ErrorsSchema.schema,
-          customer: CustomerSchema.schema
+          resources: {
+            customer: CustomerSchema.schema(require_all: true),
+            customers_collection: CustomerSchema.collection(require_all: true)
+          }
         },
         securitySchemas: {
           api_key_header: {

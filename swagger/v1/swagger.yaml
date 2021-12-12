@@ -23,53 +23,150 @@ components:
             - detail
       required:
       - errors
-    customer:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              example: '1'
-            type:
-              type: string
-              example: customer
-            attributes:
+    resources:
+      customer:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                example: '1'
+              type:
+                type: string
+                example: customer
+              attributes:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  enterprise_id:
+                    type: integer
+                    example: 2
+                  first_name:
+                    type: string
+                    nullable: true
+                    example: Alice
+                  last_name:
+                    type: string
+                    nullable: true
+                    example: Springs
+                  code:
+                    type: string
+                    nullable: true
+                    example: BUYER1
+                  email:
+                    type: string
+                    example: alice@example.com
+                required:
+                - id
+                - enterprise_id
+                - first_name
+                - last_name
+                - code
+                - email
+              relationships:
+                type: object
+                properties:
+                  enterprise:
+                    "$ref": "#/components/schemas/relationship"
+          meta:
+            type: object
+          links:
+            type: object
+        required:
+        - data
+      customers_collection:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
               type: object
               properties:
                 id:
-                  type: integer
-                  example: 1
-                enterprise_id:
-                  type: integer
-                  example: 2
-                first_name:
                   type: string
-                  nullable: true
-                  example: Alice
-                last_name:
+                  example: '1'
+                type:
                   type: string
-                  nullable: true
-                  example: Springs
-                code:
-                  type: string
-                  nullable: true
-                  example: BUYER1
-                email:
-                  type: string
-                  example: alice@example.com
-              required:
-              - enterprise_id
-              - email
-            relationships:
-              type: object
-        meta:
-          type: object
-        links:
-          type: object
-      required:
-      - data
+                  example: customer
+                attributes:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    enterprise_id:
+                      type: integer
+                      example: 2
+                    first_name:
+                      type: string
+                      nullable: true
+                      example: Alice
+                    last_name:
+                      type: string
+                      nullable: true
+                      example: Springs
+                    code:
+                      type: string
+                      nullable: true
+                      example: BUYER1
+                    email:
+                      type: string
+                      example: alice@example.com
+                  required:
+                  - id
+                  - enterprise_id
+                  - first_name
+                  - last_name
+                  - code
+                  - email
+                relationships:
+                  type: object
+                  properties:
+                    enterprise:
+                      "$ref": "#/components/schemas/relationship"
+          meta:
+            type: object
+            properties:
+              pagination:
+                type: object
+                properties:
+                  results:
+                    type: integer
+                    example: 250
+                  pages:
+                    type: integer
+                    example: 5
+                  page:
+                    type: integer
+                    example: 2
+                  per_page:
+                    type: integer
+                    example: 50
+            required:
+            - pagination
+          links:
+            type: object
+            properties:
+              self:
+                type: string
+              first:
+                type: string
+              prev:
+                type: string
+                nullable: true
+              next:
+                type: string
+                nullable: true
+              last:
+                type: string
+        required:
+        - data
+        - meta
+        - links
   securitySchemas:
     api_key_header:
       type: apiKey
@@ -103,91 +200,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: '1'
-                        type:
-                          type: string
-                          example: customer
-                        attributes:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            enterprise_id:
-                              type: integer
-                              example: 2
-                            first_name:
-                              type: string
-                              nullable: true
-                              example: Alice
-                            last_name:
-                              type: string
-                              nullable: true
-                              example: Springs
-                            code:
-                              type: string
-                              nullable: true
-                              example: BUYER1
-                            email:
-                              type: string
-                              example: alice@example.com
-                          required:
-                          - id
-                          - enterprise_id
-                          - first_name
-                          - last_name
-                          - code
-                          - email
-                        relationships:
-                          type: object
-                  meta:
-                    type: object
-                    properties:
-                      pagination:
-                        type: object
-                        properties:
-                          results:
-                            type: integer
-                            example: 250
-                          pages:
-                            type: integer
-                            example: 5
-                          page:
-                            type: integer
-                            example: 2
-                          per_page:
-                            type: integer
-                            example: 50
-                    required:
-                    - pagination
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                      first:
-                        type: string
-                      prev:
-                        type: string
-                        nullable: true
-                      next:
-                        type: string
-                        nullable: true
-                      last:
-                        type: string
-                required:
-                - data
-                - meta
-                - links
+                "$ref": "#/components/schemas/resources/customers_collection"
     post:
       summary: Create customer
       tags:
@@ -199,78 +212,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: '1'
-                      type:
-                        type: string
-                        example: customer
-                      attributes:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          enterprise_id:
-                            type: integer
-                            example: 2
-                          first_name:
-                            type: string
-                            nullable: true
-                            example: Alice
-                          last_name:
-                            type: string
-                            nullable: true
-                            example: Springs
-                          code:
-                            type: string
-                            nullable: true
-                            example: BUYER1
-                          email:
-                            type: string
-                            example: alice@example.com
-                        required:
-                        - id
-                        - enterprise_id
-                        - first_name
-                        - last_name
-                        - code
-                        - email
-                      relationships:
-                        type: object
-                  meta:
-                    type: object
-                  links:
-                    type: object
-                required:
-                - data
+                "$ref": "#/components/schemas/resources/customer"
         '422':
           description: Unprocessable entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        detail:
-                          type: string
-                        source:
-                          type: object
-                      required:
-                      - detail
-                required:
-                - errors
+                "$ref": "#/components/schemas/error_response"
       requestBody:
         content:
           application/json:
@@ -315,100 +263,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: '1'
-                      type:
-                        type: string
-                        example: customer
-                      attributes:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          enterprise_id:
-                            type: integer
-                            example: 2
-                          first_name:
-                            type: string
-                            nullable: true
-                            example: Alice
-                          last_name:
-                            type: string
-                            nullable: true
-                            example: Springs
-                          code:
-                            type: string
-                            nullable: true
-                            example: BUYER1
-                          email:
-                            type: string
-                            example: alice@example.com
-                        required:
-                        - id
-                        - enterprise_id
-                        - first_name
-                        - last_name
-                        - code
-                        - email
-                      relationships:
-                        type: object
-                  meta:
-                    type: object
-                  links:
-                    type: object
-                required:
-                - data
+                "$ref": "#/components/schemas/resources/customer"
         '404':
           description: Not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        detail:
-                          type: string
-                        source:
-                          type: object
-                      required:
-                      - detail
-                required:
-                - errors
+                "$ref": "#/components/schemas/error_response"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        detail:
-                          type: string
-                        source:
-                          type: object
-                      required:
-                      - detail
-                required:
-                - errors
+                "$ref": "#/components/schemas/error_response"
     put:
       summary: Update customer
       tags:
@@ -425,78 +292,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: '1'
-                      type:
-                        type: string
-                        example: customer
-                      attributes:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          enterprise_id:
-                            type: integer
-                            example: 2
-                          first_name:
-                            type: string
-                            nullable: true
-                            example: Alice
-                          last_name:
-                            type: string
-                            nullable: true
-                            example: Springs
-                          code:
-                            type: string
-                            nullable: true
-                            example: BUYER1
-                          email:
-                            type: string
-                            example: alice@example.com
-                        required:
-                        - id
-                        - enterprise_id
-                        - first_name
-                        - last_name
-                        - code
-                        - email
-                      relationships:
-                        type: object
-                  meta:
-                    type: object
-                  links:
-                    type: object
-                required:
-                - data
+                "$ref": "#/components/schemas/resources/customer"
         '422':
           description: Unprocessable entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        detail:
-                          type: string
-                        source:
-                          type: object
-                      required:
-                      - detail
-                required:
-                - errors
+                "$ref": "#/components/schemas/error_response"
       requestBody:
         content:
           application/json:
@@ -543,56 +345,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: '1'
-                      type:
-                        type: string
-                        example: customer
-                      attributes:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          enterprise_id:
-                            type: integer
-                            example: 2
-                          first_name:
-                            type: string
-                            nullable: true
-                            example: Alice
-                          last_name:
-                            type: string
-                            nullable: true
-                            example: Springs
-                          code:
-                            type: string
-                            nullable: true
-                            example: BUYER1
-                          email:
-                            type: string
-                            example: alice@example.com
-                        required:
-                        - id
-                        - enterprise_id
-                        - first_name
-                        - last_name
-                        - code
-                        - email
-                      relationships:
-                        type: object
-                  meta:
-                    type: object
-                  links:
-                    type: object
-                required:
-                - data
+                "$ref": "#/components/schemas/resources/customer"
   "/api/v1/enterprises/{enterprise_id}/customers":
     get:
       summary: List customers of an enterprise
@@ -611,90 +364,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: '1'
-                        type:
-                          type: string
-                          example: customer
-                        attributes:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            enterprise_id:
-                              type: integer
-                              example: 2
-                            first_name:
-                              type: string
-                              nullable: true
-                              example: Alice
-                            last_name:
-                              type: string
-                              nullable: true
-                              example: Springs
-                            code:
-                              type: string
-                              nullable: true
-                              example: BUYER1
-                            email:
-                              type: string
-                              example: alice@example.com
-                          required:
-                          - id
-                          - enterprise_id
-                          - first_name
-                          - last_name
-                          - code
-                          - email
-                        relationships:
-                          type: object
-                  meta:
-                    type: object
-                    properties:
-                      pagination:
-                        type: object
-                        properties:
-                          results:
-                            type: integer
-                            example: 250
-                          pages:
-                            type: integer
-                            example: 5
-                          page:
-                            type: integer
-                            example: 2
-                          per_page:
-                            type: integer
-                            example: 50
-                    required:
-                    - pagination
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                      first:
-                        type: string
-                      prev:
-                        type: string
-                        nullable: true
-                      next:
-                        type: string
-                        nullable: true
-                      last:
-                        type: string
-                required:
-                - data
-                - meta
-                - links
+                "$ref": "#/components/schemas/resources/customers_collection"
 servers:
 - url: "/"
