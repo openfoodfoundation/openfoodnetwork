@@ -6,7 +6,7 @@ describe Api::V0::ReportsController, type: :controller do
   let(:params) {
     {
       report_type: 'packing',
-      q: { created_at_lt: Time.zone.now }
+      q: { order_created_at_lt: Time.zone.now }
     }
   }
 
