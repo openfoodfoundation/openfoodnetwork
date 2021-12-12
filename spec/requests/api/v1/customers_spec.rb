@@ -130,6 +130,9 @@ describe "Customers", type: :request do
             "data" => {
               "id" => customer1.enterprise_id.to_s,
               "type" => "enterprise"
+            },
+            "links" => {
+              "related" => "http://test.host/api/v1/enterprises/#{customer1.enterprise_id}"
             }
           }
 
