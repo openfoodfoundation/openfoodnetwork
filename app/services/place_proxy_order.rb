@@ -13,8 +13,6 @@ class PlaceProxyOrder
   def call
     return unless initialise_order
 
-    mark_as_processed
-
     summarizer.record_order(order)
     return summarizer.record_issue(:complete, order) if order.completed?
 
@@ -43,6 +41,9 @@ class PlaceProxyOrder
       summarizer.record_subscription_issue(subscription)
       return false
     end
+
+    mark_as_processed
+
     true
   rescue StandardError => e
     Bugsnag.notify(e, subscription: subscription, proxy_order: proxy_order)
