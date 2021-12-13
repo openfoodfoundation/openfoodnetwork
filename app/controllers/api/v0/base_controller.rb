@@ -52,11 +52,11 @@ module Api
 
         if api_key.blank?
           # An anonymous user
-          @current_api_user = Spree.user_class.new
+          @current_api_user = Spree::User.new
           return
         end
 
-        return if @current_api_user = Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        return if @current_api_user = Spree::User.find_by(spree_api_key: api_key.to_s)
 
         invalid_api_key
       end

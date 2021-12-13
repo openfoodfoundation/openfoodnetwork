@@ -33,9 +33,6 @@ Spree::Image.set_attachment_attribute(:path, ENV['ATTACHMENT_PATH']) if ENV['ATT
 Spree::Image.set_attachment_attribute(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
 Spree::Image.set_storage_attachment_attributes
 
-# Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
-Spree.user_class = 'Spree::User'
-
 # TODO Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?

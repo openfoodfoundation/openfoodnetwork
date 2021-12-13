@@ -16,7 +16,7 @@ module Spree
       alias_action :new_action, to: :create
       alias_action :show, to: :read
 
-      user ||= Spree.user_class.new
+      user ||= Spree::User.new
 
       if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
         can :manage, :all
@@ -34,8 +34,8 @@ module Spree
         can [:index, :read], Product
         can [:index, :read], ProductProperty
         can [:index, :read], Property
-        can :create, Spree.user_class
-        can [:read, :update, :destroy], Spree.user_class, id: user.id
+        can :create, Spree::User
+        can [:read, :update, :destroy], Spree::User, id: user.id
         can [:index, :read], State
         can [:index, :read], StockItem
         can [:index, :read], StockLocation
