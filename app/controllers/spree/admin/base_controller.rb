@@ -65,7 +65,7 @@ module Spree
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
         Spree.t(event_sym, resource: resource_desc)
       end
-      
+
       def flash_message_for_w_res(resource_name, object, event_sym)
         resource_desc  = resource_name
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
