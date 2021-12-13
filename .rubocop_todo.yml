@@ -1648,7 +1648,6 @@ Style/StringConcatenation:
     - 'lib/spree/api/controller_setup.rb'
     - 'lib/spree/core/environment_extension.rb'
     - 'spec/controllers/user_confirmations_controller_spec.rb'
-    - 'spec/features/consumer/account_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
     - 'spec/models/spree/product_spec.rb'
