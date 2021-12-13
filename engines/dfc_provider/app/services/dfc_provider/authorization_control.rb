@@ -45,10 +45,6 @@ module DfcProvider
       raise 'Email Not Found' if @payload['email'].blank?
     end
 
-    def client_secret
-      Devise.omniauth_configs[:openid_connect].options[:client_options][:secret]
-    end
-
     def jwks_uri
       Devise.omniauth_configs[:openid_connect].options[:client_options][:jwks_uri]
     end
