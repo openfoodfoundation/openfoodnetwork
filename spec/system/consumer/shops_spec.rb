@@ -147,8 +147,12 @@ describe 'Shops', js: true do
 
   describe "property badges" do
     let!(:order_cycle) {
-      create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), variants: [product.variants.first])
+      create(
+        :simple_order_cycle,
+        distributors: [distributor],
+        coordinator: create(:distributor_enterprise),
+        variants: [product.variants.first]
+      )
     }
     let(:product) { create(:simple_product, supplier: producer) }
 
@@ -176,8 +180,12 @@ describe 'Shops', js: true do
     let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
     let!(:taxon) { create(:taxon, name: 'Fruit') }
     let!(:order_cycle) {
-      create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), variants: [product.variants.first])
+      create(
+        :simple_order_cycle,
+        distributors: [distributor],
+        coordinator: create(:distributor_enterprise),
+        variants: [product.variants.first]
+      )
     }
 
     it "shows hub producer modals" do

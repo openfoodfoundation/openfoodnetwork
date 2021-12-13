@@ -161,7 +161,6 @@ Layout/LineLength:
     - 'spec/controllers/user_confirmations_controller_spec.rb'
     - 'spec/factories/stock_location_factory.rb'
     - 'spec/features/consumer/multilingual_spec.rb'
-    - 'spec/features/consumer/shops_spec.rb'
     - 'spec/helpers/enterprises_helper_spec.rb'
     - 'spec/helpers/injection_helper_spec.rb'
     - 'spec/helpers/order_cycles_helper_spec.rb'
