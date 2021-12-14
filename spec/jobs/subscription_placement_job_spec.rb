@@ -214,8 +214,6 @@ describe SubscriptionPlacementJob do
         breakpoint.unlock
         threads.each(&:join)
       }.to change {
-        pending "The current code places two orders!"
-
         Spree::Order.count
       }.by(1)
     end

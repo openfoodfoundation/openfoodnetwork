@@ -11,7 +11,7 @@ class PlaceProxyOrder
   end
 
   def call
-    return unless initialise_order
+    return unless place_order
 
     summarizer.record_order(order)
     return summarizer.record_issue(:complete, order) if order.completed?
@@ -31,6 +31,14 @@ class PlaceProxyOrder
 
   attr_reader :proxy_order, :subscription, :summarizer, :logger, :stock_changes_loader, :changes
   attr_accessor :order
+
+  def place_order
+    proxy_order.with_lock do
+      return if proxy_order.placed_at.present?
+
+      initialise_order
+    end
+  end
 
   def initialise_order
     logger.info("Placing Order for Proxy Order #{proxy_order.id}")
