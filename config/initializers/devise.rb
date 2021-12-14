@@ -134,28 +134,33 @@ Devise.setup do |config|
   # change their passwords.
   config.reset_password_within = 6.hours
   config.sign_out_via = :get
+
   config.case_insensitive_keys = [:email]
-
-  protocol = Rails.env.development? ? "http://" : "https://"
-  config.omniauth :openid_connect, {
-    name: :openid_connect,
-    issuer: "https://login.lescommuns.org/auth/realms/data-food-consortium",
-    scope: [:openid, :profile, :email],
-    response_type: :code,
-    uid_field: "email",
-    discovery: true,
-    client_auth_method: :jwks,
-
-    client_options: {
-      identifier: ENV["OPENID_APP_ID"],
-      secret: ENV["OPENID_APP_SECRET"],
-      redirect_uri: "#{protocol}#{ActionMailer::Base.default_url_options[:host]}/user/spree_user/auth/openid_connect/callback",
-      jwks_uri: "https://login.lescommuns.org/auth/realms/data-food-consortium/protocol/openid-connect/certs"
-    }
-  }
 end
 
 Devise::TokenAuthenticatable.setup do |config|
   # Defines name of the authentication token params key
   config.token_authentication_key = :auth_token
+end
+
+if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
+  Devise.setup do |config|
+    protocol = Rails.env.development? ? "http://" : "https://"
+    config.omniauth :openid_connect, {
+      name: :openid_connect,
+      issuer: "https://login.lescommuns.org/auth/realms/data-food-consortium",
+      scope: [:openid, :profile, :email],
+      response_type: :code,
+      uid_field: "email",
+      discovery: true,
+      client_auth_method: :jwks,
+
+      client_options: {
+        identifier: ENV["OPENID_APP_ID"],
+        secret: ENV["OPENID_APP_SECRET"],
+        redirect_uri: "#{protocol}#{ActionMailer::Base.default_url_options[:host]}/user/spree_user/auth/openid_connect/callback"
+        jwks_uri: 'https://login.lescommuns.org/auth/realms/data-food-consortium/protocol/openid-connect/certs'
+      }
+    }
+  end
 end
