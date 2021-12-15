@@ -4,7 +4,7 @@ class BulkInvoiceJob < ActiveJob::Base
   def perform(order_ids, filepath)
     pdf = CombinePDF.new
 
-    orders_from(order_ids).each do |order|
+    sorted_orders(order_ids).each do |order|
       invoice = renderer.render_to_string(order)
 
       pdf << CombinePDF.parse(invoice)
@@ -15,8 +15,9 @@ class BulkInvoiceJob < ActiveJob::Base
 
   private
 
-  def orders_from(order_ids)
-    Spree::Order.where(id: order_ids).order("completed_at DESC")
+  # Ensures the records are returned in the same order the ids were originally given in
+  def sorted_orders(order_ids)
+    Spree::Order.where(id: order_ids).to_a.sort_by{ |order| order_ids.index(order.id) }
   end
 
   def renderer
