@@ -1,0 +1,27 @@
+= f.fields :bill_address, model: @order.bill_address do |bill_address|
+  %div.checkout-input
+    = bill_address.label :firstname, t("split_checkout.step1.your_details.first_name.label")
+    = bill_address.text_field :firstname, { placeholder: t("split_checkout.step1.your_details.first_name.placeholder") }    
+    = f.error_message_on "bill_address.firstname"  
+
+  %div.checkout-input
+    = bill_address.label :lastname, t("split_checkout.step1.your_details.last_name.label")
+    = bill_address.text_field :lastname, { placeholder: t("split_checkout.step1.your_details.last_name.placeholder") }
+    = f.error_message_on "bill_address.lastname"
+
+.flex{style: "justify-content: space-between; gap: 10px;" }
+  %div.checkout-input{style: "flex-grow: 2;" }
+    = f.label :card_number, t("split_checkout.step2.form.card_number.label")
+    = f.text_field :card_number, { placeholder: t("split_checkout.step2.form.card_number.placeholder") }
+
+  %div.checkout-input{style: "flex: 0 1 100px;"}
+    = f.label :card_verification_value, t("split_checkout.step2.form.card_verification_value.label")
+    = f.number_field :card_verification_value, { placeholder: t("split_checkout.step2.form.card_verification_value.placeholder") }
+
+  %div.checkout-input{style: "flex: 0 1 70px;"}
+    = f.label :card_month, t("split_checkout.step2.form.card_month.label")
+    = f.number_field :card_month, { placeholder: t("split_checkout.step2.form.card_month.placeholder"), max: 12 }
+
+  %div.checkout-input{style: "flex: 0 1 70px;"}
+    = f.label :card_year, t("split_checkout.step2.form.card_year.label")
+    = f.number_field :card_year, { placeholder: t("split_checkout.step2.form.card_year.placeholder"), min: Time.now.year, max: Time.now.year + 10 }

@@ -97,6 +97,18 @@
       } 
     }
 
+    .stripe-card {
+      background: white;
+      box-sizing: border-box;
+      font-weight: 400;
+      padding: 0.6rem 0.5rem;
+      border: 1px solid #cccccc;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+      border-radius: 0;
+      height: 42px;
+      width: 100%;
+    }
+
     label {
       margin-bottom: 0.3rem;
     }
@@ -104,23 +116,6 @@
     input,
     select {
       margin: 0;
-    }
-
-    span.formError {
-      background-color: rgba(193, 18, 43, 0.1);
-      color: $red-700;
-      font-style: normal;
-      margin: 0;
-      font-size: 0.8rem;
-      display: block;
-      padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-
-      &.standalone {
-        padding: 10px;
-      }
     }
 
     #distributor_address.panel {
@@ -135,6 +130,29 @@
     a {
       color: $teal-400;
       text-decoration: underline;
+    }
+  }
+
+  .checkout-input span.formError, div.error.card-errors {
+    background-color: rgba(193, 18, 43, 0.1);
+    color: $red-700;
+    font-style: normal;
+    margin: 0;
+    font-size: 0.8rem;
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    &.standalone {
+      padding: 10px;
+    }
+  }
+
+  div.error.card-errors {
+    &:empty {
+      display: none;
     }
   }
 

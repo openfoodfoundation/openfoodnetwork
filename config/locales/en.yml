@@ -1724,6 +1724,24 @@ en:
     step2:
       payment_method:
         title: Payment method
+      form: 
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+          placeholder: 123
+        card_month:
+          label: Month
+          placeholder: 01
+        card_year:
+          label: Year
+          placeholder: 2020
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
