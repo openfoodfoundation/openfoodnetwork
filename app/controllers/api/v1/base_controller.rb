@@ -8,8 +8,6 @@ module Api
       include Pagy::Backend
       include JsonApiPagination
 
-      RESULTS_PER_PAGE = 50
-
       check_authorization
 
       attr_accessor :current_api_user

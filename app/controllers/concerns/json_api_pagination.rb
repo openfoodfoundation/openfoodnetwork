@@ -3,6 +3,9 @@
 module JsonApiPagination
   extend ActiveSupport::Concern
 
+  DEFAULT_PER_PAGE = 50
+  MAX_PER_PAGE = 200
+
   def pagination_options
     current_page = params[:page] || 1
     total_pages = @pagy.pages
@@ -16,7 +19,7 @@ module JsonApiPagination
           results: @pagy.count,
           pages: total_pages,
           page: current_page,
-          per_page: (params[:per_page] || self.class::RESULTS_PER_PAGE)
+          per_page: final_per_page_value
         }
       },
       links: {
@@ -30,7 +33,7 @@ module JsonApiPagination
   end
 
   def pagy_options
-    { items: params[:per_page] || self.class::RESULTS_PER_PAGE }
+    { items: final_per_page_value }
   end
 
   private
@@ -39,5 +42,10 @@ module JsonApiPagination
     return if page_number.nil?
 
     url_for(only_path: false, params: request.query_parameters.merge(page: page_number))
+  end
+
+  # User-specified value, or DEFAULT_PER_PAGE, capped at MAX_PER_PAGE
+  def final_per_page_value
+    (params[:per_page] || DEFAULT_PER_PAGE).to_i.clamp(1, MAX_PER_PAGE)
   end
 end
