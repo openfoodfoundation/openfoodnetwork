@@ -1634,6 +1634,21 @@ fr:
     step2:
       payment_method:
         title: Moyen de paiement
+      form:
+        card_number:
+          label: Numéro de la carte
+          placeholder: par ex. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
+        stripe:
+          use_saved_card: Utilisez une carte enregistrée
+          use_new_card: Entrez les informations de votre carte
+          save_card: Enregistrez votre carte pour vos prochains achats
+          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
       explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
