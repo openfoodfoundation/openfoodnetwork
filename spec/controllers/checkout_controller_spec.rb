@@ -76,7 +76,7 @@ describe CheckoutController, type: :controller do
       expect { post :update, params: params }.
         to change { Customer.count }.by(1)
       expect(order.completed?).to be true
-      expect(response).to redirect_to order_path(order)
+      expect(response).to redirect_to order_path(order, order_token: order.token)
     end
   end
 
@@ -356,7 +356,7 @@ describe CheckoutController, type: :controller do
 
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(200)
-      expect(response.body).to eq({ path: order_path(order) }.to_json)
+      expect(response.body).to eq({ path: order_path(order, order_token: order.token) }.to_json)
     end
 
     it "returns an error on unexpected failure" do
