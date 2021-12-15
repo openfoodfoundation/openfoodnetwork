@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module PaymentGateways
   describe PaypalController, type: :controller do
     context '#cancel' do
       it 'redirects back to checkout' do
