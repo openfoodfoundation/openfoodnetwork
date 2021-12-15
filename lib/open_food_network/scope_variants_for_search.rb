@@ -37,7 +37,9 @@ module OpenFoodNetwork
         ransack(search_params.merge(m: 'or')).
         result.
         includes(:product).
-        order("products_spree_variants.name, display_name, display_as, products_spree_variants.variant_unit_name")
+        merge(Spree::Product.order(:name)).
+        order(:display_name, :display_as).
+        merge(Spree::Product.order(:variant_unit_name))
     end
 
     def distributor
