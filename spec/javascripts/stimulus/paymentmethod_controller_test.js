@@ -9,23 +9,23 @@ describe("PaymentmethodController", () => {
   describe("#selectPaymentMethod", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="paymentmethod">
-         <span id="paymentmethod_1" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod1" />
-         <span id="paymentmethod_2" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod2" />
-         <span id="paymentmethod_3" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod3" />
+         <input id="paymentmethod_1" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod1" data-paymentmethod-target="input" />
+         <input id="paymentmethod_2" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod2" data-paymentmethod-target="input" checked="checked" />
+         <input id="paymentmethod_3" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod3" data-paymentmethod-target="input"/>
          
-         <div class="paymentmethod-container" style="display: none;" id="paymentmethod1">
+         <div class="paymentmethod-container" id="paymentmethod1">
           <input type="number" required id="input1" />
           <select id="select1" >
             <option value="1">1</option>
           </select>
          </div>
-         <div class="paymentmethod-container" style="display: block;" id="paymentmethod2">
+         <div class="paymentmethod-container" id="paymentmethod2">
           <input type="number" required="true" id="input2" />
           <select id="select2" >
             <option value="1">1</option>
           </select>
          </div>
-         <div class="paymentmethod-container" style="display: none;" id="paymentmethod3">
+         <div class="paymentmethod-container" id="paymentmethod3">
           <input type="number" id="input3" />
           <select id="select3" >
             <option value="1">1</option>

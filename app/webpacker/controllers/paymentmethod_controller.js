@@ -1,9 +1,20 @@
 import { Controller } from "stimulus";
 export default class extends Controller {
-  static targets = ["paymentMethod"];
+  static targets = ["input"];
+
+  connect() {
+    this.inputTargets.forEach((i) => {
+      if (i.checked) {
+        this.doSelectPaymentMethod(i.dataset.paymentmethodId);
+      }
+    });
+  }
 
   selectPaymentMethod(event) {
-    const paymentMethodContainerId = event.target.dataset.paymentmethodId;
+    this.doSelectPaymentMethod(event.target.dataset.paymentmethodId);
+  }
+
+  doSelectPaymentMethod(paymentMethodContainerId) {
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((e) => {
