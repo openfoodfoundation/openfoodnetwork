@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+# Note: "off-session" processing happens when a payment is placed on behalf of a user when
+# they are currently offline. This can happen with backoffice orders or subscriptions.
+# In that case; if the payment requires authorization in Stripe, we send an email so the user
+# can authorize it later (asynchronously).
+
 module OrderManagement
   module Order
     class StripeScaPaymentAuthorize
