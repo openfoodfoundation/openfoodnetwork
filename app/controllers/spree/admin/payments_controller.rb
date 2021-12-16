@@ -175,8 +175,7 @@ module Spree
         return unless @payment.payment_method.instance_of?(Spree::Gateway::StripeSCA)
 
         OrderManagement::Order::StripeScaPaymentAuthorize.
-          new(@order, payment: @payment, off_session: true).
-          call!(full_order_path(@order))
+          new(@order, payment: @payment, off_session: true).call!
 
         raise Spree::Core::GatewayError, I18n.t('authorization_failure') if @order.errors.any?
 

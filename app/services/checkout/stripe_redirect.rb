@@ -14,7 +14,7 @@ module Checkout
     def path
       return unless stripe_payment_method?
 
-      payment = payment_authorizer.call!(return_url)
+      payment = payment_authorizer.call!(checkout_return_url)
 
       return if order.errors.any?
 
@@ -33,7 +33,7 @@ module Checkout
       OrderManagement::Order::StripeScaPaymentAuthorize.new(order)
     end
 
-    def return_url
+    def checkout_return_url
       payment_gateways_confirm_stripe_url
     end
 

@@ -10,8 +10,4 @@ module FullUrlHelper
   def full_checkout_path
     URI.join(url_helpers.root_url, url_helpers.checkout_path).to_s
   end
-
-  def full_order_path(order)
-    URI.join(url_helpers.root_url, url_helpers.order_path(order)).to_s
-  end
 end
