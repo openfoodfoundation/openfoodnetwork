@@ -7,28 +7,37 @@ module OrderManagement
 
       def initialize(order, off_session: false)
         @order = order
-        @payment = OrderPaymentFinder.new(@order).last_pending_payment
+        @payment = OrderPaymentFinder.new(order).last_pending_payment
         @off_session = off_session
       end
 
-      def call!(redirect_url = full_order_path(@order))
-        return unless @payment&.checkout?
+      def call!(redirect_url = full_order_path(order))
+        return unless payment&.checkout?
 
-        @payment.authorize!(redirect_url)
+        payment.authorize!(redirect_url)
 
-        unless @payment.pending? || @payment.requires_authorization?
-          @order.errors.add(:base, I18n.t('authorization_failure'))
-        end
+        order.errors.add(:base, I18n.t('authorization_failure')) unless successfully_processed?
+        send_auth_emails if requires_authorization_emails?
 
-        return @payment unless @payment.requires_authorization? && off_session
-
-        PaymentMailer.authorize_payment(@payment).deliver_now
-        PaymentMailer.authorization_required(@payment).deliver_now
+        payment
       end
 
       private
 
-      attr_reader :off_session
+      attr_reader :order, :payment, :off_session
+
+      def successfully_processed?
+        payment.pending? || payment.requires_authorization?
+      end
+
+      def requires_authorization_emails?
+        payment.requires_authorization? && off_session
+      end
+
+      def send_auth_emails
+        PaymentMailer.authorize_payment(payment).deliver_now
+        PaymentMailer.authorization_required(payment).deliver_now
+      end
     end
   end
 end
