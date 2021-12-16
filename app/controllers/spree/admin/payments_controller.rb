@@ -3,8 +3,6 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      include FullUrlHelper
-
       before_action :load_order, except: [:show]
       before_action :load_payment, only: [:fire, :show]
       before_action :load_data
