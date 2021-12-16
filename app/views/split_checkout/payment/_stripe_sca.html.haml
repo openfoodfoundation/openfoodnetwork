@@ -12,7 +12,7 @@
       %label
         = t('split_checkout.step2.form.stripe.use_new_card')
 
-    %div.stripe-card{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}" }
+    %div.stripe-card{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}", "data-stripe-target": "stripeElementsForm" }
       = hidden_field_tag "order[payments_attributes][][source_attributes][first_name]", @order.bill_address.first_name
       = hidden_field_tag "order[payments_attributes][][source_attributes][last_name]", @order.bill_address.last_name
       = hidden_field_tag "order[payments_attributes][][source_attributes][month]", nil, { "data-stripe-target": "expMonth" }
