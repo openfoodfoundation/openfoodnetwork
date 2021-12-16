@@ -1634,6 +1634,21 @@ de_DE:
     step2:
       payment_method:
         title: Zahlungsart
+      form:
+        card_number:
+          label: Kreditkartennummer
+          placeholder: z. B. 4242 4242 4242 4242
+        card_verification_value:
+          label: Kartenprüfnummer (3-stellig)
+        card_month:
+          label: Monat
+        card_year:
+          label: Jahr
+        stripe:
+          use_saved_card: Gespeicherte Kreditkarte verwenden
+          use_new_card: Geben Sie Ihre Kreditkartendaten ein
+          save_card: Kreditkarte für zukünftige Verwendung speichern
+          create_new_card: oder geben Sie unten neue Kreditkartendetails ein
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
