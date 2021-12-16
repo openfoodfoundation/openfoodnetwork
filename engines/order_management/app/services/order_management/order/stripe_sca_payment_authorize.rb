@@ -10,9 +10,9 @@ module OrderManagement
     class StripeScaPaymentAuthorize
       include FullUrlHelper
 
-      def initialize(order, off_session: false)
+      def initialize(order, payment: nil, off_session: false)
         @order = order
-        @payment = OrderPaymentFinder.new(order).last_pending_payment
+        @payment = payment || OrderPaymentFinder.new(order).last_pending_payment
         @off_session = off_session
       end
 
