@@ -48,7 +48,7 @@ describe "Order Management", js: true do
         expect(page).to_not be_confirmed_order_page
 
         # Can load the page with token
-        visit order_path(order, token: order.token)
+        visit order_path(order, order_token: order.token)
         expect(page).to be_confirmed_order_page
 
         # Can load the page even without the token, after loading the page with

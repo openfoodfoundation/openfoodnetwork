@@ -192,7 +192,7 @@ module PaymentGateways
     end
 
     def completion_route(order)
-      main_app.order_path(order, token: order.token)
+      main_app.order_path(order, order_token: order.token)
     end
 
     def address_required?

@@ -26,12 +26,12 @@ describe Spree::OrdersController, type: :controller do
       let(:current_user) { nil }
 
       it "loads page" do
-        get :show, params: { id: order.number, token: order.token }
+        get :show, params: { id: order.number, order_token: order.token }
         expect(response.status).to eq 200
       end
 
       it "stores order token in session as 'access_token'" do
-        get :show, params: { id: order.number, token: order.token }
+        get :show, params: { id: order.number, order_token: order.token }
         expect(session[:access_token]).to eq(order.token)
       end
     end
