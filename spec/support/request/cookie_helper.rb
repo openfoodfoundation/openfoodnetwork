@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module CookieHelper
-  def cookie_named(name)
-    Capybara.current_session.driver.browser.manage.cookie_named(name)
+  def cookies_name
+    Capybara.current_session.driver.browser.cookies
   end
 
   def cookies
-    Capybara.current_session.driver.browser.manage.all_cookies
+    Capybara.current_session.driver.browser.cookies.all
   end
 end
