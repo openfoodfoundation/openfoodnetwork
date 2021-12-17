@@ -10,10 +10,11 @@ module OrderManagement
     class StripeScaPaymentAuthorize
       include FullUrlHelper
 
-      def initialize(order, payment: nil, off_session: false)
+      def initialize(order, payment: nil, off_session: false, notify_hub: false)
         @order = order
         @payment = payment || OrderPaymentFinder.new(order).last_pending_payment
         @off_session = off_session
+        @notify_hub = notify_hub
       end
 
       def call!(redirect_url = full_order_path(order))
@@ -29,7 +30,7 @@ module OrderManagement
 
       private
 
-      attr_reader :order, :payment, :off_session
+      attr_reader :order, :payment, :off_session, :notify_hub
 
       def successfully_processed?
         payment.pending? || payment.requires_authorization?
@@ -41,7 +42,7 @@ module OrderManagement
 
       def send_auth_emails
         PaymentMailer.authorize_payment(payment).deliver_now
-        PaymentMailer.authorization_required(payment).deliver_now
+        PaymentMailer.authorization_required(payment).deliver_now if notify_hub
       end
     end
   end

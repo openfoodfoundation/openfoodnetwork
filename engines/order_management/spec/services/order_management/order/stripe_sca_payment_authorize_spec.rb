@@ -84,13 +84,31 @@ module OrderManagement
                   OrderManagement::Order::StripeScaPaymentAuthorize.new(order, off_session: true)
                 }
 
-                it "sends an email requesting authorization and an email notifying the shop owner when requested" do
+                it "notifies the customer" do
                   payment_authorize.call!
 
                   expect(order.errors.size).to eq 0
                   expect(PaymentMailer).to have_received(:authorize_payment)
-                  expect(PaymentMailer).to have_received(:authorization_required)
-                  expect(mail_mock).to have_received(:deliver_now).twice
+                  expect(mail_mock).to have_received(:deliver_now).once
+                end
+
+                context "with an additional notification for the hub manager" do
+                  let(:payment_authorize) {
+                    OrderManagement::Order::StripeScaPaymentAuthorize.new(
+                      order,
+                      off_session: true,
+                      notify_hub: true
+                    )
+                  }
+
+                  it "notifies both the customer and the hub" do
+                    payment_authorize.call!
+
+                    expect(order.errors.size).to eq 0
+                    expect(PaymentMailer).to have_received(:authorize_payment)
+                    expect(PaymentMailer).to have_received(:authorization_required)
+                    expect(mail_mock).to have_received(:deliver_now).twice
+                  end
                 end
               end
             end
