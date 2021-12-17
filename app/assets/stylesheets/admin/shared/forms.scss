@@ -283,3 +283,8 @@ fieldset {
 .form-buttons {
   text-align: center;
 }
+
+select {
+  @extend input[type="text"];
+  background-color: white;
+}
