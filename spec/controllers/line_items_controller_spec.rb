@@ -91,7 +91,7 @@ describe LineItemsController, type: :controller do
 
               context "after a payment is captured" do
                 let(:payment) {
-                  create(:check_payment, amount: order.total, order: order, state: 'completed')
+                  create(:check_payment, :completed, amount: order.total, order: order)
                 }
                 before { payment.capture! }
 
