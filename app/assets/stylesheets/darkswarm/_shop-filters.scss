@@ -173,6 +173,13 @@
   z-index: 90;
 }
 
+.sticky-shop-filters-container {
+  position: sticky;
+  top: $topbar-height;
+  max-height: calc(100vh - #{$topbar-height});
+  overflow-y: auto;
+}
+
 .filter-shopfront {
   &.taxon-selectors, &.property-selectors {
     background: transparent;
