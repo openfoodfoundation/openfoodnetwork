@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'open_food_network/scope_variants_for_search'
 
 describe OpenFoodNetwork::ScopeVariantsForSearch do
@@ -85,7 +86,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
           create(:variant_override, variant: variant, hub: d1, on_demand: false, count_on_hand: 0)
           variant
         end
-        let!(:distributor1_variant_with_override_without_stock_level_set_and_producer_not_in_stock) do
+        let!(:distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock) do
           variant = create(:simple_product).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
@@ -100,7 +101,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
           variant
         end
         let!(:distributor2_variant_with_override_in_stock) do
-          create_variant_with_variant_override_for(d2, count_on_hand: 1)
+          create_variant_with_variant_override_for(d2, on_demand: true, count_on_hand: nil)
         end
 
         context "when :include_out_of_stock is not specified" do
@@ -120,7 +121,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
               distributor1_variant_not_backorderable_and_not_on_hand,
               distributor1_variant_with_override_not_on_demand_and_not_on_hand,
               distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
-              distributor1_variant_with_override_without_stock_level_set_and_producer_not_in_stock,
+              distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
               distributor2_variant_with_override_in_stock
             )
           end
@@ -136,7 +137,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
               distributor1_variant_with_override_on_demand_but_not_on_hand,
               distributor1_variant_with_override_on_hand_but_not_on_demand,
               distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock,
-              distributor1_variant_with_override_without_stock_level_set_and_producer_not_in_stock,
+              distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
               distributor1_variant_not_backorderable_and_not_on_hand,
               distributor1_variant_with_override_not_on_demand_and_not_on_hand,
               distributor1_variant_with_override_not_in_stock_but_producer_in_stock
