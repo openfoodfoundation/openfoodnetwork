@@ -57,7 +57,10 @@ module OrderCompletion
   end
 
   def process_payment_completion!
-    return processing_failed unless @order.process_payments!
+    unless @order.process_payments!
+      processing_failed
+      return redirect_to order_failed_route
+    end
 
     if OrderWorkflow.new(@order).next && @order.complete?
       processing_succeeded
@@ -69,6 +72,7 @@ module OrderCompletion
   rescue Spree::Core::GatewayError => e
     gateway_error(e)
     processing_failed
+    redirect_to order_failed_route
   end
 
   def processing_succeeded
