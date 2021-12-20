@@ -8,7 +8,16 @@ describe 'sitemap' do
 
   it "renders sitemap" do
     visit '/sitemap.xml'
-    expect(page).to have_content enterprise_shop_url(enterprise)
-    expect(page).to have_content group_url(group)
+    expect(page.source).to have_content return_page(enterprise_shop_url(enterprise))
+    expect(page.source).to have_content return_page(group_url(group))
   end
+end
+
+private
+
+def return_page(website)
+  # routing does not include the port of the session, this method adds it
+  url = URI(page.driver.browser.url)
+  path = URI(website).path
+  return_page = "http://" + url.host.to_s + ':' + url.port.to_s + path
 end
