@@ -16,8 +16,18 @@ export default class extends Controller {
   selectCard(cardValue) {
     if (cardValue == "") {
       this.stripeelementsTarget.style.display = "block";
+      this.getFormElementsArray(this.stripeelementsTarget).forEach((i) => {
+        i.disabled = false;
+      });
     } else {
       this.stripeelementsTarget.style.display = "none";
+      this.getFormElementsArray(this.stripeelementsTarget).forEach((i) => {
+        i.disabled = true;
+      });
     }
+  }
+
+  getFormElementsArray(container) {
+    return Array.from(container.querySelectorAll("input, select, textarea"));
   }
 }
