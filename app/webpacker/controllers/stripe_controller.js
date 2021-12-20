@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = [ "cardElement", "cardErrors", "expMonth", "expYear", "brand", "last4", "pmId", "stripeElementsForm" ];
+  static targets = [ "cardElement", "cardErrors", "expMonth", "expYear", "brand", "last4", "pmId" ];
   static styles = {
     base: {
       fontFamily: "Roboto, Arial, sans-serif",
@@ -14,54 +14,52 @@ export default class extends Controller {
   };
 
   connect() {
-    const stripe = Stripe(this.data.get("key"));
-    const elements = stripe.elements();
-    const form = this.pmIdTarget.form;
-    const error_container = this.cardErrorsTarget;
-    const exp_month_field = this.expMonthTarget;
-    const exp_year_field = this.expYearTarget;
-    const brand_field = this.brandTarget;
-    const last4_field = this.last4Target;
-    const pm_id_field = this.pmIdTarget;
-    const stripeElementsForm = this.stripeElementsFormTarget;
+    this.parentForm = this.pmIdTarget.form;
 
-    const stripe_element = elements.create("card", {
+    // Initialize Stripe JS
+    this.stripe = Stripe(this.data.get("key"));
+    this.stripeElement = this.stripe.elements().create("card", {
       style: this.constructor.styles,
       hidePostalCode: true
     });
 
-    // Mount Stripe Elements JS to the field and add form validations
-    stripe_element.mount(this.cardElementTarget);
-    stripe_element.addEventListener("change", event => {
-      if (event.error) {
-        error_container.textContent = event.error.message;
+    // Mount Stripe Elements JS to the form field
+    this.stripeElement.mount(this.cardElementTarget);
+
+    this.parentForm.addEventListener("submit", this.stripeSubmit);
+    this.stripeElement.addEventListener("change", this.updateErrors);
+  }
+
+  // Before the form is submitted we send the card details directly to Stripe (via StripeJS),
+  // and receive a token which represents the card object, and add that token into the form.
+  stripeSubmit = (event) => {
+    if(!this.stripeSelected()) { return }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.stripe.createPaymentMethod({type: "card", card: this.stripeElement}).then(response => {
+      if (response.error) {
+        this.updateErrors(response);
       } else {
-        error_container.textContent = "";
+        this.pmIdTarget.setAttribute("value", response.paymentMethod.id);
+        this.expMonthTarget.setAttribute("value", response.paymentMethod.card.exp_month);
+        this.expYearTarget.setAttribute("value", response.paymentMethod.card.exp_year);
+        this.brandTarget.setAttribute("value", response.paymentMethod.card.brand);
+        this.last4Target.setAttribute("value", response.paymentMethod.card.last4);
+
+        this.parentForm.submit();
       }
     });
+  }
 
-    // Before the form is submitted we send the card details directly to Stripe (via StripeJS),
-    // and receive a token which represents the card object, and add that token into the form.
-    form.addEventListener("submit", event => {
-      if(!this.stripeSelected()) { return }
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      stripe.createPaymentMethod({type: "card", card: stripe_element}).then(response => {
-        if (response.error) {
-          error_container.textContent = response.error.message;
-        } else {
-          pm_id_field.setAttribute("value", response.paymentMethod.id);
-          exp_month_field.setAttribute("value", response.paymentMethod.card.exp_month);
-          exp_year_field.setAttribute("value", response.paymentMethod.card.exp_year);
-          brand_field.setAttribute("value", response.paymentMethod.card.brand);
-          last4_field.setAttribute("value", response.paymentMethod.card.last4);
-
-          form.submit();
-        }
-      });
-    });
+  // Update validation messages from Stripe shown in the form
+  updateErrors = (data) => {
+    if (data.error) {
+      this.cardErrorsTarget.textContent = data.error.message;
+    } else {
+      this.cardErrorsTarget.textContent = "";
+    }
   }
 
   // Boolean; true if Stripe is shown / currently selected
