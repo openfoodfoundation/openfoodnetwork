@@ -132,6 +132,11 @@ module Spree
           providers.reject! { |provider| stripe_provider?(provider) }
         end
 
+        # This method is deprecated and will be removed soon:
+        unless @payment_method&.type == "Spree::Gateway::StripeConnect"
+          providers.reject! { |provider| provider.name.ends_with?("StripeConnect") }
+        end
+
         providers
       end
 

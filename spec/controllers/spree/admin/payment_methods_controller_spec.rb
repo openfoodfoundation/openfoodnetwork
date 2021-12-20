@@ -8,6 +8,59 @@ module Spree
   end
 
   describe Admin::PaymentMethodsController, type: :controller do
+    let(:user) {
+      create(:user, enterprises: [create(:distributor_enterprise)])
+    }
+
+    describe "#new" do
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      it "allows to select from a range of payment gateways" do
+        spree_get :new
+        providers = assigns(:providers).map(&:to_s)
+
+        expect(providers).to eq %w[
+          Spree::Gateway::Bogus
+          Spree::Gateway::BogusSimple
+          Spree::Gateway::PayPalExpress
+          Spree::PaymentMethod::Check
+        ]
+      end
+
+      it "allows to select StripeSCA when configured" do
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+
+        spree_get :new
+        providers = assigns(:providers).map(&:to_s)
+
+        expect(providers).to include "Spree::Gateway::StripeSCA"
+        expect(providers).to_not include "Spree::Gateway::StripeConnect"
+      end
+    end
+
+    describe "#edit" do
+      let(:deprecated_stripe) {
+        create(
+          :stripe_connect_payment_method,
+          distributor_ids: [enterprise_id],
+          preferred_enterprise_id: enterprise_id
+        )
+      }
+      let(:enterprise_id) { user.enterprise_ids.first }
+
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      it "shows the current gateway type even if deprecated" do
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+
+        spree_get :edit, id: deprecated_stripe.id
+        providers = assigns(:providers).map(&:to_s)
+
+        expect(providers).to include "Spree::Gateway::StripeSCA"
+        expect(providers).to include "Spree::Gateway::StripeConnect"
+      end
+    end
+
     describe "#create and #update" do
       let!(:enterprise) { create(:distributor_enterprise, owner: user) }
       let(:payment_method) {
