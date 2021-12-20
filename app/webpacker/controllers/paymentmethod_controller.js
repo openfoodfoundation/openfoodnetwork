@@ -12,14 +12,15 @@ export default class extends Controller {
 
   selectPaymentMethod(event) {
     this.doSelectPaymentMethod(event.target.dataset.paymentmethodId);
-    const stripeCardsController =
+
+    const stripeCardSelector =
       this.application.getControllerForElementAndIdentifier(
         document
           .getElementById(event.target.dataset.paymentmethodId)
           .querySelector('[data-controller="stripe-cards"]'),
         "stripe-cards"
       );
-    stripeCardsController.connect();
+    stripeCardSelector?.connect();
   }
 
   doSelectPaymentMethod(paymentMethodContainerId) {
