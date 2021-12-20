@@ -9,8 +9,8 @@ module JsonApiPagination
   def pagination_options
     current_page = params[:page] || 1
     total_pages = @pagy.pages
-    previous_page = (current_page > 1) ? (current_page - 1) : nil
-    next_page = (current_page < total_pages) ? (current_page + 1) : nil
+    previous_page = current_page > 1 ? (current_page - 1) : nil
+    next_page = current_page < total_pages ? (current_page + 1) : nil
 
     {
       is_collection: true,

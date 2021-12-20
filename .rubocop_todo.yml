@@ -744,6 +744,7 @@ Metrics/MethodLength:
     - 'app/controllers/api/v0/taxons_controller.rb'
     - 'app/controllers/api/v0/variants_controller.rb'
     - 'app/controllers/shop_controller.rb'
+    - 'app/controllers/concerns/json_api_pagination.rb'
     - 'app/controllers/split_checkout_controller.rb'
     - 'app/controllers/spree/admin/orders/customer_details_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'

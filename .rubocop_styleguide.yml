@@ -204,6 +204,8 @@ Metrics/BlockLength:
     "resources",
     "scenario"
   ]
+  Exclude:
+    - "spec/requests/**/*"
 
 Metrics/BlockNesting:
   Max: 3
@@ -219,6 +221,8 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Max: 10
+  Exclude:
+    - "app/json_schemas/**/*"
 
 Metrics/ParameterLists:
   Max: 5

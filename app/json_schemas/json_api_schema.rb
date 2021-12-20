@@ -15,7 +15,7 @@ class JsonApiSchema
     end
 
     def all_attributes
-      self.attributes.keys
+      attributes.keys
     end
 
     def schema(options = {})
@@ -24,7 +24,7 @@ class JsonApiSchema
         properties: {
           data: {
             type: :object,
-            properties: self.data_properties(options)
+            properties: data_properties(options)
           },
           meta: { type: :object },
           links: { type: :object }
@@ -41,7 +41,7 @@ class JsonApiSchema
             type: :array,
             items: {
               type: :object,
-              properties: self.data_properties(options)
+              properties: data_properties(options)
             }
           },
           meta: {
@@ -77,19 +77,19 @@ class JsonApiSchema
     private
 
     def data_properties(require_all: false)
-      required = require_all ? self.all_attributes : self.required_attributes
+      required = require_all ? all_attributes : required_attributes
 
       {
         id: { type: :string, example: "1" },
-        type: { type: :string, example: self.object_name },
+        type: { type: :string, example: object_name },
         attributes: {
           type: :object,
-          properties: self.attributes,
+          properties: attributes,
           required: required
         },
         relationships: {
           type: :object,
-          properties: self.relationships.to_h do |name|
+          properties: relationships.to_h do |name|
             [
               name,
               is_singular?(name) ? RelationshipSchema.schema(name) : RelationshipSchema.collection(name)
