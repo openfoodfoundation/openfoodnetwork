@@ -6,6 +6,10 @@ export default class extends Controller {
   static targets = ["stripeelements", "select"];
 
   connect() {
+    this.initSelectedCard()
+  }
+
+  initSelectedCard() {
     if (this.hasSelectTarget) {
       this.selectCard(this.selectTarget.value);
     }

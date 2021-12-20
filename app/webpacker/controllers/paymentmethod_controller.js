@@ -20,7 +20,7 @@ export default class extends Controller {
           .querySelector('[data-controller="stripe-cards"]'),
         "stripe-cards"
       );
-    stripeCardSelector?.connect();
+    stripeCardSelector?.initSelectedCard();
   }
 
   doSelectPaymentMethod(paymentMethodContainerId) {
