@@ -235,6 +235,6 @@ fieldset {
 }
 
 select {
-  @extend input[type="text"];
+  @extend input, [type="text"];
   background-color: white;
 }
