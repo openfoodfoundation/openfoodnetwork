@@ -51,22 +51,22 @@ module Api
 
       def invalid_resource!(resource = nil)
         render status: :unprocessable_entity,
-               json: json_api_invalid(I18n.t(:invalid_resource, scope: "spree.api"), resource&.errors)
+               json: json_api_invalid(I18n.t(:invalid_resource, scope: "api"), resource&.errors)
       end
 
       def invalid_api_key
         render status: :unauthorized,
-               json: json_api_error(I18n.t(:invalid_api_key, key: api_key, scope: "spree.api"))
+               json: json_api_error(I18n.t(:invalid_api_key, key: api_key, scope: "api"))
       end
 
       def unauthorized
         render status: :unauthorized,
-               json: json_api_error(I18n.t(:unauthorized, scope: "spree.api"))
+               json: json_api_error(I18n.t(:unauthorized, scope: "api"))
       end
 
       def not_found
         render status: :not_found,
-               json: json_api_error(I18n.t(:resource_not_found, scope: "spree.api"))
+               json: json_api_error(I18n.t(:resource_not_found, scope: "api"))
       end
 
       def json_api_error(message, **options)
