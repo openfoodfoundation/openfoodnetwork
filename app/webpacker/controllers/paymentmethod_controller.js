@@ -29,11 +29,9 @@ export default class extends Controller {
     ).forEach((e) => {
       if (e.id === paymentMethodContainerId) {
         e.style.display = "block";
-        this.addRequiredAttributeOnInputIfNeeded(e);
         this.removeDisabledAttributeOnInput(e);
       } else {
         e.style.display = "none";
-        this.removeRequiredAttributeOnInput(e);
         this.addDisabledAttributeOnInput(e);
       }
     });
@@ -52,23 +50,6 @@ export default class extends Controller {
   removeDisabledAttributeOnInput(container) {
     this.getFormElementsArray(container).forEach((i) => {
       i.disabled = false;
-    });
-  }
-
-  removeRequiredAttributeOnInput(container) {
-    this.getFormElementsArray(container).forEach((i) => {
-      if (i.required) {
-        i.dataset.required = i.required;
-        i.required = false;
-      }
-    });
-  }
-
-  addRequiredAttributeOnInputIfNeeded(container) {
-    this.getFormElementsArray(container).forEach((i) => {
-      if (i.dataset.required === "true") {
-        i.required = true;
-      }
     });
   }
 }
