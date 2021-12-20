@@ -113,8 +113,11 @@ module Spree
         let!(:enterprise1) { create(:distributor_enterprise, owner: user) }
         let!(:enterprise2) { create(:distributor_enterprise, owner: create(:user)) }
         let!(:payment_method) {
-          create(:stripe_sca_payment_method, distributor_ids: [enterprise1.id, enterprise2.id],
-                                                 preferred_enterprise_id: enterprise2.id)
+          create(
+            :stripe_sca_payment_method,
+            distributor_ids: [enterprise1.id, enterprise2.id],
+            preferred_enterprise_id: enterprise2.id
+          )
         }
 
         before { allow(controller).to receive(:spree_current_user) { user } }
