@@ -3,15 +3,15 @@ export default class extends Controller {
   static targets = ["input"];
 
   connect() {
-    this.inputTargets.forEach((i) => {
-      if (i.checked) {
-        this.doSelectPaymentMethod(i.dataset.paymentmethodId);
+    this.inputTargets.forEach((input) => {
+      if (input.checked) {
+        this.setPaymentMethod(input.dataset.paymentmethodId);
       }
     });
   }
 
   selectPaymentMethod(event) {
-    this.doSelectPaymentMethod(event.target.dataset.paymentmethodId);
+    this.setPaymentMethod(event.target.dataset.paymentmethodId);
 
     const stripeCardSelector =
       this.application.getControllerForElementAndIdentifier(
@@ -23,33 +23,29 @@ export default class extends Controller {
     stripeCardSelector?.initSelectedCard();
   }
 
-  doSelectPaymentMethod(paymentMethodContainerId) {
+  setPaymentMethod(paymentMethodContainerId) {
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
-    ).forEach((e) => {
-      if (e.id === paymentMethodContainerId) {
-        e.style.display = "block";
-        this.removeDisabledAttributeOnInput(e);
+    ).forEach((container) => {
+      const enabled = container.id === paymentMethodContainerId
+
+      if (enabled) {
+        container.style.display = "block";
+        this.toggleFieldsEnabled(container, enabled);
       } else {
-        e.style.display = "none";
-        this.addDisabledAttributeOnInput(e);
+        container.style.display = "none";
+        this.toggleFieldsEnabled(container, enabled);
       }
     });
   }
 
-  getFormElementsArray(container) {
+  toggleFieldsEnabled(container, enabled) {
+    this.subFormElements(container).forEach((field) => {
+      field.disabled = !enabled;
+    });
+  }
+
+  subFormElements(container) {
     return Array.from(container.querySelectorAll("input, select, textarea"));
-  }
-
-  addDisabledAttributeOnInput(container) {
-    this.getFormElementsArray(container).forEach((i) => {
-      i.disabled = true;
-    });
-  }
-
-  removeDisabledAttributeOnInput(container) {
-    this.getFormElementsArray(container).forEach((i) => {
-      i.disabled = false;
-    });
   }
 }
