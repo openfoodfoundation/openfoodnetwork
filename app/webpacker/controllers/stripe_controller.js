@@ -32,6 +32,11 @@ export default class extends Controller {
     this.stripeElement.addEventListener("change", this.updateErrors);
   }
 
+  disconnect() {
+    this.parentForm.removeEventListener("submit", this.stripeSubmit);
+    this.stripeElement.removeEventListener("change", this.updateErrors);
+  }
+
   // Before the form is submitted we send the card details directly to Stripe (via StripeJS),
   // and receive a token which represents the card object, and add that token into the form.
   stripeSubmit = (event) => {
