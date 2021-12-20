@@ -13,7 +13,7 @@ export default class extends Controller {
     }
   };
 
-  connect() {
+  initialize() {
     this.parentForm = this.pmIdTarget.form;
 
     // Initialize Stripe JS
@@ -25,7 +25,9 @@ export default class extends Controller {
 
     // Mount Stripe Elements JS to the form field
     this.stripeElement.mount(this.cardElementTarget);
+  }
 
+  connect() {
     this.parentForm.addEventListener("submit", this.stripeSubmit);
     this.stripeElement.addEventListener("change", this.updateErrors);
   }
