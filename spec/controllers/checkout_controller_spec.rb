@@ -423,6 +423,7 @@ describe CheckoutController, type: :controller do
 
       it "should call Stripe redirect and redirect if a path is provided" do
         expect(Spree::PaymentMethod).to receive(:find).and_return(payment_method)
+        expect(payment_method).to receive(:external_gateway?).and_return(true)
         expect(payment_method).to receive(:external_payment_url).and_return("test_path")
 
         spree_post :update,

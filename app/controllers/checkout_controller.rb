@@ -191,15 +191,17 @@ class CheckoutController < ::BaseController
   end
 
   def redirect_to_payment_gateway
-    payment_method_id = params.dig(:order, :payments_attributes, 0, :payment_method_id)
-    payment_method = Spree::PaymentMethod.find(payment_method_id)
-
-    redirect_url = payment_method&.external_payment_url(order: @order)
-
-    return if redirect_url.blank?
+    return unless selected_payment_method.external_gateway?
+    return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
     render json: { path: redirect_url }, status: :ok
     true
+  end
+
+  def selected_payment_method
+    @selected_payment_method ||= Spree::PaymentMethod.find(
+      params.dig(:order, :payments_attributes, 0, :payment_method_id)
+    )
   end
 
   def order_error
