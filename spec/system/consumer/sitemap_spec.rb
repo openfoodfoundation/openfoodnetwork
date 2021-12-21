@@ -19,5 +19,5 @@ def return_page(website)
   # routing does not include the port of the session, this method adds it
   url = URI(page.driver.browser.url)
   path = URI(website).path
-  return_page = "http://" + url.host.to_s + ':' + url.port.to_s + path
+  return_page = "http://#{url.host}:#{url.port}#{path}"
 end
