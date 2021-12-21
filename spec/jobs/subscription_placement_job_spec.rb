@@ -171,4 +171,51 @@ describe SubscriptionPlacementJob do
       end
     end
   end
+
+  describe "parallisation", concurrency: true do
+    let(:shop) { create(:distributor_enterprise) }
+    let(:order_cycle) {
+      create(
+        :simple_order_cycle,
+        coordinator: shop,
+        orders_open_at: 1.minute.ago,
+        orders_close_at: 10.minutes.from_now
+      )
+    }
+    let(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+    let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+    let!(:proxy_order) {
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+    }
+    let(:breakpoint) { Mutex.new }
+
+    it "doesn't place duplicate orders" do
+      # Pause jobs when placing proxy order:
+      breakpoint.lock
+      allow(PlaceProxyOrder).to(
+        receive(:new).and_wrap_original do |method, *args|
+          breakpoint.synchronize {}
+          method.call(*args)
+        end
+      )
+
+      expect {
+        # Start two jobs in parallel:
+        threads = [
+          Thread.new { SubscriptionPlacementJob.new.perform },
+          Thread.new { SubscriptionPlacementJob.new.perform },
+        ]
+
+        # Wait for both to jobs to pause.
+        # This can reveal a race condition.
+        sleep 1
+
+        # Resume and complete both jobs:
+        breakpoint.unlock
+        threads.each(&:join)
+      }.to change {
+        Spree::Order.count
+      }.by(1)
+    end
+  end
 end
