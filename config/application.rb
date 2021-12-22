@@ -228,6 +228,8 @@ module Openfoodnetwork
 
     config.autoloader = :zeitwerk
 
+    Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
+
     config.action_view.form_with_generates_ids = true
   end
 end
