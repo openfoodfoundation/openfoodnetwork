@@ -5,6 +5,7 @@ require 'spree/core/s3_support'
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
+
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,

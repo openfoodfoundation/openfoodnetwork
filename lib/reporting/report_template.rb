@@ -31,8 +31,12 @@ module Reporting
       @renderer ||= ReportRenderer.new(self)
     end
 
-    def scoped_orders_relation
+    def ransacked_orders_relation
       visible_orders_relation.ransack(ransack_params).result
+    end
+
+    def ransacked_line_items_relation
+      visible_line_items_relation.ransack(ransack_params).result
     end
 
     def visible_orders_relation

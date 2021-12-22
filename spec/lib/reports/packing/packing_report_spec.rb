@@ -127,23 +127,36 @@ describe "Packing Reports" do
         expect(report_contents).to_not include line_item3.product.name
       end
 
-      context "filtering by order cycle" do
+      context "filtering results" do
         let(:order_cycle2) { create(:simple_order_cycle) }
         let(:order4) {
           create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle2,
                                                line_items_count: 0)
         }
         let(:line_item4) { build(:line_item_with_shipment) }
-        let(:params) { { order_cycle_id_in: order_cycle.id } }
 
         before do
           order4.line_items << line_item4
           order4.finalize!
+          line_item4.variant.product.update(supplier: create(:supplier_enterprise))
         end
 
-        it "only shows results from the selected order cycle" do
-          expect(report_contents).to include line_item.product.name
-          expect(report_contents).to_not include line_item4.product.name
+        context "filtering by order cycle" do
+          let(:params) { { order_cycle_id_in: [order_cycle.id] } }
+
+          it "only shows results from the selected order cycle" do
+            expect(report_contents).to include line_item.product.name
+            expect(report_contents).to_not include line_item4.product.name
+          end
+        end
+
+        context "filtering by supplier" do
+          let(:params) { { supplier_id_in: [line_item.supplier.id] } }
+
+          it "only shows results from the selected supplier" do
+            expect(report_contents).to include line_item.product.name
+            expect(report_contents).to_not include line_item4.product.name
+          end
         end
       end
     end

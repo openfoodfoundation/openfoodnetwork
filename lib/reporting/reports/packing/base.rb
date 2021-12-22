@@ -12,8 +12,8 @@ module Reporting
 
         def report_query
           Queries::QueryBuilder.new(primary_model, grouping_fields).
-            scoped_to_orders(scoped_orders_relation).
-            scoped_to_line_items(visible_line_items_relation).
+            scoped_to_orders(visible_orders_relation).
+            scoped_to_line_items(ransacked_line_items_relation).
             with_managed_orders(managed_orders_relation).
             joins_order_and_distributor.
             joins_order_customer.
