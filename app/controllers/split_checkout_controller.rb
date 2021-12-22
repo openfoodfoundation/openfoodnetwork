@@ -70,7 +70,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def validate_payment!
-    return true if params.dig(:order, :payments_attributes).present?
+    return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
 
     @order.errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
   end

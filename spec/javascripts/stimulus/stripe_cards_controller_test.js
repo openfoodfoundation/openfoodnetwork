@@ -13,7 +13,9 @@ describe("StripeCardsController", () => {
         <option value="1">Card #1</option>
         <option value="2">Card #2</option>
        </select>
-       <div data-stripe-cards-target="stripeelements" id="stripeelements" />
+       <div data-stripe-cards-target="stripeelements" id="stripeelements" >
+        <input type="hidden" id="input_1">
+       </div>
       </div>`;
 
     const application = Application.start();
@@ -38,18 +40,21 @@ describe("StripeCardsController", () => {
       expect(document.getElementById("stripeelements").style.display).toBe(
         "none"
       );
+      expect(document.getElementById("input_1").disabled).toBe(true);
 
       select.value = "2";
       select.dispatchEvent(new Event("change"));
       expect(document.getElementById("stripeelements").style.display).toBe(
         "none"
       );
+      expect(document.getElementById("input_1").disabled).toBe(true);
 
       select.value = "";
       select.dispatchEvent(new Event("change"));
       expect(document.getElementById("stripeelements").style.display).toBe(
         "block"
       );
+      expect(document.getElementById("input_1").disabled).toBe(false);
     });
   });
 });

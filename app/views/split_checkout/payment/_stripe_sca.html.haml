@@ -12,17 +12,18 @@
       %label
         = t('split_checkout.step2.form.stripe.use_new_card')
 
-    %div.stripe-card{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}" }
-      = hidden_field_tag "order[payments_attributes][][source_attributes][first_name]", @order.bill_address.first_name
-      = hidden_field_tag "order[payments_attributes][][source_attributes][last_name]", @order.bill_address.last_name
-      = hidden_field_tag "order[payments_attributes][][source_attributes][month]", nil, { "data-stripe-target": "expMonth" }
-      = hidden_field_tag "order[payments_attributes][][source_attributes][year]", nil, { "data-stripe-target": "expYear" }
-      = hidden_field_tag "order[payments_attributes][][source_attributes][cc_type]", nil, { "data-stripe-target": "brand" }
-      = hidden_field_tag "order[payments_attributes][][source_attributes][last_digits]", nil, { "data-stripe-target": "last4" }
-      = hidden_field_tag "order[payments_attributes][][source_attributes][gateway_payment_profile_id]", nil, { "data-stripe-target": "pmId" }
-
-      %div.card-element{ "data-stripe-target": "cardElement" }
-      %div.card-errors{ "data-stripe-target": "cardErrors" }
+    %div{ "data-controller": "stripe", "data-stripe-key": "#{Stripe.publishable_key}" }
+      .stripe-card
+        = hidden_field_tag "order[payments_attributes][][source_attributes][first_name]", @order.bill_address.first_name
+        = hidden_field_tag "order[payments_attributes][][source_attributes][last_name]", @order.bill_address.last_name
+        = hidden_field_tag "order[payments_attributes][][source_attributes][month]", nil, { "data-stripe-target": "expMonth" }
+        = hidden_field_tag "order[payments_attributes][][source_attributes][year]", nil, { "data-stripe-target": "expYear" }
+        = hidden_field_tag "order[payments_attributes][][source_attributes][cc_type]", nil, { "data-stripe-target": "brand" }
+        = hidden_field_tag "order[payments_attributes][][source_attributes][last_digits]", nil, { "data-stripe-target": "last4" }
+        = hidden_field_tag "order[payments_attributes][][source_attributes][gateway_payment_profile_id]", nil, { "data-stripe-target": "pmId" }
+        %div.card-element{ "data-stripe-target": "cardElement" }
+      
+      %div.error.card-errors{ "data-stripe-target": "cardErrors" }
 
   - if spree_current_user
     .checkout-input
