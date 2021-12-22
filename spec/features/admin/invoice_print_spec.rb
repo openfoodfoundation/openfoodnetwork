@@ -41,7 +41,7 @@ describe '
 
     context "with one payment" do
       let!(:payment1) do
-        create(:payment, order: order, state: 'completed', payment_method: payment_method1)
+        create(:payment, :completed, order: order, payment_method: payment_method1)
       end
       before do
         order.save!
@@ -58,8 +58,9 @@ describe '
     context "with two payments, and one that failed" do
       before do
         order.update payments: []
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method1, created_at: 1.day.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method1,
+                                                       created_at: 1.day.ago)
         order.payments << create(:payment, order: order, state: 'failed',
                                            payment_method: payment_method2, created_at: 2.days.ago)
         order.save!
@@ -76,10 +77,12 @@ describe '
     context "with two completed payments" do
       before do
         order.update payments: []
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method1, created_at: 2.days.ago)
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method2, created_at: 1.day.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method1,
+                                                       created_at: 2.days.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method2,
+                                                       created_at: 1.day.ago)
         order.save!
       end
 

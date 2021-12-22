@@ -19,6 +19,11 @@ FactoryBot.define do
     payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
   end
 
+  trait :completed do
+    state { 'completed' }
+    captured_at { Time.zone.now }
+  end
+
   factory :check_payment, class: Spree::Payment do
     amount { 45.75 }
     payment_method

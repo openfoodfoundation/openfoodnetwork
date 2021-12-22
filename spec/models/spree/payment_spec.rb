@@ -286,7 +286,7 @@ describe Spree::Payment do
         # Regression test for #2119
         context "when payment is completed" do
           it "should do nothing" do
-            payment = build_stubbed(:payment, state: 'completed')
+            payment = build_stubbed(:payment, :completed)
             expect(payment).to_not receive(:complete)
             expect(payment.payment_method).to_not receive(:capture)
             expect(payment.log_entries).to_not receive(:create)
@@ -569,7 +569,7 @@ describe Spree::Payment do
     context "#save" do
       context "completed payments" do
         it "updates order payment total" do
-          payment = create(:payment, amount: 100, order: order, state: "completed")
+          payment = create(:payment, :completed, amount: 100, order: order)
           expect(order.payment_total).to eq payment.amount
         end
       end
@@ -583,7 +583,7 @@ describe Spree::Payment do
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, amount: 100, order: order, state: 'completed') }
+        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
 
         it 'updates order payment total' do
           payment.void
@@ -672,7 +672,7 @@ describe Spree::Payment do
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, amount: 100, order: order, state: 'completed') }
+        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
 
         it 'updates order payment total' do
           payment.void
@@ -1007,6 +1007,15 @@ describe Spree::Payment do
     it "removes the cvv_response_message" do
       payment.clear_authorization_url
       expect(payment.cvv_response_message).to eq(nil)
+    end
+  end
+
+  describe "#complete" do
+    let(:payment) { build(:payment, state: "processing") }
+
+    it "sets :captured_at to the current time" do
+      payment.complete
+      expect(payment.captured_at).to be_present
     end
   end
 end

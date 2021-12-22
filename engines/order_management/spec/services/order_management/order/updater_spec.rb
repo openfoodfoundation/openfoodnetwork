@@ -162,7 +162,7 @@ module OrderManagement
 
         context "when the order has a payment that requires authorization and a completed payment" do
           let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
-          let!(:completed_payment) { create(:payment, order: order, state: "completed") }
+          let!(:completed_payment) { create(:payment, :completed, order: order) }
 
           it "returns paid" do
             updater.update_payment_state

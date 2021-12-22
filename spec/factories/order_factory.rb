@@ -48,7 +48,8 @@ FactoryBot.define do
           payment_state { 'paid' }
           shipment_state { 'ready' }
           after(:create) do |order|
-            create(:payment, amount: order.total, order: order, state: 'completed')
+            create(:payment, :completed, amount: order.total, order: order)
+
             order.shipments.each do |shipment|
               shipment.inventory_units.each { |u| u.update_column('state', 'on_hand') }
               shipment.update_column('state', 'ready')
@@ -174,8 +175,8 @@ FactoryBot.define do
     end
 
     after(:create) do |order, evaluator|
-      create(:payment, amount: order.total + evaluator.credit_amount, order: order,
-                       state: "completed")
+      create(:payment, :completed, amount: order.total + evaluator.credit_amount, order: order)
+
       order.reload
     end
   end
