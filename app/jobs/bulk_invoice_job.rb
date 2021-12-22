@@ -17,7 +17,8 @@ class BulkInvoiceJob < ActiveJob::Base
 
   # Ensures the records are returned in the same order the ids were originally given in
   def sorted_orders(order_ids)
-    Spree::Order.where(id: order_ids).to_a.sort_by{ |order| order_ids.index(order.id) }
+    orders_by_id = Spree::Order.where(id: order_ids).to_a.index_by(&:id)
+    order_ids.map { |id| orders_by_id[id] }
   end
 
   def renderer
