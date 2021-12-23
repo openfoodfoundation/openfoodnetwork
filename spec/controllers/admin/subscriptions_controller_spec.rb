@@ -753,7 +753,7 @@ describe Admin::SubscriptionsController, type: :controller do
     end
 
     context "when other payment methods exist" do
-      let!(:stripe) { create(:stripe_connect_payment_method, distributors: [shop]) }
+      let!(:stripe) { create(:stripe_sca_payment_method, distributors: [shop]) }
       let!(:paypal) {
         Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id])
       }

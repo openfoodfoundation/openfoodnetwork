@@ -101,12 +101,7 @@ module Spree
       end
 
       def load_data
-        @providers = if Rails.env.dev? || Rails.env.test?
-                       Gateway.providers.sort_by(&:name)
-                     else
-                       Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort_by(&:name)
-                     end
-        @providers.reject!{ |provider| stripe_provider?(provider) } unless show_stripe?
+        @providers = load_providers
         @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
@@ -124,6 +119,26 @@ module Spree
           [(@payment_method.has_distributor? d) ? 0 : 1, d.name]
         end
         # rubocop:enable Style/TernaryParentheses
+      end
+
+      def load_providers
+        providers = Gateway.providers.sort_by(&:name)
+
+        unless Rails.env.development? || Rails.env.test?
+          providers.reject! { |provider| provider.name.include? "Bogus" }
+        end
+
+        unless show_stripe?
+          providers.reject! { |provider| stripe_provider?(provider) }
+        end
+
+        # This method is deprecated and will be removed soon:
+        unless @payment_method&.type == "Spree::Gateway::StripeConnect" ||
+               OpenFoodNetwork::FeatureToggle.enabled?("StripeConnect")
+          providers.reject! { |provider| provider.name.ends_with?("StripeConnect") }
+        end
+
+        providers
       end
 
       # Show Stripe as an option if enabled, or if the
