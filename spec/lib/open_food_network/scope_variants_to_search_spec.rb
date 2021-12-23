@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'open_food_network/scope_variants_for_search'
 require 'spec_helper'
 
@@ -38,8 +39,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
       let(:params) { { q: "product", schedule_id: s1.id } }
 
       it "returns all products distributed through that schedule" do
-        lala = result
-        expect(lala).to include v1, v3
+        expect(result).to include v1, v3
         expect(result).to_not include v2, v4
       end
     end
@@ -60,6 +60,95 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
         expect(result).to include v4
         expect(result).to_not include v1, v2, v3
       end
+
+      context "filtering by stock availability" do
+        let!(:distributor1_variant_on_hand_but_not_backorderable) do
+          create_variant_with_stock_item_for(d1, backorderable: false, count_on_hand: 1)
+        end
+        let!(:distributor1_variant_backorderable_but_not_on_hand) do
+          create_variant_with_stock_item_for(d1, backorderable: true, count_on_hand: 0)
+        end
+        let!(:distributor1_variant_not_backorderable_and_not_on_hand) do
+          create_variant_with_stock_item_for(d1, backorderable: false, count_on_hand: 0)
+        end
+        let!(:distributor1_variant_with_override_on_hand_but_not_on_demand) do
+          create_variant_with_variant_override_for(d1, on_demand: false, count_on_hand: 1)
+        end
+        let!(:distributor1_variant_with_override_on_demand_but_not_on_hand) do
+          create_variant_with_variant_override_for(d1, on_demand: true, count_on_hand: nil)
+        end
+        let!(:distributor1_variant_with_override_not_on_demand_and_not_on_hand) do
+          create_variant_with_variant_override_for(d1, on_demand: false, count_on_hand: 0)
+        end
+        let!(:distributor1_variant_with_override_not_in_stock_but_producer_in_stock) do
+          variant = create(:simple_product).variants.first
+          variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
+          create(:simple_order_cycle, distributors: [d1], variants: [variant])
+          create(:variant_override, variant: variant, hub: d1, on_demand: false, count_on_hand: 0)
+          variant
+        end
+        let!(:distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock) do
+          variant = create(:simple_product).variants.first
+          variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
+          create(:simple_order_cycle, distributors: [d1], variants: [variant])
+          create(:variant_override, variant: variant, hub: d1, on_demand: nil, count_on_hand: nil)
+          variant
+        end
+        let!(:distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock) do
+          variant = create(:simple_product).variants.first
+          variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
+          create(:simple_order_cycle, distributors: [d1], variants: [variant])
+          create(:variant_override, variant: variant, hub: d1, on_demand: nil, count_on_hand: nil)
+          variant
+        end
+        let!(:distributor2_variant_with_override_in_stock) do
+          create_variant_with_variant_override_for(d2, on_demand: true, count_on_hand: nil)
+        end
+
+        context "when :include_out_of_stock is not specified" do
+          let(:params) { { distributor_id: d1.id } }
+
+          it "returns variants for the given distributor if they have a variant override which is
+              in stock, or if they have a variant override with no stock level set but the producer
+              has stock, or if they don't have a variant override and the producer has stock" do
+            expect(result).to include(
+              distributor1_variant_on_hand_but_not_backorderable,
+              distributor1_variant_backorderable_but_not_on_hand,
+              distributor1_variant_with_override_on_demand_but_not_on_hand,
+              distributor1_variant_with_override_on_hand_but_not_on_demand,
+              distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock
+            )
+            expect(result).to_not include(
+              distributor1_variant_not_backorderable_and_not_on_hand,
+              distributor1_variant_with_override_not_on_demand_and_not_on_hand,
+              distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
+              distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
+              distributor2_variant_with_override_in_stock
+            )
+          end
+        end
+
+        context "when :include_out_of_stock is specified" do
+          let(:params) { { distributor_id: d1.id, include_out_of_stock: "1" } }
+
+          it "returns all variants for the given distributor even if they are not in stock" do
+            expect(result).to include(
+              distributor1_variant_on_hand_but_not_backorderable,
+              distributor1_variant_backorderable_but_not_on_hand,
+              distributor1_variant_with_override_on_demand_but_not_on_hand,
+              distributor1_variant_with_override_on_hand_but_not_on_demand,
+              distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock,
+              distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock,
+              distributor1_variant_not_backorderable_and_not_on_hand,
+              distributor1_variant_with_override_not_on_demand_and_not_on_hand,
+              distributor1_variant_with_override_not_in_stock_but_producer_in_stock
+            )
+            expect(result).to_not include(
+              distributor2_variant_with_override_in_stock
+            )
+          end
+        end
+      end
     end
 
     context "searching products starting with the same 3 caracters" do
@@ -77,5 +166,25 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
           to eq(["Product 1", "Product a", "Product b", "Product c"])
       end
     end
+  end
+
+  private
+
+  def create_variant_with_stock_item_for(distributor, stock_item_attributes)
+    variant = create(:simple_product).variants.first
+    variant.stock_items.first.update!(stock_item_attributes)
+    create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+    variant
+  end
+
+  def create_variant_with_variant_override_for(distributor, variant_override_attributes)
+    variant = create(:simple_product).variants.first
+    variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
+    create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+    create(:variant_override, {
+      variant: variant,
+      hub: distributor
+    }.merge(variant_override_attributes))
+    variant
   end
 end
