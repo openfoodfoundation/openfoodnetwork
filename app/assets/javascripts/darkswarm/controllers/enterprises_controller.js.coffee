@@ -1,4 +1,4 @@
-angular.module('Darkswarm').controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+angular.module('Darkswarm').controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.producers_to_filter = Enterprises.producers
   $scope.filterSelectors = FilterSelectorsService.createSelectors()
@@ -55,8 +55,8 @@ angular.module('Darkswarm').controller "EnterprisesCtrl", ($scope, $rootScope, $
 
   $scope.filterEnterprises = ->
     es = Enterprises.hubs
-    $scope.nameMatches = enterpriseMatchesNameQueryFilter(es, true)
-    noNameMatches = enterpriseMatchesNameQueryFilter(es, false)
+    $scope.nameMatches = enterpriseMatchesQueryFilter(es, true)
+    noNameMatches = enterpriseMatchesQueryFilter(es, false)
     $scope.distanceMatches = distanceWithinKmFilter(noNameMatches, 50)
 
 
