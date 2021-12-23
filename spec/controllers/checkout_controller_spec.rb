@@ -418,28 +418,13 @@ describe CheckoutController, type: :controller do
       allow(order).to receive(:state) { "payment" }
     end
 
-    describe "paypal redirect" do
-      let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
-      let(:paypal_redirect) { instance_double(Checkout::PaypalRedirect) }
-
-      it "should call Paypal redirect and redirect if a path is provided" do
-        expect(Checkout::PaypalRedirect).to receive(:new).and_return(paypal_redirect)
-        expect(paypal_redirect).to receive(:path).and_return("test_path")
-
-        spree_post :update,
-                   order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
-
-        expect(response.body).to eq({ path: "test_path" }.to_json)
-      end
-    end
-
-    describe "stripe redirect" do
-      let(:payment_method) { create(:payment_method, type: "Spree::Gateway::StripeSCA") }
-      let(:stripe_redirect) { instance_double(Checkout::StripeRedirect) }
+    describe "redirecting to an external payment gateway" do
+      let(:payment_method) { create(:payment_method) }
 
       it "should call Stripe redirect and redirect if a path is provided" do
-        expect(Checkout::StripeRedirect).to receive(:new).and_return(stripe_redirect)
-        expect(stripe_redirect).to receive(:path).and_return("test_path")
+        expect(Spree::PaymentMethod).to receive(:find).and_return(payment_method)
+        expect(payment_method).to receive(:external_gateway?).and_return(true)
+        expect(payment_method).to receive(:external_payment_url).and_return("test_path")
 
         spree_post :update,
                    order: { payments_attributes: [{ payment_method_id: payment_method.id }] }

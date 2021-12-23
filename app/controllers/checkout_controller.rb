@@ -178,6 +178,7 @@ class CheckoutController < ::BaseController
       if @order.state == "payment"
         return if redirect_to_payment_gateway
 
+        return action_failed if @order.errors.any?
         return action_failed unless @order.process_payments!
       end
 
@@ -190,12 +191,17 @@ class CheckoutController < ::BaseController
   end
 
   def redirect_to_payment_gateway
-    redirect_path = Checkout::PaypalRedirect.new(params).path
-    redirect_path = Checkout::StripeRedirect.new(params, @order).path if redirect_path.blank?
-    return if redirect_path.blank?
+    return unless selected_payment_method.external_gateway?
+    return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
-    render json: { path: redirect_path }, status: :ok
+    render json: { path: redirect_url }, status: :ok
     true
+  end
+
+  def selected_payment_method
+    @selected_payment_method ||= Spree::PaymentMethod.find(
+      params.dig(:order, :payments_attributes, 0, :payment_method_id)
+    )
   end
 
   def order_error
