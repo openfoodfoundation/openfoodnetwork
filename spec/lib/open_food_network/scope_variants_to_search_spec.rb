@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'open_food_network/scope_variants_for_search'
+require 'spec_helper'
 
 describe OpenFoodNetwork::ScopeVariantsForSearch do
   let!(:p1) { create(:simple_product, name: 'Product 1') }
@@ -58,6 +59,22 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
       it "returns all products distributed through that distributor" do
         expect(result).to include v4
         expect(result).to_not include v1, v2, v3
+      end
+    end
+
+    context "searching products starting with the same 3 caracters" do
+      let(:params) { { q: "pro" } }
+      it "returns variants ordered by display_name" do
+        p1.name = "Product b"
+        p2.name = "Product a"
+        p3.name = "Product c"
+        p4.name = "Product 1"
+        p1.save!
+        p2.save!
+        p3.save!
+        p4.save!
+        expect(result.map(&:name)).
+          to eq(["Product 1", "Product a", "Product b", "Product c"])
       end
     end
   end
