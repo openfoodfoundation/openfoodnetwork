@@ -371,7 +371,9 @@ describe OrderCycle do
   it "clones itself" do
     coordinator = create(:enterprise);
     oc = create(:simple_order_cycle,
-                coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)], preferred_product_selection_from_coordinator_inventory_only: true)
+                coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
+                preferred_product_selection_from_coordinator_inventory_only: true,
+                automatic_notifications: true)
     ex1 = create(:exchange, order_cycle: oc)
     ex2 = create(:exchange, order_cycle: oc)
     oc.clone!
@@ -382,6 +384,7 @@ describe OrderCycle do
     expect(occ.orders_close_at).to be_nil
     expect(occ.coordinator).not_to be_nil
     expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
+    expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
     expect(occ.coordinator).to eq(oc.coordinator)
 
     expect(occ.coordinator_fee_ids).not_to be_empty
@@ -539,6 +542,30 @@ describe OrderCycle do
 
       pending "gathering schedule ids before save"
       expect(oc.versions.last.custom_data).to eq "[#{schedule.id}]"
+    end
+  end
+
+  describe "processed_at " do
+    let!(:oc) {
+      create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago, processed_at: 1.hour.ago)
+    }
+
+    it "reset processed_at if close date change in future" do
+      expect(oc.processed_at).to_not be_nil
+      oc.update!(orders_close_at: 1.week.from_now)
+      expect(oc.processed_at).to be_nil
+    end
+
+    it "it does not reset processed_at if close date change in the past" do
+      expect(oc.processed_at).to_not be_nil
+      oc.update!(orders_close_at: 2.days.ago)
+      expect(oc.processed_at).to_not be_nil
+    end
+
+    it "it does not reset processed_at if close date do not change" do
+      expect(oc.processed_at).to_not be_nil
+      oc.update!(orders_open_at: 2.weeks.ago)
+      expect(oc.processed_at).to_not be_nil
     end
   end
 

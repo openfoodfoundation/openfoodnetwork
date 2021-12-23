@@ -1038,6 +1038,8 @@ en:
         back_to_list: "Back To List"
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
+        re_notify_producers: Re notify producers
+        notify_producers_tip: This will send an email to each producer with the list of their orders.
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1078,6 +1080,8 @@ en:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
+        automatic_notifications: Automatic notifications
+        automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
         choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
@@ -2403,7 +2407,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   new_order_cycle: "New Order Cycle"
   new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
-  notify_producers: 'Notify producers'
+  notify_producers: 'Notify producers'  
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"

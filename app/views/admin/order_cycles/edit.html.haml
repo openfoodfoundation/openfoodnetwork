@@ -2,7 +2,13 @@
 - content_for :page_actions do
   - if can? :notify_producers, @order_cycle
     %li
-      = button_to t(:notify_producers), main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => t(:are_you_sure)
+      - processed = @order_cycle.processed_at.present?
+      - url = main_app.notify_producers_admin_order_cycle_path
+      - confirm_msg = "#{t('.notify_producers_tip')} #{t(:are_you_sure)}"
+      %a.button.icon-email.with-tip{ href: url, data: { method: 'post', confirm: confirm_msg }, 'data-powertip': t('.notify_producers_tip') }
+        = processed ? t('.re_notify_producers') : t(:notify_producers)
+        - if processed
+          .badge.icon-ok.success
 
 - content_for :page_title do
   = t :edit_order_cycle
