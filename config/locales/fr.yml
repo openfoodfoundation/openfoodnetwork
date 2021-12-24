@@ -986,6 +986,8 @@ fr:
         back_to_list: "Retour à la liste"
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
         choose_products_from: "Choisir produits depuis :"
+        re_notify_producers: Notifier les producteurs
+        notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les boutiques du cycle de vente)"
         supplier: "Fournisseur"
@@ -1026,6 +1028,8 @@ fr:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
+        automatic_notifications: Notifications automatiques
+        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez restreindre les produits entrants et sortants uniquement au catalogue boutique de %{inventory}
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue boutique
@@ -3492,6 +3496,7 @@ fr:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
+          include_out_of_stock_variants: "Inclure les variantes sans stock"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
