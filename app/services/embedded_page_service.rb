@@ -18,8 +18,8 @@ class EmbeddedPageService
     return if embedding_without_https?
 
     process_embedded_request
-    set_response_headers
     set_embedded_layout
+    @embedding_domain
   end
 
   def use_embedded_layout?
@@ -48,12 +48,6 @@ class EmbeddedPageService
 
     @session[:embedded_shopfront] = true
     set_logout_redirect
-  end
-
-  def set_response_headers
-    @response.headers.except! 'X-Frame-Options'
-    @response.default_headers.except! 'X-Frame-Options'
-    @response.headers['Content-Security-Policy'] = "frame-ancestors 'self' #{@embedding_domain}"
   end
 
   def set_embedding_domain
