@@ -10,7 +10,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.img_src :self, :https, :data, '*.s3.amazonaws.com'
   policy.object_src :none
   policy.frame_ancestors :none
-  policy.script_src :self, :https, :unsafe_inline, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
+  policy.script_src :self, :https, :unsafe_inline, :unsafe_eval, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
   policy.style_src :self, :https, :unsafe_inline
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
