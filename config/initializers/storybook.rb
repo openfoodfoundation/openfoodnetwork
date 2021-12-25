@@ -9,6 +9,7 @@ if Rails.env.development?
     end
   end
 
-  ViewComponent::Storybook::StoriesController.before_action(PermissiveCORSHeaders)
+  Rails.application.reloader.to_prepare do
+    ViewComponent::Storybook::StoriesController.before_action(PermissiveCORSHeaders)
+  end
 end
-

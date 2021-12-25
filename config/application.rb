@@ -55,21 +55,27 @@ module Openfoodnetwork
     end
 
     initializer "spree.environment", before: :load_config_initializers do |app|
-      app.config.spree = Spree::Core::Environment.new
-      Spree::Config = app.config.spree.preferences # legacy access
+      Rails.application.reloader.to_prepare do
+        app.config.spree = Spree::Core::Environment.new
+        Spree::Config = app.config.spree.preferences # legacy access
+      end
     end
 
     initializer "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods = [
-        Spree::Gateway::Bogus,
-        Spree::Gateway::BogusSimple,
-        Spree::PaymentMethod::Check
-      ]
+      Rails.application.reloader.to_prepare do
+        app.config.spree.payment_methods = [
+          Spree::Gateway::Bogus,
+          Spree::Gateway::BogusSimple,
+          Spree::PaymentMethod::Check
+        ]
+      end
     end
 
     initializer "spree.mail.settings" do |_app|
-      Spree::Core::MailSettings.init
-      Mail.register_interceptor(Spree::Core::MailInterceptor)
+      Rails.application.reloader.to_prepare do
+        Spree::Core::MailSettings.init
+        Mail.register_interceptor(Spree::Core::MailInterceptor)
+      end
     end
 
     # filter sensitive information during logging
@@ -93,52 +99,57 @@ module Openfoodnetwork
     # TODO: move back to spree initializer once we upgrade to a more recent version
     #       of Spree
     initializer 'ofn.spree_locale_settings', before: 'spree.promo.environment' do |app|
-      Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
-      Spree::Config['currency'] = ENV['CURRENCY']
+      Rails.application.reloader.to_prepare do
+        Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
+        Spree::Config['currency'] = ENV['CURRENCY']
+      end
     end
 
-    # Register Spree calculators
-    Rails.application.reloader.to_prepare do
-      app = Openfoodnetwork::Application
-      app.config.spree.calculators.shipping_methods = [
-        Calculator::FlatPercentItemTotal,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack,
-        Calculator::Weight
-      ]
+    initializer "load_spree_calculators" do |app|
+      # Register Spree calculators
+      Rails.application.reloader.to_prepare do
+        app.config.spree.calculators.shipping_methods = [
+          Calculator::FlatPercentItemTotal,
+          Calculator::FlatRate,
+          Calculator::FlexiRate,
+          Calculator::PerItem,
+          Calculator::PriceSack,
+          Calculator::Weight
+        ]
 
-      app.config.spree.calculators.add_class('enterprise_fees')
-      app.config.spree.calculators.enterprise_fees = [
-        Calculator::FlatPercentPerItem,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack,
-        Calculator::Weight
-      ]
+        app.config.spree.calculators.add_class('enterprise_fees')
+        app.config.spree.calculators.enterprise_fees = [
+          Calculator::FlatPercentPerItem,
+          Calculator::FlatRate,
+          Calculator::FlexiRate,
+          Calculator::PerItem,
+          Calculator::PriceSack,
+          Calculator::Weight
+        ]
 
-      app.config.spree.calculators.add_class('payment_methods')
-      app.config.spree.calculators.payment_methods = [
-        Calculator::FlatPercentItemTotal,
-        Calculator::FlatRate,
-        Calculator::FlexiRate,
-        Calculator::PerItem,
-        Calculator::PriceSack
-      ]
+        app.config.spree.calculators.add_class('payment_methods')
+        app.config.spree.calculators.payment_methods = [
+          Calculator::FlatPercentItemTotal,
+          Calculator::FlatRate,
+          Calculator::FlexiRate,
+          Calculator::PerItem,
+          Calculator::PriceSack
+        ]
 
-      app.config.spree.calculators.add_class('tax_rates')
-      app.config.spree.calculators.tax_rates = [
-        Calculator::DefaultTax
-      ]
+        app.config.spree.calculators.add_class('tax_rates')
+        app.config.spree.calculators.tax_rates = [
+          Calculator::DefaultTax
+        ]
+      end
     end
 
     # Register Spree payment methods
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Spree::Gateway::StripeConnect
-      app.config.spree.payment_methods << Spree::Gateway::StripeSCA
-      app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
+      Rails.application.reloader.to_prepare do
+        app.config.spree.payment_methods << Spree::Gateway::StripeConnect
+        app.config.spree.payment_methods << Spree::Gateway::StripeSCA
+        app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
+      end
     end
 
     # Settings in config/environments/* take precedence over those specified here.
