@@ -30,11 +30,21 @@ describe "Using embedded shopfront functionality", js: true do
 
       Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = '127.0.0.1 test.com localhost'
+
+      FileUtils.cp(
+        Rails.root.join("spec/fixtures/files/embedded-shop-preview.html"),
+        Rails.root.join("public/embedded-shop-preview.html")
+      )
+
       visit "/embedded-shop-preview.html?#{distributor.permalink}"
     end
 
     after do
       Spree::Config[:enable_embedded_shopfronts] = false
+
+      FileUtils.remove(
+        Rails.root.join("public/embedded-shop-preview.html")
+      )
     end
 
     it "displays modified shopfront layout" do

@@ -12,7 +12,19 @@ describe "Using embedded shopfront functionality", js: true do
     before do
       Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = '127.0.0.1 test.com localhost'
+
+      FileUtils.copy(
+        Rails.root.join("spec/fixtures/files/embedded-group-preview.html"),
+        Rails.root.join("public/embedded-group-preview.html")
+      )
+
       visit "/embedded-group-preview.html?#{group.permalink}"
+    end
+
+    after do
+      FileUtils.remove(
+        Rails.root.join("public/embedded-group-preview.html")
+      )
     end
 
     it "displays in an iframe" do
