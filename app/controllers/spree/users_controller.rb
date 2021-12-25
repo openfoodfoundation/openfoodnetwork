@@ -2,17 +2,17 @@
 
 module Spree
   class UsersController < ::BaseController
+    include Spree::Core::ControllerHelpers
+    include I18nHelper
+    include EmbeddedPages
+
     layout 'darkswarm'
 
     skip_before_action :set_current_order, only: :show
     prepend_before_action :load_object, only: [:show, :edit, :update]
     prepend_before_action :authorize_actions, only: :new
 
-    include Spree::Core::ControllerHelpers
-    include I18nHelper
-
     before_action :set_locale
-    before_action :enable_embedded_shopfront
 
     def show
       @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query

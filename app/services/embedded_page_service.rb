@@ -3,6 +3,8 @@
 # Processes requests for pages embedded in iframes
 
 class EmbeddedPageService
+  attr_reader :embedding_domain, :use_embedded_layout
+
   def initialize(params, session, request, response)
     @params = params
     @session = session
@@ -19,11 +21,6 @@ class EmbeddedPageService
 
     process_embedded_request
     set_embedded_layout
-    @embedding_domain
-  end
-
-  def use_embedded_layout?
-    @use_embedded_layout
   end
 
   private

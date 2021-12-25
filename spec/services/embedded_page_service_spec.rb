@@ -31,9 +31,8 @@ describe EmbeddedPageService do
     context "when the request's referer is in the whitelist" do
       before { service.embed! }
 
-      it "sets the response headers to enables embedding requests from the embedding site" do
-        expect(response.headers).to_not include 'X-Frame-Options' => 'DENY'
-        expect(response.headers).to eq 'Content-Security-Policy' => "frame-ancestors 'self' embedding-enterprise.com"
+      it "returns the domain for the embedding site" do
+        expect(service.embedding_domain).to eq "embedding-enterprise.com"
       end
 
       it "sets session variables" do
@@ -43,7 +42,7 @@ describe EmbeddedPageService do
       end
 
       it "publicly reports that embedded layout should be used" do
-        expect(service.use_embedded_layout?).to be true
+        expect(service.use_embedded_layout).to be true
       end
     end
 
@@ -68,7 +67,7 @@ describe EmbeddedPageService do
       end
 
       it "does not enable embedding" do
-        expect(response.headers['X-Frame-Options']).to eq 'DENY'
+        expect(service.embedding_domain).to be_nil
       end
     end
 

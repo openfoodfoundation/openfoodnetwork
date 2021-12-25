@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ShopsController < BaseController
-  layout 'darkswarm'
+  include EmbeddedPages
 
-  before_action :enable_embedded_shopfront
+  layout 'darkswarm'
 
   def index
     @enterprises = ShopsListService.new.open_shops

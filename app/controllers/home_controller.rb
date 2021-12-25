@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class HomeController < BaseController
-  layout 'darkswarm'
+  include EmbeddedPages
 
-  before_action :enable_embedded_shopfront
+  layout 'darkswarm'
 
   def index
     if ContentConfig.home_show_stats

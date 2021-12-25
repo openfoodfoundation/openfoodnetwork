@@ -106,12 +106,6 @@ class ApplicationController < ActionController::Base
     session[:shopfront_redirect]
   end
 
-  def enable_embedded_shopfront
-    embed_service = EmbeddedPageService.new(params, session, request, response)
-    embed_service.embed!
-    @shopfront_layout = 'embedded' if embed_service.use_embedded_layout?
-  end
-
   def action
     params[:action].to_sym
   end
