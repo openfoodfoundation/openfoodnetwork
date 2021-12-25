@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
   include Spree::Core::ControllerHelpers::RespondWith
   include Spree::Core::ControllerHelpers::Common
 
-  prepend_before_action :restrict_iframes
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
 
   include RawParams
@@ -105,11 +104,6 @@ class ApplicationController < ActionController::Base
 
   def shopfront_redirect
     session[:shopfront_redirect]
-  end
-
-  def restrict_iframes
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['Content-Security-Policy'] = "frame-ancestors 'none'"
   end
 
   def enable_embedded_shopfront

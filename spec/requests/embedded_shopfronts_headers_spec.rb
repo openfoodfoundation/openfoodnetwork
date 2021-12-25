@@ -20,7 +20,7 @@ describe "setting response headers for embedded shopfronts", type: :request do
     it "disables iframes by default" do
       get shops_path
       expect(response.status).to be 200
-      expect(response.headers['X-Frame-Options']).to eq 'DENY'
+      expect(response.headers['X-Frame-Options']).to be_nil
       expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
     end
   end
@@ -38,7 +38,6 @@ describe "setting response headers for embedded shopfronts", type: :request do
       it "disables iframes" do
         get shops_path
         expect(response.status).to be 200
-        expect(response.headers['X-Frame-Options']).to eq 'DENY'
         expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
       end
     end
@@ -53,13 +52,11 @@ describe "setting response headers for embedded shopfronts", type: :request do
         get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
-        expect(response.headers['X-Frame-Options']).to be_nil
-        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' external-site.com"
+        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors external-site.com"
 
         get spree.admin_dashboard_path
 
         expect(response.status).to be 200
-        expect(response.headers['X-Frame-Options']).to eq 'DENY'
         expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
       end
     end
@@ -74,7 +71,6 @@ describe "setting response headers for embedded shopfronts", type: :request do
         get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
-        expect(response.headers['X-Frame-Options']).to be_nil
         expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' www.external-site.com"
       end
     end

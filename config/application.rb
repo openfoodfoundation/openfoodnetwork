@@ -204,6 +204,9 @@ module Openfoodnetwork
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.2'
 
+    # Unset X-Frame-Options header for embedded pages.
+    config.action_dispatch.default_headers.except! "X-Frame-Options"
+
     # css and js files other than application.* are not precompiled by default
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
