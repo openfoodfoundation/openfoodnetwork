@@ -29,9 +29,7 @@ describe "Using embedded shopfront functionality", js: true do
       add_variant_to_order_cycle(exchange, variant)
 
       Spree::Config[:enable_embedded_shopfronts] = true
-      Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
-
-      allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
+      Spree::Config[:embedded_shopfronts_whitelist] = '127.0.0.1 test.com localhost'
       visit "/embedded-shop-preview.html?#{distributor.permalink}"
     end
 
