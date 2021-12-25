@@ -17,11 +17,11 @@ describe "setting response headers for embedded shopfronts", type: :request do
       Spree::Config[:enable_embedded_shopfronts] = false
     end
 
-    it "disables iframes by default" do
+    it "disables external embedding by default" do
       get shops_path
       expect(response.status).to be 200
       expect(response.headers['X-Frame-Options']).to be_nil
-      expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'none'"
+      expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'self' ;"
     end
   end
 
@@ -35,10 +35,10 @@ describe "setting response headers for embedded shopfronts", type: :request do
         Spree::Config[:embedded_shopfronts_whitelist] = ""
       end
 
-      it "disables iframes" do
+      it "disables external embedding" do
         get shops_path
         expect(response.status).to be 200
-        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'none'"
+        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'self' ;"
       end
     end
 
@@ -52,8 +52,10 @@ describe "setting response headers for embedded shopfronts", type: :request do
         get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
-        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors external-site.com"
+        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'self' external-site.com"
+      end
 
+      it "doesn't allow iframes on other pages" do
         get spree.admin_dashboard_path
 
         expect(response.status).to be 200
@@ -71,7 +73,7 @@ describe "setting response headers for embedded shopfronts", type: :request do
         get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
-        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors www.external-site.com"
+        expect(response.headers['Content-Security-Policy']).to include "frame-ancestors 'self' www.external-site.com"
       end
     end
   end
