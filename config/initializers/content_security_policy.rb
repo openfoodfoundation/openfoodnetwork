@@ -6,12 +6,12 @@
 
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
-  policy.font_src :self, :https, :data, 'fonts.gstatic.com'
-  policy.img_src :self, :https, :data, '*.s3.amazonaws.com'
+  policy.font_src :self, :https, :data, "fonts.gstatic.com"
+  policy.img_src :self, :https, :data, "*.s3.amazonaws.com"
   policy.object_src :none
   policy.frame_ancestors :none
   policy.script_src :self, :https, :unsafe_inline, :unsafe_eval, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
-  policy.style_src :self, :https, :unsafe_inline
+  policy.style_src :self, :https, :unsafe_inline, "fonts.googleapis.com", "cdnjs.cloudflare.com"
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
   # Specify URI for violation reports
