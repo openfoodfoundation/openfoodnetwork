@@ -9,7 +9,7 @@
     = t(controller.controller_name, :default => controller.controller_name.titleize)
   = " - OFN #{t(:administration)}"
 
-%link{:href => "//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese", :rel => "stylesheet", :type => "text/css"}
+%link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese", :rel => "stylesheet", :type => "text/css"}
 
 = stylesheet_pack_tag 'admin-styles'
 = render "layouts/bugsnag_js"
@@ -23,7 +23,7 @@
 %script
   = raw "var AUTH_TOKEN = \"#{form_authenticity_token}\";"
 
-%link{'data-require' => "font-awesome@*", 'data-semver'=>"4.2.0", 'rel' => "stylesheet", 'href' => "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"}
+%link{'data-require' => "font-awesome@*", 'data-semver'=>"4.2.0", 'rel' => "stylesheet", 'href' => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"}
 
 = render "layouts/auth_token_script"
 
