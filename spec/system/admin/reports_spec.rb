@@ -222,10 +222,10 @@ describe '
                        special_instructions: shipping_instructions)
       }
 
-      let(:completed_at1) { Time.zone.now - 500.hours } # 500 hours in the past
-      let(:completed_at2) { Time.zone.now - 510.hours } # 510 hours in the past
-      let(:datetime_start) { Time.zone.now - 600.hours } # 600 hours in the past
-      let(:datetime_end) { Time.zone.now - 400.hours } # 400 hours in the past
+      let(:completed_at1) { Time.zone.now - 1500.hours } # 1500 hours in the past
+      let(:completed_at2) { Time.zone.now - 1510.hours } # 1510 hours in the past
+      let(:datetime_start) { Time.zone.now - 1600.hours } # 1600 hours in the past
+      let(:datetime_end) { Time.zone.now - 1400.hours } # 1400 hours in the past
 
       before do
         Timecop.travel(completed_at1) { order1.finalize! }
