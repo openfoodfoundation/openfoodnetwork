@@ -45,7 +45,7 @@ module Openfoodnetwork
 
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
-      Spree::Core::Engine.routes.default_url_options[:host] = 'test.host' if Rails.env == 'test'
+      Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
     end
 
     # We reload the routes here
@@ -229,6 +229,8 @@ module Openfoodnetwork
     config.action_controller.include_all_helpers = false
 
     config.generators.template_engine = :haml
+
+    Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
 
     config.autoloader = :zeitwerk
 

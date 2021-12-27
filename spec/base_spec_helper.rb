@@ -46,7 +46,7 @@ Capybara.configure do |config|
 end
 
 # Override setting in Spree engine: Spree::Core::MailSettings
-ActionMailer::Base.default_url_options[:host] = 'test.host'
+ActionMailer::Base.default_url_options[:host] = ENV["SITE_URL"]
 
 FactoryBot.use_parent_strategy = false
 
