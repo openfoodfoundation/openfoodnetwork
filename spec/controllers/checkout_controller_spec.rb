@@ -8,7 +8,6 @@ describe CheckoutController, type: :controller do
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
-  let(:reset_order_service) { double(OrderCompletionReset) }
 
   before do
     allow(order).to receive(:checkout_allowed?).and_return true
@@ -252,9 +251,7 @@ describe CheckoutController, type: :controller do
       let(:test_shipping_method_id) { "111" }
 
       before do
-        # stub order and OrderCompletionReset
-        allow(OrderCompletionReset).to receive(:new).with(controller, order) { reset_order_service }
-        allow(reset_order_service).to receive(:call)
+        allow(controller).to receive(:order_completion_reset)
         allow(order).to receive(:update).and_return true
         allow(controller).to receive(:current_order).and_return order
 
@@ -348,8 +345,8 @@ describe CheckoutController, type: :controller do
     end
 
     it "returns order confirmation url on success" do
-      allow(OrderCompletionReset).to receive(:new).with(controller, order) { reset_order_service }
-      expect(reset_order_service).to receive(:call)
+      expect(controller).to receive(:expire_current_order)
+      expect(controller).to receive(:build_new_order).with(order.distributor, order.token)
 
       allow(order).to receive(:update).and_return true
       allow(order).to receive(:state).and_return "complete"
@@ -379,8 +376,8 @@ describe CheckoutController, type: :controller do
 
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
-        allow(OrderCompletionReset).to receive(:new).with(controller, order) { reset_order_service }
-        expect(reset_order_service).to receive(:call)
+        expect(controller).to receive(:expire_current_order)
+        expect(controller).to receive(:build_new_order).with(order.distributor, order.token)
 
         allow(order).to receive(:update).and_return true
         allow(controller).to receive(:state_callback)
