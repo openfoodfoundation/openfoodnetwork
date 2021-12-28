@@ -11,6 +11,10 @@ class TermsOfService
                   end
   end
 
+  def self.required?(distributor)
+    platform_terms_required? || distributor_terms_required?(distributor)
+  end
+
   def self.platform_terms_required?
     Spree::Config.shoppers_require_tos
   end

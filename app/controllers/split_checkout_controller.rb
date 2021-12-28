@@ -44,6 +44,7 @@ class SplitCheckoutController < ::BaseController
     return unless summary_step? && @order.confirmation?
     return unless validate_summary! && @order.errors.empty?
 
+    @order.customer.touch :terms_and_conditions_accepted_at
     @order.confirm!
   end
 
@@ -81,6 +82,7 @@ class SplitCheckoutController < ::BaseController
 
   def validate_summary!
     return true if params[:accept_terms]
+    return true unless TermsOfService.required?(@order.distributor)
 
     @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
   end
