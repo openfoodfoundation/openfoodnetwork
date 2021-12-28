@@ -6,16 +6,28 @@ module PaymentGateways
     include OrderCompletion
 
     before_action :load_checkout_order, only: :confirm
+    before_action :validate_payment_intent, only: :confirm
+    before_action :validate_stock, only: :confirm
 
     def confirm
-      return processing_failed unless valid_payment_intent?
-
-      cancel_incomplete_payments && handle_insufficient_stock unless sufficient_stock?
-
       process_payment_completion!
     end
 
     private
+
+    def validate_stock
+      return if sufficient_stock?
+
+      cancel_incomplete_payments
+      handle_insufficient_stock
+    end
+
+    def validate_payment_intent
+      return if valid_payment_intent?
+
+      processing_failed
+      redirect_to order_failed_route
+    end
 
     def valid_payment_intent?
       @valid_payment_intent ||= begin
