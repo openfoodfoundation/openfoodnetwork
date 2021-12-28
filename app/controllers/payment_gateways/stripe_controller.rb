@@ -21,12 +21,14 @@ module PaymentGateways
       @valid_payment_intent ||= begin
         return false unless params["payment_intent"]&.starts_with?("pi_")
 
-        last_payment = OrderPaymentFinder.new(@order).last_payment
-
         @order.state == "payment" &&
           last_payment&.state == "requires_authorization" &&
           last_payment&.response_code == params["payment_intent"]
       end
+    end
+
+    def last_payment
+      @last_payment ||= OrderPaymentFinder.new(@order).last_payment
     end
 
     def cancel_incomplete_payments
