@@ -10,4 +10,12 @@ class TermsOfService
                     TermsOfServiceFile.updated_at
                   end
   end
+
+  def self.platform_terms_required?
+    Spree::Config.shoppers_require_tos
+  end
+
+  def self.terms_and_conditions_activated?(distributor)
+    distributor.terms_and_conditions.file?
+  end
 end

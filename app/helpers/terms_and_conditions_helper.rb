@@ -17,11 +17,11 @@ module TermsAndConditionsHelper
   end
 
   def platform_terms_required?
-    Spree::Config.shoppers_require_tos
+    TermsOfService.platform_terms_required?
   end
 
   def terms_and_conditions_activated?
-    current_order.distributor.terms_and_conditions.file?
+    TermsOfService.terms_and_conditions_activated?(current_order.distributor)
   end
 
   def all_terms_and_conditions_already_accepted?
