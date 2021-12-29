@@ -219,10 +219,11 @@ module Openfoodnetwork
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and
     # include the defaults from previous versions. For more info see:
     # https://guides.rubyonrails.org/configuring.html#results-of-config-load-defaults
-    config.load_defaults 6.0
+    config.load_defaults 6.1
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.belongs_to_required_by_default = false
     config.active_record.cache_versioning = false
+    config.active_record.has_many_inversing = false
 
     config.active_support.escape_html_entities_in_json = true
 
