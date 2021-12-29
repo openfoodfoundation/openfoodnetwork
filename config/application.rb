@@ -216,6 +216,11 @@ module Openfoodnetwork
     config.assets.precompile += ['qz/*']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
+    # Apply framework defaults. New recommended defaults are successively added with each Rails version and
+    # include the defaults from previous versions. For more info see:
+    # https://guides.rubyonrails.org/configuring.html#results-of-config-load-defaults
+    config.load_defaults 5.2
+
     config.active_support.escape_html_entities_in_json = true
 
     config.active_job.queue_adapter = :sidekiq
