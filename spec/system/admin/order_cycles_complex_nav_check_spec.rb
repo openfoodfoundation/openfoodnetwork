@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an administrator
     I want to be alerted when I navigate away from a dirty order cycle form
-', js: true do
+' do
   include AuthenticationHelper
 
   it "alert when navigating away from dirty form" do

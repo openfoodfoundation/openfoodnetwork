@@ -13,7 +13,7 @@ describe 'Customers' do
     let(:managed_distributor2) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
 
-    describe "using the customers index", js: true do
+    describe "using the customers index" do
       let!(:customer1) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
