@@ -28,7 +28,7 @@ describe "Account Settings", js: true do
       performing_deliveries do
         expect do
           click_button I18n.t(:update)
-        end.to enqueue_job ActionMailer::DeliveryJob
+        end.to enqueue_job ActionMailer::MailDeliveryJob
       end
 
       expect(enqueued_jobs.last.to_s).to match "new@email.com"
