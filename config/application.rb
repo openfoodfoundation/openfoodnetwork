@@ -235,10 +235,6 @@ module Openfoodnetwork
 
     Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
 
-    config.autoloader = :zeitwerk
-
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
-
-    config.action_view.form_with_generates_ids = true
   end
 end
