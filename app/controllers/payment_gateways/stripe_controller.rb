@@ -33,7 +33,7 @@ module PaymentGateways
       require_order_authentication!
 
       session[:access_token] ||= params[:order_token]
-      @order = Spree::Order.find_by(number: params[:id]) || current_order
+      @order = Spree::Order.find_by(number: params[:order_number]) || current_order
 
       if @order
         authorize! :edit, @order, session[:access_token]
