@@ -46,7 +46,7 @@ module OrderManagement
       end
 
       def off_session_return_url
-        order_url(order)
+        payment_gateways_authorize_stripe_url(order)
       end
     end
   end
