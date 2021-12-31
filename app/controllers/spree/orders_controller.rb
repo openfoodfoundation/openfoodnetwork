@@ -7,13 +7,12 @@ module Spree
 
     layout 'darkswarm'
 
-    before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
-    respond_to :html
-    respond_to :json
+    respond_to :html, :json
 
+    before_action :check_authorization
     before_action :set_current_order, only: :update
     before_action :filter_order_params, only: :update
     before_action :enable_embedded_shopfront
