@@ -75,6 +75,7 @@ Openfoodnetwork::Application.routes.draw do
     get "/paypal/cancel", to: "paypal#cancel", as: :cancel_paypal
 
     get "/stripe/confirm", to: "stripe#confirm", as: :confirm_stripe
+    get "/stripe/authorize", to: "stripe#authorize", as: :authorize_stripe
   end
 
   constraints SplitCheckoutConstraint.new do

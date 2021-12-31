@@ -13,7 +13,41 @@ module PaymentGateways
       process_payment_completion!
     end
 
+    def authorize
+      load_order_for_authorization
+
+      return unless params.key?("payment_intent")
+
+      result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
+
+      unless result.ok?
+        flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
+      end
+
+      redirect_to order_path(@order)
+    end
+
     private
+
+    def load_order_for_authorization
+      require_order_authentication!
+
+      session[:access_token] ||= params[:order_token]
+      @order = Spree::Order.find_by(number: params[:id]) || current_order
+
+      if @order
+        authorize! :edit, @order, session[:access_token]
+      else
+        authorize! :create, Spree::Order
+      end
+    end
+
+    def require_order_authentication!
+      return if session[:access_token] || params[:order_token] || spree_current_user
+
+      flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
+      redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+    end
 
     def validate_stock
       return if sufficient_stock?

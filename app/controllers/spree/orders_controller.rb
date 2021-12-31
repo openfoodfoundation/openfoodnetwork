@@ -25,8 +25,6 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-
-      handle_stripe_response
     end
 
     def empty
@@ -120,19 +118,6 @@ module Spree
       else
         authorize! :create, Spree::Order
       end
-    end
-
-    # Stripe can redirect here after a payment is processed in the backoffice.
-    # We verify if it was successful here and persist the changes.
-    def handle_stripe_response
-      return unless params.key?("payment_intent")
-
-      result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-
-      unless result.ok?
-        flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
-      end
-      @order.reload
     end
 
     def filter_order_params
