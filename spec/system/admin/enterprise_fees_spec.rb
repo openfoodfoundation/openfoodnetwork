@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an administrator
     I want to manage enterprise fees
-', js: true do
+' do
   include WebHelper
   include AuthenticationHelper
 
