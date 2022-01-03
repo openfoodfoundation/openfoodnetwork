@@ -1635,6 +1635,13 @@ ru:
     step2:
       payment_method:
         title: Способ оплаты
+      form:
+        card_number:
+          label: Номер карты
+        card_month:
+          label: Месяц
+        card_year:
+          label: Год
       explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
       submit: Далее - Сводка заказа
       cancel: Назад к Вашим данным

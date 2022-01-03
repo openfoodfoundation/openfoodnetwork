@@ -1539,6 +1539,12 @@ ar:
           label: بلد
       delivery_address:
         title: عنوان التسليم
+    step2:
+      form:
+        card_month:
+          label: شهر
+        card_year:
+          label: عام
     step3:
       your_details:
         title: تفاصيلك

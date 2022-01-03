@@ -1632,6 +1632,13 @@ cy:
     step2:
       payment_method:
         title: Dull talu
+      form:
+        card_number:
+          label: Rhif cerdyn
+        card_month:
+          label: Mis
+        card_year:
+          label: Blwyddyn
       explaination: Gallwch adolygu a chadarnhau eich archeb yn y cam nesaf sy'n cynnwys y costau terfynol.
       submit: Nesaf - Crynodeb o'r Archeb
       cancel: Nôl at Eich Manylion

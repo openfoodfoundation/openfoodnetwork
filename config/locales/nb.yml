@@ -1632,6 +1632,13 @@ nb:
     step2:
       payment_method:
         title: Betalingsmetode
+      form:
+        card_number:
+          label: Kortnummer
+        card_month:
+          label: Måned
+        card_year:
+          label: År
       explaination: Du kan gå gjennom og bekrefte bestillingen din i neste trinn som inkluderer de endelige kostnadene.
       submit: Neste - Bestillingssammendrag
       cancel: Tilbake til dine detaljer

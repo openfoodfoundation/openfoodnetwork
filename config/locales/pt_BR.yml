@@ -1555,6 +1555,14 @@ pt_BR:
           label: País
       delivery_address:
         title: Endereço para entrega
+    step2:
+      form:
+        card_number:
+          label: Número do cartão
+        card_month:
+          label: Mês
+        card_year:
+          label: Ano
     step3:
       your_details:
         title: Seus detalhes

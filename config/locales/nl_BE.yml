@@ -1486,6 +1486,12 @@ nl_BE:
           label: Land
       delivery_address:
         title: Leveringsadres
+    step2:
+      form:
+        card_month:
+          label: Maand
+        card_year:
+          label: Jaar
     step3:
       your_details:
         title: Jouw gegevens

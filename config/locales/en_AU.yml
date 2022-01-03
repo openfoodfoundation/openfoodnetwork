@@ -1515,6 +1515,12 @@ en_AU:
           label: Country
       delivery_address:
         title: Delivery address
+    step2:
+      form:
+        card_month:
+          label: Month
+        card_year:
+          label: Year
     step3:
       your_details:
         title: Your details

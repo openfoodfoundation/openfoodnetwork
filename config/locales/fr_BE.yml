@@ -1484,6 +1484,12 @@ fr_BE:
           label: Pays
       delivery_address:
         title: Adresse de livraison
+    step2:
+      form:
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
     step3:
       your_details:
         title: Vos informations

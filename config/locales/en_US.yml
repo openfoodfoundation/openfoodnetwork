@@ -1632,6 +1632,13 @@ en_US:
     step2:
       payment_method:
         title: Payment method
+      form:
+        card_number:
+          label: Card number
+        card_month:
+          label: Month
+        card_year:
+          label: Year
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to your details

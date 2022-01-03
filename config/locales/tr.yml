@@ -1593,6 +1593,13 @@ tr:
     step2:
       payment_method:
         title: Ödeme yöntemi
+      form:
+        card_number:
+          label: Kart numarası
+        card_month:
+          label: Ay
+        card_year:
+          label: Yıl
       explaination: Nihai maliyetleri içeren bir sonraki adımda siparişinizi inceleyebilir ve onaylayabilirsiniz.
       submit: Sonraki - Sipariş özeti
       cancel: Bilgilerinize geri dönün
