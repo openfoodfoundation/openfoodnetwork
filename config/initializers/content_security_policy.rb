@@ -9,8 +9,8 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :https, :data, 'fonts.gstatic.com'
   policy.img_src     :self, :https, :data, '*.s3.amazonaws.com'
   policy.object_src  :none
-  policy.script_src  :self, :https, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
-  policy.style_src   :self, :https
+  policy.script_src  :self, :https, :unsafe_inline, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
+  policy.style_src   :self, :https, :unsafe_inline
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
   # Specify URI for violation reports
