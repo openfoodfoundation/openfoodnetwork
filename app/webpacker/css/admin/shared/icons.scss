@@ -20,5 +20,5 @@
 .icon-cancel:before,
 .icon-void:before     { @extend .icon-remove, :before;   }
 
-.icon-capture:before  { @extend .icon-ok, :before;       }
+.icon-capture  { @extend .icon-ok }
 .icon-credit:before   { @extend .icon-ok, :before ;      }
