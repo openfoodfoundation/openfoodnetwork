@@ -6,10 +6,10 @@
 
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
-  policy.font_src    :self, :https, :data
-  policy.img_src     :self, :https, :data
+  policy.font_src    :self, :https, :data, 'fonts.gstatic.com'
+  policy.img_src     :self, :https, :data, '*.s3.amazonaws.com'
   policy.object_src  :none
-  policy.script_src  :self, :https
+  policy.script_src  :self, :https, "*.stripe.com", "openfoodnetwork.innocraft.cloud"
   policy.style_src   :self, :https
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
