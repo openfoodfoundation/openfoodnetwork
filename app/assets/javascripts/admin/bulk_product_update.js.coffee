@@ -144,7 +144,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.variantIdCounter
 
   $scope.deleteProduct = (product) ->
-    if confirm("Are you sure?")
+    if confirm(t('are_you_sure'))
       $http(
         method: "DELETE"
         url: "/api/v0/products/" + product.id
