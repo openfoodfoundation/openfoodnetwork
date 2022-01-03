@@ -822,6 +822,7 @@ describe "AdminProductEditCtrl", ->
       $scope.dirtyProducts = {}
       $httpBackend.expectDELETE("/api/v0/products/13").respond 200, "data"
       $scope.deleteProduct $scope.products[1]
+      expect(window.confirm).toHaveBeenCalledWith "Are you sure?"
       $httpBackend.flush()
 
     it "removes the specified product from both $scope.products and $scope.dirtyProducts (if it exists there)", ->
