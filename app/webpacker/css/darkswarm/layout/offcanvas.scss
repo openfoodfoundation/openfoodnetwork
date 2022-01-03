@@ -1,0 +1,15 @@
+.off-canvas-fixed {
+  @include transition(transform 1000ms ease-in-out);
+}
+
+.move-right > .off-canvas-fixed {
+  height: 100%;
+  -webkit-transform: translate3d(15.625rem, 0, 0);
+  transform: translate3d(15.625rem, 0, 0);
+}
+
+.left-off-canvas-menu {
+  -webkit-transform: none;
+  transform: none;
+  margin-left: -15.625rem;
+}

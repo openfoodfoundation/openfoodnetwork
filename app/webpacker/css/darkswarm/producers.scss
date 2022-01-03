@@ -1,0 +1,21 @@
+.producers {
+  @include producersbg;
+
+  @include sidepaddingSm;
+
+  @include panepadding;
+
+  a {
+    color: $clr-turquoise;
+
+    &:hover, &:active, &:focus {
+      color: $clr-turquoise-bright;
+    }
+  }
+
+  a.button.primary {
+    &:hover, &:active, &:focus {
+      color: white;
+    }
+  }
+}

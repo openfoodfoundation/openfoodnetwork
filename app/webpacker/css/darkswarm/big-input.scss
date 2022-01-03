@@ -1,0 +1,122 @@
+//Big search used in active table search \\
+
+@mixin big-input($input, $inputhvr, $inputactv) {
+  @include headingFont;
+
+  @include csstrans;
+
+  @include border-radius(0.5rem);
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid $input;
+  font-size: 2rem;
+  box-shadow: 0;
+  padding: 0.5rem 1rem;
+  height: auto;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+  color: $inputactv;
+
+  @include breakpoint(phablet) {
+    font-size: 1.25rem;
+  }
+
+  &:hover {
+    @include box-shadow(0 1px 1px 0 rgba(255, 255, 255, 0.25));
+
+    border: 2px solid $inputhvr;
+    color: $inputactv;
+  }
+
+  &:active, &:focus, &.active {
+    border: 2px solid $inputactv;
+    color: $inputactv;
+    background: white;
+    background: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px #ffffff;
+    padding: 1rem;
+    letter-spacing: 0.02rem;
+    outline: none;
+  }
+}
+
+@mixin big-input-static {
+  outline: 0;
+
+  &:active, &:focus, &.active {
+    padding: 0.75rem 1rem 0.35rem 1rem;
+    letter-spacing: 0;
+  }
+}
+
+@mixin medium-input($input, $inputhvr, $inputactv) {
+  @include headingFont;
+
+  @include csstrans;
+
+  @include border-radius(0.5rem);
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid $input;
+  font-size: 0.875rem;
+  box-shadow: 0;
+  padding: 0.5rem 0.625rem 0.375rem;
+  height: auto;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+  color: $inputactv;
+
+  &:hover {
+    @include box-shadow(0 1px 1px 0 rgba(255, 255, 255, 0.25));
+
+    border: 2px solid $inputhvr;
+    color: $inputactv;
+  }
+
+  &:active, &:focus, &.active {
+    border: 2px solid $inputactv;
+    color: $inputactv;
+    background: white;
+    background: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px #ffffff;
+    outline: none;
+  }
+}
+
+@mixin placeholder($placeholder, $placeholderhvr) {
+  ::-webkit-input-placeholder {
+    color: $placeholder;
+  }
+
+  -moz-placeholder: {
+    color: $placeholder;
+  };
+
+  ::-moz-placeholder {
+    color: $placeholder;
+  }
+
+  -ms-input-placeholder: {
+    color: $placeholder;
+  };
+
+  &:hover {
+    ::-webkit-input-placeholder {
+      color: $placeholderhvr;
+    }
+
+    -moz-placeholder: {
+      color: $placeholderhvr;
+    };
+
+    ::-moz-placeholder {
+      color: $placeholderhvr;
+    }
+
+    -ms-input-placeholder: {
+      color: $placeholderhvr;
+    };
+  }
+}

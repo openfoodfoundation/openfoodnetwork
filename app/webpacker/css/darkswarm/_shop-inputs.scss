@@ -1,0 +1,130 @@
+.darkswarm {
+  // #search
+  @include placeholder(rgba(0, 0, 0, 0.4), #777);
+
+  .row .columns.variant-quantity-column {
+    padding-left: 0;
+  }
+}
+
+.reveal-modal.product-bulk-modal {
+  width: 27em;
+}
+
+// Components to add variants to cart and change quantities
+//
+// They are not nested so that they can be used in modals.
+
+.variant-quantity-inputs {
+  height: 2.5rem;
+  white-space: nowrap;
+}
+
+button.add-variant, button.variant-quantity {
+  height: 2.5rem;
+  border-radius: 0;
+  background-color: $orange-500;
+  color: white;
+  // Override foundation button styles:
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  transition: none;
+
+  &:hover {
+    background-color: $orange-600;
+  }
+
+  &[disabled] {
+    background-color: $grey-400;
+
+    &:hover, &:focus {
+      background-color: $grey-400;
+    }
+  }
+  &:nth-of-type(1) {
+    border-bottom-left-radius: 0.25em;
+    border-top-left-radius: 0.25em;
+  }
+  &:nth-last-of-type(1) {
+    border-top-right-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+  }
+}
+
+button.add-variant {
+  min-width: 7rem;
+  padding: 0 1em;
+
+  &[disabled] {
+    &:hover, &:focus {
+      background-color: $orange-500;
+    }
+  }
+}
+
+button.variant-quantity {
+  width: 2.25rem;
+
+  &:nth-of-type(1):not(.bulk-buy):not(.bulk-buy-add) {
+    border-right: .1em solid $orange-400;
+  }
+}
+
+.variant-quantity-display {
+  display: inline-block;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+  text-align: center;
+  width: 7rem;
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+  }
+}
+
+button.bulk-buy.variant-quantity {
+  background-color: transparent;
+  border: .1em solid $grey-200;
+  color: inherit;
+  width: 3.5rem;
+}
+
+button.bulk-buy-add.variant-quantity {
+  width: 2.4rem;
+}
+
+[type="number"].variant-quantity {
+  border: .1em solid $grey-200;
+  height: 2.5rem;
+  display: inline-block;
+  width: 2.5rem;
+  padding: 0;
+  text-align: center;
+  vertical-align: top;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+
+  &.bulk-buy {
+    width: 5rem;
+  }
+}
+
+// Hide number arrows on Chrome, Safari, Edge, Opera
+.variant-quantity::-webkit-outer-spin-button,
+.variant-quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.variant-bulk-buy-price-summary {
+  color: $disabled-med;
+  margin-bottom: 1em;
+}
+
+.variant-bulk-buy-quantity-label {
+  font-size: 0.875rem;
+  margin-bottom: .5em;
+}

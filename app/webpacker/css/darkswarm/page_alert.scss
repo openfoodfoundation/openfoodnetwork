@@ -1,0 +1,67 @@
+$page-alert-height: 55px;
+
+// Basic style \\
+.page-alert {
+  .alert-box {
+    height: $page-alert-height;
+    overflow: hidden;
+    border: 1px solid rgba($dark-grey, 0.35);
+    border-left: none;
+    border-right: none;
+    background-color: #bbb;
+    background-image: url("../images/tile-wide.png");
+    background-position: center center;
+    padding: 12px 0 8px 0;
+    margin: 0;
+
+    h6 {
+      @include breakpoint(mobile) {
+        font-size: 10px;
+        line-height: 24px;
+      }
+    }
+
+    .alert-cta {
+      &, & * {
+        @include csstrans;
+
+        color: #333;
+      }
+
+      strong {
+        letter-spacing: 0.5px;
+      }
+
+      a:hover, a:active, a:focus {
+        &, & * {
+          text-decoration: none;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Show-hide animation \\
+
+.off-canvas-wrap .inner-wrap,
+.off-canvas-fixed .top-bar,
+.off-canvas-fixed ofn-flash,
+.off-canvas-fixed nav.tab-bar,
+.off-canvas-fixed .page-alert {
+  @include transition(all 1000ms ease-in-out);
+}
+
+.off-canvas-wrap .page-alert {
+  bottom: -1 * $page-alert-height;
+  top: unset;
+  z-index: 100;
+
+  &.move-up {
+    bottom: 0;
+  }
+
+  .alert-box {
+    border-bottom: 0;
+  }
+}

@@ -1,0 +1,103 @@
+// Pop over
+// Foundation overrides
+.joyride-tip-guide.price_breakdown {
+  width: 16rem;
+  max-width: 65%;
+  // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
+  margin-left: -7.4rem;
+  margin-top: 0.1rem;
+
+  @include box-shadow(0 2px 8px 0 rgba(0, 0, 0, 0.35));
+
+  .joyride-content-wrapper {
+    padding: .625rem;
+    width: 98%;
+    background-color: $grey-800;
+    color: white;
+  }
+
+  h6 {
+    font-size: 0.937rem;
+    line-height: 1;
+    border-bottom: .1em solid $grey-700;
+    padding: 0 0 .625em 0;
+    margin-bottom: 2px;
+  }
+
+  .joyride-nub.top {
+    left: 7.4rem;
+    z-index: -1;
+  }
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    cursor: pointer;
+  }
+
+  ul, li {
+    list-style: none;
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  li {
+    line-height: 1;
+    border-bottom: .1em solid $grey-700;
+    padding: 0.625rem 0;
+    margin-bottom: 2px;
+  }
+
+  li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+button.graph-button {
+  // z-index: 9999999
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  @include box-shadow(none);
+
+  @include border-radius(999rem);
+
+  &:before {
+    @include icon-font;
+
+    content: "";
+    color: #999;
+  }
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 1);
+
+    &:before {
+      color: #666;
+    }
+  }
+
+  &:hover, &:active {
+    background-color: rgba(255, 255, 255, 1);
+
+    &:before {
+      color: $teal-500;
+    }
+  }
+}
+
+button.graph-button.open {
+  background-color: $teal-500;
+
+  &:before {
+    content: "";
+    color: white;
+  }
+}

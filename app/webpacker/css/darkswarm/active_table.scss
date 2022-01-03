@@ -1,0 +1,160 @@
+.no-results {
+  font-size: 1.875rem;
+}
+
+.active_table {
+  margin: 2em 0em;
+
+  @include user-select(none);
+
+  .active_table_row {
+    display: block;
+    cursor: pointer;
+
+    &:first-child {
+      padding: 1rem 0;
+    }
+  }
+}
+
+.active_table .active_table_node {
+  margin-top: 0.25rem;
+  display: block;
+  border: 0;
+
+  @include breakpoint(phablet) {
+    margin-bottom: 1rem;
+  }
+
+  //Generic text link style
+  a:hover, a:active, a:focus {
+    color: $dark-grey;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  span.margin-top {
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+
+  // Generic text resize
+  @include breakpoint(phablet) {
+    &, & * {
+      font-size: 0.875rem;
+    }
+
+    fat > div label {
+      &, & * {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  // Inherits from active_table
+  .active_table_row {
+    border: 1px solid transparent;
+
+    @include border-radius(0.5em);
+
+    // Foundation overrides
+    margin-left: 0;
+    margin-right: 0;
+
+    &, & > a.row {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+    }
+  }
+
+  .active_table_row.link {
+    border: 0;
+  }
+
+  &.open {
+    // .active_table_row:nth-child(2)
+
+    .active_table_row {
+      border-left: 1px solid $disabled-bright;
+      border-right: 1px solid $disabled-bright;
+      border-top: 0;
+      border-bottom: 0;
+
+      @include border-radius(0);
+    }
+
+    .active_table_row:first-child {
+      border-top: 1px solid $disabled-bright;
+      color: $dark-grey;
+
+      @include border-radius-mixed(0.5em, 0.5em, 0, 0);
+
+      &:hover, &:active, &:focus {
+        // color: $dark-grey
+
+      }
+    }
+
+    .active_table_row:last-child {
+      border-bottom: 1px solid $disabled-bright;
+
+      @include border-radius-mixed(0, 0, 0.5em, 0.5em);
+    }
+
+    //Open row sections
+    .fat > div {
+      border-top: 1px solid #aaa;
+
+      @include breakpoint(phablet) {
+        margin-top: 1em;
+      }
+
+      ul, ol {
+        font-size: 0.875rem;
+      }
+
+      [class*="block-grid-"] > li {
+        padding-bottom: 0.25rem !important;
+      }
+
+      label {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        color: #777;
+      }
+    }
+
+    p.trans-sentence {
+      text-transform: capitalize;
+    }
+  }
+
+  &.closed {
+    &:hover, &:active, &:focus {
+      .active_table_row.closed {
+        border: 1px solid $disabled-bright;
+      }
+    }
+  }
+
+  &.current {
+    &.closed {
+      &, & * {
+        color: $dark-grey;
+      }
+    }
+
+    &.open {
+      .active_table_row:first-child {
+        color: $dark-grey;
+      }
+    }
+  }
+}

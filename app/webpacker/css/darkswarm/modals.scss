@@ -1,0 +1,80 @@
+dialog
+, .reveal-modal {
+  border: none;
+  outline: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  min-height: 260px;
+
+  // Not working yet - want a nice gradient shadow when there is overflow - needs JS too
+  // &:after
+  //   @include elipse-shadow(0 0 40px rgba(0, 0, 0, 0.8))
+
+  // Reveal.js break point:
+  // @media only screen and (max-width: 40.063em)
+
+  // Small - smaller outside area
+  @media only screen and (max-width: 640px) {
+    left: 4%;
+    max-height: 92%;
+    max-width: 92%;
+    padding: 15px 0 0;
+    top: 4%;
+  }
+
+  // Medium and up - larger outside area
+  @media only screen and (min-width: 641px) {
+    border-bottom: 30px solid $white;
+    max-height: 90%;
+    padding: 30px 20px 0 20px;
+    top: 5%;
+  }
+}
+
+.reveal-modal-bg {
+  background-color: $black;
+  position: fixed;
+}
+
+@mixin close-button($top) {
+  background-color: rgba(205, 205, 205, 0.65);
+  color: #666;
+  font-size: 2rem;
+  padding: 0.45rem;
+  text-shadow: none;
+  z-index: 9999999;
+  top: $top;
+
+  @include border-radius(999999rem);
+
+  &:hover, &:active, &:focus {
+    background-color: rgba(205, 205, 205, 1);
+    color: #333;
+  }
+}
+
+dialog .close-reveal-modal
+, .reveal-modal .close-reveal-modal {
+  @include close-button(0.25rem);
+
+  background-color: $grey-500;
+  color: $white;
+  font-size: 1.5rem;
+  right: 0.25rem;
+}
+
+dialog .mobile-close-reveal-modal
+, .reveal-modal .mobile-close-reveal-modal {
+  @include close-button(auto);
+  left: 90%;
+  position: relative;
+
+  @media only screen and (min-width: 40.063em) {
+    display: none;
+  }
+}
+
+// Prevent body from scrolling when a modal is open
+body.modal-open {
+  overflow: hidden;
+}

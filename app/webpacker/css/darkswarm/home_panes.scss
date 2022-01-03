@@ -1,0 +1,219 @@
+// Styling for big panes on homepage \\
+#panes {
+  .pane {
+    .row {
+      @include panepadding;
+
+      padding-top: 75px;
+      padding-bottom: 75px;
+
+      &.header {
+        padding-bottom: 0;
+      }
+
+      &.content {
+        padding-top: 0;
+      }
+    }
+  }
+}
+
+// Background styles \\
+#system.pane {
+  background-color: white;
+}
+
+#brand-story.pane, #cta.pane, #shops.pane, #sell.pane {
+  @include tiledPane;
+}
+
+#connect.pane {
+  @include groupsbg;
+}
+
+#learn.pane {
+  @include hubsbg;
+}
+
+#stats.pane {
+  background-image: url("../images/home/background-blurred-oranges.jpg");
+  background-position: center center;
+  background-color: $ofn-grey;
+
+  @include fullbg;
+
+  @include paneWhiteText;
+}
+
+// Content styles \\
+#brand-story.pane {
+  .row {
+    h2 {
+      font-weight: 300;
+      font-size: 88px;
+    }
+
+    p {
+      @include bodyFont;
+
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+
+    @include breakpoint(tablet) {
+      h2 {
+        font-size: 52px;
+      }
+
+      p {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  a.text-vbig i {
+    font-size: 75px;
+  }
+}
+
+#system.pane {
+  .row .row {
+    padding-bottom: 0;
+  }
+
+  @include breakpoint(phablet) {
+    .row .row {
+      padding: 0;
+    }
+  }
+
+  .home-icon-box {
+    background-image: url("../images/ofn-o.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    padding: 3rem 0;
+    text-align: center;
+    margin-top: 2rem;
+
+    @media all and (min-width: 642px) {
+      margin-top: 0;
+    }
+
+    i {
+      font-size: 4rem;
+    }
+
+    a {
+      display: block;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+      background-color: $brand-colour;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+
+      &.search {
+        background-image: url("../images/icon-mask-magnifier.png");
+      }
+
+      &.shop {
+        background-image: url("../images/icon-mask-apple.png");
+      }
+
+      &.pick-up-delivery {
+        background-image: url("../images/icon-mask-truck.png");
+      }
+    }
+  }
+
+  h2 {
+    font-size: 70px;
+    font-weight: 300;
+    color: $brand-colour;
+
+    @include breakpoint(phablet) {
+      font-size: 45px;
+    }
+  }
+
+  .home-icon-box-bottom {
+    margin-top: 1rem;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    @media all and (min-width: 480px) {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+
+    @media all and (min-width: 642px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    h4 {
+      color: $brand-colour;
+      border-bottom: 2px solid lighten($brand-colour, 20%);
+      text-align: center;
+      padding: 1rem 0;
+      margin: 1.5rem 0;
+    }
+  }
+}
+
+#cta.pane, #stats.pane {
+  h2 {
+    font-weight: 300;
+    font-size: 45px;
+    margin-bottom: 2rem;
+
+    @media all and (max-width: 830px) {
+      font-size: 35px;
+    }
+  }
+}
+
+#stats.pane {
+  .row.header {
+    padding-bottom: 2rem;
+  }
+
+  h4 {
+    font-weight: 300;
+    text-transform: uppercase;
+    margin: 1.5rem 0;
+    display: inline-block;
+
+    strong {
+      display: block;
+      font-weight: normal;
+      font-size: 75px;
+    }
+  }
+}
+
+#shops.pane {
+  @include paneWhiteText;
+
+  h2 {
+    margin-bottom: 2rem;
+    font-size: 4.4rem;
+    font-weight: 300;
+  }
+}
+
+#shops-signup.pane {
+  background-color: $brand-colour;
+}
+
+#sell-detail.pane {
+  margin: 50px 0;
+
+  .row {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+}

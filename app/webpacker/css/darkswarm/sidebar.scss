@@ -1,0 +1,32 @@
+#sidebar {
+  margin-top: 1.875em;
+
+  $bg: #222;
+  $padding: emCalc(20);
+  $adjust: true;
+  $adjust: true;
+
+  @include panel($bg, $padding, $adjust);
+
+  .content {
+    background: white;
+  }
+
+  .tabs dd a {
+    padding: 0.5em 1em;
+  }
+
+  #account {
+    dl {
+      @include clearfix;
+    }
+
+    dt, dd {
+      display: inline-block;
+    }
+
+    p > strong {
+      display: block;
+    }
+  }
+}

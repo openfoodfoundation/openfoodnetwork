@@ -1,7 +1,7 @@
 %nav.tab-bar.show-for-medium-down
   %section.left
     %a.left-off-canvas-toggle.menu-icon
-      = image_tag "menu/btn-menu-mobile.png"
+      = image_pack_tag "menu/btn-menu-mobile.png"
 
   %section.left
     .ofn-logo
@@ -14,7 +14,7 @@
         %span
           = t '.cart'
         %span.count
-          = image_tag "menu/icn-cart.svg"
+          = image_pack_tag "menu/icn-cart.svg"
           %span
             {{ Cart.total_item_count() }}
 

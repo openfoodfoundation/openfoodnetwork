@@ -1,0 +1,28 @@
+$padding-small: 0.5rem;
+$radius-small: 0.25em;
+$white: #fff;
+$dynamic-blue: #3d8dd1;
+$teal-500: #0096ad;
+
+/* Defined in foundation-rails components/_reveal.scss */
+$modal-zIndex: 1005;
+
+@font-face {
+	font-family: 'OFN';
+	src: url('../fonts/OFN-v2.eot');
+	src: url('../fonts/OFN-v2.eot') format('embedded-opentype'),
+		url('../fonts/OFN-v2.woff') format('woff'),
+		url('../fonts/OFN-v2.ttf') format('truetype'),
+		url('../fonts/OFN-v2.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@mixin icon-font {
+  font-family: "OFN";
+  display: inline-block;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+}

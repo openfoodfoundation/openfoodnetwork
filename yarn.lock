@@ -6164,6 +6164,11 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
+foundation-sites@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/foundation-sites/-/foundation-sites-5.5.2.tgz#99c387ce3cd79672f79cb31745b39b5b1c782c03"
+  integrity sha1-mcOHzjzXlnL3nLMXRbObWxx4LAM=
+
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -8060,6 +8065,11 @@ jest@^27.4.5:
     "@jest/core" "^27.4.5"
     import-local "^3.0.2"
     jest-cli "^27.4.5"
+
+jquery-ui@1.10.4:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.10.4.tgz#a096fe5f4e0f2ab69a0585cf10455877f57506bd"
+  integrity sha1-oJb+X04PKraaBYXPEEVYd/V1Br0=
 
 js-string-escape@^1.0.1:
   version "1.0.1"
@@ -11250,6 +11260,11 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
+
+select2@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/select2/-/select2-3.4.5.tgz#c0555ed77da22b1d402ec9e1a69687abc15e747a"
+  integrity sha1-wFVe132iKx1ALsnhppaHq8FedHo=
 
 select@^1.1.2:
   version "1.1.2"

@@ -1,0 +1,64 @@
+// Place all the styles related to the map controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.map-container {
+  width: 100%;
+  position: relative;
+
+  map, .angular-google-map-container, google-map, .angular-google-map {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  // https://github.com/zurb/foundation/issues/112
+  img {
+    max-width: none;
+    height: auto;
+  }
+
+  #pac-input {
+    @include big-input(#888, #333, $clr-brick);
+
+    @include big-input-static;
+
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.85);
+    width: 50%;
+    margin-top: 1.2rem;
+    margin-left: 1rem;
+
+    @include breakpoint(tablet) {
+      width: 80%;
+    }
+
+    &:active, &:focus, &.active {
+      background: rgba(255, 255, 255, 1);
+    }
+  }
+
+  #open-street-map {
+    z-index: 1;
+  }
+
+  #open-street-map--search {
+    top: 16px;
+    left: 54px;
+    width: 50%;
+    z-index: 1000;
+
+    .autocomplete-input,
+    .autocomplete-result-list {
+      border: 2px solid $grey-500;
+
+      &:hover, &:active, &:focus {
+        border-color: $clr-brick;
+      }
+    }
+
+    .autocomplete-result-list {
+      border-top: 1px dotted $grey-500;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 %fieldset.no-border-top
   .add_producer_properties{"data-hook" => "add_producer_properties"}
-  = image_tag 'spinner.gif', :plugin => 'spree', :style => 'display:none;', :id => 'busy_indicator'
+  = image_pack_tag 'spinner.gif', :plugin => 'spree', :style => 'display:none;', :id => 'busy_indicator'
   %table.index.sortable{"data-hook" => "", "data-sortable-link" => main_app.update_positions_admin_enterprise_producer_properties_url(@enterprise)}
     %thead
       %tr{"data-hook" => "producer_properties_header"}

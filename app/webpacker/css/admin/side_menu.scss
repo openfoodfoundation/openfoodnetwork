@@ -1,0 +1,29 @@
+.side_menu {
+  border-right: 2px solid #f6f6f6;
+  border-top: 2px solid #f6f6f6;
+
+  .menu_item {
+    display: block;
+    padding: 8px 15px;
+    font-size: 120%;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &:nth-child(odd) {
+      background-color: #ebf3fb;
+    }
+
+    &:nth-child(even) {
+      background-color: #ffffff;
+    }
+
+    &:hover {
+      background-color: #eaf0f5;
+    }
+
+    &.selected {
+      background-color: $spree-blue;
+      color: #ffffff;
+    }
+  }
+}

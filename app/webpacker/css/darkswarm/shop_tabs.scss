@@ -1,0 +1,132 @@
+// Tabs styling
+#shop-tabs {
+
+  .tab-buttons {
+    color: $dark-grey;
+    box-shadow: $distributor-header-shadow;
+    position: relative;
+    z-index: $shop-navigation-zindex + 1;
+
+    .columns {
+      display: flex;
+
+      @include breakpoint(desktop) {
+        display: table;
+        width: 100%;
+      }
+
+      @include breakpoint(mobile) {
+        padding: 0;
+      }
+    }
+  }
+
+  .page {
+    text-align: center;
+    border-top: 4px solid transparent;
+    display: inline-block;
+    width: 100%;
+
+    >a {
+      outline: none;
+      display: block;
+      color: $black;
+      font-family: "Oswald", sans-serif;
+    }
+
+    a {
+      @include headingFont;
+
+      background: transparent;
+      text-transform: capitalize;
+      line-height: 1;
+      font-size: 1em;
+      padding: 1em 2em;
+      border: none;
+
+      &:hover, &:active {
+        color: $teal-500;
+      }
+
+      &, &:hover {
+        background: none;
+      }
+
+      @include breakpoint(phablet) {
+        padding: 0.35em 0 0.65em 0;
+        font-size: 0.875em;
+      }
+    }
+
+    &.selected {
+      border-bottom: 4px solid $teal-500;
+
+      a {
+        color: $teal-500;
+      }
+    }
+
+    @include breakpoint(desktop) {
+      display: table-cell;
+      width: auto;
+    }
+  }
+
+  // content revealed in accordion
+
+  .page-view {
+    background: none;
+    border: none;
+    padding-bottom: 5em;
+
+    .content {
+      padding: 1.25em 0;
+      background-color: transparent;
+
+      a {
+        color: $orange-500;
+
+        &:hover {
+          color: $orange-600;
+        }
+      }
+
+      img {
+        margin: 0px 0px 0px 40px;
+      }
+
+      h5 {
+        margin-bottom: 1em;
+        font-family: $body-font;
+      }
+
+      p {
+        max-width: 100%;
+
+        @include breakpoint(tablet) {
+          height: auto !important;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: none;
+      }
+
+      .header {
+        text-align: center;
+        color: $grey-600;
+        margin-top: 0.75rem;
+        margin-bottom: 2px;
+      }
+    }
+
+    &.with-darker-background {
+      background-color: $very-light-grey-transparency;
+
+      a {
+        color: $teal-500;
+      }
+    }
+  }
+}

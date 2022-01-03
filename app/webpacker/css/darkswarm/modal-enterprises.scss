@@ -1,0 +1,240 @@
+// Generic styles for use
+
+.modal-centered {
+  text-align: center;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.modal-header, p.modal-header {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 400;
+  color: $disabled-dark;
+  border-bottom: 1px solid $light-grey;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-list {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  border-bottom: 1px solid $light-grey;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  a.heading {
+    color: $teal-400;
+
+    &:hover {
+      color: $teal-500;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Enterprise promo image and text
+
+.highlight {
+  position: relative;
+}
+
+.highlight-top {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.65);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border: 0;
+  outline: 0;
+
+  @media only screen and (max-width: 640px) {
+    padding-top: 0.5rem;
+    padding-bottom: 0.35rem;
+  }
+
+  h3, p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    line-height: 1;
+  }
+
+  h3 > i {
+    color: $clr-brick;
+  }
+
+  &.enterprise {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+  }
+
+  p {
+    line-height: 2.4;
+
+    @include breakpoint(phablet) {
+      line-height: 1.4;
+    }
+  }
+
+  h3 a:hover span {
+    border-bottom: 1px solid $clr-brick-bright;
+  }
+
+  .is_producer {
+    &, & * {
+      color: $clr-turquoise;
+    }
+  }
+}
+
+// ABOUT Enterprise
+
+.about-container {
+  min-height: 20px;
+  margin-bottom: 0.5rem;
+  overflow-x: hidden;
+  border-bottom: 1px solid $light-grey;
+
+  @include box-shadow(0 2px 2px -2px $light-grey);
+
+  .enterprise-logo, img {
+    float: left;
+    margin-right: 2rem;
+    margin-bottom: 0.5rem;
+    max-width: 180px;
+    max-height: 180px;
+  }
+}
+
+// CONTACT Enterprise
+
+.contact-container {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+// FOLLOW Enterprise
+
+.follow-icons {
+  // text-align: center
+  span {
+    display: inline-block;
+    margin: 0 0.25rem 0.75rem 0.25rem;
+  }
+
+  i {
+    font-size: 2rem;
+
+    &.facebook {
+      color: $social-facebook;
+    }
+
+    &.twitter {
+      color: $social-twitter;
+    }
+
+    &.linkedin {
+      color: $social-linkedin;
+    }
+
+    &.instagram {
+      color: $social-instagram;
+    }
+  }
+
+  a {
+    color: #999;
+
+    &:hover, &:active, &:focus {
+      color: #666;
+    }
+  }
+}
+
+// CALL TO ACTION - hub click throughs
+
+.cta-container {
+  background-color: #ececec;
+  padding-top: 0.75rem;
+
+  label {
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+
+    color: $dark-grey;
+  }
+
+  label.right {
+    color: $disabled-dark;
+
+    span {
+      text-transform: capitalize;
+    }
+  }
+
+  .cta-hub {
+    margin-right: 2rem;
+    margin-top: 0rem;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+
+    &.secondary {
+      color: $disabled-dark;
+    }
+
+    &.primary {
+      color: $clr-brick;
+    }
+
+    .hub-name {
+      margin-top: 0.75rem;
+      margin-bottom: 0.2rem;
+      font-weight: 400;
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+    }
+
+    .button-address {
+      margin-top: 0.5rem;
+      margin-bottom: 0.2rem;
+      margin-left: 0.1rem;
+      text-transform: uppercase;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 0.75rem;
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+
+      @include breakpoint(phablet) {
+        display: none;
+      }
+    }
+
+    &:hover, &:focus, &:active {
+      &.secondary {
+        color: #666;
+
+        .hub-name, .button-address {
+          border-bottom: 1px solid #999;
+        }
+      }
+
+      &.primary {
+        color: $clr-brick-bright;
+
+        .hub-name, .button-address {
+          border-bottom: 1px solid $clr-brick-bright;
+        }
+      }
+    }
+  }
+}

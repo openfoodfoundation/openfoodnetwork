@@ -1,0 +1,193 @@
+ordercycle {
+  float: right;
+  background: $grey-050;
+  color: $grey-800;
+  width: 100%;
+  border-radius: $radius-medium $radius-medium 0 0;
+  margin-top: 1em;
+  padding: 1em 1.25em 0;
+
+  p {
+    max-width: 400px;
+  }
+
+  h4 i {
+    margin-right: 0.3rem;
+  }
+
+  @include breakpoint(desktop) {
+    float: none;
+    padding: 0.5em 1em;
+    width: 100%;
+    margin-top: 0;
+    display: inline-block;
+    border-radius: 0;
+    position: relative;
+    right: 0;
+    height: auto;
+
+    p {
+      max-width: 100%;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    padding: 0.5em 1em 0.75em;
+  }
+
+  .order-cycle-select {
+    border: 1px solid $teal-300;
+    display: flex;
+    font-size: 1em;
+    border-radius: $radius-small;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    .select-label {
+      background-color: rgba($teal-300, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: $radius-small 0 0 $radius-small;
+      font-size: 1em;
+      line-height: 1.3em;
+      padding: 0.5em 0.75em;
+
+      span {
+        width: max-content;
+        display: block;
+      }
+    }
+
+    select {
+      background-image: url('../images/white-caret.svg');
+      background-size: 30px auto;
+      background-position-x: 102%;
+      height: 2.35em;
+    }
+
+    p {
+      text-align: left;
+    }
+
+    select,
+    p {
+      display: inline-block;
+      color: $white;
+      background-color: transparent;
+      border: 0;
+      border-radius: 0 $radius-small $radius-small 0;
+      margin-bottom: 0;
+      padding: 0.5em 1.25em 0.5em 0.75em;
+      font-size: 1em;
+      line-height: 1.3em;
+      min-width: 13em;
+      width: 200px;
+
+      @include breakpoint(mobile) {
+        width: 100%;
+        min-width: 0;
+      }
+
+      @media all and (min-width: 640px) and (max-width: 1024px), (min-width: 1200px) {
+        width: 250px;
+      }
+    }
+
+    option {
+      color: $grey-700;
+    }
+
+    @include breakpoint(desktop) {
+      float: none;
+      margin-right: 1em;
+    }
+
+    @include breakpoint(tablet) {
+      float: none;
+      margin-right: 0;
+    }
+
+    @include breakpoint(mobile) {
+      display: flex;
+      margin-right: 0;
+    }
+  }
+
+  closing {
+    @include headingFont;
+    color: $grey-800;
+    font-size: 1.25rem;
+    display: block;
+    padding: 0.5em 0;
+
+    span {
+      @include breakpoint(tablet) {
+        font-size: 0.875em;
+      }
+    }
+  }
+}
+
+shop ordercycle {
+  background: $teal-400;
+  color: $white;
+
+  &.requires-selection {
+    background-color: $red-700;
+
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: rgba($red-500, 0.5);
+      }
+
+      select {
+        background-color: $white;
+        background-image: url('../images/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
+      }
+    }
+  }
+
+  .select-and-closing-container {
+    @include breakpoint(desktop) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  closing {
+    color: $white;
+    padding: 0 0 12px;
+
+    @include breakpoint(desktop) {
+      padding: 0;
+      font-size: 1.2em;
+      margin-right: 1em;
+    }
+  }
+
+  form.custom {
+    text-align: center;
+  }
+}
+
+shop .tab-buttons ordercycle {
+  padding: 1em;
+  position: absolute;
+  bottom: 0;
+  right: 1em;
+}
+
+.sub-header {
+  form {
+    p {
+      margin-bottom: 0.75em;
+    }
+  }
+}

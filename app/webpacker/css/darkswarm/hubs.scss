@@ -1,0 +1,20 @@
+#hubs {
+  background-color: lighten($ofn-grey, 43%);
+
+  @include panepadding;
+
+  @include sidepaddingSm;
+
+  .name-matches, .distance-matches {
+    margin-top: 4em;
+  }
+
+  .more-controls {
+    text-align: center;
+
+    .spinner {
+      height: 2.25em;
+      margin-right: 0.5em;
+    }
+  }
+}

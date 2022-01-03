@@ -13,7 +13,6 @@ gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '2.4.2'
 gem 'responders'
-gem 'sass-rails', '< 5.1.0' # this restriction originates from the compass-rails's version
 gem 'webpacker', '~> 5'
 
 gem 'i18n'
@@ -104,16 +103,12 @@ gem 'whenever', require: false
 gem 'test-unit', '~> 3.5'
 
 gem 'coffee-rails', '~> 5.0.0'
-gem 'compass-rails'
 
 gem 'mini_racer', '0.4.0'
 
 gem 'uglifier', '>= 1.0.3'
 
 gem 'angular_rails_csrf'
-gem 'foundation-icons-sass-rails'
-
-gem 'foundation-rails', '= 5.5.2.1'
 
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'

@@ -1,0 +1,28 @@
+#progress {
+  @include border-radius(10px);
+  position: fixed;
+  top: -10px;
+  left: 50%;
+  z-index: 1000;
+  opacity: 0.8;
+  width: 200px;
+  background-color: $spree-blue;
+  color: $color-1;
+  display: none;
+  font-size: 120%;
+  font-weight: bold;
+  line-height: 40px;
+  margin-left: -100px;
+  padding-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
+
+  .spinner {
+    position: absolute;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    top: -5px;
+    margin-left: -15px;
+  }
+}
