@@ -13,11 +13,11 @@ it:
         shipment_state: Stato Spedizione
         completed_at: Completato Al
         number: Numero
-        state: Provincia
+        state: Stato
         email: E-Mail Cliente
       spree/payment:
         amount: Quantità
-        state: Provincia
+        state: Stato
         source: Fonte
       spree/product:
         primary_taxon: "Categoria Prodotto"
@@ -388,7 +388,7 @@ it:
     shipping_method: Metodo di consegna
     shop: Negozio
     sku: articolo gestito a magazzino
-    status_state: Provincia
+    status_state: Stato
     tags: Tag
     variant: Variante
     weight: Peso
@@ -484,7 +484,7 @@ it:
         edit_ship_address: "Modifica l'indirizzo di spedizione"
         required_fileds: "I campi obbligatori sono segnati con un asterisco"
         select_country: "Seleziona il paese"
-        select_state: "Selezione la provincia"
+        select_state: "Seleziona la provincia"
         edit: "Modifica"
         update_address: "Aggiorna indirizzo"
         confirm_delete: "Sei sicuro di cancellare?"
@@ -985,6 +985,8 @@ it:
         back_to_list: "Indietro alla lista"
         save_and_back_to_list: "Salva e torna alla lista"
         choose_products_from: "Scegli i prodotti da:"
+        re_notify_producers: Ri-notifica i produttori
+        notify_producers_tip: Sarà inviata una mail a ciascun produttore con la lista dei suoi ordini.
       incoming:
         incoming: "In arrivo"
         supplier: "Fornitore"
@@ -1025,6 +1027,8 @@ it:
         add_supplier: 'Aggiungi fornitore'
         add_distributor: 'Aggiungi distributore'
       advanced_settings:
+        automatic_notifications: Notifiche automatiche
+        automatic_notifications_tip: Invia automaticamente una mail a ciascun produttore con i suoi ordini alla chiusura dei cicli di richieste.
         title: Impostazioni avanzate
         choose_product_tip: Puoi limitare i prodotti in entrata e in uscita al%{inventory}dell'Inventario
         preferred_product_selection_from_coordinator_inventory_only_here: Solo inventario del coordinatore
@@ -1633,6 +1637,21 @@ it:
     step2:
       payment_method:
         title: Metodo di pagamento
+      form:
+        card_number:
+          label: Numero carta
+          placeholder: es. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mese
+        card_year:
+          label: Anno
+        stripe:
+          use_saved_card: Usa la carta salvata
+          use_new_card: Inserisci i dati della tua carta
+          save_card: Salva i dati di questa carta per il futuro
+          create_new_card: o inserisci qui sotto i dettagli della nuova carta
       explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
       submit: Prossimo - riepilogo richiesta
       cancel: Indietro a Tuoi dettagli
@@ -2397,14 +2416,14 @@ it:
   report_header_ship_street_2: Indirizzo di spedizione 2
   report_header_ship_city: Città di spedizione
   report_header_ship_postcode: CAP di spedizione
-  report_header_ship_state: Stato di spedizione
+  report_header_ship_state: Provincia di spedizione
   report_header_billing_street: Indirizzo di fatturazione
   report_header_billing_street_2: Indirizzo di fatturazione 2
   report_header_billing_street_3: Indirizzo di fatturazione 3
   report_header_billing_street_4: Indirizzo di fatturazione 4
   report_header_billing_city: Città di fatturazione
   report_header_billing_postcode: CAP. di fatturazione
-  report_header_billing_state: Stato di fatturazione
+  report_header_billing_state: Provincia di fatturazione
   report_header_incoming_transport: Trasporto in arrivo
   report_header_special_instructions: Istruzioni speciali
   report_header_order_number: Numero gentile richiesta
@@ -3121,7 +3140,7 @@ it:
     add_state: "Aggiungi provincia"
     adjustment: "Aggiustamenti"
     all: "Tutti"
-    associated_adjustment_closed: "Aggiustamenti associati chiusi"
+    associated_adjustment_closed: "Modifica anche impostazioni associate"
     back_to_adjustments_list: "Indietro ad Aggiustamenti"
     back_to_users_list: "Indietro a Utenti"
     back_to_zones_list: "Indietro a Zone"
@@ -3271,16 +3290,16 @@ it:
     default_tax: "Imposta predefinita"
     default_tax_zone: "Zona fiscale predefinita"
     country_based: "Basato sul paese"
-    state_based: "Basato sullo stato"
+    state_based: "In base alla nazione"
     countries: "Paesi"
     listing_countries: "Elenco dei paesi"
     iso_name: "Nome ISO"
-    states_required: "Stati richiesti"
+    states_required: "Provincia richiesta"
     editing_country: "Modifica Paese"
     back_to_countries_list: "Torna all'elenco dei Paesi"
     states: "Stati"
     abbreviation: "Abbreviazione"
-    new_state: "Nuovo stato"
+    new_state: "Nuovo Stato"
     payment_methods: "Metodi di pagamento"
     taxonomies: "Tassonomie"
     new_taxonomy: "Nuova tassonomia"
@@ -3452,6 +3471,7 @@ it:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Non è possibile aggiungere articoli a richieste cancellate"
+          include_out_of_stock_variants: "Include varianti non disponibili"
         index:
           listing_orders: "Listino Ordini"
           new_order: "Nuovo ordine"
