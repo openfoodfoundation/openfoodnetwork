@@ -22,6 +22,8 @@ class SplitCheckoutController < ::BaseController
 
   def update
     if confirm_order || update_order
+      return if performed?
+
       clear_invalid_payments
       advance_order_state
       redirect_to_step
@@ -45,12 +47,27 @@ class SplitCheckoutController < ::BaseController
     return unless validate_summary! && @order.errors.empty?
 
     @order.customer.touch :terms_and_conditions_accepted_at
+
+    return true if redirect_to_payment_gateway
+
     @order.confirm!
     order_completion_reset @order
   end
 
+  def redirect_to_payment_gateway
+    return unless selected_payment_method&.external_gateway?
+    return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
+
+    render operations: cable_car.redirect_to(url: URI(redirect_url))
+    true
+  end
+
+  def selected_payment_method
+    @order.payments.order(:created_at).last&.payment_method
+  end
+
   def update_order
-    return if @order.errors.any?
+    return if params[:confirm_order] || @order.errors.any?
 
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
