@@ -170,9 +170,8 @@ describe SubscriptionConfirmJob do
         let(:provider) { double }
 
         before do
-          allow_any_instance_of(Stripe::CreditCardCloner).to receive(:find_or_clone) {
-                                                               ["cus_123", "pm_1234"]
-                                                             }
+          allow_any_instance_of(Stripe::CreditCardCloner).
+            to receive(:find_or_clone) { ["cus_123", "pm_1234"] }
           allow(order).to receive(:pending_payments) { [stripe_sca_payment] }
           allow(stripe_sca_payment_method).to receive(:provider) { provider }
           allow(stripe_sca_payment_method.provider).to receive(:purchase) { true }
@@ -187,6 +186,15 @@ describe SubscriptionConfirmJob do
         it "uses #capture if the payment is already authorized" do
           allow(stripe_sca_payment).to receive(:preauthorized?) { true }
           expect(stripe_sca_payment_method.provider).to receive(:capture)
+          job.send(:confirm_order!, order)
+        end
+
+        it "authorizes the payment with Stripe" do
+          allow(order).to receive_message_chain(:subscription, :payment_method) { stripe_sca_payment_method }
+
+          expect(OrderManagement::Order::StripeScaPaymentAuthorize).
+            to receive_message_chain(:new, :call!) { true }
+
           job.send(:confirm_order!, order)
         end
       end
