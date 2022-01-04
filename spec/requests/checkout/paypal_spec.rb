@@ -58,7 +58,7 @@ describe "checking out an order with a paypal express payment method", type: :re
       get payment_gateways_confirm_paypal_path, params: params
 
       # Processing was successful, order is complete
-      expect(response).to redirect_to order_path(order, token: order.token)
+      expect(response).to redirect_to order_path(order, order_token: order.token)
       expect(order.reload.complete?).to be true
 
       # We have only one payment, and one transaction fee

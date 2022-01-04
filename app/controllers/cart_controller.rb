@@ -28,7 +28,7 @@ class CartController < BaseController
   end
 
   def check_authorization
-    session[:access_token] ||= params[:token]
+    session[:access_token] ||= params[:order_token]
     order = Spree::Order.find_by(number: params[:id]) || current_order
 
     if order

@@ -113,7 +113,7 @@ module Spree
     end
 
     def check_authorization
-      session[:access_token] ||= params[:token]
+      session[:access_token] ||= params[:order_token]
       order = Spree::Order.find_by(number: params[:id]) || current_order
 
       if order
@@ -154,7 +154,7 @@ module Spree
     end
 
     def require_order_authentication
-      return if session[:access_token] || params[:token] || spree_current_user
+      return if session[:access_token] || params[:order_token] || spree_current_user
 
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
       redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
