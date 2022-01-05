@@ -90,7 +90,7 @@ describe "Credit Cards", js: true do
 
       # Allows deletion of cards
       within(".card#card#{default_card.id}") do
-        click_link I18n.t(:delete)
+        click_button I18n.t(:delete)
       end
 
       expect(page).to have_content I18n.t(:card_has_been_removed,

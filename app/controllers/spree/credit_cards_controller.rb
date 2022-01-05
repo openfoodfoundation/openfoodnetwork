@@ -54,10 +54,11 @@ module Spree
       else
         flash[:error] = I18n.t(:card_could_not_be_removed)
       end
-      redirect_to spree.account_path(anchor: 'cards')
+
+      head :ok
     rescue Stripe::CardError
       flash[:error] = I18n.t(:card_could_not_be_removed)
-      redirect_to spree.account_path(anchor: 'cards')
+      head :unprocessable_entity
     end
 
     private

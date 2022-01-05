@@ -1,4 +1,4 @@
-angular.module('Darkswarm').controller "CreditCardsCtrl", ($scope, CreditCard, CreditCards, $controller) ->
+angular.module('Darkswarm').controller "CreditCardsCtrl", ($scope, $http, CreditCard, CreditCards, $controller) ->
   angular.extend this, $controller('FieldsetMixin', {$scope: $scope})
 
   $scope.savedCreditCards = CreditCards.saved
@@ -12,3 +12,11 @@ angular.module('Darkswarm').controller "CreditCardsCtrl", ($scope, CreditCard, C
 
   $scope.allow_name_change = true
   $scope.disable_fields = false
+
+  $scope.deleteCard = (id) ->
+    $http(
+      method: "DELETE"
+      url: "/credit_cards/#{id}"
+    ).finally ->
+      window.location.reload()
+
