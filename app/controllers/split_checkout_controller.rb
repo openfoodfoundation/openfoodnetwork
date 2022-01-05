@@ -85,7 +85,13 @@ class SplitCheckoutController < ::BaseController
     @order_params ||= Checkout::Params.new(@order, params).call
   end
 
+  def redirect_to_guest
+    redirect_to checkout_step_path(:guest)
+  end
+
   def redirect_to_step
+    return redirect_to_guest unless spree_current_user
+
     case @order.state
     when "cart", "address", "delivery"
       redirect_to checkout_step_path(:details)
