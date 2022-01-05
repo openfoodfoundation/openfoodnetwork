@@ -70,7 +70,7 @@ root = exports ? this
 root.setup_taxonomy_tree = (taxonomy_id) ->
   if taxonomy_id != undefined
     # this is defined within admin/taxonomies/edit
-    root.base_url = Spree.url(Spree.routes.taxonomy_taxons_path)
+    root.base_url = Spree.url(Spree.routes.taxonomy_taxons)
 
     $.ajax
       url: base_url.pathname.replace("/taxons", "/jstree"),
