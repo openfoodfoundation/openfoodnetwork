@@ -9,7 +9,7 @@ handle_move = (e, data) ->
   new_parent = data.rslt.np
 
   url = Spree.url(base_url).clone()
-  url.setPath url.path() + '/' + node.attr("id")
+  url.pathname = url.pathname + '/' + node.attr("id")
   $.ajax
     type: "POST",
     dataType: "json",
@@ -41,7 +41,7 @@ handle_rename = (e, data) ->
   name = data.rslt.new_name
 
   url = Spree.url(base_url).clone()
-  url.setPath(url.path() + '/' + node.attr("id"))
+  url.pathname = url.pathname + '/' + node.attr("id")
 
   $.ajax
     type: "POST",
@@ -73,7 +73,7 @@ root.setup_taxonomy_tree = (taxonomy_id) ->
     root.base_url = Spree.url(Spree.routes.taxonomy_taxons_path)
 
     $.ajax
-      url: base_url.path().replace("/taxons", "/jstree"),
+      url: base_url.pathname.replace("/taxons", "/jstree"),
       success: (taxonomy) ->
         last_rollback = null
 
@@ -82,7 +82,7 @@ root.setup_taxonomy_tree = (taxonomy_id) ->
             data: taxonomy,
             ajax:
               url: (e) ->
-                base_url.path() + '/' + e.attr('id') + '/jstree'
+                base_url.pathname + '/' + e.attr('id') + '/jstree'
           themes:
             theme: "apple",
             url: "/assets/jquery.jstree/themes/apple/style.css"

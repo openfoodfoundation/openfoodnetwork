@@ -4,8 +4,7 @@ root.taxon_tree_menu = (obj, context) ->
 
   base_url = Spree.url(Spree.routes.taxonomy_taxons_path)
   admin_base_url = Spree.url(Spree.routes.admin_taxonomy_taxons_path)
-  edit_url = admin_base_url.clone()
-  edit_url.setPath(edit_url.path() + '/' + obj.attr("id") + "/edit");
+  edit_url = Spree.url(Spree.routes.admin_taxonomy_taxons_path + '/' + obj.attr("id") + "/edit");
 
   create:
     label: "<i class='icon-plus'></i> " + Spree.translations.add,
