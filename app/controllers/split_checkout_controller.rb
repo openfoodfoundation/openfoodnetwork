@@ -22,6 +22,8 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
+    return redirect_to_guest if !spree_current_user && !@order.distributor.allow_guest_orders?
+
     if confirm_order || update_order
       clear_invalid_payments
       advance_order_state
