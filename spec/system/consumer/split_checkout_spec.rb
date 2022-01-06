@@ -64,6 +64,13 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect(page).to have_no_content("Checkout as guest")
     end
 
+    it "should be redirected if user enter the url" do
+      order.update(state: "payment")
+      get checkout_step_path(:details)
+      expect(response).to have_http_status(:redirect)
+      expect(page).to have_current_path("/checkout/guest")
+    end
+
     it "should redirect to the login page when clicking the login button" do
       click_on "Login"
       expect(page).to have_current_path "/"
@@ -116,6 +123,14 @@ describe "As a consumer, I want to checkout my order", js: true do
 
       click_button "Next - Payment method"
       expect(page).to have_current_path("/checkout/payment")
+    end
+
+    context "when order is state: 'payment'" do
+      it "should allow visit '/checkout/details'" do
+        order.update(state: "payment")
+        visit checkout_step_path(:details)
+        expect(page).to have_current_path("/checkout/details")
+      end
     end
   end
 
