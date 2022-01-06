@@ -721,7 +721,8 @@ module Spree
         enterprise: distributor,
         email: email_for_customer,
         user: user,
-        name: bill_address&.full_name,
+        first_name: bill_address&.first_name,
+        last_name: bill_address&.last_name,
         bill_address: bill_address&.clone,
         ship_address: ship_address&.clone
       )
