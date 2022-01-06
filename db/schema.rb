@@ -51,9 +51,11 @@ ActiveRecord::Schema.define(version: 2022_01_18_053107) do
     t.datetime "updated_at", null: false
     t.integer "bill_address_id"
     t.integer "ship_address_id"
-    t.string "name", limit: 255
+    t.string "backup_name", limit: 255
     t.boolean "allow_charges", default: false, null: false
     t.datetime "terms_and_conditions_accepted_at"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true
