@@ -56,7 +56,16 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    it "should display the split checkout page" do
+    it "should display the split checkout login/guest page" do
+      expect(page).to have_content distributor.name
+      expect(page).to have_current_path("/checkout/guest")
+      expect(page).to have_content("Ok, ready to checkout?")
+      expect(page).to have_content("Login")
+      expect(page).to have_content("Checkout as guest")
+    end
+
+    it "should display the split checkout details page" do
+      click_on "Checkout as guest"
       expect(page).to have_content distributor.name
       expect(page).to have_current_path("/checkout/details")
       expect(page).to have_content("1 - Your details")
@@ -66,6 +75,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     it "should display error when fields are empty" do
+      click_on "Checkout as guest"
       click_button "Next - Payment method"
       expect(page).to have_content("Saving failed, please update the highlighted fields")
       expect(page).to have_css 'span.field_with_errors label', count: 4
@@ -74,6 +84,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     it "should validate once each needed field is filled" do
+      click_on "Checkout as guest"
       fill_in "First Name", with: "Jane"
       fill_in "Last Name", with: "Doe"
       fill_in "Phone number", with: "07987654321"
