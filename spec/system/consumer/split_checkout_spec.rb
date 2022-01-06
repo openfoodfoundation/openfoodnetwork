@@ -2,10 +2,9 @@
 
 require "system_helper"
 
-include SplitCheckoutRequestsHelper
-
 describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
+  include SplitCheckoutRequestsHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -87,7 +86,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect(page).to have_current_path("/checkout/payment")
     end
   end
-  
+
   describe 'login in as user' do
     let(:user) { create(:user) }
 
@@ -95,7 +94,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       login_as(user)
       visit checkout_path
     end
-    
+
     describe "purchasing" do
       context "takes us to the Payment Method" do
         before do
@@ -107,22 +106,21 @@ describe "As a consumer, I want to checkout my order", js: true do
           before do
             choose free_shipping.name
           end
-          
-          it "redirects the user to the Payment Method step" do 
-            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"       
+
+          it "redirects the user to the Payment Method step" do
+            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
             click_button "Next - Payment method"
-            expect(page).to have_current_path("/checkout/payment")   
+            expect(page).to have_current_path("/checkout/payment")
           end
         end
 
         context "selecting a delivery shipping method and submiting the form" do
-          
           before do
             choose shipping_with_fee.name
             uncheck "ship_address_same_as_billing"
           end
 
-          it "redirects the user to the Payment Method step" do             
+          it "redirects the user to the Payment Method step" do
             split_fill_out_shipping_address
             fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
             click_button "Next - Payment method"
