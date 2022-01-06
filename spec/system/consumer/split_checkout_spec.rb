@@ -19,7 +19,7 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
   let(:order) {
     create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
-                   ship_address_id: nil)
+                   ship_address_id: nil, state: "cart")
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
@@ -49,6 +49,25 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
+  end
+
+  context "guest checkout when distributor doesn't allow guest orders" do
+    before do
+      visit checkout_path
+    end
+
+    it "should display the split checkout login page" do
+      expect(page).to have_content distributor.name
+      expect(page).to have_current_path("/checkout/guest")
+      expect(page).to have_content("Ok, ready to checkout?")
+      expect(page).to have_content("Login")
+      expect(page).to have_no_content("Checkout as guest")
+    end
+
+    it "should redirect to the login page when clicking the login button" do
+      click_on "Login"
+      expect(page).to have_current_path "/"
+    end
   end
 
   context "as a guest user" do
