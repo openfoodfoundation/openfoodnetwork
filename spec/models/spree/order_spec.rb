@@ -1054,7 +1054,7 @@ describe Spree::Order do
             expect(order.customer).to be_nil
             expect { order.send(:ensure_customer) }.to change{ Customer.count }.by 1
 
-            expect(order.customer.name).to eq order.bill_address.full_name
+            expect(order.customer.full_name).to eq order.bill_address.full_name
             expect(order.customer.bill_address.same_as?(order.bill_address)).to be true
             expect(order.customer.ship_address.same_as?(order.ship_address)).to be true
           end
