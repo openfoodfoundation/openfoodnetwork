@@ -94,7 +94,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def redirect_to_step
-    return redirect_to_guest unless spree_current_user
+    return redirect_to_guest if !spree_current_user && !params[:step]
 
     case @order.state
     when "cart", "address", "delivery"
