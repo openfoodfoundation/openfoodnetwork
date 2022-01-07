@@ -133,9 +133,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "when I have an out of stock product in my cart" do
     before do
-      variant.on_demand = false
-      variant.on_hand = 0
-      variant.save!
+      variant.update!(on_demand: false, on_hand: 0)
     end
 
     it "returns me to the cart with an error message" do
