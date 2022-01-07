@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
 
   acts_as_taggable
 
-  searchable_attributes :name, :email, :code
+  searchable_attributes :first_name, :last_name, :email, :code
 
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User"

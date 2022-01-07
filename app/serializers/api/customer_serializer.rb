@@ -2,7 +2,7 @@
 
 module Api
   class CustomerSerializer < ActiveModel::Serializer
-    attributes :id, :enterprise_id, :name, :code, :email, :allow_charges
+    attributes :id, :enterprise_id, :first_name, :last_name, :code, :email, :allow_charges
 
     def attributes
       hash = super
