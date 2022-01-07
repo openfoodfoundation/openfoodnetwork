@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 module SplitCheckoutRequestsHelper
-  def have_split_checkout_details
+  def have_checkout_details
     have_content "Your details"
   end
 
-  def split_checkout_as_guest
+  def checkout_as_guest
     click_button "Checkout as guest"
   end
 
-  def split_place_order
+  def place_order
     find("button", text: "Complete order").click
   end
 
-  def split_fill_out_details
+  def fill_out_details
     # Section: Your Details
     within(:xpath, './/div[@class="checkout-substep"][1]') do
       fill_in "First Name", with: "Will"
@@ -23,7 +23,7 @@ module SplitCheckoutRequestsHelper
     end
   end
 
-  def split_fill_out_billing_address
+  def fill_out_billing_address
     # Section: Your Billing Address
     within(:xpath, './/div[@class="checkout-substep"][2]') do
       fill_in "Address", with: "Rue de la Vie, 77"
@@ -34,7 +34,7 @@ module SplitCheckoutRequestsHelper
     end
   end
 
-  def split_fill_out_shipping_address
+  def fill_out_shipping_address
     # Section: Delivery Address
     within(:xpath, './/div[@class="checkout-substep"][3]') do
       fill_in "Address", with: "Rue de la Vie, 66"
