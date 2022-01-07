@@ -4,7 +4,7 @@ require "system_helper"
 
 describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
-  include SplitCheckoutRequestsHelper
+  include SplitCheckoutHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -98,8 +98,8 @@ describe "As a consumer, I want to checkout my order", js: true do
     describe "purchasing" do
       context "takes us to the Payment Method" do
         before do
-          split_fill_out_details
-          split_fill_out_billing_address
+          fill_out_details
+          fill_out_billing_address
         end
 
         context "selecting a pick-up shipping method and submiting the form" do
@@ -121,7 +121,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
 
           it "redirects the user to the Payment Method step" do
-            split_fill_out_shipping_address
+            fill_out_shipping_address
             fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
             click_button "Next - Payment method"
             expect(page).to have_current_path("/checkout/payment")
