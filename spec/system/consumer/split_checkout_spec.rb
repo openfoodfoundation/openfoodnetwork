@@ -51,7 +51,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     distributor.shipping_methods << shipping_with_fee
   end
 
-  context "guest checkout" do
+  context "as a guest user" do
     before do
       visit checkout_path
     end
@@ -87,7 +87,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
   end
 
-  describe 'login in as user' do
+  context "as a logged in user" do
     let(:user) { create(:user) }
 
     before do
@@ -95,37 +95,35 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    describe "purchasing" do
-      context "takes us to the Payment Method" do
+    describe "filling out delivery details" do
+      before do
+        fill_out_details
+        fill_out_billing_address
+      end
+
+      describe "selecting a pick-up shipping method and submiting the form" do
         before do
-          fill_out_details
-          fill_out_billing_address
+          choose free_shipping.name
         end
 
-        context "selecting a pick-up shipping method and submiting the form" do
-          before do
-            choose free_shipping.name
-          end
+        it "redirects the user to the Payment Method step" do
+          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
+          click_button "Next - Payment method"
+          expect(page).to have_current_path("/checkout/payment")
+        end
+      end
 
-          it "redirects the user to the Payment Method step" do
-            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-            click_button "Next - Payment method"
-            expect(page).to have_current_path("/checkout/payment")
-          end
+      describe "selecting a delivery shipping method and submiting the form" do
+        before do
+          choose shipping_with_fee.name
+          uncheck "ship_address_same_as_billing"
         end
 
-        context "selecting a delivery shipping method and submiting the form" do
-          before do
-            choose shipping_with_fee.name
-            uncheck "ship_address_same_as_billing"
-          end
-
-          it "redirects the user to the Payment Method step" do
-            fill_out_shipping_address
-            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-            click_button "Next - Payment method"
-            expect(page).to have_current_path("/checkout/payment")
-          end
+        it "redirects the user to the Payment Method step" do
+          fill_out_shipping_address
+          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
+          click_button "Next - Payment method"
+          expect(page).to have_current_path("/checkout/payment")
         end
       end
     end
