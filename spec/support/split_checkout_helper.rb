@@ -44,4 +44,13 @@ module SplitCheckoutHelper
       select "New South Wales", from: "State"
     end
   end
+
+  def fill_out(notes)
+    fill_in 'Any comments or special instructions?', with: "#{notes}"
+  end
+
+  def proceed_to_payment
+    click_button "Next - Payment method"
+    expect(page).to have_current_path("/checkout/payment")
+  end
 end

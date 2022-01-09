@@ -154,23 +154,50 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
 
         it "redirects the user to the Payment Method step" do
-          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-          click_button "Next - Payment method"
-          expect(page).to have_current_path("/checkout/payment")
+          fill_out("SpEcIaL NoTeS")
+          proceed_to_payment
         end
       end
 
-      describe "selecting a delivery shipping method and submiting the form" do
+      describe "selecting a delivery method" do
         before do
           choose shipping_with_fee.name
-          uncheck "ship_address_same_as_billing"
         end
 
-        it "redirects the user to the Payment Method step" do
-          fill_out_shipping_address
-          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-          click_button "Next - Payment method"
-          expect(page).to have_current_path("/checkout/payment")
+        context "with same shipping and billing address" do
+          before do
+            check "ship_address_same_as_billing"
+          end
+          
+          it "does not display the shipping address form" do
+            within(:xpath, './/div[@class="checkout-substep"][3]') do
+              expect(page).not_to have_field "order_ship_address_attributes_address1"
+            end
+          end
+
+          it "redirects the user to the Payment Method step, when submiting the form" do
+            click_button "Next - Payment method"
+            expect(page).to have_current_path("/checkout/payment")
+          end
+        end
+
+        context "with different shipping and billing address" do
+          before do
+            uncheck "ship_address_same_as_billing"
+          end
+          
+          it "displays the shipping address form" do
+            within(:xpath, './/div[@class="checkout-substep"][3]') do
+              expect(page).to have_field "order_ship_address_attributes_address1"
+            end
+          end
+
+          it "fills in shipping details and redirects the user to the Payment Method step,
+          when submiting the form" do
+            fill_out_shipping_address
+            fill_out("SpEcIaL NoTeS")
+            proceed_to_payment
+          end
         end
       end
     end
