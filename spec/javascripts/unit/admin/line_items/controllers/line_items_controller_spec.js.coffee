@@ -261,24 +261,24 @@ describe "LineItemsCtrl", ->
           scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
 
-        it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
+        it "calls Math.round with the value multiplied by 1000", ->
           unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 5
           scope.formattedValueWithUnitName(10, unitsProduct,unitsVariant)
-          expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
+          expect(Math.round).toHaveBeenCalledWith 10 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
           unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 1000
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
-          expect(scope.formattedValueWithUnitName(2000,unitsProduct,unitsVariant)).toEqual "2 kg"
+          expect(scope.formattedValueWithUnitName(2,unitsProduct,unitsVariant)).toEqual "2 kg"
 
         it "handle correclty the imperial units", ->
           unitsProduct = { variant_unit: "weight" }
           unitsVariant = { unit_value: "453.6" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 1000
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
-          expect(scope.formattedValueWithUnitName(2000, unitsProduct, unitsVariant)).toEqual "2 lb"
+          expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
 
 
       describe "updating the price upon updating the weight of a line item", ->
