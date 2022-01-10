@@ -18,7 +18,9 @@ class SplitCheckoutController < ::BaseController
   def edit
     return redirect_to_step unless params[:step]
 
-    return redirect_to_guest if !@order.distributor.allow_guest_orders? && params[:step] != "guest"
+    return redirect_to_guest if !spree_current_user &&
+                                !@order.distributor.allow_guest_orders? &&
+                                params[:step] != "guest"
   end
 
   def update
