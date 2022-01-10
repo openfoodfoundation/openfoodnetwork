@@ -161,6 +161,7 @@ en:
       logged_in_succesfully: "Logged in successfully"
     sessions:
       signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."      
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
