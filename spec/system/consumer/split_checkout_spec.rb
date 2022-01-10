@@ -175,8 +175,12 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
 
           it "redirects the user to the Payment Method step, when submiting the form" do
-            click_button "Next - Payment method"
-            expect(page).to have_current_path("/checkout/payment")
+            proceed_to_payment
+            # asserts whether shipping and billing addresses are the same
+            ship_add_id = Spree::Order.first.ship_address_id
+            bill_add_id = Spree::Order.first.bill_address_id
+            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+              Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
           end
         end
 
@@ -184,7 +188,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           before do
             uncheck "ship_address_same_as_billing"
           end
-          it "displays the shipping address form" do
+          it "displays the shipping address form and the option to save it as default" do
             within(:xpath, './/div[@class="checkout-substep"][3]') do
               expect(page).to have_field "order_ship_address_attributes_address1"
             end
@@ -206,6 +210,11 @@ describe "As a consumer, I want to checkout my order", js: true do
             fill_out_shipping_address
             fill_out("SpEcIaL NoTeS")
             proceed_to_payment
+            # asserts whether shipping and billing addresses are the same
+            ship_add_id = Spree::Order.first.ship_address_id
+            bill_add_id = Spree::Order.first.bill_address_id
+            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+             Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
           end
         end
       end
