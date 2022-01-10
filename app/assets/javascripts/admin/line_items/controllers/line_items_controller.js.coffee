@@ -161,6 +161,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.getFormattedValueWithUnitName = (value, unitsProduct, unitsVariant, scale) ->
     unit_name = VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
     $scope.roundToThreeDecimals(value) + " " + unit_name
+
+  $scope.getGroupBySizeFormattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
+    scale = $scope.getScale(unitsProduct, unitsVariant)
+    if scale
+      value = value / scale if scale != 28.35 && scale != 1 # divide by scale if not smallest unit
+      $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
     else
       ''
 

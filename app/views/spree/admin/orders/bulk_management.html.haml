@@ -70,7 +70,7 @@
       .three.columns
         .text-center
           = t("admin.orders.bulk_management.group_buy_unit_size")
-        .text-center {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
+        .text-center {{ getGroupBySizeFormattedValueWithUnitName(selectedUnitsProduct.group_buy_unit_size , selectedUnitsProduct, selectedUnitsVariant ) }}
       .three.columns
         .text-center
           = t("admin.orders.bulk_management.total_qtt_ordered")
