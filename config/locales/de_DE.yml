@@ -390,7 +390,7 @@ de_DE:
     sku: Artikelnummer
     status_state: Status
     tags: Stichwörter
-    variant: Variante
+    variant: Produktvariante
     weight: Gewicht
     volume: Volumen
     items: Artikel
@@ -556,7 +556,7 @@ de_DE:
         product_details: "Produktdetails"
         group_buy_options: "Gruppenkauf"
         images: "Bilder"
-        variants: "Varianten"
+        variants: "Produktvarianten"
         product_properties: "Produkteigenschaften"
     product_import:
       title: Produkte importieren
@@ -703,9 +703,9 @@ de_DE:
         current_fulfilled_units: "Aktuell erfüllte Einheiten"
         max_fulfilled_units: "Max erfüllte Einheiten"
         order_error: "Bevor Sie Bestellungen aktualisieren können, müssen Fehler behoben werden.\nFelder mit roten Rahmen enthalten Fehler."
-        variants_without_unit_value: "WARNUNG: Manche Varianten haben keine Einheit"
+        variants_without_unit_value: "WARNUNG: Manche Produktvarianten haben keine Einheit"
         all: "Alle"
-      select_variant: "Wählen Sie eine Variante"
+      select_variant: "Wählen Sie eine Produktvariante"
     enterprise:
       select_outgoing_oc_products_from: Wählen Sie die im Bestellzyklus ausgehenden Produkte von
     enterprises:
@@ -986,6 +986,8 @@ de_DE:
         back_to_list: "Zurück zur Liste"
         save_and_back_to_list: "Speichern und zurück zur Liste"
         choose_products_from: "Wählen Sie Produkte von:"
+        re_notify_producers: Produzenten erneut benachrichtigen
+        notify_producers_tip: Benachrichtigen Sie die Produzenten per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen.
       incoming:
         incoming: "Eingehend"
         supplier: "Lieferant"
@@ -1026,6 +1028,8 @@ de_DE:
         add_supplier: 'Lieferant hinzufügen'
         add_distributor: 'Verteilstelle hinzufügen'
       advanced_settings:
+        automatic_notifications: Automatische Benachrichtigungen
+        automatic_notifications_tip: Benachrichtigen Sie die Produzenten automatisch per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen, wenn der Bestellzyklus schließt.
         title: Erweiterte Einstellungen
         choose_product_tip: Sie können die eingehenden und ausgehenden Produkte auf den Katalog nur von %{inventory} beschränken.
         preferred_product_selection_from_coordinator_inventory_only_here: Nur vom Katalog des Koordinators
@@ -1065,7 +1069,7 @@ de_DE:
       row:
         suppliers: Lieferanten
         distributors: Verteilstellen
-        variants: Varianten
+        variants: Produktvarianten
       simple_form:
         ready_for: Bereit am
         ready_for_placeholder: Datum/Uhrzeit
@@ -1168,7 +1172,7 @@ de_DE:
           last_name: "Nachname"
           supplier: "Lieferant"
           product: "Produkt"
-          variant: "Variante"
+          variant: "Produktvariante"
           quantity: "Menge"
           is_temperature_controlled: "Temperaturüberwachte Artikel?"
           temp_controlled: "Temperaturüberwachte Artikel?"
@@ -1822,9 +1826,9 @@ de_DE:
   hubs_distance_filter: "Läden in der Nähe von %{location} suchen"
   shop_changeable_orders_alert_html:
     one: Prüfen Sie Ihre Bestellung unter <a href='%{path}' target='_blank'>%{shop}/%{order}</a>. Sie können Änderungen bis %{oc_close} vornehmen.
-    few: Sie haben <a href='%{path}' target='_blank'>%{count}Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
-    many: Sie haben <a href='%{path}' target='_blank'>%{count}Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
-    other: Sie haben <a href='%{path}' target='_blank'>%{count}Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
+    few: Sie haben <a href='%{path}' target='_blank'>%{count} Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
+    many: Sie haben <a href='%{path}' target='_blank'>%{count} Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
+    other: Sie haben <a href='%{path}' target='_blank'>%{count} Bestellungen bei %{shop}</a>, die derzeit zur Überprüfung geöffnet sind. Sie können Änderungen bis %{oc_close} vornehmen.
   orders_changeable_orders_alert_html: Diese Bestellung wurde bestätigt, Sie können jedoch bis <strong>%{oc_close}</strong> Änderungen vornehmen.
   products_clear: Zurücksetzen
   products_showing: "Angezeigt:"
@@ -1911,7 +1915,7 @@ de_DE:
   producers_signup_detail: Weitere Details folgen.
   products_item: Artikel
   products_description: Beschreibung
-  products_variant: Variante
+  products_variant: Produktvariante
   products_quantity: Menge
   products_available: Verfügbar?
   products_producer: "Produzent"
@@ -2314,10 +2318,10 @@ de_DE:
   spree_admin_unit_value: Einheitswert
   spree_admin_unit_description: Einheit Beschreibung
   spree_admin_variant_unit: Varianteneinheit
-  spree_admin_variant_unit_scale: Einheit der Variante
+  spree_admin_variant_unit_scale: Einheit der Produktvariante
   spree_admin_supplier: Lieferant
   spree_admin_product_category: Produktkategorie
-  spree_admin_variant_unit_name: Einheit der Variante
+  spree_admin_variant_unit_name: Einheit der Produktvariante
   unit_name: "Einheitenname"
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
@@ -2330,7 +2334,7 @@ de_DE:
   spree_order_populator_availability_error: "Dieses Produkt ist bei der ausgewählten Verteilstelle oder im ausgewählten Bestellzyklus nicht verfügbar."
   spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein."
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
-  spree_variant_product_error: muss mindestens eine Variante haben
+  spree_variant_product_error: muss mindestens eine Produktvariante haben
   your_profil_live: "Ihr Profil live"
   see: "Sehen Sie"
   live: "live"
@@ -2442,8 +2446,8 @@ de_DE:
   report_header_product_properties: Produkteigenschaften
   report_header_quantity: Menge
   report_header_max_quantity: Max Menge
-  report_header_variant: Variante
-  report_header_variant_value: Wert der Varianten
+  report_header_variant: Produktvariante
+  report_header_variant_value: Wert der Produktvarianten
   report_header_variant_unit: Varianteneinheit
   report_header_total_available: Insgesamt verfügbar
   report_header_unallocated: Nicht zugewiesen
@@ -2529,7 +2533,7 @@ de_DE:
   contains: "enthält"
   discount: "Rabatt"
   filter_products: "Produkte filtern"
-  delete_product_variant: "Die letzte Variante kann nicht gelöscht werden."
+  delete_product_variant: "Die letzte Produktvariante kann nicht gelöscht werden."
   progress: "Fortschritt"
   saving: "Wird gespeichert ..."
   success: "Erfolgreich."
@@ -2780,11 +2784,11 @@ de_DE:
           description: Beschreibung
           resolve: Lösung
         exchange_products:
-          load_more_variants: "Weitere Varianten laden"
-          load_all_variants: "Alle Varianten laden"
-          select_all_variants: "Wählen Sie alle %{total_number_of_variants} Varianten aus"
-          variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Varianten geladen"
-          loading_variants: "Varianten werden geladen ..."
+          load_more_variants: "Weitere Produktvarianten laden"
+          load_all_variants: "Alle Produktvarianten laden"
+          select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
+          variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
+          loading_variants: "Produktvarianten werden geladen ..."
       tag_rules:
         shipping_method_tagged_top: "Lieferoptionen markiert mit"
         shipping_method_tagged_bottom: "sind:"
@@ -3168,7 +3172,7 @@ de_DE:
     none: "Keine"
     not_found: "Nicht gefunden"
     notice_messages:
-      variant_deleted: "Variante wurde gelöscht"
+      variant_deleted: "Produktvariante wurde gelöscht"
     or: "oder"
     order_processed_successfully: "Ihre Bestellung wurde erfolgreich verarbeitet."
     payment_method_not_supported: "Zahlungsart wird nicht unterstützt"
@@ -3472,6 +3476,7 @@ de_DE:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"
+          include_out_of_stock_variants: "Produktvarianten ohne Lagerbestand mit einschließen"
         index:
           listing_orders: "Bestellungen verwalten"
           new_order: "Neue Bestellung"
@@ -3664,8 +3669,8 @@ de_DE:
             av_on: "Verfüg. am"
             import_date: "Importdatum"
           products_variant:
-            variant_has_n_overrides: "Diese Variante hat %{n} Überschreibung(en)."
-            new_variant: "Neue Variante"
+            variant_has_n_overrides: "Diese Produktvariante hat %{n} Überschreibung(en)."
+            new_variant: "Neue Produktvariante"
           product_name: Produktname
         primary_taxon_form:
           product_category: Produktkategorie
@@ -3713,11 +3718,11 @@ de_DE:
           option_types: "Optionstypen"
           option_values: "Optionswerte"
           and: "und"
-          new_variant: "Neue Variante"
+          new_variant: "Neue Produktvariante"
           show_active: "Zeige aktive"
           show_deleted: "Zeige gelöschte"
         new:
-          new_variant: "Neue Variante"
+          new_variant: "Neue Produktvariante"
         form:
           sku: "Artikelnummer"
           price: "Preis"
