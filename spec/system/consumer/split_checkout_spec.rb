@@ -210,16 +210,41 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
       end
     end
+
+    describe "not filling out delivery details" do
+      before do
+        fill_in "Email", with: ""
+      end
+      it "should display error when fields are empty" do
+        click_button "Next - Payment method"
+        expect(page).to have_content("Saving failed, please update the highlighted fields")
+        within(:xpath, './/div[@class="checkout-substep"][1]') do
+          expect(page).to have_field("First Name", with: "") # needs to display error, issue #8691
+          expect(page).to have_field("Last Name", with: "") # needs to display error, issue #8691
+          expect(page).to have_field("Email", with: "")
+          expect(page).to have_content("is invalid")
+          expect(page).to have_field("Phone number", with: "")
+          expect(page).to have_content("can't be blank", count: 2) # update count: 4 after closing #8691
+        end
+        within(:xpath, './/div[@class="checkout-substep"][2]') do
+          expect(page).to have_field("Address", with: "")
+          expect(page).to have_field("City", with: "")
+          expect(page).to have_field("Postcode", with: "")
+          expect(page).to have_content("can't be blank", count: 3)
+        end
+        within(:xpath, './/div[@class="checkout-substep"][3]') do
+          expect(page).to have_content("Select a shipping method")
+        end
+      end
+    end
   end
 
   context "when I have an out of stock product in my cart" do
     before do
       variant.update!(on_demand: false, on_hand: 0)
     end
-
     it "returns me to the cart with an error message" do
       visit checkout_path
-
       expect(page).not_to have_selector 'closing', text: "Checkout now"
       expect(page).to have_selector 'closing', text: "Your shopping cart"
       expect(page).to have_content "An item in your cart has become unavailable"
