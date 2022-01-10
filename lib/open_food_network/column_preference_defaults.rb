@@ -30,7 +30,8 @@ module OpenFoodNetwork
       node = 'admin.customers.index'
       {
         email: { name: I18n.t("admin.email"), visible: true },
-        name: { name: I18n.t("admin.name"),           visible: true },
+        first_name: { name: I18n.t("admin.first_name"),           visible: true },
+        last_name: { name: I18n.t("admin.last_name"),           visible: true },
         code: { name: I18n.t("#{node}.code"),         visible: true },
         tags: { name: I18n.t("admin.tags"),           visible: true },
         bill_address: { name: I18n.t("#{node}.bill_address"), visible: true },

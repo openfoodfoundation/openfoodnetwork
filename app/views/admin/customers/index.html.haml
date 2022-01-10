@@ -50,7 +50,8 @@
 
       %table.index#customers
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
-        %col.name{ width: "20%", 'ng-show' => 'columns.name.visible' }
+        %col.first_name{ width: "20%", 'ng-show' => 'columns.first_name.visible' }
+        %col.last_name{ width: "20%", 'ng-show' => 'columns.last_name.visible' }
         %col.code{ width: "10%", 'ng-show' => 'columns.code.visible' }
         %col.tags{ width: "20%", 'ng-show' => 'columns.tags.visible' }
         %col.bill_address{ width: "10%", 'ng-show' => 'columns.bill_address.visible' }
@@ -63,8 +64,10 @@
               -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.email{ 'ng-show' => 'columns.email.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('email')" }=t('admin.email')
-            %th.name{ 'ng-show' => 'columns.name.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.toggle('name')" }=t('admin.name')
+            %th.first_name{ 'ng-show' => 'columns.first_name.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('first_name')" }=t('admin.first_name')
+            %th.last_name{ 'ng-show' => 'columns.last_name.visible' }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('last_name')" }=t('admin.last_name')
             %th.code{ 'ng-show' => 'columns.code.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('code')" }=t('admin.customers.index.code')
             %th.tags{ 'ng-show' => 'columns.tags.visible' }=t('admin.tags')
@@ -78,8 +81,10 @@
             %td.email{ 'ng-show' => 'columns.email.visible'}
               %span{ 'ng-bind' => '::customer.email' }
               %span.guest-label{ 'ng-show' => 'customer.user_id == null' }= t('.guest_label')
-            %td.name{ 'ng-show' => 'columns.name.visible'}
-              %input{ type: 'text', name: 'name', ng: { model: 'customer.name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
+            %td.first_name{ 'ng-show' => 'columns.first_name.visible'}
+              %input{ type: 'text', name: 'first_name', ng: { model: 'customer.first_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
+            %td.name{ 'ng-show' => 'columns.last_name.visible'}
+              %input{ type: 'text', name: 'last_name', ng: { model: 'customer.last_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
             %td.code{ 'ng-show' => 'columns.code.visible' }
               %input{ type: 'text', name: 'code', ng: {model: 'customer.code', change: 'checkForDuplicateCodes()'}, "obj-for-update" => "customer", "attr-for-update" => "code" }
               %i.icon-warning-sign{ ng: {if: 'duplicate'} }

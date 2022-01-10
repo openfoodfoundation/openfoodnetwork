@@ -177,7 +177,8 @@ describe 'Customers' do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
-          expect(find_field('name').value).to eq 'John Doe'
+          expect(find_field('first_name').value).to eq 'John'
+          expect(find_field('last_name').value).to eq 'Doe'
 
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"

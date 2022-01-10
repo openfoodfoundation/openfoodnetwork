@@ -411,6 +411,8 @@ en_GB:
     ends_at: Ends At
     ends_on: Ends On
     name: Name
+    first_name: First name
+    last_name: Last name
     on_hand: In Stock
     on_demand: Unlimited
     on_demand?: Unlimited?

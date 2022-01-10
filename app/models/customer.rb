@@ -34,11 +34,11 @@ class Customer < ApplicationRecord
 
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
 
-  private
-
   def full_name
     "#{first_name} #{last_name}".strip
   end
+
+  private
 
   def downcase_email
     email&.downcase!
