@@ -165,7 +165,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.getGroupBySizeFormattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
     scale = $scope.getScale(unitsProduct, unitsVariant)
     if scale
-      value = value / scale if scale != 28.35 && scale != 1 # divide by scale if not smallest unit
+      value = value / scale if scale != 28.35 && scale != 1 && scale != 453.6 # divide by scale if not smallest unit
       $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
     else
       ''
@@ -183,7 +183,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
       ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
         scale = $scope.getScale($scope.selectedUnitsProduct, $scope.selectedUnitsVariant)
-        sumOfUnitValues = sumOfUnitValues / scale if scale == 28.35 # divide by scale if smallest unit
+        sumOfUnitValues = sumOfUnitValues / scale if scale == 28.35 || scale == 453.6 # divide by scale if smallest unit
         $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * $scope.selectedUnitsVariant.unit_value)
     else
       ''
