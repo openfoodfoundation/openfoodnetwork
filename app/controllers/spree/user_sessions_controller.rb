@@ -45,7 +45,6 @@ module Spree
       # Logout will clear session data including shopfront_redirect
       #   Here we store it before actually logging out so that the redirect works correctly
       @shopfront_redirect = session[:shopfront_redirect]
-      flash.notice = t('devise.sessions.signed_out')
 
       super
     end
