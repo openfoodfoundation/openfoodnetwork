@@ -168,7 +168,6 @@ describe "As a consumer, I want to checkout my order", js: true do
           before do
             check "ship_address_same_as_billing"
           end
-          
           it "does not display the shipping address form" do
             within(:xpath, './/div[@class="checkout-substep"][3]') do
               expect(page).not_to have_field "order_ship_address_attributes_address1"
@@ -185,10 +184,20 @@ describe "As a consumer, I want to checkout my order", js: true do
           before do
             uncheck "ship_address_same_as_billing"
           end
-          
           it "displays the shipping address form" do
             within(:xpath, './/div[@class="checkout-substep"][3]') do
               expect(page).to have_field "order_ship_address_attributes_address1"
+            end
+          end
+
+          it "displays error messages when submitting incomplete billing address" do
+            click_button "Next - Payment method"
+            expect(page).to have_content "Saving failed, please update the highlighted fields."
+            within(:xpath, './/div[@class="checkout-substep"][3]') do
+              expect(page).to have_field("Address", with: "")
+              expect(page).to have_field("City", with: "")
+              expect(page).to have_field("Postcode", with: "")
+              expect(page).to have_content("can't be blank", count: 3)
             end
           end
 
