@@ -34,7 +34,7 @@ describe Spree::UserSessionsController, type: :controller do
   describe "destroy" do
     it "redirects to root with flash message" do
       spree_post :destroy
-  
+
       expect(response).to redirect_to root_path
       expect(flash[:notice]).to eq "Signed out successfully."
     end
