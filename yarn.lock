@@ -11681,10 +11681,10 @@ shell-quote@1.7.2:
   resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.7.2.tgz#67a7d02c76c9da24f99d20808fcaded0e0e04be2"
   integrity sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
 
-shortcut-buttons-flatpickr@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/shortcut-buttons-flatpickr/-/shortcut-buttons-flatpickr-0.3.1.tgz#25ec705db8e7c80f0f81f5e160783102775ef529"
-  integrity sha512-zZRLJXF7WSeQJ0ZES+PdD1FI+yjBOufqOQ4AU5przR71Rhyekiw/6/JLA33zOqVkgR7QQ1NbVcuuSqNHHGneEg==
+shortcut-buttons-flatpickr@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/shortcut-buttons-flatpickr/-/shortcut-buttons-flatpickr-0.4.0.tgz#a36e0a88a670ed2637b7b1adb5bee0914c29a7e7"
+  integrity sha512-JKmT4my3Hm1e18OvG4Q6RcFhN4WRqqpTMkHrvZ7fup/dp6aTIWGVCHdRYtASkp/FCzDlJh6iCLQ/VcwwNpAMoQ==
 
 side-channel@^1.0.4:
   version "1.0.4"

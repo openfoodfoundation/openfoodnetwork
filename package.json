@@ -37,7 +37,7 @@
     "moment": "^2.29.1",
     "mrujs": "^0.7.4",
     "select2": "^4.0.13",
-    "shortcut-buttons-flatpickr": "^0.3.1",
+    "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^2.0.0",
     "webpack": "~4",
     "webpack-cli": "~3"
