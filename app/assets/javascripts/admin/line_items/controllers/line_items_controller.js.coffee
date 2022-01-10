@@ -152,15 +152,23 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       return false if !lineItem.hasOwnProperty('final_weight_volume') || !(lineItem.final_weight_volume > 0)
     true
 
-  # How is this different to OptionValueNamer#name?
-  # Should it be extracted to that class or VariantUnitManager?
-  $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
-    # A Units Variant is an API object which holds unit properies of a variant
-    if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
-      scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
-      unit_name = VariantUnitManager.getUnitName(unitsVariant.unit_value, unitsProduct.variant_unit)
-      $scope.roundToThreeDecimals(value/scale) + " " + unit_name
+  $scope.getScale = (unitsProduct, unitsVariant) ->
+    if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume")
+      VariantUnitManager.getScale(unitsVariant.unit_value, unitsProduct.variant_unit)
     else
+      null
+
+  $scope.getFormattedValueWithUnitName = (value, unitsProduct, unitsVariant, scale) ->
+    unit_name = VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
+    $scope.roundToThreeDecimals(value) + " " + unit_name
+    else
+      ''
+
+  $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
+    scale = $scope.getScale(unitsProduct, unitsVariant)
+    if scale
+      $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
+    else 
       ''
 
   $scope.fulfilled = (sumOfUnitValues) ->
