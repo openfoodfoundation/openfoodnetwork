@@ -21,18 +21,19 @@ module Api
       let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
       let!(:order1) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address), total: 5.0)
+                       distributor: distributor, billing_address: create(:address, lastname: "c"), total: 5.0)
       end
       let!(:order2) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor2, billing_address: create(:address), total: 10.0)
+                       distributor: distributor2, billing_address: create(:address, lastname: "a"), total: 10.0)
       end
       let!(:order3) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address), total: 1.0 )
+                       distributor: distributor, billing_address: create(:address, lastname: "b"), total: 1.0 )
       end
       let!(:order4) do
-        create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2, total: 15.0)
+        create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2,
+                                           billing_address: create(:address, lastname: "d"), total: 15.0)
       end
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
@@ -133,6 +134,13 @@ module Api
                       as: :json
 
           expect(json_response['orders']).to eq serialized_orders([order4, order2, order1, order3])
+        end
+
+        it 'can sort orders by bill_address.lastname' do
+          get :index, params: { q: { completed_at_not_null: true, s: 'bill_address_lastname ASC' } },
+                      as: :json
+
+          expect(json_response['orders'].map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4]).map{ |o| o["id"] }
         end
       end
 

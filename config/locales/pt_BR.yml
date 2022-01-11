@@ -3612,6 +3612,7 @@ pt_BR:
           shipment_state: "Situação do Envio"
           email: "E-mail"
           total: "Total"
+          bill_address_lastname: "Nome"
       general_settings:
         edit:
           legal_settings: "Configurações de Legislação"

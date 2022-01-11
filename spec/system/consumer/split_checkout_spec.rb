@@ -4,6 +4,7 @@ require "system_helper"
 
 describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
+  include SplitCheckoutHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -26,13 +27,13 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
   let(:free_shipping) {
-    create(:shipping_method, require_ship_address: true, name: "Free Shipping", description: "yellow",
+    create(:shipping_method, require_ship_address: false, name: "Free Shipping", description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
   let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
   let(:shipping_with_fee) {
-    create(:shipping_method, require_ship_address: false, tax_category: shipping_tax_category,
+    create(:shipping_method, require_ship_address: true, tax_category: shipping_tax_category,
                              name: "Shipping with Fee", description: "blue",
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
   }
@@ -50,7 +51,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     distributor.shipping_methods << shipping_with_fee
   end
 
-  context "guest checkout" do
+  context "as a guest user" do
     before do
       visit checkout_path
     end
@@ -83,6 +84,62 @@ describe "As a consumer, I want to checkout my order", js: true do
 
       click_button "Next - Payment method"
       expect(page).to have_current_path("/checkout/payment")
+    end
+  end
+
+  context "as a logged in user" do
+    let(:user) { create(:user) }
+
+    before do
+      login_as(user)
+      visit checkout_path
+    end
+
+    describe "filling out delivery details" do
+      before do
+        fill_out_details
+        fill_out_billing_address
+      end
+
+      describe "selecting a pick-up shipping method and submiting the form" do
+        before do
+          choose free_shipping.name
+        end
+
+        it "redirects the user to the Payment Method step" do
+          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
+          click_button "Next - Payment method"
+          expect(page).to have_current_path("/checkout/payment")
+        end
+      end
+
+      describe "selecting a delivery shipping method and submiting the form" do
+        before do
+          choose shipping_with_fee.name
+          uncheck "ship_address_same_as_billing"
+        end
+
+        it "redirects the user to the Payment Method step" do
+          fill_out_shipping_address
+          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
+          click_button "Next - Payment method"
+          expect(page).to have_current_path("/checkout/payment")
+        end
+      end
+    end
+  end
+
+  context "when I have an out of stock product in my cart" do
+    before do
+      variant.update!(on_demand: false, on_hand: 0)
+    end
+
+    it "returns me to the cart with an error message" do
+      visit checkout_path
+
+      expect(page).not_to have_selector 'closing', text: "Checkout now"
+      expect(page).to have_selector 'closing', text: "Your shopping cart"
+      expect(page).to have_content "An item in your cart has become unavailable"
     end
   end
 end

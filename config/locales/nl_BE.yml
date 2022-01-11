@@ -3345,6 +3345,7 @@ nl_BE:
           shipment_state: "Status Verzending"
           email: "E-mail"
           total: "Totaal"
+          bill_address_lastname: "Naam"
       general_settings:
         edit:
           legal_settings: "De legale instelling"

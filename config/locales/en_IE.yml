@@ -3730,6 +3730,7 @@ en_IE:
           shipment_state: "Shipment County"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

@@ -431,7 +431,7 @@ module Spree
     end
 
     def update_units
-      return unless saved_change_to_variant_unit?
+      return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?

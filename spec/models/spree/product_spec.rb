@@ -443,6 +443,30 @@ module Spree
 
         expect(product.taxons).not_to include(original_taxon)
       end
+
+      it "updates units when saved change to variant unit" do
+        product.variant_unit = 'items'
+        product.variant_unit_scale = nil
+        product.variant_unit_name = 'loaf'
+        product.save!
+
+        expect(product.variant_unit_name).to eq 'loaf'
+
+        product.update(variant_unit_name: 'bag')
+
+        expect(product.variant_unit_name).to eq 'bag'
+
+        product.variant_unit = 'weight'
+        product.variant_unit_scale = 1
+        product.variant_unit_name = 'g'
+        product.save!
+
+        expect(product.variant_unit).to eq 'weight'
+
+        product.update(variant_unit: 'volume')
+
+        expect(product.variant_unit).to eq 'volume'
+      end
     end
 
     describe "scopes" do

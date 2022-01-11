@@ -19,7 +19,7 @@ class SearchOrders
       includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
       ransack(params[:q])
 
-    @search.result(distinct: true)
+    @search.result(distinct: true).joins(:bill_address)
   end
 
   def search_query

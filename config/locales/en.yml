@@ -3904,6 +3904,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

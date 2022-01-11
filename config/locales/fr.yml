@@ -3766,6 +3766,7 @@ fr:
           shipment_state: "Statut livraison"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Nom"
       general_settings:
         edit:
           legal_settings: "Configuration légales"

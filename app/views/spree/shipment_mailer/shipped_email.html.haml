@@ -1,22 +1,18 @@
-%p
+%h3
   = t('.dear_customer')
-%p
+%p.lead
   = t('.instructions', distributor: @shipment.order.distributor.name)
 
 %p
-  = "============================================================"
-  %br
-  = t('.shipment_summary')
-  %br
-  = "============================================================"
+  %strong
+    = t('.shipment_summary')
 
-%p
+%p{ style: "font-family: monospace, serif;" }
   - @shipment.manifest.each do |item|
     = item.variant.sku
     = item.variant.product.name
     = item.variant.options_text
-  %br
-  = "============================================================"
+    %br
 
 - if @shipment.tracking
   %p
@@ -26,5 +22,5 @@
   %p
     = t('.track_link', url: @shipment.tracking_url)
 
-%p
+%p.lead
   = t('.thanks')

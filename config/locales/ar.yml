@@ -3651,6 +3651,7 @@ ar:
           shipment_state: "حالة الشحن"
           email: "البريد الإلكتروني"
           total: "المجموع"
+          bill_address_lastname: "الاسم"
       general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"

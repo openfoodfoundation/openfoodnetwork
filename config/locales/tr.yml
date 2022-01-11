@@ -3671,6 +3671,7 @@ tr:
           shipment_state: "Teslimat Durumu"
           email: "E-posta"
           total: "Toplam"
+          bill_address_lastname: "Ad"
       general_settings:
         edit:
           legal_settings: "Yasal Ayarlar"
