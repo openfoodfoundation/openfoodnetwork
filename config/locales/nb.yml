@@ -3721,6 +3721,7 @@ nb:
           shipment_state: "Leveringsstatus"
           email: "Epost"
           total: "Total"
+          bill_address_lastname: "Navn"
       general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"

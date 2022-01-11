@@ -3741,6 +3741,7 @@ it:
           shipment_state: "Stato della spedizione"
           email: "Email"
           total: "Totale"
+          bill_address_lastname: "Nome"
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"

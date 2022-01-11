@@ -2172,6 +2172,7 @@ sv:
           shipment_state: "Leveransstatus"
           email: "E-post"
           total: "Summa"
+          bill_address_lastname: "Namn"
       general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"

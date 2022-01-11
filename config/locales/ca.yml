@@ -3640,6 +3640,7 @@ ca:
           shipment_state: "Estat de la Tramesa"
           email: "Correu electrònic"
           total: "Total"
+          bill_address_lastname: "Nom"
       general_settings:
         edit:
           legal_settings: "Paràmetres legals"

@@ -3766,6 +3766,7 @@ fr_CM:
           shipment_state: "Statut livraison"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Produit/Variante"
       general_settings:
         edit:
           legal_settings: "Configuration légales"
