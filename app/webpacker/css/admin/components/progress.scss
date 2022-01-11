@@ -1,28 +1,22 @@
+// Loading throbber displayed when ajax request takes too long to complete
 #progress {
-  @include border-radius(10px);
-  position: fixed;
-  top: -10px;
-  left: 50%;
-  z-index: 1000;
-  opacity: 0.8;
-  width: 200px;
-  background-color: $spree-blue;
-  color: $color-1;
   display: none;
-  font-size: 120%;
+  @include border-radius(0 0 4px 4px);
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: $spree-blue;
+  color: #FFFFFF;
+  opacity: .8;
+  font-size: 1rem;
+  padding: .5rem 1rem;
   font-weight: bold;
-  line-height: 40px;
-  margin-left: -100px;
-  padding-top: 15px;
   text-align: center;
   text-transform: uppercase;
 
   .spinner {
-    position: absolute;
-    left: 50%;
-    width: 30px;
-    height: 30px;
-    top: -5px;
-    margin-left: -15px;
+    margin-right: 5px;
   }
 }

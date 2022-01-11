@@ -1,24 +1,4 @@
 #progress
-  / By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL
-  %svg{:class => "spinner", :viewbox => "0 0 58 58", :xmlns => "http://www.w3.org/2000/svg"}
-    %g{:fill => "none", "fill-rule" => "evenodd"}
-      %g{:stroke => "currentColor", "stroke-width" => "1.5", :transform => "translate(2 1)"}
-        %circle{:cx => "42.601", :cy => "11.462", :fill => "currentColor", "fill-opacity" => "1", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "1;0;0;0;0;0;0;0"}
-        %circle{:cx => "49.063", :cy => "27.063", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;1;0;0;0;0;0;0"}
-        %circle{:cx => "42.601", :cy => "42.663", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;1;0;0;0;0;0"}
-        %circle{:cx => "27", :cy => "49.125", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;0;1;0;0;0;0"}
-        %circle{:cx => "11.399", :cy => "42.663", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;0;0;1;0;0;0"}
-        %circle{:cx => "4.938", :cy => "27.063", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;0;0;0;1;0;0"}
-        %circle{:cx => "11.399", :cy => "11.462", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;0;0;0;0;1;0"}
-        %circle{:cx => "27", :cy => "5", :fill => "currentColor", "fill-opacity" => "0", :r => "5"}
-          %animate{:attributename => "fill-opacity", :begin => "0s", :calcmode => "linear", :dur => "1.3s", :repeatcount => "indefinite", :values => "0;0;0;0;0;0;0;1"}
-
+  %i.spinner.fa.fa-spin.fa-circle-o-notch
   = Spree.t(:loading)
   \...
