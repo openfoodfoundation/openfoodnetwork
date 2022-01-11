@@ -3746,6 +3746,7 @@ de_DE:
           shipment_state: "Lieferstatus"
           email: "E-Mail-Adresse"
           total: "Gesamt"
+          bill_address_lastname: "Name der Lieferoption"
       general_settings:
         edit:
           legal_settings: "Rechtliche Einstellungen"
