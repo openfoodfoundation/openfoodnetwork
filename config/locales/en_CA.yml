@@ -1327,7 +1327,7 @@ en_CA:
         checkout: "Checkout"
         edit_cart: "Edit cart"
         items_in_cart_singular: "%{num}item in your cart"
-        items_in_cart_plural: "%{num}items in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
         close: "Close"
         cart_empty: "Your cart is empty"
         take_me_shopping: "Take me shopping!"
@@ -1585,7 +1585,7 @@ en_CA:
   checkout_instructions: "Any comments or special instructions?"
   checkout_payment: Payment
   checkout_send: Place order now
-  checkout_your_order: Your order (applicable taxes charged at checkout)
+  checkout_your_order: Your order
   checkout_cart_total: Cart total
   checkout_shipping_price: Shipping
   checkout_total_price: Total
@@ -1743,7 +1743,7 @@ en_CA:
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "Your order from <strong>%{distributor}</strong> has been processed."
+  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
@@ -2324,7 +2324,7 @@ en_CA:
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, YourCity'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Your City'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
@@ -3481,7 +3481,7 @@ en_CA:
           next: "Next"
           loading: "Loading"
           no_orders_found: "No Orders Found"
-          results_found: " %{number}Results found."
+          results_found: " %{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
         sortable_header:
@@ -3736,6 +3736,7 @@ en_CA:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"
@@ -3798,7 +3799,7 @@ en_CA:
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
-        instructions_html: "Your order with 1%{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
+        instructions_html: "Your order with %{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}  "
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
@@ -3839,7 +3840,7 @@ en_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "
-        instructions: "Your order from %{distributor}has been shipped."
+        instructions: "Your order from %{distributor} has been shipped."
         shipment_summary: "Shipment/Pick Up Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."
