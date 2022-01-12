@@ -45,8 +45,8 @@ module SplitCheckoutHelper
     end
   end
 
-  def fill_out(notes)
-    fill_in 'Any comments or special instructions?', with: notes.to_s
+  def fill_notes(text)
+    fill_in 'Any comments or special instructions?', with: text.to_s
   end
 
   def proceed_to_payment
