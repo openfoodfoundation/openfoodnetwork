@@ -53,7 +53,8 @@ class SplitCheckoutController < ::BaseController
 
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
-    send("validate_#{params[:step]}!")
+
+    validate_current_step!
 
     @order.errors.empty?
   end
@@ -66,6 +67,11 @@ class SplitCheckoutController < ::BaseController
     return if @order.complete?
 
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
+  end
+
+  def validate_current_step!
+    step = params[:step].tap{ |step| ["details", "payment", "summary"].include? step }
+    send("validate_#{step}!")
   end
 
   def validate_details!
