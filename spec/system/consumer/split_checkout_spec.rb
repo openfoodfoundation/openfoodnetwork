@@ -177,8 +177,8 @@ describe "As a consumer, I want to checkout my order", js: true do
           it "redirects the user to the Payment Method step, when submiting the form" do
             proceed_to_payment
             # asserts whether shipping and billing addresses are the same
-            ship_add_id = Spree::Order.first.ship_address_id
-            bill_add_id = Spree::Order.first.bill_address_id
+            ship_add_id = order.reload.ship_address_id
+            bill_add_id = order.reload.bill_address_id
             expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
               Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
           end
