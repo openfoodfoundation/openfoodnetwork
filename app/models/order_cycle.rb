@@ -281,7 +281,9 @@ class OrderCycle < ApplicationRecord
 
   def reset_processed_at
     return unless orders_close_at.present? && orders_close_at_was.present?
+    return unless orders_close_at > orders_close_at_was
 
-    self.processed_at = nil if orders_close_at > orders_close_at_was
+    self.processed_at = nil
+    self.mails_sent = false
   end
 end
