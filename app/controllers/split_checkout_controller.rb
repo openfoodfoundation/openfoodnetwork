@@ -41,7 +41,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def confirm_order
-    return unless @order.confirmation? && params[:confirm_order]
+    return unless summary_step? && @order.confirmation?
     return unless validate_summary! && @order.errors.empty?
 
     @order.confirm!
@@ -55,6 +55,10 @@ class SplitCheckoutController < ::BaseController
     send("validate_#{params[:step]}!")
 
     @order.errors.empty?
+  end
+
+  def summary_step?
+    params[:step] == "summary"
   end
 
   def advance_order_state
