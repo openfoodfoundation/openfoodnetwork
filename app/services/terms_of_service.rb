@@ -15,7 +15,7 @@ class TermsOfService
     Spree::Config.shoppers_require_tos
   end
 
-  def self.terms_and_conditions_activated?(distributor)
+  def self.distributor_terms_required?(distributor)
     distributor.terms_and_conditions.file?
   end
 end
