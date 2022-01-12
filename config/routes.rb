@@ -78,7 +78,7 @@ Openfoodnetwork::Application.routes.draw do
   constraints SplitCheckoutConstraint.new do
     get '/checkout', to: 'split_checkout#edit'
 
-    constraints step: /(details|payment|summary)/ do
+    constraints step: /(guest|details|payment|summary)/ do
       get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
       put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
     end

@@ -8,7 +8,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
+  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_guest_orders: false) }
   let(:product) {
     create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
   }
@@ -19,7 +19,7 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
   let(:order) {
     create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
-                   ship_address_id: nil)
+                   ship_address_id: nil, state: "cart")
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
@@ -51,12 +51,49 @@ describe "As a consumer, I want to checkout my order", js: true do
     distributor.shipping_methods << shipping_with_fee
   end
 
-  context "as a guest user" do
+  context "guest checkout when distributor doesn't allow guest orders" do
     before do
       visit checkout_path
     end
 
-    it "should display the split checkout page" do
+    it "should display the split checkout login page" do
+      expect(page).to have_content distributor.name
+      expect(page).to have_current_path("/checkout/guest")
+      expect(page).to have_content("Ok, ready to checkout?")
+      expect(page).to have_content("Login")
+      expect(page).to have_no_content("Checkout as guest")
+    end
+
+    it "should be redirected if user enter the url" do
+      order.update(state: "payment")
+      get checkout_step_path(:details)
+      expect(response).to have_http_status(:redirect)
+      expect(page).to have_current_path("/checkout/guest")
+    end
+
+    it "should redirect to the login page when clicking the login button" do
+      click_on "Login"
+      expect(page).to have_current_path "/"
+    end
+  end
+
+  context "as a guest user" do
+    before do
+      distributor.update!(allow_guest_orders: true)
+      order.update!(distributor_id: distributor.id)
+      visit checkout_path
+    end
+
+    it "should display the split checkout login/guest page" do
+      expect(page).to have_content distributor.name
+      expect(page).to have_current_path("/checkout/guest")
+      expect(page).to have_content("Ok, ready to checkout?")
+      expect(page).to have_content("Login")
+      expect(page).to have_content("Checkout as guest")
+    end
+
+    it "should display the split checkout details page" do
+      click_on "Checkout as guest"
       expect(page).to have_content distributor.name
       expect(page).to have_current_path("/checkout/details")
       expect(page).to have_content("1 - Your details")
@@ -66,6 +103,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     it "should display error when fields are empty" do
+      click_on "Checkout as guest"
       click_button "Next - Payment method"
       expect(page).to have_content("Saving failed, please update the highlighted fields")
       expect(page).to have_css 'span.field_with_errors label', count: 6
@@ -74,6 +112,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     it "should validate once each needed field is filled" do
+      click_on "Checkout as guest"
       fill_in "First Name", with: "Jane"
       fill_in "Last Name", with: "Doe"
       fill_in "Phone number", with: "07987654321"
@@ -84,6 +123,14 @@ describe "As a consumer, I want to checkout my order", js: true do
 
       click_button "Next - Payment method"
       expect(page).to have_current_path("/checkout/payment")
+    end
+
+    context "when order is state: 'payment'" do
+      it "should allow visit '/checkout/details'" do
+        order.update(state: "payment")
+        visit checkout_step_path(:details)
+        expect(page).to have_current_path("/checkout/details")
+      end
     end
   end
 

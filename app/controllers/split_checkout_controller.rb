@@ -16,10 +16,16 @@ class SplitCheckoutController < ::BaseController
   helper OrderHelper
 
   def edit
-    redirect_to_step unless params[:step]
+    return redirect_to_step unless params[:step]
+
+    return redirect_to_guest if !spree_current_user &&
+                                !@order.distributor.allow_guest_orders? &&
+                                params[:step] != "guest"
   end
 
   def update
+    return redirect_to_guest if !spree_current_user && !@order.distributor.allow_guest_orders?
+
     if confirm_order || update_order
       clear_invalid_payments
       advance_order_state
@@ -85,7 +91,13 @@ class SplitCheckoutController < ::BaseController
     @order_params ||= Checkout::Params.new(@order, params).call
   end
 
+  def redirect_to_guest
+    redirect_to checkout_step_path(:guest)
+  end
+
   def redirect_to_step
+    return redirect_to_guest if !spree_current_user && !params[:step]
+
     case @order.state
     when "cart", "address", "delivery"
       redirect_to checkout_step_path(:details)
