@@ -51,6 +51,6 @@ module SplitCheckoutHelper
 
   def proceed_to_payment
     click_button "Next - Payment method"
-    expect(page).to have_current_path("/checkout/payment")
+    expect(page).to have_button("Next - Order summary")
   end
 end
