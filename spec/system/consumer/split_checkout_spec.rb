@@ -68,9 +68,9 @@ describe "As a consumer, I want to checkout my order", js: true do
     it "should display error when fields are empty" do
       click_button "Next - Payment method"
       expect(page).to have_content("Saving failed, please update the highlighted fields")
-      expect(page).to have_css 'span.field_with_errors label', count: 4
-      expect(page).to have_css 'span.field_with_errors input', count: 4
-      expect(page).to have_css 'span.formError', count: 5
+      expect(page).to have_css 'span.field_with_errors label', count: 6
+      expect(page).to have_css 'span.field_with_errors input', count: 6
+      expect(page).to have_css 'span.formError', count: 7
     end
 
     it "should validate once each needed field is filled" do
