@@ -16,6 +16,10 @@ module TermsAndConditionsHelper
     end
   end
 
+  def any_terms_required?(distributor)
+    TermsOfService.required?(distributor)
+  end
+
   def platform_terms_required?
     TermsOfService.platform_terms_required?
   end
