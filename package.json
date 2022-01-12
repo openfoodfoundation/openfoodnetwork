@@ -14,7 +14,7 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-controls": "^6.4.9",
+    "@storybook/addon-controls": "^6.4.12",
     "@storybook/addon-docs": "^6.4.9",
     "@storybook/server": "^6.4.9",
     "jasmine-core": "~2.4.1",
