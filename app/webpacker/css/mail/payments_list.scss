@@ -1,0 +1,43 @@
+// payment list, used in both invoice pdfs and order confirmation emails
+
+.payments-list {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+  margin-bottom: 20px;
+
+  td {
+    padding: 5px;
+    border-bottom: 1px solid $medium-grey;
+
+    .payment-method-name {
+      display: block;
+      font-weight: bold;
+    }
+
+    .payment-method-description {
+      display: block;
+    }
+  }
+
+  thead th {
+    border-bottom: 1px solid $medium-grey;
+    padding: 10px 5px 5px;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .amount {
+    text-align: right;
+    padding-right: 15px;
+  }
+
+  .payment-state {
+    text-align: right;
+  }
+
+  .payment-state-value {
+    text-transform: uppercase;
+  }
+}

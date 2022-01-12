@@ -26,6 +26,12 @@ module Reporting
         )
       end
 
+      def scoped_to_line_items(line_items_relation)
+        reflect query.where(
+          line_item_table[:id].in(Arel.sql(line_items_relation.to_sql))
+        )
+      end
+
       def with_managed_orders(orders_relation)
         reflect query.
           outer_join(managed_orders_alias).

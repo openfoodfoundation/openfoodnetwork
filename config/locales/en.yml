@@ -1038,6 +1038,8 @@ en:
         back_to_list: "Back To List"
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
+        re_notify_producers: Re notify producers
+        notify_producers_tip: This will send an email to each producer with the list of their orders.
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1078,6 +1080,8 @@ en:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
+        automatic_notifications: Automatic notifications
+        automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
         choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
@@ -1724,6 +1728,24 @@ en:
     step2:
       payment_method:
         title: Payment method
+      form: 
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+          placeholder: 123
+        card_month:
+          label: Month
+          placeholder: 01
+        card_year:
+          label: Year
+          placeholder: 2020
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
@@ -2385,7 +2407,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   new_order_cycle: "New Order Cycle"
   new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
-  notify_producers: 'Notify producers'
+  notify_producers: 'Notify producers'  
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
@@ -3612,6 +3634,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          include_out_of_stock_variants: "Include variants with no available stock"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3881,6 +3904,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

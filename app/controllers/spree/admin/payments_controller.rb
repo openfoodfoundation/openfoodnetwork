@@ -174,15 +174,14 @@ module Spree
       def authorize_stripe_sca_payment
         return unless @payment.payment_method.instance_of?(Spree::Gateway::StripeSCA)
 
-        @payment.authorize!(full_order_path(@payment.order))
+        OrderManagement::Order::StripeScaPaymentAuthorize.
+          new(@order, payment: @payment, off_session: true).
+          call!(full_order_path(@order))
 
-        unless @payment.pending? || @payment.requires_authorization?
-          raise Spree::Core::GatewayError, I18n.t('authorization_failure')
-        end
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure') if @order.errors.any?
 
         return unless @payment.requires_authorization?
 
-        PaymentMailer.authorize_payment(@payment).deliver_later
         raise Spree::Core::GatewayError, I18n.t('action_required')
       end
 

@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Test Flatpickr", js: true do
+describe "Test Flatpickr" do
   include AuthenticationHelper
   include WebHelper
 

@@ -1,0 +1,16 @@
+name: Linters
+on: [push, pull_request]
+jobs:
+  rubocop:
+    name: runner / rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v2
+        with:
+          reporter: github-pr-check
+          level: error
+          fail_on_error: true

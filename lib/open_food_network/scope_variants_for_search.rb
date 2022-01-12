@@ -16,6 +16,7 @@ module OpenFoodNetwork
     def search
       @variants = query_scope
 
+      scope_to_in_stock_only if scope_to_in_stock_only?
       scope_to_schedule if params[:schedule_id]
       scope_to_order_cycle if params[:order_cycle_id]
       scope_to_distributor if params[:distributor_id]
@@ -34,7 +35,11 @@ module OpenFoodNetwork
     def query_scope
       Spree::Variant.where(is_master: false).
         includes(option_values: :option_type).
-        ransack(search_params.merge(m: 'or')).result
+        ransack(search_params.merge(m: 'or')).
+        result.
+        order("spree_products.name, display_name, display_as, spree_products.variant_unit_name").
+        includes(:product).
+        joins(:product)
     end
 
     def distributor
@@ -66,6 +71,23 @@ module OpenFoodNetwork
       eligible_variants_scope = OrderManagement::Subscriptions::VariantsList.eligible_variants(distributor)
       @variants = @variants.merge(eligible_variants_scope)
       scope_variants_to_distributor(@variants, distributor)
+    end
+
+    def scope_to_in_stock_only
+      @variants = @variants.joins(
+        "INNER JOIN spree_stock_items ON spree_stock_items.variant_id = spree_variants.id
+         LEFT JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id AND
+                                        variant_overrides.hub_id = #{distributor.id}"
+      ).where("
+        variant_overrides.on_demand IS TRUE OR
+        variant_overrides.count_on_hand > 0 OR
+        (variant_overrides.on_demand IS NULL AND spree_stock_items.backorderable IS TRUE) OR
+        (variant_overrides.count_on_hand IS NULL AND spree_stock_items.count_on_hand > 0)
+      ")
+    end
+
+    def scope_to_in_stock_only?
+      params[:distributor_id] && params[:include_out_of_stock] != "1"
     end
 
     def scope_variants_to_distributor(variants, distributor)

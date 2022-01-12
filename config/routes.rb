@@ -68,6 +68,12 @@ Openfoodnetwork::Application.routes.draw do
     resources :callbacks, only: [:index]
     resources :webhooks, only: [:create]
   end
+  
+  namespace :payment_gateways do
+    get "/paypal", to: "paypal#express", as: :paypal_express
+    get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
+    get "/paypal/cancel", to: "paypal#cancel", as: :cancel_paypal
+  end
 
   constraints SplitCheckoutConstraint.new do
     get '/checkout', to: 'split_checkout#edit'
@@ -81,7 +87,6 @@ Openfoodnetwork::Application.routes.draw do
   get '/checkout', to: 'checkout#edit'
   put '/checkout', to: 'checkout#update', as: :update_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
-  get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   get 'embedded_shopfront/shopfront_session', to: 'application#shopfront_session'
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'

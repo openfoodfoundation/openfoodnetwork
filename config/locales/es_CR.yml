@@ -3337,6 +3337,7 @@ es_CR:
           shipment_state: "Estado del envío"
           email: "Correo electrónico"
           total: "Total"
+          bill_address_lastname: "Nombre"
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"

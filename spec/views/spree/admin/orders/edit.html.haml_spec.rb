@@ -17,7 +17,7 @@ describe "spree/admin/orders/edit.html.haml" do
   before do
     controller.singleton_class.class_eval do
       def current_ability
-        Spree::Ability.new(Spree.user_class.new)
+        Spree::Ability.new(Spree::User.new)
       end
     end
 

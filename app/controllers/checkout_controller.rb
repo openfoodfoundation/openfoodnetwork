@@ -81,17 +81,21 @@ class CheckoutController < ::BaseController
   def load_order
     @order = current_order
 
-    redirect_to(main_app.shop_path) && return if redirect_to_shop?
+    if order_invalid_for_checkout?
+      Bugsnag.notify("Notice: invalid order loaded during Stripe processing", order: @order) if valid_payment_intent_provided?
+      redirect_to(main_app.shop_path) && return
+    end
+
     handle_invalid_stock && return unless valid_order_line_items?
+
+    return if valid_payment_intent_provided?
 
     before_address
     setup_for_current_state
   end
 
-  def redirect_to_shop?
-    !@order ||
-      !@order.checkout_allowed? ||
-      @order.completed?
+  def order_invalid_for_checkout?
+    !@order || @order.completed? || !@order.checkout_allowed?
   end
 
   def valid_order_line_items?
@@ -148,12 +152,14 @@ class CheckoutController < ::BaseController
   end
 
   def valid_payment_intent_provided?
-    return false unless params["payment_intent"]&.starts_with?("pi_")
+    @valid_payment_intent_provided ||= begin
+      return false unless params["payment_intent"]&.starts_with?("pi_")
 
-    last_payment = OrderPaymentFinder.new(@order).last_payment
-    @order.state == "payment" &&
-      last_payment&.state == "requires_authorization" &&
-      last_payment&.response_code == params["payment_intent"]
+      last_payment = OrderPaymentFinder.new(@order).last_payment
+      @order.state == "payment" &&
+        last_payment&.state == "requires_authorization" &&
+        last_payment&.response_code == params["payment_intent"]
+    end
   end
 
   def handle_redirect_from_stripe
@@ -172,6 +178,7 @@ class CheckoutController < ::BaseController
       if @order.state == "payment"
         return if redirect_to_payment_gateway
 
+        return action_failed if @order.errors.any?
         return action_failed unless @order.process_payments!
       end
 
@@ -184,12 +191,17 @@ class CheckoutController < ::BaseController
   end
 
   def redirect_to_payment_gateway
-    redirect_path = Checkout::PaypalRedirect.new(params).path
-    redirect_path = Checkout::StripeRedirect.new(params, @order).path if redirect_path.blank?
-    return if redirect_path.blank?
+    return unless selected_payment_method.external_gateway?
+    return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
-    render json: { path: redirect_path }, status: :ok
+    render json: { path: redirect_url }, status: :ok
     true
+  end
+
+  def selected_payment_method
+    @selected_payment_method ||= Spree::PaymentMethod.find(
+      params.dig(:order, :payments_attributes, 0, :payment_method_id)
+    )
   end
 
   def order_error
@@ -237,7 +249,7 @@ class CheckoutController < ::BaseController
   end
 
   def checkout_failed(error = RuntimeError.new(order_error))
-    Bugsnag.notify(error)
+    Bugsnag.notify(error, order: @order)
     flash[:error] = order_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end

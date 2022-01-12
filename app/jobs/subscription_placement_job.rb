@@ -4,8 +4,7 @@ require 'order_management/subscriptions/summarizer'
 
 class SubscriptionPlacementJob < ActiveJob::Base
   def perform
-    ids = proxy_orders.pluck(:id)
-    ProxyOrder.where(id: ids).each do |proxy_order|
+    proxy_orders.each do |proxy_order|
       place_order_for(proxy_order)
     end
 
@@ -23,6 +22,7 @@ class SubscriptionPlacementJob < ActiveJob::Base
     ProxyOrder.not_canceled.where(placed_at: nil)
       .joins(:order_cycle).merge(OrderCycle.active)
       .joins(:subscription).merge(Subscription.not_canceled.not_paused)
+      .order(:id)
   end
 
   def place_order_for(proxy_order)

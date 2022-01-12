@@ -1,0 +1,166 @@
+
+@mixin headingFont {
+  font-family: "Oswald", sans-serif;
+}
+
+@mixin bodyFont {
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+$headingFont: "Oswald";
+$body-font: "Roboto", Arial, sans-serif;
+
+body {
+  @include bodyFont;
+
+  font-weight: 400;
+}
+
+a {
+  color: $clr-brick;
+
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: $clr-brick-bright;
+  }
+}
+
+.text-vbig {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.text-big {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+small, .small {
+  font-size: 0.75rem;
+}
+
+.text-small {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-family: $body-font;
+
+  &, & * {
+    font-size: 0.875rem;
+  }
+}
+
+.text-normal {
+  font-weight: 400;
+  font-family: $body-font;
+}
+
+.text-skinny {
+  font-weight: 300;
+  font-family: $body-font;
+}
+
+.word-wrap {
+  word-wrap: break-word;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+.pre-line {
+  white-space: pre-line;
+}
+
+.light {
+  color: #999;
+  display: inline;
+}
+
+.center {
+  text-align: center;
+}
+
+.turquoise {
+  color: $clr-turquoise;
+}
+
+.brick {
+  color: $clr-brick;
+}
+
+.hr-light {
+  border-color: rgba(#ddd, 0.25);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @include headingFont;
+
+  padding: 0px;
+}
+
+.inline-header {
+  display: inline-block;
+  margin: 0px;
+}
+
+ul.bullet-list, ul.check-list {
+  margin: 0 0 0 1.25em !important;
+
+  li {
+    list-style: none;
+    line-height: 1.5;
+    height: inherit;
+  }
+
+  li:before {
+    content: "•";
+    font-family: "OFN";
+    margin: 0 0.25em 0 -1.25em;
+    display: inline-block;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+  }
+}
+
+ul.check-list {
+  li:before {
+    content: "";
+  }
+}
+
+.light-grey {
+  color: $min-accessible-grey;
+}
+
+.pad {
+  padding: 1em;
+}
+
+.pad-top {
+  padding-top: 1em;
+}
+
+.not-bold {
+  font-weight: normal;
+}
+
+.footer-pad {
+  padding-bottom: 100px;
+}
+
+// These selectors match the default Foundation selectors
+// For clean overriden magic
+table tr th, table tr td {
+  color: #333333;
+}
+
+table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
+  color: #333333;
+}
+
+span.email {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}

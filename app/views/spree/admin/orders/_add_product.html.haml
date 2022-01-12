@@ -7,8 +7,13 @@
     - if @order.canceled?
       = t(".cannot_add_item_to_canceled_order")
     - else
-      .field.twelve.columns.alpha{"data-hook" => "add_product_name"}
+      .field.nine.columns.alpha{"data-hook" => "add_product_name"}
         = label_tag :add_variant_id, Spree.t(:name_or_sku)
         = hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth"
+      .five.columns.omega
+        .field
+          = label_tag 'include_out_of_stock', t(".include_out_of_stock_variants")
+          %br/
+          = check_box_tag 'include_out_of_stock', '1'
 
   #stock_details

@@ -11,6 +11,6 @@
   - databaseurl = "#{admin_states_path(format: :js)}?country_id="
   %select#country.observe_field.select2.fullwidth{"data-base-url" => databaseurl, "data-update" => "#state-list"}
     = options_from_collection_for_select(@countries, :id, :name, @country.id)
-= image_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
+= image_pack_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
 #state-list
   = render partial: 'state_list'

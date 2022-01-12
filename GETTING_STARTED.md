@@ -2,6 +2,10 @@
 
 This is a general guide to setting up an Open Food Network **development environment on your local machine**. If you want to setup OFN on a server, please have a look at the [ofn-install deployment guide](https://github.com/openfoodfoundation/ofn-install/wiki).
 
+#### Still learning Ruby on Rails?
+
+Head to our wiki on [Learning Rails](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Learning-Rails) to find some good starting points.
+
 ### Requirements
 
 The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
@@ -81,7 +85,7 @@ The tests of all custom engines can be run with:
 
 Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop.
 
-Note: The time zone on your machine should match the one defined in `config/application.yml`.
+Note: The time zone on your machine should match the one defined in the `.env[.*]` file.
 
 Once [npm dependencies are installed][karma], AngularJS tests can be run with:
 

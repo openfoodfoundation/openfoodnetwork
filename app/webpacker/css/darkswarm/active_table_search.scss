@@ -1,0 +1,159 @@
+// Filter-box
+.row .row.filter-box {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row.filter-box:first-child {
+  border: 1px solid $clr-blue-light;
+
+  @include border-radius(0.25em);
+
+  margin-top: 2px;
+
+  @include breakpoint(phablet) {
+    margin-bottom: 1em;
+  }
+}
+
+.row.filter-box.clear-filters {
+  background: transparent;
+  margin-top: 1em;
+}
+
+products .filter-box {
+  background: $grey-050;
+}
+
+.filter-box {
+  background: rgba(245, 245, 245, 0.6);
+
+  .tdhead {
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.9rem;
+    color: $clr-blue;
+    border-bottom: 1px solid $clr-blue-light;
+  }
+
+  // OVERRIDES
+  [class*="block-grid-"] {
+    margin: 0 0 0.5rem 0;
+  }
+
+  [class*="block-grid-"] > li {
+    padding-bottom: 0.5rem !important;
+  }
+
+  li {
+    @include border-radius(12px);
+
+    padding-top: 0.5rem;
+    margin-bottom: 0.25rem;
+
+    &:hover, &:focus {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  li.active {
+    background: white;
+
+    @include box-shadow(inset 0 1px 3px 0 rgba(143, 48, 29, 0.5));
+  }
+
+  li.active a {
+    color: $clr-brick;
+
+    render-svg {
+      svg {
+        path {
+          fill: $clr-brick;
+        }
+      }
+    }
+
+    &:hover, &:focus {
+      border-color: $clr-brick-bright;
+    }
+  }
+
+  li a {
+    @include csstrans;
+
+    display: table;
+    table-layout: fixed;
+    text-transform: capitalize;
+    overflow: visible;
+    line-height: 1;
+    color: $med-drk-grey;
+    font-size: 0.875rem;
+
+    span {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left;
+    }
+
+    i {
+      display: block;
+      font-size: 1.5rem;
+      margin: 0 0.2rem 0 0;
+    }
+
+    &:hover, &:focus {
+      color: $clr-brick-bright;
+
+      render-svg {
+        svg {
+          path {
+            fill: $clr-brick-bright;
+          }
+        }
+      }
+    }
+
+    &:active, &.active {
+      color: $clr-brick;
+
+      render-svg {
+        svg {
+          path {
+            fill: $clr-brick;
+          }
+        }
+      }
+    }
+
+    render-svg {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0 0.2rem 0 0;
+      padding: 0;
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+
+        path {
+          fill: #666;
+        }
+      }
+    }
+  }
+}
+
+.button.filterbtn {
+  margin-bottom: 0 !important;
+  min-width: 160px;
+}
+
+#active-table-search {
+  position: relative;
+
+  @include placeholder(rgba(0, 0, 0, 0.4), #777);
+
+  input[type="text"], input[type="search"] {
+    @include big-input(rgba(0, 0, 0, 0.3), #777, $clr-brick);
+  }
+}

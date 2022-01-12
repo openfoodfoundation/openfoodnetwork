@@ -196,7 +196,6 @@ GEM
       rubyzip (>= 1.3.0, < 3)
     childprocess (4.1.0)
     chronic (0.10.2)
-    chunky_png (1.4.0)
     climate_control (0.2.0)
     cliver (0.3.2)
     cocaine (0.5.8)
@@ -211,22 +210,6 @@ GEM
     coffee-script-source (1.12.2)
     combine_pdf (1.0.21)
       ruby-rc4 (>= 0.1.5)
-    compass (1.0.3)
-      chunky_png (~> 1.2)
-      compass-core (~> 1.0.2)
-      compass-import-once (~> 1.0.5)
-      rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9)
-      sass (>= 3.3.13, < 3.5)
-    compass-core (1.0.3)
-      multi_json (~> 1.0)
-      sass (>= 3.3.0, < 3.5)
-    compass-import-once (1.0.5)
-      sass (>= 3.2, < 3.5)
-    compass-rails (4.0.0)
-      compass (~> 1.0.0)
-      sass-rails (< 5.1)
-      sprockets (< 4.0)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crack (0.4.5)
@@ -319,12 +302,6 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     foreman (0.87.2)
     formatador (0.2.5)
-    foundation-icons-sass-rails (3.0.0)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
-    foundation-rails (5.5.2.1)
-      railties (>= 3.1.0)
-      sass (>= 3.3.0, < 3.5)
     fugit (1.4.5)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -732,7 +709,6 @@ DEPENDENCIES
   catalog!
   coffee-rails (~> 5.0.0)
   combine_pdf
-  compass-rails
   cuprite
   custom_error_message!
   database_cleaner
@@ -752,8 +728,6 @@ DEPENDENCIES
   flipper-ui
   fog-aws (~> 2.0)
   foreman
-  foundation-icons-sass-rails
-  foundation-rails (= 5.5.2.1)
   fuubar (~> 2.5.1)
   geocoder
   gmaps4rails
@@ -807,7 +781,6 @@ DEPENDENCIES
   rswag
   rubocop
   rubocop-rails
-  sass-rails (< 5.1.0)
   sd_notify
   select2-rails!
   selenium-webdriver

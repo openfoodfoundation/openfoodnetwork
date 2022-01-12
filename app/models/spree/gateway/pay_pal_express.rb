@@ -13,6 +13,15 @@ module Spree
       preference :landing_page, :string, default: 'Billing'
       preference :logourl, :string, default: ''
 
+      def external_gateway?
+        true
+      end
+
+      def external_payment_url(_options)
+        Rails.application.routes.url_helpers.
+          payment_gateways_paypal_express_path(payment_method_id: id)
+      end
+
       def supports?(_source)
         true
       end

@@ -286,7 +286,7 @@ describe Spree::Payment do
         # Regression test for #2119
         context "when payment is completed" do
           it "should do nothing" do
-            payment = build_stubbed(:payment, state: 'completed')
+            payment = build_stubbed(:payment, :completed)
             expect(payment).to_not receive(:complete)
             expect(payment.payment_method).to_not receive(:capture)
             expect(payment.log_entries).to_not receive(:create)
@@ -354,6 +354,22 @@ describe Spree::Payment do
             payment = build_stubbed(:payment, payment_method: gateway, state: 'void')
             expect(payment.payment_method).to_not receive(:void)
             payment.void_transaction!
+          end
+        end
+
+        context "if payment has any adjustment" do
+          let!(:order) { create(:order) }
+          let!(:payment_method) { create(:payment_method, calculator: ::Calculator::FlatRate.new(preferred_amount: 10)) }
+
+          it "should create another adjustment and revoke the previous one" do
+            payment = create(:payment, order: order, payment_method: payment_method)
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
+
+            payment.void_transaction!
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(0)
+
+            payment = create(:payment, order: order, payment_method: payment_method)
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
           end
         end
       end
@@ -553,7 +569,7 @@ describe Spree::Payment do
     context "#save" do
       context "completed payments" do
         it "updates order payment total" do
-          payment = create(:payment, amount: 100, order: order, state: "completed")
+          payment = create(:payment, :completed, amount: 100, order: order)
           expect(order.payment_total).to eq payment.amount
         end
       end
@@ -567,7 +583,7 @@ describe Spree::Payment do
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, amount: 100, order: order, state: 'completed') }
+        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
 
         it 'updates order payment total' do
           payment.void
@@ -656,7 +672,7 @@ describe Spree::Payment do
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, amount: 100, order: order, state: 'completed') }
+        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
 
         it 'updates order payment total' do
           payment.void
@@ -904,8 +920,8 @@ describe Spree::Payment do
       context "to Stripe payments" do
         let(:shop) { create(:enterprise) }
         let(:payment_method) {
-          create(:stripe_connect_payment_method, distributor_ids: [create(:distributor_enterprise).id],
-                                                 preferred_enterprise_id: shop.id)
+          create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
+                                             preferred_enterprise_id: shop.id)
         }
         let(:payment) {
           create(:payment, order: order, payment_method: payment_method, amount: order.total)
@@ -991,6 +1007,15 @@ describe Spree::Payment do
     it "removes the cvv_response_message" do
       payment.clear_authorization_url
       expect(payment.cvv_response_message).to eq(nil)
+    end
+  end
+
+  describe "#complete" do
+    let(:payment) { build(:payment, state: "processing") }
+
+    it "sets :captured_at to the current time" do
+      payment.complete
+      expect(payment.captured_at).to be_present
     end
   end
 end

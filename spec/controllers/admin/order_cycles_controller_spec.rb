@@ -216,6 +216,17 @@ module Admin
           spree_put :update, params.
             merge(order_cycle: { preferred_product_selection_from_coordinator_inventory_only: true })
         end
+
+        it "can update preference automatic_notifications" do
+          expect(OrderCycleForm).to receive(:new).
+            with(order_cycle,
+                 { "automatic_notifications" => true },
+                 anything) { form_mock }
+          allow(form_mock).to receive(:save) { true }
+
+          spree_put :update, params.
+            merge(order_cycle: { automatic_notifications: true })
+        end
       end
     end
 

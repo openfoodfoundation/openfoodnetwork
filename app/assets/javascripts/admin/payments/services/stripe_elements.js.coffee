@@ -1,4 +1,4 @@
-angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, StatusMessage) ->
+angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, StatusMessage, $timeout) ->
   new class AdminStripeElements
 
     # These are both set from the AdminStripeElements directive
@@ -13,11 +13,11 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          StatusMessage.display 'error', response.error.message
+          $timeout -> StatusMessage.display 'error', response.error.message
           console.error(JSON.stringify(response.error))
         else
           secrets.token = response.token.id
-          secrets.cc_type = @mapTokenApiCardBrand(response.token.card.brand)
+          secrets.cc_type = response.token.card.brand
           secrets.card = response.token.card
           submit()
 
@@ -29,31 +29,13 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
 
       @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
-          StatusMessage.display 'error', response.error.message
+          $timeout -> StatusMessage.display 'error', response.error.message
           console.error(JSON.stringify(response.error))
         else
           secrets.token = response.paymentMethod.id
-          secrets.cc_type = @mapPaymentMethodsApiCardBrand(response.paymentMethod.card.brand)
+          secrets.cc_type = response.paymentMethod.card.brand
           secrets.card = response.paymentMethod.card
           submit()
-
-    # Maps the brand returned by Stripe's tokenAPI to that required by activemerchant
-    mapTokenApiCardBrand: (cardBrand) ->
-      switch cardBrand
-        when 'MasterCard' then return 'master'
-        when 'Visa' then return 'visa'
-        when 'American Express' then return 'american_express'
-        when 'Discover' then return 'discover'
-        when 'JCB' then return 'jcb'
-        when 'Diners Club' then return 'diners_club'
-
-    # Maps the brand returned by Stripe's paymentMethodsAPI to that required by activemerchant
-    mapPaymentMethodsApiCardBrand: (cardBrand) ->
-      switch cardBrand
-        when 'mastercard' then return 'master'
-        when 'amex' then return 'american_express'
-        when 'diners' then return 'diners_club'
-        else return cardBrand # a few brands are equal, for example, visa
 
     # It doesn't matter if any of these are nil, all are optional.
     makeCardData: (secrets) ->

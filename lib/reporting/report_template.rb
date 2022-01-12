@@ -31,13 +31,23 @@ module Reporting
       @renderer ||= ReportRenderer.new(self)
     end
 
-    def scoped_orders_relation
+    def ransacked_orders_relation
       visible_orders_relation.ransack(ransack_params).result
+    end
+
+    def ransacked_line_items_relation
+      visible_line_items_relation.ransack(ransack_params).result
     end
 
     def visible_orders_relation
       ::Permissions::Order.new(current_user).
         visible_orders.complete.not_state(:canceled).
+        select(:id).distinct
+    end
+
+    def visible_line_items_relation
+      ::Permissions::Order.new(current_user).
+        visible_line_items.
         select(:id).distinct
     end
 

@@ -1,0 +1,182 @@
+#producer-signup.pane, #shops-signup.pane {
+  @include tiledPane;
+
+  h2 {
+    margin-bottom: 2rem;
+    font-size: 4.4rem;
+    font-weight: 300;
+  }
+}
+
+#producer-details.pane, #hub-details.pane, .groups-details.pane {
+  background-color: lighten($ofn-grey, 44%);
+}
+
+#producer-case-studies, #shops-case-studies {
+  @include hubsbg;
+
+  padding-top: 100px;
+  padding-bottom: 100px;
+  -webkit-filter: brightness(1.1);
+  filter: brightness(1.1);
+
+  h2 {
+    color: $brand-colour;
+    font-size: 3rem;
+  }
+
+  .case-study {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+
+    .case-study-img {
+      background-color: white;
+      margin-bottom: 1rem;
+
+      @media all and (min-width: 768px) {
+        float: right;
+        margin-left: 2rem;
+      }
+    }
+
+    @media all and (min-width: 640px) {
+      text-align: left;
+    }
+
+    h4, a {
+      color: $brand-colour;
+    }
+
+    a {
+      &, & * {
+        @include csstrans;
+
+        opacity: 1;
+      }
+
+      &:hover, &:focus, &:active {
+        &, & * {
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}
+
+// Signup tables \\
+table.signup-table {
+  width: 100%;
+  border: 0;
+}
+
+table.signup-table.hubs-table, table.signup-table.producers-table {
+  tr {
+    td {
+      background-color: white;
+      border-bottom: 1px solid rgba($ofn-grey, 0.3);
+    }
+
+    td:nth-child(2) {
+      background-color: lighten($ofn-grey, 46%);
+    }
+
+    td:nth-child(3) {
+      background-color: lighten($ofn-grey, 41%);
+    }
+
+    td:last-child {
+      &, & i {
+        color: $brand-colour;
+      }
+
+      border-bottom: 1px solid rgba($brand-colour, 0.3);
+      background-color: lighten($brand-colour, 48%);
+    }
+  }
+
+  thead {
+    background-color: transparent;
+
+    tr {
+      td {
+        border-bottom: 1px solid transparent;
+      }
+
+      td:nth-child(1) {
+        background-color: transparent;
+      }
+
+      td:nth-child(2) {
+        background: lighten($ofn-grey, 44%);
+      }
+
+      td:nth-child(3) {
+        background: lighten($ofn-grey, 38%);
+      }
+
+      td:last-child {
+        &, & * {
+          color: white;
+        }
+
+        background: $brand-colour;
+      }
+    }
+
+    h5 {
+      text-transform: uppercase;
+      color: $ofn-grey;
+      font-weight: 400;
+      font-size: 0.875rem;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  tfoot {
+    background-color: transparent;
+
+    tr {
+      td {
+        border-bottom: 1px solid transparent;
+      }
+
+      td:nth-child(1) {
+        background-color: transparent;
+      }
+
+      td:nth-child(2) {
+        background: lighten($ofn-grey, 44%);
+      }
+
+      td:nth-child(3) {
+        background: lighten($ofn-grey, 38%);
+      }
+
+      td:last-child {
+        &, & * {
+          color: white;
+        }
+
+        background: $brand-colour;
+      }
+    }
+
+    h2 {
+      .text-small {
+        text-transform: uppercase;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+
+        @include headingFont;
+      }
+    }
+  }
+}
+
+// Detail \\
+.enterprise-type-flowchart {
+  float: right;
+}

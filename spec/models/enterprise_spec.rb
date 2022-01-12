@@ -11,7 +11,7 @@ describe Enterprise do
       it "sends a welcome email" do
         expect do
           create(:enterprise, owner: user)
-        end.to enqueue_job ActionMailer::DeliveryJob
+        end.to enqueue_job ActionMailer::MailDeliveryJob
 
         expect(enqueued_jobs.last.to_s).to match "welcome"
       end
@@ -561,13 +561,20 @@ describe Enterprise do
       build_stubbed(:distributor_enterprise,
                     website: "http://www.google.com",
                     facebook: "www.facebook.com/roger",
-                    linkedin: "https://linkedin.com")
+                    linkedin: "https://linkedin.com",
+                    instagram: "https://www.instagram.com/@insgram_user",
+                    twitter: "www.twitter.com/@twitter_user")
     }
 
     it "strips http from url fields" do
       expect(distributor.website).to eq("www.google.com")
       expect(distributor.facebook).to eq("www.facebook.com/roger")
       expect(distributor.linkedin).to eq("linkedin.com")
+    end
+
+    it "strips @, http and domain address from url fields" do
+      expect(distributor.instagram).to eq("insgram_user")
+      expect(distributor.twitter).to eq("twitter_user")
     end
   end
 

@@ -4,16 +4,16 @@ require 'spec_helper'
 
 module Spree
   describe CreditCard do
-    describe "original specs from Spree" do
-      let(:valid_credit_card_attributes) {
-        {
-          number: '4111111111111111',
-          verification_value: '123',
-          month: 12,
-          year: Time.zone.now.year + 1
-        }
+    let(:valid_credit_card_attributes) {
+      {
+        number: '4111111111111111',
+        verification_value: '123',
+        month: 12,
+        year: Time.zone.now.year + 1
       }
+    }
 
+    describe "original specs from Spree" do
       def self.payment_states
         Spree::Payment.state_machine.states.keys
       end
@@ -151,25 +151,6 @@ module Spree
         end
       end
 
-      context "#cc_type=" do
-        it "converts between the different types" do
-          credit_card.cc_type = 'mastercard'
-          expect(credit_card.cc_type).to eq 'master'
-
-          credit_card.cc_type = 'maestro'
-          expect(credit_card.cc_type).to eq 'master'
-
-          credit_card.cc_type = 'amex'
-          expect(credit_card.cc_type).to eq 'american_express'
-
-          credit_card.cc_type = 'dinersclub'
-          expect(credit_card.cc_type).to eq 'diners_club'
-
-          credit_card.cc_type = 'some_outlandish_cc_type'
-          expect(credit_card.cc_type).to eq 'some_outlandish_cc_type'
-        end
-      end
-
       context "#associations" do
         it "should be able to access its payments" do
           expect { credit_card.payments.to_a }.not_to raise_error
@@ -194,6 +175,42 @@ module Spree
           expect(am_card.first_name).to eq "Bob"
           am_card.last_name = "Boblaw"
           expect(am_card.verification_value).to eq 123
+        end
+      end
+    end
+
+    describe "formatting the card type for ActiveMerchant" do
+      context "#cc_type=" do
+        let(:credit_card) { build(:credit_card) }
+
+        it "converts the card type format" do
+          credit_card.cc_type = 'mastercard'
+          expect(credit_card.cc_type).to eq 'master'
+
+          credit_card.cc_type = 'maestro'
+          expect(credit_card.cc_type).to eq 'master'
+
+          credit_card.cc_type = 'amex'
+          expect(credit_card.cc_type).to eq 'american_express'
+
+          credit_card.cc_type = 'dinersclub'
+          expect(credit_card.cc_type).to eq 'diners_club'
+
+          credit_card.cc_type = 'some_outlandish_cc_type'
+          expect(credit_card.cc_type).to eq 'some_outlandish_cc_type'
+        end
+      end
+
+      context "on save" do
+        it "converts the card type format" do
+          expect_any_instance_of(Spree::CreditCard).to receive(:reformat_card_type!).
+            at_least(:once).and_call_original
+
+          credit_card = Spree::CreditCard.create(
+            valid_credit_card_attributes.merge(cc_type: "Master Card")
+          )
+
+          expect(credit_card.cc_type).to eq "master"
         end
       end
     end

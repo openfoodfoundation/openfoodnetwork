@@ -1,0 +1,78 @@
+.fat-taxons, .fat-properties {
+  display: inline-block;
+  line-height: 1;
+  margin-right: 0.5rem;
+  margin-bottom: 0.35rem;
+  text-transform: capitalize;
+  font-weight: 300;
+  font-size: 0.875rem;
+  background: rgba(215, 215, 215, 0.5);
+  color: #555;
+
+  @include border-radius(3px);
+
+  padding: 0.25rem 0.5rem 0.35rem 0.35rem;
+
+  render-svg {
+    svg {
+      width: 16px;
+      height: 16px;
+
+      path {
+        fill: #555;
+      }
+    }
+  }
+
+  &, & * {
+    display: inline-block;
+    color: #555;
+  }
+}
+
+.inactive {
+  .fat-taxons {
+    render-svg {}
+
+    svg {
+      path {
+        fill: $disabled-dark;
+      }
+    }
+  }
+}
+
+.product-header {
+  render-svg {
+    svg {
+      width: 32px;
+      height: 32px;
+
+      path {
+        fill: black;
+      }
+    }
+  }
+
+  @include breakpoint(phablet) {
+    render-svg {
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+.summary-header {
+  render-svg {
+    svg {
+      width: 18px;
+      height: 18px;
+
+      path {
+        fill: $clr-brick;
+      }
+    }
+  }
+}

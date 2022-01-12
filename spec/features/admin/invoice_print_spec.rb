@@ -23,6 +23,10 @@ describe '
                                                 payment_state: 'balance_due')
   end
 
+  before do
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+  end
+
   describe "that contains right Payment Description at Checkout information" do
     let!(:payment_method1) do
       create(:stripe_sca_payment_method, distributors: [distributor], description: "description1")
@@ -41,7 +45,7 @@ describe '
 
     context "with one payment" do
       let!(:payment1) do
-        create(:payment, order: order, state: 'completed', payment_method: payment_method1)
+        create(:payment, :completed, order: order, payment_method: payment_method1)
       end
       before do
         order.save!
@@ -58,8 +62,9 @@ describe '
     context "with two payments, and one that failed" do
       before do
         order.update payments: []
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method1, created_at: 1.day.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method1,
+                                                       created_at: 1.day.ago)
         order.payments << create(:payment, order: order, state: 'failed',
                                            payment_method: payment_method2, created_at: 2.days.ago)
         order.save!
@@ -76,10 +81,12 @@ describe '
     context "with two completed payments" do
       before do
         order.update payments: []
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method1, created_at: 2.days.ago)
-        order.payments << create(:payment, order: order, state: 'completed',
-                                           payment_method: payment_method2, created_at: 1.day.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method1,
+                                                       created_at: 2.days.ago)
+        order.payments << create(:payment, :completed, order: order,
+                                                       payment_method: payment_method2,
+                                                       created_at: 1.day.ago)
         order.save!
       end
 

@@ -4,6 +4,7 @@ pt:
     attributes:
       spree/user:
         password: "Palavra-passe"
+        password_confirmation: "Confirmação de Palavra-passe"
         reset_password_token: Redefinir palavra-passe
       enterprise_fee:
         fee_type: Tipo de Taxa
@@ -40,6 +41,8 @@ pt:
           attributes:
             email:
               taken: "Já existe uma conta associada a este email. Por favor faça login ou defina uma nova palavra-passe."
+            reset_password_token:
+              invalid: é inválido
         spree/order:
           no_card: Não há cartões autorizados disponíveis para serem cobrados
         spree/credit_card:
@@ -55,6 +58,18 @@ pt:
             using_producer_stock_settings_but_count_on_hand_set: "deve ser vazio dado estar a usar as configurações do produtor"
             on_demand_but_count_on_hand_set: "deve ser vazio dado estar sob encomenda"
             limited_stock_but_no_count_on_hand: "deve ser definido dado não estar sob encomenda"
+  stripe:
+    error_code:
+      incorrect_number: "O número do cartão está incorreto."
+      invalid_number: "O número do cartão não é um número de cartão de crédito válido."
+      invalid_expiry_month: "O mês de validade do cartão é inválido."
+      invalid_expiry_year: "O ano de validade do cartão é inválido."
+      invalid_cvc: "O código de segurança do cartão é inválido."
+      expired_card: "O cartão expirou."
+      incorrect_cvc: "O código de segurança do cartão está incorreto."
+      incorrect_zip: "O código postal do cartão falhou na validação."
+      card_declined: "O cartão foi recusado."
+      processing_error: "Ocorreu um erro ao processar o cartão."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -88,6 +103,10 @@ pt:
               no_default_card: "^Nenhum cartão por defeito para este/a consumidor/a"
             shipping_method:
               not_available_to_shop: "não está disponível para %{shop}"
+  card_details: "Detalhes do cartão"
+  card_type: "Tipo de cartão"
+  cardholder_name: "Nome do titular do cartão"
+  community_forum_url: "Endereço do fórum da comunidade"
   customer_instructions: "Instruções para o consumidor"
   devise:
     confirmations:
@@ -118,9 +137,21 @@ pt:
         updated_not_active: "A sua palavra-passe foi redefinida, mas o seu email ainda não foi confirmado."
         updated: "A sua password foi mudada com sucesso."
         send_instructions: "Daqui a uns minutos irá receber um email com instruções sobre como confirmar a sua conta."
+  home_page_alert_html: "HTML de alerta da página"
+  item_description: "Descrição do item"
+  menu_1_icon_name: "Nome do ícone do Menu 1"
+  menu_2_icon_name: "Nome do ícone do Menu 2"
+  menu_3_icon_name: "Nome do ícone do Menu 3"
+  menu_4_icon_name: "Nome do ícone do Menu 4"
+  menu_5_icon_name: "Nome do ícone do Menu 5"
+  menu_6_icon_name: "Nome do ícone do Menu 6"
+  menu_7_icon_name: "Nome do ícone do Menu 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "CÓPIA DE%{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluído no Preço"
+  open_street_map_enabled: "Open Street Map ativado"
   sku: "SKU"
   tax_rate: "Taxa de imposto"
   validators:
@@ -660,7 +691,13 @@ pt:
           remove_terms_and_conditions: "Remover ficheiro"
           uploaded_on: "actualizado em"
         business_address:
+          company_legal_name: Nome Legal da Empresa
+          company_placeholder: Exemplo Lda.
+          address1: Endereço legal
+          address1_placeholder: Rua de Cima 123
           address2: Morada (cont.)
+          legal_phone_number: Telefone legal
+          phone_placeholder: "91 234 5678"
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
@@ -728,6 +765,7 @@ pt:
           ofn_uid_tip: O número de identificação serve para identificar a organização na Open Food Network.
         shipping_methods:
           name: "Nome"
+          applies: "Activo?"
           manage: "Gerir Métodos de Envio"
           create_button: "Criar Nova Forma de Envio"
           create_one_button: "Criar um agora"
@@ -1188,11 +1226,19 @@ pt:
       powered_by:
         open_food_network: "Open Food Network"
     menu:
+      cart:
+        cart: "Carrinho"
       cart_sidebar:
         checkout: "Finalizar compra"
+        edit_cart: "Editar carrinho"
+        items_in_cart_singular: "%{num} item no seu carrinho"
+        items_in_cart_plural: "%{num} items no seu carrinho"
         close: "Fechar"
+        cart_empty: "O seu carrinho está vazio"
       signed_in:
         profile: "Perfil"
+      mobile_menu:
+        cart: "Carrinho"
     register_call:
       selling_on_ofn: "Tem interesse em participar na Open Food Network?"
       register: "Registe-se aqui"
@@ -1461,6 +1507,12 @@ pt:
           label: País
       delivery_address:
         title: Morada de entrega
+    step2:
+      form:
+        card_month:
+          label: Mês
+        card_year:
+          label: Ano
     step3:
       your_details:
         title: Os seus detalhes
@@ -2600,6 +2652,8 @@ pt:
     shopfront:
       variant:
         add_to_cart: "Adicionar"
+        in_cart: "no carrinho"
+        quantity_in_cart: "%{quantity} no carrinho"
       bulk_buy_modal:
         max_quantity: "Quantidade máxima"
     variants:
@@ -3250,6 +3304,7 @@ pt:
           shipment_state: "Estado do envio"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Nome"
       general_settings:
         edit:
           legal_settings: "Configurações Legais"

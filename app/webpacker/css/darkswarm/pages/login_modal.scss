@@ -1,0 +1,36 @@
+// Styling for login modal to style tabs
+.reveal-modal.login-modal {
+  border-bottom-color: $modal-background-color;
+}
+
+.login-modal {
+  background: $modal-background-color;
+
+  .tabs-content {
+    background: $modal-content-background-color;
+    padding-top: 10px;
+  }
+
+  .alert-box a {
+    color: $modal-alert-link-color;
+    text-decoration: underline;
+
+    &:hover {
+      color: $modal-alert-link-hover-color;
+      text-decoration: underline;
+    }
+  }
+
+  @media only screen and (max-width: 640px) {
+    .tabbable {
+      margin: 0 15px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  // make sure styling doesn't get messed up if resizing down and back up
+  .collapsible-menus-container {
+    min-height: 250px;
+  }
+}

@@ -34,8 +34,6 @@ jobs:
           - "spec/controllers"
           - "spec/models"
           - "spec/features/admin/[a-o0-9]*_spec.rb"
-          - "spec/features/admin/[p-z]*_spec.rb"
-          - "spec/features/consumer"
           - "spec/lib"
           - "spec/migrations"
           - "spec/serializers"
@@ -58,9 +56,6 @@ jobs:
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
 
       - name: Set up database
         run: |
@@ -108,9 +103,6 @@ jobs:
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Set up application.yml
-        run: cp config/application.yml.example config/application.yml
 
       - name: Set up database
         run: |

@@ -1,0 +1,126 @@
+.expanding-sidebar.cart-sidebar {
+  .background {
+    z-index: 150;
+  }
+
+  .sidebar {
+    padding: $topbar-height 0 0;
+    background-color: $white;
+    z-index: 160;
+
+    @include breakpoint(desktop) {
+      padding: $mobile-nav-height 0 0;
+    }
+  }
+
+  .cart-header {
+    background-color: $white;
+    border-bottom: 1px solid $grey-100;
+    min-height: 3.5em;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+
+    .title {
+      color: $grey-800;
+      margin: 0;
+    }
+
+    .close {
+      color: $grey-500;
+      float: right;
+
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .cart-content {
+    margin-bottom: $sidebar-footer-height + 2em;
+
+    .cart-empty {
+      text-align: center;
+      padding-top: 10em;
+      width: 100%;
+
+      p {
+        font-size: 1.5em;
+      }
+    }
+
+    .unit-price {
+      justify-content: flex-end;
+    }
+
+  }
+
+  .go-shopping {
+    display: none;
+    padding: 0 1.5em;
+
+    @include breakpoint(mobile) {
+      display: inline-block;
+    }
+  }
+
+  table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    margin: 0;
+
+    .product-cart {
+      background-color: $white;
+
+      td {
+        border-bottom: 1px solid $grey-100;
+        padding: 0.75em 1em 0.5em;
+        vertical-align: top;
+
+        &.image {
+          width: 42px;
+          padding: 0.5em 0 0.5em 1em;
+        }
+
+        span,
+        .total-price {
+          color: $grey-800;
+          font-size: 16px;
+          line-height: 1.4em;
+        }
+
+        img {
+          max-width: 56px;
+          max-height: 56px;
+        }
+
+        .options-text {
+          color: $grey-500;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .cart-total {
+    color: $white;
+    text-align: center;
+    margin: -0.5em 0 0.75em;
+  }
+
+  .sidebar,
+  .sidebar-footer {
+    width: 375px;
+    margin-right: -375px;
+
+    @include breakpoint(mobile) {
+      width: 100%;
+      margin-right: -100%;
+    }
+  }
+
+  .sidebar-footer {
+    z-index: 170;
+  }
+}

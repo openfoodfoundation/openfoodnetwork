@@ -1577,6 +1577,14 @@ ca:
           label: País
       delivery_address:
         title: Adreça de lliurament
+    step2:
+      form:
+        card_number:
+          label: Número de targeta
+        card_month:
+          label: Mes
+        card_year:
+          label: Any
     step3:
       your_details:
         title: Els teus detalls
@@ -3632,6 +3640,7 @@ ca:
           shipment_state: "Estat de la Tramesa"
           email: "Correu electrònic"
           total: "Total"
+          bill_address_lastname: "Nom"
       general_settings:
         edit:
           legal_settings: "Paràmetres legals"

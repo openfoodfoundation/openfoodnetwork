@@ -20,7 +20,7 @@ module Spree
         def update
           if @order.update(order_params)
             if params[:guest_checkout] == "false"
-              @order.associate_user!(Spree.user_class.find_by(email: @order.email))
+              @order.associate_user!(Spree::User.find_by(email: @order.email))
             end
 
             refresh_shipment_rates
@@ -75,14 +75,10 @@ module Spree
         end
 
         def check_authorization
-          load_order
-          session[:access_token] ||= params[:token]
-
-          resource = @order
           action = params[:action].to_sym
           action = :edit if action == :show # show route renders :edit for this controller
 
-          authorize! action, resource, session[:access_token]
+          authorize! action, @order
         end
 
         def set_guest_checkout_status

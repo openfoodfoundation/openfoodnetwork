@@ -13,7 +13,7 @@ describe Spree::TestMailer do
   end
 
   it "confirm_email accepts a user id as an alternative to a User object" do
-    expect(Spree.user_class).to receive(:find).with(user.id).and_return(user)
+    expect(Spree::User).to receive(:find).with(user.id).and_return(user)
     expect {
       Spree::TestMailer.test_email(user.id).deliver_now
     }.to_not raise_error

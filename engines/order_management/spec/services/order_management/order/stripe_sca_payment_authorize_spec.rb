@@ -70,15 +70,6 @@ module OrderManagement
                 }
               end
 
-              it "sends an email requesting authorization and an email notifying the shop owner when requested" do
-                payment_authorize.extend(OrderManagement::Order::SendAuthorizationEmails).call!
-
-                expect(order.errors.size).to eq 0
-                expect(PaymentMailer).to have_received(:authorize_payment)
-                expect(PaymentMailer).to have_received(:authorization_required)
-                expect(mail_mock).to have_received(:deliver_now).twice
-              end
-
               it "doesn't send emails by default" do
                 payment_authorize.call!
 
@@ -86,6 +77,39 @@ module OrderManagement
                 expect(PaymentMailer).to_not have_received(:authorize_payment)
                 expect(PaymentMailer).to_not have_received(:authorization_required)
                 expect(mail_mock).to_not have_received(:deliver_now)
+              end
+
+              context "when the processing is off-session (via backoffice/subscription)" do
+                let(:payment_authorize) {
+                  OrderManagement::Order::StripeScaPaymentAuthorize.new(order, off_session: true)
+                }
+
+                it "notifies the customer" do
+                  payment_authorize.call!
+
+                  expect(order.errors.size).to eq 0
+                  expect(PaymentMailer).to have_received(:authorize_payment)
+                  expect(mail_mock).to have_received(:deliver_now).once
+                end
+
+                context "with an additional notification for the hub manager" do
+                  let(:payment_authorize) {
+                    OrderManagement::Order::StripeScaPaymentAuthorize.new(
+                      order,
+                      off_session: true,
+                      notify_hub: true
+                    )
+                  }
+
+                  it "notifies both the customer and the hub" do
+                    payment_authorize.call!
+
+                    expect(order.errors.size).to eq 0
+                    expect(PaymentMailer).to have_received(:authorize_payment)
+                    expect(PaymentMailer).to have_received(:authorization_required)
+                    expect(mail_mock).to have_received(:deliver_now).twice
+                  end
+                end
               end
             end
           end

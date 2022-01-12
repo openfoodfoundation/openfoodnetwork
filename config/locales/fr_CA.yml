@@ -58,6 +58,20 @@ fr_CA:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+  stripe:
+    error_code:
+      incorrect_number: "e numéro de carte bancaire est incorrect."
+      invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      invalid_expiry_month: "Le mois d'expiration de la carte bancaire est erroné."
+      invalid_expiry_year: "L'année d'expiration de la carte bancaire est erronée."
+      invalid_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      expired_card: "La carte bancaire a expiré."
+      incorrect_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      incorrect_zip: "Le code postal de la carte bancaire est erroné."
+      card_declined: "La carte bancaire a été refusée."
+      missing: "Il n'y a pas de carte bancaire liée à cet acheteur."
+      processing_error: "Une erreur est survenue durant le traitement du paiement."
+      rate_limit: "Une erreur est survenue suite à un grand nombre de requête quasi-simultanée sur notre API. Veuillez contacter notre support si vous observez cette erreur trop souvent."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -239,6 +253,7 @@ fr_CA:
   search_by_name: Recherche par nom ou ville...
   producers_join: Les producteurs et autres hubs basés au Québec sont invités à rejoindre Open Food Network Canada.
   charges_sales_tax: Soumis aux taxes?
+  business_address: "Adresse du siège social"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -718,8 +733,15 @@ fr_CA:
           terms_and_conditions: "CGU & CGV"
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
+          reset_form: "Vider les champs"
         business_address:
+          company_legal_name: Raison sociale
+          company_placeholder: Indiquez ici le nom légal de votre entreprise
+          address1: Adresse du siège social
+          address1_placeholder: 123, rue de la Chèvre
           address2: Adresse (suite)
+          legal_phone_number: Numéro de téléphone
+          phone_placeholder: "98 123 4565"
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
@@ -965,6 +987,8 @@ fr_CA:
         back_to_list: "Retour à la liste"
         save_and_back_to_list: "Sauvegarder et suivant"
         choose_products_from: "Choisir produits depuis :"
+        re_notify_producers: Notifier les producteurs
+        notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
         supplier: "Fournisseur"
@@ -1005,6 +1029,8 @@ fr_CA:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
+        automatic_notifications: Notifications automatiques
+        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez restreindre les produits entrants et sortants uniquement au catalogue boutique de %{inventory}
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement le catalogue boutique du coordinateur
@@ -1131,6 +1157,11 @@ fr_CA:
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      errors:
+        no_report_type: "Merci de sélectionner un type de rapport"
+        report_not_found: "Le rapport n'a pas été trouvé"
+        missing_ransack_params: "Veuillez renseigner un filtre ou une sélection de dates"
+      hidden_field: "< Masqué >"
       summary_row:
         total: "Total"
       table:
@@ -1146,6 +1177,13 @@ fr_CA:
           quantity: "Quantité"
           is_temperature_controlled: "Temp Contrôlée ?"
           temp_controlled: "Temp Contrôlée ?"
+      rendering_options:
+        generate_report: "Générer le rapport:"
+        on_screen: "A l'écran"
+        csv_spreadsheet: "CSV"
+        excel_spreadsheet: "Excel"
+        openoffice_spreadsheet: "OpenOffice"
+        hide_summary_rows: "Masquer les lignes de totaux"
       packing:
         name: "Rapports de préparation des paniers"
         customer_report: "Préparation des commandes par Acheteur"
@@ -1558,6 +1596,7 @@ fr_CA:
   split_checkout:
     your_details_without_number: Vos informations
     payment_method_without_number: Méthode de paiement
+    order_summary_without_number: Récapitulatif de la commande
     step1:
       your_details:
         title: Vos informations
@@ -1599,6 +1638,21 @@ fr_CA:
     step2:
       payment_method:
         title: Méthode de paiement
+      form:
+        card_number:
+          label: Numéro de carte
+          placeholder: par ex. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
+        stripe:
+          use_saved_card: Utilisez une carte enregistrée
+          use_new_card: Entrez les informations de votre carte
+          save_card: Enregistrez votre carte pour vos prochains achats
+          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
       explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
@@ -2589,6 +2643,7 @@ fr_CA:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    default_card_voids_auth: Modifier votre carte de paiement par défaut va supprimer les autorisations attribuées à certaines boutiques. Vous pouvez les remettre en place dans les paramètres de votre compte, une fois la carte par défaut modifiée. Souhaitez-vous modifier la carte par défaut ?
     cart:
       add_to_cart_failed: >
           Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
@@ -2627,6 +2682,8 @@ fr_CA:
           title: "Mise à jour des CGU & CGV"
           message_1: "Vos acheteurs devront valider vos CGV lors de leur commande."
           message_2: "Si vos acheteurs bénéficient de la fonctionnalité d'abonnement, vous devez pour l'instant leur communiquer vos CGV (et leurs mises à jour) par email. N'hésitez pas à nous contacter pour toute question."
+        business_address_info:
+          message: "Ces informations légales seront utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
       panels:
         save: Enregistrer
         saved: Enregistré
@@ -3423,6 +3480,7 @@ fr_CA:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée."
+          include_out_of_stock_variants: "Inclure les variantes sans stock"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -3579,6 +3637,7 @@ fr_CA:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
+        paperclip_image_error: "Erreur pour le ficher '%{attachment_file_name}' - veuillez vérifier la source du fichier."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3691,6 +3750,7 @@ fr_CA:
           shipment_state: "Statut de la livraison"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Nom"
       general_settings:
         edit:
           legal_settings: "Configuration légales"
@@ -3795,7 +3855,7 @@ fr_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande de %{distributor} a été envoyéeonfirmation du mot de passe."
+        instructions: "Votre commande de %{distributor} a été envoyée"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."

@@ -1,0 +1,45 @@
+// Styling for brand intro / tagline on homepage
+
+#tagline {
+  width: 100%;
+
+  &:before {
+    content: "";
+
+    @include fullbg;
+
+    background-color: $ofn-grey;
+    //background-image: url("../../images/home/home.jpg");
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    // Use vh units for new browsers - fixed issue 1253
+    height: 100vh;
+  }
+
+  h1 {
+    margin-top: 2rem;
+
+    @media all and (min-width: 768px) {
+      margin-top: 10rem;
+    }
+
+    img {
+      max-width: 45%;
+
+      @media all and (min-height: 500px) {
+        max-width: 250px;
+      }
+
+      margin-bottom: 2rem;
+
+      @media all and (min-width: 768px) {
+        margin-bottom: 5rem;
+      }
+    }
+  }
+}

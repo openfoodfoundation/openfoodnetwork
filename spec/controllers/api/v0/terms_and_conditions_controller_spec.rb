@@ -5,13 +5,14 @@ require "spec_helper"
 module Api
   describe V0::TermsAndConditionsController, type: :controller do
     include AuthenticationHelper
+    include FileHelper
 
     let(:enterprise_owner) { create(:user) }
     let(:enterprise) { create(:enterprise, owner: enterprise_owner ) }
     let(:enterprise_manager) { create(:user, enterprises: [enterprise]) }
 
     describe "removing terms and conditions file" do
-      fake_terms_file_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
+      let(:fake_terms_file_path) { black_logo_file }
       let(:terms_and_conditions_file) {
         Rack::Test::UploadedFile.new(fake_terms_file_path, "application/pdf")
       }

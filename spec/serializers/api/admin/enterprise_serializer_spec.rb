@@ -3,6 +3,8 @@
 require "spec_helper"
 
 describe Api::Admin::EnterpriseSerializer do
+  include FileHelper
+
   let(:enterprise) { create(:distributor_enterprise) }
   it "serializes an enterprise" do
     serializer = Api::Admin::EnterpriseSerializer.new enterprise
@@ -14,8 +16,8 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a logo" do
       let(:image) do
-        image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
-        Rack::Test::UploadedFile.new(image_path, "image/png")
+        image = white_logo_file
+        Rack::Test::UploadedFile.new(image, "image/png")
       end
 
       it "includes URLs of image versions" do
@@ -40,8 +42,8 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a promo image" do
       let(:image) do
-        image_path = File.open(Rails.root.join("app", "assets", "images", "logo-black.png"))
-        Rack::Test::UploadedFile.new(image_path, "image/png")
+        image = black_logo_file
+        Rack::Test::UploadedFile.new(image, "image/png")
       end
 
       it "includes URLs of image versions" do

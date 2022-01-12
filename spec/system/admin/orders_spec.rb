@@ -5,7 +5,7 @@ require "system_helper"
 describe '
     As an administrator
     I want to manage orders
-', js: true do
+' do
   include AuthenticationHelper
   include WebHelper
 

@@ -52,6 +52,3 @@ Openfoodnetwork::Application.configure do
 
   config.active_job.queue_adapter = :test
 end
-
-# Allows us to use _url helpers in Rspec
-Rails.application.routes.default_url_options[:host] = 'test.host'

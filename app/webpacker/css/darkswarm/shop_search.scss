@@ -1,0 +1,70 @@
+.shop-searchbar {
+  background-color: $grey-100;
+  height: 5em;
+  padding: 1em 0;
+  position: relative;
+  z-index: 5;
+
+  .search-wrap {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+
+    .clear {
+      height: 1em;
+      width: 1em;
+      margin-top: 1em;
+      position: absolute;
+      right: 1em;
+    }
+  }
+
+  input#search {
+    height: 3em;
+    border-radius: $radius-small;
+    border: solid 1px $grey-300;
+    margin: 0;
+    padding: 0 2.25em 0 2.75em;
+    width: 100%;
+    min-width: 0;
+    background: $white url("../images/icn-search-grey.png") 1em center no-repeat;
+    font-size: 1rem; // avoid zoom on iphone, see issue #4535
+
+    &::placeholder {
+      font-style: italic;
+    }
+
+    // Remove conflicting "clear search" buttons added by Chrome
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+  }
+
+  button {
+    background-color: $grey-600;
+    margin: 0 0 0 1em;
+    height: 3em;
+    width: 7em;
+    padding: 0;
+    font-size: 1em;
+    border-radius: $radius-small;
+    transition: none;
+
+    &:hover {
+      background-color: $grey-700;
+    }
+
+    @include breakpoint(mobile) {
+      margin-left: 0.75em;
+    }
+  }
+
+  @include breakpoint(desktop) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: $mobile-nav-height;
+  }
+}

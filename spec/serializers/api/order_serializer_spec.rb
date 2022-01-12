@@ -12,7 +12,7 @@ describe Api::OrderSerializer do
 
   describe '#serializable_hash' do
     let!(:completed_payment) do
-      create(:payment, order: order, state: 'completed', amount: order.total - 1)
+      create(:payment, :completed, order: order, amount: order.total - 1)
     end
     let!(:payment) { create(:payment, order: order, state: 'checkout', amount: 123.45) }
 

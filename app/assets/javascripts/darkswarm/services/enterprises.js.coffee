@@ -53,8 +53,8 @@ angular.module('Darkswarm').factory 'Enterprises', (enterprises, ShopsResource, 
 
     flagMatching: (query) ->
       for enterprise in @enterprises
-        enterprise.matches_name_query = if query? && query.length > 0
-          Matcher.match([enterprise.name], query)
+        enterprise.matches_query = if query? && query.length > 0
+          Matcher.match([enterprise.name, enterprise.address?.state_name, enterprise.address?.city], query)
         else
           false
 

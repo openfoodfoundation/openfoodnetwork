@@ -5,6 +5,7 @@ require 'spree/core/s3_support'
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
+
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
@@ -290,6 +291,14 @@ class Enterprise < ApplicationRecord
     strip_url self[:linkedin]
   end
 
+  def twitter
+    correct_twitter_url self[:twitter]
+  end
+
+  def instagram
+    correct_instagram_url self[:instagram]
+  end
+
   def inventory_variants
     if prefers_product_selection_from_inventory_only?
       Spree::Variant.visible_for(self)
@@ -418,6 +427,14 @@ class Enterprise < ApplicationRecord
 
   def strip_url(url)
     url&.sub(%r{(https?://)?}, '')
+  end
+
+  def correct_instagram_url(url)
+    url && strip_url(url).sub(%r{www.instagram.com/}, '').delete("@")
+  end
+
+  def correct_twitter_url(url)
+    url && strip_url(url).sub(%r{www.twitter.com/}, '').delete("@")
   end
 
   def set_unused_address_fields

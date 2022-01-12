@@ -24,7 +24,7 @@ describe '
     expect(page).to have_selector 'td', text: e.name
   end
 
-  it "creating a new enterprise group", js: true do
+  it "creating a new enterprise group" do
     e1 = create(:enterprise)
     e2 = create(:enterprise)
     e3 = create(:enterprise)
@@ -95,7 +95,7 @@ describe '
     expect(page.all('td.name').map(&:text)).to eq(['A', 'B'])
   end
 
-  it "deleting an enterprise group", js: true do
+  it "deleting an enterprise group" do
     eg = create(:enterprise_group, name: 'EGEGEG')
 
     click_link 'Groups'

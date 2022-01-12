@@ -1,0 +1,164 @@
+input, div {
+	&.update-pending {
+	  border: solid 1px orange;
+  }
+}
+
+input.show-dirty {
+	&.ng-dirty {
+	  border: solid 1px orange;
+		&.update-error {
+			border: solid 1px $warning-red;
+		}
+  }
+}
+
+input, div {
+	&.update-error {
+		border: solid 1px $warning-red;
+	}
+}
+
+input, div {
+	&.update-success {
+		border: solid 1px $spree-green;
+	}
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+div#group_buy_calculation {
+    border-radius: 3px;
+	background-color: $spree-light-blue;
+	div {
+		margin-bottom: 5px;
+		span, h6 {
+			padding: 5px;
+		}
+	}
+
+	hr {
+		width: 95%;
+		margin: 0 auto;
+	}
+
+	.row span {
+		text-align: center;
+	}
+}
+
+.input-symbol {
+  position: relative;
+  &.before {
+
+	  span {
+			position: absolute;
+		  transform: translate(0,-50%);
+		  top:50%;
+		  pointer-events:none;
+		  margin-left: 1em;
+		}
+
+		input {
+			text-indent:1em;
+		}
+	}
+
+	&.after {
+
+		span {
+			position: absolute;
+			transform: translate(0,-55%);
+			top:50%;
+			right: 0.5em;
+			pointer-events:none;
+		}
+
+		input {
+			padding-right: 1.2em;
+		}
+	}
+}
+
+th.actions {
+  white-space: nowrap;
+}
+
+table.index td.actions {
+  text-align: left;
+}
+
+.orders-loading {
+  margin-top: 1em;
+
+  img {
+    width: 85px;
+  }
+
+  span {
+    font-size: 1.2em;
+  }
+}
+
+.index-controls {
+
+  button {
+    float: right;
+
+    &:disabled {
+      background-color: $disabled-button;
+    }
+  }
+}
+
+.simple-modal {
+  text-align: center;
+
+  .modal-title {
+    margin-bottom: 1.5em;
+  }
+
+  .message, .error {
+    margin-bottom: 1em;
+  }
+
+  .spinner {
+    margin-bottom: 1em;
+  }
+
+  .error {
+    color: $warning-red;
+  }
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	text-align: center;
+
+	.modal-content {
+		background-color: $color-1;
+		margin: 15% auto;
+		padding: 1.2em;
+		width: 30%;
+		border-radius: 1em;
+		border: 1px solid $color-border;
+	}
+
+	.modal-title {
+		font-size: $h4-size;
+	}
+
+	.message {
+		font-size: $h5-size;
+		padding: 1.2em 0;
+	}
+}

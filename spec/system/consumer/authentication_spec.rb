@@ -48,6 +48,13 @@ describe "Authentication", js: true do
           expect(page).to be_logged_in_as user
         end
 
+        context "using keyboard" do
+          it "logging in successfully" do
+            fill_in_using_keyboard
+            expect(page).to be_logged_in_as user
+          end
+        end
+
         describe "signing up" do
           before do
             select_login_tab "Sign up"
@@ -84,7 +91,7 @@ describe "Authentication", js: true do
               expect do
                 click_signup_button
                 expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-              end.to enqueue_job ActionMailer::DeliveryJob
+              end.to enqueue_job ActionMailer::MailDeliveryJob
             end
           end
         end
@@ -106,7 +113,7 @@ describe "Authentication", js: true do
             expect do
               click_reset_password_button
               expect(page).to have_reset_password
-            end.to enqueue_job ActionMailer::DeliveryJob
+            end.to enqueue_job ActionMailer::MailDeliveryJob
 
             expect(enqueued_jobs.last.to_s).to match "reset_password_instructions"
           end

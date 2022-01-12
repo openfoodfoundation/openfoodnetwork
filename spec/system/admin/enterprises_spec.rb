@@ -19,7 +19,7 @@ describe '
     expect(page).to have_content e.name
   end
 
-  it "creating a new enterprise", js: true do
+  it "creating a new enterprise" do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -60,7 +60,7 @@ describe '
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
   end
 
-  it "editing an existing enterprise", js: true do
+  it "editing an existing enterprise" do
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -270,7 +270,7 @@ describe '
       expect(s.producer_properties.first.value).to eq("Shininess")
     end
 
-    it "removes producer properties", js: true do
+    it "removes producer properties" do
       # Given a producer enterprise with a property
       s = create(:supplier_enterprise)
       pp = s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
@@ -292,7 +292,7 @@ describe '
     end
   end
 
-  context "as an Enterprise user", js: true do
+  context "as an Enterprise user" do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }

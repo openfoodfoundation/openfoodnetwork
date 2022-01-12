@@ -1,0 +1,69 @@
+.tabset-ctrl:not(#shop-tabs) {
+  .tab-view {
+    padding-top: 30px;
+  }
+
+  .tab {
+    text-align: center;
+
+    @include breakpoint(phablet) {
+      text-align: left;
+    }
+
+    a {
+      @include headingFont;
+
+      background: transparent;
+      text-transform: uppercase;
+      font-size: 1.5em;
+      text-shadow: 0 -1px 1px #ffffff;
+      padding: 1em;
+      border: none;
+
+      @include breakpoint(phablet) {
+        padding: 0.35em 0 0.65em 0;
+        text-shadow: none;
+      }
+    }
+
+    border-bottom: 4px solid transparent;
+
+    @media (hover: hover) {
+      &:hover {
+        transition: all 0.4s ease-in-out;
+        border-bottom: 4px solid $clr-brick-bright;
+        cursor: pointer;
+
+        @include breakpoint(phablet) {
+          transition: none;
+          color: white;
+          background-color: $clr-brick-bright;
+        }
+
+        a {
+          color: $clr-brick-bright;
+
+          @include breakpoint(phablet) {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+
+    &.selected {
+      border-bottom: 4px solid $clr-brick;
+
+      @include breakpoint(phablet) {
+        background-color: $clr-brick;
+      }
+
+      a {
+        color: $clr-brick;
+
+        @include breakpoint(phablet) {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}

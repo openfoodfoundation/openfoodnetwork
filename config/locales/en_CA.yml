@@ -58,6 +58,20 @@ en_CA:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because you are using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if 'on demand' is used"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
+  stripe:
+    error_code:
+      incorrect_number: "The card number is incorrect."
+      invalid_number: "The card number is not a valid credit card number."
+      invalid_expiry_month: "The card's expiration month is invalid."
+      invalid_expiry_year: "The card's expiration year is invalid."
+      invalid_cvc: "The card's security code is invalid."
+      expired_card: "The card has expired."
+      incorrect_cvc: "The card's security code is incorrect."
+      incorrect_zip: "The card's postal code failed validation."
+      card_declined: "The card was declined."
+      missing: "There is no card on a customer that is being charged."
+      processing_error: "An error occurred while processing the card."
+      rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -238,6 +252,7 @@ en_CA:
   search_by_name: Search by name or city
   producers_join: Producers are  welcome to join the Open Food Network.
   charges_sales_tax: Charges sales tax?
+  business_address: "Business Address"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -717,8 +732,15 @@ en_CA:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
         business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 High St.
           address2: Address (contd.)
+          legal_phone_number: Legal phone number
+          phone_placeholder: "98 123 4565"
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -962,6 +984,8 @@ en_CA:
         back_to_list: "Back to List"
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
+        re_notify_producers: Re notify producers
+        notify_producers_tip: This will send an email to each producer with the list of their orders.
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1002,6 +1026,8 @@ en_CA:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
+        automatic_notifications: Automatic notifications
+        automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
         choose_product_tip: You can restrict products incoming and outgoing to only%{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
@@ -1128,6 +1154,11 @@ en_CA:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      errors:
+        no_report_type: "Please specify a report type"
+        report_not_found: "Report not found"
+        missing_ransack_params: "Please supply Ransack search params in the request"
+      hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1143,6 +1174,13 @@ en_CA:
           quantity: "Quantity"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+      rendering_options:
+        generate_report: "Generate report:"
+        on_screen: "On screen"
+        csv_spreadsheet: "CSV Spreadsheet"
+        excel_spreadsheet: "Excel Spreadsheet"
+        openoffice_spreadsheet: "OpenOffice Spreadsheet"
+        hide_summary_rows: "Hide summary Rows"
       packing:
         name: "Packing Reports"
         customer_report: "Pack By Customer"
@@ -1289,7 +1327,7 @@ en_CA:
         checkout: "Checkout"
         edit_cart: "Edit cart"
         items_in_cart_singular: "%{num}item in your cart"
-        items_in_cart_plural: "%{num}items in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
         close: "Close"
         cart_empty: "Your cart is empty"
         take_me_shopping: "Take me shopping!"
@@ -1547,7 +1585,7 @@ en_CA:
   checkout_instructions: "Any comments or special instructions?"
   checkout_payment: Payment
   checkout_send: Place order now
-  checkout_your_order: Your order (applicable taxes charged at checkout)
+  checkout_your_order: Your order
   checkout_cart_total: Cart total
   checkout_shipping_price: Shipping
   checkout_total_price: Total
@@ -1556,6 +1594,7 @@ en_CA:
   split_checkout:
     your_details_without_number: Your details
     payment_method_without_number: Payment Method
+    order_summary_without_number: Order summary
     step1:
       your_details:
         title: Your details
@@ -1597,6 +1636,21 @@ en_CA:
     step2:
       payment_method:
         title: Payment Method
+      form:
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Month
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs
       submit: Next - Order Summary
       cancel: Back to your details
@@ -1689,7 +1743,7 @@ en_CA:
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "Your order from <strong>%{distributor}</strong> has been processed."
+  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
@@ -2270,7 +2324,7 @@ en_CA:
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, YourCity'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Your City'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
@@ -2585,6 +2639,7 @@ en_CA:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    default_card_voids_auth: Changing your default card will remove shops' existing authorizations to charge it. You can re-authorize shops after updating the default card. Do you wish to change the default card?
     cart:
       add_to_cart_failed: >
           There was a problem adding this product to the cart. Perhaps it has become
@@ -2623,6 +2678,8 @@ en_CA:
           title: "Uploading Terms and Conditions"
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
+        business_address_info:
+          message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
       panels:
         save: SAVE
         saved: SAVED
@@ -3409,6 +3466,7 @@ en_CA:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "You cannot add an item to a cancelled order."
+          include_out_of_stock_variants: "Include variants with no available stock"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3423,7 +3481,7 @@ en_CA:
           next: "Next"
           loading: "Loading"
           no_orders_found: "No Orders Found"
-          results_found: " %{number}Results found."
+          results_found: " %{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
         sortable_header:
@@ -3565,6 +3623,7 @@ en_CA:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the backoffice.
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        paperclip_image_error: "Paperclip returned errors for file '%{attachment_file_name}' - check ImageMagick installation or image source file."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3677,6 +3736,7 @@ en_CA:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"
@@ -3739,7 +3799,7 @@ en_CA:
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
-        instructions_html: "Your order with 1%{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
+        instructions_html: "Your order with %{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}  "
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
@@ -3780,7 +3840,7 @@ en_CA:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "
-        instructions: "Your order from %{distributor}has been shipped."
+        instructions: "Your order from %{distributor} has been shipped."
         shipment_summary: "Shipment/Pick Up Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."

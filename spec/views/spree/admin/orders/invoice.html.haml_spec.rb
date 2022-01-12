@@ -25,6 +25,8 @@ describe "spree/admin/orders/invoice.html.haml" do
                                     display_checkout_tax_total: '10',
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'
+
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
   end
 
   it "displays the customer code" do

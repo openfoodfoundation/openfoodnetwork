@@ -39,25 +39,11 @@ module Spree
       end
     end
 
-    # cc_type is set by jquery.payment, which helpfully provides different
-    # types from Active Merchant. Converting them is necessary.
     def cc_type=(type)
-      real_type = case type
-                  when 'mastercard', 'maestro'
-                    'master'
-                  when 'amex'
-                    'american_express'
-                  when 'dinersclub'
-                    'diners_club'
-                  else
-                    type
-                  end
-      self[:cc_type] = real_type
+      reformat_card_type!(type)
     end
 
     def set_last_digits
-      number = @number.to_s.gsub(/\s/, '')
-      verification_value = verification_value.to_s.gsub(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
@@ -128,6 +114,27 @@ module Spree
     end
 
     private
+
+    def reformat_card_type!(type)
+      self[:cc_type] = active_merchant_card_type(type)
+    end
+
+    # ActiveMerchant requires certain credit card brand names to be stored in a specific format.
+    # See: https://github.com/activemerchant/active_merchant/blob/master/lib/active_merchant/billing/credit_card.rb#L89
+    def active_merchant_card_type(type)
+      card_type = type.to_s.downcase
+
+      case card_type
+      when "mastercard", "maestro", "master card"
+        "master"
+      when "amex", "american express"
+        "american_express"
+      when "dinersclub", "diners club"
+        "diners_club"
+      else
+        card_type
+      end
+    end
 
     def expiry_not_in_the_past
       return unless year.present? && month.present?

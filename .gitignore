@@ -6,6 +6,7 @@
 .env.development.local
 .env.test.local
 .swp
+.vscode
 *.swo
 *.swp
 .sass-cache
@@ -42,7 +43,6 @@ config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
 libpeerconnection.log
-/config/application.yml
 /config/newrelic.yml
 node_modules
 vendor/bundle/

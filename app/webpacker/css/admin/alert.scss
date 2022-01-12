@@ -1,0 +1,24 @@
+.alert {
+  border: 3px solid $medium-grey;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  color: $medium-grey;
+  padding: 5px 10px;
+
+  h6 {
+    color: $medium-grey;
+  }
+
+  .message {
+    font-weight: bold;
+  }
+
+  &:hover {
+    border-color: $warning-red;
+    color: $warning-red;
+
+    h6 {
+      color: $warning-red;
+    }
+  }
+}

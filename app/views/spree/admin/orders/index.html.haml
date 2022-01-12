@@ -41,7 +41,7 @@
             %span{'ng-show' => "sorting == 'completed_at asc'"}= "&#x25B2;".html_safe
             %span{'ng-show' => "sorting == 'completed_at desc' || sorting === undefined"}= "&#x25BC;".html_safe
 
-      - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'total'].each do |column_name|
+      - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'bill_address_lastname', 'total'].each do |column_name|
         %th
           = render partial: 'spree/admin/shared/sortable_header', locals: {column_name: column_name}
 
@@ -76,7 +76,7 @@
       %td
         %a{ ng: { href: "mailto:{{order.email}}" } }
           {{order.email}}
-        %br
+      %td
         {{order.full_name}}
       %td.align-center
         %span{'ng-bind-html' => 'order.display_total'}

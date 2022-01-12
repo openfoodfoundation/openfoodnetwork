@@ -26,8 +26,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, order: order, state: 'completed', payment_method: payment_method,
-                           response_code: 'ch_1a2b3c', amount: order.total)
+          create(:payment, :completed, order: order, payment_method: payment_method,
+                                       response_code: 'ch_1a2b3c', amount: order.total)
         end
 
         before do
@@ -85,8 +85,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_connect_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, order: order, state: 'completed', payment_method: payment_method,
-                           response_code: 'ch_1a2b3c', amount: order.total + 5)
+          create(:payment, :completed, order: order, payment_method: payment_method,
+                                       response_code: 'ch_1a2b3c', amount: order.total + 5)
         end
 
         before do
@@ -146,8 +146,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, order: order, state: 'completed', payment_method: payment_method,
-                           response_code: 'pi_123', amount: order.total)
+          create(:payment, :completed, order: order, payment_method: payment_method,
+                                       response_code: 'pi_123', amount: order.total)
         end
         let(:stripe_account) { create(:stripe_account, enterprise: shop) }
 
@@ -256,8 +256,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, order: order, state: 'completed', payment_method: payment_method,
-                           response_code: 'pi_123', amount: order.total + 5)
+          create(:payment, :completed, order: order, payment_method: payment_method,
+                                       response_code: 'pi_123', amount: order.total + 5)
         end
 
         before do

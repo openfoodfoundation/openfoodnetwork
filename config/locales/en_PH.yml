@@ -3329,6 +3329,7 @@ en_PH:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

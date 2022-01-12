@@ -44,18 +44,18 @@
                 %span.error{ ng: { show: "details.zipcode.$error.required && submitted" } }
                   = t(".postcode_field_error")
           .row
-            .small-12.medium-4.large-4.columns
-              .field
-                %label{ for: 'enterprise_state' }= t(".state_field")
-                %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
-                %span.error{ ng: { show: "details.state.$error.required && submitted" } }
-                  = t(".state_field_error")
             .small-12.medium-8.large-8.columns
               .field
                 %label{ for: 'enterprise_country' }= t(".country_field")
                 %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { init: "setDefaultCountry(#{DefaultCountry.id})", model: 'enterprise.country', options: 'c as c.name for c in countries' } }
                 %span.error{ ng: { show: "details.country.$error.required && submitted" } }
                   = t(".country_field_error")
+            .small-12.medium-4.large-4.columns
+              .field
+                %label{ for: 'enterprise_state' }= t(".state_field")
+                %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
+                %span.error{ ng: { show: "details.state.$error.required && submitted" } }
+                  = t(".state_field_error")
 
       = render 'registration/steps/location_map' if using_google_maps?
 

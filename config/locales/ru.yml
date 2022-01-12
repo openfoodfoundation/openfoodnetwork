@@ -58,6 +58,20 @@ ru:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
+  stripe:
+    error_code:
+      incorrect_number: "Номер карты неверный."
+      invalid_number: "Номер карты не является действительным номером кредитной карты."
+      invalid_expiry_month: "Месяц истечения срока действия карты недействителен."
+      invalid_expiry_year: "Год истечения срока действия карты недействителен."
+      invalid_cvc: "Код безопасности карты недействителен."
+      expired_card: "Срок действия карты истек."
+      incorrect_cvc: "Код безопасности карты неверен."
+      incorrect_zip: "Почтовый индекс карты не прошел проверку."
+      card_declined: "Карта была отклонена."
+      missing: "У клиента нет карты, с которой начисляется оплата."
+      processing_error: "Произошла ошибка при обработке карты."
+      rate_limit: "Произошла ошибка из-за того, что запросы попали в API слишком быстро. Сообщите нам, если вы постоянно сталкиваетесь с этой ошибкой."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -235,7 +249,7 @@ ru:
   home: "ОСП"
   title: "Открытая Сеть Продуктов"
   welcome_to: "Добро пожаловать в "
-  site_meta_description: "Мы начинаем с нуля. С фермерами и садоводами готовы с гордостью рассказать свои истории. С дистрибьюторами готовы искренне и беспристрастно связывать людей с продуктами. С покупателями, которые считают, что лучшие еженедельные покупки могут серьезно изменить мир."
+  site_meta_description: "Мы начинаем с нуля. С фермерами и садоводами готовы рассказать свои истории. С дистрибьюторами готовы искренне и беспристрастно связывать людей с продуктами. С покупателями, которые считают, что лучшие еженедельные покупки могут серьезно изменить мир."
   search_by_name: Поиск по имени или городу...
   producers_join: Производители теперь могут присоединиться к Открытой Сети Продуктов.
   charges_sales_tax: Сбор налога с продаж?
@@ -972,6 +986,8 @@ ru:
         back_to_list: "Назад К Спику"
         save_and_back_to_list: "Сохранить и Назад к Списку"
         choose_products_from: "Выбрать Товары Из:"
+        re_notify_producers: Повторно уведомить производителей
+        notify_producers_tip: Каждому производителю будет отправлено электронное письмо со списком их заказов.
       incoming:
         incoming: "Входящие"
         supplier: "Поставщик"
@@ -1012,6 +1028,8 @@ ru:
         add_supplier: 'Добавить поставщика'
         add_distributor: 'Добавить дистрибьютора'
       advanced_settings:
+        automatic_notifications: Автоматические уведомления
+        automatic_notifications_tip: Автоматически уведомлять производителей об их заказах по электронной почте при завершении цикла заказов
         title: Расширенные Настройки
         choose_product_tip: Вы можете ограничить входящие и исходящие товары только к товарной номенклатуре %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Только Товарная Номенклатура Координатора
@@ -1138,6 +1156,11 @@ ru:
       enterprise_fee_summary:
         name: "Сводка Сборов Предприятия"
         description: "Сводная Информация о Сборах с Предприятия"
+      errors:
+        no_report_type: "Укажите тип отчета"
+        report_not_found: "Отчет не найден"
+        missing_ransack_params: "Пожалуйста, укажите параметры поиска Ransack в запросе"
+      hidden_field: "&lt;Скрытый&gt;"
       summary_row:
         total: "ВСЕГО"
       table:
@@ -1153,6 +1176,13 @@ ru:
           quantity: "Количество"
           is_temperature_controlled: "Контроль Температуры?"
           temp_controlled: "Контроль Температуры?"
+      rendering_options:
+        generate_report: "Создать отчет:"
+        on_screen: "На экране"
+        csv_spreadsheet: "Таблица CSV"
+        excel_spreadsheet: "Таблица Excel"
+        openoffice_spreadsheet: "Таблица OpenOffice"
+        hide_summary_rows: "Скрыть сводные Строки"
       packing:
         name: "Выборочные Отчёты"
         customer_report: "Выборка по Клиенту"
@@ -1609,6 +1639,21 @@ ru:
     step2:
       payment_method:
         title: Способ оплаты
+      form:
+        card_number:
+          label: Номер карты
+          placeholder: например, 4242 4242 4242 4242
+        card_verification_value:
+          label: CVV
+        card_month:
+          label: Месяц
+        card_year:
+          label: Год
+        stripe:
+          use_saved_card: Использовать сохраненную карту
+          use_new_card: Введите данные вашей карты
+          save_card: Сохранить карту для будущего использования
+          create_new_card: или введите данные новой карты ниже
       explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
       submit: Далее - Сводка заказа
       cancel: Назад к Вашим данным
@@ -3478,6 +3523,7 @@ ru:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Невозможно добавить товар в отмененный заказ"
+          include_out_of_stock_variants: "Включить варианты, которых нет в наличии"
         index:
           listing_orders: "Список Заказов"
           new_order: "Новый Заказ"
@@ -3747,6 +3793,7 @@ ru:
           shipment_state: "Статус Доставки"
           email: "Email"
           total: "Всего"
+          bill_address_lastname: "Название"
       general_settings:
         edit:
           legal_settings: "Правовые настройки"

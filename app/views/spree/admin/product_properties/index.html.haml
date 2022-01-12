@@ -12,7 +12,7 @@
 = form_for @product, url: admin_product_url(@product, @url_filters), method: :put do |f|
   %fieldset.no-border-top
     .add_product_properties
-    = image_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
+    = image_pack_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
 
     %table.index.sortable{"data-sortable-link" => update_positions_admin_product_product_properties_url}
       %thead

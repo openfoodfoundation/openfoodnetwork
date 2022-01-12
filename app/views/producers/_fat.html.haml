@@ -79,7 +79,7 @@
       .columns.small-12
         %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
         "ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined }}",
-        "ng-class" => "::{primary: hub.active, secondary: !hub.active}"}
+        "ng-class" => "::{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
           %i.ofn-i_068-shop-reversed{"ng-if" => "::hub.active"}
           %i.ofn-i_068-shop-reversed{"ng-if" => "::!hub.active"}
           .hub-name{"ng-bind" => "::hub.name"}

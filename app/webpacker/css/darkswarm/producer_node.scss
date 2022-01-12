@@ -1,0 +1,152 @@
+.producers {
+  .active_table .active_table_node {
+    // Header row
+    @include breakpoint(phablet) {
+      .active_table_row {
+        display: inline-block;
+        width: 100%;
+      }
+
+      .skinny-head {
+        background-color: $clr-turquoise-light;
+
+        @include border-radius-mixed(0.5em, 0.5em, 0, 0);
+
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .follow-icons {
+        &, & * {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    // Producer icons
+    i.ofn-i_059-producer, i.ofn-i_060-producer-reversed {
+      font-size: 2rem;
+      display: inline-block;
+      margin-right: 0.25rem;
+      float: left;
+      color: $clr-turquoise;
+    }
+
+    .vertical-align-middle {
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      &:hover, &:active, &:focus {
+        color: $clr-turquoise-bright;
+
+        span {
+          text-decoration: underline;
+        }
+      }
+
+      &.is_distributor, &.is_distributor i.ofn-i_059-producer, &.is_distributor i.ofn-i_060-producer-reversed {
+        color: $clr-brick;
+
+        &:hover, &:active, &:focus {
+          color: $clr-brick-bright;
+        }
+      }
+    }
+
+    a.cta-hub {
+      &:hover, &:focus, &:active {
+        &.secondary {
+          color: #666;
+
+          .hub-name, .button-address {
+            border-bottom: 1px solid #999;
+          }
+        }
+
+        &.primary {
+          color: $clr-brick-bright;
+
+          .hub-name, .button-address {
+            border-bottom: 1px solid $clr-brick-bright;
+          }
+        }
+      }
+    }
+
+    p.word-wrap {
+      margin-bottom: 0;
+
+      &:last-child {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .fat-taxons {
+      background-color: $clr-turquoise-light;
+    }
+
+    .fat-properties {
+      background-color: $clr-turquoise-ultra-light;
+      border: 1px solid $clr-turquoise-light;
+    }
+
+    .producer-name {
+      color: $clr-turquoise;
+    }
+
+    //Open row
+    &.open {
+      .active_table_row {
+        border-left: 1px solid $clr-turquoise-bright;
+        border-right: 1px solid $clr-turquoise-bright;
+        background-color: rgba(206, 239, 228, 0.4);
+
+        .cta-container {
+          background: none;
+        }
+
+        .columns img {
+          padding: 1rem 0;
+          max-height: 160px;
+          width: auto;
+
+          &.left {
+            padding: 0.25rem 1rem 0.25rem 0;
+          }
+
+          &.right {
+            padding: 0.25rem 0.5rem 0.25rem 2rem;
+          }
+        }
+      }
+
+      .active_table_row:first-child {
+        border-top: 1px solid $clr-turquoise-bright;
+      }
+
+      .active_table_row:last-child {
+        border-bottom: 1px solid $clr-turquoise-bright;
+        cursor: auto;
+      }
+    }
+
+    //Closed row
+    &.closed {
+      .active_table_row.closed {
+        border: 1px solid transparent;
+
+        @include breakpoint(phablet) {
+          border-color: $clr-turquoise-light;
+        }
+
+        &:hover, &:active, &:focus {
+          border-color: $clr-turquoise;
+        }
+      }
+    }
+  }
+}

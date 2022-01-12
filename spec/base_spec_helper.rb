@@ -46,9 +46,10 @@ Capybara.configure do |config|
 end
 
 # Override setting in Spree engine: Spree::Core::MailSettings
-ActionMailer::Base.default_url_options[:host] = 'test.host'
+ActionMailer::Base.default_url_options[:host] = ENV["SITE_URL"]
 
 FactoryBot.use_parent_strategy = false
+FactoryBot::SyntaxRunner.include FileHelper
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

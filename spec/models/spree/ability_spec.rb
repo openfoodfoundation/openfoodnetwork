@@ -40,9 +40,9 @@ describe Spree::Ability do
     let(:resource) { Object.new }
     let(:resource_shipment) { Spree::Shipment.new }
     let(:resource_product) { Spree::Product.new }
-    let(:resource_user) { Spree.user_class.new }
+    let(:resource_user) { Spree::User.new }
     let(:resource_order) { Spree::Order.new }
-    let(:fakedispatch_user) { Spree.user_class.new }
+    let(:fakedispatch_user) { Spree::User.new }
     let(:fakedispatch_ability) { Spree::Ability.new(fakedispatch_user) }
 
     context 'with admin user' do
@@ -97,7 +97,7 @@ describe Spree::Ability do
       end
 
       context 'requested by other user' do
-        before(:each) { resource.user = Spree.user_class.new }
+        before(:each) { resource.user = Spree::User.new }
         it_should_behave_like 'create only'
       end
 
@@ -185,7 +185,7 @@ describe Spree::Ability do
         it_should_behave_like 'no index allowed'
       end
       context 'requested by other user' do
-        let(:resource) { Spree.user_class.new }
+        let(:resource) { Spree::User.new }
         it_should_behave_like 'create only'
       end
     end
@@ -328,6 +328,8 @@ describe Spree::Ability do
 
     let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
     let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
+    let(:er3) { create(:enterprise_relationship, parent: s2, child: d2) }
+
     let(:er_ps) {
       create(:enterprise_relationship, parent: s_related, child: s1,
                                        permissions_list: [:manage_products])
@@ -429,8 +431,12 @@ describe Spree::Ability do
         is_expected.to have_ability(:destroy, for: er1)
       end
 
+      it "should be able to destroy enterprise relationships for other enterprises that are linked as child" do
+        is_expected.to have_ability(:destroy, for: er2)
+      end
+
       it "should not be able to destroy enterprise relationships for other enterprises" do
-        is_expected.not_to have_ability(:destroy, for: er2)
+        is_expected.not_to have_ability(:destroy, for: er3)
       end
 
       it "should be able to read some reports" do
@@ -655,8 +661,12 @@ describe Spree::Ability do
         is_expected.to have_ability(:destroy, for: er2)
       end
 
+      it "should be able to destroy enterprise relationships for other enterprises that are linked as child" do
+        is_expected.to have_ability(:destroy, for: er1)
+      end
+
       it "should not be able to destroy enterprise relationships for other enterprises" do
-        is_expected.not_to have_ability(:destroy, for: er1)
+        is_expected.not_to have_ability(:destroy, for: er3)
       end
 
       it "should be able to read some reports" do

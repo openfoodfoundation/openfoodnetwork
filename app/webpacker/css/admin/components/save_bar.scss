@@ -1,0 +1,19 @@
+#save-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  bottom: 0px;
+  left: 0;
+  padding: 8px 8px;
+  font-weight: bold;
+  background-color: $spree-light-blue;
+  color: $spree-blue;
+
+  h5 {
+    color: $spree-blue;
+  }
+
+  input {
+    margin-right: 5px;
+  }
+}

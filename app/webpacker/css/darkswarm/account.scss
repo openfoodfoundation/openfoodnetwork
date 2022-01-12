@@ -1,0 +1,166 @@
+.account-summary {
+  color: #4a4a4a;
+}
+
+.credit_cards {
+  .saved_cards {
+    table {
+      width: 100%;
+    }
+  }
+
+  .saved_cards, .no_cards {
+    margin-bottom: 1em;
+  }
+
+  .new_card {
+    opacity: 0;
+    -webkit-transition: opacity 0.4s linear;
+    transition: opacity 0.4s linear;
+    &.visible {
+      opacity: 1;
+    }
+
+    input.ng-invalid {
+      margin-bottom: 0px;
+    }
+  }
+
+  .authorised_shops{
+    table {
+      width: 100%;
+    }
+  }
+}
+
+.orders {
+  margin-bottom: 100px;
+
+  a {
+    color: $clr-brick;
+
+    &:hover, &:active, &:focus {
+      color: $clr-brick-med-bright;
+    }
+  }
+
+  img {
+    display: block;
+    width: 80px;
+    height: auto;
+  }
+
+  &.active_table {
+    margin: 0px;
+  }
+
+  .active_table_row {
+    h3 {
+      margin-top: 0.5em;
+    }
+  }
+
+  i.ofn-i_059-producer, i.ofn-i_060-producer-reversed {
+    font-size: 3rem;
+    display: inline-block;
+    margin-right: 0.25rem;
+    float: left;
+    color: $clr-turquoise;
+  }
+
+  .credit {
+    color: green;
+  }
+
+  .debit {
+    color: $clr-brick;
+  }
+
+  .invalid {
+    color: $ofn-grey;
+
+    .credit {
+      color: $ofn-grey;
+    }
+
+    .debit {
+      color: $ofn-grey;
+    }
+  }
+
+  .distributor-balance.paid {
+    visibility: hidden;
+  }
+
+  .transaction-group {}
+
+  table {
+    border-radius: $radius-medium $radius-medium 0 0;
+
+    tr:nth-of-type(even) {
+      background: transparent;
+    }
+
+    tbody.odd {
+      tr {
+        background-color: #f9f9f9;
+        border: none;
+      }
+    }
+  }
+
+  // Column widths for order table
+  .order1 {
+    width: 20%;
+  }
+
+  .order2 {
+    width: 20%;
+  }
+
+  .order3 {
+    width: 20%;
+  }
+
+  .order4 {
+    width: 10%;
+  }
+
+  .order5 {
+    width: 10%;
+  }
+
+  .order6 {
+    width: 10%;
+  }
+
+  .order7 {
+    width: 10%;
+  }
+}
+
+table {
+  &.full {
+    width: 100%;
+  }
+
+  &.top-rounded {
+    border-radius: $radius-medium $radius-medium 0 0;
+  }
+}
+
+// Note this relies on the <th> using `.show-for-large-up` as well.
+.requiring-authorization tr {
+  position: relative;
+
+  th:last-child {
+    position: absolute;
+    // The following calculation is the equivalent of:
+    //
+    // $table-cell-padding + 2 * browser's default border-spacing + 2 * table border
+    //
+    // Unfortunately we can't use Scss's interpolation
+    // https://sass-lang.com/documentation/interpolation. We're using a too old version perhaps?
+    right: calc(12px + 2*2px + 2*1px);
+  }
+}

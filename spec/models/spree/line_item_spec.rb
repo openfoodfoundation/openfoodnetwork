@@ -822,4 +822,36 @@ module Spree
       end
     end
   end
+
+  describe "searching with ransack" do
+    let(:order_cycle1) { create(:order_cycle) }
+    let(:order_cycle2) { create(:order_cycle) }
+    let(:product1) { create(:product, supplier: create(:supplier_enterprise)) }
+    let(:product2) { create(:product, supplier: create(:supplier_enterprise)) }
+    let!(:line_item1) { create(:line_item, variant: product1.variants.first) }
+    let!(:line_item2) { create(:line_item, variant: product2.variants.first) }
+
+    let(:search_result) { Spree::LineItem.ransack(query).result }
+
+    before do
+      line_item1.order.update_attribute :order_cycle, order_cycle1
+      line_item2.order.update_attribute :order_cycle, order_cycle2
+    end
+
+    context "searching by supplier" do
+      let(:query) { { supplier_id_eq: line_item1.variant.product.supplier_id } }
+
+      it "filters results" do
+        expect(search_result.to_a).to eq [line_item1]
+      end
+    end
+
+    context "searching by order_cycle" do
+      let(:query) { { order_cycle_id_eq: order_cycle1.id } }
+
+      it "filters results" do
+        expect(search_result.to_a).to eq [line_item1]
+      end
+    end
+  end
 end

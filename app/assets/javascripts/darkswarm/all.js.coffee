@@ -50,6 +50,7 @@
 #
 #= require modernizr
 #
+#= require foundation-sites/js/foundation.js
 #= require ./darkswarm
 #= require_tree ./mixins
 #= require_tree ./directives

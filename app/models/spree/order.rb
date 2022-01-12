@@ -34,8 +34,8 @@ module Spree
 
     token_resource
 
-    belongs_to :user, class_name: Spree.user_class.to_s
-    belongs_to :created_by, class_name: Spree.user_class.to_s
+    belongs_to :user, class_name: "Spree::User"
+    belongs_to :created_by, class_name: "Spree::User"
 
     belongs_to :bill_address, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
@@ -201,10 +201,6 @@ module Spree
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
       total.to_f > 0.0 && !skip_payment_for_subscription?
-    end
-
-    def backordered?
-      shipments.any?(&:backordered?)
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
@@ -681,7 +677,7 @@ module Spree
     end
 
     def registered_email?
-      Spree.user_class.exists?(email: email)
+      Spree::User.exists?(email: email)
     end
 
     def adjustments_fetcher

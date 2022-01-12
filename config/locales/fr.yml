@@ -58,6 +58,20 @@ fr:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+  stripe:
+    error_code:
+      incorrect_number: "Le numéro de carte bancaire est incorrect."
+      invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      invalid_expiry_month: "Le mois d'expiration de la carte bancaire est erroné."
+      invalid_expiry_year: "L'année d'expiration de la carte bancaire est erronée."
+      invalid_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      expired_card: "La carte bancaire a expiré."
+      incorrect_cvc: "Le code de sécurité de la carte bancaire est erroné."
+      incorrect_zip: "Le code postal de la carte bancaire est erroné."
+      card_declined: "La carte bancaire a été refusée."
+      missing: "Il n'y a pas de carte bancaire liée à cet acheteur."
+      processing_error: "Une erreur est survenue durant le traitement du paiement."
+      rate_limit: "Une erreur est survenue suite à un grand nombre de requête quasi-simultanée sur notre API. Veuillez contacter notre support si vous observez cette erreur trop souvent."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -972,6 +986,8 @@ fr:
         back_to_list: "Retour à la liste"
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
         choose_products_from: "Choisir produits depuis :"
+        re_notify_producers: Notifier les producteurs
+        notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les boutiques du cycle de vente)"
         supplier: "Fournisseur"
@@ -1012,6 +1028,8 @@ fr:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
+        automatic_notifications: Notifications automatiques
+        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez restreindre les produits entrants et sortants uniquement au catalogue boutique de %{inventory}
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue boutique
@@ -1433,7 +1451,7 @@ fr:
   state: Département
   country: Pays
   unauthorized: Non authorisé
-  terms_of_service: "Conditions d'utilisation"
+  terms_of_service: "Conditions Générales d'Utilisation de CoopCircuits"
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
@@ -1620,6 +1638,21 @@ fr:
     step2:
       payment_method:
         title: Moyen de paiement
+      form:
+        card_number:
+          label: Numéro de la carte
+          placeholder: par ex. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
+        stripe:
+          use_saved_card: Utilisez une carte enregistrée
+          use_new_card: Entrez les informations de votre carte
+          save_card: Enregistrez votre carte pour vos prochains achats
+          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
       explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
@@ -3463,6 +3496,7 @@ fr:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
+          include_out_of_stock_variants: "Inclure les variantes sans stock"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -3732,6 +3766,7 @@ fr:
           shipment_state: "Statut livraison"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Nom"
       general_settings:
         edit:
           legal_settings: "Configuration légales"

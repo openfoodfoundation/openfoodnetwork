@@ -1514,6 +1514,12 @@ en_NZ:
           label: Country
       delivery_address:
         title: Delivery address
+    step2:
+      form:
+        card_month:
+          label: Month
+        card_year:
+          label: Year
     step3:
       your_details:
         title: Your details
@@ -3495,6 +3501,7 @@ en_NZ:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

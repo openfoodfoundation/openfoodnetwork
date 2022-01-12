@@ -3391,6 +3391,7 @@ pl:
           shipment_state: "Status dostawy"
           email: "E-mail"
           total: "Razem"
+          bill_address_lastname: "Nazwa"
       general_settings:
         edit:
           legal_settings: "Ustawienia prawne"

@@ -1555,6 +1555,14 @@ pt_BR:
           label: País
       delivery_address:
         title: Endereço para entrega
+    step2:
+      form:
+        card_number:
+          label: Número do cartão
+        card_month:
+          label: Mês
+        card_year:
+          label: Ano
     step3:
       your_details:
         title: Seus detalhes
@@ -3604,6 +3612,7 @@ pt_BR:
           shipment_state: "Situação do Envio"
           email: "E-mail"
           total: "Total"
+          bill_address_lastname: "Nome"
       general_settings:
         edit:
           legal_settings: "Configurações de Legislação"

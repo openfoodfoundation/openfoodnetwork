@@ -13,11 +13,11 @@ it:
         shipment_state: Stato Spedizione
         completed_at: Completato Al
         number: Numero
-        state: Provincia
+        state: Stato
         email: E-Mail Cliente
       spree/payment:
         amount: Quantità
-        state: Provincia
+        state: Stato
         source: Fonte
       spree/product:
         primary_taxon: "Categoria Prodotto"
@@ -58,6 +58,20 @@ it:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
             on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
             limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
+  stripe:
+    error_code:
+      incorrect_number: "Il numero di carta non è corretto"
+      invalid_number: "Il numero carta non è valido"
+      invalid_expiry_month: "Il mese di scadenza della carta non è valido"
+      invalid_expiry_year: "L'anno di scadenza della carta non è valido."
+      invalid_cvc: "Il codice di sicurezza della carta non è valido"
+      expired_card: "La carta è scaduta"
+      incorrect_cvc: "Il codice di sicurezza della carta non è corretto."
+      incorrect_zip: "Errore validazione codice carta."
+      card_declined: "La carta non è stata accettata."
+      missing: "Non è stata caricata nessuna carta sul consumatore."
+      processing_error: "C'è stato un errore nel processare la carta"
+      rate_limit: "C'è stato un errore per una richiesta troppo rapida alle API. Per favore comunicaci se incontri spesso questo errore."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -158,7 +172,7 @@ it:
   producer_signup_pricing_table_html: "HTML tabella prezzi iscrizione produttore"
   producers_social: "Social dei produttori"
   resume_order: "Riepilogo richieste"
-  sku: "SKU"
+  sku: "Codice ID"
   subtotal: "Subtotale"
   tax_rate: "% tasse"
   validators:
@@ -239,19 +253,19 @@ it:
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
   charges_sales_tax: Vuoi calcolare gli importi IVA delle tue vendite?
   business_address: "Indirizzo azienda"
-  print_invoice: "Stampa fattura"
+  print_invoice: "Stampa Conferma d'ordine"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
-  send_invoice: "Invia Fattura"
+  send_invoice: "Invia Conferma d'ordine"
   resend_confirmation: "Rimanda Conferma"
   view_order: "Vedi Ordine"
   edit_order: "Modifica Ordine"
   ship_order: "Invia Ordine"
   cancel_order: "Cancella Ordine"
-  confirm_send_invoice: "Una fattura per quest'ordine verrà mandata al cliente. Sei sicuro di voler continuare?"
+  confirm_send_invoice: "Verrà mandata al cliente una mail con la conferma di quest'ordine. Sei sicuro di voler continuare?"
   confirm_resend_order_confirmation: "Sei sicuro di voler inviare di nuovo l'email di conferma per l'ordine?"
   must_have_valid_business_number: "%{enterprise_name} deve avere una partita iva valida per poter emettere fattura."
-  invoice: "Fattura"
+  invoice: "Conferma d'ordine"
   more: "Di più"
   say_no: "No"
   say_yes: "Sì"
@@ -374,8 +388,8 @@ it:
     shipping_method: Metodo di consegna
     shop: Negozio
     sku: articolo gestito a magazzino
-    status_state: Provincia
-    tags: Tag
+    status_state: Stato
+    tags: Etichetta
     variant: Variante
     weight: Peso
     volume: Volume
@@ -401,7 +415,7 @@ it:
     viewing: "Vista: %{current_view_name}"
     description: Descrizione
     whats_this: Cos'è questo?
-    tag_has_rules: "Regole esistenti per questo tag: %{num}"
+    tag_has_rules: "Regole esistenti per questa etichetta: %{num}"
     has_one_rule: "ha una regola"
     has_n_rules: "ha %{num} regole"
     unsaved_confirm_leave: "Ci sono cambiamenti non salvati in questa pagina. Continuare senza salvare?"
@@ -427,8 +441,8 @@ it:
       enable_localized_number: "Usa la logica internazionale di separazione migliaia/decimali"
     invoice_settings:
       edit:
-        title: "Impostazioni fatturazione"
-        enable_invoices?: "Abilita fatture?"
+        title: "Impostazioni fiscali"
+        enable_invoices?: "Abilita conferme d'ordine?"
         invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
         enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
     stripe_connect_settings:
@@ -452,7 +466,7 @@ it:
         title: "Impostazioni Matomo"
         matomo_url: "URL Matomo"
         matomo_site_id: "Site ID Matomo"
-        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        matomo_tag_manager_url: "URL Matomo Tag Manager"
         info_html: "Matomo è una applicazione Analitica per Web e Mobile. Puoi ospitare Matomo in locale o utilizzare un servizio ospitato su cloud. Visita <a href='http://matomo.org' target='_blank'>matomo.org</a> per maggiori informazioni."
         config_instructions_html: "Qui è possibile configurare l'integrazione OFN Matomo. L'URL di Matomo qui sotto dovrebbe puntare l'istanza di Matomo a cui saranno inviate le informazioni di monitoraggio dell'utente; se lasciato vuoto, il monitoraggio dell'utente da parte di Matomo sarà disabilitato. Il campo Site ID non è obbligatorio ma è utile se si sta tracciando più di un sito web su una singola istanza di Matomo; si può trovare sulla console dell'istanza di Matomo. "
         config_instructions_tag_manager_html: "La configurazione di Matomo Tag Manager URL abilita Matomo Tag Manager. Questo strumento consente di impostare eventi di analisi. Il Matomo Tag Manager URL è copiato dalla sezione Install Code di Matomo Tag Manager. Assicurati di selezionare il giusto container e l'ambiente perché queste opzioni modificano l'URL."
@@ -470,7 +484,7 @@ it:
         edit_ship_address: "Modifica l'indirizzo di spedizione"
         required_fileds: "I campi obbligatori sono segnati con un asterisco"
         select_country: "Seleziona il paese"
-        select_state: "Selezione la provincia"
+        select_state: "Seleziona la provincia"
         edit: "Modifica"
         update_address: "Aggiorna indirizzo"
         confirm_delete: "Sei sicuro di cancellare?"
@@ -668,7 +682,7 @@ it:
     orders:
       edit:
         order_sure_want_to: Sei sicuro di voler %{event} questa gentile richiesta?
-      invoice_email_sent: 'La mail con la fattura è stata inviata'
+      invoice_email_sent: 'La mail con la conferma d''ordine è stata inviata'
       order_email_resent: 'La mail con la gentile richiesta è stata re-inviata'
       bulk_management:
         tip: "Usa questa pagina per modificare le quantità su ordini multipli. I prodotti possono anche essere rimossi del tutto dagli ordini, se necessario."
@@ -713,8 +727,8 @@ it:
           abn_placeholder: es. 99 123 456 789
           acn: C.F.
           acn_placeholder: es. 123 456 789
-          display_invoice_logo: Mostra logo nelle fatture
-          invoice_text: Aggiungere testo personalizzato alla fine delle fatture
+          display_invoice_logo: Mostra logo nelle conferme d'ordine
+          invoice_text: Aggiungere testo personalizzato alla fine delle conferme d'ordine
           terms_and_conditions: "Termini e Condizioni"
           remove_terms_and_conditions: "Rimuovi File"
           uploaded_on: "caricato il"
@@ -863,14 +877,14 @@ it:
             cancel: Annulla
         tag_rules:
           default_rules:
-            by_default: Per impostazione predefinita
+            by_default: Predefinito
             no_rules_yet: Non è ancora stata fissata nessuna regola predefinita
             add_new_button: ' + Aggiungi una nuova regola predefinita'
           no_tags_yet: Nessuna etichetta per questa azienda
           no_rules_yet: Nessuna regola per questa etichetta
-          for_customers_tagged: 'Per i clienti etichettati:'
+          for_customers_tagged: 'Per i clienti con l''etichetta:'
           add_new_rule: '+ Aggiungi una nuova regola'
-          add_new_tag: '+ Aggiungi una nuova tag'
+          add_new_tag: '+ Aggiungi una nuova etichetta'
         users:
           email_confirmation_notice_html: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
           resend: Invia di nuovo
@@ -971,6 +985,8 @@ it:
         back_to_list: "Indietro alla lista"
         save_and_back_to_list: "Salva e torna alla lista"
         choose_products_from: "Scegli i prodotti da:"
+        re_notify_producers: Ri-notifica i produttori
+        notify_producers_tip: Sarà inviata una mail a ciascun produttore con la lista dei suoi ordini.
       incoming:
         incoming: "In arrivo"
         supplier: "Fornitore"
@@ -986,7 +1002,7 @@ it:
         outgoing: "In uscita"
         distributor: "Distributore"
         products: "Prodotti"
-        tags: "Tag"
+        tags: "Etichette"
         delivery_details: "Dettagli Spedizione"
         fees: "Tariffe"
         previous: "Precedente"
@@ -1011,6 +1027,8 @@ it:
         add_supplier: 'Aggiungi fornitore'
         add_distributor: 'Aggiungi distributore'
       advanced_settings:
+        automatic_notifications: Notifiche automatiche
+        automatic_notifications_tip: Invia automaticamente una mail a ciascun produttore con i suoi ordini alla chiusura dei cicli di richieste.
         title: Impostazioni avanzate
         choose_product_tip: Puoi limitare i prodotti in entrata e in uscita al%{inventory}dell'Inventario
         preferred_product_selection_from_coordinator_inventory_only_here: Solo inventario del coordinatore
@@ -1034,8 +1052,8 @@ it:
         outgoing: In uscita
         distributor: Distributore
         products: Prodotti
-        tags: Tag
-        add_a_tag: Aggiungi una tag
+        tags: Etichette
+        add_a_tag: Aggiungi un'etichetta
         delivery_details: Dettagli per il ritiro / consegna
       index:
         schedule: Programma
@@ -1137,6 +1155,11 @@ it:
       enterprise_fee_summary:
         name: "Riepilogo tariffe dell'azienda"
         description: "Riepilogo delle Tariffe applicate dall'azienda"
+      errors:
+        no_report_type: "Per favore specifica un tipo di resoconto"
+        report_not_found: "Resoconto non trovato"
+        missing_ransack_params: "Per favore fornisci i parametri di ricerca Ransack nella richiesta."
+      hidden_field: "< Nascosto >"
       summary_row:
         total: "TOTALE"
       table:
@@ -1152,6 +1175,13 @@ it:
           quantity: "Quantità"
           is_temperature_controlled: "Controllo Temperatura?"
           temp_controlled: "Controllo Temperatura?"
+      rendering_options:
+        generate_report: "Genera resoconto:"
+        on_screen: "Sullo schermo"
+        csv_spreadsheet: "Foglio CSV"
+        excel_spreadsheet: "Foglio Excel"
+        openoffice_spreadsheet: "Foglio OpenOffice"
+        hide_summary_rows: "Nascondi righe totali"
       packing:
         name: "Resoconti smistamento/imballaggio"
         customer_report: "Imballato dal Cliente"
@@ -1200,7 +1230,7 @@ it:
             Se cambi i prezzi o le tariffe, le gentili richieste saranno aggiornate, ma l'abbonamento visualizzerà ancora i valori precedenti
         not_in_open_and_upcoming_order_cycles_warning: "Non ci sono cicli di richieste aperte o in apertura per questo prodotto."
       autocomplete:
-        name_or_sku: "NOME O SKU"
+        name_or_sku: "NOME O CODICE ID"
         quantity: "Quantità"
         add: "Aggiungi"
       details:
@@ -1354,14 +1384,14 @@ it:
   invoice_column_price_without_taxes: "Prezzo totale (escl. tasse)"
   invoice_column_tax_rate: "% tasse"
   invoice_tax_total: "IVA totale"
-  tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
+  tax_invoice: "Conferma d'ordine"
   tax_total: "Totale tasse (%{rate}):"
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
   abn: "CF:"
   acn: "C.F.:"
-  invoice_issued_on: "Fattura emessa il"
-  order_number: "Numero fattura:"
+  invoice_issued_on: "Documento emesso il: "
+  order_number: "Numero documento:"
   date_of_transaction: "Data della transazione:"
   ticket_column_qty: "Qty"
   ticket_column_item: "Articolo"
@@ -1607,6 +1637,21 @@ it:
     step2:
       payment_method:
         title: Metodo di pagamento
+      form:
+        card_number:
+          label: Numero carta
+          placeholder: es. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mese
+        card_year:
+          label: Anno
+        stripe:
+          use_saved_card: Usa la carta salvata
+          use_new_card: Inserisci i dati della tua carta
+          save_card: Salva i dati di questa carta per il futuro
+          create_new_card: o inserisci qui sotto i dettagli della nuova carta
       explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
       submit: Prossimo - riepilogo richiesta
       cancel: Indietro a Tuoi dettagli
@@ -1686,7 +1731,7 @@ it:
   email_confirm_shop_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà"
-  email_order_summary_sku: "SKU"
+  email_order_summary_sku: "Codice ID"
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
   email_order_summary_total: "Totale:"
@@ -1874,7 +1919,7 @@ it:
   products_available: Disponibile?
   products_producer: "Produttore"
   products_price: "Prezzo"
-  name_or_sku: "NOME O SKU"
+  name_or_sku: "NOME O Codice ID"
   register_title: Registra
   sell_title: "Registrati"
   sell_headline: "Entra nella rete OFN Italia!"
@@ -2132,7 +2177,7 @@ it:
   enterprise_limit: Limite azienda
   shipping_method_destroy_error: "Questo metodo di consegna non può essere annullato perchè è collegato ad una gentile richiesta: %{number}."
   fees: "Commissioni"
-  item_cost: "Costo dell'articolo"
+  item_cost: "Prezzo al produttore"
   bulk: "Volume"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
@@ -2215,7 +2260,7 @@ it:
   tax_category: "Categoria di imposta"
   description: "Descrizione"
   display: "Visualizza"
-  tags: "Tag"
+  tags: "Etichette"
   calculator: "Calcolatore"
   calculator_values: "Valori del calcolatore"
   calculator_settings_warning: "Se stai modificando il tipo di calcolatore, devi prima salvare prima di editare i setting del calcolatore"
@@ -2371,20 +2416,20 @@ it:
   report_header_ship_street_2: Indirizzo di spedizione 2
   report_header_ship_city: Città di spedizione
   report_header_ship_postcode: CAP di spedizione
-  report_header_ship_state: Stato di spedizione
+  report_header_ship_state: Provincia di spedizione
   report_header_billing_street: Indirizzo di fatturazione
   report_header_billing_street_2: Indirizzo di fatturazione 2
   report_header_billing_street_3: Indirizzo di fatturazione 3
   report_header_billing_street_4: Indirizzo di fatturazione 4
   report_header_billing_city: Città di fatturazione
   report_header_billing_postcode: CAP. di fatturazione
-  report_header_billing_state: Stato di fatturazione
+  report_header_billing_state: Provincia di fatturazione
   report_header_incoming_transport: Trasporto in arrivo
   report_header_special_instructions: Istruzioni speciali
   report_header_order_number: Numero gentile richiesta
   report_header_date: Data
   report_header_confirmation_date: Data conferma
-  report_header_tags: Tag
+  report_header_tags: Etichette
   report_header_items: Prodotti
   report_header_items_total: "Totale articoli %{currency_symbol}"
   report_header_taxable_items_total: "Totale Articoli con tariffe (%{currency_symbol})"
@@ -2456,7 +2501,7 @@ it:
   report_header_outstanding_balance_price: "Saldo in sospeso (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
-  report_header_sku: SKU
+  report_header_sku: Codice ID
   report_header_amount: Quantità
   report_header_balance: Saldo
   report_header_total_cost: "Costi totali"
@@ -2479,8 +2524,8 @@ it:
   report_header_transaction_fee: Commissioni di transazione (no tasse)
   report_header_total_untaxable_admin: Aggiustamenti amministrativi totali non tassabili (nessuna imposta)
   report_header_total_taxable_admin: Totale rettifiche amministrative tassabili (tasse incluse)
-  initial_invoice_number: "Numero di fattura iniziale:"
-  invoice_date: "Data fattura:"
+  initial_invoice_number: "Numero documento iniziale:"
+  invoice_date: "Data documento:"
   due_date: "Scadenza:"
   account_code: "Codice account:"
   equals: "Uguale a"
@@ -2518,8 +2563,8 @@ it:
   payment_updated: "Pagamento aggiornato"
   cannot_perform_operation: "Non è possibile aggiornare il pagamento"
   action_required: "Azione richiesta"
-  inventory_settings: "Impostazioni dell'inventario"
-  tag_rules: "Regole dei tag"
+  inventory_settings: "Impostazioni Inventario"
+  tag_rules: "Regole Etichette"
   shop_preferences: "Preferenze di acquisto"
   enterprise_fee_whole_order: Ordine intero
   enterprise_fee_by: "%{type} tariffa da %{role} %{enterprise_name}"
@@ -2610,22 +2655,22 @@ it:
         invite: "Invita"
         invite_title: "Invita un utente non registrato"
         tag_rule_help:
-          title: Regole Tag
+          title: Regole Etichette
           overview: Panoramica
           overview_text: >
-              Le regole per le tag forniscono un modo per descrivere quali elementi
+              Le regole per le etichette forniscono un modo per descrivere quali elementi
               sono visibili, o a quali utenti. Gli elementi possono essere: Metodi
               di Consegna, Metodi di Pagamento, Prodotti e Cicli d'Ordine.
           by_default_rules: "Regole predefinite"
           by_default_rules_text: >
               Le regole predefinite ti permettono di nascondere gli elementi affinché
               non siano visibili. Puoi renderli visibili assegnando regole non predefinite
-              ad utenti con tag particolari
-          customer_tagged_rules: "Regole \"Utenti taggati...\""
+              ad utenti con etichette particolari.
+          customer_tagged_rules: "Regole \"Clienti etichettati...\""
           customer_tagged_rules_text: >
-              Creando regole relative ad una specifica tag per clienti, puoi superare
-              il comportamento predefinito (che prevede elementi visibili o nascosti)
-              per clienti con le tag specificate.
+              Creando regole relative ad una specifica etichetta dei clienti, puoi
+              modificare il comportamento predefinito (per mostrare o nascondere determinati
+              elementi) per i clienti con le etichette specificate.
         terms_and_conditions_info:
           title: "Caricamento dei Termini e Condizioni"
           message_1: "I Termini e Condizioni sono il contratto tra te, il venditore, e l'acquirente. Se carichi un documento qui, i tuoi clienti dovranno accettare i tuoi Termini e Condizioni per poter confermare la loro gentile richiesta. Ti consigliamo vivamente di caricare i tuoi Termini e Condizioni, in linea con la legislazione nazionale."
@@ -2635,7 +2680,7 @@ it:
           message_1: "Tutti i tuoi clienti dovranno accettarli alla conferma delle loro gentili richieste. Se aggiorni il documento, tutti i tuoi clienti dovranno accettarli nuovamente alla prossima conferma di richiesta."
           message_2: "Per i clienti in abbonamento, per ora è necessario mandare loro una mail con i Termini e le Condizioni (o con le modifiche ad essi). Non è al momento prevista alcuna notifica automatica."
         business_address_info:
-          message: "La ragione sociale, l'indirizzo ed il telefono della sede legale sono usati per aziende che fatturano da un'entità legale registrata con dettagli diversi rispetto alle informazioni commerciali pubbliche. Questi dettagli saranno utilizzati SOLO per le fatture. Se non inserisci queste informazioni, nelle fatture saranno utilizzati Nome, Indirizzo e Numero di telefono pubblicati."
+          message: "La ragione sociale, l'indirizzo ed il telefono della sede legale sono usati per aziende che fatturano da un'entità legale registrata con dettagli diversi rispetto alle informazioni commerciali pubbliche. Questi dettagli saranno utilizzati SOLO per le conferme d'ordine. Se non inserisci queste informazioni, nelle fatture saranno utilizzati Nome, Indirizzo e Numero di telefono pubblicati."
       panels:
         save: SALVA
         saved: SALVATO
@@ -2739,13 +2784,13 @@ it:
           variants_loaded: "%{num_of_variants_loaded} di %{total_number_of_variants} varianti caricate"
           loading_variants: "Caricamento Varianti"
       tag_rules:
-        shipping_method_tagged_top: "Metodi di consegna taggati"
+        shipping_method_tagged_top: "Metodi di consegna etichettati"
         shipping_method_tagged_bottom: "sono:"
-        payment_method_tagged_top: "Metodi di Pagamento taggati"
+        payment_method_tagged_top: "Metodi di Pagamento etichettati"
         payment_method_tagged_bottom: "sono:"
-        order_cycle_tagged_top: "Cicli di richieste taggati"
+        order_cycle_tagged_top: "Cicli di richieste etichettati"
         order_cycle_tagged_bottom: "sono:"
-        inventory_tagged_top: "Varianti inventario taggate"
+        inventory_tagged_top: "Varianti inventario etichettate"
         inventory_tagged_bottom: "sono:"
       new_tag_rule_dialog:
         select_rule_type: "Seleziona un tipo di regola:"
@@ -2756,9 +2801,9 @@ it:
         index:
           per_page: "%{results} per pagina"
           view_file: "Vedi file"
-          compiling_invoices: "Compilazione fatture"
-          bulk_invoice_created: "Fattura all'ingrosso creata"
-          bulk_invoice_failed: "Creazione fattura all'ingrosso fallita"
+          compiling_invoices: "Compilazione Conferme d'ordine"
+          bulk_invoice_created: "Conferme d'ordine massive create"
+          bulk_invoice_failed: "Creazione conferme d'ordine massive fallita"
           please_wait: "Si prega di attendere che il PDF sia pronto prima di chiudere questo modale"
         order_state:
           address: "indirizzo"
@@ -2862,7 +2907,7 @@ it:
         use_producer_settings: "Usa le impostazioni dello stock del produttore"
         'yes': "Sì"
         'no': "No"
-      inventory_products: "Inventario Prodotti"
+      inventory_products: "Prodotti in Inventario"
       hidden_products: "Prodotti Nascosti"
       new_products: "Nuovi Prodotti"
       reset_stock_levels: Resetta le quantità disponibili alla quantità predefinita
@@ -3095,7 +3140,7 @@ it:
     add_state: "Aggiungi provincia"
     adjustment: "Aggiustamenti"
     all: "Tutti"
-    associated_adjustment_closed: "Aggiustamenti associati chiusi"
+    associated_adjustment_closed: "Modifica anche impostazioni associate"
     back_to_adjustments_list: "Indietro ad Aggiustamenti"
     back_to_users_list: "Indietro a Utenti"
     back_to_zones_list: "Indietro a Zone"
@@ -3141,7 +3186,7 @@ it:
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
     add_product: "Aggiungi prodotto"
-    name_or_sku: "Nome o SKU (inserisci almeno i primi 4 caratteri del nome del prodotto)"
+    name_or_sku: "Nome o Codice ID (inserisci almeno i primi 4 caratteri del nome del prodotto)"
     resend: "Invia di nuovo"
     back_to_orders_list: "Torna alla lista delle richieste"
     back_to_payments_list: "Torna Alla Lista Pagamenti"
@@ -3245,16 +3290,16 @@ it:
     default_tax: "Imposta predefinita"
     default_tax_zone: "Zona fiscale predefinita"
     country_based: "Basato sul paese"
-    state_based: "Basato sullo stato"
+    state_based: "In base alla nazione"
     countries: "Paesi"
     listing_countries: "Elenco dei paesi"
     iso_name: "Nome ISO"
-    states_required: "Stati richiesti"
+    states_required: "Provincia richiesta"
     editing_country: "Modifica Paese"
     back_to_countries_list: "Torna all'elenco dei Paesi"
     states: "Stati"
     abbreviation: "Abbreviazione"
-    new_state: "Nuovo stato"
+    new_state: "Nuovo Stato"
     payment_methods: "Metodi di pagamento"
     taxonomies: "Tassonomie"
     new_taxonomy: "Nuova tassonomia"
@@ -3316,7 +3361,7 @@ it:
     payment_method: "Metodo di pagamento"
     payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
     not_available: "N/A"
-    sku: "SKU"
+    sku: "Codice ID"
     there_are_no_items_for_this_order: "Non ci sono articoli per questa richiesta"
     order_populator:
       out_of_stock: '%{item} non è al momento disponibile.'
@@ -3426,6 +3471,7 @@ it:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Non è possibile aggiungere articoli a richieste cancellate"
+          include_out_of_stock_variants: "Include varianti non disponibili"
         index:
           listing_orders: "Listino Ordini"
           new_order: "Nuovo ordine"
@@ -3442,7 +3488,7 @@ it:
           no_orders_found: "Nessuna gentile richiesta trovata"
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
-          print_invoices: "Stampa fatture"
+          print_invoices: "Stampa conferme d'ordine"
         sortable_header:
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"
@@ -3452,7 +3498,7 @@ it:
           email: "E-mail Cliente"
         invoice:
           issued_on: "Emesso il"
-          tax_invoice: "FATTURA DI CORTESIA (non ha valore fiscale)"
+          tax_invoice: "Conferma d'ordine"
           code: "Codice"
           from: "Da"
           to: "Pagamento a"
@@ -3562,7 +3608,7 @@ it:
           both: "Entrambi Checkout e Back Office"
           front_end: "Solo checkout"
           back_end: "Solo Back office"
-          tags: "Tag"
+          tags: "Etichette"
           deactivation_warning: "Disattivare un metodo di pagamento può far sparire il metodo di pagamento dalla tua lista. Alternativamente, puoi nascondere il metodo di pagamento dalla pagina di checkout impostando l'opzione 'Visualizza' su 'Solo Back office'."
         providers:
           provider: "Provider"
@@ -3660,7 +3706,7 @@ it:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
         index:
-          sku: "SKU"
+          sku: "Codice ID"
           price: "Prezzo"
           options: "Opzioni"
           no_results: "Nessun risultato"
@@ -3673,7 +3719,7 @@ it:
         new:
           new_variant: "Nuova variante"
         form:
-          sku: "SKU"
+          sku: "Codice ID"
           price: "Prezzo"
           unit_price: "Prezzo unitario"
           display_as: "Visualizza come"
@@ -3695,6 +3741,7 @@ it:
           shipment_state: "Stato della spedizione"
           email: "Email"
           total: "Totale"
+          bill_address_lastname: "Nome"
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"
@@ -3774,7 +3821,7 @@ it:
         subject: "Conferma Ordine"
       invoice_email:
         hi: "Ciao %{name}"
-        invoice_attached_text: 'Aggiunge una fattura per il tuo recente ordine di '
+        invoice_attached_text: In allegato trovi la conferma d'ordine per la tua recente gentile richiesta da
     user_mailer:
       reset_password_instructions:
         request_sent_text: |

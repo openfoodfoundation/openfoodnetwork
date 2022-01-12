@@ -1539,6 +1539,12 @@ ar:
           label: بلد
       delivery_address:
         title: عنوان التسليم
+    step2:
+      form:
+        card_month:
+          label: شهر
+        card_year:
+          label: عام
     step3:
       your_details:
         title: تفاصيلك
@@ -3645,6 +3651,7 @@ ar:
           shipment_state: "حالة الشحن"
           email: "البريد الإلكتروني"
           total: "المجموع"
+          bill_address_lastname: "الاسم"
       general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"

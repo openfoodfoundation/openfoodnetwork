@@ -3342,6 +3342,7 @@ fil_PH:
           shipment_state: "status ng kargamento"
           email: "Email"
           total: "kabuuan"
+          bill_address_lastname: "Pangalan"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

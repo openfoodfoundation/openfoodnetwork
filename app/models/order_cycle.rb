@@ -28,6 +28,8 @@ class OrderCycle < ApplicationRecord
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
+  before_update :reset_processed_at, if: :will_save_change_to_orders_close_at?
+
   validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
 
@@ -52,6 +54,7 @@ class OrderCycle < ApplicationRecord
     where('order_cycles.orders_close_at < ?',
           Time.zone.now).order("order_cycles.orders_close_at DESC")
   }
+  scope :unprocessed, -> { where(processed_at: nil) }
   scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
   scope :dated, -> { where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL') }
 
@@ -274,5 +277,11 @@ class OrderCycle < ApplicationRecord
     return if orders_close_at > orders_open_at
 
     errors.add(:orders_close_at, :after_orders_open_at)
+  end
+
+  def reset_processed_at
+    return unless orders_close_at.present? && orders_close_at_was.present?
+
+    self.processed_at = nil if orders_close_at > orders_close_at_was
   end
 end

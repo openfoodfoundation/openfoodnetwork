@@ -12,18 +12,6 @@ require 'ransack'
 require 'state_machines'
 
 module Spree
-  mattr_accessor :user_class
-
-  def self.user_class
-    if @@user_class.is_a?(Class)
-      raise "Spree.user_class MUST be a String object, not a Class object."
-    end
-
-    return unless @@user_class.is_a?(String)
-
-    @@user_class.constantize
-  end
-
   # Used to configure Spree.
   #
   # Example:

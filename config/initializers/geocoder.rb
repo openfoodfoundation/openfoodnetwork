@@ -1,5 +1,5 @@
 # Google requires an API key with a billing account to use their API.
-# The key is stored in config/application.yml.
+# The key is stored in .env[.*] files.
 
 Geocoder.configure(
   timeout: ENV.fetch('GEOCODER_TIMEOUT', 6).to_i,

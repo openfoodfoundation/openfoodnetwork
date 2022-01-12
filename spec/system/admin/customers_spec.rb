@@ -13,7 +13,7 @@ describe 'Customers' do
     let(:managed_distributor2) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
 
-    describe "using the customers index", js: true do
+    describe "using the customers index" do
       let!(:customer1) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
@@ -119,8 +119,8 @@ describe 'Customers' do
           create(:stripe_sca_payment_method, distributors: [managed_distributor1])
         }
         let!(:payment1) {
-          create(:payment, order: order1, state: 'completed', payment_method: payment_method,
-                           response_code: 'pi_123', amount: 88.00)
+          create(:payment, :completed, order: order1, payment_method: payment_method,
+                                       response_code: 'pi_123', amount: 88.00)
         }
 
         before do
@@ -149,8 +149,8 @@ describe 'Customers' do
 
         context "with an additional negative payment (or refund)" do
           let!(:payment2) {
-            create(:payment, order: order1, state: 'completed', payment_method: payment_method,
-                             response_code: 'pi_123', amount: -25.00)
+            create(:payment, :completed, order: order1, payment_method: payment_method,
+                                         response_code: 'pi_123', amount: -25.00)
           }
 
           before do

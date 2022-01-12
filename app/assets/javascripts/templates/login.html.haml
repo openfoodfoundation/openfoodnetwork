@@ -14,7 +14,7 @@
         %input.title.input-text{name: "email",
           type: "email",
           id: "email",
-          tabindex: 1,
+          tabindex: "1",
           inputmode: "email",
           "ng-model" => "spree_user.email"}
     .row
@@ -24,7 +24,7 @@
           type: "password",
           id: "password",
           autocomplete: "off",
-          tabindex: 2,
+          tabindex: "2",
           inputmode: "password",
           "ng-model" => "spree_user.password"}
     .row
@@ -33,12 +33,13 @@
         type: "checkbox",
         id: "remember_me",
         value: "1",
+        tabindex: "3",
         "ng-model" => "spree_user.remember_me"}
         %label{for: "remember_me"} {{'remember_me' | t}}
     .row
       .large-12.columns
         %input.button.primary{name: "commit",
-          tabindex: "3",
+          tabindex: "4",
           type: "submit",
           value: "{{'label_login' | t}}"}
 :javascript

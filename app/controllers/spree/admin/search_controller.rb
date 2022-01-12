@@ -8,7 +8,7 @@ module Spree
       respond_to :json
 
       def known_users
-        @users = if exact_match = Spree.user_class.find_by(email: search_params[:q])
+        @users = if exact_match = Spree::User.find_by(email: search_params[:q])
                    [exact_match]
                  else
                    spree_current_user.known_users.ransack(ransack_hash).result.limit(10)

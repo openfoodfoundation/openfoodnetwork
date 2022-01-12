@@ -1,0 +1,16 @@
+.tag-with-rules {
+  color: black;
+}
+
+table#customers.index {
+
+  tr.customer {
+
+    .guest-label {
+      color: $medium-grey;
+      display: block;
+      font-size: 0.85em;
+      margin-top: 0.15em;
+    }
+  }
+}

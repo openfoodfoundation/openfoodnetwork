@@ -19,6 +19,15 @@ AllCops:
 #
 # Cop settings that have been agreed upon by the OFN community
 
+Rails/SkipsModelValidations:
+  AllowedMethods:
+    - "touch"
+    - "touch_all"
+    - "update_all"
+    - "update_attribute"
+    - "update_column"
+    - "update_columns"
+
 Style/Documentation:
   Enabled: false
 

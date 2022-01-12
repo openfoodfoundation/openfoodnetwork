@@ -58,6 +58,20 @@ en_GB:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+  stripe:
+    error_code:
+      incorrect_number: "The card number is incorrect."
+      invalid_number: "The card number is not a valid credit card number."
+      invalid_expiry_month: "The card's expiration month is invalid."
+      invalid_expiry_year: "The card's expiration year is invalid."
+      invalid_cvc: "The card's security code is invalid."
+      expired_card: "The card has expired."
+      incorrect_cvc: "The card's security code is incorrect."
+      incorrect_zip: "The card's post code failed validation."
+      card_declined: "The card was declined."
+      missing: "There is no card available to charge the customer."
+      processing_error: "An error occurred while processing the card."
+      rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -970,6 +984,8 @@ en_GB:
         back_to_list: "Back To List"
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
+        re_notify_producers: Re notify producers
+        notify_producers_tip: This will send an email to each producer with the list of their orders.
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1010,6 +1026,8 @@ en_GB:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
+        automatic_notifications: Automatic notifications
+        automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
         choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
@@ -1618,6 +1636,21 @@ en_GB:
     step2:
       payment_method:
         title: Payment method
+      form:
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Month
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card details
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
@@ -2481,7 +2514,7 @@ en_GB:
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: 20%
-  report_header_gst_free_income: No VAT 0% and excluded from the VAT return
+  report_header_gst_free_income: Zero rated income
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
@@ -3440,6 +3473,7 @@ en_GB:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
+          include_out_of_stock_variants: "Include variants with no available stock"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3709,6 +3743,7 @@ en_GB:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
+          bill_address_lastname: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"
