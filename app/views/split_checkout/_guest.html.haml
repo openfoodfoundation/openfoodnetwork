@@ -4,7 +4,7 @@
       = t :checkout_headline
 
     %div.checkout-submit{ class: "#{@order.distributor.allow_guest_orders? ? 'checkout-submit-inline' : 'medium-6' }" }
-      %a.primary.button{ href: main_app.login_path }
+      %button.button.primary{ "data-action": "click->guest-checkout#login" }
         = t :label_login
       -if @order.distributor.allow_guest_orders?
         %span.checkout-submit-or

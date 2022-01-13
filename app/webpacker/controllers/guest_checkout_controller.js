@@ -15,6 +15,10 @@ export default class extends Controller {
     }
   }
 
+  login() {
+    window.dispatchEvent(new Event("login:modal:open"))
+  }
+
   showCheckout() {
     this.checkoutTarget.style.display = "block";
     this.guestTarget.style.display = "none";

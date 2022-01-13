@@ -62,9 +62,9 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect(page).to have_no_content("Checkout as guest")
     end
 
-    it "should redirect to the login page when clicking the login button" do
+    it "should show the login modal when clicking the login button" do
       click_on "Login"
-      expect(page).to have_current_path "/"
+      expect(page).to have_selector ".login-modal"
     end
   end
 
