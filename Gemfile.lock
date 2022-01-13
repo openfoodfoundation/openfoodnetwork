@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/jeremydurham/custom-err-msg.git
-  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
-  specs:
-    custom_error_message (1.1.1)
-
-GIT
   remote: https://github.com/openfoodfoundation/db2fog.git
   revision: 5b63343847452f52aa42f7fc169d6ab3af57cda3
   branch: rails-6
@@ -710,7 +704,6 @@ DEPENDENCIES
   coffee-rails (~> 5.0.0)
   combine_pdf
   cuprite
-  custom_error_message!
   database_cleaner
   db2fog!
   ddtrace
