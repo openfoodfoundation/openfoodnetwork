@@ -131,6 +131,15 @@
       color: $teal-400;
       text-decoration: underline;
     }
+
+    &.checkout-input-radio {
+      display: flex;
+      align-items: center;
+
+      label {
+        margin-top: 0.3rem;
+      }
+    }
   }
 
   .checkout-input span.formError, div.error.card-errors {

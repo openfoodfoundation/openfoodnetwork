@@ -72,7 +72,7 @@
     - ship_method_description = nil
 
     - @shipping_methods.each do |shipping_method|
-      %div.checkout-input
+      %div.checkout-input.checkout-input-radio
         = fields_for shipping_method do |shipping_method_form|
           = shipping_method_form.radio_button :name, shipping_method.id,
             id: "shipping_method_#{shipping_method.id}",
