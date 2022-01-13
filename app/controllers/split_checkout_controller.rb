@@ -16,16 +16,10 @@ class SplitCheckoutController < ::BaseController
   helper OrderHelper
 
   def edit
-    return redirect_to_step unless params[:step]
-
-    return redirect_to_guest if !spree_current_user &&
-                                !@order.distributor.allow_guest_orders? &&
-                                params[:step] != "guest"
+    redirect_to_step unless params[:step]
   end
 
   def update
-    return redirect_to_guest if !spree_current_user && !@order.distributor.allow_guest_orders?
-
     if confirm_order || update_order
       clear_invalid_payments
       advance_order_state
@@ -33,10 +27,9 @@ class SplitCheckoutController < ::BaseController
     else
       flash.now[:error] = I18n.t('split_checkout.errors.global')
 
-      render operations: cable_car.
+      render status: :unprocessable_entity, operations: cable_car.
         replace("#checkout", partial("split_checkout/checkout")).
-        replace("#flashes", partial("shared/flashes", locals: { flashes: flash })),
-             status: :unprocessable_entity
+        replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
     end
   end
 
@@ -91,13 +84,7 @@ class SplitCheckoutController < ::BaseController
     @order_params ||= Checkout::Params.new(@order, params).call
   end
 
-  def redirect_to_guest
-    redirect_to checkout_step_path(:guest)
-  end
-
   def redirect_to_step
-    return redirect_to_guest if !spree_current_user && !params[:step]
-
     case @order.state
     when "cart", "address", "delivery"
       redirect_to checkout_step_path(:details)

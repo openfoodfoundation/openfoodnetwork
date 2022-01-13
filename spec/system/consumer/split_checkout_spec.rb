@@ -53,26 +53,18 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "guest checkout when distributor doesn't allow guest orders" do
     before do
-      visit checkout_path
+      visit checkout_step_path(:details)
     end
 
     it "should display the split checkout login page" do
-      expect(page).to have_content distributor.name
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_no_content("Checkout as guest")
     end
 
-    it "should be redirected if user enter the url" do
-      order.update(state: "payment")
-      get checkout_step_path(:details)
-      expect(response).to have_http_status(:redirect)
-      expect(page).to have_content("Ok, ready to checkout?")
-    end
-
     it "should redirect to the login page when clicking the login button" do
       click_on "Login"
-      expect(page).to have_content("Login")
+      expect(page).to have_current_path "/"
     end
   end
 
@@ -83,7 +75,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    it "should display the split checkout login/guest page" do
+    it "should display the split checkout login/guest form" do
       expect(page).to have_content distributor.name
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
@@ -126,7 +118,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       it "should allow visit '/checkout/details'" do
         order.update(state: "payment")
         visit checkout_step_path(:details)
-        expect(page).to have_button("Next - Payment method")
+        expect(page).to have_current_path("/checkout/details")
       end
     end
   end
@@ -236,8 +228,10 @@ describe "As a consumer, I want to checkout my order", js: true do
     before do
       variant.update!(on_demand: false, on_hand: 0)
     end
+
     it "returns me to the cart with an error message" do
       visit checkout_path
+
       expect(page).not_to have_selector 'closing', text: "Checkout now"
       expect(page).to have_selector 'closing', text: "Your shopping cart"
       expect(page).to have_content "An item in your cart has become unavailable"
