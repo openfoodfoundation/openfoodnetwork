@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include OrderCompletion
   include CablecarResponses
 
   helper 'terms_and_conditions'
@@ -51,6 +52,7 @@ class SplitCheckoutController < ::BaseController
     return unless validate_summary! && @order.errors.empty?
 
     @order.confirm!
+    order_completion_reset @order
   end
 
   def update_order
