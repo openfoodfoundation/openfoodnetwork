@@ -188,4 +188,24 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect(page).to have_content "An item in your cart has become unavailable"
     end
   end
+
+  context "summary step" do
+    let(:order) { create(:order_ready_for_confirmation, distributor: distributor) }
+
+    describe "completing the checkout" do
+      it "keeps the distributor selected for the current user after completion" do
+        visit checkout_step_path(:summary)
+
+        expect(page).to have_content "Shopping @ #{distributor.name}"
+
+        check "accept_terms"
+        click_on "Complete order"
+
+        expect(page).to have_content "Back To Store"
+        expect(order.reload.state).to eq "complete"
+
+        expect(page).to have_content "Shopping @ #{distributor.name}"
+      end
+    end
+  end
 end
