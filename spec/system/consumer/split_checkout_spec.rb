@@ -8,7 +8,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_guest_orders: false) }
+  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
     create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
   }
@@ -53,6 +53,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "guest checkout when distributor doesn't allow guest orders" do
     before do
+      distributor.update_columns allow_guest_orders: false
       visit checkout_path
     end
 
@@ -79,8 +80,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "as a guest user" do
     before do
-      distributor.update!(allow_guest_orders: true)
-      order.update!(distributor_id: distributor.id)
       visit checkout_path
     end
 
