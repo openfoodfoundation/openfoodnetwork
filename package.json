@@ -9,9 +9,8 @@
     "storybook": "start-storybook"
   },
   "jest": {
-    "testRegex": [
-      "spec/javascripts/.*_test\\.js"
-    ]
+    "testRegex": ["spec/javascripts/.*_test\\.js"],
+    "transformIgnorePatterns": ["/node_modules/(?!(stimulus)/)"]
   },
   "devDependencies": {
     "@storybook/addon-controls": "^6.4.12",
