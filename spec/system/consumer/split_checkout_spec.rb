@@ -19,7 +19,8 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
   let(:order) {
     create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
-                   ship_address_id: nil, state: "cart")
+                   ship_address_id: nil, state: "cart",
+                   line_items: [create(:line_item, variant: variant)])
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
@@ -45,7 +46,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     add_enterprise_fee enterprise_fee
     set_order order
-    add_product_to_cart order, product
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
