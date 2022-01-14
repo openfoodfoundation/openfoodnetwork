@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include OrderCompletion
   include CablecarResponses
 
   helper 'terms_and_conditions'
@@ -45,6 +46,7 @@ class SplitCheckoutController < ::BaseController
 
     @order.customer.touch :terms_and_conditions_accepted_at
     @order.confirm!
+    order_completion_reset @order
   end
 
   def update_order
