@@ -2,6 +2,8 @@
 
 module Spree
   class Taxon < ApplicationRecord
+    include Spree::Core::S3Support
+
     acts_as_nested_set dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
@@ -19,7 +21,6 @@ module Spree
                       path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
                       default_url: '/assets/default_taxon.png'
 
-    include Spree::Core::S3Support
     supports_s3 :icon
 
     # Indicate which filters should be used for this taxon
@@ -36,12 +37,11 @@ module Spree
       end
     end
 
-    # Creates permalink based on Stringex's .to_url method
     def set_permalink
       if parent.present?
         self.permalink = [parent.permalink, permalink_end].join('/')
       elsif permalink.blank?
-        self.permalink = name.to_url
+        self.permalink = UrlGenerator.to_url(name)
       end
     end
 
@@ -104,7 +104,7 @@ module Spree
     private
 
     def permalink_end
-      return name.to_url if permalink.blank?
+      return UrlGenerator.to_url(name) if permalink.blank?
 
       permalink.split('/').last
     end

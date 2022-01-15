@@ -236,7 +236,7 @@ module Spree
     end
 
     def to_param
-      permalink.present? ? permalink : (permalink_was || name.to_s.to_url)
+      permalink.present? ? permalink : (permalink_was || UrlGenerator.to_url(name))
     end
 
     # the master variant is not a member of the variants array
