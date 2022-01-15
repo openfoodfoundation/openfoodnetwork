@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
 require 'concerns/product_stock'
 

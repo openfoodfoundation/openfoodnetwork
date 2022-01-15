@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'open_food_network/locking'
-require 'open_food_network/permalink_generator'
 require 'spree/core/s3_support'
 
 class EnterpriseGroup < ApplicationRecord
   include PermalinkGenerator
+  include Spree::Core::S3Support
+
   acts_as_list
 
   has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'
@@ -39,7 +40,6 @@ class EnterpriseGroup < ApplicationRecord
   validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
   validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
 
-  include Spree::Core::S3Support
   supports_s3 :logo
   supports_s3 :promo_image
 
