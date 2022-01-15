@@ -21,6 +21,9 @@ angular.module('Darkswarm').factory "AuthenticationService", (Navigation, $modal
       @selectedPath = path || @selectedPath
       Navigation.navigate @selectedPath
 
+      if window._paq
+        window._paq.push(['trackEvent', 'Signin/Signup', 'Login Modal View', window.location.href])
+
     # Opens the /login tab if returning from email confirmation,
     # the /signup tab if opened from the enterprise registration page,
     # otherwise opens whichever tab is selected in the URL params ('/login', '/signup', or '/forgot')
