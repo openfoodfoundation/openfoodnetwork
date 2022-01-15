@@ -213,12 +213,16 @@ describe '
       expect(page).to have_selector 'h1', text: "Customer Details"
 
       fill_in "order_email", with: "test@test.com"
+      
+      expect(page).to have_selector('#order_ship_address_attributes_firstname')
       check "order_use_billing"
-      fill_in "order_bill_address_attributes_firstname", with: "xxx"
-      fill_in "order_bill_address_attributes_lastname", with: "xxx"
-      fill_in "order_bill_address_attributes_address1", with: "xxx"
-      fill_in "order_bill_address_attributes_city", with: "xxx"
-      fill_in "order_bill_address_attributes_zipcode", with: "xxx"
+      expect(page).not_to have_selector('#order_ship_address_attributes_firstname')
+      
+      fill_in "order_bill_address_attributes_firstname", with: "Clark"
+      fill_in "order_bill_address_attributes_lastname", with: "Kent"
+      fill_in "order_bill_address_attributes_address1", with: "Smallville"
+      fill_in "order_bill_address_attributes_city", with: "Kansas"
+      fill_in "order_bill_address_attributes_zipcode", with: "SP1 M11"
 
       # The country is already selected and we avoid re-selecting it here
       # because it would trigger an API call which we would need to wait for
@@ -229,9 +233,19 @@ describe '
       #
       # select "Australia", from: "order_bill_address_attributes_country_id"
       select "Victoria", from: "order_bill_address_attributes_state_id"
-      fill_in "order_bill_address_attributes_phone", with: "xxx"
+      fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
-      click_button "Update"
+      expect { click_button "Update" }.to change { Customer.count }.by(1)
+
+      new_customer = Customer.last
+
+      expect(new_customer.name).to eq('Clark Kent')
+      expect(new_customer.bill_address.address1).to eq('Smallville')
+      expect(new_customer.bill_address.city).to eq('Kansas')
+      expect(new_customer.bill_address.zipcode).to eq('SP1 M11')
+      expect(new_customer.bill_address.phone).to eq('111 1111 1111')
+
+      expect(new_customer.bill_address).to eq(new_customer.ship_address)
 
       expect(page).to have_content "Customer Details updated"
 
