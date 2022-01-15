@@ -30,7 +30,7 @@ module Spree
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
 
     token_resource
 
@@ -103,6 +103,8 @@ module Spree
 
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
+
+    after_save_commit :save_default_addresses
 
     # -- Scopes
     scope :not_empty, -> {
@@ -742,6 +744,23 @@ module Spree
       return unless pending_payments.any?
 
       pending_payments.first.update_attribute :amount, total
+    end
+
+    def save_default_addresses
+      return unless save_bill_address || save_ship_address
+
+      if save_bill_address
+        customer.bill_address_id = bill_address_id
+        user&.bill_address_id = bill_address_id
+      end
+
+      if save_ship_address
+        customer.ship_address_id = ship_address_id
+        user&.ship_address_id = ship_address_id
+      end
+
+      customer.save
+      user&.save
     end
   end
 end

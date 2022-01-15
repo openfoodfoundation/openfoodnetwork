@@ -24,6 +24,7 @@ module Checkout
     def apply_strong_parameters
       @order_params = params.require(:order).permit(
         :email, :shipping_method_id, :special_instructions, :existing_card_id,
+        :save_bill_address, :save_ship_address,
         bill_address_attributes: ::PermittedAttributes::Address.attributes,
         ship_address_attributes: ::PermittedAttributes::Address.attributes,
         payments_attributes: [
