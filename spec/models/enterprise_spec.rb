@@ -664,6 +664,13 @@ describe Enterprise do
         create(:enterprise, permalink: "permalink3")
         expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
       end
+
+      it "should support permalink generation from names with non-roman characters" do
+        enterprise = create(:enterprise, name: "你好")
+
+        expect(enterprise.valid?).to be true
+        expect(enterprise.permalink).to eq "ni-hao"
+      end
     end
   end
 
