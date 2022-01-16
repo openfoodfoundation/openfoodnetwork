@@ -1,23 +1,22 @@
-.variants.row
-  .small-4.medium-4.large-5.columns.variant-name
-    .inline{"ng-if" => "::variant.display_name"} {{ ::variant.display_name }}
-    .variant-unit {{ ::variant.unit_to_display }}
-  .small-3.medium-3.large-2.columns.variant-price
-    %price-breakdown{"price-breakdown" => "_", variant: "variant",
-      "price-breakdown-append-to-body" => "true",
-      "price-breakdown-placement" => "bottom",
-      "price-breakdown-animation" => true}
-    {{ variant.price_with_fees | localizeCurrency }}
-    .unit-price.variant-unit-price
-      %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
-      "question-mark-with-tooltip-append-to-body" => "true",
-      "question-mark-with-tooltip-placement" => "top",
-      "question-mark-with-tooltip-animation" => true,
-      key: "'js.shopfront.unit_price_tooltip'"}
-      {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
-        
-  .medium-2.large-2.columns.total-price
-    %span{"ng-class" => "{filled: variant.line_item.total_price}"}
-      {{ variant.line_item.total_price | localizeCurrency }}
-  = render partial: "shop/products/shop_variant_no_group_buy"
-  = render partial: "shop/products/shop_variant_with_group_buy"
+.small-4.medium-4.large-5.columns.variant-name
+  .inline{"ng-if" => "::variant.display_name"} {{ ::variant.display_name }}
+  .variant-unit {{ ::variant.unit_to_display }}
+.small-3.medium-3.large-2.columns.variant-price
+  %price-breakdown{"price-breakdown" => "_", variant: "variant",
+    "price-breakdown-append-to-body" => "true",
+    "price-breakdown-placement" => "bottom",
+    "price-breakdown-animation" => true}
+  {{ variant.price_with_fees | localizeCurrency }}
+  .unit-price.variant-unit-price
+    %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+    "question-mark-with-tooltip-append-to-body" => "true",
+    "question-mark-with-tooltip-placement" => "top",
+    "question-mark-with-tooltip-animation" => true,
+    key: "'js.shopfront.unit_price_tooltip'"}
+    {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
+
+.medium-2.large-2.columns.total-price
+  %span{"ng-class" => "{filled: variant.line_item.total_price}"}
+    {{ variant.line_item.total_price | localizeCurrency }}
+= render partial: "shop/products/shop_variant_no_group_buy"
+= render partial: "shop/products/shop_variant_with_group_buy"
