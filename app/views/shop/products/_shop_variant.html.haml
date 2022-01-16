@@ -19,5 +19,5 @@
   .medium-2.large-2.columns.total-price
     %span{"ng-class" => "{filled: variant.line_item.total_price}"}
       {{ variant.line_item.total_price | localizeCurrency }}
-  %ng-include{src: "'partials/shop_variant_no_group_buy.html'"}
-  %ng-include{src: "'partials/shop_variant_with_group_buy.html'"}
+  = render partial: "shop/products/shop_variant_no_group_buy"
+  = render partial: "shop/products/shop_variant_with_group_buy"
