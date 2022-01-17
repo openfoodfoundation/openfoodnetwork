@@ -616,16 +616,16 @@ cy:
         no_name: Dim enw
         blank_enterprise: 'ni ddiffiniwyd menter ar gyfer rhai eitemau cynnyrch '
         reset_absent?: Ailosod cynhyrchion absennol
-        reset_absent_tip: Gosod stoc i ddim ar gyfer yr holl gynhyrchion sy&#39;n gadael nad ydyn nhw&#39;n bresennol yn y ffeil
+        reset_absent_tip: Gosod stoc i ddim ar gyfer yr holl gynhyrchion sy'n gadael nad ydyn nhw'n bresennol yn y ffeil
         overwrite_all: Ysgrifennu popeth
-        overwrite_empty: Ysgrifennwch os yw&#39;n wag
+        overwrite_empty: Ysgrifennwch os yw'n wag
         default_stock: Gosod lefel stoc
         default_tax_cat: Categori treth gosod
         default_shipping_cat: Gosod categori cludo
         default_available_date: Gosod y dyddiad sydd ar gael
         validation_overview: Trosolwg dilysu mewnforio
         entries_found: Cofnodion a geir mewn ffeil a fewnforiwyd
-        entries_with_errors: Mae eitemau&#39;n cynnwys gwallau ac ni fyddant yn cael eu mewnforio
+        entries_with_errors: Mae eitemau'n cynnwys gwallau ac ni fyddant yn cael eu mewnforio
         products_to_create: Bydd cynhyrchion yn cael eu creu
         products_to_update: Bydd cynhyrchion yn cael eu diweddaru
         inventory_to_create: Bydd eitemau rhestr yn cael eu creu
@@ -635,15 +635,15 @@ cy:
         line: Llinell
         item_line: Llinell eitem
       import_review:
-        not_updatable_tip: "Ni ellir diweddaru&#39;r meysydd canlynol trwy fewnforio swmp ar gyfer cynhyrchion sy&#39;n bodoli eisoes:"
+        not_updatable_tip: "Ni ellir diweddaru'r meysydd canlynol trwy fewnforio swmp ar gyfer cynhyrchion sy'n bodoli eisoes:"
         fields_ignored: Anwybyddir y caeau hyn pan arbedir y cynhyrchion a fewnforir.
       entries_table:
-        not_updatable: Ni ellir diweddaru&#39;r maes hwn trwy fewnforio swmp ar gynhyrchion sy&#39;n bodoli eisoes
+        not_updatable: Ni ellir diweddaru'r maes hwn trwy fewnforio swmp ar gynhyrchion sy'n bodoli eisoes
       save_results:
         final_results: Mewnforio canlyniadau terfynol
-        products_created: Cynhyrchion wedi&#39;u creu
-        products_updated: Cynhyrchion wedi&#39;u diweddaru
-        inventory_created: Eitemau rhestr wedi&#39;u creu
+        products_created: Cynhyrchion wedi'u creu
+        products_updated: Cynhyrchion wedi'u diweddaru
+        inventory_created: Eitemau rhestr wedi'u creu
         inventory_updated: Diweddarwyd eitemau rhestr
         products_reset: Roedd cynhyrchion wedi ailosod lefel stoc i sero
         inventory_reset: Ailosodwyd lefel stoc ar eitemau stoc i sero
@@ -658,7 +658,7 @@ cy:
         loading_inventory: BUDDSODDI BUDDSODDI
       index:
         title: Rhestr
-        description: Defnyddiwch y dudalen hon i reoli stocrestrau ar gyfer eich mentrau. Bydd unrhyw fanylion cynnyrch a osodir yma yn diystyru&#39;r rhai a osodir ar y dudalen &#39;Cynhyrchion&#39;
+        description: Defnyddiwch y dudalen hon i reoli stocrestrau ar gyfer eich mentrau. Bydd unrhyw fanylion cynnyrch a osodir yma yn diystyru'r rhai a osodir ar y dudalen &#39;Cynhyrchion&#39;
         enable_reset?: Galluogi Ailosod Stoc?
         default_stock: "Stoc ddiofyn"
         inherit?: Etifedd?
@@ -667,28 +667,28 @@ cy:
         import_date: Mewnforio
         select_a_shop: Dewiswch Siop
         review_now: Adolygu Nawr
-        new_products_alert_message: Mae %{new_product_count} o gynhyrchion newydd ar gael i&#39;w hychwanegu at eich rhestr eiddo.
+        new_products_alert_message: Mae %{new_product_count} o gynhyrchion newydd ar gael i'w hychwanegu at eich rhestr eiddo.
         currently_empty: Mae eich rhestr eiddo yn wag ar hyn o bryd
         no_matching_products: Ni cheir unrhyw gynhyrchion paru yn eich rhestr eiddo
-        no_hidden_products: Nid oes unrhyw gynhyrchion wedi&#39;u cuddio o&#39;r rhestr eiddo hon
-        no_matching_hidden_products: Nid oes unrhyw gynhyrchion cudd yn cyd-fynd â&#39;ch meini prawf chwilio
-        no_new_products: Nid oes unrhyw gynhyrchion newydd ar gael i&#39;w hychwanegu at y rhestr eiddo hon
-        no_matching_new_products: Nid oes unrhyw gynhyrchion newydd yn cyd-fynd â&#39;ch meini prawf chwilio
-        inventory_powertip: Dyma&#39;ch rhestr o gynhyrchion. I ychwanegu cynhyrchion at eich rhestr eiddo, dewiswch &#39;Cynhyrchion Newydd&#39; o&#39;r gwymplen Gweld.
-        hidden_powertip: Mae&#39;r cynhyrchion hyn wedi&#39;u cuddio o&#39;ch rhestr eiddo ac ni fyddant ar gael i&#39;w hychwanegu at eich siop. Gallwch glicio &#39;Ychwanegu&#39; i ychwanegu cynnyrch at eich rhestr eiddo.
-        new_powertip: Mae&#39;r cynhyrchion hyn ar gael i&#39;w hychwanegu at eich rhestr eiddo. Cliciwch &#39;Ychwanegu&#39; i ychwanegu cynnyrch at eich rhestr eiddo, neu &#39;Cuddio&#39; i&#39;w guddio o&#39;r golwg. Gallwch chi bob amser newid eich meddwl yn nes ymlaen!
+        no_hidden_products: Nid oes unrhyw gynhyrchion wedi'u cuddio o'r rhestr eiddo hon
+        no_matching_hidden_products: Nid oes unrhyw gynhyrchion cudd yn cyd-fynd â'ch meini prawf chwilio
+        no_new_products: Nid oes unrhyw gynhyrchion newydd ar gael i'w hychwanegu at y rhestr eiddo hon
+        no_matching_new_products: Nid oes unrhyw gynhyrchion newydd yn cyd-fynd â'ch meini prawf chwilio
+        inventory_powertip: Dyma'ch rhestr o gynhyrchion. I ychwanegu cynhyrchion at eich rhestr eiddo, dewiswch &#39;Cynhyrchion Newydd&#39; o'r gwymplen Gweld.
+        hidden_powertip: Mae'r cynhyrchion hyn wedi'u cuddio o'ch rhestr eiddo ac ni fyddant ar gael i'w hychwanegu at eich siop. Gallwch glicio &#39;Ychwanegu&#39; i ychwanegu cynnyrch at eich rhestr eiddo.
+        new_powertip: Mae'r cynhyrchion hyn ar gael i'w hychwanegu at eich rhestr eiddo. Cliciwch &#39;Ychwanegu&#39; i ychwanegu cynnyrch at eich rhestr eiddo, neu &#39;Cuddio&#39; i'w guddio o'r golwg. Gallwch chi bob amser newid eich meddwl yn nes ymlaen!
       controls:
         back_to_my_inventory: Yn ôl at fy rhestr eiddo
     orders:
       edit:
-        order_sure_want_to: Ydych chi&#39;n siŵr eich bod chi am %{event} y gorchymyn hwn?
-      invoice_email_sent: 'Mae e-bost anfoneb wedi&#39;i anfon'
+        order_sure_want_to: Ydych chi'n siŵr eich bod chi am %{event} y gorchymyn hwn?
+      invoice_email_sent: 'Mae e-bost anfoneb wedi''i anfon'
       order_email_resent: 'Mae e-bost archeb wedi bod yn ddig'
       bulk_management:
         tip: "Defnyddiwch y dudalen hon i newid meintiau cynnyrch ar draws sawl archeb. Gellir hefyd tynnu cynhyrchion o archebion yn gyfan gwbl, os oes angen."
         shared: "Adnodd a Rennir?"
         order_no: "Gorchymyn Rhif."
-        order_date: "Wedi&#39;i gwblhau yn"
+        order_date: "Wedi'i gwblhau yn"
         max: "Max"
         product_unit: "Cynnyrch: Uned"
         weight_volume: "Pwysau / Cyfrol (g)"
@@ -707,7 +707,7 @@ cy:
         all: "I gyd"
       select_variant: "Dewiswch amrywiad"
     enterprise:
-      select_outgoing_oc_products_from: Dewiswch gynhyrchion OC sy&#39;n mynd allan o
+      select_outgoing_oc_products_from: Dewiswch gynhyrchion OC sy'n mynd allan o
     enterprises:
       index:
         title: Mentrau
@@ -721,14 +721,14 @@ cy:
           desc_short: Disgrifiad Byr
           desc_short_placeholder: Dywedwch wrthym am eich menter mewn un neu ddwy frawddeg
           desc_long: Amdanom ni
-          desc_long_placeholder: Dywedwch wrth gwsmeriaid amdanoch chi&#39;ch hun. Mae&#39;r wybodaeth hon yn ymddangos ar eich proffil cyhoeddus.
+          desc_long_placeholder: Dywedwch wrth gwsmeriaid amdanoch chi'ch hun. Mae'r wybodaeth hon yn ymddangos ar eich proffil cyhoeddus.
         business_details:
           abn: ABN
           abn_placeholder: ee. 99 123 456 789
           acn: ACN
           acn_placeholder: ee. 123 456 789
           display_invoice_logo: Arddangos logo mewn anfonebau
-          invoice_text: Ychwanegwch destun wedi&#39;i addasu ar ddiwedd yr anfonebau
+          invoice_text: Ychwanegwch destun wedi'i addasu ar ddiwedd yr anfonebau
           terms_and_conditions: "Telerau ac Amodau"
           remove_terms_and_conditions: "Tynnu Ffeil"
           uploaded_on: "uwchlwytho ar"
@@ -759,10 +759,10 @@ cy:
           create_button: Creu Un Nawr
         images:
           logo: Logo
-          promo_image_placeholder: 'Mae&#39;r ddelwedd hon i&#39;w gweld yn &quot;Amdanom Ni&quot;'
+          promo_image_placeholder: 'Mae''r ddelwedd hon i''w gweld yn &quot;Amdanom Ni&quot;'
           promo_image_note1: 'SYLWCH:'
-          promo_image_note2: Bydd unrhyw ddelwedd promo sy&#39;n cael ei lanlwytho yma yn cael ei docio i 1200 x 260.
-          promo_image_note3: Mae&#39;r ddelwedd promo yn cael ei harddangos ar frig tudalen proffil menter a pop-ups.
+          promo_image_note2: Bydd unrhyw ddelwedd promo sy'n cael ei lanlwytho yma yn cael ei docio i 1200 x 260.
+          promo_image_note3: Mae'r ddelwedd promo yn cael ei harddangos ar frig tudalen proffil menter a pop-ups.
           remove_logo: "Tynnu Delwedd"
           remove_promo_image: "Tynnu Delwedd"
         inventory_settings:
@@ -786,10 +786,10 @@ cy:
           name: Enw
           name_placeholder: ee. Trufflau Biodynamig yr Athro Plum
           groups: Grwpiau
-          groups_tip: Dewiswch unrhyw grwpiau neu ranbarthau rydych chi&#39;n aelod ohonynt. Bydd hyn yn helpu cwsmeriaid i ddod o hyd i&#39;ch menter.
-          groups_placeholder: Dechreuwch deipio i chwilio&#39;r grwpiau sydd ar gael ...
+          groups_tip: Dewiswch unrhyw grwpiau neu ranbarthau rydych chi'n aelod ohonynt. Bydd hyn yn helpu cwsmeriaid i ddod o hyd i'ch menter.
+          groups_placeholder: Dechreuwch deipio i chwilio'r grwpiau sydd ar gael ...
           primary_producer: Cynhyrchydd Cynradd?
-          primary_producer_tip: Dewiswch &#39;Cynhyrchydd&#39; os ydych chi&#39;n brif gynhyrchydd bwyd.
+          primary_producer_tip: Dewiswch &#39;Cynhyrchydd&#39; os ydych chi'n brif gynhyrchydd bwyd.
           producer: Cynhyrchydd
           any: Unrhyw
           none: Dim
@@ -797,15 +797,15 @@ cy:
           sells: Gwerthu
           sells_tip: "Dim - nid yw menter yn gwerthu i gwsmeriaid yn uniongyrchol.<br /> Own - Mae Enterprise yn gwerthu eu cynhyrchion eu hunain i gwsmeriaid.<br /> Unrhyw - Gall Menter werthu ei gynhyrchion ei hun neu gynhyrchion mentrau eraill.<br />"
           visible_in_search: Gweladwy wrth chwilio?
-          visible_in_search_tip: Yn penderfynu a fydd y fenter hon yn weladwy i gwsmeriaid wrth chwilio&#39;r wefan.
+          visible_in_search_tip: Yn penderfynu a fydd y fenter hon yn weladwy i gwsmeriaid wrth chwilio'r wefan.
           visible: Gweladwy
           not_visible: Ddim yn weladwy
           permalink: Permalink (dim lleoedd)
-          permalink_tip: "Defnyddir y permalink hwn i greu&#39;r url i&#39;ch siop: %{link}your-shop-name / shop"
+          permalink_tip: "Defnyddir y permalink hwn i greu'r url i'ch siop: %{link}your-shop-name / shop"
           link_to_front: Dolen i du blaen y siop
-          link_to_front_tip: Dolen uniongyrchol â&#39;ch blaen siop ar y Rhwydwaith Bwyd Agored.
+          link_to_front_tip: Dolen uniongyrchol â'ch blaen siop ar y Rhwydwaith Bwyd Agored.
           ofn_uid: OFN UID
-          ofn_uid_tip: Yr id unigryw a ddefnyddir i nodi&#39;r fenter ar Open Food Network.
+          ofn_uid_tip: Yr id unigryw a ddefnyddir i nodi'r fenter ar Open Food Network.
         shipping_methods:
           name: "Enw"
           applies: "Egnïol?"
@@ -814,8 +814,8 @@ cy:
           create_one_button: "Creu Un Nawr"
           no_method_yet: "Nid oes gennych unrhyw ddulliau cludo eto."
         shop_preferences:
-          shopfront_requires_login: "Blaen siop sydd i&#39;w gweld yn gyhoeddus?"
-          shopfront_requires_login_tip: "Dewiswch a oes rhaid i gwsmeriaid fewngofnodi i weld blaen y siop neu a yw&#39;n weladwy i bawb."
+          shopfront_requires_login: "Blaen siop sydd i'w gweld yn gyhoeddus?"
+          shopfront_requires_login_tip: "Dewiswch a oes rhaid i gwsmeriaid fewngofnodi i weld blaen y siop neu a yw'n weladwy i bawb."
           shopfront_requires_login_false: "Cyhoeddus"
           shopfront_requires_login_true: "Yn weladwy i gwsmeriaid cofrestredig yn unig"
           recommend_require_login: "Rydym yn argymell ei gwneud yn ofynnol i ddefnyddwyr fewngofnodi pan ellir newid archebion."
@@ -825,23 +825,23 @@ cy:
           allow_guest_orders_true: "Caniatáu i ddesg dalu gwesteion"
           allow_order_changes: "Newid gorchmynion"
           allow_order_changes_tip: "Caniatáu i gwsmeriaid newid eu harcheb cyhyd â bod y cylch archebu ar agor."
-          allow_order_changes_false: "Ni ellir newid / canslo archebion wedi&#39;u gosod"
+          allow_order_changes_false: "Ni ellir newid / canslo archebion wedi'u gosod"
           allow_order_changes_true: "Gall cwsmeriaid newid / canslo archebion tra bod y cylch archebu ar agor"
           enable_subscriptions: "Tanysgrifiadau"
           enable_subscriptions_tip: "Galluogi ymarferion tanysgrifiadau?"
           enable_subscriptions_false: "Anabl"
-          enable_subscriptions_true: "Wedi&#39;i alluogi"
+          enable_subscriptions_true: "Wedi'i alluogi"
           customer_names_in_reports: "Enwau Cwsmeriaid mewn Adroddiadau"
           customer_names_tip: "Galluogi eich cyflenwyr i weld enwau eich cwsmeriaid mewn adroddiadau"
           customer_names_false: "Anabl"
-          customer_names_true: "Wedi&#39;i alluogi"
+          customer_names_true: "Wedi'i alluogi"
           shopfront_message: "Neges Blaen Siop"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with
               you. If text is entered here it will be displayed in a home tab when
               customers first arrive at your shopfront.
           shopfront_message_link_tooltip: "Mewnosod / golygu dolen"
-          shopfront_message_link_prompt: "Rhowch URL i&#39;w fewnosod"
+          shopfront_message_link_prompt: "Rhowch URL i'w fewnosod"
           shopfront_closed_message: "Neges Ar Gau Blaen Siop"
           shopfront_closed_message_placeholder: >
               A message which provides a more detailed explanation about why your
@@ -849,7 +849,7 @@ cy:
               is displayed on your shop only when you have no active order cycles
               (ie. shop is closed).
           shopfront_category_ordering: "Archebu Categori Blaen Siop"
-          shopfront_category_ordering_note: "(o&#39;r brig i&#39;r gwaelod)"
+          shopfront_category_ordering_note: "(o'r brig i'r gwaelod)"
           open_date: "Dyddiad Agored"
           close_date: "Dyddiad Cau"
           display_ordering_in_shopfront: "Arddangos archebu ym mlaen y siop:"
@@ -864,24 +864,24 @@ cy:
           linkedin_placeholder: "ee. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Cysylltu â Stripe"
-          stripe_connect_intro: "I dderbyn taliadau gan ddefnyddio cerdyn credyd, bydd angen i chi gysylltu eich cyfrif streipen â&#39;r Rhwydwaith Bwyd Agored. Defnyddiwch y botwm ar y dde i ddechrau."
-          stripe_account_connected: "Cyfrif streip wedi&#39;i gysylltu."
+          stripe_connect_intro: "I dderbyn taliadau gan ddefnyddio cerdyn credyd, bydd angen i chi gysylltu eich cyfrif streipen â'r Rhwydwaith Bwyd Agored. Defnyddiwch y botwm ar y dde i ddechrau."
+          stripe_account_connected: "Cyfrif streip wedi'i gysylltu."
           disconnect: "Datgysylltwch y cyfrif"
           confirm_modal:
             title: Cysylltu â Stripe
-            part1: Mae Stripe yn wasanaeth prosesu taliadau sy&#39;n caniatáu i siopau ar yr OFN dderbyn taliadau cardiau credyd gan gwsmeriaid.
-            part2: I ddefnyddio&#39;r nodwedd hon, rhaid i chi gysylltu eich cyfrif Stripe â&#39;r OFN. Bydd clicio &#39;Rwy&#39;n Cytuno&#39; isod yn ailgyfeirio gwefan Stripe atoch lle gallwch gysylltu cyfrif Stripe sy&#39;n bodoli eisoes, neu greu un newydd os nad oes gennych un eisoes.
-            part3: Bydd hyn yn caniatáu i&#39;r Rhwydwaith Bwyd Agored dderbyn taliadau cardiau credyd gan gwsmeriaid ar eich rhan. Sylwch y bydd angen i chi gynnal eich cyfrif Stripe eich hun, talu&#39;r ffioedd taliadau Stripe a thrafod unrhyw daliadau gwefr a gwasanaeth cwsmeriaid eich hun.
-            i_agree: Rwy&#39;n cytuno
+            part1: Mae Stripe yn wasanaeth prosesu taliadau sy'n caniatáu i siopau ar yr OFN dderbyn taliadau cardiau credyd gan gwsmeriaid.
+            part2: I ddefnyddio'r nodwedd hon, rhaid i chi gysylltu eich cyfrif Stripe â'r OFN. Bydd clicio &#39;Rwy'n Cytuno&#39; isod yn ailgyfeirio gwefan Stripe atoch lle gallwch gysylltu cyfrif Stripe sy'n bodoli eisoes, neu greu un newydd os nad oes gennych un eisoes.
+            part3: Bydd hyn yn caniatáu i'r Rhwydwaith Bwyd Agored dderbyn taliadau cardiau credyd gan gwsmeriaid ar eich rhan. Sylwch y bydd angen i chi gynnal eich cyfrif Stripe eich hun, talu'r ffioedd taliadau Stripe a thrafod unrhyw daliadau gwefr a gwasanaeth cwsmeriaid eich hun.
+            i_agree: Rwy'n cytuno
             cancel: Canslo
         tag_rules:
           default_rules:
             by_default: Yn ddiofyn
             no_rules_yet: Nid oes unrhyw reolau diofyn yn berthnasol eto
             add_new_button: '+ Ychwanegu Rheol Ddiffyg Newydd'
-          no_tags_yet: Nid oes tagiau yn berthnasol i&#39;r fenter hon eto
-          no_rules_yet: Nid oes unrhyw reolau yn berthnasol i&#39;r tag hwn eto
-          for_customers_tagged: 'Ar gyfer cwsmeriaid sydd wedi&#39;u tagio:'
+          no_tags_yet: Nid oes tagiau yn berthnasol i'r fenter hon eto
+          no_rules_yet: Nid oes unrhyw reolau yn berthnasol i'r tag hwn eto
+          for_customers_tagged: 'Ar gyfer cwsmeriaid sydd wedi''u tagio:'
           add_new_rule: '+ Ychwanegu Rheol Newydd'
           add_new_tag: '+ Ychwanegu Tag Newydd'
         users:
@@ -889,18 +889,18 @@ cy:
           resend: Resend
           owner: 'Perchennog'
           contact: "Cysylltwch"
-          contact_tip: "Y rheolwr a fydd yn derbyn e-byst menter am archebion a hysbysiadau. Rhaid bod â chyfeiriad e-bost wedi&#39;i gadarnhau."
-          owner_tip: Y prif ddefnyddiwr sy&#39;n gyfrifol am y fenter hon.
+          contact_tip: "Y rheolwr a fydd yn derbyn e-byst menter am archebion a hysbysiadau. Rhaid bod â chyfeiriad e-bost wedi'i gadarnhau."
+          owner_tip: Y prif ddefnyddiwr sy'n gyfrifol am y fenter hon.
           notifications: Hysbysiadau
-          notifications_tip: Anfonir hysbysiadau am archebion i&#39;r cyfeiriad e-bost hwn.
+          notifications_tip: Anfonir hysbysiadau am archebion i'r cyfeiriad e-bost hwn.
           notifications_placeholder: ee. gustav@truffles.com
           notifications_note: 'Nodyn: Efallai y bydd angen cadarnhau cyfeiriad e-bost newydd cyn ei ddefnyddio'
           managers: Rheolwyr
-          managers_tip: Y defnyddwyr eraill sydd â chaniatâd i reoli&#39;r fenter hon.
+          managers_tip: Y defnyddwyr eraill sydd â chaniatâd i reoli'r fenter hon.
           invite_manager: "Gwahodd Rheolwr"
           invite_manager_tip: "Gwahoddwch ddefnyddiwr anghofrestredig i arwyddo a dod yn rheolwr ar y fenter hon."
           add_unregistered_user: "Ychwanegwch ddefnyddiwr anghofrestredig"
-          email_confirmed: "E-bost wedi&#39;i gadarnhau"
+          email_confirmed: "E-bost wedi'i gadarnhau"
           email_not_confirmed: "E-bost heb ei gadarnhau"
       actions:
         edit_profile: Gosodiadau
@@ -922,21 +922,21 @@ cy:
         producer_profile: Proffil Cynhyrchydd
         connect_ofn: Cysylltu trwy OFN
         always_free: BOB AMSER AM DDIM
-        producer_description_text: Ychwanegwch eich cynhyrchion at Open Food Network, gan ganiatáu i hybiau stocio&#39;ch cynhyrchion yn eu siopau.
+        producer_description_text: Ychwanegwch eich cynhyrchion at Open Food Network, gan ganiatáu i hybiau stocio'ch cynhyrchion yn eu siopau.
         producer_shop: Siop Cynhyrchwyr
-        sell_your_produce: Gwerthu&#39;ch cynnyrch eich hun
-        producer_shop_description_text: Gwerthu&#39;ch cynhyrchion yn uniongyrchol i gwsmeriaid trwy&#39;ch blaen siop Rhwydwaith Bwyd Agored eich hun.
-        producer_shop_description_text2: Mae Siop Cynhyrchwyr ar gyfer eich cynnyrch yn unig, os ydych chi am werthu cynnyrch sydd wedi&#39;i dyfu / gynhyrchu oddi ar y safle, dewiswch &#39;Producer Hub&#39;.
+        sell_your_produce: Gwerthu'ch cynnyrch eich hun
+        producer_shop_description_text: Gwerthu'ch cynhyrchion yn uniongyrchol i gwsmeriaid trwy'ch blaen siop Rhwydwaith Bwyd Agored eich hun.
+        producer_shop_description_text2: Mae Siop Cynhyrchwyr ar gyfer eich cynnyrch yn unig, os ydych chi am werthu cynnyrch sydd wedi'i dyfu / gynhyrchu oddi ar y safle, dewiswch &#39;Producer Hub&#39;.
         producer_hub: Hwb Cynhyrchydd
         producer_hub_text: Gwerthu cynnyrch oddi wrth eich hun ac eraill
-        producer_hub_description_text: Eich menter yw asgwrn cefn eich system fwyd leol. Gallwch werthu eich cynnyrch eich hun yn ogystal â chynhyrchu cynnyrch wedi&#39;i agregu o fentrau eraill trwy&#39;ch blaen siop ar y Rhwydwaith Bwyd Agored.
+        producer_hub_description_text: Eich menter yw asgwrn cefn eich system fwyd leol. Gallwch werthu eich cynnyrch eich hun yn ogystal â chynhyrchu cynnyrch wedi'i agregu o fentrau eraill trwy'ch blaen siop ar y Rhwydwaith Bwyd Agored.
         profile: Proffil yn Unig
         get_listing: Mynnwch restr
-        profile_description_text: Gall pobl ddod o hyd i chi a chysylltu â nhw ar y Rhwydwaith Bwyd Agored. Bydd eich menter i&#39;w gweld ar y map, a gellir ei chwilio mewn rhestrau.
+        profile_description_text: Gall pobl ddod o hyd i chi a chysylltu â nhw ar y Rhwydwaith Bwyd Agored. Bydd eich menter i'w gweld ar y map, a gellir ei chwilio mewn rhestrau.
         hub_shop: Siop Hwb
         hub_shop_text: Gwerthu cynnyrch gan eraill
-        hub_shop_description_text: Eich menter yw asgwrn cefn eich system fwyd leol. Rydych chi&#39;n agregu cynnyrch o fentrau eraill ac yn gallu ei werthu trwy&#39;ch siop ar y Rhwydwaith Bwyd Agored.
-        choose_option: Dewiswch un o&#39;r opsiynau uchod.
+        hub_shop_description_text: Eich menter yw asgwrn cefn eich system fwyd leol. Rydych chi'n agregu cynnyrch o fentrau eraill ac yn gallu ei werthu trwy'ch siop ar y Rhwydwaith Bwyd Agored.
+        choose_option: Dewiswch un o'r opsiynau uchod.
         change_now: Newid nawr
       enterprise_user_index:
         loading_enterprises: MENTRAU LLWYTHO
@@ -949,17 +949,17 @@ cy:
         status: "Statws"
       new_form:
         owner: Perchennog
-        owner_tip: Y prif ddefnyddiwr sy&#39;n gyfrifol am y fenter hon.
-        i_am_producer: Rwy&#39;n Gynhyrchydd
+        owner_tip: Y prif ddefnyddiwr sy'n gyfrifol am y fenter hon.
+        i_am_producer: Rwy'n Gynhyrchydd
         contact_name: Enw Cyswllt
       edit:
         editing: 'Gosodiadau:'
-        back_link: Yn ôl i&#39;r rhestr mentrau
+        back_link: Yn ôl i'r rhestr mentrau
       new:
         title: Menter Newydd
-        back_link: Yn ôl i&#39;r rhestr mentrau
+        back_link: Yn ôl i'r rhestr mentrau
       welcome:
-        welcome_title: Croeso i&#39;r Rhwydwaith Bwyd Agored!
+        welcome_title: Croeso i'r Rhwydwaith Bwyd Agored!
         welcome_text: Rydych chi wedi creu a
         next_step: Y cam nesaf
         choose_starting_point: 'Dewiswch eich pecyn:'
@@ -967,7 +967,7 @@ cy:
         producer_profile: 'Proffil Cynhyrchydd'
       invite_manager:
         user_already_exists: "Defnyddiwr yn bodoli eisoes"
-        error: "Aeth rhywbeth o&#39;i le"
+        error: "Aeth rhywbeth o'i le"
     order_cycles:
       loading_flash:
         loading_order_cycles: GORCHMYNION LLWYTHO CYCLES
@@ -975,14 +975,14 @@ cy:
       new:
         create: "Creu"
         cancel: "Canslo"
-        back_to_list: "Yn ôl i&#39;r Rhestr"
+        back_to_list: "Yn ôl i'r Rhestr"
       edit:
         save: "Arbedwch"
         save_and_next: "Arbed a Nesaf"
         next: "Nesaf"
         cancel: "Canslo"
-        back_to_list: "Yn ôl i&#39;r Rhestr"
-        save_and_back_to_list: "Cadw ac Yn ôl i&#39;r Rhestr"
+        back_to_list: "Yn ôl i'r Rhestr"
+        save_and_back_to_list: "Cadw ac Yn ôl i'r Rhestr"
         choose_products_from: "Dewis Cynhyrchion Gan:"
       incoming:
         incoming: "Yn dod i mewn"
@@ -994,7 +994,7 @@ cy:
         save_and_next: "Arbed a Nesaf"
         next: "Nesaf"
         cancel: "Canslo"
-        back_to_list: "Yn ôl i&#39;r Rhestr"
+        back_to_list: "Yn ôl i'r Rhestr"
       outgoing:
         outgoing: "Allanol"
         distributor: "Dosbarthwr"
@@ -1004,12 +1004,12 @@ cy:
         fees: "Ffioedd"
         previous: "Blaenorol"
         save: "Arbedwch"
-        save_and_back_to_list: "Cadw ac Yn ôl i&#39;r Rhestr"
+        save_and_back_to_list: "Cadw ac Yn ôl i'r Rhestr"
         cancel: "Canslo"
-        back_to_list: "Yn ôl i&#39;r Rhestr"
+        back_to_list: "Yn ôl i'r Rhestr"
       wizard_progress:
         edit: "1. Gosodiadau Cyffredinol"
-        incoming: "2. Cynhyrchion sy&#39;n Dod i Mewn"
+        incoming: "2. Cynhyrchion sy'n Dod i Mewn"
         outgoing: "3. Cynhyrchion Allanol"
       exchange_form:
         pickup_time_tip: Pan fydd archebion gan yr OC hwn yn barod ar gyfer y cwsmer
@@ -1019,13 +1019,13 @@ cy:
         receival_instructions_placeholder: "Cyfarwyddiadau derbyn"
         add_fee: 'Ychwanegu ffi'
         remove: 'Tynnu'
-        selected: 'wedi&#39;i ddewis'
+        selected: 'wedi''i ddewis'
       add_exchange_form:
         add_supplier: 'Ychwanegu cyflenwr'
         add_distributor: 'Ychwanegu dosbarthwr'
       advanced_settings:
         title: Lleoliadau uwch
-        choose_product_tip: Gallwch gyfyngu cynhyrchion sy&#39;n dod i mewn ac allan i stocrestr %{inventory} yn unig.
+        choose_product_tip: Gallwch gyfyngu cynhyrchion sy'n dod i mewn ac allan i stocrestr %{inventory} yn unig.
         preferred_product_selection_from_coordinator_inventory_only_here: Rhestr y Cydlynydd yn Unig
         preferred_product_selection_from_coordinator_inventory_only_all: Yr holl Gynhyrchion sydd ar Gael
         save_reload: Cadw a Ail-lwytho Tudalen
@@ -1072,12 +1072,12 @@ cy:
         products: Cynhyrchion
         fees: Ffioedd
       destroy_errors:
-        orders_present: Mae&#39;r cylch archebu hwnnw wedi&#39;i ddewis gan gwsmer ac ni ellir ei ddileu. Er mwyn atal cwsmeriaid rhag cael mynediad iddo, caewch ef yn lle.
-        schedule_present: Mae&#39;r cylch archebu hwnnw&#39;n gysylltiedig ag amserlen ac ni ellir ei ddileu. Datgysylltwch neu dilëwch yr amserlen yn gyntaf.
+        orders_present: Mae'r cylch archebu hwnnw wedi'i ddewis gan gwsmer ac ni ellir ei ddileu. Er mwyn atal cwsmeriaid rhag cael mynediad iddo, caewch ef yn lle.
+        schedule_present: Mae'r cylch archebu hwnnw'n gysylltiedig ag amserlen ac ni ellir ei ddileu. Datgysylltwch neu dilëwch yr amserlen yn gyntaf.
       bulk_update:
-        no_data: Hm, aeth rhywbeth o&#39;i le. Ni ddarganfuwyd unrhyw ddata beicio archeb.
+        no_data: Hm, aeth rhywbeth o'i le. Ni ddarganfuwyd unrhyw ddata beicio archeb.
       date_warning:
-        msg: Mae&#39;r cylch archebu hwn wedi&#39;i gysylltu ag archebion tanysgrifio agored %{n}. Ni fydd newid y dyddiad hwn nawr yn effeithio ar unrhyw orchmynion sydd eisoes wedi&#39;u gosod, ond dylid eu hosgoi os yn bosibl. Ydych chi&#39;n siŵr eich bod chi am symud ymlaen?
+        msg: Mae'r cylch archebu hwn wedi'i gysylltu ag archebion tanysgrifio agored %{n}. Ni fydd newid y dyddiad hwn nawr yn effeithio ar unrhyw orchmynion sydd eisoes wedi'u gosod, ond dylid eu hosgoi os yn bosibl. Ydych chi'n siŵr eich bod chi am symud ymlaen?
         cancel: Canslo
         proceed: Ewch ymlaen
     producer_properties:
@@ -1085,9 +1085,9 @@ cy:
         title: Priodweddau Cynhyrchwyr
     proxy_orders:
       cancel:
-        could_not_cancel_the_order: Methu canslo&#39;r archeb
+        could_not_cancel_the_order: Methu canslo'r archeb
       resume:
-        could_not_resume_the_order: Methu ailddechrau&#39;r gorchymyn
+        could_not_resume_the_order: Methu ailddechrau'r gorchymyn
     shared:
       user_guide_link:
         user_guide: Canllaw Defnyddiwr
@@ -1146,10 +1146,10 @@ cy:
         name: Treth Gwerthu
       xero_invoices:
         name: Anfonebau Xero
-        description: Anfonebau i&#39;w mewnforio i Xero
+        description: Anfonebau i'w mewnforio i Xero
       enterprise_fee_summary:
         name: "Crynodeb Ffi Menter"
-        description: "Crynodeb o&#39;r Ffioedd Menter a gasglwyd"
+        description: "Crynodeb o'r Ffioedd Menter a gasglwyd"
       errors:
         no_report_type: "Noder pa fath o adroddiad"
         report_not_found: "Ni chafwyd hyd i'r adroddiad"
@@ -1158,7 +1158,7 @@ cy:
       summary_row:
         total: "CYFANSWM"
       table:
-        select_and_search: "Dewiswch hidlwyr a chlicio ar %{option} i gael mynediad i&#39;ch data."
+        select_and_search: "Dewiswch hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
         headings:
           hub: "Hwb"
           customer_code: "Côd"
@@ -1200,14 +1200,14 @@ cy:
       setup_explanation:
         title: "Tanysgrifiadau"
         just_a_few_more_steps: 'Ychydig yn fwy o gamau cyn y gallwch ddechrau:'
-        enable_subscriptions: "Galluogi tanysgrifiadau ar gyfer o leiaf un o&#39;ch siopau"
-        enable_subscriptions_step_1_html: 1. Ewch i&#39;r dudalen %{enterprises_link}, dewch o hyd i&#39;ch siop, a chlicio &quot;Rheoli&quot;
+        enable_subscriptions: "Galluogi tanysgrifiadau ar gyfer o leiaf un o'ch siopau"
+        enable_subscriptions_step_1_html: 1. Ewch i'r dudalen %{enterprises_link}, dewch o hyd i'ch siop, a chlicio &quot;Rheoli&quot;
         enable_subscriptions_step_2: 2. O dan &quot;Dewisiadau Siop&quot;, galluogwch yr opsiwn Tanysgrifiadau
         set_up_shipping_and_payment_methods_html: Sefydlu dulliau %{shipping_link} ac %{payment_link}
         set_up_shipping_and_payment_methods_note_html: Sylwch mai dim ond dulliau talu Arian Parod a Stripe all<br /> cael eu defnyddio gyda thanysgrifiadau
         ensure_at_least_one_customer_html: Sicrhewch fod o leiaf un %{customer_link} yn bodoli
         create_at_least_one_schedule: Creu o leiaf un Atodlen
-        create_at_least_one_schedule_step_1_html: 1. Ewch i&#39;r dudalen ar %{order_cycles_link}
+        create_at_least_one_schedule_step_1_html: 1. Ewch i'r dudalen ar %{order_cycles_link}
         create_at_least_one_schedule_step_2: 2. Creu cylch archebu os nad ydych wedi gwneud hynny eisoes
         create_at_least_one_schedule_step_3: 3. Cliciwch &#39;+ Amserlen Newydd&#39;, a llenwch y ffurflen
         once_you_are_done_you_can_html: Ar ôl i chi gael ei wneud, gallwch %{reload_this_page_link}
@@ -1234,8 +1234,8 @@ cy:
         allowed_payment_method_types_tip: Dim ond dulliau talu Arian Parod a Stripe y gellir eu defnyddio ar hyn o bryd
         credit_card: Cerdyn credyd
         charges_not_allowed: Ni chaniateir taliadau gan y cwsmer hwn
-        no_default_card: Nid oes gan y cwsmer unrhyw gardiau ar gael i&#39;w codi
-        card_ok: Mae gan y cwsmer gerdyn ar gael i&#39;w godi
+        no_default_card: Nid oes gan y cwsmer unrhyw gardiau ar gael i'w codi
+        card_ok: Mae gan y cwsmer gerdyn ar gael i'w godi
         begins_at_placeholder: "Dewiswch Ddyddiad"
         ends_at_placeholder: "Dewisol"
       loading_flash:
@@ -1249,55 +1249,55 @@ cy:
         save: "ARBED"
         saving: "ARBED"
         saved: "ARBEDIR"
-      product_already_in_order: Mae&#39;r cynnyrch hwn eisoes wedi&#39;i ychwanegu at y gorchymyn. Golygwch y maint yn uniongyrchol.
+      product_already_in_order: Mae'r cynnyrch hwn eisoes wedi'i ychwanegu at y gorchymyn. Golygwch y maint yn uniongyrchol.
       stock:
         insufficient_stock: "Stoc annigonol ar gael"
         out_of_stock: "Allan o stoc"
       orders:
         number: Rhif
-        confirm_edit: Ydych chi&#39;n siŵr eich bod chi am olygu&#39;r gorchymyn hwn? Gall gwneud hynny ei gwneud yn anoddach cysoni newidiadau i&#39;r tanysgrifiad yn awtomatig yn y dyfodol.
-      confirm_cancel_msg: "Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r tanysgrifiad hwn? Ni ellir dadwneud y weithred hon."
-      cancel_failure_msg: "Mae&#39;n ddrwg gennym, methodd canslo!"
-      confirm_pause_msg: "Ydych chi&#39;n siŵr eich bod chi am oedi&#39;r tanysgrifiad hwn?"
+        confirm_edit: Ydych chi'n siŵr eich bod chi am olygu'r gorchymyn hwn? Gall gwneud hynny ei gwneud yn anoddach cysoni newidiadau i'r tanysgrifiad yn awtomatig yn y dyfodol.
+      confirm_cancel_msg: "Ydych chi'n siŵr eich bod chi am ganslo'r tanysgrifiad hwn? Ni ellir dadwneud y weithred hon."
+      cancel_failure_msg: "Mae'n ddrwg gennym, methodd canslo!"
+      confirm_pause_msg: "Ydych chi'n siŵr eich bod chi am oedi'r tanysgrifiad hwn?"
       pause_failure_msg: "Sori, methodd oedi!"
-      confirm_unpause_msg: "Os oes gennych Gylch Archebu agored yn amserlen y tanysgrifiad hwn, bydd archeb yn cael ei chreu ar gyfer y cwsmer hwn. Ydych chi&#39;n siŵr eich bod chi am ddad-ddefnyddio&#39;r tanysgrifiad hwn?"
-      unpause_failure_msg: "Mae&#39;n ddrwg gennym, aflwyddiannus wedi methu!"
-      confirm_cancel_open_orders_msg: "Mae rhai archebion ar gyfer y tanysgrifiad hwn ar agor ar hyn o bryd. Mae&#39;r cwsmer eisoes wedi cael gwybod y bydd yr archeb yn cael ei gosod. Hoffech chi ganslo&#39;r archeb (au) hyn neu eu cadw?"
-      resume_canceled_orders_msg: "Gellir ailddechrau rhai archebion ar gyfer y tanysgrifiad hwn ar hyn o bryd. Gallwch eu hailddechrau o&#39;r gwymplen archebion."
+      confirm_unpause_msg: "Os oes gennych Gylch Archebu agored yn amserlen y tanysgrifiad hwn, bydd archeb yn cael ei chreu ar gyfer y cwsmer hwn. Ydych chi'n siŵr eich bod chi am ddad-ddefnyddio'r tanysgrifiad hwn?"
+      unpause_failure_msg: "Mae'n ddrwg gennym, aflwyddiannus wedi methu!"
+      confirm_cancel_open_orders_msg: "Mae rhai archebion ar gyfer y tanysgrifiad hwn ar agor ar hyn o bryd. Mae'r cwsmer eisoes wedi cael gwybod y bydd yr archeb yn cael ei gosod. Hoffech chi ganslo'r archeb (au) hyn neu eu cadw?"
+      resume_canceled_orders_msg: "Gellir ailddechrau rhai archebion ar gyfer y tanysgrifiad hwn ar hyn o bryd. Gallwch eu hailddechrau o'r gwymplen archebion."
       yes_cancel_them: Canslo nhw
       no_keep_them: Cadwch nhw
-      yes_i_am_sure: Ydw, rwy&#39;n siŵr
+      yes_i_am_sure: Ydw, rwy'n siŵr
       number: "Rhif"
-      order_update_issues_msg: Ni ellid diweddaru rhai archebion yn awtomatig, mae hyn yn fwyaf tebygol oherwydd eu bod wedi&#39;u golygu â llaw. Adolygwch y materion a restrir isod a gwnewch unrhyw addasiadau i archebion unigol os oes angen.
+      order_update_issues_msg: Ni ellid diweddaru rhai archebion yn awtomatig, mae hyn yn fwyaf tebygol oherwydd eu bod wedi'u golygu â llaw. Adolygwch y materion a restrir isod a gwnewch unrhyw addasiadau i archebion unigol os oes angen.
       no_results:
         no_subscriptions: Dim tanysgrifiadau eto ...
         why_dont_you_add_one: Pam na wnewch chi ychwanegu un? :)
         no_matching_subscriptions: Ni ddarganfuwyd tanysgrifiadau paru
     schedules:
       destroy:
-        associated_subscriptions_error: Ni ellir dileu&#39;r amserlen hon oherwydd bod ganddi danysgrifiadau cysylltiedig
+        associated_subscriptions_error: Ni ellir dileu'r amserlen hon oherwydd bod ganddi danysgrifiadau cysylltiedig
     controllers:
       enterprises:
-        stripe_connect_cancelled: "Mae&#39;r cysylltiad â Stripe wedi&#39;i ganslo"
-        stripe_connect_success: "Cyfrif streip wedi&#39;i gysylltu&#39;n llwyddiannus"
-        stripe_connect_fail: Mae&#39;n ddrwg gennym, methodd cysylltiad eich cyfrif Stripe
+        stripe_connect_cancelled: "Mae'r cysylltiad â Stripe wedi'i ganslo"
+        stripe_connect_success: "Cyfrif streip wedi'i gysylltu'n llwyddiannus"
+        stripe_connect_fail: Mae'n ddrwg gennym, methodd cysylltiad eich cyfrif Stripe
       stripe_connect_settings:
         resource: Cyfluniad Stripe Connect
   api:
     enterprise_logo:
-      destroy_attachment_does_not_exist: "Nid yw&#39;r logo yn bodoli"
+      destroy_attachment_does_not_exist: "Nid yw'r logo yn bodoli"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Nid yw delwedd promo yn bodoli"
     enterprise_terms_and_conditions:
-      destroy_attachment_does_not_exist: "Nid yw&#39;r ffeil Telerau ac Amodau yn bodoli"
+      destroy_attachment_does_not_exist: "Nid yw'r ffeil Telerau ac Amodau yn bodoli"
     orders:
-      failed_to_update: "Wedi methu diweddaru&#39;r archeb"
+      failed_to_update: "Wedi methu diweddaru'r archeb"
   checkout:
     already_ordered:
       cart: "trol"
-      message_html: "Mae gennych chi orchymyn ar gyfer y cylch archebu hwn eisoes. Gwiriwch yr %{cart} i weld yr eitemau a archebwyd gennych o&#39;r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
+      message_html: "Mae gennych chi orchymyn ar gyfer y cylch archebu hwn eisoes. Gwiriwch yr %{cart} i weld yr eitemau a archebwyd gennych o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     terms_and_conditions:
-      message_html: "Rwy&#39;n cytuno i %{terms_and_conditions_link} y gwerthwr."
+      message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
       link_text: "Telerau ac Amodau"
     platform_terms_of_service:
       message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
@@ -1325,7 +1325,7 @@ cy:
         items_in_cart_singular: "eitem %{num} yn eich trol"
         items_in_cart_plural: "%{num} eitemau yn eich trol"
         close: "Caewch"
-        cart_empty: "Mae&#39;ch trol yn wag"
+        cart_empty: "Mae'ch trol yn wag"
         take_me_shopping: "Ewch â fi i siopa!"
       signed_in:
         profile: "Proffil"
@@ -1336,7 +1336,7 @@ cy:
       register: "Cofrestrwch yma"
     footer:
       footer_secure: "Yn ddiogel ac yn ymddiried ynddo."
-      footer_secure_text: "Mae Open Food Network yn defnyddio amgryptio SSL (2048 bit RSA) ym mhobman i gadw&#39;ch gwybodaeth siopa a thalu yn breifat. Nid yw ein gweinyddwyr yn storio manylion eich cerdyn credyd ac mae taliadau&#39;n cael eu prosesu gan wasanaethau sy&#39;n cydymffurfio â PCI."
+      footer_secure_text: "Mae Open Food Network yn defnyddio amgryptio SSL (2048 bit RSA) ym mhobman i gadw'ch gwybodaeth siopa a thalu yn breifat. Nid yw ein gweinyddwyr yn storio manylion eich cerdyn credyd ac mae taliadau'n cael eu prosesu gan wasanaethau sy'n cydymffurfio â PCI."
       footer_contact_headline: "Cadwch mewn cysylltiad"
       footer_contact_email: "E-bostiwch ni"
       footer_nav_headline: "Llywiwch"
@@ -1345,9 +1345,9 @@ cy:
       footer_join_cta: "Dywedwch fwy wrthyf!"
       footer_legal_call: "Darllenwch ein"
       footer_legal_visit: "Dewch o hyd i ni ar"
-      footer_legal_text_html: "Mae Open Food Network yn blatfform meddalwedd ffynhonnell agored am ddim. Mae ein cynnwys wedi&#39;i drwyddedu gydag %{content_license} a&#39;n cod gydag %{code_license}."
-      footer_data_text_with_privacy_policy_html: "Rydym yn cymryd gofal da o&#39;ch data. Gweler ein %{privacy_policy} ac %{cookies_policy}"
-      footer_data_text_without_privacy_policy_html: "Rydym yn cymryd gofal da o&#39;ch data. Gweler ein %{cookies_policy}"
+      footer_legal_text_html: "Mae Open Food Network yn blatfform meddalwedd ffynhonnell agored am ddim. Mae ein cynnwys wedi'i drwyddedu gydag %{content_license} a'n cod gydag %{code_license}."
+      footer_data_text_with_privacy_policy_html: "Rydym yn cymryd gofal da o'ch data. Gweler ein %{privacy_policy} ac %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "Rydym yn cymryd gofal da o'ch data. Gweler ein %{cookies_policy}"
       footer_data_privacy_policy: "polisi preifatrwydd"
       footer_data_cookies_policy: "polisi cwcis"
   shop:
@@ -1356,7 +1356,7 @@ cy:
         login: "Mewngofnodi"
         signup: "cofrestru"
         contact: "cyswllt"
-        require_customer_login: "Dim ond cwsmeriaid cymeradwy sy&#39;n gallu cyrchu&#39;r siop hon."
+        require_customer_login: "Dim ond cwsmeriaid cymeradwy sy'n gallu cyrchu'r siop hon."
         require_login_html: "Os ydych chi eisoes yn gwsmer cymeradwy, %{login} neu %{signup} i symud ymlaen."
         require_login_2_html: "Am ddechrau siopa yma? Os gwelwch yn dda %{contact} %{enterprise} a gofyn am ymuno."
         require_customer_html: "Os hoffech chi ddechrau siopa yma, %{contact} %{enterprise} i ofyn am ymuno."
@@ -1365,9 +1365,9 @@ cy:
     products:
       summary:
         bulk: "Swmp"
-  card_could_not_be_updated: Ni ellid diweddaru&#39;r cerdyn
+  card_could_not_be_updated: Ni ellid diweddaru'r cerdyn
   card_could_not_be_saved: ni ellid arbed cerdyn
-  spree_gateway_error_flash_for_checkout: "Roedd problem gyda&#39;ch gwybodaeth dalu: %{error}"
+  spree_gateway_error_flash_for_checkout: "Roedd problem gyda'ch gwybodaeth dalu: %{error}"
   invoice_billing_address: "Cyfeiriad bilio:"
   invoice_column_tax: "GST"
   invoice_column_price: "Pris"
@@ -1479,7 +1479,7 @@ cy:
   total: "Cyfanswm"
   cart_updating: "Diweddaru cart ..."
   cart_empty: "Cart yn wag"
-  cart_edit: "Golygu&#39;ch trol"
+  cart_edit: "Golygu'ch trol"
   item: "Eitem"
   qty: "Qty"
   card_number: Rhif cerdyn
@@ -1490,75 +1490,75 @@ cy:
   new_credit_card: "Cerdyn credyd newydd"
   my_credit_cards: Fy nghardiau credyd
   add_new_credit_card: Ychwanegwch gerdyn credyd newydd
-  saved_cards: Cardiau wedi&#39;u cadw
+  saved_cards: Cardiau wedi'u cadw
   add_a_card: Ychwanegwch Gerdyn
   add_card: Ychwanegu Cerdyn
   you_have_no_saved_cards: Nid ydych wedi arbed unrhyw gardiau eto
   saving_credit_card: Cerdyn credyd arbed ...
-  card_has_been_removed: "Mae&#39;ch cerdyn wedi&#39;i dynnu (rhif: %{number})"
-  card_could_not_be_removed: Mae&#39;n ddrwg gennym, ni ellid tynnu&#39;r cerdyn
+  card_has_been_removed: "Mae'ch cerdyn wedi'i dynnu (rhif: %{number})"
+  card_could_not_be_removed: Mae'n ddrwg gennym, ni ellid tynnu'r cerdyn
   invalid_credit_card: "Cerdyn credyd annilys"
   ie_warning_headline: "Mae eich porwr wedi dyddio :-("
-  ie_warning_text: "Am y profiad Rhwydwaith Bwyd Agored gorau, rydym yn argymell yn gryf uwchraddio&#39;ch porwr:"
+  ie_warning_text: "Am y profiad Rhwydwaith Bwyd Agored gorau, rydym yn argymell yn gryf uwchraddio'ch porwr:"
   ie_warning_chrome: Dadlwythwch Chrome
   ie_warning_firefox: Dadlwythwch Firefox
   ie_warning_ie: Uwchraddio Internet Explorer
-  ie_warning_other: "Methu uwchraddio&#39;ch porwr? Rhowch gynnig ar Open Food Network ar eich ffôn clyfar :-)"
+  ie_warning_other: "Methu uwchraddio'ch porwr? Rhowch gynnig ar Open Food Network ar eich ffôn clyfar :-)"
   legal:
     cookies_policy:
       header: "Sut Rydym yn Defnyddio Cwcis"
-      desc_part_1: "Ffeiliau testun bach iawn yw cwcis sy&#39;n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
-      desc_part_2: "Yn OFN rydym yn parchu&#39;ch preifatrwydd yn llwyr. Rydym yn defnyddio&#39;r cwcis yn unig sy&#39;n angenrheidiol ar gyfer cyflwyno&#39;r gwasanaeth i chi o werthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o&#39;ch data. Efallai y byddwn yn y dyfodol yn cynnig ichi rannu peth o&#39;ch data i adeiladu gwasanaethau tir comin newydd a allai fod yn ddefnyddiol i&#39;r ecosystem (fel gwasanaethau logisteg ar gyfer systemau bwyd byr) ond nid ydym yno eto, ac ni fyddwn yn ei wneud heb eich awdurdodiad :-)"
-      desc_part_3: "Rydyn ni&#39;n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi&#39;n &#39;mewngofnodi&#39; i&#39;r gwasanaeth, neu i allu cofio&#39;r eitemau rydych chi&#39;n eu rhoi yn eich trol hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi&#39;n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio&#39;r cwcis sy&#39;n hanfodol ar gyfer gweithrediad y wefan. Dyma&#39;r rhestr o gwcis rydyn ni&#39;n eu defnyddio!"
+      desc_part_1: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
+      desc_part_2: "Yn OFN rydym yn parchu'ch preifatrwydd yn llwyr. Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol ar gyfer cyflwyno'r gwasanaeth i chi o werthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Efallai y byddwn yn y dyfodol yn cynnig ichi rannu peth o'ch data i adeiladu gwasanaethau tir comin newydd a allai fod yn ddefnyddiol i'r ecosystem (fel gwasanaethau logisteg ar gyfer systemau bwyd byr) ond nid ydym yno eto, ac ni fyddwn yn ei wneud heb eich awdurdodiad :-)"
+      desc_part_3: "Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n &#39;mewngofnodi&#39; i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich trol hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol ar gyfer gweithrediad y wefan. Dyma'r rhestr o gwcis rydyn ni'n eu defnyddio!"
       essential_cookies: "Cwcis Hanfodol"
-      essential_cookies_desc: "Mae&#39;r cwcis canlynol yn gwbl angenrheidiol ar gyfer gweithredu ein gwefan."
-      essential_cookies_note: "Dim ond dynodwr unigryw sydd yn y mwyafrif o gwcis, ond dim data arall, felly nid yw&#39;ch cyfeiriad e-bost a&#39;ch cyfrinair er enghraifft byth yn cael eu cynnwys ynddynt a byth yn agored."
+      essential_cookies_desc: "Mae'r cwcis canlynol yn gwbl angenrheidiol ar gyfer gweithredu ein gwefan."
+      essential_cookies_note: "Dim ond dynodwr unigryw sydd yn y mwyafrif o gwcis, ond dim data arall, felly nid yw'ch cyfeiriad e-bost a'ch cyfrinair er enghraifft byth yn cael eu cynnwys ynddynt a byth yn agored."
       cookie_domain: "Gosodwyd Gan:"
-      cookie_session_desc: "Fe&#39;i defnyddir i ganiatáu i&#39;r wefan gofio defnyddwyr rhwng ymweliadau â thudalennau, er enghraifft, cofiwch eitemau yn eich trol."
-      cookie_consent_desc: "Fe&#39;i defnyddir i gynnal statws caniatâd defnyddiwr i storio cwcis"
-      cookie_remember_me_desc: "Wedi&#39;i ddefnyddio os yw&#39;r defnyddiwr wedi gofyn i&#39;r wefan ei gofio. Mae&#39;r cwci hwn yn cael ei ddileu&#39;n awtomatig ar ôl 12 diwrnod. Os ydych chi fel defnyddiwr eisiau i&#39;r cwci hwnnw gael ei ddileu, dim ond allgofnodi y mae angen i chi ei allgofnodi. Os nad ydych chi am i&#39;r cwci hwnnw gael ei osod ar eich cyfrifiadur ni ddylech wirio&#39;r blwch gwirio “cofiwch fi” wrth fewngofnodi."
-      cookie_openstreemap_desc: "Yn cael ei ddefnyddio gan ein darparwr mapio ffynhonnell agored cyfeillgar (OpenStreetMap) i sicrhau nad yw&#39;n derbyn gormod o geisiadau yn ystod cyfnod penodol, i atal cam-drin eu gwasanaethau."
-      cookie_stripe_desc: "Data a gasglwyd gan ein prosesydd talu Stripe ar gyfer canfod twyll https://stripe.com/cookies-policy/legal. Nid yw pob siop yn defnyddio Stripe fel dull talu ond mae&#39;n arfer da atal twyll i&#39;w gymhwyso ar bob tudalen. Mae&#39;n debyg bod Stripe yn adeiladu llun o ba rai o&#39;n tudalennau sydd fel arfer yn rhyngweithio â&#39;u API ac yna&#39;n tynnu sylw at unrhyw beth anarferol. Felly mae gan osod y cwci Stripe swyddogaeth ehangach na darparu dull talu i ddefnyddiwr yn unig. Gallai ei ddileu effeithio ar ddiogelwch y gwasanaeth ei hun. Gallwch ddysgu mwy am Stripe a darllen ei bolisi preifatrwydd yn https://stripe.com/privacy."
+      cookie_session_desc: "Fe'i defnyddir i ganiatáu i'r wefan gofio defnyddwyr rhwng ymweliadau â thudalennau, er enghraifft, cofiwch eitemau yn eich trol."
+      cookie_consent_desc: "Fe'i defnyddir i gynnal statws caniatâd defnyddiwr i storio cwcis"
+      cookie_remember_me_desc: "Wedi'i ddefnyddio os yw'r defnyddiwr wedi gofyn i'r wefan ei gofio. Mae'r cwci hwn yn cael ei ddileu'n awtomatig ar ôl 12 diwrnod. Os ydych chi fel defnyddiwr eisiau i'r cwci hwnnw gael ei ddileu, dim ond allgofnodi y mae angen i chi ei allgofnodi. Os nad ydych chi am i'r cwci hwnnw gael ei osod ar eich cyfrifiadur ni ddylech wirio'r blwch gwirio “cofiwch fi” wrth fewngofnodi."
+      cookie_openstreemap_desc: "Yn cael ei ddefnyddio gan ein darparwr mapio ffynhonnell agored cyfeillgar (OpenStreetMap) i sicrhau nad yw'n derbyn gormod o geisiadau yn ystod cyfnod penodol, i atal cam-drin eu gwasanaethau."
+      cookie_stripe_desc: "Data a gasglwyd gan ein prosesydd talu Stripe ar gyfer canfod twyll https://stripe.com/cookies-policy/legal. Nid yw pob siop yn defnyddio Stripe fel dull talu ond mae'n arfer da atal twyll i'w gymhwyso ar bob tudalen. Mae'n debyg bod Stripe yn adeiladu llun o ba rai o'n tudalennau sydd fel arfer yn rhyngweithio â'u API ac yna'n tynnu sylw at unrhyw beth anarferol. Felly mae gan osod y cwci Stripe swyddogaeth ehangach na darparu dull talu i ddefnyddiwr yn unig. Gallai ei ddileu effeithio ar ddiogelwch y gwasanaeth ei hun. Gallwch ddysgu mwy am Stripe a darllen ei bolisi preifatrwydd yn https://stripe.com/privacy."
       statistics_cookies: "Cwcis Ystadegau"
-      statistics_cookies_desc: "Nid yw&#39;r canlynol yn hollol angenrheidiol, ond maent yn helpu i roi&#39;r profiad defnyddiwr gorau i chi trwy ganiatáu inni ddadansoddi ymddygiad defnyddwyr, nodi pa nodweddion rydych chi&#39;n eu defnyddio fwyaf, neu ddim yn eu defnyddio, deall materion profiad defnyddiwr, ac ati."
-      statistics_cookies_matomo_desc_html: "I gasglu a dadansoddi data defnydd platfform, rydym yn defnyddio <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), offeryn dadansoddeg ffynhonnell agored sy&#39;n cydymffurfio â GDPR ac yn amddiffyn eich preifatrwydd."
+      statistics_cookies_desc: "Nid yw'r canlynol yn hollol angenrheidiol, ond maent yn helpu i roi'r profiad defnyddiwr gorau i chi trwy ganiatáu inni ddadansoddi ymddygiad defnyddwyr, nodi pa nodweddion rydych chi'n eu defnyddio fwyaf, neu ddim yn eu defnyddio, deall materion profiad defnyddiwr, ac ati."
+      statistics_cookies_matomo_desc_html: "I gasglu a dadansoddi data defnydd platfform, rydym yn defnyddio <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), offeryn dadansoddeg ffynhonnell agored sy'n cydymffurfio â GDPR ac yn amddiffyn eich preifatrwydd."
       statistics_cookies_matomo_optout: "Ydych chi am optio allan o ddadansoddeg Matomo? Nid ydym yn casglu unrhyw ddata personol, ac mae Matomo yn ein helpu i wella ein gwasanaeth, ond rydym yn parchu eich dewis :-)"
       cookie_matomo_basics_desc: "Cwcis parti cyntaf Matomo i gasglu ystadegau."
       cookie_matomo_heatmap_desc: "Map Gwres Matomo a Chwci Cofnodi Sesiwn."
-      cookie_matomo_ignore_desc: "Defnyddiodd cwci i eithrio&#39;r defnyddiwr rhag cael ei olrhain."
+      cookie_matomo_ignore_desc: "Defnyddiodd cwci i eithrio'r defnyddiwr rhag cael ei olrhain."
       disabling_cookies_header: "Rhybudd ar anablu cwcis"
-      disabling_cookies_desc: "Fel defnyddiwr, gallwch chi bob amser ganiatáu, blocio neu ddileu cwcis Rhwydwaith Bwyd Agored neu unrhyw gwcis gwefan eraill pryd bynnag y dymunwch trwy reolaeth gosodiad eich porwr. Mae gan bob porwr weithredwr gwahanol. Dyma&#39;r dolenni:"
+      disabling_cookies_desc: "Fel defnyddiwr, gallwch chi bob amser ganiatáu, blocio neu ddileu cwcis Rhwydwaith Bwyd Agored neu unrhyw gwcis gwefan eraill pryd bynnag y dymunwch trwy reolaeth gosodiad eich porwr. Mae gan bob porwr weithredwr gwahanol. Dyma'r dolenni:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/cy-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/cy-ww/cookies/"
-      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi&#39;n dileu neu&#39;n addasu&#39;r cwcis hanfodol a ddefnyddir gan Open Food Network, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich trol na&#39;u talu er enghraifft."
+      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi'n dileu neu'n addasu'r cwcis hanfodol a ddefnyddir gan Open Food Network, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich trol na'u talu er enghraifft."
     cookies_banner:
-      cookies_usage: "Mae&#39;r wefan hon yn defnyddio cwcis er mwyn gwneud eich llywio yn ddi-ffrithiant ac yn ddiogel, ac i&#39;n helpu ni i ddeall sut rydych chi&#39;n ei ddefnyddio er mwyn gwella&#39;r nodweddion rydyn ni&#39;n eu cynnig."
-      cookies_definition: "Ffeiliau testun bach iawn yw cwcis sy&#39;n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
-      cookies_desc: "Rydym yn defnyddio&#39;r cwcis yn unig sy&#39;n angenrheidiol ar gyfer cyflwyno&#39;r gwasanaeth i chi o werthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o&#39;ch data. Rydyn ni&#39;n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi&#39;n &#39;mewngofnodi&#39; i&#39;r gwasanaeth, neu i allu cofio&#39;r eitemau rydych chi&#39;n eu rhoi yn eich trol hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi&#39;n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio&#39;r cwcis sy&#39;n hanfodol ar gyfer gweithrediad y wefan."
+      cookies_usage: "Mae'r wefan hon yn defnyddio cwcis er mwyn gwneud eich llywio yn ddi-ffrithiant ac yn ddiogel, ac i'n helpu ni i ddeall sut rydych chi'n ei ddefnyddio er mwyn gwella'r nodweddion rydyn ni'n eu cynnig."
+      cookies_definition: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
+      cookies_desc: "Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol ar gyfer cyflwyno'r gwasanaeth i chi o werthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n &#39;mewngofnodi&#39; i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich trol hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol ar gyfer gweithrediad y wefan."
       cookies_policy_link_desc: "Os ydych chi eisiau dysgu mwy, gwiriwch ein"
       cookies_policy_link: "polisi cwcis"
       cookies_accept_button: "Derbyn Cwcis"
   home_shop: Siopa Nawr
   brandstory_headline: "Bwyd, anghorfforedig."
-  brandstory_intro: "Weithiau&#39;r ffordd orau o atgyweirio&#39;r system yw cychwyn un newydd ..."
-  brandstory_part1: "Dechreuwn o&#39;r llawr i fyny. Gyda ffermwyr a thyfwyr yn barod i adrodd eu straeon yn falch ac yn wirioneddol. Gyda dosbarthwyr yn barod i gysylltu pobl â chynhyrchion yn deg ac yn onest. Gyda phrynwyr sy&#39;n credu y gall penderfyniadau siopa wythnosol gwell newid y byd o ddifrif."
-  brandstory_part2: "Yna mae angen ffordd arnom i&#39;w wneud yn real. Ffordd i rymuso pawb sy&#39;n tyfu, gwerthu a phrynu bwyd. Ffordd i adrodd yr holl straeon, i drin yr holl logisteg. Ffordd i droi trafodiad yn drawsnewidiad bob dydd."
-  brandstory_part3: "Felly rydyn ni&#39;n adeiladu marchnad ar-lein sy&#39;n lefelu&#39;r cae chwarae. Mae&#39;n dryloyw, felly mae&#39;n creu perthnasoedd go iawn. Mae&#39;n ffynhonnell agored, felly mae&#39;n eiddo i bawb. Mae&#39;n graddio i ranbarthau a chenhedloedd, felly mae pobl yn cychwyn fersiynau ledled y byd."
-  brandstory_part4: "Mae&#39;n gweithio ym mhobman. Mae&#39;n newid popeth."
-  brandstory_part5_strong: "Rydyn ni&#39;n ei alw&#39;n Open Food Network."
+  brandstory_intro: "Weithiau'r ffordd orau o atgyweirio'r system yw cychwyn un newydd ..."
+  brandstory_part1: "Dechreuwn o'r llawr i fyny. Gyda ffermwyr a thyfwyr yn barod i adrodd eu straeon yn falch ac yn wirioneddol. Gyda dosbarthwyr yn barod i gysylltu pobl â chynhyrchion yn deg ac yn onest. Gyda phrynwyr sy'n credu y gall penderfyniadau siopa wythnosol gwell newid y byd o ddifrif."
+  brandstory_part2: "Yna mae angen ffordd arnom i'w wneud yn real. Ffordd i rymuso pawb sy'n tyfu, gwerthu a phrynu bwyd. Ffordd i adrodd yr holl straeon, i drin yr holl logisteg. Ffordd i droi trafodiad yn drawsnewidiad bob dydd."
+  brandstory_part3: "Felly rydyn ni'n adeiladu marchnad ar-lein sy'n lefelu'r cae chwarae. Mae'n dryloyw, felly mae'n creu perthnasoedd go iawn. Mae'n ffynhonnell agored, felly mae'n eiddo i bawb. Mae'n graddio i ranbarthau a chenhedloedd, felly mae pobl yn cychwyn fersiynau ledled y byd."
+  brandstory_part4: "Mae'n gweithio ym mhobman. Mae'n newid popeth."
+  brandstory_part5_strong: "Rydyn ni'n ei alw'n Open Food Network."
   brandstory_part6: "Rydyn ni i gyd yn caru bwyd. Nawr gallwn garu ein system fwyd hefyd."
-  system_headline: "Siopa - dyma sut mae&#39;n gweithio."
+  system_headline: "Siopa - dyma sut mae'n gweithio."
   system_step1: "1. Chwilio"
-  system_step1_text: "Chwiliwch ein siopau amrywiol, annibynnol am fwyd lleol tymhorol. Chwilio yn ôl categori cymdogaeth a bwyd, neu a yw&#39;n well gennych ddanfon neu godi."
+  system_step1_text: "Chwiliwch ein siopau amrywiol, annibynnol am fwyd lleol tymhorol. Chwilio yn ôl categori cymdogaeth a bwyd, neu a yw'n well gennych ddanfon neu godi."
   system_step2: "2. Siop"
-  system_step2_text: "Trawsnewidiwch eich trafodion â bwyd lleol fforddiadwy gan gynhyrchwyr a hybiau amrywiol. Gwybod y straeon y tu ôl i&#39;ch bwyd a&#39;r bobl sy&#39;n ei wneud!"
+  system_step2_text: "Trawsnewidiwch eich trafodion â bwyd lleol fforddiadwy gan gynhyrchwyr a hybiau amrywiol. Gwybod y straeon y tu ôl i'ch bwyd a'r bobl sy'n ei wneud!"
   system_step3: "3. Codi / Dosbarthu"
-  system_step3_text: "Hongian ymlaen ar gyfer eich danfoniad, neu ymwelwch â&#39;ch cynhyrchydd neu ganolbwynt i gael cysylltiad mwy personol â&#39;ch bwyd. Roedd siopa bwyd mor amrywiol ag yr oedd natur yn ei fwriadu."
-  cta_headline: "Siopa sy&#39;n gwneud y byd yn lle gwell."
-  cta_label: "Rwy&#39;n barod"
-  stats_headline: "Rydyn ni&#39;n creu system fwyd newydd."
+  system_step3_text: "Hongian ymlaen ar gyfer eich danfoniad, neu ymwelwch â'ch cynhyrchydd neu ganolbwynt i gael cysylltiad mwy personol â'ch bwyd. Roedd siopa bwyd mor amrywiol ag yr oedd natur yn ei fwriadu."
+  cta_headline: "Siopa sy'n gwneud y byd yn lle gwell."
+  cta_label: "Rwy'n barod"
+  stats_headline: "Rydyn ni'n creu system fwyd newydd."
   stats_producers: "cynhyrchwyr bwyd"
   stats_shops: "siopau bwyd"
   stats_shoppers: "siopwyr bwyd"
@@ -1576,7 +1576,7 @@ cy:
   checkout_shipping: Gwybodaeth cludo
   checkout_default_ship_address: "Cadw fel cyfeiriad cludo diofyn"
   checkout_method_free: Am ddim
-  checkout_address_same: Cyfeiriad cludo yr un peth â&#39;r cyfeiriad bilio?
+  checkout_address_same: Cyfeiriad cludo yr un peth â'r cyfeiriad bilio?
   checkout_ready_for: "Yn barod am:"
   checkout_instructions: "Unrhyw sylwadau neu gyfarwyddiadau arbennig?"
   checkout_payment: Taliad
@@ -1585,7 +1585,7 @@ cy:
   checkout_cart_total: Cyfanswm y drol
   checkout_shipping_price: Llongau
   checkout_total_price: Cyfanswm
-  checkout_back_to_cart: "Yn ôl i&#39;r Cart"
+  checkout_back_to_cart: "Yn ôl i'r Cart"
   cost_currency: "Arian Cyfred Cost"
   split_checkout:
     your_details_without_number: Eich manylion
@@ -1658,7 +1658,7 @@ cy:
       order:
         title: Cyfanswm yr Archeb
       terms_and_conditions:
-        message_html: "Rwy&#39;n cytuno i %{terms_and_conditions_link} y gwerthwr."
+        message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
         link_text: "Telerau ac Amodau"
       agree: Trwy glicio 'Cwblhau'r Archeb' rydych yn cytuno inni brosesu eich archeb.
       submit: Cwblhau'r archeb
@@ -1680,15 +1680,15 @@ cy:
   order_delivery_address: Cyfeiriad dosbarthu
   order_delivery_time: Amser dosbarthu
   order_special_instructions: "Eich nodiadau:"
-  order_pickup_time: Yn barod i&#39;w gasglu
+  order_pickup_time: Yn barod i'w gasglu
   order_pickup_instructions: Cyfarwyddiadau Casglu
   order_produce: Cynhyrchu
   order_total_price: Cyfanswm
   order_includes_tax: (yn cynnwys treth)
-  order_payment_paypal_successful: Mae eich taliad trwy PayPal wedi&#39;i brosesu&#39;n llwyddiannus.
+  order_payment_paypal_successful: Mae eich taliad trwy PayPal wedi'i brosesu'n llwyddiannus.
   order_hub_info: Gwybodaeth Hwb
-  order_back_to_store: Yn ôl i&#39;r siop
-  order_back_to_cart: Yn ôl i&#39;r drol
+  order_back_to_store: Yn ôl i'r siop
+  order_back_to_cart: Yn ôl i'r drol
   bom_tip: "Defnyddiwch y dudalen hon i newid meintiau cynnyrch ar draws sawl archeb. Gellir hefyd tynnu cynhyrchion o archebion yn gyfan gwbl, os oes angen."
   unsaved_changes_warning: "Mae newidiadau heb eu cadw yn bodoli a chânt eu colli os byddwch yn parhau."
   unsaved_changes_error: "Mae caeau â ffiniau coch yn cynnwys gwallau."
@@ -1699,11 +1699,11 @@ cy:
   email_confirmed: "Diolch am gadarnhau eich cyfeiriad e-bost."
   email_confirmation_activate_account: "Cyn y gallwn actifadu eich cyfrif newydd, mae angen i ni gadarnhau eich cyfeiriad e-bost."
   email_confirmation_greeting: "Helo, %{contact}!"
-  email_confirmation_profile_created: "Mae proffil ar gyfer %{name} wedi&#39;i greu&#39;n llwyddiannus! Er mwyn actifadu eich Proffil mae angen i ni gadarnhau&#39;r cyfeiriad e-bost hwn."
-  email_confirmation_click_link: "Cliciwch ar y ddolen isod i gadarnhau eich e-bost ac i barhau i sefydlu&#39;ch proffil."
+  email_confirmation_profile_created: "Mae proffil ar gyfer %{name} wedi'i greu'n llwyddiannus! Er mwyn actifadu eich Proffil mae angen i ni gadarnhau'r cyfeiriad e-bost hwn."
+  email_confirmation_click_link: "Cliciwch ar y ddolen isod i gadarnhau eich e-bost ac i barhau i sefydlu'ch proffil."
   email_confirmation_link_label: "Cadarnhewch y cyfeiriad e-bost hwn »"
-  email_confirmation_help_html: "Ar ôl cadarnhau eich e-bost gallwch gael mynediad i&#39;ch cyfrif gweinyddol ar gyfer y fenter hon. Gweler yr %{link} i ddarganfod mwy am nodweddion %{sitename} ac i ddechrau defnyddio&#39;ch proffil neu&#39;ch siop ar-lein."
-  email_confirmation_notice_unexpected: "Fe wnaethoch chi dderbyn y neges hon oherwydd i chi arwyddo ar %{sitename}, neu gael eich gwahodd i arwyddo gan rywun rydych chi&#39;n ei adnabod mae&#39;n debyg. Os nad ydych yn deall pam eich bod yn derbyn yr e-bost hwn, ysgrifennwch at %{contact}."
+  email_confirmation_help_html: "Ar ôl cadarnhau eich e-bost gallwch gael mynediad i'ch cyfrif gweinyddol ar gyfer y fenter hon. Gweler yr %{link} i ddarganfod mwy am nodweddion %{sitename} ac i ddechrau defnyddio'ch proffil neu'ch siop ar-lein."
+  email_confirmation_notice_unexpected: "Fe wnaethoch chi dderbyn y neges hon oherwydd i chi arwyddo ar %{sitename}, neu gael eich gwahodd i arwyddo gan rywun rydych chi'n ei adnabod mae'n debyg. Os nad ydych yn deall pam eich bod yn derbyn yr e-bost hwn, ysgrifennwch at %{contact}."
   email_social: "Cysylltu â Ni:"
   email_contact: "E-bostiwch ni:"
   email_signoff: "Lloniannau,"
@@ -1726,55 +1726,55 @@ cy:
   email_payment_paid: DALU
   email_payment_not_paid: NID TALU
   email_payment_description: Disgrifiad Talu wrth y Ddesg Talu
-  email_payment_summary: Crynodeb o&#39;r taliad
+  email_payment_summary: Crynodeb o'r taliad
   email_payment_method: "Talu trwy:"
   email_so_placement_intro_html: "Mae gennych chi archeb newydd gydag <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Dyma fanylion eich archeb am <strong>%{distributor}</strong> :"
-  email_so_placement_changes: "Yn anffodus, nid oedd yr holl gynhyrchion y gwnaethoch ofyn amdanynt ar gael. Mae&#39;r meintiau gwreiddiol y gwnaethoch ofyn amdanynt yn ymddangos wedi&#39;u croesi allan isod."
-  email_so_payment_success_intro_html: "Mae taliad awtomatig wedi&#39;i brosesu ar gyfer eich archeb o <strong>%{distributor}</strong> ."
+  email_so_placement_changes: "Yn anffodus, nid oedd yr holl gynhyrchion y gwnaethoch ofyn amdanynt ar gael. Mae'r meintiau gwreiddiol y gwnaethoch ofyn amdanynt yn ymddangos wedi'u croesi allan isod."
+  email_so_payment_success_intro_html: "Mae taliad awtomatig wedi'i brosesu ar gyfer eich archeb o <strong>%{distributor}</strong> ."
   email_so_placement_explainer_html: "Crëwyd y gorchymyn hwn yn awtomatig i chi."
   email_so_edit_true_html: "Gallwch <a href='%{order_url}'>wneud newidiadau</a> nes bod archebion yn cau ar %{orders_close_at}."
   email_so_edit_false_html: "Gallwch <a href='%{order_url}'>weld manylion y gorchymyn hwn</a> ar unrhyw adeg."
   email_so_contact_distributor_html: "Os oes gennych unrhyw gwestiynau gallwch gysylltu ag <strong>%{distributor}</strong> trwy %{email}."
   email_so_contact_distributor_to_change_order_html: "Crëwyd y gorchymyn hwn yn awtomatig i chi. Gallwch wneud newidiadau nes bod archebion yn cau ar %{orders_close_at} trwy gysylltu ag <strong>%{distributor}</strong> trwy %{email}."
-  email_so_confirmation_intro_html: "Mae eich archeb gydag <strong>%{distributor}</strong> bellach wedi&#39;i gadarnhau"
-  email_so_confirmation_explainer_html: "Gosodwyd y gorchymyn hwn yn awtomatig ar eich cyfer chi, ac mae bellach wedi&#39;i gwblhau."
+  email_so_confirmation_intro_html: "Mae eich archeb gydag <strong>%{distributor}</strong> bellach wedi'i gadarnhau"
+  email_so_confirmation_explainer_html: "Gosodwyd y gorchymyn hwn yn awtomatig ar eich cyfer chi, ac mae bellach wedi'i gwblhau."
   email_so_confirmation_details_html: "Dyma bopeth sydd angen i chi ei wybod am eich archeb o <strong>%{distributor}</strong> :"
   email_so_empty_intro_html: "Fe wnaethon ni geisio gosod archeb newydd gydag <strong>%{distributor}</strong> , ond <strong>cawson</strong> ni rai problemau ..."
-  email_so_empty_explainer_html: "Yn anffodus, nid oedd yr un o&#39;r cynhyrchion a archebwyd gennych ar gael, felly ni roddwyd archeb. Mae&#39;r meintiau gwreiddiol y gwnaethoch ofyn amdanynt yn ymddangos wedi&#39;u croesi allan isod."
+  email_so_empty_explainer_html: "Yn anffodus, nid oedd yr un o'r cynhyrchion a archebwyd gennych ar gael, felly ni roddwyd archeb. Mae'r meintiau gwreiddiol y gwnaethoch ofyn amdanynt yn ymddangos wedi'u croesi allan isod."
   email_so_empty_details_html: "Dyma fanylion y gorchymyn heb ei osod ar gyfer <strong>%{distributor}</strong> :"
   email_so_failed_payment_intro_html: "Fe wnaethon ni geisio prosesu taliad, ond cawson ni rai problemau ..."
-  email_so_failed_payment_explainer_html: "Methodd y taliad am eich tanysgrifiad gydag <strong>%{distributor}</strong> oherwydd problem gyda&#39;ch cerdyn credyd. <strong>mae %{distributor}</strong> wedi cael gwybod am y taliad <strong>aflwyddiannus</strong> hwn."
+  email_so_failed_payment_explainer_html: "Methodd y taliad am eich tanysgrifiad gydag <strong>%{distributor}</strong> oherwydd problem gyda'ch cerdyn credyd. <strong>mae %{distributor}</strong> wedi cael gwybod am y taliad <strong>aflwyddiannus</strong> hwn."
   email_so_failed_payment_details_html: "Dyma fanylion y methiant a ddarparwyd gan y porth talu:"
   email_shipping_delivery_details: Manylion dosbarthu
   email_shipping_delivery_time: "Dosbarthu ar:"
   email_shipping_delivery_address: "Cyfeiriad dosbarthu:"
   email_shipping_collection_details: Manylion y casgliad
-  email_shipping_collection_time: "Yn barod i&#39;w gasglu:"
+  email_shipping_collection_time: "Yn barod i'w gasglu:"
   email_shipping_collection_instructions: "Cyfarwyddiadau casglu:"
   email_special_instructions: "Eich nodiadau:"
   email_signup_greeting: Helo!
   email_signup_welcome: "Croeso i %{sitename}!"
   email_signup_confirmed_email: "Diolch am gadarnhau eich e-bost."
   email_signup_shop_html: "Gallwch nawr fewngofnodi yn %{link}."
-  email_signup_text: "Diolch am ymuno â&#39;r rhwydwaith. Os ydych chi&#39;n gwsmer, rydyn ni&#39;n edrych ymlaen at eich cyflwyno i lawer o ffermwyr gwych, hybiau bwyd gwych a bwyd blasus! Os ydych chi&#39;n gynhyrchydd neu&#39;n fenter fwyd, rydym yn gyffrous eich cael chi fel rhan o&#39;r rhwydwaith."
-  email_signup_help_html: "Rydym yn croesawu eich holl gwestiynau a&#39;ch adborth; gallwch ddefnyddio&#39;r botwm <em>Anfon Adborth</em> ar y wefan neu anfon e-bost atom yn %{email}"
+  email_signup_text: "Diolch am ymuno â'r rhwydwaith. Os ydych chi'n gwsmer, rydyn ni'n edrych ymlaen at eich cyflwyno i lawer o ffermwyr gwych, hybiau bwyd gwych a bwyd blasus! Os ydych chi'n gynhyrchydd neu'n fenter fwyd, rydym yn gyffrous eich cael chi fel rhan o'r rhwydwaith."
+  email_signup_help_html: "Rydym yn croesawu eich holl gwestiynau a'ch adborth; gallwch ddefnyddio'r botwm <em>Anfon Adborth</em> ar y wefan neu anfon e-bost atom yn %{email}"
   invite_email:
     greeting: "Helo!"
-    invited_to_manage: "Fe&#39;ch gwahoddwyd i reoli %{enterprise} ar %{instance}."
-    confirm_your_email: "Dylech fod wedi derbyn neu y byddwch yn derbyn e-bost yn fuan gyda dolen gadarnhau. Ni fyddwch yn gallu cyrchu proffil %{enterprise} nes eich bod wedi cadarnhau&#39;ch e-bost."
-    set_a_password: "Yna fe&#39;ch anogir i osod cyfrinair cyn y gallwch weinyddu&#39;r fenter."
+    invited_to_manage: "Fe'ch gwahoddwyd i reoli %{enterprise} ar %{instance}."
+    confirm_your_email: "Dylech fod wedi derbyn neu y byddwch yn derbyn e-bost yn fuan gyda dolen gadarnhau. Ni fyddwch yn gallu cyrchu proffil %{enterprise} nes eich bod wedi cadarnhau'ch e-bost."
+    set_a_password: "Yna fe'ch anogir i osod cyfrinair cyn y gallwch weinyddu'r fenter."
     mistakenly_sent: "Ddim yn siŵr pam rydych chi wedi derbyn yr e-bost hwn? Cysylltwch â %{owner_email} i gael mwy o wybodaeth."
   producer_mail_greeting: "Annwyl"
   producer_mail_text_before: "Gweler idos ddiwe4ddariad am y cylch archebu'n barod ar gyfer:"
-  producer_mail_order_text: "Dyma grynodeb o&#39;r archebion ar gyfer eich cynhyrchion:"
+  producer_mail_order_text: "Dyma grynodeb o'r archebion ar gyfer eich cynhyrchion:"
   producer_mail_delivery_instructions: "Cyfarwyddiadau codi / dosbarthu stoc:"
   producer_mail_signoff: "Diolch a dymuniadau gorau"
   producer_mail_order_customer_text: "Gweler crynodeb o'r archebion fesul grwp cwsmeriaid"
-  shopping_oc_closed: Mae&#39;r archebion ar gau
+  shopping_oc_closed: Mae'r archebion ar gau
   shopping_oc_closed_description: "Arhoswch nes bydd y cylch nesaf yn agor (neu cysylltwch â ni yn uniongyrchol i weld a allwn dderbyn unrhyw archebion hwyr)"
   shopping_oc_last_closed: "Caeodd y cylch olaf %{distance_of_time} yn ôl"
-  shopping_oc_next_open: "Mae&#39;r cylch nesaf yn agor yn %{distance_of_time}"
+  shopping_oc_next_open: "Mae'r cylch nesaf yn agor yn %{distance_of_time}"
   shopping_oc_select: "Dewiswch ..."
   shopping_tabs_home: "Hafan"
   shopping_tabs_shop: "Siop"
@@ -1806,16 +1806,16 @@ cy:
   hubs_filter_type: "Math"
   hubs_filter_delivery: "Dosbarthu"
   hubs_filter_property: "Eiddo"
-  hubs_matches: "Oeddech chi&#39;n golygu?"
+  hubs_matches: "Oeddech chi'n golygu?"
   hubs_intro: Siopa yn eich ardal leol
   hubs_distance: Agosaf at
   hubs_distance_filter: "Dangoswch siopau i mi ger %{location}"
   shop_changeable_orders_alert_html:
-    one: Mae eich archeb gydag <a href='%{path}' target='_blank'>%{shop} / %{order}</a> ar agor i&#39;w hadolygu. Gallwch wneud newidiadau tan %{oc_close}.
-    few: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i&#39;w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
-    many: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i&#39;w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
-    other: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i&#39;w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
-  orders_changeable_orders_alert_html: Mae&#39;r gorchymyn hwn wedi&#39;i gadarnhau, ond gallwch chi wneud newidiadau tan <strong>%{oc_close}</strong> .
+    one: Mae eich archeb gydag <a href='%{path}' target='_blank'>%{shop} / %{order}</a> ar agor i'w hadolygu. Gallwch wneud newidiadau tan %{oc_close}.
+    few: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i'w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
+    many: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i'w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
+    other: Mae gennych chi <a href='%{path}' target='_blank'>archebion %{count} gydag %{shop}</a> ar agor i'w hadolygu ar hyn o bryd. Gallwch wneud newidiadau tan %{oc_close}.
+  orders_changeable_orders_alert_html: Mae'r gorchymyn hwn wedi'i gadarnhau, ond gallwch chi wneud newidiadau tan <strong>%{oc_close}</strong> .
   products_clear: Clir
   products_showing: "Yn dangos:"
   products_results_for: "Canlyniadau ar gyfer"
@@ -1825,30 +1825,30 @@ cy:
   products_with: gyda
   products_search: "Chwilio ..."
   products_filter_by: "Hidlo gan"
-  products_filter_selected: "wedi&#39;i ddewis"
+  products_filter_selected: "wedi'i ddewis"
   products_filter_heading: "Hidlau"
   products_filter_clear: "Clir"
-  products_filter_done: "Wedi&#39;i wneud"
+  products_filter_done: "Wedi'i wneud"
   products_loading: "Llwytho cynhyrchion ..."
   products_updating_cart: "Diweddaru cart ..."
   products_cart_empty: "Cart yn wag"
-  products_edit_cart: "Golygu&#39;ch trol"
+  products_edit_cart: "Golygu'ch trol"
   products_from: o
-  products_change: "Dim newidiadau i&#39;w harbed."
-  products_update_error: "Methodd cynilo gyda&#39;r gwall (au) canlynol:"
+  products_change: "Dim newidiadau i'w harbed."
+  products_update_error: "Methodd cynilo gyda'r gwall (au) canlynol:"
   products_update_error_msg: "Methodd arbed."
   products_update_error_data: "Methodd arbed oherwydd data annilys:"
-  products_changes_saved: "Newidiadau wedi&#39;u cadw."
-  products_no_results_html: "Mae&#39;n ddrwg gennym, ni ddarganfuwyd unrhyw ganlyniadau ar gyfer %{query}"
+  products_changes_saved: "Newidiadau wedi'u cadw."
+  products_no_results_html: "Mae'n ddrwg gennym, ni ddarganfuwyd unrhyw ganlyniadau ar gyfer %{query}"
   products_clear_search: "Chwilio clir"
-  search_no_results_html: "Mae&#39;n ddrwg gennym, ni ddarganfuwyd unrhyw ganlyniadau ar gyfer %{query}. Rhowch gynnig ar chwiliad arall?"
-  components_profiles_popover: "Nid oes gan broffiliau flaen siop ar y Rhwydwaith Bwyd Agored, ond gallant fod â&#39;u siop gorfforol neu ar-lein eu hunain yn rhywle arall"
+  search_no_results_html: "Mae'n ddrwg gennym, ni ddarganfuwyd unrhyw ganlyniadau ar gyfer %{query}. Rhowch gynnig ar chwiliad arall?"
+  components_profiles_popover: "Nid oes gan broffiliau flaen siop ar y Rhwydwaith Bwyd Agored, ond gallant fod â'u siop gorfforol neu ar-lein eu hunain yn rhywle arall"
   components_profiles_show: "Dangos proffiliau"
   components_filters_nofilters: "Dim hidlwyr"
   components_filters_clearfilters: "Cliriwch yr holl hidlwyr"
   groups_title: Grwpiau
   groups_headline: Grwpiau / rhanbarthau
-  groups_text: "Mae pob cynhyrchydd yn unigryw. Mae gan bob busnes rywbeth gwahanol i&#39;w gynnig. Mae ein grwpiau yn grwpiau o gynhyrchwyr, hybiau a dosbarthwyr sy&#39;n rhannu rhywbeth yn gyffredin fel lleoliad, marchnad ffermwyr neu athroniaeth. Mae hyn yn gwneud eich profiad siopa yn haws. Felly archwiliwch ein grwpiau a gwnewch y curadu ar eich rhan."
+  groups_text: "Mae pob cynhyrchydd yn unigryw. Mae gan bob busnes rywbeth gwahanol i'w gynnig. Mae ein grwpiau yn grwpiau o gynhyrchwyr, hybiau a dosbarthwyr sy'n rhannu rhywbeth yn gyffredin fel lleoliad, marchnad ffermwyr neu athroniaeth. Mae hyn yn gwneud eich profiad siopa yn haws. Felly archwiliwch ein grwpiau a gwnewch y curadu ar eich rhan."
   groups_search: "Chwilio enw neu allweddair"
   groups_no_groups: "Ni ddaethpwyd o hyd i grwpiau"
   groups_about: "Amdanom ni"
@@ -1858,26 +1858,26 @@ cy:
   groups_contact_social: Dilynwch
   groups_contact_address: Cyfeiriad
   groups_contact_email: E-bostiwch ni
-  groups_contact_website: Ewch i&#39;n gwefan
+  groups_contact_website: Ewch i'n gwefan
   groups_contact_facebook: Dilynwch ni ar Facebook
   groups_signup_title: Cofrestrwch fel grŵp
-  groups_signup_headline: Mae grwpiau&#39;n cofrestru
-  groups_signup_intro: "Rydym yn llwyfan anhygoel ar gyfer marchnata cydweithredol, y ffordd hawsaf i&#39;ch aelodau a&#39;ch rhanddeiliaid gyrraedd marchnadoedd newydd. Rydym yn ddielw, yn fforddiadwy ac yn syml."
+  groups_signup_headline: Mae grwpiau'n cofrestru
+  groups_signup_intro: "Rydym yn llwyfan anhygoel ar gyfer marchnata cydweithredol, y ffordd hawsaf i'ch aelodau a'ch rhanddeiliaid gyrraedd marchnadoedd newydd. Rydym yn ddielw, yn fforddiadwy ac yn syml."
   groups_signup_email: E-bostiwch ni
   groups_signup_motivation1: Rydym yn trawsnewid systemau bwyd yn deg.
-  groups_signup_motivation2: Dyma pam rydyn ni&#39;n codi o&#39;r gwely bob dydd. Rydym yn ddielw byd-eang, yn seiliedig ar god ffynhonnell agored. Rydyn ni&#39;n chwarae&#39;n deg. Gallwch chi ymddiried ynom ni bob amser.
-  groups_signup_motivation3: Rydyn ni&#39;n gwybod bod gennych chi syniadau mawr, ac rydyn ni am helpu. Byddwn yn rhannu ein gwybodaeth, ein rhwydweithiau a&#39;n hadnoddau. Rydym yn gwybod nad yw unigedd yn creu newid, felly byddwn yn partneru â chi.
-  groups_signup_motivation4: Rydyn ni&#39;n cwrdd â chi lle rydych chi.
-  groups_signup_motivation5: Efallai eich bod chi&#39;n gynghrair o hybiau bwyd, cynhyrchwyr, neu ddosbarthwyr, a chorff diwydiant, neu lywodraeth leol.
-  groups_signup_motivation6: Beth bynnag fo&#39;ch rôl yn eich mudiad bwyd lleol, rydyn ni&#39;n barod i helpu. Fodd bynnag, rydych chi&#39;n dod i feddwl sut olwg fyddai ar Open Food Network neu&#39;n ei wneud yn eich rhan chi o&#39;r byd, gadewch i ni ddechrau&#39;r sgwrs.
-  groups_signup_motivation7: Rydyn ni&#39;n gwneud i symudiadau bwyd wneud mwy o synnwyr.
-  groups_signup_motivation8: Mae angen i chi actifadu a galluogi&#39;ch rhwydweithiau, rydyn ni&#39;n cynnig llwyfan ar gyfer sgwrsio a gweithredu. Mae angen ymgysylltu go iawn. Byddwn yn helpu i gyrraedd yr holl chwaraewyr, yr holl randdeiliaid, yr holl sectorau.
+  groups_signup_motivation2: Dyma pam rydyn ni'n codi o'r gwely bob dydd. Rydym yn ddielw byd-eang, yn seiliedig ar god ffynhonnell agored. Rydyn ni'n chwarae'n deg. Gallwch chi ymddiried ynom ni bob amser.
+  groups_signup_motivation3: Rydyn ni'n gwybod bod gennych chi syniadau mawr, ac rydyn ni am helpu. Byddwn yn rhannu ein gwybodaeth, ein rhwydweithiau a'n hadnoddau. Rydym yn gwybod nad yw unigedd yn creu newid, felly byddwn yn partneru â chi.
+  groups_signup_motivation4: Rydyn ni'n cwrdd â chi lle rydych chi.
+  groups_signup_motivation5: Efallai eich bod chi'n gynghrair o hybiau bwyd, cynhyrchwyr, neu ddosbarthwyr, a chorff diwydiant, neu lywodraeth leol.
+  groups_signup_motivation6: Beth bynnag fo'ch rôl yn eich mudiad bwyd lleol, rydyn ni'n barod i helpu. Fodd bynnag, rydych chi'n dod i feddwl sut olwg fyddai ar Open Food Network neu'n ei wneud yn eich rhan chi o'r byd, gadewch i ni ddechrau'r sgwrs.
+  groups_signup_motivation7: Rydyn ni'n gwneud i symudiadau bwyd wneud mwy o synnwyr.
+  groups_signup_motivation8: Mae angen i chi actifadu a galluogi'ch rhwydweithiau, rydyn ni'n cynnig llwyfan ar gyfer sgwrsio a gweithredu. Mae angen ymgysylltu go iawn. Byddwn yn helpu i gyrraedd yr holl chwaraewyr, yr holl randdeiliaid, yr holl sectorau.
   groups_signup_motivation9: Mae angen adnoddau arnoch chi. Byddwn yn dwyn ein holl brofiad i rym. Mae angen cydweithrediad arnoch chi. Byddwn yn eich cysylltu yn well â rhwydwaith fyd-eang o gyfoedion.
   groups_signup_pricing: Cyfrif Grŵp
   groups_signup_studies: Astudiaethau achos
   groups_signup_contact: Yn barod i drafod?
   groups_signup_contact_text: "Cysylltwch â ni i ddarganfod beth all OFN ei wneud i chi:"
-  groups_signup_detail: "Dyma&#39;r manylion."
+  groups_signup_detail: "Dyma'r manylion."
   login_invalid: "E-bost neu gyfrinair annilys"
   producers_about: Amdanom ni
   producers_buy: Siopa am
@@ -1891,14 +1891,14 @@ cy:
   producers_title: Cynhyrchwyr
   producers_headline: Dewch o hyd i gynhyrchwyr lleol
   producers_signup_title: Cofrestrwch fel cynhyrchydd
-  producers_signup_headline: Cynhyrchwyr bwyd, wedi&#39;u grymuso.
-  producers_signup_motivation: Gwerthu&#39;ch bwyd ac adrodd eich straeon i farchnadoedd newydd amrywiol. Arbedwch amser ac arian ar bob uwchben. Rydym yn cefnogi arloesedd heb y risg. Rydyn ni wedi lefelu&#39;r cae chwarae.
+  producers_signup_headline: Cynhyrchwyr bwyd, wedi'u grymuso.
+  producers_signup_motivation: Gwerthu'ch bwyd ac adrodd eich straeon i farchnadoedd newydd amrywiol. Arbedwch amser ac arian ar bob uwchben. Rydym yn cefnogi arloesedd heb y risg. Rydyn ni wedi lefelu'r cae chwarae.
   producers_signup_send: Ymunwch nawr
   producers_signup_enterprise: Cyfrifon Menter
   producers_signup_studies: Straeon gan ein cynhyrchwyr.
   producers_signup_cta_headline: Ymunwch nawr!
   producers_signup_cta_action: Ymunwch nawr
-  producers_signup_detail: Dyma&#39;r manylion.
+  producers_signup_detail: Dyma'r manylion.
   products_item: Eitem
   products_description: Disgrifiad
   products_variant: Amrywiol
@@ -1914,25 +1914,25 @@ cy:
   sell_producers: "Cynhyrchwyr"
   sell_hubs: "Hybiau"
   sell_groups: "Grwpiau"
-  sell_producers_detail: "Sefydlu proffil ar gyfer eich busnes ar yr OFN mewn munudau&#39;n unig. Ar unrhyw adeg gallwch chi uwchraddio&#39;ch proffil i siop ar-lein a gwerthu&#39;ch cynhyrchion yn uniongyrchol i gwsmeriaid."
-  sell_hubs_detail: "Sefydlu proffil ar gyfer eich menter neu sefydliad bwyd ar yr OFN. Ar unrhyw adeg gallwch chi uwchraddio&#39;ch proffil i siop aml-gynhyrchydd."
-  sell_groups_detail: "Sefydlu cyfeirlyfr o fentrau wedi&#39;u teilwra (cynhyrchwyr a mentrau bwyd eraill) ar gyfer eich rhanbarth neu ar gyfer eich sefydliad."
+  sell_producers_detail: "Sefydlu proffil ar gyfer eich busnes ar yr OFN mewn munudau'n unig. Ar unrhyw adeg gallwch chi uwchraddio'ch proffil i siop ar-lein a gwerthu'ch cynhyrchion yn uniongyrchol i gwsmeriaid."
+  sell_hubs_detail: "Sefydlu proffil ar gyfer eich menter neu sefydliad bwyd ar yr OFN. Ar unrhyw adeg gallwch chi uwchraddio'ch proffil i siop aml-gynhyrchydd."
+  sell_groups_detail: "Sefydlu cyfeirlyfr o fentrau wedi'u teilwra (cynhyrchwyr a mentrau bwyd eraill) ar gyfer eich rhanbarth neu ar gyfer eich sefydliad."
   sell_user_guide: "Darganfyddwch fwy yn ein canllaw defnyddiwr."
-  sell_listing_price: "Mae rhestru ar yr OFN yn rhad ac am ddim. Mae agor a rhedeg siop ar OFN yn rhad ac am ddim hyd at $ 500 o werthiannau misol. Os ydych chi&#39;n gwerthu mwy gallwch ddewis eich cyfraniad cymunedol rhwng 1% a 3% o&#39;r gwerthiannau. I gael mwy o fanylion am brisio, ymwelwch â&#39;r adran Llwyfan Meddalwedd trwy&#39;r ddolen About yn y ddewislen uchaf."
-  sell_embed: "Gallwn hefyd wreiddio siop OFN yn eich gwefan wedi&#39;i haddasu eich hun neu adeiladu gwefan rhwydwaith bwyd lleol wedi&#39;i haddasu ar gyfer eich rhanbarth."
+  sell_listing_price: "Mae rhestru ar yr OFN yn rhad ac am ddim. Mae agor a rhedeg siop ar OFN yn rhad ac am ddim hyd at $ 500 o werthiannau misol. Os ydych chi'n gwerthu mwy gallwch ddewis eich cyfraniad cymunedol rhwng 1% a 3% o'r gwerthiannau. I gael mwy o fanylion am brisio, ymwelwch â'r adran Llwyfan Meddalwedd trwy'r ddolen About yn y ddewislen uchaf."
+  sell_embed: "Gallwn hefyd wreiddio siop OFN yn eich gwefan wedi'i haddasu eich hun neu adeiladu gwefan rhwydwaith bwyd lleol wedi'i haddasu ar gyfer eich rhanbarth."
   sell_ask_services: "Gofynnwch i ni am wasanaethau OFN."
   shops_title: Siopiau
   shops_headline: Siopa, trawsnewid.
-  shops_text: Mae bwyd yn tyfu mewn cylchoedd, ffermwyr yn cynaeafu mewn beiciau, ac rydyn ni&#39;n archebu bwyd mewn beiciau. Os dewch o hyd i gylch archeb ar gau, edrychwch yn ôl yn fuan.
+  shops_text: Mae bwyd yn tyfu mewn cylchoedd, ffermwyr yn cynaeafu mewn beiciau, ac rydyn ni'n archebu bwyd mewn beiciau. Os dewch o hyd i gylch archeb ar gau, edrychwch yn ôl yn fuan.
   shops_signup_title: Cofrestrwch fel canolbwynt
   shops_signup_headline: Hybiau bwyd, diderfyn.
-  shops_signup_motivation: Beth bynnag fo&#39;ch model, rydyn ni&#39;n eich cefnogi chi. Sut bynnag rydych chi&#39;n newid, rydyn ni gyda chi. Rydym yn ddielw, yn annibynnol ac yn ffynhonnell agored. Ni yw&#39;r partneriaid meddalwedd rydych chi wedi breuddwydio amdanyn nhw.
+  shops_signup_motivation: Beth bynnag fo'ch model, rydyn ni'n eich cefnogi chi. Sut bynnag rydych chi'n newid, rydyn ni gyda chi. Rydym yn ddielw, yn annibynnol ac yn ffynhonnell agored. Ni yw'r partneriaid meddalwedd rydych chi wedi breuddwydio amdanyn nhw.
   shops_signup_action: Ymunwch nawr
   shops_signup_pricing: Cyfrifon Menter
-  shops_signup_stories: Straeon o&#39;n hybiau.
-  shops_signup_help: Rydyn ni&#39;n barod i helpu.
-  shops_signup_help_text: Mae angen gwell dychweliad arnoch chi. Mae angen prynwyr a phartneriaid logisteg newydd arnoch chi. Mae angen i&#39;ch stori gael ei hadrodd ar draws cyfanwerth, manwerthu a bwrdd y gegin.
-  shops_signup_detail: Dyma&#39;r manylion.
+  shops_signup_stories: Straeon o'n hybiau.
+  shops_signup_help: Rydyn ni'n barod i helpu.
+  shops_signup_help_text: Mae angen gwell dychweliad arnoch chi. Mae angen prynwyr a phartneriaid logisteg newydd arnoch chi. Mae angen i'ch stori gael ei hadrodd ar draws cyfanwerth, manwerthu a bwrdd y gegin.
+  shops_signup_detail: Dyma'r manylion.
   orders: "Gorchmynion"
   orders_fees: "Ffioedd ..."
   orders_edit_title: "Cart Siopa"
@@ -1946,28 +1946,28 @@ cy:
   orders_form_admin: "Gweinyddiaeth a Thrin"
   orders_form_total: "Cyfanswm"
   orders_oc_expired_headline: "Mae archebion wedi cau ar gyfer y cylch archebu hwn"
-  orders_oc_expired_text: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a allan nhw dderbyn archebion hwyr."
-  orders_oc_expired_text_others_html: "Mae&#39;n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â&#39;ch canolbwynt yn uniongyrchol i weld a <strong>allan</strong> nhw dderbyn archebion hwyr <strong>%{link}</strong> ."
+  orders_oc_expired_text: "Mae'n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â'ch canolbwynt yn uniongyrchol i weld a allan nhw dderbyn archebion hwyr."
+  orders_oc_expired_text_others_html: "Mae'n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â'ch canolbwynt yn uniongyrchol i weld a <strong>allan</strong> nhw dderbyn archebion hwyr <strong>%{link}</strong> ."
   orders_oc_expired_text_link: "neu gwelwch y cylchoedd archebu eraill sydd ar gael yn y canolbwynt hwn"
   orders_oc_expired_email: "E-bost:"
   orders_oc_expired_phone: "Ffôn:"
   orders_show_title: "Cadarnhad Gorchymyn"
   orders_show_time: "Archeb yn barod ymlaen"
   orders_show_order_number: "Gorchymyn # %{number}"
-  orders_show_cancelled: "Wedi&#39;i ganslo"
+  orders_show_cancelled: "Wedi'i ganslo"
   orders_show_confirmed: "Cadarnhawyd"
-  orders_your_order_has_been_cancelled: "Mae eich archeb wedi&#39;i ganslo"
-  orders_could_not_cancel: "Mae&#39;n ddrwg gennym, ni ellid canslo&#39;r gorchymyn"
+  orders_your_order_has_been_cancelled: "Mae eich archeb wedi'i ganslo"
+  orders_could_not_cancel: "Mae'n ddrwg gennym, ni ellid canslo'r gorchymyn"
   orders_cannot_remove_the_final_item: "Ni all dynnu’r eitem olaf o orchymyn, canslwch yr archeb yn lle."
   orders_bought_items_notice:
-    one: "Mae eitem ychwanegol eisoes wedi&#39;i chadarnhau ar gyfer y cylch archebu hwn"
+    one: "Mae eitem ychwanegol eisoes wedi'i chadarnhau ar gyfer y cylch archebu hwn"
     few: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     many: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
     other: "%{count} eitemau ychwanegol a gadarnhawyd eisoes ar gyfer y cylch archebu hwn"
-  orders_bought_edit_button: "Golygu eitemau wedi&#39;u cadarnhau"
-  orders_bought_already_confirmed: "* wedi&#39;i gadarnhau eisoes"
-  orders_confirm_cancel: "Ydych chi&#39;n siŵr eich bod chi am ganslo&#39;r gorchymyn hwn?"
-  order_processed_successfully: "Mae eich archeb wedi&#39;i phrosesu&#39;n llwyddiannus"
+  orders_bought_edit_button: "Golygu eitemau wedi'u cadarnhau"
+  orders_bought_already_confirmed: "* wedi'i gadarnhau eisoes"
+  orders_confirm_cancel: "Ydych chi'n siŵr eich bod chi am ganslo'r gorchymyn hwn?"
+  order_processed_successfully: "Mae eich archeb wedi'i phrosesu'n llwyddiannus"
   products_cart_distributor_choice: "Dosbarthwr ar gyfer eich archeb:"
   products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer y gorchymyn hwn yn cael ei newid i %{name} os ychwanegwch y cynnyrch hwn at eich trol."
   products_cart_distributor_is: "Eich dosbarthwr ar gyfer y gorchymyn hwn yw %{name}."
@@ -1979,35 +1979,35 @@ cy:
   products_oc_current: "eich cylch archebu cyfredol"
   products_max_quantity: Maint mwyaf
   products_distributor: Dosbarthwr
-  products_distributor_info: Pan ddewiswch ddosbarthwr ar gyfer eich archeb, bydd eu cyfeiriad a&#39;u hamseroedd codi yn cael eu harddangos yma.
+  products_distributor_info: Pan ddewiswch ddosbarthwr ar gyfer eich archeb, bydd eu cyfeiriad a'u hamseroedd codi yn cael eu harddangos yma.
   password: Cyfrinair
   remember_me: Cofiwch fi
-  are_you_sure: "Wyt ti&#39;n siwr?"
+  are_you_sure: "Wyt ti'n siwr?"
   orders_open: "Gorchmynion ar agor"
   closing: "Cau"
-  going_back_to_home_page: "Mynd â chi yn ôl i&#39;r dudalen gartref"
+  going_back_to_home_page: "Mynd â chi yn ôl i'r dudalen gartref"
   creating: Creu
   updating: Diweddaru
   failed_to_create_enterprise: "Wedi methu creu eich menter."
-  failed_to_create_enterprise_unknown: "Wedi methu creu eich menter. Sicrhewch fod pob maes wedi&#39;i lenwi&#39;n llwyr."
-  failed_to_update_enterprise_unknown: "Wedi methu diweddaru eich menter. Sicrhewch fod pob maes wedi&#39;i lenwi&#39;n llwyr."
-  enterprise_confirm_delete_message: "Bydd hyn hefyd yn dileu&#39;r %{product} y mae&#39;r fenter hon yn ei gyflenwi. Ydych chi&#39;n siŵr eich bod chi eisiau parhau?"
-  order_not_saved_yet: "Nid yw&#39;ch archeb wedi&#39;i chadw eto. Rhowch ychydig eiliadau i ni orffen!"
+  failed_to_create_enterprise_unknown: "Wedi methu creu eich menter. Sicrhewch fod pob maes wedi'i lenwi'n llwyr."
+  failed_to_update_enterprise_unknown: "Wedi methu diweddaru eich menter. Sicrhewch fod pob maes wedi'i lenwi'n llwyr."
+  enterprise_confirm_delete_message: "Bydd hyn hefyd yn dileu'r %{product} y mae'r fenter hon yn ei gyflenwi. Ydych chi'n siŵr eich bod chi eisiau parhau?"
+  order_not_saved_yet: "Nid yw'ch archeb wedi'i chadw eto. Rhowch ychydig eiliadau i ni orffen!"
   filter_by: "Hidlo gan"
   hide_filters: "Cuddio hidlwyr"
-  one_filter_applied: "1 hidlydd wedi&#39;i gymhwyso"
-  x_filters_applied: "hidlwyr wedi&#39;u cymhwyso"
-  submitting_order: "Cyflwyno&#39;ch archeb: arhoswch"
-  confirm_hub_change: "Wyt ti&#39;n siwr? Bydd hyn yn newid y canolbwynt a ddewiswyd gennych ac yn cael gwared ar unrhyw eitemau yn eich trol siopa."
-  confirm_oc_change: "Wyt ti&#39;n siwr? Bydd hyn yn newid y cylch archebu a ddewiswyd gennych ac yn cael gwared ar unrhyw eitemau yn eich trol siopa."
+  one_filter_applied: "1 hidlydd wedi'i gymhwyso"
+  x_filters_applied: "hidlwyr wedi'u cymhwyso"
+  submitting_order: "Cyflwyno'ch archeb: arhoswch"
+  confirm_hub_change: "Wyt ti'n siwr? Bydd hyn yn newid y canolbwynt a ddewiswyd gennych ac yn cael gwared ar unrhyw eitemau yn eich trol siopa."
+  confirm_oc_change: "Wyt ti'n siwr? Bydd hyn yn newid y cylch archebu a ddewiswyd gennych ac yn cael gwared ar unrhyw eitemau yn eich trol siopa."
   location_placeholder: "Teipiwch leoliad ..."
   error_required: "ni all fod yn wag"
   error_number: "rhaid bod yn rhif"
   error_email: "rhaid bod yn gyfeiriad e-bost"
   error_not_found_in_database: "%{name} heb ei ddarganfod yn y gronfa ddata"
-  error_not_primary_producer: "nid yw %{name} wedi&#39;i alluogi fel cynhyrchydd"
+  error_not_primary_producer: "nid yw %{name} wedi'i alluogi fel cynhyrchydd"
   error_no_permission_for_enterprise: "&quot;%{name}&quot;: nid oes gennych ganiatâd i reoli cynhyrchion ar gyfer y fenter hon"
-  item_handling_fees: "Ffioedd Trin Eitem (wedi&#39;u cynnwys yng nghyfansymiau&#39;r eitemau)"
+  item_handling_fees: "Ffioedd Trin Eitem (wedi'u cynnwys yng nghyfansymiau'r eitemau)"
   january: "Ionawr"
   february: "Chwefror"
   march: "Mawrth"
@@ -2023,20 +2023,20 @@ cy:
   email_not_found: "Cyfeiriad e-bost heb ei ddarganfod"
   email_unconfirmed: "Rhaid i chi gadarnhau eich cyfeiriad e-bost cyn y gallwch ailosod eich cyfrinair."
   email_required: "Rhaid i chi ddarparu cyfeiriad e-bost"
-  logging_in: "Daliwch eiliad, rydyn ni&#39;n eich mewngofnodi"
+  logging_in: "Daliwch eiliad, rydyn ni'n eich mewngofnodi"
   signup_email: "Dy ebost"
   choose_password: "Dewiswch gyfrinair"
   confirm_password: "Cadarnhau cyfrinair"
   action_signup: "Cofrestrwch nawr"
   forgot_password: "Wedi anghofio cyfrinair?"
-  password_reset_sent: "Mae e-bost gyda chyfarwyddiadau ar ailosod eich cyfrinair wedi&#39;i anfon!"
+  password_reset_sent: "Mae e-bost gyda chyfarwyddiadau ar ailosod eich cyfrinair wedi'i anfon!"
   reset_password: "Ailosod cyfrinair"
-  update_and_recalculate_fees: "Diweddaru a Ail-gyfrifo&#39;r Ffioedd"
+  update_and_recalculate_fees: "Diweddaru a Ail-gyfrifo'r Ffioedd"
   registration:
     steps:
       introduction:
         registration_greeting: "Helo yno!"
-        registration_intro: "Nawr gallwch chi greu proffil i&#39;ch Cynhyrchydd neu Hwb"
+        registration_intro: "Nawr gallwch chi greu proffil i'ch Cynhyrchydd neu Hwb"
         registration_checklist: "Beth sydd ei angen arnaf?"
         registration_time: "5-10 munud"
         registration_enterprise_address: "Cyfeiriad menter"
@@ -2044,9 +2044,9 @@ cy:
         registration_logo: "Delwedd eich logo"
         registration_promo_image: "Delwedd tirwedd ar gyfer eich proffil"
         registration_about_us: "Testun &#39;Amdanom Ni&#39;"
-        registration_outcome_headline: "Beth ydw i&#39;n ei gael?"
+        registration_outcome_headline: "Beth ydw i'n ei gael?"
         registration_outcome1_html: "Mae eich proffil yn helpu pobl i <strong>ddod</strong> o <strong>hyd i</strong> chi a <strong>chysylltu â nhw</strong> ar y Rhwydwaith Bwyd Agored."
-        registration_outcome2: "Defnyddiwch y gofod hwn i adrodd stori eich menter, i helpu i yrru cysylltiadau â&#39;ch presenoldeb cymdeithasol ac ar-lein."
+        registration_outcome2: "Defnyddiwch y gofod hwn i adrodd stori eich menter, i helpu i yrru cysylltiadau â'ch presenoldeb cymdeithasol ac ar-lein."
         registration_outcome3: "Dyma hefyd y cam cyntaf tuag at fasnachu ar y Rhwydwaith Bwyd Agored, neu agor siop ar-lein."
         registration_action: "Dewch inni ddechrau!"
       details:
@@ -2055,7 +2055,7 @@ cy:
         enterprise: "Gwych! Yn gyntaf mae angen inni wybod ychydig am eich menter:"
         producer: "Woot! Yn gyntaf mae angen i ni wybod ychydig am eich fferm:"
         enterprise_name_field: "Enw Menter:"
-        producer_name_field: "Enw&#39;r Fferm:"
+        producer_name_field: "Enw'r Fferm:"
         producer_name_field_placeholder: "ee Fferm Awesome Charlie"
         producer_name_field_error: "Dewiswch enw unigryw ar gyfer eich menter"
         address1_field: "Llinell Cyfeiriad 1:"
@@ -2079,7 +2079,7 @@ cy:
         drag_map_marker: "Oherwydd bod llawer o gynhyrchwyr mewn ardaloedd gwledig, rydym yn gwella cywirdeb y mapiau'n barhaus.  Gallwch ein helpu i ddeall eich union leoliad trwy ryngweithio â'r map uchod a symud y pin trwy glicio neu dapio i  ddal y pin, a'i lusgo i leoliad mwy cywir, ar sail eich gwybodaeth."
       contact:
         title: "Cysylltwch"
-        who_is_managing_enterprise: "Pwy sy&#39;n gyfrifol am reoli %{enterprise}?"
+        who_is_managing_enterprise: "Pwy sy'n gyfrifol am reoli %{enterprise}?"
         contact_field: "Prif Gyswllt"
         contact_field_placeholder: "Enw Cyswllt"
         contact_field_required: "Mae angen i chi nodi prif gyswllt."
@@ -2088,23 +2088,23 @@ cy:
       type:
         title: "Math"
         headline: "Y cam olaf i ychwanegu %{enterprise}!"
-        question: "Ydych chi&#39;n gynhyrchydd?"
-        yes_producer: "Ydw, rwy&#39;n gynhyrchydd"
+        question: "Ydych chi'n gynhyrchydd?"
+        yes_producer: "Ydw, rwy'n gynhyrchydd"
         no_producer: "Na, nid wyf yn gynhyrchydd"
-        producer_field_error: "Dewiswch un. Ydych chi&#39;n gynhyrchydd?"
-        yes_producer_help: "Mae cynhyrchwyr yn gwneud pethau blasus i&#39;w bwyta a / neu eu hyfed. Rydych chi&#39;n gynhyrchydd os ydych chi&#39;n ei dyfu, ei godi, ei fragu, ei bobi, ei eplesu, ei odro neu ei fowldio."
-        no_producer_help: "Os nad ydych chi&#39;n gynhyrchydd, mae&#39;n debyg eich bod chi&#39;n rhywun sy&#39;n gwerthu ac yn dosbarthu bwyd. Efallai eich bod chi&#39;n ganolbwynt, yn gwt, yn grŵp prynu, yn fanwerthwr, yn gyfanwerthwr neu&#39;n arall."
+        producer_field_error: "Dewiswch un. Ydych chi'n gynhyrchydd?"
+        yes_producer_help: "Mae cynhyrchwyr yn gwneud pethau blasus i'w bwyta a / neu eu hyfed. Rydych chi'n gynhyrchydd os ydych chi'n ei dyfu, ei godi, ei fragu, ei bobi, ei eplesu, ei odro neu ei fowldio."
+        no_producer_help: "Os nad ydych chi'n gynhyrchydd, mae'n debyg eich bod chi'n rhywun sy'n gwerthu ac yn dosbarthu bwyd. Efallai eich bod chi'n ganolbwynt, yn gwt, yn grŵp prynu, yn fanwerthwr, yn gyfanwerthwr neu'n arall."
         create_profile: "Creu Proffil"
       about:
         title: "Am"
         headline: "Un braf!"
-        message: "Nawr, gadewch i ni gnawdoli&#39;r manylion am"
+        message: "Nawr, gadewch i ni gnawdoli'r manylion am"
         success: "Llwyddiant! ychwanegwyd %{enterprise} at y Rhwydwaith Bwyd Agored"
-        registration_exit_message: "Os byddwch chi&#39;n gadael y dewin hwn ar unrhyw adeg, gallwch barhau i greu eich proffil trwy fynd i&#39;r rhyngwyneb gweinyddol."
+        registration_exit_message: "Os byddwch chi'n gadael y dewin hwn ar unrhyw adeg, gallwch barhau i greu eich proffil trwy fynd i'r rhyngwyneb gweinyddol."
         enterprise_description: "Disgrifiad Byr"
-        enterprise_description_placeholder: "Brawddeg fer yn disgrifio&#39;ch menter"
+        enterprise_description_placeholder: "Brawddeg fer yn disgrifio'ch menter"
         enterprise_long_desc: "Disgrifiad Hir"
-        enterprise_long_desc_placeholder: "Dyma&#39;ch cyfle i adrodd stori eich menter - beth sy&#39;n eich gwneud chi&#39;n wahanol ac yn fendigedig? Byddem yn awgrymu cadw&#39;ch disgrifiad i lai na 600 nod neu 150 gair."
+        enterprise_long_desc_placeholder: "Dyma'ch cyfle i adrodd stori eich menter - beth sy'n eich gwneud chi'n wahanol ac yn fendigedig? Byddem yn awgrymu cadw'ch disgrifiad i lai na 600 nod neu 150 gair."
         enterprise_long_desc_length: "%{num} nod / hyd at 600 a argymhellir"
         enterprise_abn: "ABN"
         enterprise_abn_placeholder: "ee. 99 123 456 789"
@@ -2124,16 +2124,16 @@ cy:
         logo_label: "Dewiswch ddelwedd logo"
         logo_drag: "Llusgwch a gollwng eich logo yma"
         review_logo: "Cam 2. Adolygwch Eich Logo"
-        review_logo_tip: "Awgrym: ar gyfer y canlyniadau gorau, dylai eich logo lenwi&#39;r lle sydd ar gael"
-        logo_placeholder: "Bydd eich logo yn ymddangos yma i&#39;w adolygu ar ôl ei uwchlwytho"
+        review_logo_tip: "Awgrym: ar gyfer y canlyniadau gorau, dylai eich logo lenwi'r lle sydd ar gael"
+        logo_placeholder: "Bydd eich logo yn ymddangos yma i'w adolygu ar ôl ei uwchlwytho"
       promo:
         select_promo_image: "Cam 3. Dewiswch Delwedd Promo"
-        promo_image_tip: "Awgrym: Wedi&#39;i ddangos fel baner, y maint a ffefrir yw 1200 × 260px"
+        promo_image_tip: "Awgrym: Wedi'i ddangos fel baner, y maint a ffefrir yw 1200 × 260px"
         promo_image_label: "Dewiswch ddelwedd promo"
         promo_image_drag: "Llusgwch a gollwng eich promo yma"
         review_promo_image: "Cam 4. Adolygwch Eich Baner Promo"
-        review_promo_image_tip: "Awgrym: ar gyfer y canlyniadau gorau, dylai eich delwedd promo lenwi&#39;r lle sydd ar gael"
-        promo_image_placeholder: "Bydd eich logo yn ymddangos yma i&#39;w adolygu ar ôl ei uwchlwytho"
+        review_promo_image_tip: "Awgrym: ar gyfer y canlyniadau gorau, dylai eich delwedd promo lenwi'r lle sydd ar gael"
+        promo_image_placeholder: "Bydd eich logo yn ymddangos yma i'w adolygu ar ôl ei uwchlwytho"
       social:
         title: "Cymdeithasol"
         enterprise_final_step: "Cam olaf!"
@@ -2152,17 +2152,17 @@ cy:
         headline: "O na!"
         message: "Rydych chi wedi cyrraedd y terfyn!"
         text: "Rydych wedi cyrraedd y terfyn ar gyfer nifer y mentrau y caniateir ichi fod yn berchen arnynt ar y"
-        action: "Dychwelwch i&#39;r hafan"
+        action: "Dychwelwch i'r hafan"
       finished:
         headline: "Wedi gorffen!"
-        thanks: "Diolch am lenwi&#39;r manylion ar gyfer %{enterprise}."
+        thanks: "Diolch am lenwi'r manylion ar gyfer %{enterprise}."
         login: "Gallwch newid neu ddiweddaru eich menter ar unrhyw adeg trwy fewngofnodi i Open Food Network a mynd i Admin."
         action: "Ewch i Dangosfwrdd Menter"
   back: "Yn ôl"
   continue: "Parhewch"
   action_or: "NEU"
   enterprise_limit: Terfyn Menter
-  shipping_method_destroy_error: "Ni ellir dileu&#39;r dull cludo hwnnw gan ei fod yn cael ei gyfeirio gan orchymyn: %{number}."
+  shipping_method_destroy_error: "Ni ellir dileu'r dull cludo hwnnw gan ei fod yn cael ei gyfeirio gan orchymyn: %{number}."
   fees: "Ffioedd"
   item_cost: "Cost yr eitem"
   bulk: "Swmp"
@@ -2178,7 +2178,7 @@ cy:
   transport_fee: "Ffi cludo"
   fundraising_fee: "Ffi codi arian"
   price_graph: "Graff pris"
-  included_tax: "Treth wedi&#39;i chynnwys"
+  included_tax: "Treth wedi'i chynnwys"
   tax: "Treth"
   tax_amount_included: "%{amount} (wedi'i gynnwys)"
   balance: "Balans"
@@ -2195,9 +2195,9 @@ cy:
   not_visible: ddim yn weladwy
   you_have_no_orders_yet: "Nid oes gennych unrhyw archebion eto"
   show_only_complete_orders: "Dim ond dangos archebion cyflawn"
-  successfully_created: 'mae %{resource} wedi&#39;i greu&#39;n llwyddiannus!'
-  successfully_removed: 'mae %{resource} wedi&#39;i dynnu&#39;n llwyddiannus!'
-  successfully_updated: 'mae %{resource} wedi&#39;i ddiweddaru&#39;n llwyddiannus!'
+  successfully_created: 'mae %{resource} wedi''i greu''n llwyddiannus!'
+  successfully_removed: 'mae %{resource} wedi''i dynnu''n llwyddiannus!'
+  successfully_updated: 'mae %{resource} wedi''i ddiweddaru''n llwyddiannus!'
   running_balance: "Cydbwysedd rhedeg"
   outstanding_balance: "Cydbwysedd rhagorol"
   admin_enterprise_relationships: "Caniatadau Menter"
@@ -2211,8 +2211,8 @@ cy:
   admin_enterprise_groups_owner: "Perchennog"
   admin_enterprise_groups_on_front_page: "Ar dudalen flaen?"
   admin_enterprise_groups_enterprise: "Mentrau"
-  admin_enterprise_groups_data_powertip: "Y prif ddefnyddiwr sy&#39;n gyfrifol am y grŵp hwn."
-  admin_enterprise_groups_data_powertip_logo: "Dyma&#39;r logo ar gyfer y grŵp"
+  admin_enterprise_groups_data_powertip: "Y prif ddefnyddiwr sy'n gyfrifol am y grŵp hwn."
+  admin_enterprise_groups_data_powertip_logo: "Dyma'r logo ar gyfer y grŵp"
   admin_enterprise_groups_data_powertip_promo_image: "Arddangosir y ddelwedd hon ar frig proffil y Grŵp"
   admin_enterprise_groups_contact: "Cysylltwch"
   admin_enterprise_groups_contact_phone_placeholder: "ee. 98 7654 3210"
@@ -2233,7 +2233,7 @@ cy:
   search: "Chwilio"
   supplier: "Cyflenwr"
   product_name: "Enw Cynnyrch"
-  product_description: "Disgrifiad o&#39;r Cynnyrch"
+  product_description: "Disgrifiad o'r Cynnyrch"
   permalink: "Permalink"
   shipping_categories: "Categorïau Llongau"
   units: "Maint yr Uned"
@@ -2250,7 +2250,7 @@ cy:
   tags: "Tagiau"
   calculator: "Cyfrifiannell"
   calculator_values: "Gwerthoedd cyfrifiannell"
-  calculator_settings_warning: "Os ydych chi&#39;n newid y math cyfrifiannell, rhaid i chi gynilo gyntaf cyn y gallwch chi olygu gosodiadau&#39;r gyfrifiannell"
+  calculator_settings_warning: "Os ydych chi'n newid y math cyfrifiannell, rhaid i chi gynilo gyntaf cyn y gallwch chi olygu gosodiadau'r gyfrifiannell"
   calculator_preferred_unit_error: "rhaid iddo fod yn kg neu lb."
   calculator_preferred_value_error: "Mewnbwn annilys.  Dylid defnyddio rhifau'n unig.  Er enghraifft: 10, 5.5, -20"
   flat_percent_per_item: "Canran Fflat (yr eitem)"
@@ -2271,7 +2271,7 @@ cy:
   in_progress: "Ar y gweill"
   started_at: "Dechreuwyd yn"
   queued: "Ciwio"
-  scheduled_for: "Wedi&#39;i drefnu ar gyfer"
+  scheduled_for: "Wedi'i drefnu ar gyfer"
   customers: "Cwsmeriaid"
   please_select_hub: "Dewiswch Hwb"
   loading_customers: "Llwytho Cwsmeriaid"
@@ -2284,7 +2284,7 @@ cy:
   on_hand: "Wrth law"
   review: "Adolygiad"
   save_changes: "Arbed Newidiadau"
-  order_saved: "Gorchymyn wedi&#39;i gadw"
+  order_saved: "Gorchymyn wedi'i gadw"
   no_products: Dim Cynhyrchion
   spree_admin_overview_enterprises_header: "Fy Mentrau"
   spree_admin_overview_enterprises_footer: "RHEOLI FY MENTRAU"
@@ -2302,22 +2302,22 @@ cy:
   spree_admin_overview_action_required: "Camau Angenrheidiol"
   spree_admin_overview_check_your_inbox: "Gwiriwch eich blwch derbyn am gyfarwyddiadau pellach. Diolch!"
   spree_admin_unit_value: Gwerth Uned
-  spree_admin_unit_description: Disgrifiad o&#39;r Uned
+  spree_admin_unit_description: Disgrifiad o'r Uned
   spree_admin_variant_unit: Uned amrywiol
   spree_admin_variant_unit_scale: Graddfa uned amrywiol
   spree_admin_supplier: Cyflenwr
   spree_admin_product_category: Categori Cynnyrch
   spree_admin_variant_unit_name: Enw uned amrywiol
-  unit_name: "Enw&#39;r uned"
+  unit_name: "Enw'r uned"
   change_package: "Newid Pecyn"
   spree_admin_single_enterprise_hint: "Awgrym: Er mwyn caniatáu i bobl ddod o hyd i chi, trowch eich gwelededd ymlaen"
-  spree_admin_eg_pickup_from_school: "ee. &#39;Codi o&#39;r Ysgol Gynradd&#39;"
+  spree_admin_eg_pickup_from_school: "ee. &#39;Codi o'r Ysgol Gynradd&#39;"
   spree_admin_eg_collect_your_order: "ee. &#39;Casglwch eich archeb oddi wrth 123 Imaginary St, Northcote, 3070&#39;"
   spree_classification_primary_taxon_error: "Tacson %{taxon} yw prif dacson %{product} ac ni ellir ei ddileu"
-  spree_order_availability_error: "Ni all dosbarthwr na chylch archebu gyflenwi&#39;r cynhyrchion yn eich trol"
-  spree_order_populator_error: "Ni all y cylchredwr neu&#39;r cylch archebu hwnnw gyflenwi&#39;r holl gynhyrchion yn eich trol. Dewiswch un arall."
+  spree_order_availability_error: "Ni all dosbarthwr na chylch archebu gyflenwi'r cynhyrchion yn eich trol"
+  spree_order_populator_error: "Ni all y cylchredwr neu'r cylch archebu hwnnw gyflenwi'r holl gynhyrchion yn eich trol. Dewiswch un arall."
   spree_order_cycle_error: "Dewiswch gylch archeb ar gyfer archeb hwn."
-  spree_order_populator_availability_error: "Nid yw&#39;r cynnyrch hwnnw ar gael o&#39;r dosbarthwr neu&#39;r cylch archebu a ddewiswyd."
+  spree_order_populator_availability_error: "Nid yw'r cynnyrch hwnnw ar gael o'r dosbarthwr neu'r cylch archebu a ddewiswyd."
   spree_distributors_error: "Rhaid dewis o leiaf un canolbwynt"
   spree_user_enterprise_limit_error: "Ni chaniateir i %{email} fod yn berchen ar ragor o fentrau (y terfyn yw %{enterprise_limit})."
   spree_variant_product_error: rhaid bod ag o leiaf un amrywiad
@@ -2336,13 +2336,13 @@ cy:
   order_cycles: "Archebu Beiciau"
   enterprise_relationships: "Caniatadau menter"
   remove_tax: "Dileu treth"
-  first_name_begins_with: "Mae&#39;r enw cyntaf yn dechrau gyda"
-  last_name_begins_with: "Mae&#39;r enw olaf yn dechrau gyda"
+  first_name_begins_with: "Mae'r enw cyntaf yn dechrau gyda"
+  last_name_begins_with: "Mae'r enw olaf yn dechrau gyda"
   shipping_method: "Dull cludo"
   new_order: "Gorchymyn Newydd"
   enterprise_tos_link: "Dolen Telerau Gwasanaeth Menter"
-  enterprise_tos_message: "Rydyn ni eisiau gweithio gyda phobl sy&#39;n rhannu ein nodau a&#39;n gwerthoedd. O&#39;r herwydd, gofynnwn i fentrau newydd gytuno â&#39;n"
-  enterprise_tos_agree: "Rwy&#39;n cytuno i&#39;r Telerau Gwasanaeth uchod"
+  enterprise_tos_message: "Rydyn ni eisiau gweithio gyda phobl sy'n rhannu ein nodau a'n gwerthoedd. O'r herwydd, gofynnwn i fentrau newydd gytuno â'n"
+  enterprise_tos_agree: "Rwy'n cytuno i'r Telerau Gwasanaeth uchod"
   tax_settings: "Gosodiadau Treth"
   products_require_tax_category: "mae angen categori treth ar gynhyrchion"
   admin_shared_address_1: "Cyfeiriad"
@@ -2357,7 +2357,7 @@ cy:
   hub_sidebar_at_least: "Rhaid dewis o leiaf un canolbwynt"
   hub_sidebar_blue: "glas"
   hub_sidebar_red: "Coch"
-  order_cycles_closed_for_hub: "Mae&#39;r canolbwynt rydych chi wedi&#39;i ddewis wedi&#39;i gau dros dro ar gyfer archebion. Rho gynnig Arni eto&#39;n hwyrach."
+  order_cycles_closed_for_hub: "Mae'r canolbwynt rydych chi wedi'i ddewis wedi'i gau dros dro ar gyfer archebion. Rho gynnig Arni eto'n hwyrach."
   report_customers_distributor: "Dosbarthwr"
   report_customers_supplier: "Cyflenwr"
   report_customers_cycle: "Archebu Cylch"
@@ -2411,7 +2411,7 @@ cy:
   report_header_billing_city: Dinas Bilio
   report_header_billing_postcode: Cod Post Bilio
   report_header_billing_state: Cyflwr Bilio
-  report_header_incoming_transport: Cludiant sy&#39;n dod i mewn
+  report_header_incoming_transport: Cludiant sy'n dod i mewn
   report_header_special_instructions: Cyfarwyddiadau Arbennig
   report_header_order_number: Rhif archeb
   report_header_date: Dyddiad
@@ -2463,13 +2463,13 @@ cy:
   report_header_weight: Pwysau
   report_header_sum_total: Cyfanswm Cyfanswm
   report_header_date_of_order: Dyddiad y Gorchymyn
-  report_header_amount_owing: Swm sy&#39;n ddyledus
+  report_header_amount_owing: Swm sy'n ddyledus
   report_header_amount_paid: Swm a Dalwyd
   report_header_units_required: Unedau Angenrheidiol
   report_header_remainder: Gweddill
   report_header_order_date: Dyddiad archebu
   report_header_order_id: Gorchymyn Id
-  report_header_item_name: Enw&#39;r eitem
+  report_header_item_name: Enw'r eitem
   report_header_temp_controlled_items: Eitemau Rheoledig Dros Dro?
   report_header_customer_name: Enw Cwsmer
   report_header_customer_email: E-bost Cwsmer
@@ -2519,7 +2519,7 @@ cy:
   contains: "yn cynnwys"
   discount: "Disgownt"
   filter_products: "Cynhyrchion Hidlo"
-  delete_product_variant: "Ni ellir dileu&#39;r amrywiad olaf!"
+  delete_product_variant: "Ni ellir dileu'r amrywiad olaf!"
   progress: "cynnydd"
   saving: "Arbed .."
   success: "llwyddiant"
@@ -2529,8 +2529,8 @@ cy:
   products_unsaved: "Mae newidiadau i gynhyrchion %{n} yn parhau i fod heb eu cadw."
   is_already_manager: "eisoes yn rheolwr!"
   no_change_to_save: "Dim newid i arbed"
-  user_invited: "gwahoddwyd %{email} i reoli&#39;r fenter hon"
-  add_manager: "Ychwanegwch ddefnyddiwr sy&#39;n bodoli eisoes"
+  user_invited: "gwahoddwyd %{email} i reoli'r fenter hon"
+  add_manager: "Ychwanegwch ddefnyddiwr sy'n bodoli eisoes"
   users: "Defnyddwyr"
   about: "Am"
   images: "Delweddau"
@@ -2546,8 +2546,8 @@ cy:
   payment_methods: "Dulliau Talu"
   payment_method_fee: "Ffi trafodiad"
   payment_processing_failed: "Ni ellid prosesu taliad, gwiriwch y manylion a nodwyd gennych"
-  payment_method_not_supported: "Nid yw&#39;r dull talu hwnnw&#39;n cael ei gefnogi. Dewiswch un arall."
-  payment_updated: "Diweddariad o&#39;r Taliad"
+  payment_method_not_supported: "Nid yw'r dull talu hwnnw'n cael ei gefnogi. Dewiswch un arall."
+  payment_updated: "Diweddariad o'r Taliad"
   cannot_perform_operation: "Nid oedd yn bosib diweddaru'r taliad."
   action_required: "Mae angen gewithredu"
   inventory_settings: "Gosodiadau Rhestr"
@@ -2555,19 +2555,19 @@ cy:
   shop_preferences: "Dewisiadau Siop"
   enterprise_fee_whole_order: Trefn gyfan
   enterprise_fee_by: "ffi %{type} erbyn %{role} %{enterprise_name}"
-  validation_msg_relationship_already_established: "^ Mae&#39;r berthynas honno wedi&#39;i sefydlu eisoes."
+  validation_msg_relationship_already_established: "^ Mae'r berthynas honno wedi'i sefydlu eisoes."
   validation_msg_at_least_one_hub: "^ Rhaid dewis o leiaf un canolbwynt"
   validation_msg_tax_category_cant_be_blank: "^ Ni all y Categori Trethi fod yn wag"
   validation_msg_is_associated_with_an_exising_customer: "yn gysylltiedig â chwsmer presennol"
   content_configuration_pricing_table: "(TODO: Tabl prisio)"
   content_configuration_case_studies: "(TODO: Astudiaethau achos)"
   content_configuration_detail: "(TODO: Manylion)"
-  enterprise_name_error: "eisoes wedi&#39;u cymryd. Os mai dyma&#39;ch menter ac yr hoffech hawlio perchnogaeth, neu os hoffech fasnachu gyda&#39;r fenter hon, cysylltwch â rheolwr cyfredol y proffil hwn ar %{email}."
+  enterprise_name_error: "eisoes wedi'u cymryd. Os mai dyma'ch menter ac yr hoffech hawlio perchnogaeth, neu os hoffech fasnachu gyda'r fenter hon, cysylltwch â rheolwr cyfredol y proffil hwn ar %{email}."
   enterprise_owner_error: "Ni chaniateir i %{email} fod yn berchen ar ragor o fentrau (y terfyn yw %{enterprise_limit})."
-  enterprise_role_uniqueness_error: "^ Mae&#39;r rôl honno eisoes yn bresennol."
+  enterprise_role_uniqueness_error: "^ Mae'r rôl honno eisoes yn bresennol."
   enterprise_terms_and_conditions_type_error: "Dim ond PDFs a ganiateir"
-  inventory_item_visibility_error: rhaid iddo fod yn wir neu&#39;n anwir
-  product_importer_file_error: "gwall: dim ffeil wedi&#39;i lanlwytho"
+  inventory_item_visibility_error: rhaid iddo fod yn wir neu'n anwir
+  product_importer_file_error: "gwall: dim ffeil wedi'i lanlwytho"
   product_importer_spreadsheet_error: "ni allai brosesu ffeil: ffeil ffeil annilys"
   product_importer_products_save_error: ni arbedodd unrhyw gynhyrchion yn llwyddiannus
   product_import_file_not_found_notice: 'Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor'
@@ -2577,28 +2577,28 @@ cy:
   adjustments_tax_rate_error: "^ Gwiriwch fod y gyfradd dreth ar gyfer yr addasiad hwn yn gywir."
   active_distributors_not_ready_for_checkout_message_singular: >-
       Rhestrir y canolbwynt %{distributor_names} mewn cylch archeb weithredol, ond
-      nid oes ganddo ddulliau cludo a thalu dilys. Hyd nes i chi sefydlu&#39;r rhain,
+      nid oes ganddo ddulliau cludo a thalu dilys. Hyd nes i chi sefydlu'r rhain,
       ni fydd cwsmeriaid yn gallu siopa yn yr hyb hwn.
   active_distributors_not_ready_for_checkout_message_plural: >-
       Rhestrir yr hybiau %{distributor_names} mewn cylch archeb weithredol, ond nid
-      oes ganddynt ddulliau cludo a thalu dilys. Hyd nes y byddwch yn sefydlu&#39;r
-      rhain, ni fydd cwsmeriaid yn gallu siopa yn yr hybiau hyn.
-  enterprise_fees_update_notice: Mae eich ffioedd menter wedi&#39;u diweddaru.
+      oes ganddynt ddulliau cludo a thalu dilys. Hyd nes y byddwch yn sefydlu'r rhain,
+      ni fydd cwsmeriaid yn gallu siopa yn yr hybiau hyn.
+  enterprise_fees_update_notice: Mae eich ffioedd menter wedi'u diweddaru.
   enterprise_register_package_error: "Dewiswch becyn"
   enterprise_register_error: "Methu cwblhau cofrestriad ar gyfer %{enterprise}"
-  enterprise_register_success_notice: "Llongyfarchiadau! Mae&#39;r cofrestriad ar gyfer %{enterprise} wedi&#39;i gwblhau!"
+  enterprise_register_success_notice: "Llongyfarchiadau! Mae'r cofrestriad ar gyfer %{enterprise} wedi'i gwblhau!"
   enterprise_bulk_update_success_notice: "Diweddarwyd mentrau yn llwyddiannus"
   enterprise_bulk_update_error: 'Methodd y diweddariad'
-  enterprise_shop_show_error: "Nid yw&#39;r siop rydych chi&#39;n chwilio amdani yn bodoli nac yn anactif ar OFN. Gwiriwch siopau eraill."
-  order_cycles_create_notice: 'Mae eich cylch archebu wedi&#39;i greu.'
-  order_cycles_update_notice: 'Mae eich cylch archebu wedi&#39;i ddiweddaru.'
-  order_cycles_bulk_update_notice: 'Mae cylchoedd archebu wedi&#39;u diweddaru.'
-  order_cycles_clone_notice: "Mae eich cylch archebu %{name} wedi&#39;i glonio."
-  order_cycles_email_to_producers_notice: 'Mae e-byst i&#39;w hanfon at gynhyrchwyr wedi&#39;u ciwio i&#39;w hanfon.'
-  order_cycles_no_permission_to_coordinate_error: "Nid oes gan unrhyw un o&#39;ch mentrau ganiatâd i gydlynu cylch archebu"
-  order_cycles_no_permission_to_create_error: "Nid oes gennych ganiatâd i greu cylch archebu wedi&#39;i gydlynu gan y fenter honno"
-  order_cycle_closed: "Mae&#39;r cylch archebu rydych chi wedi&#39;i ddewis newydd gau. Trio eto os gwelwch yn dda!"
-  back_to_orders_list: "Yn ôl i&#39;r rhestr archebu"
+  enterprise_shop_show_error: "Nid yw'r siop rydych chi'n chwilio amdani yn bodoli nac yn anactif ar OFN. Gwiriwch siopau eraill."
+  order_cycles_create_notice: 'Mae eich cylch archebu wedi''i greu.'
+  order_cycles_update_notice: 'Mae eich cylch archebu wedi''i ddiweddaru.'
+  order_cycles_bulk_update_notice: 'Mae cylchoedd archebu wedi''u diweddaru.'
+  order_cycles_clone_notice: "Mae eich cylch archebu %{name} wedi'i glonio."
+  order_cycles_email_to_producers_notice: 'Mae e-byst i''w hanfon at gynhyrchwyr wedi''u ciwio i''w hanfon.'
+  order_cycles_no_permission_to_coordinate_error: "Nid oes gan unrhyw un o'ch mentrau ganiatâd i gydlynu cylch archebu"
+  order_cycles_no_permission_to_create_error: "Nid oes gennych ganiatâd i greu cylch archebu wedi'i gydlynu gan y fenter honno"
+  order_cycle_closed: "Mae'r cylch archebu rydych chi wedi'i ddewis newydd gau. Trio eto os gwelwch yn dda!"
+  back_to_orders_list: "Yn ôl i'r rhestr archebu"
   no_orders_found: "Ni ddaethpwyd o hyd i Orchmynion"
   order_information: "Gwybodaeth Archebu"
   new_payment: "Taliad Newydd"
@@ -2607,17 +2607,17 @@ cy:
   state_names:
     ready: Yn barod
     pending: Yn yr arfaeth
-    shipped: Wedi&#39;i gludo
+    shipped: Wedi'i gludo
   js:
     saving: 'Arbed ...'
-    changes_saved: 'Newidiadau wedi&#39;u cadw.'
+    changes_saved: 'Newidiadau wedi''u cadw.'
     authorising: "Yn awdurdodi ....."
     save_changes_first: Arbedwch newidiadau yn gyntaf.
     all_changes_saved: Arbedwyd pob newid
     unsaved_changes: Mae gennych chi newidiadau heb eu cadw
     all_changes_saved_successfully: Arbedwyd pob newid yn llwyddiannus
     oh_no: "O na! Nid oeddwn yn gallu arbed eich newidiadau."
-    unauthorized: "Nid oes gennych awdurdod i gael mynediad i&#39;r dudalen hon."
+    unauthorized: "Nid oes gennych awdurdod i gael mynediad i'r dudalen hon."
     error: Gwall
     unavailable: Ddim ar gael
     profile: Proffil
@@ -2626,7 +2626,7 @@ cy:
     choose: Dewiswch
     resolve_errors: Datryswch y gwallau canlynol
     more_items: "+ %{count} Mwy"
-    default_card_updated: Cerdyn Diofyn wedi&#39;i Ddiweddaru
+    default_card_updated: Cerdyn Diofyn wedi'i Ddiweddaru
     default_card_voids_auth: Bydd newid y cerdyn diofyn yn dileu caniatâd presennol y siop i'w ddefnyddio. Gallwch ail-awdurdodi siopau ar ôl diweddaru'r cerdyn diofyn.  Hoffech chi newid y cerdyn diofyn?
     cart:
       add_to_cart_failed: >
@@ -2636,7 +2636,7 @@ cy:
       unit_price_tooltip: "Mae pris yr uned yn cynyddu tryloywder trwy ganiatau i'ch cwsmeriaid gymharu prisiau'n rhwydd rhwng cynnyrch gwahanol a meintiau pecynnu.  Noder: efallai y bydd y pris uned terfynol a ddangosir ym mlaen y siop yn wahanol oherwydd mae'n cynnwys trethi a ffioedd."
       enterprise_limit_reached: "Rydych wedi cyrraedd terfyn safonol mentrau fesul cyfrif. Ysgrifennwch at %{contact_email} os oes angen i chi ei gynyddu."
       modals:
-        got_it: "Wedi&#39;i gael"
+        got_it: "Wedi'i gael"
         close: "Caewch"
         continue: "Parhewch"
         invite: "Gwahodd"
@@ -2653,19 +2653,19 @@ cy:
               Default rules allow you to hide items so that they are not visible by
               default. This behaviour can then be overriden by non-default rules for
               customers with particular tags.
-          customer_tagged_rules: "Rheolau &#39;Cwsmeriaid wedi&#39;u Tagio ...&#39;"
+          customer_tagged_rules: "Rheolau &#39;Cwsmeriaid wedi'u Tagio ...&#39;"
           customer_tagged_rules_text: >
               By creating rules related to a specific customer tag, you can override
               the default behaviour (whether it be to show or to hide items) for customers
               with the specified tag.
         terms_and_conditions_info:
           title: "Llwytho Telerau ac Amodau i fyny"
-          message_1: "Telerau ac Amodau yw&#39;r contract rhyngoch chi, y gwerthwr, a&#39;r siopwr. Os ydych chi&#39;n uwchlwytho ffeil yma mae&#39;n rhaid i siopwyr dderbyn eich Telerau ac Amodau er mwyn cwblhau&#39;r ddesg dalu. Ar gyfer y siopwr bydd hwn yn ymddangos fel blwch gwirio wrth y ddesg dalu y mae&#39;n rhaid ei wirio er mwyn bwrw ymlaen â&#39;r ddesg dalu. Rydym yn argymell yn gryf eich bod yn uwchlwytho Telerau ac Amodau yn unol â deddfwriaeth genedlaethol."
-          message_2: "Dim ond unwaith y bydd yn ofynnol i siopwyr dderbyn Telerau ac Amodau. Fodd bynnag, os byddwch chi&#39;n newid eich Telerau ac Amodau, bydd gofyn i siopwyr eu derbyn cyn y gallant ddesg dalu."
+          message_1: "Telerau ac Amodau yw'r contract rhyngoch chi, y gwerthwr, a'r siopwr. Os ydych chi'n uwchlwytho ffeil yma mae'n rhaid i siopwyr dderbyn eich Telerau ac Amodau er mwyn cwblhau'r ddesg dalu. Ar gyfer y siopwr bydd hwn yn ymddangos fel blwch gwirio wrth y ddesg dalu y mae'n rhaid ei wirio er mwyn bwrw ymlaen â'r ddesg dalu. Rydym yn argymell yn gryf eich bod yn uwchlwytho Telerau ac Amodau yn unol â deddfwriaeth genedlaethol."
+          message_2: "Dim ond unwaith y bydd yn ofynnol i siopwyr dderbyn Telerau ac Amodau. Fodd bynnag, os byddwch chi'n newid eich Telerau ac Amodau, bydd gofyn i siopwyr eu derbyn cyn y gallant ddesg dalu."
         terms_and_conditions_warning:
           title: "Llwytho Telerau ac Amodau i fyny"
-          message_1: "Bydd yn rhaid i&#39;ch holl brynwyr gytuno iddynt unwaith wrth y ddesg dalu. Os byddwch chi&#39;n diweddaru&#39;r ffeil, bydd yn rhaid i&#39;ch holl brynwyr gytuno iddynt eto wrth y ddesg dalu."
-          message_2: "Ar gyfer prynwyr sydd â thanysgrifiadau, mae angen i chi e-bostio&#39;r Telerau ac Amodau (neu&#39;r newidiadau iddynt) am y tro, ni fydd unrhyw beth yn eu hysbysu am y Telerau ac Amodau newydd hyn."
+          message_1: "Bydd yn rhaid i'ch holl brynwyr gytuno iddynt unwaith wrth y ddesg dalu. Os byddwch chi'n diweddaru'r ffeil, bydd yn rhaid i'ch holl brynwyr gytuno iddynt eto wrth y ddesg dalu."
+          message_2: "Ar gyfer prynwyr sydd â thanysgrifiadau, mae angen i chi e-bostio'r Telerau ac Amodau (neu'r newidiadau iddynt) am y tro, ni fydd unrhyw beth yn eu hysbysu am y Telerau ac Amodau newydd hyn."
         business_address_info:
           message: "Defnyddir Enw Cyfreithiol y Cwmni, y Cyfeiriad Cyfreithiol a'r Rhif Ffôn Cyfreithiol ar gyfer busnesau sy'n anfonebu o endid cyfreithiol a gofrestrwyd gyda manylion sy'n wahanol i'w gwybodaeth masnachu cyhoeddus. Defnyddir y manylion hyn YN UNIG ar anfonebau. Os gadewir y manylion hyn yn wag, defnyddir eich Enw , eich Cyfeiriad a'ch Rhif ffôn cyhoeddus ar anfonebau."
       panels:
@@ -2733,7 +2733,7 @@ cy:
           get_listing: Mynnwch restr
           always_free: BOB AMSER AM DDIM
           sell_produce_others: Gwerthu cynnyrch gan eraill
-          sell_own_produce: Gwerthu&#39;ch cynnyrch eich hun
+          sell_own_produce: Gwerthu'ch cynnyrch eich hun
           sell_both: Gwerthu cynnyrch oddi wrth eich hun ac eraill
         enterprise_producer:
           producer: Cynhyrchydd
@@ -2757,7 +2757,7 @@ cy:
           non_producer_desc: Pob menter fwyd arall
           non_producer_example: ee. Siopau groser, cydweithfeydd bwyd, grwpiau prynu
         enterprise_status:
-          status_title: "mae %{name} wedi&#39;i sefydlu ac yn barod i fynd!"
+          status_title: "mae %{name} wedi'i sefydlu ac yn barod i fynd!"
           severity: Difrifoldeb
           description: Disgrifiad
           resolve: Datrys
@@ -2765,35 +2765,35 @@ cy:
           load_more_variants: "Llwythwch Mwy o Amrywiadau"
           load_all_variants: "Llwythwch Pob Amrywiad"
           select_all_variants: "Dewiswch Pob Amrywiad %{total_number_of_variants}"
-          variants_loaded: "%{num_of_variants_loaded} o %{total_number_of_variants} Amrywiadau wedi&#39;u Llwytho"
+          variants_loaded: "%{num_of_variants_loaded} o %{total_number_of_variants} Amrywiadau wedi'u Llwytho"
           loading_variants: "Llwytho Amrywiadau"
       tag_rules:
-        shipping_method_tagged_top: "Dulliau cludo wedi&#39;u tagio"
+        shipping_method_tagged_top: "Dulliau cludo wedi'u tagio"
         shipping_method_tagged_bottom: "yw:"
-        payment_method_tagged_top: "Dulliau talu wedi&#39;u tagio"
+        payment_method_tagged_top: "Dulliau talu wedi'u tagio"
         payment_method_tagged_bottom: "yw:"
-        order_cycle_tagged_top: "Archebu Beiciau wedi&#39;u tagio"
+        order_cycle_tagged_top: "Archebu Beiciau wedi'u tagio"
         order_cycle_tagged_bottom: "yw:"
-        inventory_tagged_top: "Amrywiadau stocrestr wedi&#39;u tagio"
+        inventory_tagged_top: "Amrywiadau stocrestr wedi'u tagio"
         inventory_tagged_bottom: "yw:"
       new_tag_rule_dialog:
         select_rule_type: "Dewiswch fath o reol:"
         add_rule: "Ychwanegu Rheol"
       enterprise_fees:
-        inherit_from_product: "Etifedd O&#39;r Cynnyrch"
+        inherit_from_product: "Etifedd O'r Cynnyrch"
       orders:
         index:
           per_page: "%{results} y dudalen"
           view_file: "Gweld Ffeil"
           compiling_invoices: "Llunio Anfonebau"
-          bulk_invoice_created: "Anfoneb Swmp wedi&#39;i chreu"
+          bulk_invoice_created: "Anfoneb Swmp wedi'i chreu"
           bulk_invoice_failed: "Wedi methu creu Anfoneb Swmp"
-          please_wait: "Arhoswch nes bod y PDF yn barod cyn cau&#39;r modd hwn."
+          please_wait: "Arhoswch nes bod y PDF yn barod cyn cau'r modd hwn."
         order_state:
           address: "cyfeiriad"
           adjustments: "addasiadau"
           awaiting_return: "yn aros yn ôl"
-          canceled: "wedi&#39;i ganslo"
+          canceled: "wedi'i ganslo"
           cart: "trol"
           complete: "cyflawn"
           confirm: "cadarnhau"
@@ -2810,10 +2810,10 @@ cy:
           pending: "yn yr arfaeth"
           ready: "yn barod"
           shipped: "cludo"
-          canceled: "wedi&#39;i ganslo"
+          canceled: "wedi'i ganslo"
         payment_states:
           balance_due: "cydbwysedd yn ddyledus"
-          completed: "wedi&#39;i gwblhau"
+          completed: "wedi'i gwblhau"
           checkout: "til"
           credit_owed: "credyd yn ddyledus"
           failed: "wedi methu"
@@ -2829,7 +2829,7 @@ cy:
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend ..."
-        done: "Ail-wneud wedi&#39;i wneud ✓"
+        done: "Ail-wneud wedi'i wneud ✓"
         failed: "Methodd y resend ✗"
       order_cycles:
         schedules:
@@ -2838,14 +2838,14 @@ cy:
           create_schedule: "Creu Atodlen"
           update_schedule: "Amserlen Diweddaru"
           delete_schedule: "Dileu Amserlen"
-          schedule_name_placeholder: "Enw&#39;r Atodlen"
-          created_schedule: "Amserlen wedi&#39;i chreu"
-          updated_schedule: "Amserlen wedi&#39;i diweddaru"
-          deleted_schedule: "Amserlen wedi&#39;i dileu"
+          schedule_name_placeholder: "Enw'r Atodlen"
+          created_schedule: "Amserlen wedi'i chreu"
+          updated_schedule: "Amserlen wedi'i diweddaru"
+          deleted_schedule: "Amserlen wedi'i dileu"
           name_required_error: "Rhowch enw ar gyfer yr amserlen hon"
           no_order_cycles_error: "Dewiswch o leiaf un cylch archebu (llusgo a gollwng)"
           available: "Ar gael"
-          selected: "Wedi&#39;i ddewis"
+          selected: "Wedi'i ddewis"
       customers:
         index:
           add_customer: "Ychwanegu Cwsmer"
@@ -2899,11 +2899,11 @@ cy:
       one_override: un yn diystyru
       overrides: diystyru
       remain_unsaved: aros heb eu cadw.
-      no_changes_to_save: Dim newidiadau i&#39;w harbed. &#39;
+      no_changes_to_save: Dim newidiadau i'w harbed. &#39;
       no_authorisation: "Ni allwn gael awdurdodiad i achub y newidiadau hynny, felly maent yn parhau i fod heb eu cadw."
       some_trouble: "Cefais ychydig o drafferth arbed: %{errors}"
       changing_on_hand_stock: Newid ar lefelau stoc llaw ...
-      stock_reset: Mae stociau&#39;n ailosod i ddiffygion.
+      stock_reset: Mae stociau'n ailosod i ddiffygion.
     tag_rules:
       show_hide_variants: 'Dangos neu Guddio amrywiadau yn fy ffrynt siop'
       show_hide_shipping: 'Dangos neu Guddio dulliau cludo wrth y ddesg dalu'
@@ -2927,8 +2927,8 @@ cy:
           enterprise that are not present in the uploaded file.
     order_cycles:
       create_failure: "Wedi methu creu cylch archebu"
-      update_success: 'Mae eich cylch archebu wedi&#39;i ddiweddaru.'
-      update_failure: "Wedi methu diweddaru&#39;r cylch archebu"
+      update_success: 'Mae eich cylch archebu wedi''i ddiweddaru.'
+      update_failure: "Wedi methu diweddaru'r cylch archebu"
       no_distributors: Nid oes unrhyw ddosbarthwyr yn y cylch archebu hwn. Ni fydd y cylch archebu hwn yn weladwy i gwsmeriaid nes i chi ychwanegu un. Hoffech chi barhau i arbed y cylch archebu hwn? &#39;
     enterprises:
       producer: "Cynhyrchydd"
@@ -2944,7 +2944,7 @@ cy:
       users:
         order: "Gorchymyn"
     registration:
-      welcome_to_ofn: "Croeso i&#39;r Rhwydwaith Bwyd Agored!"
+      welcome_to_ofn: "Croeso i'r Rhwydwaith Bwyd Agored!"
       signup_or_login: "Dechreuwch Trwy Arwyddo (neu fewngofnodi)"
       have_an_account: "Eisoes â chyfrif?"
       action_login: "Mewngofnodi nawr."
@@ -3076,7 +3076,7 @@ cy:
       other: "sachau"
   producers:
     signup:
-      start_free_profile: "Dechreuwch gyda phroffil am ddim, ac ehangwch pan fyddwch chi&#39;n barod!"
+      start_free_profile: "Dechreuwch gyda phroffil am ddim, ac ehangwch pan fyddwch chi'n barod!"
   order_management:
     reports:
       bulk_coop:
@@ -3095,7 +3095,7 @@ cy:
           generate_report: "Cynhyrchu Adroddiad"
         report:
           none: "Dim"
-          select_and_search: "Dewiswch hidlwyr a chlicio ar ADRODDIAD CYFFREDINOL i gael mynediad i&#39;ch data."
+          select_and_search: "Dewiswch hidlwyr a chlicio ar ADRODDIAD CYFFREDINOL i gael mynediad i'ch data."
       enterprise_fee_summary:
         date_end_before_start_error: "rhaid bod ar ôl dechrau"
         parameter_not_allowed_error: "Nid oes gennych awdurdod i ddefnyddio un neu fwy o hidlwyr dethol ar gyfer yr adroddiad hwn."
@@ -3132,7 +3132,7 @@ cy:
               fee_calculated_on_transfer_through_name: "Cyfrif Ffioedd ar Drosglwyddo Trwy"
               tax_category_name: "Categori Treth"
               total_amount: "SUM $ $"
-        invalid_filter_parameters: "Mae&#39;r hidlwyr a ddewisoch ar gyfer yr adroddiad hwn yn annilys."
+        invalid_filter_parameters: "Mae'r hidlwyr a ddewisoch ar gyfer yr adroddiad hwn yn annilys."
       report:
         none: "Dim"
   order: "Gorchymyn"
@@ -3218,12 +3218,12 @@ cy:
     updating: "Diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"
     add_product: "Ychwanegu Cynnyrch"
-    name_or_sku: "Enw neu SKU (nodwch o leiaf 4 nod cyntaf enw&#39;r cynnyrch)"
+    name_or_sku: "Enw neu SKU (nodwch o leiaf 4 nod cyntaf enw'r cynnyrch)"
     resend: "Resend"
-    back_to_orders_list: "Yn ôl i&#39;r Rhestr Archebion"
+    back_to_orders_list: "Yn ôl i'r Rhestr Archebion"
     back_to_payments_list: "Nôl at y Rhestr Taliadau"
     return_authorizations: "Awdurdodiadau Dychwelyd"
-    cannot_create_returns: "Ni all greu ffurflenni gan nad oes gan y gorchymyn hwn unrhyw unedau wedi&#39;u cludo."
+    cannot_create_returns: "Ni all greu ffurflenni gan nad oes gan y gorchymyn hwn unrhyw unedau wedi'u cludo."
     select_stock: "Dewiswch stoc"
     location: "Lleoliad"
     count_on_hand: "Cyfrif Wrth Law"
@@ -3231,7 +3231,7 @@ cy:
     on_demand: "Ar alw"
     on_hand: "Wrth Law"
     package_from: "pecyn o"
-    item_description: "Disgrifiad o&#39;r Eitem"
+    item_description: "Disgrifiad o'r Eitem"
     price: "Pris"
     total: "Cyfanswm"
     edit: "Golygu"
@@ -3275,11 +3275,11 @@ cy:
     server: "Gweinydd"
     test_mode: "Modd Prawf"
     logourl: "Logourl"
-    are_you_sure_delete: "Ydych chi&#39;n siŵr eich bod chi am ddileu&#39;r cofnod hwn?"
+    are_you_sure_delete: "Ydych chi'n siŵr eich bod chi am ddileu'r cofnod hwn?"
     confirm_delete: "Cadarnhau Dileu"
     configurations: "Cyfluniadau"
     general_settings: "Gosodiadau Cyffredinol"
-    site_name: "Enw&#39;r Safle"
+    site_name: "Enw'r Safle"
     site_url: "URL y wefan"
     default_seo_title: "Rhagosodiad Dyma Deitl"
     default_meta_description: "Disgrifiad Meta Rhagosodedig"
@@ -3299,23 +3299,23 @@ cy:
     general: "Cyffredinol"
     enable_mail_delivery: "Galluogi Dosbarthu Post"
     send_mails_as: "Anfon Postiau Fel"
-    smtp_send_all_emails_as_from_following_address: "Anfonwch bob post o&#39;r cyfeiriad canlynol."
-    send_copy_of_all_mails_to: "Anfon Copi o&#39;r Holl Bostiau at"
-    smtp_send_copy_to_this_addresses: "Yn anfon copi o&#39;r holl negeseuon sy&#39;n mynd allan i&#39;r cyfeiriad hwn. Ar gyfer cyfeiriadau lluosog, ar wahân gyda choma."
+    smtp_send_all_emails_as_from_following_address: "Anfonwch bob post o'r cyfeiriad canlynol."
+    send_copy_of_all_mails_to: "Anfon Copi o'r Holl Bostiau at"
+    smtp_send_copy_to_this_addresses: "Yn anfon copi o'r holl negeseuon sy'n mynd allan i'r cyfeiriad hwn. Ar gyfer cyfeiriadau lluosog, ar wahân gyda choma."
     intercept_email_address: "Intercept Cyfeiriad E-bost"
     intercept_email_instructions: "Diystyru derbynnydd e-bost a rhoi cyfeiriad arall yn ei le."
     tax_categories: "Categorïau Treth"
     listing_tax_categories: "Rhestru Categorïau Treth"
-    back_to_tax_categories_list: "Yn ôl i&#39;r Rhestr Categorïau Treth"
+    back_to_tax_categories_list: "Yn ôl i'r Rhestr Categorïau Treth"
     tax rate: "Cyfraddau Treth"
     new_tax_rate: "Cyfradd Trethi Newydd"
     tax_category: "Categori Treth"
     tax_rates: "Cyfraddau Treth"
     rate: "Cyfradd"
-    tax_rate_amount_explanation: "Mae cyfraddau treth yn swm degol i gynorthwyo gyda chyfrifiadau, (hy os yw&#39;r gyfradd dreth yn 5% yna nodwch 0.05)"
-    included_in_price: "Wedi&#39;i gynnwys yn y Pris"
+    tax_rate_amount_explanation: "Mae cyfraddau treth yn swm degol i gynorthwyo gyda chyfrifiadau, (hy os yw'r gyfradd dreth yn 5% yna nodwch 0.05)"
+    included_in_price: "Wedi'i gynnwys yn y Pris"
     show_rate_in_label: "Dangos cyfradd yn y label"
-    back_to_tax_rates_list: "Yn ôl i&#39;r Rhestr Cyfraddau Treth"
+    back_to_tax_rates_list: "Yn ôl i'r Rhestr Cyfraddau Treth"
     tax_settings: "Gosodiadau Treth"
     zones: "Parthau"
     new_zone: "Parth Newydd"
@@ -3328,14 +3328,14 @@ cy:
     iso_name: "Enw ISO"
     states_required: "Gwladwriaethau Angenrheidiol"
     editing_country: "Gwlad Golygu"
-    back_to_countries_list: "Yn ôl i&#39;r Rhestr Gwledydd"
+    back_to_countries_list: "Yn ôl i'r Rhestr Gwledydd"
     states: "Gwladwriaethau"
     abbreviation: "Talfyriad"
     new_state: "Gwladwriaeth Newydd"
     payment_methods: "Dulliau Talu"
     taxonomies: "Tacsonomeg"
     new_taxonomy: "Tacsonomeg Newydd"
-    back_to_taxonomies_list: "Yn ôl i&#39;r Rhestr Tacsonomeg"
+    back_to_taxonomies_list: "Yn ôl i'r Rhestr Tacsonomeg"
     shipping_methods: "Dulliau Llongau"
     shipping_method: "Dull Llongau"
     shipment: "Cludo"
@@ -3372,10 +3372,10 @@ cy:
     filename: "Enw ffeil"
     alt_text: "Testun Amgen"
     thumbnail: "Bawd"
-    back_to_images_list: "Yn ôl i&#39;r Rhestr Delweddau"
+    back_to_images_list: "Yn ôl i'r Rhestr Delweddau"
     email: E-bost
     account_updated: "Diweddarwyd y cyfrif!"
-    email_updated: "Bydd y cyfrif yn cael ei ddiweddaru unwaith y bydd yr e-bost newydd wedi&#39;i gadarnhau."
+    email_updated: "Bydd y cyfrif yn cael ei ddiweddaru unwaith y bydd yr e-bost newydd wedi'i gadarnhau."
     my_account: "Fy nghyfrif"
     date: "Dyddiad"
     time: "Amser"
@@ -3383,13 +3383,13 @@ cy:
     inventory: Rhestr
     zipcode: Cod post
     weight: Pwysau (y kg neu pwys)
-    error_user_destroy_with_orders: "Ni chaniateir dileu defnyddwyr ag archebion wedi&#39;u cwblhau"
+    error_user_destroy_with_orders: "Ni chaniateir dileu defnyddwyr ag archebion wedi'u cwblhau"
     cannot_create_payment_without_payment_methods: "Ni allwch greu taliad am orchymyn heb ddiffinio unrhyw ddulliau talu."
     please_define_payment_methods: "Diffiniwch rai dulliau talu yn gyntaf."
     options: "Opsiynau"
-    has_no_shipped_units: "heb unedau wedi&#39;u cludo"
-    successfully_created: 'mae %{resource} wedi&#39;i greu&#39;n llwyddiannus!'
-    successfully_updated: 'mae %{resource} wedi&#39;i ddiweddaru&#39;n llwyddiannus!'
+    has_no_shipped_units: "heb unedau wedi'u cludo"
+    successfully_created: 'mae %{resource} wedi''i greu''n llwyddiannus!'
+    successfully_updated: 'mae %{resource} wedi''i ddiweddaru''n llwyddiannus!'
     payment_method: "Dull talu"
     payment_processing_failed: "Ni ellid prosesu taliad, gwiriwch y manylion a nodwyd gennych"
     not_available: "Amherthnasol"
@@ -3403,11 +3403,11 @@ cy:
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
-          one: "Roedd 1 gwall yn gwahardd cadw&#39;r cofnod hwn rhag:"
+          one: "Roedd 1 gwall yn gwahardd cadw'r cofnod hwn rhag:"
           few: "gwaharddodd gwallau %{count} y cofnod hwn rhag cael ei gadw:"
           many: "gwaharddodd gwallau %{count} y cofnod hwn rhag cael ei gadw:"
           other: "gwaharddodd gwallau %{count} y cofnod hwn rhag cael ei gadw:"
-        there_were_problems_with_the_following_fields: "Roedd problemau gyda&#39;r meysydd canlynol"
+        there_were_problems_with_the_following_fields: "Roedd problemau gyda'r meysydd canlynol"
       payments_list:
         date_time: "Dyddiad / amser"
         amount: "Swm"
@@ -3465,7 +3465,7 @@ cy:
           new_property: "Eiddo Newydd"
         edit:
           editing_property: "Golygu Eiddo"
-          back_to_properties_list: "Yn ôl i&#39;r Rhestr Eiddo"
+          back_to_properties_list: "Yn ôl i'r Rhestr Eiddo"
         form:
           name: "Enw"
           presentation: "Cyflwyniad"
@@ -3473,11 +3473,11 @@ cy:
         index:
           new_return_authorization: "Awdurdodi Dychwelyd Newydd"
           return_authorizations: "Awdurdodiadau Dychwelyd"
-          back_to_orders_list: "Yn ôl i&#39;r Rhestr Archebion"
+          back_to_orders_list: "Yn ôl i'r Rhestr Archebion"
           rma_number: "Rhif RMA"
           status: "Statws"
           amount: "Swm"
-          cannot_create_returns: "Ni all greu ffurflenni gan nad oes gan y gorchymyn hwn unrhyw unedau wedi&#39;u cludo."
+          cannot_create_returns: "Ni all greu ffurflenni gan nad oes gan y gorchymyn hwn unrhyw unedau wedi'u cludo."
           continue: "Parhewch"
         new:
           new_return_authorization: "Awdurdodi Dychwelyd Newydd"
@@ -3485,11 +3485,11 @@ cy:
           continue: "Parhewch"
         edit:
           receive: "derbyn"
-          are_you_sure: "Wyt ti&#39;n siwr?"
+          are_you_sure: "Wyt ti'n siwr?"
           return_authorization: "Awdurdodi Dychwelyd"
         form:
           product: "Cynnyrch"
-          quantity_shipped: "Nifer wedi&#39;i Llongau"
+          quantity_shipped: "Nifer wedi'i Llongau"
           quantity_returned: "Dychwelwyd Meintiau"
           return_quantity: "Nifer Dychwelyd"
           amount: "Swm"
@@ -3499,7 +3499,7 @@ cy:
         states:
           authorized: "Awdurdodedig"
           received: "Derbyniwyd"
-          canceled: "Wedi&#39;i ganslo"
+          canceled: "Wedi'i ganslo"
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Nid yw'n bosib ychwanegu'r eitem i archeb a ganslwyd."
@@ -3509,7 +3509,7 @@ cy:
           capture: "Dal"
           ship: "Llong"
           edit: "Golygu"
-          order_not_updated: "Ni ellid diweddaru&#39;r gorchymyn"
+          order_not_updated: "Ni ellid diweddaru'r gorchymyn"
           note: "Nodyn"
           first: "Yn gyntaf"
           last: "Diwethaf"
@@ -3517,13 +3517,13 @@ cy:
           next: "Nesaf"
           loading: "Llwytho"
           no_orders_found: "Ni ddaethpwyd o hyd i Orchmynion"
-          results_found: "%{number} Canlyniadau wedi&#39;u darganfod."
+          results_found: "%{number} Canlyniadau wedi'u darganfod."
           viewing: "Gweld %{start} i %{end}."
           print_invoices: "Anfonebau Argraffu"
         sortable_header:
           payment_state: "Cyflwr Talu"
           shipment_state: "Gwladwriaeth Cludo"
-          completed_at: "Wedi&#39;i gwblhau yn"
+          completed_at: "Wedi'i gwblhau yn"
           number: "Rhif"
           state: "Nodwch"
           email: "E-bost Cwsmer"
@@ -3544,7 +3544,7 @@ cy:
           order_total: "Cyfanswm y Gorchymyn"
       overview:
         enterprises_header:
-          ofn_with_tip: Cynhyrchwyr a / neu Hybiau yw mentrau a nhw yw&#39;r uned drefniadaeth sylfaenol yn y Rhwydwaith Bwyd Agored.
+          ofn_with_tip: Cynhyrchwyr a / neu Hybiau yw mentrau a nhw yw'r uned drefniadaeth sylfaenol yn y Rhwydwaith Bwyd Agored.
         enterprise_row:
           has_no_enterprise_fees: "does dim ffioedd busnes"
           has_no_payment_methods: "does dim dulliau talu"
@@ -3558,7 +3558,7 @@ cy:
             other: "Mae gennych chi gynhyrchion gweithredol %{count}"
         order_cycles:
           order_cycles: "Archebu Beiciau"
-          order_cycles_tip: "Mae cylchoedd archebu yn penderfynu pryd a ble mae&#39;ch cynhyrchion ar gael i gwsmeriaid."
+          order_cycles_tip: "Mae cylchoedd archebu yn penderfynu pryd a ble mae'ch cynhyrchion ar gael i gwsmeriaid."
           you_have_active:
             zero: "Nid oes gennych unrhyw gylchoedd archebu gweithredol."
             one: "Mae gennych chi un cylch archeb weithredol."
@@ -3580,18 +3580,18 @@ cy:
           no_shipping_methods_found: "Ni ddarganfuwyd unrhyw ddulliau cludo"
         new:
           new_shipping_method: "Dull Llongau Newydd"
-          back_to_shipping_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Llongau"
+          back_to_shipping_methods_list: "Yn ôl i'r Rhestr Dulliau Llongau"
         edit:
           editing_shipping_method: "Golygu Dull Llongau"
           new: "Newydd"
-          back_to_shipping_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Llongau"
+          back_to_shipping_methods_list: "Yn ôl i'r Rhestr Dulliau Llongau"
         form:
           categories: "Categorïau"
           tax_category: "Categori Treth"
           zones: "Parthau"
           both: "Checkout a Swyddfa Gefn"
           back_end: "Swyddfa gefn yn unig"
-          deactivation_warning: "Gall dad-actifadu dull cludo wneud i&#39;r dull cludo ddiflannu o&#39;ch rhestr. Fel arall, gallwch guddio dull cludo o&#39;r dudalen ddesg dalu trwy osod yr opsiwn &#39;Arddangos&#39; i &#39;swyddfa gefn yn unig&#39;."
+          deactivation_warning: "Gall dad-actifadu dull cludo wneud i'r dull cludo ddiflannu o'ch rhestr. Fel arall, gallwch guddio dull cludo o'r dudalen ddesg dalu trwy osod yr opsiwn &#39;Arddangos&#39; i &#39;swyddfa gefn yn unig&#39;."
       payment_methods:
         index:
           payment_methods: "Dulliau Talu"
@@ -3610,19 +3610,19 @@ cy:
           no_payment_methods_found: "Ni ddarganfuwyd unrhyw ddulliau talu"
         new:
           new_payment_method: "Dull Talu Newydd"
-          back_to_payment_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Talu"
+          back_to_payment_methods_list: "Yn ôl i'r Rhestr Dulliau Talu"
         edit:
           new: "Newydd"
           editing_payment_method: "Dull Talu Golygu"
-          back_to_payment_methods_list: "Yn ôl i&#39;r Rhestr Dulliau Talu"
+          back_to_payment_methods_list: "Yn ôl i'r Rhestr Dulliau Talu"
         stripe_connect:
           enterprise_select_placeholder: Dewiswch ...
           loading_account_information_msg: Llwytho gwybodaeth gyfrif o streipen, arhoswch ...
           stripe_disabled_msg: Mae taliadau streip wedi cael eu hanalluogi gan weinyddwr y system.
-          request_failed_msg: Sori. Aeth rhywbeth o&#39;i le wrth geisio gwirio manylion cyfrif gyda Stripe ...
+          request_failed_msg: Sori. Aeth rhywbeth o'i le wrth geisio gwirio manylion cyfrif gyda Stripe ...
           account_missing_msg: Nid oes cyfrif Stripe yn bodoli ar gyfer y fenter hon.
           connect_one: Cysylltu Un
-          access_revoked_msg: Mae mynediad i&#39;r cyfrif Stripe hwn wedi&#39;i ddirymu, ailgysylltwch eich cyfrif.
+          access_revoked_msg: Mae mynediad i'r cyfrif Stripe hwn wedi'i ddirymu, ailgysylltwch eich cyfrif.
           status: Statws
           connected: Cysylltiedig
           account_id: ID y Cyfrif
@@ -3640,7 +3640,7 @@ cy:
           front_end: "Talu yn unig"
           back_end: "Swyddfa gefn yn unig"
           tags: "Tagiau"
-          deactivation_warning: "Gall dad-actifadu dull talu wneud i&#39;r dull talu ddiflannu o&#39;ch rhestr. Fel arall, gallwch guddio dull talu o&#39;r dudalen ddesg dalu trwy osod yr opsiwn &#39;Arddangos&#39; i &#39;swyddfa gefn yn unig&#39;."
+          deactivation_warning: "Gall dad-actifadu dull talu wneud i'r dull talu ddiflannu o'ch rhestr. Fel arall, gallwch guddio dull talu o'r dudalen ddesg dalu trwy osod yr opsiwn &#39;Arddangos&#39; i &#39;swyddfa gefn yn unig&#39;."
         providers:
           provider: "Darparwr"
           check: "Arian/TRhE/ac ati (taliadau lle nad oes angen dilysu awtomatig)."
@@ -3667,13 +3667,13 @@ cy:
           product_name: "Enw Cynnyrch"
           units: "Maint yr Uned"
           value: "Gwerth"
-          unit_name: "Enw&#39;r uned"
+          unit_name: "Enw'r uned"
           price: "Pris"
           unit_price: "Pris Uned"
           unit_price_legend: "Cyfrifwyd ar sail pris yr eitem."
           on_hand: "Wrth Law"
           on_demand: "Ar alw"
-          product_description: "Disgrifiad o&#39;r Cynnyrch"
+          product_description: "Disgrifiad o'r Cynnyrch"
           image: "Delwedd"
           or: "neu"
         unit_name_placeholder: 'ee. sypiau'
@@ -3683,7 +3683,7 @@ cy:
           indicators:
             title: CYNHYRCHION LLWYTHO
             no_products: "Dim cynhyrchion eto. Pam na wnewch chi ychwanegu rhai?"
-            no_results: "Mae&#39;n ddrwg gennym, nid oes unrhyw ganlyniadau yn cyfateb"
+            no_results: "Mae'n ddrwg gennym, nid oes unrhyw ganlyniadau yn cyfateb"
           products_head:
             name: Enw
             unit: Uned
@@ -3707,14 +3707,14 @@ cy:
           display_as: Arddangos Fel
       reports:
         table:
-          select_and_search: "Dewiswch hidlwyr a chlicio ar %{option} i gael mynediad i&#39;ch data."
+          select_and_search: "Dewiswch hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
         bulk_coop:
           bulk_coop_supplier_report: 'Co-op Swmp - Cyfanswm gan Gyflenwr'
           bulk_coop_allocation: 'Co-op Swmp - Dyraniad'
           bulk_coop_packing_sheets: 'Co-op Swmp - Taflenni Pacio'
           bulk_coop_customer_payments: 'Co-op Swmp - Taliadau Cwsmer'
         customer_names_message:
-          customer_names_tip: "Os yw enwau cwsmeriaid wedi&#39;u cuddio ar gyfer archebion rydych wedi&#39;u cyflenwi, gallwch gysylltu â&#39;r dosbarthwr a gofyn a allant ddiweddaru eu dewisiadau siop i ganiatáu i&#39;w cyflenwyr weld enwau cwsmeriaid."
+          customer_names_tip: "Os yw enwau cwsmeriaid wedi'u cuddio ar gyfer archebion rydych wedi'u cyflenwi, gallwch gysylltu â'r dosbarthwr a gofyn a allant ddiweddaru eu dewisiadau siop i ganiatáu i'w cyflenwyr weld enwau cwsmeriaid."
       users:
         index:
           listing_users: "Rhestru Defnyddwyr"
@@ -3725,7 +3725,7 @@ cy:
           email: "E-bost"
         edit:
           editing_user: "Defnyddiwr Golygu"
-          back_to_users_list: "Yn ôl i&#39;r Rhestr Defnyddwyr"
+          back_to_users_list: "Yn ôl i'r Rhestr Defnyddwyr"
           general_settings: "Gosodiadau Cyffredinol"
         form:
           email: "E-bost"
@@ -3746,7 +3746,7 @@ cy:
           and: "a"
           new_variant: "Amrywiad Newydd"
           show_active: "Dangos Egnïol"
-          show_deleted: "Dangos Wedi&#39;i ddileu"
+          show_deleted: "Dangos Wedi'i ddileu"
         new:
           new_variant: "Amrywiad Newydd"
         form:
@@ -3787,15 +3787,15 @@ cy:
         stripe:
           choose_one: Dewis un
           enter_new_card: Rhowch fanylion ar gyfer cerdyn newydd
-          used_saved_card: "Defnyddiwch gerdyn wedi&#39;i arbed:"
+          used_saved_card: "Defnyddiwch gerdyn wedi'i arbed:"
           or_enter_new_card: "Neu, nodwch fanylion cerdyn newydd:"
-          remember_this_card: Ydych chi&#39;n cofio&#39;r cerdyn hwn?
+          remember_this_card: Ydych chi'n cofio'r cerdyn hwn?
         stripe_sca:
           choose_one: Dewis un
           enter_new_card: Rhowch fanylion ar gyfer cerdyn newydd
-          used_saved_card: "Defnyddiwch gerdyn wedi&#39;i arbed:"
+          used_saved_card: "Defnyddiwch gerdyn wedi'i arbed:"
           or_enter_new_card: "Neu, nodwch fanylion cerdyn newydd:"
-          remember_this_card: Ydych chi&#39;n cofio&#39;r cerdyn hwn?
+          remember_this_card: Ydych chi'n cofio'r cerdyn hwn?
     date_picker:
       flatpickr_date_format: "B-m-d"
       flatpickr_datetime_format: "B-m-d H:i"
@@ -3821,7 +3821,7 @@ cy:
       canceled: canslwyd
     payment_states:
       balance_due: cydbwysedd yn ddyledus
-      completed: wedi&#39;i gwblhau
+      completed: wedi'i gwblhau
       checkout: til
       credit_owed: credyd yn ddyledus
       failed: wedi methu
@@ -3835,13 +3835,13 @@ cy:
     order_mailer:
       cancel_email:
         customer_greeting: "Annwyl %{name},"
-        instructions_html: "Mae eich archeb gydag <strong>%{distributor}</strong> wedi&#39;i GANSLO. Cadwch y wybodaeth ganslo hon ar gyfer eich cofnodion."
-        dont_cancel: "Os ydych wedi newid eich meddwl neu os nad ydych am ganslo&#39;r gorchymyn hwn, cysylltwch â %{email}"
+        instructions_html: "Mae eich archeb gydag <strong>%{distributor}</strong> wedi'i GANSLO. Cadwch y wybodaeth ganslo hon ar gyfer eich cofnodion."
+        dont_cancel: "Os ydych wedi newid eich meddwl neu os nad ydych am ganslo'r gorchymyn hwn, cysylltwch â %{email}"
         order_summary_canceled_html: "<strong>Crynodeb Gorchymyn # %{number} [CANCELED]</strong>"
         details: "Dyma fanylion yr hyn a archebwyd gennych:"
         unpaid_order: "Ni thalwyd eich archeb felly ni wnaed ad-daliad"
-        paid_order: "Talwyd eich archeb felly mae %{distributor} wedi ad-dalu&#39;r swm llawn"
-        credit_order: "Talwyd eich archeb fel bod eich cyfrif wedi&#39;i gredydu"
+        paid_order: "Talwyd eich archeb felly mae %{distributor} wedi ad-dalu'r swm llawn"
+        credit_order: "Talwyd eich archeb fel bod eich cyfrif wedi'i gredydu"
         subject: "Canslo Gorchymyn"
       cancel_email_for_shop:
         greeting: "Annwyl %{name},"
@@ -3891,7 +3891,7 @@ cy:
       address: cyfeiriad
       adjustments: addasiadau
       awaiting_return: yn aros yn ôl
-      canceled: wedi&#39;i ganslo
+      canceled: wedi'i ganslo
       cart: trol
       confirmation: "cadarnhad"
       complete: cyflawn
@@ -3908,7 +3908,7 @@ cy:
       pending: yn yr arfaeth
       ended: daeth i ben
       paused: seibio
-      canceled: wedi&#39;i ganslo
+      canceled: wedi'i ganslo
     paypal:
       already_refunded: "Ad-dalwyd y taliad hwn, ac nid yw'n bosib cymryd unrhyw gamau pellach arno."
       no_payment_via_admin_backend: "Ni fedrwch ddefnyddio cyfrifon PayPal trwy'r ôl-system gweinyddol ar hyn o bryd."
@@ -3936,7 +3936,7 @@ cy:
           cards: Cardiau Credyd
           transactions: Trafodion
           settings: Gosodiadau Cyfrif
-        unconfirmed_email: "Yn aros am gadarnhad e-bost ar gyfer: %{unconfirmed_email}. Bydd eich cyfeiriad e-bost yn cael ei ddiweddaru unwaith y bydd yr e-bost newydd wedi&#39;i gadarnhau."
+        unconfirmed_email: "Yn aros am gadarnhad e-bost ar gyfer: %{unconfirmed_email}. Bydd eich cyfeiriad e-bost yn cael ei ddiweddaru unwaith y bydd yr e-bost newydd wedi'i gadarnhau."
       orders:
         open_orders: Gorchmynion Agored
         past_orders: Gorchmynion y Gorffennol
@@ -3957,7 +3957,7 @@ cy:
       past_orders:
         order: Gorchymyn
         shop: Siop
-        completed_at: Wedi&#39;i gwblhau yn
+        completed_at: Wedi'i gwblhau yn
         items: Eitemau
         total: Cyfanswm
         paid?: Wedi talu?
@@ -3968,25 +3968,25 @@ cy:
       cards:
         authorised_shops: Siopau Awdurdodedig
         authorised_shops_agreement: Dyma restr o siopau sydd â chaniatad i ddefnyddio eich cerdyn credyd diofyn ar gyfer unrhyw danysgrifiadau (h.y. archebion sy'n cael eu hail-adrodd) sydd gennych efallai.  Cedwir manylion eich cerdyn yn ddiogel, ac ni rhennir y rhain gyda pherchnogion siop(au).  Byddwch yn cael eich hysbysu pan fyddwch yn talu.  Trwy dicio'r blwch ar gyfer siop, rydych yn cytuno i awdurdodi'r siop dan sylw i anfon cyfawyddiadau at y sefydliad ariannol a gyhoeddodd eich cerdyn i dderbyn taliadau'n unol ag unrhyw danysgrifiad rydych yn ei greu gyda'r siop dan sylw.
-        saved_cards_popover: Dyma&#39;r rhestr o gardiau rydych chi wedi dewis eu cadw i&#39;w defnyddio&#39;n ddiweddarach. Bydd eich &#39;rhagosodiad&#39; yn cael ei ddewis yn awtomatig pan fyddwch chi&#39;n talu archeb, a gall unrhyw siopau rydych chi wedi caniatáu gwneud hynny godi tâl arnyn nhw (gweler ar y dde).
+        saved_cards_popover: Dyma'r rhestr o gardiau rydych chi wedi dewis eu cadw i'w defnyddio'n ddiweddarach. Bydd eich &#39;rhagosodiad&#39; yn cael ei ddewis yn awtomatig pan fyddwch chi'n talu archeb, a gall unrhyw siopau rydych chi wedi caniatáu gwneud hynny godi tâl arnyn nhw (gweler ar y dde).
       authorised_shops:
-        shop_name: "Enw&#39;r Siop"
+        shop_name: "Enw'r Siop"
         allow_charges?: "Caniatau defnyddio'r Cerdyn Diofyn i dalu?"
     localized_number:
       invalid_format: mae fformat annilys. Rhowch rif.
     api:
-      invalid_api_key: "Allwedd API annilys (%{key}) wedi&#39;i nodi."
-      unauthorized: "Nid oes gennych awdurdod i gyflawni&#39;r weithred honno."
+      invalid_api_key: "Allwedd API annilys (%{key}) wedi'i nodi."
+      unauthorized: "Nid oes gennych awdurdod i gyflawni'r weithred honno."
       invalid_resource: "Adnodd annilys. Trwsiwch wallau a rhoi cynnig arall arni."
-      resource_not_found: "Ni ellid dod o hyd i&#39;r adnodd yr oeddech yn edrych amdano."
+      resource_not_found: "Ni ellid dod o hyd i'r adnodd yr oeddech yn edrych amdano."
       access: "Mynediad API"
       key: "Allwedd"
       clear_key: "Allwedd glir"
       regenerate_key: "Adfywio Allwedd"
       no_key: "Dim allwedd"
       generate_key: "Cynhyrchu allwedd API"
-      key_generated: "Allwedd wedi&#39;i gynhyrchu"
-      key_cleared: "Allwedd wedi&#39;i chlirio"
+      key_generated: "Allwedd wedi'i gynhyrchu"
+      key_cleared: "Allwedd wedi'i chlirio"
       shipment:
         cannot_ready: "Methu â chludiant parod."
       invalid_taxonomy_id: "Tacsonomeg annilys id."

@@ -176,8 +176,8 @@ de_DE:
     success:
       logged_in_succesfully: "Erfolgreich eingeloggt."
     sessions:
-      signed_out: "Sie sind jetzt ausgeloggt."
-      already_signed_out: "Sie sind jetzt ausgeloggt."
+      signed_out: "Erfolgreich ausgeloggt."
+      already_signed_out: "Erfolgreich ausgeloggt."
     user_passwords:
       spree_user:
         updated_not_active: "Ihr Passwort wurde zurückgesetzt, aber ihre E-Mail-Adresse muss noch bestätigt werden."

@@ -72,6 +72,21 @@ it:
       missing: "Non è stata caricata nessuna carta sul consumatore."
       processing_error: "C'è stato un errore nel processare la carta"
       rate_limit: "C'è stato un errore per una richiesta troppo rapida alle API. Per favore comunicaci se incontri spesso questo errore."
+      authentication_required: "La carta non è stata accettata perchè la transazione richiede autenticazione"
+      approve_with_id: "Il pagamento non può essere autorizzato."
+      call_issuer: "La carta non è stata accettata per ragioni sconosciute."
+      card_not_supported: "La carta non supporta questo tipo di acquisti."
+      do_not_honor: "La carta non è stata accettata per ragioni sconosciute."
+      do_not_try_again: "La carta non è stata accettata per ragioni sconosciute."
+      generic_decline: "La carta non è stata accettata per ragioni sconosciute."
+      no_action_taken: "La carta non è stata accettata per ragioni sconosciute."
+      revocation_of_all_authorizations: "La carta non è stata accettata per ragioni sconosciute."
+      revocation_of_authorization: "La carta non è stata accettata per ragioni sconosciute."
+      security_violation: "La carta non è stata accettata per ragioni sconosciute."
+      service_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
+      stop_payment_order: "La carta non è stata accettata per ragioni sconosciute."
+      transaction_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
+      try_again_later: "La carta non è stata accettata per ragioni sconosciute."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:

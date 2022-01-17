@@ -1,11 +1,11 @@
 es:
-  language_name: "Castellano"
+  language_name: "Inglés"
   activerecord:
     attributes:
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
-        reset_password_token: token de restablecimiento de contraseña
+        reset_password_token: Token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
       spree/order:
@@ -18,7 +18,7 @@ es:
       spree/payment:
         amount: Cantidad
         state: Estado
-        source: Source
+        source: Fuente
       spree/product:
         primary_taxon: "categoría del producto"
         supplier: "Proveedora"
