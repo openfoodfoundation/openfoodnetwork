@@ -9,7 +9,7 @@ angular.module('Darkswarm').directive "stripeElements", ($injector, StripeElemen
     if $injector.has('stripeObject')
       stripe = $injector.get('stripeObject')
 
-      card = stripe.elements().create 'card',
+      card = stripe.elements({ locale: I18n.base_locale }).create 'card',
         hidePostalCode: true
         style:
           base:
