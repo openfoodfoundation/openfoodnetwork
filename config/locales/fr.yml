@@ -175,6 +175,9 @@ fr:
       already_registered: "Cet email est déjà associé à un utilisateur et a déjà été validé. Veuillez vous connecter pour continuer, ou utiliser un autre email."
     success:
       logged_in_succesfully: "Vous êtes désormais connecté !"
+    sessions:
+      signed_out: "Vous êtes désormais déconnecté."
+      already_signed_out: "Vous êtes désormais déconnecté."
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
