@@ -104,7 +104,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         it "should process the payment without storing card details" do
           put update_checkout_path, params: params
 
-          expect(json_response["path"]).to eq order_path(order)
+          expect(json_response["path"]).to eq order_path(order, order_token: order.token)
           expect(order.payments.completed.count).to be 1
 
           card = order.payments.completed.first.source
@@ -161,7 +161,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         it "should process the payment, and stores the card/customer details" do
           put update_checkout_path, params: params
 
-          expect(json_response["path"]).to eq order_path(order)
+          expect(json_response["path"]).to eq order_path(order, order_token: order.token)
           expect(order.payments.completed.count).to be 1
 
           card = order.payments.completed.first.source
@@ -263,7 +263,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       it "should process the payment, and keep the profile ids and other card details" do
         put update_checkout_path, params: params
 
-        expect(json_response["path"]).to eq order_path(order)
+        expect(json_response["path"]).to eq order_path(order, order_token: order.token)
         expect(order.payments.completed.count).to be 1
 
         card = order.payments.completed.first.source

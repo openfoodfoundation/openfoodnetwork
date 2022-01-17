@@ -68,11 +68,20 @@ Openfoodnetwork::Application.routes.draw do
     resources :callbacks, only: [:index]
     resources :webhooks, only: [:create]
   end
+
+  # Temporary re-routing for any pending Stripe payments still using the old return URLs
+  constraints ->(request) { request["payment_intent"]&.start_with?("pm_") } do
+    match "/checkout", via: :get, controller: "payment_gateways/stripe", action: "confirm"
+    match "/orders/:order_number", via: :get, controller: "payment_gateways/stripe", action: "authorize"
+  end
   
   namespace :payment_gateways do
     get "/paypal", to: "paypal#express", as: :paypal_express
     get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
     get "/paypal/cancel", to: "paypal#cancel", as: :cancel_paypal
+
+    get "/stripe/confirm", to: "stripe#confirm", as: :confirm_stripe
+    get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
   end
 
   constraints SplitCheckoutConstraint.new do

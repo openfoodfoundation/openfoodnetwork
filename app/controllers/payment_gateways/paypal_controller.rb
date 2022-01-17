@@ -3,17 +3,19 @@
 module PaymentGateways
   class PaypalController < ::BaseController
     include OrderStockCheck
+    include OrderCompletion
 
     before_action :enable_embedded_shopfront
     before_action :destroy_orphaned_paypal_payments, only: :confirm
-    after_action :reset_order_when_complete, only: :confirm
+    before_action :load_checkout_order, only: [:express, :confirm]
+    before_action :handle_insufficient_stock, only: [:express, :confirm]
     before_action :permit_parameters!
 
-    def express
-      order = current_order || raise(ActiveRecord::RecordNotFound)
+    after_action :reset_order_when_complete, only: :confirm
 
+    def express
       pp_request = provider.build_set_express_checkout(
-        express_checkout_request_details(order)
+        express_checkout_request_details(@order)
       )
 
       begin
@@ -36,11 +38,8 @@ module PaymentGateways
     end
 
     def confirm
-      @order = current_order || raise(ActiveRecord::RecordNotFound)
-
       # At this point the user has come back from the Paypal form, and we get one
       # last chance to interact with the payment process before the money moves...
-      return reset_to_cart unless sufficient_stock?
 
       @order.payments.create!(
         source: Spree::PaypalExpressCheckout.create(
@@ -50,27 +49,13 @@ module PaymentGateways
         amount: @order.total,
         payment_method: payment_method
       )
-      @order.process_payments!
-      @order.next
-      if @order.complete?
-        flash.notice = Spree.t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
-        session[:order_id] = nil
-        redirect_to completion_route(@order)
-      else
-        redirect_to main_app.checkout_state_path(@order.state)
-      end
+
+      process_payment_completion!
     end
 
     def cancel
       flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
       redirect_to main_app.checkout_path
-    end
-
-    # Clears the cached order. Required for #current_order to return a new order to serve as cart.
-    def expire_current_order
-      session[:order_id] = nil
-      @current_order = nil
     end
 
     private
@@ -104,14 +89,7 @@ module PaymentGateways
     def reset_order_when_complete
       return unless current_order.complete?
 
-      flash[:notice] = t(:order_processed_successfully)
-      OrderCompletionReset.new(self, current_order).call
-      session[:access_token] = current_order.token
-    end
-
-    def reset_to_cart
-      OrderCheckoutRestart.new(@order).call
-      handle_insufficient_stock
+      order_completion_reset(current_order)
     end
 
     # See #1074 and #1837 for more detail on why we need this
@@ -189,10 +167,6 @@ module PaymentGateways
         Country: current_order.bill_address.country.iso,
         PostalCode: current_order.bill_address.zipcode
       }
-    end
-
-    def completion_route(order)
-      main_app.order_path(order, order_token: order.token)
     end
 
     def address_required?

@@ -7,13 +7,12 @@ module Spree
 
     layout 'darkswarm'
 
-    before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
-    respond_to :html
-    respond_to :json
+    respond_to :html, :json
 
+    before_action :check_authorization
     before_action :set_current_order, only: :update
     before_action :filter_order_params, only: :update
     before_action :enable_embedded_shopfront
@@ -26,8 +25,6 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-
-      handle_stripe_response
     end
 
     def empty
@@ -121,19 +118,6 @@ module Spree
       else
         authorize! :create, Spree::Order
       end
-    end
-
-    # Stripe can redirect here after a payment is processed in the backoffice.
-    # We verify if it was successful here and persist the changes.
-    def handle_stripe_response
-      return unless params.key?("payment_intent")
-
-      result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-
-      unless result.ok?
-        flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
-      end
-      @order.reload
     end
 
     def filter_order_params
