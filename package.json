@@ -9,9 +9,8 @@
     "storybook": "start-storybook"
   },
   "jest": {
-    "testRegex": [
-      "spec/javascripts/.*_test\\.js"
-    ]
+    "testRegex": ["spec/javascripts/.*_test\\.js"],
+    "transformIgnorePatterns": ["/node_modules/(?!(stimulus)/)"]
   },
   "devDependencies": {
     "@storybook/addon-controls": "^6.4.12",
@@ -38,7 +37,7 @@
     "mrujs": "^0.7.4",
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
-    "stimulus": "^2.0.0",
+    "stimulus": "^3.0.1",
     "webpack": "~4",
     "webpack-cli": "~3"
   }
