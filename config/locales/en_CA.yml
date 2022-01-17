@@ -72,6 +72,44 @@ en_CA:
       missing: "There is no card on a customer that is being charged."
       processing_error: "An error occurred while processing the card."
       rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
+      authentication_required: "The card was declined as the transaction requires authentication."
+      approve_with_id: "The payment cannot be authorized."
+      call_issuer: "The card has been declined for an unknown reason."
+      card_not_supported: "The card does not support this type of purchase."
+      card_velocity_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      currency_not_supported: "The card does not support the specified currency."
+      do_not_honor: "The card has been declined for an unknown reason."
+      do_not_try_again: "The card has been declined for an unknown reason."
+      duplicate_transaction: "A transaction with identical amount and credit card information was submitted very recently."
+      fraudulent: "The payment has been declined as Stripe suspects it is fraudulent."
+      generic_decline: "The card has been declined for an unknown reason."
+      incorrect_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      insufficient_funds: "The card has insufficient funds to complete the purchase."
+      invalid_account: "The card, or account the card is connected to, is invalid."
+      invalid_amount: "The payment amount is invalid, or exceeds the amount that is allowed."
+      invalid_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      issuer_not_available: "The card issuer could not be reached, so the payment could not be authorized."
+      lost_card: "The payment has been declined because the card is reported lost."
+      merchant_blacklist: "The payment has been declined because it matches a value on the Stripe user’s block list."
+      new_account_information_available: "The card, or account the card is connected to, is invalid."
+      no_action_taken: "The card has been declined for an unknown reason."
+      not_permitted: "The payment is not permitted."
+      offline_pin_required: "The card has been declined as it requires a PIN."
+      online_or_offline_pin_required: "The card has been declined as it requires a PIN."
+      pickup_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      pin_try_exceeded: "The allowable number of PIN tries has been exceeded."
+      reenter_transaction: "The payment could not be processed by the issuer for an unknown reason."
+      restricted_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      revocation_of_all_authorizations: "The card has been declined for an unknown reason."
+      revocation_of_authorization: "The card has been declined for an unknown reason."
+      security_violation: "The card has been declined for an unknown reason."
+      service_not_allowed: "The card has been declined for an unknown reason."
+      stolen_card: "The payment has been declined because the card is reported stolen."
+      stop_payment_order: "The card has been declined for an unknown reason."
+      testmode_decline: "A Stripe test card number was used."
+      transaction_not_allowed: "The card has been declined for an unknown reason."
+      try_again_later: "The card has been declined for an unknown reason."
+      withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -1029,7 +1067,7 @@ en_CA:
         automatic_notifications: Automatic notifications
         automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
-        choose_product_tip: You can restrict products incoming and outgoing to only%{inventory}'s inventory.
+        choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -1326,7 +1364,7 @@ en_CA:
       cart_sidebar:
         checkout: "Checkout"
         edit_cart: "Edit cart"
-        items_in_cart_singular: "%{num}item in your cart"
+        items_in_cart_singular: "%{num} item in your cart"
         items_in_cart_plural: "%{num} items in your cart"
         close: "Close"
         cart_empty: "Your cart is empty"
@@ -1711,7 +1749,7 @@ en_CA:
   email_confirmed: "Thank you for confirming your email address."
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
-  email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
+  email_confirmation_profile_created: "A profile for  %{name}  has been successfully created! To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
@@ -1748,7 +1786,7 @@ en_CA:
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
   email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
-  email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at}by contacting <strong>%{distributor}</strong>via %{email}."
+  email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via  %{email}."
   email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
@@ -2207,9 +2245,9 @@ en_CA:
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show completed orders"
-  successfully_created: '%{resource}has been successfully created!'
+  successfully_created: '%{resource} has been successfully created!'
   successfully_removed: '%{resource}has been successfully removed!'
-  successfully_updated: '%{resource}has been successfully updated!'
+  successfully_updated: '%{resource} has been successfully updated!'
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
   admin_enterprise_relationships: "Enterprise Permissions"
@@ -2775,8 +2813,8 @@ en_CA:
         exchange_products:
           load_more_variants: "Load More Variants"
           load_all_variants: "Load All Variants"
-          select_all_variants: "Select All %{total_number_of_variants}Variants"
-          variants_loaded: "%{num_of_variants_loaded}of%{total_number_of_variants}Variants Loaded"
+          select_all_variants: "Select All  %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants}  Variants Loaded"
           loading_variants: "Loading Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
@@ -3351,8 +3389,8 @@ en_CA:
     please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     has_no_shipped_units: "has no shipped units"
-    successfully_created: '%{resource}has been successfully created!'
-    successfully_updated: '%{resource}has been successfully updated!'
+    successfully_created: '%{resource} has been successfully created!'
+    successfully_updated: '%{resource} has been successfully updated!'
     payment_method: "Payment Method"
     payment_processing_failed: "Payment could not be processed, please check the details you entered."
     not_available: "N/A"
@@ -3367,9 +3405,9 @@ en_CA:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
           one: "1 error prohibited this record from being saved:"
-          few: " %{count}errors prohibited this record from being saved:"
-          many: " %{count}errors prohibited this record from being saved:"
-          other: " %{count}errors prohibited this record from being saved:"
+          few: " %{count} errors prohibited this record from being saved:"
+          many: " %{count} errors prohibited this record from being saved:"
+          other: " %{count} errors prohibited this record from being saved:"
         there_were_problems_with_the_following_fields: "There were problems with the following fields"
       payments_list:
         date_time: "Date/time"
@@ -3481,7 +3519,7 @@ en_CA:
           next: "Next"
           loading: "Loading"
           no_orders_found: "No Orders Found"
-          results_found: " %{number} Results found."
+          results_found: " %{number}  Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
         sortable_header:
@@ -3799,7 +3837,7 @@ en_CA:
     order_mailer:
       cancel_email:
         customer_greeting: "Dear %{name},"
-        instructions_html: "Your order with %{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
+        instructions_html: "Your order with  <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}  "
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
@@ -3836,7 +3874,7 @@ en_CA:
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication.  Please visit the following URL to authorize your payment:"
       authorization_required:
         subject: "A payment requires authorization from the customer"
-        message: "A payment for order%{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
+        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer, "
