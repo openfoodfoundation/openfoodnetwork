@@ -6,8 +6,10 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    versioning-strategy: lockfile-only
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    versioning-strategy: lockfile-only
