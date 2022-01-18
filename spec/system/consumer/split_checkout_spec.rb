@@ -58,7 +58,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     it "should display the split checkout login page" do
       expect(page).to have_content distributor.name
-      expect(page).to have_current_path("/checkout/guest")
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_no_content("Checkout as guest")
@@ -68,12 +67,12 @@ describe "As a consumer, I want to checkout my order", js: true do
       order.update(state: "payment")
       get checkout_step_path(:details)
       expect(response).to have_http_status(:redirect)
-      expect(page).to have_current_path("/checkout/guest")
+      expect(page).to have_content("Ok, ready to checkout?")
     end
 
     it "should redirect to the login page when clicking the login button" do
       click_on "Login"
-      expect(page).to have_current_path "/"
+      expect(page).to have_content("Login")
     end
   end
 
@@ -86,7 +85,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     it "should display the split checkout login/guest page" do
       expect(page).to have_content distributor.name
-      expect(page).to have_current_path("/checkout/guest")
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_content("Checkout as guest")
@@ -95,7 +93,6 @@ describe "As a consumer, I want to checkout my order", js: true do
     it "should display the split checkout details page" do
       click_on "Checkout as guest"
       expect(page).to have_content distributor.name
-      expect(page).to have_current_path("/checkout/details")
       expect(page).to have_content("1 - Your details")
       expect(page).to have_selector("div.checkout-tab.selected", text: "1 - Your details")
       expect(page).to have_content("2 - Payment method")
@@ -122,14 +119,14 @@ describe "As a consumer, I want to checkout my order", js: true do
       choose free_shipping.name
 
       click_button "Next - Payment method"
-      expect(page).to have_current_path("/checkout/payment")
+      expect(page).to have_button("Next - Order summary")
     end
 
     context "when order is state: 'payment'" do
       it "should allow visit '/checkout/details'" do
         order.update(state: "payment")
         visit checkout_step_path(:details)
-        expect(page).to have_current_path("/checkout/details")
+        expect(page).to have_button("Next - Payment method")
       end
     end
   end
@@ -154,24 +151,83 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
 
         it "redirects the user to the Payment Method step" do
-          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-          click_button "Next - Payment method"
-          expect(page).to have_current_path("/checkout/payment")
+          fill_notes("SpEcIaL NoTeS")
+          proceed_to_payment
         end
       end
 
-      describe "selecting a delivery shipping method and submiting the form" do
+      describe "selecting a delivery method" do
         before do
           choose shipping_with_fee.name
-          uncheck "ship_address_same_as_billing"
         end
 
-        it "redirects the user to the Payment Method step" do
-          fill_out_shipping_address
-          fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
-          click_button "Next - Payment method"
-          expect(page).to have_current_path("/checkout/payment")
+        context "with same shipping and billing address" do
+          before do
+            check "ship_address_same_as_billing"
+          end
+          it "does not display the shipping address form" do
+            expect(page).not_to have_field "order_ship_address_attributes_address1"
+          end
+
+          it "redirects the user to the Payment Method step, when submiting the form" do
+            proceed_to_payment
+            # asserts whether shipping and billing addresses are the same
+            ship_add_id = order.reload.ship_address_id
+            bill_add_id = order.reload.bill_address_id
+            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+              Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
+          end
         end
+
+        context "with different shipping and billing address" do
+          before do
+            uncheck "ship_address_same_as_billing"
+          end
+          it "displays the shipping address form and the option to save it as default" do
+            expect(page).to have_field "order_ship_address_attributes_address1"
+          end
+
+          it "displays error messages when submitting incomplete billing address" do
+            click_button "Next - Payment method"
+            expect(page).to have_content "Saving failed, please update the highlighted fields."
+            expect(page).to have_field("Address", with: "")
+            expect(page).to have_field("City", with: "")
+            expect(page).to have_field("Postcode", with: "")
+            expect(page).to have_content("can't be blank", count: 3)
+          end
+
+          it "fills in shipping details and redirects the user to the Payment Method step,
+          when submiting the form" do
+            fill_out_shipping_address
+            fill_notes("SpEcIaL NoTeS")
+            proceed_to_payment
+            # asserts whether shipping and billing addresses are the same
+            ship_add_id = Spree::Order.first.ship_address_id
+            bill_add_id = Spree::Order.first.bill_address_id
+            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+             Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
+          end
+        end
+      end
+    end
+
+    describe "not filling out delivery details" do
+      before do
+        fill_in "Email", with: ""
+      end
+      it "should display error when fields are empty" do
+        click_button "Next - Payment method"
+        expect(page).to have_content("Saving failed, please update the highlighted fields")
+        expect(page).to have_field("First Name", with: "")
+        expect(page).to have_field("Last Name", with: "")
+        expect(page).to have_field("Email", with: "")
+        expect(page).to have_content("is invalid")
+        expect(page).to have_field("Phone number", with: "")
+        expect(page).to have_field("Address", with: "")
+        expect(page).to have_field("City", with: "")
+        expect(page).to have_field("Postcode", with: "")
+        expect(page).to have_content("can't be blank", count: 7)
+        expect(page).to have_content("Select a shipping method")
       end
     end
   end
@@ -180,10 +236,8 @@ describe "As a consumer, I want to checkout my order", js: true do
     before do
       variant.update!(on_demand: false, on_hand: 0)
     end
-
     it "returns me to the cart with an error message" do
       visit checkout_path
-
       expect(page).not_to have_selector 'closing', text: "Checkout now"
       expect(page).to have_selector 'closing', text: "Your shopping cart"
       expect(page).to have_content "An item in your cart has become unavailable"
