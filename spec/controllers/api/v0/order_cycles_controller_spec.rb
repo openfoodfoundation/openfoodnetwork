@@ -70,6 +70,25 @@ module Api
           expect(product_ids).to include product1.id, product2.id
           expect(product_ids).to_not include product3.id
         end
+
+        context "with supplier properties" do
+          let!(:supplier_property) { create(:property, presentation: 'Certified Organic') }
+          let!(:supplier) { create(:supplier_enterprise, properties: [supplier_property]) }
+
+          before do
+            product1.update!(supplier: supplier)
+            product2.update!(supplier: supplier)
+            product3.update!(supplier: supplier, inherits_properties: false)
+          end
+
+          it "filter out the product that don't inherits from supplier properties" do
+            api_get :products, id: order_cycle.id, distributor: distributor.id,
+                               q: { properties_id_or_supplier_properties_id_in_any: [supplier_property.id] }
+
+            expect(product_ids).to include product1.id, product2.id
+            expect(product_ids).to_not include product3.id
+          end
+        end
       end
 
       context "with taxon filters" do
