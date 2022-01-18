@@ -38,7 +38,7 @@ describe Api::V0::BaseController do
   context "cannot make a request to the API" do
     it "with an invalid API key" do
       request.headers["X-Spree-Token"] = "fake_key"
-      get :index, {}
+      get :index, params: {}
       expect(json_response).to eq( "error" => "Invalid API key (fake_key) specified." )
       expect(response.status).to eq(401)
     end
