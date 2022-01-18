@@ -226,12 +226,12 @@ describe "As a consumer, I want to checkout my order", js: true do
         click_button "Next - Payment method"
         expect(page).to have_content("Saving failed, please update the highlighted fields")
         within(:xpath, './/div[@class="checkout-substep"][1]') do
-          expect(page).to have_field("First Name", with: "") # needs to display error, issue #8691
-          expect(page).to have_field("Last Name", with: "") # needs to display error, issue #8691
+          expect(page).to have_field("First Name", with: "")
+          expect(page).to have_field("Last Name", with: "")
           expect(page).to have_field("Email", with: "")
           expect(page).to have_content("is invalid")
           expect(page).to have_field("Phone number", with: "")
-          expect(page).to have_content("can't be blank", count: 2) # update count: 4 after closing #8691
+          expect(page).to have_content("can't be blank", count: 4)
         end
         within(:xpath, './/div[@class="checkout-substep"][2]') do
           expect(page).to have_field("Address", with: "")
