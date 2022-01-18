@@ -94,7 +94,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo', '~> 2.8.3'
+gem 'roo', github: "roo-rb/roo" # master is currently needed for Ruby 3.x (awaiting new release)
 gem 'spreadsheet_architect'
 
 gem 'whenever', require: false
