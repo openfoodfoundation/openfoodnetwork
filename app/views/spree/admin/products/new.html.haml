@@ -59,7 +59,7 @@
               %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
                 "question-mark-with-tooltip-append-to-body" => "true",
                 "question-mark-with-tooltip-placement" => "top",
-                "question-mark-with-tooltip-animation" => true, 
+                "question-mark-with-tooltip-animation" => true,
                 key: "'js.admin.unit_price_tooltip'"}
             %input{ "type" => "text", "id" => "product_unit_price", "name" => "product[unit_price]",
                 "class" => 'fullwidth', "disabled" =>  true, "ng-model" => "unit_price"}
@@ -104,11 +104,9 @@
   .sixteen.columns.alpha
     .form-buttons.filter-actions.actions
       = button t('actions.create'), 'icon-ok', :submit, value: "create"
-      %span.or
-        = t(".or")
+
       = button t('actions.create_and_add_another'), 'icon-repeat', :submit, value: 'add_another'
-      %span.or
-        = t(".or")
+
       = link_to_with_icon 'icon-remove', t('actions.cancel'), admin_products_path, :class => 'button'
 
 

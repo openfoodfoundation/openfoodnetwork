@@ -10,5 +10,4 @@
 
     .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
       = button t(:update), 'icon-refresh'
-      %span.or= t(:or)
       = link_to_with_icon 'icon-remove', t(:cancel), main_app.edit_admin_contents_path, class: 'button'

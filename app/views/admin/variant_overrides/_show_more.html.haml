@@ -1,5 +1,5 @@
 -# %show-more.text-center{ data: "filteredProducts", limit: "productLimit", increment: "10" }
 .text-center{ ng: { show: "filteredProducts.length > productLimit" } }
   %input{ type: 'button', value: t(:show_more), ng: { click: 'productLimit = productLimit + 10' } }
-  = t(:or)
+
   %input{ type: 'button', value: "#{t(:show_all)} ({{ filteredProducts.length - productLimit }}  More)", ng: { click: 'productLimit = filteredProducts.length' } }

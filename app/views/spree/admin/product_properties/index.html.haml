@@ -48,7 +48,6 @@
 
     .form-buttons.filter-actions.actions
       = button t('spree.actions.update'), 'icon-refresh'
-      %span.or= t('spree.or')
       = link_to t('spree.actions.cancel'), admin_product_product_properties_url(@product, @url_filters), id: 'cancel_link', class: 'button icon-remove'
 
     = hidden_field_tag 'clear_product_properties', 'true'

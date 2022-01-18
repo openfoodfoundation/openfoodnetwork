@@ -15,5 +15,4 @@
     = render partial: 'form', locals: { f: f }
     .form-buttons.filter-actions.actions
       = button t('.continue'), 'icon-arrow-right'
-      %span.or= t(:or)
       = button_link_to t('actions.cancel'), admin_order_return_authorizations_url(@order), icon: 'icon-remove'

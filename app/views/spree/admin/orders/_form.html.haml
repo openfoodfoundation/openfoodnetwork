@@ -17,8 +17,6 @@
 
     .filter-actions.actions{"ng-show" => "distributionChosen()"}
       = button t(:update_and_recalculate_fees), 'icon-refresh'
-      %span.or
-        = t(:or)
       = link_to_with_icon 'button icon-arrow-left', t(:back), spree.admin_orders_url
 
   = javascript_tag do

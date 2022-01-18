@@ -8,7 +8,6 @@
     .filter-actions.actions
       = form_tag spree.clear_api_key_admin_user_path(@user), method: :put do
         = button t('spree.api.clear_key'), 'icon-trash'
-      %span.or= t(:or)
       = form_tag spree.generate_api_key_admin_user_path(@user), method: :put do
         = button t('spree.api.regenerate_key'), 'icon-refresh'
   - else
