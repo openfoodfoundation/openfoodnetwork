@@ -242,6 +242,30 @@ describe "As a consumer I want to shop with a distributor", js: true do
         expect(page).not_to have_content product.name
       end
 
+      context "when supplier uses property" do
+        let(:product3) { create(:simple_product, supplier: supplier, inherits_properties: false) }
+
+        before do
+          add_variant_to_order_cycle(exchange, product3.variants.first)
+          property = create(:property, presentation: 'certified')
+          supplier.update!(properties: [property])
+        end
+
+        it "filters product by properties" do
+          visit shop_path
+
+          expect(page).to have_content product2.name
+          expect(page).to have_content product3.name
+
+          expect(page).to have_selector ".sticky-shop-filters-container .property-selectors span", text: "certified"
+          find(".sticky-shop-filters-container .property-selectors span", text: 'certified').click
+          expect(page).to have_content "Results for certified"
+
+          expect(page).to have_content product2.name
+          expect(page).not_to have_content product3.name
+        end
+      end
+
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
