@@ -1351,6 +1351,7 @@ en_FR:
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
+    order_not_loaded: "No valid order found for checkout processing"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -3206,7 +3207,6 @@ en_FR:
     notice_messages:
       variant_deleted: "Variant deleted"
     or: "Or"
-    order_processed_successfully: "Order processed successfully"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
