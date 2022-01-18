@@ -70,7 +70,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def validate_current_step!
-    step = params[:step].tap{ |step| ["details", "payment", "summary"].include? step }
+    step = ([params[:step]] & ["details", "payment", "summary"]).first
     send("validate_#{step}!")
   end
 
