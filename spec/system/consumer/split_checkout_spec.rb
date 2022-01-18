@@ -73,7 +73,6 @@ describe "As a consumer, I want to checkout my order", js: true do
     it "should redirect to the login page when clicking the login button" do
       click_on "Login"
       expect(page).to have_content("Login")
-      expect(page).to have_content("Login")
     end
   end
 
@@ -167,9 +166,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             check "ship_address_same_as_billing"
           end
           it "does not display the shipping address form" do
-            within(:xpath, './/div[@class="checkout-substep"][3]') do
-              expect(page).not_to have_field "order_ship_address_attributes_address1"
-            end
+            expect(page).not_to have_field "order_ship_address_attributes_address1"
           end
 
           it "redirects the user to the Payment Method step, when submiting the form" do
@@ -187,20 +184,16 @@ describe "As a consumer, I want to checkout my order", js: true do
             uncheck "ship_address_same_as_billing"
           end
           it "displays the shipping address form and the option to save it as default" do
-            within(:xpath, './/div[@class="checkout-substep"][3]') do
-              expect(page).to have_field "order_ship_address_attributes_address1"
-            end
+            expect(page).to have_field "order_ship_address_attributes_address1"
           end
 
           it "displays error messages when submitting incomplete billing address" do
             click_button "Next - Payment method"
             expect(page).to have_content "Saving failed, please update the highlighted fields."
-            within(:xpath, './/div[@class="checkout-substep"][3]') do
-              expect(page).to have_field("Address", with: "")
-              expect(page).to have_field("City", with: "")
-              expect(page).to have_field("Postcode", with: "")
-              expect(page).to have_content("can't be blank", count: 3)
-            end
+            expect(page).to have_field("Address", with: "")
+            expect(page).to have_field("City", with: "")
+            expect(page).to have_field("Postcode", with: "")
+            expect(page).to have_content("can't be blank", count: 3)
           end
 
           it "fills in shipping details and redirects the user to the Payment Method step,
@@ -225,23 +218,16 @@ describe "As a consumer, I want to checkout my order", js: true do
       it "should display error when fields are empty" do
         click_button "Next - Payment method"
         expect(page).to have_content("Saving failed, please update the highlighted fields")
-        within(:xpath, './/div[@class="checkout-substep"][1]') do
-          expect(page).to have_field("First Name", with: "")
-          expect(page).to have_field("Last Name", with: "")
-          expect(page).to have_field("Email", with: "")
-          expect(page).to have_content("is invalid")
-          expect(page).to have_field("Phone number", with: "")
-          expect(page).to have_content("can't be blank", count: 4)
-        end
-        within(:xpath, './/div[@class="checkout-substep"][2]') do
-          expect(page).to have_field("Address", with: "")
-          expect(page).to have_field("City", with: "")
-          expect(page).to have_field("Postcode", with: "")
-          expect(page).to have_content("can't be blank", count: 3)
-        end
-        within(:xpath, './/div[@class="checkout-substep"][3]') do
-          expect(page).to have_content("Select a shipping method")
-        end
+        expect(page).to have_field("First Name", with: "")
+        expect(page).to have_field("Last Name", with: "")
+        expect(page).to have_field("Email", with: "")
+        expect(page).to have_content("is invalid")
+        expect(page).to have_field("Phone number", with: "")
+        expect(page).to have_field("Address", with: "")
+        expect(page).to have_field("City", with: "")
+        expect(page).to have_field("Postcode", with: "")
+        expect(page).to have_content("can't be blank", count: 7)
+        expect(page).to have_content("Select a shipping method")
       end
     end
   end
