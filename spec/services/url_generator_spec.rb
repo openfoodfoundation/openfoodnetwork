@@ -10,7 +10,7 @@ describe UrlGenerator do
       expect(subject.to_url("Top Cat!?")).to eq "top-cat"
     end
 
-    it "handles unusual characters like accents and umlauts" do
+    it "handles accents" do
       expect(subject.to_url("Père Noël")).to eq "pere-noel"
     end
 
