@@ -749,18 +749,7 @@ module Spree
     def save_default_addresses
       return unless save_bill_address || save_ship_address
 
-      if save_bill_address
-        customer.bill_address_id = bill_address_id
-        user&.bill_address_id = bill_address_id
-      end
-
-      if save_ship_address
-        customer.ship_address_id = ship_address_id
-        user&.ship_address_id = ship_address_id
-      end
-
-      customer.save
-      user&.save
+      DefaultAddressUpdater.new(self).call
     end
   end
 end
