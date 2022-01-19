@@ -104,7 +104,7 @@ module Spree
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
-    after_save_commit :save_default_addresses
+    after_save_commit DefaultAddressUpdater
 
     # -- Scopes
     scope :not_empty, -> {
@@ -744,12 +744,6 @@ module Spree
       return unless pending_payments.any?
 
       pending_payments.first.update_attribute :amount, total
-    end
-
-    def save_default_addresses
-      return unless save_bill_address || save_ship_address
-
-      DefaultAddressUpdater.new(self).call
     end
   end
 end

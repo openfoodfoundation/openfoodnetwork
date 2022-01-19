@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class DefaultAddressUpdater
+  def self.after_commit(order)
+    return unless order.save_bill_address || order.save_ship_address
+
+    new(order).call
+  end
+
   def initialize(order)
     @order = order
   end
