@@ -1,12 +1,13 @@
-.medium-10
-  %div.checkout-guest-title
-    = t :checkout_headline
+.checkout-step
+  .medium-10
+    %div.checkout-guest-title
+      = t :checkout_headline
 
-  %div.checkout-submit{ class: "#{@order.distributor.allow_guest_orders? ? 'checkout-submit-inline' : 'medium-6' }" }
-    %a.primary.button{href: main_app.login_path}
-      = t :label_login
-    -if @order.distributor.allow_guest_orders?
-      %span.checkout-submit-or
-        or
-      %a.button.cancel{href: main_app.checkout_step_path(:details)}
-        = t :checkout_as_guest
+    %div.checkout-submit{ class: "#{@order.distributor.allow_guest_orders? ? 'checkout-submit-inline' : 'medium-6' }" }
+      %button.button.primary{ "data-action": "click->guest-checkout#login" }
+        = t :label_login
+      -if @order.distributor.allow_guest_orders?
+        %span.checkout-submit-or
+          or
+        %button.button.cancel{ "data-action": "click->guest-checkout#guestSelected" }
+          = t :checkout_as_guest
