@@ -30,7 +30,7 @@ module Spree
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
 
     token_resource
 
@@ -103,6 +103,8 @@ module Spree
 
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
+
+    after_save_commit DefaultAddressUpdater
 
     # -- Scopes
     scope :not_empty, -> {
