@@ -47,9 +47,10 @@ class SplitCheckoutController < ::BaseController
   end
 
   def confirm_order
-    return unless @order.confirmation? && params[:confirm_order]
+    return unless summary_step? && @order.confirmation?
     return unless validate_summary! && @order.errors.empty?
 
+    @order.customer.touch :terms_and_conditions_accepted_at
     @order.confirm!
   end
 
@@ -58,15 +59,25 @@ class SplitCheckoutController < ::BaseController
 
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
-    send("validate_#{params[:step]}!")
+
+    validate_current_step!
 
     @order.errors.empty?
+  end
+
+  def summary_step?
+    params[:step] == "summary"
   end
 
   def advance_order_state
     return if @order.complete?
 
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
+  end
+
+  def validate_current_step!
+    step = ([params[:step]] & ["details", "payment", "summary"]).first
+    send("validate_#{step}!")
   end
 
   def validate_details!
@@ -83,6 +94,7 @@ class SplitCheckoutController < ::BaseController
 
   def validate_summary!
     return true if params[:accept_terms]
+    return true unless TermsOfService.required?(@order.distributor)
 
     @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
   end

@@ -71,15 +71,16 @@
     
     = render 'spree/orders/summary', order: @order
 
-%div.checkout-substep.medium-6
-  %div.checkout-input
-    = f.check_box :accept_terms, { id: "accept_terms", name: "accept_terms", "checked": "#{all_terms_and_conditions_already_accepted?}" }, 1, nil
-    = f.label :accept_terms, t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms), { for: "accept_terms" }
+- if any_terms_required?(@order.distributor)
+  %div.checkout-substep.medium-6
+    %div.checkout-input
+      = f.check_box :accept_terms, { id: "accept_terms", name: "accept_terms", "checked": "#{all_terms_and_conditions_already_accepted?}" }, 1, nil
+      = f.label :accept_terms, t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions.url, target: '_blank'), tos_link: link_to_platform_terms), { for: "accept_terms" }
 
-  = f.error_message_on :terms_and_conditions, standalone: true
+    = f.error_message_on :terms_and_conditions, standalone: true
 
-  %div.checkout-input
-  = t("split_checkout.step3.agree")
+    %div.checkout-input
+    = t("split_checkout.step3.agree")
 
 %div.checkout-submit.medium-6
   = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
