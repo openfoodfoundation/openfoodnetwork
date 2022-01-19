@@ -63,7 +63,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def selected_payment_method
-    @order.payments.order(:created_at).last&.payment_method
+    @selected_payment_method ||= @order.payments.order(:created_at).last&.payment_method
   end
 
   def update_order
