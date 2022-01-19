@@ -220,9 +220,10 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    ddtrace (0.53.0)
-      ffi (~> 1.0)
+    ddtrace (0.54.1)
+      debase-ruby_core_source (= 0.10.12)
       msgpack
+    debase-ruby_core_source (0.10.12)
     debugger-linecache (1.2.0)
     devise (4.8.0)
       bcrypt (~> 3.0)
