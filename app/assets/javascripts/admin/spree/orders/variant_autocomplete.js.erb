@@ -85,7 +85,12 @@ adjustItems = function(shipment_number, variant_id, quantity){
     ofnAlert(t("js.admin.orders.cannot_remove_last_item"));
     return;
   }
+  doAdjustItems(shipment_number, variant_id, quantity, inventory_units, () => {
+    window.location.reload();
+  });
+}
 
+doAdjustItems = function(shipment_number, variant_id, quantity, inventory_units, callback) {
   var url = Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number;
 
   var new_quantity = 0;
@@ -106,7 +111,7 @@ adjustItems = function(shipment_number, variant_id, quantity){
       url: Spree.url(url),
       data: { variant_id: variant_id, quantity: new_quantity }
     }).done(function( msg ) {
-      window.location.reload();
+      callback();
     });
   }
 }
