@@ -113,14 +113,6 @@ FactoryBot.define do
     property
   end
 
-  factory :customer, class: Customer do
-    email { generate(:random_email) }
-    enterprise
-    code { SecureRandom.base64(150) }
-    user
-    bill_address { create(:address) }
-  end
-
   factory :stripe_account do
     enterprise { FactoryBot.create(:distributor_enterprise) }
     stripe_user_id { "abc123" }
