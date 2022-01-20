@@ -196,7 +196,8 @@ describe SplitCheckoutController, type: :controller do
 
       context "when an external payment gateway is used" do
         before do
-          expect(controller).to receive(:selected_payment_method).at_least(:once) { payment_method }
+          expect(Checkout::PaymentMethodFetcher).
+            to receive_message_chain(:new, :call) { payment_method }
           expect(payment_method).to receive(:external_gateway?) { true }
           expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
         end
