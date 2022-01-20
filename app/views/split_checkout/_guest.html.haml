@@ -7,6 +7,6 @@
       = t :label_login
     -if @order.distributor.allow_guest_orders?
       %span.checkout-submit-or
-        or
+
       %a.button.cancel{href: main_app.checkout_step_path(:details)}
         = t :checkout_as_guest
