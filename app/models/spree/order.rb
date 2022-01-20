@@ -106,6 +106,7 @@ module Spree
 
     after_save_commit DefaultAddressUpdater
 
+    attribute :send_cancellation_email, type: :boolean, default: true
     # -- Scopes
     scope :not_empty, -> {
       left_outer_joins(:line_items).where.not(spree_line_items: { id: nil })
@@ -658,7 +659,7 @@ module Spree
     def after_cancel
       shipments.each(&:cancel!)
 
-      OrderMailer.cancel_email(id).deliver_later
+      OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
       self.payment_state = 'credit_owed' unless shipped?
     end
 
