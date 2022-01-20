@@ -60,8 +60,8 @@
 
       - if spree_current_user||true
         %div.checkout-input
-          = f.check_box :checkout_default_bill_address
-          = f.label :checkout_default_bill_address, t(:checkout_default_bill_address)
+          = f.check_box :save_bill_address
+          = f.label :save_bill_address, t(:checkout_default_bill_address)
 
   %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
     - selected_shipping_method = @order.shipping_method&.id || params[:shipping_method_id]
@@ -136,8 +136,8 @@
 
     - if spree_current_user
       %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
-        = f.check_box :default_ship_address, { id: "default_ship_address", name: "default_ship_address" }
-        = f.label :default_ship_address, t(:checkout_default_ship_address), { for: "default_ship_address" }
+        = f.check_box :save_ship_address
+        = f.label :save_ship_address, t(:checkout_default_ship_address)
 
     .div.checkout-input
       = f.label :special_instructions, t(:checkout_instructions)

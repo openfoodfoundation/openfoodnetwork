@@ -1353,6 +1353,7 @@ fr:
       terms_and_conditions: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
+    order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -3235,7 +3236,6 @@ fr:
     notice_messages:
       variant_deleted: "Variante supprimée"
     or: "Ou"
-    order_processed_successfully: "Commande traitée avec succès"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
