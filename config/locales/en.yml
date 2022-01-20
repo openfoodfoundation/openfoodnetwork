@@ -200,7 +200,7 @@ en:
       logged_in_succesfully: "Logged in successfully"
     sessions:
       signed_out: "Signed out successfully."
-      already_signed_out: "Signed out successfully."      
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -345,7 +345,6 @@ en:
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all:  Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -1771,7 +1770,7 @@ en:
     step2:
       payment_method:
         title: Payment method
-      form: 
+      form:
         card_number:
           label: Card number
           placeholder: e.g. 4242 4242 4242 4242
@@ -2450,7 +2449,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   new_order_cycle: "New Order Cycle"
   new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
-  notify_producers: 'Notify producers'  
+  notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
@@ -3356,7 +3355,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
-    or: "Or"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
@@ -3849,7 +3847,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           on_demand: "On Demand"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:
