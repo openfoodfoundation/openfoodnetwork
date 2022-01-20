@@ -12,10 +12,18 @@ class SplitCustomersName < ActiveRecord::Migration[6.1]
   end
 
   def migrate_customer_name_data
-    Customer.where("backup_name LIKE '% %'").find_each do |customer|
-      first_name, last_name = customer.backup_name.split(' ', 2)
-      customer.first_name = first_name
-      customer.last_name = last_name
+    Customer.includes(:bill_address).find_each do |customer|
+      bill_address = customer.bill_address
+
+      if bill_address.present? && bill_address.firstname.present? && bill_address.lastname?
+        customer.first_name = bill_address.firstname.strip
+        customer.last_name = bill_address.lastname.strip
+      else
+        first_name, last_name = customer.backup_name.strip.split(' ', 2)
+        customer.first_name = first_name
+        customer.last_name = last_name
+      end
+
       customer.save
     end
   end
