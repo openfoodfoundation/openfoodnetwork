@@ -193,6 +193,23 @@ describe SplitCheckoutController, type: :controller do
           end
         end
       end
+
+      context "when an external payment gateway is used" do
+        before do
+          expect(controller).to receive(:selected_payment_method).at_least(:once) { payment_method }
+          expect(payment_method).to receive(:external_gateway?) { true }
+          expect(payment_method).to receive(:external_payment_url) { "https://example.com/pay" }
+        end
+
+        describe "confirming the order" do
+          it "redirects to the payment gateway's URL" do
+            put :update, params: params
+
+            expect(response.body).to match("https://example.com/pay").and match("redirect")
+            expect(order.reload.state).to eq "confirmation"
+          end
+        end
+      end
     end
   end
 end
