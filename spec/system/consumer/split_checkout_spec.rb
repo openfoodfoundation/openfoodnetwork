@@ -8,7 +8,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_guest_orders: false) }
+  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
     create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
   }
@@ -19,7 +19,8 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
   let(:order) {
     create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
-                   ship_address_id: nil, state: "cart")
+                   ship_address_id: nil, state: "cart",
+                   line_items: [create(:line_item, variant: variant)])
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
@@ -45,7 +46,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     add_enterprise_fee enterprise_fee
     set_order order
-    add_product_to_cart order, product
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
@@ -53,6 +53,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "guest checkout when distributor doesn't allow guest orders" do
     before do
+      distributor.update_columns allow_guest_orders: false
       visit checkout_step_path(:details)
     end
 
@@ -70,8 +71,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "as a guest user" do
     before do
-      distributor.update!(allow_guest_orders: true)
-      order.update!(distributor_id: distributor.id)
       visit checkout_path
     end
 
@@ -220,6 +219,25 @@ describe "As a consumer, I want to checkout my order", js: true do
         expect(page).to have_field("Postcode", with: "")
         expect(page).to have_content("can't be blank", count: 7)
         expect(page).to have_content("Select a shipping method")
+      end
+    end
+
+    context "summary step" do
+      let(:order) { create(:order_ready_for_confirmation, distributor: distributor) }
+
+      describe "completing the checkout" do
+        it "keeps the distributor selected for the current user after completion" do
+          visit checkout_step_path(:summary)
+
+          expect(page).to have_content "Shopping @ #{distributor.name}"
+
+          click_on "Complete order"
+
+          expect(page).to have_content "Back To Store"
+          expect(order.reload.state).to eq "complete"
+
+          expect(page).to have_content "Shopping @ #{distributor.name}"
+        end
       end
     end
   end
