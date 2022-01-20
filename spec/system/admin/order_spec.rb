@@ -239,7 +239,7 @@ describe '
 
       new_customer = Customer.last
 
-      expect(new_customer.name).to eq('Clark Kent')
+      expect(new_customer.full_name).to eq('Clark Kent')
       expect(new_customer.bill_address.address1).to eq('Smallville')
       expect(new_customer.bill_address.city).to eq('Kansas')
       expect(new_customer.bill_address.zipcode).to eq('SP1 M11')

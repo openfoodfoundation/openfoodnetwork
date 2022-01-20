@@ -36,8 +36,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let!(:variant) { prepare_variant }
 
   # Create customers.
-  let!(:customer) { create(:customer, name: "Sample Customer") }
-  let!(:another_customer) { create(:customer, name: "Another Customer") }
+  let!(:customer) { create(:customer, first_name: "Sample", last_name: "Customer") }
+  let!(:another_customer) { create(:customer, first_name: "Another", last_name: "Customer") }
 
   # Setup up permissions and report.
   let!(:current_user) { create(:admin_user) }
@@ -438,9 +438,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     context "filtering by completion date" do
       let(:timestamp) { Time.zone.local(2018, 1, 5, 14, 30, 5) }
 
-      let!(:customer_a) { create(:customer, name: "Customer A") }
-      let!(:customer_b) { create(:customer, name: "Customer B") }
-      let!(:customer_c) { create(:customer, name: "Customer C") }
+      let!(:customer_a) { create(:customer, first_name: "Customer", last_name: "A") }
+      let!(:customer_b) { create(:customer, first_name: "Customer", last_name: "B") }
+      let!(:customer_c) { create(:customer, first_name: "Customer", last_name: "C") }
 
       let!(:order_placed_before_timestamp) do
         prepare_order(customer: customer_a).tap do |order|

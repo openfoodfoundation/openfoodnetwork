@@ -82,9 +82,9 @@
               %span{ 'ng-bind' => '::customer.email' }
               %span.guest-label{ 'ng-show' => 'customer.user_id == null' }= t('.guest_label')
             %td.first_name{ 'ng-show' => 'columns.first_name.visible'}
-              %input{ type: 'text', name: 'first_name', ng: { model: 'customer.first_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
-            %td.name{ 'ng-show' => 'columns.last_name.visible'}
-              %input{ type: 'text', name: 'last_name', ng: { model: 'customer.last_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
+              %input{ type: 'text', name: 'first_name', ng: { model: 'customer.first_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'first_name'}
+            %td.last_name{ 'ng-show' => 'columns.last_name.visible'}
+              %input{ type: 'text', name: 'last_name', ng: { model: 'customer.last_name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'last_name'}
             %td.code{ 'ng-show' => 'columns.code.visible' }
               %input{ type: 'text', name: 'code', ng: {model: 'customer.code', change: 'checkForDuplicateCodes()'}, "obj-for-update" => "customer", "attr-for-update" => "code" }
               %i.icon-warning-sign{ ng: {if: 'duplicate'} }

@@ -41,7 +41,7 @@
       %td.customer.text-center{ ng: { show: 'columns.customer.visible'}}
         %span{ "ng-bind": '::subscription.customer_email' }
         %br
-        %span{ "ng-bind": '::subscription.customer_name' } 
+        %span{ "ng-bind": '::subscription.customer_full_name' }
       %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::subscription.schedule_name' } }
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(subscription)' } }

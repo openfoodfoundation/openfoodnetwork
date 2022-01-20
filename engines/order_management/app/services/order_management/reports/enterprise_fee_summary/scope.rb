@@ -374,7 +374,7 @@ module OrderManagement
                   hubs.name AS hub_name,
                   enterprises.name AS enterprise_name,
                   enterprise_fees.fee_type AS fee_type,
-                  customers.name AS customer_name,
+                  TRIM(CONCAT(customers.first_name, ' ', customers.last_name)) AS customer_name,
                   customers.email AS customer_email,
                   enterprise_fees.name AS fee_name,
                   spree_tax_categories.name AS tax_category_name,
