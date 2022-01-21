@@ -41,6 +41,8 @@ export default class extends Controller {
       this.modalTarget.classList.add("in")
       this.backgroundTarget.classList.add("in")
     })
+
+    window._paq?.push(['trackEvent', 'Signin/Signup', 'Login Modal View', window.location.href])
   }
 
   close() {
