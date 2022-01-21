@@ -29,6 +29,20 @@ describe "User password confirm/reset page" do
       expect(page).to have_no_text "Reset password token has expired"
       expect(page).to be_logged_in_as user
     end
+
+    it "shows an error if password is empty" do
+      visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+
+      expect(user.reload.confirmed?).to be true
+      expect(page).to have_text I18n.t(:change_my_password)
+
+      fill_in "Password", with: ""
+      fill_in "Password Confirmation", with: ""
+      click_button
+
+      expect(page).to have_text "User password cannot be blank. Please enter a password."
+      expect(page).to_not be_logged_in_as user
+    end
   end
 
   describe "can reset its own password" do

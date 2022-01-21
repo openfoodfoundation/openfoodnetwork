@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe UserPasswordsController, type: :controller do
-  include OpenFoodNetwork::EmailHelper
+  render_views
 
   let(:user) { create(:user) }
   let(:unconfirmed_user) { create(:user, confirmed_at: nil) }
@@ -13,15 +13,22 @@ describe UserPasswordsController, type: :controller do
   end
 
   describe "create" do
-    it "returns errors" do
-      spree_post :create, spree_user: {}
-      expect(response.status).to eq 200
-      expect(response).to render_template "spree/user_passwords/new"
+    it "returns 404 if user is not found" do
+      spree_post :create, spree_user: { email: "xxxxxxxxxx@example.com" }
+      expect(response.status).to eq 404
+      expect(response.body).to match I18n.t(:email_not_found)
     end
 
-    it "redirects to login when data is valid" do
+    it "returns 422 if user is registered but not confirmed" do
+      spree_post :create, spree_user: { email: unconfirmed_user.email }
+      expect(response.status).to eq 422
+      expect(response.body).to match I18n.t(:email_unconfirmed)
+    end
+
+    it "returns 200 when password reset was successful" do
       spree_post :create, spree_user: { email: user.email }
-      expect(response).to be_redirect
+      expect(response.status).to eq 200
+      expect(response.body).to match I18n.t(:password_reset_sent)
     end
   end
 
@@ -35,28 +42,11 @@ describe UserPasswordsController, type: :controller do
   end
 
   it "renders Darkswarm" do
-    setup_email
-
     user.send_reset_password_instructions
 
     user.reload
     spree_get :edit, reset_password_token: user.reset_password_token
 
     expect(response).to render_template "user_passwords/edit"
-  end
-
-  describe "via ajax" do
-    it "returns error when email not found" do
-      post :create, xhr: true, params: { spree_user: {}, use_route: :spree }
-      expect(response.status).to eq 404
-      expect(json_response).to eq 'error' => I18n.t('email_not_found')
-    end
-
-    it "returns error when user is unconfirmed" do
-      post :create, xhr: true,
-                    params: { spree_user: { email: unconfirmed_user.email }, use_route: :spree }
-      expect(response.status).to eq 401
-      expect(json_response).to eq 'error' => I18n.t('email_unconfirmed')
-    end
   end
 end

@@ -26,7 +26,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   private
 
   def render_unconfirmed_response
-    render status: :unauthorized, operations: cable_car.inner_html(
+    render status: :unprocessable_entity, operations: cable_car.inner_html(
       "#forgot-feedback",
       partial("layouts/alert",
               locals: { type: "alert", message: t(:email_unconfirmed), unconfirmed: true })
