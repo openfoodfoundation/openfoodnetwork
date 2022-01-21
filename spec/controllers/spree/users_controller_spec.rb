@@ -60,14 +60,14 @@ describe Spree::UsersController, type: :controller do
 
     let!(:user) { create(:user) }
 
-    it "returns true if email corresponds to a registered user" do
+    it "returns ok (200) if email corresponds to a registered user" do
       post :registered_email, params: { email: user.email }
-      expect(json_response['registered']).to eq true
+      expect(response).to have_http_status(:ok)
     end
 
-    it "returns false if email does not correspond to a registered user" do
+    it "returns not_found (404) if email does not correspond to a registered user" do
       post :registered_email, params: { email: 'nonregistereduser@example.com' }
-      expect(json_response['registered']).to eq false
+      expect(response).to have_http_status(:not_found)
     end
   end
 

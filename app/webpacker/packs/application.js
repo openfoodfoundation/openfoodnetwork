@@ -14,6 +14,7 @@ import { CableCar } from "mrujs/plugins"
 import * as Turbo from "@hotwired/turbo"
 
 window.Turbo = Turbo
+window.CableReady = CableReady
 mrujs.start({
   plugins: [
     new CableCar(CableReady)

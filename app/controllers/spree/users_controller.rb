@@ -27,8 +27,18 @@ module Spree
 
     # Endpoint for queries to check if a user is already registered
     def registered_email
-      user = Spree::User.find_by email: params[:email]
-      render json: { registered: user.present? }
+      registered = Spree::User.find_by(email: params[:email]).present?
+
+      if registered
+        render status: :ok, operations: cable_car.
+          inner_html(
+            "#login-feedback",
+            partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.already_registered') })
+          ).
+          dispatch_event(name: "login:modal:open")
+      else
+        head :not_found
+      end
     end
 
     def create
