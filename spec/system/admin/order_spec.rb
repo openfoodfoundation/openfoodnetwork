@@ -126,6 +126,73 @@ describe '
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
+  context "deleting item of an order" do
+    context "when there a more than one items in the order" do
+      let(:line_item) { create(:line_item) }
+
+      before do
+        order.line_items << line_item
+        login_as_admin_and_visit spree.edit_admin_order_path(order)
+        find("a.delete-item").click
+        expect(page).to have_content "Are you sure?"        
+      end
+
+      it "show a modal 'Are you sure?' that the user can close and then nothing change" do
+        within(".modal", visible: true) do
+          expect do
+            click_on("Cancel")
+            expect(page).not_to have_content "Are you sure?"
+          end.not_to change { order.line_items.length }
+        end
+      end
+
+      it "show a modal 'Are you sure?' that the user confirm and then the item is deleted" do
+        expect(order.line_items.length).to eq(2)
+        within(".modal", visible: true) do
+          expect do
+            click_on("OK")
+            expect(page).not_to have_css(".modal", visible: true)
+          end.to change { order.reload.line_items.length }.by(-1)
+        end
+      end
+    end
+
+    context "when it is the last item of an order" do
+      before do
+        # specify that order has only one line item
+        order.line_items = [order.line_items.first]
+        login_as_admin_and_visit spree.edit_admin_order_path(order)
+        find("a.delete-item").click 
+        within(".modal", visible: true) do
+          # ignore first modal by confirming it
+          click_on("OK")
+        end
+      end
+
+      context "it shows a second modal about last item deletion and therefore about order cancellation" do
+        
+        it "that the user can close and then nothing change" do
+          expect(page).to have_content "This will cancel the current order."
+          within(".modal", visible: true) do
+            click_on("Cancel")
+          end
+          
+          expect(order.reload.line_items.length).to eq(1)
+          expect(page).to have_selector('tr.stock-item', count: 1)
+        end
+
+        it "that the user can confirm and then the order is cancelled" do
+          within(".modal", visible: true) do
+            click_on("OK")
+          end
+          expect(page).to have_content "Cannot add item to canceled order"
+          expect(order.reload.line_items.length).to eq(0)
+          expect(order.reload.state).to eq("canceled")
+        end
+      end
+    end
+  end
+
   it "can't add more items than are available" do
     # Move the order back to the cart state
     order.state = 'cart'
