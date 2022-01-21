@@ -200,7 +200,7 @@ en:
       logged_in_succesfully: "Logged in successfully"
     sessions:
       signed_out: "Signed out successfully."
-      already_signed_out: "Signed out successfully."      
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -750,6 +750,21 @@ en:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        units: Units
+        unit_type: Unit Type
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: On Hand
+        on_demand: On Demand
+        shipping_category: Shipping Category
+        tax_category: Tax Category
 
     variant_overrides:
       loading_flash:
@@ -1771,7 +1786,7 @@ en:
     step2:
       payment_method:
         title: Payment method
-      form: 
+      form:
         card_number:
           label: Card number
           placeholder: e.g. 4242 4242 4242 4242
@@ -2450,7 +2465,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   new_order_cycle: "New Order Cycle"
   new_order_cycle_tooltip: "Open shop for a certain time period"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
-  notify_producers: 'Notify producers'  
+  notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
