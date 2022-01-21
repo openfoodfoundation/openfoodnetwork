@@ -46,7 +46,7 @@ module PaymentGateways
       return if session[:access_token] || params[:order_token] || spree_current_user
 
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+      redirect_to root_path(anchor: "login", after_login: request.original_fullpath)
     end
 
     def validate_stock

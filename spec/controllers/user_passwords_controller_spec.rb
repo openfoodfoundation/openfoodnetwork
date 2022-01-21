@@ -28,7 +28,7 @@ describe UserPasswordsController, type: :controller do
   describe "edit" do
     context "when given a redirect" do
       it "stores the redirect path in 'spree_user_return_to'" do
-        spree_post :edit, reset_password_token: "token", return_to: "/return_path"
+        spree_post :edit, reset_password_token: "token", after_login: "/return_path"
         expect(session["spree_user_return_to"]).to eq "/return_path"
       end
     end

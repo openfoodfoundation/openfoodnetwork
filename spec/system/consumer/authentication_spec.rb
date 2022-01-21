@@ -12,7 +12,7 @@ describe "Authentication", js: true do
 
     describe "With redirects" do
       it "logging in with a redirect set" do
-        visit groups_path(anchor: "login?after_login=#{producers_path}")
+        visit groups_path(anchor: "/login", after_login: producers_path)
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
         click_login_button
@@ -161,7 +161,7 @@ describe "Authentication", js: true do
 
     describe "after following email confirmation link" do
       it "shows confirmed message in modal" do
-        visit '/#/login?validation=confirmed'
+        visit root_path(anchor: "/login", validation: "confirmed")
         expect(page).to have_login_modal
         expect(page).to have_content I18n.t('devise.confirmations.confirmed')
       end

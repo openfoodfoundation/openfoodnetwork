@@ -57,11 +57,6 @@ module Spree
       Spree.t(:login)
     end
 
-    def redirect_back_or_default(default)
-      redirect_to(session["spree_user_return_to"] || default)
-      session["spree_user_return_to"] = nil
-    end
-
     def ensure_valid_locale_persisted
       # When creating a new user session we have to wait until after a successful
       # login to be able to persist a selected locale on the current user

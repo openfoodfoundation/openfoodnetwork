@@ -39,22 +39,25 @@ class UserConfirmationsController < DeviseController
   end
 
   def after_confirmation_path_for(resource)
-    result =
-      if resource.errors.empty?
-        'confirmed'
-      else
-        'not_confirmed'
-      end
+    result = resource.errors.empty? ? "confirmed" : "not_confirmed"
 
     if result == 'confirmed' && resource.reset_password_token.present?
-      raw_reset_password_token = resource.regenerate_reset_password_token
       return spree.edit_spree_user_password_path(
-        reset_password_token: raw_reset_password_token
+        reset_password_token: resource.regenerate_reset_password_token
       )
     end
 
-    path = (session[:confirmation_return_url] || login_path).to_s
-    path += path.include?('?') ? '&' : '?'
-    path + "validation=#{result}"
+    path = session[:confirmation_return_url] || root_path(anchor: "/login")
+    append_query_to_url(path, "validation", result)
+  end
+
+  private
+
+  def append_query_to_url(url, key, value)
+    uri = URI.parse(url.to_s)
+    query = URI.decode_www_form(uri.query || "") << [key, value]
+    uri.query = URI.encode_www_form(query)
+
+    uri.to_s
   end
 end

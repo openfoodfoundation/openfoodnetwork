@@ -3,8 +3,6 @@
 class UserPasswordsController < Spree::UserPasswordsController
   layout 'darkswarm'
 
-  before_action :set_admin_redirect, only: :edit
-
   def create
     render_unconfirmed_response && return if user_unconfirmed?
 
@@ -26,10 +24,6 @@ class UserPasswordsController < Spree::UserPasswordsController
   end
 
   private
-
-  def set_admin_redirect
-    session["spree_user_return_to"] = params[:return_to] if params[:return_to]
-  end
 
   def render_unconfirmed_response
     render json: { error: t('email_unconfirmed') }, status: :unauthorized
