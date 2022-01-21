@@ -4,6 +4,7 @@ module Spree
   class UsersController < ::BaseController
     include Spree::Core::ControllerHelpers
     include I18nHelper
+    include CablecarResponses
 
     layout 'darkswarm'
 
@@ -32,10 +33,17 @@ module Spree
 
     def create
       @user = Spree::User.new(user_params)
+
       if @user.save
-        redirect_back_or_default(main_app.root_url)
+        render operations: cable_car.inner_html(
+          "#signup-feedback",
+          partial("layouts/alert", locals: { type: "success", message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
+        )
       else
-        render :new
+        render status: :unprocessable_entity, operations: cable_car.morph(
+          "#signup-tab",
+          partial("layouts/signup_tab", locals: { signup_form_user: @user })
+        )
       end
     end
 

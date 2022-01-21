@@ -3,6 +3,7 @@
 class UserConfirmationsController < DeviseController
   # Needed for access to current_ability, so we can authorize! actions
   include Spree::Core::ControllerHelpers::Auth
+  include CablecarResponses
 
   # GET /resource/confirmation/new
   def new
@@ -20,6 +21,12 @@ class UserConfirmationsController < DeviseController
       else
         set_flash_message(:error, :confirmation_not_sent)
       end
+    else
+      render operations: cable_car.inner_html(
+        "#forgot-feedback",
+        partial("layouts/alert", locals: { type: "success", message: t("devise.confirmations.send_instructions") })
+      )
+      return
     end
 
     respond_with_navigational(resource){ redirect_to login_path }

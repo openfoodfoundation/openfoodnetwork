@@ -6,11 +6,12 @@ require "spree/core/controller_helpers/order"
 
 module Spree
   class UserSessionsController < Devise::SessionsController
-    helper 'spree/base'
-
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
+    include CablecarResponses
+
+    helper 'spree/base'
 
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
@@ -19,25 +20,16 @@ module Spree
       authenticate_spree_user!
 
       if spree_user_signed_in?
-        respond_to do |format|
-          format.html {
-            flash[:success] = t('devise.success.logged_in_succesfully')
-            redirect_back_or_default(after_sign_in_path_for(spree_current_user))
-          }
-          format.js {
-            render json: { email: spree_current_user.login }, status: :ok
-          }
-        end
+        flash[:success] = t('devise.success.logged_in_succesfully')
+
+        render operations: cable_car.redirect_to(
+          url: URI(return_url_or_default(after_sign_in_path_for(spree_current_user)))
+        )
       else
-        respond_to do |format|
-          format.html {
-            flash.now[:error] = t('devise.failure.invalid')
-            render :new
-          }
-          format.js {
-            render json: { message: t('devise.failure.invalid') }, status: :unauthorized
-          }
-        end
+        render status: :unauthorized, operations: cable_car.inner_html(
+          "#login-feedback",
+          partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.invalid') })
+        )
       end
     end
 
