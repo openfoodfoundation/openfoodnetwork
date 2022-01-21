@@ -68,6 +68,10 @@ export default class extends Controller {
     }).then(data => data.json()).then(CableReady.perform)
   }
 
+  returnHome() {
+    window.location = "/"
+  }
+
   disconnect() {
     if(this.hasModalTarget) {
       window.removeEventListener("login:modal:open", this.open)
