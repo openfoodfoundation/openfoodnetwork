@@ -61,38 +61,35 @@ describe "Authentication", js: true do
           end
 
           it "Failing to sign up because password is too short" do
-            fill_in "Email", with: "test@foo.com"
+            fill_in "Your email", with: "test@foo.com"
             fill_in "Choose a password", with: "short"
             click_signup_button
             expect(page).to have_content "too short"
           end
 
           it "Failing to sign up because email is already registered" do
-            fill_in "Email", with: user.email
+            fill_in "Your email", with: user.email
             fill_in "Choose a password", with: "foobarino"
             click_signup_button
             expect(page).to have_content "There's already an account for this email."
           end
 
           it "Failing to sign up because password confirmation doesn't match or is blank" do
-            fill_in "Email", with: user.email
+            fill_in "Your email", with: user.email
             fill_in "Choose a password", with: "ForgotToRetype"
             click_signup_button
             expect(page).to have_content "doesn't match"
           end
 
           it "Signing up successfully" do
-            performing_deliveries do
-              setup_email
-              fill_in "Email", with: "test@foo.com"
-              fill_in "Choose a password", with: "test12345"
-              fill_in "Confirm password", with: "test12345"
+            fill_in "Your email", with: "test@foo.com"
+            fill_in "Choose a password", with: "test12345"
+            fill_in "Confirm password", with: "test12345"
 
-              expect do
-                click_signup_button
-                expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-              end.to enqueue_job ActionMailer::MailDeliveryJob
-            end
+            expect do
+              click_signup_button
+              expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+            end.to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 

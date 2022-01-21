@@ -24,8 +24,8 @@ module AuthenticationHelper
   end
 
   def fill_in_and_submit_login_form(user)
-    fill_in "email", with: user.email
-    fill_in "password", with: user.password
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
     click_button "Login"
   end
 
