@@ -5,6 +5,21 @@
 
 .login-modal {
   background: $modal-background-color;
+  visibility: visible;
+  position: fixed;
+  top: 3em;
+
+  a.active {
+    background-color: white;
+
+    &:hover {
+      background-color: white;
+    }
+  }
+
+  span.formError {
+    @extend .error;
+  }
 
   .tabs-content {
     background: $modal-content-background-color;
