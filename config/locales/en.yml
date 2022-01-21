@@ -3416,6 +3416,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     tracking: "Tracking"
     tracking_number: "Tracking Number"
     order_total: "Order Total"
+    order_updated: "Order updated"
     customer_details: "Customer Details"
     customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
