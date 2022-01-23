@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class HomeController < BaseController
-  include EmbeddedPages
-
   layout 'darkswarm'
 
   def index

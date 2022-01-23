@@ -4,7 +4,6 @@ require 'open_food_network/address_finder'
 
 class CheckoutController < ::BaseController
   include OrderStockCheck
-  include EmbeddedPages
   include OrderCompletion
 
   layout 'darkswarm'

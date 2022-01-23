@@ -7,7 +7,6 @@ class EnterprisesController < BaseController
   helper Spree::ProductsHelper
   include OrderCyclesHelper
   include SerializerHelper
-  include EmbeddedPages
 
   protect_from_forgery except: :check_permalink
 

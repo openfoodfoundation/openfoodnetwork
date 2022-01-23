@@ -3,7 +3,6 @@
 module Spree
   class OrdersController < ::BaseController
     include OrderCyclesHelper
-    include EmbeddedPages
     include Rails.application.routes.url_helpers
 
     layout 'darkswarm'
