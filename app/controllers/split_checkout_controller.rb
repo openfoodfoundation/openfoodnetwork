@@ -112,7 +112,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def order_params
-    @order_params ||= Checkout::Params.new(@order, params).call
+    @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
   end
 
   def redirect_to_step

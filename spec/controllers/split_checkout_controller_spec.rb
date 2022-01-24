@@ -141,6 +141,28 @@ describe SplitCheckoutController, type: :controller do
           expect(order.reload.state).to eq "confirmation"
         end
       end
+
+      context "with a saved credit card" do
+        let!(:saved_card) { create(:stored_credit_card, user: user) }
+        let(:checkout_params) do
+          {
+            order: {
+              payments_attributes: [
+                { payment_method_id: payment_method.id }
+              ]
+            },
+            existing_card_id: saved_card.id
+          }
+        end
+
+        it "updates and redirects to payment step" do
+          put :update, params: params
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+          expect(order.reload.state).to eq "confirmation"
+          expect(order.payments.first.source.id).to eq saved_card.id
+        end
+      end
     end
 
     context "summary step" do

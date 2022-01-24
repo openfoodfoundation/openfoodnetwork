@@ -2,9 +2,10 @@
 
 module Checkout
   class Params
-    def initialize(order, params)
+    def initialize(order, params, current_user)
       @params = params
       @order = order
+      @current_user = current_user
     end
 
     def call
@@ -13,17 +14,18 @@ module Checkout
       apply_strong_parameters
       set_address_details
       set_payment_amount
+      set_existing_card
 
       @order_params
     end
 
     private
 
-    attr_reader :params, :order
+    attr_reader :params, :order, :current_user
 
     def apply_strong_parameters
       @order_params = params.require(:order).permit(
-        :email, :shipping_method_id, :special_instructions, :existing_card_id,
+        :email, :shipping_method_id, :special_instructions,
         :save_bill_address, :save_ship_address,
         bill_address_attributes: ::PermittedAttributes::Address.attributes,
         ship_address_attributes: ::PermittedAttributes::Address.attributes,
@@ -48,6 +50,22 @@ module Checkout
       return unless @order_params[:payments_attributes]
 
       @order_params[:payments_attributes].first[:amount] = order.total
+    end
+
+    def set_existing_card
+      return unless existing_card_selected?
+
+      card = Spree::CreditCard.find(params[:existing_card_id])
+
+      if card.user_id.blank? || card.user_id != current_user&.id
+        raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
+      end
+
+      @order_params[:payments_attributes].first[:source] = card
+    end
+
+    def existing_card_selected?
+      @order_params[:payments_attributes] && params[:existing_card_id].present?
     end
 
     def addresses_present?
