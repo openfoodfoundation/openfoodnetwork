@@ -9,6 +9,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gem
 gem 'rails', '>= 6.1.4'
 
 gem 'activemerchant', '>= 1.78.0'
+gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '2.4.2'
