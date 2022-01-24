@@ -170,7 +170,6 @@ describe '
       end
 
       context "it shows a second modal about last item deletion and therefore about order cancellation" do
-        
         it "that the user can close and then nothing change" do
           expect(page).to have_content "This will cancel the current order."
           within(".modal", visible: true) do
@@ -181,13 +180,29 @@ describe '
           expect(page).to have_selector('tr.stock-item', count: 1)
         end
 
-        it "that the user can confirm and then the order is cancelled" do
-          within(".modal", visible: true) do
-            click_on("OK")
+        context "that the user can confirm" do
+          it "and then the order is cancelled and no email is sent by default" do
+            expect do
+              within(".modal", visible: true) do
+                click_on("OK")
+              end
+              expect(page).to have_content "Cannot add item to canceled order"
+              expect(order.reload.line_items.length).to eq(0)
+              expect(order.reload.state).to eq("canceled")
+            end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
-          expect(page).to have_content "Cannot add item to canceled order"
-          expect(order.reload.line_items.length).to eq(0)
-          expect(order.reload.state).to eq("canceled")
+
+          it "and check the checkbox to send an email to the customer about its order cancellation" do
+            expect do
+              within(".modal", visible: true) do
+                check("send_cancellation_email")
+                click_on("OK")
+              end
+              expect(page).to have_content "Cannot add item to canceled order"
+              expect(order.reload.line_items.length).to eq(0)
+              expect(order.reload.state).to eq("canceled")
+            end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+          end
         end
       end
     end
