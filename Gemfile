@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby "2.7.3"
+ruby "3.0.3"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
@@ -9,6 +9,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gem
 gem 'rails', '>= 6.1.4'
 
 gem 'activemerchant', '>= 1.78.0'
+gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '2.4.2'
@@ -94,7 +95,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo', '~> 2.8.3'
+gem 'roo', github: "roo-rb/roo" # master is currently needed for Ruby 3.x (awaiting new release)
 gem 'spreadsheet_architect'
 
 gem 'whenever', require: false
