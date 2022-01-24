@@ -146,7 +146,6 @@ module Openfoodnetwork
     # Register Spree payment methods
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
       Rails.application.reloader.to_prepare do
-        app.config.spree.payment_methods << Spree::Gateway::StripeConnect
         app.config.spree.payment_methods << Spree::Gateway::StripeSCA
         app.config.spree.payment_methods << Spree::Gateway::PayPalExpress
       end
