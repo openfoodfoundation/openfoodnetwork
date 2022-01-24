@@ -3,6 +3,15 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20220118053107_convert_stripe_connect_to_stripe_sca'
 
+module Spree
+  class Gateway
+    class StripeConnect < Gateway::StripeSCA
+      # This class got deleted from the code base but this minimum definition
+      # is enough for this test.
+    end
+  end
+end
+
 describe ConvertStripeConnectToStripeSca do
   let(:owner) { create(:distributor_enterprise) }
   let(:new_owner) { create(:distributor_enterprise) }
