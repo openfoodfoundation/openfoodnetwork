@@ -284,12 +284,15 @@ describe Spree::Order do
       expect(order.can_cancel?).to be_truthy
     end
 
-    it "should cancel order if product is soft deleted" do
-      o = FactoryBot.create(:completed_order_with_totals)
-      o.line_items.first.variant.product.tap(&:destroy)
-      o.cancel!
-      expect(Spree::Order.by_state(:canceled)).to include o
-    end
+    context "with a soft-deleted product" do
+      let(:order) { create(:completed_order_with_totals) }
+      
+      it "should cancel the order without error" do
+        order.line_items.first.variant.product.tap(&:destroy)
+        order.cancel!
+        expect(Spree::Order.by_state(:canceled)).to include order
+      end
+    end  
   end
 
   context "insufficient_stock_lines" do
