@@ -33,6 +33,16 @@
   }
 }
 
+.insufficient-stock-items {
+  legend {
+    color: $color-error;
+  }
+
+  table tr:last-child th {
+    border-bottom: 1px solid $admin-table-border;
+  }
+}
+
 // Customize orduct add fieldset
 #add-line-item {
   fieldset {

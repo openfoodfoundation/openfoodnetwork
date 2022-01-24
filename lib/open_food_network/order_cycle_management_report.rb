@@ -94,7 +94,7 @@ module OpenFoodNetwork
        order.email,
        ba&.phone,
        order.shipping_method&.name,
-       order.payments.first&.payment_method&.name,
+       order.payments.last&.payment_method&.name,
        order.total,
        balance(order)]
     end

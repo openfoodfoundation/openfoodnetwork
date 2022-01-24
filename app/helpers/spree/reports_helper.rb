@@ -6,7 +6,7 @@ module Spree
   module ReportsHelper
     def report_payment_method_options(orders)
       orders.map do |order|
-        payment_method = order.payments.first&.payment_method
+        payment_method = order.payments.last&.payment_method
 
         next unless payment_method
 

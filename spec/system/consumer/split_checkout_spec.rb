@@ -8,7 +8,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_guest_orders: false) }
+  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
     create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
   }
@@ -19,7 +19,8 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
   let(:order) {
     create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
-                   ship_address_id: nil, state: "cart")
+                   ship_address_id: nil, state: "cart",
+                   line_items: [create(:line_item, variant: variant)])
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
@@ -45,7 +46,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     add_enterprise_fee enterprise_fee
     set_order order
-    add_product_to_cart order, product
 
     distributor.shipping_methods << free_shipping
     distributor.shipping_methods << shipping_with_fee
@@ -53,37 +53,28 @@ describe "As a consumer, I want to checkout my order", js: true do
 
   context "guest checkout when distributor doesn't allow guest orders" do
     before do
-      visit checkout_path
+      distributor.update_columns allow_guest_orders: false
+      visit checkout_step_path(:details)
     end
 
     it "should display the split checkout login page" do
-      expect(page).to have_content distributor.name
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_no_content("Checkout as guest")
     end
 
-    it "should be redirected if user enter the url" do
-      order.update(state: "payment")
-      get checkout_step_path(:details)
-      expect(response).to have_http_status(:redirect)
-      expect(page).to have_content("Ok, ready to checkout?")
-    end
-
-    it "should redirect to the login page when clicking the login button" do
+    it "should show the login modal when clicking the login button" do
       click_on "Login"
-      expect(page).to have_content("Login")
+      expect(page).to have_selector ".login-modal"
     end
   end
 
   context "as a guest user" do
     before do
-      distributor.update!(allow_guest_orders: true)
-      order.update!(distributor_id: distributor.id)
       visit checkout_path
     end
 
-    it "should display the split checkout login/guest page" do
+    it "should display the split checkout login/guest form" do
       expect(page).to have_content distributor.name
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
@@ -126,7 +117,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       it "should allow visit '/checkout/details'" do
         order.update(state: "payment")
         visit checkout_step_path(:details)
-        expect(page).to have_button("Next - Payment method")
+        expect(page).to have_current_path("/checkout/details")
       end
     end
   end
@@ -230,14 +221,35 @@ describe "As a consumer, I want to checkout my order", js: true do
         expect(page).to have_content("Select a shipping method")
       end
     end
+
+    context "summary step" do
+      let(:order) { create(:order_ready_for_confirmation, distributor: distributor) }
+
+      describe "completing the checkout" do
+        it "keeps the distributor selected for the current user after completion" do
+          visit checkout_step_path(:summary)
+
+          expect(page).to have_content "Shopping @ #{distributor.name}"
+
+          click_on "Complete order"
+
+          expect(page).to have_content "Back To Store"
+          expect(order.reload.state).to eq "complete"
+
+          expect(page).to have_content "Shopping @ #{distributor.name}"
+        end
+      end
+    end
   end
 
   context "when I have an out of stock product in my cart" do
     before do
       variant.update!(on_demand: false, on_hand: 0)
     end
+
     it "returns me to the cart with an error message" do
       visit checkout_path
+
       expect(page).not_to have_selector 'closing', text: "Checkout now"
       expect(page).to have_selector 'closing', text: "Your shopping cart"
       expect(page).to have_content "An item in your cart has become unavailable"

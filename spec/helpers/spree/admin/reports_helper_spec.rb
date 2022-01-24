@@ -7,7 +7,7 @@ describe Spree::ReportsHelper, type: :helper do
     let(:order_with_payments) { create(:order_ready_to_ship) }
     let(:order_without_payments) { create(:order_with_line_items) }
     let(:orders) { [order_with_payments, order_without_payments] }
-    let(:payment_method) { order_with_payments.payments.first.payment_method }
+    let(:payment_method) { order_with_payments.payments.last.payment_method }
 
     it "returns payment method select options for given orders" do
       select_options = helper.report_payment_method_options([order_with_payments])
