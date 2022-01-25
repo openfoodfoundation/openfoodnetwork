@@ -9,6 +9,7 @@ describe '
   include CheckoutHelper
   include AuthenticationHelper
   include ActionView::Helpers::NumberHelper
+  include WebHelper
 
   context "as an enterprise manager" do
     let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
@@ -46,7 +47,15 @@ describe '
 
         within_window ticket_window do
           accept_alert do
-            print_data = page.evaluate_script('printData');
+            # The JS code needs time to load but there's no visual indicator
+            # we can wait for.
+            print_data = nil
+            wait_until do
+              print_data = page.evaluate_script('printData')
+            rescue Ferrum::JavaScriptError
+              false
+            end
+
             elements_in_print_data = [
               order.distributor.name,
               order.distributor.address.address_part1,
