@@ -24,7 +24,7 @@ class JsonApiSchema
         properties: {
           data: {
             type: :object,
-            properties: data_properties(options)
+            properties: data_properties(**options)
           },
           meta: { type: :object },
           links: { type: :object }
@@ -41,7 +41,7 @@ class JsonApiSchema
             type: :array,
             items: {
               type: :object,
-              properties: data_properties(options)
+              properties: data_properties(**options)
             }
           },
           meta: {
