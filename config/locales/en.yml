@@ -1810,6 +1810,11 @@ en:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
       agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
