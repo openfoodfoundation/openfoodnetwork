@@ -67,10 +67,14 @@ module PaymentGateways
       @valid_payment_intent ||= begin
         return false unless params["payment_intent"]&.starts_with?("pi_")
 
-        @order.state == "payment" &&
-          last_payment&.state == "requires_authorization" &&
-          last_payment&.response_code == params["payment_intent"]
+        order_and_payment_valid?
       end
+    end
+
+    def order_and_payment_valid?
+      @order.state.in?(["payment", "confirmation"]) &&
+        last_payment&.state == "requires_authorization" &&
+        last_payment&.response_code == params["payment_intent"]
     end
 
     def last_payment

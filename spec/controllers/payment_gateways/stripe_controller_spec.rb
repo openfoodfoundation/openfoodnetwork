@@ -46,16 +46,20 @@ module PaymentGateways
           order.payments << payment
         end
 
-        it "completes the order and redirects to the order confirmation page" do
-          expect(controller).to receive(:processing_succeeded).and_call_original
-          expect(controller).to receive(:order_completion_reset).and_call_original
+        shared_examples "successful order completion" do
+          it "completes the order and redirects to the order confirmation page" do
+            expect(controller).to receive(:processing_succeeded).and_call_original
+            expect(controller).to receive(:order_completion_reset).and_call_original
 
-          get :confirm, params: { payment_intent: "pi_123" }
+            get :confirm, params: { payment_intent: "pi_123" }
 
-          expect(order.completed?).to be true
-          expect(response).to redirect_to order_path(order, order_token: order.token)
-          expect(flash[:notice]).to eq I18n.t(:order_processed_successfully)
+            expect(order.completed?).to be true
+            expect(response).to redirect_to order_path(order, order_token: order.token)
+            expect(flash[:notice]).to eq I18n.t(:order_processed_successfully)
+          end
         end
+
+        include_examples "successful order completion"
 
         it "creates a customer record" do
           order.update_columns(customer_id: nil)
@@ -64,6 +68,17 @@ module PaymentGateways
           expect {
             get :confirm, params: { payment_intent: "pi_123" }
           }.to change { Customer.count }.by(1)
+        end
+
+        context "using split checkout" do
+          before do
+            allow(Flipper).to receive(:enabled?).with(:split_checkout) { true }
+            allow(Flipper).to receive(:enabled?).with(:split_checkout, anything) { true }
+
+            order.update_attribute :state, "confirmation"
+          end
+
+          include_examples "successful order completion"
         end
       end
 
