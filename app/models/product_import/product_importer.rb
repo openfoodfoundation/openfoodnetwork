@@ -107,7 +107,11 @@ module ProductImport
     end
 
     def table_headings
-      @entries.first.displayable_attributes.keys.map(&:humanize) if @entries.first
+      return unless @entries.first
+
+      @entries.first.displayable_attributes.keys.map do |key|
+        I18n.t "admin.product_import.product_headings.#{key}"
+      end
     end
 
     def products_created_count

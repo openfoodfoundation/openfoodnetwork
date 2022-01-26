@@ -565,6 +565,47 @@ describe "Product Import", js: true do
 
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
+
+    context 'when using other language than English' do
+      around do |example|
+        original_default_locale = I18n.default_locale
+        # Set the language to Spanish
+        I18n.default_locale = 'es'
+        example.run
+        I18n.default_locale = original_default_locale
+      end
+
+      it 'returns the header in selected language' do
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                  "shipping_category"]
+          csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "1", "lb",
+                  shipping_category_id_str]
+          csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "8", "oz",
+                  shipping_category_id_str]
+        end
+        File.write('/tmp/test.csv', csv_data)
+
+        visit main_app.admin_product_import_path
+
+        expect(page).to have_content 'Importación de productos'
+        expect(page).to have_content 'Selecciona una hoja de cálculo para subir'
+        attach_file 'file', '/tmp/test.csv'
+        click_button 'Subir'
+        find('a.button.proceed').click
+
+        within('.panel-header .header-caret') { find('i').click }
+
+        within('.panel-content .table-wrap') do
+          product_headings = ['producer', 'category', 'units', 'unit_type',
+                              'price', 'on_hand', 'shipping_category', 'name']
+
+          product_headings.each do |heading|
+            expect(page).to have_content I18n.t("admin.product_import.product_headings.#{heading}").upcase
+          end
+        end
+      end
+    end
   end
 
   describe "when dealing with uploaded files" do

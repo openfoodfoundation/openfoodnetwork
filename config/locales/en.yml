@@ -749,6 +749,21 @@ en:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        units: Units
+        unit_type: Unit Type
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: On Hand
+        on_demand: On Demand
+        shipping_category: Shipping Category
+        tax_category: Tax Category
 
     variant_overrides:
       loading_flash:
