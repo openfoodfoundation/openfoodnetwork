@@ -132,12 +132,6 @@ module Spree
           providers.reject! { |provider| stripe_provider?(provider) }
         end
 
-        # This method is deprecated and will be removed soon:
-        unless @payment_method&.type == "Spree::Gateway::StripeConnect" ||
-               OpenFoodNetwork::FeatureToggle.enabled?("StripeConnect")
-          providers.reject! { |provider| provider.name.ends_with?("StripeConnect") }
-        end
-
         providers
       end
 
@@ -160,12 +154,11 @@ module Spree
       end
 
       def stripe_payment_method?
-        ["Spree::Gateway::StripeConnect",
-         "Spree::Gateway::StripeSCA"].include? @payment_method.try(:type)
+        @payment_method.try(:type) == "Spree::Gateway::StripeSCA"
       end
 
       def stripe_provider?(provider)
-        provider.name.ends_with?("StripeConnect", "StripeSCA")
+        provider.name.ends_with?("StripeSCA")
       end
 
       def base_params
@@ -177,7 +170,7 @@ module Spree
         raw_params[ActiveModel::Naming.param_key(@payment_method)] || {}
       end
 
-      # Merge payment method params with gateway params like :gateway_stripe_connect
+      # Merge payment method params with gateway params like :gateway_stripe_sca
       # Also, remove password if present and blank
       def update_params
         @update_params ||= begin

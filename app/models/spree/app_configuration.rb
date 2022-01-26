@@ -130,7 +130,7 @@ module Spree
     preference :invoice_style2?, :boolean, default: false
     preference :enable_receipt_printing?, :boolean, default: false
 
-    # Stripe Connect
+    # Stripe payments
     preference :stripe_connect_enabled, :boolean, default: false
 
     # Number localization
