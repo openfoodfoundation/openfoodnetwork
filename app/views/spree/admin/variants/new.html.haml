@@ -9,5 +9,4 @@
 
   .form-buttons.filter-actions.actions
     = button t('actions.create'), 'icon-ok'
-    %span.or= t(:or)
     = button_link_to t('actions.cancel'), collection_url(@url_filters), icon: 'icon-remove'

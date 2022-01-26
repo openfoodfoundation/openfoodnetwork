@@ -95,5 +95,4 @@
 
       .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
         = button Spree.t('actions.update'), 'icon-refresh'
-        %span.or= Spree.t(:or)
         = link_to_with_icon 'icon-remove', Spree.t('actions.cancel'), edit_admin_general_settings_url, :class => 'button'

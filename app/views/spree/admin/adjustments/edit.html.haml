@@ -16,5 +16,4 @@
     = render :partial => 'form', :locals => { :f => f }
     .filter-actions.actions{"data-hook" => "buttons"}
       = button Spree.t(:continue), 'icon-arrow-right'
-      %span.or= Spree.t(:or)
       = link_to_with_icon 'icon-remove', Spree.t('actions.cancel'), admin_order_adjustments_url(@order), :class => 'button'

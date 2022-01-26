@@ -8,6 +8,7 @@
         = t :label_login
       -if @order.distributor.allow_guest_orders?
         %span.checkout-submit-or
-          or
+          
         %button.button.cancel{ "data-action": "click->guest-checkout#guestSelected" }
           = t :checkout_as_guest
+

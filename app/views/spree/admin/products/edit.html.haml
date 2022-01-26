@@ -15,5 +15,5 @@
     = render :partial => 'form', :locals => { :f => f }
     .form-buttons.filter-actions.actions
       = button t(:update), 'icon-refresh'
-      %span.or= t(:or)
+
       = button_link_to t(:cancel), "#{collection_url}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", icon: 'icon-remove'
