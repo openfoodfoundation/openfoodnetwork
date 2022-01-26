@@ -44,7 +44,7 @@ gem 'json'
 gem 'monetize', '~> 1.11'
 gem 'paranoia', '~> 2.4'
 gem 'state_machines-activerecord'
-gem 'stringex', '~> 2.8.5'
+gem 'stringex', '~> 2.8.5', require: false
 
 gem 'paypal-sdk-merchant', '1.117.2'
 gem 'stripe'

@@ -8,11 +8,9 @@
 # This may become obsolete with Spree 2.3.
 # https://github.com/spree/spree/commits/master/core/lib/spree/core/permalinks.rb
 module PermalinkGenerator
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
+  extend ActiveSupport::Concern
 
-  module ClassMethods
+  class_methods do
     def find_available_value(existing, requested)
       return requested unless existing.include?(requested)
 
@@ -24,6 +22,8 @@ module PermalinkGenerator
       requested + options.first.to_s
     end
   end
+
+  private
 
   def create_unique_permalink(requested)
     existing = others.where("permalink LIKE ?", "#{requested}%").pluck(:permalink)

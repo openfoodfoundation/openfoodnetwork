@@ -178,7 +178,7 @@ module Spree
     end
 
     def to_param
-      number.to_s.to_url.upcase
+      number.to_s.parameterize.upcase
     end
 
     def completed?

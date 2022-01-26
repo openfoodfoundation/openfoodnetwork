@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'stringex'
-
 module Spree
   module Core
     module Permalinks
