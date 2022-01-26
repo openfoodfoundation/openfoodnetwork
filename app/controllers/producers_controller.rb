@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ProducersController < BaseController
-  layout 'darkswarm'
+  include EmbeddedPages
 
-  before_action :enable_embedded_shopfront
+  layout 'darkswarm'
 
   def index
     @enterprises = Enterprise

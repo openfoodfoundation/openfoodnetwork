@@ -3,6 +3,7 @@
 module Spree
   class OrdersController < ::BaseController
     include OrderCyclesHelper
+    include EmbeddedPages
     include Rails.application.routes.url_helpers
 
     layout 'darkswarm'
@@ -15,7 +16,6 @@ module Spree
     before_action :check_authorization
     before_action :set_current_order, only: :update
     before_action :filter_order_params, only: :update
-    before_action :enable_embedded_shopfront
 
     prepend_before_action :require_order_authentication, only: :show
     prepend_before_action :require_order_cycle, only: :edit

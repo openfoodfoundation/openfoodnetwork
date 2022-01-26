@@ -3,10 +3,11 @@
 require 'open_food_network/address_finder'
 
 class CheckoutController < ::BaseController
-  layout 'darkswarm'
-
   include OrderStockCheck
+  include EmbeddedPages
   include OrderCompletion
+
+  layout 'darkswarm'
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -26,7 +27,6 @@ class CheckoutController < ::BaseController
 
   before_action :associate_user
   before_action :check_authorization
-  before_action :enable_embedded_shopfront
 
   helper 'spree/orders'
 

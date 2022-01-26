@@ -16,6 +16,8 @@ module Spree
       before_action :ensure_distribution, only: :new
       before_action :require_distributor_abn, only: :invoice
 
+      content_security_policy false, only: :print_ticket
+
       respond_to :html, :json
 
       def new

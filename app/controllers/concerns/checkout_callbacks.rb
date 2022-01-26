@@ -20,7 +20,6 @@ module CheckoutCallbacks
     before_action :ensure_checkout_allowed
     before_action :handle_insufficient_stock
     before_action :check_authorization
-    before_action :enable_embedded_shopfront
   end
 
   private
