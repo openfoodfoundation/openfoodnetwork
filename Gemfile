@@ -38,6 +38,7 @@ gem "pg", "~> 1.2.3"
 
 gem 'acts_as_list', '1.0.4'
 gem 'cancancan', '~> 1.15.0'
+gem 'digest'
 gem 'ffaker'
 gem 'highline', '2.0.3' # Necessary for the install generator
 gem 'json'
