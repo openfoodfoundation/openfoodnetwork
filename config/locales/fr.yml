@@ -317,7 +317,6 @@ fr:
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
-  or: ou
   collapse_all: Tout masquer
   expand_all: Tout afficher
   loading: Chargement en cours...
@@ -694,6 +693,21 @@ fr:
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
+      product_headings:
+        producer: Producteur
+        sku: Référence Produit
+        name: Nom
+        display_name: Nom affiché
+        category: Catégorie
+        description: Description
+        units: Unités
+        unit_type: Type d'unité
+        variant_unit_name: Unité de la variante
+        price: Prix
+        on_hand: En stock
+        on_demand: A volonté
+        shipping_category: Condition de transport
+        tax_category: TVA applicable
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue boutique en cours de chargement...
@@ -3235,7 +3249,6 @@ fr:
     not_found: "Non trouvé"
     notice_messages:
       variant_deleted: "Variante supprimée"
-    or: "Ou"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
@@ -3710,7 +3723,6 @@ fr:
           on_demand: "A volonté"
           product_description: "Description du Produit"
           image: "Image"
-          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:
