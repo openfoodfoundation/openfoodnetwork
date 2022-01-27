@@ -1,8 +1,6 @@
 angular.module('Darkswarm').directive "shippingTypeSelector", ->
   # Builds selector for shipping types
-  restrict: 'E'
-  replace: true
-  templateUrl: 'shipping_type_selector.html'
+  restrict: 'C'
   link: (scope, elem, attr)->
     scope.shippingTypes =
       pickup: false
