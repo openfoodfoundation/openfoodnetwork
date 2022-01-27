@@ -76,17 +76,40 @@ it:
       approve_with_id: "Il pagamento non può essere autorizzato."
       call_issuer: "La carta non è stata accettata per ragioni sconosciute."
       card_not_supported: "La carta non supporta questo tipo di acquisti."
+      card_velocity_exceeded: "Il cliente ha "
+      currency_not_supported: "La carta non supporta la valuta specificata."
       do_not_honor: "La carta non è stata accettata per ragioni sconosciute."
       do_not_try_again: "La carta non è stata accettata per ragioni sconosciute."
+      duplicate_transaction: "Di recente è stata inviata una transazione con importo e informazioni sulla carta di credito identici."
+      fraudulent: "Il pagamento è stato rifiutato perchè Stripe sospetta che sia fraudolento."
       generic_decline: "La carta non è stata accettata per ragioni sconosciute."
+      incorrect_pin: "Il PIN digitato è scorretto. Questo codice di rifiuto si applica solo ai pagamenti effettuati con un lettore di carte. "
+      insufficient_funds: "Questa carta non ha credito sufficiente per completare questo acquisto."
+      invalid_account: "La carta, o il profilo a cui è collegata, non sono validi."
+      invalid_amount: "L'importo del pagamento non è valido o eccede l'importo consentito."
+      invalid_pin: "Il PIN digitato è scorretto. Questo codice di rifiuto si applica solo ai pagamenti effettuati con un lettore di carte. "
+      issuer_not_available: "L'erogatore della carta non può essere raggiunto, quindi il pagamento non può essere autorizzato"
+      lost_card: "Il pagamento è stato rifiutato perchè la carta risulta smarrita."
+      merchant_blacklist: "Il pagamento è stato rifiutato perché corrisponde a un valore nell'elenco di blocco dell'utente Stripe. "
+      new_account_information_available: "La carta, o il profilo a cui è collegata, non sono validi."
       no_action_taken: "La carta non è stata accettata per ragioni sconosciute."
+      not_permitted: "Il pagamento non è consentito."
+      offline_pin_required: "La carta è stata rifiutata perchè richiede un PIN."
+      online_or_offline_pin_required: "La carta è stata rifiutata perchè richiede un PIN."
+      pickup_card: "La carta non può essere utilizzata per questo pagamento (è possibile che risulti persa o rubata)"
+      pin_try_exceeded: "Hai superato il numero consentito di inserimenti del PIN."
+      reenter_transaction: "Il pagamento non può essere processato dall'erogatore per motivi sconosciuti."
+      restricted_card: "La carta non può essere utilizzata per questo pagamento (è possibile che risulti persa o rubata)"
       revocation_of_all_authorizations: "La carta non è stata accettata per ragioni sconosciute."
       revocation_of_authorization: "La carta non è stata accettata per ragioni sconosciute."
       security_violation: "La carta non è stata accettata per ragioni sconosciute."
       service_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
+      stolen_card: "Il pagamento è stato rifiutato perchè la carta risulta rubata."
       stop_payment_order: "La carta non è stata accettata per ragioni sconosciute."
+      testmode_decline: "E' stato usato un numero di carta test Stripe."
       transaction_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
       try_again_later: "La carta non è stata accettata per ragioni sconosciute."
+      withdrawal_count_limit_exceeded: "Il cliente ha "
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -152,6 +175,9 @@ it:
       already_registered: "Questo indirizzo email è già registrato. Per favore effettua il log in per continuare, o torna indietro e utilizza un altro indirizzo email."
     success:
       logged_in_succesfully: "Collegato con successo"
+    sessions:
+      signed_out: "Disconnessione riuscita."
+      already_signed_out: "Disconnessione riuscita."
     user_passwords:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
@@ -1326,6 +1352,7 @@ it:
       terms_and_conditions: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
     payment_cancelled_due_to_stock: "Pagamento annullato: la transazione non può avvenire a causa di problemi di disponibilità."
+    order_not_loaded: "Nessuna richiesta valida trovata per la conferma. "
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -3184,7 +3211,6 @@ it:
     notice_messages:
       variant_deleted: "Variante eliminata"
     or: "O"
-    order_processed_successfully: "Richiesta processata con successo"
     payment_method_not_supported: "Metodo di pagamento non supportato"
     resend_authorization_email: "Invia di nuovo mail di autorizzazione"
     rma_credit: "Credito RMA"
