@@ -5,6 +5,7 @@ require "system_helper"
 describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
   include SplitCheckoutHelper
+  include FileHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -237,6 +238,122 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(order.reload.state).to eq "complete"
 
           expect(page).to have_content "Shopping @ #{distributor.name}"
+        end
+      end
+
+      describe "terms and conditions" do
+        context "when none are required" do
+          it "doesn't show checkbox or links" do
+            visit checkout_step_path(:summary)
+
+            within "#checkout" do
+              expect(page).to_not have_field "order_accept_terms"
+              expect(page).to_not have_link "Terms and Conditions"
+              expect(page).to_not have_link "Terms of service"
+            end
+          end
+        end
+
+        context "when distributor has T&Cs" do
+          let(:fake_terms_and_conditions_path) { white_logo_path }
+          let(:terms_and_conditions_file) {
+            Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
+          }
+          let(:terms_url) { order.distributor.terms_and_conditions.url }
+
+          before do
+            order.distributor.terms_and_conditions = terms_and_conditions_file
+            order.distributor.save
+          end
+
+          describe "when customer has not accepted T&Cs before" do
+            it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
+              visit checkout_step_path(:summary)
+              expect(page).to have_link "Terms and Conditions", href: terms_url
+              expect(page).to have_field "order_accept_terms", checked: false
+            end
+          end
+
+          describe "when customer has already accepted T&Cs before" do
+            before do
+              customer = create(:customer, enterprise: order.distributor, user: user)
+              customer.update terms_and_conditions_accepted_at: Time.zone.now
+            end
+
+            it "enables checkout button (because T&Cs are accepted by default)" do
+              visit checkout_step_path(:summary)
+              expect(page).to have_field "order_accept_terms", checked: true
+            end
+
+            describe "but afterwards the enterprise has uploaded a new T&Cs file" do
+              before { order.distributor.update terms_and_conditions_updated_at: Time.zone.now }
+
+              it "disables checkout button until terms are accepted" do
+                visit checkout_step_path(:summary)
+                expect(page).to have_field "order_accept_terms", checked: false
+              end
+            end
+          end
+        end
+
+        context "when the platform's terms of service have to be accepted" do
+          let(:tos_url) { "https://example.org/tos" }
+
+          before do
+            allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
+            allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+          end
+
+          it "shows the terms which need to be accepted" do
+            visit checkout_step_path(:summary)
+
+            expect(page).to have_link "Terms of service", href: tos_url
+            expect(find_link("Terms of service")[:target]).to eq "_blank"
+            expect(page).to have_field "order_accept_terms", checked: false
+          end
+
+          context "when the terms have been accepted in the past" do
+            before do
+              TermsOfServiceFile.create!(
+                attachment: File.open(Rails.root.join("public/Terms-of-service.pdf")),
+                updated_at: 1.day.ago,
+              )
+              customer = create(:customer, enterprise: order.distributor, user: user)
+              customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+            end
+
+            it "remembers the selection" do
+              visit checkout_step_path(:summary)
+
+              expect(page).to have_link "Terms of service"
+              expect(page).to have_field "order_accept_terms", checked: true
+            end
+          end
+        end
+
+        context "when the seller's terms and the platform's terms have to be accepted" do
+          let(:fake_terms_and_conditions_path) { white_logo_path }
+          let(:terms_and_conditions_file) {
+            Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
+          }
+          let(:tos_url) { "https://example.org/tos" }
+          let(:terms_url) { order.distributor.terms_and_conditions.url }
+
+          before do
+            order.distributor.terms_and_conditions = terms_and_conditions_file
+            order.distributor.save!
+
+            allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
+            allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+          end
+
+          it "shows links to both terms and all need accepting" do
+            visit checkout_step_path(:summary)
+
+            expect(page).to have_link "Terms and Conditions", href: terms_url
+            expect(page).to have_link "Terms of service", href: tos_url
+            expect(page).to have_field "order_accept_terms", checked: false
+          end
         end
       end
     end
