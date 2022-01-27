@@ -230,7 +230,6 @@ ar:
   required_fields: تتم الإشارة إلى الحقول المطلوبة بعلامة النجمة
   select_continue: اختيار وتابع
   remove: إزالة
-  or: أو
   collapse_all: اخفاء الجميع
   expand_all: اظهار الكل
   loading: جار التحميل...
@@ -605,6 +604,19 @@ ar:
         import_again: تحميل ملف آخر
         view_products: الذهاب إلى صفحة المنتجات
         view_inventory: انتقل إلى صفحة المخزون
+      product_headings:
+        producer: المنتج
+        sku: SKU
+        name: الاسم
+        display_name: اسم العرض
+        category: الفئة
+        description: وصف
+        variant_unit_name: اسم وحدة النوع
+        price: السعر
+        on_hand: متوفر
+        on_demand: على الطلب
+        shipping_category: نوع الشحن
+        tax_category: الفئة الضريبية
     variant_overrides:
       loading_flash:
         loading_inventory: تحميل المخزون
@@ -1553,6 +1565,11 @@ ar:
       terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} للبائع."
         link_text: "الأحكام والشروط"
+      platform_terms_of_service:
+        message_html: "أوافق على المنصة %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
+        terms_and_conditions: "الأحكام والشروط"
     errors:
       invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
   order_paid: دفع
@@ -3088,7 +3105,6 @@ ar:
     no_pending_payments: "لا توجد دفعات معلقة"
     none: "لا شيء"
     not_found: "غير موجود"
-    order_processed_successfully: "تمت معالجة الطلب بنجاح"
     payment_method_not_supported: "طريقة الدفع غير مدعومة"
     resend_authorization_email: "إعادة إرسال البريد الإلكتروني الخاص بالتفويض"
     refund: "إعادة المال"
@@ -3554,7 +3570,6 @@ ar:
           on_demand: "حسب الطلب"
           product_description: "وصف المنتج"
           image: "الصورة"
-          or: "أو"
         unit_name_placeholder: 'على سبيل المثال. باقات'
         index:
           header:

@@ -229,7 +229,6 @@ pl:
   required_fields: Wymagane pola są oznaczone gwiazdką
   select_continue: Wybierz i kontynuuj
   remove: Usuń
-  or: lub
   collapse_all: Zwiń wszystko
   expand_all: Rozwiń wszystko
   loading: Ładowanie...
@@ -578,6 +577,18 @@ pl:
         import_again: Prześlij inny plik
         view_products: Przejdź do strony produktów
         view_inventory: Przejdź do strony magazynu
+      product_headings:
+        producer: Producent
+        sku: SKU
+        name: Nazwa
+        category: Kategoria
+        description: Opis
+        variant_unit_name: Nazwa jednostki wariantu
+        price: Cena
+        on_hand: Dostępne
+        on_demand: Na żądanie
+        shipping_category: Kategoria dostawy
+        tax_category: Kategoria podatku
     variant_overrides:
       loading_flash:
         loading_inventory: ŁADOWANIE ZAPASÓW
@@ -3316,7 +3327,6 @@ pl:
           on_demand: "Na żądanie"
           product_description: "Opis produktu"
           image: "Obraz"
-          or: "lub"
         unit_name_placeholder: 'np. pęczki'
         index:
           header:

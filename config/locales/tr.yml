@@ -258,7 +258,6 @@ tr:
   required_fields: Zorunlu alanlar yıldız ile belirtilmiştir
   select_continue: Seç ve Devam Et
   remove: Kaldır
-  or: veya
   collapse_all: Hepsini Daralt
   expand_all: Hepsini genişlet
   loading: Yükleniyor...
@@ -635,6 +634,19 @@ tr:
         import_again: Başka Bir Dosya Yükle
         view_products: Ürünler Sayfasına Git
         view_inventory: Stok Sayfasına Git
+      product_headings:
+        producer: ÜRETİCİ
+        sku: Stok Kodu
+        name: Ad
+        display_name: Ekran adı
+        category: Kategori
+        description: Açıklama
+        variant_unit_name: Çeşit Birim Adı
+        price: Fiyat
+        on_hand: Mevcut
+        on_demand: Talep Üzerine
+        shipping_category: TESLİMAT KATEGORİSİ
+        tax_category: Vergi Kategorisi
     variant_overrides:
       loading_flash:
         loading_inventory: STOK YÜKLENİYOR
@@ -1619,6 +1631,11 @@ tr:
       terms_and_conditions:
         message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
         link_text: "Şartlar ve Koşullar"
+      platform_terms_of_service:
+        message_html: "%{tos_link} platformunu onaylıyorum."
+      all_terms_and_conditions:
+        message_html: "Satıcıya ait %{terms_and_conditions_link} ve platforma ait %{tos_link} onaylıyorum."
+        terms_and_conditions: "Şartlar ve Koşullar"
       submit: Siparişi tamamla
       cancel: Ödeme yöntemine geri dön
     errors:
@@ -3102,8 +3119,6 @@ tr:
     not_found: "Bulunamadı"
     notice_messages:
       variant_deleted: "Çeşit silindi"
-    or: "Veya"
-    order_processed_successfully: "Sipariş başarıyla işlendi"
     payment_method_not_supported: "Ödeme yöntemi desteklenmiyor"
     resend_authorization_email: "Yetkilendirme e-postasını yeniden gönder"
     rma_credit: "RMA kredisi"
@@ -3574,7 +3589,6 @@ tr:
           on_demand: "Talep üzerine"
           product_description: "Ürün Açıklaması"
           image: "Görsel"
-          or: "veya"
         unit_name_placeholder: 'Örn. Demet'
         index:
           header:

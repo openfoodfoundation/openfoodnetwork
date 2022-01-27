@@ -225,7 +225,6 @@ fr_BE:
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
-  or: ou
   collapse_all: Tout masquer
   expand_all: Tout afficher
   loading: Chargement en cours...
@@ -575,6 +574,19 @@ fr_BE:
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Comptoir
+      product_headings:
+        producer: Producteur·trice
+        sku: Référence produit
+        name: Nom
+        display_name: Nom d'affichage
+        category: Catégorie
+        description: Description
+        variant_unit_name: Nom de la variante
+        price: Prix
+        on_hand: En stock
+        on_demand: A la demande
+        shipping_category: Catégorie de livraison
+        tax_category: TVA applicable
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue du magasin en cours de chargement...
@@ -3261,7 +3273,6 @@ fr_BE:
           on_demand: "A volonté"
           product_description: "Description du Produit"
           image: "Image"
-          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:

@@ -217,7 +217,6 @@ en_ZA:
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -559,6 +558,18 @@ en_ZA:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        category: Category
+        description: Description
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: In Stock
+        on_demand: Unlimited
+        shipping_category: Shipping Category
+        tax_category: Tax Category
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -3142,7 +3153,6 @@ en_ZA:
           on_demand: "Unlimited"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

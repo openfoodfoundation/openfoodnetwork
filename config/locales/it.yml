@@ -317,7 +317,6 @@ it:
   required_fields: I campi obbligatori sono contrassegnati con un asterisco
   select_continue: Seleziona e Continua
   remove: Rimuovi
-  or: o
   collapse_all: Riduci tutto
   expand_all: Espandi tutto
   loading: Caricamento...
@@ -694,6 +693,19 @@ it:
         import_again: Carica un altro file
         view_products: Vai alla Pagina dei Prodotti
         view_inventory: Vai alla Pagina dell'Inventario
+      product_headings:
+        producer: Produttore
+        sku: Codice ID
+        name: Nome
+        display_name: Nome da visualizzare
+        category: Categoria
+        description: Descrizione
+        variant_unit_name: Nome Unità Variante
+        price: Prezzo
+        on_hand: Disponibile
+        on_demand: A richiesta
+        shipping_category: Categoria Spedizioni
+        tax_category: Categoria d'imposta
     variant_overrides:
       loading_flash:
         loading_inventory: Caricamento Inventario
@@ -1408,7 +1420,7 @@ it:
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
-        select_oc_html: "Per favore <span class='highlighted'>scegli la data di consegna </span>, per vedere quali prodotti sono disponibili."
+        select_oc_html: "Per vedere i prodotti disponibili,<span class='highlighted'>scegli la data di consegna</span> dal riquadro in alto a destra."
     products:
       summary:
         bulk: "Volume"
@@ -1525,7 +1537,7 @@ it:
   cart_headline: "Il tuo carrello"
   total: "Totale"
   cart_updating: "Aggiornamento del carrello..."
-  cart_empty: "Carrello vuoto"
+  cart_empty: "Svuota carrello"
   cart_edit: "Modifica il tuo carrello"
   item: "Articolo"
   qty: "Qtà"
@@ -1615,10 +1627,10 @@ it:
   checkout_order_ready: Ordine pronto per
   checkout_hide: Nascondi
   checkout_expand: Espandi
-  checkout_headline: "Ok, pronto per pagare?"
+  checkout_headline: "Ok, confermare?"
   checkout_as_guest: "Paga come ospite"
   checkout_details: "I tuoi dettagli"
-  checkout_billing: "Informazioni sul conto"
+  checkout_billing: "Dati di fatturazione"
   checkout_default_bill_address: "Salva come indirizzo di fatturazione predefinito"
   checkout_shipping: Informazioni sulla spedizione
   checkout_default_ship_address: "Salva come indirizzo di spedizione predefinito"
@@ -1715,6 +1727,11 @@ it:
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
         link_text: "Termini e Condizioni"
+      platform_terms_of_service:
+        message_html: "Acconsento ai %{tos_link} della piattaforma."
+      all_terms_and_conditions:
+        message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
+        terms_and_conditions: "Termini e Condizioni"
       agree: Cliccando su "Conferma" accetti che la tua gentile richiesta sia processata.
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
@@ -1728,16 +1745,16 @@ it:
       select_a_payment_method: Seleziona un metodo di pagamento
   order_paid: PAGATO
   order_not_paid: NON PAGATO
-  order_total: Totale dell'ordine
-  order_payment: "Pagamento attraverso:"
+  order_total: Importo totale
+  order_payment: "Metodo di Pagamento:"
   order_billing_address: Indirizzo di fatturazione
   order_delivery_on: Consegna il
   order_delivery_address: Indirizzo di consegna
   order_delivery_time: Tempo di consegna
   order_special_instructions: "Tue note:"
   order_pickup_time: Pronto per il ritiro
-  order_pickup_instructions: Istruzioni per la Distribuzione
-  order_produce: Produrre
+  order_pickup_instructions: 'Dove ritirare la tua spesa:'
+  order_produce: Subtotale
   order_total_price: Totale
   order_includes_tax: (importo IVA incluso nel totale)
   order_payment_paypal_successful: Il tuo pagamento con PayPal è stato elaborato con successo.
@@ -1782,7 +1799,7 @@ it:
   email_payment_not_paid: NON PAGATO
   email_payment_description: Descrizione pagamento alla Conferma
   email_payment_summary: Riepilogo di pagamento
-  email_payment_method: "Pagamento attraverso:"
+  email_payment_method: "Metodo di Pagamento:"
   email_so_placement_intro_html: "Hai una nuova gentile richiesta di <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Ecco i dettagli della gentile richiesta per <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Purtroppo alcuni prodotti richiesti non sono disponibili. Le quantità originali richieste sono barrate qui sotto."
@@ -1805,7 +1822,7 @@ it:
   email_shipping_delivery_time: "Consegna il"
   email_shipping_delivery_address: "Indirizzo di consegna"
   email_shipping_collection_details: Dettagli della raccolta
-  email_shipping_collection_time: "Pronto per il ritiro:"
+  email_shipping_collection_time: "Pronto per:"
   email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
@@ -1878,7 +1895,7 @@ it:
   products_and: "e"
   products_filters_in: "in"
   products_with: con
-  products_search: "Ricerca..."
+  products_search: "Cerca un prodotto o un produttore..."
   products_filter_by: "Filtra per"
   products_filter_selected: "selezionato"
   products_filter_heading: "Filtri"
@@ -1886,7 +1903,7 @@ it:
   products_filter_done: "Fatto"
   products_loading: "Caricamento prodotti..."
   products_updating_cart: "Aggiornamento del carrello..."
-  products_cart_empty: "Carrello vuoto"
+  products_cart_empty: "Svuota carrello"
   products_edit_cart: "Modifica il tuo carrello"
   products_from: da
   products_change: "Nessuna modifica da salvare."
@@ -1995,7 +2012,7 @@ it:
   orders_edit_time: "Ordine pronto per"
   orders_edit_continue: "Continua a comprare"
   orders_edit_checkout: "Conferma"
-  orders_form_empty_cart: "Carrello vuoto"
+  orders_form_empty_cart: "Svuota carrello"
   orders_form_update_cart: "Aggiorna"
   orders_form_subtotal: "Calcola il subtotale"
   orders_form_admin: "Admin"
@@ -2552,7 +2569,7 @@ it:
   report_header_total_units: Unità totali
   report_header_sum_max_total: "Somma totale max"
   report_header_total_excl_vat: "Totale imponibile (%{currency_symbol})"
-  report_header_total_incl_vat: "Total IVA incl. (%{currency_symbol})"
+  report_header_total_incl_vat: "Totale IVA incl. (%{currency_symbol})"
   report_header_temp_controlled: Controllo Temperatura?
   report_header_is_producer: Produttore?
   report_header_not_confirmed: Non confermato
@@ -2560,8 +2577,8 @@ it:
   report_header_gst_free_income: Entrate senza IVA
   report_header_total_untaxable_produce: Totale prodotti esenti tasse
   report_header_total_taxable_produce: Totale prodotti tassati (incl. tasse)
-  report_header_total_untaxable_fees: Totale provvigioni esenti (no tasse)
-  report_header_total_taxable_fees: Totale provvigioni tassabili (incl. tasse)
+  report_header_total_untaxable_fees: Totale tariffe esentasse (no tasse)
+  report_header_total_taxable_fees: Totale tariffe tassabili (incl. tasse)
   report_header_delivery_shipping_cost: Costi di spedizione/consegna (incl. tasse)
   report_header_transaction_fee: Commissioni di transazione (no tasse)
   report_header_total_untaxable_admin: Aggiustamenti amministrativi totali non tassabili (nessuna imposta)
@@ -3210,7 +3227,6 @@ it:
     not_found: "Non trovato"
     notice_messages:
       variant_deleted: "Variante eliminata"
-    or: "O"
     payment_method_not_supported: "Metodo di pagamento non supportato"
     resend_authorization_email: "Invia di nuovo mail di autorizzazione"
     rma_credit: "Credito RMA"
@@ -3685,7 +3701,6 @@ it:
           on_demand: "A richiesta"
           product_description: "Descrizione prodotto"
           image: "Immagine"
-          or: "o"
         unit_name_placeholder: 'es. grappoli'
         index:
           header:
@@ -3971,7 +3986,7 @@ it:
         items: Prodotti
         total: Totale
         paid?: Pagato?
-        view: Vista
+        view: Dettagli
       saved_cards:
         default?: Predefinito?
         delete?: Elimina?

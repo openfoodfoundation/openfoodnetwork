@@ -256,7 +256,6 @@ ca:
   required_fields: Els camps obligatoris estan marcats amb un asterisc
   select_continue: Seleccionar i Continuar
   remove: Eliminar
-  or: o
   collapse_all: Plegar-los tots
   expand_all: Expandeix tots
   loading: Carregant...
@@ -633,6 +632,19 @@ ca:
         import_again: Penja un altre fitxer
         view_products: Anar a la pàgina de Productes
         view_inventory: Anar a la pàgina d'Inventari
+      product_headings:
+        producer: Productora
+        sku: Número de referència (SKU)
+        name: Nom
+        display_name: Nom de visualització
+        category: Categoria
+        description: Descripció
+        variant_unit_name: Nom de la unitat de la variant
+        price: Preu
+        on_hand: Disponibles
+        on_demand: Sota demanda
+        shipping_category: Categoria d'enviament
+        tax_category: Categoria d'impostos
     variant_overrides:
       loading_flash:
         loading_inventory: CARREGANT INVENTARI
@@ -1593,6 +1605,11 @@ ca:
       terms_and_conditions:
         message_html: "Accepto el %{terms_and_conditions_link} del venedor."
         link_text: "Termes i condicions"
+      platform_terms_of_service:
+        message_html: "Accepto els %{tos_link} de la plataforma."
+      all_terms_and_conditions:
+        message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
+        terms_and_conditions: "Termes i condicions"
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
   order_paid: PAGAT
@@ -3069,8 +3086,6 @@ ca:
     not_found: "No trobat"
     notice_messages:
       variant_deleted: "Variant eliminada"
-    or: "O bé"
-    order_processed_successfully: "La comanda s'ha processat correctament"
     payment_method_not_supported: "No s'admet la forma de pagament"
     resend_authorization_email: "Torneu a enviar el correu electrònic d’autorització"
     rma_credit: "credit RMA"
@@ -3543,7 +3558,6 @@ ca:
           on_demand: "Sota demanda"
           product_description: "Descripció del producte"
           image: "Imatge"
-          or: "o"
         unit_name_placeholder: 'per exemple: manat'
         index:
           header:

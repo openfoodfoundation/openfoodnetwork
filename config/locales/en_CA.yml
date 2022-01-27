@@ -175,6 +175,9 @@ en_CA:
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
     success:
       logged_in_succesfully: "Logged in successfully"
+    sessions:
+      signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -286,7 +289,7 @@ en_CA:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Welcome to"
-  site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
+  site_meta_description: "Open Food Network’s online platform supports fair, sustainable food systems. Buy from local farms; sell to local eaters; connect through food hubs and markets. Be part of a better system."
   search_by_name: Search by name or city
   producers_join: Producers are  welcome to join the Open Food Network.
   charges_sales_tax: Charges sales tax?
@@ -314,7 +317,6 @@ en_CA:
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -360,7 +362,7 @@ en_CA:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
-  invalid_payment_state: "Invalid payment state %{state}"
+  invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
   clear_filters: Clear filters
   quantity: Quantity
@@ -691,6 +693,19 @@ en_CA:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: On Hand
+        on_demand: On Demand
+        shipping_category: Shipping Category
+        tax_category: Tax Category
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -1661,7 +1676,7 @@ en_CA:
           label: City
           placeholder: e.g. London
         state_id:
-          label: State
+          label: 'state '
         zipcode:
           label: Postal Code
           placeholder: e.g. N0B 2L0
@@ -1710,6 +1725,11 @@ en_CA:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}"
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
+        terms_and_conditions: "Terms and Conditions"
       agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
@@ -3201,8 +3221,6 @@ en_CA:
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
-    or: "Or"
-    order_processed_successfully: "Order processed successfully"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
@@ -3677,7 +3695,6 @@ en_CA:
           on_demand: "On Demand"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

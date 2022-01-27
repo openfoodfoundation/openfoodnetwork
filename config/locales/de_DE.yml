@@ -317,7 +317,6 @@ de_DE:
   required_fields: Pflichtangaben sind mit * markiert
   select_continue: Auswählen und fortfahren
   remove: Löschen
-  or: oder
   collapse_all: Alle Details verbergen
   expand_all: Alle Details anzeigen
   loading: Wird geladen ...
@@ -694,6 +693,19 @@ de_DE:
         import_again: Eine andere Datei hochladen
         view_products: Zur Produktseite
         view_inventory: Zur Katalogseite
+      product_headings:
+        producer: Produzent
+        sku: Artikelnummer
+        name: Name
+        display_name: Variantenname
+        category: Kategorie
+        description: Beschreibung
+        variant_unit_name: Name der Varianteneinheit
+        price: Preis
+        on_hand: Verfügbar
+        on_demand: Unbegrenzt/auf Bestellung
+        shipping_category: Lieferkategorie
+        tax_category: Steuerkategorie
     variant_overrides:
       loading_flash:
         loading_inventory: KATALOG WIRD GELADEN
@@ -1716,6 +1728,11 @@ de_DE:
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
         link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
+      platform_terms_of_service:
+        message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
+      all_terms_and_conditions:
+        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
+        terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
       agree: Durch Klicken auf "Zahlungspflichtig bestellen" stimmen Sie der Verarbeitung Ihrer Bestellung zu.
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
@@ -3215,7 +3232,6 @@ de_DE:
     not_found: "Nicht gefunden"
     notice_messages:
       variant_deleted: "Produktvariante wurde gelöscht"
-    or: "oder"
     payment_method_not_supported: "Zahlungsart wird nicht unterstützt"
     resend_authorization_email: "Autorisierungs-E-Mail erneut senden"
     rma_credit: "Gutschrift aus Retour"
@@ -3690,7 +3706,6 @@ de_DE:
           on_demand: "Unbegrenzt/auf Bestellung"
           product_description: "Produktbeschreibung"
           image: "Bild"
-          or: "oder"
         unit_name_placeholder: 'z. B. Bündel'
         index:
           header:

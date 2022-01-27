@@ -314,7 +314,6 @@ es:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Selecciona y Continua
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -691,6 +690,19 @@ es:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productora
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría de impuestos
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -1712,6 +1724,11 @@ es:
       terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y Condiciones"
+      platform_terms_of_service:
+        message_html: "Acepto los %{tos_link} de la plataforma."
+      all_terms_and_conditions:
+        message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
+        terms_and_conditions: "Términos y Condiciones"
       agree: Al hacer clic a 'Completar pedido' acepta que se procese su pedido.
       submit: Completar pedido
       cancel: Regresar a Método de pago
@@ -3206,8 +3223,6 @@ es:
     not_found: "No encontrado"
     notice_messages:
       variant_deleted: "Variante eliminada"
-    or: "O"
-    order_processed_successfully: "Pedido procesado correctamente"
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar correo electrónico de autorización"
     rma_credit: "Crédito RMA"
@@ -3682,7 +3697,6 @@ es:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imagen"
-          or: "o"
         unit_name_placeholder: 'ej. manojos'
         index:
           header:

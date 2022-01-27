@@ -276,7 +276,6 @@ cy:
   required_fields: 'Defnyddir seren i ddynodi meysydd gofynnol '
   select_continue: Dewis a Pharhau
   remove: Dileu
-  or: neu
   collapse_all: Crebachu pob un
   expand_all: Ehangu bob un
   loading: Llwytho ...
@@ -653,6 +652,19 @@ cy:
         import_again: Llwythwch Ffeil arall i fyny
         view_products: Ewch i Dudalen Cynhyrchion
         view_inventory: Ewch i Dudalen Rhestr
+      product_headings:
+        producer: Cynhyrchydd
+        sku: SKU
+        name: Enw
+        display_name: Enw Arddangos
+        category: Categori
+        description: Disgrifiad
+        variant_unit_name: Enw Uned Amrywiol
+        price: Pris
+        on_hand: Wrth Law
+        on_demand: Ar alw
+        shipping_category: Categori Anfon
+        tax_category: Categori Treth
     variant_overrides:
       loading_flash:
         loading_inventory: BUDDSODDI BUDDSODDI
@@ -1660,6 +1672,11 @@ cy:
       terms_and_conditions:
         message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
         link_text: "Telerau ac Amodau"
+      platform_terms_of_service:
+        message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
+      all_terms_and_conditions:
+        message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
+        terms_and_conditions: "Telerau ac Amodau"
       agree: Trwy glicio 'Cwblhau'r Archeb' rydych yn cytuno inni brosesu eich archeb.
       submit: Cwblhau'r archeb
       cancel: Nôl at y Dull Talu
@@ -3200,8 +3217,6 @@ cy:
     not_found: "Heb ei ganfod"
     notice_messages:
       variant_deleted: "Dilëwyd amrywiolyn"
-    or: "Neu"
-    order_processed_successfully: "Proseswyd yr archeb yn llwyddiannus"
     payment_method_not_supported: "Ni chefnogir y dull talu"
     resend_authorization_email: "Ailanfon ebost awdurdodi"
     rma_credit: "Credyd RMA"
@@ -3675,7 +3690,6 @@ cy:
           on_demand: "Ar alw"
           product_description: "Disgrifiad o'r Cynnyrch"
           image: "Delwedd"
-          or: "neu"
         unit_name_placeholder: 'ee. sypiau'
         index:
           header:

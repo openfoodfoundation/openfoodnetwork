@@ -72,6 +72,8 @@ en_US:
       missing: "There is no card on a customer that is being charged."
       processing_error: "An error occurred while processing the card."
       rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
+      invalid_account: "La tarjeta, o la cuenta a la que esta ligada la tarjeta es invalida. "
+      new_account_information_available: "La tarjeta, o la cuenta a la que esta ligada la tarjeta es invalida. "
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -276,7 +278,6 @@ en_US:
   required_fields: Required fields are marked with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -653,6 +654,19 @@ en_US:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: On Hand
+        on_demand: On Demand
+        shipping_category: Shipping Category
+        tax_category: Tax Category
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -1672,6 +1686,11 @@ en_US:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
       agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
@@ -3164,8 +3183,6 @@ en_US:
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
-    or: "Or"
-    order_processed_successfully: "Order processed successfully"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
@@ -3640,7 +3657,6 @@ en_US:
           on_demand: "On Demand"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

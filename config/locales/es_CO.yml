@@ -237,7 +237,6 @@ es_CO:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Seleccione y Continue
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -587,6 +586,19 @@ es_CO:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productor
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría de impuestos
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -3339,7 +3351,6 @@ es_CO:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imágen"
-          or: "o"
         unit_name_placeholder: 'ej. racimos'
         index:
           header:

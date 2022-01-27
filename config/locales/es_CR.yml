@@ -314,7 +314,6 @@ es_CR:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Seleccione y Continue
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -616,6 +615,7 @@ es_CR:
         line_number: "Línea %{number}:"
         encoding_error: "Verifique la configuración de idioma de su archivo fuente y asegúrese de que esté guardado con la codificación UTF-8"
         unexpected_error: "La importación de productos encontró un error inesperado al abrir el archivo: %{error_message}"
+        malformed_csv: "La importación de productos encontró un CSV con formato incorrecto: %{error_message}"
       index:
         notice: "Aviso"
         beta_notice: "Esta funcionalidad aún está en versión beta: puede experimentar algunos errores mientras la usa. Por favor no dude en ponerse en contacto con nosotros."
@@ -690,6 +690,19 @@ es_CR:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productor
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría de impuestos
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -3384,7 +3397,6 @@ es_CR:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imágen"
-          or: "o"
         unit_name_placeholder: 'ej. racimos'
         index:
           header:

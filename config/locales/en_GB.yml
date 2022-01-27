@@ -276,7 +276,6 @@ en_GB:
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -653,6 +652,19 @@ en_GB:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: Product Code
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: In Stock
+        on_demand: Unlimited
+        shipping_category: Shipping Category
+        tax_category: Tax Category
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -1672,6 +1684,11 @@ en_GB:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
       agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
@@ -3170,8 +3187,6 @@ en_GB:
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
-    or: "Or"
-    order_processed_successfully: "Order processed successfully"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorisation email"
     rma_credit: "RMA credit"
@@ -3646,7 +3661,6 @@ en_GB:
           on_demand: "Unlimited"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

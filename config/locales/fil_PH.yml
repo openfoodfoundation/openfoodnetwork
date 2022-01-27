@@ -217,7 +217,6 @@ fil_PH:
   required_fields: ang mga kailangang sagutan ay may nakalagay na asterisk
   select_continue: Pumili at Magpatuloy
   remove: Tanggalin
-  or: o
   collapse_all: Itago lahat
   expand_all: Ipakita lahat
   loading: Naglo-load...
@@ -559,6 +558,19 @@ fil_PH:
         import_again: mag-upload ng isa pang file
         view_products: pumunta sa pahina ng mga produkto
         view_inventory: pumunta sa pahina ng mga imbentaryo
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Pangalan
+        display_name: Pangalan na nakikita
+        category: kategorya
+        description: paglalarawan
+        variant_unit_name: pangalan ng yunit ng variant
+        price: Presyo
+        on_hand: on hand
+        on_demand: on demand
+        shipping_category: Kategorya ng Pagpapadala
+        tax_category: kategorya ng tax
     variant_overrides:
       loading_flash:
         loading_inventory: NILO-LOAD ANG IMBENTARYO
@@ -3251,7 +3263,6 @@ fil_PH:
           on_demand: "on demand"
           product_description: "paglalarawan ng produkto"
           image: "larawan"
-          or: "o"
         unit_name_placeholder: 'hal. mga kumpol'
         index:
           header:

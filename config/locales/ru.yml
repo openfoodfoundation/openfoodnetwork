@@ -318,7 +318,6 @@ ru:
   required_fields: Обязательные поля отмечены звёздочкой
   select_continue: Выбрать и Продолжить
   remove: Удалить
-  or: или
   collapse_all: Свернуть все
   expand_all: Развернуть все
   loading: Загрузка...
@@ -695,6 +694,19 @@ ru:
         import_again: Загрузить Другой Файл
         view_products: Перейти на Страницу Товаров
         view_inventory: Перейти на Страницу Элементов товарной номенклатуры
+      product_headings:
+        producer: Производитель
+        sku: SKU
+        name: Название
+        display_name: Показать имя
+        category: Категория
+        description: Описание
+        variant_unit_name: Название Единицы Варианта
+        price: Цена
+        on_hand: В наличии
+        on_demand: По Запросу
+        shipping_category: Категория Доставки
+        tax_category: Налоговая Категория
     variant_overrides:
       loading_flash:
         loading_inventory: ЗАГРУЗКА ЭЛЕМЕНТОВ ТОВАРНОЙ НОМЕНКЛАТУРЫ
@@ -1717,6 +1729,11 @@ ru:
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
         link_text: "Условия и Положения"
+      platform_terms_of_service:
+        message_html: "Я согласен c условиями платформы %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
+        terms_and_conditions: "Условия и Положения"
       agree: Нажимая «Завершить заказ», вы соглашаетесь с тем, что заказ отправится на обработку.
       submit: Завершить заказ
       cancel: Вернуться к Способу оплаты
@@ -3262,7 +3279,6 @@ ru:
     not_found: "Не найден"
     notice_messages:
       variant_deleted: "Вариант удален"
-    or: "Или"
     payment_method_not_supported: "Способ оплаты не поддерживается"
     resend_authorization_email: "Повторно отправить письмо для авторизации"
     rma_credit: "Кредит RMA"
@@ -3737,7 +3753,6 @@ ru:
           on_demand: "По Запросу"
           product_description: "Описание Товара"
           image: "Изображение"
-          or: "или"
         unit_name_placeholder: 'напр. пучки'
         index:
           header:
