@@ -4,7 +4,6 @@ module PaymentGateways
   class PaypalController < ::BaseController
     include OrderStockCheck
     include OrderCompletion
-    include EmbeddedPages
 
     before_action :destroy_orphaned_paypal_payments, only: :confirm
     before_action :load_checkout_order, only: [:express, :confirm]
