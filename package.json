@@ -42,6 +42,7 @@
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.0.1",
+    "tom-select": "^2.0.0",
     "webpack": "~4",
     "webpack-cli": "~3"
   }
