@@ -1730,6 +1730,11 @@ fr:
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
+      platform_terms_of_service:
+        message_html: "J'accepte les %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
+        terms_and_conditions: "CGU & CGV"
       agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
