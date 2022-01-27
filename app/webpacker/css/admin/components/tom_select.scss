@@ -1,0 +1,46 @@
+.ts-dropdown {
+  margin-top: 0;
+}
+
+.ts-wrapper.single .ts-control, .ts-dropdown.single {
+  border-color: $admin-table-border;
+}
+
+.ts-control, .ts-wrapper.single.input-active .ts-control {
+  cursor: pointer;
+  padding: 6px 8px;
+  outline: 0 !important;
+  min-height: 2.5em;
+}
+
+.ts-wrapper.single .ts-control {
+  box-shadow: none;
+  background-image: none;
+  background-color: $white;
+}
+
+.dropdown-input-wrap {
+  padding: 0.2em;
+
+  .dropdown-input {
+    outline: 0;
+    padding: 4px 6px;
+    border: 1px solid $spree-green;
+    border-radius: 0.3em;
+  }
+}
+
+.ts-wrapper.no-search {
+  .dropdown-input-wrap {
+    display: none;
+  }
+}
+
+.ts-dropdown .create:hover, .ts-dropdown #admin-menu li.selected a.create, #admin-menu li.selected .ts-dropdown a.create, .ts-dropdown .option:hover, .ts-dropdown #admin-menu li.selected a.option, #admin-menu li.selected .ts-dropdown a.option, .ts-dropdown .active {
+  background-color: $spree-blue;
+  color: $white;
+}
+
+.ts-dropdown [data-selectable] .highlight {
+  background: rgba(149, 180, 255, 0.26);
+}
