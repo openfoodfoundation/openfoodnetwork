@@ -405,6 +405,19 @@ describe Spree::Payment do
           end
         end
 
+        context "if payment method has any payment fees" do
+          before do
+            payment.order.stub outstanding_balance: 10
+            payment.stub credit_allowed: 200
+          end
+
+          it "should not applied any transaction fees" do
+            payment.credit!
+            expect(payment.adjustment.try(:finalized?)).to eq(false)
+            expect(order.all_adjustments.payment_fee.eligible.length).to eq(0)
+          end
+        end
+
         context "when outstanding_balance is equal to payment amount" do
           before do
             payment.order.stub outstanding_balance: payment.amount
