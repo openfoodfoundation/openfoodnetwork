@@ -2,7 +2,7 @@
 = render "layouts/i18n_script"
 = yield :stripe_js
 
-#wrapper{ data: { hook: '' } }
+#wrapper{ data: { hook: '', controller: (yield :wrapper_data_controllers) } }
   .flash-container
     - if flash[:error]
       .flash.error= flash[:error]

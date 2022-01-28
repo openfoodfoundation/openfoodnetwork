@@ -1,19 +1,9 @@
+- content_for :wrapper_data_controllers, "toggle"
 - content_for :page_actions do
-  :javascript
-    function toggleSettings(){
-      if( $('#advanced_settings').is(":visible") ){
-        $('button#toggle_settings i').switchClass("icon-chevron-up","icon-chevron-down")
-      }
-      else {
-        $('button#toggle_settings i').switchClass("icon-chevron-down","icon-chevron-up")
-      }
-      $("#advanced_settings").slideToggle()
-    }
-
   %li
-    %button#toggle_settings{ onClick: 'toggleSettings()' }
+    %button#toggle_settings{ "data-action": "toggle#toggle" }
       = t('.advanced_settings')
       %i.icon-chevron-down
 
-#advanced_settings{ hidden: true }
+#advanced_settings{ "data-toggle-target": "content", style: "display: none" }
   = render partial: "/admin/order_cycles/advanced_settings"
