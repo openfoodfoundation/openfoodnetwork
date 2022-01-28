@@ -142,6 +142,34 @@ describe SplitCheckoutController, type: :controller do
         end
       end
 
+      context "with payment fees" do
+        let(:payment_method_with_fee) do
+          create(:payment_method, :flat_rate, amount: "1.23", distributors: [distributor])
+        end
+        let(:checkout_params) do
+          {
+            order: {
+              payments_attributes: [
+                { payment_method_id: payment_method_with_fee.id }
+              ]
+            }
+          }
+        end
+
+        it "applies the fee and updates the order total" do
+          put :update, params: params
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+
+          order.reload
+
+          expect(order.state).to eq "confirmation"
+          expect(order.payments.first.adjustment.amount).to eq 1.23
+          expect(order.adjustment_total).to eq 1.23
+          expect(order.total).to eq order.item_total + order.adjustment_total
+        end
+      end
+
       context "with a saved credit card" do
         let!(:saved_card) { create(:stored_credit_card, user: user) }
         let(:checkout_params) do
