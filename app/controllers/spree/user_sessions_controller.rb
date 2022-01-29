@@ -23,7 +23,7 @@ module Spree
         flash[:success] = t('devise.success.logged_in_succesfully')
 
         render operations: cable_car.redirect_to(
-          url: URI(return_url_or_default(after_sign_in_path_for(spree_current_user)))
+          url: return_url_or_default(after_sign_in_path_for(spree_current_user))
         )
       else
         render status: :unauthorized, operations: cable_car.inner_html(

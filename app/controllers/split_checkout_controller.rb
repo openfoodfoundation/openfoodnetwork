@@ -58,7 +58,7 @@ class SplitCheckoutController < ::BaseController
     return unless selected_payment_method&.external_gateway?
     return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
-    render operations: cable_car.redirect_to(url: URI(redirect_url))
+    render operations: cable_car.redirect_to(url: redirect_url)
     true
   end
 
