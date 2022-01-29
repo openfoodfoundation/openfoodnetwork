@@ -575,7 +575,7 @@ describe "Product Import", js: true do
         I18n.default_locale = original_default_locale
       end
 
-      it 'returns the header in selected language' do
+      xit 'returns the header in selected language' do
         csv_data = CSV.generate do |csv|
           csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
                   "shipping_category"]
