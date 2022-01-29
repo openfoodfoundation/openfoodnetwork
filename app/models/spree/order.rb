@@ -310,6 +310,8 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
+      return if state.in?(["cart", "address", "delivery"]) && Flipper.enabled?(:split_checkout)
+
       clear_legacy_taxes!
 
       Spree::TaxRate.adjust(self, line_items)
