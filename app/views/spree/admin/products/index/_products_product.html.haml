@@ -6,14 +6,13 @@
     %a{class: 'image-modal'}
       %img{'ng-src' => '{{ product.thumb_url }}'}
   %td.producer{ 'ng-show' => 'columns.producer.visible' }
-    %select.select2.fullwidth{ 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+    %select.fullwidth{ "data-controller": "tom-select", 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
   %td.sku{ 'ng-show' => 'columns.sku.visible' }
     %input{ 'ng-model' => "product.sku", :name => 'product_sku', 'ofn-track-product' => 'sku', :type => 'text' }
   %td.name{ 'ng-show' => 'columns.name.visible' }
     %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
   %td.unit{ 'ng-show' => 'columns.unit.visible' }
-    %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-      %option{'value' => '', 'ng-hide' => "hasVariants(product) && hasUnit(product)"}
+    %select.no-search{ "data-controller": "tom-select", 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
     %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)", 'ofn-maintain-unit-scale' => true }
     %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
   %td.display_as{ 'ng-show' => 'columns.unit.visible' }
