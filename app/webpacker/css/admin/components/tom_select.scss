@@ -19,6 +19,27 @@
   background-color: $white;
 }
 
+.ts-wrapper.primary.focus .ts-control,
+.ts-wrapper.primary .ts-control {
+  background-color: $spree-blue;
+  border-color: $spree-blue;
+  color: $white;
+
+  &:after {
+    border-color: $white transparent transparent transparent;
+  }
+}
+
+.ts-wrapper.dropdown-active.primary .ts-control {
+  background-color: $spree-green;
+  border-color: $spree-green;
+  color: $white;
+
+  &:after {
+    border-color: transparent transparent $white transparent;
+  }
+}
+
 .dropdown-input-wrap {
   padding: 0.2em;
 
