@@ -11,9 +11,7 @@ module Spree
 
       def duplicate
         new_product = duplicate_product
-
-        # don't dup the actual variants, just the characterising types
-        new_product.option_types = product.option_types if product.variants?
+        new_product.option_types = product.option_types
 
         new_product.save!
         new_product
