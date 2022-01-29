@@ -70,6 +70,22 @@ module PaymentGateways
           }.to change { Customer.count }.by(1)
         end
 
+        context "when the order cycle has closed" do
+          it "redirects to shopfront with message if order cycle is expired" do
+            allow(controller).to receive(:current_distributor).and_return(distributor)
+            expect(controller).to receive(:current_order_cycle).and_return(order_cycle)
+            expect(controller).to receive(:current_order).and_return(order).at_least(:once)
+            expect(order_cycle).to receive(:closed?).and_return(true)
+            expect(order).to receive(:empty!)
+            expect(order).to receive(:set_order_cycle!).with(nil)
+
+            get :confirm, params: { payment_intent: "pi_123" }
+
+            expect(response).to redirect_to shop_url
+            expect(flash[:info]).to eq I18n.t('order_cycle_closed')
+          end
+        end
+
         context "using split checkout" do
           before do
             allow(Flipper).to receive(:enabled?).with(:split_checkout) { true }
@@ -224,6 +240,21 @@ module PaymentGateways
             end
 
             it "should still process the payment" do
+              expect(order).to receive(:process_payments!) do
+                payment.complete!
+              end
+
+              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+
+              expect(response).to redirect_to order_path(order)
+              payment.reload
+              expect(payment.state).to eq("completed")
+              expect(payment.cvv_response_message).to be nil
+            end
+          end
+
+          context "when the order cycle has closed" do
+            it "should still authorize the payment successfully" do
               expect(order).to receive(:process_payments!) do
                 payment.complete!
               end
