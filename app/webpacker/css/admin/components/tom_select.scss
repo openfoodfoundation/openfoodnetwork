@@ -14,6 +14,18 @@
 }
 
 .ts-wrapper.single .ts-control {
+  padding-right: 2rem;
+}
+
+.ts-wrapper.inline, .ts-wrapper.inline.input-active {
+  width: fit-content;
+
+  .ts-control {
+    padding-right: 2rem;
+  }
+}
+
+.ts-wrapper.single .ts-control {
   box-shadow: none;
   background-image: none;
   background-color: $white;
