@@ -235,7 +235,7 @@ describe "As a consumer, I want to checkout my order", js: true do
         user.update_columns bill_address_id: saved_address.id
       end
 
-      xit "pre-fills address details" do
+      it "pre-fills address details" do
         visit checkout_path
         expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
         expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
