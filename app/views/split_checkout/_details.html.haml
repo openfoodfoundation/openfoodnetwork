@@ -129,7 +129,7 @@
           = ship_address.text_field :zipcode, { placeholder: t("split_checkout.step1.address.zipcode.placeholder") }
           = f.error_message_on "ship_address.zipcode"
 
-        %div
+        %div{ "data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
           - ship_address_country = @order.ship_address.country || DefaultCountry.country
 
           %div.checkout-input
