@@ -4,10 +4,6 @@ export default class extends Controller {
   static targets = ["source", "select"];
   static values = { options: Array };
 
-  connect() {
-    this.populateSelect(parseInt(this.sourceTarget.value));
-  }
-
   handleSelectChange() {
     this.populateSelect(parseInt(this.sourceTarget.value));
   }
