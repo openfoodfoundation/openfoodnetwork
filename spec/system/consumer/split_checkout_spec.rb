@@ -223,6 +223,25 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
     end
 
+    context "with a saved address" do
+      let!(:address_state) do
+        create(:state, name: "Testville", abbr: "TST", country: DefaultCountry.country )
+      end
+      let(:saved_address) do
+        create(:bill_address, state: address_state, zipcode: "TST01" )
+      end
+
+      before do
+        user.update_columns bill_address_id: saved_address.id
+      end
+
+      xit "pre-fills address details" do
+        visit checkout_path
+        expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
+        expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
+      end
+    end
+
     context "summary step" do
       let(:order) { create(:order_ready_for_confirmation, distributor: distributor) }
 
