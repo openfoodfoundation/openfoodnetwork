@@ -54,12 +54,24 @@
 
 .dropdown-input-wrap {
   padding: 0.2em;
+  position: relative;
+
+  &:before {
+    @extend [class^="icon-"];
+    @extend .icon-search;
+
+    position: absolute;
+    opacity: 0.4;
+    line-height: 2em;
+    left: 0.75em;
+  }
 
   .dropdown-input {
     outline: 0;
     padding: 4px 6px;
     border: 1px solid $spree-green;
     border-radius: 0.3em;
+    padding-left: 1.75em;
   }
 }
 
