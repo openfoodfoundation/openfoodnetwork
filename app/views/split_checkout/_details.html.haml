@@ -25,7 +25,7 @@
         = bill_address.text_field :phone, { placeholder: t("split_checkout.step1.your_details.phone.placeholder") }
         = f.error_message_on "bill_address.phone"
 
-    %div.checkout-substep{ "data-controller": "dependant-select", "data-dependant-select-options-value": @countries_with_states }
+    %div.checkout-substep{ "data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
       -# BILLING ADDRESS
       %div.checkout-title
         = t("split_checkout.step1.billing_address.title")
@@ -45,9 +45,11 @@
         = bill_address.text_field :city, { placeholder: t("split_checkout.step1.address.city.placeholder") }
         = f.error_message_on "bill_address.city"
 
+      - bill_address_country = @order.bill_address.country || DefaultCountry.country
+
       %div.checkout-input
         = bill_address.label :state_id, t("split_checkout.step1.address.state_id.label")
-        = bill_address.select :state_id, @countries_with_states, { }, { "data-dependant-select-target": "select" }
+        = bill_address.select :state_id, states_for_country(bill_address_country), { selected: @order.bill_address&.state_id }, { "data-dependant-select-target": "select" }
 
       %div.checkout-input
         = bill_address.label :zipcode, t("split_checkout.step1.address.zipcode.label")
@@ -56,7 +58,7 @@
 
       %div.checkout-input
         = bill_address.label :country_id, t("split_checkout.step1.address.country_id.label")
-        = bill_address.select :country_id, @countries, { selected: @order.bill_address.country_id || DefaultCountry.id }, {"data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange"}
+        = bill_address.select :country_id, countries, { selected: bill_address_country.id }, { "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange" }
 
       - if spree_current_user||true
         %div.checkout-input
@@ -121,9 +123,11 @@
           = ship_address.text_field :city, { placeholder: t("split_checkout.step1.address.city.placeholder") }
           = f.error_message_on "ship_address.city"
 
+        - ship_address_country = @order.ship_address.country || DefaultCountry.country
+
         %div.checkout-input
           = ship_address.label :state_id, t("split_checkout.step1.address.state_id.label")
-          = ship_address.select :state_id, @countries_with_states, { }, { "data-dependant-select-target": "select" }
+          = ship_address.select :state_id, states_for_country(ship_address_country), { selected: @order.ship_address&.state_id }, { "data-dependant-select-target": "select" }
 
         %div.checkout-input
           = ship_address.label :zipcode, t("split_checkout.step1.address.zipcode.label")
@@ -132,7 +136,7 @@
 
         %div.checkout-input
           = ship_address.label :country_id, t("split_checkout.step1.address.country_id.label")
-          = ship_address.select :country_id, @countries, { selected: @order.ship_address.country_id || DefaultCountry.id }, {"data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange"}
+          = ship_address.select :country_id, countries, { selected: ship_address_country.id }, { "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange" }
 
     - if spree_current_user
       %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }

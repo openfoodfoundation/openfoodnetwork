@@ -17,6 +17,24 @@ module Spree
       end.sort { |a, b| a.name <=> b.name }
     end
 
+    def countries
+      available_countries.map { |c| [c.name, c.id] }
+    end
+
+    def states_for_country(country)
+      country.states.map do |state|
+        [state.name, state.id]
+      end
+    end
+
+    def countries_with_states
+      available_countries.map { |c|
+        [c.id, c.states.map { |s|
+          [s.name, s.id]
+        }]
+      }
+    end
+
     def pretty_time(time)
       [I18n.l(time.to_date, format: :long),
        time.strftime("%l:%M %p")].join(" ")
