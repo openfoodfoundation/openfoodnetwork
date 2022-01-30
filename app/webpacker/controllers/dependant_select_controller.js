@@ -13,15 +13,25 @@ export default class extends Controller {
   }
 
   populateSelect(sourceId) {
-    const allOptions = this.optionsValue;
-    const options = allOptions.find((option) => option[0] === sourceId)[1];
-    const selectBox = this.selectTarget;
-    selectBox.innerHTML = "";
-    options.forEach((item) => {
-      const opt = document.createElement("option");
-      opt.value = item[1];
-      opt.innerHTML = item[0];
-      selectBox.appendChild(opt);
+    this.removeCurrentOptions()
+
+    this.dependantOptionsFor(sourceId).forEach((item) => {
+      this.addOption(item[0], item[1])
     });
+  }
+
+  removeCurrentOptions() {
+    this.selectTarget.innerHTML = ""
+  }
+
+  addOption(label, value) {
+    const newOption = document.createElement("option")
+    newOption.innerHTML = label
+    newOption.value = value
+    this.selectTarget.appendChild(newOption)
+  }
+
+  dependantOptionsFor(sourceId) {
+    return this.optionsValue.find((option) => option[0] === sourceId)[1]
   }
 }
