@@ -165,6 +165,7 @@ describe SplitCheckoutController, type: :controller do
 
           expect(order.state).to eq "confirmation"
           expect(order.payments.first.adjustment.amount).to eq 1.23
+          expect(order.payments.first.amount).to eq order.item_total + order.adjustment_total
           expect(order.adjustment_total).to eq 1.23
           expect(order.total).to eq order.item_total + order.adjustment_total
         end
