@@ -62,10 +62,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_checkout_redirect
-    return unless (referer_path = URI(request.referer.to_s).path)
-    return unless referer_path == main_app.checkout_path
+    return unless URI(request.referer.to_s).path == main_app.checkout_path
 
-    session["spree_user_return_to"] = referer_path
+    session["spree_user_return_to"] = main_app.checkout_path
   end
 
   def shopfront_session
