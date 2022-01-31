@@ -147,7 +147,7 @@ module Spree
         adjustment.originator = payment_method
         adjustment.label = adjustment_label
         adjustment.save
-      elsif payment_method.present?
+      elsif amount.positive? && payment_method.present?
         payment_method.create_adjustment(adjustment_label, self, true)
         adjustment.reload
       end
