@@ -188,8 +188,9 @@
 
     @media screen and (max-width: 700px) {
       &.sticked {
-        width: 100%;
         width: auto;
+        margin-left: -15px;
+        margin-right: -15px;
         box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.33);
                 
         .checkout-submit {
