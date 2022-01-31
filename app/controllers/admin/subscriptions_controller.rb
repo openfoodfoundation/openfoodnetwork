@@ -16,7 +16,7 @@ module Admin
       respond_to do |format|
         format.html do
           if view_context.subscriptions_setup_complete?(@shops)
-            @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
+            @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user).includes([:distributors, :cached_incoming_exchanges])
             @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).includes(:taggings)
             @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
           else
@@ -172,7 +172,7 @@ module Admin
         includes(:taggings).
         where(taggings: { taggable_type: "Spree::PaymentMethod",
                           taggable_id: Spree::PaymentMethod.from(Enterprise.managed_by(spree_current_user).
-                          select('enterprises.id').find_by_id(params[:enterprise_id])),
+                          select('enterprises.id').find_by(id: params[:enterprise_id])),
                           context: 'tags' })
 
       payment_method_tags.each_with_object({}) do |tag, hash|
