@@ -136,6 +136,10 @@
       display: flex;
       align-items: center;
 
+      input[type=radio] {
+        min-width: 12px;
+      }
+
       label {
         margin-top: 0.3rem;
       }
