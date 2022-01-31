@@ -79,6 +79,8 @@ module Spree
     after_create :create_stock_items
     after_create :set_position
 
+    before_save :convert_variant_weight_to_decimal
+
     around_destroy :destruction
 
     # default variant scope only lists non-deleted variants
@@ -242,6 +244,10 @@ module Spree
       return unless (product&.variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
+    end
+
+    def convert_variant_weight_to_decimal
+      self.weight = weight.to_d
     end
   end
 end
