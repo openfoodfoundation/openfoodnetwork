@@ -72,6 +72,44 @@ en_GB:
       missing: "There is no card available to charge the customer."
       processing_error: "An error occurred while processing the card."
       rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
+      authentication_required: "The card was declined as the transaction requires authentication."
+      approve_with_id: "The payment cannot be authorised."
+      call_issuer: "The card has been declined for an unknown reason."
+      card_not_supported: "The card does not support this type of purchase."
+      card_velocity_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      currency_not_supported: "The card does not support the specified currency."
+      do_not_honor: "The card has been declined for an unknown reason."
+      do_not_try_again: "The card has been declined for an unknown reason."
+      duplicate_transaction: "A transaction with identical amount and credit card information was submitted very recently."
+      fraudulent: "The payment has been declined as Stripe suspects it is fraudulent."
+      generic_decline: "The card has been declined for an unknown reason."
+      incorrect_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      insufficient_funds: "The card has insufficient funds to complete the purchase."
+      invalid_account: "The card, or account the card is connected to, is invalid."
+      invalid_amount: "The payment amount is invalid, or exceeds the amount that is allowed."
+      invalid_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      issuer_not_available: "The card issuer could not be reached, so the payment could not be authorised."
+      lost_card: "The payment has been declined because the card is reported lost."
+      merchant_blacklist: "The payment has been declined because it matches a value on the Stripe user’s block list."
+      new_account_information_available: "The card, or account the card is connected to, is invalid."
+      no_action_taken: "The card has been declined for an unknown reason."
+      not_permitted: "The payment is not permitted."
+      offline_pin_required: "The card has been declined as it requires a PIN."
+      online_or_offline_pin_required: "The card has been declined as it requires a PIN."
+      pickup_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      pin_try_exceeded: "The allowable number of PIN tries has been exceeded."
+      reenter_transaction: "The payment could not be processed by the issuer for an unknown reason."
+      restricted_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      revocation_of_all_authorizations: "The card has been declined for an unknown reason."
+      revocation_of_authorization: "The card has been declined for an unknown reason."
+      security_violation: "The card has been declined for an unknown reason."
+      service_not_allowed: "The card has been declined for an unknown reason."
+      stolen_card: "The payment has been declined because the card is reported stolen."
+      stop_payment_order: "The card has been declined for an unknown reason."
+      testmode_decline: "A Stripe test card number was used."
+      transaction_not_allowed: "The card has been declined for an unknown reason."
+      try_again_later: "The card has been declined for an unknown reason."
+      withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -137,6 +175,9 @@ en_GB:
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
     success:
       logged_in_succesfully: "Logged in successfully"
+    sessions:
+      signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -659,6 +700,8 @@ en_GB:
         display_name: Display Name
         category: Category
         description: Description
+        units: Units
+        unit_type: Unit Type
         variant_unit_name: Variant Unit Name
         price: Price
         on_hand: In Stock
@@ -1322,6 +1365,7 @@ en_GB:
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
+    order_not_loaded: "No valid order found for checkout processing"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
