@@ -24,7 +24,7 @@ module Admin
             render :setup_explanation
           end
         end
-        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix] }
+        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix], payment_method_tags: payment_method_tags_by_id }
       end
     end
 
@@ -164,6 +164,22 @@ module Admin
     def subscription_params
       @subscription_params ||= PermittedAttributes::Subscription.new(params).call.
         to_h.with_indifferent_access
+    end
+
+    def payment_method_tags_by_id
+      payment_method_tags = ::ActsAsTaggableOn::Tag.
+        joins(:taggings).
+        includes(:taggings).
+        where(taggings: { taggable_type: "Spree::PaymentMethod",
+                          taggable_id: Spree::PaymentMethod.from(Enterprise.managed_by(spree_current_user).
+                          select('enterprises.id').find_by_id(params[:enterprise_id])),
+                          context: 'tags' })
+
+      payment_method_tags.each_with_object({}) do |tag, hash|
+        payment_method_id = tag.taggings.first.taggable_id
+        hash[payment_method_id] ||= []
+        hash[payment_method_id] << tag.name
+      end
     end
   end
 end
