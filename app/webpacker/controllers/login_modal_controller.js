@@ -35,11 +35,10 @@ export default class extends Controller {
     this.backgroundTarget.style.display = "block"
     this.modalTarget.style.display = "block"
 
-    document.querySelector("body").classList.add("modal-open")
-
     setTimeout(() => {
       this.modalTarget.classList.add("in")
       this.backgroundTarget.classList.add("in")
+      document.querySelector("body").classList.add("modal-open")
     })
 
     window._paq?.push(['trackEvent', 'Signin/Signup', 'Login Modal View', window.location.href])
