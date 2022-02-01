@@ -199,6 +199,51 @@ module Spree
       end
     end
 
+    describe "supplier properties" do
+      subject { create(:product) }
+
+      it "has no supplier properties to start with" do
+        expect(subject.supplier_properties).to eq []
+      end
+
+      it "doesn't include product properties" do
+        subject.set_property("certified", "organic")
+        expect(subject.supplier_properties).to eq []
+      end
+
+      it "includes the supplier's properties" do
+        subject.supplier.set_producer_property("certified", "yes")
+        expect(subject.supplier_properties.map(&:presentation)).to eq ["certified"]
+      end
+    end
+
+    describe ".with_properties scope" do
+      let!(:product_without_wanted_property_on_supplier) { create(:product, supplier: supplier_without_wanted_property) }
+      let!(:product_with_wanted_property_on_supplier) { create(:product, supplier: supplier_with_wanted_property) }
+      let!(:product_with_wanted_property) { create(:product, properties: [wanted_property]) }
+      let!(:product_without_wanted_property_property) { create(:product, properties: [unwanted_property]) }
+      let!(:product_with_wanted_property_and_on_supplier) { create(:product, properties: [wanted_property], supplier: supplier_with_wanted_property) }
+      let!(:product_ignoring_property) { create(:product, supplier: supplier_with_wanted_property, inherits_properties: false) }
+      let(:supplier_with_wanted_property) { create(:supplier_enterprise, properties: [wanted_property]) }
+      let(:supplier_without_wanted_property) { create(:supplier_enterprise, properties: [unwanted_property]) }
+      let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
+      let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
+
+      it "returns no products without a property id" do
+        expect(Spree::Product.with_properties([])).to eq []
+      end
+
+      it "returns only products with the wanted property set both on supplier and on the product itself" do
+        expect(
+          Spree::Product.with_properties([wanted_property.id])
+        ).to match_array [
+          product_with_wanted_property_on_supplier,
+          product_with_wanted_property,
+          product_with_wanted_property_and_on_supplier
+        ]
+      end
+    end
+
     # Regression tests for Spree #2352
     context "classifications and taxons" do
       it "is joined through classifications" do
