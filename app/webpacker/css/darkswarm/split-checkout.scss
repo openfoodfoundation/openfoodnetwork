@@ -165,6 +165,43 @@
     }
   }
 
+  .checkout-step3 {
+    padding-left: 15px;
+    padding-right: 15px;
+    .checkout-submit {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 2rem;
+
+      .button {
+        margin-bottom: 1rem;
+      }
+    }
+
+    &.sticked {
+      background-color: $white;
+      box-shadow: 0 -6px 12px -6px rgba(0, 0, 0, 0.33);
+      border-left: 1px solid $light-grey;
+      border-right: 1px solid $light-grey;
+      border-top: 1px solid $light-grey;
+    }
+
+    @media screen and (max-width: 700px) {
+      &.sticked {
+        width: auto;
+        margin-left: -15px;
+        margin-right: -15px;
+        box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.33);
+                
+        .checkout-submit {
+          width: 100%;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+      }
+    }
+  }
+
   .checkout-submit {
     margin-top: 5rem;
     margin-bottom: 5rem;
