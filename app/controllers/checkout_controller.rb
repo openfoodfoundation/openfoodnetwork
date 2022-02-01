@@ -96,6 +96,9 @@ class CheckoutController < ::BaseController
   def checkout_workflow(shipping_method_id)
     while @order.state != "complete"
       if @order.state == "payment"
+        @order.updater.update_totals
+        @order.updater.update_pending_payment
+
         return if redirect_to_payment_gateway
 
         return action_failed if @order.errors.any?
