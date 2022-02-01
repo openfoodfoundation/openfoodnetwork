@@ -3,8 +3,8 @@ class SplitCustomersName < ActiveRecord::Migration[6.1]
   end
 
   def change
-    add_column :customers, :first_name, :string
-    add_column :customers, :last_name, :string
+    add_column :customers, :first_name, :string, null: false, default: ""
+    add_column :customers, :last_name, :string, null: false, default: ""
     rename_column :customers, :name, :backup_name
     reversible do |dir|
       dir.up { migrate_customer_name_data }
