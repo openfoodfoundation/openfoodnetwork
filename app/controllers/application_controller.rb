@@ -139,17 +139,6 @@ class ApplicationController < ActionController::Base
       !current_distributor.ready_for_checkout?
   end
 
-  def check_order_cycle_expiry
-    if current_order_cycle&.closed?
-      Bugsnag.notify("Notice: order cycle closed during checkout completion", order: current_order)
-      current_order.empty!
-      current_order.set_order_cycle! nil
-      flash[:info] = I18n.t('order_cycle_closed')
-
-      redirect_to main_app.shop_path
-    end
-  end
-
   # All render calls within the block will be performed with the specified format
   # Useful for rendering html within a JSON response, particularly if the specified
   # template or partial then goes on to render further partials without specifying

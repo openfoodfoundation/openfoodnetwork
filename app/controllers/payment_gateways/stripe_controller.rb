@@ -7,6 +7,7 @@ module PaymentGateways
 
     before_action :load_checkout_order, only: :confirm
     before_action :validate_payment_intent, only: :confirm
+    before_action :check_order_cycle_expiry, only: :confirm
     before_action :validate_stock, only: :confirm
 
     def confirm

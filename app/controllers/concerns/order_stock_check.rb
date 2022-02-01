@@ -18,6 +18,17 @@ module OrderStockCheck
     redirect_to main_app.cart_path
   end
 
+  def check_order_cycle_expiry
+    return unless current_order_cycle&.closed?
+
+    Bugsnag.notify("Notice: order cycle closed during checkout completion", order: current_order)
+    current_order.empty!
+    current_order.set_order_cycle! nil
+
+    flash[:info] = I18n.t('order_cycle_closed')
+    redirect_to main_app.shop_path
+  end
+
   private
 
   def sufficient_stock?
