@@ -20,10 +20,6 @@
         Spree.routes.taxonomy_taxons = "#{main_app.api_v0_taxonomy_taxons_url(@taxonomy)}";
         Spree.routes.admin_taxonomy_taxons = "#{spree.admin_taxonomy_taxons_url(@taxonomy)}";
       #taxonomy_tree.tree
-    #progress{style: "display:none;"}
-      = image_pack_tag 'select2-spinner.gif', title: 'Spinner', style: "vertical-align:bottom;"
-      = t("spree.updating")
-      \..
     .info= t("spree.taxonomy_tree_instruction")
     %br/
     .filter-actions.actions

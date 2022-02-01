@@ -9,8 +9,9 @@
       %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
   .row{ 'ng-if' => '!loaded' }
     .sixteen.columns.alpha#loading
-      = render partial: "components/spinner"
-      %h1= t('.loading_enterprises')
+      = render partial: "components/admin_spinner"
+      %h1
+        = t('.loading_enterprises')
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded && filteredEnterprises.length == 0'}
     %h1#no_results= t('.no_enterprises_found')
 
