@@ -374,6 +374,7 @@ describe OrderCycle do
                 coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
                 preferred_product_selection_from_coordinator_inventory_only: true,
                 automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
+    schedule = create(:schedule, order_cycles: [oc])
     ex1 = create(:exchange, order_cycle: oc)
     ex2 = create(:exchange, order_cycle: oc)
     oc.clone!
@@ -392,6 +393,8 @@ describe OrderCycle do
     expect(occ.coordinator_fee_ids).not_to be_empty
     expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
     expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
+    expect(occ.schedule_ids).not_to be_empty
+    expect(occ.schedule_ids).to eq(oc.schedule_ids)
 
     # Check that the exchanges have been cloned.
     original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
