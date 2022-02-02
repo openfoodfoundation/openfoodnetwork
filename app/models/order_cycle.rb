@@ -156,6 +156,7 @@ class OrderCycle < ApplicationRecord
     # rubocop:disable Layout/LineLength
     oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
     # rubocop:enable Layout/LineLength
+    oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
     oc.reload
