@@ -1,9 +1,9 @@
-require 'concerns/address_display'
-require 'spree/address'
-
 class SplitCustomersName < ActiveRecord::Migration[6.1]
+  class Spree::DummyAddress < ApplicationRecord
+    self.table_name = 'spree_addresses'
+  end
   class Customer < ApplicationRecord
-    belongs_to :bill_address, class_name: "Spree::Address"
+    belongs_to :bill_address, class_name: "Spree::DummyAddress"
   end
 
   def up
