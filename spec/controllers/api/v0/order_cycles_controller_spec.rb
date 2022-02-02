@@ -65,8 +65,9 @@ module Api
       context "with property filters" do
         it "filters by product property" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { properties_id_or_supplier_properties_id_in_any: [property1.id, property2.id] }
+                             q: { with_properties: [property1.id, property2.id] }
 
+          expect(response.status).to eq 200
           expect(product_ids).to include product1.id, product2.id
           expect(product_ids).to_not include product3.id
         end
@@ -83,8 +84,9 @@ module Api
 
           it "filter out the product that don't inherits from supplier properties" do
             api_get :products, id: order_cycle.id, distributor: distributor.id,
-                               q: { properties_id_or_supplier_properties_id_in_any: [supplier_property.id] }
+                               q: { with_properties: [supplier_property.id] }
 
+            expect(response.status).to eq 200
             expect(product_ids).to include product1.id, product2.id
             expect(product_ids).to_not include product3.id
           end
