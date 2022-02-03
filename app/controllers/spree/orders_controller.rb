@@ -139,8 +139,10 @@ module Spree
     def require_order_authentication
       return if session[:access_token] || params[:order_token] || spree_current_user
 
+      store_location_for :spree_user, request.original_fullpath
+
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+      redirect_to main_app.root_path(anchor: "/login", after_login: request.original_fullpath)
     end
 
     def order_to_update

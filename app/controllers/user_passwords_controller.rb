@@ -1,38 +1,36 @@
 # frozen_string_literal: true
 
 class UserPasswordsController < Spree::UserPasswordsController
+  include CablecarResponses
+
   layout 'darkswarm'
 
-  before_action :set_admin_redirect, only: :edit
-
   def create
-    render_unconfirmed_response && return if user_unconfirmed?
+    return render_unconfirmed_response if user_unconfirmed?
 
     self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
 
     if resource.errors.empty?
-      set_flash_message(:success, :send_instructions) if is_navigational_format?
-      respond_with resource, location: main_app.login_path
+      render operations: cable_car.inner_html(
+        "#forgot-feedback",
+        partial("layouts/alert", locals: { type: "success", message: t(:password_reset_sent) })
+      )
     else
-      respond_to do |format|
-        format.html do
-          respond_with_navigational(resource) { render :new }
-        end
-        format.js do
-          render json: { error: t('email_not_found') }, status: :not_found
-        end
-      end
+      render status: :not_found, operations: cable_car.inner_html(
+        "#forgot-feedback",
+        partial("layouts/alert", locals: { type: "alert", message: t(:email_not_found) })
+      )
     end
   end
 
   private
 
-  def set_admin_redirect
-    session["spree_user_return_to"] = params[:return_to] if params[:return_to]
-  end
-
   def render_unconfirmed_response
-    render json: { error: t('email_unconfirmed') }, status: :unauthorized
+    render status: :unprocessable_entity, operations: cable_car.inner_html(
+      "#forgot-feedback",
+      partial("layouts/alert",
+              locals: { type: "alert", message: t(:email_unconfirmed), unconfirmed: true })
+    )
   end
 
   def user_unconfirmed?

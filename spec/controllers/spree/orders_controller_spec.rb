@@ -77,7 +77,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "redirects to unauthorized" do
         get :show, params: { id: order.number }
-        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{order_path(order)}"))
+        expect(response).to redirect_to(root_path(anchor: "/login", after_login: order_path(order)))
         expect(flash[:error]).to eq("Please log in to view your order.")
       end
     end

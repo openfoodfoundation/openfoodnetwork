@@ -1,0 +1,25 @@
+- signup_form_user = Spree::User.new if local_assigns[:signup_form_user].nil?
+
+#signup-tab
+  = form_with model: signup_form_user, url: spree.account_path, scope: :user, data: { remote: "true" } do |form|
+    .row
+      .large-12.columns#signup-feedback
+
+    .row
+      .large-12.columns
+        = form.label :email, t(:signup_email)
+        = form.email_field :email, { tabindex: 1, "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+        = form.error_message_on :email
+    .row
+      .large-12.columns
+        = form.label :password, t(:choose_password)
+        = form.password_field :password, { tabindex: 2, autocomplete: "off" }
+        = form.error_message_on :password
+    .row
+      .large-12.columns
+        = form.label :password_confirmation, t(:confirm_password)
+        = form.password_field :password_confirmation, { tabindex: 3, autocomplete: "off" }
+        = form.error_message_on :password_confirmation
+    .row
+      .large-12.columns
+        = form.submit t(:action_signup), { class: "button primary", tabindex: 4 }
