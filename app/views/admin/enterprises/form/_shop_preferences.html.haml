@@ -71,6 +71,19 @@
     .eight.columns.alpha.omega
       %i.icon-warning-sign
       = t '.recommend_require_login'
+
+.row
+  .three.columns.alpha
+    %label= t '.preferred_enterprise_stock_display'
+    %div{'ofn-with-tip' => t('.preferred_enterprise_stock_display_tip')}
+      %a= t 'admin.whats_this'
+  .three.columns
+    = f.radio_button :preferred_product_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_stock_display', 'ng-value' => 'true'
+    = f.label :preferred_product_stock_display, t('.enabled'), value: :true
+  .five.columns.omega
+    = f.radio_button :preferred_product_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_stock_display', 'ng-value' => 'false' 
+    = f.label :preferred_product_stock_display, t('.disabled'), value: :false
+
 .row
   .three.columns.alpha
     %label= t '.allow_order_changes'
