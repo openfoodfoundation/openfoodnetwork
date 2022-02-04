@@ -22,7 +22,7 @@ describe UserConfirmationsController, type: :controller do
       end
 
       it "redirects the user to login" do
-        expect(response).to redirect_to login_path(validation: 'not_confirmed')
+        expect(response).to redirect_to root_path(anchor: "/login", validation: "not_confirmed")
       end
     end
 
@@ -34,19 +34,21 @@ describe UserConfirmationsController, type: :controller do
 
       it "redirects the user to #/login by default" do
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to login_path(validation: 'confirmed')
+        expect(response).to redirect_to root_path(anchor: "/login", validation: "confirmed")
       end
 
       it "redirects to previous url, if present" do
-        session[:confirmation_return_url] = producers_path + '#/login'
+        session[:confirmation_return_url] = producers_path(anchor: "#/login")
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to producers_path + '#/login?validation=confirmed'
+        expect(response).to redirect_to producers_path(anchor: "#/login", validation: "confirmed")
       end
 
       it "redirects to previous url on /register path" do
-        session[:confirmation_return_url] = registration_path + '#/signup?after_login=%2Fregister'
+        session[:confirmation_return_url] = registration_path(anchor: "#/signup", after_login: "/register")
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to registration_path + '#/signup?after_login=%2Fregister&validation=confirmed'
+        expect(response).
+          to redirect_to registration_path(anchor: "#/signup",
+                                           after_login: "/register", validation: "confirmed")
       end
 
       it "redirects to set password page, if user needs to reset their password" do

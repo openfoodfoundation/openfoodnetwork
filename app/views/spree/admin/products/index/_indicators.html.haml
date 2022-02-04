@@ -1,7 +1,7 @@
 %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
-  %br
-  = render partial: "components/spinner"
-  %h1= t('.title')
+  = render partial: "components/admin_spinner"
+  %h1
+    = t('.title')
 
 %div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && q.query.length == 0' }
   %h1#no_results= t('.no_products')

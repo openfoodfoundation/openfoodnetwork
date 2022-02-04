@@ -7,6 +7,7 @@ module PaymentGateways
 
     before_action :load_checkout_order, only: :confirm
     before_action :validate_payment_intent, only: :confirm
+    before_action :check_order_cycle_expiry, only: :confirm
     before_action :validate_stock, only: :confirm
 
     def confirm
@@ -46,7 +47,7 @@ module PaymentGateways
       return if session[:access_token] || params[:order_token] || spree_current_user
 
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+      redirect_to root_path(anchor: "login", after_login: request.original_fullpath)
     end
 
     def validate_stock

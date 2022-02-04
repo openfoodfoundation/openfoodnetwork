@@ -25,6 +25,20 @@ describe CheckoutController, type: :controller do
     expect(response).to redirect_to shop_path
   end
 
+  it "redirects to shopfront with message if order cycle is expired" do
+    allow(controller).to receive(:current_distributor).and_return(distributor)
+    expect(controller).to receive(:current_order_cycle).and_return(order_cycle).at_least(:once)
+    expect(controller).to receive(:current_order).and_return(order).at_least(:once)
+    expect(order_cycle).to receive(:closed?).and_return(true)
+    expect(order).to receive(:empty!)
+    expect(order).to receive(:set_order_cycle!).with(nil)
+
+    get :edit
+
+    expect(response).to redirect_to shop_url
+    expect(flash[:info]).to eq I18n.t('order_cycle_closed')
+  end
+
   it "redirects home with message if hub is not ready for checkout" do
     allow(distributor).to receive(:ready_for_checkout?) { false }
     allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)

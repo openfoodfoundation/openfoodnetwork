@@ -1,7 +1,11 @@
 $(document).ready ->
+  progressTimer = null
   $(document).ajaxStart ->
-    $("#progress").fadeIn()
+    progressTimer = setTimeout ->
+      $("#progress").fadeIn()
+    , 500
 
   $(document).ajaxStop ->
-    $("#progress").fadeOut()
+    clearTimeout(progressTimer) if progressTimer?
+    $("#progress").stop().hide()
 

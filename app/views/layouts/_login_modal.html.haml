@@ -1,0 +1,24 @@
+%div{"data-controller": "login-modal" }
+  .reveal-modal-bg.fade{ "data-login-modal-target": "background", "data-action": "click->login-modal#close" }
+
+  .reveal-modal.fade.login-modal.medium{ "data-login-modal-target": "modal" }
+    %div{ "data-controller": "tabs" }
+      %dl.tabs
+        %dd
+          %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }= t(:label_login)
+        %dd
+          %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }= t(:label_signup)
+        %dd
+          %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }= t(:forgot_password)
+
+      .tabs-content
+        .content.active
+          %div{ data: { "tabs-target": "content" } }
+            = render "layouts/login_tab"
+          %div{ data: { "tabs-target": "content" } }
+            = render "layouts/signup_tab"
+          %div{ data: { "tabs-target": "content" } }
+            = render "layouts/forgot_tab"
+
+    %a.close-reveal-modal{ "data-action": "click->login-modal#close" }
+      %i.ofn-i_009-close

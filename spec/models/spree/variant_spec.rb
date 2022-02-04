@@ -525,6 +525,38 @@ module Spree
           expect(product.master).to be_valid
         end
       end
+
+      context "when the product's unit is non-weight" do
+        before do
+          product.update_attribute :variant_unit, 'volume'
+          product.reload
+          variant.reload
+        end
+
+        it "sets weight to decimal before save if it's integer" do
+          variant.weight = 1
+          variant.save!
+          expect(variant.weight).to eq 1.0
+        end
+
+        it "sets weight to 0.0 before save if it's nil" do
+          variant.weight = nil
+          variant.save!
+          expect(variant.weight).to eq 0.0
+        end
+
+        it "sets weight to 0.0 if input is a non numerical string" do
+          variant.weight = "BANANAS!"
+          variant.save!
+          expect(variant.weight).to eq 0.0
+        end
+
+        it "sets weight to correct decimal value if input is numerical string" do
+          variant.weight = "2"
+          variant.save!
+          expect(variant.weight).to eq 2.0
+        end
+      end
     end
 
     describe "unit value/description" do

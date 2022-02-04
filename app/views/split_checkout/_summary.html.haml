@@ -71,10 +71,11 @@
     
     = render 'spree/orders/summary', order: @order
 
-- if any_terms_required?(@order.distributor)
-  = render partial: "terms_and_conditions", locals: { f: f }
-
-%div.checkout-submit.medium-6
-  = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-  %a.button.cancel{href: main_app.cart_path}
-    = t("split_checkout.step3.cancel")
+.checkout-step3{"data-controller": "sticky", "data-sticky-target": "container"}
+  - if any_terms_required?(@order.distributor)
+    = render partial: "terms_and_conditions", locals: { f: f }
+  .medium-6
+    .checkout-submit
+      = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+      %a.button.cancel{href: main_app.cart_path}
+        = t("split_checkout.step3.cancel")
