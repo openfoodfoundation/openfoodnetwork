@@ -717,16 +717,15 @@ module Spree
     def ensure_customer
       return if associate_customer
 
-      self.customer = Customer.new(
+      self.customer = Customer.create(
         enterprise: distributor,
         email: email_for_customer,
         user: user,
-        first_name: bill_address&.first_name,
-        last_name: bill_address&.last_name,
+        first_name: bill_address&.first_name.to_s,
+        last_name: bill_address&.last_name.to_s,
         bill_address: bill_address&.clone,
         ship_address: ship_address&.clone
       )
-      customer.save
 
       Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
     end
