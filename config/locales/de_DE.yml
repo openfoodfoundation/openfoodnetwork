@@ -462,8 +462,8 @@ de_DE:
     unsaved_changes: "Sie haben ungespeicherte Änderungen!"
     available_units: "Verfügbare Einheiten"
     shopfront_settings:
-      embedded_shopfront_settings: "Einstellungen für eingebettete Läden"
-      enable_embedded_shopfronts: "Eingebettete Läden erlauben"
+      embedded_shopfront_settings: "Einstellungen für eingebettete Gruppen"
+      enable_embedded_shopfronts: "Eingebettete Gruppen erlauben"
       embedded_shopfronts_whitelist: "Zugelassene externe Domains"
     terms_of_service_files:
       create:
@@ -700,6 +700,8 @@ de_DE:
         display_name: Variantenname
         category: Kategorie
         description: Beschreibung
+        units: Menge
+        unit_type: Einheit
         variant_unit_name: Name der Varianteneinheit
         price: Preis
         on_hand: Verfügbar

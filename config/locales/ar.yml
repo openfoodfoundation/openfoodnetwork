@@ -41,6 +41,8 @@ ar:
           attributes:
             email:
               taken: "يوجد حساب متصل بهذا الايميل.\nالرجاء الدخول او اعادة تعيين كلمة السر."
+            reset_password_token:
+              invalid: غير صالحة
         spree/order:
           no_card: لا توجد بطاقات ائتمان معتمدة لشحنها
         spree/credit_card:
@@ -56,6 +58,58 @@ ar:
             using_producer_stock_settings_but_count_on_hand_set: "يجب أن تكون فارغة بسبب استخدام إعدادات المخزون للمنتج"
             on_demand_but_count_on_hand_set: "يجب أن تكون فارغة إذا كانت عند الطلب"
             limited_stock_but_no_count_on_hand: "يجب ان تكون تحديد بسبب فرض مدودية المخزون"
+  stripe:
+    error_code:
+      incorrect_number: "رقم البطاقة غير صحيح."
+      invalid_number: " رقم بطاقة الائتمان غير صالح."
+      invalid_expiry_month: "شهر انتهاء صلاحية البطاقة غير صالح."
+      invalid_expiry_year: "سنة انتهاء البطاقة غير صالحة."
+      invalid_cvc: "رمز أمان البطاقة غير صالح."
+      expired_card: "صلاحية البطاقة منتهية."
+      incorrect_cvc: "رمز أمان البطاقة غير صحيح."
+      incorrect_zip: "فشل التحقق من صحة الرمز البريدي للبطاقة."
+      card_declined: "تم رفض البطاقة."
+      missing: "لا توجد بطاقة للعميل ليتم تحصيل الرسوم."
+      processing_error: "حدث خطأ أثناء معالجة البطاقة."
+      rate_limit: "حدث خطأ بسبب وصول الطلبات إلىAPI  بسرعة كبيرة. يرجى إعلامنا إذا كنت تواجه هذا الخطأ باستمرار."
+      authentication_required: "تم رفض البطاقة لأن المعاملة تتطلب المصادقة."
+      approve_with_id: "لا يمكن السماح بالدفع."
+      call_issuer: "تم رفض البطاقة لسبب غير معروف."
+      card_not_supported: "البطاقة لا تدعم هذا النوع من الشراء."
+      card_velocity_exceeded: "تجاوز العميل الرصيد أو حد الائتمان المتاح على بطاقته."
+      currency_not_supported: "البطاقة لا تدعم العملة المحددة."
+      do_not_honor: "تم رفض البطاقة لسبب غير معروف."
+      do_not_try_again: "تم رفض البطاقة لسبب غير معروف."
+      duplicate_transaction: "تم تقديم معاملة بالمبلغ نفسه ومعلومات بطاقة الائتمان مؤخرًا."
+      fraudulent: "تم رفض الدفع لأن Stripe يشتبه في أنه احتيالي."
+      generic_decline: "تم رفض البطاقة لسبب غير معروف."
+      incorrect_pin: "رقم التعريف الشخصي الذي تم إدخاله غير صحيح. ينطبق رمز الرفض هذا فقط على المدفوعات التي تتم باستخدام قارئ البطاقة."
+      insufficient_funds: "لا تحتوي البطاقة على أموال كافية لإتمام عملية الشراء."
+      invalid_account: "البطاقة أو الحساب الذي تم توصيل البطاقة به غير صالح."
+      invalid_amount: "مبلغ الدفع غير صالح أو يتجاوز المبلغ المسموح به."
+      invalid_pin: "رقم التعريف الشخصي الذي تم إدخاله غير صحيح. ينطبق رمز الرفض هذا فقط على المدفوعات التي تتم باستخدام قارئ البطاقة."
+      issuer_not_available: "تعذر الوصول إلى جهة إصدار البطاقة ، لذلك لا يمكن تفويض الدفع."
+      lost_card: "تم رفض الدفع بسبب الإبلاغ عن فقدان البطاقة."
+      merchant_blacklist: "تم رفض الدفع لأنه يطابق قيمة موجودة في قائمة الحظر الخاصة بمستخدم Stripe."
+      new_account_information_available: "البطاقة أو الحساب الذي تم توصيل البطاقة به غير صالح."
+      no_action_taken: "تم رفض البطاقة لسبب غير معروف."
+      not_permitted: "الدفع غير مسموح به."
+      offline_pin_required: "تم رفض البطاقة لأنها تتطلب رقم تعريف شخصي."
+      online_or_offline_pin_required: "تم رفض البطاقة لأنها تتطلب رقم تعريف شخصي."
+      pickup_card: "لا يمكن استخدام البطاقة لإجراء هذه الدفعة (من الممكن أن يكون قد تم الإبلاغ عن ضياعها أو سرقتها)."
+      pin_try_exceeded: "تم تجاوز العدد المسموح به من محاولات PIN."
+      reenter_transaction: "لا يمكن للمُصدر معالجة الدفعة لسبب غير معروف."
+      restricted_card: "لا يمكن استخدام البطاقة لإجراء هذه الدفعة (من الممكن أن يكون قد تم الإبلاغ عن ضياعها أو سرقتها)."
+      revocation_of_all_authorizations: "تم رفض البطاقة لسبب غير معروف."
+      revocation_of_authorization: "تم رفض البطاقة لسبب غير معروف."
+      security_violation: "تم رفض البطاقة لسبب غير معروف."
+      service_not_allowed: "تم رفض البطاقة لسبب غير معروف."
+      stolen_card: "تم رفض الدفع لأنه تم الإبلاغ عن سرقة البطاقة."
+      stop_payment_order: "تم رفض البطاقة لسبب غير معروف."
+      testmode_decline: "تم استخدام رقم بطاقة اختبار Stripe."
+      transaction_not_allowed: "تم رفض البطاقة لسبب غير معروف."
+      try_again_later: "تم رفض البطاقة لسبب غير معروف."
+      withdrawal_count_limit_exceeded: "تجاوز العميل الرصيد أو حد الائتمان المتاح على بطاقته."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -92,8 +146,12 @@ ar:
   card_details: "معلومات البطاقة"
   card_type: "نوع البطاقة"
   cardholder_name: "إسم صاحب البطاقة"
+  community_forum_url: "عنوان منتدى المجتمع"
   customer_instructions: "تعليمات العملاء"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "لا يمكن أن تكون كلمة مرور المستخدم فارغة. الرجاء إدخال كلمة المرور."
     confirmations:
       send_instructions: "ستتلقى رسالة بريد إلكتروني تحتوي على إرشادات حول كيفية تأكيد حسابك في بضع دقائق."
       failed_to_send: "حدث خطأ أثناء إرسال رسالة التأكيد الإلكترونية."
@@ -117,19 +175,46 @@ ar:
       already_registered: "هذا البريد الالكتروني مسجل سابقا. يرجى تسجيل الدخول للمتابعة ، أو العودة واستخدام عنوان بريد إلكتروني آخر."
     success:
       logged_in_succesfully: "تم تسجيل الدخول بنجاح"
+    sessions:
+      signed_out: "تم تسجيل الخروج بنجاح."
+      already_signed_out: "تم تسجيل الخروج بنجاح."
     user_passwords:
       spree_user:
         updated_not_active: "تمت إعادة تعيين كلمة المرور الخاصة بك ، ولكن لم يتم تأكيد بريدك الإلكتروني بعد."
         updated: "تم تغيير كلمة المرور الخاصة بك بنجاح. انت الآن مسجل دخولك."
         send_instructions: "ستتلقى رسالة بريد إلكتروني تحتوي على إرشادات حول كيفية تأكيد حسابك في بضع دقائق."
   home_page_alert_html: "الصفحة الرئيسية تنبيه HTML"
+  hub_signup_case_studies_html: "Hub signup case studies HTML"
+  hub_signup_detail_html: "Hub signup detail HTML"
+  hub_signup_pricing_table_html: "Hub signup pricing table HTML"
+  group_signup_case_studies_html: "Group signup case studies HTML"
+  group_signup_detail_html: "Group signup detail HTML"
+  group_signup_pricing_table_html: "Group signup pricing table HTML"
   item_description: "وصف السلعة"
+  menu_1_icon_name: "Menu 1 icon name"
+  menu_2_icon_name: "Menu 2 icon name"
+  menu_3_icon_name: "Menu 3 icon name"
+  menu_4_icon_name: "Menu 4 icon name"
+  menu_5_icon_name: "Menu 5 icon name"
+  menu_6_icon_name: "Menu 6 icon name"
+  menu_7_icon_name: "Menu 7 icon name"
   models:
     order_cycle:
       cloned_order_cycle_name: "نسخة من %{order_cycle}"
     tax_rate:
       included_in_price: "مشمول في السعر"
+  open_street_map_enabled: "تمكين خريطة Open Street "
+  open_street_map_default_latitude: "افتح خط العرض الافتراضي خريطة Open Street "
+  open_street_map_default_longitude: "خريطة Open Street الشارع الافتراضية لخط الطول"
+  open_street_map_provider_name: "اسم مزود خريطة Open Street "
+  open_street_map_provider_options: "خيارات مزود خريطة Open Street "
+  producer_signup_case_studies_html: "Producer signup case studies HTML"
+  producer_signup_detail_html: "Producer signup detail HTML"
+  producer_signup_pricing_table_html: "Producer signup pricing table HTML"
+  producers_social: "تواصل المنتجين"
+  resume_order: "استئناف طلب الشرء"
   sku: "SKU"
+  subtotal: "المجموع الفرعي"
   tax_rate: "معدل الضريبة"
   validators:
     date_time_string_validator:
@@ -156,6 +241,7 @@ ar:
   producer_mailer:
     order_cycle:
       subject: "تقرير دورة الطلبية لـ %{producer}"
+  provider_settings: "إعدادات المزود"
   shipment_mailer:
     shipped_email:
       dear_customer: "عزيزي العميل،"
@@ -207,6 +293,7 @@ ar:
   search_by_name: البحث بالاسم أو الضاحية ...
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
   charges_sales_tax: رسوم ضريبة السلع والخدمات؟
+  business_address: "عنوان العمل"
   print_invoice: "طباعة الفاتورة"
   print_ticket: "طباعة التذكرة"
   select_ticket_printer: "حدد الطابعة للتذاكر"
@@ -275,7 +362,9 @@ ar:
   error: خطأ
   processing_payment: "معالجة الدفع..."
   no_pending_payments: "لا توجد دفعات معلقة"
+  invalid_payment_state: "حالة الدفع غير صالحة: %{state}"
   filter_results: تصفية النتائج
+  clear_filters: ازالة المرشحات
   quantity: الكمية
   pick_up: النقل
   copy: نسخ
@@ -611,6 +700,8 @@ ar:
         display_name: اسم العرض
         category: الفئة
         description: وصف
+        units: الوحدات
+        unit_type: نوع الوحدة
         variant_unit_name: اسم وحدة النوع
         price: السعر
         on_hand: متوفر
@@ -696,8 +787,15 @@ ar:
           terms_and_conditions: "الأحكام والشروط"
           remove_terms_and_conditions: "إزالة الملف"
           uploaded_on: "تم الرفع في"
+          reset_form: "إعادة تعيين النموذج"
         business_address:
+          company_legal_name: الاسم القانوني للشركة
+          company_placeholder: شركة مثال
+          address1: العنوان القانوني
+          address1_placeholder: 123 شارع هاي
           address2: العنوان (تابع)
+          legal_phone_number: رقم الهاتف القانوني
+          phone_placeholder: "98123 4565"
         contact:
           name: اسم
           name_placeholder: على سبيل المثال. برقوق غوستاف
@@ -808,6 +906,9 @@ ar:
           shopfront_category_ordering_note: "(من اعلى لاسفل)"
           open_date: "تاريخ الفتح "
           close_date: "تاريخ الاغلاق"
+          display_ordering_in_shopfront: "عرض الطلب في واجهة المتجر:"
+          shopfront_sort_by_category: "حسب التصنيف"
+          shopfront_sort_by_producer: "حسب المنتج"
           shopfront_sort_by_category_placeholder: "الفئة"
           shopfront_sort_by_producer_placeholder: "المنتج"
         social:
@@ -937,6 +1038,8 @@ ar:
         back_to_list: "العودة للقائمة"
         save_and_back_to_list: "حفظ والعودة إلى القائمة"
         choose_products_from: "اختر المنتجات من:"
+        re_notify_producers: إعادة إخطار المنتجين
+        notify_producers_tip: سيؤدي هذا إلى إرسال بريد إلكتروني إلى كل منتج مع قائمة طلباتهم.
       incoming:
         incoming: "الوارد"
         supplier: "المورد"
@@ -977,6 +1080,8 @@ ar:
         add_supplier: 'إضافة المورد'
         add_distributor: 'إضافة موزع'
       advanced_settings:
+        automatic_notifications: إخطارات تلقائية
+        automatic_notifications_tip: إخطار المنتجين تلقائيًا بأوامرهم عبر رسائل البريد الإلكتروني عند إغلاق دورات الطلب
         title: إعدادات متقدمة
         choose_product_tip: يمكنك تقييد المنتجات الواردة والصادرة إلى مخزون %{inventory} فقط.
         preferred_product_selection_from_coordinator_inventory_only_here: متسقين المخزون فقط
@@ -1007,6 +1112,7 @@ ar:
         schedule: جدول
         schedules: جداول
         new_schedule: جدول جديد
+        new_schedule_tooltip: معدل تكرار تقديم طلب الاشتراك
       name_and_timing_form:
         name: اسم
         orders_open: طلبات مفتوحة في
@@ -1102,6 +1208,11 @@ ar:
       enterprise_fee_summary:
         name: "ملخص رسوم الشركات"
         description: "ملخص رسوم الشركات التي تم جمعها"
+      errors:
+        no_report_type: "الرجاء تحديد نوع التقرير"
+        report_not_found: "التقرير غير موجود"
+        missing_ransack_params: "يرجى تقديم معلمات بحث Ransack في الطلب"
+      hidden_field: "< Hidden >"
       summary_row:
         total: "مجموع"
       table:
@@ -1117,6 +1228,13 @@ ar:
           quantity: "الكمية"
           is_temperature_controlled: "التحكم المؤقت؟"
           temp_controlled: "التحكم المؤقت؟"
+      rendering_options:
+        generate_report: "انشاء تقرير:"
+        on_screen: "على الشاشة"
+        csv_spreadsheet: "جدول بيانات CSV"
+        excel_spreadsheet: "جداول البيانات إكسل"
+        openoffice_spreadsheet: "جدول بيانات OpenOffice"
+        hide_summary_rows: "إخفاء صفوف التلخيص"
       packing:
         name: "تقارير التعبئة"
         customer_report: "تم التعبئة من العملاء"
@@ -1125,6 +1243,7 @@ ar:
       index:
         title: "الاشتراكات"
         new: "اشتراك جديد"
+      issue: "اصدار"
       new:
         title: "اشتراك جديد"
       edit:
@@ -1244,6 +1363,8 @@ ar:
       message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
       terms_and_conditions: "الأحكام والشروط"
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
+    payment_cancelled_due_to_stock: "تم إلغاء الدفع: لا يمكن إتمام عملية الدفع بسبب مشاكل في المخزون."
+    order_not_loaded: "لم يتم العثور على أمر صالح لمعالجة اكمال الطلب"
   shops:
     hubs:
       show_closed_shops: "عرض المتاجر المغلقة"
@@ -1527,41 +1648,82 @@ ar:
   cost_currency: "تكلفة العملة"
   split_checkout:
     your_details_without_number: تفاصيلك
+    payment_method_without_number: 'طريقة الدفع '
+    order_summary_without_number: ملخص الطلب
     step1:
       your_details:
         title: تفاصيلك
         first_name:
           label: الاسم الاول
+          placeholder: على سبيل المثال ، جين
         last_name:
           label: الكنية
+          placeholder: على سبيل المثال ، الفلاح
         email:
           label: البريد الإلكتروني
+          placeholder: على سبيل المثال Janedoe@email.com
         phone:
           label: رقم الهاتف
+          placeholder: مثال  07987654321
       billing_address:
         title: عنوان وصول الفواتير
       address:
+        address1:
+          label: العنوان (الشارع + رقم المنزل)
+          placeholder: على سبيل المثال شقق Flat 1 Elm
+        address2:
+          label: معلومات عنوان إضافية (اختياري)
+          placeholder: على سبيل المثال كافاليير أفينور
         city:
           label: مدينة
+          placeholder: على سبيل المثال لندن
         state_id:
           label: محافظة
         zipcode:
           label: الرمز البريدي
+          placeholder: على سبيل المثال SW11 3QN
         country_id:
           label: بلد
       delivery_address:
         title: عنوان التسليم
+      submit: التالي - طريقة الدفع
+      cancel: رجوع إلى تعديل السلة
     step2:
+      payment_method:
+        title: 'طريقة الدفع '
       form:
+        card_number:
+          label: رقم البطاقة
+          placeholder: على سبيل المثال 4242 4242 4242 4242
+        card_verification_value:
+          label: رمز التحقق من البطاقة
         card_month:
           label: شهر
         card_year:
           label: عام
+        stripe:
+          use_saved_card: استخدم البطاقة المحفوظة
+          use_new_card: أدخل معرفات بطاقتك
+          save_card: حفظ البطاقة للاستخدام في المستقبل
+          create_new_card: أو أدخل تفاصيل البطاقة الجديدة أدناه
+      explaination: يمكنك مراجعة طلبك وتأكيده في الخطوة التالية والتي تتضمن التكاليف النهائية.
+      submit: التالي - ملخص الطلب
+      cancel: العودة إلى التفاصيل الخاصة بك
     step3:
       your_details:
         title: تفاصيلك
+        edit: تحرير التفاصيل الخاصة بك
       billing_address:
         title: عنوان وصول الفواتير
+      shipping_address:
+        title: عنوان الشحن
+      delivery_info:
+        title: معلومات التوصيل
+      payment_method:
+        title: 'طريقة الدفع '
+        edit: تحرير طريقة الدفع
+      order:
+        title: الطلب الكلي
       terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} للبائع."
         link_text: "الأحكام والشروط"
@@ -1570,8 +1732,17 @@ ar:
       all_terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
         terms_and_conditions: "الأحكام والشروط"
+      agree: بالنقر فوق "إكمال الطلب" فإنك توافق على معالجة طلبك.
+      submit: اكمل الطلب
+      cancel: العودة إلى طريقة الدفع
     errors:
+      global: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
+      terms_not_accepted: الرجاء قبول الشروط والأحكام
+      required: لا يمكن أن يكون الحقل فارغًا
+      invalid_number: "يرجى إدخال رقم هاتف صالح"
       invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
+      select_a_shipping_method: حدد طريقة الشحن
+      select_a_payment_method: اختر طريقة الدفع
   order_paid: دفع
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب
@@ -1671,6 +1842,7 @@ ar:
   producer_mail_order_text: "فيما يلي ملخص لطلبات منتجاتك:"
   producer_mail_delivery_instructions: "استلام المخزون / تعليمات التسليم:"
   producer_mail_signoff: "شكرا وأطيب التمنيات"
+  producer_mail_order_customer_text: "فيما يلي ملخص للأوامر التي تم تجميعها حسب العملاء"
   shopping_oc_closed: طلبات مغلقة
   shopping_oc_closed_description: "يرجى الانتظار حتى تفتح الدورة التالية (أو اتصل بنا مباشرة لمعرفة ما إذا كان يمكننا قبول أي طلبات متأخرة)"
   shopping_oc_last_closed: "آخر دورة تم إغلاق %{distance_of_time} منذ"
@@ -2079,6 +2251,8 @@ ar:
   fundraising_fee: "رسوم جمع التبرعات"
   price_graph: "الرسم البياني للسعر"
   included_tax: "الضريبة مشمولة"
+  tax: "ضريبة"
+  tax_amount_included: "%{amount} (مضمنة)"
   balance: "الباقي"
   transaction: "عملية تجارية"
   transaction_date: "تاريخ"
@@ -2150,6 +2324,7 @@ ar:
   calculator_values: "القيم المحوسبة"
   calculator_settings_warning: "إذا كنت تقوم بتغيير نوع الحاسبة ، فيجب عليك الحفظ أولاً قبل أن تتمكن من تحرير إعدادات الحاسبة"
   calculator_preferred_unit_error: "يجب أن تكون كجم أو رطل"
+  calculator_preferred_value_error: "مدخل غير صالح. الرجاء استخدام الأرقام فقط. على سبيل المثال: 10 ، 5.5 ، -20"
   flat_percent_per_item: "نسبة ثابتة (لكل بند)"
   flat_rate_per_item: "سعر ثابت (لكل بند)"
   flat_rate_per_order: "تسعيرة ثابته (لكل طلب)"
@@ -2157,6 +2332,7 @@ ar:
   price_sack: "كيس السعر"
   new_order_cycles: "دورات الطلبات الجديدة"
   new_order_cycle: "دورة ترتالطلب الجديدة"
+  new_order_cycle_tooltip: "فتح المحل لفترة زمنية معينة"
   select_a_coordinator_for_your_order_cycle: "حدد منسق لدورة طلبك"
   notify_producers: 'أخبر المنتجين'
   edit_order_cycle: "تحرير دورة الطلب"
@@ -2521,6 +2697,7 @@ ar:
     resolve_errors: يرجى حل الأخطاء التالية
     more_items: "+ %{count} ايضا"
     default_card_updated: تم تحديث البطاقة الافتراضية
+    default_card_voids_auth: سيؤدي تغيير بطاقتك الافتراضية إلى إزالة تراخيص المتاجر الحالية لشحنها. يمكنك إعادة تفويض المتاجر بعد تحديث البطاقة الافتراضية. هل ترغب في تغيير البطاقة الافتراضية؟
     cart:
       add_to_cart_failed: >
           حدثت مشكلة أثناء إضافة هذا المنتج إلى عربة التسوق. ربما أصبح غير متوفر أو
@@ -2557,6 +2734,8 @@ ar:
           title: "تحميل الشروط والأحكام"
           message_1: "سيتعين على جميع المشترين الموافقة عليهم مرة واحدة عند الخروج. إذا قمت بتحديث الملف ، فسيتعين على جميع المشترين الموافقة عليهم مرة أخرى عند الخروج."
           message_2: "بالنسبة للمشترين الذين لديهم اشتراكات ، يجب أن ترسل إليهم الشروط والأحكام (أو التغييرات عليها) عبر البريد الإلكتروني في الوقت الحالي ، ولن يخطرهم أي شيء بهذه الشروط والأحكام الجديدة."
+        business_address_info:
+          message: "يتم استخدام الاسم القانوني للشركة والعنوان القانوني ورقم الهاتف القانوني للشركات التي تصدر فاتورة من كيان قانوني مسجل بتفاصيل مختلفة عن معلومات التداول العامة الخاصة بهم. سيتم استخدام هذه التفاصيل فقط في الفواتير. إذا كانت هذه التفاصيل فارغة ، فسيتم استخدام اسمك العام وعنوانك ورقم هاتفك في الفواتير."
       panels:
         save: حفظ
         saved: تم الحفظ
@@ -2705,11 +2884,13 @@ ar:
           failed: "عطل"
           paid: "تم الدفع"
           pending: "قيد الانتظار"
+          requires_authorization: "إذن المطلوب"
           processing: "قيد المعالجة"
           void: "فارغ"
           invalid: "غير صالحة"
         quantity_adjusted: "مخزون غير كافٍ. تم تحديث البند إلى الكمية القصوى المتاحة."
         quantity_unchanged: "الكمية لم تتغير عن المبلغ السابق."
+        cannot_remove_last_item: "لا يمكن إزالة المادة الأخير من الطلب. الرجاء إلغاء الطلب بدلا من ذلك."
       resend_user_email_confirmation:
         resend: "إعادة إرسال"
         sending: "إعادة إرسال..."
@@ -3013,7 +3194,13 @@ ar:
     reports:
       bulk_coop:
         filters:
+          bulk_coop_allocation: "التخصيص الجماعي التعاوني"
+          bulk_coop_customer_payments: "مدفوعات العملاء الجماعية"
+          bulk_coop_packing_sheets: "أوراق التعبئة التعاونية السائبة"
+          bulk_coop_supplier_report: "تقرير المورد التعاوني المجمع"
+          date_range: "نطاق الموعد"
           generate_report: "توليد تقرير"
+          report_format_csv: "تنسيق التقرير CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "نطاق الموعد"
@@ -3095,22 +3282,50 @@ ar:
   last: "الاخير"
   spree:
     add_country: "أضف دولة"
+    add_state: "أضف المدينة"
     adjustment: "تعديل"
     all: "الكل"
+    associated_adjustment_closed: "تم إغلاق التعديل المرتبط"
+    back_to_adjustments_list: "رجوع إلى التعديلات"
+    back_to_users_list: "رجوع إلى المستخدمين"
+    back_to_zones_list: "العودة إلى المناطق"
+    card_code: "رمز البطاقة"
+    card_number: "رقم البطاقة"
     category: "الفئة"
+    created_successfully: "تم إنشاؤه بنجاح"
     credit: "اجل"
+    editing_tax_category: "تحرير فئة الضريبة"
+    editing_tax_rate: "تعديل معدل الضريبة"
+    editing_zone: "منطقة التحرير"
+    expiration: "انتهاء الصلاحية"
+    invalid_payment_provider: "مزود الدفع غير صالح"
+    items_cannot_be_shipped: "لا يمكن شحن العناصر"
+    gateway_config_unavailable: "تكوين Gateway غير متوفر"
     gateway_error: "عملية الدفع فشلت"
     more: "أكثر"
+    new_adjustment: "تعديل جديد"
+    new_order_completed: "طلب جديد مكتمل"
+    new_tax_category: "فئة ضريبية جديدة"
+    new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
     none: "لا شيء"
     not_found: "غير موجود"
+    notice_messages:
+      variant_deleted: "تم حذف البديل"
     payment_method_not_supported: "طريقة الدفع غير مدعومة"
     resend_authorization_email: "إعادة إرسال البريد الإلكتروني الخاص بالتفويض"
+    rma_credit: "رصيد RMA"
     refund: "إعادة المال"
     server_error: "خطأ في الخادم"
+    shipping_method_names:
+      UPS Ground: "UPS الأرضي"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
+    taxonomy_edit: "التصنيف"
+    taxonomy_tree_error: "خطأ شجرة التصنيف"
+    taxonomy_tree_instruction: "تعليمات شجرة التصنيف"
+    tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
@@ -3399,6 +3614,7 @@ ar:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "لا يمكن إضافة عنصر إلى الطلب الملغى"
+          include_out_of_stock_variants: "تضمين المتغيرات مع عدم وجود مخزون متاح"
         index:
           listing_orders: "لائحة الطلبات"
           new_order: "طلب جديد"
@@ -3555,6 +3771,7 @@ ar:
             no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
         image_upload_error: "لم يتم التعرف على صورة المنتج. يرجى تحميل صورة بتنسيق PNG أو JPG."
+        paperclip_image_error: "عرض مشبك الورق أخطاء للملف '%{attachment_file_name}' - تحقق من تثبيت ImageMagick أو ملف مصدر الصورة."
         new:
           title: "منتج جديد"
           new_product: "منتج جديد"
@@ -3722,6 +3939,7 @@ ar:
       paid: تم الدفع
       pending: قيد الانتظار
       processing: قيد المعالجة
+      requires_authorization: "إلاذن المطلوب"
       void: فارغ
       invalid: غير صالحة
       authorise: authorise
@@ -3786,6 +4004,7 @@ ar:
       awaiting_return: في انتظار العودة
       canceled: ألغيت
       cart: سلة التسوق
+      confirmation: "التأكيد"
       complete: اكتمال
       confirm: التاكيد
       delivery: التوصيل

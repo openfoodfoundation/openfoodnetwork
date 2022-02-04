@@ -700,6 +700,8 @@ it:
         display_name: Nome da visualizzare
         category: Categoria
         description: Descrizione
+        units: Unità
+        unit_type: Tipo Unità
         variant_unit_name: Nome Unità Variante
         price: Prezzo
         on_hand: Disponibile
