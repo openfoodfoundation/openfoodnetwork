@@ -462,8 +462,8 @@ it:
     unsaved_changes: "Hai modifiche non salvate"
     available_units: "Unità disponibili"
     shopfront_settings:
-      embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
-      enable_embedded_shopfronts: "Abilita vetrine incorporate"
+      embedded_shopfront_settings: "Impostazioni incorporazione Reti"
+      enable_embedded_shopfronts: "Abilita incorporazione Reti"
       embedded_shopfronts_whitelist: "Whitelist dei domini esterni"
     terms_of_service_files:
       create:
@@ -1385,7 +1385,7 @@ it:
         edit_cart: "Modifica il carrello"
         items_in_cart_singular: "%{num} articolo nel tuo carrello"
         items_in_cart_plural: "%{num} articoli nel tuo carrello"
-        close: "Chiuso"
+        close: "Ok"
         cart_empty: "Il tuo carrello è vuoto"
         take_me_shopping: "Portami ad acquistare!"
       signed_in:
@@ -1993,7 +1993,7 @@ it:
   sell_groups_detail: "Imposta un'area per le aziende (produttori o altro) della tua regione o per la tua organizzazione."
   sell_user_guide: "Scopri di più nella nostra guida utente."
   sell_listing_price: "Politica dei prezzi in fase di definizione..."
-  sell_embed: "Possiamo anche inserire un negozio OFN nel tuo proprio sito o creare un sito per la tua rete locale."
+  sell_embed: "Possiamo anche incorporare la pagina di una rete OFN nel tuo sito."
   sell_ask_services: "Chiedici dei servizi OFN."
   shops_title: Negozi
   shops_headline: La spesa, ripensata.
@@ -2302,7 +2302,7 @@ it:
   admin_enterprise_groups_web_website_placeholder: "p.es. www.cascina.it"
   admin_order_cycles: "Amministrazione Cicli d'ordine"
   open: "Aperto"
-  close: "Chiuso"
+  close: "Ok"
   create: "Crea"
   search: "Cerca"
   supplier: "Fornitore"
@@ -2711,7 +2711,7 @@ it:
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
       modals:
         got_it: "Capito"
-        close: "Chiuso"
+        close: "Ok"
         continue: "Continua"
         invite: "Invita"
         invite_title: "Invita un utente non registrato"
@@ -3828,7 +3828,7 @@ it:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Oggi"
       now: "Adesso"
-      close: "Chiuso"
+      close: "Ok"
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:

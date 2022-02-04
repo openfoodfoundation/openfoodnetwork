@@ -462,8 +462,8 @@ en_CA:
     unsaved_changes: "You have unsaved changes"
     available_units: "Available Units"
     shopfront_settings:
-      embedded_shopfront_settings: "Embedded Shopfront Settings"
-      enable_embedded_shopfronts: "Enable Embedded Shopfronts"
+      embedded_shopfront_settings: "Embedded Group Settings"
+      enable_embedded_shopfronts: "Enable Embedded Groups"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     terms_of_service_files:
       create:
@@ -1992,7 +1992,7 @@ en_CA:
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other local enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
   sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is free up to $500 of monthly sales. If you sell more we will invoice you for 2% of sales to a maximum of $150/month. For more detail on pricing visit the Software Platform section via the About link in the top menu."
-  sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
+  sell_embed: "We can also embed an OFN group page in your own  website or build a customised local food network website for your marketing group,  school, food network, region.... Ask us!"
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.
