@@ -2,7 +2,7 @@
 = admin_inject_json_ams_array "admin.subscriptions", "shops", @shops, Api::Admin::IdNameSerializer if @shops
 = admin_inject_json_ams_array "admin.subscriptions", "customers", @customers, Api::Admin::IdEmailSerializer if @customers
 = admin_inject_json_ams_array "admin.subscriptions", "schedules", @schedules, Api::Admin::IdNameSerializer if @schedules
-= admin_inject_json_ams_array "admin.subscriptions", "paymentMethods", @payment_methods, Api::Admin::PaymentMethodSerializer if @payment_methods
+= admin_inject_json_ams_array "admin.subscriptions", "paymentMethods", @payment_methods, Api::Admin::PaymentMethodSerializer, { payment_method_tags: @payment_method_tags } if @payment_methods
 = admin_inject_json_ams_array "admin.subscriptions", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer if @shipping_methods
 = admin_inject_json_ams_array "admin.subscriptions", "orderCycles", @order_cycles, Api::Admin::BasicOrderCycleSerializer if @order_cycles
 = admin_inject_available_countries(module: "admin.subscriptions")

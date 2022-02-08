@@ -7,11 +7,19 @@ module Api
         attributes :id, :name, :type, :tag_list, :tags
 
         def tag_list
-          object.tag_list.join(",")
+          payment_method_tag_list.join(",")
         end
 
         def tags
-          object.tag_list.map{ |t| { text: t } }
+          payment_method_tag_list.map{ |t| { text: t } }
+        end
+
+        private
+
+        def payment_method_tag_list
+          return object.tag_list unless options[:payment_method_tags]
+
+          options.dig(:payment_method_tags, object.id) || []
         end
       end
     end

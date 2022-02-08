@@ -18,6 +18,7 @@ module Admin
           if view_context.subscriptions_setup_complete?(@shops)
             @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user).includes([:distributors, :cached_incoming_exchanges])
             @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).includes(:taggings)
+            @payment_method_tags = payment_method_tags_by_id
             @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
           else
             @shop = @shops.first
