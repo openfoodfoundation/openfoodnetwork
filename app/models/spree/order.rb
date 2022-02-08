@@ -711,13 +711,11 @@ module Spree
     def associate_customer
       return customer if customer.present?
 
-      self.customer = Customer.of(distributor).find_by(email: email_for_customer)
+      Customer.of(distributor).find_by(email: email_for_customer)
     end
 
-    def ensure_customer
-      return if associate_customer
-
-      self.customer = Customer.create(
+    def create_customer
+      Customer.create(
         enterprise: distributor,
         email: email_for_customer,
         user: user,
@@ -726,8 +724,10 @@ module Spree
         bill_address: bill_address&.clone,
         ship_address: ship_address&.clone
       )
+    end
 
-      Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
+    def ensure_customer
+      self.customer = associate_customer || create_customer
     end
 
     def update_adjustment!(adjustment)

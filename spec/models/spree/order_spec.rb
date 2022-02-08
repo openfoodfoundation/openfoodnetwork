@@ -969,9 +969,8 @@ describe Spree::Order do
       context "and a customer for order.distributor and order#email_for_customer already exists" do
         let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
 
-        it "associates the order with the existing customer, and returns the customer" do
+        it "returns the customer to associate" do
           result = order.send(:associate_customer)
-          expect(order.customer).to eq customer
           expect(result).to eq customer
         end
       end
@@ -1033,20 +1032,6 @@ describe Spree::Order do
         before do
           order.bill_address = create(:address)
           order.ship_address = create(:address)
-        end
-
-        context "and the customer is not valid" do
-          before do
-            order.distributor = nil
-            order.user = nil
-            order.email = nil
-          end
-
-          it "sends an error to Bugsnag" do
-            expect(Bugsnag)
-              .to receive(:notify).with("Email can't be blank, Enterprise can't be blank")
-            order.send(:ensure_customer)
-          end
         end
 
         context "and the customer is valid" do
