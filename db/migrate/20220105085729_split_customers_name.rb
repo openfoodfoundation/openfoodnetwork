@@ -24,8 +24,8 @@ class SplitCustomersName < ActiveRecord::Migration[6.1]
       bill_address = customer.bill_address
 
       customer.update(
-        first_name: bill_address.firstname.strip,
-        last_name: bill_address.lastname.strip
+        first_name: bill_address.firstname.to_s.strip,
+        last_name: bill_address.lastname.to_s.strip
       )
     end
 
