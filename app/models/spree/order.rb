@@ -84,8 +84,7 @@ module Spree
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
     before_validation :clone_billing_address, if: :use_billing?
-    before_validation :associate_customer, unless: :customer_id?
-    before_validation :ensure_customer, unless: :customer_is_valid?
+    before_validation :ensure_customer
 
     before_create :link_by_email
     after_create :create_tax_charge!
@@ -715,6 +714,8 @@ module Spree
     end
 
     def create_customer
+      return if customer_is_valid?
+
       Customer.create(
         enterprise: distributor,
         email: email_for_customer,

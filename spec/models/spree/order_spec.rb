@@ -948,8 +948,6 @@ describe Spree::Order do
       end
 
       it "associates an existing customer" do
-        pending "the last commit broke associating orders"
-
         customer = create(
           :customer,
           user: user,
