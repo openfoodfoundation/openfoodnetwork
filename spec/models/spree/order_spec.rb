@@ -1335,54 +1335,6 @@ describe Spree::Order do
     end
   end
 
-  describe '#set_payment_amount!' do
-    let(:order) do
-      shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
-      build(:order, shipments: [shipment])
-    end
-
-    context 'after transitioning to payment' do
-      before do
-        order.state = 'delivery' # payment's previous state
-
-        allow(order).to receive(:payment_required?) { true }
-      end
-
-      it 'calls #set_payment_amount! and updates totals' do
-        expect(order).to receive(:set_payment_amount!)
-        expect(order).to receive(:update_totals).at_least(:once)
-
-        order.next
-      end
-
-      context "payment's amount" do
-        let(:failed_payment) { create(:payment, order: order, state: 'failed', amount: 100) }
-
-        before do
-          allow(order).to receive(:total) { 120 }
-        end
-
-        it 'is not updated for failed payments' do
-          failed_payment
-
-          order.next
-
-          expect(failed_payment.reload.amount).to eq 100
-        end
-
-        it 'is updated only for pending payments' do
-          pending_payment = create(:payment, order: order, state: 'pending', amount: 80)
-          failed_payment
-
-          order.next
-
-          expect(failed_payment.reload.amount).to eq 100
-          expect(pending_payment.reload.amount).to eq 120
-        end
-      end
-    end
-  end
-
   describe "#ensure_updated_shipments" do
     before { Spree::Shipment.create!(order: order) }
 
