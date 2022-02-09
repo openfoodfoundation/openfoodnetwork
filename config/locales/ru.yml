@@ -701,6 +701,8 @@ ru:
         display_name: Показать имя
         category: Категория
         description: Описание
+        units: Единицы
+        unit_type: Тип единицы
         variant_unit_name: Название Единицы Варианта
         price: Цена
         on_hand: В наличии
