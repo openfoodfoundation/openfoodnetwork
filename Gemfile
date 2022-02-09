@@ -59,6 +59,9 @@ gem 'oauth2', '~> 1.4.7' # Used for Stripe Connect
 
 gem 'pagy', '~> 5.1'
 
+gem 'rswag-api'
+gem 'rswag-ui'
+
 gem 'angularjs-rails', '1.8.0'
 gem 'aws-sdk', '1.67.0'
 gem 'bugsnag'
@@ -145,7 +148,7 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry'
-  gem 'rswag'
+  gem 'rswag-specs'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
