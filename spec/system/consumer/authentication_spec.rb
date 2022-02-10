@@ -166,14 +166,17 @@ describe "Authentication", js: true do
         visit enterprise_shop_path(distributor)
       end
 
-      it "clicking login triggers the login modal" do
+      it "clicking Login triggers the login modal" do
         find("a", text: "login").click
-        expect(page).to have_selector ".login-modal"
+        expect(page).to have_selector("a.active", text: "Login")
+        expect(page).to have_button("Login")
       end
 
-      xit "clicking signup triggers the signup modal" do
-        find("a", text: "login").click
-        expect(page).to have_selector ".login-modal"
+      # needs to be changed once #8860 is addressed
+      xit "clicking Signup triggers login modal and opens the signup tab" do
+        find("a", text: "signup").click
+        expect(page).to have_selector("a.active", text: "Sign up")
+        expect(page).to have_button "Sign up"
       end
     end
 
