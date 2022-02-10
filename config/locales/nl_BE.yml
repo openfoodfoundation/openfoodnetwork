@@ -221,7 +221,6 @@ nl_BE:
   required_fields: Verplichte velden zijn aangegeven met een sterretje
   select_continue: Kiezen en doorgaan
   remove: Verwijderen
-  or: of
   collapse_all: Alles ineenstorten
   expand_all: Uitbreiden alle
   loading: Laden...
@@ -572,6 +571,19 @@ nl_BE:
         import_again: Een ander bestand uploaden
         view_products: Ga naar de pagina Producten
         view_inventory: Ga naar de inventarispagina
+      product_headings:
+        producer: Producent
+        sku: SKU
+        name: Naam
+        display_name: Weergave naam
+        category: Categorie
+        description: Beschrijving
+        variant_unit_name: Variant Unit Name
+        price: Prijs
+        on_hand: Bij de Hand
+        on_demand: Op Aanvraag
+        shipping_category: Verzendcategorie
+        tax_category: Belastingcategorie
     variant_overrides:
       loading_flash:
         loading_inventory: LADINGSINVENTARISATIE
@@ -3250,7 +3262,6 @@ nl_BE:
           on_demand: "Op Aanvraag"
           product_description: "Beschrijving product"
           image: "beeltenis"
-          or: "of"
         unit_name_placeholder: 'b.v. trossen'
         index:
           header:

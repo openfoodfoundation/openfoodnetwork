@@ -151,7 +151,7 @@ class OrderCycle < ApplicationRecord
   def clone!
     oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
-    oc.orders_open_at = oc.orders_close_at = nil
+    oc.orders_open_at = oc.orders_close_at = oc.mails_sent = oc.processed_at = nil
     oc.coordinator_fee_ids = coordinator_fee_ids
     # rubocop:disable Layout/LineLength
     oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
@@ -281,7 +281,9 @@ class OrderCycle < ApplicationRecord
 
   def reset_processed_at
     return unless orders_close_at.present? && orders_close_at_was.present?
+    return unless orders_close_at > orders_close_at_was
 
-    self.processed_at = nil if orders_close_at > orders_close_at_was
+    self.processed_at = nil
+    self.mails_sent = false
   end
 end

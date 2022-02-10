@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
   include Spree::Core::ControllerHelpers::RespondWith
   include Spree::Core::ControllerHelpers::Common
 
-  prepend_before_action :restrict_iframes
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
+  before_action :set_after_login_url
 
   include RawParams
   include EnterprisesHelper
@@ -62,15 +62,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_checkout_redirect
-    referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
-    if referer_path
-      is_checkout_path_the_referer = [main_app.checkout_path].include?(referer_path)
-      session["spree_user_return_to"] = if is_checkout_path_the_referer
-                                          referer_path
-                                        else
-                                          main_app.root_path
-                                        end
-    end
+    return unless URI(request.referer.to_s).path == main_app.checkout_path
+
+    session["spree_user_return_to"] = main_app.checkout_path
   end
 
   def shopfront_session
@@ -103,19 +97,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def set_after_login_url
+    store_location_for(:spree_user, params[:after_login]) if params[:after_login]
+  end
+
   def shopfront_redirect
     session[:shopfront_redirect]
-  end
-
-  def restrict_iframes
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['Content-Security-Policy'] = "frame-ancestors 'none'"
-  end
-
-  def enable_embedded_shopfront
-    embed_service = EmbeddedPageService.new(params, session, request, response)
-    embed_service.embed!
-    @shopfront_layout = 'embedded' if embed_service.use_embedded_layout?
   end
 
   def action
@@ -123,7 +110,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_distributor_chosen
-    unless @distributor = current_distributor
+    unless (@distributor = current_distributor)
       redirect_to main_app.root_path
       false
     end
@@ -149,17 +136,6 @@ class ApplicationController < ActionController::Base
       current_order &&
       current_distributor.respond_to?(:ready_for_checkout?) &&
       !current_distributor.ready_for_checkout?
-  end
-
-  def check_order_cycle_expiry
-    if current_order_cycle&.closed?
-      Bugsnag.notify("Notice: order cycle closed during checkout completion", order: current_order)
-      current_order.empty!
-      current_order.set_order_cycle! nil
-      flash[:info] = I18n.t('order_cycle_closed')
-
-      redirect_to main_app.shop_path
-    end
   end
 
   # All render calls within the block will be performed with the specified format

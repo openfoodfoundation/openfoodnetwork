@@ -35,6 +35,14 @@ module OrderManagement
         end
 
         persist_totals
+        update_pending_payment
+      end
+
+      def update_pending_payment
+        return unless order.state.in? ["payment", "confirmation"]
+        return unless order.pending_payments.any?
+
+        order.pending_payments.first.update_attribute :amount, order.total
       end
 
       # Updates the following Order total values:

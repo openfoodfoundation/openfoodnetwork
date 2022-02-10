@@ -1,0 +1,66 @@
+---
+openapi: 3.0.1
+info:
+  title: API V0
+  version: v0
+paths:
+  "/api/v0/orders":
+    get:
+      summary: list orders
+      tags:
+      - Orders
+      parameters:
+      - name: X-Spree-Token
+        in: header
+        schema:
+          type: string
+      - name: q[distributor_id_eq]
+        in: query
+        required: false
+        description: Query orders for a specific distributor id.
+        schema:
+          type: string
+      - name: q[completed_at_gt]
+        in: query
+        required: false
+        description: Query orders completed after a date.
+        schema:
+          type: string
+      - name: q[completed_at_lt]
+        in: query
+        required: false
+        description: Query orders completed before a date.
+        schema:
+          type: string
+      - name: q[state_eq]
+        in: query
+        required: false
+        description: Query orders by order state, eg 'cart', 'complete'.
+        schema:
+          type: string
+      - name: q[payment_state_eq]
+        in: query
+        required: false
+        description: Query orders by order payment_state, eg 'balance_due', 'paid',
+          'failed'.
+        schema:
+          type: string
+      - name: q[email_cont]
+        in: query
+        required: false
+        description: Query orders where the order email contains a string.
+        schema:
+          type: string
+      - name: q[order_cycle_id_eq]
+        in: query
+        required: false
+        description: Query orders for a specific order_cycle id.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get orders
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Order_Concise"

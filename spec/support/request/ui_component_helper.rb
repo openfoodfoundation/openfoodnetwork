@@ -111,8 +111,8 @@ module UIComponentHelper
   end
 
   def fill_in_using_keyboard
-    page.find('#email').send_keys(user.email, :tab, user.password, :tab, :space)
-    expect(page.find('#remember_me')).to be_checked
-    page.find('#remember_me').send_keys(:tab, :enter)
+    page.find('#spree_user_email').send_keys(user.email, :tab, user.password, :tab, :space)
+    expect(page.find('#spree_user_remember_me')).to be_checked
+    page.find('#spree_user_remember_me').send_keys(:tab, :enter)
   end
 end

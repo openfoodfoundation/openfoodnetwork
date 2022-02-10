@@ -1,0 +1,12 @@
+#forgot-tab
+  = form_with url: spree_user_password_path, scope: :spree_user, data: { remote: "true" } do |form|
+    .row
+      .large-12.columns#forgot-feedback
+
+    .row
+      .large-12.columns
+        = form.label :email, t(:signup_email)
+        = form.email_field :email, { tabindex: 1, inputmode: "email", "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+    .row
+      .large-12.columns
+        = form.submit t(:reset_password), { class: "button primary", tabindex: 2 }

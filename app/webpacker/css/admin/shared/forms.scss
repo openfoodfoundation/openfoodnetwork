@@ -184,6 +184,10 @@ fieldset {
       &:hover {
         border-color: $color-1;
       }
+
+      &:first-of-type {
+        margin-right: 1.25em;
+      }
     }
 
     span.or {

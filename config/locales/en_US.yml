@@ -72,6 +72,44 @@ en_US:
       missing: "There is no card on a customer that is being charged."
       processing_error: "An error occurred while processing the card."
       rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
+      authentication_required: "The card was declined because the transaction requires authentication."
+      approve_with_id: "The payment cannot be authorized."
+      call_issuer: "The card has been declined for an unknown reason."
+      card_not_supported: "The card does not support this type of purchase."
+      card_velocity_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      currency_not_supported: "The card does not support the specified currency."
+      do_not_honor: "The card has been declined for an unknown reason."
+      do_not_try_again: "The card has been declined for an unknown reason."
+      duplicate_transaction: "A transaction with identical amount and credit card information was submitted very recently."
+      fraudulent: "The payment has been declined as Stripe suspects it is fraudulent."
+      generic_decline: "The card has been declined for an unknown reason."
+      incorrect_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      insufficient_funds: "The card has insufficient funds to complete the purchase."
+      invalid_account: "La tarjeta, o la cuenta a la que esta ligada la tarjeta es invalida. "
+      invalid_amount: "The payment amount is invalid, or exceeds the amount that is allowed."
+      invalid_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      issuer_not_available: "The card issuer could not be reached, so the payment could not be authorized."
+      lost_card: "The payment has been declined because the card is reported lost."
+      merchant_blacklist: "The payment has been declined because it matches a value on the Stripe user’s block list."
+      new_account_information_available: "La tarjeta, o la cuenta a la que esta ligada la tarjeta es invalida. "
+      no_action_taken: "The card has been declined for an unknown reason."
+      not_permitted: "The payment is not permitted."
+      offline_pin_required: "The card has been declined as it requires a PIN."
+      online_or_offline_pin_required: "The card has been declined as it requires a PIN."
+      pickup_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      pin_try_exceeded: "The allowable number of PIN tries has been exceeded."
+      reenter_transaction: "The payment could not be processed by the issuer for an unknown reason."
+      restricted_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      revocation_of_all_authorizations: "The card has been declined for an unknown reason."
+      revocation_of_authorization: "The card has been declined for an unknown reason."
+      security_violation: "The card has been declined for an unknown reason."
+      service_not_allowed: "The card has been declined for an unknown reason."
+      stolen_card: "The payment has been declined because the card is reported stolen."
+      stop_payment_order: "The card has been declined for an unknown reason."
+      testmode_decline: "A Stripe test card number was used."
+      transaction_not_allowed: "The card has been declined for an unknown reason."
+      try_again_later: "The card has been declined for an unknown reason."
+      withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -137,6 +175,9 @@ en_US:
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
     success:
       logged_in_succesfully: "Logged in successfully"
+    sessions:
+      signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -186,14 +227,14 @@ en_US:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
-      subject: "%{enterprise} is now on %{sitename}"
+      subject: "%{enterprise}: Welcome to the %{sitename}Community!"
       email_welcome: "Welcome"
       email_registered: "is now part of"
-      email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      email_userguide_html: "OFN is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for this platform are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}"
       userguide: "Open Food Network User Guide"
-      email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
+      email_admin_html: "You might have already discovered that you can can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
-      email_community_html: "We'll leave you to explore the platform and our community for now and will check back in soon with more information and resources!   In the meantime, please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community, we're glad you are here!"
+      email_community_html: "Please consider the reality of the costs we face in supporting this software, and the place of fair compensation for everyone in a just food system. We invite and encourage you to pitch in with money when you can at https://donate.openfoodnetwork.net or to contact us to learn about non-monetary ways of contributing. We send super-infrequent email newsletters with useful information, so please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community. We're glad you are here!"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
@@ -276,7 +317,6 @@ en_US:
   required_fields: Required fields are marked with an asterisk
   select_continue: Select and Continue
   remove: Remove
-  or: or
   collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
@@ -422,8 +462,8 @@ en_US:
     unsaved_changes: "You have unsaved changes"
     available_units: "Available Units"
     shopfront_settings:
-      embedded_shopfront_settings: "Embedded Shopfront Settings"
-      enable_embedded_shopfronts: "Enable Embedded Shopfronts"
+      embedded_shopfront_settings: "Embedded Group Settings"
+      enable_embedded_shopfronts: "Enable Embedded Groups"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     terms_of_service_files:
       create:
@@ -653,6 +693,21 @@ en_US:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
+      product_headings:
+        producer: Producer
+        sku: SKU
+        name: Name
+        display_name: Display Name
+        category: Category
+        description: Description
+        units: Units
+        unit_type: Unit Type
+        variant_unit_name: Variant Unit Name
+        price: Price
+        on_hand: On Hand
+        on_demand: On Demand
+        shipping_category: Shipping Category
+        tax_category: Tax Category
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -1310,6 +1365,7 @@ en_US:
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
+    order_not_loaded: "No valid order found for checkout processing"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1408,8 +1464,8 @@ en_US:
   menu_5_url: "https://about.openfoodnetwork.net/"
   menu_6_title: "Donate"
   menu_6_url: "https://donate.openfoodnetwork.net"
-  menu_7_title: "Help"
-  menu_7_url: "https://help.openfoodnetwork.net/"
+  menu_7_title: "Support"
+  menu_7_url: "https://about.openfoodnetwork.net/?page_id=1123"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1672,6 +1728,11 @@ en_US:
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
       agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
@@ -1931,7 +1992,7 @@ en_US:
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
   sell_listing_price: "Listing on the OFN is free. When you start selling your products, we invite you to contribute to platform upkeep. For more detail on pricing visit the Software Platform section via the About link in the top menu."
-  sell_embed: "We can also embed an OFN shop in your personal website or build a customized local food network website for your region."
+  sell_embed: "We can also embed an OFN group in your personal website."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Stores
   shops_headline: Shopping, transformed.
@@ -3164,8 +3225,6 @@ en_US:
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
-    or: "Or"
-    order_processed_successfully: "Order processed successfully"
     payment_method_not_supported: "Payment method not supported"
     resend_authorization_email: "Resend authorization email"
     rma_credit: "RMA credit"
@@ -3640,7 +3699,6 @@ en_US:
           on_demand: "On Demand"
           product_description: "Product Description"
           image: "Image"
-          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

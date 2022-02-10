@@ -276,7 +276,6 @@ nb:
   required_fields: Obligatoriske felt er merket med en stjerne
   select_continue: Velg og fortsett
   remove: Fjern
-  or: eller
   collapse_all: Skjul alle
   expand_all: Utvid alle
   loading: Laster...
@@ -653,6 +652,19 @@ nb:
         import_again: Last opp en annen fil
         view_products: Gå til produktside
         view_inventory: Gå til varelager
+      product_headings:
+        producer: Produsent
+        sku: SKU
+        name: Navn
+        display_name: Visningsnavn
+        category: Kategori
+        description: Beskrivelse
+        variant_unit_name: Enhetsnavn Variant
+        price: Pris
+        on_hand: Tilgjengelig
+        on_demand: Ved forespørsel
+        shipping_category: Leveringskategori
+        tax_category: Avgiftskategori
     variant_overrides:
       loading_flash:
         loading_inventory: LASTER VARELAGER
@@ -1660,6 +1672,11 @@ nb:
       terms_and_conditions:
         message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
         link_text: "Vilkår og Betingelser"
+      platform_terms_of_service:
+        message_html: "Jeg godtar plattformens %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
+        terms_and_conditions: "Vilkår og Betingelser"
       agree: Ved å klikke &quot;Fullfør bestilling&quot; godtar du at bestillingen din blir behandlet.
       submit: Fullfør bestillingen
       cancel: Tilbake til Betalingsmåte
@@ -3149,8 +3166,6 @@ nb:
     not_found: "Ikke funnet"
     notice_messages:
       variant_deleted: "Variant slettet"
-    or: "Eller"
-    order_processed_successfully: "Bestillingen ble behandlet"
     payment_method_not_supported: "Betalingsmåte støttes ikke"
     resend_authorization_email: "Send autorisasjons-epost på nytt"
     rma_credit: "RMA-kreditt"
@@ -3624,7 +3639,6 @@ nb:
           on_demand: "Ved forespørsel"
           product_description: "Produktbeskrivelse"
           image: "Bilde"
-          or: "eller"
         unit_name_placeholder: 'f.eks. bunter'
         index:
           header:

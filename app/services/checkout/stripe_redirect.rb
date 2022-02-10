@@ -3,7 +3,7 @@
 # Provides the redirect path if a redirect to the payment gateway is needed
 module Checkout
   class StripeRedirect
-    include FullUrlHelper
+    include Rails.application.routes.url_helpers
 
     def initialize(payment_method, order)
       @payment_method = payment_method
@@ -14,7 +14,7 @@ module Checkout
     def path
       return unless stripe_payment_method?
 
-      payment = payment_authorizer.call!(return_url)
+      payment = payment_authorizer.call!(checkout_return_url)
 
       return if order.errors.any?
 
@@ -33,8 +33,8 @@ module Checkout
       OrderManagement::Order::StripeScaPaymentAuthorize.new(order)
     end
 
-    def return_url
-      full_checkout_path
+    def checkout_return_url
+      payment_gateways_confirm_stripe_url
     end
 
     # Stripe::AuthorizeResponsePatcher patches the Stripe authorization response

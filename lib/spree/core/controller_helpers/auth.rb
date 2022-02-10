@@ -29,7 +29,8 @@ module Spree
             redirect_to '/unauthorized'
           else
             store_location
-            redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+
+            redirect_to main_app.root_path(anchor: "/login", after_login: request.original_fullpath)
           end
         end
 
@@ -49,9 +50,8 @@ module Spree
           session['spree_user_return_to'] = request.fullpath.gsub('//', '/')
         end
 
-        def redirect_back_or_default(default)
-          redirect_to(session["spree_user_return_to"] || default)
-          session["spree_user_return_to"] = nil
+        def return_url_or_default(default)
+          session.delete("spree_user_return_to") || default
         end
 
         # Need to generate an API key for a user due to some actions potentially

@@ -246,7 +246,6 @@ pt_BR:
   required_fields: Campos obrigatórios são indicados com um asterisco
   select_continue: Selecionar e continuar
   remove: Remover
-  or: ou
   collapse_all: Recolher todos
   expand_all: Expandir tudo
   loading: Carregando...
@@ -622,6 +621,18 @@ pt_BR:
         import_again: Carregar outro arquivo
         view_products: Ir para a página de produtos
         view_inventory: Ir para a página de inventário
+      product_headings:
+        producer: Produtor
+        sku: SKU
+        name: Nome
+        display_name: Mostrar Nome
+        category: Categoria
+        description: Descrição
+        price: Preço
+        on_hand: Disponível
+        on_demand: Sob Encomenda
+        shipping_category: Tipos de Frete
+        tax_category: Categoria de taxa
     variant_overrides:
       loading_flash:
         loading_inventory: CARREGANDO INVENTÁRIO
@@ -1571,6 +1582,11 @@ pt_BR:
       terms_and_conditions:
         message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
         link_text: "Termos e Condições"
+      platform_terms_of_service:
+        message_html: "Eu concordo com os %{tos_link}da plataforma"
+      all_terms_and_conditions:
+        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
+        terms_and_conditions: "Termos e Condições"
     errors:
       invalid_email: "Por favor use um endereço de e-mail válido"
   order_paid: PAGO
@@ -3044,8 +3060,6 @@ pt_BR:
     not_found: "Não encontrado"
     notice_messages:
       variant_deleted: "Variante excluída"
-    or: "Ou"
-    order_processed_successfully: "Pedido processado com sucesso"
     payment_method_not_supported: "Este método de pagamento não é aceito"
     resend_authorization_email: "Reenviar email de autorização"
     refund: "Estorno"
@@ -3515,7 +3529,6 @@ pt_BR:
           on_demand: "Sob Encomenda"
           product_description: "Descrição do Produto"
           image: "Imagem"
-          or: "ou"
         unit_name_placeholder: 'por exemplo. cachos'
         index:
           header:

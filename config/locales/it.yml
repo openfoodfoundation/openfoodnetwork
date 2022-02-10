@@ -72,6 +72,44 @@ it:
       missing: "Non è stata caricata nessuna carta sul consumatore."
       processing_error: "C'è stato un errore nel processare la carta"
       rate_limit: "C'è stato un errore per una richiesta troppo rapida alle API. Per favore comunicaci se incontri spesso questo errore."
+      authentication_required: "La carta non è stata accettata perchè la transazione richiede autenticazione"
+      approve_with_id: "Il pagamento non può essere autorizzato."
+      call_issuer: "La carta non è stata accettata per ragioni sconosciute."
+      card_not_supported: "La carta non supporta questo tipo di acquisti."
+      card_velocity_exceeded: "Il cliente ha "
+      currency_not_supported: "La carta non supporta la valuta specificata."
+      do_not_honor: "La carta non è stata accettata per ragioni sconosciute."
+      do_not_try_again: "La carta non è stata accettata per ragioni sconosciute."
+      duplicate_transaction: "Di recente è stata inviata una transazione con importo e informazioni sulla carta di credito identici."
+      fraudulent: "Il pagamento è stato rifiutato perchè Stripe sospetta che sia fraudolento."
+      generic_decline: "La carta non è stata accettata per ragioni sconosciute."
+      incorrect_pin: "Il PIN digitato è scorretto. Questo codice di rifiuto si applica solo ai pagamenti effettuati con un lettore di carte. "
+      insufficient_funds: "Questa carta non ha credito sufficiente per completare questo acquisto."
+      invalid_account: "La carta, o il profilo a cui è collegata, non sono validi."
+      invalid_amount: "L'importo del pagamento non è valido o eccede l'importo consentito."
+      invalid_pin: "Il PIN digitato è scorretto. Questo codice di rifiuto si applica solo ai pagamenti effettuati con un lettore di carte. "
+      issuer_not_available: "L'erogatore della carta non può essere raggiunto, quindi il pagamento non può essere autorizzato"
+      lost_card: "Il pagamento è stato rifiutato perchè la carta risulta smarrita."
+      merchant_blacklist: "Il pagamento è stato rifiutato perché corrisponde a un valore nell'elenco di blocco dell'utente Stripe. "
+      new_account_information_available: "La carta, o il profilo a cui è collegata, non sono validi."
+      no_action_taken: "La carta non è stata accettata per ragioni sconosciute."
+      not_permitted: "Il pagamento non è consentito."
+      offline_pin_required: "La carta è stata rifiutata perchè richiede un PIN."
+      online_or_offline_pin_required: "La carta è stata rifiutata perchè richiede un PIN."
+      pickup_card: "La carta non può essere utilizzata per questo pagamento (è possibile che risulti persa o rubata)"
+      pin_try_exceeded: "Hai superato il numero consentito di inserimenti del PIN."
+      reenter_transaction: "Il pagamento non può essere processato dall'erogatore per motivi sconosciuti."
+      restricted_card: "La carta non può essere utilizzata per questo pagamento (è possibile che risulti persa o rubata)"
+      revocation_of_all_authorizations: "La carta non è stata accettata per ragioni sconosciute."
+      revocation_of_authorization: "La carta non è stata accettata per ragioni sconosciute."
+      security_violation: "La carta non è stata accettata per ragioni sconosciute."
+      service_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
+      stolen_card: "Il pagamento è stato rifiutato perchè la carta risulta rubata."
+      stop_payment_order: "La carta non è stata accettata per ragioni sconosciute."
+      testmode_decline: "E' stato usato un numero di carta test Stripe."
+      transaction_not_allowed: "La carta non è stata accettata per ragioni sconosciute."
+      try_again_later: "La carta non è stata accettata per ragioni sconosciute."
+      withdrawal_count_limit_exceeded: "Il cliente ha "
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -137,6 +175,9 @@ it:
       already_registered: "Questo indirizzo email è già registrato. Per favore effettua il log in per continuare, o torna indietro e utilizza un altro indirizzo email."
     success:
       logged_in_succesfully: "Collegato con successo"
+    sessions:
+      signed_out: "Disconnessione riuscita."
+      already_signed_out: "Disconnessione riuscita."
     user_passwords:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
@@ -276,7 +317,6 @@ it:
   required_fields: I campi obbligatori sono contrassegnati con un asterisco
   select_continue: Seleziona e Continua
   remove: Rimuovi
-  or: o
   collapse_all: Riduci tutto
   expand_all: Espandi tutto
   loading: Caricamento...
@@ -422,8 +462,8 @@ it:
     unsaved_changes: "Hai modifiche non salvate"
     available_units: "Unità disponibili"
     shopfront_settings:
-      embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
-      enable_embedded_shopfronts: "Abilita vetrine incorporate"
+      embedded_shopfront_settings: "Impostazioni incorporazione Reti"
+      enable_embedded_shopfronts: "Abilita incorporazione Reti"
       embedded_shopfronts_whitelist: "Whitelist dei domini esterni"
     terms_of_service_files:
       create:
@@ -653,6 +693,21 @@ it:
         import_again: Carica un altro file
         view_products: Vai alla Pagina dei Prodotti
         view_inventory: Vai alla Pagina dell'Inventario
+      product_headings:
+        producer: Produttore
+        sku: Codice ID
+        name: Nome
+        display_name: Nome da visualizzare
+        category: Categoria
+        description: Descrizione
+        units: Unità
+        unit_type: Tipo Unità
+        variant_unit_name: Nome Unità Variante
+        price: Prezzo
+        on_hand: Disponibile
+        on_demand: A richiesta
+        shipping_category: Categoria Spedizioni
+        tax_category: Categoria d'imposta
     variant_overrides:
       loading_flash:
         loading_inventory: Caricamento Inventario
@@ -1311,6 +1366,7 @@ it:
       terms_and_conditions: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
     payment_cancelled_due_to_stock: "Pagamento annullato: la transazione non può avvenire a causa di problemi di disponibilità."
+    order_not_loaded: "Nessuna richiesta valida trovata per la conferma. "
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -1329,7 +1385,7 @@ it:
         edit_cart: "Modifica il carrello"
         items_in_cart_singular: "%{num} articolo nel tuo carrello"
         items_in_cart_plural: "%{num} articoli nel tuo carrello"
-        close: "Chiuso"
+        close: "Ok"
         cart_empty: "Il tuo carrello è vuoto"
         take_me_shopping: "Portami ad acquistare!"
       signed_in:
@@ -1366,7 +1422,7 @@ it:
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
-        select_oc_html: "Per favore <span class='highlighted'>scegli la data di consegna </span>, per vedere quali prodotti sono disponibili."
+        select_oc_html: "Per vedere i prodotti disponibili,<span class='highlighted'>scegli la data di consegna</span> dal riquadro in alto a destra."
     products:
       summary:
         bulk: "Volume"
@@ -1483,7 +1539,7 @@ it:
   cart_headline: "Il tuo carrello"
   total: "Totale"
   cart_updating: "Aggiornamento del carrello..."
-  cart_empty: "Carrello vuoto"
+  cart_empty: "Svuota carrello"
   cart_edit: "Modifica il tuo carrello"
   item: "Articolo"
   qty: "Qtà"
@@ -1573,10 +1629,10 @@ it:
   checkout_order_ready: Ordine pronto per
   checkout_hide: Nascondi
   checkout_expand: Espandi
-  checkout_headline: "Ok, pronto per pagare?"
+  checkout_headline: "Ok, confermare?"
   checkout_as_guest: "Paga come ospite"
   checkout_details: "I tuoi dettagli"
-  checkout_billing: "Informazioni sul conto"
+  checkout_billing: "Dati di fatturazione"
   checkout_default_bill_address: "Salva come indirizzo di fatturazione predefinito"
   checkout_shipping: Informazioni sulla spedizione
   checkout_default_ship_address: "Salva come indirizzo di spedizione predefinito"
@@ -1673,6 +1729,11 @@ it:
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
         link_text: "Termini e Condizioni"
+      platform_terms_of_service:
+        message_html: "Acconsento ai %{tos_link} della piattaforma."
+      all_terms_and_conditions:
+        message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
+        terms_and_conditions: "Termini e Condizioni"
       agree: Cliccando su "Conferma" accetti che la tua gentile richiesta sia processata.
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
@@ -1686,16 +1747,16 @@ it:
       select_a_payment_method: Seleziona un metodo di pagamento
   order_paid: PAGATO
   order_not_paid: NON PAGATO
-  order_total: Totale dell'ordine
-  order_payment: "Pagamento attraverso:"
+  order_total: Importo totale
+  order_payment: "Metodo di Pagamento:"
   order_billing_address: Indirizzo di fatturazione
   order_delivery_on: Consegna il
   order_delivery_address: Indirizzo di consegna
   order_delivery_time: Tempo di consegna
   order_special_instructions: "Tue note:"
   order_pickup_time: Pronto per il ritiro
-  order_pickup_instructions: Istruzioni per la Distribuzione
-  order_produce: Produrre
+  order_pickup_instructions: 'Dove ritirare la tua spesa:'
+  order_produce: Subtotale
   order_total_price: Totale
   order_includes_tax: (importo IVA incluso nel totale)
   order_payment_paypal_successful: Il tuo pagamento con PayPal è stato elaborato con successo.
@@ -1740,7 +1801,7 @@ it:
   email_payment_not_paid: NON PAGATO
   email_payment_description: Descrizione pagamento alla Conferma
   email_payment_summary: Riepilogo di pagamento
-  email_payment_method: "Pagamento attraverso:"
+  email_payment_method: "Metodo di Pagamento:"
   email_so_placement_intro_html: "Hai una nuova gentile richiesta di <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Ecco i dettagli della gentile richiesta per <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Purtroppo alcuni prodotti richiesti non sono disponibili. Le quantità originali richieste sono barrate qui sotto."
@@ -1763,7 +1824,7 @@ it:
   email_shipping_delivery_time: "Consegna il"
   email_shipping_delivery_address: "Indirizzo di consegna"
   email_shipping_collection_details: Dettagli della raccolta
-  email_shipping_collection_time: "Pronto per il ritiro:"
+  email_shipping_collection_time: "Pronto per:"
   email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
@@ -1836,7 +1897,7 @@ it:
   products_and: "e"
   products_filters_in: "in"
   products_with: con
-  products_search: "Ricerca..."
+  products_search: "Cerca un prodotto o un produttore..."
   products_filter_by: "Filtra per"
   products_filter_selected: "selezionato"
   products_filter_heading: "Filtri"
@@ -1844,7 +1905,7 @@ it:
   products_filter_done: "Fatto"
   products_loading: "Caricamento prodotti..."
   products_updating_cart: "Aggiornamento del carrello..."
-  products_cart_empty: "Carrello vuoto"
+  products_cart_empty: "Svuota carrello"
   products_edit_cart: "Modifica il tuo carrello"
   products_from: da
   products_change: "Nessuna modifica da salvare."
@@ -1932,7 +1993,7 @@ it:
   sell_groups_detail: "Imposta un'area per le aziende (produttori o altro) della tua regione o per la tua organizzazione."
   sell_user_guide: "Scopri di più nella nostra guida utente."
   sell_listing_price: "Politica dei prezzi in fase di definizione..."
-  sell_embed: "Possiamo anche inserire un negozio OFN nel tuo proprio sito o creare un sito per la tua rete locale."
+  sell_embed: "Possiamo anche incorporare la pagina di una rete OFN nel tuo sito."
   sell_ask_services: "Chiedici dei servizi OFN."
   shops_title: Negozi
   shops_headline: La spesa, ripensata.
@@ -1953,7 +2014,7 @@ it:
   orders_edit_time: "Ordine pronto per"
   orders_edit_continue: "Continua a comprare"
   orders_edit_checkout: "Conferma"
-  orders_form_empty_cart: "Carrello vuoto"
+  orders_form_empty_cart: "Svuota carrello"
   orders_form_update_cart: "Aggiorna"
   orders_form_subtotal: "Calcola il subtotale"
   orders_form_admin: "Admin"
@@ -2241,7 +2302,7 @@ it:
   admin_enterprise_groups_web_website_placeholder: "p.es. www.cascina.it"
   admin_order_cycles: "Amministrazione Cicli d'ordine"
   open: "Aperto"
-  close: "Chiuso"
+  close: "Ok"
   create: "Crea"
   search: "Cerca"
   supplier: "Fornitore"
@@ -2510,7 +2571,7 @@ it:
   report_header_total_units: Unità totali
   report_header_sum_max_total: "Somma totale max"
   report_header_total_excl_vat: "Totale imponibile (%{currency_symbol})"
-  report_header_total_incl_vat: "Total IVA incl. (%{currency_symbol})"
+  report_header_total_incl_vat: "Totale IVA incl. (%{currency_symbol})"
   report_header_temp_controlled: Controllo Temperatura?
   report_header_is_producer: Produttore?
   report_header_not_confirmed: Non confermato
@@ -2518,8 +2579,8 @@ it:
   report_header_gst_free_income: Entrate senza IVA
   report_header_total_untaxable_produce: Totale prodotti esenti tasse
   report_header_total_taxable_produce: Totale prodotti tassati (incl. tasse)
-  report_header_total_untaxable_fees: Totale provvigioni esenti (no tasse)
-  report_header_total_taxable_fees: Totale provvigioni tassabili (incl. tasse)
+  report_header_total_untaxable_fees: Totale tariffe esentasse (no tasse)
+  report_header_total_taxable_fees: Totale tariffe tassabili (incl. tasse)
   report_header_delivery_shipping_cost: Costi di spedizione/consegna (incl. tasse)
   report_header_transaction_fee: Commissioni di transazione (no tasse)
   report_header_total_untaxable_admin: Aggiustamenti amministrativi totali non tassabili (nessuna imposta)
@@ -2650,7 +2711,7 @@ it:
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
       modals:
         got_it: "Capito"
-        close: "Chiuso"
+        close: "Ok"
         continue: "Continua"
         invite: "Invita"
         invite_title: "Invita un utente non registrato"
@@ -3168,8 +3229,6 @@ it:
     not_found: "Non trovato"
     notice_messages:
       variant_deleted: "Variante eliminata"
-    or: "O"
-    order_processed_successfully: "Richiesta processata con successo"
     payment_method_not_supported: "Metodo di pagamento non supportato"
     resend_authorization_email: "Invia di nuovo mail di autorizzazione"
     rma_credit: "Credito RMA"
@@ -3644,7 +3703,6 @@ it:
           on_demand: "A richiesta"
           product_description: "Descrizione prodotto"
           image: "Immagine"
-          or: "o"
         unit_name_placeholder: 'es. grappoli'
         index:
           header:
@@ -3770,7 +3828,7 @@ it:
       flatpickr_datetime_format: "Y-m-d H:i"
       today: "Oggi"
       now: "Adesso"
-      close: "Chiuso"
+      close: "Ok"
     orders:
       error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:
@@ -3930,7 +3988,7 @@ it:
         items: Prodotti
         total: Totale
         paid?: Pagato?
-        view: Vista
+        view: Dettagli
       saved_cards:
         default?: Predefinito?
         delete?: Elimina?

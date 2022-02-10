@@ -11,6 +11,39 @@ FactoryBot.define do
     completed_at { nil }
     email { user&.email || customer.email }
 
+    factory :order_ready_for_details do
+      distributor { create(:distributor_enterprise, with_payment_and_shipping: true) }
+      order_cycle { create(:order_cycle, distributors: [distributor]) }
+
+      after(:create) do |order|
+        order.line_items << build(:line_item, order: order)
+        order.updater.update_totals_and_states
+
+        order.order_cycle.exchanges.outgoing.first.variants << order.line_items.first.variant
+      end
+
+      factory :order_ready_for_payment do
+        bill_address
+        ship_address
+
+        after(:create) do |order, evaluator|
+          order.select_shipping_method evaluator.shipping_method.id
+          OrderWorkflow.new(order).advance_to_payment
+        end
+
+        factory :order_ready_for_confirmation do
+          transient do
+            payment_method { create(:payment_method, distributors: [distributor]) }
+          end
+
+          after(:create) do |order, evaluator|
+            order.payments << build(:payment, amount: order.total, payment_method: evaluator.payment_method)
+            order.next!
+          end
+        end
+      end
+    end
+
     factory :order_with_totals do
       after(:create) do |order|
         create(:line_item, order: order)

@@ -12,7 +12,6 @@ class BaseController < ApplicationController
   include OrderCyclesHelper
 
   before_action :set_locale
-  before_action :check_order_cycle_expiry
 
   private
 

@@ -35,9 +35,9 @@
 
   .row{ 'ng-if' => 'shop_id && RequestMonitor.loading' }
     .sixteen.columns.alpha#loading
-      = render partial: "components/spinner"
+      = render partial: "components/admin_spinner"
       %h1
-        =t :loading_customers
+        = t :loading_customers
 
   .row{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0'}
     %h1#no_results
@@ -100,5 +100,4 @@
       -# %show-more.text-center{ data: "filteredCustomers", limit: "customerLimit", increment: "20" }
       %div.text-center{ ng: { show: "filteredCustomers.length > customerLimit" } }
         %input{ type: 'button', value: t(:show_more), ng: { click: 'customerLimit = customerLimit + 20' } }
-        or
         %input{ type: 'button', value: t(:show_all_with_more, num: '{{ filteredCustomers.length - customerLimit }}'), ng: { click: 'customerLimit = filteredCustomers.length' } }

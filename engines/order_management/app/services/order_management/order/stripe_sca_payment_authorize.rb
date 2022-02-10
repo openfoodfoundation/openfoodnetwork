@@ -8,7 +8,7 @@
 module OrderManagement
   module Order
     class StripeScaPaymentAuthorize
-      include FullUrlHelper
+      include Rails.application.routes.url_helpers
 
       def initialize(order, payment: nil, off_session: false, notify_hub: false)
         @order = order
@@ -17,10 +17,10 @@ module OrderManagement
         @notify_hub = notify_hub
       end
 
-      def call!(redirect_url = full_order_path(order))
+      def call!(return_url = off_session_return_url)
         return unless payment&.checkout?
 
-        payment.authorize!(redirect_url)
+        payment.authorize!(return_url)
 
         order.errors.add(:base, I18n.t('authorization_failure')) unless successfully_processed?
         send_auth_emails if requires_authorization_emails?
@@ -43,6 +43,10 @@ module OrderManagement
       def send_auth_emails
         PaymentMailer.authorize_payment(payment).deliver_now
         PaymentMailer.authorization_required(payment).deliver_now if notify_hub
+      end
+
+      def off_session_return_url
+        payment_gateways_authorize_stripe_url(order)
       end
     end
   end

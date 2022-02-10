@@ -34,14 +34,13 @@ module Spree
         providers = assigns(:providers).map(&:to_s)
 
         expect(providers).to include "Spree::Gateway::StripeSCA"
-        expect(providers).to_not include "Spree::Gateway::StripeConnect"
       end
     end
 
     describe "#edit" do
-      let(:deprecated_stripe) {
+      let(:stripe) {
         create(
-          :stripe_connect_payment_method,
+          :stripe_sca_payment_method,
           distributor_ids: [enterprise_id],
           preferred_enterprise_id: enterprise_id
         )
@@ -50,14 +49,13 @@ module Spree
 
       before { allow(controller).to receive(:spree_current_user) { user } }
 
-      it "shows the current gateway type even if deprecated" do
-        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+      it "shows the current gateway type even if not enabled" do
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(false)
 
-        spree_get :edit, id: deprecated_stripe.id
+        spree_get :edit, id: stripe.id
         providers = assigns(:providers).map(&:to_s)
 
         expect(providers).to include "Spree::Gateway::StripeSCA"
-        expect(providers).to include "Spree::Gateway::StripeConnect"
       end
     end
 

@@ -237,7 +237,6 @@ es_US:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Selecciona y Continua
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -604,6 +603,19 @@ es_US:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productora
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría del impuesto
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -1551,6 +1563,8 @@ es_US:
       terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y Condiciones"
+      all_terms_and_conditions:
+        terms_and_conditions: "Términos y Condiciones"
     errors:
       invalid_email: "Introduce un email válido"
   order_paid: PAGADO
@@ -3015,8 +3029,6 @@ es_US:
     not_found: "no encontrado"
     notice_messages:
       variant_deleted: "Variante eliminada"
-    or: "O"
-    order_processed_successfully: "Pedido procesado con éxito"
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar email de autorización"
     refund: "Reembolso"
@@ -3480,7 +3492,6 @@ es_US:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imagen"
-          or: "o"
         unit_name_placeholder: 'ej. manojos'
         index:
           header:

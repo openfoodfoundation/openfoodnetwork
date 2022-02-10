@@ -72,7 +72,7 @@
       .columns.small-12.fat
         %div{"ng-if" => "::producer.name"}
           %label
-            = t :producers_buy_at_html, {enterprise: '<span class="turquoise" ng-bind="::producer.name"></span>'.html_safe}
+            = t :producers_buy_at_html, enterprise: '<span class="turquoise" ng-bind="::producer.name"></span>'.html_safe
         %div.show-for-medium-up{"ng-if" => "::!producer.name"}
           &nbsp;
     .row.cta-container

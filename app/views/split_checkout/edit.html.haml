@@ -19,6 +19,12 @@
   .sub-header.show-for-medium-down
     = render partial: "shopping_shared/order_cycles"
 
-  = render partial: "checkout"
+  %div{ "data-controller": "guest-checkout", "data-guest-checkout-distributor-value": @order.distributor.id }
+    %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
+      = render partial: "checkout"
+
+    - unless spree_current_user
+      %div{ style: "display: block", "data-guest-checkout-target": "guest" }
+        = render partial: "guest"
 
 = render partial: "shared/footer"

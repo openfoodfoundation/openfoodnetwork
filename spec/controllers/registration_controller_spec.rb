@@ -6,7 +6,7 @@ describe RegistrationController, type: :controller do
   describe "redirecting when user not logged in" do
     it "index" do
       get :index
-      expect(response).to redirect_to registration_auth_path(anchor: "signup?after_login=/register")
+      expect(response).to redirect_to registration_auth_path(anchor: "/signup", after_login: "/register")
     end
   end
 

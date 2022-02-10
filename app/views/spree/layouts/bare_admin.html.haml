@@ -1,4 +1,4 @@
-%html{ lang: "en" }
+%html{ lang: "en", "ng-csp": "no-unsafe-eval" }
   %head{"data-hook" => "admin_inside_head"}= render :partial => 'spree/admin/shared/head'
   %body.admin{"data-ajax-root-path" => main_app.root_path}
     #wrapper{"data-hook" => ""}

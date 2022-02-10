@@ -2,17 +2,17 @@
 
 module Spree
   class UsersController < ::BaseController
+    include Spree::Core::ControllerHelpers
+    include I18nHelper
+    include CablecarResponses
+
     layout 'darkswarm'
 
     skip_before_action :set_current_order, only: :show
     prepend_before_action :load_object, only: [:show, :edit, :update]
     prepend_before_action :authorize_actions, only: :new
 
-    include Spree::Core::ControllerHelpers
-    include I18nHelper
-
     before_action :set_locale
-    before_action :enable_embedded_shopfront
 
     def show
       @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
@@ -27,16 +27,33 @@ module Spree
 
     # Endpoint for queries to check if a user is already registered
     def registered_email
-      user = Spree::User.find_by email: params[:email]
-      render json: { registered: user.present? }
+      registered = Spree::User.find_by(email: params[:email]).present?
+
+      if registered
+        render status: :ok, operations: cable_car.
+          inner_html(
+            "#login-feedback",
+            partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.already_registered') })
+          ).
+          dispatch_event(name: "login:modal:open")
+      else
+        head :not_found
+      end
     end
 
     def create
       @user = Spree::User.new(user_params)
+
       if @user.save
-        redirect_back_or_default(main_app.root_url)
+        render operations: cable_car.inner_html(
+          "#signup-feedback",
+          partial("layouts/alert", locals: { type: "success", message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
+        )
       else
-        render :new
+        render status: :unprocessable_entity, operations: cable_car.morph(
+          "#signup-tab",
+          partial("layouts/signup_tab", locals: { signup_form_user: @user })
+        )
       end
     end
 

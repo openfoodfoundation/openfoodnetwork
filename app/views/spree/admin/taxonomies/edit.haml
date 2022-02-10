@@ -17,16 +17,11 @@
       = label_tag nil, t("spree.tree")
       %br/
       :javascript
-        Spree.routes.taxonomy_taxons_path = "#{main_app.api_v0_taxonomy_taxons_path(@taxonomy)}";
-        Spree.routes.admin_taxonomy_taxons_path = "#{spree.admin_taxonomy_taxons_path(@taxonomy)}";
+        Spree.routes.taxonomy_taxons = "#{main_app.api_v0_taxonomy_taxons_url(@taxonomy)}";
+        Spree.routes.admin_taxonomy_taxons = "#{spree.admin_taxonomy_taxons_url(@taxonomy)}";
       #taxonomy_tree.tree
-    #progress{style: "display:none;"}
-      = image_pack_tag 'select2-spinner.gif', title: 'Spinner', style: "vertical-align:bottom;"
-      = t("spree.updating")
-      \..
     .info= t("spree.taxonomy_tree_instruction")
     %br/
     .filter-actions.actions
       = button t('spree.actions.update'), 'icon-refresh'
-      %span.or= t("spree.or")
       = button_link_to t('spree.actions.cancel'), admin_taxonomies_path, icon: 'icon-remove'

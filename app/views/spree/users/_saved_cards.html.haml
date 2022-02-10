@@ -12,5 +12,5 @@
     %td.is-default
       %input{ type: 'radio', name: 'default_card', ng: { model: 'card.is_default', click: 'confirmSetDefault(card, $event)', value: "true"} }
     %td.actions
-      %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
+      %button.tiny.alert.no-margin{ "ng-click": "deleteCard(card.id)" }
         = t(:delete)

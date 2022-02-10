@@ -18,7 +18,7 @@ export default class extends Controller {
 
     // Initialize Stripe JS
     this.stripe = Stripe(this.data.get("key"));
-    this.stripeElement = this.stripe.elements().create("card", {
+    this.stripeElement = this.stripe.elements({ locale: I18n.base_locale }).create("card", {
       style: this.constructor.styles,
       hidePostalCode: true
     });

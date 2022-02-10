@@ -14,7 +14,6 @@ class EnterprisesController < BaseController
   prepend_before_action :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
 
   before_action :clean_permalink, only: :check_permalink
-  before_action :enable_embedded_shopfront
 
   respond_to :js, only: :permalink_checker
 

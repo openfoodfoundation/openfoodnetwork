@@ -28,7 +28,7 @@ assignees: ''
   <pre>
   git checkout master # same version as the release draft
   git fetch upstream
-  git diff upstream master -- config/locales/en.yml
+  git diff upstream/master -- config/locales/en.yml
   tx pull --force # if no changes or only additions in the locale
   git checkout --detach # if we need to commit new translations
   git commit -a -m "Update translations"
@@ -43,7 +43,6 @@ assignees: ''
   <pre>
   cd ofn-install
   git pull
-  (cd ../ofn-secrets && git pull)
   ansible-playbook --limit all-prod --extra-vars "git_version=vx.y.z" playbooks/deploy.yml
   </pre>
   </details>

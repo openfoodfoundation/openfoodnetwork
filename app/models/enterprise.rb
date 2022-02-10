@@ -3,6 +3,8 @@
 require 'spree/core/s3_support'
 
 class Enterprise < ApplicationRecord
+  include Spree::Core::S3Support
+
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 
@@ -91,7 +93,6 @@ class Enterprise < ApplicationRecord
                                     content_type: "application/pdf",
                                     message: I18n.t(:enterprise_terms_and_conditions_type_error)
 
-  include Spree::Core::S3Support
   supports_s3 :logo
   supports_s3 :promo_image
 
@@ -374,7 +375,7 @@ class Enterprise < ApplicationRecord
   end
 
   def self.find_available_permalink(test_permalink)
-    test_permalink = test_permalink.parameterize
+    test_permalink = UrlGenerator.to_url(test_permalink)
     test_permalink = "my-enterprise" if test_permalink.blank?
     existing = Enterprise.
       select(:permalink).

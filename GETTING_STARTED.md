@@ -60,7 +60,7 @@ If the script succeeds you're ready to start developing. If not, take a look at 
 
 Now, your dreams of spinning up a development server can be realised:
 
-    bundle exec rails server
+    foreman start
 
 Go to [http://localhost:3000](http://localhost:3000) to play around!
 

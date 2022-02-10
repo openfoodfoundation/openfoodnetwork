@@ -1,11 +1,11 @@
 es:
-  language_name: "Castellano"
+  language_name: "Inglés"
   activerecord:
     attributes:
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
-        reset_password_token: token de restablecimiento de contraseña
+        reset_password_token: Token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
       spree/order:
@@ -18,7 +18,7 @@ es:
       spree/payment:
         amount: Cantidad
         state: Estado
-        source: Source
+        source: Fuente
       spree/product:
         primary_taxon: "categoría del producto"
         supplier: "Proveedora"
@@ -41,6 +41,8 @@ es:
           attributes:
             email:
               taken: "Ya existe una cuenta con este email. Inicie sesión o restablezca tu contraseña."
+            reset_password_token:
+              invalid: es inválido
         spree/order:
           no_card: No hay tarjetas de crédito autorizadas disponibles para cargar
         spree/credit_card:
@@ -56,6 +58,58 @@ es:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
             on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
+  stripe:
+    error_code:
+      incorrect_number: "El número de tarjeta es incorrecto."
+      invalid_number: "El número de tarjeta no es un número válido."
+      invalid_expiry_month: "El mes de expiración de la tarjeta es inválido."
+      invalid_expiry_year: "El año de expiración de la tarjeta es inválido."
+      invalid_cvc: "El código de seguridad de la tarjeta es inválido."
+      expired_card: "La tarjeta ha expirado. "
+      incorrect_cvc: "El código de seguridad de la tarjeta es incorrecto."
+      incorrect_zip: "El código postal de la tarjeta falló en la validación."
+      card_declined: "La tarjeta fue denegada."
+      missing: "El consumidor al que se le está cobrando no tiene tarjeta."
+      processing_error: "Ha ocurrido un error al procesar la tarjeta."
+      rate_limit: "Ha ocurrido un error debido a que las solicitudes llegaron a la API demasiado rápido. Háganos saber si se encuentra constantemente con este error. "
+      authentication_required: "La tarjeta ha sido denegada porque la transacción requiere autenticación."
+      approve_with_id: "El pago no puede ser autorizado."
+      call_issuer: "La tarjeta ha sido denegada por una razón desconocida."
+      card_not_supported: "La tarjeta no admite este tipo de compra."
+      card_velocity_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
+      currency_not_supported: "La tarjeta no admite la moneda especificada."
+      do_not_honor: "La tarjeta ha sido denegada por una razón desconocida."
+      do_not_try_again: "La tarjeta ha sido denegada por una razón desconocida."
+      duplicate_transaction: "Recientemente se envió una transacción con la misma cantidad e información de la tarjeta de crédito."
+      fraudulent: "El pago ha sido rechazado porque Stripe sospecha que es fraudulento."
+      generic_decline: "La tarjeta ha sido denegada por una razón desconocida."
+      incorrect_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      insufficient_funds: "La tarjeta tiene fondos insuficientes para completar la compra."
+      invalid_account: "La tarjeta, o la cuenta asociada a ella, es inválida."
+      invalid_amount: "El monto del pago es inválido o excede el monto permitido. "
+      invalid_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      issuer_not_available: "No se pudo contactar al emisor de la tarjeta, por lo que no se pudo autorizar el pago."
+      lost_card: "El pago ha sido rechazado porque la tarjeta está reportada como perdida. "
+      merchant_blacklist: "El pago ha sido rechazado porque coincide con un valor en la lista de bloqueo del usuario de Stripe."
+      new_account_information_available: "La tarjeta, o la cuenta asociada a ella, es inválida."
+      no_action_taken: "La tarjeta ha sido denegada por una razón desconocida."
+      not_permitted: "El pago no está permitido. "
+      offline_pin_required: "La tarjeta ha sido rechazada porque requiere un PIN."
+      online_or_offline_pin_required: "La tarjeta ha sido rechazada porque requiere un PIN."
+      pickup_card: "La tarjeta no se puede utilizar para realizar este pago (es posible que haya sido reportada como perdida o robada). "
+      pin_try_exceeded: "Se ha superado el número permitido de intentos de PIN."
+      reenter_transaction: "El emisor no pudo procesar el pago por un motivo desconocido."
+      restricted_card: "La tarjeta no se puede utilizar para realizar este pago (es posible que haya sido reportada como perdida o robada). "
+      revocation_of_all_authorizations: "La tarjeta ha sido denegada por una razón desconocida."
+      revocation_of_authorization: "La tarjeta ha sido denegada por una razón desconocida."
+      security_violation: "La tarjeta ha sido denegada por una razón desconocida."
+      service_not_allowed: "La tarjeta ha sido denegada por una razón desconocida."
+      stolen_card: "El pago ha sido rechazado porque la tarjeta está reportada como robada."
+      stop_payment_order: "La tarjeta ha sido denegada por una razón desconocida."
+      testmode_decline: "Se utilizó un número de tarjeta de prueba de Stripe."
+      transaction_not_allowed: "La tarjeta ha sido denegada por una razón desconocida."
+      try_again_later: "La tarjeta ha sido denegada por una razón desconocida."
+      withdrawal_count_limit_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -95,6 +149,9 @@ es:
   community_forum_url: "URL del foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "La contraseña no puede estar en blanco. Por favor ingrese una contraseña."
     confirmations:
       send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
       failed_to_send: "Se produjo un error al enviar su correo electrónico de confirmación."
@@ -233,6 +290,7 @@ es:
   search_by_name: Buscar por nombre o municipio...
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
+  business_address: "Dirección de Negocios"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -256,7 +314,6 @@ es:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Selecciona y Continua
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -633,6 +690,19 @@ es:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productora
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría de impuestos
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -712,8 +782,15 @@ es:
           terms_and_conditions: "Términos y Condiciones"
           remove_terms_and_conditions: "Eliminar archivo"
           uploaded_on: "Subido en"
+          reset_form: "Reestablecer formulario"
         business_address:
+          company_legal_name: Razón social de la empresa
+          company_placeholder: 'Ejemplo S.A. '
+          address1: Dirección legal
+          address1_placeholder: 123 Calle Alta
           address2: Dirección (cont.)
+          legal_phone_number: Número telefónico legal
+          phone_placeholder: "98 123 4565"
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -959,6 +1036,8 @@ es:
         back_to_list: "Regresar a la lista"
         save_and_back_to_list: "Salvar y volver a lista"
         choose_products_from: "Escoger Productos desde:"
+        re_notify_producers: Re notificar a los productores
+        notify_producers_tip: Esto le enviará un correo a cada productor con su lista de pedidos.
       incoming:
         incoming: "Entrante"
         supplier: "Proveedora"
@@ -999,6 +1078,8 @@ es:
         add_supplier: 'Añadir proveedora'
         add_distributor: 'Añadir distribuidora'
       advanced_settings:
+        automatic_notifications: Notificaciones automáticas
+        automatic_notifications_tip: Notificar automáticamente a los productores con sus pedidos via correo electrónico cuando cierren los el ciclos de pedido
         title: Configuración Avanzada
         choose_product_tip: Puede restringir los productos entrantes y salientes a solo el inventario de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
@@ -1125,6 +1206,11 @@ es:
       enterprise_fee_summary:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
+      errors:
+        no_report_type: "Por favor especifique un tipo de reporte"
+        report_not_found: "El reporte no fue encontrado"
+        missing_ransack_params: "Por favor proporcione los parámetros de búsqueda de Ransack en la solicitud"
+      hidden_field: "< Escondido >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1140,6 +1226,13 @@ es:
           quantity: "Cantidad"
           is_temperature_controlled: "¿Control de Temperatura?"
           temp_controlled: "¿Control de Temperatura?"
+      rendering_options:
+        generate_report: "Generar reporte:"
+        on_screen: "En pantalla"
+        csv_spreadsheet: "Hoja de cálculo CSV"
+        excel_spreadsheet: "Hoja de cálculo Excel"
+        openoffice_spreadsheet: "Hoja de cálculo OpenOffice"
+        hide_summary_rows: "Esconder filas de resumen"
       packing:
         name: "Informes de empaquetado"
         customer_report: "Pack por Consumidor"
@@ -1552,48 +1645,101 @@ es:
   cost_currency: "Moneda"
   split_checkout:
     your_details_without_number: Sus detalles
+    payment_method_without_number: Método de pago
+    order_summary_without_number: Resumen del pedido
     step1:
       your_details:
         title: Sus detalles
         first_name:
           label: Nombre
+          placeholder: ej. Jane
         last_name:
           label: Apellido
+          placeholder: ej. Doe
         email:
           label: Email
+          placeholder: ej. Janedoe@email.com
         phone:
           label: Número de teléfono
+          placeholder: ej. 07987654321
       billing_address:
         title: Dirección de cobro
       address:
+        address1:
+          label: Dirección (Calle + Número de Casa)
+          placeholder: ej. Apartamentos Flat 1 Elm
+        address2:
+          label: Información de dirección adicional (opcional)
+          placeholder: ej. Cavalier avenur
         city:
           label: Ciudad
+          placeholder: Ej. Londres
         state_id:
           label: Estado
         zipcode:
           label: Código Postal
+          placeholder: ej. SW11 3QN
         country_id:
           label: País
       delivery_address:
         title: Dirección de entrega
+      submit: Siguente - método de pago
+      cancel: Regresar a Editar cesta
     step2:
+      payment_method:
+        title: Método de pago
       form:
         card_number:
           label: Número de tarjeta
+          placeholder: ej. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
         card_month:
           label: Mes
         card_year:
           label: Año
+        stripe:
+          use_saved_card: Utilizar tarjeta guardada
+          use_new_card: Ingrese los identificadores de su tarjeta
+          save_card: Guardar tarjeta para uso futuro
+          create_new_card: o ingrese los detalles de la nueva tarjeta a continuación
+      explaination: Puede revisar y confirmar su pedido en el siguiente paso cual incluye costos finales.
+      submit: Siguiente - Resumen del pedido
+      cancel: Regresar a Su información
     step3:
       your_details:
         title: Sus detalles
+        edit: Editar su información
       billing_address:
         title: Dirección de cobro
+      shipping_address:
+        title: Dirección de envío
+      delivery_info:
+        title: Información de la entrega
+      payment_method:
+        title: Método de pago
+        edit: Editar método de pago
+      order:
+        title: Total del pedido
       terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y Condiciones"
+      platform_terms_of_service:
+        message_html: "Acepto los %{tos_link} de la plataforma."
+      all_terms_and_conditions:
+        message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
+        terms_and_conditions: "Términos y Condiciones"
+      agree: Al hacer clic a 'Completar pedido' acepta que se procese su pedido.
+      submit: Completar pedido
+      cancel: Regresar a Método de pago
     errors:
+      global: "Error al guardar, actualice los campos resaltados."
+      terms_not_accepted: Por favor acepte Términos y condiciones
+      required: Espacio no puede estar en blanco
+      invalid_number: "Por favor ingresar un número de teléfono válido"
       invalid_email: "Introduce un email válido"
+      select_a_shipping_method: Seleccionar método de envío
+      select_a_payment_method: Seleccionar método de pago
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total
@@ -1693,6 +1839,7 @@ es:
   producer_mail_order_text: "Se muestra un resumen de los pedidos de tus productos:"
   producer_mail_delivery_instructions: "Instrucciones de recogida/entrega de stock:"
   producer_mail_signoff: "Gracias y hasta pronto"
+  producer_mail_order_customer_text: "Aquí hay un resumen de los pedidos agrupados por clientes"
   shopping_oc_closed: Los pedidos están cerrados
   shopping_oc_closed_description: "Por favor espere hasta que el próximo ciclo abra (o contactanos de forma directa para ver si podemos aceptar algunos pedidos tardíos)"
   shopping_oc_last_closed: "El último ciclo cerró hace %{distance_of_time}"
@@ -2101,6 +2248,8 @@ es:
   fundraising_fee: "Comisión para recaptación de fondos"
   price_graph: "Gráfico de precios"
   included_tax: "Impuesto incluido"
+  tax: "Impuesto"
+  tax_amount_included: "%{amount} (incluido)"
   balance: "Saldo"
   transaction: "Transacción"
   transaction_date: "Fecha"
@@ -2172,6 +2321,7 @@ es:
   calculator_values: "Calculadora de valores"
   calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
   calculator_preferred_unit_error: "debe ser kg o lb"
+  calculator_preferred_value_error: "Entrada inválida. Utilice solo números. Por ejemplo: 10, 5.5, -20"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
   flat_rate_per_item: "Tarifa plana (por artículo)"
   flat_rate_per_order: "Tarifa plana (por pedido)"
@@ -2546,6 +2696,7 @@ es:
     resolve_errors: Resuelve los siguientes errores
     more_items: "+ %{count} Más"
     default_card_updated: Tarjeta predeterminada actualizada
+    default_card_voids_auth: Cambiar su tarjeta predeterminada eliminará las autorizaciones existentes de las tiendas para cargarla. Puede volver a autorizar tiendas después de actualizar la tarjeta predeterminada. ¿Desea cambiar la tarjeta predeterminada?
     cart:
       add_to_cart_failed: >
           Ha habido un problema al añadir este producto en el carrito. Puede que haya
@@ -2585,6 +2736,8 @@ es:
           title: "Subiendo términos y condiciones"
           message_1: "Todos sus compradores deberán aceptarlos una vez al finalizar la compra. Si actualiza el archivo, todos sus compradores deberán volver a aceptarlos al finalizar la compra."
           message_2: "Para los compradores con suscripciones, debe enviarles por correo electrónico los Términos y condiciones (o los cambios en ellos) por ahora, nada les notificará sobre estos nuevos Términos y condiciones."
+        business_address_info:
+          message: "El nombre legal de la empresa, la dirección legal y el número de teléfono legal se utilizan para las empresas que facturan a una entidad legal registrada con detalles diferentes a su información comercial pública. Estos datos SÓLO se utilizarán en las facturas. Si estos detalles están en blanco, su nombre público, dirección y número de teléfono se utilizarán en las facturas."
       panels:
         save: GUARDAR
         saved: GUARDADO
@@ -2745,6 +2898,7 @@ es:
           invalid: "inválido"
         quantity_adjusted: "Stock insuficiente disponible. El artículo se ha actualizada a la cantidad máxima disponible."
         quantity_unchanged: "Cantidad sin cambios respecto a la cantidad anterior."
+        cannot_remove_last_item: "No se puede eliminar el último artículo del pedido. Cancele el pedido en su lugar."
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -3069,8 +3223,6 @@ es:
     not_found: "No encontrado"
     notice_messages:
       variant_deleted: "Variante eliminada"
-    or: "O"
-    order_processed_successfully: "Pedido procesado correctamente"
     payment_method_not_supported: "Método de pago no admitido"
     resend_authorization_email: "Reenviar correo electrónico de autorización"
     rma_credit: "Crédito RMA"
@@ -3372,6 +3524,7 @@ es:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"
+          include_out_of_stock_variants: "Incluir variantes sin inventario disponible."
         index:
           listing_orders: "Pedidos de listado"
           new_order: "Nuevo pedido"
@@ -3528,6 +3681,7 @@ es:
             no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
+        paperclip_image_error: "Paperclip devolvió errores para el archivo '%{attachment_file_name}' - revisar instalación de ImageMagick o archivo de la imagen"
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -3543,7 +3697,6 @@ es:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imagen"
-          or: "o"
         unit_name_placeholder: 'ej. manojos'
         index:
           header:
@@ -3761,6 +3914,7 @@ es:
       awaiting_return: Esperando retorno
       canceled: cancelado
       cart: carrito
+      confirmation: "confirmación"
       complete: completar
       confirm: Confirmar
       delivery: Entrega

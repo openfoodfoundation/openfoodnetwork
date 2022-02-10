@@ -129,6 +129,8 @@ describe ProcessPaymentIntent do
 
         it "completes the order, but with failed payment state recorded" do
           service.call!
+          order.reload
+
           expect(order.state).to eq("complete")
           expect(order.payment_state).to eq("failed")
           expect(order).to have_received(:deliver_order_confirmation_email)

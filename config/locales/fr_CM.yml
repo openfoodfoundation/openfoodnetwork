@@ -276,7 +276,6 @@ fr_CM:
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
-  or: ou
   collapse_all: Tout masquer
   expand_all: Tout afficher
   loading: Chargement en cours...
@@ -653,6 +652,19 @@ fr_CM:
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
+      product_headings:
+        producer: Producteur
+        sku: Référence Produit
+        name: Produit/Variante
+        display_name: Nom affiché
+        category: Catégorie
+        description: Description
+        variant_unit_name: Unité de la variante
+        price: Prix
+        on_hand: En stock
+        on_demand: A volonté
+        shipping_category: Condition de transport
+        tax_category: TVA applicable
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue boutique en cours de chargement...
@@ -1674,6 +1686,11 @@ fr_CM:
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
+      platform_terms_of_service:
+        message_html: "J'accepte les %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
+        terms_and_conditions: "CGU & CGV"
       agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
@@ -3193,8 +3210,6 @@ fr_CM:
     not_found: "Non trouvé"
     notice_messages:
       variant_deleted: "Variante supprimée"
-    or: "Ou"
-    order_processed_successfully: "Commande traitée avec succès"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
@@ -3669,7 +3684,6 @@ fr_CM:
           on_demand: "A volonté"
           product_description: "Description du Produit"
           image: "Image"
-          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:

@@ -7,16 +7,14 @@ module Spree
 
     layout 'darkswarm'
 
-    before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
-    respond_to :html
-    respond_to :json
+    respond_to :html, :json
 
+    before_action :check_authorization
     before_action :set_current_order, only: :update
     before_action :filter_order_params, only: :update
-    before_action :enable_embedded_shopfront
 
     prepend_before_action :require_order_authentication, only: :show
     prepend_before_action :require_order_cycle, only: :edit
@@ -26,8 +24,6 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-
-      handle_stripe_response
     end
 
     def empty
@@ -123,19 +119,6 @@ module Spree
       end
     end
 
-    # Stripe can redirect here after a payment is processed in the backoffice.
-    # We verify if it was successful here and persist the changes.
-    def handle_stripe_response
-      return unless params.key?("payment_intent")
-
-      result = ProcessPaymentIntent.new(params["payment_intent"], @order).call!
-
-      unless result.ok?
-        flash.now[:error] = "#{I18n.t('payment_could_not_process')}. #{result.error}"
-      end
-      @order.reload
-    end
-
     def filter_order_params
       if params[:order] && params[:order][:line_items_attributes]
         params[:order][:line_items_attributes] =
@@ -156,8 +139,10 @@ module Spree
     def require_order_authentication
       return if session[:access_token] || params[:order_token] || spree_current_user
 
+      store_location_for :spree_user, request.original_fullpath
+
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+      redirect_to main_app.root_path(anchor: "/login", after_login: request.original_fullpath)
     end
 
     def order_to_update

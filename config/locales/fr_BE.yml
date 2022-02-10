@@ -40,6 +40,8 @@ fr_BE:
           attributes:
             email:
               taken: "Un compte existe déjà pour cette adresse électronique. Connectez-vous ou demandez un nouveau mot de passe."
+            reset_password_token:
+              invalid: est invalide
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
         spree/credit_card:
@@ -58,6 +60,8 @@ fr_BE:
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
+      invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      approve_with_id: "Le paiement ne peut pas être autorisé."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -225,7 +229,6 @@ fr_BE:
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
-  or: ou
   collapse_all: Tout masquer
   expand_all: Tout afficher
   loading: Chargement en cours...
@@ -426,7 +429,7 @@ fr_BE:
         group_signup_page: Page d'inscription Groupe
         main_links: Liens du menu principal
         footer_and_external_links: Pied de page et Liens Externes
-        your_content: Votre contenu
+        your_content: 'Votre contenu '
         user_guide: Guide d'utilisation
         map: Carte
     enterprise_fees:
@@ -575,6 +578,19 @@ fr_BE:
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Comptoir
+      product_headings:
+        producer: Producteur·trice
+        sku: Référence produit
+        name: Nom
+        display_name: Nom d'affichage
+        category: Catégorie
+        description: Description
+        variant_unit_name: Nom de la variante
+        price: Prix
+        on_hand: En stock
+        on_demand: A la demande
+        shipping_category: Catégorie de livraison
+        tax_category: TVA applicable
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue du magasin en cours de chargement...
@@ -762,6 +778,8 @@ fr_BE:
           shopfront_category_ordering: "Ordre d'affichage des catégories"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
+          shopfront_sort_by_category: "Par catégorie"
+          shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur·trice"
         social:
@@ -891,6 +909,8 @@ fr_BE:
         back_to_list: "Retour à la liste"
         save_and_back_to_list: "Sauver et retour à la liste"
         choose_products_from: "Choisir produits depuis :"
+        re_notify_producers: Notifier les producteurs
+        notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec leur contenu du cycle de vente.
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les comptoirs)"
         supplier: "Disitributeur·trice"
@@ -931,6 +951,7 @@ fr_BE:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
+        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez limiter les produits entrants et sortants à l'inventaire uniquement%{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
@@ -3261,7 +3282,6 @@ fr_BE:
           on_demand: "A volonté"
           product_description: "Description du Produit"
           image: "Image"
-          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:

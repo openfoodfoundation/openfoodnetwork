@@ -72,6 +72,44 @@ fr_CA:
       missing: "Il n'y a pas de carte bancaire liée à cet acheteur."
       processing_error: "Une erreur est survenue durant le traitement du paiement."
       rate_limit: "Une erreur est survenue suite à un grand nombre de requête quasi-simultanée sur notre API. Veuillez contacter notre support si vous observez cette erreur trop souvent."
+      authentication_required: "Le paiement a été refusé car la transaction nécessite une authentification."
+      approve_with_id: "Le paiement ne peut pas être autorisé."
+      call_issuer: "La carte bancaire a été refusée pour une raison inconnue."
+      card_not_supported: "La carte bancaire ne supporte pas ce type d'achat."
+      card_velocity_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
+      currency_not_supported: "La carte bancaire ne supporte pas la monnaie indiquée."
+      do_not_honor: "La carte bancaire a été refusée pour une raison inconnue."
+      do_not_try_again: "La carte bancaire a été refusée pour une raison inconnue."
+      duplicate_transaction: "Une transaction avec un montant identique et la même carte bancaire a été réalisée très récemment."
+      fraudulent: "Le paiement a été refusé car Stripe soupçonne une opération frauduleuse."
+      generic_decline: "La carte bancaire a été refusée pour une raison inconnue."
+      incorrect_pin: "Le code PIN renseigné est incorrect. Ce code de refus s'applique uniquement pour les paiements effectués depuis un terminal de vente."
+      insufficient_funds: "La carte bancaire n'a pas les fonds suffisants pour finaliser la commande."
+      invalid_account: "La carte bancaire, ou le compte lié à la carte bancaire, est invalide."
+      invalid_amount: "Le montant du paiement est invalide, ou dépasse les plafonds autorisés."
+      invalid_pin: "Le code PIN renseigné est incorrect. Ce code de refus s'applique uniquement pour les paiements effectués depuis un terminal de vente."
+      issuer_not_available: "L'émetteur de la carte n'a pas pu être contacté, donc le paiement n'a pas pu être autorisé."
+      lost_card: "Le paiement a été refusé car la carte bancaire est considérée perdue par son émetteur."
+      merchant_blacklist: "Le paiement a été refusé car il correspond à une valeur listée comme bloquée sur le compte Stripe de la boutique."
+      new_account_information_available: "La carte bancaire, ou le compte lié à la carte bancaire, est invalide."
+      no_action_taken: "La carte bancaire a été refusée pour une raison inconnue."
+      not_permitted: "Le paiement n'est pas autorisé."
+      offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
+      online_or_offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
+      pickup_card: "La carte bancaire ne peut pas être utilisée pour réaliser ce paiement (il est possible qu'elle soit identifiée comme perdue ou volée)."
+      pin_try_exceeded: "Vous avez dépassé le nombre d'essai du code PIN."
+      reenter_transaction: "Le paiement ne peut pas être effectué par l'émetteur de la carte bancaire pour une raison inconnue."
+      restricted_card: "La carte bancaire ne peut pas être utilisée pour réaliser ce paiement (il est possible qu'elle soit identifiée comme perdue ou volée)."
+      revocation_of_all_authorizations: "La carte bancaire a été refusée pour une raison inconnue."
+      revocation_of_authorization: "La carte bancaire a été refusée pour une raison inconnue."
+      security_violation: "La carte bancaire a été refusée pour une raison inconnue."
+      service_not_allowed: "La carte bancaire a été refusée pour une raison inconnue."
+      stolen_card: "Le paiement a été refusé parce que la carte bancaire est considérée comme volée."
+      stop_payment_order: "La carte bancaire a été refusée pour une raison inconnue."
+      testmode_decline: "Un code de carte bancaire de test a été utilisé."
+      transaction_not_allowed: "La carte bancaire a été refusée pour une raison inconnue."
+      try_again_later: "La carte bancaire a été refusée pour une raison inconnue."
+      withdrawal_count_limit_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -138,6 +176,9 @@ fr_CA:
       already_registered: "Cet email existe déjà. Veuillez vous connecter ou utiliser une autre adresse email."
     success:
       logged_in_succesfully: "Vous êtes désormais connecté !"
+    sessions:
+      signed_out: "Vous êtes désormais déconnecté."
+      already_signed_out: "Vous êtes désormais déconnecté."
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a été mis à jour, mais votre email n'a pas encore été confirmé."
@@ -277,7 +318,6 @@ fr_CA:
   required_fields: Les champs obligatoires sont mentionnés par un asterisk
   select_continue: Choisir et continuer
   remove: Supprimer
-  or: ou
   collapse_all: Tout masquer
   expand_all: Tout afficher
   loading: Chargement en cours...
@@ -654,6 +694,21 @@ fr_CA:
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
+      product_headings:
+        producer: Producteur
+        sku: Référence Produit
+        name: Nom
+        display_name: Nom affiché
+        category: Catégorie
+        description: Description
+        units: Unités
+        unit_type: Type d'unité
+        variant_unit_name: Unité de la variante
+        price: Prix
+        on_hand: En stock
+        on_demand: A volonté
+        shipping_category: Condition de transport
+        tax_category: Type de taxe
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue Boutique en cours de chargement...
@@ -1084,7 +1139,7 @@ fr_CA:
       bulk_update:
         no_data: Oups, un problème est survenu. Aucune donnée trouvée.
       date_warning:
-        msg: 'Ce cycle de vente est lié aux ordres d''abonnements  1%{n} ouverts. Changer cette date n''affectera pas les ordres ayant déjà été passé, mais devrait être éviter si possible. Êtes-vous sûr de vouloir procéder? '
+        msg: 'Ce cycle de vente est lié aux ordres d''abonnements %{n}  ouverts. Changer cette date n''affectera pas les ordres ayant déjà été passé, mais devrait être éviter si possible. Êtes-vous sûr de vouloir procéder? '
         cancel: Annuler
         proceed: Procéder
     producer_properties:
@@ -1108,7 +1163,7 @@ fr_CA:
       has_no_payment_methods: "%{enterprise} n'a pas de méthode de paiement active"
       has_no_shipping_methods: "%{enterprise} n'a pas de méthode de livraison active"
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
-      not_visible: "%{enterprise}n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
+      not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
       hidden: Masqué
       unitsize: Unité de mesure
@@ -1165,7 +1220,7 @@ fr_CA:
       summary_row:
         total: "Total"
       table:
-        select_and_search: "Sélectionner les filtres et cliquez sur %{option}pour accéder aux données."
+        select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
         headings:
           hub: "Hub"
           customer_code: "Code"
@@ -1312,6 +1367,7 @@ fr_CA:
       terms_and_conditions: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
+    order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -1328,8 +1384,8 @@ fr_CA:
       cart_sidebar:
         checkout: "Finalisation commande"
         edit_cart: "Modifier le panier"
-        items_in_cart_singular: "%{num}élément dans le panier"
-        items_in_cart_plural: "%{num}éléments dans le panier"
+        items_in_cart_singular: "%{num} élément dans le panier"
+        items_in_cart_plural: "%{num} éléments dans le panier"
         close: "Ferme"
         cart_empty: "Le panier est vide"
         take_me_shopping: "Continuer mes achats"
@@ -1363,7 +1419,7 @@ fr_CA:
         signup: "inscrivez-vous"
         contact: "contact"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup}pour continuer."
+        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} ou %{signup} pour continuer."
         require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
@@ -1674,6 +1730,11 @@ fr_CA:
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}"
         link_text: "CGU & CGV"
+      platform_terms_of_service:
+        message_html: "J'accepte les %{tos_link}"
+      all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Open Food Network."
+        terms_and_conditions: "CGU & CGV"
       agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
@@ -1750,7 +1811,7 @@ fr_CA:
   email_so_edit_true_html: "Vous pouvez <a href='%{order_url}'>effectuer des modifications</a> jusqu'à la fermeture de la période de commande le %{orders_close_at}."
   email_so_edit_false_html: "Vous pouvez <a href='%{order_url}'>consulter les détails de cette commande</a> à tout moment."
   email_so_contact_distributor_html: "Pour toute question contactez <strong>%{distributor}</strong> via %{email}."
-  email_so_contact_distributor_to_change_order_html: "Cette commande a été automatiquement créée en votre nom. Vous pouvez effectuer des modifications sur cette commande jusqu'à fermeture de la période de commande le%{orders_close_at} en contactant<strong>%{distributor}</strong> à%{email} ."
+  email_so_contact_distributor_to_change_order_html: "Cette commande a été automatiquement créée en votre nom. Vous pouvez effectuer des modifications sur cette commande jusqu'à fermeture de la période de commande le %{orders_close_at} en contactant <strong>%{distributor}</strong> à %{email} ."
   email_so_confirmation_intro_html: "Votre commande auprès de <strong>%{distributor}</strong> est maintenant confirmée"
   email_so_confirmation_explainer_html: "Cette commande a été automatiquement passée pour vous dans le cadre de votre abonnement, et a maintenant été confirmée."
   email_so_confirmation_details_html: "Voici les détails concernant cette commande auprès de <strong>%{distributor}</strong>:"
@@ -1967,7 +2028,7 @@ fr_CA:
   orders_oc_expired_phone: "Téléphone:"
   orders_show_title: "Confirmation de commande"
   orders_show_time: "Commande prête pour"
-  orders_show_order_number: "Commande #%{number}"
+  orders_show_order_number: "Commande # %{number}"
   orders_show_cancelled: "Annulée"
   orders_show_confirmed: "Confirmée"
   orders_your_order_has_been_cancelled: "VotrVotre commande a été annuléee commande a été annulée"
@@ -2019,7 +2080,7 @@ fr_CA:
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
   error_not_found_in_database: "%{name} n'a pas été trouvé dans la base de donnée"
-  error_not_primary_producer: "%{name}n'est pas enregistré comme \"producteur\""
+  error_not_primary_producer: "%{name} n'est pas enregistré comme \"producteur\""
   error_no_permission_for_enterprise: "\"%{name}\" : vous n'avez pas les droits requis pour gérer les produits de cette entreprise"
   item_handling_fees: "Frais logistiques (inclus dans le prix affiché)"
   january: "Janvier"
@@ -2113,7 +2174,7 @@ fr_CA:
         title: "A propos"
         headline: "Bien joué!"
         message: "A présent, allons un peu plus dans les détails concernant"
-        success: "Opération réussie ! %{enterprise}a été ajoutée à Open Food Network "
+        success: "Opération réussie ! %{enterprise} a été ajoutée à Open Food Network "
         registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profile via l'interface d'administration.\n\n "
         enterprise_description: "Description courte"
         enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
@@ -2210,8 +2271,8 @@ fr_CA:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   show_only_complete_orders: "Ne montrer que les commandes finalisées"
   successfully_created: '%{resource} a été créé avec succès !'
-  successfully_removed: ' %{resource}a été supprimé avec succès !'
-  successfully_updated: ' %{resource}été mis à jour avec succès !'
+  successfully_removed: ' %{resource} a été supprimé avec succès !'
+  successfully_updated: ' %{resource} eté mis à jour avec succès !'
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
   admin_enterprise_relationships: "Permissions Inter-entreprises"
@@ -2327,7 +2388,7 @@ fr_CA:
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 123 Parliament Street, Toronto, Ontario 3070 \""
-  spree_classification_primary_taxon_error: "L'intitulé %{taxon}est l'intitulé de base pour %{product} et ne peut être supprimé"
+  spree_classification_primary_taxon_error: "L'intitulé %{taxon} est l'intitulé de base pour %{product}  et ne peut être supprimé"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
   spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
@@ -2543,7 +2604,7 @@ fr_CA:
   products_unsaved: "Des changements sur %{n} produits n'ont pas été sauvegardés."
   is_already_manager: "est déjà manager!"
   no_change_to_save: "Pas de changement à sauvegarder"
-  user_invited: "%{email}a été invité à gérer cette entreprise"
+  user_invited: "%{email} a été invité à gérer cette entreprise"
   add_manager: "Ajouter un utilisateur existant"
   users: "Utilisateurs"
   about: "A propos"
@@ -2568,7 +2629,7 @@ fr_CA:
   tag_rules: "Règles de tag"
   shop_preferences: "Préférences boutique"
   enterprise_fee_whole_order: Commande totale
-  enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
+  enterprise_fee_by: "%{type} marges/frais par  %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner le type de taxe"
@@ -2650,7 +2711,7 @@ fr_CA:
           qu'il n'est plus en stock ou que la boutique sur laquelle vous étiez a fermé.
     admin:
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
-      enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
+      enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à  %{contact_email} si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: "J'ai compris"
         close: "Fermer"
@@ -2788,8 +2849,8 @@ fr_CA:
         exchange_products:
           load_more_variants: "Afficher plus de variantes"
           load_all_variants: "Afficher toutes les variantes"
-          select_all_variants: "Sélectionnez toutes les%{total_number_of_variants}variantes"
-          variants_loaded: "%{num_of_variants_loaded}sur%{total_number_of_variants}variantes"
+          select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
+          variants_loaded: "%{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taggées"
@@ -2807,7 +2868,7 @@ fr_CA:
         inherit_from_product: "Hériter du produit"
       orders:
         index:
-          per_page: " %{results}par page"
+          per_page: " %{results} par page"
           view_file: "Voir le fichier"
           compiling_invoices: "Compilation des factures en cours"
           bulk_invoice_created: "Facture compilée générée"
@@ -3177,8 +3238,6 @@ fr_CA:
     not_found: "Non trouvé"
     notice_messages:
       variant_deleted: "Variante supprimée"
-    or: "ou"
-    order_processed_successfully: "Commande traitée avec succès"
     payment_method_not_supported: "Mode de paiement non pris en charge"
     resend_authorization_email: "Renvoyer l'e-mail d'autorisation"
     rma_credit: "Crédit ARM"
@@ -3366,7 +3425,7 @@ fr_CA:
     options: "Options"
     has_no_shipped_units: "n'a pas d'éléments envoyés"
     successfully_created: '%{resource} a été créé avec succès !'
-    successfully_updated: ' %{resource}été mis à jour avec succès !'
+    successfully_updated: ' %{resource}  été mis à jour avec succès !'
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n'a pas pu être traité, veuillez vérifier les informations saisies"
     not_available: "N/A"
@@ -3495,8 +3554,8 @@ fr_CA:
           next: "Suivant"
           loading: "Chargement en cours"
           no_orders_found: "Aucune commande trouvée"
-          results_found: " %{number}résultats trouvés"
-          viewing: "Résultats %{start} à %{end}affichés."
+          results_found: " %{number} résultats trouvés"
+          viewing: "Résultats %{start} à  %{end} affichés."
           print_invoices: "Imprimer les factures"
         sortable_header:
           payment_state: "Statut du Paiement"
@@ -3531,9 +3590,9 @@ fr_CA:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
-            few: "Vous avez %{count}produits actifs"
-            many: "Vous avez %{count}produits actifs"
-            other: "Vous avez %{count}produits actifs"
+            few: "Vous avez %{count} produits actifs"
+            many: "Vous avez %{count} produits actifs"
+            other: "Vous avez %{count} produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
           order_cycles_tip: "Les cycles de vente définissent quand et où vos produits peuvent être commandés par vos acheteurs."
@@ -3653,7 +3712,6 @@ fr_CA:
           on_demand: "A volonté"
           product_description: "Description du Produit"
           image: "Image"
-          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:
@@ -3685,7 +3743,7 @@ fr_CA:
           display_as: Unité affichéé
       reports:
         table:
-          select_and_search: "Sélectionner les filtres et cliquez sur %{option}pour accéder aux données."
+          select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
@@ -3813,12 +3871,12 @@ fr_CA:
     order_mailer:
       cancel_email:
         customer_greeting: "Bonjour %{name},"
-        instructions_html: "Votre commande avec 1%{distributor}1a été annulée. Merci de conserver cet email."
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong> a été annulée. Merci de conserver cet email."
         dont_cancel: "Si vous avez changé d'avis ou l'annulation a été réalisée par erreur, merci de contacter %{email}"
         order_summary_canceled_html: "1[ANNULATION] Commande #%{number}1"
         details: "Voici le détail des produits commandés:"
         unpaid_order: "Votre commande n'avait pas été réglée, aucun remboursement n'a donc été effectué"
-        paid_order: "Votre commande avait été réglée, ainsi %{distributor}a remboursé la totalité du montant"
+        paid_order: "Votre commande avait été réglée, ainsi %{distributor} a remboursé la totalité du montant"
         credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Annulation de Commande"
       cancel_email_for_shop:
@@ -3987,7 +4045,7 @@ fr_CA:
         other: environ %{count} années
       almost_x_years:
         one: presque 1 année
-        other: presque%{count} années
+        other: presque %{count} années
       half_a_minute: moins d'une minute
       less_than_x_seconds:
         one: moins d' 1 seconde

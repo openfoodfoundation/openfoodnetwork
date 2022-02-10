@@ -12,7 +12,7 @@ describe Spree::Admin::BaseController, type: :controller do
 
   it "redirects to Angular login" do
     spree_get :index
-    expect(response).to redirect_to root_path(anchor: "login?after_login=/spree/admin/base")
+    expect(response).to redirect_to root_path(anchor: "/login", after_login: "/spree/admin/base")
   end
 
   describe "rendering as json ActiveModelSerializer" do

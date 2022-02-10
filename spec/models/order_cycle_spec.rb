@@ -373,7 +373,7 @@ describe OrderCycle do
     oc = create(:simple_order_cycle,
                 coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
                 preferred_product_selection_from_coordinator_inventory_only: true,
-                automatic_notifications: true)
+                automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
     ex1 = create(:exchange, order_cycle: oc)
     ex2 = create(:exchange, order_cycle: oc)
     oc.clone!
@@ -385,6 +385,8 @@ describe OrderCycle do
     expect(occ.coordinator).not_to be_nil
     expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
     expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
+    expect(occ.processed_at).to eq(nil)
+    expect(occ.mails_sent).to eq(nil)
     expect(occ.coordinator).to eq(oc.coordinator)
 
     expect(occ.coordinator_fee_ids).not_to be_empty

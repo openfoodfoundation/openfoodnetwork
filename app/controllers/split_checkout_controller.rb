@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include OrderCompletion
   include CablecarResponses
 
   helper 'terms_and_conditions'
@@ -21,16 +22,17 @@ class SplitCheckoutController < ::BaseController
 
   def update
     if confirm_order || update_order
+      return if performed?
+
       clear_invalid_payments
       advance_order_state
       redirect_to_step
     else
       flash.now[:error] = I18n.t('split_checkout.errors.global')
 
-      render operations: cable_car.
+      render status: :unprocessable_entity, operations: cable_car.
         replace("#checkout", partial("split_checkout/checkout")).
-        replace("#flashes", partial("shared/flashes", locals: { flashes: flash })),
-             status: :unprocessable_entity
+        replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
     end
   end
 
@@ -41,26 +43,54 @@ class SplitCheckoutController < ::BaseController
   end
 
   def confirm_order
-    return unless @order.confirmation? && params[:confirm_order]
+    return unless summary_step? && @order.confirmation?
     return unless validate_summary! && @order.errors.empty?
 
+    @order.customer.touch :terms_and_conditions_accepted_at
+
+    return true if redirect_to_payment_gateway
+
     @order.confirm!
+    order_completion_reset @order
+  end
+
+  def redirect_to_payment_gateway
+    return unless selected_payment_method&.external_gateway?
+    return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
+
+    render operations: cable_car.redirect_to(url: redirect_url)
+    true
+  end
+
+  def selected_payment_method
+    @selected_payment_method ||= Checkout::PaymentMethodFetcher.new(@order).call
   end
 
   def update_order
-    return if @order.errors.any?
+    return if params[:confirm_order] || @order.errors.any?
 
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
-    send("validate_#{params[:step]}!")
+    @order.updater.update_totals_and_states
+
+    validate_current_step!
 
     @order.errors.empty?
+  end
+
+  def summary_step?
+    params[:step] == "summary"
   end
 
   def advance_order_state
     return if @order.complete?
 
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
+  end
+
+  def validate_current_step!
+    step = ([params[:step]] & ["details", "payment", "summary"]).first
+    send("validate_#{step}!")
   end
 
   def validate_details!
@@ -77,12 +107,13 @@ class SplitCheckoutController < ::BaseController
 
   def validate_summary!
     return true if params[:accept_terms]
+    return true unless TermsOfService.required?(@order.distributor)
 
     @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
   end
 
   def order_params
-    @order_params ||= Checkout::Params.new(@order, params).call
+    @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
   end
 
   def redirect_to_step

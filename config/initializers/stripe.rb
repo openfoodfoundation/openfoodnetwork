@@ -10,7 +10,9 @@ module Stripe
   end
 end
 
-Stripe.api_key = ENV['STRIPE_INSTANCE_SECRET_KEY']
-Stripe.publishable_key = ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']
-Stripe.client_id = ENV['STRIPE_CLIENT_ID']
-Stripe.endpoint_secret = ENV['STRIPE_ENDPOINT_SECRET']
+Rails.application.reloader.to_prepare do
+  Stripe.api_key = ENV['STRIPE_INSTANCE_SECRET_KEY']
+  Stripe.publishable_key = ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']
+  Stripe.client_id = ENV['STRIPE_CLIENT_ID']
+  Stripe.endpoint_secret = ENV['STRIPE_ENDPOINT_SECRET']
+end

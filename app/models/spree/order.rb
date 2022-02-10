@@ -24,13 +24,13 @@ module Spree
         order.update_totals
         order.payment_required?
       }
-      go_to_state :confirmation, if: ->(_order) {
-        Flipper.enabled? :split_checkout
+      go_to_state :confirmation, if: ->(order) {
+        Flipper.enabled? :split_checkout, order.created_by
       }
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
 
     token_resource
 
@@ -104,6 +104,8 @@ module Spree
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
+    after_save_commit DefaultAddressUpdater
+
     # -- Scopes
     scope :not_empty, -> {
       left_outer_joins(:line_items).where.not(spree_line_items: { id: nil })
@@ -176,7 +178,7 @@ module Spree
     end
 
     def to_param
-      number.to_s.to_url.upcase
+      number.to_s.parameterize.upcase
     end
 
     def completed?
@@ -731,17 +733,6 @@ module Spree
 
       adjustment.update_adjustment!(force: true)
       updater.update_totals_and_states
-    end
-
-    # object_params sets the payment amount to the order total, but it does this
-    # before the shipping method is set. This results in the customer not being
-    # charged for their order's shipping. To fix this, we refresh the payment
-    # amount here.
-    def set_payment_amount!
-      update_totals
-      return unless pending_payments.any?
-
-      pending_payments.first.update_attribute :amount, total
     end
   end
 end

@@ -1,0 +1,24 @@
+#login-content
+  = form_with url: spree.spree_user_session_path, scope: :spree_user, data: { remote: "true" } do |form|
+    .row
+      .large-12.columns#login-feedback
+        - confirmation_result = request.query_parameters[:validation]
+        - if confirmation_result.in? ["confirmed", "not_confirmed"]
+          .alert-box{ class: "#{confirmation_result == "confirmed" ? "success" : "alert" }" }
+            = t("devise.confirmations.#{confirmation_result}")
+
+    .row
+      .large-12.columns
+        = form.label :email, t(:email)
+        = form.email_field :email, { tabindex: 1, inputmode: "email", autocomplete: "off", "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+    .row
+      .large-12.columns
+        = form.label :password, t(:password)
+        = form.password_field :password, { tabindex: 2, inputmode: "password" }
+    .row
+      .large-12.columns
+        = form.check_box :remember_me, { tabindex: 3 }
+        = form.label :remember_me, t(:remember_me)
+    .row
+      .large-12.columns
+        = form.submit t(:label_login), { class: "button primary", tabindex: 4 }

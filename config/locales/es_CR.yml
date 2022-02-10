@@ -4,6 +4,7 @@ es_CR:
     attributes:
       spree/user:
         password: "Contraseña"
+        password_confirmation: "Confirmación de la contraseña"
         reset_password_token: Token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
@@ -17,6 +18,7 @@ es_CR:
       spree/payment:
         amount: Cantidad
         state: Provincia
+        source: Fuente
       spree/product:
         primary_taxon: "Categoría del producto"
         supplier: "Proveedor"
@@ -26,6 +28,9 @@ es_CR:
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
+        month: "Mes"
+        verification_value: "Valor de verificación"
+        year: "Año"
       order_cycle:
         orders_close_at: Fecha de cierre
       variant_override:
@@ -36,6 +41,8 @@ es_CR:
           attributes:
             email:
               taken: "Ya existe una cuenta con este correo electrónico. Inicie sesión o restablezca tu contraseña."
+            reset_password_token:
+              invalid: es inválido
         spree/order:
           no_card: No hay tarjetas de crédito autorizadas disponibles para realizar el cobro
         spree/credit_card:
@@ -51,6 +58,58 @@ es_CR:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque está usando la configuración de inventario del productor"
             on_demand_but_count_on_hand_set: "debe estar en blanco si es bajo demanda"
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
+  stripe:
+    error_code:
+      incorrect_number: "El número de tarjeta es incorrecto."
+      invalid_number: "El número de tarjeta no es un número de tarjeta de crédito válido."
+      invalid_expiry_month: "El mes de expiración de la tarjeta es inválido."
+      invalid_expiry_year: "El año de expiración de la tarjeta es inválido"
+      invalid_cvc: "El código de seguridad de la tarjeta es inválido."
+      expired_card: "La tarjeta ha expirado."
+      incorrect_cvc: "El código de seguridad de la tarjeta es incorrecto."
+      incorrect_zip: "El código postal de la tarjeta falló en la validación."
+      card_declined: "La tarjeta fue denegada."
+      missing: "No hay tarjeta de un cliente al que se le está cobrando."
+      processing_error: "Un error ocurrió mientras se procesaba la tarjeta."
+      rate_limit: "Se produjo un error debido a que las solicitudes llegaron a la API demasiado rápido. Háganos saber si se encuentra constantemente con este error."
+      authentication_required: "La tarjeta fue rechazada porque la transacción requiere autenticación."
+      approve_with_id: "El pago no pudo ser autorizado."
+      call_issuer: "La tarjeta fue denegada por una razón desconocida."
+      card_not_supported: "La tarjeta no admite este tipo de compra."
+      card_velocity_exceeded: "El cliente ha excedido el balance o límite de crédito disponible en su tarjeta."
+      currency_not_supported: "La tarjeta no admite el tipo de cambio especificado"
+      do_not_honor: "La tarjeta fue denegada por una razón desconocida."
+      do_not_try_again: "La tarjeta fue denegada por una razón desconocida."
+      duplicate_transaction: "Recientemente se envió una transacción con la misma cantidad e información de la tarjeta de crédito."
+      fraudulent: "El pago ha sido rechazado porque Stripe sospecha que es fraudulento."
+      generic_decline: "La tarjeta fue denegada por una razón desconocida."
+      incorrect_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      insufficient_funds: "La tarjeta no tiene fondos suficientes para completar la compra."
+      invalid_account: "La tarjeta o la cuenta a la que está conectada la tarjeta no es válida."
+      invalid_amount: "El monto del pago no es válido o excede el monto permitido."
+      invalid_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      issuer_not_available: "No se pudo contactar al emisor de la tarjeta, por lo que no se pudo autorizar el pago."
+      lost_card: "El pago ha sido rechazado porque la tarjeta está reportada como perdida."
+      merchant_blacklist: "El pago se ha rechazado porque coincide con un valor en la lista de bloqueo del usuario de Stripe."
+      new_account_information_available: "La tarjeta o la cuenta a la que está conectada la tarjeta no es válida."
+      no_action_taken: "La tarjeta fue denegada por una razón desconocida."
+      not_permitted: "El pago no está permitido."
+      offline_pin_required: "La tarjeta fue denegada porque requiere un PIN."
+      online_or_offline_pin_required: "La tarjeta fue denegada porque requiere un PIN."
+      pickup_card: "La tarjeta no puede ser utilizada para realizar este pago (es posible que haya sido reportada como perdida o robada)."
+      pin_try_exceeded: "El número de intentos permitidos del PIN ha sido excedido."
+      reenter_transaction: "El pago no pudo ser procesado por el emisor por alguna razón desconocida."
+      restricted_card: "La tarjeta no puede ser utilizada para realizar este pago (es posible que haya sido reportada como perdida o robada)."
+      revocation_of_all_authorizations: "La tarjeta fue denegada por una razón desconocida."
+      revocation_of_authorization: "La tarjeta fue denegada por una razón desconocida."
+      security_violation: "La tarjeta fue denegada por una razón desconocida."
+      service_not_allowed: "La tarjeta fue denegada por una razón desconocida."
+      stolen_card: "La tarjeta fue denegada porque se reportó como perdida."
+      stop_payment_order: "La tarjeta fue denegada por una razón desconocida."
+      testmode_decline: "Se utilizó un número de tarjeta de prueba de Stripe."
+      transaction_not_allowed: "La tarjeta fue denegada por una razón desconocida."
+      try_again_later: "La tarjeta fue denegada por una razón desconocida."
+      withdrawal_count_limit_exceeded: "El cliente ha excedido el balance o límite de crédito disponible en su tarjeta."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -84,8 +143,15 @@ es_CR:
               no_default_card: "^No hay una tarjeta predeterminada disponible para este cliente"
             shipping_method:
               not_available_to_shop: "no está disponible para %{shop}"
+  card_details: "Detalles de la tarjeta"
+  card_type: "Tipo de tarjeta"
+  cardholder_name: "Nombre del titular de la tarjeta"
+  community_forum_url: "URL del foro de la comunidad"
   customer_instructions: "Instrucciones del cliente"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "La contraseña de usuario no puede estar en blanco. Porfavor ingrese una contraseña."
     confirmations:
       send_instructions: "En unos minutos recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta."
       failed_to_send: "Se produjo un error al enviar su correo electrónico de confirmación."
@@ -114,10 +180,38 @@ es_CR:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  home_page_alert_html: "HTML de alerta de página de inicio"
+  hub_signup_case_studies_html: "Casos prácticos de registro de concentrador HTML"
+  hub_signup_detail_html: "HTML de detalle de registro de concentrador"
+  hub_signup_pricing_table_html: "Tabla de precios de registro de Hub HTML"
+  group_signup_case_studies_html: "Casos prácticos de registro de grupos HTML"
+  group_signup_detail_html: "Detalle de registro de grupo HTML"
+  group_signup_pricing_table_html: "Tabla de precios de registro de grupo HTML"
+  item_description: "Descripción del Artículo"
+  menu_1_icon_name: "Nombre del icono del menú 1"
+  menu_2_icon_name: "Nombre del icono del menú 2"
+  menu_3_icon_name: "Nombre del icono del menú 3"
+  menu_4_icon_name: "Nombre del icono del menú 4"
+  menu_5_icon_name: "Nombre del icono del menú 5"
+  menu_6_icon_name: "Nombre del icono del menú 6"
+  menu_7_icon_name: "Nombre del icono del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
+    tax_rate:
+      included_in_price: "Incluído en el precio"
+  open_street_map_enabled: "Abrir mapa de calles habilitado"
+  open_street_map_default_latitude: "Latitud predeterminada de Open Street Map"
+  open_street_map_default_longitude: "Longitud predeterminada de Open Street Map"
+  open_street_map_provider_name: "Nombre del proveedor de Open Street Map"
+  open_street_map_provider_options: "Opciones del proveedor de Open Street Map "
+  producer_signup_case_studies_html: "Casos prácticos de registro de productores HTML"
+  producer_signup_detail_html: "Productor registro detalle HTML"
+  producer_signup_pricing_table_html: "Tabla de precios de registro de productores HTML"
+  producers_social: "Productores sociales"
+  resume_order: "Continuar con la orden"
   sku: "SKU"
+  subtotal: "Subtotal"
   tax_rate: "Tarifa de impuestos"
   validators:
     date_time_string_validator:
@@ -144,6 +238,7 @@ es_CR:
   producer_mailer:
     order_cycle:
       subject: "Reporte de Ciclo de Pedido para %{producer}"
+  provider_settings: "Configuración del proveedor"
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimado cliente,"
@@ -190,10 +285,12 @@ es_CR:
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Bienvenido a"
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o cantón...
   producers_join: Los productores costarricenses son bienvenidos a unirse ahora a Open Food Network (LaFeriaCR).
   charges_sales_tax: ¿Cargos de IVA?
+  business_address: "Dirección del negocio"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -217,7 +314,6 @@ es_CR:
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Seleccione y Continue
   remove: Eliminar
-  or: o
   collapse_all: Contraer todos
   expand_all: Expandir todos
   loading: Cargando...
@@ -232,6 +328,7 @@ es_CR:
   enterprises: Organizaciones
   enterprise_groups: Grupos
   reports: Reportes
+  listing_reports: Listado de informes
   variant_overrides: Inventario
   import: Importar
   spree_products: Productos de temporada
@@ -262,7 +359,9 @@ es_CR:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
+  invalid_payment_state: "Estado de pago no válido: %{state}"
   filter_results: Filtrar resultados
+  clear_filters: Borrar filtros
   quantity: Cantidad
   pick_up: Recoger
   copy: Copia
@@ -277,18 +376,32 @@ es_CR:
   on hand: "Disponibles"
   ship: "Envío"
   shipping_category: "Categoría de envío"
+  height: "Altura"
+  width: "Ancho"
+  depth: "Profundidad"
+  payment_could_not_process: "El pago no pudo ser procesado"
+  payment_could_not_complete: "El pago no pudo ser completado"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    resume: "Continuar"
     save: "Guardar"
     edit: "Editar"
     update: "Actualizar"
     delete: "Borrar"
     add: "Añadir"
+    cut: "Cortar"
+    paste: "Pegar"
+    destroy: "Destruir"
+    rename: "Nombrar de nuevo"
   admin:
+    adjustments:
+      skipped_changing_canceled_order: "No se puede cambiar una orden cancelada"
     begins_at: Empieza en
     begins_on: Comienza en
+    bill_address: "Dirección de facturación"
+    ship_address: "Dirección de envío"
     customer: Cliente
     date: Fecha
     email: Email
@@ -344,10 +457,22 @@ es_CR:
     has_n_rules: "Tiene %{num} reglas"
     unsaved_confirm_leave: "Hay cambios sin guardar en esta página ¿Desea continuar?"
     unsaved_changes: "Tiene cambios sin guardar"
+    available_units: "Unidades disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Configuración de la tienda integrada"
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
+    terms_of_service_files:
+      create:
+        select_file: "Por favor seleccionar un archivo primero."
+      show:
+        title: "Archivos de términos de servicio"
+        no_files: "Aún no se han subido términos de servicio."
+        using_default_terms_html: "El sitio actualmente está vinculado a su antiguo %{tos_link}."
+        current_terms_html: "Ver el actual %{tos_link}. Tiempo de carga: %{datetime}."
+        terms_of_service: "Términos de servicio"
+        delete: "Borrar archivo"
+        confirm_delete: "¿Está seguro que quiere eliminar el archivo de Términos de servicio actual?"
     number_localization:
       number_localization_settings: "Configuración de ubicación de número"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
@@ -378,7 +503,10 @@ es_CR:
         title: "Configuración de Matomo"
         matomo_url: "URL de Matomo"
         matomo_site_id: "ID de sitio de Matomo"
+        matomo_tag_manager_url: "URL del administrador de etiquetas de Matomo"
+        info_html: "Matomo es una aplicación de análisis web y móvil. Puede alojar Matomo en las instalaciones o utilizar un servicio alojado en la nube. Visite <a href='http://matomo.org' target='_blank'>matomo.org</a> para obtener más información."
         config_instructions_html: "Aquí puede configurar la integración de OFN Matomo. La siguiente URL de Matomo debe apuntar a la instancia de Matomo a la que se enviará la información de seguimiento del usuario; si se deja vacío, el seguimiento del usuario Matomo se desactivará. El campo ID del sitio no es obligatorio, pero es útil si está rastreando más de un sitio web en una sola instancia de Matomo; se puede encontrar en la consola de la instancia de Matomo."
+        config_instructions_tag_manager_html: "Configurar la URL de Matomo Tag Manager habilita Matomo Tag Manager. Esta herramienta le permite configurar eventos de análisis. La URL de Matomo Tag Manager se copia de la sección Código de instalación de Matomo Tag Manager. Asegúrese de seleccionar el contenedor y el entorno correctos, ya que estas opciones cambian la URL."
     customers:
       index:
         new_customer: "Nuevo cliente"
@@ -399,6 +527,8 @@ es_CR:
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
         guest_label: "Retirar como invitado"
+        credit_owed: "Crédito adeudado"
+        balance_due: "Saldo adeudado"
       destroy:
         has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
@@ -485,6 +615,7 @@ es_CR:
         line_number: "Línea %{number}:"
         encoding_error: "Verifique la configuración de idioma de su archivo fuente y asegúrese de que esté guardado con la codificación UTF-8"
         unexpected_error: "La importación de productos encontró un error inesperado al abrir el archivo: %{error_message}"
+        malformed_csv: "La importación de productos encontró un CSV con formato incorrecto: %{error_message}"
       index:
         notice: "Aviso"
         beta_notice: "Esta funcionalidad aún está en versión beta: puede experimentar algunos errores mientras la usa. Por favor no dude en ponerse en contacto con nosotros."
@@ -559,6 +690,19 @@ es_CR:
         import_again: Subir otro archivo
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
+      product_headings:
+        producer: Productor
+        sku: SKU
+        name: Nombre
+        display_name: Nombre para mostrar
+        category: Categoría
+        description: Descripción
+        variant_unit_name: Nombre de la unidad de la variante
+        price: Precio
+        on_hand: Disponibles
+        on_demand: Bajo demanda
+        shipping_category: Categoría de envío
+        tax_category: Categoría de impuestos
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -1459,6 +1603,12 @@ es_CR:
           label: País
       delivery_address:
         title: Dirección de entrega
+    step2:
+      form:
+        card_month:
+          label: Mes
+        card_year:
+          label: Año
     step3:
       your_details:
         title: Sus detalles
@@ -2821,6 +2971,7 @@ es_CR:
   adjustments: "Ajustes"
   payments: "Pagos"
   return_authorizations: "Autorizaciones de devolución"
+  credit_owed: "Crédito adeudado"
   payment: "Pago"
   payment_method: "Método de pago"
   shipment: "Envío"
@@ -3246,7 +3397,6 @@ es_CR:
           on_demand: "Bajo demanda"
           product_description: "Descripción del producto"
           image: "Imágen"
-          or: "o"
         unit_name_placeholder: 'ej. racimos'
         index:
           header:
@@ -3329,6 +3479,8 @@ es_CR:
           producer_name: "Productor"
           unit: "Unidad"
       shared:
+        configuration_menu:
+          terms_of_service: "Términos de servicio"
         sortable_header:
           name: "Nombre"
           number: "Número"

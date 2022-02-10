@@ -7,33 +7,20 @@ describe Checkout::PostCheckoutActions do
   let(:postCheckoutActions) { Checkout::PostCheckoutActions.new(order) }
 
   describe "#success" do
-    let(:controller) {}
     let(:params) { { order: {} } }
     let(:current_user) { order.distributor.owner }
-
-    let(:reset_order_service) { instance_double(OrderCompletionReset) }
-
-    before do
-      expect(OrderCompletionReset).to receive(:new).
-        with(controller, order).and_return(reset_order_service)
-      expect(reset_order_service).to receive(:call)
-    end
-
-    it "resets the order" do
-      postCheckoutActions.success(controller, params, current_user)
-    end
 
     describe "setting customer terms_and_conditions_accepted_at" do
       before { order.customer = build(:customer) }
 
       it "does not set customer's terms_and_conditions to the current time if terms have not been accepted" do
-        postCheckoutActions.success(controller, params, current_user)
+        postCheckoutActions.success(params, current_user)
         expect(order.customer.terms_and_conditions_accepted_at).to be_nil
       end
 
       it "sets customer's terms_and_conditions to the current time if terms have been accepted" do
         params = { order: { terms_and_conditions_accepted: true } }
-        postCheckoutActions.success(controller, params, current_user)
+        postCheckoutActions.success(params, current_user)
         expect(order.customer.terms_and_conditions_accepted_at).to_not be_nil
       end
     end
@@ -50,14 +37,14 @@ describe Checkout::PostCheckoutActions do
         params[:order][:default_bill_address] = true
         expect(user_default_address_setter).to receive(:set_default_bill_address)
 
-        postCheckoutActions.success(controller, params, current_user)
+        postCheckoutActions.success(params, current_user)
       end
 
       it "sets user default ship address is option selected in params" do
         params[:order][:default_ship_address] = true
         expect(user_default_address_setter).to receive(:set_default_ship_address)
 
-        postCheckoutActions.success(controller, params, current_user)
+        postCheckoutActions.success(params, current_user)
       end
     end
   end

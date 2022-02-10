@@ -253,7 +253,6 @@ pt:
   required_fields: Os campos obrigatórios estão indicados com um asterisco
   select_continue: Seleccionar e continuar
   remove: Remover
-  or: ou
   collapse_all: Esconder tudo
   expand_all: Expandir tudo
   loading: A carregar...
@@ -611,6 +610,19 @@ pt:
         import_again: Carregar outro ficheiro
         view_products: Ir para a Página de Produtos
         view_inventory: Ir para a Página de Inventário
+      product_headings:
+        producer: Produtor/a
+        sku: SKU
+        name: Nome
+        display_name: Nome a apresentar
+        category: Categoria
+        description: Descrição
+        variant_unit_name: Nome da Unidade da Variante
+        price: Preço
+        on_hand: Disponível
+        on_demand: Sob Encomenda
+        shipping_category: Categoria de Envio
+        tax_category: Categoria de Imposto
     variant_overrides:
       loading_flash:
         loading_inventory: A CARREGAR INVENTÁRIO...
@@ -1520,6 +1532,8 @@ pt:
         title: Morada de faturação
       terms_and_conditions:
         link_text: "Termos e Condições"
+      all_terms_and_conditions:
+        terms_and_conditions: "Termos e Condições"
     errors:
       invalid_email: "Por favor usar um endereço de email válido"
   order_paid: PAGO
@@ -3211,7 +3225,6 @@ pt:
           on_demand: "Sob Encomenda"
           product_description: "Descrição do Produto"
           image: "Imagem"
-          or: "ou"
         unit_name_placeholder: 'ex: ramos'
         index:
           header:

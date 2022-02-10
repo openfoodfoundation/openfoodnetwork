@@ -1,5 +1,4 @@
 #= require jquery2
-#= require jquery_ujs
 #= require jquery.ui.all
 #
 #= require angular
@@ -57,7 +56,8 @@
 #= require_tree .
 
 document.addEventListener "turbo:load", ->
-  window.injector = angular.bootstrap document.body, ["Darkswarm"]
+  try
+    window.injector = angular.bootstrap document.body, ["Darkswarm"]
   true
 
 document.addEventListener "turbo:before-render", ->

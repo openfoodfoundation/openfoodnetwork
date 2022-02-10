@@ -272,36 +272,51 @@ describe '
         expect(exchange.tag_list).to eq(["wholesale"])
       end
 
-      it "editing an order cycle" do
-        oc = create(:simple_order_cycle,
-                    suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
-        distributor_managed.update_attribute(:enable_subscriptions, true)
+      context "editing an order cycle" do
+        let(:oc) do
+          create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged],
+                                      coordinator: distributor_managed,
+                                      distributors: [distributor_managed, distributor_permitted, distributor_unmanaged],
+                                      name: 'Order Cycle 1' )
+        end
 
-        visit edit_admin_order_cycle_path(oc)
+        before { distributor_managed.update_attribute(:enable_subscriptions, true) }
 
-        expect(page).to have_field 'order_cycle_name', with: oc.name
-        select2_select schedule.name, from: 'schedule_ids'
-        expect(page).not_to have_select2 'schedule_ids',
-                                         with_options: [schedule_of_other_managed_distributor.name]
+        it "shows if notifications have been sent" do
+          oc.update_columns mails_sent: true
 
-        click_button 'Save and Next'
+          visit edit_admin_order_cycle_path(oc)
 
-        # When I remove all incoming exchanges
-        page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
-        page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
-        click_button 'Save and Next'
+          expect(page).to have_content I18n.t("admin.order_cycles.edit.re_notify_producers").upcase
+        end
 
-        # And I remove all outgoing exchanges
-        page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
-        page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
-        click_button 'Save and Back to List'
-        expect(page).to have_input "oc#{oc.id}[name]", value: oc.name
+        it "allows removing exchanges" do
+          visit edit_admin_order_cycle_path(oc)
 
-        oc.reload
-        expect(oc.suppliers).to eq([supplier_unmanaged])
-        expect(oc.coordinator).to eq(distributor_managed)
-        expect(oc.distributors).to eq([distributor_unmanaged])
-        expect(oc.schedules).to eq([schedule])
+          expect(page).to have_field 'order_cycle_name', with: oc.name
+          select2_select schedule.name, from: 'schedule_ids'
+          expect(page).not_to have_select2 'schedule_ids',
+                                           with_options: [schedule_of_other_managed_distributor.name]
+
+          click_button 'Save and Next'
+
+          # When I remove all incoming exchanges
+          page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
+          page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+          click_button 'Save and Next'
+
+          # And I remove all outgoing exchanges
+          page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
+          page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+          click_button 'Save and Back to List'
+          expect(page).to have_input "oc#{oc.id}[name]", value: oc.name
+
+          oc.reload
+          expect(oc.suppliers).to eq([supplier_unmanaged])
+          expect(oc.coordinator).to eq(distributor_managed)
+          expect(oc.distributors).to eq([distributor_unmanaged])
+          expect(oc.schedules).to eq([schedule])
+        end
       end
 
       it "cloning an order cycle" do

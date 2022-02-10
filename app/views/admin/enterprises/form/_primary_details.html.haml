@@ -57,7 +57,7 @@
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
     .two.columns.omega
       %div{ng: {show: "checking", cloak: true}, style: "width: 30px; height: 30px;"}
-        = render partial: "components/spinner"
+        = render partial: "components/admin_spinner"
       %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
         {{ availability }}
         %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }

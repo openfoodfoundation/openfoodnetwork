@@ -283,6 +283,16 @@ describe Spree::Order do
       order.completed_at = Time.zone.now
       expect(order.can_cancel?).to be_truthy
     end
+
+    context "with a soft-deleted product" do
+      let(:order) { create(:completed_order_with_totals) }
+
+      it "should cancel the order without error" do
+        order.line_items.first.variant.product.tap(&:destroy)
+        order.cancel!
+        expect(Spree::Order.by_state(:canceled)).to include order
+      end
+    end
   end
 
   context "insufficient_stock_lines" do
@@ -1321,54 +1331,6 @@ describe Spree::Order do
       it 'transitions to :cart state' do
         order.restart_checkout!
         expect(order.state).to eq('cart')
-      end
-    end
-  end
-
-  describe '#set_payment_amount!' do
-    let(:order) do
-      shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
-      build(:order, shipments: [shipment])
-    end
-
-    context 'after transitioning to payment' do
-      before do
-        order.state = 'delivery' # payment's previous state
-
-        allow(order).to receive(:payment_required?) { true }
-      end
-
-      it 'calls #set_payment_amount! and updates totals' do
-        expect(order).to receive(:set_payment_amount!)
-        expect(order).to receive(:update_totals).at_least(:once)
-
-        order.next
-      end
-
-      context "payment's amount" do
-        let(:failed_payment) { create(:payment, order: order, state: 'failed', amount: 100) }
-
-        before do
-          allow(order).to receive(:total) { 120 }
-        end
-
-        it 'is not updated for failed payments' do
-          failed_payment
-
-          order.next
-
-          expect(failed_payment.reload.amount).to eq 100
-        end
-
-        it 'is updated only for pending payments' do
-          pending_payment = create(:payment, order: order, state: 'pending', amount: 80)
-          failed_payment
-
-          order.next
-
-          expect(failed_payment.reload.amount).to eq 100
-          expect(pending_payment.reload.amount).to eq 120
-        end
       end
     end
   end

@@ -3,7 +3,6 @@
 class ShopController < BaseController
   layout "darkswarm"
   before_action :require_distributor_chosen, :set_order_cycles, except: :changeable_orders_alert
-  before_action :enable_embedded_shopfront
 
   def show
     redirect_to main_app.enterprise_shop_path(current_distributor)

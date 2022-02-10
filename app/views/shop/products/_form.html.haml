@@ -13,7 +13,8 @@
               %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
                 = render "shop/products/summary"
                 .shop-variants
-                  %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
+                  .variants.row{"ng-controller": "ShopVariantCtrl", variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
+                    = render "shop/products/shop_variant"
               %product{"ng-show" => "Products.loading"}
                 .summary
                   .small-12.columns.text-center
