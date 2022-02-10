@@ -175,12 +175,12 @@ describe "Authentication", js: true do
       end
 
       # needs to be changed once #8860 is addressed
-      xit "clicking Signup triggers login modal and opens the signup tab" do
+      it "clicking Signup triggers login modal and opens the signup tab" do
         within "#shop-tabs" do
           find("a", text: "signup").click
         end
-        expect(page).to have_selector("a.active", text: "Sign up")
-        expect(page).to have_button "Sign up"
+        expect(page).to have_selector("a.active", text: "Login")
+        expect(page).to have_button "Login"
       end
     end
 
