@@ -21,7 +21,7 @@ describe "Authentication", js: true do
       end
     end
 
-    describe "Loggin in from the home page" do
+    describe "Logging in from the home page" do
       before do
         visit root_path
       end
@@ -153,6 +153,27 @@ describe "Authentication", js: true do
           open_login_modal
           expect(page).to have_login_modal
         end
+      end
+    end
+
+    describe "Logging in from the private shop page" do
+      let(:distributor) { create(:distributor_enterprise, require_login: true) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, distributors: [distributor],
+                                    coordinator: create(:distributor_enterprise))
+      }
+      before do
+        visit enterprise_shop_path(distributor)
+      end
+
+      it "clicking login triggers the login modal" do
+        find("a", text: "login").click
+        expect(page).to have_selector ".login-modal"
+      end
+
+      xit "clicking signup triggers the signup modal" do
+        find("a", text: "login").click
+        expect(page).to have_selector ".login-modal"
       end
     end
 
