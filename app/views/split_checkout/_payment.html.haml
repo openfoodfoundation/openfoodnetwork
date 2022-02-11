@@ -4,6 +4,7 @@
       = t("split_checkout.step2.payment_method.title")
 
     - selected_payment_method = @order.payments&.with_state(:checkout)&.first&.payment_method_id
+    - selected_payment_method ||= available_payment_methods[0].id if available_payment_methods.length == 1
     - available_payment_methods.each do |payment_method| 
       %div.checkout-input.checkout-input-radio
         = f.radio_button :payment_method_id, payment_method.id,
