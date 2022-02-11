@@ -242,6 +242,27 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
     end
 
+    context "payment method step" do
+      let(:order) { create(:order_ready_for_payment, distributor: distributor) }
+
+      it "preselect the payment method if only one is available" do
+        visit checkout_step_path(:payment)
+
+        expect(page).to have_checked_field "payment_method_#{payment_method.id}"
+      end
+
+      context "with more than one payment method" do
+        let!(:payment_method2) { create(:payment_method, distributors: [distributor]) }
+
+        it "don't preselect the payment method if more than one is available" do
+          visit checkout_step_path(:payment)
+
+          expect(page).to have_field "payment_method_#{payment_method.id}", checked: false
+          expect(page).to have_field "payment_method_#{payment_method2.id}", checked: false
+        end
+      end
+    end
+
     context "summary step" do
       let(:order) { create(:order_ready_for_confirmation, distributor: distributor) }
 
