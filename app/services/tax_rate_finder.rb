@@ -20,9 +20,15 @@ class TaxRateFinder
     case originator
     when Spree::TaxRate
       [originator]
+    when Spree::ShippingMethod
+      shipping_method_fee_tax_rates(originator, adjustable)
     when EnterpriseFee
       enterprise_fee_tax_rates(originator, adjustable)
     end
+  end
+
+  def shipping_method_fee_tax_rates(shipping_method, _adjustable)
+    shipping_method.tax_category ? shipping_method.tax_category.tax_rates : []
   end
 
   def enterprise_fee_tax_rates(enterprise_fee, adjustable)
