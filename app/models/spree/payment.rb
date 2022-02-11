@@ -206,7 +206,7 @@ module Spree
     # Makes newly entered payments invalidate previously entered payments so the most recent payment
     # is used by the gateway.
     def invalidate_old_payments
-      order.payments.with_state('checkout').where.not(id: id).each do |payment|
+      order.payments.incomplete.where.not(id: id).each do |payment|
         # Using update_column skips validations and so it skips validate_source. As we are just
         # invalidating past payments here, we don't want to validate all of them at this stage.
         payment.update_columns(

@@ -49,6 +49,18 @@ describe Spree::Payment do
       end
     end
 
+    context "creating a new payment alongside other incomplete payments" do
+      let(:order) { create(:order_with_totals) }
+      let!(:incomplete_payment) { create(:payment, order: order, state: "pending") }
+      let(:new_payment) { create(:payment, order: order, state: "checkout") }
+
+      it "invalidates other incomplete payments on the order" do
+        new_payment
+
+        expect(incomplete_payment.reload.state).to eq "invalid"
+      end
+    end
+
     # Regression test for https://github.com/spree/spree/pull/2224
     context 'failure' do
       it 'should transition to failed from pending state' do
