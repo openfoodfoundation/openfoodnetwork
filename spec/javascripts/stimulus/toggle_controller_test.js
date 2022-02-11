@@ -6,6 +6,11 @@ import { Application } from "stimulus";
 import toggle_controller from "../../../app/webpacker/controllers/toggle_controller";
 
 describe("ToggleController", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("toggle", toggle_controller);
+  });
+
   describe("#toggle", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="toggle">
@@ -14,9 +19,6 @@ describe("ToggleController", () => {
           content
         </div>
       </div>`;
-
-      const application = Application.start();
-      application.register("toggle", toggle_controller);
     });
 
     it("toggle the content", () => {

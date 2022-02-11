@@ -6,6 +6,11 @@ import { Application } from "stimulus";
 import remote_toggle_controller from "../../../app/webpacker/controllers/remote_toggle_controller";
 
 describe("RemoteToggleController", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("remote-toggle", remote_toggle_controller);
+  });
+
   describe("#toggle", () => {
     beforeEach(() => {
       document.body.innerHTML = `
@@ -17,9 +22,6 @@ describe("RemoteToggleController", () => {
         </div>
         <div id="content">...</div>
       `;
-
-      const application = Application.start();
-      application.register("remote-toggle", remote_toggle_controller);
     });
 
     it("clicking a toggle switches the visibility of the :data-remote-toggle-selector element", () => {
@@ -36,8 +38,7 @@ describe("RemoteToggleController", () => {
       expect(content.style.display).toBe("block");
     });
 
-    /* skipping, this test passes when it's the only test in this file but not otherwise? */
-    it.skip("clicking a toggle with a chevron icon switches the visibility of content and the direction of the icon", () => {
+    it("clicking a toggle with a chevron icon switches the visibility of content and the direction of the icon", () => {
       const button = document.getElementById("remote-toggle-with-chevron");
       const chevron = button.querySelector("i");
       const content = document.getElementById("content");

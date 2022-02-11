@@ -6,13 +6,18 @@ import { Application } from "stimulus";
 import paymentmethod_controller from "../../../app/webpacker/controllers/paymentmethod_controller";
 
 describe("PaymentmethodController", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("paymentmethod", paymentmethod_controller);
+  });
+
   describe("#selectPaymentMethod", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="paymentmethod">
          <input id="paymentmethod_1" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod1" data-paymentmethod-target="input" />
          <input id="paymentmethod_2" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod2" data-paymentmethod-target="input" checked="checked" />
          <input id="paymentmethod_3" data-action="click->paymentmethod#selectPaymentMethod" data-paymentmethod-id="paymentmethod3" data-paymentmethod-target="input"/>
-         
+
          <div class="paymentmethod-container" id="paymentmethod1">
           <input type="number" id="input1" />
           <select id="select1" >
@@ -32,9 +37,6 @@ describe("PaymentmethodController", () => {
           </select>
          </div>
        </div>`;
-
-      const application = Application.start();
-      application.register("paymentmethod", paymentmethod_controller);
     });
 
     it("fill the right payment container", () => {
