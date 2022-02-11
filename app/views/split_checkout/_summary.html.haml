@@ -77,5 +77,5 @@
   .medium-6
     .checkout-submit
       = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-      %a.button.cancel{href: main_app.cart_path}
+      %a.button.cancel{href: main_app.checkout_step_path(:payment)}
         = t("split_checkout.step3.cancel")

@@ -260,6 +260,16 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
       end
 
+      describe "navigation available" do
+        it "redirect to Payment method step by clicking on 'Back to payment method' button" do
+          visit checkout_step_path(:summary)
+
+          click_on "Back to Payment method"
+
+          expect(page).to have_content "You can review and confirm your order in the next step which includes the final costs."
+        end
+      end
+
       describe "terms and conditions" do
         context "when none are required" do
           it "doesn't show checkbox or links" do
