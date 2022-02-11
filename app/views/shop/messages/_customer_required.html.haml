@@ -6,7 +6,7 @@
       %p
       - if spree_current_user.nil?
         %p
-          = t('.require_login_html', login: ('<a auth="login" data-action="click->login-modal#call">' + t('.login') + '</a>').html_safe, signup: ('<a auth="signup" data-action="click->login-modal#call">' + t('.signup') + '</a>').html_safe)
+          = t('.require_login_3_html', login: ('<a data-action="click->login-modal#call">' + t('.login') + '</a>').html_safe)
         %p
           = t('.require_login_2_html', contact: link_to(t('.contact'), '#contact'), enterprise: current_distributor.name)
       - else
