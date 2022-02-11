@@ -6,6 +6,6 @@ class SplitCheckoutConstraint
   end
 
   def current_user(request)
-    @spree_current_user ||= request.env['warden'].user
+    request.env['warden'].user
   end
 end
