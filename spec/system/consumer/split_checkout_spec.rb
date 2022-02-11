@@ -201,6 +201,25 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
       end
+
+      describe "pre-selecting a shipping method" do
+        it "preselect a shipping method if only one is available" do
+          order.distributor.update! shipping_methods: [free_shipping]
+
+          visit checkout_step_path(:details)
+
+          expect(page).to have_checked_field "shipping_method_#{free_shipping.id}"
+        end
+
+        it "don't preselect a shipping method if more than one is available" do
+          order.distributor.update! shipping_methods: [free_shipping, shipping_with_fee]
+
+          visit checkout_step_path(:details)
+
+          expect(page).to have_field "shipping_method_#{free_shipping.id}", checked: false
+          expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
+        end
+      end
     end
 
     describe "not filling out delivery details" do
