@@ -20,15 +20,6 @@ class SplitCustomersName < ActiveRecord::Migration[6.1]
   end
 
   def migrate_customer_name_data!
-    Customer.joins(:bill_address).find_each do |customer|
-      bill_address = customer.bill_address
-
-      customer.update(
-        first_name: bill_address.firstname.to_s.strip,
-        last_name: bill_address.lastname.to_s.strip
-      )
-    end
-
     Customer.where(first_name: "", last_name: "").where.not(backup_name: [nil, ""]).find_each do |customer|
       name_words = customer.backup_name.split(' ')
 
