@@ -4075,4 +4075,64 @@ cy:
           other: Taliadau
   datetime:
     distance_in_words:
+      about_x_hours:
+        one: tua 1 awr
+        two: tua %{count} awr
+        many: tua %{count} awr
+        other: tua %{count} awr
+      about_x_months:
+        one: tua 1 mis
+        two: tua %{count} mis
+        many: tua %{count} mis
+        other: tua %{count} mis
+      about_x_years:
+        one: tua 1 flwyddyn
+        two: tua %{count} mlynedd
+        many: tua %{count} mlynedd
+        other: tua %{count} blwyddyn
+      almost_x_years:
+        one: bron i 1 flwyddyn
+        two: bron %{count} mlynedd
+        many: bron %{count} mlynedd
+        other: bron %{count} blwyddyn
       half_a_minute: hanner munud
+      less_than_x_seconds:
+        one: llai nag 1 eiliad
+        two: llai na %{count} eiliad
+        many: llai na %{count} eiliad
+        other: llai nag %{count} eiliad
+      less_than_x_minutes:
+        one: llai na munud
+        two: llai nag %{count} munud
+        many: llai nag %{count} munud
+        other: llai nag %{count} munud
+      over_x_years:
+        one: dros 1 flwyddyn
+        two: dros %{count} mlynedd
+        many: dros %{count} mlynedd
+        other: dros %{count} blwyddyn
+      x_seconds:
+        one: "1 eiliad"
+        two: "%{count} eiliad"
+        many: "%{count} eiliad"
+        other: "%{count} eiliad"
+      x_minutes:
+        one: "1 funud"
+        two: "%{count} munud"
+        many: "%{count} munud"
+        other: "%{count} munud"
+      x_days:
+        one: "1 diwrnod"
+        two: "%{count} diwrnod"
+        many: "%{count} diwrnod"
+        other: "%{count} diwrnod"
+      x_months:
+        one: "1 mis"
+        two: "%{count} mis"
+        many: "%{count} mis"
+        other: "%{count} mis"
+      x_years:
+        one: "1 flwyddyn"
+        two: "%{count} mlynedd"
+        many: "%{count} mlynedd"
+        other: "%{count} blwyddyn"
