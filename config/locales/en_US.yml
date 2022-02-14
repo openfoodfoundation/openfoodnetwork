@@ -230,7 +230,7 @@ en_US:
       subject: "%{enterprise}: Welcome to the %{sitename}Community!"
       email_welcome: "Welcome"
       email_registered: "is now part of"
-      email_userguide_html: "OFN is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for this platform are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}"
+      email_userguide_html: "The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in \"office hours\" most Mondays and Fridays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
       userguide: "Open Food Network User Guide"
       email_admin_html: "You might have already discovered that you can can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"

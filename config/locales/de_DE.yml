@@ -1688,7 +1688,7 @@ de_DE:
         country_id:
           label: Land
       delivery_address:
-        title: Lieferadresse
+        title: Liefer-/Abholinformationen
       submit: Weiter - Zahlungsart
       cancel: Zurück - Warenkorb
     step2:
