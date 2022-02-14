@@ -73,7 +73,7 @@ module ProductImport
                                            'variant_unit_scale', 'primary_taxon_id')
       )
       new_variant.save
-      if entry.attributes['unit_type'].present? || entry.attributes['variant_unit_name'].present?
+      if new_variant.persisted?
         if entry.attributes['on_demand'].present?
           new_variant.on_demand = entry.attributes['on_demand']
         end
