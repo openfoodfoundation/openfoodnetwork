@@ -13,6 +13,7 @@ module Spree
 
     helper 'spree/base'
 
+    prepend_before_action :handle_unconfirmed_email
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
 
@@ -47,6 +48,22 @@ module Spree
 
     def accurate_title
       Spree.t(:login)
+    end
+
+    def handle_unconfirmed_email
+      render_unconfirmed_response if email_unconfirmed?
+    end
+
+    def email_unconfirmed?
+      Spree::User.where(email: params.dig(:spree_user, :email), confirmed_at: nil).exists?
+    end
+
+    def render_unconfirmed_response
+      render status: :unprocessable_entity, operations: cable_car.inner_html(
+        "#login-feedback",
+        partial("layouts/alert",
+                locals: { type: "alert", message: t(:email_unconfirmed), unconfirmed: true })
+      )
     end
 
     def ensure_valid_locale_persisted
