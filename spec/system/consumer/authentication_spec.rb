@@ -31,27 +31,53 @@ describe "Authentication", js: true do
           open_login_modal
         end
 
-        it "showing login" do
-          expect(page).to have_login_modal
-        end
+        describe "logging in" do
+          it "showing login" do
+            expect(page).to have_login_modal
+          end
 
-        it "failing to login" do
-          fill_in "Email", with: user.email
-          click_login_button
-          expect(page).to have_content "Invalid email or password"
-        end
+          it "failing to login" do
+            fill_in "Email", with: user.email
+            click_login_button
+            expect(page).to have_content "Invalid email or password"
+          end
 
-        it "logging in successfully" do
-          fill_in "Email", with: user.email
-          fill_in "Password", with: user.password
-          click_login_button
-          expect(page).to be_logged_in_as user
-        end
-
-        context "using keyboard" do
           it "logging in successfully" do
-            fill_in_using_keyboard
+            fill_in "Email", with: user.email
+            fill_in "Password", with: user.password
+            click_login_button
             expect(page).to be_logged_in_as user
+          end
+
+          context "using keyboard" do
+            it "logging in successfully" do
+              fill_in_using_keyboard
+              expect(page).to be_logged_in_as user
+            end
+          end
+
+          context "with an unconfirmed email" do
+            let!(:user) {
+              Spree::User.create(email: "test@example.com", unconfirmed_email: "test@example.com", password: "password")
+            }
+
+            it "shows an error and an option to resend the confirmation email" do
+              fill_in "Email", with: user.email
+              fill_in "Password", with: user.password
+              click_login_button
+
+              expect(page).to have_content I18n.t('email_unconfirmed')
+              expect do
+                page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
+              end.to enqueue_job ActionMailer::MailDeliveryJob
+              expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
+
+              expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
+
+              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              expect(user.reload.confirmed?).to be true
+              expect(page).to have_text I18n.t('devise.confirmations.confirmed')
+            end
           end
         end
 

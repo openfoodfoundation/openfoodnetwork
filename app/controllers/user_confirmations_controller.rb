@@ -23,7 +23,7 @@ class UserConfirmationsController < DeviseController
       end
     else
       render operations: cable_car.inner_html(
-        "#forgot-feedback",
+        "##{params[:tab] || 'forgot'}-feedback",
         partial("layouts/alert", locals: { type: "success", message: t("devise.confirmations.send_instructions") })
       )
       return

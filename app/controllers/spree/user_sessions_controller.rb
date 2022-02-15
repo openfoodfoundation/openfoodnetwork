@@ -61,8 +61,8 @@ module Spree
     def render_unconfirmed_response
       render status: :unprocessable_entity, operations: cable_car.inner_html(
         "#login-feedback",
-        partial("layouts/alert",
-                locals: { type: "alert", message: t(:email_unconfirmed), unconfirmed: true })
+        partial("layouts/alert", locals: { type: "alert", message: t(:email_unconfirmed),
+                                           unconfirmed: true, tab: "login" })
       )
     end
 
