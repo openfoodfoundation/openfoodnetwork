@@ -407,8 +407,8 @@ describe Spree::Payment do
 
         context "if payment method has any payment fees" do
           before do
-            payment.order.stub outstanding_balance: 10
-            payment.stub credit_allowed: 200
+            expect(payment.order).to receive(:outstanding_balance).at_least(:once) { 10 }
+            expect(payment).to receive(:credit_allowed) { 200 }
           end
 
           it "should not applied any transaction fees" do
