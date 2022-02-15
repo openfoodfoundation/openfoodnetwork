@@ -14,7 +14,7 @@ module Api
 
       before_action :authenticate_user
 
-      rescue_from Exception, with: :error_during_processing
+      rescue_from StandardError, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
       rescue_from Pagy::VariableError, with: :invalid_pagination
@@ -46,8 +46,13 @@ module Api
       def error_during_processing(exception)
         Bugsnag.notify(exception)
 
-        render status: :unprocessable_entity,
-               json: json_api_error(exception.message, backtrace: exception.backtrace)
+        if Rails.env.development? || Rails.env.test?
+          render status: :unprocessable_entity,
+                 json: json_api_error(exception.message, meta: exception.backtrace)
+        else
+          render status: :unprocessable_entity,
+                 json: json_api_error(I18n.t(:unknown_error, scope: "api"))
+        end
       end
 
       def invalid_pagination(exception)
@@ -79,11 +84,7 @@ module Api
       end
 
       def json_api_error(message, **options)
-        error_response = { errors: [{ detail: message }] }
-        if options[:backtrace] && (Rails.env.development? || Rails.env.test?)
-          error_response.merge!(meta: [options[:backtrace]])
-        end
-        error_response
+        { errors: [{ detail: message }] }.merge(options)
       end
 
       def json_api_invalid(message, errors)

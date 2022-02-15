@@ -1409,6 +1409,7 @@ en:
 # API
 #
   api:
+    unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
     invalid_resource: "Invalid resource. Please fix errors and try again."
