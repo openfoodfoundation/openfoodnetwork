@@ -53,7 +53,7 @@ module JsonApiPagination
   end
 
   def current_page
-    params[:page] || 1
+    (params[:page] || 1).to_i
   end
 
   def total_pages

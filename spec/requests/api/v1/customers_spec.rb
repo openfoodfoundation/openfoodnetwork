@@ -73,10 +73,13 @@ describe "Customers", type: :request do
 
     describe "pagination" do
       it "renders the first page" do
-        pending "pagination logic compares string with integer"
-
         get "/api/v1/customers", params: { page: "1" }
         expect(json_response_ids).to eq [customer1.id.to_s, customer2.id.to_s]
+      end
+
+      it "renders the second page" do
+        get "/api/v1/customers", params: { page: "2", per_page: "1" }
+        expect(json_response_ids).to eq [customer2.id.to_s]
       end
     end
 
