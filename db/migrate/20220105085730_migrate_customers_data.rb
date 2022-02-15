@@ -2,6 +2,7 @@
 
 class MigrateCustomersData < ActiveRecord::Migration[6.1]
   class SpreeAddress < ApplicationRecord; end
+
   class Customer < ApplicationRecord
     belongs_to :bill_address, class_name: "SpreeAddress"
   end
@@ -34,7 +35,8 @@ class MigrateCustomersData < ActiveRecord::Migration[6.1]
   end
 
   def bill_address_name_matches?(customer)
-    customer.name.delete(" ") == (customer.bill_address.firstname + customer.bill_address.lastname).delete(" ")
+    address_name = customer.bill_address.firstname + customer.bill_address.lastname
+    customer.name.delete(" ") == address_name.delete(" ")
   end
 
   def split_customer_name!(customer)
