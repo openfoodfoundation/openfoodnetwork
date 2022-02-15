@@ -413,7 +413,7 @@ describe Spree::Payment do
 
           it "should not applied any transaction fees" do
             payment.credit!
-            expect(payment.adjustment.try(:finalized?)).to eq(false)
+            expect(payment.adjustment.finalized?).to eq(false)
             expect(order.all_adjustments.payment_fee.eligible.length).to eq(0)
           end
         end
