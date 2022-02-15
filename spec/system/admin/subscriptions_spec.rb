@@ -19,7 +19,7 @@ describe 'Subscriptions' do
       let!(:subscription) {
         create(:subscription, shop: shop, with_items: true, with_proxy_orders: true)
       }
-      let!(:customer) { create(:customer) }
+      let!(:customer) { create(:customer, first_name: "Timmy", last_name: "Test") }
       let!(:other_subscription) {
         create(:subscription, shop: shop, customer: customer, with_items: true,
                               with_proxy_orders: true)
