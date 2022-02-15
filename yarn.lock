@@ -2120,19 +2120,19 @@
     "@sinonjs/commons" "^1.7.0"
 
 "@storybook/addon-controls@^6.4.13":
-  version "6.4.18"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.4.18.tgz#0b65658a141428e9625ddbe7dee0a761911cd04f"
-  integrity sha512-nP7JCiAES4S5mn8PYfmPZZG9VpsPV7eeQQRPuiPgdidhH93cmsW/FYj8V739lrm5QJc0JSI6uY/y9qHa9rh43w==
+  version "6.4.19"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.4.19.tgz#1ebf74f7b0843ea0eccd319f5295dfa48947a975"
+  integrity sha512-JHi5z9i6NsgQLfG5WOeQE1AyOrM+QJLrjT+uOYx40bq+OC1yWHH7qHiphPP8kjJJhCZlaQk1qqXYkkQXgaeHSw==
   dependencies:
-    "@storybook/addons" "6.4.18"
-    "@storybook/api" "6.4.18"
-    "@storybook/client-logger" "6.4.18"
-    "@storybook/components" "6.4.18"
-    "@storybook/core-common" "6.4.18"
+    "@storybook/addons" "6.4.19"
+    "@storybook/api" "6.4.19"
+    "@storybook/client-logger" "6.4.19"
+    "@storybook/components" "6.4.19"
+    "@storybook/core-common" "6.4.19"
     "@storybook/csf" "0.0.2--canary.87bc651.0"
-    "@storybook/node-logger" "6.4.18"
-    "@storybook/store" "6.4.18"
-    "@storybook/theming" "6.4.18"
+    "@storybook/node-logger" "6.4.19"
+    "@storybook/store" "6.4.19"
+    "@storybook/theming" "6.4.19"
     core-js "^3.8.2"
     lodash "^4.17.21"
     ts-dedent "^2.0.0"
