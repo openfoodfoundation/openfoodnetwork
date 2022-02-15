@@ -64,7 +64,7 @@ module Api
       end
 
       def visible_customers
-        Customer.where(user_id: current_api_user.id).or(
+        current_api_user.customers.or(
           Customer.where(enterprise_id: editable_enterprises)
         )
       end

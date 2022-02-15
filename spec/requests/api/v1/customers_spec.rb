@@ -26,6 +26,22 @@ describe "Customers", type: :request do
     end
 
     describe "returning results based on permissions" do
+      context "as guest user" do
+        before { login_as nil }
+
+        it "returns no customers" do
+          get "/api/v1/customers"
+          expect(json_response_ids).to eq []
+        end
+
+        it "returns not even customers without user id" do
+          customer3.update!(user_id: nil)
+
+          get "/api/v1/customers"
+          expect(json_response_ids).to eq []
+        end
+      end
+
       context "as an enterprise owner" do
         before { login_as enterprise1.owner }
 
