@@ -71,6 +71,15 @@ describe "Customers", type: :request do
       end
     end
 
+    describe "pagination" do
+      it "renders the first page" do
+        pending "pagination logic compares string with integer"
+
+        get "/api/v1/customers", params: { page: "1" }
+        expect(json_response_ids).to eq [customer1.id.to_s, customer2.id.to_s]
+      end
+    end
+
     post "Create customer" do
       tags "Customers"
       consumes "application/json"
