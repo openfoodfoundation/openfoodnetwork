@@ -425,6 +425,26 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
       end
+
+      context "handle the navigation when the order is ready for confirmation" do
+        it "redirect to summary step" do
+          visit "/checkout"
+
+          expect(page).to have_current_path checkout_step_path(:summary)
+        end
+
+        it "handle the navigation between each step by clicking on tab or button to submit the form" do
+          visit checkout_step_path(:summary)
+
+          click_on "Your details"
+
+          expect(page).to have_current_path checkout_step_path(:details)
+
+          click_on "Next - Payment method"
+
+          expect(page).to have_current_path checkout_step_path(:payment)
+        end
+      end
     end
   end
 
