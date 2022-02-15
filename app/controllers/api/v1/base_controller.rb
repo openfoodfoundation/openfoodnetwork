@@ -17,6 +17,7 @@ module Api
       rescue_from Exception, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
+      rescue_from Pagy::VariableError, with: :invalid_pagination
 
       private
 
@@ -47,6 +48,11 @@ module Api
 
         render status: :unprocessable_entity,
                json: json_api_error(exception.message, backtrace: exception.backtrace)
+      end
+
+      def invalid_pagination(exception)
+        render status: :unprocessable_entity,
+               json: json_api_error(exception.message)
       end
 
       def invalid_resource!(resource = nil)

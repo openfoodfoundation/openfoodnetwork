@@ -81,6 +81,17 @@ describe "Customers", type: :request do
         get "/api/v1/customers", params: { page: "2", per_page: "1" }
         expect(json_response_ids).to eq [customer2.id.to_s]
       end
+
+      it "renders beyond the available pages" do
+        get "/api/v1/customers", params: { page: "2" }
+        expect(json_response_ids).to eq []
+      end
+
+      it "informs about invalid pages" do
+        get "/api/v1/customers", params: { page: "0" }
+        expect(json_response_ids).to eq nil
+        expect(json_error_detail).to eq 'expected :page >= 1; got "0"'
+      end
     end
 
     post "Create customer" do
