@@ -275,7 +275,7 @@ class OrderCycle < ApplicationRecord
   private
 
   def sync_subscriptions
-    return unless schedule_ids.any?
+    return unless open? && schedule_ids.any?
 
     subscriptions = Subscription.where(schedule_id: schedule_ids)
     syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
