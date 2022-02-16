@@ -276,15 +276,15 @@ class OrderCycle < ApplicationRecord
   private
 
   def opening?
-    open? && orders_close_at_changed? && was_closed?
+    (open? || upcoming?) && saved_change_to_orders_close_at? && was_closed?
   end
 
   def was_closed?
-    orders_close_at_was && Time.zone.now > orders_close_at_was
+    orders_close_at_previously_was && Time.zone.now > orders_close_at_previously_was
   end
 
   def sync_subscriptions
-    return unless open? && schedule_ids.any?
+    return unless schedule_ids.any?
 
     OrderManagement::Subscriptions::ProxyOrderSyncer.new(
       Subscription.where(schedule_id: schedule_ids)
