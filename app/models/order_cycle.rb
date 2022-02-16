@@ -159,6 +159,7 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
+    sync_subscriptions
     oc.reload
   end
 
@@ -272,6 +273,14 @@ class OrderCycle < ApplicationRecord
   end
 
   private
+
+  def sync_subscriptions
+    return unless schedule_ids.any?
+
+    subscriptions = Subscription.where(schedule_id: schedule_ids)
+    syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
+    syncer.sync!
+  end
 
   def orders_close_at_after_orders_open_at?
     return if orders_open_at.blank? || orders_close_at.blank?
