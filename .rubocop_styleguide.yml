@@ -202,7 +202,8 @@ Metrics/BlockLength:
     "namespace",
     "resource",
     "resources",
-    "scenario"
+    "scenario",
+    "shared_examples",
   ]
 
 Metrics/BlockNesting:

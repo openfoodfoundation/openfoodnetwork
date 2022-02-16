@@ -57,14 +57,14 @@ describe "As a consumer I want to check out my cart", js: true do
             fill_in "Password", with: user.password
             within(".login-modal") { click_button 'Login' }
           end
-          
+
           context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("legacy_checkout") do
             it "toggles the Details section" do
               expect(page).to have_content "Your details"
               page.find(:css, "i.ofn-i_052-point-down").click
             end
           end
-  
+
           context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("split_checkout") do
             it "currently redirects to the homepage" do
               # currently redirects to the homepage due to bug #8894
