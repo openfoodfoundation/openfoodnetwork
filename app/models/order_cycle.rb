@@ -277,9 +277,9 @@ class OrderCycle < ApplicationRecord
   def sync_subscriptions
     return unless open? && schedule_ids.any?
 
-    subscriptions = Subscription.where(schedule_id: schedule_ids)
-    syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
-    syncer.sync!
+    OrderManagement::Subscriptions::ProxyOrderSyncer.new(
+      Subscription.where(schedule_id: schedule_ids)
+    ).sync!
   end
 
   def orders_close_at_after_orders_open_at?
