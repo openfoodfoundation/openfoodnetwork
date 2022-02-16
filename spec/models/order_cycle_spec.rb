@@ -572,6 +572,18 @@ describe OrderCycle do
         oc.update(orders_open_at: 1.day.from_now, orders_close_at: 1.week.from_now)
       }.to change{ ProxyOrder.count }
     end
+
+    context "when the current dates are nil" do
+      before { oc.update(orders_open_at: nil, orders_close_at: nil) }
+
+      it "syncs subscriptions when transitioning from closed to open" do
+        expect(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new).and_call_original
+
+        expect{
+          oc.update(orders_open_at: 1.day.ago, orders_close_at: 1.week.from_now)
+        }.to change{ ProxyOrder.count }
+      end
+    end
   end
 
   describe "processed_at " do

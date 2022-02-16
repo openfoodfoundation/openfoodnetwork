@@ -280,7 +280,7 @@ class OrderCycle < ApplicationRecord
   end
 
   def was_closed?
-    orders_close_at_previously_was && Time.zone.now > orders_close_at_previously_was
+    orders_close_at_previously_was.blank? || Time.zone.now > orders_close_at_previously_was
   end
 
   def sync_subscriptions
