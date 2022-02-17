@@ -16,6 +16,8 @@ class SplitCheckoutController < ::BaseController
   helper 'spree/orders'
   helper OrderHelper
 
+  before_action :set_checkout_redirect
+
   def edit
     redirect_to_step unless params[:step]
   end

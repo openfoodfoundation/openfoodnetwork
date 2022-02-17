@@ -62,7 +62,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_checkout_redirect
-    return unless URI(request.referer.to_s).path == main_app.checkout_path
+    referer_path = URI(request.referer.to_s).path
+    return unless referer_path == main_app.checkout_path ||
+                  referer_path == main_app.checkout_step_path(:details)
 
     session["spree_user_return_to"] = main_app.checkout_path
   end

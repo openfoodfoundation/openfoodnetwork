@@ -66,12 +66,8 @@ describe "As a consumer I want to check out my cart", js: true do
           end
 
           context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("split_checkout") do
-            it "currently redirects to the homepage" do
-              # currently redirects to the homepage due to bug #8894
-              expect(page).to have_content("Logged in successfully")
-            end
             it "should allow proceeding to the next step" do
-              pending("bug fix for #8894")
+              expect(page).to have_content("Logged in successfully")
               click_button "Next - Payment method"
               expect(page).to have_button("Next - Order summary")
             end
