@@ -103,10 +103,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     it "should display the split checkout details page" do
       click_on "Checkout as guest"
       expect(page).to have_content distributor.name
-      expect(page).to have_content("1 - Your details")
-      expect(page).to have_selector("div.checkout-tab.selected", text: "1 - Your details")
-      expect(page).to have_content("2 - Payment method")
-      expect(page).to have_content("3 - Order summary")
+      expect_to_be_on_first_step
     end
 
     it "should display error when fields are empty" do
