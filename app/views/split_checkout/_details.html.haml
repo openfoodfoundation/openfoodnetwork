@@ -74,6 +74,7 @@
     - display_ship_address = false
     - ship_method_description = nil
 
+    - selected_shipping_method ||= @shipping_methods[0].id if @shipping_methods.length == 1
     - @shipping_methods.each do |shipping_method|
       %div.checkout-input.checkout-input-radio
         = fields_for shipping_method do |shipping_method_form|
