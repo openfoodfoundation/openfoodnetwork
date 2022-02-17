@@ -9,6 +9,7 @@ describe "As a consumer, I want to checkout my order", js: true do
   include StripeHelper
   include StripeStubs
   include PaypalHelper
+  include AuthenticationHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -91,6 +92,23 @@ describe "As a consumer, I want to checkout my order", js: true do
   context "as a guest user" do
     before do
       visit checkout_path
+    end
+
+    context "actually user has an account and wants to login", :debug do
+      let(:user) { create(:user) }
+
+      it "should redirect to '/checkout/details' when user submit the login form" do
+        expect(page).to have_content("Ok, ready to checkout?")
+
+        click_on "Login"
+        within ".login-modal" do
+          fill_in_and_submit_login_form(user)
+        end
+
+        expect_logged_in
+        expect(page).not_to have_selector ".login-modal"
+        expect_to_be_on_first_step
+      end
     end
 
     it "should display the split checkout login/guest form" do
