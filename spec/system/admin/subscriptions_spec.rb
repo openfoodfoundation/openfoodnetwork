@@ -19,7 +19,7 @@ describe 'Subscriptions' do
       let!(:subscription) {
         create(:subscription, shop: shop, with_items: true, with_proxy_orders: true)
       }
-      let!(:customer) { create(:customer, name: "Customer A") }
+      let!(:customer) { create(:customer, first_name: "Timmy", last_name: "Test") }
       let!(:other_subscription) {
         create(:subscription, shop: shop, customer: customer, with_items: true,
                               with_proxy_orders: true)
@@ -81,8 +81,13 @@ describe 'Subscriptions' do
         expect(page).to have_selector "tr#so_#{other_subscription.id}"
         expect(page).to have_no_selector "tr#so_#{subscription.id}"
 
-        # Using the Quick Search: filter by name
-        fill_in 'query', with: other_subscription.customer.name
+        # Using the Quick Search: filter by first_name
+        fill_in 'query', with: other_subscription.customer.first_name
+        expect(page).to have_selector "tr#so_#{other_subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+        # Using the Quick Search: filter by last_name
+        fill_in 'query', with: other_subscription.customer.last_name
         expect(page).to have_selector "tr#so_#{other_subscription.id}"
         expect(page).to have_no_selector "tr#so_#{subscription.id}"
 

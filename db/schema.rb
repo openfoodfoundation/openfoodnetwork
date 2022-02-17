@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 2022_01_18_053107) do
     t.string "name", limit: 255
     t.boolean "allow_charges", default: false, null: false
     t.datetime "terms_and_conditions_accepted_at"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true

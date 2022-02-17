@@ -4,8 +4,8 @@ module Api
   module Admin
     class SubscriptionSerializer < ActiveModel::Serializer
       attributes :id, :shop_id, :customer_id, :schedule_id, :payment_method_id, :shipping_method_id,
-                 :begins_at, :ends_at,
-                 :customer_email, :customer_name, :schedule_name, :edit_path, :canceled_at, :paused_at, :state,
+                 :begins_at, :ends_at, :customer_email, :customer_first_name, :customer_last_name,
+                 :customer_full_name, :schedule_name, :edit_path, :canceled_at, :paused_at, :state,
                  :shipping_fee_estimate, :payment_fee_estimate
 
       has_many :subscription_line_items, serializer: Api::Admin::SubscriptionLineItemSerializer
@@ -34,8 +34,16 @@ module Api
         object.customer&.email
       end
 
-      def customer_name
-        object.customer&.name
+      def customer_first_name
+        object.customer&.first_name
+      end
+
+      def customer_last_name
+        object.customer&.last_name
+      end
+
+      def customer_full_name
+        object.customer&.full_name
       end
 
       def schedule_name

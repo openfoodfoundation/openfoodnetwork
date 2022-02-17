@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
 
   acts_as_taggable
 
-  searchable_attributes :name, :email, :code
+  searchable_attributes :first_name, :last_name, :email, :code
 
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User"
@@ -33,6 +33,10 @@ class Customer < ApplicationRecord
   before_create :associate_user
 
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
+
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
 
   private
 

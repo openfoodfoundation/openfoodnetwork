@@ -940,125 +940,56 @@ describe Spree::Order do
 
     context "when creating an order" do
       it "does not create a customer" do
-        order = create(:order, distributor: distributor)
-        expect(order.customer).to be_nil
-      end
-    end
-
-    context "when updating the order" do
-      let!(:order) { create(:order, distributor: distributor) }
-
-      before do
-        order.state = "complete"
-        order.save!
-      end
-
-      it "creates a customer" do
-        expect(order.customer).not_to be_nil
-      end
-    end
-  end
-
-  describe "#associate_customer" do
-    let(:distributor) { create(:distributor_enterprise) }
-    let!(:order) { create(:order, distributor: distributor) }
-
-    context "when an email address is available for the order" do
-      before { allow(order).to receive(:email_for_customer) { "existing@email.com" } }
-
-      context "and a customer for order.distributor and order#email_for_customer already exists" do
-        let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
-
-        it "associates the order with the existing customer, and returns the customer" do
-          result = order.send(:associate_customer)
-          expect(order.customer).to eq customer
-          expect(result).to eq customer
-        end
-      end
-
-      context "and a customer for order.distributor and order.user.email does not alread exist" do
-        let!(:customer) {
-          create(:customer, enterprise: distributor, email: 'some-other-email@email.com')
+        expect {
+          create(:order, distributor: distributor)
+        }.to_not change {
+          Customer.count
         }
-
-        it "does not set the customer and returns nil" do
-          result = order.send(:associate_customer)
-          expect(order.customer).to be_nil
-          expect(result).to be_nil
-        end
       end
-    end
 
-    context "when an email address is not available for the order" do
-      let!(:customer) { create(:customer, enterprise: distributor) }
-      before { allow(order).to receive(:email_for_customer) { nil } }
+      it "associates an existing customer" do
+        customer = create(
+          :customer,
+          user: user,
+          email: user.email,
+          enterprise: distributor
+        )
+        order = create(:order, user: user, distributor: distributor)
 
-      it "does not set the customer and returns nil" do
-        result = order.send(:associate_customer)
-        expect(order.customer).to be_nil
-        expect(result).to be_nil
-      end
-    end
-  end
-
-  describe "ensuring a customer is linked" do
-    let(:distributor) { create(:distributor_enterprise) }
-    let!(:order) { create(:order, distributor: distributor) }
-
-    context "when a customer has already been linked to the order" do
-      let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
-      before { order.update_attribute(:customer_id, customer.id) }
-
-      it "does nothing" do
-        order.send(:ensure_customer)
         expect(order.customer).to eq customer
       end
     end
 
-    context "when a customer not been linked to the order" do
-      context "but one matching order#email_for_customer already exists" do
-        let!(:customer) {
-          create(:customer, enterprise: distributor, email: 'some-other-email@email.com')
-        }
-        before { allow(order).to receive(:email_for_customer) { 'some-other-email@email.com' } }
-
-        it "links the customer customer to the order" do
-          expect(order.customer).to be_nil
-          expect{ order.send(:ensure_customer) }.to_not change{ Customer.count }
-          expect(order.customer).to eq customer
-        end
+    context "when updating the order" do
+      before do
+        order.update!(distributor: distributor)
       end
 
-      context "and order#email_for_customer does not match any existing customers" do
-        before do
-          order.bill_address = create(:address)
-          order.ship_address = create(:address)
-        end
+      it "associates an existing customer" do
+        customer = create(
+          :customer,
+          user: user,
+          email: user.email,
+          enterprise: distributor
+        )
 
-        context "and the customer is not valid" do
-          before do
-            order.distributor = nil
-            order.user = nil
-            order.email = nil
-          end
+        order.update!(state: "complete")
 
-          it "sends an error to Bugsnag" do
-            expect(Bugsnag)
-              .to receive(:notify).with("Email can't be blank, Enterprise can't be blank")
-            order.send(:ensure_customer)
-          end
-        end
+        expect(order.customer).to eq customer
+      end
 
-        context "and the customer is valid" do
-          it "creates a new customer with defaut name and addresses" do
-            expect(order.customer).to be_nil
-            expect { order.send(:ensure_customer) }.to change{ Customer.count }.by 1
+      it "doesn't create a customer before needed" do
+        expect(order.customer).to eq nil
+      end
 
-            expect(order.customer.name).to eq order.bill_address.full_name
-            expect(order.customer.bill_address.same_as?(order.bill_address)).to be true
-            expect(order.customer.ship_address.same_as?(order.ship_address)).to be true
-          end
-        end
+      it "creates a customer" do
+        expect {
+          order.update!(state: "complete")
+        }.to change {
+          Customer.count
+        }.by(1)
+
+        expect(order.customer).to be_present
       end
     end
   end

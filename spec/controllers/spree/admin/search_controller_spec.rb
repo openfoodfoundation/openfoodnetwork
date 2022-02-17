@@ -35,7 +35,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
     describe 'searching for customers' do
       let!(:customer_1) { create(:customer, enterprise: enterprise, email: 'test1@email.com') }
-      let!(:customer_2) { create(:customer, enterprise: enterprise, name: 'test2') }
+      let!(:customer_2) { create(:customer, enterprise: enterprise, first_name: 'test2') }
       let!(:customer_3) { create(:customer, email: 'test3@email.com') }
 
       describe 'when search owned enterprises' do

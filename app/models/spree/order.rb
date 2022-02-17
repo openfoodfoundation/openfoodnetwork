@@ -84,8 +84,7 @@ module Spree
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
     before_validation :clone_billing_address, if: :use_billing?
-    before_validation :associate_customer, unless: :customer_id?
-    before_validation :ensure_customer, unless: :customer_is_valid?
+    before_validation :ensure_customer
 
     before_create :link_by_email
     after_create :create_tax_charge!
@@ -711,23 +710,25 @@ module Spree
     def associate_customer
       return customer if customer.present?
 
-      self.customer = Customer.of(distributor).find_by(email: email_for_customer)
+      Customer.of(distributor).find_by(email: email_for_customer)
     end
 
-    def ensure_customer
-      return if associate_customer
+    def create_customer
+      return if customer_is_valid?
 
-      self.customer = Customer.new(
+      Customer.create(
         enterprise: distributor,
         email: email_for_customer,
         user: user,
-        name: bill_address&.full_name,
+        first_name: bill_address&.first_name.to_s,
+        last_name: bill_address&.last_name.to_s,
         bill_address: bill_address&.clone,
         ship_address: ship_address&.clone
       )
-      customer.save
+    end
 
-      Bugsnag.notify(customer.errors.full_messages.join(", ")) unless customer.persisted?
+    def ensure_customer
+      self.customer = associate_customer || create_customer
     end
 
     def update_adjustment!(adjustment)

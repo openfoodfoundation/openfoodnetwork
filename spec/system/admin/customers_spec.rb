@@ -14,7 +14,9 @@ describe 'Customers' do
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
 
     describe "using the customers index" do
-      let!(:customer1) { create(:customer, enterprise: managed_distributor1, code: nil) }
+      let!(:customer1) {
+        create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, code: nil)
+      }
       let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
       let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
@@ -177,13 +179,14 @@ describe 'Customers' do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
-          expect(find_field('name').value).to eq 'John Doe'
+          expect(find_field('first_name').value).to eq 'John'
+          expect(find_field('last_name').value).to eq 'Doe'
 
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
 
-          fill_in "name", with: "customer abc"
-          expect(page).to have_css "input[name=name].update-pending"
+          fill_in "first_name", with: "customer abc"
+          expect(page).to have_css "input[name=first_name].update-pending"
 
           find(:css, "tags-input .tags input").set "awesome\n"
           expect(page).to have_css ".tag_watcher.update-pending"
@@ -193,12 +196,12 @@ describe 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
-        expect(page).to have_css "input[name=name].update-success"
+        expect(page).to have_css "input[name=first_name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to eq "new-customer-code"
-        expect(customer1.reload.name).to eq "customer abc"
+        expect(customer1.reload.first_name).to eq "customer abc"
         expect(customer1.tag_list).to eq ["awesome"]
 
         # Clearing attributes
@@ -206,8 +209,8 @@ describe 'Customers' do
           fill_in "code", with: ""
           expect(page).to have_css "input[name=code].update-pending"
 
-          fill_in "name", with: ""
-          expect(page).to have_css "input[name=name].update-pending"
+          fill_in "first_name", with: ""
+          expect(page).to have_css "input[name=first_name].update-pending"
 
           find("tags-input li.tag-item a.remove-button").click
           expect(page).to have_css ".tag_watcher.update-pending"
@@ -216,12 +219,12 @@ describe 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
-        expect(page).to have_css "input[name=name].update-success"
+        expect(page).to have_css "input[name=first_name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to be nil
-        expect(customer1.reload.name).to eq ''
+        expect(customer1.reload.first_name).to eq ''
         expect(customer1.tag_list).to eq []
       end
 
