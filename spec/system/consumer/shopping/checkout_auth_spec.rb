@@ -9,7 +9,7 @@ describe "As a consumer I want to check out my cart", js: true do
   include CheckoutRequestsHelper
   include UIComponentHelper
 
-  describe "using the checkout" do
+  describe "checking out" do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
     let!(:order_cycle) {
@@ -28,37 +28,70 @@ describe "As a consumer I want to check out my cart", js: true do
       add_product_to_cart order, product
     end
 
-    it "does not render the login form when logged in" do
-      login_as user
-      visit checkout_path
-      within "section[role='main']" do
-        expect(page).to have_no_content "Login"
-        expect(page).to have_checkout_details
+    shared_examples "with different checkout types" do |checkout_type|
+      context "on #{checkout_type}" do
+        it "does not render the login form when logged in" do
+          login_as user
+          visit checkout_path
+          within "section[role='main']" do
+            expect(page).to have_no_content "Login"
+            expect(page).to have_checkout_details
+          end
+        end
+
+        it "renders the login buttons when logged out" do
+          visit checkout_path
+          within "section[role='main']" do
+            expect(page).to have_content "Login"
+            click_button "Login"
+          end
+          expect(page).to have_login_modal
+        end
+
+        describe "logging in" do
+          before do
+            visit checkout_path
+            within("section[role='main']") { click_button "Login" }
+            expect(page).to have_login_modal
+            fill_in "Email", with: user.email
+            fill_in "Password", with: user.password
+            within(".login-modal") { click_button 'Login' }
+          end
+
+          context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("legacy_checkout") do
+            it "toggles the Details section" do
+              expect(page).to have_content "Your details"
+              page.find(:css, "i.ofn-i_052-point-down").click
+            end
+          end
+
+          context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("split_checkout") do
+            it "currently redirects to the homepage" do
+              # currently redirects to the homepage due to bug #8894
+              expect(page).to have_content("Logged in successfully")
+            end
+            it "should allow proceeding to the next step" do
+              pending("bug fix for #8894")
+              click_button "Next - Payment method"
+              expect(page).to have_button("Next - Order summary")
+            end
+          end
+        end
       end
     end
 
-    it "renders the login buttons when logged out" do
-      visit checkout_path
-      within "section[role='main']" do
-        expect(page).to have_content "Login"
-        click_button "Login"
+    describe "shared examples" do
+      context "legacy checkout" do
+        it_behaves_like "with different checkout types", "legacy_checkout"
       end
-      expect(page).to have_login_modal
-    end
 
-    it "populates user details once logged in" do
-      visit checkout_path
-      within("section[role='main']") { click_button "Login" }
-      expect(page).to have_login_modal
-      fill_in "Email", with: user.email
-      fill_in "Password", with: user.password
-      within(".login-modal") { click_button 'Login' }
-
-      expect(page).to have_content "Your details"
-      page.find(:css, "i.ofn-i_052-point-down").click
-
-      expect(page).to have_field 'First Name', with: 'Foo'
-      expect(page).to have_field 'Last Name', with: 'Bar'
+      context "split checkout" do
+        before do
+          allow(Flipper).to receive(:enabled?).with(:split_checkout) { true }
+          allow(Flipper).to receive(:enabled?).with(:split_checkout, anything) { true }
+        end
+        include_examples "with different checkout types", "split_checkout"
+      end
     end
 
     context "using the guest checkout" do
