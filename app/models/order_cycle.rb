@@ -29,6 +29,7 @@ class OrderCycle < ApplicationRecord
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
   before_update :reset_processed_at, if: :will_save_change_to_orders_close_at?
+  after_save :sync_subscriptions, if: :opening?
 
   validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
@@ -159,6 +160,7 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
+    sync_subscriptions
     oc.reload
   end
 
@@ -272,6 +274,22 @@ class OrderCycle < ApplicationRecord
   end
 
   private
+
+  def opening?
+    (open? || upcoming?) && saved_change_to_orders_close_at? && was_closed?
+  end
+
+  def was_closed?
+    orders_close_at_previously_was.blank? || Time.zone.now > orders_close_at_previously_was
+  end
+
+  def sync_subscriptions
+    return unless schedule_ids.any?
+
+    OrderManagement::Subscriptions::ProxyOrderSyncer.new(
+      Subscription.where(schedule_id: schedule_ids)
+    ).sync!
+  end
 
   def orders_close_at_after_orders_open_at?
     return if orders_open_at.blank? || orders_close_at.blank?
