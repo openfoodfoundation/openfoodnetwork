@@ -147,7 +147,7 @@ module Spree
         adjustment.originator = payment_method
         adjustment.label = adjustment_label
         adjustment.save
-      elsif payment_method.present?
+      elsif !processing_refund? && payment_method.present?
         payment_method.create_adjustment(adjustment_label, self, true)
         adjustment.reload
       end
@@ -162,6 +162,10 @@ module Spree
     end
 
     private
+
+    def processing_refund?
+      amount.negative?
+    end
 
     # Don't charge fees for invalid or failed payments.
     # This is called twice for failed payments, because the persistence of the 'failed'
