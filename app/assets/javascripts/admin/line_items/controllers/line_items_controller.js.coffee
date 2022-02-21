@@ -128,29 +128,53 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.selectedUnitsProduct = unitsProduct
     $scope.selectedUnitsVariant = unitsVariant
 
+  $scope.getLineItemScale = (lineItem) ->
+    if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
+      VariantUnitManager.getScale(lineItem.units_variant.unit_value, lineItem.units_product.variant_unit)
+    else
+      1
+
   $scope.sumUnitValues = ->
-    sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-      sum + lineItem.final_weight_volume
+    sum = $scope.filteredLineItems?.reduce (sum, lineItem) ->
+      sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getLineItemScale(lineItem))
     , 0
 
   $scope.sumMaxUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-        sum + lineItem.max_quantity * lineItem.units_variant.unit_value
+      sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getLineItemScale(lineItem))
     , 0
+
+  $scope.roundToThreeDecimals = (value) ->
+    Math.round(value * 1000) / 1000
 
   $scope.allFinalWeightVolumesPresent = ->
     for i,lineItem of $scope.filteredLineItems
       return false if !lineItem.hasOwnProperty('final_weight_volume') || !(lineItem.final_weight_volume > 0)
     true
 
-  # How is this different to OptionValueNamer#name?
-  # Should it be extracted to that class or VariantUnitManager?
-  $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
-    # A Units Variant is an API object which holds unit properies of a variant
-    if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
-      scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
-      Math.round(value/scale * 1000)/1000 + " " + VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
+  $scope.getScale = (unitsProduct, unitsVariant) ->
+    if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume")
+      VariantUnitManager.getScale(unitsVariant.unit_value, unitsProduct.variant_unit)
     else
+      null
+
+  $scope.getFormattedValueWithUnitName = (value, unitsProduct, unitsVariant, scale) ->
+    unit_name = VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
+    $scope.roundToThreeDecimals(value) + " " + unit_name
+
+  $scope.getGroupBySizeFormattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
+    scale = $scope.getScale(unitsProduct, unitsVariant)
+    if scale
+      value = value / scale if scale != 28.35 && scale != 1 && scale != 453.6 # divide by scale if not smallest unit
+      $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
+    else
+      ''
+
+  $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
+    scale = $scope.getScale(unitsProduct, unitsVariant)
+    if scale
+      $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
+    else 
       ''
 
   $scope.fulfilled = (sumOfUnitValues) ->
@@ -158,7 +182,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
       $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
       ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        Math.round( sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * 1000)/1000
+        scale = $scope.getScale($scope.selectedUnitsProduct, $scope.selectedUnitsVariant)
+        sumOfUnitValues = sumOfUnitValues / scale if scale == 28.35 || scale == 453.6 # divide by scale if smallest unit
+        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * $scope.selectedUnitsVariant.unit_value)
     else
       ''
 

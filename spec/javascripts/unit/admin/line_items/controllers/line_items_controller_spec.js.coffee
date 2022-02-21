@@ -171,7 +171,13 @@ describe "LineItemsCtrl", ->
 
         it "returns the quantity of fulfilled group buy units", ->
           scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
+          scope.selectedUnitsVariant = { unit_value: 1 }
           expect(scope.fulfilled(1500)).toEqual 1.5
+
+        it "returns the quantity of fulfilled group buy units by volume", ->
+          scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 5000 }
+          scope.selectedUnitsVariant = { unit_value: 1000 }
+          expect(scope.fulfilled(5)).toEqual 1
 
       describe "allFinalWeightVolumesPresent()", ->
         it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
@@ -213,6 +219,15 @@ describe "LineItemsCtrl", ->
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
+        it "returns the sum of the final_weight_volumes for line_items with both metric and imperial units", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 907.2, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 453.6 } }
+            { final_weight_volume: 2000, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 1000 } }
+            { final_weight_volume: 56.7, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 28.35 } }
+            { final_weight_volume: 2, units_product: { variant_unit: "volume" }, units_variant: { unit_value: 1.0 } }
+          ]
+          expect(scope.sumUnitValues()).toEqual 8
+
       describe "sumMaxUnitValues()", ->
         it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
           scope.filteredLineItems = [
@@ -228,34 +243,43 @@ describe "LineItemsCtrl", ->
 
         beforeEach ->
           spyOn(Math,"round").and.callThrough()
+        unitsVariant = { unit_value: "1" }
 
         it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
 
         it "returns '', and does not call Math.round if variant_unit is 'items'", ->
-          unitsVariant = { variant_unit: "items" }
-          expect(scope.formattedValueWithUnitName(1,unitsVariant)).toEqual ''
+          unitsProduct = { variant_unit: "items" }
+          expect(scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)).toEqual ''
           expect(Math.round).not.toHaveBeenCalled()
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-          unitsVariant = { variant_unit: "weight" }
-          scope.formattedValueWithUnitName(1,unitsVariant)
+          unitsProduct = { variant_unit: "weight" }
+          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
           scope.selectedUnitsVariant = { variant_unit: "volume" }
-          scope.formattedValueWithUnitName(1,unitsVariant)
+          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
 
-        it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
-          unitsVariant = { variant_unit: "weight" }
+        it "calls Math.round with the value multiplied by 1000", ->
+          unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 5
-          scope.formattedValueWithUnitName(10, unitsVariant)
-          expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
+          scope.formattedValueWithUnitName(10, unitsProduct,unitsVariant)
+          expect(Math.round).toHaveBeenCalledWith 10 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
-          unitsVariant = { variant_unit: "weight" }
+          unitsProduct = { variant_unit: "weight" }
           spyOn(VariantUnitManager, "getScale").and.returnValue 1000
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
-          expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
+          expect(scope.formattedValueWithUnitName(2,unitsProduct,unitsVariant)).toEqual "2 kg"
+
+        it "handle correclty the imperial units", ->
+          unitsProduct = { variant_unit: "weight" }
+          unitsVariant = { unit_value: "453.6" }
+          spyOn(VariantUnitManager, "getScale").and.returnValue 1000
+          spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
+          expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
+
 
       describe "updating the price upon updating the weight of a line item", ->
         beforeEach ->

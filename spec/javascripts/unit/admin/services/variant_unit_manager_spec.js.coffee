@@ -4,7 +4,7 @@ describe "VariantUnitManager", ->
   beforeEach ->
     module "admin.products"
     module ($provide)->
-      $provide.value "availableUnits", "g,kg,T,mL,L,kL"
+      $provide.value "availableUnits", "g,kg,T,mL,L,kL,lb,oz"
       null
 
   beforeEach inject (_VariantUnitManager_) ->
@@ -21,6 +21,10 @@ describe "VariantUnitManager", ->
       expect(VariantUnitManager.getScale(0.4,"weight")).toEqual 1
       expect(VariantUnitManager.getScale(0.0004,"volume")).toEqual 0.001
 
+    it "returns the right unit when using imperial units", ->
+      expect(VariantUnitManager.getScale(453.6, "weight")).toEqual 453.6
+      expect(VariantUnitManager.getScale(28.35, "weight")).toEqual 28.35
+
   describe "getUnitName", ->
     it "returns the unit name based on the scale and unit type (weight/volume) provided", ->
       expect(VariantUnitManager.getUnitName(1, "weight")).toEqual "g"
@@ -29,6 +33,8 @@ describe "VariantUnitManager", ->
       expect(VariantUnitManager.getUnitName(0.001, "volume")).toEqual "mL"
       expect(VariantUnitManager.getUnitName(1, "volume")).toEqual "L"
       expect(VariantUnitManager.getUnitName(1000, "volume")).toEqual "kL"
+      expect(VariantUnitManager.getUnitName(453.6, "weight")).toEqual "lb"
+      expect(VariantUnitManager.getUnitName(28.35, "weight")).toEqual "oz"
 
   describe "unitScales", ->
     it "returns a sorted set of scales for unit type weight", ->
@@ -46,6 +52,8 @@ describe "VariantUnitManager", ->
     it "returns an array of options", ->
       expect(VariantUnitManager.variantUnitOptions()).toEqual [
         ["Weight (g)", "weight_1"],
+        ["Weight (oz)", "weight_28.35" ],
+        ["Weight (lb)", "weight_453.6" ]
         ["Weight (kg)", "weight_1000"],
         ["Weight (T)", "weight_1000000"],
         ["Volume (mL)", "volume_0.001"],
