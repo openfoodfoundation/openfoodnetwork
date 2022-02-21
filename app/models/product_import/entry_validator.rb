@@ -73,11 +73,13 @@ module ProductImport
                                            'variant_unit_scale', 'primary_taxon_id')
       )
       new_variant.save
-      if entry.attributes['on_demand'].present?
-        new_variant.on_demand = entry.attributes['on_demand']
-      end
-      if entry.attributes['on_hand'].present?
-        new_variant.on_hand = entry.attributes['on_hand']
+      if new_variant.persisted?
+        if entry.attributes['on_demand'].present?
+          new_variant.on_demand = entry.attributes['on_demand']
+        end
+        if entry.attributes['on_hand'].present?
+          new_variant.on_hand = entry.attributes['on_hand']
+        end
       end
 
       new_variant.product_id = product_id

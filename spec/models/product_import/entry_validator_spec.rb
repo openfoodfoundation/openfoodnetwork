@@ -55,6 +55,54 @@ describe ProductImport::EntryValidator do
     )
   end
 
+  describe "variant validation" do
+    let(:potatoes) {
+      create(
+        :simple_product,
+        supplier: enterprise,
+        on_hand: '100',
+        name: 'Potatoes',
+        unit_value: 1000,
+        variant_unit_scale: 1000,
+        variant_unit: 'weight'
+      )
+    }
+
+    let(:potato_variant) do
+      ProductImport::SpreadsheetEntry.new(
+        unscaled_units: "1",
+        units: "1",
+        unit_type: "",
+        variant_unit_name: "",
+        name: potatoes.name,
+        display_name: 'Potatoes',
+        enterprise: enterprise,
+        enterprise_id: enterprise.id,
+        producer: enterprise,
+        producer_id: enterprise.id,
+      )
+    end
+
+    before do
+      allow(import_settings).to receive(:dig)
+      allow(spreadsheet_data).to receive(:tax_index)
+      allow(spreadsheet_data).to receive(:shipping_index)
+      allow(spreadsheet_data).to receive(:categories_index)
+      allow(entry_validator).to receive(:enterprise_validation)
+      allow(entry_validator).to receive(:tax_and_shipping_validation)
+      allow(entry_validator).to receive(:variant_of_product_validation)
+      allow(entry_validator).to receive(:category_validation)
+      allow(entry_validator).to receive(:shipping_presence_validation)
+      allow(entry_validator).to receive(:product_validation)
+    end
+
+    it "validates a product" do
+      entries = [potato_variant]
+      entry_validator.validate_all(entries)
+      expect(potato_variant.errors.count).to eq 1
+    end
+  end
+
   describe "inventory validation" do
     before do
       allow(entry_validator).to receive(:import_into_inventory?) { true }
