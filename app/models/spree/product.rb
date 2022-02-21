@@ -31,7 +31,7 @@ module Spree
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
     searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
-    searchable_scopes :active
+    searchable_scopes :active, :with_properties
 
     has_many :product_option_types, dependent: :destroy
     # We have an after_destroy callback on Spree::ProductOptionType. However, if we
@@ -68,6 +68,19 @@ module Spree
     }, through: :variants
 
     has_many :stock_items, through: :variants
+
+    has_many :supplier_properties, through: :supplier, source: :properties
+
+    scope :with_properties, ->(*property_ids) {
+      left_outer_joins(:product_properties).
+        left_outer_joins(:supplier_properties).
+        where(inherits_properties: true).
+        where(producer_properties: { property_id: property_ids }).
+        or(
+          where(spree_product_properties: { property_id: property_ids })
+        ).
+        distinct
+    }
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
                         :height, :width, :depth, :is_master, :cost_currency,
