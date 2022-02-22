@@ -131,7 +131,6 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-
     context "details step" do
       describe "filling out delivery details" do
         before do
@@ -281,7 +280,7 @@ describe "As a consumer, I want to checkout my order", js: true do
         before do
           visit checkout_step_path(:payment)
         end
-        
+
         it "don't preselect the payment method if more than one is available" do
           expect(page).to have_field "payment_method_#{payment_method.id}", checked: false
           expect(page).to have_field "payment_method_#{payment_method2.id}", checked: false
@@ -296,15 +295,21 @@ describe "As a consumer, I want to checkout my order", js: true do
       describe "choosing" do
         shared_examples "bewteen different payment methods" do |pay_method|
           let!(:payment_method3) { create(:payment_method, distributors: [distributor], name: "Cash") }
-          let!(:payment_method4) { create(:payment_method, distributors: [distributor], name: "BoGuS") }
+          let!(:paypal) do
+            Spree::Gateway::PayPalExpress.create!(
+              name: "Paypal",
+              environment: "test",
+              distributor_ids: [distributor.id]
+            )
+          end
 
           before do
             visit checkout_step_path(:payment)
           end
 
           context "like #{pay_method}" do
-            it "selects it and proceeds to the summary step" do        
-              choose "#{pay_method}"
+            it "selects it and proceeds to the summary step" do
+              choose pay_method.to_s
               click_on "Next - Order summary"
               expect(page).to have_content "Shopping @ #{distributor.name}"
             end
@@ -313,6 +318,7 @@ describe "As a consumer, I want to checkout my order", js: true do
         describe "shared examples" do
           context "legacy checkout" do
             it_behaves_like "bewteen different payment methods", "Cash"
+            it_behaves_like "bewteen different payment methods", "Paypal"
           end
         end
       end
