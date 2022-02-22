@@ -292,6 +292,30 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_content "Select a payment method"
         end
       end
+
+      describe "choosing" do
+        shared_examples "bewteen different payment methods" do |pay_method|
+          let!(:payment_method3) { create(:payment_method, distributors: [distributor], name: "Cash") }
+          let!(:payment_method4) { create(:payment_method, distributors: [distributor], name: "BoGuS") }
+
+          before do
+            visit checkout_step_path(:payment)
+          end
+
+          context "like #{pay_method}" do
+            it "selects it and proceeds to the summary step" do        
+              choose "#{pay_method}"
+              click_on "Next - Order summary"
+              expect(page).to have_content "Shopping @ #{distributor.name}"
+            end
+          end
+        end
+        describe "shared examples" do
+          context "legacy checkout" do
+            it_behaves_like "bewteen different payment methods", "Cash"
+          end
+        end
+      end
     end
 
     context "summary step" do
