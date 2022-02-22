@@ -264,7 +264,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
     end
 
-    context "payment method step" do
+    context "payment step" do
       let(:order) { create(:order_ready_for_payment, distributor: distributor) }
 
       context "with one payment method" do
@@ -278,11 +278,18 @@ describe "As a consumer, I want to checkout my order", js: true do
       context "with more than one payment method" do
         let!(:payment_method2) { create(:payment_method, distributors: [distributor]) }
 
-        it "don't preselect the payment method if more than one is available" do
+        before do
           visit checkout_step_path(:payment)
-
+        end
+        
+        it "don't preselect the payment method if more than one is available" do
           expect(page).to have_field "payment_method_#{payment_method.id}", checked: false
           expect(page).to have_field "payment_method_#{payment_method2.id}", checked: false
+        end
+
+        it "requires choosing a payment method" do
+          click_on "Next - Order summary"
+          expect(page).to have_content "Select a payment method"
         end
       end
     end
