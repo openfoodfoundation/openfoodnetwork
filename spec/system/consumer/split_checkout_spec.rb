@@ -131,133 +131,136 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    describe "filling out delivery details" do
-      before do
-        fill_out_details
-        fill_out_billing_address
-      end
 
-      describe "selecting a pick-up shipping method and submiting the form" do
+    context "details step" do
+      describe "filling out delivery details" do
         before do
-          choose free_shipping.name
+          fill_out_details
+          fill_out_billing_address
         end
 
-        it "redirects the user to the Payment Method step" do
-          fill_notes("SpEcIaL NoTeS")
-          proceed_to_payment
-        end
-      end
-
-      describe "selecting a delivery method" do
-        before do
-          choose shipping_with_fee.name
-        end
-
-        context "with same shipping and billing address" do
+        describe "selecting a pick-up shipping method and submiting the form" do
           before do
-            check "ship_address_same_as_billing"
-          end
-          it "does not display the shipping address form" do
-            expect(page).not_to have_field "order_ship_address_attributes_address1"
+            choose free_shipping.name
           end
 
-          it "redirects the user to the Payment Method step, when submiting the form" do
-            proceed_to_payment
-            # asserts whether shipping and billing addresses are the same
-            ship_add_id = order.reload.ship_address_id
-            bill_add_id = order.reload.bill_address_id
-            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
-              Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
-          end
-        end
-
-        context "with different shipping and billing address" do
-          before do
-            uncheck "ship_address_same_as_billing"
-          end
-          it "displays the shipping address form and the option to save it as default" do
-            expect(page).to have_field "order_ship_address_attributes_address1"
-          end
-
-          it "displays error messages when submitting incomplete billing address" do
-            click_button "Next - Payment method"
-            expect(page).to have_content "Saving failed, please update the highlighted fields."
-            expect(page).to have_field("Address", with: "")
-            expect(page).to have_field("City", with: "")
-            expect(page).to have_field("Postcode", with: "")
-            expect(page).to have_content("can't be blank", count: 3)
-          end
-
-          it "fills in shipping details and redirects the user to the Payment Method step,
-          when submiting the form" do
-            fill_out_shipping_address
+          it "redirects the user to the Payment Method step" do
             fill_notes("SpEcIaL NoTeS")
             proceed_to_payment
-            # asserts whether shipping and billing addresses are the same
-            ship_add_id = Spree::Order.first.ship_address_id
-            bill_add_id = Spree::Order.first.bill_address_id
-            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
-             Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
+          end
+        end
+
+        describe "selecting a delivery method" do
+          before do
+            choose shipping_with_fee.name
+          end
+
+          context "with same shipping and billing address" do
+            before do
+              check "ship_address_same_as_billing"
+            end
+            it "does not display the shipping address form" do
+              expect(page).not_to have_field "order_ship_address_attributes_address1"
+            end
+
+            it "redirects the user to the Payment Method step, when submiting the form" do
+              proceed_to_payment
+              # asserts whether shipping and billing addresses are the same
+              ship_add_id = order.reload.ship_address_id
+              bill_add_id = order.reload.bill_address_id
+              expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+                Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
+            end
+          end
+
+          context "with different shipping and billing address" do
+            before do
+              uncheck "ship_address_same_as_billing"
+            end
+            it "displays the shipping address form and the option to save it as default" do
+              expect(page).to have_field "order_ship_address_attributes_address1"
+            end
+
+            it "displays error messages when submitting incomplete billing address" do
+              click_button "Next - Payment method"
+              expect(page).to have_content "Saving failed, please update the highlighted fields."
+              expect(page).to have_field("Address", with: "")
+              expect(page).to have_field("City", with: "")
+              expect(page).to have_field("Postcode", with: "")
+              expect(page).to have_content("can't be blank", count: 3)
+            end
+
+            it "fills in shipping details and redirects the user to the Payment Method step,
+            when submiting the form" do
+              fill_out_shipping_address
+              fill_notes("SpEcIaL NoTeS")
+              proceed_to_payment
+              # asserts whether shipping and billing addresses are the same
+              ship_add_id = Spree::Order.first.ship_address_id
+              bill_add_id = Spree::Order.first.bill_address_id
+              expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+               Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
+            end
+          end
+        end
+
+        describe "pre-selecting a shipping method" do
+          it "preselect a shipping method if only one is available" do
+            order.distributor.update! shipping_methods: [free_shipping]
+
+            visit checkout_step_path(:details)
+
+            expect(page).to have_checked_field "shipping_method_#{free_shipping.id}"
+          end
+
+          it "don't preselect a shipping method if more than one is available" do
+            order.distributor.update! shipping_methods: [free_shipping, shipping_with_fee]
+
+            visit checkout_step_path(:details)
+
+            expect(page).to have_field "shipping_method_#{free_shipping.id}", checked: false
+            expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
           end
         end
       end
 
-      describe "pre-selecting a shipping method" do
-        it "preselect a shipping method if only one is available" do
-          order.distributor.update! shipping_methods: [free_shipping]
+      describe "not filling out delivery details" do
+        before do
+          fill_in "Email", with: ""
+        end
+        it "should display error when fields are empty" do
+          click_button "Next - Payment method"
+          expect(page).to have_content("Saving failed, please update the highlighted fields")
+          expect(page).to have_field("First Name", with: "")
+          expect(page).to have_field("Last Name", with: "")
+          expect(page).to have_field("Email", with: "")
+          expect(page).to have_content("is invalid")
+          expect(page).to have_field("Phone number", with: "")
+          expect(page).to have_field("Address", with: "")
+          expect(page).to have_field("City", with: "")
+          expect(page).to have_field("Postcode", with: "")
+          expect(page).to have_content("can't be blank", count: 7)
+          expect(page).to have_content("Select a shipping method")
+        end
+      end
 
-          visit checkout_step_path(:details)
-
-          expect(page).to have_checked_field "shipping_method_#{free_shipping.id}"
+      context "with a saved address" do
+        let!(:address_state) do
+          create(:state, name: "Testville", abbr: "TST", country: DefaultCountry.country )
+        end
+        let(:saved_address) do
+          create(:bill_address, state: address_state, zipcode: "TST01" )
         end
 
-        it "don't preselect a shipping method if more than one is available" do
-          order.distributor.update! shipping_methods: [free_shipping, shipping_with_fee]
-
-          visit checkout_step_path(:details)
-
-          expect(page).to have_field "shipping_method_#{free_shipping.id}", checked: false
-          expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
+        before do
+          user.update_columns bill_address_id: saved_address.id
         end
-      end
-    end
 
-    describe "not filling out delivery details" do
-      before do
-        fill_in "Email", with: ""
-      end
-      it "should display error when fields are empty" do
-        click_button "Next - Payment method"
-        expect(page).to have_content("Saving failed, please update the highlighted fields")
-        expect(page).to have_field("First Name", with: "")
-        expect(page).to have_field("Last Name", with: "")
-        expect(page).to have_field("Email", with: "")
-        expect(page).to have_content("is invalid")
-        expect(page).to have_field("Phone number", with: "")
-        expect(page).to have_field("Address", with: "")
-        expect(page).to have_field("City", with: "")
-        expect(page).to have_field("Postcode", with: "")
-        expect(page).to have_content("can't be blank", count: 7)
-        expect(page).to have_content("Select a shipping method")
-      end
-    end
-
-    context "with a saved address" do
-      let!(:address_state) do
-        create(:state, name: "Testville", abbr: "TST", country: DefaultCountry.country )
-      end
-      let(:saved_address) do
-        create(:bill_address, state: address_state, zipcode: "TST01" )
-      end
-
-      before do
-        user.update_columns bill_address_id: saved_address.id
-      end
-
-      it "pre-fills address details" do
-        visit checkout_path
-        expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
-        expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
+        it "pre-fills address details" do
+          visit checkout_path
+          expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
+          expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
+        end
       end
     end
 
