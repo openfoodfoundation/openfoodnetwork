@@ -6,6 +6,8 @@ describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
   include SplitCheckoutHelper
   include FileHelper
+  include StripeHelper
+  include StripeStubs
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -303,13 +305,32 @@ describe "As a consumer, I want to checkout my order", js: true do
             )
           end
 
-          before do
-            visit checkout_step_path(:payment)
-          end
+          context "like #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
+            before do
+              visit checkout_step_path(:payment)
+            end
 
-          context "like #{pay_method}" do
             it "selects it and proceeds to the summary step" do
               choose pay_method.to_s
+              click_on "Next - Order summary"
+              expect(page).to have_content "Shopping @ #{distributor.name}"
+            end
+          end
+
+          context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
+            let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
+            let!(:stripe_sca_payment_method) {
+              create(:stripe_sca_payment_method, distributors: [distributor], name: "Stripe SCA")
+            }
+
+            before do
+              setup_stripe
+              visit checkout_step_path(:payment)
+            end
+
+            it "selects Stripe SCA and proceeds to the summary step" do
+              choose pay_method.to_s
+              fill_out_card_details
               click_on "Next - Order summary"
               expect(page).to have_content "Shopping @ #{distributor.name}"
             end
@@ -319,6 +340,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           context "legacy checkout" do
             it_behaves_like "bewteen different payment methods", "Cash"
             it_behaves_like "bewteen different payment methods", "Paypal"
+            it_behaves_like "bewteen different payment methods", "Stripe SCA"
           end
         end
       end
