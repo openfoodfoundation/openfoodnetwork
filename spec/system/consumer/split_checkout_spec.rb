@@ -8,6 +8,7 @@ describe "As a consumer, I want to checkout my order", js: true do
   include FileHelper
   include StripeHelper
   include StripeStubs
+  include PaypalHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -295,34 +296,27 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       describe "choosing" do
-        shared_examples "bewteen different payment methods" do |pay_method|
-          let!(:payment_method3) { create(:payment_method, distributors: [distributor], name: "Cash") }
-          let!(:paypal) do
-            Spree::Gateway::PayPalExpress.create!(
-              name: "Paypal",
-              environment: "test",
-              distributor_ids: [distributor.id]
-            )
-          end
+        shared_examples "different payment methods" do |pay_method|
 
-          context "like #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
+          context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
             before do
               visit checkout_step_path(:payment)
             end
 
-            it "selects it and proceeds to the summary step" do
+            it "proceeds to the summary step and completes the order" do
               choose pay_method.to_s
               click_on "Next - Order summary"
               expect(page).to have_content "Shopping @ #{distributor.name}"
+
+              click_on "Complete order"
+              expect(page).to have_content "Back To Store"
+              expect(page).to have_content "Paying via: #{pay_method}"
+              expect(order.reload.state).to eq "complete"
             end
+
           end
 
           context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
-            let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
-            let!(:stripe_sca_payment_method) {
-              create(:stripe_sca_payment_method, distributors: [distributor], name: "Stripe SCA")
-            }
-
             before do
               setup_stripe
               visit checkout_step_path(:payment)
@@ -336,11 +330,43 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
           end
         end
+        
         describe "shared examples" do
-          context "legacy checkout" do
-            it_behaves_like "bewteen different payment methods", "Cash"
-            it_behaves_like "bewteen different payment methods", "Paypal"
-            it_behaves_like "bewteen different payment methods", "Stripe SCA"
+            let!(:payment_method3) { create(:payment_method, distributors: [distributor], name: "Cash") }
+          
+          context "Cash" do
+            it_behaves_like "different payment methods", "Cash"
+          end
+          
+          context "Paypal" do
+            let!(:paypal) do
+              Spree::Gateway::PayPalExpress.create!(
+                name: "Paypal",
+                environment: "test",
+                distributor_ids: [distributor.id]
+              )
+            end
+
+            before do
+              stub_paypal_response(
+                success: true,
+                redirect: payment_gateways_confirm_paypal_path(
+                  payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+                )
+              )
+              stub_paypal_confirm
+            end
+
+            it_behaves_like "different payment methods", "Paypal"
+          end
+          
+          context "Stripe SCA" do
+            let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
+            let!(:stripe_sca_payment_method) {
+              create(:stripe_sca_payment_method, distributors: [distributor], name: "Stripe SCA")
+            }
+
+            it_behaves_like "different payment methods", "Stripe SCA"
           end
         end
       end
