@@ -121,7 +121,6 @@ module Spree
         when :integer
           value.to_i
         when :boolean
-          # rubocop:disable Style/NumericPredicate
           if value.is_a?(FalseClass) ||
              value.nil? ||
              value == 0 ||
@@ -131,7 +130,6 @@ module Spree
           else
             true
           end
-          # rubocop:enable Style/NumericPredicate
         else
           value
         end
