@@ -46,26 +46,15 @@ describe "Check out with Paypal", js: true do
     add_product_to_cart order, product
   end
 
-  context "as a guest" do
-    it "fails with an error message" do
-      visit checkout_path
-      checkout_as_guest
-      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
-
-      stub_paypal_response success: false
-
-      place_order
-      expect(page).to have_content "PayPal failed."
-    end
-  end
-
   context "as a registered user" do
-    before { login_as user }
-
-    it "completes the checkout after successful Paypal payment" do
+    before do
+      login_as user
       visit checkout_path
       fill_out_details
       fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
+    end
+
+    it "completes the checkout after successful Paypal payment" do
 
       # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
       # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
@@ -83,6 +72,13 @@ describe "Check out with Paypal", js: true do
 
       expect(order.reload.state).to eq "complete"
       expect(order.payments.count).to eq 1
+    end
+
+    it "fails with an error message" do
+      stub_paypal_response success: false
+
+      place_order
+      expect(page).to have_content "PayPal failed."
     end
   end
 end
