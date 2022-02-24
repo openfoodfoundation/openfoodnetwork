@@ -41,14 +41,14 @@ module OrderManagement
 
       # This uses `deliver_now` since it's called from inside a job
       def send_placement_summary_emails
-        @summaries.values.each do |summary|
+        @summaries.each_value do |summary|
           SubscriptionMailer.placement_summary_email(summary).deliver_now
         end
       end
 
       # This uses `deliver_now` since it's called from inside a job
       def send_confirmation_summary_emails
-        @summaries.values.each do |summary|
+        @summaries.each_value do |summary|
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
         end
       end

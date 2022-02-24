@@ -93,7 +93,7 @@ module Spree
       end
 
       def clear_preferences
-        preferences.keys.each { |pref| preference_store.delete preference_cache_key(pref) }
+        preferences.each_key { |pref| preference_store.delete preference_cache_key(pref) }
       end
 
       private
