@@ -411,6 +411,8 @@ en_CA:
     ends_at: Ends At
     ends_on: Ends On
     name: Name
+    first_name: First Name
+    last_name: Last Name
     on_hand: On Hand
     on_demand: On Demand
     on_demand?: On Demand?
@@ -2465,7 +2467,7 @@ en_CA:
   report_header_hub: Hub
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
-  report_header_hub_code: Hub Code
+  report_header_hub_code: Customer Code
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?

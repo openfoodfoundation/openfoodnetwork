@@ -412,6 +412,8 @@ ru:
     ends_at: Заканчивается В
     ends_on: Заканчивается На
     name: Имя
+    first_name: Имя
+    last_name: Фамилия
     on_hand: В Наличии
     on_demand: По Запросу
     on_demand?: По Запросу?

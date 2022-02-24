@@ -282,6 +282,8 @@ en_BE:
     ends_at: Ends At
     ends_on: Ends On
     name: Name
+    first_name: First Name
+    last_name: Last Name
     on_hand: On Hand
     on_demand: On Demand
     on_demand?: On Demand?

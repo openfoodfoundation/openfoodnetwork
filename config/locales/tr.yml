@@ -352,6 +352,8 @@ tr:
     ends_at: Bitiş
     ends_on: Bitiş vakti
     name: Ad
+    first_name: Ad
+    last_name: Soyad
     on_hand: Mevcut
     on_demand: Talep Üzerine
     on_demand?: Talep Üzerine?

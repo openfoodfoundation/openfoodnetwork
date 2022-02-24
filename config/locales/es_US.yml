@@ -329,6 +329,8 @@ es_US:
     ends_at: Termina en
     ends_on: Finaliza
     name: Nombre
+    first_name: Nombre
+    last_name: Apellido
     on_hand: Disponibles
     on_demand: Bajo demanda
     on_demand?: Bajo demanda?

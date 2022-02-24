@@ -302,6 +302,8 @@ nl_BE:
     ends_at: Einde Bij
     ends_on: Einde Aan
     name: Naam
+    first_name: Voornaam
+    last_name: Familienaam
     on_hand: Bij de Hand
     on_demand: Op Aanvraag
     on_demand?: Op Aanvraag?

@@ -411,6 +411,8 @@ it:
     ends_at: Termina a
     ends_on: Termina da
     name: Nome
+    first_name: Nome
+    last_name: Cognome
     on_hand: Disponibile
     on_demand: A richiesta
     on_demand?: A richiesta?

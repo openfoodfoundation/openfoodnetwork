@@ -411,6 +411,8 @@ de_DE:
     ends_at: Endet
     ends_on: Endet am
     name: Name
+    first_name: Vorname
+    last_name: Nachname
     on_hand: Verfügbar
     on_demand: Unbegrenzt/auf Bestellung
     on_demand?: Unbegrenzt/auf Bestellung
@@ -3395,7 +3397,7 @@ de_DE:
     currency: "Währung"
     first_item: "Gebühr erster Artikel (€)"
     additional_item: "Gebühr weitere Artikel (€)"
-    max_items: "Gebührenfrei ab (Anzahl Artikel)"
+    max_items: "Gebührenfrei bei mehr als x Artikeln"
     minimal_amount: "Mengenrabatt ab (€)"
     normal_amount: "Gebühr unterhalb (€)"
     discount_amount: "Gebühr oberhalb (€)"

@@ -294,6 +294,8 @@ fil_PH:
     ends_at: nagtatapos sa
     ends_on: natapos sa
     name: Pangalan
+    first_name: Pangalan
+    last_name: Apelyido
     on_hand: on hand
     on_demand: on demand
     on_demand?: on demand?

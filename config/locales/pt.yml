@@ -339,6 +339,8 @@ pt:
     ends_at: 'Termina às '
     ends_on: 'Termina em '
     name: Nome
+    first_name: Primeiro Nome
+    last_name: Último Nome
     on_hand: Disponível
     on_demand: Sob Encomenda
     on_demand?: Sob Encomenda?

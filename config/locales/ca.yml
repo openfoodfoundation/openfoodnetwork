@@ -350,6 +350,8 @@ ca:
     ends_at: Acaba a
     ends_on: Finalitza
     name: Nom
+    first_name: Nom
+    last_name: Cognoms
     on_hand: Disponibles
     on_demand: Sota demanda
     on_demand?: Sota demanda?

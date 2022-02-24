@@ -370,6 +370,8 @@ nb:
     ends_at: Slutter på
     ends_on: Slutter på
     name: Navn
+    first_name: Fornavn
+    last_name: Etternavn
     on_hand: Tilgjengelig
     on_demand: Ved forespørsel
     on_demand?: Ved forespørsel?

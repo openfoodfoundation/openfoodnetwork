@@ -230,9 +230,9 @@ en_US:
       subject: "%{enterprise}: Welcome to the %{sitename}Community!"
       email_welcome: "Welcome"
       email_registered: "is now part of"
-      email_userguide_html: "The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in \"office hours\" most Mondays and Fridays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
+      email_userguide_html: "Hey you made it! Thanks for joining the party. The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in \"office hours\" most Mondays and Fridays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
       userguide: "Open Food Network User Guide"
-      email_admin_html: "You might have already discovered that you can can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
+      email_admin_html: "You might have already discovered that you can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
       email_community_html: "Please consider the reality of the costs we face in supporting this software, and the place of fair compensation for everyone in a just food system. We invite and encourage you to pitch in with money when you can at https://donate.openfoodnetwork.net or to contact us to learn about non-monetary ways of contributing. We send super-infrequent email newsletters with useful information, so please make sure emails from addresses at openfoodnetwork.net aren't intercepted by your spam filter.   If you have any questions at all, please don't hesitate to contact us at support-usa@openfoodnetwork.net.  Once again, welcome to our community. We're glad you are here!"
       join_community: "Join the community"
@@ -411,6 +411,8 @@ en_US:
     ends_at: Ends At
     ends_on: Ends On
     name: Name
+    first_name: First Name
+    last_name: Last Name
     on_hand: On Hand
     on_demand: On Demand
     on_demand?: On Demand?

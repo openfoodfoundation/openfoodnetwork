@@ -318,6 +318,8 @@ es_CO:
     ends_at: Termina en
     ends_on: Finaliza en
     name: Nombre
+    first_name: Nombre
+    last_name: Apellidos
     on_hand: Disponibles
     on_demand: Bajo demanda
     on_demand?: Bajo demanda?

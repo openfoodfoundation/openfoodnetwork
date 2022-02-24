@@ -370,6 +370,8 @@ fr_CM:
     ends_at: Termine
     ends_on: Termine le
     name: Nom
+    first_name: Prénom
+    last_name: Nom
     on_hand: En stock
     on_demand: A volonté
     on_demand?: A volonté?

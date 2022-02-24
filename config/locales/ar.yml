@@ -411,6 +411,8 @@ ar:
     ends_at: ينتهي عند
     ends_on: ينتهي في
     name: اسم
+    first_name: الاسم الاول
+    last_name: الكنية
     on_hand: متوفر
     on_demand: على الطلب
     on_demand?: على الطلب؟

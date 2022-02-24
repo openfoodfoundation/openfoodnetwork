@@ -126,6 +126,8 @@ sv:
     date: Datum
     email: epost
     name: Namn
+    first_name: Förnamn
+    last_name: Efternamn
     on_hand: På lager
     on_demand: På begäran
     on_demand?: På begäran?
