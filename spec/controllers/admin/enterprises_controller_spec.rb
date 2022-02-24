@@ -174,8 +174,6 @@ describe Admin::EnterprisesController, type: :controller do
       end
 
       it "updates the contact for notifications" do
-        pending "parameter sanitation: https://github.com/openfoodfoundation/openfoodnetwork/issues/8925"
-
         allow(controller).to receive_messages spree_current_user: distributor_manager
         params = {
           id: distributor,

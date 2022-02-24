@@ -234,8 +234,10 @@ module Admin
     end
 
     def update_enterprise_notifications
-      if params.key? :receives_notifications
-        @enterprise.update_contact params[:receives_notifications]
+      user_id = params[:receives_notifications].to_i
+
+      if user_id.positive? && @enterprise.user_ids.include?(user_id)
+        @enterprise.update_contact(user_id)
       end
     end
 
