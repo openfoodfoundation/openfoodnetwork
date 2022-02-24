@@ -10,6 +10,9 @@ inherit_from:
   # The automatically generated todo list to ignore all current violations.
   - .rubocop_todo.yml
 
+  # The relaxed style rules as a common starting point which we can refine.
+  - .rubocop_relaxed_styleguide.yml
+
   # Our Open Food Network style guide. If you want to see all violations,
   # then use only that configuration:
   #

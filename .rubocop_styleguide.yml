@@ -46,6 +46,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 Layout/LineLength:
+  Enabled: true
   Max: 100
 
 Lint/RaiseException:
@@ -187,9 +188,11 @@ Lint/AssignmentInCondition:
   StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
 
 Metrics/AbcSize:
+  Enabled: true
   Max: 15
 
 Metrics/BlockLength:
+  Enabled: true
   Max: 25
   IgnoredMethods: [
     "class_eval",
@@ -207,24 +210,31 @@ Metrics/BlockLength:
   ]
 
 Metrics/BlockNesting:
+  Enabled: true
   Max: 3
 
 Metrics/ClassLength:
+  Enabled: true
   Max: 100
 
 Metrics/ModuleLength:
+  Enabled: true
   Max: 100
 
 Metrics/CyclomaticComplexity:
+  Enabled: true
   Max: 6
 
 Metrics/MethodLength:
+  Enabled: true
   Max: 10
 
 Metrics/ParameterLists:
+  Enabled: true
   Max: 5
 
 Metrics/PerceivedComplexity:
+  Enabled: true
   Max: 7
 
 Naming/PredicateName:
