@@ -46,39 +46,56 @@ describe "Check out with Paypal", js: true do
     add_product_to_cart order, product
   end
 
-  context "as a registered user" do
-    before do
-      login_as user
-      visit checkout_path
-      fill_out_details
-      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
-    end
+  shared_examples "users which " do |user_type|
+    context "checkout #{user_type}" do
+      before do
+        fill_out_details
+        fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
+      end
 
-    it "completes the checkout after successful Paypal payment" do
-
-      # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
-      # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
-      # jump straight to being redirected back to OFN with a "confirmed" payment.
-      stub_paypal_response(
-        success: true,
-        redirect: payment_gateways_confirm_paypal_path(
-          payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+      it "completes the checkout after successful Paypal payment" do
+        # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
+        # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
+        # jump straight to being redirected back to OFN with a "confirmed" payment.
+        stub_paypal_response(
+          success: true,
+          redirect: payment_gateways_confirm_paypal_path(
+            payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+          )
         )
-      )
-      stub_paypal_confirm
+        stub_paypal_confirm
 
-      place_order
-      expect(page).to have_content "Your order has been processed successfully"
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
 
-      expect(order.reload.state).to eq "complete"
-      expect(order.payments.count).to eq 1
+        expect(order.reload.state).to eq "complete"
+        expect(order.payments.count).to eq 1
+      end
+
+      it "fails with an error message" do
+        stub_paypal_response success: false
+
+        place_order
+        expect(page).to have_content "PayPal failed."
+      end
+    end
+  end
+
+  describe "shared_examples" do
+    context "as a guest user" do
+      before do
+        visit checkout_path
+        checkout_as_guest
+      end
+      it_behaves_like "users which ", "as guest"
     end
 
-    it "fails with an error message" do
-      stub_paypal_response success: false
-
-      place_order
-      expect(page).to have_content "PayPal failed."
+    context "as a logged in user" do
+      before do
+        login_as user
+        visit checkout_path
+      end
+      it_behaves_like "users which ", "after logging in"
     end
   end
 end
