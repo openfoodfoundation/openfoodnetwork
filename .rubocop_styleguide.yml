@@ -22,6 +22,22 @@ AllCops:
 Metrics:
   Enabled: true
 
+Metrics/BlockLength:
+  IgnoredMethods: [
+    "class_eval",
+    "collection",
+    "context",
+    "describe",
+    "feature",
+    "it",
+    "member",
+    "namespace",
+    "resource",
+    "resources",
+    "scenario",
+    "shared_examples",
+  ]
+
 Rails/SkipsModelValidations:
   AllowedMethods:
     - "touch"
@@ -81,22 +97,6 @@ Lint/UselessAssignment:
 
 Metrics/AbcSize:
   Max: 30 # default 17
-
-Metrics/BlockLength:
-  IgnoredMethods: [
-    "class_eval",
-    "collection",
-    "context",
-    "describe",
-    "feature",
-    "it",
-    "member",
-    "namespace",
-    "resource",
-    "resources",
-    "scenario",
-    "shared_examples",
-  ]
 
 Metrics/MethodLength:
   Enabled: true
