@@ -140,6 +140,7 @@ GEM
       activerecord (>= 4.2)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    aes_key_wrap (1.1.0)
     afm (0.2.2)
     angular-rails-templates (1.2.0)
       railties (>= 5.0, < 7.1)
@@ -153,6 +154,7 @@ GEM
     arel-helpers (2.14.0)
       activerecord (>= 3.1.0, < 8)
     ast (2.4.2)
+    attr_required (1.0.1)
     awesome_nested_set (3.5.0)
       activerecord (>= 4.0.0, < 7.1)
     aws-eventstream (1.2.0)
@@ -176,6 +178,7 @@ GEM
       caxlsx (>= 2.0.2)
     bcrypt (3.1.18)
     bigdecimal (3.0.2)
+    bindata (2.4.12)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
@@ -279,6 +282,8 @@ GEM
     faraday (2.3.0)
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
+    faraday-follow_redirects (0.3.0)
+      faraday (>= 1, < 3)
     faraday-net_http (2.0.3)
     ferrum (0.11)
       addressable (~> 2.5)
@@ -320,6 +325,10 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.8.1)
+    gitlab-omniauth-openid-connect (0.10.0)
+      addressable (~> 2.7)
+      omniauth (>= 1.9, < 3)
+      openid_connect (~> 1.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     gmaps4rails (2.1.2)
@@ -331,9 +340,11 @@ GEM
       tilt
     hashdiff (1.0.1)
     hashery (2.1.2)
+    hashie (5.0.0)
     highline (2.0.3)
     hiredis (0.6.3)
     htmlentities (4.3.4)
+    httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     i18n-js (3.9.2)
@@ -355,6 +366,12 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (2.6.2)
+    json-jwt (1.16.0)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
+      faraday (~> 2.0)
+      faraday-follow_redirects
     json-schema (2.8.1)
       addressable (>= 2.4)
     json_spec (1.1.5)
@@ -400,6 +417,10 @@ GEM
     msgpack (1.5.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    net-protocol (0.1.3)
+      timeout
+    net-smtp (0.3.2)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
@@ -410,6 +431,24 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    omniauth (2.1.0)
+      hashie (>= 3.4.6)
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-rails_csrf_protection (1.0.1)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
+    openid_connect (1.4.2)
+      activemodel
+      attr_required (>= 1.0.0)
+      json-jwt (>= 1.15.0)
+      net-smtp
+      rack-oauth2 (~> 1.21)
+      swd (~> 1.3)
+      tzinfo
+      validate_email
+      validate_url
+      webfinger (~> 1.2)
     orm_adapter (0.5.0)
     pagy (5.10.1)
       activesupport
@@ -445,6 +484,12 @@ GEM
     rack (2.2.4)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
+    rack-oauth2 (1.21.3)
+      activesupport
+      attr_required
+      httpclient
+      json-jwt (>= 1.11.0)
+      rack (>= 2.1.0)
     rack-protection (2.1.0)
       rack
     rack-proxy (0.7.0)
@@ -642,6 +687,10 @@ GEM
       redis
     stringex (2.8.5)
     stripe (7.1.0)
+    swd (1.3.0)
+      activesupport (>= 3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.4)
     temple (0.8.2)
     test-prof (1.0.10)
     test-unit (3.5.5)
@@ -650,6 +699,7 @@ GEM
     thread-local (1.1.0)
     tilt (2.0.11)
     timecop (0.9.5)
+    timeout (0.3.0)
     ttfunk (1.7.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -658,6 +708,12 @@ GEM
     valid_email2 (4.0.4)
       activemodel (>= 3.2)
       mail (~> 2.5)
+    validate_email (0.1.6)
+      activemodel (>= 3.0)
+      mail (>= 2.2.5)
+    validate_url (1.0.15)
+      activemodel (>= 3.0.0)
+      public_suffix
     vcr (6.1.0)
     view_component (2.74.1)
       activesupport (>= 5.0.0, < 8.0)
@@ -672,6 +728,9 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webfinger (1.2.0)
+      activesupport
+      httpclient (>= 2.4)
     webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -746,6 +805,7 @@ DEPENDENCIES
   foreman
   fuubar (~> 2.5.1)
   geocoder
+  gitlab-omniauth-openid-connect
   gmaps4rails
   good_migrations
   haml
@@ -770,6 +830,8 @@ DEPENDENCIES
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
   ofn-qz!
+  omniauth-rails_csrf_protection
+  openid_connect (~> 1.3)
   order_management!
   pagy (~> 5.1)
   paper_trail (~> 12.1.0)
