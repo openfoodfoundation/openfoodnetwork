@@ -46,8 +46,8 @@ describe "Check out with Paypal", js: true do
     add_product_to_cart order, product
   end
 
-  shared_examples "users which " do |user_type|
-    context "checkout #{user_type}" do
+  shared_examples "checking out with paypal" do |user_type|
+    context "#{user_type}" do
       before do
         fill_out_details
         fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
@@ -87,7 +87,7 @@ describe "Check out with Paypal", js: true do
         visit checkout_path
         checkout_as_guest
       end
-      it_behaves_like "users which ", "as guest"
+      it_behaves_like "checking out with paypal", "as guest"
     end
 
     context "as a logged in user" do
@@ -95,7 +95,7 @@ describe "Check out with Paypal", js: true do
         login_as user
         visit checkout_path
       end
-      it_behaves_like "users which ", "after logging in"
+      it_behaves_like "checking out with paypal", "after logging-in"
     end
   end
 end
