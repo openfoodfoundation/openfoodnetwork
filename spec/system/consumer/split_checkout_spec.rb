@@ -297,7 +297,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
       describe "choosing" do
         shared_examples "different payment methods" do |pay_method|
-
           context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
             before do
               visit checkout_step_path(:payment)
@@ -313,7 +312,6 @@ describe "As a consumer, I want to checkout my order", js: true do
               expect(page).to have_content "Paying via: #{pay_method}"
               expect(order.reload.state).to eq "complete"
             end
-
           end
 
           context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
@@ -330,14 +328,14 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
           end
         end
-        
+
         describe "shared examples" do
-            let!(:payment_method3) { create(:payment_method, distributors: [distributor], name: "Cash") }
-          
+          let!(:cash) { create(:payment_method, distributors: [distributor], name: "Cash") }
+
           context "Cash" do
             it_behaves_like "different payment methods", "Cash"
           end
-          
+
           context "Paypal" do
             let!(:paypal) do
               Spree::Gateway::PayPalExpress.create!(
@@ -359,7 +357,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
             it_behaves_like "different payment methods", "Paypal"
           end
-          
+
           context "Stripe SCA" do
             let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
             let!(:stripe_sca_payment_method) {
