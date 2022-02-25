@@ -47,7 +47,7 @@ describe "Check out with Paypal", js: true do
   end
 
   shared_examples "checking out with paypal" do |user_type|
-    context "#{user_type}" do
+    context user_type.to_s do
       before do
         fill_out_details
         fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
