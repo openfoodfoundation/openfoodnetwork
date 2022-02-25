@@ -78,7 +78,7 @@ Lint/UselessAssignment:
 
 Metrics/AbcSize:
   Enabled: true
-  Max: 15
+  Max: 30 # default 17
 
 Metrics/BlockLength:
   Enabled: true
@@ -116,7 +116,7 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Enabled: true
-  Max: 10
+  Max: 25 # default 10
 
 Metrics/ParameterLists:
   Enabled: true
@@ -124,7 +124,7 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Enabled: true
-  Max: 7
+  Max: 14 # default 8
 
 Naming/PredicateName:
   Enabled: false
