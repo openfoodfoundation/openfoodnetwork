@@ -19,6 +19,9 @@ AllCops:
 #
 # Cop settings that have been agreed upon by the OFN community
 
+Metrics:
+  Enabled: true
+
 Rails/SkipsModelValidations:
   AllowedMethods:
     - "touch"
@@ -77,11 +80,7 @@ Lint/UselessAssignment:
   - spec/**/*
 
 Metrics/AbcSize:
-  Enabled: true
   Max: 30 # default 17
-
-Metrics:
-  Enabled: true
 
 Metrics/BlockLength:
   IgnoredMethods: [
@@ -98,10 +97,6 @@ Metrics/BlockLength:
     "scenario",
     "shared_examples",
   ]
-
-Metrics/CyclomaticComplexity:
-  Enabled: true
-  Max: 6 # default 7
 
 Metrics/MethodLength:
   Enabled: true
