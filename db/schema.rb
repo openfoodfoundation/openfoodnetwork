@@ -1068,6 +1068,8 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.string "unconfirmed_email", limit: 255
     t.datetime "disabled_at"
     t.boolean "show_api_key_view", default: false, null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
