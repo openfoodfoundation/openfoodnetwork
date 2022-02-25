@@ -27,6 +27,17 @@ module ApplicationHelper
     OpenFoodNetwork::FeatureToggle.enabled?(feature, user)
   end
 
+  def language_meta_tags
+    return if I18n.available_locales.one?
+
+    I18n.available_locales.map do |locale|
+      tag.link(
+        hreflang: locale.to_s.gsub("_", "-").downcase,
+        href: "#{request.protocol}#{request.host_with_port}/locales/#{locale}"
+      )
+    end.join("\n").html_safe
+  end
+
   def ng_form_for(name, *args, &block)
     options = args.extract_options!
 
