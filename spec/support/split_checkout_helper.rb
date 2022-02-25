@@ -46,4 +46,9 @@ module SplitCheckoutHelper
     click_button "Next - Payment method"
     expect(page).to have_button("Next - Order summary")
   end
+
+  def proceed_to_summary
+    click_button "Next - Order summary"
+    expect(page).to have_content "Shopping @ #{distributor.name}"
+  end
 end

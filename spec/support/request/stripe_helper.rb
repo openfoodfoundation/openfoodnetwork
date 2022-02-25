@@ -14,11 +14,25 @@ module StripeHelper
     place_order
   end
 
+  def split_checkout_with_stripe(guest_checkout: true, remember_card: false)
+    fill_out_details
+    fill_out_billing_address
+    choose shipping_method.name
+    proceed_to_payment
+    choose "StripeSCA"
+    fill_out_card_details
+    check "Remember this card?" if remember_card
+    proceed_to_summary
+    click_on "Complete order"
+  end
+
   def fill_out_card_details
     expect(page).to have_css("input[name='cardnumber']")
-    fill_in 'Card number', with: '4242424242424242'
+    fill_in 'Card number', with: '4242'
+    #fill_in 'Card number', with: '4242424242424242'
     fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
     fill_in 'CVC', with: '123'
+    byebug
   end
 
   def fill_in_card_details_in_backoffice
