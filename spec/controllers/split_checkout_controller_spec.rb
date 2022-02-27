@@ -264,4 +264,45 @@ describe SplitCheckoutController, type: :controller do
       end
     end
   end
+
+  describe "running out of stock" do
+    let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
+
+    before do
+      allow(controller).to receive(:current_order).and_return(order)
+      allow(order).to receive(:distributor).and_return(distributor)
+      order.update(order_cycle: order_cycle)
+
+      allow(OrderCycleDistributedVariants).to receive(:new).and_return(
+        order_cycle_distributed_variants
+      )
+    end
+
+    shared_examples "handling stock issues" do |step|
+      context "#{step} step" do
+        let(:step) { step.to_s }
+
+        it "redirects when some items are out of stock" do
+          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+
+          get :edit
+          expect(response).to redirect_to cart_path
+        end
+
+        it "redirects when some items are not available" do
+          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+          expect(order_cycle_distributed_variants).to receive(
+            :distributes_order_variants?
+          ).with(order).and_return(false)
+
+          get :edit
+          expect(response).to redirect_to cart_path
+        end
+      end
+    end
+
+    it_behaves_like "handling stock issues", "details"
+    it_behaves_like "handling stock issues", "payment"
+    it_behaves_like "handling stock issues", "summary"
+  end
 end
