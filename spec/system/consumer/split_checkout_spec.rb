@@ -121,6 +121,21 @@ describe "As a consumer, I want to checkout my order", js: true do
         expect(page).to have_current_path("/checkout/details")
       end
     end
+
+    context "when I have an out of stock product in my cart" do
+      before do
+        variant.update!(on_demand: false, on_hand: 0)
+      end
+
+      it "returns me to the cart with an error message" do
+        visit checkout_path
+
+        expect(page).not_to have_selector 'closing', text: "Checkout now"
+        expect(page).to have_selector 'closing', text: "Your shopping cart"
+        expect(page).to have_content "An item in your cart has become unavailable"
+        expect(page).to have_content "Update"
+      end
+    end
   end
 
   context "as a logged in user" do
@@ -425,20 +440,6 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
       end
-    end
-  end
-
-  context "when I have an out of stock product in my cart" do
-    before do
-      variant.update!(on_demand: false, on_hand: 0)
-    end
-
-    it "returns me to the cart with an error message" do
-      visit checkout_path
-
-      expect(page).not_to have_selector 'closing', text: "Checkout now"
-      expect(page).to have_selector 'closing', text: "Your shopping cart"
-      expect(page).to have_content "An item in your cart has become unavailable"
     end
   end
 end
