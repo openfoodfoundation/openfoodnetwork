@@ -55,7 +55,6 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize
       def columns
         [
           supplier_name,
@@ -68,7 +67,6 @@ module OpenFoodNetwork
           proc { |_line_items| I18n.t(:report_header_shipping_method) }
         ]
       end
-      # rubocop:enable Metrics/AbcSize
 
       def line_item_includes
         [{ order: :distributor,

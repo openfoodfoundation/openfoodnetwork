@@ -1,7 +1,0 @@
-inherit_from:
-  - .rubocop.yml
-
-# This rubocop config file is only used for specs
-# Here we allow specs to be 300 lines long
-Metrics/ModuleLength:
-  Max: 300

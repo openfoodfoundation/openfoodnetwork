@@ -55,7 +55,7 @@ module OpenFoodNetwork
     def build_i18n_key_lookup
       lookup = {}
       I18n.t("inflections")&.each do |key, translations|
-        translations.values.each do |translation|
+        translations.each_value do |translation|
           lookup[translation.downcase] = key
         end
       end

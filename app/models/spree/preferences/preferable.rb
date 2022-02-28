@@ -93,7 +93,7 @@ module Spree
       end
 
       def clear_preferences
-        preferences.keys.each { |pref| preference_store.delete preference_cache_key(pref) }
+        preferences.each_key { |pref| preference_store.delete preference_cache_key(pref) }
       end
 
       private
@@ -121,7 +121,6 @@ module Spree
         when :integer
           value.to_i
         when :boolean
-          # rubocop:disable Style/NumericPredicate
           if value.is_a?(FalseClass) ||
              value.nil? ||
              value == 0 ||
@@ -131,7 +130,6 @@ module Spree
           else
             true
           end
-          # rubocop:enable Style/NumericPredicate
         else
           value
         end

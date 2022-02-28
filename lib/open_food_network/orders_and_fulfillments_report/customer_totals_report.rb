@@ -17,7 +17,6 @@ module OpenFoodNetwork
       end
 
       # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def header
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email),
          I18n.t(:report_header_phone), I18n.t(:report_header_producer),
@@ -42,9 +41,8 @@ module OpenFoodNetwork
          I18n.t(:report_header_order_number),
          I18n.t(:report_header_date)]
       end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
 
+      # rubocop:enable Metrics/AbcSize
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def rules
