@@ -6,6 +6,9 @@ describe "As a consumer, I want to checkout my order", js: true do
   include ShopWorkflow
   include SplitCheckoutHelper
   include FileHelper
+  include StripeHelper
+  include StripeStubs
+  include PaypalHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -131,153 +134,238 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    describe "filling out delivery details" do
-      before do
-        fill_out_details
-        fill_out_billing_address
-      end
-
-      describe "selecting a pick-up shipping method and submiting the form" do
+    context "details step" do
+      describe "filling out delivery details" do
         before do
-          choose free_shipping.name
+          fill_out_details
+          fill_out_billing_address
         end
 
-        it "redirects the user to the Payment Method step" do
-          fill_notes("SpEcIaL NoTeS")
-          proceed_to_payment
-        end
-      end
-
-      describe "selecting a delivery method" do
-        before do
-          choose shipping_with_fee.name
-        end
-
-        context "with same shipping and billing address" do
+        describe "selecting a pick-up shipping method and submiting the form" do
           before do
-            check "ship_address_same_as_billing"
-          end
-          it "does not display the shipping address form" do
-            expect(page).not_to have_field "order_ship_address_attributes_address1"
+            choose free_shipping.name
           end
 
-          it "redirects the user to the Payment Method step, when submiting the form" do
-            proceed_to_payment
-            # asserts whether shipping and billing addresses are the same
-            ship_add_id = order.reload.ship_address_id
-            bill_add_id = order.reload.bill_address_id
-            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
-              Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
-          end
-        end
-
-        context "with different shipping and billing address" do
-          before do
-            uncheck "ship_address_same_as_billing"
-          end
-          it "displays the shipping address form and the option to save it as default" do
-            expect(page).to have_field "order_ship_address_attributes_address1"
-          end
-
-          it "displays error messages when submitting incomplete billing address" do
-            click_button "Next - Payment method"
-            expect(page).to have_content "Saving failed, please update the highlighted fields."
-            expect(page).to have_field("Address", with: "")
-            expect(page).to have_field("City", with: "")
-            expect(page).to have_field("Postcode", with: "")
-            expect(page).to have_content("can't be blank", count: 3)
-          end
-
-          it "fills in shipping details and redirects the user to the Payment Method step,
-          when submiting the form" do
-            fill_out_shipping_address
+          it "redirects the user to the Payment Method step" do
             fill_notes("SpEcIaL NoTeS")
             proceed_to_payment
-            # asserts whether shipping and billing addresses are the same
-            ship_add_id = Spree::Order.first.ship_address_id
-            bill_add_id = Spree::Order.first.bill_address_id
-            expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
-             Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
+          end
+        end
+
+        describe "selecting a delivery method" do
+          before do
+            choose shipping_with_fee.name
+          end
+
+          context "with same shipping and billing address" do
+            before do
+              check "ship_address_same_as_billing"
+            end
+            it "does not display the shipping address form" do
+              expect(page).not_to have_field "order_ship_address_attributes_address1"
+            end
+
+            it "redirects the user to the Payment Method step, when submiting the form" do
+              proceed_to_payment
+              # asserts whether shipping and billing addresses are the same
+              ship_add_id = order.reload.ship_address_id
+              bill_add_id = order.reload.bill_address_id
+              expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+                Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
+            end
+          end
+
+          context "with different shipping and billing address" do
+            before do
+              uncheck "ship_address_same_as_billing"
+            end
+            it "displays the shipping address form and the option to save it as default" do
+              expect(page).to have_field "order_ship_address_attributes_address1"
+            end
+
+            it "displays error messages when submitting incomplete billing address" do
+              click_button "Next - Payment method"
+              expect(page).to have_content "Saving failed, please update the highlighted fields."
+              expect(page).to have_field("Address", with: "")
+              expect(page).to have_field("City", with: "")
+              expect(page).to have_field("Postcode", with: "")
+              expect(page).to have_content("can't be blank", count: 3)
+            end
+
+            it "fills in shipping details and redirects the user to the Payment Method step,
+            when submiting the form" do
+              fill_out_shipping_address
+              fill_notes("SpEcIaL NoTeS")
+              proceed_to_payment
+              # asserts whether shipping and billing addresses are the same
+              ship_add_id = Spree::Order.first.ship_address_id
+              bill_add_id = Spree::Order.first.bill_address_id
+              expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
+               Spree::Address.where(id: ship_add_id).pluck(:address1)).to be false
+            end
+          end
+        end
+
+        describe "pre-selecting a shipping method" do
+          it "preselect a shipping method if only one is available" do
+            order.distributor.update! shipping_methods: [free_shipping]
+
+            visit checkout_step_path(:details)
+
+            expect(page).to have_checked_field "shipping_method_#{free_shipping.id}"
+          end
+
+          it "don't preselect a shipping method if more than one is available" do
+            order.distributor.update! shipping_methods: [free_shipping, shipping_with_fee]
+
+            visit checkout_step_path(:details)
+
+            expect(page).to have_field "shipping_method_#{free_shipping.id}", checked: false
+            expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
           end
         end
       end
 
-      describe "pre-selecting a shipping method" do
-        it "preselect a shipping method if only one is available" do
-          order.distributor.update! shipping_methods: [free_shipping]
+      describe "not filling out delivery details" do
+        before do
+          fill_in "Email", with: ""
+        end
+        it "should display error when fields are empty" do
+          click_button "Next - Payment method"
+          expect(page).to have_content("Saving failed, please update the highlighted fields")
+          expect(page).to have_field("First Name", with: "")
+          expect(page).to have_field("Last Name", with: "")
+          expect(page).to have_field("Email", with: "")
+          expect(page).to have_content("is invalid")
+          expect(page).to have_field("Phone number", with: "")
+          expect(page).to have_field("Address", with: "")
+          expect(page).to have_field("City", with: "")
+          expect(page).to have_field("Postcode", with: "")
+          expect(page).to have_content("can't be blank", count: 7)
+          expect(page).to have_content("Select a shipping method")
+        end
+      end
 
-          visit checkout_step_path(:details)
-
-          expect(page).to have_checked_field "shipping_method_#{free_shipping.id}"
+      context "with a saved address" do
+        let!(:address_state) do
+          create(:state, name: "Testville", abbr: "TST", country: DefaultCountry.country )
+        end
+        let(:saved_address) do
+          create(:bill_address, state: address_state, zipcode: "TST01" )
         end
 
-        it "don't preselect a shipping method if more than one is available" do
-          order.distributor.update! shipping_methods: [free_shipping, shipping_with_fee]
+        before do
+          user.update_columns bill_address_id: saved_address.id
+        end
 
-          visit checkout_step_path(:details)
-
-          expect(page).to have_field "shipping_method_#{free_shipping.id}", checked: false
-          expect(page).to have_field "shipping_method_#{shipping_with_fee.id}", checked: false
+        it "pre-fills address details" do
+          visit checkout_path
+          expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
+          expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
         end
       end
     end
 
-    describe "not filling out delivery details" do
-      before do
-        fill_in "Email", with: ""
-      end
-      it "should display error when fields are empty" do
-        click_button "Next - Payment method"
-        expect(page).to have_content("Saving failed, please update the highlighted fields")
-        expect(page).to have_field("First Name", with: "")
-        expect(page).to have_field("Last Name", with: "")
-        expect(page).to have_field("Email", with: "")
-        expect(page).to have_content("is invalid")
-        expect(page).to have_field("Phone number", with: "")
-        expect(page).to have_field("Address", with: "")
-        expect(page).to have_field("City", with: "")
-        expect(page).to have_field("Postcode", with: "")
-        expect(page).to have_content("can't be blank", count: 7)
-        expect(page).to have_content("Select a shipping method")
-      end
-    end
-
-    context "with a saved address" do
-      let!(:address_state) do
-        create(:state, name: "Testville", abbr: "TST", country: DefaultCountry.country )
-      end
-      let(:saved_address) do
-        create(:bill_address, state: address_state, zipcode: "TST01" )
-      end
-
-      before do
-        user.update_columns bill_address_id: saved_address.id
-      end
-
-      it "pre-fills address details" do
-        visit checkout_path
-        expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
-        expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
-      end
-    end
-
-    context "payment method step" do
+    context "payment step" do
       let(:order) { create(:order_ready_for_payment, distributor: distributor) }
 
-      it "preselect the payment method if only one is available" do
-        visit checkout_step_path(:payment)
+      context "with one payment method" do
+        it "preselect the payment method if only one is available" do
+          visit checkout_step_path(:payment)
 
-        expect(page).to have_checked_field "payment_method_#{payment_method.id}"
+          expect(page).to have_checked_field "payment_method_#{payment_method.id}"
+        end
       end
 
       context "with more than one payment method" do
         let!(:payment_method2) { create(:payment_method, distributors: [distributor]) }
 
-        it "don't preselect the payment method if more than one is available" do
+        before do
           visit checkout_step_path(:payment)
+        end
 
+        it "don't preselect the payment method if more than one is available" do
           expect(page).to have_field "payment_method_#{payment_method.id}", checked: false
           expect(page).to have_field "payment_method_#{payment_method2.id}", checked: false
+        end
+
+        it "requires choosing a payment method" do
+          click_on "Next - Order summary"
+          expect(page).to have_content "Select a payment method"
+        end
+      end
+
+      describe "choosing" do
+        shared_examples "different payment methods" do |pay_method|
+          context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
+            before do
+              visit checkout_step_path(:payment)
+            end
+
+            it "proceeds to the summary step and completes the order" do
+              choose pay_method.to_s
+              click_on "Next - Order summary"
+              expect(page).to have_content "Shopping @ #{distributor.name}"
+
+              click_on "Complete order"
+              expect(page).to have_content "Back To Store"
+              expect(page).to have_content "Paying via: #{pay_method}"
+              expect(order.reload.state).to eq "complete"
+            end
+          end
+
+          context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
+            before do
+              setup_stripe
+              visit checkout_step_path(:payment)
+            end
+
+            it "selects Stripe SCA and proceeds to the summary step" do
+              choose pay_method.to_s
+              fill_out_card_details
+              click_on "Next - Order summary"
+              expect(page).to have_content "Shopping @ #{distributor.name}"
+            end
+          end
+        end
+
+        describe "shared examples" do
+          let!(:cash) { create(:payment_method, distributors: [distributor], name: "Cash") }
+
+          context "Cash" do
+            it_behaves_like "different payment methods", "Cash"
+          end
+
+          context "Paypal" do
+            let!(:paypal) do
+              Spree::Gateway::PayPalExpress.create!(
+                name: "Paypal",
+                environment: "test",
+                distributor_ids: [distributor.id]
+              )
+            end
+
+            before do
+              stub_paypal_response(
+                success: true,
+                redirect: payment_gateways_confirm_paypal_path(
+                  payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+                )
+              )
+              stub_paypal_confirm
+            end
+
+            it_behaves_like "different payment methods", "Paypal"
+          end
+
+          context "Stripe SCA" do
+            let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
+            let!(:stripe_sca_payment_method) {
+              create(:stripe_sca_payment_method, distributors: [distributor], name: "Stripe SCA")
+            }
+
+            it_behaves_like "different payment methods", "Stripe SCA"
+          end
         end
       end
     end
