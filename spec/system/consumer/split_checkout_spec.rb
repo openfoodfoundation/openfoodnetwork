@@ -73,6 +73,21 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
   end
 
+  shared_examples "when I have an out of stock product in my cart" do
+    before do
+      variant.update!(on_demand: false, on_hand: 0)
+    end
+
+    it "returns me to the cart with an error message" do
+      visit checkout_path
+
+      expect(page).not_to have_selector 'closing', text: "Checkout now"
+      expect(page).to have_selector 'closing', text: "Your shopping cart"
+      expect(page).to have_content "An item in your cart has become unavailable"
+      expect(page).to have_content "Update"
+    end
+  end
+
   context "as a guest user" do
     before do
       visit checkout_path
@@ -117,11 +132,32 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect(page).to have_button("Next - Order summary")
     end
 
-    context "when order is state: 'payment'" do
-      it "should allow visit '/checkout/details'" do
-        order.update(state: "payment")
+    context "on the 'details' step" do
+      before do
         visit checkout_step_path(:details)
+      end
+
+      it "should allow visit '/checkout/details'" do
         expect(page).to have_current_path("/checkout/details")
+      end
+
+      it_behaves_like "when I have an out of stock product in my cart"
+    end
+
+    context "on the 'payment' step" do
+      before do
+        order.update(state: "payment")
+        visit checkout_step_path(:payment)
+      end
+
+      it "should allow visit '/checkout/payment'" do
+        expect(page).to have_current_path("/checkout/payment")
+      end
+
+      context "when I have an out of stock product in my cart" do
+        pending("awaiting closure bug #8940") do
+          it_behaves_like "when I have an out of stock product in my cart"
+        end
       end
     end
   end
@@ -513,20 +549,6 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
       end
-    end
-  end
-
-  context "when I have an out of stock product in my cart" do
-    before do
-      variant.update!(on_demand: false, on_hand: 0)
-    end
-
-    it "returns me to the cart with an error message" do
-      visit checkout_path
-
-      expect(page).not_to have_selector 'closing', text: "Checkout now"
-      expect(page).to have_selector 'closing', text: "Your shopping cart"
-      expect(page).to have_content "An item in your cart has become unavailable"
     end
   end
 end
