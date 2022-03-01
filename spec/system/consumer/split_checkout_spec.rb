@@ -154,11 +154,7 @@ describe "As a consumer, I want to checkout my order", js: true do
         expect(page).to have_current_path("/checkout/payment")
       end
 
-      context "when I have an out of stock product in my cart" do
-        pending("awaiting closure bug #8940") do
-          it_behaves_like "when I have an out of stock product in my cart"
-        end
-      end
+      it_behaves_like "when I have an out of stock product in my cart"
     end
   end
 
