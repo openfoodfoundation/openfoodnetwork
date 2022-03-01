@@ -1418,10 +1418,9 @@ fr:
     messages:
       customer_required:
         login: "Se connecter"
-        signup: "inscrivez-vous"
         contact: "contacter"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} ou %{signup} pour continuer."
+        require_login_link_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} pour continuer."
         require_login_2_html: "Vous souhaitez réaliser vos courses ici ? Merci de %{contact} %{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
