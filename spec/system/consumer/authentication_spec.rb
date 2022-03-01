@@ -156,6 +156,25 @@ describe "Authentication", js: true do
       end
     end
 
+    describe "Logging in from the private shop page" do
+      let(:distributor) { create(:distributor_enterprise, require_login: true) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, distributors: [distributor],
+                                    coordinator: create(:distributor_enterprise))
+      }
+      before do
+        visit enterprise_shop_path(distributor)
+      end
+
+      it "clicking login triggers the login modal" do
+        within "#shop-tabs" do
+          find("a", text: "login").click
+        end
+        expect(page).to have_selector("a.active", text: "Login")
+        expect(page).to have_button("Login")
+      end
+    end
+
     describe "after following email confirmation link" do
       it "shows confirmed message in modal" do
         visit root_path(anchor: "/login", validation: "confirmed")
