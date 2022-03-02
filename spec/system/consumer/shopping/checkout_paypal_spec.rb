@@ -46,43 +46,56 @@ describe "Check out with Paypal", js: true do
     add_product_to_cart order, product
   end
 
-  context "as a guest" do
-    it "fails with an error message" do
-      visit checkout_path
-      checkout_as_guest
-      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
+  shared_examples "checking out with paypal" do |user_type|
+    context user_type.to_s do
+      before do
+        fill_out_details
+        fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
+      end
 
-      stub_paypal_response success: false
+      it "completes the checkout after successful Paypal payment" do
+        # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
+        # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
+        # jump straight to being redirected back to OFN with a "confirmed" payment.
+        stub_paypal_response(
+          success: true,
+          redirect: payment_gateways_confirm_paypal_path(
+            payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
+          )
+        )
+        stub_paypal_confirm
 
-      place_order
-      expect(page).to have_content "PayPal failed."
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
+
+        expect(order.reload.state).to eq "complete"
+        expect(order.payments.count).to eq 1
+      end
+
+      it "fails with an error message" do
+        stub_paypal_response success: false
+
+        place_order
+        expect(page).to have_content "PayPal failed."
+      end
     end
   end
 
-  context "as a registered user" do
-    before { login_as user }
+  describe "shared_examples" do
+    context "as a guest user" do
+      before do
+        visit checkout_path
+        checkout_as_guest
+      end
+      it_behaves_like "checking out with paypal", "as guest"
+    end
 
-    it "completes the checkout after successful Paypal payment" do
-      visit checkout_path
-      fill_out_details
-      fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
-
-      # Normally the checkout would redirect to Paypal, a form would be filled out there, and the
-      # user would be redirected back to #confirm_paypal_path. Here we skip the PayPal part and
-      # jump straight to being redirected back to OFN with a "confirmed" payment.
-      stub_paypal_response(
-        success: true,
-        redirect: payment_gateways_confirm_paypal_path(
-          payment_method_id: paypal.id, token: "t123", PayerID: 'p123'
-        )
-      )
-      stub_paypal_confirm
-
-      place_order
-      expect(page).to have_content "Your order has been processed successfully"
-
-      expect(order.reload.state).to eq "complete"
-      expect(order.payments.count).to eq 1
+    context "as a logged in user" do
+      before do
+        login_as user
+        visit checkout_path
+      end
+      it_behaves_like "checking out with paypal", "after logging-in"
     end
   end
 end
