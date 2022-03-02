@@ -1418,10 +1418,9 @@ de_DE:
     messages:
       customer_required:
         login: "Einloggen"
-        signup: "Registrieren"
         contact: "Kontakt"
         require_customer_login: "Nur manuell der Kundenliste hinzugefügte Nutzer können in diesem Laden einkaufen."
-        require_login_html: "Wenn Sie bereits auf der Kundenliste dieses Ladens stehen, fahren Sie mit %{login} oder %{signup} fort."
+        require_login_link_html: "Wenn Sie bereits der Kundenliste hinzugefügt wurden, loggen Sie sich bitte ein um fortzufahren:%{login}."
         require_login_2_html: "Sie stehen noch nicht auf der Kundenliste dieses Ladens? Bitte nehmen Sie %{contact} mit %{enterprise} auf und fragen Sie nach der Aufnahme."
         require_customer_html: "Wenn Sie hier einkaufen möchten, nehmen Sie bitte %{contact} mit %{enterprise} auf und fragen Sie nach dem Beitritt."
       select_oc:
