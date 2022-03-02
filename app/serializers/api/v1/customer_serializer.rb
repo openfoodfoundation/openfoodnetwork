@@ -3,7 +3,8 @@
 module Api
   module V1
     class CustomerSerializer < BaseSerializer
-      attributes :id, :enterprise_id, :first_name, :last_name, :code, :email
+      attributes :id, :enterprise_id, :first_name, :last_name, :code, :email,
+                 :allow_charges
 
       belongs_to :enterprise, links: {
         related: ->(object) {

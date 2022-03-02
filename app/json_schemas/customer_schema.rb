@@ -12,7 +12,8 @@ class CustomerSchema < JsonApiSchema
       first_name: { type: :string, nullable: true, example: "Alice" },
       last_name: { type: :string, nullable: true, example: "Springs" },
       code: { type: :string, nullable: true, example: "BUYER1" },
-      email: { type: :string, example: "alice@example.com" }
+      email: { type: :string, example: "alice@example.com" },
+      allow_charges: { type: :boolean, example: false },
     }
   end
 

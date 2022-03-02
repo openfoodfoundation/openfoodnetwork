@@ -60,6 +60,9 @@ components:
                   email:
                     type: string
                     example: alice@example.com
+                  allow_charges:
+                    type: boolean
+                    example: false
                 required:
                 - id
                 - enterprise_id
@@ -67,6 +70,7 @@ components:
                 - last_name
                 - code
                 - email
+                - allow_charges
               relationships:
                 type: object
                 properties:
@@ -130,6 +134,9 @@ components:
                     email:
                       type: string
                       example: alice@example.com
+                    allow_charges:
+                      type: boolean
+                      example: false
                   required:
                   - id
                   - enterprise_id
@@ -137,6 +144,7 @@ components:
                   - last_name
                   - code
                   - email
+                  - allow_charges
                 relationships:
                   type: object
                   properties:
@@ -271,6 +279,9 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
+                allow_charges:
+                  type: boolean
+                  example: false
               required:
               - enterprise_id
               - email
@@ -354,6 +365,9 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
+                allow_charges:
+                  type: boolean
+                  example: false
               required:
               - enterprise_id
               - email
