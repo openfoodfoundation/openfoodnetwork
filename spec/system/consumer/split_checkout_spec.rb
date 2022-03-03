@@ -438,11 +438,9 @@ describe "As a consumer, I want to checkout my order", js: true do
 
             it "proceeds to the summary step and completes the order" do
               choose pay_method.to_s
-              click_on "Next - Order summary"
-              expect(page).to have_content "Shopping @ #{distributor.name}"
+              proceed_to_summary
 
-              click_on "Complete order"
-              expect(page).to have_content "Back To Store"
+              place_order
               expect(page).to have_content "Paying via: #{pay_method}"
               expect(order.reload.state).to eq "complete"
             end
@@ -457,8 +455,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             it "selects Stripe SCA and proceeds to the summary step" do
               choose pay_method.to_s
               fill_out_card_details
-              click_on "Next - Order summary"
-              expect(page).to have_content "Shopping @ #{distributor.name}"
+              proceed_to_summary
             end
           end
         end
@@ -513,7 +510,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
           expect(page).to have_content "Shopping @ #{distributor.name}"
 
-          click_on "Complete order"
+          place_order
 
           expect(page).to have_content "Back To Store"
           expect(order.reload.state).to eq "complete"

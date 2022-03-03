@@ -9,10 +9,6 @@ module SplitCheckoutHelper
     click_button "Checkout as guest"
   end
 
-  def place_order
-    find("button", text: "Complete order").click
-  end
-
   def fill_out_details
     fill_in "First Name", with: "Will"
     fill_in "Last Name", with: "Marshall"
@@ -52,5 +48,14 @@ module SplitCheckoutHelper
     expect(page).to have_selector("div.checkout-tab.selected", text: "1 - Your details")
     expect(page).to have_content("2 - Payment method")
     expect(page).to have_content("3 - Order summary")
+
+  def proceed_to_summary
+    click_on "Next - Order summary"
+    expect(page).to have_button("Complete order")
+  end
+
+  def place_order
+    click_on "Complete order"
+    expect(page).to have_content "Back To Store"
   end
 end
