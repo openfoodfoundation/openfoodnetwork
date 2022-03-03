@@ -21,6 +21,13 @@ class CustomerSchema < JsonApiSchema
     [:enterprise_id, :email]
   end
 
+  def self.writable_attributes
+    attributes.except(
+      :id,
+      :allow_charges,
+    )
+  end
+
   def self.relationships
     [:enterprise]
   end

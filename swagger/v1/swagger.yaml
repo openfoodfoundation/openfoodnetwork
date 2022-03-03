@@ -279,9 +279,6 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
-                allow_charges:
-                  type: boolean
-                  example: false
               required:
               - enterprise_id
               - email
@@ -344,9 +341,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  type: integer
-                  example: 1
                 enterprise_id:
                   type: integer
                   example: 2
@@ -365,9 +359,6 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
-                allow_charges:
-                  type: boolean
-                  example: false
               required:
               - enterprise_id
               - email

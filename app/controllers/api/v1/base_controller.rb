@@ -7,6 +7,7 @@ module Api
       include RequestTimeouts
       include Pagy::Backend
       include JsonApiPagination
+      include RaisingParameters
 
       check_authorization
 
@@ -18,6 +19,7 @@ module Api
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
       rescue_from Pagy::VariableError, with: :invalid_pagination
+      rescue_from ActionController::UnpermittedParameters, with: :unpermitted_parameters
 
       private
 
@@ -58,6 +60,13 @@ module Api
       def invalid_pagination(exception)
         render status: :unprocessable_entity,
                json: json_api_error(exception.message)
+      end
+
+      def unpermitted_parameters(error)
+        message = I18n.t(:unpermitted_parameters, params: error.params.join(", "), scope: :api)
+
+        render status: :unprocessable_entity,
+               json: json_api_error(message)
       end
 
       def invalid_resource!(resource = nil)

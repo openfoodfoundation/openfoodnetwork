@@ -101,7 +101,7 @@ describe "Customers", type: :request do
 
       parameter name: :customer, in: :body, schema: {
         type: :object,
-        properties: CustomerSchema.attributes.except(:id),
+        properties: CustomerSchema.writable_attributes,
         required: CustomerSchema.required_attributes
       }
 
@@ -114,7 +114,26 @@ describe "Customers", type: :request do
         end
         schema "$ref": "#/components/schemas/resources/customer"
 
-        run_test!
+        run_test! do
+          expect(json_response[:data][:attributes]).to include(
+            allow_charges: false
+          )
+        end
+      end
+
+      response "422", "Unpermitted parameter" do
+        param(:customer) do
+          {
+            email: "test@example.com",
+            enterprise_id: enterprise1.id.to_s,
+            allow_charges: true,
+          }
+        end
+        schema "$ref": "#/components/schemas/error_response"
+
+        run_test! do
+          expect(json_error_detail).to eq "Parameters not allowed in this request: allow_charges"
+        end
       end
 
       response "422", "Unprocessable entity" do
@@ -187,7 +206,7 @@ describe "Customers", type: :request do
 
       parameter name: :customer, in: :body, schema: {
         type: :object,
-        properties: CustomerSchema.attributes,
+        properties: CustomerSchema.writable_attributes,
         required: CustomerSchema.required_attributes
       }
 
@@ -195,7 +214,6 @@ describe "Customers", type: :request do
         param(:id) { customer1.id }
         param(:customer) do
           {
-            id: customer1.id.to_s,
             email: "test@example.com",
             enterprise_id: enterprise1.id.to_s
           }
