@@ -161,7 +161,10 @@ describe "Customers", type: :request do
         param(:customer) { {} }
         schema "$ref": "#/components/schemas/error_response"
 
-        run_test!
+        run_test! do
+          expect(json_error_detail).to eq "A required parameter is missing or empty: customer"
+          expect(json_response[:meta]).to eq nil
+        end
       end
     end
   end
