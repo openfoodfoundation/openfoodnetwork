@@ -5,7 +5,13 @@ require "swagger_helper"
 describe "Customers", type: :request do
   let!(:enterprise1) { create(:enterprise) }
   let!(:enterprise2) { create(:enterprise) }
-  let!(:customer1) { create(:customer, enterprise: enterprise1) }
+  let!(:customer1) {
+    create(
+      :customer,
+      enterprise: enterprise1,
+      terms_and_conditions_accepted_at: Time.zone.parse("2000-01-01"),
+    )
+  }
   let!(:customer2) { create(:customer, enterprise: enterprise1) }
   let!(:customer3) { create(:customer, enterprise: enterprise2) }
 
@@ -116,7 +122,8 @@ describe "Customers", type: :request do
 
         run_test! do
           expect(json_response[:data][:attributes]).to include(
-            allow_charges: false
+            allow_charges: false,
+            terms_and_conditions_accepted_at: nil,
           )
         end
       end
@@ -179,7 +186,14 @@ describe "Customers", type: :request do
         param(:id) { customer1.id }
         schema "$ref": "#/components/schemas/resources/customer"
 
-        run_test!
+        run_test! do
+          date_time_string =
+            json_response[:data][:attributes][:terms_and_conditions_accepted_at]
+          expect(date_time_string).to match /^2000-01-01T00:00:00.000[Z+-].*$/
+          expect(DateTime.parse(date_time_string)).to eq(
+            customer1.terms_and_conditions_accepted_at
+          )
+        end
       end
 
       response "404", "Not found" do
