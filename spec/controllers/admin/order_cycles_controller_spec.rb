@@ -402,17 +402,30 @@ module Admin
         end
       end
 
-      describe "when an order cycle has any coordinator_fees", :debug do
+      describe "when an order cycle has any coordinator_fees" do
         let(:enterprise_fee1) { create(:enterprise_fee) }
 
         before do
           oc.coordinator_fees << enterprise_fee1
         end
 
-        it "displays an error message when we attempt to delete it" do
+        it "actually delete the order cycle" do
           get :destroy, params: { id: oc.id }
           expect(OrderCycle.find_by(id: oc.id)).to be nil
           expect(response).to redirect_to admin_order_cycles_path
+        end
+
+        describe "when the order_cycle was previously cloned" do
+          let(:cloned) { oc.clone! }
+
+          it "actually delete the order cycle" do
+            get :destroy, params: { id: cloned.id }
+
+            expect(OrderCycle.find_by(id: cloned.id)).to be nil
+            expect(OrderCycle.find_by(id: oc.id)).to_not be nil
+            expect(EnterpriseFee.find_by(id: enterprise_fee1.id)).to_not be nil
+            expect(response).to redirect_to admin_order_cycles_path
+          end
         end
       end
     end
