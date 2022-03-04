@@ -15,10 +15,9 @@ module StripeHelper
   end
 
   def fill_out_card_details
-    expect(page).to have_css("input[name='cardnumber']")
-    fill_in 'Card number', with: '4242424242424242'
-    fill_in 'MM / YY', with: "01/#{DateTime.now.year + 1}"
-    fill_in 'CVC', with: '123'
+    fill_in "stripe-cardnumber", with: '4242424242424242'
+    fill_in "exp-date", with: "01/#{DateTime.now.year + 1}"
+    fill_in "cvc", with: "123"
   end
 
   def fill_in_card_details_in_backoffice
