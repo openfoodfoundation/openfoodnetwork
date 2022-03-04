@@ -48,6 +48,7 @@ module SplitCheckoutHelper
     expect(page).to have_selector("div.checkout-tab.selected", text: "1 - Your details")
     expect(page).to have_content("2 - Payment method")
     expect(page).to have_content("3 - Order summary")
+  end
 
   def proceed_to_summary
     click_on "Next - Order summary"
