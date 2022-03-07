@@ -22,7 +22,7 @@
       = render 'bought' if show_bought_items? && @order.cart?
 
       %tfoot#edit-cart
-        = render 'spree/orders/form/cart_actions_row' if @order.cart?
+        = render 'spree/orders/form/cart_actions_row' unless @order.complete?
 
         %tr
           %td.text-right{colspan:"3"}
