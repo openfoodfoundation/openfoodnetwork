@@ -98,7 +98,7 @@ describe "As a consumer, I want to checkout my order", js: true do
       visit checkout_path
     end
 
-    context "actually user has an account and wants to login", :debug do
+    context "actually user has an account and wants to login" do
       let(:user) { create(:user) }
 
       it "should redirect to '/checkout/details' when user submit the login form" do
