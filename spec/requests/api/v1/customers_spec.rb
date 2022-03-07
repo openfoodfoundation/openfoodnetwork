@@ -17,7 +17,10 @@ describe "Customers", type: :request do
   let!(:customer2) { create(:customer, enterprise: enterprise1) }
   let!(:customer3) { create(:customer, enterprise: enterprise2) }
 
-  before { login_as enterprise1.owner }
+  before do
+    Flipper.enable(:api_v1)
+    login_as enterprise1.owner
+  end
 
   path "/api/v1/customers" do
     get "List customers" do
