@@ -17,7 +17,7 @@ module Api
       end
 
       def show
-        render json: Api::V1::CustomerSerializer.new(@customer)
+        render json: Api::V1::CustomerSerializer.new(@customer, include_options)
       end
 
       def create
@@ -124,6 +124,12 @@ module Api
 
       def editable_enterprises
         OpenFoodNetwork::Permissions.new(current_api_user).editable_enterprises.select(:id)
+      end
+
+      def include_options
+        fields = [params.fetch(:include, [])].flatten
+
+        { include: fields.map(&:to_s) }
       end
     end
   end

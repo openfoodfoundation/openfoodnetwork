@@ -3,7 +3,7 @@
 require "swagger_helper"
 
 describe "Customers", type: :request do
-  let!(:enterprise1) { create(:enterprise) }
+  let!(:enterprise1) { create(:enterprise, name: "The Farm") }
   let!(:enterprise2) { create(:enterprise) }
   let!(:customer1) {
     create(
@@ -236,6 +236,28 @@ describe "Customers", type: :request do
 
           get "/api/v1/customers/#{customer1.id}"
           expect(json_response[:data][:relationships][:enterprise]).to eq(expected_enterprise_data)
+        end
+      end
+
+      describe "including related records" do
+        it "doesn't include other records by default" do
+          get "/api/v1/customers/#{customer1.id}"
+
+          expect(json_response[:included]).to eq nil
+        end
+
+        it "includes enterprise data on request" do
+          get "/api/v1/customers/#{customer1.id}?include=enterprise"
+
+          expect(json_response[:included].size).to eq 1
+          expect(json_response[:included].first).to include(
+            id: enterprise1.id.to_s,
+            type: "enterprise",
+            attributes: {
+              id: enterprise1.id,
+              name: "The Farm",
+            }
+          )
         end
       end
     end
