@@ -49,6 +49,8 @@
 
     %div.fullwidth
       %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
-        = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t('.edit_cart')}' ) }}"
+        %div{ ng: { if: "Cart.dirty" } }= t(:cart_updating)
+        %div{ ng: { if: "!Cart.dirty && Cart.empty()" } }= t(:cart_empty)
+        %div{ ng: { if: "!Cart.dirty && !Cart.empty()" } }= t('.edit_cart')
       %a.checkout.button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
         = t '.checkout'
