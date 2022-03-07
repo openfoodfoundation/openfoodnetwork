@@ -70,7 +70,10 @@ module Api
       end
 
       def customer_params
-        params.require(:customer).permit(:email, :enterprise_id)
+        params.require(:customer).permit(
+          :email, :enterprise_id,
+          :code, :first_name, :last_name,
+        )
       end
 
       def editable_enterprises

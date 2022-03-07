@@ -244,7 +244,7 @@ paths:
       parameters: []
       responses:
         '201':
-          description: Customer created
+          description: Example customer created
           content:
             application/json:
               schema:

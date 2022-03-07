@@ -105,7 +105,7 @@ describe "Customers", type: :request do
         required: CustomerSchema.required_attributes
       }
 
-      response "201", "Customer created" do
+      response "201", "Minimal customer created" do
         param(:customer) do
           {
             email: "test@example.com",
@@ -117,6 +117,27 @@ describe "Customers", type: :request do
         run_test! do
           expect(json_response[:data][:attributes]).to include(
             allow_charges: false
+          )
+        end
+      end
+
+      response "201", "Example customer created" do
+        param(:customer) do
+          CustomerSchema.writable_attributes.transform_values do |attribute|
+            attribute[:example]
+          end.merge(
+            enterprise_id: enterprise1.id,
+          )
+        end
+        schema "$ref": "#/components/schemas/resources/customer"
+
+        run_test! do
+          expect(json_response[:data][:attributes]).to include(
+            first_name: "Alice",
+            last_name: "Springs",
+            code: "BUYER1",
+            email: "alice@example.com",
+            enterprise_id: enterprise1.id,
           )
         end
       end
